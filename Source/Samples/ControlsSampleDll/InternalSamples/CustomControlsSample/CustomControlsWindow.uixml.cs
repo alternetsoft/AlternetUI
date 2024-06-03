@@ -50,7 +50,7 @@ namespace CustomControlsSample
 
         public CustomControlsWindow()
         {
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
 
             InitializeComponent();
 

@@ -23,8 +23,8 @@ namespace Alternet.UI
         {
             if (hookedExceptionEvents)
                 return;
-            var a = BaseApplication.Current;
-            BaseApplication.ThreadException += Application_ThreadException;
+            var a = App.Current;
+            App.ThreadException += Application_ThreadException;
             a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException +=
                 CurrentDomain_UnhandledException;

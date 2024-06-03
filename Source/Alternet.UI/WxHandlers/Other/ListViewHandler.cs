@@ -25,7 +25,7 @@ namespace Alternet.UI
             {
                 int v = value ? 1 : 0;
 
-                BaseApplication.SetSystemOption("mac.listctrl.always_use_generic", v);
+                App.SetSystemOption("mac.listctrl.always_use_generic", v);
             }
         }
 

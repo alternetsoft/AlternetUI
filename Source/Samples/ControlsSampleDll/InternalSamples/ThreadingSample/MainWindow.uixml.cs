@@ -20,7 +20,7 @@ namespace ThreadingSample
             tokenSource = new CancellationTokenSource();
 
             counter = ++globalCounter;
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
 
             Disposed += MainWindow_Disposed;
             Closing += MainWindow_Closing;
@@ -35,12 +35,12 @@ namespace ThreadingSample
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
-            BaseApplication.IdleLog($"ThreadingSample.MainWindow '{counter}' Closed");
+            App.IdleLog($"ThreadingSample.MainWindow '{counter}' Closed");
         }
 
         private void MainWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
-            BaseApplication.IdleLog($"ThreadingSample.MainWindow '{counter}' Closing");
+            App.IdleLog($"ThreadingSample.MainWindow '{counter}' Closing");
             EndCounterThread(ref thread1);
             EndCounterThread(ref thread2);
             tokenSource.Cancel();
@@ -48,7 +48,7 @@ namespace ThreadingSample
 
         private void MainWindow_Disposed(object? sender, EventArgs e)
         {
-            BaseApplication.IdleLog($"ThreadingSample.MainWindow '{counter}' Disposed");
+            App.IdleLog($"ThreadingSample.MainWindow '{counter}' Disposed");
         }
 
         private void EndCounterThread(ref Thread? thread)
@@ -67,7 +67,7 @@ namespace ThreadingSample
                     {
                         if (IsDisposed)
                         {
-                            BaseApplication.IdleLog($"Thread {counter}.1: Form is already diposed");
+                            App.IdleLog($"Thread {counter}.1: Form is already diposed");
                         }
                         else
                             beginInvokeCounterLabel.Text = i.ToString();
@@ -89,7 +89,7 @@ namespace ThreadingSample
                     {
                         if (IsDisposed)
                         {
-                            BaseApplication.IdleLog($"Thread {counter}.2: Form is already diposed");
+                            App.IdleLog($"Thread {counter}.2: Form is already diposed");
                         }
                         else
                             invokeCounterLabel.Text = i.ToString(); 
@@ -109,15 +109,15 @@ namespace ThreadingSample
             }
             catch (ThreadInterruptedException)
             {
-                BaseApplication.IdleLog($"Thread '{counter}.{Thread.CurrentThread.Name}' awoken.");
+                App.IdleLog($"Thread '{counter}.{Thread.CurrentThread.Name}' awoken.");
             }
             catch (ThreadAbortException)
             {
-                BaseApplication.IdleLog($"Thread '{counter}.{Thread.CurrentThread.Name}' aborted.");
+                App.IdleLog($"Thread '{counter}.{Thread.CurrentThread.Name}' aborted.");
             }
             finally
             {
-                BaseApplication.IdleLog($"Thread '{counter}.{Thread.CurrentThread.Name}' executing finally block.");
+                App.IdleLog($"Thread '{counter}.{Thread.CurrentThread.Name}' executing finally block.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace ThreadingSample
                 {
                     if (IsDisposed)
                     {
-                        BaseApplication.IdleLog($"Form {counter} is already diposed");
+                        App.IdleLog($"Form {counter} is already diposed");
                     }
                     else
                         longOperationProgressBar.Maximum = Maximum;
@@ -176,7 +176,7 @@ namespace ThreadingSample
                     {
                         if (IsDisposed)
                         {
-                            BaseApplication.IdleLog($"Form {counter} is already diposed");
+                            App.IdleLog($"Form {counter} is already diposed");
                         }
                         else
                             longOperationProgressBar.Value = i;
@@ -190,7 +190,7 @@ namespace ThreadingSample
             }
             catch (OperationCanceledException ex)
             {
-                BaseApplication.IdleLog(
+                App.IdleLog(
                     $"Long operation canceled with message: {ex.Message}");
             }
 

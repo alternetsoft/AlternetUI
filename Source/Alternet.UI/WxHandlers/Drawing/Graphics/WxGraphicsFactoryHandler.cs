@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     internal class WxGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
@@ -84,7 +86,7 @@ namespace Alternet.Drawing
             return new UI.Native.GraphicsPath();
         }
 
-        public IImageSetHandler CreateImageSetHandler()
+        public IImageSetHandler? CreateImageSetHandler()
         {
             return new UI.Native.ImageSet();
         }
@@ -112,12 +114,12 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        public IImageListHandler CreateImageListHandler()
+        public IImageListHandler? CreateImageListHandler()
         {
             return new UI.Native.ImageList();
         }
 
-        public IIconSetHandler CreateIconSetHandler()
+        public IIconSetHandler? CreateIconSetHandler()
         {
             return new UI.Native.IconSet();
         }
@@ -136,16 +138,6 @@ namespace Alternet.Drawing
         {
             return new WxGraphics(
                 UI.Native.DrawingContext.FromImage((UI.Native.Image)image.Handler));
-        }
-
-        public IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
-        {
-            var image = new UI.Native.Image();
-            ((UI.Native.ImageSet)imageSet.Handler).InitImage(
-                image,
-                size.Width,
-                size.Height);
-            return image;
         }
 
         public IImageHandler CreateImageHandler()
@@ -169,6 +161,16 @@ namespace Alternet.Drawing
                 height,
                 (UI.Native.DrawingContext)dc.NativeObject);
             return nativeImage;
+        }
+
+        public IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
+        {
+            var image = new UI.Native.Image();
+            ((UI.Native.ImageSet)imageSet.Handler).InitImage(
+                image,
+                size.Width,
+                size.Height);
+            return image;
         }
 
         public IImageHandler CreateImageHandler(ImageSet imageSet, IControl control)
@@ -348,20 +350,26 @@ namespace Alternet.Drawing
         public IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            bool staticData = false)
+            RGBValue[] data)
         {
-            return new WxGenericImageHandler(width, height, data, staticData);
+            return new WxGenericImageHandler(width, height, data);
         }
 
         public IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false)
+            SKColor[] data)
         {
-            return new WxGenericImageHandler(width, height, data, alpha, staticData);
+            return new WxGenericImageHandler(width, height, data);
+        }
+
+        public IGenericImageHandler CreateGenericImageHandler(
+            int width,
+            int height,
+            RGBValue[] data,
+            byte[] alpha)
+        {
+            return new WxGenericImageHandler(width, height, data, alpha);
         }
     }
 }

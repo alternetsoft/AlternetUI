@@ -62,7 +62,7 @@ namespace ControlsSample
 
             button2.ClickAction = () =>
             {
-                BaseApplication.Log("Some Linux versions don't support getting screen image.");
+                App.Log("Some Linux versions don't support getting screen image.");
                 var bitmap = Image.FromScreen();
                 if (bitmap is not null)
                 {
@@ -71,12 +71,12 @@ namespace ControlsSample
                     picturePopup.ShowPopup(button2);
                 }
                 else
-                    BaseApplication.LogError("Screen picture is null");
+                    App.LogError("Screen picture is null");
             };           
 
             button.ClickAction = () =>
             {
-                BaseApplication.Log("Some Linux versions don't support drawing on screen.");
+                App.Log("Some Linux versions don't support drawing on screen.");
 
                 for(int i = 0; i < Display.Count; i++)
                     DrawOnDisplay(i);

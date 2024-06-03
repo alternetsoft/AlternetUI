@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>Provides data for the exception related events.</summary>
-    public sealed class ControlExceptionEventArgs : BaseEventArgs
+    public class ThrowExceptionEventArgs : BaseEventArgs
     {
         private readonly Exception exception;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlExceptionEventArgs" /> class.
+        /// Initializes a new instance of the <see cref="ThrowExceptionEventArgs" /> class.
         /// </summary>
         /// <param name="errorException">The <see cref="Exception" /> that occurred.</param>
-        public ControlExceptionEventArgs(Exception errorException)
+        public ThrowExceptionEventArgs(Exception errorException)
         {
             exception = errorException ?? throw new ArgumentNullException(nameof(errorException));
         }

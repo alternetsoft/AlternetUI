@@ -41,7 +41,7 @@ namespace ControlsSample
             var result = checkListBox.HitTest(Mouse.GetPosition(checkListBox));
             var item = (result == null ? 
                 "<none>" : checkListBox.Items[result.Value]);
-            BaseApplication.Log($"HitTest result: Item: '{item}'");
+            App.Log($"HitTest result: Item: '{item}'");
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace ControlsSample
         private void CheckListBox_CheckedChanged(object? sender, EventArgs e)
         {
             string checkedIndicesString = IndicesToStr(checkListBox.CheckedIndices);
-            BaseApplication.Log(
+            App.Log(
                 $"CheckListBox: CheckedChanged. Checked: ({checkedIndicesString})");
         }
 
@@ -87,7 +87,7 @@ namespace ControlsSample
         {
             string selectedIndicesStr = 
                 IndicesToStr(checkListBox.SelectedIndices);
-            BaseApplication.Log(
+            App.Log(
                 $"CheckListBox: SelectionChanged. Selected: ({selectedIndicesStr})");
         }
 
@@ -109,7 +109,7 @@ namespace ControlsSample
 
         private void RemoveItemsAndLog(IReadOnlyList<int> items)
         {
-            BaseApplication.Log($"Remove items: ({IndicesToStr(items)})");
+            App.Log($"Remove items: ({IndicesToStr(items)})");
             checkListBox.RemoveItems(items);
         }
 

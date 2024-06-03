@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.UI;
+using Alternet.UI.Extensions;
 using Alternet.Drawing;
 
 using SkiaSharp;
@@ -29,12 +30,12 @@ namespace ControlsSample
             BottomVisible = false,
         };
 
-        private readonly Button button = new("Update Skia image")
+        private readonly Button button = new("Paint on SKCanvas")
         {
             Visible = true,
         };
 
-        private readonly Button button2 = new("Button 2")
+        private readonly Button button2 = new("GenericImage to SKBitmap")
         {
             Visible = true,
         };
@@ -48,6 +49,8 @@ namespace ControlsSample
         {
             ImageStretch = false,
         };
+
+        private readonly DrawTextParams prm = new();
 
         static SkiaDrawingWindow()
         {
@@ -63,7 +66,7 @@ namespace ControlsSample
 
             propGrid.Parent = panel.RightPanel;
             pictureBox.Parent = panel.LeftPanel;
-            propGrid.SetProps(control, true);
+            propGrid.SetProps(prm, true);
 
             propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
@@ -88,16 +91,23 @@ namespace ControlsSample
             button2.HorizontalAlignment = HorizontalAlignment.Left;
             button2.Parent = buttonPanel;
 
-            button2.ClickAction = () =>
-            {
-            };           
+            button2.ClickAction = GenericToSkia;
 
-            button.ClickAction = UpdateSkiaImage;
+            button.ClickAction = PaintOnCanvas;
 
             propGrid.SuggestedInitDefaults();
+
+            DrawTextOnSkia();
         }
 
-        private void UpdateSkiaImage()
+        private void GenericToSkia()
+        {
+            GenericImage image = new(backgroundUrl1);
+            var bitmap = (SKBitmap)image;
+            pictureBox.Image = (Image)bitmap;
+        }
+
+        private void PaintOnCanvas()
         {
             RectD rect = (0, 0, control.Width, control.Height);
 
@@ -114,6 +124,37 @@ namespace ControlsSample
             control.RaisePaint(e);
 
             pictureBox.Image = (Image)bitmap;
+        }
+
+        private void DrawTextOnSkia()
+        {
+            RectD rect = (0, 0, 500, 500);
+
+            SKBitmap bitmap = new((int)rect.Width, (int)rect.Height);
+
+            SKCanvas canvas = new(bitmap);
+
+            canvas.DrawRect(rect, Brushes.White);
+
+            PointD pt = new(100, 150);
+            PointD pt2 = new(300, 150);
+
+            var font = SkiaSampleControl.SampleFont;
+
+            canvas.DrawText("He|l lo", pt, font, Color.Black, Color.LightGreen);
+
+            canvas.DrawText("; hello ", pt2, font, Color.Red, Color.LightGreen);
+
+            canvas.DrawPoint(pt, Color.Red);
+            canvas.DrawPoint(pt2, Color.Red);
+
+            pictureBox.Image = (Image)bitmap;
+
+        }
+
+        private class DrawTextParams
+        {
+
         }
    }
 }

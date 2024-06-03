@@ -36,7 +36,7 @@ namespace MenuSample
 
         public MainWindow()
         {
-            Icon = BaseApplication.DefaultIcon;
+            Icon = App.DefaultIcon;
             Layout = LayoutStyle.Vertical;
 
             toolbar.TextVisible = true;
@@ -201,7 +201,7 @@ namespace MenuSample
 
         private void PlatformSpecificInitialize()
         {
-            roleControlsPanel.Visible = BaseApplication.IsMacOS;
+            roleControlsPanel.Visible = App.IsMacOS;
         }
 
         public Command? SaveCommand { get; private set; }
@@ -352,7 +352,7 @@ namespace MenuSample
 
         void LogEvent(string? message)
         {
-            BaseApplication.Log(message);
+            App.Log(message);
         }
 
         private void ToggleToolbarItemCheckButton_Click(object? sender, EventArgs e)

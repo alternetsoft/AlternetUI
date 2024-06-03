@@ -387,7 +387,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="double"/> coordinate to the integer value.
+        /// Creates new rectangle with the specified width and height.
+        /// </summary>
+        /// <param name="width">Rectangle width.</param>
+        /// <param name="height">Rectangle height.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RectD Create(Coord width, Coord height)
+        {
+            return new RectD(0, 0, width, height);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Coord"/> coordinate to the integer value.
         /// </summary>
         /// <param name="value">Coordinate.</param>
         /// <returns></returns>
@@ -399,7 +411,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="double"/> coordinate to the <see cref="float"/> value.
+        /// Converts <see cref="Coord"/> coordinate to the <see cref="float"/> value.
         /// </summary>
         /// <param name="value">Coordinate.</param>
         /// <returns></returns>
@@ -462,7 +474,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static RectD Parse(string source)
         {
-            IFormatProvider formatProvider = BaseApplication.InvariantEnglishUS;
+            IFormatProvider formatProvider = App.InvariantEnglishUS;
 
             TokenizerHelper th = new(source, formatProvider);
 

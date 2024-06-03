@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// </summary>
         public static IMemoryHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateMemoryHandler();
+            get => handler ??= App.Handler.CreateMemoryHandler();
 
             set => handler = value;
         }

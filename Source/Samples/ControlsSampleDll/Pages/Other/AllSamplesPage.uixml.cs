@@ -112,12 +112,12 @@ namespace ControlsSample
         private void RunDotNetOnCsProjInFolder(string folder, string dotnetCmd = "run")
         {
             var targetFramework = AppUtils.GetMyTargetFrameworkName();
-            var arch = BaseApplication.Is64BitOS ? "x64" : "x86";
+            var arch = App.Is64BitOS ? "x64" : "x86";
             var cmdRunWindows =
               $"dotnet {dotnetCmd} /p:Platform={arch} --arch {arch} --property WarningLevel=0 --framework {targetFramework}";
             var cmdRunOther =
                 $"dotnet {dotnetCmd} --property WarningLevel=0 --framework {targetFramework}";
-            var cmd = BaseApplication.IsWindowsOS ? cmdRunWindows : cmdRunOther;
+            var cmd = App.IsWindowsOS ? cmdRunWindows : cmdRunOther;
             AppUtils.ExecuteTerminalCommand(cmd, folder);
         }
 
@@ -134,7 +134,7 @@ namespace ControlsSample
             path = Path.GetDirectoryName(path)!;
             if (DeleteBin)
                 FileUtils.DeleteBinObjFiles(path);
-            BaseApplication.Log("Run sample: " + path);
+            App.Log("Run sample: " + path);
             RunCsProjInFolder(path);
         }
 
@@ -143,7 +143,7 @@ namespace ControlsSample
             if (view.SelectedItem is not CsProjItem item)
                 return;
             string path = item.CsProjPath;
-            BaseApplication.Log("Build sample: " + path);
+            App.Log("Build sample: " + path);
             path = Path.GetDirectoryName(path)!;
             if (DeleteBin)
                 FileUtils.DeleteBinObjFiles(path);
@@ -158,8 +158,8 @@ namespace ControlsSample
                 buildUIButton.Enabled = false;
                 return;
             }
-            BaseApplication.Log("Build Alternet.UI.dll");
-            BaseApplication.Log("Path: " + s);
+            App.Log("Build Alternet.UI.dll");
+            App.Log("Path: " + s);
             if (DeleteBin)
                 FileUtils.DeleteBinObjFiles(s);
             BuildCsProjInFolder(s);
@@ -167,14 +167,14 @@ namespace ControlsSample
 
         private void BuildPalButton_Click(object? sender, EventArgs e)
         {
-            BaseApplication.Log("Build Alternet.UI.Pal");
+            App.Log("Build Alternet.UI.Pal");
             var s = CommonUtils.GetPalFolder();
             if (s is null)
             {
                 buildPalButton.Enabled = false;
                 return;
             }
-            BaseApplication.Log("Path: " + s);
+            App.Log("Path: " + s);
             if (DeleteBin)
                 FileUtils.DeleteBinObjFiles(s);
         }

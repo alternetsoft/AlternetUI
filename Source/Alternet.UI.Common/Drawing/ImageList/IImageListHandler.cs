@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
-    public class MauiPenHandler : PlessPenHandler
+    public interface IImageListHandler : IImageContainer
     {
-        public MauiPenHandler(Pen pen)
-            : base(pen)
-        {
-        }
+        SizeI Size { get; set; }
     }
 }

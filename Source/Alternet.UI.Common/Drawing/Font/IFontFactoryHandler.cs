@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public interface IFontFactoryHandler
+    public interface IFontFactoryHandler : IDisposable
     {
         /// <summary>
         /// Gets or sets default font encoding.
@@ -24,19 +24,13 @@ namespace Alternet.Drawing
         void SetDefaultFont(Font value);
 
         /// <summary>
-        /// Creates default native mono font.
-        /// </summary>
-        /// <returns></returns>
-        IFontHandler CreateDefaultMonoFontHandler();
-
-        /// <summary>
-        /// Creates native font.
+        /// Creates native font handler.
         /// </summary>
         /// <returns></returns>
         IFontHandler CreateFontHandler();
 
         /// <summary>
-        /// Creates default native font.
+        /// Creates default native font handler.
         /// </summary>
         /// <returns></returns>
         IFontHandler CreateDefaultFontHandler();
@@ -46,24 +40,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="systemFont">System font identifier.</param>
         /// <returns></returns>
-        Font CreateSystemFont(SystemSettingsFont systemFont);
-
-        /// <summary>
-        /// Creates native font using other font properties.
-        /// </summary>
-        /// <returns></returns>
-        IFontHandler CreateFontHandler(Font font);
+        Font? CreateSystemFont(SystemSettingsFont systemFont);
 
         /// <summary>
         /// Returns a string array that contains all font families names
         /// currently available in the system.
         /// </summary>
         string[] GetFontFamiliesNames();
-
-        /// <summary>
-        /// Gets whether font family is installed on this computer.
-        /// </summary>
-        bool IsFontFamilyValid(string name);
 
         /// <summary>
         /// Gets the name of the font family specified using <see cref="GenericFontFamily"/>.

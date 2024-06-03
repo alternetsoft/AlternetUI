@@ -236,7 +236,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when exception is raised inside <see cref="AvoidException"/>.
         /// </summary>
-        event EventHandler<ControlExceptionEventArgs>? ProcessException;
+        event EventHandler<ThrowExceptionEventArgs>? ProcessException;
 
         /// <summary>
         /// Occurs when the mouse pointer enters the control.
@@ -547,7 +547,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A value representing the distance, in dips, between the right edge of the
         /// control and the left edge of its container's client area.</returns>
-        double Right { get; set; }
+        Coord Right { get; set; }
 
         /// <summary>
         /// Gets the distance, in dips, between the bottom edge of the control and the top edge
@@ -555,7 +555,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A value representing the distance, in dips, between the bottom edge of
         /// the control and the top edge of its container's client area.</returns>
-        double Bottom { get; set; }
+        Coord Bottom { get; set; }
 
         /// <summary>
         /// Gets control index in the <see cref="Children"/> of the container control.
@@ -606,13 +606,13 @@ namespace Alternet.UI
         /// Gets or sets the distance between the left edge of the control
         /// and the left edge of its container's client area.
         /// </summary>
-        double Left { get; set; }
+        Coord Left { get; set; }
 
         /// <summary>
         /// Gets or sets the distance between the top edge of the control
         /// and the top edge of its container's client area.
         /// </summary>
-        double Top { get; set; }
+        Coord Top { get; set; }
 
         /// <summary>
         /// Gets or sets the location of upper-left corner of the control, in
@@ -689,13 +689,13 @@ namespace Alternet.UI
         /// Gets or sets the size of the control.
         /// </summary>
         /// <value>The size of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Alternet.Drawing.SizeD"/>(<see cref="double.NaN"/>,
-        /// <see cref="double.NaN"/>)/>.
+        /// The default value is <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
+        /// <see cref="Coord.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the size of the control.
-        /// Set this property to <see cref="Alternet.Drawing.SizeD"/>(<see cref="double.NaN"/>,
-        /// <see cref="double.NaN"/>) to specify system-default sizing
+        /// Set this property to <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
+        /// <see cref="Coord.NaN"/>) to specify system-default sizing
         /// behavior when the control is first shown.
         /// </remarks>
         SizeD Size { get; set; }
@@ -704,42 +704,42 @@ namespace Alternet.UI
         /// Gets or sets the width of the control.
         /// </summary>
         /// <value>The width of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the width of the control.
-        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
+        /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
         /// behavior before the control is first shown.
         /// </remarks>
-        double Width { get; set; }
+        Coord Width { get; set; }
 
         /// <summary>
         /// Gets or sets the height of the control.
         /// </summary>
         /// <value>The height of the control, in device-independent units
         /// (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the height of the control.
-        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
+        /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
         /// behavior before the control is first shown.
         /// </remarks>
-        double Height { get; set; }
+        Coord Height { get; set; }
 
         /// <summary>
         /// Gets or sets the suggested size of the control.
         /// </summary>
         /// <value>The suggested size of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="Alternet.Drawing.SizeD"/>
-        /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
+        /// The default value is <see cref="SizeD"/>
+        /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested size of the control. An actual
         /// size is calculated by the layout system.
-        /// Set this property to <see cref="Alternet.Drawing.SizeD"/>
-        /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify auto
+        /// Set this property to <see cref="SizeD"/>
+        /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>) to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
@@ -751,34 +751,34 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The suggested width of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested width of the control. An
         /// actual width is calculated by the layout system.
-        /// Set this property to <see cref="double.NaN"/> to specify auto
+        /// Set this property to <see cref="Coord.NaN"/> to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
-        double SuggestedWidth { get; set; }
+        Coord SuggestedWidth { get; set; }
 
         /// <summary>
         /// Gets or sets the suggested height of the control.
         /// </summary>
         /// <value>The suggested height of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested height of the control. An
         /// actual height is calculated by the layout system.
-        /// Set this property to <see cref="double.NaN"/> to specify auto
+        /// Set this property to <see cref="Coord.NaN"/> to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
-        double SuggestedHeight { get; set; }
+        Coord SuggestedHeight { get; set; }
 
         /// <summary>
         /// Gets or set a value indicating whether the control paints itself
@@ -878,22 +878,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the minimum width the window can be resized to.
         /// </summary>
-        double? MinWidth { get; set; }
+        Coord? MinWidth { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum height the window can be resized to.
         /// </summary>
-        double? MinHeight { get; set; }
+        Coord? MinHeight { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum width the window can be resized to.
         /// </summary>
-        double? MaxWidth { get; set; }
+        Coord? MaxWidth { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum height the window can be resized to.
         /// </summary>
-        double? MaxHeight { get; set; }
+        Coord? MaxHeight { get; set; }
 
         /// <summary>
         /// Gets or sets the background color for the control.
@@ -1198,7 +1198,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        int PixelFromDip(double value);
+        int PixelFromDip(Coord value);
 
         /// <summary>
         /// Converts device-independent units (1/96th inch per unit) to pixels.
@@ -1247,7 +1247,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
-        double PixelToDip(int value);
+        Coord PixelToDip(int value);
 
         /// <summary>
         /// Gets child control at the specified index in the collection of child controls.
@@ -1276,7 +1276,7 @@ namespace Alternet.UI
         /// pixels conversions.
         /// </summary>
         /// <returns></returns>
-        double GetPixelScaleFactor();
+        Coord GetPixelScaleFactor();
 
         /// <summary>
         /// Raises the window to the top of the window hierarchy (Z-order).
@@ -1526,7 +1526,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        void RaiseClick(EventArgs e);
+        void RaiseClick();
 
         /// <summary>
         /// Raises the <see cref="Idle"/> event and calls
@@ -1642,10 +1642,10 @@ namespace Alternet.UI
         /// <param name="specified">Specifies which bounds to use when applying new
         /// location and size.</param>
         void SetBounds(
-            double x,
-            double y,
-            double width,
-            double height,
+            Coord x,
+            Coord y,
+            Coord width,
+            Coord height,
             BoundsSpecified specified);
 
         /// <summary>
@@ -2042,7 +2042,7 @@ namespace Alternet.UI
         void EndIgnoreRecreate();
 
         /// <summary>
-        /// Same as <see cref="BaseApplication.Log"/>.
+        /// Same as <see cref="App.Log"/>.
         /// </summary>
         /// <param name="s"></param>
         void Log(object? s);
@@ -2116,7 +2116,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        double PixelFromDipF(double value);
+        Coord PixelFromDipF(Coord value);
 
         /// <summary>
         /// Invalidates the specified region of the control (adds it to the control's update

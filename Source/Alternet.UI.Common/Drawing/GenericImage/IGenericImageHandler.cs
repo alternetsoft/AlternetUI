@@ -13,6 +13,8 @@ namespace Alternet.Drawing
     {
         GenericImageLoadFlags LoadFlags { get; set; }
 
+        GenericImage.PixelStrategy BestStrategy {get;}
+
         bool HasAlpha { get; }
 
         bool HasMask { get; }
@@ -22,6 +24,7 @@ namespace Alternet.Drawing
         int Height { get; }
 
         bool IsOk { get; }
+
 
         void SetAlpha(int x, int y, byte alpha);
 
@@ -156,16 +159,6 @@ namespace Alternet.Drawing
             BitmapType bitmapType = BitmapType.Any,
             int index = -1);
 
-        bool LoadFromFile(
-            string filename,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1);
-
-        bool LoadFromFile(
-            string name,
-            string mimetype,
-            int index = -1);
-
         bool LoadFromStream(
             Stream stream,
             string mimetype,
@@ -173,41 +166,25 @@ namespace Alternet.Drawing
 
         bool SaveToStream(Stream stream, string mimetype);
 
-        bool SaveToFile(string filename, BitmapType bitmapType);
-
-        bool SaveToFile(string filename, string mimetype);
-
-        bool SaveToFile(string filename);
-
         bool SaveToStream(Stream stream, BitmapType type);
-
-        void SetNativeData(
-            IntPtr data,
-            int new_width,
-            int new_height,
-            bool static_data = false);
 
         IntPtr GetNativeAlphaData();
 
         IntPtr GetNativeData();
-
-        bool CreateNativeData(
-            int width,
-            int height,
-            IntPtr data,
-            bool staticData = false);
-
-        bool CreateNativeData(
-            int width,
-            int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false);
 
         void SetNativeAlphaData(
             IntPtr alpha = default,
             bool staticData = false);
 
         void SetNativeData(IntPtr data, bool staticData = false);
+
+        /*
+        SKColor[] Pixels {get;set;}
+        
+        RGBValue[] RgbData {get;set;}
+        
+        byte[] AlphaData {get;set;}
+
+        */
     }
 }

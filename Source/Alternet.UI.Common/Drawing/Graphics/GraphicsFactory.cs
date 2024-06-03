@@ -14,7 +14,7 @@ namespace Alternet.Drawing
 
         public static IGraphicsFactoryHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateGraphicsFactoryHandler();
+            get => handler ??= App.Handler.CreateGraphicsFactoryHandler();
 
             set => handler = value;
         }

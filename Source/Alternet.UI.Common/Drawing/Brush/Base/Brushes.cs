@@ -158,155 +158,13 @@ namespace Alternet.Drawing
             { "YellowGreen", () => YellowGreen },
         };
 
-        private static Brush? transparent;
-        private static Brush? aliceBlue;
-        private static Brush? antiqueWhite;
-        private static Brush? aqua;
-        private static Brush? aquamarine;
-        private static Brush? azure;
-        private static Brush? beige;
-        private static Brush? bisque;
-        private static Brush? black;
-        private static Brush? blanchedAlmond;
-        private static Brush? blue;
-        private static Brush? blueViolet;
-        private static Brush? brown;
-        private static Brush? burlyWood;
-        private static Brush? cadetBlue;
-        private static Brush? chartreuse;
-        private static Brush? chocolate;
-        private static Brush? coral;
-        private static Brush? cornflowerBlue;
-        private static Brush? cornsilk;
-        private static Brush? crimson;
-        private static Brush? cyan;
-        private static Brush? darkBlue;
-        private static Brush? darkCyan;
-        private static Brush? darkGoldenrod;
-        private static Brush? darkGray;
-        private static Brush? darkGreen;
-        private static Brush? darkKhaki;
-        private static Brush? darkMagenta;
-        private static Brush? darkOliveGreen;
-        private static Brush? darkOrange;
-        private static Brush? darkOrchid;
-        private static Brush? darkRed;
-        private static Brush? darkSalmon;
-        private static Brush? darkSeaGreen;
-        private static Brush? darkSlateBlue;
-        private static Brush? darkSlateGray;
-        private static Brush? darkTurquoise;
-        private static Brush? darkViolet;
-        private static Brush? deepPink;
-        private static Brush? deepSkyBlue;
-        private static Brush? dimGray;
-        private static Brush? dodgerBlue;
-        private static Brush? firebrick;
-        private static Brush? floralWhite;
-        private static Brush? forestGreen;
-        private static Brush? fuchsia;
-        private static Brush? gainsboro;
-        private static Brush? ghostWhite;
-        private static Brush? gold;
-        private static Brush? goldenrod;
-        private static Brush? gray;
-        private static Brush? green;
-        private static Brush? greenYellow;
-        private static Brush? honeydew;
-        private static Brush? hotPink;
-        private static Brush? indianRed;
-        private static Brush? indigo;
-        private static Brush? ivory;
-        private static Brush? khaki;
-        private static Brush? lavender;
-        private static Brush? lavenderBlush;
-        private static Brush? lawnGreen;
-        private static Brush? lemonChiffon;
-        private static Brush? lightBlue;
-        private static Brush? lightCoral;
-        private static Brush? lightCyan;
-        private static Brush? lightGoldenrodYellow;
-        private static Brush? lightGreen;
-        private static Brush? lightGray;
-        private static Brush? lightPink;
-        private static Brush? lightSalmon;
-        private static Brush? lightSeaGreen;
-        private static Brush? lightSkyBlue;
-        private static Brush? lightSlateGray;
-        private static Brush? lightSteelBlue;
-        private static Brush? lightYellow;
-        private static Brush? lime;
-        private static Brush? limeGreen;
-        private static Brush? linen;
-        private static Brush? magenta;
-        private static Brush? maroon;
-        private static Brush? mediumAquamarine;
-        private static Brush? mediumBlue;
-        private static Brush? mediumOrchid;
-        private static Brush? mediumPurple;
-        private static Brush? mediumSeaGreen;
-        private static Brush? mediumSlateBlue;
-        private static Brush? mediumSpringGreen;
-        private static Brush? mediumTurquoise;
-        private static Brush? mediumVioletRed;
-        private static Brush? midnightBlue;
-        private static Brush? mintCream;
-        private static Brush? mistyRose;
-        private static Brush? moccasin;
-        private static Brush? navajoWhite;
-        private static Brush? navy;
-        private static Brush? oldLace;
-        private static Brush? olive;
-        private static Brush? oliveDrab;
-        private static Brush? orange;
-        private static Brush? orangeRed;
-        private static Brush? orchid;
-        private static Brush? paleGoldenrod;
-        private static Brush? paleGreen;
-        private static Brush? paleTurquoise;
-        private static Brush? paleVioletRed;
-        private static Brush? papayaWhip;
-        private static Brush? peachPuff;
-        private static Brush? peru;
-        private static Brush? pink;
-        private static Brush? plum;
-        private static Brush? powderBlue;
-        private static Brush? purple;
-        private static Brush? red;
-        private static Brush? rosyBrown;
-        private static Brush? royalBlue;
-        private static Brush? saddleBrown;
-        private static Brush? salmon;
-        private static Brush? sandyBrown;
-        private static Brush? seaGreen;
-        private static Brush? seaShell;
-        private static Brush? sienna;
-        private static Brush? silver;
-        private static Brush? skyBlue;
-        private static Brush? slateBlue;
-        private static Brush? slateGray;
-        private static Brush? snow;
-        private static Brush? springGreen;
-        private static Brush? steelBlue;
-        private static Brush? tan;
-        private static Brush? teal;
-        private static Brush? thistle;
-        private static Brush? tomato;
-        private static Brush? turquoise;
-        private static Brush? violet;
-        private static Brush? wheat;
-        private static Brush? white;
-        private static Brush? whiteSmoke;
-        private static Brush? yellow;
-        private static Brush? yellowGreen;
-
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
         /// </summary>
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Transparent => GetBrush(ref transparent, Color.Transparent);
+        public static Brush Transparent => Color.Transparent.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -314,7 +172,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush AliceBlue => GetBrush(ref aliceBlue, Color.AliceBlue);
+        public static Brush AliceBlue => Color.AliceBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -322,7 +180,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush AntiqueWhite => GetBrush(ref antiqueWhite, Color.AntiqueWhite);
+        public static Brush AntiqueWhite => Color.AntiqueWhite.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -330,7 +188,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Aqua => GetBrush(ref aqua, Color.Aqua);
+        public static Brush Aqua => Color.Aqua.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -338,7 +196,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Aquamarine => GetBrush(ref aquamarine, Color.Aquamarine);
+        public static Brush Aquamarine => Color.Aquamarine.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -346,7 +204,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Azure => GetBrush(ref azure, Color.Azure);
+        public static Brush Azure => Color.Azure.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -354,7 +212,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Beige => GetBrush(ref beige, Color.Beige);
+        public static Brush Beige => Color.Beige.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -362,7 +220,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Bisque => GetBrush(ref bisque, Color.Bisque);
+        public static Brush Bisque => Color.Bisque.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -370,7 +228,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Black => GetBrush(ref black, Color.Black);
+        public static Brush Black => Color.Black.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -378,7 +236,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush BlanchedAlmond => GetBrush(ref blanchedAlmond, Color.BlanchedAlmond);
+        public static Brush BlanchedAlmond => Color.BlanchedAlmond.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -386,7 +244,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Blue => GetBrush(ref blue, Color.Blue);
+        public static Brush Blue => Color.Blue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -394,7 +252,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush BlueViolet => GetBrush(ref blueViolet, Color.BlueViolet);
+        public static Brush BlueViolet => Color.BlueViolet.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -402,7 +260,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Brown => GetBrush(ref brown, Color.Brown);
+        public static Brush Brown => Color.Brown.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -410,7 +268,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush BurlyWood => GetBrush(ref burlyWood, Color.BurlyWood);
+        public static Brush BurlyWood => Color.BurlyWood.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -418,7 +276,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush CadetBlue => GetBrush(ref cadetBlue, Color.CadetBlue);
+        public static Brush CadetBlue => Color.CadetBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -426,7 +284,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Chartreuse => GetBrush(ref chartreuse, Color.Chartreuse);
+        public static Brush Chartreuse => Color.Chartreuse.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -434,7 +292,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Chocolate => GetBrush(ref chocolate, Color.Chocolate);
+        public static Brush Chocolate => Color.Chocolate.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -442,7 +300,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Coral => GetBrush(ref coral, Color.Coral);
+        public static Brush Coral => Color.Coral.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -450,7 +308,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush CornflowerBlue => GetBrush(ref cornflowerBlue, Color.CornflowerBlue);
+        public static Brush CornflowerBlue => Color.CornflowerBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -458,7 +316,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Cornsilk => GetBrush(ref cornsilk, Color.Cornsilk);
+        public static Brush Cornsilk => Color.Cornsilk.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -466,7 +324,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Crimson => GetBrush(ref crimson, Color.Crimson);
+        public static Brush Crimson => Color.Crimson.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -474,7 +332,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Cyan => GetBrush(ref cyan, Color.Cyan);
+        public static Brush Cyan => Color.Cyan.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -482,7 +340,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkBlue => GetBrush(ref darkBlue, Color.DarkBlue);
+        public static Brush DarkBlue => Color.DarkBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -490,7 +348,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkCyan => GetBrush(ref darkCyan, Color.DarkCyan);
+        public static Brush DarkCyan => Color.DarkCyan.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -498,7 +356,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkGoldenrod => GetBrush(ref darkGoldenrod, Color.DarkGoldenrod);
+        public static Brush DarkGoldenrod => Color.DarkGoldenrod.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -506,7 +364,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkGray => GetBrush(ref darkGray, Color.DarkGray);
+        public static Brush DarkGray => Color.DarkGray.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -514,7 +372,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkGreen => GetBrush(ref darkGreen, Color.DarkGreen);
+        public static Brush DarkGreen => Color.DarkGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -522,7 +380,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkKhaki => GetBrush(ref darkKhaki, Color.DarkKhaki);
+        public static Brush DarkKhaki => Color.DarkKhaki.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -530,7 +388,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkMagenta => GetBrush(ref darkMagenta, Color.DarkMagenta);
+        public static Brush DarkMagenta => Color.DarkMagenta.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -538,7 +396,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkOliveGreen => GetBrush(ref darkOliveGreen, Color.DarkOliveGreen);
+        public static Brush DarkOliveGreen => Color.DarkOliveGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -546,7 +404,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkOrange => GetBrush(ref darkOrange, Color.DarkOrange);
+        public static Brush DarkOrange => Color.DarkOrange.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -554,7 +412,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkOrchid => GetBrush(ref darkOrchid, Color.DarkOrchid);
+        public static Brush DarkOrchid => Color.DarkOrchid.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -562,7 +420,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkRed => GetBrush(ref darkRed, Color.DarkRed);
+        public static Brush DarkRed => Color.DarkRed.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -570,7 +428,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkSalmon => GetBrush(ref darkSalmon, Color.DarkSalmon);
+        public static Brush DarkSalmon => Color.DarkSalmon.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -578,7 +436,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkSeaGreen => GetBrush(ref darkSeaGreen, Color.DarkSeaGreen);
+        public static Brush DarkSeaGreen => Color.DarkSeaGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -586,7 +444,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkSlateBlue => GetBrush(ref darkSlateBlue, Color.DarkSlateBlue);
+        public static Brush DarkSlateBlue => Color.DarkSlateBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -594,7 +452,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkSlateGray => GetBrush(ref darkSlateGray, Color.DarkSlateGray);
+        public static Brush DarkSlateGray => Color.DarkSlateGray.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -602,7 +460,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkTurquoise => GetBrush(ref darkTurquoise, Color.DarkTurquoise);
+        public static Brush DarkTurquoise => Color.DarkTurquoise.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -610,7 +468,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DarkViolet => GetBrush(ref darkViolet, Color.DarkViolet);
+        public static Brush DarkViolet => Color.DarkViolet.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -618,7 +476,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DeepPink => GetBrush(ref deepPink, Color.DeepPink);
+        public static Brush DeepPink => Color.DeepPink.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -626,7 +484,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DeepSkyBlue => GetBrush(ref deepSkyBlue, Color.DeepSkyBlue);
+        public static Brush DeepSkyBlue => Color.DeepSkyBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -634,7 +492,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DimGray => GetBrush(ref dimGray, Color.DimGray);
+        public static Brush DimGray => Color.DimGray.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -642,7 +500,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush DodgerBlue => GetBrush(ref dodgerBlue, Color.DodgerBlue);
+        public static Brush DodgerBlue => Color.DodgerBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -650,7 +508,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Firebrick => GetBrush(ref firebrick, Color.Firebrick);
+        public static Brush Firebrick => Color.Firebrick.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -658,7 +516,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush FloralWhite => GetBrush(ref floralWhite, Color.FloralWhite);
+        public static Brush FloralWhite => Color.FloralWhite.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -666,7 +524,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush ForestGreen => GetBrush(ref forestGreen, Color.ForestGreen);
+        public static Brush ForestGreen => Color.ForestGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -674,7 +532,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Fuchsia => GetBrush(ref fuchsia, Color.Fuchsia);
+        public static Brush Fuchsia => Color.Fuchsia.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -682,7 +540,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Gainsboro => GetBrush(ref gainsboro, Color.Gainsboro);
+        public static Brush Gainsboro => Color.Gainsboro.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -690,7 +548,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush GhostWhite => GetBrush(ref ghostWhite, Color.GhostWhite);
+        public static Brush GhostWhite => Color.GhostWhite.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -698,7 +556,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Gold => GetBrush(ref gold, Color.Gold);
+        public static Brush Gold => Color.Gold.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -706,7 +564,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Goldenrod => GetBrush(ref goldenrod, Color.Goldenrod);
+        public static Brush Goldenrod => Color.Goldenrod.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -714,7 +572,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Gray => GetBrush(ref gray, Color.Gray);
+        public static Brush Gray => Color.Gray.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -722,7 +580,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Green => GetBrush(ref green, Color.Green);
+        public static Brush Green => Color.Green.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -730,7 +588,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush GreenYellow => GetBrush(ref greenYellow, Color.GreenYellow);
+        public static Brush GreenYellow => Color.GreenYellow.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -738,7 +596,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Honeydew => GetBrush(ref honeydew, Color.Honeydew);
+        public static Brush Honeydew => Color.Honeydew.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -746,7 +604,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush HotPink => GetBrush(ref hotPink, Color.HotPink);
+        public static Brush HotPink => Color.HotPink.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -754,7 +612,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush IndianRed => GetBrush(ref indianRed, Color.IndianRed);
+        public static Brush IndianRed => Color.IndianRed.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -762,7 +620,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Indigo => GetBrush(ref indigo, Color.Indigo);
+        public static Brush Indigo => Color.Indigo.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -770,7 +628,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Ivory => GetBrush(ref ivory, Color.Ivory);
+        public static Brush Ivory => Color.Ivory.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -778,7 +636,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Khaki => GetBrush(ref khaki, Color.Khaki);
+        public static Brush Khaki => Color.Khaki.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -786,7 +644,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Lavender => GetBrush(ref lavender, Color.Lavender);
+        public static Brush Lavender => Color.Lavender.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -794,7 +652,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LavenderBlush => GetBrush(ref lavenderBlush, Color.LavenderBlush);
+        public static Brush LavenderBlush => Color.LavenderBlush.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -802,7 +660,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LawnGreen => GetBrush(ref lawnGreen, Color.LawnGreen);
+        public static Brush LawnGreen => Color.LawnGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -810,7 +668,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LemonChiffon => GetBrush(ref lemonChiffon, Color.LemonChiffon);
+        public static Brush LemonChiffon => Color.LemonChiffon.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -818,7 +676,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightBlue => GetBrush(ref lightBlue, Color.LightBlue);
+        public static Brush LightBlue => Color.LightBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -826,7 +684,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightCoral => GetBrush(ref lightCoral, Color.LightCoral);
+        public static Brush LightCoral => Color.LightCoral.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -834,7 +692,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightCyan => GetBrush(ref lightCyan, Color.LightCyan);
+        public static Brush LightCyan => Color.LightCyan.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -842,7 +700,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightGoldenrodYellow => GetBrush(ref lightGoldenrodYellow, Color.LightGoldenrodYellow);
+        public static Brush LightGoldenrodYellow => Color.LightGoldenrodYellow.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -850,7 +708,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightGreen => GetBrush(ref lightGreen, Color.LightGreen);
+        public static Brush LightGreen => Color.LightGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -858,7 +716,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightGray => GetBrush(ref lightGray, Color.LightGray);
+        public static Brush LightGray => Color.LightGray.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -866,7 +724,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightPink => GetBrush(ref lightPink, Color.LightPink);
+        public static Brush LightPink => Color.LightPink.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -874,7 +732,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightSalmon => GetBrush(ref lightSalmon, Color.LightSalmon);
+        public static Brush LightSalmon => Color.LightSalmon.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -882,7 +740,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightSeaGreen => GetBrush(ref lightSeaGreen, Color.LightSeaGreen);
+        public static Brush LightSeaGreen => Color.LightSeaGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -890,7 +748,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightSkyBlue => GetBrush(ref lightSkyBlue, Color.LightSkyBlue);
+        public static Brush LightSkyBlue => Color.LightSkyBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -898,7 +756,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightSlateGray => GetBrush(ref lightSlateGray, Color.LightSlateGray);
+        public static Brush LightSlateGray => Color.LightSlateGray.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -906,7 +764,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightSteelBlue => GetBrush(ref lightSteelBlue, Color.LightSteelBlue);
+        public static Brush LightSteelBlue => Color.LightSteelBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -914,7 +772,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LightYellow => GetBrush(ref lightYellow, Color.LightYellow);
+        public static Brush LightYellow => Color.LightYellow.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -922,7 +780,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Lime => GetBrush(ref lime, Color.Lime);
+        public static Brush Lime => Color.Lime.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -930,7 +788,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush LimeGreen => GetBrush(ref limeGreen, Color.LimeGreen);
+        public static Brush LimeGreen => Color.LimeGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -938,7 +796,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Linen => GetBrush(ref linen, Color.Linen);
+        public static Brush Linen => Color.Linen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -946,7 +804,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Magenta => GetBrush(ref magenta, Color.Magenta);
+        public static Brush Magenta => Color.Magenta.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -954,7 +812,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Maroon => GetBrush(ref maroon, Color.Maroon);
+        public static Brush Maroon => Color.Maroon.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -962,7 +820,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumAquamarine => GetBrush(ref mediumAquamarine, Color.MediumAquamarine);
+        public static Brush MediumAquamarine => Color.MediumAquamarine.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -970,7 +828,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumBlue => GetBrush(ref mediumBlue, Color.MediumBlue);
+        public static Brush MediumBlue => Color.MediumBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -978,7 +836,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumOrchid => GetBrush(ref mediumOrchid, Color.MediumOrchid);
+        public static Brush MediumOrchid => Color.MediumOrchid.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -986,7 +844,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumPurple => GetBrush(ref mediumPurple, Color.MediumPurple);
+        public static Brush MediumPurple => Color.MediumPurple.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -994,7 +852,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumSeaGreen => GetBrush(ref mediumSeaGreen, Color.MediumSeaGreen);
+        public static Brush MediumSeaGreen => Color.MediumSeaGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1002,7 +860,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumSlateBlue => GetBrush(ref mediumSlateBlue, Color.MediumSlateBlue);
+        public static Brush MediumSlateBlue => Color.MediumSlateBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1010,7 +868,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumSpringGreen => GetBrush(ref mediumSpringGreen, Color.MediumSpringGreen);
+        public static Brush MediumSpringGreen => Color.MediumSpringGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1018,7 +876,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumTurquoise => GetBrush(ref mediumTurquoise, Color.MediumTurquoise);
+        public static Brush MediumTurquoise => Color.MediumTurquoise.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1026,7 +884,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MediumVioletRed => GetBrush(ref mediumVioletRed, Color.MediumVioletRed);
+        public static Brush MediumVioletRed => Color.MediumVioletRed.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1034,7 +892,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MidnightBlue => GetBrush(ref midnightBlue, Color.MidnightBlue);
+        public static Brush MidnightBlue => Color.MidnightBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1042,7 +900,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MintCream => GetBrush(ref mintCream, Color.MintCream);
+        public static Brush MintCream => Color.MintCream.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1050,7 +908,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush MistyRose => GetBrush(ref mistyRose, Color.MistyRose);
+        public static Brush MistyRose => Color.MistyRose.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1058,7 +916,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Moccasin => GetBrush(ref moccasin, Color.Moccasin);
+        public static Brush Moccasin => Color.Moccasin.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1066,7 +924,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush NavajoWhite => GetBrush(ref navajoWhite, Color.NavajoWhite);
+        public static Brush NavajoWhite => Color.NavajoWhite.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1074,7 +932,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Navy => GetBrush(ref navy, Color.Navy);
+        public static Brush Navy => Color.Navy.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1082,7 +940,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush OldLace => GetBrush(ref oldLace, Color.OldLace);
+        public static Brush OldLace => Color.OldLace.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1090,7 +948,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Olive => GetBrush(ref olive, Color.Olive);
+        public static Brush Olive => Color.Olive.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1098,7 +956,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush OliveDrab => GetBrush(ref oliveDrab, Color.OliveDrab);
+        public static Brush OliveDrab => Color.OliveDrab.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1106,7 +964,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Orange => GetBrush(ref orange, Color.Orange);
+        public static Brush Orange => Color.Orange.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1114,7 +972,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush OrangeRed => GetBrush(ref orangeRed, Color.OrangeRed);
+        public static Brush OrangeRed => Color.OrangeRed.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1122,7 +980,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Orchid => GetBrush(ref orchid, Color.Orchid);
+        public static Brush Orchid => Color.Orchid.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1130,7 +988,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush PaleGoldenrod => GetBrush(ref paleGoldenrod, Color.PaleGoldenrod);
+        public static Brush PaleGoldenrod => Color.PaleGoldenrod.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1138,7 +996,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush PaleGreen => GetBrush(ref paleGreen, Color.PaleGreen);
+        public static Brush PaleGreen => Color.PaleGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1146,7 +1004,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush PaleTurquoise => GetBrush(ref paleTurquoise, Color.PaleTurquoise);
+        public static Brush PaleTurquoise => Color.PaleTurquoise.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1154,7 +1012,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush PaleVioletRed => GetBrush(ref paleVioletRed, Color.PaleVioletRed);
+        public static Brush PaleVioletRed => Color.PaleVioletRed.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1162,7 +1020,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush PapayaWhip => GetBrush(ref papayaWhip, Color.PapayaWhip);
+        public static Brush PapayaWhip => Color.PapayaWhip.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1170,7 +1028,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush PeachPuff => GetBrush(ref peachPuff, Color.PeachPuff);
+        public static Brush PeachPuff => Color.PeachPuff.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1178,7 +1036,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Peru => GetBrush(ref peru, Color.Peru);
+        public static Brush Peru => Color.Peru.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1186,7 +1044,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Pink => GetBrush(ref pink, Color.Pink);
+        public static Brush Pink => Color.Pink.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1194,7 +1052,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Plum => GetBrush(ref plum, Color.Plum);
+        public static Brush Plum => Color.Plum.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1202,7 +1060,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush PowderBlue => GetBrush(ref powderBlue, Color.PowderBlue);
+        public static Brush PowderBlue => Color.PowderBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1210,7 +1068,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Purple => GetBrush(ref purple, Color.Purple);
+        public static Brush Purple => Color.Purple.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1218,7 +1076,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Red => GetBrush(ref red, Color.Red);
+        public static Brush Red => Color.Red.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1226,7 +1084,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush RosyBrown => GetBrush(ref rosyBrown, Color.RosyBrown);
+        public static Brush RosyBrown => Color.RosyBrown.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1234,7 +1092,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush RoyalBlue => GetBrush(ref royalBlue, Color.RoyalBlue);
+        public static Brush RoyalBlue => Color.RoyalBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1242,7 +1100,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SaddleBrown => GetBrush(ref saddleBrown, Color.SaddleBrown);
+        public static Brush SaddleBrown => Color.SaddleBrown.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1250,7 +1108,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Salmon => GetBrush(ref salmon, Color.Salmon);
+        public static Brush Salmon => Color.Salmon.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1258,7 +1116,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SandyBrown => GetBrush(ref sandyBrown, Color.SandyBrown);
+        public static Brush SandyBrown => Color.SandyBrown.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1266,7 +1124,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SeaGreen => GetBrush(ref seaGreen, Color.SeaGreen);
+        public static Brush SeaGreen => Color.SeaGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1274,7 +1132,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SeaShell => GetBrush(ref seaShell, Color.SeaShell);
+        public static Brush SeaShell => Color.SeaShell.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1282,7 +1140,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Sienna => GetBrush(ref sienna, Color.Sienna);
+        public static Brush Sienna => Color.Sienna.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1290,7 +1148,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Silver => GetBrush(ref silver, Color.Silver);
+        public static Brush Silver => Color.Silver.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1298,7 +1156,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SkyBlue => GetBrush(ref skyBlue, Color.SkyBlue);
+        public static Brush SkyBlue => Color.SkyBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1306,7 +1164,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SlateBlue => GetBrush(ref slateBlue, Color.SlateBlue);
+        public static Brush SlateBlue => Color.SlateBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1314,7 +1172,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SlateGray => GetBrush(ref slateGray, Color.SlateGray);
+        public static Brush SlateGray => Color.SlateGray.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1322,7 +1180,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Snow => GetBrush(ref snow, Color.Snow);
+        public static Brush Snow => Color.Snow.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1330,7 +1188,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SpringGreen => GetBrush(ref springGreen, Color.SpringGreen);
+        public static Brush SpringGreen => Color.SpringGreen.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1338,7 +1196,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush SteelBlue => GetBrush(ref steelBlue, Color.SteelBlue);
+        public static Brush SteelBlue => Color.SteelBlue.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1346,7 +1204,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Tan => GetBrush(ref tan, Color.Tan);
+        public static Brush Tan => Color.Tan.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1354,7 +1212,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Teal => GetBrush(ref teal, Color.Teal);
+        public static Brush Teal => Color.Teal.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1362,7 +1220,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Thistle => GetBrush(ref thistle, Color.Thistle);
+        public static Brush Thistle => Color.Thistle.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1370,7 +1228,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Tomato => GetBrush(ref tomato, Color.Tomato);
+        public static Brush Tomato => Color.Tomato.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1378,7 +1236,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Turquoise => GetBrush(ref turquoise, Color.Turquoise);
+        public static Brush Turquoise => Color.Turquoise.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1386,7 +1244,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Violet => GetBrush(ref violet, Color.Violet);
+        public static Brush Violet => Color.Violet.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1394,7 +1252,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Wheat => GetBrush(ref wheat, Color.Wheat);
+        public static Brush Wheat => Color.Wheat.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1402,7 +1260,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush White => GetBrush(ref white, Color.White);
+        public static Brush White => Color.White.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1410,7 +1268,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush WhiteSmoke => GetBrush(ref whiteSmoke, Color.WhiteSmoke);
+        public static Brush WhiteSmoke => Color.WhiteSmoke.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1418,7 +1276,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush Yellow => GetBrush(ref yellow, Color.Yellow);
+        public static Brush Yellow => Color.Yellow.AsBrush;
 
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
@@ -1426,7 +1284,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Brush"/> object set to a system-defined color.
         /// </remarks>
-        public static Brush YellowGreen => GetBrush(ref yellowGreen, Color.YellowGreen);
+        public static Brush YellowGreen => Color.YellowGreen.AsBrush;
 
         /// <summary>
         /// Gets a named brush by its name.
@@ -1440,22 +1298,15 @@ namespace Alternet.Drawing
             return b;
         }
 
-        internal static Brush? TryGetBrush(string name)
+        /// <summary>
+        /// Tries to get a named brush by its name.
+        /// </summary>
+        public static Brush? TryGetBrush(string name)
         {
             if (!BrushGettersByName.TryGetValue(name, out var brushGetter))
                 return null;
 
             return brushGetter();
-        }
-
-        private static Brush GetBrush(ref Brush? brush, Color color)
-        {
-            if (brush == null)
-            {
-                brush = new SolidBrush(color, immutable: true);
-            }
-
-            return brush;
         }
     }
 }

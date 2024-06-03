@@ -23,7 +23,7 @@ namespace Alternet.UI
                 if (fontNameChoices != null)
                     return fontNameChoices;
                 fontNameChoices = ControlFactory.Handler.CreateChoices();
-                string[] names = FontFamily.FamiliesNamesAscending;
+                var names = FontFamily.FamiliesNamesAscending;
                 fontNameChoices.AddRange(names);
                 return fontNameChoices;
             }

@@ -3,7 +3,7 @@ namespace Alternet.Drawing
     /// <summary>Each property of the <see cref="SystemColors" /> class is a
     /// <see cref="Color" /> structure that is the color of a Windows
     /// display element.</summary>
-    public sealed class SystemColors
+    public static class SystemColors
     {
         /// <summary>Gets a <see cref="Color" /> structure that is the color
         /// of the active window's border.</summary>

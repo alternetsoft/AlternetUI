@@ -109,12 +109,12 @@ namespace ControlsSample
 
         private void MainWindow_StateChanged(object? sender, EventArgs e)
         {
-            BaseApplication.Log($"State changed: {Size}, {this.State}");
+            App.Log($"State changed: {Size}, {this.State}");
         }
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)
         {
-            BaseApplication.Log($"Size changed: {Size}, {this.State}");
+            App.Log($"Size changed: {Size}, {this.State}");
         }
 
         Control CreateCustomPage(NameValue<Func<Control>>?[] pages)
@@ -242,7 +242,7 @@ namespace ControlsSample
         {
             NameValue<Func<Control>>? animationNameValue;
 
-            if (!BaseApplication.IsLinuxOS)
+            if (!App.IsLinuxOS)
                 animationNameValue = new("Animation", () => new AnimationPage());
             else
                 animationNameValue = null;
@@ -300,7 +300,7 @@ namespace ControlsSample
 
         private static void ResourceLoader_CustomStreamFromUrl2(object? sender, StreamFromUrlEventArgs e)
         {
-            BaseApplication.Log("CustomStreamFromUrl 2");
+            App.Log("CustomStreamFromUrl 2");
         }
     }
 }

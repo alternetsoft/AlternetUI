@@ -282,7 +282,7 @@ namespace Alternet.UI
                         radialGradientCenter,
                         radialGradientRadius,
                         radialGradientOrigin,
-                        LinearGradientBrush.GetGradientStopsFromEdgeColors(color, endColor));
+                        GradientBrush.GradientStopsFromEdgeColors(color, endColor));
                 }
             }
 
@@ -300,7 +300,7 @@ namespace Alternet.UI
                     return new LinearGradientBrush(
                         linearGradientStart,
                         linearGradientEnd,
-                        LinearGradientBrush.GetGradientStopsFromEdgeColors(color, endColor));
+                        GradientBrush.GradientStopsFromEdgeColors(color, endColor));
                 }
             }
 

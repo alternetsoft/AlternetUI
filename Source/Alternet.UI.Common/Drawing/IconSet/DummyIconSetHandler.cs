@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +9,8 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public interface IImageListHandler : IDisposable
+    public class DummyIconSetHandler : DummyImageContainer, IIconSetHandler
     {
-        SizeI PixelImageSize { get; set; }
-
-        SizeD ImageSize { get; set; }
-
-        void Add(Image item);
+        public static IIconSetHandler Default = new DummyIconSetHandler();
     }
 }

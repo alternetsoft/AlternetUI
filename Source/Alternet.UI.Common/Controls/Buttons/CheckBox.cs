@@ -237,5 +237,17 @@ namespace Alternet.UI
         protected virtual void OnCheckedChanged(EventArgs e)
         {
         }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+        }
     }
 }

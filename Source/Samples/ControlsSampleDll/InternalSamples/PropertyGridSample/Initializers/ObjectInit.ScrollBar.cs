@@ -19,12 +19,12 @@ namespace PropertyGridSample
 
             static void ScrollBar_Scroll(object sender, ScrollEventArgs e)
             {
-                BaseApplication.AddIdleTask(() =>
+                App.AddIdleTask(() =>
                 {
-                    BaseApplication.LogBeginSection();
-                    BaseApplication.Log($"Scrollbar {e.Type}, New: {e.NewValue} Old: {e.OldValue}");
+                    App.LogBeginSection();
+                    App.Log($"Scrollbar {e.Type}, New: {e.NewValue} Old: {e.OldValue}");
                     (sender as ScrollBar)?.LogInfo();
-                    BaseApplication.LogEndSection();
+                    App.LogEndSection();
                 });
             }
 

@@ -31,7 +31,7 @@ namespace Alternet.UI
 
         static SkiaContainer()
         {
-            BaseApplication.Handler ??= new MauiApplicationHandler();
+            App.Handler ??= new MauiApplicationHandler();
         }
 
         public SkiaContainer()

@@ -62,7 +62,7 @@ namespace Alternet.Drawing
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(double width, double height)
+        public Bitmap(Coord width, Coord height)
             : this((int)width, (int)height)
         {
         }
@@ -93,7 +93,7 @@ namespace Alternet.Drawing
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
-                BaseApplication.LogError($"Image not loaded from: {url}");
+                App.LogError($"Image not loaded from: {url}");
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace Alternet.Drawing
 
             if (!result)
             {
-                BaseApplication.LogError($"Image not loaded from: {url}");
+                App.LogError($"Image not loaded from: {url}");
                 return;
             }
         }
@@ -134,7 +134,7 @@ namespace Alternet.Drawing
         /// <param name="imageSet">Source of the image.</param>
         /// <param name="control">Control used to get dpi.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(ImageSet imageSet, IControl control)
+        public Bitmap(ImageSet imageSet, Control control)
             : base(GraphicsFactory.Handler.CreateImageHandler(imageSet, control))
         {
         }
@@ -220,7 +220,7 @@ namespace Alternet.Drawing
         /// <param name="size">The size, in device pixels, of the new <see cref="Bitmap"/>.</param>
         /// <param name="control">The control from which pixel scaling factor is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(SizeI size, IControl control)
+        public Bitmap(SizeI size, Control control)
             : this(size)
         {
             ScaleFactor = control.GetPixelScaleFactor();

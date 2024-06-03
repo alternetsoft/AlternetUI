@@ -91,7 +91,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref="Drawing.Point"/> to a
+        /// Converts the specified <see cref="PointD"/> to a
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -127,20 +127,28 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PointD((Coord, Coord) d) => new(d.Item1, d.Item2);
 
+        /// <summary>
+        /// Converts the specified <see cref="SKPoint"/> to a
+        /// <see cref="PointD"/>.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PointD(SKPoint value)
         {
             return new(value.X, value.Y);
         }
 
+        /// <summary>
+        /// Converts the specified <see cref="PointD"/> to a
+        /// <see cref="SKPoint"/>.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKPoint(PointD point)
         {
-            return new SKPoint((float)point.X, (float)point.Y);
+            return new SKPoint((float)point.x, (float)point.y);
         }
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.SizeI'/>.
+        /// Translates a <see cref='PointD'/> by a given <see cref='SizeI'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointD operator +(PointD pt, SizeI sz) => Add(pt, sz);
@@ -224,7 +232,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static PointD Parse(string source)
         {
-            IFormatProvider formatProvider = BaseApplication.InvariantEnglishUS;
+            IFormatProvider formatProvider = App.InvariantEnglishUS;
 
             TokenizerHelper th = new(source, formatProvider);
 

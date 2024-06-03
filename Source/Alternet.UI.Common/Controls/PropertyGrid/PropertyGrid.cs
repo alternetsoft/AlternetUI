@@ -3957,7 +3957,7 @@ namespace Alternet.UI
 
             // This call makes property editing better if scrollbar is shown.
             // We add an empty column on the right.
-            if (BaseApplication.IsLinuxOS)
+            if (App.IsLinuxOS)
                 SetColumnCount(3);
             CenterSplitter();
         }

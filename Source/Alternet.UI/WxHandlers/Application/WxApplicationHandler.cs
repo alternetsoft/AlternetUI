@@ -19,11 +19,11 @@ namespace Alternet.UI
 
         static WxApplicationHandler()
         {
-            if (BaseApplication.SupressDiagnostics)
+            if (App.SupressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);
 
             nativeApplication = new Native.Application();
-            nativeApplication.Idle = BaseApplication.RaiseIdle;
+            nativeApplication.Idle = App.RaiseIdle;
             nativeApplication.LogMessage += NativeApplication_LogMessage;
             nativeApplication.Name = Path.GetFileNameWithoutExtension(
                 Process.GetCurrentProcess()?.MainModule?.FileName!);
@@ -146,7 +146,7 @@ namespace Alternet.UI
         {
             var s = nativeApplication.EventArgString;
 
-            BaseApplication.LogNativeMessage(s);
+            App.LogNativeMessage(s);
         }
 
         public ISystemSettingsHandler CreateSystemSettingsHandler()

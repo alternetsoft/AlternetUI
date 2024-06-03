@@ -901,7 +901,7 @@ namespace Alternet.UI
 
             static void ParentWindow_Disposed(object? sender, EventArgs e)
             {
-                BaseApplication.DebugLogIf("FindReplace window disposed", false);
+                App.DebugLogIf("FindReplace window disposed", false);
             }
         }
 
@@ -1117,52 +1117,52 @@ namespace Alternet.UI
 
             public void FindNext()
             {
-                BaseApplication.Log("FindReplaceControl.FindNext");
+                App.Log("FindReplaceControl.FindNext");
             }
 
             public void FindPrevious()
             {
-                BaseApplication.Log("FindReplaceControl.FindPrevious");
+                App.Log("FindReplaceControl.FindPrevious");
             }
 
             public void Replace()
             {
-                BaseApplication.Log("FindReplaceControl.Replace");
+                App.Log("FindReplaceControl.Replace");
             }
 
             public void ReplaceAll()
             {
-                BaseApplication.Log("FindReplaceControl.ReplaceAll");
+                App.Log("FindReplaceControl.ReplaceAll");
             }
 
             public void SetFindText(string text)
             {
-                BaseApplication.Log($"FindReplaceControl.FindText = '{text}'");
+                App.Log($"FindReplaceControl.FindText = '{text}'");
             }
 
             public void SetMatchCase(bool value)
             {
-                BaseApplication.Log($"FindReplaceControl.MatchCase = {value}");
+                App.Log($"FindReplaceControl.MatchCase = {value}");
             }
 
             public void SetMatchWholeWord(bool value)
             {
-                BaseApplication.Log($"FindReplaceControl.MatchWholeWord = {value}");
+                App.Log($"FindReplaceControl.MatchWholeWord = {value}");
             }
 
             public void SetReplaceText(string text)
             {
-                BaseApplication.Log($"FindReplaceControl.ReplaceText = '{text}'");
+                App.Log($"FindReplaceControl.ReplaceText = '{text}'");
             }
 
             public void SetUseRegularExpressions(bool value)
             {
-                BaseApplication.Log($"FindReplaceControl.UseRegularExpressions = {value}");
+                App.Log($"FindReplaceControl.UseRegularExpressions = {value}");
             }
 
             public void SetReplaceVisible(bool value)
             {
-                BaseApplication.Log($"FindReplaceControl.ReplaceVisible = {value}");
+                App.Log($"FindReplaceControl.ReplaceVisible = {value}");
             }
         }
     }

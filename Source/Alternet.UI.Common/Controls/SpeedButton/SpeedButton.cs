@@ -747,7 +747,7 @@ namespace Alternet.UI
 
             void Fn()
             {
-                RaiseClick(EventArgs.Empty);
+                RaiseClick();
                 ShowDropDownMenu();
             }
         }

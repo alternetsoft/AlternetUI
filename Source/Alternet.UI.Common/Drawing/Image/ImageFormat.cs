@@ -6,7 +6,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>Specifies the file format of the image. Not inheritable.</summary>
-    public sealed class ImageFormat
+    public class ImageFormat
     {
         private readonly Guid guid;
 

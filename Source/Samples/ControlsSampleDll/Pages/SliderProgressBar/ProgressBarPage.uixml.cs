@@ -10,7 +10,7 @@ namespace ControlsSample
         public ProgressBarPage()
         {
             InitializeComponent();
-			VerticalProgressBarsGroupBox.Visible = !BaseApplication.IsMacOS;
+			VerticalProgressBarsGroupBox.Visible = !App.IsMacOS;
         }
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)

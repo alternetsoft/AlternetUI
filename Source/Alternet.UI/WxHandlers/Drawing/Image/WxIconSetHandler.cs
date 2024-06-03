@@ -9,17 +9,31 @@ namespace Alternet.UI.Native
 {
     internal partial class IconSet : Alternet.Drawing.IIconSetHandler
     {
-        bool Alternet.Drawing.IIconSetHandler.IsOk => IsOk();
+        public bool IsDummy => false;
 
-        public void Add(Alternet.Drawing.Image image)
+        public bool IsReadOnly => false;
+
+        bool Alternet.Drawing.IImageContainer.IsOk => IsOk();
+
+        public bool Remove(int index) => false;
+
+        bool Alternet.Drawing.IImageContainer.Clear()
         {
-            AddImage((UI.Native.Image)image.Handler);
+            Clear();
+            return true;
         }
 
-        public void Add(Stream stream)
+        public bool Add(Alternet.Drawing.Image image)
+        {
+            AddImage((UI.Native.Image)image.Handler);
+            return true;
+        }
+
+        public bool Add(Stream stream)
         {
             using var inputStream = new UI.Native.InputStream(stream);
             LoadFromStream(inputStream);
+            return true;
         }
     }
 }

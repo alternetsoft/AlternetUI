@@ -14,25 +14,24 @@ namespace Alternet.UI
     /// Implements base class that pass calls to it's handler.
     /// and other graphics objects.
     /// </summary>
-    public abstract class HandledObject<T> : DisposableObject
+    public abstract class HandledObject<T> : ImmutableObject
         where T : class, IDisposable
     {
-        private bool immutable;
         private T? handler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HandledObject"/> class.
         /// </summary>
         /// <param name="immutable">Whether this object is immutable (properties are readonly).</param>
-        protected HandledObject(bool immutable)
+        public HandledObject(bool immutable)
         {
-            this.immutable = immutable;
+            Immutable = immutable;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HandledObject"/> class.
         /// </summary>
-        protected HandledObject()
+        public HandledObject()
         {
         }
 
@@ -41,16 +40,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool IsReadOnly => Immutable;
-
-        /// <summary>
-        /// Gets whether this object is immutable (properties are readonly).
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool Immutable
-        {
-            get => immutable;
-            protected set => immutable = value;
-        }
 
         /// <summary>
         /// Gets whether handler was created.

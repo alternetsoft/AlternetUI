@@ -21,7 +21,7 @@ namespace Alternet.Drawing
         /// <param name="color">The color value of the gradient stop.</param>
         /// <param name="offset">The location in the gradient where the gradient stop is
         /// placed.</param>
-        public GradientStop(Color color, double offset)
+        public GradientStop(Color color, Coord offset)
         {
             Color = color;
             Offset = offset;
@@ -35,7 +35,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the location of the gradient stop within the gradient vector.
         /// </summary>
-        public double Offset { get; set; }
+        public Coord Offset { get; set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are not equal.

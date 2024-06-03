@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets min element size.
         /// </summary>
-        public static double MinElementSize = 32;
+        public static Coord MinElementSize = 32;
 
         /// <summary>
         /// Gets or sets whether <see cref="DebugBackgroundColor"/> property is used.
@@ -359,7 +359,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when exception is raised inside <see cref="AvoidException"/>.
         /// </summary>
-        public event EventHandler<ControlExceptionEventArgs>? ProcessException;
+        public event EventHandler<ThrowExceptionEventArgs>? ProcessException;
 
         /// <summary>
         /// Occurs when the mouse pointer enters the control.
@@ -425,7 +425,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when the application finishes processing events and is
-        /// about to enter the idle state. This is the same as <see cref="BaseApplication.Idle"/>
+        /// about to enter the idle state. This is the same as <see cref="App.Idle"/>
         /// but on the control level.
         /// </summary>
         /// <remarks>
@@ -653,7 +653,7 @@ namespace Alternet.UI
                     return;
 
                 title = value;
-                RaiseTitleChanged(EventArgs.Empty);
+                RaiseTitleChanged();
             }
         }
 
@@ -1053,7 +1053,7 @@ namespace Alternet.UI
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public double Right
+        public Coord Right
         {
             get => Bounds.Right;
             set => Left = value - Width;
@@ -1069,7 +1069,7 @@ namespace Alternet.UI
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Category("Layout")]
-        public double Bottom
+        public Coord Bottom
         {
             get => Bounds.Bottom;
             set => Top = value - Height;
@@ -1192,7 +1192,7 @@ namespace Alternet.UI
         /// Gets or sets the distance between the left edge of the control
         /// and the left edge of its container's client area.
         /// </summary>
-        public virtual double Left
+        public virtual Coord Left
         {
             get
             {
@@ -1212,7 +1212,7 @@ namespace Alternet.UI
         /// Gets or sets the distance between the top edge of the control
         /// and the top edge of its container's client area.
         /// </summary>
-        public virtual double Top
+        public virtual Coord Top
         {
             get
             {
@@ -1441,13 +1441,13 @@ namespace Alternet.UI
         /// Gets or sets the size of the control.
         /// </summary>
         /// <value>The size of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Alternet.Drawing.SizeD"/>(<see cref="double.NaN"/>,
-        /// <see cref="double.NaN"/>)/>.
+        /// The default value is <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
+        /// <see cref="Coord.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the size of the control.
-        /// Set this property to <see cref="Alternet.Drawing.SizeD"/>(<see cref="double.NaN"/>,
-        /// <see cref="double.NaN"/>) to specify system-default sizing
+        /// Set this property to <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
+        /// <see cref="Coord.NaN"/>) to specify system-default sizing
         /// behavior when the control is first shown.
         /// </remarks>
         [Browsable(false)]
@@ -1468,14 +1468,14 @@ namespace Alternet.UI
         /// Gets or sets the width of the control.
         /// </summary>
         /// <value>The width of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the width of the control.
-        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
+        /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
         /// behavior before the control is first shown.
         /// </remarks>
-        public virtual double Width
+        public virtual Coord Width
         {
             get => Size.Width;
             set => Size = new(value, Height);
@@ -1486,14 +1486,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The height of the control, in device-independent units
         /// (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the height of the control.
-        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
+        /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
         /// behavior before the control is first shown.
         /// </remarks>
-        public virtual double Height
+        public virtual Coord Height
         {
             get => Size.Height;
             set => Size = new(Width, value);
@@ -1504,14 +1504,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The suggested size of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="Alternet.Drawing.SizeD"/>
-        /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
+        /// The default value is <see cref="SizeD"/>
+        /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested size of the control. An actual
         /// size is calculated by the layout system.
-        /// Set this property to <see cref="Alternet.Drawing.SizeD"/>
-        /// (<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify auto
+        /// Set this property to <see cref="SizeD"/>
+        /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>) to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
@@ -1539,17 +1539,17 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The suggested width of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested width of the control. An
         /// actual width is calculated by the layout system.
-        /// Set this property to <see cref="double.NaN"/> to specify auto
+        /// Set this property to <see cref="Coord.NaN"/> to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
-        public double SuggestedWidth
+        public Coord SuggestedWidth
         {
             get => suggestedSize.Width;
 
@@ -1564,17 +1564,17 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The suggested height of the control, in device-independent
         /// units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
+        /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested height of the control. An
         /// actual height is calculated by the layout system.
-        /// Set this property to <see cref="double.NaN"/> to specify auto
+        /// Set this property to <see cref="Coord.NaN"/> to specify auto
         /// sizing behavior.
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
-        public double SuggestedHeight
+        public Coord SuggestedHeight
         {
             get => suggestedSize.Height;
 
@@ -1817,7 +1817,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the minimum width the window can be resized to.
         /// </summary>
-        public virtual double? MinWidth
+        public virtual Coord? MinWidth
         {
             get
             {
@@ -1839,7 +1839,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the minimum height the window can be resized to.
         /// </summary>
-        public virtual double? MinHeight
+        public virtual Coord? MinHeight
         {
             get
             {
@@ -1861,7 +1861,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the maximum width the window can be resized to.
         /// </summary>
-        public virtual double? MaxWidth
+        public virtual Coord? MaxWidth
         {
             get
             {
@@ -1883,7 +1883,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the maximum height the window can be resized to.
         /// </summary>
-        public virtual double? MaxHeight
+        public virtual Coord? MaxHeight
         {
             get
             {
@@ -2594,7 +2594,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="WxControlHandler"/> associated with this class.
+        /// Gets a <see cref="IControlHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         public virtual IControlHandler Handler

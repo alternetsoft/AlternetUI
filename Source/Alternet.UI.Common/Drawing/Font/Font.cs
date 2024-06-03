@@ -29,6 +29,9 @@ namespace Alternet.Drawing
         private Font[]? fonts;
         private Font? baseFont;
         private FontFamily? fontFamily;
+        private SKPaint? strokeAndFillPaint;
+        private SKPaint? strokePaint;
+        private SKPaint? fillPaint;
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
@@ -52,7 +55,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             string familyName,
-            double emSize,
+            FontSize emSize,
             FontStyle style = FontStyle.Regular)
             : this(null, familyName, emSize, style)
         {
@@ -72,7 +75,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             FontFamily family,
-            double emSize,
+            FontSize emSize,
             FontStyle style = FontStyle.Regular)
             : this(
                 family.GenericFamily,
@@ -115,7 +118,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(Font prototype, double newSize)
+        public Font(Font prototype, FontSize newSize)
             : this(
                 prototype.fontFamily?.GenericFamily,
                 prototype.Name,
@@ -137,7 +140,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, double emSize, FontStyle style, GraphicsUnit unit)
+        public Font(FontFamily family, FontSize emSize, FontStyle style, GraphicsUnit unit)
             : this(family?.GenericFamily, family?.Name, emSize, style, unit)
         {
         }
@@ -158,7 +161,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             FontFamily family,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet)
@@ -185,7 +188,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             FontFamily family,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet,
@@ -211,7 +214,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             string familyName,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet)
@@ -240,7 +243,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public Font(
             string familyName,
-            double emSize,
+            FontSize emSize,
             FontStyle style,
             GraphicsUnit unit,
             byte gdiCharSet,
@@ -273,7 +276,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(FontFamily family, double emSize)
+        public Font(FontFamily family, FontSize emSize)
             : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular)
         {
         }
@@ -290,7 +293,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, FontStyle style, GraphicsUnit unit)
+        public Font(string familyName, FontSize emSize, FontStyle style, GraphicsUnit unit)
             : this(null, familyName, emSize, style, unit)
         {
         }
@@ -308,7 +311,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize, GraphicsUnit unit)
+        public Font(string familyName, FontSize emSize, GraphicsUnit unit)
             : this(null, familyName, emSize, FontStyle.Regular, unit)
         {
         }
@@ -321,7 +324,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
-        public Font(string familyName, double emSize)
+        public Font(string familyName, FontSize emSize)
             : this(null, familyName, emSize, FontStyle.Regular)
         {
         }
@@ -338,7 +341,7 @@ namespace Alternet.Drawing
         internal Font(
              GenericFontFamily? genericFamily,
              string? familyName,
-             double emSize,
+             FontSize emSize,
              FontStyle style,
              GraphicsUnit unit = GraphicsUnit.Point,
              byte gdiCharSet = 1)
@@ -365,7 +368,18 @@ namespace Alternet.Drawing
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font Default => defaultFont ??= CreateDefaultFont();
+        public static Font Default
+        {
+            get => defaultFont ??= CreateDefaultFont();
+
+            set
+            {
+                if (value is null)
+                    defaultFont = CreateDefaultFont();
+                else
+                    defaultFont = value;
+            }
+        }
 
         /// <summary>
         /// Gets the default fixed width font used in the application.
@@ -375,7 +389,17 @@ namespace Alternet.Drawing
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font DefaultMono => defaultMonoFont ??= CreateDefaultMonoFont();
+        public static Font DefaultMono
+        {
+            get => defaultMonoFont ??= CreateDefaultMonoFont();
+            set
+            {
+                if(value is null)
+                    defaultMonoFont = CreateDefaultMonoFont();
+                else
+                    defaultMonoFont = value;
+            }
+        }
 
         /// <summary>
         /// Gets the name of the font originally specified.
@@ -401,7 +425,7 @@ namespace Alternet.Drawing
         /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
         /// the <see cref="Font.Unit" /> property.</summary>
         /// <returns>The em-size of this <see cref="Font" />.</returns>
-        public virtual double Size
+        public virtual FontSize Size
         {
             get
             {
@@ -409,6 +433,48 @@ namespace Alternet.Drawing
                     return SizeInPixels;
                 else
                     return SizeInPoints;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> for this font with
+        /// <see cref="SKPaintStyle.StrokeAndFill"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPaint AsStrokeAndFillPaint
+        {
+            get
+            {
+                strokeAndFillPaint ??= SkiaGraphics.CreateStrokeAndFillPaint(SkiaFont);
+                return strokeAndFillPaint;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> for this font with
+        /// <see cref="SKPaintStyle.Stroke"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPaint AsStrokePaint
+        {
+            get
+            {
+                strokePaint ??= SkiaGraphics.CreateStrokePaint(SkiaFont);
+                return strokePaint;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> for this font with
+        /// <see cref="SKPaintStyle.Fill"/> style.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPaint AsFillPaint
+        {
+            get
+            {
+                fillPaint ??= SkiaGraphics.CreateFillPaint(SkiaFont);
+                return fillPaint;
             }
         }
 
@@ -432,12 +498,15 @@ namespace Alternet.Drawing
                     SKFontStyleWidth.Normal,
                     skiaSlant);
 
-                skiaFont = new(typeFace, (float)SizeInPixels);
+                skiaFont = new(typeFace, (float)(SizeInPixels));
                 return skiaFont;
             }
 
             set
             {
+                strokeAndFillPaint = null;
+                fillPaint = null;
+                strokePaint = null;
                 skiaFont = value;
             }
         }
@@ -592,7 +661,7 @@ namespace Alternet.Drawing
         /// Gets the em-size, in points, of this <see cref="Font"/>.
         /// </summary>
         /// <value>The em-size, in points, of this <see cref="Font"/>.</value>
-        public virtual double SizeInPoints
+        public virtual FontSize SizeInPoints
         {
             get
             {
@@ -721,11 +790,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="emSize"></param>
         /// <returns></returns>
-        public static double CheckSize(double emSize)
+        public static FontSize CheckSize(FontSize emSize)
         {
-            if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
+            if (emSize <= 0 || FontSize.IsInfinity(emSize) || FontSize.IsNaN(emSize))
             {
-                BaseApplication.LogError("Invalid font size {emSize}, using default font size.");
+                App.LogError("Invalid font size {emSize}, using default font size.");
                 return Font.Default.Size;
             }
 
@@ -743,7 +812,7 @@ namespace Alternet.Drawing
         /// <see cref="Font.Default"/> is used.</param>
         public static Font GetDefaultOrNew(
             string name,
-            double sizeInPoints,
+            FontSize sizeInPoints,
             FontStyle style,
             Font? defaultFont = null)
         {
@@ -818,12 +887,12 @@ namespace Alternet.Drawing
         /// (which may be less than 1 to create a smaller version of the font).
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual Font Scaled(double scaleFactor)
+        public virtual Font Scaled(FontSize scaleFactor)
         {
             return Get(this.Name, SizeInPoints * scaleFactor, this.Style);
         }
 
-        public static Font Get(string familyName, double emSize, FontStyle style = FontStyle.Regular)
+        public static Font Get(string familyName, FontSize emSize, FontStyle style = FontStyle.Regular)
         {
             return new(familyName, emSize, style);
         }
@@ -933,7 +1002,7 @@ namespace Alternet.Drawing
         /// <param name="sizeInPoints">Font size.</param>
         /// <param name="style">Font style.</param>
         /// <returns></returns>
-        public virtual bool Equals(string name, double sizeInPoints, FontStyle style)
+        public virtual bool Equals(string name, FontSize sizeInPoints, FontStyle style)
         {
             return Name == name && SizeInPoints == sizeInPoints && Style == style;
         }
@@ -943,9 +1012,10 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual Font Clone()
         {
-            var nativeFont = FontFactory.Handler.CreateFontHandler(this);
-            var result = new Font(nativeFont);
-            return result;
+            var result = FontFactory.Handler.CreateFontHandler();
+            IFontHandler.FontParams prm = new(this);
+            result.Update(prm);
+            return new Font(result);
         }
 
         /// <summary>
@@ -1002,11 +1072,24 @@ namespace Alternet.Drawing
             if (prm.GenericFamily == null && prm.FamilyName == null )
             {
                 if(!FontFactory.Handler.AllowNullFontName)
-                    BaseApplication.LogError("Font name and family are null, using default font.");
+                    App.LogError("Font name and family are null, using default font.");
                 prm.GenericFamily = Alternet.Drawing.GenericFontFamily.Default;
             }
 
             prm.Size = Alternet.Drawing.Font.CheckSize(prm.Size);
+        }
+
+        /// <summary>
+        /// Helper function for converting arbitrary numeric width to the closest
+        /// value of <see cref="SKFontStyleWidth"/> enum.
+        /// </summary>
+        /// <param name="width">Numeric width.</param>
+        /// <returns></returns>
+        public static SKFontStyleWidth? GetSkiaWidthClosestToNumericValue(int width)
+        {
+            if (width > 0 && width <= (int)SKFontStyleWidth.UltraExpanded)
+                return (SKFontStyleWidth)width;
+            return null;
         }
 
         /// <summary>

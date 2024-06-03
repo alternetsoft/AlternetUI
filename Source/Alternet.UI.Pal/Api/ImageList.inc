@@ -9,6 +9,8 @@ SizeD GetImageSize();
 void SetImageSize(const SizeD& value);
 
 void AddImage(Image* image);
+bool Remove(int index);
+bool Clear();
 public:
 ImageList();
 protected:

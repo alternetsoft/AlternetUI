@@ -9,12 +9,23 @@ namespace ControlsSample
         public RadioButtonsPage()
         {
             InitializeComponent();
+
+            changeValueButton.Click += (s, e) =>
+            {
+                if (radio21.IsChecked)
+                    radio22.IsChecked = true;
+                else
+                if (radio22.IsChecked)
+                    radio23.IsChecked = true;
+                else
+                    radio21.IsChecked = true;
+            };
         }
 
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
             var rb = (RadioButton)sender;
-            BaseApplication.Log("Radio button " + rb.Text + " IsChecked changed to " + rb.IsChecked);
+            App.Log("Radio button " + rb.Text + " IsChecked changed to " + rb.IsChecked);
         }
     }
 }

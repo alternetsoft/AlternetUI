@@ -9,9 +9,11 @@ namespace Alternet.UI
     /// Represents a button control.
     /// </summary>
     [ControlCategory("Common")]
-    public partial class Button : ButtonBase
+    public partial class Button : ButtonBase, IControlStateObjectChanged
     {
         private static bool imagesEnabled = true;
+
+        private ControlStateImages? stateImages;
 
         /// <summary>
         /// Initializes a new <see cref="Button"/> instance.
@@ -56,13 +58,25 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual ControlStateImages StateImages
         {
-            get => Handler.StateImages;
+            get
+            {
+                if(stateImages is null)
+                {
+                    stateImages = new();
+                    stateImages.ChangedHandler = this;
+                }
+
+                return stateImages;
+            } 
 
             set
             {
-                if (!imagesEnabled || Handler.StateImages == value)
+                if (!imagesEnabled || stateImages == value)
                     return;
-                Handler.StateImages = value ?? throw new ArgumentNullException(nameof(StateImages));
+                PerformLayoutAndInvalidate(() =>
+                {
+                    StateImages.Assign(value);
+                });
             }
         }
 
@@ -285,18 +299,57 @@ namespace Alternet.UI
         public virtual void SetImageMargins(double x, double? y = null)
         {
             y ??= x;
-            if (BaseApplication.IsWindowsOS)
-            {
-                var xPixels = PixelFromDip(x);
-                var yPixels = PixelFromDip(y.Value);
-                Handler.SetImageMargins(xPixels, yPixels);
-            }
+            Handler.SetImageMargins(x, y.Value);
         }
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateButtonHandler(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.Click = RaiseClick;
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.Click = null;
+        }
+
+        void IControlStateObjectChanged.DisabledChanged(object? sender)
+        {
+            Handler.DisabledImage = stateImages?.Disabled;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.NormalChanged(object? sender)
+        {
+            Handler.NormalImage = stateImages?.Normal;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.FocusedChanged(object? sender)
+        {
+            Handler.FocusedImage = stateImages?.Focused;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.HoveredChanged(object? sender)
+        {
+            Handler.HoveredImage = stateImages?.Hovered;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.PressedChanged(object? sender)
+        {
+            Handler.PressedImage = stateImages?.Pressed;
+            PerformLayoutAndInvalidate();
         }
     }
 }

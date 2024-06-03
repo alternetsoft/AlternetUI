@@ -221,10 +221,10 @@ namespace Alternet.UI.Native
             return NativeApi.Image_GrayScale_(NativePointer);
         }
         
-        public void ResetAlpha()
+        public bool ResetAlpha()
         {
             CheckDisposed();
-            NativeApi.Image_ResetAlpha_(NativePointer);
+            return NativeApi.Image_ResetAlpha_(NativePointer);
         }
         
         public bool LoadFile(string name, int type)
@@ -269,10 +269,10 @@ namespace Alternet.UI.Native
             return _mmm;
         }
         
-        public void Rescale(Alternet.Drawing.SizeI sizeNeeded)
+        public bool Rescale(Alternet.Drawing.SizeI sizeNeeded)
         {
             CheckDisposed();
-            NativeApi.Image_Rescale_(NativePointer, sizeNeeded);
+            return NativeApi.Image_Rescale_(NativePointer, sizeNeeded);
         }
         
         public static int GetDefaultBitmapType()
@@ -368,7 +368,7 @@ namespace Alternet.UI.Native
             public static extern bool Image_GrayScale_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_ResetAlpha_(IntPtr obj);
+            public static extern bool Image_ResetAlpha_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_LoadFile_(IntPtr obj, string name, int type);
@@ -389,7 +389,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_ConvertToDisabled_(IntPtr obj, byte brightness);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_Rescale_(IntPtr obj, Alternet.Drawing.SizeI sizeNeeded);
+            public static extern bool Image_Rescale_(IntPtr obj, Alternet.Drawing.SizeI sizeNeeded);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDefaultBitmapType_();

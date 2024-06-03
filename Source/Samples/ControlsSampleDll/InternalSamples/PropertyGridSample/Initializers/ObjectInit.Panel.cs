@@ -39,14 +39,14 @@ namespace PropertyGridSample
             {
                 var prefix = "Panel.KeyPress: ";
                 var s = prefix + e.KeyChar;
-                BaseApplication.LogReplace(s, prefix);
+                App.LogReplace(s, prefix);
             }
         }
 
         private static void Panel_Scroll(object sender, ScrollEventArgs e)
         {
             var s = $"Panel.Scroll: {e.Type}";
-            BaseApplication.LogReplace($"{s}, {e.ScrollOrientation}, {e.NewValue}", s);
+            App.LogReplace($"{s}, {e.ScrollOrientation}, {e.NewValue}", s);
         }
     }
 }

@@ -77,7 +77,7 @@ namespace NativeApi.Api
 
         public bool HasAlpha { get;set; }
 
-        public void ResetAlpha() { }
+        public bool ResetAlpha() => default;
 
         public int PixelWidth { get; }
         public int PixelHeight { get; }
@@ -105,7 +105,7 @@ namespace NativeApi.Api
         // resizing, e.g.to specify the quality option different from
         // wxIMAGE_QUALITY_NEAREST used by this function, please use the wxImage function
         // directly instead. Both the bitmap itself and size must be valid.
-        public void Rescale(SizeI sizeNeeded) { }
+        public bool Rescale(SizeI sizeNeeded) => default;
 
         public static int GetDefaultBitmapType() => default;
     }

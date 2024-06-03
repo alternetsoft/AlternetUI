@@ -9,14 +9,18 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public interface IIconSetHandler : IDisposable
+    public interface IImageContainer : IDisposable
     {
+        bool IsDummy { get; }
+
         bool IsOk { get; }
 
-        void Add(Image image);
+        bool IsReadOnly { get; }
 
-        void Add(Stream stream);
+        bool Add(Image image);
 
-        void Clear();
+        bool Remove(int imageIndex);
+
+        bool Clear();
     }
 }

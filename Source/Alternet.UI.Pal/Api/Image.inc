@@ -48,14 +48,14 @@ bool SaveToFile(const string& fileName);
 void* ConvertToGenericImage();
 void LoadFromGenericImage(void* image, int depth);
 bool GrayScale();
-void ResetAlpha();
+bool ResetAlpha();
 bool LoadFile(const string& name, int type);
 bool SaveFile(const string& name, int type);
 bool SaveStream(void* stream, int type);
 bool LoadStream(void* stream, int type);
 Image* GetSubBitmap(const RectI& rect);
 Image* ConvertToDisabled(uint8_t brightness);
-void Rescale(const SizeI& sizeNeeded);
+bool Rescale(const SizeI& sizeNeeded);
 static int GetDefaultBitmapType();
 public:
 Image();

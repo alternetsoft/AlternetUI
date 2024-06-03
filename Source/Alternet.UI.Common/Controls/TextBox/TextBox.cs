@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// You need to call <see cref="IdleAction"/> in the
-        /// <see cref="BaseApplication.Idle"/> event handler in order to enable
+        /// <see cref="App.Idle"/> event handler in order to enable
         /// <see cref="CurrentPositionChanged"/> event firing.
         /// </remarks>
         public event EventHandler? CurrentPositionChanged;
@@ -905,7 +905,7 @@ namespace Alternet.UI
         {
             // Under MacOs url parameter of the event data is always empty,
             // so event is not fired. Also on MacOs url is opened automatically.
-            if (BaseApplication.IsMacOS)
+            if (App.IsMacOS)
                 return;
             TextUrl?.Invoke(this, e);
             if (e.Cancel)
@@ -1178,7 +1178,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Call this method in <see cref="BaseApplication.Idle"/> event handler
+        /// Call this method in <see cref="App.Idle"/> event handler
         /// in order to update information related to the current selection and caret position.
         /// </summary>
         public virtual void IdleAction()

@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// </summary>
         public static Control? GetFocusedControl()
         {
-            var result = BaseApplication.Handler.GetFocusedControl();
+            var result = App.Handler.GetFocusedControl();
             return (Control?)result;
         }
 
@@ -398,6 +398,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="TitleChanged"/> event and calls
+        /// <see cref="OnTitleChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseTitleChanged()
+        {
+            OnTitleChanged(EventArgs.Empty);
+            TitleChanged?.Invoke(this, EventArgs.Empty);
+            Parent?.OnChildPropertyChanged(this, nameof(Title));
+        }
+
+        /// <summary>
         /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
         /// </summary>
         public virtual void PerformLayoutAndInvalidate(Action? action = null)
@@ -443,7 +455,7 @@ namespace Alternet.UI
             }
             catch (Exception exception)
             {
-                ControlExceptionEventArgs data = new(exception);
+                ThrowExceptionEventArgs data = new(exception);
                 RaiseProcessException(data);
                 if (data.ThrowIt)
                     throw;
@@ -568,12 +580,10 @@ namespace Alternet.UI
         /// <see cref="OnClick(EventArgs)"/>.
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        public virtual void RaiseClick(EventArgs e)
+        public void RaiseClick()
         {
-            OnClick(e);
-            Click?.Invoke(this, e);
+            OnClick(EventArgs.Empty);
+            Click?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -582,7 +592,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TouchEventArgs"/> that contains the event
         /// data.</param>
-        public virtual void RaiseTouch(TouchEventArgs e)
+        public void RaiseTouch(TouchEventArgs e)
         {
             OnTouch(e);
             Touch?.Invoke(this, e);
@@ -593,7 +603,7 @@ namespace Alternet.UI
         /// <see cref="OnIdle(EventArgs)"/>.
         /// See <see cref="Idle"/> event description for more details.
         /// </summary>
-        public virtual void RaiseIdle()
+        public void RaiseIdle()
         {
             OnIdle(EventArgs.Empty);
             Idle?.Invoke(this, EventArgs.Empty);
@@ -908,10 +918,10 @@ namespace Alternet.UI
         /// <param name="specified">Specifies which bounds to use when applying new
         /// location and size.</param>
         public virtual void SetBounds(
-            double x,
-            double y,
-            double width,
-            double height,
+            Coord x,
+            Coord y,
+            Coord width,
+            Coord height,
             BoundsSpecified specified)
         {
             var bounds = Bounds;
@@ -1195,14 +1205,17 @@ namespace Alternet.UI
             return null;
         }
 
-        public virtual void RaiseMouseWheel(MouseEventArgs e)
+        public void RaiseMouseWheel(MouseEventArgs e)
         {
             OnMouseWheel(e);
+            MouseWheel?.Invoke(this, e);
         }
 
-        public virtual void RaiseMouseDoubleClick(MouseEventArgs e)
+        public void RaiseMouseDoubleClick(MouseEventArgs e)
         {
+            LastDoubleClickTimestamp = e.Timestamp;
             OnMouseDoubleClick(e);
+            MouseDoubleClick?.Invoke(this, e);
         }
 
         public virtual void RaiseKeyDown(KeyEventArgs e)
@@ -1285,12 +1298,12 @@ namespace Alternet.UI
             }
         }
 
-        public virtual void RaiseMouseMove(MouseEventArgs e)
+        public void RaiseMouseMove(MouseEventArgs e)
         {
             OnMouseMove(e);
         }
 
-        public virtual void RaiseMouseUp(MouseEventArgs e)
+        public void RaiseMouseUp(MouseEventArgs e)
         {
             OnMouseUp(e);
 
@@ -1470,7 +1483,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ResetSuggestedHeight()
         {
-            SuggestedHeight = double.NaN;
+            SuggestedHeight = Coord.NaN;
         }
 
         /// <summary>
@@ -1478,7 +1491,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ResetSuggestedWidth()
         {
-            SuggestedWidth = double.NaN;
+            SuggestedWidth = Coord.NaN;
         }
 
         /// <summary>
@@ -1799,7 +1812,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public virtual int PixelFromDip(double value)
+        public virtual int PixelFromDip(Coord value)
         {
             return Handler.PixelFromDip(value);
         }
@@ -1839,7 +1852,7 @@ namespace Alternet.UI
         /// pixels conversions.
         /// </summary>
         /// <returns></returns>
-        public virtual double GetPixelScaleFactor()
+        public virtual Coord GetPixelScaleFactor()
         {
             return Handler.GetPixelScaleFactor();
         }
@@ -1990,7 +2003,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
-        public virtual double PixelToDip(int value)
+        public virtual Coord PixelToDip(int value)
         {
             return Handler.PixelToDip(value);
         }
@@ -2000,7 +2013,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public virtual double PixelFromDipF(double value)
+        public virtual Coord PixelFromDipF(Coord value)
         {
             return Handler.PixelFromDipF(value);
         }
@@ -2052,80 +2065,95 @@ namespace Alternet.UI
             return Handler.GetDefaultAttributesFont();
         }
 
-        public virtual void RaiseHandlerSizeChanged()
+        public void RaiseHandlerSizeChanged()
         {
             OnHandlerSizeChanged(EventArgs.Empty);
             ReportBoundsChanged();
         }
 
-        public virtual void RaiseHandlerLocationChanged()
+        public void RaiseHandlerLocationChanged()
         {
             OnHandlerLocationChanged(EventArgs.Empty);
             ReportBoundsChanged();
         }
 
-        public virtual void RaiseDeactivated()
+        public void RaiseDeactivated()
         {
+            OnDeactivated(EventArgs.Empty);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseHandleCreated()
+        public void RaiseHandleCreated()
         {
             OnHandleCreated(EventArgs.Empty);
             HandleCreated?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseHandleDestroyed()
+        public void RaiseHandleDestroyed()
         {
             OnHandleDestroyed(EventArgs.Empty);
             HandleDestroyed?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseMouseCaptureLost()
+        public void RaiseMouseCaptureLost()
         {
             OnMouseCaptureLost(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseTextChanged() => OnTextChanged(EventArgs.Empty);
+        /// <summary>
+        /// Raises the <see cref="TextChanged" /> event.</summary>
+        public void RaiseTextChanged()
+        {
+            TextChanged?.Invoke(this, EventArgs.Empty);
+            OnTextChanged(EventArgs.Empty);
+        }
 
-        public virtual void RaiseSizeChanged() => OnSizeChanged(EventArgs.Empty);
+        /// <summary>
+        /// Raises the <see cref="SizeChanged"/> event.
+        /// </summary>
+        public void RaiseSizeChanged()
+        {
+            OnSizeChanged(EventArgs.Empty);
+            SizeChanged?.Invoke(this, EventArgs.Empty);
+            OnResize(EventArgs.Empty);
+        }
 
-        public virtual void RaiseMouseEnter()
+        public void RaiseMouseEnter()
         {
             RaiseIsMouseOverChanged();
             OnMouseEnter(EventArgs.Empty);
             MouseEnter?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseVisualStateChanged()
+        public void RaiseVisualStateChanged()
         {
             OnVisualStateChanged(EventArgs.Empty);
             VisualStateChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseIsMouseOverChanged()
+        public void RaiseIsMouseOverChanged()
         {
             OnIsMouseOverChanged(EventArgs.Empty);
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
         }
 
-        public virtual void RaiseMouseLeave()
+        public void RaiseMouseLeave()
         {
             RaiseIsMouseOverChanged();
             OnMouseLeave(EventArgs.Empty);
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void RaiseChildInserted(int index, Control childControl)
+        public void RaiseChildInserted(int index, Control childControl)
         {
             OnChildInserted(index, childControl);
             Handler.OnChildInserted(childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
         }
 
-        public virtual void RaiseChildRemoved(Control childControl)
+        public void RaiseChildRemoved(Control childControl)
         {
             OnChildRemoved(childControl);
             Handler.OnChildRemoved(childControl);
@@ -2138,17 +2166,67 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
-        public virtual void RaiseLocationChanged() => OnLocationChanged(EventArgs.Empty);
+        /// <summary>
+        /// Raises the <see cref="LocationChanged"/> event.
+        /// </summary>
+        public void RaiseLocationChanged()
+        {
+            OnLocationChanged(EventArgs.Empty);
+            LocationChanged?.Invoke(this, EventArgs.Empty);
+        }
 
-        public virtual void RaiseDragStart(DragStartEventArgs e) => OnDragStart(e);
+        /// <summary>
+        /// Raises the <see cref="DragStart"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragStartEventArgs"/> that contains the
+        /// event data.</param>
+        public void RaiseDragStart(DragStartEventArgs e)
+        {
+            OnDragStart(e);
+            DragStart?.Invoke(this, e);
+        }
 
-        public virtual void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
+        /// <summary>
+        /// Raises the <see cref="DragDrop"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragEventArgs"/> that contains the
+        /// event data.</param>
+        public void RaiseDragDrop(DragEventArgs e)
+        {
+            OnDragDrop(e);
+            DragDrop?.Invoke(this, e);
+        }
 
-        public virtual void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
+        /// <summary>
+        /// Raises the <see cref="DragOver"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragEventArgs"/> that contains the
+        /// event data.</param>
+        public void RaiseDragOver(DragEventArgs e)
+        {
+            OnDragOver(e);
+            DragOver?.Invoke(this, e);
+        }
 
-        public virtual void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
+        /// <summary>
+        /// Raises the <see cref="DragEnter"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragEventArgs"/>
+        /// that contains the event data.</param>
+        public void RaiseDragEnter(DragEventArgs e)
+        {
+            OnDragEnter(e);
+            DragEnter?.Invoke(this, e);
+        }
 
-        public virtual void RaiseDragLeave() => OnDragLeave(EventArgs.Empty);
+        /// <summary>
+        /// Raises the <see cref="DragLeave"/> event.
+        /// </summary>
+        public void RaiseDragLeave()
+        {
+            DragLeave?.Invoke(this, EventArgs.Empty);
+            OnDragLeave(EventArgs.Empty);
+        }
 
         public virtual void ReportBoundsChanged()
         {
@@ -2173,7 +2251,7 @@ namespace Alternet.UI
             PerformLayout();
         }
 
-        public virtual void RaiseGotFocus()
+        public void RaiseGotFocus()
         {
             OnGotFocus(EventArgs.Empty);
             GotFocus?.Invoke(this, EventArgs.Empty);
@@ -2181,15 +2259,16 @@ namespace Alternet.UI
             RaiseVisualStateChanged();
         }
 
-        public virtual void RaiseLostFocus()
+        public void RaiseLostFocus()
         {
             OnLostFocus(EventArgs.Empty);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
         }
 
-        public virtual void RaiseActivated()
+        public void RaiseActivated()
         {
+            OnActivated(EventArgs.Empty);
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
@@ -2211,7 +2290,7 @@ namespace Alternet.UI
         /// <param name="x">The X position in dips where the menu will appear.</param>
         /// <param name="y">The Y position in dips where the menu will appear.</param>
         /// <remarks>Position is specified in device independent units (1/96 inch).</remarks>
-        public virtual void ShowPopupMenu(ContextMenu? menu, double x = -1, double y = -1)
+        public virtual void ShowPopupMenu(ContextMenu? menu, Coord x = -1, Coord y = -1)
         {
             menu?.Show(this, (x, y));
         }

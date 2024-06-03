@@ -441,6 +441,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Copies result of the <see cref="SelectedItemsAsText"/> to clipboard.
+        /// </summary>
+        public virtual bool SelectedItemsToClipboard(string? separator = default)
+        {
+            var text = SelectedItemsAsText();
+            if (string.IsNullOrEmpty(text))
+                return false;
+            Clipboard.SetText(text ?? string.Empty);
+            return true;
+        }
+
+        /// <summary>
         /// Gets selected items as <see cref="string"/>.
         /// </summary>
         /// <remarks>Each item is separated by <paramref name="separator"/> or

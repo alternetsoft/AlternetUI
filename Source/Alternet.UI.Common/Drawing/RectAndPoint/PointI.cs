@@ -6,6 +6,8 @@ using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -246,8 +248,8 @@ namespace Alternet.Drawing
         {
             unchecked
             {
-                X += dx;
-                Y += dy;
+                x += dx;
+                y += dy;
             }
         }
 
@@ -255,7 +257,7 @@ namespace Alternet.Drawing
         /// Translates this <see cref='Drawing.PointI'/> by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Offset(PointI p) => Offset(p.X, p.Y);
+        public void Offset(PointI p) => Offset(p.x, p.y);
 
         /// <summary>
         /// Converts this <see cref='Drawing.PointI'/> to a human readable string.

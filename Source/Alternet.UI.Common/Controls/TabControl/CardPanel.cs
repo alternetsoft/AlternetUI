@@ -202,7 +202,7 @@ namespace Alternet.UI
                 {
                     if (UseBusyCursor)
                     {
-                        BaseApplication.BeginBusyCursor();
+                        App.BeginBusyCursor();
                         busyCursor = true;
                     }
                 }
@@ -214,7 +214,7 @@ namespace Alternet.UI
             finally
             {
                 if (busyCursor)
-                    BaseApplication.EndBusyCursor();
+                    App.EndBusyCursor();
                 ResumeLayout();
             }
 

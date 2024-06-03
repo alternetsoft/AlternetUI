@@ -18,7 +18,7 @@ namespace Alternet.UI
 
         public static IDialogFactoryHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateDialogFactoryHandler();
+            get => handler ??= App.Handler.CreateDialogFactoryHandler();
 
             set => handler = value;
         }

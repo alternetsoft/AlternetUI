@@ -2,6 +2,8 @@ using System;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -90,6 +92,12 @@ namespace Alternet.Drawing
         protected override void UpdateHandler()
         {
             ((IHatchBrushHandler)Handler).Update(this);
+        }
+
+        /// <inheritdoc/>
+        protected override SKPaint CreateSkiaPaint()
+        {
+            return base.CreateSkiaPaint();
         }
     }
 }

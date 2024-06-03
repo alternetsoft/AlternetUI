@@ -16,7 +16,7 @@ namespace InputSample
 
             SetSizeToContent();
 
-            BaseApplication.Idle += Current_Idle;
+            App.Idle += Current_Idle;
 
             lb.BindApplicationLog();
 
@@ -66,7 +66,7 @@ namespace InputSample
 
         private void HelloButton_Click(object sender, EventArgs e)
         {
-            BaseApplication.Log("Hello Button Clicked");
+            App.Log("Hello Button Clicked");
         }
 
         private void MouseCaptureBorder_MouseDown(object sender, MouseEventArgs e)
@@ -85,17 +85,17 @@ namespace InputSample
 
         private void MouseCaptureBorder_MouseCaptureLost(object sender, EventArgs e)
         {
-            BaseApplication.Log("Mouse capture was lost.");
+            App.Log("Mouse capture was lost.");
         }
 
         private void MouseCaptureBorder_MouseEnter(object sender, EventArgs e)
         {
-            BaseApplication.Log("MouseCaptureBorder_MouseEnter");
+            App.Log("MouseCaptureBorder_MouseEnter");
         }
 
         private void MouseCaptureBorder_MouseLeave(object sender, EventArgs e)
         {
-            BaseApplication.Log("MouseCaptureBorder_MouseLeave");
+            App.Log("MouseCaptureBorder_MouseLeave");
         }
 
         private void LogMouseMove(
@@ -109,7 +109,7 @@ namespace InputSample
 
             var prefix = $"{ objectName }.{ eventName}";
 
-            BaseApplication.LogReplace($"{prefix} [{FormatPoint(Mouse.GetPosition(element as Control))}]", prefix);
+            App.LogReplace($"{prefix} [{FormatPoint(Mouse.GetPosition(element as Control))}]", prefix);
         }
 
         private void LogMouseButton(
@@ -117,7 +117,7 @@ namespace InputSample
             string objectName,
             string eventName,
             object? element) =>
-            BaseApplication.Log(
+            App.Log(
                 $"{objectName}.{eventName} [{e.ChangedButton}, {FormatPoint(Mouse.GetPosition(element as Control))}]");
 
         private void LogMouseWheel(
@@ -125,7 +125,7 @@ namespace InputSample
             string objectName,
             string eventName,
             object? element) =>
-            BaseApplication.Log(
+            App.Log(
                 $"{objectName}.{eventName} [{e.Delta}, {FormatPoint(Mouse.GetPosition(element as Control))}]");
 
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) =>

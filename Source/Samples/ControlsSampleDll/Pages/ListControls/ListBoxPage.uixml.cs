@@ -74,7 +74,7 @@ namespace ControlsSample
             var result = listBox.HitTest(Mouse.GetPosition(listBox));
             var item = (result == null ? "<none>" : listBox.Items[result.Value]);
 
-            BaseApplication.Log($"HitTest result: Item: '{item}'");
+            App.Log($"HitTest result: Item: '{item}'");
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace ControlsSample
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
             string s = IndicesToStr(listBox.SelectedIndices);
-            BaseApplication.Log($"ListBox: SelectionChanged. SelectedIndices: ({s})");
+            App.Log($"ListBox: SelectionChanged. SelectedIndices: ({s})");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(

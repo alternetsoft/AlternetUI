@@ -84,7 +84,7 @@ namespace Alternet.UI
         {
             get
             {
-                return factory ??= BaseApplication.Handler.CreateCursorFactoryHandler();
+                return factory ??= App.Handler.CreateCursorFactoryHandler();
             }
 
             set => factory = value;

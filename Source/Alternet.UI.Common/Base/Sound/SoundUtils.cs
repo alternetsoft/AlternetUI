@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public static ISoundFactoryHandler Handler
         {
-            get => handler ??= BaseApplication.Handler.CreateSoundFactoryHandler();
+            get => handler ??= App.Handler.CreateSoundFactoryHandler();
 
             set => handler = value;
         }

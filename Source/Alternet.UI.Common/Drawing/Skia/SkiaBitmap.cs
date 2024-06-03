@@ -11,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Encapsulates a bitmap which can be used with <see cref="SkiaGraphics"/>.
     /// </summary>
-    public class SkiaBitmap : Image
+    internal class SkiaBitmap : Image
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaBitmap"/> class from
@@ -104,7 +104,7 @@ namespace Alternet.Drawing
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
-                BaseApplication.LogError($"Image not loaded from: {url}");
+                App.LogError($"Image not loaded from: {url}");
                 return;
             }
 
@@ -112,7 +112,7 @@ namespace Alternet.Drawing
 
             if (!result)
             {
-                BaseApplication.LogError($"Image not loaded from: {url}");
+                App.LogError($"Image not loaded from: {url}");
                 return;
             }
         }

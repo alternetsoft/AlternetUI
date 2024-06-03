@@ -11,7 +11,7 @@ namespace Alternet.Drawing
 {
     public abstract class PlessImageHandler : DisposableObject, IImageHandler
     {
-        public virtual double ScaleFactor
+        public virtual Coord ScaleFactor
         {
             get => throw new NotImplementedException();
             set => throw new NotImplementedException();
@@ -22,7 +22,7 @@ namespace Alternet.Drawing
             get => throw new NotImplementedException();
         }
         
-        public virtual double ScaledHeight
+        public virtual Coord ScaledHeight
         {
             get => throw new NotImplementedException();
         }
@@ -32,7 +32,7 @@ namespace Alternet.Drawing
             get => throw new NotImplementedException();
         }
         
-        public virtual double ScaledWidth
+        public virtual Coord ScaledWidth
         {
             get => throw new NotImplementedException();
         }
@@ -75,7 +75,11 @@ namespace Alternet.Drawing
 
         public virtual bool Load(string name, BitmapType type)
         {
-            throw new NotImplementedException();
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.OpenRead(name);
+                return LoadFromStream(stream, type);
+            });
         }
 
         public virtual bool LoadFromStream(Stream stream)
@@ -88,12 +92,12 @@ namespace Alternet.Drawing
             return LoadFromStream(stream);
         }
 
-        public virtual void Rescale(SizeI sizeNeeded)
+        public virtual bool Rescale(SizeI sizeNeeded)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void ResetAlpha()
+        public virtual bool ResetAlpha()
         {
             throw new NotImplementedException();
         }

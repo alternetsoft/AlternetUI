@@ -156,6 +156,12 @@ namespace PropertyGridSample
             Actions.Add(typeof(ColorComboBox), InitColorComboBox);
             Actions.Add(typeof(CheckListBox), InitCheckListBox);
 
+            Actions.Add(typeof(UserControl), (c) =>
+            {
+                var control = (c as UserControl)!;
+                control.SuggestedSize = 200;
+            });
+
             Actions.Add(typeof(SaveFileDialog), (c) =>
             {
                 var control = (c as SaveFileDialog)!;
@@ -203,12 +209,12 @@ namespace PropertyGridSample
 
                 static void Button_Click(object? sender, EventArgs e)
                 {
-                    BaseApplication.Log("Button in Border clicked.");
+                    App.Log("Button in Border clicked.");
                 }
 
                 static void Border_VisualStateChanged(object? sender, EventArgs e)
                 {
-                    BaseApplication.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
+                    App.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
                 }
             });
 
@@ -324,7 +330,7 @@ namespace PropertyGridSample
 
             static void Button_Click(object? sender, EventArgs e)
             {
-                BaseApplication.Log($"Button '{(sender as Button)?.Text}' Click");
+                App.Log($"Button '{(sender as Button)?.Text}' Click");
             }
         }
 
@@ -519,7 +525,7 @@ namespace PropertyGridSample
         private static ImageLists LoadImageListsCore()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new SizeD(32, 32) };
+            var largeImageList = new ImageList() { ImageSize = new(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();

@@ -81,7 +81,7 @@ namespace ControlsSample
             if(e.Url == "PropertyGrid")
             {
                 e.Cancel = true;
-                BaseApplication.AddIdleTask(() =>
+                App.AddIdleTask(() =>
                 {
                     var form = new PropertyGridSample.MainWindow();
                     form.Show();

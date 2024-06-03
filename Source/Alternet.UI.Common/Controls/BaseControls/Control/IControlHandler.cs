@@ -205,15 +205,15 @@ namespace Alternet.UI
 
         void BeginIgnoreRecreate();
 
-        double GetPixelScaleFactor();
+        Coord GetPixelScaleFactor();
 
         RectI GetUpdateClientRectI();
 
-        double PixelToDip(int value);
+        Coord PixelToDip(int value);
 
-        int PixelFromDip(double value);
+        int PixelFromDip(Coord value);
 
-        double PixelFromDipF(double value);
+        Coord PixelFromDipF(Coord value);
 
         void SetScrollBar(
             bool isVertical,

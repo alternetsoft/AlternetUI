@@ -42,21 +42,21 @@ namespace Alternet.UI
 
         static AllPlatformDefaults()
         {
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
             {
                 PlatformCurrent = PlatformWindows;
                 InitWindows();
                 return;
             }
 
-            if (BaseApplication.IsLinuxOS)
+            if (App.IsLinuxOS)
             {
                 PlatformCurrent = PlatformLinux;
                 InitLinux();
                 return;
             }
 
-            if (BaseApplication.IsMacOS)
+            if (App.IsMacOS)
             {
                 PlatformCurrent = PlatformMacOs;
                 InitMacOs();

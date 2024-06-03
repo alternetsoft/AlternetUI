@@ -13,6 +13,7 @@ namespace Alternet.UI
         private static IDisplayFactoryHandler? factory;
         private static Display? primary;
         private static Display[]? allScreens;
+        private static Display? defaultDisplay;
 
         private readonly IControl? control;
 
@@ -100,6 +101,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default display. By default it equals <see cref="Primary"/>.
+        /// </summary>
+        public static Display Default
+        {
+            get
+            {
+                return defaultDisplay ?? Primary;
+            }
+
+            set
+            {
+                defaultDisplay = value;
+            }
+        }
+
+        /// <summary>
         /// Gets default display resolution for the current platform as <see cref="SizeI"/>.
         /// </summary>
         /// <remarks>
@@ -129,7 +146,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets scaling factor used by this display.
         /// </summary>
-        public double ScaleFactor => Handler.GetScaleFactor();
+        public Coord ScaleFactor => Handler.GetScaleFactor();
 
         /// <summary>
         /// Gets <c>true</c> if the display is the primary display.
@@ -250,7 +267,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
-        public double PixelToDip(int value)
+        public Coord PixelToDip(int value)
         {
             if (control is null)
             {
@@ -269,7 +286,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
-        public int PixelFromDip(double value)
+        public int PixelFromDip(Coord value)
         {
             if (control is null)
             {

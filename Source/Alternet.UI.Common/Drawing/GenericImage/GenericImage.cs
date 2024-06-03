@@ -69,7 +69,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a file.
         /// </summary>
-        /// <param name="fileName">Path to file.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="bitmapType">Type of the bitmap. Depending on how library
         /// and OS has been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
@@ -80,10 +80,17 @@ namespace Alternet.Drawing
         /// "choose the default image" and is interpreted as the first image(index= 0) by the GIF and
         /// TIFF handler and as the largest and most colorful one by the ICO handler.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string fileName, BitmapType bitmapType = BitmapType.Any, int index = -1)
+        public GenericImage(string url, BitmapType bitmapType = BitmapType.Any, int index = -1)
         {
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return;
+            }
+
             Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                    fileName,
+                    stream,
                     bitmapType,
                     index);
         }
@@ -92,14 +99,24 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from a file using MIME-types to specify the type.
         /// </summary>
-        /// <param name="name">Name of the file from which to load the image.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string name, string mimetype, int index = -1)
+        public GenericImage(string url, string mimetype, int index = -1)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(name, mimetype, index);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return;
+            }
+
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
+                    stream,
+                    mimetype,
+                    index);
         }
 
         /// <summary>
@@ -145,16 +162,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">Specifies the width of the image.</param>
         /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If static_data is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with
-        /// malloc.</param>
+        /// <param name="data">Image data.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, IntPtr data, bool staticData = false)
+        public GenericImage(int width, int height, SKColor[] data)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data, staticData);
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data);
         }
 
         /// <summary>
@@ -163,17 +175,29 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">Specifies the width of the image.</param>
         /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="alpha">A pointer to alpha-channel data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with
-        /// malloc.</param>
+        /// <param name="data">RGB data.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
+        public GenericImage(int width, int height, RGBValue[] data)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data, alpha, staticData);
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericImage"/> class.
+        /// Creates an image from data in memory.
+        /// </summary>
+        /// <param name="width">Specifies the width of the image.</param>
+        /// <param name="height">Specifies the height of the image.</param>
+        /// <param name="data">RGB data.</param>
+        /// <param name="alpha">Alpha-channel data.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public GenericImage(int width, int height, RGBValue[] data, byte[] alpha)
+        {
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
+                width,
+                height,
+                data,
+                alpha);
         }
 
         /// <summary>
@@ -183,6 +207,12 @@ namespace Alternet.Drawing
         public GenericImage(IGenericImageHandler handle)
         {
             Handler = handle;
+        }
+
+        public enum PixelStrategy
+        {
+            Pixels,
+            RgbData,
         }
 
         /// <summary>
@@ -231,6 +261,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets best strategy to access pixels.
+        /// </summary>
+        public PixelStrategy BestStrategy => Handler.BestStrategy;
+
+        /// <summary>
         /// Converts the specified <see cref='SKBitmap'/> to a <see cref='GenericImage'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -240,15 +275,99 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='SKBitmap'/> to a <see cref='GenericImage'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator SKBitmap(GenericImage bitmap)
+        {
+            return ToSkia(bitmap);
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if at least one of the available image handlers can read the file
         /// with the given name.
         /// </summary>
-        /// <param name="filename">Name of the file from which to load the image.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool CanRead(string filename)
+        public static bool CanRead(string url)
         {
-            return GraphicsFactory.Handler.CanReadGenericImage(filename);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return false;
+            }
+            return CanRead(stream);
+        }
+
+        public static unsafe RGBValue[] GetRGBValues(SKColor[] data)
+        {
+            var length = data.Length;
+
+            var result = new RGBValue[length];
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                fixed (RGBValue* resultPtr = result)
+                {
+                    var aptr = resultPtr;
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        *aptr = (*ptr);
+                        ptr++;
+                        aptr++;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static unsafe byte[] GetAlphaValues(SKColor[] data)
+        {
+            var length = data.Length;
+
+            var alpha = new byte[length];
+
+            fixed(SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                fixed (byte* alphaPtr = alpha)
+                {
+                    var aptr = alphaPtr;
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        *aptr = (*ptr).Alpha;
+                        ptr++;
+                        aptr++;
+                    }
+                }
+            }
+
+            return alpha;
+        }
+
+        public static void SeparateAlphaData(
+            SKColor[] data,
+            out RGBValue[] rgb,
+            out byte[] alpha)
+        {
+            rgb = GetRGBValues(data);
+            alpha = GetAlphaValues(data);
+        }
+
+        public static SKBitmap ToSkia(GenericImage bitmap)
+        {
+            if (bitmap.HasAlpha())
+                return ToSkiaWithAlpha(bitmap);
+            else
+                return ToSkiaWithoutAlpha(bitmap);
         }
 
         public static unsafe GenericImage FromSkia(SKBitmap bitmap)
@@ -266,20 +385,21 @@ namespace Alternet.Drawing
             byte* alphaData = (byte*)alphaNativedata;
 
             var pixels = bitmap.Pixels;
-            int i = 0;
+            var length = pixels.Length;
 
-            for (int y = 0; y < height; y++)
+            fixed (SKColor* p = pixels)
             {
-                for (int x = 0; x < width; x++)
+                var ptr = p;
+
+                for (int i = 0; i < length; i++)
                 {
-                    var color = pixels[i];
+                    var color = *ptr;
 
                     *alphaData = color.Alpha;
                     *rgbData = color;
-
                     rgbData++;
                     alphaData++;
-                    i++;
+                    ptr++;
                 }
             }
 
@@ -319,21 +439,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Finds image load/save handler with the given name, and removes it.
-        /// </summary>
-        /// <param name="name">Name of the handler.</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool RemoveHandler(string name)
-        {
-            return GraphicsFactory.Handler.RemoveGenericImageHandler(name);
-        }
-
-        /// <summary>
         /// If the image file contains more than one image and the image handler is capable of
         /// retrieving these individually, this function will return the number of available images.
         /// </summary>
-        /// <param name="filename">Name of the file from which to load the image.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
         /// been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
@@ -343,10 +452,17 @@ namespace Alternet.Drawing
         /// returns the number of frames in the animation).</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetImageCount(
-            string filename,
+            string url,
             BitmapType bitmapType = BitmapType.Any)
         {
-            return GraphicsFactory.Handler.GetGenericImageCount(filename, bitmapType);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return 0;
+            }
+
+            return GetImageCount(stream, bitmapType);
         }
 
         /// <summary>
@@ -368,15 +484,6 @@ namespace Alternet.Drawing
             BitmapType bitmapType = BitmapType.Any)
         {
             return GraphicsFactory.Handler.GetGenericImageCount(stream, bitmapType);
-        }
-
-        /// <summary>
-        /// Deletes all image handlers.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CleanUpHandlers()
-        {
-            GraphicsFactory.Handler.CleanUpGenericImageHandlers();
         }
 
         /// <summary>
@@ -1293,7 +1400,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file.
         /// </summary>
-        /// <param name="filename">Path to file.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
         /// been configured and
         /// by which handlers have been loaded, not all formats may be available. If value is
@@ -1302,12 +1409,19 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public virtual bool LoadFromFile(
-            string filename,
+            string url,
             BitmapType bitmapType = BitmapType.Any,
             int index = -1)
         {
-            return Handler.LoadFromFile(
-                filename,
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return false;
+            }
+
+            return Handler.LoadFromStream(
+                stream,
                 bitmapType,
                 index);
         }
@@ -1315,14 +1429,21 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file.
         /// </summary>
-        /// <param name="name">Path to file.</param>
+        /// <param name="url">Path or url to file with image data.</param>
         /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromFile(string name, string mimetype, int index = -1)
+        public virtual bool LoadFromFile(string url, string mimetype, int index = -1)
         {
-            return Handler.LoadFromFile(name, mimetype, index);
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (stream is null)
+            {
+                App.LogError($"GenericImage not loaded from: {url}");
+                return false;
+            }
+
+            return Handler.LoadFromStream(stream, mimetype, index);
         }
 
         /// <summary>
@@ -1359,7 +1480,11 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public virtual bool SaveToFile(string filename, BitmapType bitmapType)
         {
-            return Handler.SaveToFile(filename, bitmapType);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(filename);
+                return SaveToStream(stream, bitmapType);
+            });
         }
 
         /// <summary>
@@ -1370,7 +1495,11 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public virtual bool SaveToFile(string filename, string mimetype)
         {
-            return Handler.SaveToFile(filename, mimetype);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(filename);
+                return SaveToStream(stream, mimetype);
+            });
         }
 
         /// <summary>
@@ -1386,7 +1515,12 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual bool SaveToFile(string filename)
         {
-            return Handler.SaveToFile(filename);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(filename);
+                var bitmapType = Image.GetBitmapTypeFromFileName(filename);
+                return SaveToStream(stream, bitmapType);
+            });
         }
 
         /// <summary>
@@ -1398,25 +1532,6 @@ namespace Alternet.Drawing
         public virtual bool SaveToStream(Stream stream, BitmapType type)
         {
             return Handler.SaveToStream(stream, type);
-        }
-
-        /// <summary>
-        /// Sets the image data without performing checks.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with malloc.</param>
-        public virtual void SetNativeData(
-            IntPtr data,
-            int width,
-            int height,
-            bool staticData = false)
-        {
-            Handler.SetNativeData(data, width, height, staticData);
         }
 
         /// <summary>
@@ -1445,53 +1560,6 @@ namespace Alternet.Drawing
         public virtual IntPtr GetNativeData()
         {
             return Handler.GetNativeData();
-        }
-
-        /// <summary>
-        /// Creates a fresh image.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with malloc.</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool CreateNativeData(int width, int height, IntPtr data, bool staticData = false)
-        {
-            return Handler.CreateNativeData(
-                width,
-                height,
-                data,
-                staticData);
-        }
-
-        /// <summary>
-        /// Creates a fresh image.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">A pointer to RGB data</param>
-        /// <param name="staticData">Indicates if the data should be free'd after use.
-        /// If <paramref name="staticData"/> is <c>false</c> then the
-        /// library will take ownership of the data and free it afterwards.For this,
-        /// it has to be allocated with malloc.</param>
-        /// <param name="alpha">A pointer to alpha-channel data</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool CreateNativeData(
-            int width,
-            int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false)
-        {
-            return Handler.CreateNativeData(
-                width,
-                height,
-                data,
-                alpha,
-                staticData);
         }
 
         /// <summary>
@@ -1545,6 +1613,72 @@ namespace Alternet.Drawing
         protected override IGenericImageHandler CreateHandler()
         {
             return GraphicsFactory.Handler.CreateGenericImageHandler();
+        }
+
+        private static unsafe SKBitmap ToSkiaWithAlpha(GenericImage bitmap)
+        {
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+
+            var result = new SKBitmap(width, height, isOpaque: false);
+
+            var rgbNativeData = bitmap.GetNativeData();
+            RGBValue* rgbData = (RGBValue*)rgbNativeData;
+
+            var alphaNativedata = bitmap.GetNativeAlphaData();
+            byte* alphaData = (byte*)alphaNativedata;
+
+            var count = bitmap.PixelCount;
+
+            SKColor[] pixels = new SKColor[count];
+
+            fixed (SKColor* p = pixels)
+            {
+                var ptr = p;
+
+                for (int i = 0; i < count; i++)
+                {
+                    *ptr = RGBValue.ToSkia(*rgbData, *alphaData);
+                    rgbData++;
+                    alphaData++;
+                    ptr++;
+                }
+            }
+
+            result.Pixels = pixels;
+
+            return result;
+        }
+
+        private static unsafe SKBitmap ToSkiaWithoutAlpha(GenericImage bitmap)
+        {
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+
+            var result = new SKBitmap(width, height, isOpaque: true);
+
+            var rgbNativeData = bitmap.GetNativeData();
+            RGBValue* rgbData = (RGBValue*)rgbNativeData;
+
+            var count = bitmap.PixelCount;
+
+            SKColor[] pixels = new SKColor[count];
+
+            fixed (SKColor* p = pixels)
+            {
+                var ptr = p;
+
+                for (int i = 0; i < count; i++)
+                {
+                    *ptr = (SKColor)(*rgbData);
+                    rgbData++;
+                    ptr++;
+                }
+            }
+
+            result.Pixels = pixels;
+
+            return result;
         }
     }
 }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public interface IGraphicsFactoryHandler : IDisposable
@@ -103,7 +105,7 @@ namespace Alternet.Drawing
             int height,
             Color? color = null);
 
-        IImageSetHandler CreateImageSetHandler();
+        IImageSetHandler? CreateImageSetHandler();
 
         IImageSetHandler CreateImageSetHandlerFromSvg(
             Stream stream,
@@ -117,40 +119,23 @@ namespace Alternet.Drawing
             int height,
             Color? color = null);
 
-        IImageListHandler CreateImageListHandler();
+        IImageListHandler? CreateImageListHandler();
 
-        IIconSetHandler CreateIconSetHandler();
-
-        bool CanReadGenericImage(string filename);
+        IIconSetHandler? CreateIconSetHandler();
 
         bool CanReadGenericImage(Stream stream);
 
         string GetGenericImageExtWildcard();
 
-        bool RemoveGenericImageHandler(string name);
-
-        int GetGenericImageCount(
-            string filename,
-            BitmapType bitmapType = BitmapType.Any);
-
         int GetGenericImageCount(
             Stream stream,
             BitmapType bitmapType = BitmapType.Any);
-
-        void CleanUpGenericImageHandlers();
 
         IGenericImageHandler CreateGenericImageHandler();
 
         IGenericImageHandler CreateGenericImageHandler(int width, int height, bool clear = false);
 
         IGenericImageHandler CreateGenericImageHandler(SizeI size, bool clear = false);
-
-        IGenericImageHandler CreateGenericImageHandler(
-            string fileName,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1);
-
-        IGenericImageHandler CreateGenericImageHandler(string name, string mimetype, int index = -1);
 
         IGenericImageHandler CreateGenericImageHandler(
             Stream stream,
@@ -165,14 +150,17 @@ namespace Alternet.Drawing
         IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            bool staticData = false);
+            RGBValue[] data);
 
         IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false);
+            SKColor[] data);
+
+        IGenericImageHandler CreateGenericImageHandler(
+            int width,
+            int height,
+            RGBValue[] data,
+            byte[] alpha);
     }
 }

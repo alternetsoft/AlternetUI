@@ -29,7 +29,7 @@ namespace Alternet.UI
 
         public SizeI GetDefaultDPI()
         {
-            if (BaseApplication.IsIOS || BaseApplication.IsMacOS)
+            if (App.IsIOS || App.IsMacOS)
                 return 72;
             return 96;
         }

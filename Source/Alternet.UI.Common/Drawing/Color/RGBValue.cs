@@ -64,16 +64,26 @@ namespace Alternet.Drawing
         /// to <see cref="RGBValue"/>.
         /// </summary>
         /// <param name="d">New <see cref="RGBValue"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGBValue((byte, byte, byte) d) =>
             new(d.Item1, d.Item2, d.Item3);
 
         /// <summary>
-        /// Converts the specified <see cref='SKColor'/> to a <see cref='Color'/>.
+        /// Converts the specified <see cref='SKColor'/> to a <see cref='RGBValue'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGBValue(SKColor color)
         {
             return new(color.Red, color.Green, color.Blue);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='RGBValue'/> to a <see cref='SKColor'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator SKColor(RGBValue color)
+        {
+            return new(color.R, color.G, color.B);
         }
 
         /// <summary>
@@ -101,6 +111,18 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator ==(RGBValue left, RGBValue right) =>
             left.R == right.R && left.G == right.G && left.B == right.B;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKColor ToSkia(RGBValue color, byte alpha)
+        {
+            return new(color.R, color.G, color.B, alpha);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKColor ToSkia(RGBValue color)
+        {
+            return new(color.R, color.G, color.B);
+        }
 
         /// <summary>
         /// Tests whether <paramref name="obj"/> is a <see cref='RGBValue'/> and

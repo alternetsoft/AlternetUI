@@ -241,7 +241,7 @@ namespace Alternet.UI
 
         public Calendar.HitTestResult HitTest(PointD point)
         {
-            if (BaseApplication.IsLinuxOS)
+            if (App.IsLinuxOS)
                 return Calendar.HitTestResult.None;
 
             var pointi = Control.PixelFromDip(point);
@@ -340,7 +340,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
                 UserPaint = true;
             BackgroundColor = SystemColors.Window;
 

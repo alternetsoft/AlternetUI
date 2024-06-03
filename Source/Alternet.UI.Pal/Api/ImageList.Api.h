@@ -75,3 +75,25 @@ ALTERNET_UI_API void ImageList_AddImage_(ImageList* obj, Image* image)
     #endif
 }
 
+ALTERNET_UI_API c_bool ImageList_Remove_(ImageList* obj, int index)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Remove(index);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool ImageList_Clear_(ImageList* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Clear();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+

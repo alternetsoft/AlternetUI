@@ -9,7 +9,7 @@ namespace Alternet.UI
         {
             get
             {
-                var currentApplication = BaseApplication.Current;
+                var currentApplication = App.Current;
                 if (currentApplication?.IsDisposed ?? true)
                     return false;
 
@@ -19,7 +19,7 @@ namespace Alternet.UI
 
         public static IAsyncResult BeginInvoke(Delegate method, object?[] args)
         {
-            var currentApplication = BaseApplication.Current;
+            var currentApplication = App.Current;
             if (currentApplication?.IsDisposed ?? true)
                 throw new InvalidOperationException();
 

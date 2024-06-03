@@ -13,6 +13,18 @@ namespace Alternet.UI.Extensions
 {
     public static class ExtensionsPrivate
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double Abs(this double value)
+        {
+            return Math.Abs(value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Abs(this float value)
+        {
+            return Math.Abs(value);
+        }
+
         public static SKPoint[] ToSkia(this PointD[] points)
         {
             var length = points.Length;

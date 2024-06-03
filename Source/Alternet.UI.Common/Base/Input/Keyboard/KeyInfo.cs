@@ -78,7 +78,7 @@ namespace Alternet.UI
 
             foreach (var key in keys)
             {
-                if (key.BackendOS.HasFlag(BaseApplication.BackendOS))
+                if (key.BackendOS.HasFlag(App.BackendOS))
                     result.Add(key);
             }
 
@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
         public bool Run(KeyEventArgs e, Action? action = null, bool setHandled = true)
         {
-            if (!BackendOS.HasFlag(BaseApplication.BackendOS))
+            if (!BackendOS.HasFlag(App.BackendOS))
                 return false;
 
             var result = IsPressed(e);

@@ -72,15 +72,15 @@ namespace Alternet.UI
         {
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
-            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
+            if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
                 return new SizeD(specifiedWidth, specifiedHeight);
 
             var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
             var maxWidth = maxSize.Width;
             var maxHeight = maxSize.Height;
 
-            var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
-            var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
+            var width = Coord.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
+            var height = Coord.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
 
             return new SizeD(width, height);
         }
@@ -109,8 +109,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual SizeD GetChildrenMaxPreferredSize(SizeD availableSize)
         {
-            double maxWidth = 0;
-            double maxHeight = 0;
+            Coord maxWidth = 0;
+            Coord maxHeight = 0;
 
             foreach (var control in AllChildrenInLayout)
             {
@@ -123,15 +123,8 @@ namespace Alternet.UI
             return new SizeD(maxWidth, maxHeight);
         }
 
-        /// <summary>
-        /// Raises the <see cref="SizeChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
         protected virtual void OnSizeChanged(EventArgs e)
         {
-            SizeChanged?.Invoke(this, e);
-            OnResize(e);
         }
 
         /// <summary>
@@ -153,13 +146,9 @@ namespace Alternet.UI
             Resize?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="LocationChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
-        protected virtual void OnLocationChanged(EventArgs e) =>
-            LocationChanged?.Invoke(this, e);
+        protected virtual void OnLocationChanged(EventArgs e)
+        {
+        }
 
         /// <summary>
         /// Called when a <see cref="Control"/> is inserted into
@@ -249,6 +238,14 @@ namespace Alternet.UI
         {
         }
 
+        protected virtual void OnActivated(EventArgs e)
+        {
+        }
+
+        protected virtual void OnDeactivated(EventArgs e)
+        {
+        }
+
         /// <summary>
         /// Called when the native conrol location is changed.
         /// </summary>
@@ -291,13 +288,9 @@ namespace Alternet.UI
             KeyPress?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="Control.TextChanged" /> event.</summary>
-        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnTextChanged(EventArgs e)
         {
-            TextChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -554,54 +547,24 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragDrop"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/> that contains the
-        /// event data.</param>
         protected virtual void OnDragDrop(DragEventArgs e)
         {
-            DragDrop?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragStart"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragStartEventArgs"/> that contains the
-        /// event data.</param>
         protected virtual void OnDragStart(DragStartEventArgs e)
         {
-            DragStart?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragOver"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/> that contains the
-        /// event data.</param>
         protected virtual void OnDragOver(DragEventArgs e)
         {
-            DragOver?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragEnter"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/>
-        /// that contains the event data.</param>
         protected virtual void OnDragEnter(DragEventArgs e)
         {
-            DragEnter?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Raises the <see cref="DragLeave"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="EventArgs"/> that
-        /// contains the event data.</param>
         protected virtual void OnDragLeave(EventArgs e)
         {
-            DragLeave?.Invoke(this, e);
         }
 
         /// <summary>
@@ -627,8 +590,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseDoubleClick(MouseEventArgs e)
         {
-            LastDoubleClickTimestamp = e.Timestamp;
-            MouseDoubleClick?.Invoke(this, e);
         }
 
         /// <summary>
@@ -636,7 +597,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnMouseWheel(MouseEventArgs e)
         {
-            MouseWheel?.Invoke(this, e);
         }
 
         /// <summary>
@@ -673,9 +633,9 @@ namespace Alternet.UI
         /// <summary>
         /// Called when an exception need to be processed.
         /// </summary>
-        /// <param name="e">An <see cref="ControlExceptionEventArgs"/> that contains
+        /// <param name="e">An <see cref="ThrowExceptionEventArgs"/> that contains
         /// the event data.</param>
-        protected virtual void OnProcessException(ControlExceptionEventArgs e)
+        protected virtual void OnProcessException(ThrowExceptionEventArgs e)
         {
         }
 
@@ -755,8 +715,8 @@ namespace Alternet.UI
             var s = Handler.GetPreferredSize(availableSize);
             s += Padding.Size;
             return new SizeD(
-                double.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
-                double.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
+                Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
+                Coord.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
         }
 
         /// <summary>

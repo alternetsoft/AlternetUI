@@ -91,7 +91,7 @@ namespace Alternet.UI
 
         internal static void NotifyCaptureLost()
         {
-            BaseApplication.Handler.NotifyCaptureLost();
+            App.Handler.NotifyCaptureLost();
         }
 
         internal static void PerformDefaultLayout(
@@ -168,7 +168,7 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        internal void RaiseProcessException(ControlExceptionEventArgs e)
+        internal void RaiseProcessException(ThrowExceptionEventArgs e)
         {
             OnProcessException(e);
             ProcessException?.Invoke(this, e);
@@ -214,7 +214,7 @@ namespace Alternet.UI
             bool visible = Handler.Visible;
             Visible = visible;
 
-            if (BaseApplication.IsLinuxOS && visible)
+            if (App.IsLinuxOS && visible)
             {
                 // todo: this is a workaround for a problem on Linux when
                 // ClientSize is not reported correctly until the window is shown

@@ -59,6 +59,18 @@ namespace Alternet.UI.Native
             NativeApi.ImageList_AddImage_(NativePointer, image.NativePointer);
         }
         
+        public bool Remove(int index)
+        {
+            CheckDisposed();
+            return NativeApi.ImageList_Remove_(NativePointer, index);
+        }
+        
+        public bool Clear()
+        {
+            CheckDisposed();
+            return NativeApi.ImageList_Clear_(NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -82,6 +94,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageList_AddImage_(IntPtr obj, IntPtr image);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ImageList_Remove_(IntPtr obj, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ImageList_Clear_(IntPtr obj);
             
         }
     }

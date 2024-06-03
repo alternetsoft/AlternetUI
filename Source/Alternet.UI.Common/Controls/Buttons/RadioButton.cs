@@ -30,7 +30,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class RadioButton : ButtonBase
     {
-        private bool isChecked;
+        private bool? reportedChecked;
 
         /// <summary>
         /// Occurs when the value of the <see cref="IsChecked"/> property changes.
@@ -42,18 +42,23 @@ namespace Alternet.UI
         /// </summary>
         /// <value><c>true</c> if the radio button is checked; otherwise,
         /// <c>false</c>.</value>
-        public bool IsChecked
+        public virtual bool IsChecked
         {
-            get => isChecked;
+            get => Handler.IsChecked;
             set
             {
-                if (isChecked == value)
+                if (IsChecked == value)
                     return;
-
-                isChecked = value;
-                RaiseCheckedChanged(EventArgs.Empty);
+                Handler.IsChecked = value;
+                RaiseSiblingsCheckedChanged();
             }
         }
+
+        /// <summary>
+        /// Gets a <see cref="IRadioButtonHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        public new IRadioButtonHandler Handler => (IRadioButtonHandler)base.Handler;
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.RadioButton;
@@ -77,15 +82,50 @@ namespace Alternet.UI
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        private void RaiseCheckedChanged(EventArgs e)
+        protected virtual void RaiseCheckedChanged()
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
+            var newChecked = IsChecked;
 
-            OnCheckedChanged(e);
-            CheckedChanged?.Invoke(this, e);
+            if (reportedChecked == newChecked)
+                return;
+            reportedChecked = newChecked;
+            OnCheckedChanged(EventArgs.Empty);
+            CheckedChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Calls <see cref="RaiseCheckedChanged"/> for all sibling <see cref="RadioButtons"/>.
+        /// </summary>
+        protected virtual void RaiseSiblingsCheckedChanged()
+        {
+            var siblings = Parent?.Children;
+
+            if (siblings is null || siblings.Count == 0)
+            {
+                RaiseCheckedChanged();
+                return;
+            }
+
+            foreach (var sibling in siblings)
+            {
+                if (sibling is not RadioButton radioButton)
+                    continue;
+                radioButton.RaiseCheckedChanged();
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.CheckedChanged = RaiseCheckedChanged;
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.CheckedChanged = null;
         }
     }
 }

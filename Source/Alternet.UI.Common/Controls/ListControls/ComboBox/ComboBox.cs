@@ -211,7 +211,7 @@ namespace Alternet.UI
                     return;
                 selectedIndex = value;
                 Text = GetItemText(SelectedItem);
-                RaiseSelectedItemChanged(EventArgs.Empty);
+                RaiseSelectedItemChanged();
             }
         }
 
@@ -415,13 +415,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
-        public virtual void RaiseSelectedItemChanged(EventArgs e)
+        public void RaiseSelectedItemChanged()
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnSelectedItemChanged(e);
-            SelectedItemChanged?.Invoke(this, e);
+            OnSelectedItemChanged(EventArgs.Empty);
+            SelectedItemChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

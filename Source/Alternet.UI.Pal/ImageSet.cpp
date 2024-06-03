@@ -84,13 +84,6 @@ namespace Alternet::UI
 		return GetBitmapBundle().GetDefaultSize();
 	}
 
-	void ImageSet::InitImageFor(Image* image, void* window)
-	{
-		auto bitmapBundle = GetBitmapBundle();
-		auto bitmap = bitmapBundle.GetBitmapFor((wxWindow*) window);
-		image->_bitmap = bitmap;
-	}
-
 	Int32Size ImageSet::GetPreferredBitmapSizeFor(void* window)
 	{
 		return GetBitmapBundle().GetPreferredBitmapSizeFor((wxWindow*)window);
@@ -99,6 +92,13 @@ namespace Alternet::UI
 	Int32Size ImageSet::GetPreferredBitmapSizeAtScale(double scale)
 	{
 		return GetBitmapBundle().GetPreferredBitmapSizeAtScale(scale);
+	}
+
+	void ImageSet::InitImageFor(Image* image, void* window)
+	{
+		auto bitmapBundle = GetBitmapBundle();
+		auto bitmap = bitmapBundle.GetBitmapFor((wxWindow*)window);
+		image->_bitmap = bitmap;
 	}
 
 	void ImageSet::InitImage(Image* image, int width, int height)

@@ -11,15 +11,15 @@ namespace Alternet.Drawing
 {
     public interface IImageHandler : IDisposable
     {
-        double ScaleFactor { get; set; }
+        Coord ScaleFactor { get; set; }
 
         SizeI DipSize { get; }
 
-        double ScaledHeight { get; }
+        Coord ScaledHeight { get; }
 
         SizeI ScaledSize { get; }
 
-        double ScaledWidth { get; }
+        Coord ScaledWidth { get; }
 
         SizeI PixelSize { get; }
 
@@ -51,8 +51,8 @@ namespace Alternet.Drawing
 
         bool GrayScale();
 
-        void ResetAlpha();
+        bool ResetAlpha();
 
-        void Rescale(SizeI sizeNeeded);
+        bool Rescale(SizeI sizeNeeded);
     }
 }

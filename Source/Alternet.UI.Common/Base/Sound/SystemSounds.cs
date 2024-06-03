@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Retrieves sounds associated with a set of operating system sound-event types.
     /// This class cannot be inherited.
     /// </summary>
-    public sealed class SystemSounds
+    public static class SystemSounds
     {
         private static volatile SystemSound? asterisk;
         private static volatile SystemSound? beep;
@@ -18,7 +18,7 @@ namespace Alternet.UI
         private static volatile SystemSound? hand;
         private static volatile SystemSound? question;
 
-        private SystemSounds()
+        static SystemSounds()
         {
         }
 

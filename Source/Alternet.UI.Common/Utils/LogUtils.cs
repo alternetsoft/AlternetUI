@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -97,16 +99,16 @@ namespace Alternet.UI
                 return;
             LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
             var wxWidgets = SystemSettings.Handler.GetLibraryVersionString();
-            var bitsOS = BaseApplication.Is64BitOS ? "x64" : "x86";
-            var bitsApp = BaseApplication.Is64BitProcess ? "x64" : "x86";
+            var bitsOS = App.Is64BitOS ? "x64" : "x86";
+            var bitsApp = App.Is64BitProcess ? "x64" : "x86";
             var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
-            var dpi = $"DPI: {BaseApplication.FirstWindow()?.GetDPI().Width}";
+            var dpi = $"DPI: {App.FirstWindow()?.GetDPI().Width}";
             var ui = $"UI: {SystemSettings.Handler.GetUIVersion()}";
-            var counterStr = $"Counter: {BaseApplication.BuildCounter}";
+            var counterStr = $"Counter: {App.BuildCounter}";
             var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
-            BaseApplication.Log(s);
-            if (BaseApplication.LogFileIsEnabled)
-                BaseApplication.DebugLog($"Log File = {BaseApplication.LogFilePath}");
+            App.Log(s);
+            if (App.LogFileIsEnabled)
+                App.DebugLog($"Log File = {App.LogFilePath}");
         }
 
         /// <summary>
@@ -131,7 +133,7 @@ namespace Alternet.UI
             if (items is null)
                 return;
             foreach (var item in items)
-                BaseApplication.Log(item, kind);
+                App.Log(item, kind);
         }
 
         /// <summary>
@@ -141,9 +143,9 @@ namespace Alternet.UI
         {
             if (items is null)
                 return;
-            BaseApplication.LogBeginSection();
+            App.LogBeginSection();
             Log(items, kind);
-            BaseApplication.LogEndSection();
+            App.LogEndSection();
         }
 
         /// <summary>
@@ -164,7 +166,7 @@ namespace Alternet.UI
 
             void ToLog(object? value)
             {
-                BaseApplication.Log(value, kind);
+                App.Log(value, kind);
             }
 
             if (toFile)
@@ -182,10 +184,10 @@ namespace Alternet.UI
         {
             try
             {
-                BaseApplication.Log(SectionSeparator, LogItemKind.Error);
-                BaseApplication.Log($"Exception: {info}", LogItemKind.Error);
-                BaseApplication.Log(e.ToString(), LogItemKind.Error);
-                BaseApplication.Log(SectionSeparator, LogItemKind.Error);
+                App.Log(SectionSeparator, LogItemKind.Error);
+                App.Log($"Exception: {info}", LogItemKind.Error);
+                App.Log(e.ToString(), LogItemKind.Error);
+                App.Log(SectionSeparator, LogItemKind.Error);
             }
             catch
             {
@@ -227,7 +229,7 @@ namespace Alternet.UI
             if (logUseMaxLength > 0)
                 propValue = StringUtils.LimitLength(propValue, LogPropMaxLength);
 
-            BaseApplication.Log(s + propName + " = " + propValue, kind);
+            App.Log(s + propName + " = " + propValue, kind);
         }
 
         /// <summary>
@@ -257,8 +259,8 @@ namespace Alternet.UI
         /// </summary>
         public static void DeleteLog()
         {
-            if (File.Exists(BaseApplication.LogFilePath))
-                File.Delete(BaseApplication.LogFilePath);
+            if (File.Exists(App.LogFilePath))
+                File.Delete(App.LogFilePath);
         }
 
         /// <summary>
@@ -270,7 +272,7 @@ namespace Alternet.UI
         public static void LogToFile(object? obj = null, string? filename = null)
         {
             var msg = obj?.ToString() ?? string.Empty;
-            filename ??= BaseApplication.LogFilePath;
+            filename ??= App.LogFilePath;
 
             string dt = System.DateTime.Now.ToString("HH:mm:ss");
             string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.None);
@@ -305,7 +307,7 @@ namespace Alternet.UI
             if (value is not null)
                 value = ColorUtils.FindKnownColor(value);
             title ??= "Color";
-            BaseApplication.Log($"{title} = {value?.ToDebugString()}");
+            App.Log($"{title} = {value?.ToDebugString()}");
         }
 
         /// <summary>
@@ -319,7 +321,7 @@ namespace Alternet.UI
             if (value is not null)
                 value = ColorUtils.FindKnownColor(value);
             title ??= "ColorAndRect";
-            BaseApplication.Log($"{title} = {value?.ToDebugString()}, {rect}");
+            App.Log($"{title} = {value?.ToDebugString()}, {rect}");
         }
 
         /// <summary>
@@ -330,7 +332,7 @@ namespace Alternet.UI
         public static void LogRange(IEnumerable items, LogItemKind kind = LogItemKind.Information)
         {
             foreach (var item in items)
-                BaseApplication.Log(item, kind);
+                App.Log(item, kind);
         }
 
         /// <summary>
@@ -352,7 +354,7 @@ namespace Alternet.UI
                 value.ToString(),
                 minBound.ToString(),
                 maxBound.ToString());
-            BaseApplication.LogError(s);
+            App.LogError(s);
         }
 
         /// <summary>
@@ -412,6 +414,251 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="SKFont"/> metrics.
+        /// </summary>
+        public static void LogSkiaFont()
+        {
+            LogSkiaFont(SkiaUtils.DefaultFont);
+        }
+
+        /// <summary>
+        /// Logs <see cref="SKBitmap"/> metrics.
+        /// </summary>
+        public static void LogSkiaBitmap()
+        {
+            LogSkiaBitmap(new SKBitmap(), "new SKBitmap():");
+            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: true), "new SKBitmap(50, 50, isOpaque: true):");
+            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: false), "new SKBitmap(50, 50, isOpaque: true):");
+        }
+
+        /// <summary>
+        /// Logs <see cref="SKBitmap"/> metrics.
+        /// </summary>
+        public static void LogSkiaBitmap(SKBitmap bitmap, string? title = null)
+        {
+            App.LogSection(
+                () =>
+                {
+                    App.LogNameValue("Size", (bitmap.Width, bitmap.Height));
+                    App.LogNameValue("ReadyToDraw", bitmap.ReadyToDraw);
+                    App.LogNameValue("DrawsNothing", bitmap.DrawsNothing);
+                    App.LogNameValue("IsEmpty", bitmap.IsEmpty);
+                    App.LogNameValue("IsNull", bitmap.IsNull);
+                    App.LogNameValue("AlphaType", bitmap.AlphaType);
+                    App.LogNameValue("BytesPerPixel", bitmap.BytesPerPixel);
+                    App.LogNameValue("ColorType", bitmap.ColorType);
+                },
+                title);
+        }
+
+        /// <summary>
+        /// Logs useful c++ defines.
+        /// </summary>
+        public static void LogUsefulDefines()
+        {
+            var s = WebBrowser.DoCommandGlobal("GetUsefulDefines");
+            var splitted = s?.Split(' ');
+            LogUtils.LogAsSection(splitted);
+        }
+
+        /// <summary>
+        /// Logs monospaced Skia fonts.
+        /// </summary>
+        public static void LogSkiaMonoFonts()
+        {
+            App.LogBeginSection();
+            App.Log("Skia Mono Fonts:");
+            App.LogEmptyLine();
+
+            var names = SKFontManager.Default.GetFontFamilies();
+
+            foreach(var name in names)
+            {
+                var family = SKFontManager.Default.MatchFamily(name);
+                if (family.IsFixedPitch)
+                    App.Log(family.FamilyName);
+            }
+
+            App.LogEndSection();
+        }
+
+        public static void LogSkiaFont(SKFont font)
+        {
+            App.LogBeginSection("SKFont");
+            App.LogNameValue("FamilyName", font.Typeface.FamilyName);
+
+            App.LogNameValue("Typeface.UnitsPerEm", font.Typeface.UnitsPerEm);
+            App.LogNameValue("ForceAutoHinting", font.ForceAutoHinting);
+            App.LogNameValue("Subpixel",font.Subpixel);
+            App.LogNameValue("EmbeddedBitmaps", font.EmbeddedBitmaps);
+            App.LogNameValue("LinearMetrics",font.LinearMetrics);
+            App.LogNameValue("Embolden", font.Embolden);
+            App.LogNameValue("BaselineSnap", font.BaselineSnap);
+            App.LogNameValue("Size", font.Size);
+            App.LogNameValue("Spacing", font.Spacing);
+            App.LogNameValue("Metrics.Top", font.Metrics.Top, null, "Greatest distance above the baseline for any glyph. (<= 0).");
+            App.LogNameValue("Metrics.Ascent", font.Metrics.Ascent, null, "Recommended distance above the baseline. (<= 0).");
+            App.LogNameValue("Metrics.Descent", font.Metrics.Descent, null, "Recommended distance below the baseline. (>= 0).");
+            App.LogNameValue("Metrics.Bottom", font.Metrics.Bottom, null, "Greatest distance below the baseline for any glyph. (>= 0).");
+            App.LogNameValue("Metrics.Leading", font.Metrics.Leading, null, "Recommended distance to add between lines of text. (>= 0).");
+            App.LogNameValue("Metrics.AverageCharacterWidth", font.Metrics.AverageCharacterWidth, null, "Average character width. (>= 0).");
+            App.LogNameValue("Metrics.MaxCharacterWidth", font.Metrics.MaxCharacterWidth, null, "Max character width. (>= 0).");
+            App.LogNameValue("Metrics.XMin", font.Metrics.XMin, null, "Minimum bounding box x value for all glyphs.");
+            App.LogNameValue("Metrics.XMax", font.Metrics.XMax, null, "Maximum bounding box x value for all glyphs.");
+            App.LogNameValue("Metrics.XHeight", font.Metrics.XHeight, null, "Height of an 'x' in px. 0 if no 'x' in face.");
+            App.LogNameValue("Metrics.CapHeight", font.Metrics.CapHeight, null, "Cap height. Will be > 0, or 0 if cannot be determined.");
+            App.LogNameValue("Metrics.UnderlineThickness?", font.Metrics.UnderlineThickness, null, "Thickness of underline. 0 - not determined. null - not set.");
+            App.LogNameValue("Metrics.UnderlinePosition?", font.Metrics.UnderlinePosition, null, "Position of top of underline relative to baseline. <0 - above. >0 - below. 0 - on baseline");
+            App.LogNameValue("Metrics.StrikeoutThickness?", font.Metrics.StrikeoutThickness, null, "Thickness of strikeout.");
+            App.LogNameValue("Metrics.StrikeoutPosition?", font.Metrics.StrikeoutPosition, null, "Position of the bottom of the strikeout stroke relative to the baseline. Is negative when valid.");
+
+            App.LogEmptyLine();
+            LogMeasureSkiaFont("Hello", font);
+            LogMeasureSkiaFont("xy;", SkiaUtils.DefaultFont);
+
+            App.LogEndSection();
+        }
+
+        public static void LogMeasureSkiaFont(string text, SKFont font)
+        {
+            SKRect bounds = SKRect.Empty;
+            SKPaint paint = new(font);
+            var result = paint.MeasureText(text, ref bounds);
+            App.Log($"Font.MeasureText: \"{text}\", {result}, {bounds}");
+        }
+
+        /// <summary>
+        /// Logs <see cref="SKFontManager"/> related information.
+        /// </summary>
+        public static void LogSkiaFontManager()
+        {
+            List<string> wxNames = new(FontFamily.FamiliesNames);
+            wxNames.Sort();
+
+            var s = string.Empty;
+            var count = SKFontManager.Default.FontFamilyCount;
+            for (int i = 0; i < count; i++)
+            {
+                var s2 = SKFontManager.Default.GetFamilyName(i);
+
+                var wx = wxNames.IndexOf(s2) >= 0 ? "(wx)" : string.Empty;
+
+                s += $"{s2} {wx}{Environment.NewLine}";
+
+                var styles = SKFontManager.Default.GetFontStyles(i);
+
+                for (int k = 0; k < styles.Count; k++)
+                {
+                    var style = styles[k];
+                    var fontWeight = Font.GetWeightClosestToNumericValue(style.Weight);
+                    var fontWidth = Font.GetSkiaWidthClosestToNumericValue(style.Width).ToString()
+                        ?? style.Width.ToString();
+                    var fontSlant = style.Slant;
+
+                    s += $"{StringUtils.FourSpaces}{fontSlant}, {fontWeight}, {fontWidth}{Environment.NewLine}";
+                }
+            }
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogUtils.LogToFile("Skia Font Families:");
+            LogUtils.LogToFile(s);
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+
+            App.Log($"{count} Skia font families logged to file.");
+        }
+
+        /// <summary>
+        /// Logs control related global information (metrics, fonts, etc.).
+        /// </summary>
+        public static void LogControlInfo(Control control)
+        {
+            App.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(control)}");
+            Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
+            Log($"Font.Default: {Font.Default.ToInfoString()}");
+            Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
+        }
+
+        /// <summary>
+        /// Logs OS related information (platform, version, etc.).
+        /// </summary>
+        public static void LogOSInformation()
+        {
+            var os = Environment.OSVersion;
+            App.Log("Current OS Information:\n");
+            App.Log($"Platform: {os.Platform:G}");
+            App.Log($"Version String: {os.VersionString}");
+            App.Log($"Major version: {os.Version.Major}");
+            App.Log($"Minor version: {os.Version.Minor}");
+            App.Log($"Service Pack: '{os.ServicePack}'");
+        }
+
+        /// <summary>
+        /// Logs <see cref="SystemSettings"/>.
+        /// </summary>
+        public static void LogSystemSettings()
+        {
+            App.LogBeginSection();
+            App.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
+            App.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
+            App.Log($"AppearanceName = {SystemSettings.AppearanceName}");
+
+            var defaultColors = Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
+            LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
+            LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
+
+            App.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
+            App.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
+
+            App.LogSeparator();
+
+            foreach (SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
+            {
+                App.Log($"HasFeature({item}) = {SystemSettings.HasFeature(item)}");
+            }
+
+            App.LogSeparator();
+
+            foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
+            {
+                App.Log($"GetMetric({item}) = {SystemSettings.GetMetric(item)}");
+            }
+
+            App.LogSeparator();
+
+            foreach (SystemSettingsFont item in Enum.GetValues(typeof(SystemSettingsFont)))
+            {
+                App.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
+            }
+
+            App.LogEndSection();
+        }
+
+        /// <summary>
+        /// Logs <see cref="FontFamily.FamiliesNames"/>.
+        /// </summary>
+        public static void LogFontFamilies()
+        {
+            List<string> skiaNames = new(SKFontManager.Default.FontFamilies);
+            skiaNames.Sort();
+
+            var s = string.Empty;
+            var names = FontFamily.FamiliesNames;
+            foreach (string s2 in names)
+            {
+                var skia = skiaNames.IndexOf(s2) >= 0 ? "(skia)" : string.Empty;
+
+                s += $"{s2} {skia}{Environment.NewLine}";
+            }
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogUtils.LogToFile("Font Families:");
+            LogUtils.LogToFile(s);
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+
+            App.Log($"{names.Count()} FontFamilies logged to file.");
+        }
+
+        /// <summary>
         /// Writes to log file "Application finished" header text.
         /// </summary>
         public static void LogToFileAppFinished()
@@ -433,9 +680,112 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Tests different methods of getting Argb of the system color.
+        /// </summary>
+        public static void TestSystemColors(
+            Func<KnownSystemColor, int> method1,
+            Func<KnownSystemColor, int> method2)
+        {
+            void Test(KnownSystemColor color)
+            {
+                var argb1 = method1(color);
+                var argb2 = method2(color);
+                var equal = argb1 == argb2;
+
+                var oldArgbStr = argb1.ToString("X");
+                var newArgbStr = argb2.ToString("X");
+
+                App.Log($"{equal} 1: {oldArgbStr} 2: {newArgbStr}");
+            }
+
+            Test(KnownSystemColor.ActiveBorder);
+            Test(KnownSystemColor.ActiveCaption);
+            Test(KnownSystemColor.ActiveCaptionText);
+            Test(KnownSystemColor.AppWorkspace);
+            Test(KnownSystemColor.Control);
+            Test(KnownSystemColor.ControlDark);
+            Test(KnownSystemColor.ControlDarkDark);
+            Test(KnownSystemColor.ControlLight);
+            Test(KnownSystemColor.ControlLightLight);
+            Test(KnownSystemColor.ControlText);
+            Test(KnownSystemColor.Desktop);
+            Test(KnownSystemColor.GrayText);
+            Test(KnownSystemColor.Highlight);
+            Test(KnownSystemColor.HighlightText);
+            Test(KnownSystemColor.HotTrack);
+            Test(KnownSystemColor.InactiveBorder);
+            Test(KnownSystemColor.InactiveCaption);
+            Test(KnownSystemColor.InactiveCaptionText);
+            Test(KnownSystemColor.Info);
+            Test(KnownSystemColor.InfoText);
+            Test(KnownSystemColor.Menu);
+            Test(KnownSystemColor.MenuText);
+            Test(KnownSystemColor.ScrollBar);
+            Test(KnownSystemColor.Window);
+            Test(KnownSystemColor.WindowFrame);
+            Test(KnownSystemColor.WindowText);
+            Test(KnownSystemColor.ButtonFace);
+            Test(KnownSystemColor.ButtonHighlight);
+            Test(KnownSystemColor.ButtonShadow);
+            Test(KnownSystemColor.GradientActiveCaption);
+            Test(KnownSystemColor.GradientInactiveCaption);
+            Test(KnownSystemColor.MenuBar);
+            Test(KnownSystemColor.MenuHighlight);
+        }
+
+        /// <summary>
+        /// Enumerates log actions.
+        /// </summary>
+        public static void EnumLogActions(Action<string, Action> addLogAction)
+        {
+            addLogAction("Log system settings", LogUtils.LogSystemSettings);
+            addLogAction("Log font families", LogUtils.LogFontFamilies);
+            addLogAction("Log system fonts", SystemSettings.LogSystemFonts);
+            addLogAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);
+            addLogAction("Log display info", Display.Log);
+            addLogAction("Log useful defines", LogUtils.LogUsefulDefines);
+            addLogAction("Log OS information", LogUtils.LogOSInformation);
+            addLogAction("Log system colors", LogUtils.LogSystemColors);
+
+            addLogAction("Log Embedded Resources in Alternet.UI", () =>
+            {
+                const string s = "embres:Alternet.UI?assembly=Alternet.UI";
+
+                App.Log("Embedded Resource Names added to log file");
+
+                var items = ResourceLoader.GetAssets(new Uri(s), null);
+                LogUtils.LogToFile(LogUtils.SectionSeparator);
+                foreach (var item in items)
+                {
+                    LogUtils.LogToFile(item);
+                }
+
+                LogUtils.LogToFile(LogUtils.SectionSeparator);
+            });
+
+            addLogAction("Log Embedded Resources", () =>
+            {
+                LogUtils.LogResourceNames();
+                App.Log("Resource Names added to log file");
+            });
+
+            addLogAction("Log test error and warning items", () =>
+            {
+                App.Log("Sample error", LogItemKind.Error);
+                App.Log("Sample warning", LogItemKind.Warning);
+                App.Log("Sample info", LogItemKind.Information);
+            });
+
+            addLogAction("Log SKFontManager", LogUtils.LogSkiaFontManager);
+            addLogAction("Log SKFont", LogUtils.LogSkiaFont);
+            addLogAction("Log SKBitmap", LogUtils.LogSkiaBitmap);
+            addLogAction("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
+        }
+
         internal static void LogAppDomainTargetFrameworkName()
         {
-            BaseApplication.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
+            App.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
 
             var frameworkName = new System.Runtime.Versioning.FrameworkName(
                 AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
@@ -445,57 +795,5 @@ namespace Alternet.UI
                 // run code
             }
         }
-
-        /*/// <summary>
-        /// Tests different methods of getting Argb of the system color.
-        /// </summary>
-        internal static void TestSystemColors()
-        {
-            static void Test(KnownColor color)
-            {
-                var oldArgb = KnownColorTable.GetSystemColorArgb(color);
-                var newArgb = KnownColorTable.GetSystemColorArgbUseSystemSettings(color);
-                var equal = oldArgb == newArgb;
-
-                var oldArgbStr = oldArgb.ToString("X");
-                var newArgbStr = newArgb.ToString("X");
-
-                BaseApplication.Log($"{equal} old: {oldArgbStr} new: {newArgbStr}");
-            }
-
-            Test(KnownColor.ActiveBorder);
-            Test(KnownColor.ActiveCaption);
-            Test(KnownColor.ActiveCaptionText);
-            Test(KnownColor.AppWorkspace);
-            Test(KnownColor.Control);
-            Test(KnownColor.ControlDark);
-            Test(KnownColor.ControlDarkDark);
-            Test(KnownColor.ControlLight);
-            Test(KnownColor.ControlLightLight);
-            Test(KnownColor.ControlText);
-            Test(KnownColor.Desktop);
-            Test(KnownColor.GrayText);
-            Test(KnownColor.Highlight);
-            Test(KnownColor.HighlightText);
-            Test(KnownColor.HotTrack);
-            Test(KnownColor.InactiveBorder);
-            Test(KnownColor.InactiveCaption);
-            Test(KnownColor.InactiveCaptionText);
-            Test(KnownColor.Info);
-            Test(KnownColor.InfoText);
-            Test(KnownColor.Menu);
-            Test(KnownColor.MenuText);
-            Test(KnownColor.ScrollBar);
-            Test(KnownColor.Window);
-            Test(KnownColor.WindowFrame);
-            Test(KnownColor.WindowText);
-            Test(KnownColor.ButtonFace);
-            Test(KnownColor.ButtonHighlight);
-            Test(KnownColor.ButtonShadow);
-            Test(KnownColor.GradientActiveCaption);
-            Test(KnownColor.GradientInactiveCaption);
-            Test(KnownColor.MenuBar);
-            Test(KnownColor.MenuHighlight);
-        }*/
     }
 }

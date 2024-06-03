@@ -95,7 +95,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="BaseApplication.LogReplace"/> but
+        /// Same as <see cref="App.LogReplace"/> but
         /// uses only this control for the logging.
         /// </summary>
         /// <param name="message">Message text.</param>
@@ -118,19 +118,19 @@ namespace Alternet.UI
 
         /// <summary>
         /// Binds this control to show messages which are logged with
-        /// <see cref="BaseApplication.Log"/>.
+        /// <see cref="App.Log"/>.
         /// </summary>
         public virtual void BindApplicationLog()
         {
             BoundToApplicationLog = true;
             ContextMenu.Required();
-            BaseApplication.LogMessage += Application_LogMessage;
-            BaseApplication.LogRefresh += Application_LogRefresh;
+            App.LogMessage += Application_LogMessage;
+            App.LogRefresh += Application_LogRefresh;
             LogUtils.DebugLogVersion();
         }
 
         /// <summary>
-        /// Same as <see cref="BaseApplication.Log"/> but
+        /// Same as <see cref="App.Log"/> but
         /// uses only this control for the logging.
         /// </summary>
         /// <param name="message">Message text.</param>
@@ -168,9 +168,20 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            BaseApplication.LogMessage -= Application_LogMessage;
-            BaseApplication.LogRefresh -= Application_LogRefresh;
+            App.LogMessage -= Application_LogMessage;
+            App.LogRefresh -= Application_LogRefresh;
             base.DisposeManaged();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if(e.KeyData == (Keys.Control | Keys.C))
+            {
+                SelectedItemsToClipboard();
+                e.Handled = true;
+            }
         }
 
         /// <summary>
@@ -178,17 +189,10 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void InitContextMenu()
         {
-            void Copy()
-            {
-                var text = SelectedItemsAsText();
-                if (string.IsNullOrEmpty(text))
-                    return;
-                Clipboard.SetText(text!);
-            }
-
             ContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
 
-            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, Copy));
+            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, () => SelectedItemsToClipboard()))
+                .SetShortcutKeys(Keys.Control | Keys.C);
 
             ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
 
@@ -200,9 +204,9 @@ namespace Alternet.UI
 
             void AlsoLogToFile()
             {
-                if (BaseApplication.LogFileIsEnabled)
+                if (App.LogFileIsEnabled)
                     return;
-                BaseApplication.LogFileIsEnabled = true;
+                App.LogFileIsEnabled = true;
                 logToFileItem.Checked = true;
                 logToFileItem.Enabled = false;
             }
@@ -219,7 +223,7 @@ namespace Alternet.UI
 
             void Fn()
             {
-                if (!BaseApplication.LogInUpdates() || !BoundToApplicationLog)
+                if (!App.LogInUpdates() || !BoundToApplicationLog)
                 {
                     var index = Items.Count - 1;
                     SelectedIndex = index;

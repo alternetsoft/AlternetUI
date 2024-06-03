@@ -60,7 +60,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            if (BaseApplication.IsWindowsOS)
+            if (App.IsWindowsOS)
                 UserPaint = true;
 
             bool? value = AllPlatformDefaults.GetHasBorderOverride(Control.ControlKind);

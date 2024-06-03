@@ -1764,7 +1764,7 @@ namespace Alternet.UI.Port
 
         private Dispatcher()
         {
-            BaseApplication.Idle += Application_Idle;
+            App.Idle += Application_Idle;
 
             _queue = new PriorityQueue<DispatcherOperation>();
 

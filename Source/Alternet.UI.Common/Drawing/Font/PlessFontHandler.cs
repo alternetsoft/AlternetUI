@@ -11,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Platformless <see cref="IFontHandler"/> implementation.
     /// </summary>
-    public class PlessFontHandler : DisposableObject, IPlessFontHandler
+    public class PlessFontHandler : DisposableObject, IFontHandler
     {
         private string name = string.Empty;
         private FontStyle style = FontStyle.Regular;
@@ -20,6 +20,12 @@ namespace Alternet.Drawing
         private FontEncoding encoding = FontEncoding.Default;
         private bool isFixedWidth = false;
         private string? serialized;
+
+        public PlessFontHandler(string name, double sizeInPoints)
+        {
+            this.Name = name;
+            this.SizeInPoints = sizeInPoints;
+        }
 
         public PlessFontHandler()
         {

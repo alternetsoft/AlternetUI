@@ -43,12 +43,12 @@ namespace PropertyGridSample
 
             static void PictureBox_Deactivated(object? sender, EventArgs e)
             {
-                BaseApplication.Log("TextBox Deactivated");
+                App.Log("TextBox Deactivated");
             }
 
             static void PictureBox_Activated(object? sender, EventArgs e)
             {
-                BaseApplication.Log("TextBox Activated");
+                App.Log("TextBox Activated");
             }
         }
 

@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>Provides access to an ordered, strongly typed collection of
     /// <see cref="ColumnDefinition" /> objects.</summary>
-    public sealed class GridColumnCollection : IList<ColumnDefinition>,
+    public class GridColumnCollection : IList<ColumnDefinition>,
         ICollection<ColumnDefinition>, IEnumerable<ColumnDefinition>, IEnumerable, IList, ICollection
     {
         internal GridColumnCollection(Grid owner)

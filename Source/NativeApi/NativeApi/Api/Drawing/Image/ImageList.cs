@@ -11,5 +11,11 @@ namespace NativeApi.Api
         public SizeI PixelImageSize { get; set; }
 
         public SizeD ImageSize { get; set; }
+
+        // Removes the image at the given index.
+        public bool Remove(int index) => default;
+
+        // Remove all images
+        public bool Clear() => default;
     }
 }

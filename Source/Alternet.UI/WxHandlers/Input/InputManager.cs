@@ -12,7 +12,7 @@ namespace Alternet.UI
     ///     The InputManager class is responsible for coordinating all of the
     ///     input system in Alternet UI.
     /// </summary>
-    public sealed class InputManager : Port.DispatcherObject
+    public class InputManager : Port.DispatcherObject
     {
         private static readonly KeyboardDevice KeyboardDevice;
         private static readonly MouseDevice MouseDevice;

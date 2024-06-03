@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,17 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     internal class WxGenericImageHandler : DisposableObject<IntPtr>, IGenericImageHandler
     {
+        public GenericImage.PixelStrategy BestStrategy
+        {
+            get => GenericImage.PixelStrategy.RgbData;
+        }
+
         public int Width => UI.Native.GenericImage.GetWidth(Handle);
 
         public int Height => UI.Native.GenericImage.GetHeight(Handle);
@@ -91,27 +99,29 @@ namespace Alternet.Drawing
         {
         }
 
-        public WxGenericImageHandler(
-            int width,
-            int height,
-            IntPtr data,
-            bool staticData = false)
-            : base(
-                  UI.Native.GenericImage.CreateImageWithSizeAndData(width, height, data, staticData),
-                  true)
+        public WxGenericImageHandler(int width, int height, SKColor[] data)
+            : base(true)
         {
+            GenericImage.SeparateAlphaData(data, out var rgb, out var alpha);
+            var alphaPtr = AllocAlphaData(width, height, alpha);
+            var dataPtr = AllocData(width, height, rgb);
+            Handle = UI.Native.GenericImage.CreateImageWithAlpha(width, height, dataPtr, alphaPtr, false);
         }
 
-        public WxGenericImageHandler(
-            int width,
-            int height,
-            IntPtr data,
-            IntPtr alpha,
-            bool staticData = false)
-            : base(
-                  UI.Native.GenericImage.CreateImageWithAlpha(width, height, data, alpha, staticData),
-                  true)
+        public WxGenericImageHandler(int width, int height, RGBValue[] data)
+            : base(true)
         {
+            var dataPtr = AllocData(width, height, data);
+            Handle = UI.Native.GenericImage.CreateImageWithSizeAndData(width, height, dataPtr, false);
+        }
+
+        public unsafe WxGenericImageHandler(int width, int height, RGBValue[] data, byte[] alpha)
+            : base(true)
+        {
+            var dataPtr = AllocData(width, height, data);
+            var alphaPtr = AllocAlphaData(width, height, alpha);
+
+            Handle = UI.Native.GenericImage.CreateImageWithAlpha(width, height, dataPtr, alphaPtr, false);
         }
 
         public static GenericImage Create(IntPtr ptr)
@@ -176,11 +186,7 @@ namespace Alternet.Drawing
 
         public void SetRGBRect(RGBValue rgb, RectI? rect = null)
         {
-            if (rect is null)
-            {
-                rect = (0, 0, Width, Height);
-            }
-
+            rect ??= RectI.Create(Width, Height);
             UI.Native.GenericImage.SetRGBRect(Handle, rect.Value, rgb.R, rgb.G, rgb.B);
         }
 
@@ -648,6 +654,41 @@ namespace Alternet.Drawing
         {
             base.DisposeUnmanaged();
             UI.Native.GenericImage.DeleteImage(Handle);
+        }
+
+        private unsafe IntPtr AllocAlphaData(int width, int height, byte[] alpha)
+        {
+            var size = width * height;
+
+            if (size != alpha.Length)
+                throw new ArgumentException("Invalid alpha array length.");
+
+            var alphaPtr = BaseMemory.Alloc(size);
+
+            fixed (byte* sourceAlphaPtr = alpha)
+            {
+                BaseMemory.Move(alphaPtr, (IntPtr)sourceAlphaPtr, size);
+            }
+
+            return alphaPtr;
+        }
+
+        private unsafe IntPtr AllocData(int width, int height, RGBValue[] data)
+        {
+            var size = width * height;
+            var rgbSize = size * 3;
+
+            if (size != data.Length)
+                throw new ArgumentException("Invalid RGB array length.");
+
+            var dataPtr = BaseMemory.Alloc(rgbSize);
+
+            fixed (RGBValue* sourcePtr = data)
+            {
+                BaseMemory.Move(dataPtr, (IntPtr)sourcePtr, rgbSize);
+            }
+
+            return dataPtr;
         }
     }
 }

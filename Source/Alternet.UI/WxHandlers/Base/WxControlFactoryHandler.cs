@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IRadioButtonHandler CreateRadioButtonHandler(RadioButton control)
         {
-            return new RadioButtonHandler();
+            return new WxRadioButtonHandler();
         }
 
         /// <inheritdoc/>
@@ -94,7 +94,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IButtonHandler CreateButtonHandler(Button control)
         {
-            return new ButtonHandler();
+            return new WxButtonHandler();
         }
 
         /// <inheritdoc/>

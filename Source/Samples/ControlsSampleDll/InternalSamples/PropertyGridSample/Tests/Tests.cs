@@ -248,9 +248,9 @@ namespace PropertyGridSample
             string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
 
             if (logAlways)
-                BaseApplication.Log(s);
+                App.Log(s);
             else
-                BaseApplication.LogReplace(s, s);
+                App.LogReplace(s, s);
         }
 
         private void PGPropertySelected(object? sender, EventArgs e)
@@ -404,10 +404,10 @@ namespace PropertyGridSample
             variant.AsULong = maxULong;
             ulong maxULong2 = variant.AsULong;
 
-            BaseApplication.Log($"{minLong} - {minLong2}");
-            BaseApplication.Log($"{maxLong} - {maxLong2}");
-            BaseApplication.Log($"{minULong} - {minULong2}");
-            BaseApplication.Log($"{maxULong} - {maxULong2}");
+            App.Log($"{minLong} - {minLong2}");
+            App.Log($"{maxLong} - {maxLong2}");
+            App.Log($"{minULong} - {minULong2}");
+            App.Log($"{maxULong} - {maxULong2}");
 
             variant.AsBool = true;
 

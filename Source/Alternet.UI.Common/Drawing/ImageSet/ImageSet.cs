@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// same picture.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : HandledObject<IImageSetHandler>
+    public class ImageSet : ImageContainer<IImageSetHandler>
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ImageSet()
-            : this(false)
+            : base(false)
         {
         }
 
@@ -36,8 +36,6 @@ namespace Alternet.UI
         public ImageSet(bool immutable)
             : base(immutable)
         {
-            Images.ItemInserted += Images_ItemInserted;
-            Images.ItemRemoved += Images_ItemRemoved;
         }
 
         /// <summary>
@@ -79,7 +77,7 @@ namespace Alternet.UI
             using var stream = ResourceLoader.StreamFromUrl(url);
             if (stream is null)
             {
-                BaseApplication.LogError($"ImageSet not loaded from: {url}");
+                App.LogError($"ImageSet not loaded from: {url}");
                 return;
             }
 
@@ -98,11 +96,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when object is changed (image is added or removed).
-        /// </summary>
-        public event EventHandler? Changed;
-
-        /// <summary>
         /// Get the size of the bitmap represented by this bundle in default resolution
         /// or, equivalently, at 100% scaling.
         /// </summary>
@@ -115,21 +108,16 @@ namespace Alternet.UI
         {
             get
             {
+                if (Handler.IsDummy)
+                {
+                    if (Images.Count == 0)
+                        return 16;
+                    return Images[0].Size;
+                }
+
                 return Handler.DefaultSize;
             }
         }
-
-        /// <summary>
-        /// Gets the <see cref="Image"/> collection for this image list.
-        /// </summary>
-        /// <value>The collection of images.</value>
-        public virtual Collection<Image> Images { get; internal set; } = new() { ThrowOnNullAdd = true };
-
-        /// <summary>
-        /// Gets whether this <see cref="ImageSet"/> instance is valid and contains image(s).
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsOk => Handler.IsOk;
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -328,7 +316,7 @@ namespace Alternet.UI
         /// that function with the result of <see cref="Control.GetPixelScaleFactor"/>.
         /// </remarks>
         /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
-        public virtual SizeI GetPreferredBitmapSizeFor(IControl control)
+        public virtual SizeI GetPreferredBitmapSizeFor(Control control)
         {
             return Handler.GetPreferredBitmapSizeFor(control);
         }
@@ -345,7 +333,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="control">Control to get DPI scaling factor from.</param>
         /// <param name="imageSet"><see cref="ImageSet"/> instance.</param>
-        public virtual Image AsImageFor(IControl control) => new Bitmap(this, control);
+        public virtual Image AsImageFor(Control control) => new Bitmap(this, control);
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at
@@ -362,7 +350,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="scale"></param>
         /// <returns></returns>
-        public virtual SizeI GetPreferredBitmapSizeAtScale(double scale)
+        public virtual SizeI GetPreferredBitmapSizeAtScale(Coord scale)
         {
             return Handler.GetPreferredBitmapSizeAtScale(scale);
         }
@@ -370,26 +358,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IImageSetHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateImageSetHandler();
+            return GraphicsFactory.Handler.CreateImageSetHandler() ?? DummyImageSetHandler.Default;
         }
-
-        private void Images_ItemInserted(object? sender, int index, Image item)
-        {
-            CheckReadOnly();
-            Handler.Add(item);
-            OnChanged();
-        }
-
-        private void Images_ItemRemoved(object? sender, int index, Image item)
-        {
-            CheckReadOnly();
-            OnChanged();
-            throw new NotImplementedException();
-        }
-
-        private void OnChanged()
-        {
-            Changed?.Invoke(this, EventArgs.Empty);
-        }
-    }
+   }
 }

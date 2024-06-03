@@ -312,7 +312,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static RectI Parse(string source)
         {
-            IFormatProvider formatProvider = BaseApplication.InvariantEnglishUS;
+            IFormatProvider formatProvider = App.InvariantEnglishUS;
 
             TokenizerHelper th = new(source, formatProvider);
 
@@ -339,6 +339,18 @@ namespace Alternet.Drawing
             th.LastTokenRequired();
 
             return value;
+        }
+
+        /// <summary>
+        /// Creates new rectangle with the specified width and height.
+        /// </summary>
+        /// <param name="width">Rectangle width.</param>
+        /// <param name="height">Rectangle height.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RectI Create(int width, int height)
+        {
+            return new RectI(0, 0, width, height);
         }
 
         /// <summary>

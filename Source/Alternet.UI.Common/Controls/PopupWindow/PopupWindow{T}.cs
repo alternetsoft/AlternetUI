@@ -55,7 +55,7 @@ namespace Alternet.UI
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
             Disposed += PopupWindow_Disposed;
-            HideOnDeactivate = !BaseApplication.IsLinuxOS;
+            HideOnDeactivate = !App.IsLinuxOS;
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace Alternet.UI
             Show();
             WasShown = true;
             FocusMainControl();
-            if (BaseApplication.IsLinuxOS || ModalPopups)
+            if (App.IsLinuxOS || ModalPopups)
             {
                 if (ShowModal() == ModalResult.Accepted)
                     HidePopup(ModalResult.Accepted);
@@ -402,7 +402,7 @@ namespace Alternet.UI
                     ModalResult = result;
                 else
                     Hide();
-                BaseApplication.DoEvents();
+                App.DoEvents();
                 if (PopupOwner is not null && FocusPopupOwnerOnHide)
                 {
                     PopupOwner.ParentWindow?.Activate();
@@ -470,7 +470,7 @@ namespace Alternet.UI
             // now check left/right too
             double x = ptOrigin.X;
 
-            if (BaseApplication.Current.LangDirection == LangDirection.RightToLeft)
+            if (App.Current.LangDirection == LangDirection.RightToLeft)
             {
                 // shift the window to the left instead of the right.
                 x -= size.Width;

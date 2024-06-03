@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    internal class WxFontFactoryHandler : IFontFactoryHandler
+    internal class WxFontFactoryHandler : DisposableObject, IFontFactoryHandler
     {
         public FontEncoding DefaultFontEncoding
         {
@@ -28,13 +28,6 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public IFontHandler CreateDefaultMonoFontHandler()
-        {
-            var result = new UI.Native.Font();
-            result.InitializeWithDefaultMonoFont();
-            return result;
-        }
-
         public IFontHandler CreateFontHandler()
         {
             var result = new UI.Native.Font();
@@ -48,9 +41,10 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public Font CreateSystemFont(SystemSettingsFont systemFont)
+        public Font? CreateSystemFont(SystemSettingsFont systemFont)
         {
-            return SystemSettings.GetFont(systemFont);
+            var fnt = UI.Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
+            return new Font(fnt);
         }
 
         public string[] GetFontFamiliesNames()

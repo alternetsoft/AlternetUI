@@ -73,9 +73,9 @@ namespace ControlsSample
 
         private void ShowInfo()
         {
-            BaseApplication.Log($"Animation.IsOk: {animation.IsOk}");
-            BaseApplication.Log($"Animation.FrameCount: {animation.FrameCount}");
-            BaseApplication.Log($"Animation.FrameDelay[0]: {animation.GetDelay(0)}");
+            App.Log($"Animation.IsOk: {animation.IsOk}");
+            App.Log($"Animation.FrameCount: {animation.FrameCount}");
+            App.Log($"Animation.FrameDelay[0]: {animation.GetDelay(0)}");
         }
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -95,12 +95,12 @@ namespace ControlsSample
                         animation.Stop();
                         if (!animation.LoadFile(dialog.FileName!, AnimationType.Any))
                         {
-                            BaseApplication.Log($"Error loading file: {dialog.FileName}");
+                            App.Log($"Error loading file: {dialog.FileName}");
                         }
                         animation.Play();
                     }
                     else
-                        BaseApplication.Log($"File not found: {dialog.FileName}");
+                        App.Log($"File not found: {dialog.FileName}");
                 }
             }
             else
