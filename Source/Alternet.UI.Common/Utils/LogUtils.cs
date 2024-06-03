@@ -422,6 +422,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="SKBitmap"/> metrics.
+        /// </summary>
+        public static void LogSkiaBitmap()
+        {
+            LogSkiaBitmap(new SKBitmap(), "new SKBitmap():");
+            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: true), "new SKBitmap(50, 50, isOpaque: true):");
+            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: false), "new SKBitmap(50, 50, isOpaque: true):");
+        }
+
+        /// <summary>
+        /// Logs <see cref="SKBitmap"/> metrics.
+        /// </summary>
+        public static void LogSkiaBitmap(SKBitmap bitmap, string? title = null)
+        {
+            App.LogSection(
+                () =>
+                {
+                    App.LogNameValue("Size", (bitmap.Width, bitmap.Height));
+                    App.LogNameValue("ReadyToDraw", bitmap.ReadyToDraw);
+                    App.LogNameValue("DrawsNothing", bitmap.DrawsNothing);
+                    App.LogNameValue("IsEmpty", bitmap.IsEmpty);
+                    App.LogNameValue("IsNull", bitmap.IsNull);
+                    App.LogNameValue("AlphaType", bitmap.AlphaType);
+                    App.LogNameValue("BytesPerPixel", bitmap.BytesPerPixel);
+                    App.LogNameValue("ColorType", bitmap.ColorType);
+                },
+                title);
+        }
+
+        /// <summary>
         /// Logs useful c++ defines.
         /// </summary>
         public static void LogUsefulDefines()
@@ -749,6 +779,7 @@ namespace Alternet.UI
 
             addLogAction("Log SKFontManager", LogUtils.LogSkiaFontManager);
             addLogAction("Log SKFont", LogUtils.LogSkiaFont);
+            addLogAction("Log SKBitmap", LogUtils.LogSkiaBitmap);
             addLogAction("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
         }
 
