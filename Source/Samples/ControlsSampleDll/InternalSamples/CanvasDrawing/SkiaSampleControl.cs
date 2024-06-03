@@ -39,7 +39,7 @@ namespace Alternet.UI
                 $"; hello text: {font.SizeInPoints}",
                 (160, 0),
                 font,
-                Color.Black,
+                Color.Navy,
                 Color.LightGreen);
 
             font = font.Base;
@@ -48,7 +48,7 @@ namespace Alternet.UI
                 $"Hello:! {font.SizeInPoints}",
                 (50, 150),
                 font,
-                Color.Black,
+                Color.Red,
                 Color.LightGreen);
 
             dc.SetPixel(5, 0, Color.Red);

@@ -190,7 +190,12 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, IntPtr data, IntPtr alpha, bool staticData = false)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data, alpha, staticData);
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
+                width,
+                height,
+                data,
+                alpha,
+                staticData);
         }
 
         /// <summary>
@@ -306,20 +311,21 @@ namespace Alternet.Drawing
             byte* alphaData = (byte*)alphaNativedata;
 
             var pixels = bitmap.Pixels;
-            int i = 0;
+            var length = pixels.Length;
 
-            for (int y = 0; y < height; y++)
+            fixed (SKColor* p = pixels)
             {
-                for (int x = 0; x < width; x++)
+                var ptr = p;
+
+                for (int i = 0; i < length; i++)
                 {
-                    var color = pixels[i];
+                    var color = *ptr;
 
                     *alphaData = color.Alpha;
                     *rgbData = color;
-
                     rgbData++;
                     alphaData++;
-                    i++;
+                    ptr++;
                 }
             }
 
@@ -1587,22 +1593,20 @@ namespace Alternet.Drawing
             var alphaNativedata = bitmap.GetNativeAlphaData();
             byte* alphaData = (byte*)alphaNativedata;
 
-            SKColor[] pixels = new SKColor[bitmap.PixelCount];
-            
-            int i = 0;
+            var count = bitmap.PixelCount;
 
-            for (int y = 0; y < height; y++)
+            SKColor[] pixels = new SKColor[count];
+
+            fixed (SKColor* p = pixels)
             {
-                for (int x = 0; x < width; x++)
+                var ptr = p;
+
+                for (int i = 0; i < count; i++)
                 {
-                    var color = *rgbData;
-                    var alpha = *alphaData;
-
-                    pixels[i] = Color.FromArgb(alpha, color);
-
+                    *ptr = RGBValue.ToSkia(*rgbData, *alphaData);
                     rgbData++;
                     alphaData++;
-                    i++;
+                    ptr++;
                 }
             }
 
@@ -1621,19 +1625,19 @@ namespace Alternet.Drawing
             var rgbNativeData = bitmap.GetNativeData();
             RGBValue* rgbData = (RGBValue*)rgbNativeData;
 
-            SKColor[] pixels = new SKColor[bitmap.PixelCount];
+            var count = bitmap.PixelCount;
 
-            int i = 0;
+            SKColor[] pixels = new SKColor[count];
 
-            for (int y = 0; y < height; y++)
+            fixed (SKColor* p = pixels)
             {
-                for (int x = 0; x < width; x++)
-                {
-                    var color = *rgbData;
-                    pixels[i] = (Color)color;
+                var ptr = p;
 
+                for (int i = 0; i < count; i++)
+                {
+                    *ptr = (SKColor)(*rgbData);
                     rgbData++;
-                    i++;
+                    ptr++;
                 }
             }
 

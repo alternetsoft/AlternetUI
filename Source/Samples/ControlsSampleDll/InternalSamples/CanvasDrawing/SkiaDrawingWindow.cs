@@ -145,7 +145,7 @@ namespace ControlsSample
 
             canvas.DrawText("He|l lo", pt, font, Color.Black, Color.LightGreen);
 
-            canvas.DrawText("; hello ", pt2, font, Color.Black, Color.LightGreen);
+            canvas.DrawText("; hello ", pt2, font, Color.Red, Color.LightGreen);
 
             canvas.DrawPoint(pt, Color.Red);
             canvas.DrawPoint(pt2, Color.Red);
