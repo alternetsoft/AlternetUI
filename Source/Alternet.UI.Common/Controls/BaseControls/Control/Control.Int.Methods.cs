@@ -168,7 +168,7 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        internal void RaiseProcessException(ControlExceptionEventArgs e)
+        internal void RaiseProcessException(ThrowExceptionEventArgs e)
         {
             OnProcessException(e);
             ProcessException?.Invoke(this, e);

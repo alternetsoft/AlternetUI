@@ -455,7 +455,7 @@ namespace Alternet.UI
             }
             catch (Exception exception)
             {
-                ControlExceptionEventArgs data = new(exception);
+                ThrowExceptionEventArgs data = new(exception);
                 RaiseProcessException(data);
                 if (data.ThrowIt)
                     throw;

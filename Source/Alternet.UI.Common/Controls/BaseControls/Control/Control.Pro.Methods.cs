@@ -633,9 +633,9 @@ namespace Alternet.UI
         /// <summary>
         /// Called when an exception need to be processed.
         /// </summary>
-        /// <param name="e">An <see cref="ControlExceptionEventArgs"/> that contains
+        /// <param name="e">An <see cref="ThrowExceptionEventArgs"/> that contains
         /// the event data.</param>
-        protected virtual void OnProcessException(ControlExceptionEventArgs e)
+        protected virtual void OnProcessException(ThrowExceptionEventArgs e)
         {
         }
 
