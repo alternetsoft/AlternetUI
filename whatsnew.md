@@ -1,3 +1,44 @@
+# 0.9.604 (2024 June 3)
+
+- Fixed exception when maximized window is closed.
+- RadioButton: CheckedChanged event is now fired when IsChecked property changed from code.
+- Control: LocationChanged event is now fired.
+- Window: StateChanged event is now fired.
+- Image: ExtensionsForLoad, ExtensionsForSave props.
+- Color and RGBValue to/from SKColor conversions.
+- GenericImage and Image to/from SKBitmap conversions.
+- Font, Brush, Pen to/from Skia converters.
+- Brush: Renamed BrushColor property to AsColor.
+- Window: IsMaximized, IsMinimized.
+- Enum renamed GenericControlState -> VisualControlState.
+- Control.CurrentState renamed to VisualState as Window has State property and it was confusing.
+- Font.Default and Font.DefaultMono set methods.
+- FontFamily: Families, FamiliesNames and FamiliesNamesAscending speedup, types changed to IEnumerable.
+- FontFamily: Reset, IsOk.
+- FontFamily.IsFamilyValid speedup and implemented on c# internally.
+- SystemFonts: All properties are now can be set.
+- SystemFonts: Default, DefaultMono, Serif, SansSerif, GetFont, SetFont.
+- FontFamily.GetName property.
+- Renamed BaseApplication to App.
+- SolidBrush: made all constructors public.
+- Color.AsBrush now returns immutable brush.
+- Brushes: Now uses Color.AsBrush. As a result: speedup and less resources are used.
+- GenericImage: Load and constructor now understand urls (previously only filename).
+- LogListBox: Ctrl+C (selected items to clipboard).
+- Control: Calls to events moved to Raise* methods from On* methods, so now overriding doesn't require calling base.On* method.
+- Display.Default.
+- Font and Color: AsFillPaint, AsStrokePaint props.
+- SkiaGraphics: better DrawText, GetTextExtent.
+- GenericImage: Contstructors without IntPtr.
+- GenericImage: Added constrcutor with SKColor[] parameter.
+- GenericImage: Static methods GetRGBValues, GetAlphaValues, SeparateAlphaData.
+- GenericImage: All load file methods now understand urls.
+- GenericImage: Save methods now use FileSystem.
+- ResourceLoader now uses FileSystem, so it can be redirected by the developer.
+- RectI and RectD: static CreateRect(Width, Height).
+- ImageSet, ImageList, IconSet improved: Common ancestor, support IImageContainer interface.
+- ImageList.ImageSize is now SizeI as in WinForms.
+
 # 0.9.603 (2024 May 30)
 
 - Control: TextChanged event.
