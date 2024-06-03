@@ -342,6 +342,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates new rectangle with the specified width and height.
+        /// </summary>
+        /// <param name="width">Rectangle width.</param>
+        /// <param name="height">Rectangle height.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RectI Create(int width, int height)
+        {
+            return new RectI(0, 0, width, height);
+        }
+
+        /// <summary>
         /// Converts a RectangleF to a Rectangle by performing a ceiling operation on all
         /// the coordinates.
         /// </summary>

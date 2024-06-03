@@ -387,6 +387,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates new rectangle with the specified width and height.
+        /// </summary>
+        /// <param name="width">Rectangle width.</param>
+        /// <param name="height">Rectangle height.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RectD Create(Coord width, Coord height)
+        {
+            return new RectD(0, 0, width, height);
+        }
+
+        /// <summary>
         /// Converts <see cref="Coord"/> coordinate to the integer value.
         /// </summary>
         /// <param name="value">Coordinate.</param>
