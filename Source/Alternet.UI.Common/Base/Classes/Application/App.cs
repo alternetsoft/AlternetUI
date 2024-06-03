@@ -971,6 +971,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs section using <see cref="LogBeginSection"/>, <see cref="LogEndSection"/>
+        /// and calling <paramref name="logAction"/> between them.
+        /// </summary>
+        /// <param name="logAction">Log action.</param>
+        /// <param name="title">Section title (optional).</param>
+        public static void LogSection(Action logAction, string? title = null)
+        {
+            LogBeginSection(title);
+            try
+            {
+                logAction?.Invoke();
+            }
+            finally
+            {
+                LogEndSection();
+            }
+        }
+
+        /// <summary>
         /// Begins log section.
         /// </summary>
         public static void LogBeginSection(string? title = null, LogItemKind kind = LogItemKind.Information)
