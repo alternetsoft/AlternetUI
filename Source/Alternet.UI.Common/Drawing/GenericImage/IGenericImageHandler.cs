@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public interface IGenericImageHandler : IDisposable
     {
+        SKColor[] Pixels { get; set; }
+
+        RGBValue[] RgbData { get; set; }
+
+        byte[] AlphaData { get; set; }
+
         GenericImageLoadFlags LoadFlags { get; set; }
 
         GenericImage.PixelStrategy BestStrategy {get;}
@@ -118,8 +126,6 @@ namespace Alternet.Drawing
 
         GenericImage ConvertToDisabled(byte brightness = 255);
 
-        GenericImage ChangeLightness(int ialpha);
-
         byte GetAlpha(int x, int y);
 
         RGBValue GetRGB(int x, int y);
@@ -177,14 +183,5 @@ namespace Alternet.Drawing
             bool staticData = false);
 
         void SetNativeData(IntPtr data, bool staticData = false);
-
-        /*
-        SKColor[] Pixels {get;set;}
-        
-        RGBValue[] RgbData {get;set;}
-        
-        byte[] AlphaData {get;set;}
-
-        */
     }
 }

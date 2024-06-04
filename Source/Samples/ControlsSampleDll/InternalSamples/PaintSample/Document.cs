@@ -6,12 +6,11 @@ using Alternet.UI.Extensions;
 
 namespace PaintSample
 {
-    public class Document : IDisposable
+    public class Document : DisposableObject
     {
         private readonly Control control;
-        private bool isDisposed;
 
-        private Bitmap? bitmap;
+        private Image? bitmap;
 
         private Action<Graphics>? previewAction;
 
@@ -62,14 +61,14 @@ namespace PaintSample
 
         public event EventHandler? Changed;
 
-        public Bitmap Bitmap
+        public Image Bitmap
         {
             get => bitmap ?? throw new Exception();
             set
             {
                 if (bitmap == value)
                     return;
-                bitmap?.Dispose();
+                SafeDispose(ref bitmap);
                 bitmap = value;
                 OnChanged();
             }
@@ -115,34 +114,15 @@ namespace PaintSample
             previewAction?.Invoke(drawingContext);
         }
 
-        public void Dispose()
+        protected override void DisposeManaged()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            SafeDispose(ref bitmap);
         }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    Bitmap.Dispose();
-                    Bitmap = null!;
-                }
-
-                isDisposed = true;
-            }
-        }
-
-        private Bitmap CreateBitmap(Control control)
+        private Image CreateBitmap(Control control)
         {
             var pixelSize = control.PixelFromDip(new SizeD(600, 600));
-            var bitmap = new Bitmap(pixelSize, control);
-            using var dc = Graphics.FromImage(bitmap);
-            dc.FillRectangle(new SolidBrush(BackgroundColor), bitmap.BoundsDip(control)); 
-            return bitmap;
+            return Image.Create(pixelSize.Width, pixelSize.Height, BackgroundColor);
         }
 
         private Bitmap LoadBitmap(string fileName)

@@ -252,6 +252,24 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual int PixelCount => Size.PixelCount;
 
+        public virtual SKColor[] Pixels
+        {
+            get => Handler.Pixels;
+            set => Handler.Pixels = value;
+        }
+
+        public virtual RGBValue[] RgbData
+        {
+            get => Handler.RgbData;
+            set => Handler.RgbData = value;
+        }
+
+        public virtual byte[] AlphaData
+        {
+            get => Handler.AlphaData;
+            set => Handler.AlphaData = value;
+        }
+
         /// <summary>
         /// Returns <c>true</c> if image data is present.
         /// </summary>
@@ -289,7 +307,6 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="url">Path or url to file with image data.</param>
         /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CanRead(string url)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
@@ -299,6 +316,110 @@ namespace Alternet.Drawing
                 return false;
             }
             return CanRead(stream);
+        }
+
+        public static unsafe void FillPixels(SKColor[] pixels, SKColor fill)
+        {
+            var length = pixels.Length;
+
+            fixed (SKColor* rgbPtr = pixels)
+            {
+                var ptr = rgbPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    *ptr = fill;
+                    ptr++;
+                }
+            }
+        }
+
+        public static unsafe void FillAlphaData(byte[] alpha, byte fill)
+        {
+            fixed (byte* alphaPtr = alpha)
+            {
+                BaseMemory.Fill((IntPtr)alphaPtr, fill, alpha.Length);
+            }
+        }
+
+        public static unsafe void FillRgbData(RGBValue[] rgb, RGBValue fill)
+        {
+            var length = rgb.Length;
+
+            fixed (RGBValue* rgbPtr = rgb)
+            {
+                var ptr = rgbPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    *ptr = fill;
+                    ptr++;
+                }
+            }
+        }
+
+        public static GenericImage Create(int width, int height, Color color)
+        {
+            var alphaData = CreateAlphaData(width, height, color.A);
+            var rgbData = CreateRgbData(width, height, color);
+            GenericImage image = new(width, height, rgbData, alphaData);
+            return image;
+        }
+
+        public static SKColor[] CreatePixels(int width, int height, SKColor? fill = null)
+        {
+            var size = width * height;
+            SKColor[] result = new SKColor[size];
+            if (fill is null)
+                return result;
+            FillPixels(result, fill.Value);
+            return result;
+        }
+
+        public static RGBValue[] CreateRgbData(int width, int height, RGBValue? fill = null)
+        {
+            var size = width * height;
+            RGBValue[] result = new RGBValue[size];
+            if (fill is null)
+                return result;
+            FillRgbData(result, fill.Value);
+            return result;
+        }
+
+        public static unsafe RGBValue[] CreateRgbDataFromPtr(int width, int height, IntPtr source)
+        {
+            var size = width * height;
+            RGBValue[] result = new RGBValue[size];
+
+            fixed (RGBValue* resultPtr = result)
+            {
+                BaseMemory.Move(source, (IntPtr)resultPtr, size * 3);
+            }
+
+            return result;
+        }
+
+        public static unsafe byte[] CreateAlphaDataFromPtr(int width, int height, IntPtr source)
+        {
+            var size = width * height;
+            byte[] result = new byte[size];
+
+            fixed(byte* resultPtr = result)
+            {
+                BaseMemory.Move(source, (IntPtr)resultPtr, size);
+            }
+
+            return result;
+        }
+
+        public static byte[] CreateAlphaData(int width, int height, byte? fill = null)
+        {
+            var size = width * height;
+            byte[] result = new byte[size];
+            if (fill is null)
+                return result;
+            FillAlphaData(result, fill.Value);
+            return result;
         }
 
         public static unsafe RGBValue[] GetRGBValues(SKColor[] data)
@@ -364,7 +485,12 @@ namespace Alternet.Drawing
 
         public static SKBitmap ToSkia(GenericImage bitmap)
         {
-            if (bitmap.HasAlpha())
+            return ToSkia(bitmap.Handler);
+        }
+
+        public static SKBitmap ToSkia(IGenericImageHandler bitmap)
+        {
+            if (bitmap.HasAlpha)
                 return ToSkiaWithAlpha(bitmap);
             else
                 return ToSkiaWithoutAlpha(bitmap);
@@ -1152,7 +1278,10 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual GenericImage ChangeLightness(int ialpha)
         {
-            return Handler.ChangeLightness(ialpha);
+            ialpha = MathUtils.ApplyMinMax(ialpha, 0, 200);
+            var result = Copy();
+            result.ForEachPixel(Color.ChangeLightness, ialpha);
+            return result;
         }
 
         /// <summary>
@@ -1615,10 +1744,13 @@ namespace Alternet.Drawing
             return GraphicsFactory.Handler.CreateGenericImageHandler();
         }
 
-        private static unsafe SKBitmap ToSkiaWithAlpha(GenericImage bitmap)
+        private static unsafe SKBitmap ToSkiaWithAlpha(IGenericImageHandler bitmap)
         {
             var width = bitmap.Width;
             var height = bitmap.Height;
+            var count = width * height;
+            if (count == 0)
+                return new SKBitmap();
 
             var result = new SKBitmap(width, height, isOpaque: false);
 
@@ -1628,7 +1760,6 @@ namespace Alternet.Drawing
             var alphaNativedata = bitmap.GetNativeAlphaData();
             byte* alphaData = (byte*)alphaNativedata;
 
-            var count = bitmap.PixelCount;
 
             SKColor[] pixels = new SKColor[count];
 
@@ -1650,17 +1781,18 @@ namespace Alternet.Drawing
             return result;
         }
 
-        private static unsafe SKBitmap ToSkiaWithoutAlpha(GenericImage bitmap)
+        private static unsafe SKBitmap ToSkiaWithoutAlpha(IGenericImageHandler bitmap)
         {
             var width = bitmap.Width;
             var height = bitmap.Height;
+            var count = width * height;
+            if (count == 0)
+                return new SKBitmap();
 
             var result = new SKBitmap(width, height, isOpaque: true);
 
             var rgbNativeData = bitmap.GetNativeData();
             RGBValue* rgbData = (RGBValue*)rgbNativeData;
-
-            var count = bitmap.PixelCount;
 
             SKColor[] pixels = new SKColor[count];
 

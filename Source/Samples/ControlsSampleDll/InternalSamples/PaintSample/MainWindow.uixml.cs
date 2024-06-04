@@ -90,11 +90,10 @@ namespace PaintSample
 
             testMenu = menu.Add("Actions");
 
-            testMenu.Add("Lightness (GenericImage.ChangeLightness)", DoChangeLightness);
-            testMenu.Add("Gen sample image (GenericImage.GetData)", DoGenImageUseGetData);
-            testMenu.Add("Lightness (GenericImage.GetData)", DoChangeLightnessUseGetData);
-            testMenu.Add("Fill red (new GenericImage with native data)", DoFillRedUseSetData);
-            testMenu.Add("Fill green (new GenericImage with native data using SKColors)", DoFillGreenUseSkiaColors);
+            testMenu.Add("Change Lightness...", DoChangeLightness);
+            testMenu.Add("Generate sample image", DoGenImageUseGetData);
+            testMenu.Add("Fill red (new with rgb and alpha arrays)", DoFillRedUseSetData);
+            testMenu.Add("Fill green (new with pixel array)", DoFillGreenUseSkiaColors);
             testMenu.Add("Make file grey...", DoMakeFileGray);
             testMenu.Add("Load Toucan image", DoLoadToucanImage);
 
@@ -480,108 +479,52 @@ namespace PaintSample
         {
             PromptToSaveDocument(out var cancel);
             e.Cancel = cancel;
-            /*if (!cancel)
-            {
-                this.Hide();
-                Alternet.UI.Application.Current.Exit();
-            }*/
-
             base.OnClosing(e);
+        }
+
+        public int AskLightness()
+        {
+            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
+            if (result is null)
+                return 100;
+            var lightness = (int)result.Value;
+            return lightness;
         }
 
         public void DoChangeLightness()
         {
-            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
-            if (result is null)
-                return;
-            App.Log($"Image.ChangeLightness: {result}");
-            var bitmap = Document.Bitmap;
-            GenericImage image = (GenericImage)bitmap;
-            var converted = image.ChangeLightness((int)result.Value);
-            Document.Bitmap = (Bitmap)converted;
-        }
-
-        public void DoChangeLightnessUseGetData()
-        {
-            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
-            if (result is null)
-                return;
-            App.Log($"Change lightness using GenericImage.GetData");
-            var bitmap = Document.Bitmap;
-            GenericImage image = (GenericImage)bitmap;
-            var lightness = (int)result.Value;
-            image.ForEachPixel(Color.ChangeLightness, lightness);
-            Document.Bitmap = (Bitmap)image;
+            var lightness = AskLightness();
+            App.Log($"Image.ChangeLightness: {lightness}");
+            Document.Bitmap = Document.Bitmap.ChangeLightness(lightness);
         }
 
         public unsafe void DoFillGreenUseSkiaColors()
         {
-            var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
-            if (result is null)
-                return;
-
-            var alpha = (byte)result.Value;
+            var alpha = AskTransparency();
             App.Log($"Fill green color (alpha = {alpha}) using new image with native data");
 
-            SizeI size = (600, 600);
-            var pixelCount = size.PixelCount;
-            var height = size.Height;
-            var width = size.Width;
-            SKColor color = RGBValue.ToSkia(Color.Green, alpha);
+            var height = 600;
+            var width = 600;
 
-            var colors = new SKColor[pixelCount];
+            var pixels = GenericImage.CreatePixels(width, height, Color.Green.WithAlpha(alpha));
+            Document.Bitmap = Bitmap.Create(width, height, pixels);
+        }
 
-            fixed (SKColor* rgbPtr = colors)
-            {
-                var ptr = rgbPtr;
+        public byte AskTransparency()
+        {
+            var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
+            if (result is null)
+                return 255;
 
-                for (int i = 0; i < pixelCount; i++)
-                {
-                    *ptr = color;
-                    ptr++;
-                }
-            }
-
-            GenericImage image = new(size.Width, size.Height, colors);
-            Document.Bitmap = (Bitmap)image;
+            var alpha = (byte)result.Value;
+            return alpha;
         }
 
         public unsafe void DoFillRedUseSetData()
         {
-            var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
-            if (result is null)
-                return;
-
-            var alpha = (byte)result.Value;
+            var alpha = AskTransparency();
             App.Log($"Fill red color (alpha = {alpha}) using new image with native data");
-
-            SizeI size = (600, 600);
-            var pixelCount = size.PixelCount;
-            var height = size.Height;
-            var width = size.Width;
-            RGBValue rgb = Color.Red;
-
-            var alphaData = new byte[pixelCount];
-            var rgbData = new RGBValue[pixelCount];
-
-            fixed(byte* alphaPtr = alphaData)
-            {
-                BaseMemory.Fill((IntPtr)alphaPtr, alpha, pixelCount);
-            }
-
-            fixed (RGBValue* rgbPtr = rgbData)
-            {
-                var ptr = rgbPtr;
-
-                for(int i = 0; i < pixelCount; i++)
-                {
-                    *ptr = rgb;
-                    ptr++;
-                }
-            }
-
-            GenericImage image = new(size.Width, size.Height, rgbData, alphaData);
-            Document.Bitmap = (Bitmap)image;
+            Document.Bitmap = Bitmap.Create(600, 600, Color.Red.WithAlpha(alpha));
         }
 
         public unsafe void DoMakeFileGray()
@@ -616,37 +559,35 @@ namespace PaintSample
         {
             App.Log($"Generate sample image using GenericImage.GetData");
             var bitmap = Document.Bitmap;
-            GenericImage image = (GenericImage)bitmap;
-            image.InitAlpha();
-            var ndata = image.GetNativeData();
-            var nalpha = image.GetNativeAlphaData();
 
-            byte* data = (byte*)ndata;
-            byte* alpha = (byte*)nalpha;
+            var width = bitmap.Width;
+            var height = bitmap.Height;
+            var pixels = GenericImage.CreatePixels(width, height);
 
-            var height = image.Height;
-            var width = image.Width;
-
-            for (int y = 0; y < height; y++)
+            fixed(SKColor* ptr = pixels)
             {
-                byte r = 0, g = 0, b = 0;
-                if (y < height / 3)
-                    r = 0xff;
-                else if (y < (2 * height) / 3)
-                    g = 0xff;
-                else
-                    b = 0xff;
+                var p = ptr;
 
-                for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
                 {
-                    *alpha++ = (byte)x;
-                    *data++ = r;
-                    *data++ = g;
-                    *data++ = b;
+                    byte r = 0, g = 0, b = 0;
+                    if (y < height / 3)
+                        r = 0xff;
+                    else if (y < (2 * height) / 3)
+                        g = 0xff;
+                    else
+                        b = 0xff;
+
+                    for (int x = 0; x < width; x++)
+                    {
+                        var color = new SKColor(r, g, b, (byte)x);
+                        *p = color;
+                        p++;
+                    }
                 }
             }
 
-            Document.Bitmap = (Bitmap)image;
+            Document.Bitmap = Bitmap.Create(width, height, pixels);
         }
 
         public void DoLoadToucanImage()
@@ -659,15 +600,18 @@ namespace PaintSample
         public void DoDrawOnBitmap()
         {
             CreateNewDocument();
-            var bitmap = Document.Bitmap;
+            var bitmap = new Bitmap(1000, 800);
+            bitmap.ScaleFactor = this.GetPixelScaleFactor();
             var dc = bitmap.Canvas;
 
-            DrawSample(dc, (15, 15));
+            DrawSample(dc, (15, 15), bitmap.Bounds);
+
+            Document.Bitmap = bitmap;
         }
 
-        public void DrawSample(Graphics dc, PointD location)
+        public void DrawSample(Graphics dc, PointD location, RectD rect)
         {
-            dc.FillRectangle(Color.WhiteSmoke.AsBrush, (0, 0, 200, 200));
+            dc.FillRectangle(Color.WhiteSmoke.AsBrush, rect);
 
             App.LogNameValue("dc.DPI", dc.GetDPI());
             App.LogNameValue("window.DPI", GetDPI());
