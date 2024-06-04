@@ -1332,6 +1332,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns RGB values of the <see cref="Color"/>
+        /// </summary>
+        /// <param name="r">Value of <see cref="R"/>.</param>
+        /// <param name="g">Value of <see cref="G"/>.</param>
+        /// <param name="b">Value of <see cref="B"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void GetRgbValues(out byte r, out byte g, out byte b)
+        {
+            var value = Value;
+            r = unchecked((byte)(value >> ARGBRedShift));
+            g = unchecked((byte)(value >> ARGBGreenShift));
+            b = unchecked((byte)(value >> ARGBBlueShift));
+        }
+
+        /// <summary>
         /// Gets the 32-bit ARGB value of this <see cref="Color"/> structure.
         /// </summary>
         /// <returns>The 32-bit ARGB value of this <see cref="Color"/>.</returns>
@@ -1450,6 +1465,54 @@ namespace Alternet.Drawing
                 return ARGBWeb;
             else
                 return string.Empty;
+        }
+
+        /// <summary>
+        /// Returns a new color based on this current instance, but with the new red channel value. 
+        /// </summary>
+        /// <param name="red">The new red component.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color WithRed(byte red)
+        {
+            GetArgbValues(out byte a, out byte r, out byte g, out byte b);
+            return FromArgb(a, red, g, b);
+        }
+
+        /// <summary>
+        /// Returns a new color based on this current instance, but with the new green channel value. 
+        /// </summary>
+        /// <param name="green">The new green component.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color WithGreen(byte green)
+        {
+            GetArgbValues(out byte a, out byte r, out byte g, out byte b);
+            return FromArgb(a, r, green, b);
+        }
+
+        /// <summary>
+        /// Returns a new color based on this current instance, but with the new blue channel value.
+        /// </summary>
+        /// <param name="blue">The new blue component.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color WithBlue(byte blue)
+        {
+            GetArgbValues(out byte a, out byte r, out byte g, out byte b);
+            return FromArgb(a, r, g, blue);
+        }
+
+        /// <summary>
+        /// Returns a new color based on this current instance, but with the new alpha channel value.
+        /// </summary>
+        /// <param name="alpha">The new alpha component.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color WithAlpha(byte alpha)
+        {
+            GetRgbValues(out byte r, out byte g, out byte b);
+            return FromArgb(alpha, r, g, b);
         }
 
         /// <summary>
