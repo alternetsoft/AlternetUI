@@ -341,6 +341,20 @@ namespace Alternet.Drawing
             return (image is null) || image.IsEmpty;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Image Create(int width, int height, Color color)
+        {
+            var image = GenericImage.Create(width, height, color);
+            return (Image)image;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Image Create(int width, int height, SKColor[] pixels)
+        {
+            var image = new GenericImage(width, height, pixels);
+            return (Image)image;
+        }
+
         /// <summary>
         /// Indicates whether the specified image is not <c>null</c> and has non-empty width and height.
         /// </summary>
@@ -586,6 +600,14 @@ namespace Alternet.Drawing
         public virtual bool Load(string name, BitmapType type)
         {
             return Handler.Load(name, type);
+        }
+
+        public virtual Image ChangeLightness(int ialpha)
+        {
+            GenericImage image = (GenericImage)this;
+            var converted = image.ChangeLightness(ialpha);
+            var result = (Bitmap)converted;
+            return result;
         }
 
         /// <summary>
