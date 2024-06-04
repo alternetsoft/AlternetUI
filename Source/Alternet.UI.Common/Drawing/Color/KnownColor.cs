@@ -6,7 +6,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Specifies the known colors.
     /// </summary>
-    public enum KnownColor
+    public enum KnownColor : short
     {
         // This enum is order dependent!!!
         // The value of these known colors are indexes into a color array.

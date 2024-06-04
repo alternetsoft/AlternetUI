@@ -85,31 +85,22 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly Color Empty = new();
 
-        // NOTE : The "zero" pattern (all members being 0) must represent
-        //      : "not set". This allows "Color c;" to be correct.
-        private const short StateKnownColorValid = 0x0001;
-        private const short StateARGBValueValid = 0x0002;
-        private const short StateValueMask = StateARGBValueValid;
-        private const short StateNameValid = 0x0008;
-        private const long NotDefinedValue = 0;
+        private const uint NotDefinedValue = 0;
 
         // User supplied name of color. Will not be filled in if
         // we map to a "knowncolor"
-        private readonly string? name; // Do not rename (binary serialization)
+        private readonly string? name;
 
         // Standard 32bit sRGB (ARGB)
-        private readonly long value; // Do not rename (binary serialization)
+        private readonly uint value;
 
         // Ignored, unless "state" says it is valid
-        private readonly short knownColor; // Do not rename (binary serialization)
+        private readonly KnownColor knownColor;
 
-        // State flags.
-        private readonly short state; // Do not rename (binary serialization)
+        private readonly StateFlags state;
 
         private SolidBrush? asBrush;
         private Pen? asPen;
-
-        private SKColor? skiaColor;
         private SKPaint? strokeAndFillPaint;
         private SKPaint? strokePaint;
         private SKPaint? fillPaint;
@@ -121,17 +112,27 @@ namespace Alternet.Drawing
         internal Color(KnownColor knownColor)
         {
             value = 0;
-            state = StateKnownColorValid;
+            state = StateFlags.KnownColorValid;
             name = null;
-            this.knownColor = unchecked((short)knownColor);
+            this.knownColor = knownColor;
         }
 
-        private Color(long value, short state, string? name, KnownColor knownColor)
+        private Color(uint value, StateFlags state, string? name, KnownColor knownColor)
         {
             this.value = value;
             this.state = state;
             this.name = name;
-            this.knownColor = unchecked((short)knownColor);
+            this.knownColor = knownColor;
+        }
+
+        [Flags]
+        public enum StateFlags : short
+        {
+            KnownColorValid = 0x0001,
+
+            ValueValid = 0x0002,
+
+            NameValid = 0x0008,
         }
 
         /// <summary>
@@ -214,6 +215,15 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public bool IsOpaque => A == 255;
 
+        [Browsable(false)]
+        public StateFlags State
+        {
+            get
+            {
+                return state;
+            }
+        }
+
         /// <summary>
         /// Gets a value indicating whether this <see cref="Color"/> structure is
         /// a predefined color.
@@ -227,7 +237,13 @@ namespace Alternet.Drawing
         /// <see cref="FromKnownColor(KnownColor)"/> method; otherwise, <c>false</c>.
         /// </value>
         [Browsable(false)]
-        public bool IsKnownColor => (state & StateKnownColorValid) != 0;
+        public bool IsKnownColor
+        {
+            get
+            {
+                return state.HasFlag(StateFlags.KnownColorValid);
+            }
+        }
 
         /// <summary>
         /// Specifies whether this <see cref="Color"/> structure is uninitialized.
@@ -235,7 +251,13 @@ namespace Alternet.Drawing
         /// <value>This property returns <c>true</c> if this color is uninitialized;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public bool IsEmpty => state == 0;
+        public bool IsEmpty
+        {
+            get
+            {
+                return state == 0;
+            }
+        }
 
         /// <summary>
         /// Specifies whether this <see cref="Color"/> structure is initialized.
@@ -320,7 +342,7 @@ namespace Alternet.Drawing
         /// the <see cref="FromName"/> method or the
         /// <see cref="FromKnownColor(KnownColor)"/> method; otherwise, <c>false</c>.
         /// </value>
-        public bool IsNamedColor => ((state & StateNameValid) != 0) || IsKnownColor;
+        public bool IsNamedColor => state.HasFlag(StateFlags.NameValid) || IsKnownColor;
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="Color"/> structure is
@@ -336,7 +358,7 @@ namespace Alternet.Drawing
         /// otherwise, <c>false</c>.
         /// </value>
         public bool IsSystemColor =>
-            IsKnownColor && IsKnownColorSystem((KnownColor)knownColor);
+            IsKnownColor && IsKnownColorSystem(knownColor);
 
         /// <summary>
         /// Creates <see cref="SolidBrush"/> instance for this color.
@@ -354,7 +376,14 @@ namespace Alternet.Drawing
         /// Creates <see cref="Pen"/> instance for this color.
         /// </summary>
         [Browsable(false)]
-        public Pen AsPen => GetAsPen(1);
+        public Pen AsPen
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return asPen ??= new(this, 1);
+            }
+        }
 
         /// <summary>
         /// Gets <see cref="SKPaint"/> for this color with
@@ -412,7 +441,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                if ((state & StateNameValid) != 0)
+                if (state.HasFlag(StateFlags.NameValid))
                 {
                     if (name == null)
                         throw new InvalidOperationException();
@@ -422,11 +451,11 @@ namespace Alternet.Drawing
                 if (IsKnownColor)
                 {
                     string tablename =
-                        KnownColorNames.KnownColorToName((KnownColor)knownColor);
+                        KnownColorNames.KnownColorToName(knownColor);
                     if (tablename != null)
                         return tablename;
                     throw new InvalidOperationException(
-                        $"Could not find known color '{(KnownColor)knownColor}'");
+                        $"Could not find known color '{knownColor}'");
                 }
 
                 // if we reached here, just encode the value
@@ -437,22 +466,25 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets color name and ARGB for the debug purposes.
         /// </summary>
-        public string NameAndARGBValue =>
-            $"{{Name={Name}, ARGB=({A}, {R}, {G}, {B})}}";
-
-        internal long Value
+        public string NameAndARGBValue
         {
             get
             {
-                if ((state & StateValueMask) != 0)
-                {
+                return $"{{Name={Name}, ARGB=({A}, {R}, {G}, {B})}}";
+            }
+        }
+
+        internal uint Value
+        {
+            get
+            {
+                if (state.HasFlag(StateFlags.ValueValid))
                     return value;
-                }
 
                 // This is the only place we have system colors value exposed
                 if (IsKnownColor)
                 {
-                    return KnownColorTable.KnownColorToArgb((KnownColor)knownColor);
+                    return KnownColorTable.KnownColorToArgb(knownColor);
                 }
 
                 return NotDefinedValue;
@@ -475,20 +507,24 @@ namespace Alternet.Drawing
             return color.AsStrokeAndFillPaint;
         }
 
+        [Browsable(false)]
+        public SKColor SkiaColor
+        {
+            get
+            {
+                if (!IsOk)
+                    return SKColor.Empty;
+                return new SKColor(Value);
+            }
+        }
+
         /// <summary>
         /// Converts the specified <see cref='Color'/> to a <see cref='SKColor'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKColor(Color color)
         {
-            if (color is null || !color.IsOk)
-                return SKColor.Empty;
-            if (color.skiaColor is not null)
-                return color.skiaColor.Value;
-
-            color.GetArgbValues(out var a, out var r, out var g, out var b);
-            var skColor = new SKColor(r, g, b, a);
-            color.skiaColor = skColor;
-            return skColor;
+            return color?.SkiaColor ?? SKColor.Empty;
         }
 
         /// <summary>
@@ -834,7 +870,7 @@ namespace Alternet.Drawing
                 return color;
 
             // otherwise treat it as a named color
-            return new Color(NotDefinedValue, StateNameValid, name, (KnownColor)0);
+            return new Color(NotDefinedValue, StateFlags.NameValid, name, 0);
         }
 
         /// <summary>
@@ -1294,10 +1330,10 @@ namespace Alternet.Drawing
         /// <param name="width">Width of the pen.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Pen GetAsPen(double width = 1)
+        public Pen GetAsPen(Coord width = 1)
         {
             if (width == 1)
-                return asPen ??= new(this, 1);
+                return AsPen;
             return new(this, width);
         }
 
@@ -1309,8 +1345,10 @@ namespace Alternet.Drawing
         /// <param name="dashStyle">Dash style of the pen. Optional.
         /// Default is <see cref="DashStyle.Solid"/>.</param>
         /// <returns></returns>
-        public Pen GetAsPen(double width = 1, DashStyle dashStyle = DashStyle.Solid)
+        public Pen GetAsPen(Coord width, DashStyle dashStyle)
         {
+            if (width == 1 && dashStyle == DashStyle.Solid)
+                return AsPen;
             return new(this, width, dashStyle);
         }
 
@@ -1372,7 +1410,7 @@ namespace Alternet.Drawing
         /// Gets color properties for the debug purposes.
         /// </summary>
         public string ToDebugString() =>
-            $"{{Name={Name}, KnownColor={(KnownColor)knownColor}, ARGB=({A}, {R}, {G}, {B}), State={state}}}";
+            $"{{Name={Name}, KnownColor={knownColor}, ARGB=({A}, {R}, {G}, {B}), State={state}}}";
 
         /// <summary>
         /// Gets the <see cref="KnownColor"/> value of this
@@ -1397,7 +1435,7 @@ namespace Alternet.Drawing
         /// the <see cref="FromName"/> method with a string name that is not valid.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public KnownColor ToKnownColor() => (KnownColor)knownColor;
+        public KnownColor ToKnownColor() => knownColor;
 
         /// <summary>
         /// Converts this <see cref="Color"/> structure to a human-readable string.
@@ -1434,10 +1472,18 @@ namespace Alternet.Drawing
                     return e.Result;
             }
 
-            var result = IsNamedColor ? $"{nameof(Color)} [{Name}]" :
-                (state & StateValueMask) != 0 ?
-                $"{nameof(Color)} [A={A}, R={R}, G={G}, B={B}]" :
-                $"{nameof(Color)} [Empty]";
+            string result;
+
+            if (IsNamedColor)
+                result = $"{nameof(Color)} [{Name}]";
+            else
+            {
+                if (state.HasFlag(StateFlags.ValueValid))
+                    result = $"{nameof(Color)} [A={A}, R={R}, G={G}, B={B}]";
+                else
+                    result = $"{nameof(Color)} [Empty]";
+            }
+
             return result;
         }
 
@@ -1617,8 +1663,10 @@ namespace Alternet.Drawing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Color FromArgb(uint argb) =>
-            new(argb, StateARGBValueValid, null, (KnownColor)0);
+        private static Color FromArgb(uint argb)
+        {
+            return new(argb, StateFlags.ValueValid, null, 0);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void MinMaxRgb(out int min, out int max, int r, int g, int b)
