@@ -33,13 +33,6 @@ namespace Alternet.Drawing
         SizeD GetTextExtent(
             string text,
             Font font,
-            out double? descent,
-            out double? externalLeading,
-            IControl? control = null);
-
-        SizeD GetTextExtent(
-            string text,
-            Font font,
             IControl? control);
 
         bool BlitI(

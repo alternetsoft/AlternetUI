@@ -270,11 +270,6 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override SizeD GetTextExtent(string text, Font font, out Coord? descent, out Coord? externalLeading, IControl? control = null)
-        {
-            throw new NotImplementedException();
-        }
-
         public override SizeD GetTextExtent(string text, Font font, IControl? control)
         {
             throw new NotImplementedException();

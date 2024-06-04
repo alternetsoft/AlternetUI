@@ -365,7 +365,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokeAndFillPaint ??= SkiaGraphics.CreateStrokeAndFillPaint((SKColor)this);
+                strokeAndFillPaint ??= GraphicsFactory.CreateStrokeAndFillPaint((SKColor)this);
                 return strokeAndFillPaint;
             }
         }
@@ -379,7 +379,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokePaint ??= SkiaGraphics.CreateStrokePaint((SKColor)this);
+                strokePaint ??= GraphicsFactory.CreateStrokePaint((SKColor)this);
                 return strokePaint;
             }
         }
@@ -393,7 +393,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                fillPaint ??= SkiaGraphics.CreateFillPaint((SKColor)this);
+                fillPaint ??= GraphicsFactory.CreateFillPaint((SKColor)this);
                 return fillPaint;
             }
         }
@@ -1475,7 +1475,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color WithRed(byte red)
         {
-            GetArgbValues(out byte a, out byte r, out byte g, out byte b);
+            GetArgbValues(out byte a, out _, out byte g, out byte b);
             return FromArgb(a, red, g, b);
         }
 
@@ -1487,7 +1487,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color WithGreen(byte green)
         {
-            GetArgbValues(out byte a, out byte r, out byte g, out byte b);
+            GetArgbValues(out byte a, out byte r, out _, out byte b);
             return FromArgb(a, r, green, b);
         }
 
@@ -1499,7 +1499,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color WithBlue(byte blue)
         {
-            GetArgbValues(out byte a, out byte r, out byte g, out byte b);
+            GetArgbValues(out byte a, out byte r, out byte g, out _);
             return FromArgb(a, r, g, blue);
         }
 

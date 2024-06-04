@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a drawing surface managed by WxWidgets library.
     /// </summary>
-    public partial class WxGraphics : Graphics, IWxGraphics
+    internal partial class WxGraphics : Graphics, IWxGraphics
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;
@@ -88,8 +88,7 @@ namespace Alternet.Drawing
             get => dc;
         }
 
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(
+        public SizeD GetTextExtent(
             string text,
             Font font,
             out Coord? descent,

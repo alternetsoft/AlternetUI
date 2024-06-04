@@ -445,7 +445,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokeAndFillPaint ??= SkiaGraphics.CreateStrokeAndFillPaint(SkiaFont);
+                strokeAndFillPaint ??= GraphicsFactory.CreateStrokeAndFillPaint(SkiaFont);
                 return strokeAndFillPaint;
             }
         }
@@ -459,7 +459,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokePaint ??= SkiaGraphics.CreateStrokePaint(SkiaFont);
+                strokePaint ??= GraphicsFactory.CreateStrokePaint(SkiaFont);
                 return strokePaint;
             }
         }
@@ -473,8 +473,16 @@ namespace Alternet.Drawing
         {
             get
             {
-                fillPaint ??= SkiaGraphics.CreateFillPaint(SkiaFont);
+                fillPaint ??= GraphicsFactory.CreateFillPaint(SkiaFont);
                 return fillPaint;
+            }
+        }
+
+        public virtual SKFontMetrics SkiaMetrics
+        {
+            get
+            {
+                return SkiaFont.Metrics;
             }
         }
 

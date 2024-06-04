@@ -6,7 +6,7 @@ using Alternet.UI.Extensions;
 
 namespace PaintSample
 {
-    public class Document : DisposableObject
+    public class PaintSampleDocument : DisposableObject
     {
         private readonly Control control;
 
@@ -14,14 +14,14 @@ namespace PaintSample
 
         private Action<Graphics>? previewAction;
 
-        public Document(Control control)
+        public PaintSampleDocument(Control control)
         {
             this.control = control;
             Bitmap = CreateBitmap(control);
             Dirty = false;
         }
 
-        public Document(Control control, string fileName)
+        public PaintSampleDocument(Control control, string fileName)
         {
             this.control = control;
             Bitmap = LoadBitmap(fileName);

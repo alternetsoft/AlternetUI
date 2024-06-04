@@ -8,9 +8,14 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public class FontFactory
+    /// <summary>
+    /// Provides access to the font factory.
+    /// </summary>
+    public static class FontFactory
     {
         private static IFontFactoryHandler? handler;
+
+        public static bool OnlySkiaFonts { get; set; } = true;
 
         public static IFontFactoryHandler Handler
         {

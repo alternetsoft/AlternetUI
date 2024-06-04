@@ -13,6 +13,7 @@ namespace Alternet.Drawing
 {
     public static class SkiaUtils
     {
+        private static string[]? fontFamilies;
         private static FontSize defaultFontSize = 12;
         private static string? defaultFontName;
         private static string? defaultMonoFontName;
@@ -46,9 +47,34 @@ namespace Alternet.Drawing
             set => defaultMonoFontName = value;
         }
 
-        public static string[] GetFontFamiliesNames()
+        public static string[] FontFamilies
         {
-            return SKFontManager.Default.GetFontFamilies();
+            get
+            {
+                if (fontFamilies is null)
+                {
+                    fontFamilies = SKFontManager.Default.GetFontFamilies();
+                    Array.Sort(fontFamilies);
+                }
+
+                return fontFamilies;
+            }
+        }
+
+        public static IEnumerable<string> GetFontFamiliesNames()
+        {
+            return FontFamilies;
+        }
+
+        public static bool IsFamilySkia(string name)
+        {
+            var index = Array.BinarySearch<string>(FontFamilies, name);
+            return index >= 0;
+        }
+
+        public static void ResetFonts()
+        {
+            fontFamilies = null;
         }
 
         public static string GetFontFamilyName(GenericFontFamily genericFamily)
@@ -85,19 +111,6 @@ namespace Alternet.Drawing
                 skFont.Metrics.Top.Abs() + skFont.Metrics.Bottom.Abs());
 
             return result;
-        }
-
-        public static SizeD GetTextExtent(
-            this SKCanvas canvas,
-            string text,
-            Font font,
-            out Coord? descent,
-            out Coord? externalLeading,
-            IControl? control = null)
-        {
-            descent = null;
-            externalLeading = null;
-            return canvas.GetTextExtent(text, font);
         }
 
         public static void DrawText(

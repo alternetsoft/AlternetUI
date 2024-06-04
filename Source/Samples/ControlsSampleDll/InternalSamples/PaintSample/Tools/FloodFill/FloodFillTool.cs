@@ -7,7 +7,7 @@ namespace PaintSample
 {
     public class FloodFillTool : Tool
     {
-        public FloodFillTool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService) :
+        public FloodFillTool(Func<PaintSampleDocument> getDocument, ISelectedColors selectedColors, UndoService undoService) :
             base(getDocument, selectedColors, undoService)
         {
         }

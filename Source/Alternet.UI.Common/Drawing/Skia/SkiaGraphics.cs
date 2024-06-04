@@ -14,10 +14,6 @@ namespace Alternet.Drawing
 {
     public class SkiaGraphics : NotImplementedGraphics
     {
-        public static SKFilterQuality DefaultScaleQuality = SKFilterQuality.High;
-
-        public static bool DefaultAntialias = true;
-
         private SKCanvas canvas;
 
         public SkiaGraphics(SKBitmap bitmap)
@@ -55,80 +51,9 @@ namespace Alternet.Drawing
         public override SizeD GetTextExtent(
             string text,
             Font font,
-            out Coord? descent,
-            out Coord? externalLeading,
-            IControl? control = null)
-        {
-            return canvas.GetTextExtent(
-                text,
-                font,
-                out descent,
-                out externalLeading,
-                control);
-        }
-
-        public override SizeD GetTextExtent(
-            string text,
-            Font font,
             IControl? control)
         {
             return GetTextExtent(text, font);
-        }
-
-        public static void SetDefaults(SKPaint paint)
-        {
-            paint.IsAntialias = DefaultAntialias;
-        }
-
-        public static SKPaint CreateFillPaint(SKColor color)
-        {
-            var result = new SKPaint();
-            SetDefaults(result);
-            result.Color = color;
-            result.Style = SKPaintStyle.Fill;
-            return result;
-        }
-
-        public static SKPaint CreateStrokePaint(SKColor color)
-        {
-            var result = new SKPaint();
-            SetDefaults(result);
-            result.Color = color;
-            result.Style = SKPaintStyle.Stroke;
-            return result;
-        }
-
-        public static SKPaint CreateStrokeAndFillPaint(SKColor color)
-        {
-            var result = new SKPaint();
-            SetDefaults(result);
-            result.Color = color;
-            result.Style = SKPaintStyle.StrokeAndFill;
-            return result;
-        }
-
-        public static SKPaint CreateStrokePaint(SKFont font)
-        {
-            var result = new SKPaint(font);
-            SetDefaults(result);
-            result.Style = SKPaintStyle.Stroke;
-            return result;
-        }
-
-        public static SKPaint CreateFillPaint(SKFont font)
-        {
-            var result = new SKPaint(font);
-            SetDefaults(result);
-            result.Style = SKPaintStyle.Fill;
-            return result;
-        }
-
-        public static SKPaint CreateStrokeAndFillPaint(SKFont font)
-        {
-            var result = new SKPaint(font);
-            SetDefaults(result);
-            result.Style = SKPaintStyle.StrokeAndFill;
-            return result;
         }
 
         /// <inheritdoc/>

@@ -108,7 +108,7 @@ namespace Alternet.Drawing
             Color backColor,
             Coord angle);
 
-        /// <summary>
+        /*/// <summary>
         /// Gets the dimensions of the string using the specified font.
         /// </summary>
         /// <param name="text">The text string to measure.</param>
@@ -129,7 +129,7 @@ namespace Alternet.Drawing
             Font font,
             out Coord? descent,
             out Coord? externalLeading,
-            IControl? control = null);
+            IControl? control = null);*/
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.

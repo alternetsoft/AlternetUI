@@ -5,7 +5,7 @@ namespace PaintSample
 {
     public class Tools
     {
-        private readonly Func<Document> getDocument;
+        private readonly Func<PaintSampleDocument> getDocument;
         private readonly ISelectedColors selectedColors;
         private readonly UndoService undoService;
         private readonly CanvasControl canvasControl;
@@ -15,7 +15,7 @@ namespace PaintSample
         FloodFillTool? floodFill;
         AirbrushTool? airbrush;
 
-        public Tools(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService, CanvasControl canvasControl)
+        public Tools(Func<PaintSampleDocument> getDocument, ISelectedColors selectedColors, UndoService undoService, CanvasControl canvasControl)
         {
             this.getDocument = getDocument;
             this.selectedColors = selectedColors;

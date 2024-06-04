@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public partial class WxGraphics
+    internal partial class WxGraphics
     {
         /// <inheritdoc/>
         public void DrawText(

@@ -195,7 +195,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         protected virtual SKPaint CreateSkiaPaint()
         {
-            SKPaint result = SkiaGraphics.CreateFillPaint(AsColor);
+            SKPaint result = GraphicsFactory.CreateFillPaint(AsColor);
             return result;
         }
 

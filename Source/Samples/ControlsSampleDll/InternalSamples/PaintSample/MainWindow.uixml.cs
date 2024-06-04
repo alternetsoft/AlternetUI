@@ -12,7 +12,7 @@ namespace PaintSample
     {
         private readonly Tools? tools;
 
-        private Document? document;
+        private PaintSampleDocument? document;
 
         private readonly UndoService? undoService;
 
@@ -240,13 +240,13 @@ namespace PaintSample
 
         private void CreateNewDocument()
         {
-            Document = new Document(this);
+            Document = new PaintSampleDocument(this);
         }
 
         UndoService UndoService => undoService ?? throw new Exception();
         Tools Tools => tools ?? throw new Exception();
 
-        Document Document
+        PaintSampleDocument Document
         {
             get => document ?? throw new Exception();
 
@@ -407,7 +407,7 @@ namespace PaintSample
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
                 return;
 
-            Document = new Document(this, dialog.FileName);
+            Document = new PaintSampleDocument(this, dialog.FileName);
         }
 
         string? PromptForSaveFileName()
@@ -621,12 +621,7 @@ namespace PaintSample
             var font = Control.DefaultFont.Scaled(5);
             var measure = dc.MeasureText(s, font);
 
-            var size = dc.GetTextExtent(
-                s,
-                font,
-                out var descent,
-                out _,
-                null);
+            var size = dc.GetTextExtent(s, font);
 
             App.Log($"GetTextExtent: {measure}, {size}");
 
@@ -639,9 +634,10 @@ namespace PaintSample
             /*dc.DrawRectangle(Color.Red.AsPen, r2);*/
             DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
 
+            /*var descent = Math.Abs(font.SkiaMetrics.Descent);
+
             var y = location.Y - descent + size.Height;
-            if(y is not null)
-                dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y.Value), (location.X + size.Width, y.Value));
+            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));*/
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 

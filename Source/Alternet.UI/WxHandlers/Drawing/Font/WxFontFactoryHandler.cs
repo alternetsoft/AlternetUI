@@ -47,7 +47,7 @@ namespace Alternet.Drawing
             return new Font(fnt);
         }
 
-        public string[] GetFontFamiliesNames()
+        public IEnumerable<string> GetFontFamiliesNames()
         {
             return UI.Native.Font.Families;
         }

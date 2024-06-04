@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -24,6 +26,7 @@ namespace Alternet.Drawing
 
         private string? name;
         private bool? isOk;
+        private SKTypeface? typeface;
 
         /// <summary>
         /// Initializes a new <see cref="FontFamily"/> with the specified name.
@@ -156,6 +159,12 @@ namespace Alternet.Drawing
                 {
                     if (name is null)
                         continue;
+                    if (FontFactory.OnlySkiaFonts)
+                    {
+                        if (!SkiaUtils.IsFamilySkia(name))
+                            continue;
+                    }
+
                     items.TryAdd(name, new FontFamily(name, false));
                 }
             }
@@ -195,6 +204,14 @@ namespace Alternet.Drawing
                     FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
 
                 return items!;
+            }
+        }
+
+        public virtual SKTypeface SkiaTypeface
+        {
+            get
+            {
+                return typeface ??= SKFontManager.Default.MatchFamily(Name);
             }
         }
 

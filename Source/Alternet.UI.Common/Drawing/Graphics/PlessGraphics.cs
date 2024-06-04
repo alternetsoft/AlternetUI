@@ -209,13 +209,6 @@ namespace Alternet.Drawing
             return Color.Black;
         }
 
-        public override SizeD GetTextExtent(string text, Font font, out double? descent, out double? externalLeading, IControl? control = null)
-        {
-            descent = null;
-            externalLeading = null;
-            return default;
-        }
-
         public override SizeD GetTextExtent(string text, Font font, IControl? control)
         {
             return default;

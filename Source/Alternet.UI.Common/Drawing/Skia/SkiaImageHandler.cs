@@ -77,7 +77,7 @@ namespace Alternet.UI
 
             void Fn(SKBitmap source)
             {
-                if (!source.ScalePixels(bitmap, SkiaGraphics.DefaultScaleQuality))
+                if (!source.ScalePixels(bitmap, GraphicsFactory.DefaultScaleQuality))
                     App.LogError("Error scaling pixels in SkiaImageHandler.Create(Image, SizeI)");
             }
         }
@@ -169,7 +169,7 @@ namespace Alternet.UI
         public override bool Rescale(SizeI sizeNeeded)
         {
             SKBitmap? newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);
-            var result = bitmap.ScalePixels(newBitmap, SkiaGraphics.DefaultScaleQuality);
+            var result = bitmap.ScalePixels(newBitmap, GraphicsFactory.DefaultScaleQuality);
             if (result)
             {
                 DisposeBitmap();
