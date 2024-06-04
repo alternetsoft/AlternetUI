@@ -584,8 +584,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file or resource.
         /// </summary>
-        /// <param name="name">Either a filename or a resource name. The meaning of name
-        /// is determined by the type parameter.</param>
+        /// <param name="url">Path to file or url with the image data.</param>
         /// <param name="type">One of the <see cref="BitmapType"/> values</param>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         /// <remarks>
@@ -597,9 +596,16 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats
         /// for the load operation.</remarks>
-        public virtual bool Load(string name, BitmapType type)
+        public virtual bool Load(string url, BitmapType type)
         {
-            return Handler.Load(name, type);
+            return InsideTryCatch(() =>
+            {
+                using var stream = ResourceLoader.StreamFromUrl(url);
+                if (stream is null)
+                    return false;
+                var result = Handler.LoadFromStream(stream);
+                return result;
+            });
         }
 
         public virtual Image ChangeLightness(int ialpha)
@@ -627,7 +633,12 @@ namespace Alternet.Drawing
         public virtual bool Save(string name, BitmapType type, int? quality = null)
         {
             quality ??= DefaultSaveQuality;
-            return Handler.SaveToFile(name, type, quality.Value);
+
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(name);
+                return Save(stream, type, quality.Value);
+            });
         }
 
         /// <summary>
@@ -770,14 +781,14 @@ namespace Alternet.Drawing
         public virtual bool Save(Stream stream, ImageFormat format, int? quality = null)
         {
             if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
+                return false;
 
             if (format is null)
-                throw new ArgumentNullException(nameof(format));
+                return false;
 
             quality ??= DefaultSaveQuality;
 
-            return Handler.SaveToStream(stream, format, quality.Value);
+            return Handler.SaveToStream(stream, format.AsBitmapType(), quality.Value);
         }
 
         /// <summary>
@@ -790,11 +801,16 @@ namespace Alternet.Drawing
         public virtual bool Save(string fileName, int? quality = null)
         {
             if (fileName is null)
-                throw new ArgumentNullException(nameof(fileName));
+                return false;
 
             quality ??= DefaultSaveQuality;
 
-            return Handler.SaveToFile(fileName, quality.Value);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(fileName);
+                var bitmapType = Image.GetBitmapTypeFromFileName(fileName);
+                return Save(stream, bitmapType, quality.Value);
+            });
         }
 
         /// <summary>

@@ -39,16 +39,6 @@ namespace Alternet.UI.Native
             return SaveToFile(name);
         }
 
-        bool Alternet.Drawing.IImageHandler.SaveToFile(string name, int quality)
-        {
-            return SaveToFile(name);
-        }
-
-        bool Alternet.Drawing.IImageHandler.SaveToFile(string name, BitmapType type, int quality)
-        {
-            return SaveFile(name, (int)type);
-        }
-
         public bool SaveToStream(Stream stream, BitmapType type, int quality)
         {
             using var outputStream = new UI.Native.OutputStream(stream);
