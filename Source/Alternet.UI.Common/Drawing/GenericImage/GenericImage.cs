@@ -393,7 +393,7 @@ namespace Alternet.Drawing
 
             fixed (RGBValue* resultPtr = result)
             {
-                BaseMemory.Move(source, (IntPtr)resultPtr, size * 3);
+                BaseMemory.Move((IntPtr)resultPtr, source, size * 3);
             }
 
             return result;
@@ -406,7 +406,7 @@ namespace Alternet.Drawing
 
             fixed(byte* resultPtr = result)
             {
-                BaseMemory.Move(source, (IntPtr)resultPtr, size);
+                BaseMemory.Move((IntPtr)resultPtr, source, size);
             }
 
             return result;
@@ -446,6 +446,60 @@ namespace Alternet.Drawing
             }
 
             return result;
+        }
+
+        public static unsafe void SetRgbValuesFromPtr(SKColor[] data, RGBValue* source)
+        {
+            var length = data.Length;
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    byte alpha = (*ptr).Alpha;
+                    var rgb = *source;
+                    *ptr = new SKColor(rgb.R, rgb.G, rgb.B, alpha);
+                    ptr++;
+                    source++;
+                }
+            }
+        }
+
+        public static unsafe void FillAlphaData(SKColor[] data, byte alpha)
+        {
+            var length = data.Length;
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    SKColor color = *ptr;
+                    *ptr = new SKColor(color.Red, color.Green, color.Blue, alpha);
+                    ptr++;
+                }
+            }
+        }
+
+        public static unsafe void SetAlphaValuesFromPtr(SKColor[] data, byte* source)
+        {
+            var length = data.Length;
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    SKColor color = (*ptr).WithAlpha(*source);
+                    *ptr = color;
+                    ptr++;
+                    source++;
+                }
+            }
         }
 
         public static unsafe byte[] GetAlphaValues(SKColor[] data)
@@ -490,45 +544,20 @@ namespace Alternet.Drawing
 
         public static SKBitmap ToSkia(IGenericImageHandler bitmap)
         {
-            if (bitmap.HasAlpha)
-                return ToSkiaWithAlpha(bitmap);
-            else
-                return ToSkiaWithoutAlpha(bitmap);
-        }
-
-        public static unsafe GenericImage FromSkia(SKBitmap bitmap)
-        {
             var width = bitmap.Width;
             var height = bitmap.Height;
+            var count = width * height;
+            if (count == 0)
+                return new SKBitmap();
 
-            var result = new GenericImage(width, height);
-            result.InitAlpha();
+            var result = new SKBitmap(width, height, isOpaque: !bitmap.HasAlpha);
+            result.Pixels = bitmap.Pixels;
+            return result;
+        }
 
-            var rgbNativeData = result.GetNativeData();
-            RGBValue* rgbData = (RGBValue*)rgbNativeData;
-
-            var alphaNativedata = result.GetNativeAlphaData();
-            byte* alphaData = (byte*)alphaNativedata;
-
-            var pixels = bitmap.Pixels;
-            var length = pixels.Length;
-
-            fixed (SKColor* p = pixels)
-            {
-                var ptr = p;
-
-                for (int i = 0; i < length; i++)
-                {
-                    var color = *ptr;
-
-                    *alphaData = color.Alpha;
-                    *rgbData = color;
-                    rgbData++;
-                    alphaData++;
-                    ptr++;
-                }
-            }
-
+        public static GenericImage FromSkia(SKBitmap bitmap)
+        {
+            var result = new GenericImage(bitmap.Width, bitmap.Height, bitmap.Pixels);
             return result;
         }
 
@@ -656,7 +685,8 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual void ClearAlpha()
         {
-            Handler.ClearAlpha();
+            if(HasAlpha())
+                Handler.ClearAlpha();
         }
 
         /// <summary>
@@ -680,7 +710,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Makes this image grayscaled.
         /// </summary>
-        public virtual void ChangeToGrayScale()
+        public virtual bool ChangeToGrayScale()
         {
             static void ChangePixel(ref RGBValue rgb, int value)
             {
@@ -688,7 +718,7 @@ namespace Alternet.Drawing
                 rgb.R = rgb.G = rgb.B = color;
             }
 
-            ForEachPixel<int>(ChangePixel, 0);
+            return ForEachPixel<int>(ChangePixel, 0);
         }
 
         /// <summary>
@@ -704,21 +734,50 @@ namespace Alternet.Drawing
         /// For an example of the action implementation, see source code of the
         /// <see cref="Color.ChangeLightness(ref RGBValue, int)"/> method.
         /// </remarks>
-        public virtual unsafe void ForEachPixel<T>(ActionRef<RGBValue, T> action, T param)
+        public virtual unsafe bool ForEachPixel<T>(ActionRef<RGBValue, T> action, T param)
         {
-            var ndata = GetNativeData();
-            RGBValue* data = (RGBValue*)ndata;
-            var height = Height;
-            var width = Width;
+            if (!IsOk)
+                return false;
 
-            for (int y = 0; y < height; y++)
+            var rgb = RgbData;
+            var count = rgb.Length;
+
+            fixed(RGBValue* ptr = rgb)
             {
-                for (int x = 0; x < width; x++)
+                var p = ptr;
+
+                for(int i = 0; i < count; i++)
                 {
-                    action(ref *data, param);
-                    data++;
+                    action(ref *p, param);
+                    p++;
                 }
             }
+
+            RgbData = rgb;
+            return true;
+        }
+
+        public virtual unsafe bool ForEachPixel<T>(ActionRef<SKColor, T> action, T param)
+        {
+            if (!IsOk)
+                return false;
+
+            var rgb = Pixels;
+            var count = rgb.Length;
+
+            fixed (SKColor* ptr = rgb)
+            {
+                var p = ptr;
+
+                for (int i = 0; i < count; i++)
+                {
+                    action(ref *p, param);
+                    p++;
+                }
+            }
+
+            Pixels = rgb;
+            return true;
         }
 
         /// <summary>
@@ -729,22 +788,32 @@ namespace Alternet.Drawing
         /// This function should only be called if the image has alpha channel data,
         /// use <see cref="HasAlpha"/> to check for this.
         /// </remarks>
-        public virtual unsafe void SetAlpha(byte value)
+        public virtual unsafe bool SetAlpha(byte value)
         {
-            var nalpha = GetNativeAlphaData();
-
-            byte* alpha = (byte*)nalpha;
-
-            var height = Height;
-            var width = Width;
-
-            for (int y = 0; y < height; y++)
+            if (!IsOk)
+                return false;
+            if (!HasAlpha())
             {
-                for (int x = 0; x < width; x++)
+                InitAlpha();
+                AlphaData = CreateAlphaData(Width, Height, value);
+                return true;
+            }
+
+            var alpha = AlphaData;
+            var count = alpha.Length;
+
+            fixed (byte* ptr = alpha)
+            {
+                var p = ptr;
+
+                for (int i = 0; i < count; i++)
                 {
-                    *alpha++ = value;
+                    *p++ = value;
                 }
             }
+
+            AlphaData = alpha;
+            return true;
         }
 
         /// <summary>
@@ -1663,154 +1732,10 @@ namespace Alternet.Drawing
             return Handler.SaveToStream(stream, type);
         }
 
-        /// <summary>
-        /// Returns pointer to the array storing the alpha values for this image.
-        /// </summary>
-        /// <returns>This pointer is NULL for the images without the alpha channel.
-        /// If the image does have it, this pointer may be used to directly manipulate the
-        /// alpha values which are stored as the RGB ones.</returns>
-        public virtual IntPtr GetNativeAlphaData()
-        {
-            return Handler.GetNativeAlphaData();
-        }
-
-        /// <summary>
-        /// Returns the image data as an array.
-        /// </summary>
-        /// <remarks>
-        /// This is most often used when doing direct image manipulation. The return value
-        /// points to an array of bytes in RGBRGBRGB...format in the top-to-bottom,
-        /// left-to-right order, that is the first RGB triplet corresponds to the first pixel
-        /// of the first row, the second one — to the second pixel of the first row and so on
-        /// until the end of the first row, with second row following after it and so on.
-        /// You should not delete the returned pointer nor pass it to
-        /// <see cref="SetNativeData(IntPtr, bool)"/> and similar methods.
-        /// </remarks>
-        public virtual IntPtr GetNativeData()
-        {
-            return Handler.GetNativeData();
-        }
-
-        /// <summary>
-        /// Sets the image data without performing checks.
-        /// </summary>
-        /// <param name="alpha">Pointer to alpha channel data.</param>
-        /// <param name="staticData">Specifies whether data is static.</param>
-        /// <remarks>
-        /// This function is similar to <see cref="SetNativeData(IntPtr, bool)"/>
-        /// and has similar restrictions.
-        /// </remarks>
-        /// <remarks>
-        /// The pointer passed to it may however be <c>null</c> in which case the function will
-        /// allocate the alpha array internally – this is useful to add alpha channel
-        /// data to an image which doesn't have any.
-        /// </remarks>
-        /// <remarks>
-        /// If the pointer is not <c>null</c>, it must have one byte for each image
-        /// pixel and be allocated with malloc(). Library takes ownership of the pointer
-        /// and will free it unless <paramref name="staticData"/> parameter is set
-        /// to <c>true</c> – in this case the caller should do it.
-        /// </remarks>
-        public virtual void SetNativeAlphaData(IntPtr alpha = default, bool staticData = false)
-        {
-            Handler.SetNativeAlphaData(alpha, staticData);
-        }
-
-        /// <summary>
-        /// Sets the image data without performing checks.
-        /// </summary>
-        /// <param name="data">Pointer to RGB data.</param>
-        /// <param name="staticData">Specifies whether data is static.</param>
-        /// <remarks>
-        /// The data given must have the size (width*height*3) or results will be unexpected.
-        /// Don't use this method if you aren't sure you know what you are doing.
-        /// </remarks>
-        /// <remarks>
-        /// The data must have been allocated with malloc(), NOT with operator new.
-        /// </remarks>
-        /// <remarks>
-        /// If <paramref name="staticData"/> is false, after this call the pointer to the data is owned
-        /// by the Library, that will be responsible for deleting it. Do not pass to
-        /// this function a pointer obtained through GetData().
-        /// </remarks>
-        public virtual void SetNativeData(IntPtr data, bool staticData = false)
-        {
-            Handler.SetNativeData(data, staticData);
-        }
-
         /// <inheritdoc/>
         protected override IGenericImageHandler CreateHandler()
         {
             return GraphicsFactory.Handler.CreateGenericImageHandler();
-        }
-
-        private static unsafe SKBitmap ToSkiaWithAlpha(IGenericImageHandler bitmap)
-        {
-            var width = bitmap.Width;
-            var height = bitmap.Height;
-            var count = width * height;
-            if (count == 0)
-                return new SKBitmap();
-
-            var result = new SKBitmap(width, height, isOpaque: false);
-
-            var rgbNativeData = bitmap.GetNativeData();
-            RGBValue* rgbData = (RGBValue*)rgbNativeData;
-
-            var alphaNativedata = bitmap.GetNativeAlphaData();
-            byte* alphaData = (byte*)alphaNativedata;
-
-
-            SKColor[] pixels = new SKColor[count];
-
-            fixed (SKColor* p = pixels)
-            {
-                var ptr = p;
-
-                for (int i = 0; i < count; i++)
-                {
-                    *ptr = RGBValue.ToSkia(*rgbData, *alphaData);
-                    rgbData++;
-                    alphaData++;
-                    ptr++;
-                }
-            }
-
-            result.Pixels = pixels;
-
-            return result;
-        }
-
-        private static unsafe SKBitmap ToSkiaWithoutAlpha(IGenericImageHandler bitmap)
-        {
-            var width = bitmap.Width;
-            var height = bitmap.Height;
-            var count = width * height;
-            if (count == 0)
-                return new SKBitmap();
-
-            var result = new SKBitmap(width, height, isOpaque: true);
-
-            var rgbNativeData = bitmap.GetNativeData();
-            RGBValue* rgbData = (RGBValue*)rgbNativeData;
-
-            SKColor[] pixels = new SKColor[count];
-
-            fixed (SKColor* p = pixels)
-            {
-                var ptr = p;
-
-                for (int i = 0; i < count; i++)
-                {
-                    *ptr = (SKColor)(*rgbData);
-                    rgbData++;
-                    ptr++;
-                }
-            }
-
-            result.Pixels = pixels;
-
-            return result;
         }
     }
 }

@@ -19,14 +19,28 @@ namespace Alternet.Drawing
             get => GenericImage.PixelStrategy.RgbData;
         }
 
-        public SKColor[] Pixels
+        public unsafe SKColor[] Pixels
         {
             get
             {
                 if (!IsOk)
                     return Array.Empty<SKColor>();
-                using SKBitmap bitmap = GenericImage.ToSkia(this);
-                return bitmap.Pixels;
+                var pixels = GenericImage.CreatePixels(Width, Height);
+
+                var rgb = UI.Native.GenericImage.GetData(Handle);
+                GenericImage.SetRgbValuesFromPtr(pixels, (RGBValue*)rgb);
+
+                if (HasAlpha)
+                {
+                    var alpha = UI.Native.GenericImage.GetAlphaData(Handle);
+                    GenericImage.SetAlphaValuesFromPtr(pixels, (byte*)alpha);
+                }
+                else
+                {
+                    GenericImage.FillAlphaData(pixels, 255);
+                }
+
+                return pixels;
             }
 
             set

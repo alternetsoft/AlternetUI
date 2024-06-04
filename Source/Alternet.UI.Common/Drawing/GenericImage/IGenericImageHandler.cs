@@ -173,15 +173,5 @@ namespace Alternet.Drawing
         bool SaveToStream(Stream stream, string mimetype);
 
         bool SaveToStream(Stream stream, BitmapType type);
-
-        IntPtr GetNativeAlphaData();
-
-        IntPtr GetNativeData();
-
-        void SetNativeAlphaData(
-            IntPtr alpha = default,
-            bool staticData = false);
-
-        void SetNativeData(IntPtr data, bool staticData = false);
     }
 }
