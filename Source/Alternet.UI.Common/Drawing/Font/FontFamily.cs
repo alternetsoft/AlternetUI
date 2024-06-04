@@ -27,6 +27,7 @@ namespace Alternet.Drawing
         private string? name;
         private bool? isOk;
         private SKTypeface? typeface;
+        private bool? isFixedPitch;
 
         /// <summary>
         /// Initializes a new <see cref="FontFamily"/> with the specified name.
@@ -207,6 +208,14 @@ namespace Alternet.Drawing
             }
         }
 
+        public virtual bool IsFixedPitch
+        {
+            get
+            {
+                return isFixedPitch ??= IsFixedPitchFontFamily(Name);
+            }
+        }
+
         public virtual SKTypeface SkiaTypeface
         {
             get
@@ -370,6 +379,41 @@ namespace Alternet.Drawing
                     return ("Times New Roman", 9);
                 case GenericFontFamily.Monospace:
                     return ("Courier New", 9);
+            }
+        }
+
+        public static string[] GetSampleFixedPitchFontsWindows()
+        {
+            return new string[]
+            {
+                "Cascadia Mono",
+                "Consolas",
+                "Courier New",
+                "Lucida Console",
+                "Lucida Sans Typewriter",
+                "MS Gothic",
+                "Cascadia Code",
+                "Fira Code",
+                "Fira Code Retina",
+                "Hack",
+                "JetBrains Mono",
+                "JetBrains Mono NL",
+                "NSimSun",
+                "SimSun",
+                "Source Code Pro",
+            };
+        }
+
+        public static bool IsFixedPitchFontFamily(string name)
+        {
+            if (FontFactory.OnlySkiaFonts)
+            {
+                var family = SKFontManager.Default.MatchFamily(name);
+                return family.IsFixedPitch;
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
     }

@@ -15,7 +15,10 @@ namespace Alternet.Drawing
     {
         private static IFontFactoryHandler? handler;
 
-        public static bool OnlySkiaFonts { get; set; } = true;
+        public static bool OnlySkiaFonts
+        {
+            get => true;
+        }
 
         public static IFontFactoryHandler Handler
         {
