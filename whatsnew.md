@@ -1,3 +1,33 @@
+# 0.9.605 (2024 June 5)
+
+- Color: GetRgbValues, WithRed, WithGreen, WithBlue, WithAlpha.
+- Color: Optimization of the internal structure (occupy less memory and speed up).
+- Color: SkiaColor, State properties.
+- Color: Optimization of AsPen and GetAsPen.
+- Color: Optimization of Color to SKColor conversion.
+- Image and GenericImage: static Create(int width, int height, SKColor[] pixels).
+- Image and GenericImage: Correct pixel conversion in case when image has alpha or mask color
+- Image: static Create(int width, int height, Color color).
+- Image and GenericImage: ConvertToDisabled implemented internally
+- Image: ChangeLightness(int ialpha).
+- Image: Load methods now understand urls.
+- Image: Save to file now uses file system.
+- Image: Exceptions are not raised during load/save, only false is returned in case of error.
+- GenericImage: Pixels, RgbData, AlphaData properties.
+- GenericImage: FillPixels, FillAlphaData, FillRgbData, CreatePixels, CreateRgbData, CreateAlphaData, SetRgbValuesFromPtr, SetAlphaValuesFromPtr.
+- GenericImage: Removed GetNativeData, SetNativeData, GetNativeAlphaData, SetNativeAlphaData. Use Pixels, AlphaData, RgbData instead of them.
+- GraphicsFactory: Many new create SkPaint methods.
+- GraphicsFactory: DefaultScaleQuality, DefaultAntialias
+- SkiaUtils: IsFamilySkia, FontFamilies, ResetFonts.
+- Font.SkiaMetrics property.
+- By default only Skia compatible fonts are available in library.
+- FontFamily: SkiaTypeface, IsFixedPitch, IsFixedPitchFontFamily
+- New classes: FontListBox, FontNameAndSize, SampleFonts.
+- Correct implementation of default fixed pitch font search for maui/skia.
+- Included assets required by SkiaSharp in library csproj.
+- DialogFactory: AskByte and other methods.
+- Impoved installation scripts. Now TargetPlatfroms override can be specified using bool flags (See Source/Version/SampleFrameworksOverride.props).
+
 # 0.9.604 (2024 June 3)
 
 - Fixed exception when maximized window is closed.
