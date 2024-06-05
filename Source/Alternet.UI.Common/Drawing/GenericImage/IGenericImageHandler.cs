@@ -124,8 +124,6 @@ namespace Alternet.Drawing
 
         GenericImage ConvertToMono(RGBValue rgb);
 
-        GenericImage ConvertToDisabled(byte brightness = 255);
-
         byte GetAlpha(int x, int y);
 
         RGBValue GetRGB(int x, int y);

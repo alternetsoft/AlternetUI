@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+
 using Alternet.UI;
 
 using SkiaSharp;
@@ -404,7 +405,7 @@ namespace Alternet.Drawing
             var size = width * height;
             byte[] result = new byte[size];
 
-            fixed(byte* resultPtr = result)
+            fixed (byte* resultPtr = result)
             {
                 BaseMemory.Move((IntPtr)resultPtr, source, size);
             }
@@ -508,7 +509,7 @@ namespace Alternet.Drawing
 
             var alpha = new byte[length];
 
-            fixed(SKColor* dataPtr = data)
+            fixed (SKColor* dataPtr = data)
             {
                 var ptr = dataPtr;
 
@@ -685,7 +686,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual void ClearAlpha()
         {
-            if(HasAlpha())
+            if (HasAlpha())
                 Handler.ClearAlpha();
         }
 
@@ -719,65 +720,6 @@ namespace Alternet.Drawing
             }
 
             return ForEachPixel<int>(ChangePixel, 0);
-        }
-
-        /// <summary>
-        /// Executes specified <paramref name="action"/> for the each pixel of the image.
-        /// </summary>
-        /// <typeparam name="T">Type of the custom value.</typeparam>
-        /// <param name="action">Action to call for the each pixel. <see cref="RGBValue"/>
-        /// is passed as the first
-        /// parameter of the action.</param>
-        /// <param name="param">Custom value. It is passed to the <paramref name="action"/>
-        /// as the second parameter.</param>
-        /// <remarks>
-        /// For an example of the action implementation, see source code of the
-        /// <see cref="Color.ChangeLightness(ref RGBValue, int)"/> method.
-        /// </remarks>
-        public virtual unsafe bool ForEachPixel<T>(ActionRef<RGBValue, T> action, T param)
-        {
-            if (!IsOk)
-                return false;
-
-            var rgb = RgbData;
-            var count = rgb.Length;
-
-            fixed(RGBValue* ptr = rgb)
-            {
-                var p = ptr;
-
-                for(int i = 0; i < count; i++)
-                {
-                    action(ref *p, param);
-                    p++;
-                }
-            }
-
-            RgbData = rgb;
-            return true;
-        }
-
-        public virtual unsafe bool ForEachPixel<T>(ActionRef<SKColor, T> action, T param)
-        {
-            if (!IsOk)
-                return false;
-
-            var rgb = Pixels;
-            var count = rgb.Length;
-
-            fixed (SKColor* ptr = rgb)
-            {
-                var p = ptr;
-
-                for (int i = 0; i < count; i++)
-                {
-                    action(ref *p, param);
-                    p++;
-                }
-            }
-
-            Pixels = rgb;
-            return true;
         }
 
         /// <summary>
@@ -1332,7 +1274,161 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual GenericImage ConvertToDisabled(byte brightness = 255)
         {
-            return Handler.ConvertToDisabled(brightness);
+            GenericImage image = this.Copy();
+            image.ChangeToDisabled(brightness);
+            return image;
+        }
+
+        public virtual void ChangeLightness(int ialpha)
+        {
+            ialpha = MathUtils.ApplyMinMax(ialpha, 0, 200);
+            ForEachPixel(Color.ChangeLightness, ialpha);
+        }
+
+        /// <summary>
+        /// Changes each pixel of this image, making it's color disabled.
+        /// </summary>
+        public virtual void ChangeToDisabled(byte brightness = 255)
+        {
+            ForEachPixel(Color.MakeDisabled, brightness);
+        }
+
+        /// <summary>
+        /// Executes specified <paramref name="action"/> for the each pixel of the image.
+        /// </summary>
+        /// <typeparam name="T">Type of the custom value.</typeparam>
+        /// <param name="action">Action to call for the each pixel. <see cref="RGBValue"/>
+        /// is passed as the first
+        /// parameter of the action.</param>
+        /// <param name="param">Custom value. It is passed to the <paramref name="action"/>
+        /// as the second parameter.</param>
+        public virtual unsafe bool ForEachPixel<T>(ActionRef<SKColor, T> action, T param)
+        {
+            if (!IsOk)
+                return false;
+
+            if (HasMask())
+            {
+                SKColor mask = GetMaskRGB();
+                return ForEachPixelInternal(MaskAction, param);
+
+                void MaskAction(ref SKColor color, T param)
+                {
+                    if (color != mask)
+                        action(ref color, param);
+                }
+            }
+            else
+            {
+                if (HasAlpha())
+                {
+                    return ForEachPixelInternal(TransparentAction, param);
+  
+                    void TransparentAction(ref SKColor color, T param)
+                    {
+                        if (color.Alpha != 0)
+                            action(ref color, param);
+                    }
+                }
+                else
+                {
+                    return ForEachPixelInternal(action, param);
+                }
+            }
+
+            unsafe bool ForEachPixelInternal<T2>(ActionRef<SKColor, T2> action, T2 param)
+            {
+                var rgb = Pixels;
+                var count = rgb.Length;
+
+                fixed (SKColor* ptr = rgb)
+                {
+                    var p = ptr;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        action(ref *p, param);
+                        p++;
+                    }
+                }
+
+                Pixels = rgb;
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Executes specified <paramref name="action"/> for the each pixel of the image.
+        /// </summary>
+        /// <typeparam name="T">Type of the custom value.</typeparam>
+        /// <param name="action">Action to call for the each pixel. <see cref="RGBValue"/>
+        /// is passed as the first
+        /// parameter of the action.</param>
+        /// <param name="param">Custom value. It is passed to the <paramref name="action"/>
+        /// as the second parameter.</param>
+        /// <remarks>
+        /// For an example of the action implementation, see source code of the
+        /// <see cref="Color.ChangeLightness(ref RGBValue, int)"/> method.
+        /// </remarks>
+        public virtual unsafe bool ForEachPixel<T>(ActionRef<RGBValue, T> action, T param)
+        {
+            if (!IsOk)
+                return false;
+
+            if (HasMask())
+            {
+                var mask = GetMaskRGB();
+                return ForEachPixelInternal(MaskAction, param);
+
+                void MaskAction(ref RGBValue rgb, T param)
+                {
+                    if (rgb != mask)
+                        action(ref rgb, param);
+                }
+            }
+            else
+            {
+                if (HasAlpha())
+                {
+                    return ForEachPixel(TransparentAction, param);
+
+                    void TransparentAction(ref SKColor color, T param)
+                    {
+                        var alpha = color.Alpha;
+
+                        if (alpha == 0)
+                            return;
+
+                        RGBValue rgb = color;                        
+                        action(ref rgb, param);
+                        color = rgb.WithAlpha(alpha);
+                    }
+                }
+                else
+                {
+                    return ForEachPixelInternal(action, param);
+                }
+            }
+
+            unsafe bool ForEachPixelInternal<T1>(ActionRef<RGBValue, T1> action, T1 param)
+            {
+                var rgb = RgbData;
+                var count = rgb.Length;
+
+                fixed (RGBValue* ptr = rgb)
+                {
+                    var p = ptr;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        action(ref *p, param);
+                        p++;
+                    }
+                }
+
+                RgbData = rgb;
+                return true;
+            }
         }
 
         /// <summary>
@@ -1345,11 +1441,10 @@ namespace Alternet.Drawing
         /// 200 completely white and 100 would not change the color.
         /// </remarks>
         /// <returns></returns>
-        public virtual GenericImage ChangeLightness(int ialpha)
+        public virtual GenericImage ConvertLightness(int ialpha)
         {
-            ialpha = MathUtils.ApplyMinMax(ialpha, 0, 200);
             var result = Copy();
-            result.ForEachPixel(Color.ChangeLightness, ialpha);
+            result.ChangeLightness(ialpha);
             return result;
         }
 

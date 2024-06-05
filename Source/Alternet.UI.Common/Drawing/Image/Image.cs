@@ -16,7 +16,7 @@ namespace Alternet.Drawing
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
-    public class Image : HandledObject<IImageHandler>
+    public partial class Image : HandledObject<IImageHandler>
     {
         private static readonly string[] DefaultExtensionsForLoad =
         {
@@ -608,14 +608,6 @@ namespace Alternet.Drawing
             });
         }
 
-        public virtual Image ChangeLightness(int ialpha)
-        {
-            GenericImage image = (GenericImage)this;
-            var converted = image.ChangeLightness(ialpha);
-            var result = (Bitmap)converted;
-            return result;
-        }
-
         /// <summary>
         /// Saves this <see cref="Image"/> to the specified file.
         /// </summary>
@@ -702,6 +694,14 @@ namespace Alternet.Drawing
             this.ScaleFactor = factor;
         }
 
+        public virtual Image ChangeLightness(int ialpha)
+        {
+            GenericImage image = (GenericImage)this;
+            var converted = image.ConvertLightness(ialpha);
+            var result = (Image)converted;
+            return result;
+        }
+
         /// <summary>
         /// Returns disabled (dimmed) version of the image.
         /// </summary>
@@ -709,8 +709,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image ConvertToDisabled(byte brightness = 255)
         {
-            var converted = Handler.ConvertToDisabled(brightness);
-            return new Image(converted);
+            GenericImage image = (GenericImage)this;
+            image.ChangeToDisabled(brightness);
+            return (Image)image;
         }
 
         /// <summary>

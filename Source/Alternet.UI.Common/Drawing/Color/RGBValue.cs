@@ -150,5 +150,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         public override readonly string ToString() => AsDebugString;
+
+        public SKColor WithAlpha(byte a) => new SKColor(R, G, B, a);
     }
 }

@@ -37,8 +37,6 @@ namespace Alternet.Drawing
 
         GenericImage ToGenericImage();
 
-        IImageHandler ConvertToDisabled(byte brightness = 255);
-
         IImageHandler GetSubBitmap(RectI rect);
 
         bool GrayScale();

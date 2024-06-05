@@ -50,11 +50,6 @@ namespace Alternet.UI.Native
             return Alternet.Drawing.WxGenericImageHandler.Create(ConvertToGenericImage());
         }
 
-        Alternet.Drawing.IImageHandler Alternet.Drawing.IImageHandler.ConvertToDisabled(byte brightness)
-        {
-            return ConvertToDisabled(brightness);
-        }
-
         Alternet.Drawing.IImageHandler Alternet.Drawing.IImageHandler.GetSubBitmap(Alternet.Drawing.RectI rect)
         {
             return GetSubBitmap(rect);

@@ -94,6 +94,8 @@ namespace PaintSample
             testMenu.Add("Fill green (new with pixel array)", DoFillGreenUseSkiaColors);
             testMenu.Add("Make file grey...", DoMakeFileGray);
             testMenu.Add("Load Toucan image", DoLoadToucanImage);
+            testMenu.Add("Load Toucan image on background", DoLoadToucanOnBackground);
+            testMenu.Add("Convert To Disabled", DoConvertToDisabled);
 
             if (!App.IsLinuxOS)
                 testMenu.Add("Sample draw", DoDrawOnBitmap);
@@ -482,25 +484,23 @@ namespace PaintSample
             base.OnClosing(e);
         }
 
-        public int AskLightness()
-        {
-            var result = DialogFactory.GetNumberFromUser(null, "Lightness (0..200)", null, 100, 0, 200);
-            if (result is null)
-                return 100;
-            var lightness = (int)result.Value;
-            return lightness;
-        }
-
         public void DoChangeLightness()
         {
-            var lightness = AskLightness();
+            var lightness = DialogFactory.AskLightness() ?? 100;
             App.Log($"Image.ChangeLightness: {lightness}");
             Document.Bitmap = Document.Bitmap.ChangeLightness(lightness);
         }
 
+        public void DoConvertToDisabled()
+        {
+            var value = DialogFactory.AskBrightness() ?? 255;
+            App.Log($"Image.ConvertToDisabled: {value}");
+            Document.Bitmap = Document.Bitmap.ConvertToDisabled(value);
+        }
+
         public unsafe void DoFillGreenUseSkiaColors()
         {
-            var alpha = AskTransparency();
+            var alpha = DialogFactory.AskTransparency(100) ?? 100;
             App.Log($"Fill green color (alpha = {alpha}) using new image with native data");
 
             var height = 600;
@@ -510,19 +510,9 @@ namespace PaintSample
             Document.Bitmap = Bitmap.Create(width, height, pixels);
         }
 
-        public byte AskTransparency()
+        public void DoFillRedUseSetData()
         {
-            var result = DialogFactory.GetNumberFromUser(null, "Transparency (0..255)", null, 100, 0, 255);
-            if (result is null)
-                return 255;
-
-            var alpha = (byte)result.Value;
-            return alpha;
-        }
-
-        public unsafe void DoFillRedUseSetData()
-        {
-            var alpha = AskTransparency();
+            var alpha = DialogFactory.AskTransparency(100) ?? 100;
             App.Log($"Fill red color (alpha = {alpha}) using new image with native data");
             Document.Bitmap = Bitmap.Create(600, 600, Color.Red.WithAlpha(alpha));
         }
@@ -594,7 +584,22 @@ namespace PaintSample
         {
             Bitmap toucan = new("SampleImages/toucan.png");
             toucan.Rescale(toucan.Size * 3);
+
             Document.Bitmap = toucan;
+        }
+
+        public void DoLoadToucanOnBackground()
+        {
+            Bitmap toucan = new("SampleImages/toucan.png");
+            toucan.Rescale(toucan.Size * 3);
+
+            var backgroundSize = (toucan.Size * 1.5).ToSize();
+
+            var background = Image.Create(backgroundSize.Width, backgroundSize.Height, Color.LightGreen);
+
+            background.Canvas.DrawImage(toucan, (50, 50));
+
+            Document.Bitmap = background;
         }
 
         public void DoDrawOnBitmap()
