@@ -22,12 +22,17 @@ namespace ControlsSample
 
         private readonly SkiaSampleControl control = new();
 
-        private readonly SplittedPanel panel = new()
+        private readonly SplittedPanel mainPanel = new()
         {
             LeftPanelWidth = Display.Primary.BoundsDip.Width / 2,
-            RightPanelWidth = 250,
+            RightPanelWidth = 300,
             TopVisible = false,
             BottomVisible = false,
+        };
+
+        private readonly FontListBox fontListBox = new()
+        {
+            HasBorder = false,
         };
 
         private readonly Button button = new("Paint on SKCanvas")
@@ -50,7 +55,11 @@ namespace ControlsSample
             ImageStretch = false,
         };
 
-        private readonly DrawTextParams prm = new();
+        private readonly DrawTextParams prm;
+
+        private readonly SideBarPanel rightPanel = new()
+        {
+        };
 
         static SkiaDrawingWindow()
         {
@@ -59,13 +68,21 @@ namespace ControlsSample
 
         public SkiaDrawingWindow()
         {
+            prm = new(this);
+
             Layout = LayoutStyle.Vertical;
 
-            panel.Parent = this;
-            panel.VerticalAlignment = VerticalAlignment.Fill;
+            mainPanel.Parent = this;
+            mainPanel.VerticalAlignment = VerticalAlignment.Fill;
 
-            propGrid.Parent = panel.RightPanel;
-            pictureBox.Parent = panel.LeftPanel;
+            rightPanel.Parent = mainPanel.RightPanel;
+
+            fontListBox.SelectionChanged += FontListBox_SelectionChanged;
+
+            rightPanel.Add("Fonts", fontListBox);
+            rightPanel.Add("Properties", propGrid);
+
+            pictureBox.Parent = mainPanel.LeftPanel;
             propGrid.SetProps(prm, true);
 
             propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
@@ -74,7 +91,7 @@ namespace ControlsSample
 
             Title = "SkiaSharp drawing demo";
 
-            control.Parent = panel.FillPanel;
+            control.Parent = mainPanel.FillPanel;
 
             Size = (900, 700);
             IsMaximized = true;
@@ -98,6 +115,16 @@ namespace ControlsSample
             propGrid.SuggestedInitDefaults();
 
             DrawTextOnSkia();
+        }
+
+        private void FontListBox_SelectionChanged(object? sender, EventArgs e)
+        {
+            var s = fontListBox.SelectedItemAs<string?>() ?? Control.DefaultFont.Name;
+
+            SkiaSampleControl.SampleFont = SkiaSampleControl.SampleFont.WithName(s);
+            control.Font = SkiaSampleControl.SampleFont;
+            DrawTextOnSkia();
+            propGrid.CenterSplitter();
         }
 
         private void GenericToSkia()
@@ -128,7 +155,7 @@ namespace ControlsSample
 
         private void DrawTextOnSkia()
         {
-            RectD rect = (0, 0, 500, 500);
+            RectD rect = (0, 0, 800, 600);
 
             SKBitmap bitmap = new((int)rect.Width, (int)rect.Height);
 
@@ -136,7 +163,7 @@ namespace ControlsSample
 
             canvas.DrawRect(rect, Brushes.White);
 
-            PointD pt = new(100, 150);
+            PointD pt = new(20, 150);
             PointD pt2 = new(300, 150);
 
             var font = SkiaSampleControl.SampleFont;
@@ -154,7 +181,23 @@ namespace ControlsSample
 
         private class DrawTextParams
         {
+            private readonly SkiaDrawingWindow owner;
 
+            public DrawTextParams(SkiaDrawingWindow owner)
+            {
+                this.owner = owner;
+            }
+
+            public Font Font
+            {
+                get => SkiaSampleControl.SampleFont;
+
+                set
+                {
+                    SkiaSampleControl.SampleFont = value;
+                    owner.FontListBox_SelectionChanged(null, EventArgs.Empty);
+                }
+            }
         }
    }
 }

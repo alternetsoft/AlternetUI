@@ -664,7 +664,7 @@ namespace Alternet.UI
                 if (itemFont is not null)
                     result = itemFont;
                 if (item.FontStyle is not null)
-                    result = result.GetWithStyle(item.FontStyle.Value);
+                    result = result.WithStyle(item.FontStyle.Value);
             }
 
             return result;

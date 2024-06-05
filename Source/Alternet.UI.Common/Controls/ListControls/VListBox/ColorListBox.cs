@@ -135,13 +135,13 @@ namespace Alternet.UI
         public class DefaultItemPainter : IListBoxItemPainter
         {
             /// <inheritdoc/>
-            public SizeD GetSize(VListBox sender, int index)
+            public virtual SizeD GetSize(VListBox sender, int index)
             {
                 return sender.DefaultMeasureItemSize(index);
             }
 
             /// <inheritdoc/>
-            public void Paint(VListBox sender, ListBoxItemPaintEventArgs e)
+            public virtual void Paint(VListBox sender, ListBoxItemPaintEventArgs e)
             {
                 var itemColor = GetItemValueOrDefault(sender, e.ItemIndex, Color.White);
 
@@ -159,7 +159,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public bool PaintBackground(VListBox sender, ListBoxItemPaintEventArgs e)
+            public virtual bool PaintBackground(VListBox sender, ListBoxItemPaintEventArgs e)
             {
                 return false;
             }

@@ -597,7 +597,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return GetWithStyle(Style | FontStyle.Bold);
+                return WithStyle(Style | FontStyle.Bold);
             }
         }
 
@@ -613,7 +613,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return GetWithStyle(Style | FontStyle.Underline);
+                return WithStyle(Style | FontStyle.Underline);
             }
         }
 
@@ -841,7 +841,7 @@ namespace Alternet.Drawing
             var sameNameAndSize = result.Name == name && result.SizeInPoints == sizeInPoints;
 
             if (sameNameAndSize)
-                return result.GetWithStyle(style);
+                return result.WithStyle(style);
             else
                 return Get(name, sizeInPoints, style);
         }
@@ -918,6 +918,24 @@ namespace Alternet.Drawing
             return new(familyName, emSize, style);
         }
 
+        [Obsolete("Use Font.WithStyle")]
+        public Font GetWithStyle(FontStyle style)
+        {
+            return WithStyle(style);
+        }
+
+        /// <summary>
+        /// Returns font with same parameters, but with different name.
+        /// </summary>
+        /// <param name="name">New font name.</param>
+        /// <returns></returns>
+        public virtual Font WithName(string name)
+        {
+            FontInfo info = this;
+            info.Name = name;
+            return new(info);
+        }
+
         /// <summary>
         /// Returns font with same name and size, but with different <see cref="FontStyle"/>.
         /// </summary>
@@ -927,7 +945,7 @@ namespace Alternet.Drawing
         /// This function saves created fonts in the base font and is memory efficient.
         /// creates 
         /// </remarks>
-        public virtual Font GetWithStyle(FontStyle style)
+        public virtual Font WithStyle(FontStyle style)
         {
             if (Style == style)
                 return this;

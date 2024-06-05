@@ -17,8 +17,20 @@ namespace Alternet.UI
             Font = SampleFont;
         }
 
-        public static Font SampleFont => sampleFont ??= Control.DefaultFont
-                .Scaled(2).GetWithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
+        public static Font SampleFont
+        {
+            get
+            {
+                return sampleFont ??=
+                    Control.DefaultFont.Scaled(2)
+                    .WithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
+            }
+
+            set
+            {
+                sampleFont = value;
+            }
+        } 
 
         protected override void OnPaint(PaintEventArgs e)
         {
