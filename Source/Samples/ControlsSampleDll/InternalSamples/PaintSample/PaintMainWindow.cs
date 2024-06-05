@@ -8,7 +8,7 @@ using SkiaSharp;
 
 namespace PaintSample
 {
-    public partial class MainWindow : Window
+    public partial class PaintMainWindow : Window
     {
         private readonly Tools? tools;
 
@@ -44,10 +44,8 @@ namespace PaintSample
         private ObjectUniqueId undoId;
         private ObjectUniqueId redoId;
 
-        public MainWindow()
+        public PaintMainWindow()
         {
-            InitializeComponent();
-
             var optionsId = toolbar.AddControl(optionsPlaceholder);
             toolbar.SetToolAlignCenter(optionsId, true);
 
@@ -55,7 +53,7 @@ namespace PaintSample
             Size = (750, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
-            var menu = (Menu as Menu)!;
+            var menu = new MainMenu();
 
             fileMainMenu = menu.Add("_File");
             editMainMenu = menu.Add("_Edit");
@@ -162,6 +160,8 @@ namespace PaintSample
 
             UpdateControls();
 
+            this.Menu = menu;
+
             PerformLayout();
         }
 
@@ -207,7 +207,7 @@ namespace PaintSample
 
         internal (ImageSet Normal, ImageSet Disabled) LoadToolImage(Tool tool)
         {
-            using var stream = typeof(MainWindow).Assembly.GetManifestResourceStream(
+            using var stream = typeof(PaintMainWindow).Assembly.GetManifestResourceStream(
                 "ControlsSampleDll.Resources.ToolIcons."
                 + tool.GetType().Name.Replace("Tool", "") + ".svg");
 #pragma warning disable

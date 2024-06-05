@@ -71,7 +71,7 @@ namespace ControlsSample
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
             Add("Drawing Sample", () => new DrawingSample.MainWindow());
             Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
-            Add("Paint Sample", () => new PaintSample.MainWindow());
+            Add("Paint Sample", () => new PaintSample.PaintMainWindow());
             Add("Custom Controls", () => new CustomControlsSample.CustomControlsWindow());
             Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());
             Add("Common Dialogs", () => new CommonDialogsWindow());
