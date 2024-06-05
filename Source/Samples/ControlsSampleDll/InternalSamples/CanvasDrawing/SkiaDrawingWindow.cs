@@ -114,7 +114,7 @@ namespace ControlsSample
 
             propGrid.SuggestedInitDefaults();
 
-            DrawTextOnSkia();
+            DrawTextOnSkia2();
         }
 
         private void FontListBox_SelectionChanged(object? sender, EventArgs e)
@@ -123,7 +123,7 @@ namespace ControlsSample
 
             SkiaSampleControl.SampleFont = SkiaSampleControl.SampleFont.WithName(s);
             control.Font = SkiaSampleControl.SampleFont;
-            DrawTextOnSkia();
+            DrawTextOnSkia2();
             propGrid.CenterSplitter();
         }
 
@@ -177,6 +177,33 @@ namespace ControlsSample
 
             pictureBox.Image = (Image)bitmap;
 
+        }
+
+        private void DrawTextOnSkia2()
+        {
+            var bitmap = new Bitmap(PixelFromDip(800), PixelFromDip(600));
+            bitmap.SetDPI(GetDPI());
+
+            using var canvasLock = bitmap.LockSkiaCanvas(GetPixelScaleFactor());
+
+            var canvas = canvasLock.Canvas;
+
+            canvas.Clear(Color.Yellow);
+            canvas.DrawRect(SKRect.Create(800, 600), Color.Red.AsPen);
+
+            PointD pt = new(1, 1);
+            PointD pt2 = new(300, 150);
+
+            var font = SkiaSampleControl.SampleFont;
+
+            canvas.DrawText(SkiaSampleControl.S1, pt, font, Color.Black, Color.LightGreen);
+
+            canvas.DrawText(SkiaSampleControl.S2, pt2, font, Color.Red, Color.LightGreen);
+
+            canvas.DrawPoint(pt, Color.Red);
+            canvas.DrawPoint(pt2, Color.Red);
+
+            pictureBox.Image = bitmap;
         }
 
         private class DrawTextParams

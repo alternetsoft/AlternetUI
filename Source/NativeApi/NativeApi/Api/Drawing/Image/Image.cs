@@ -108,5 +108,11 @@ namespace NativeApi.Api
         public bool Rescale(SizeI sizeNeeded) => default;
 
         public static int GetDefaultBitmapType() => default;
+
+        public IntPtr LockAlphaData() => default;
+
+        public int GetAlphaDataStride() => default;
+
+        public void UnlockAlphaData() { }
     }
 }

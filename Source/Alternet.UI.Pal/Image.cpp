@@ -6,13 +6,36 @@
 #include "GenericImage.h"
 
 #include <wx/wxprec.h>
-#include <wx/rawbmp.h>
 
 #include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvg.h"
 #include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvgrast.h"
 
 namespace Alternet::UI
 {
+	int Image::GetAlphaDataStride()
+	{
+		return _stride;
+	}
+
+	void* Image::LockAlphaData()
+	{
+		pixelData = new ImageAlphaPixelData(_bitmap);
+		if (!pixelData)
+			return nullptr;
+		_stride = pixelData->GetRowStride();
+		auto pixels = pixelData->GetPixels();
+		return pixels.m_ptr;
+	}
+
+	void Image::UnlockAlphaData()
+	{
+		if (pixelData)
+		{
+			delete pixelData;
+			pixelData = nullptr;
+		}
+	}
+
 	Int32Size Image::GetDipSize()
 	{
 		return _bitmap.GetDIPSize();

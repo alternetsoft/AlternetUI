@@ -3,8 +3,15 @@
 #include "ApiTypes.h"
 #include "Object.h"
 
+#include <wx/bitmap.h>
+#include <wx/rawbmp.h>
+
 namespace Alternet::UI
 {
+    typedef wxPixelData<wxBitmap, wxNativePixelFormat> ImageNativePixelData;
+
+    typedef wxPixelData<wxBitmap, wxAlphaPixelFormat> ImageAlphaPixelData;
+
     class Image : public Object
     {
 #include "Api/Image.inc"       
@@ -30,6 +37,7 @@ namespace Alternet::UI
 
         wxBitmap _bitmap; // reference-counted, so use copy-by-value.
     private:
-
+        ImageAlphaPixelData* pixelData = nullptr;
+        int _stride = 0;
     };
 }

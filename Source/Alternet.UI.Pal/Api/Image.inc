@@ -57,6 +57,9 @@ Image* GetSubBitmap(const RectI& rect);
 Image* ConvertToDisabled(uint8_t brightness);
 bool Rescale(const SizeI& sizeNeeded);
 static int GetDefaultBitmapType();
+void* LockAlphaData();
+int GetAlphaDataStride();
+void UnlockAlphaData();
 public:
 Image();
 protected:

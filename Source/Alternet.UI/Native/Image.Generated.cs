@@ -280,6 +280,24 @@ namespace Alternet.UI.Native
             return NativeApi.Image_GetDefaultBitmapType_();
         }
         
+        public System.IntPtr LockAlphaData()
+        {
+            CheckDisposed();
+            return NativeApi.Image_LockAlphaData_(NativePointer);
+        }
+        
+        public int GetAlphaDataStride()
+        {
+            CheckDisposed();
+            return NativeApi.Image_GetAlphaDataStride_(NativePointer);
+        }
+        
+        public void UnlockAlphaData()
+        {
+            CheckDisposed();
+            NativeApi.Image_UnlockAlphaData_(NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -393,6 +411,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDefaultBitmapType_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Image_LockAlphaData_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Image_GetAlphaDataStride_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_UnlockAlphaData_(IntPtr obj);
             
         }
     }

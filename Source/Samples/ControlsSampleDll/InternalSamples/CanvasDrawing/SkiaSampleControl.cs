@@ -12,6 +12,9 @@ namespace Alternet.UI
     {
         private static Font? sampleFont;
 
+        public static string S1 = "He|l lo";
+        public static string S2 = "; hello ";
+
         public SkiaSampleControl()
         {
             Font = SampleFont;
@@ -41,14 +44,14 @@ namespace Alternet.UI
             var font = Font ?? Control.DefaultFont;
 
             dc.DrawText(
-                $"Hello:! {font.SizeInPoints}",
+                $"{S1}",
                 (5, 0),
                 font,
                 Color.Black,
                 Color.LightGreen);
 
             dc.DrawText(
-                $"; hello text: {font.SizeInPoints}",
+                $"{S2}",
                 (160, 0),
                 font,
                 Color.Navy,
@@ -57,7 +60,7 @@ namespace Alternet.UI
             font = font.Base;
 
             dc.DrawText(
-                $"Hello:! {font.SizeInPoints}",
+                $"{S2} {font.SizeInPoints}",
                 (50, 150),
                 font,
                 Color.Red,

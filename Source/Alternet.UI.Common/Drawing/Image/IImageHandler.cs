@@ -44,5 +44,11 @@ namespace Alternet.Drawing
         bool ResetAlpha();
 
         bool Rescale(SizeI sizeNeeded);
+
+        public IntPtr LockAlphaData();
+
+        public void UnlockAlphaData();
+
+        int GetAlphaDataStride();
     }
 }

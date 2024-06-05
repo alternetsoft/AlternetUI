@@ -157,11 +157,10 @@ namespace Alternet.Drawing
             {
                 if (paint is null)
                 {
-                    paint = new();
-                    paint.Color = Color;
+                    paint = GraphicsFactory.CreateStrokePaint(Color);
                     paint.StrokeCap = LineCap.ToSkia();
                     paint.StrokeJoin = LineJoin.ToSkia();
-                    paint.StrokeWidth = (float)Width;
+                    paint.StrokeWidth = (float)(Width * Display.Default.ScaleFactor);
                     paint.IsStroke = true;
                 }
 
@@ -263,7 +262,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Default value is 1.
         /// </remarks>
-        public virtual double Width
+        public virtual Coord Width
         {
             get => width;
 

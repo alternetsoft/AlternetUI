@@ -506,7 +506,7 @@ namespace Alternet.Drawing
                     SKFontStyleWidth.Normal,
                     skiaSlant);
 
-                skiaFont = new(typeFace, (float)(SizeInPixels));
+                skiaFont = new(typeFace, (float)(SizeInPixels / Display.Default.ScaleFactor));
                 return skiaFont;
             }
 

@@ -63,6 +63,11 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        public int GetAlphaDataStride()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual IImageHandler GetSubBitmap(RectI rect)
         {
             throw new NotImplementedException();
@@ -90,6 +95,11 @@ namespace Alternet.Drawing
         public virtual bool LoadFromStream(Stream stream, BitmapType type)
         {
             return LoadFromStream(stream);
+        }
+
+        public nint LockAlphaData()
+        {
+            throw new NotImplementedException();
         }
 
         public virtual bool Rescale(SizeI sizeNeeded)
@@ -135,6 +145,11 @@ namespace Alternet.Drawing
         }
 
         public virtual GenericImage ToGenericImage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnlockAlphaData()
         {
             throw new NotImplementedException();
         }

@@ -162,5 +162,35 @@ namespace Alternet.Drawing
 
             canvas.DrawText(s, x + offsetX, y + offsetY, font, foreColor.AsStrokeAndFillPaint);
         }
+
+        /// <summary>
+        /// Creates <see cref="SKCanvas"/> on the memory buffer and calls specified action.
+        /// </summary>
+        /// <param name="width">Width of the image data.</param>
+        /// <param name="height">Height of the image data.</param>
+        /// <param name="scan0">The pointer to an in memory-buffer that can hold the image as specified.</param>
+        /// <param name="stride">The number of bytes per row in the pixel buffer.</param>
+        /// <param name="dpi">Dpi (dots per inch).</param>
+        /// <param name="onRender">Render action.</param>
+        public static void DrawOnPtr(
+            int width,
+            int height,
+            IntPtr scan0,
+            int stride,
+            float dpi,
+            Action<SKSurface> onRender)
+        {
+            var info = new SKImageInfo(
+                width,
+                height,
+                SKImageInfo.PlatformColorType,
+                SKAlphaType.Unpremul);
+
+            using var surface = SKSurface.Create(info, scan0, Math.Abs(stride));
+            var canvas = surface.Canvas;
+            canvas.Scale(dpi / 96.0f);
+            onRender(surface);
+            canvas.Flush();
+        }
     }
 }
