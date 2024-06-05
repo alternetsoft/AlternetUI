@@ -741,11 +741,24 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='Font'/> to a <see cref='SKFont'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKFont(Font font)
         {
             font ??= Font.Default;
-
             return font.SkiaFont;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator FontNameAndSize(Font font)
+        {
+            font ??= Font.Default;
+            return new(font.Name, font.SizeInPoints);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Font(FontNameAndSize font)
+        {
+            return new(font.Name, font.Size);
         }
 
         /// <summary>

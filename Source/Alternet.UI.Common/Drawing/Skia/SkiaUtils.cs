@@ -82,12 +82,31 @@ namespace Alternet.Drawing
             if (genericFamily == GenericFontFamily.Default)
                 return SkiaUtils.DefaultFontName;
 
-            var (name, _) = FontFamily.GetSampleFontNameAndSize(genericFamily);
+            if (genericFamily == GenericFontFamily.Monospace)
+            {
+                if(DefaultMonoFontName is null)
+                {
+                    var result = SampleFonts.GetFixedPitchFont();
+                    if (result is not null)
+                    {
+                        DefaultMonoFontName = result;
+                        return result;
+                    }
+                    else
+                        return SkiaUtils.DefaultFontName;
+                }
+                else
+                {
+                    return SkiaUtils.DefaultMonoFontName;
+                }
+            }
 
-            if (!FontFamily.IsFamilyValid(name))
-                name = SkiaUtils.DefaultFontName;
+            var nameAndSize = SampleFonts.GetNameAndSize(genericFamily);
 
-            return name;
+            if (!FontFamily.IsFamilyValid(nameAndSize.Name))
+                return SkiaUtils.DefaultFontName;
+
+            return nameAndSize.Name;
         }
 
         public static SKFont CreateDefaultFont()
