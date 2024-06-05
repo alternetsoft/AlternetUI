@@ -4,30 +4,31 @@
 <!-- Also edit \Source\Samples\CommonData\TargetFrameworks.props -->	
 
   <PropertyGroup>
-	<TargetFramework48Version>net480</TargetFramework48Version>
-	<TargetFramework46Version>net462</TargetFramework46Version>
-  	<BoolNoNet8>false</BoolNoNet8>
-	<BoolNoNet8 Condition="'$(NoNet8)'!=''">$(NoNet8)</BoolNoNet8>
     	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
-    	<UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
-	<TargetFrameworks>net8.0</TargetFrameworks>
-  </PropertyGroup>
-
- <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-	<TargetFrameworks>net8.0;net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</TargetFrameworks>
- </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-	<TargetFrameworks Condition="$(BoolNoNet8)">net7.0;net6.0</TargetFrameworks>
-	<TargetFrameworks Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-	<TargetFrameworks Condition="$(BoolNoNet8)">net7.0;net6.0</TargetFrameworks>
-	<TargetFrameworks Condition="!$(BoolNoNet8)">net8.0;net7.0;net6.0</TargetFrameworks>
+  	<BoolNet9>false</BoolNet9>
+  	<BoolNet8>true</BoolNet8>
+  	<BoolNet7>true</BoolNet7>
+  	<BoolNet6>true</BoolNet6>
+  	<BoolNet48>true</BoolNet48>
+  	<BoolNet46>true</BoolNet46>
   </PropertyGroup>
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
+
+  <PropertyGroup>
+	<TargetFramework48Version>net480</TargetFramework48Version>
+	<TargetFramework46Version>net462</TargetFramework46Version>
+
+	<TF48 Condition="$(BoolNet48) and $([MSBuild]::IsOsPlatform('Windows'))">$(TargetFramework48Version);</TF48>
+	<TF46 Condition="$(BoolNet46) and $([MSBuild]::IsOsPlatform('Windows'))">$(TargetFramework46Version);</TF46>
+	<TF6 Condition="$(BoolNet6)">net6.0;</TF6>
+	<TF7 Condition="$(BoolNet7)">net7.0;</TF7>
+	<TF8 Condition="$(BoolNet8)">net8.0;</TF8>
+	<TF9 Condition="$(BoolNet9)">net9.0;</TF9>
+
+    	<UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
+	<TargetFrameworks>$(TF9)$(TF8)$(TF7)$(TF6)$(TF48)$(TF46)</TargetFrameworks>
+  </PropertyGroup>
 
 </Project>
 
