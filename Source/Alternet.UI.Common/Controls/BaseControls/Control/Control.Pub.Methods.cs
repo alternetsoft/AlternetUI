@@ -344,6 +344,7 @@ namespace Alternet.UI
         /// all <see cref="Button"/> or <see cref="CheckBox"/> child controls.
         /// </remarks>
         public virtual IEnumerable<T> ChildrenOfType<T>()
+            where T: Control
         {
             if (HasChildren)
                 return Children.OfType<T>();
@@ -1001,7 +1002,10 @@ namespace Alternet.UI
         /// Gets <see cref="Display"/> where this control is shown.
         /// </summary>
         /// <returns></returns>
-        public virtual Display GetDisplay() => display ??= new(this);
+        public virtual Display GetDisplay()
+        {
+            return display ??= new(this);
+        }
 
         /// <summary>
         /// Changes size of the control to fit the size of its content.
@@ -1750,9 +1754,34 @@ namespace Alternet.UI
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
         public virtual void ForEachChild<T>(Action<T> action)
+            where T: Control
         {
-            foreach (var child in ChildrenOfType<T>())
+            if (!HasChildren)
+                return;
+
+            foreach (var child in Children)
+            {
+                if(child is T control)
+                    action(control);
+            }
+        }
+
+        /// <summary>
+        /// Performs some action for the each child of the control.
+        /// </summary>
+        /// <param name="action">Specifies action which will be called for the each child.</param>
+        /// <param name="recursive">Whether to call action for all child controls recursively.</param>
+        public virtual void ForEachChild(Action<Control> action, bool recursive = false)
+        {
+            if (!HasChildren)
+                return;
+
+            foreach (var child in Children)
+            {
                 action(child);
+                if (recursive)
+                    child.ForEachChild(action, true);
+            }
         }
 
         /// <summary>
@@ -2069,6 +2098,16 @@ namespace Alternet.UI
         {
             OnHandlerSizeChanged(EventArgs.Empty);
             ReportBoundsChanged();
+        }
+
+        public virtual void ResetMeasureCanvas()
+        {
+            SafeDispose(ref measureCanvas);
+        }
+
+        public virtual void ResetDisplay()
+        {
+            SafeDispose(ref display);
         }
 
         public void RaiseHandlerLocationChanged()

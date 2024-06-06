@@ -262,8 +262,8 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void OnHandleDestroyed(EventArgs e)
         {
-            SafeDispose(ref measureCanvas);
-            SafeDispose(ref display);
+            ResetMeasureCanvas();
+            ResetDisplay();
         }
 
         /// <summary>
