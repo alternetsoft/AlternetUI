@@ -1,0 +1,1 @@
+dotnet run --property WarningLevel=0 --framework net8.0
