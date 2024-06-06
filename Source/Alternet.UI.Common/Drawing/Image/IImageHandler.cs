@@ -45,10 +45,10 @@ namespace Alternet.Drawing
 
         bool Rescale(SizeI sizeNeeded);
 
-        public IntPtr LockAlphaData();
+        public IntPtr LockBits();
 
-        public void UnlockAlphaData();
+        public void UnlockBits();
 
-        int GetAlphaDataStride();
+        int GetStride();
     }
 }

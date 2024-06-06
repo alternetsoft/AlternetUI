@@ -830,24 +830,9 @@ namespace Alternet.Drawing
             return (0, 0, size.Width, size.Height);
         }
 
-        public virtual IntPtr LockPixels()
+        public virtual ISkiaBitmapData LockBits()
         {
-            return Handler.LockAlphaData();
-        }
-
-        public virtual int GetPixelsStride()
-        {
-            return Handler.GetAlphaDataStride();
-        }
-
-        public virtual void UnlockPixels()
-        {
-            Handler.UnlockAlphaData();
-        }
-
-        public ISkiaCanvasLock LockSkiaCanvas(Coord scaleFactor = 1)
-        {
-            return new SkiaCanvasOnImage(this, scaleFactor);
+            return new SkiaBitmapData(this);
         }
 
         /// <summary>

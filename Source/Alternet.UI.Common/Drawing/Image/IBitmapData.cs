@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Alternet.UI;
-
-using SkiaSharp;
-
 namespace Alternet.Drawing
 {
-    public interface ISkiaCanvasLock : IDisposable
+    public interface IBitmapData : IDisposable
     {
         int Width { get; }
-
         int Height { get; }
 
-        SKSurface Surface { get; }
+        int Stride { get; }
 
-        SKCanvas Canvas { get; }
+        PixelFormat PixelFormat { get; }
+
+        IntPtr Scan0 { get; }
+
+        int Reserved { get; }
     }
 }

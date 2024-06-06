@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Specifies the format of the color data for each pixel in the image.
     /// </summary>
-    public enum PixelFormat
+    public enum PixelFormat : int
     {
         /// <summary>
         /// The pixel data contains color-indexed values, which means the

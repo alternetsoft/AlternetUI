@@ -192,5 +192,26 @@ namespace Alternet.Drawing
             onRender(surface);
             canvas.Flush();
         }
+
+        internal static void SampleDrawText(SKCanvas canvas, string text, SKRect rect, SKPaint paint)
+        {
+            float spaceWidth = paint.MeasureText(" ");
+            float wordX = rect.Left;
+            float wordY = rect.Top + paint.TextSize;
+            foreach (string word in text.Split(' '))
+            {
+                float wordWidth = paint.MeasureText(word);
+                if (wordWidth <= rect.Right - wordX)
+                {
+                    canvas.DrawText(word, wordX, wordY, paint);
+                    wordX += wordWidth + spaceWidth;
+                }
+                else
+                {
+                    wordY += paint.FontSpacing;
+                    wordX = rect.Left;
+                }
+            }
+        }
     }
 }

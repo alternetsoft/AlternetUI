@@ -63,7 +63,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public int GetAlphaDataStride()
+        public int GetStride()
         {
             throw new NotImplementedException();
         }
@@ -97,7 +97,7 @@ namespace Alternet.Drawing
             return LoadFromStream(stream);
         }
 
-        public nint LockAlphaData()
+        public nint LockBits()
         {
             throw new NotImplementedException();
         }
@@ -149,7 +149,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public void UnlockAlphaData()
+        public void UnlockBits()
         {
             throw new NotImplementedException();
         }
