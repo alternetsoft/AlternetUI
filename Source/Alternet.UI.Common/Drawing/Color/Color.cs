@@ -188,15 +188,6 @@ namespace Alternet.Drawing
         /// </summary>
         public static event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToDisplayString;
 
-        public static Func<Color, SKPaint> ColorToFillPaint
-            = (color) => GraphicsFactory.CreateFillPaint(color);
-
-        public static Func<Color, SKPaint> ColorToStrokeAndFillPaint
-            = (color) => GraphicsFactory.CreateStrokeAndFillPaint(color);
-
-        public static Func<Color, SKPaint> ColorToStrokePaint
-            = (color) => GraphicsFactory.CreateStrokePaint(color);
-
         /// <summary>
         /// Gets the red component value of this <see cref="Color"/> structure.
         /// </summary>
@@ -518,7 +509,7 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return strokeAndFillPaint ??= ColorToStrokeAndFillPaint(this);
+                return strokeAndFillPaint ??= GraphicsFactory.ColorToStrokeAndFillPaint(this);
             }
         }
 
@@ -532,7 +523,7 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return strokePaint ??= ColorToStrokePaint(this);
+                return strokePaint ??= GraphicsFactory.ColorToStrokePaint(this);
             }
         }
 
@@ -546,7 +537,7 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return fillPaint ??= ColorToFillPaint(this);
+                return fillPaint ??= GraphicsFactory.ColorToFillPaint(this);
             }
         }
 

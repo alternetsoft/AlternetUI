@@ -155,16 +155,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (paint is null)
-                {
-                    paint = GraphicsFactory.CreateStrokePaint(Color);
-                    paint.StrokeCap = LineCap.ToSkia();
-                    paint.StrokeJoin = LineJoin.ToSkia();
-                    paint.StrokeWidth = (float)(Width * Display.Default.ScaleFactor);
-                    paint.IsStroke = true;
-                }
-
-                return paint;
+                return paint ??= GraphicsFactory.PenToPaint(this);
             }
 
             set

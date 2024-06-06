@@ -445,7 +445,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokeAndFillPaint ??= GraphicsFactory.CreateStrokeAndFillPaint(SkiaFont);
+                strokeAndFillPaint ??= GraphicsFactory.FontToStrokeAndFillPaint(this);
                 return strokeAndFillPaint;
             }
         }
@@ -459,7 +459,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokePaint ??= GraphicsFactory.CreateStrokePaint(SkiaFont);
+                strokePaint ??= GraphicsFactory.FontToStrokePaint(this);
                 return strokePaint;
             }
         }
@@ -473,7 +473,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                fillPaint ??= GraphicsFactory.CreateFillPaint(SkiaFont);
+                fillPaint ??= GraphicsFactory.FontToFillPaint(this);
                 return fillPaint;
             }
         }
@@ -493,21 +493,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (skiaFont is not null)
-                    return skiaFont;
-
-                SKFontStyleWeight skiaWeight = (SKFontStyleWeight)Weight;
-                SKFontStyleSlant skiaSlant = IsItalic ?
-                    SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
-
-                var typeFace = SKTypeface.FromFamilyName(
-                    Name,
-                    skiaWeight,
-                    SKFontStyleWidth.Normal,
-                    skiaSlant);
-
-                skiaFont = new(typeFace, (float)(SizeInPixels / Display.Default.ScaleFactor));
-                return skiaFont;
+                return skiaFont ??= GraphicsFactory.FontToSkiaFont(this);
             }
 
             set
