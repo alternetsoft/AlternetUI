@@ -427,6 +427,12 @@ namespace Alternet.UI
         public static void LogSkiaBitmap()
         {
             App.LogNameValue("SKImageInfo.PlatformColorType", SKImageInfo.PlatformColorType);
+
+            App.LogNameValue("SKImageInfo.PlatformColorAlphaShift", SKImageInfo.PlatformColorAlphaShift);
+            App.LogNameValue("SKImageInfo.PlatformColorRedShift", SKImageInfo.PlatformColorRedShift);
+            App.LogNameValue("SKImageInfo.PlatformColorGreenShift", SKImageInfo.PlatformColorGreenShift);
+            App.LogNameValue("SKImageInfo.PlatformColorBlueShift", SKImageInfo.PlatformColorBlueShift);
+
             LogSkiaBitmap(new SKBitmap(), "new SKBitmap():");
             LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: true), "new SKBitmap(50, 50, isOpaque: true):");
             LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: false), "new SKBitmap(50, 50, isOpaque: false):");

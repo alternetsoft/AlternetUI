@@ -41,42 +41,42 @@ namespace Alternet.Drawing
         /// <summary>
         /// Shift count for Alpha component of the color.
         /// </summary>
-        public const int ARGBAlphaShift = 24;
+        public static readonly int ARGBAlphaShift = 24;
 
         /// <summary>
         /// Shift count for Red component of the color.
         /// </summary>
-        public const int ARGBRedShift = 16;
+        public static readonly int ARGBRedShift = 16;
 
         /// <summary>
         /// Shift count for Green component of the color.
         /// </summary>
-        public const int ARGBGreenShift = 8;
+        public static readonly int ARGBGreenShift = 8;
 
         /// <summary>
         /// Shift count for Blue component of the color.
         /// </summary>
-        public const int ARGBBlueShift = 0;
+        public static readonly int ARGBBlueShift = 0;
 
         /// <summary>
         /// Bit mask for Alpha component of the color.
         /// </summary>
-        public const uint ARGBAlphaMask = 0xFFu << ARGBAlphaShift;
+        public static readonly uint ARGBAlphaMask = 0xFFu << ARGBAlphaShift;
 
         /// <summary>
         /// Bit mask for Red component of the color.
         /// </summary>
-        public const uint ARGBRedMask = 0xFFu << ARGBRedShift;
+        public static readonly uint ARGBRedMask = 0xFFu << ARGBRedShift;
 
         /// <summary>
         /// Bit mask for Green component of the color.
         /// </summary>
-        public const uint ARGBGreenMask = 0xFFu << ARGBGreenShift;
+        public static readonly uint ARGBGreenMask = 0xFFu << ARGBGreenShift;
 
         /// <summary>
         /// Bit mask for Blue component of the color.
         /// </summary>
-        public const uint ARGBBlueMask = 0xFFu << ARGBBlueShift;
+        public static readonly uint ARGBBlueMask = 0xFFu << ARGBBlueShift;
 
         /// <summary>
         /// Represents a color that is <c>null</c>.

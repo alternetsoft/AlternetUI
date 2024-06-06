@@ -12,7 +12,7 @@ namespace Alternet.Drawing
 {
     internal class SkiaBitmapData: BitmapData, ISkiaBitmapData
     {
-        public static SKColorType DefaultColorType = SKColorType.Bgra8888;
+        public static SKColorType DefaultColorType = SKImageInfo.PlatformColorType;
 
         public static SKAlphaType DefaultAlphaType = SKAlphaType.Premul;
 
