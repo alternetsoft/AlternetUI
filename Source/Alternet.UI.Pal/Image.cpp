@@ -12,12 +12,12 @@
 
 namespace Alternet::UI
 {
-	int Image::GetAlphaDataStride()
+	int Image::GetStride()
 	{
 		return _stride;
 	}
 
-	void* Image::LockAlphaData()
+	void* Image::LockBits()
 	{
 		pixelData = new ImageAlphaPixelData(_bitmap);
 		if (!pixelData)
@@ -27,7 +27,7 @@ namespace Alternet::UI
 		return pixels.m_ptr;
 	}
 
-	void Image::UnlockAlphaData()
+	void Image::UnlockBits()
 	{
 		if (pixelData)
 		{

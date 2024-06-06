@@ -39,25 +39,6 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
-    struct SplitterPanelEventData
-    {
-        int SashPosition;
-        int OldSize;
-        int NewSize;
-        int X;
-        int Y;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct TabPageSelectionEventData
-    {
-        int oldSelectedTabPageIndex;
-        int newSelectedTabPageIndex;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
     struct TreeViewItemEventData
     {
         void* item;

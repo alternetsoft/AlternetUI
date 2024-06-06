@@ -406,34 +406,34 @@ ALTERNET_UI_API int Image_GetDefaultBitmapType_()
     #endif
 }
 
-ALTERNET_UI_API void* Image_LockAlphaData_(Image* obj)
+ALTERNET_UI_API void* Image_LockBits_(Image* obj)
 {
     #if !defined(__WXMSW__)
     return MarshalExceptions<void*>([&](){
     #endif
-        return obj->LockAlphaData();
+        return obj->LockBits();
     #if !defined(__WXMSW__)
     });
     #endif
 }
 
-ALTERNET_UI_API int Image_GetAlphaDataStride_(Image* obj)
+ALTERNET_UI_API int Image_GetStride_(Image* obj)
 {
     #if !defined(__WXMSW__)
     return MarshalExceptions<int>([&](){
     #endif
-        return obj->GetAlphaDataStride();
+        return obj->GetStride();
     #if !defined(__WXMSW__)
     });
     #endif
 }
 
-ALTERNET_UI_API void Image_UnlockAlphaData_(Image* obj)
+ALTERNET_UI_API void Image_UnlockBits_(Image* obj)
 {
     #if !defined(__WXMSW__)
     MarshalExceptions<void>([&](){
     #endif
-        obj->UnlockAlphaData();
+        obj->UnlockBits();
     #if !defined(__WXMSW__)
     });
     #endif

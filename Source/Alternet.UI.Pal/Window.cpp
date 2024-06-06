@@ -55,9 +55,9 @@ namespace Alternet::UI
         _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
             &Window::ApplyTitle),
         _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu,   
-            &Window::ApplyMenu),
-        _toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, 
-            &Window::ApplyToolbar)
+            &Window::ApplyMenu)
+        /*_toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, 
+            &Window::ApplyToolbar)*/
     {
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_delayedFlags);
@@ -176,7 +176,7 @@ namespace Alternet::UI
         _menu.Set(value);
     }
 
-    Toolbar* Window::GetToolbar()
+    /*Toolbar* Window::GetToolbar()
     {
         return _toolbar.Get();
     }
@@ -185,7 +185,7 @@ namespace Alternet::UI
     {
         _storedToolbar = value;
         _toolbar.Set(value);
-    }
+    }*/
 
     MainMenu* Window::RetrieveMenu()
     {
@@ -202,7 +202,7 @@ namespace Alternet::UI
         frame->PostSizeEvent();
     }
 
-    Toolbar* Window::RetrieveToolbar()
+    /*Toolbar* Window::RetrieveToolbar()
     {
         return _storedToolbar;
     }
@@ -217,7 +217,7 @@ namespace Alternet::UI
         frame->SetToolBar(value == nullptr ? nullptr : value->GetWxToolBar());
         frame->Layout();
         frame->PostSizeEvent();
-    }
+    }*/
 
     void* Window::GetWxStatusBar()
     {

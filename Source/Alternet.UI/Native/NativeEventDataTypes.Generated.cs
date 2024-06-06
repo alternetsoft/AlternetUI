@@ -34,23 +34,6 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class SplitterPanelEventData
-    {
-        public int SashPosition;
-        public int OldSize;
-        public int NewSize;
-        public int X;
-        public int Y;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class TabPageSelectionEventData
-    {
-        public int oldSelectedTabPageIndex;
-        public int newSelectedTabPageIndex;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class TreeViewItemEventData
     {
         public System.IntPtr item;

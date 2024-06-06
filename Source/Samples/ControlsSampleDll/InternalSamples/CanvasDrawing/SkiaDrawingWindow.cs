@@ -153,7 +153,7 @@ namespace ControlsSample
             pictureBox.Image = (Image)bitmap;
         }
 
-        private void DrawTextOnSkia()
+        internal void DrawTextOnSkia()
         {
             RectD rect = (0, 0, 800, 600);
 
@@ -181,18 +181,23 @@ namespace ControlsSample
 
         private void DrawTextOnSkia2()
         {
-            var bitmap = new Bitmap(PixelFromDip(800), PixelFromDip(600));
+            var width = 300;
+            var height = 300;
+
+            var bitmap = new Bitmap(PixelFromDip(width), PixelFromDip(height));
+            bitmap.HasAlpha = true;
             bitmap.SetDPI(GetDPI());
 
-            using var canvasLock = bitmap.LockSkiaCanvas(GetPixelScaleFactor());
+            using var canvasLock = bitmap.LockBits();
 
             var canvas = canvasLock.Canvas;
+            canvas.Scale((float)GetPixelScaleFactor());
 
             canvas.Clear(Color.Yellow);
-            canvas.DrawRect(SKRect.Create(800, 600), Color.Red.AsPen);
+            canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);
 
-            PointD pt = new(1, 1);
-            PointD pt2 = new(300, 150);
+            PointD pt = new(10, 10);
+            PointD pt2 = new(10, 150);
 
             var font = SkiaSampleControl.SampleFont;
 

@@ -109,10 +109,10 @@ namespace NativeApi.Api
 
         public static int GetDefaultBitmapType() => default;
 
-        public IntPtr LockAlphaData() => default;
+        public IntPtr LockBits() => default;
 
-        public int GetAlphaDataStride() => default;
+        public int GetStride() => default;
 
-        public void UnlockAlphaData() { }
+        public void UnlockBits() { }
     }
 }

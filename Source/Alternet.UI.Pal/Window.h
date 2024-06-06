@@ -5,7 +5,6 @@
 #include "ImageSet.h"
 #include "IconSet.h"
 #include "MainMenu.h"
-#include "Toolbar.h"
 #include "StatusBar.h"
 
 #include <wx/minifram.h>
@@ -129,8 +128,8 @@ namespace Alternet::UI
         MainMenu* RetrieveMenu();
         void ApplyMenu(MainMenu* const& value);
 
-        Toolbar* RetrieveToolbar();
-        void ApplyToolbar(Toolbar* const& value);
+        /*Toolbar* RetrieveToolbar();
+        void ApplyToolbar(Toolbar* const& value);*/
 
         long GetWindowStyle();
 
@@ -170,10 +169,10 @@ namespace Alternet::UI
         WindowState _state = WindowState::Normal;
 
         DelayedValue<Window, MainMenu*> _menu;
-        DelayedValue<Window, Toolbar*> _toolbar;
+        /*DelayedValue<Window, Toolbar*> _toolbar;*/
 
         MainMenu* _storedMenu = nullptr;
-        Toolbar* _storedToolbar = nullptr;
+        /*Toolbar* _storedToolbar = nullptr;*/
         IconSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;
 

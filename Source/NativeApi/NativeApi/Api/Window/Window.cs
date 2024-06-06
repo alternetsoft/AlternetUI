@@ -44,7 +44,6 @@ namespace NativeApi.Api
         public WindowState State { get; set; }
         public IconSet? Icon { get; set; }
         public MainMenu? Menu { get; set; }
-        public Toolbar? Toolbar { get; set; }
         public IntPtr WxStatusBar { get; set; }
 
         public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) { }
