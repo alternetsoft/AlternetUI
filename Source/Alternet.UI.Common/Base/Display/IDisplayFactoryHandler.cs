@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     public interface IDisplayFactoryHandler : IDisposable
     {
-        int GetFromControl(IControl control);
+        int GetFromControl(Control control);
 
         IDisplayHandler CreateDisplay();
 
