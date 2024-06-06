@@ -49,12 +49,25 @@ namespace Alternet.Drawing
 
         static GraphicsFactory()
         {
-            LockBitsColorType = SKImageInfo.PlatformColorType;
+            if (App.IsWindowsOS)
+            {
+                LockBitsColorType = SKColorType.Bgra8888;
+                LockBitsAlphaType = SKAlphaType.Premul;
+                return;
+            }
 
             if (App.IsLinuxOS)
+            {
+                LockBitsColorType = SKColorType.Rgba8888;
                 LockBitsAlphaType = SKAlphaType.Unpremul;
-            else
+                return;
+            }
+
+            if (App.IsMacOS)
+            {
+                LockBitsColorType = SKColorType.Rgba8888;
                 LockBitsAlphaType = SKAlphaType.Premul;
+            }
         }
 
         public static IGraphicsFactoryHandler Handler
