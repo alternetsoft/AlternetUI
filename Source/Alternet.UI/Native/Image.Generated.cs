@@ -143,6 +143,11 @@ namespace Alternet.UI.Native
             
         }
         
+        public static void Log()
+        {
+            NativeApi.Image_Log_();
+        }
+        
         public bool InitializeFromDipSize(int width, int height, double scale, int depth)
         {
             CheckDisposed();
@@ -345,6 +350,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDepth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_Log_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, double scale, int depth);

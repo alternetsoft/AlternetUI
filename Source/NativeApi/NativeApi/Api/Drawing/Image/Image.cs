@@ -8,6 +8,8 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_bitmap.html
     public class Image
     {
+        public static void Log() { }
+
         // Gets or sets the scale factor of this bitmap.
         // Scale factor is 1 by default, but can be greater to indicate that the size of
         // bitmap in logical, DPI-independent pixels is smaller than its actual size in

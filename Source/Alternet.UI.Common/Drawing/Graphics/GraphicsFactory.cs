@@ -16,6 +16,10 @@ namespace Alternet.Drawing
     /// </summary>
     public static class GraphicsFactory
     {
+        public static SKColorType LockBitsColorType;
+
+        public static SKAlphaType LockBitsAlphaType;
+
         public static Func<Font, SKPaint> FontToFillPaint
             = (font) => GraphicsFactory.CreateFillPaint(font.SkiaFont);
 
@@ -42,6 +46,16 @@ namespace Alternet.Drawing
 
         private static IGraphicsFactoryHandler? handler;
         public static SKFilterQuality DefaultScaleQuality = SKFilterQuality.High;
+
+        static GraphicsFactory()
+        {
+            LockBitsColorType = SKImageInfo.PlatformColorType;
+
+            if (App.IsLinuxOS)
+                LockBitsAlphaType = SKAlphaType.Unpremul;
+            else
+                LockBitsAlphaType = SKAlphaType.Premul;
+        }
 
         public static IGraphicsFactoryHandler Handler
         {

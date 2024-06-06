@@ -12,16 +12,16 @@ namespace Alternet.Drawing
 {
     internal class SkiaBitmapData: BitmapData, ISkiaBitmapData
     {
-        public static SKColorType DefaultColorType = SKImageInfo.PlatformColorType;
-
-        public static SKAlphaType DefaultAlphaType = SKAlphaType.Premul;
-
         private readonly Image image;
         private readonly SKSurface surface;
         private readonly SKCanvas canvas;
-        private readonly SKColorType colorType = DefaultColorType;
-        private readonly SKAlphaType alphaType = DefaultAlphaType;
+        private readonly SKColorType colorType = GraphicsFactory.LockBitsColorType;
+        private readonly SKAlphaType alphaType = GraphicsFactory.LockBitsAlphaType;
         private readonly bool isOk;
+
+        static SkiaBitmapData()
+        {
+        }
 
         public SkiaBitmapData(Image image)
         {

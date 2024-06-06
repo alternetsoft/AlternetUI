@@ -34,6 +34,8 @@ namespace Alternet.UI
 
             Keyboard.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
             Mouse.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
+
+            UI.Native.Image.Log();
         }
 
         public WxApplicationHandler()

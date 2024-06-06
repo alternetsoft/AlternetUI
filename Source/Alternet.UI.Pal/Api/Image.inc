@@ -35,6 +35,7 @@ int GetPixelHeight();
 
 int GetDepth();
 
+static void Log();
 bool InitializeFromDipSize(int width, int height, double scale, int depth);
 bool InitializeFromScreen();
 bool LoadFromStream(void* stream);

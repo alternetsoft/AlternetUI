@@ -1,9 +1,15 @@
 #pragma once
 
 #include "Common.Base.h"
+#include <stdint.h>
 
 namespace Alternet::UI
 {
+    static void LogMessage(std::string msg)
+    {
+        wxLogMessage(msg.c_str());
+    }
+
     typedef std::u16string string;
 
 #if !defined(__WXMSW__)

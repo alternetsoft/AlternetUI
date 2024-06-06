@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #include "Image.h"
 #include "Api/InputStream.h"
 #include "Api/OutputStream.h"
@@ -15,6 +17,54 @@ namespace Alternet::UI
 	int Image::GetStride()
 	{
 		return _stride;
+	}
+
+	static void LogPixelFormat(
+		int bitsPerPixel, int hasAlpha, int sizePixel, int red, int green, int blue, int alpha)
+	{
+		LogMessage("BitsPerPixel = " + std::to_string(bitsPerPixel));
+		LogMessage("HasAlpha = " + std::to_string(hasAlpha));
+		LogMessage("SizePixel = " + std::to_string(sizePixel));
+		LogMessage("RED = " + std::to_string(red));
+		LogMessage("GREEN = " + std::to_string(green));
+		LogMessage("BLUE = " + std::to_string(blue));
+		LogMessage("ALPHA = " + std::to_string(alpha));
+	}
+
+	void Image::Log()
+	{
+		wxLogMessage("==============");
+		wxLogMessage("wxNativePixelFormat");
+
+		auto npf = wxNativePixelFormat();
+
+		auto bitsPerPixel = npf.BitsPerPixel;
+		auto hasAlpha = (int)npf.HasAlpha;
+		auto sizePixel = npf.SizePixel;
+		auto red = (int)npf.RED;
+		auto green = (int)npf.GREEN;
+		auto blue = (int)npf.BLUE;
+		auto alpha = (int)npf.ALPHA;
+
+		LogPixelFormat(bitsPerPixel, hasAlpha, sizePixel, red, green, blue, alpha);
+
+		wxLogMessage("==============");
+
+		wxLogMessage("wxAlphaPixelFormat");
+
+		auto apf = wxAlphaPixelFormat();
+
+		bitsPerPixel = apf.BitsPerPixel;
+		hasAlpha = (int)apf.HasAlpha;
+		sizePixel = apf.SizePixel;
+		red = (int)apf.RED;
+		green = (int)apf.GREEN;
+		blue = (int)apf.BLUE;
+		alpha = (int)apf.ALPHA;
+
+		LogPixelFormat(bitsPerPixel, hasAlpha, sizePixel, red, green, blue, alpha);
+
+		wxLogMessage("==============");
 	}
 
 	void* Image::LockBits()

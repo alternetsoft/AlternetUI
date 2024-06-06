@@ -164,6 +164,17 @@ ALTERNET_UI_API int Image_GetDepth_(Image* obj)
     #endif
 }
 
+ALTERNET_UI_API void Image_Log_()
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Image::Log();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool Image_InitializeFromDipSize_(Image* obj, int width, int height, double scale, int depth)
 {
     #if !defined(__WXMSW__)
