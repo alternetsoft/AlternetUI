@@ -88,6 +88,28 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Calls the specified action inside try catch block.
+        /// </summary>
+        /// <param name="action">Action to call.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// If exception is raised inside <paramref name="action"/>,
+        /// exception is logged.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void InsideTryCatch(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                LogUtils.LogException(e);
+            }
+        }
+
         /// <inheritdoc/>
         public virtual void Required()
         {
