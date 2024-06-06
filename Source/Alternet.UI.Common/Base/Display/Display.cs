@@ -15,7 +15,7 @@ namespace Alternet.UI
         private static Display[]? allScreens;
         private static Display? defaultDisplay;
 
-        private readonly IControl? control;
+        private readonly Control? control;
 
         static Display()
         {
@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control for which <see cref="Display"/> is created.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Display(IControl control)
+        public Display(Control control)
             : this(GetFromControl(control))
         {
             this.control = control;
@@ -71,13 +71,18 @@ namespace Alternet.UI
         /// <summary>
         ///  Gets an array of all of the displays on the system.
         /// </summary>
-        public static unsafe Display[] AllScreens
+        public static Display[] AllScreens
         {
             get
             {
-                if (allScreens is not null)
-                    return allScreens;
                 var count = Count;
+
+                if (allScreens is not null)
+                {
+                    if(allScreens.Length == count)
+                        return allScreens;
+                }
+
                 allScreens = new Display[count];
                 for(int i = 0; i < count; i++)
                 {
@@ -226,9 +231,19 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control for which index of display is returned.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetFromControl(IControl control)
+        public static int GetFromControl(Control control)
         {
             return Factory.GetFromControl(control);
+        }
+
+        /// <summary>
+        /// Resets all internal structures.
+        /// </summary>
+        public static void Reset()
+        {
+            SafeDispose(ref primary);
+            allScreens = null;
+            SafeDispose(ref defaultDisplay);
         }
 
         /// <summary>
