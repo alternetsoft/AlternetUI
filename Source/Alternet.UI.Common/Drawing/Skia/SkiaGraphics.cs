@@ -152,11 +152,20 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawBezier(
+            Pen pen,
+            PointD startPoint,
+            PointD controlPoint1,
+            PointD controlPoint2,
+            PointD endPoint)
+        {
+            canvas.DrawBezier(pen, startPoint, controlPoint1, controlPoint2, endPoint);
+        }
+
+        /// <inheritdoc/>
         public override void DrawBeziers(Pen pen, PointD[] points)
         {
-            DebugPenAssert(pen);
-            /*var skiaPoints = points.ToSkia();*/
-            throw new NotImplementedException();
+            canvas.DrawBeziers(pen, points);
         }
     }
 }

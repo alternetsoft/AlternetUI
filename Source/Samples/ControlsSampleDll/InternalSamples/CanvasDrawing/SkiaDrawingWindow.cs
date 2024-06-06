@@ -179,10 +179,31 @@ namespace ControlsSample
 
         }
 
+        private void DrawBeziersPoint(SKCanvas dc)
+        {
+            Pen blackPen = Color.Black.GetAsPen(3);
+
+            PointD start = new(100, 100);
+            PointD control1 = new(200, 10);
+            PointD control2 = new(350, 50);
+            PointD end1 = new(500, 100);
+            PointD control3 = new(600, 150);
+            PointD control4 = new(650, 250);
+            PointD end2 = new(500, 300);
+
+            PointD[] bezierPoints =
+            {
+                 start, control1, control2, end1,
+                 control3, control4, end2
+             };
+
+            dc.DrawBeziers(blackPen, bezierPoints);
+        }
+
         private void DrawTextOnSkia2()
         {
-            var width = 300;
-            var height = 300;
+            var width = 700;
+            var height = 500;
 
             var bitmap = new Bitmap(PixelFromDip(width), PixelFromDip(height));
             bitmap.HasAlpha = true;
@@ -207,6 +228,9 @@ namespace ControlsSample
 
             canvas.DrawPoint(pt, Color.Red);
             canvas.DrawPoint(pt2, Color.Red);
+
+            DrawBeziersPoint(canvas);
+
             canvas.Flush();
 
             pictureBox.Image = bitmap;
@@ -232,5 +256,5 @@ namespace ControlsSample
                 }
             }
         }
-   }
+    }
 }

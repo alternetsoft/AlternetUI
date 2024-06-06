@@ -2027,7 +2027,8 @@ namespace Alternet.UI
         /// <typeparam name="T">Specifies type of the child control.</typeparam>
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
-        void ForEachChild<T>(Action<T> action);
+        void ForEachChild<T>(Action<T> action)
+            where T: Control;
 
         /// <summary>
         /// Disable control recreate when properties that require control

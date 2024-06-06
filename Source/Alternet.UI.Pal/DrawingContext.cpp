@@ -287,13 +287,14 @@ namespace Alternet::UI
 
     void DrawingContext::DrawBeziers(Pen* pen, Point* points, int pointsCount)
     {
-        if (pointsCount == 0)
+        /*if (pointsCount == 0)
             return;
 
         if ((pointsCount - 1) % 3 != 0)
             throwExInvalidArg(
                 pointsCount,
                 u"The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.");
+        */
 
         auto path = new GraphicsPath(_dc, _graphicsContext);
 

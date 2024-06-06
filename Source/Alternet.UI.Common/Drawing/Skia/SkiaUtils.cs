@@ -163,6 +163,37 @@ namespace Alternet.Drawing
             canvas.DrawText(s, x + offsetX, y + offsetY, font, foreColor.AsStrokeAndFillPaint);
         }
 
+        public static void DrawBezier(
+            this SKCanvas canvas,
+            Pen pen,
+            PointD startPoint,
+            PointD controlPoint1,
+            PointD controlPoint2,
+            PointD endPoint)
+        {
+            Graphics.DebugPenAssert(pen);
+            SKPath path = new();
+            path.MoveTo(startPoint);
+            path.CubicTo(controlPoint1, controlPoint2, endPoint);
+            canvas.DrawPath(path, pen);
+        }
+
+        public static void DrawBeziers(this SKCanvas canvas, Pen pen, PointD[] points)
+        {
+            var pointsCount = points.Length;
+            Graphics.DebugPenAssert(pen);
+            Graphics.DebugBezierPointsAssert(points);
+
+            SKPath path = new();
+            path.MoveTo(points[0]);
+
+            for (int i = 1; i <= pointsCount - 3; i += 3)
+            {
+                path.CubicTo(points[i], points[i + 1], points[i + 2]);
+            }
+            canvas.DrawPath(path, pen);
+        }
+
         /// <summary>
         /// Creates <see cref="SKCanvas"/> on the memory buffer and calls specified action.
         /// </summary>
@@ -172,7 +203,7 @@ namespace Alternet.Drawing
         /// <param name="stride">The number of bytes per row in the pixel buffer.</param>
         /// <param name="dpi">Dpi (dots per inch).</param>
         /// <param name="onRender">Render action.</param>
-        public static void DrawOnPtr(
+        internal static void DrawOnPtr(
             int width,
             int height,
             IntPtr scan0,
