@@ -64,7 +64,7 @@ namespace Alternet.UI
                     CellDisabledTextColor = Color.Gray,
                     CellTextColor = Color.Black,
                     EmptySpaceColor = Color.White,
-                    LineColor = Color.FromArgb(200, 200, 200),
+                    LineColor = new(200, 200, 200),
                     immutable = true,
                 };
 
@@ -79,7 +79,7 @@ namespace Alternet.UI
         {
             get
             {
-                Color my_grey_1 = Color.FromArgb(212, 208, 200);
+                Color my_grey_1 = new(212, 208, 200);
 
                 colorSchemeNet ??= new()
                 {
@@ -105,8 +105,8 @@ namespace Alternet.UI
         {
             get
             {
-                Color my_grey_1 = Color.FromArgb(212, 208, 200);
-                Color my_grey_2 = Color.FromArgb(241, 239, 226);
+                Color my_grey_1 = new(212, 208, 200);
+                Color my_grey_2 = new(241, 239, 226);
 
                 colorSchemeCream ??= new()
                 {
@@ -155,8 +155,8 @@ namespace Alternet.UI
                                 };
                 */
 
-                var color1 = Color.FromArgb(55, 55, 55);
-                var color2 = Color.FromArgb(39, 39, 39);
+                Color color1 = new(55, 55, 55);
+                Color color2 = new(39, 39, 39);
 
                 colorSchemeBlack ??= new PropertyGridColors
                 {
@@ -343,15 +343,15 @@ namespace Alternet.UI
 
         internal void ApplyDefaultWhiteScheme()
         {
-            CaptionBackgroundColor = Color.FromArgb(200, 200, 200);
+            CaptionBackgroundColor = new(200, 200, 200);
             CaptionForegroundColor = Color.Gray;
             CellBackgroundColor = Color.White;
             CellDisabledTextColor = Color.Gray;
             CellTextColor = Color.Black;
             EmptySpaceColor = Color.White;
-            LineColor = Color.FromArgb(200, 200, 200);
-            MarginColor = Color.FromArgb(200, 200, 200);
-            SelectionBackgroundColor = Color.FromArgb(0, 120, 215);
+            LineColor = new(200, 200, 200);
+            MarginColor = new(200, 200, 200);
+            SelectionBackgroundColor = new(0, 120, 215);
             SelectionForegroundColor = Color.White;
         }
     }

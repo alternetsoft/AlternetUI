@@ -28,7 +28,6 @@ namespace Alternet.UI
         private bool needLayout = false;
         private Collection<InputBinding>? inputBindings;
         private int? oldDisplay;
-        private int? oldDpi;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.

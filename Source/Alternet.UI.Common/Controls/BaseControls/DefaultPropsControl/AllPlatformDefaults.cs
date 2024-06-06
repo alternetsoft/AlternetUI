@@ -78,9 +78,9 @@ namespace Alternet.UI
 
                 if (SystemSettings.AppearanceIsDark)
                 {
-                    platform.RichToolTipBackgroundColor = Color.FromArgb(39, 39, 39);
+                    platform.RichToolTipBackgroundColor = new(39, 39, 39);
                     platform.RichToolTipForegroundColor = Color.White;
-                    platform.RichToolTipTitleForegroundColor = Color.FromRgb(156, 220, 254);
+                    platform.RichToolTipTitleForegroundColor = new(156, 220, 254);
                 }
                 else
                 {

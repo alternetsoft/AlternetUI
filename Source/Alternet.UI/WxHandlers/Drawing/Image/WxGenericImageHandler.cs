@@ -534,7 +534,7 @@ namespace Alternet.Drawing
             var r = GetRed(x, y);
             var g = GetGreen(x, y);
             var b = GetBlue(x, y);
-            var a = (withAlpha && HasAlpha) ? GetAlpha(x, y) : 255;
+            var a = (withAlpha && HasAlpha) ? GetAlpha(x, y) : (byte)255;
             return Color.FromArgb(a, r, g, b);
         }
 
