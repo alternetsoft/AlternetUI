@@ -207,6 +207,7 @@ namespace ControlsSample
 
             canvas.DrawPoint(pt, Color.Red);
             canvas.DrawPoint(pt2, Color.Red);
+            canvas.Flush();
 
             pictureBox.Image = bitmap;
         }

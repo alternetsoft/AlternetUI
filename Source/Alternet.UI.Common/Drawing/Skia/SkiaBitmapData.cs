@@ -14,7 +14,7 @@ namespace Alternet.Drawing
     {
         public static SKColorType DefaultColorType = SKColorType.Bgra8888;
 
-        public static SKAlphaType DefaultAlphaType = SKAlphaType.Unpremul;
+        public static SKAlphaType DefaultAlphaType = SKAlphaType.Premul;
 
         private readonly Image image;
         private readonly SKSurface surface;
