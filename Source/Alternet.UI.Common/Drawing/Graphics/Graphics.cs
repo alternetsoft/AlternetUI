@@ -51,6 +51,165 @@ namespace Alternet.Drawing
         public abstract object NativeObject { get; }
 
         /// <summary>
+        /// Checks whether <see cref="Brush"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugBrushAssert(Brush value)
+        {
+            if (value is null)
+                throw new Exception("Brush is null");
+            if (value.IsDisposed)
+                throw new Exception("Brush was disposed");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="SolidBrush"/> parameter is ok.
+        /// </summary>
+        /// <param name="brush">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugSolidBrushAssert(Brush brush)
+        {
+            DebugBrushAssert(brush);
+            if (brush is not SolidBrush)
+            {
+                throw new ArgumentException(
+                    ErrorMessages.Default.OnlySolidBrushInstancesSupported,
+                    nameof(brush));
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Pen"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugPenAssert(Pen value)
+        {
+            if (value is null)
+                throw new Exception("Pen is null");
+            if (value.IsDisposed)
+                throw new Exception("Pen was disposed");
+        }
+
+        /// <summary>
+        /// Checks whether array of <see cref="PointD"/> parameter is ok.
+        /// </summary>
+        /// <param name="points">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugBezierPointsAssert(PointD[] points)
+        {
+            if (points.Length == 0)
+                return;
+
+            if ((points.Length - 1) % 3 != 0)
+            {
+                throw new ArgumentException(
+                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
+                    nameof(points));
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Color"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <param name="paramName">Parameter name.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugColorAssert(Color value, string? paramName = default)
+        {
+            if (value is null)
+                throw new Exception($"{Fn()} is null");
+            if (!value.IsOk)
+                throw new Exception($"{Fn()} is not ok");
+
+            string Fn()
+            {
+                if (paramName is null)
+                    return "Color";
+                else
+                    return $"Color '{paramName}'";
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Image"/> parameter is ok.
+        /// </summary>
+        /// <param name="image">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugImageAssert(Image image)
+        {
+            if (image is null)
+                throw new Exception("Image is null");
+            if (image.IsDisposed)
+                throw new Exception("Image was disposed");
+            if (image.Width <= 0 || image.Height <= 0)
+                throw new Exception("Image has invalid size");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="string"/> parameter is ok.
+        /// </summary>
+        /// <param name="text">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugTextAssert(string text)
+        {
+            if (text is null)
+                throw new Exception("Text is null");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Font"/> parameter is ok.
+        /// </summary>
+        /// <param name="font">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugFontAssert(Font font)
+        {
+            if (font is null)
+                throw new Exception("Font is null");
+            if (font.IsDisposed)
+                throw new Exception("Font is disposed");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="TextFormat"/> parameter is ok.
+        /// </summary>
+        /// <param name="format">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugFormatAssert(TextFormat format)
+        {
+            if (format is null)
+                throw new Exception("Text format is null");
+        }
+
+        /// <summary>
         /// Creates a new <see cref="Graphics"/> from the specified
         /// <see cref="Image"/>.
         /// </summary>
@@ -1091,164 +1250,5 @@ namespace Alternet.Drawing
         /// on success, or <see cref="RectD.Empty"/> otherwise.
         /// </returns>
         public abstract RectD GetClippingBox();
-
-        /// <summary>
-        /// Checks whether <see cref="Brush"/> parameter is ok.
-        /// </summary>
-        /// <param name="value">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugBrushAssert(Brush value)
-        {
-            if (value is null)
-                throw new Exception("Brush is null");
-            if (value.IsDisposed)
-                throw new Exception("Brush was disposed");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="SolidBrush"/> parameter is ok.
-        /// </summary>
-        /// <param name="brush">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugSolidBrushAssert(Brush brush)
-        {
-            DebugBrushAssert(brush);
-            if (brush is not SolidBrush)
-            {
-                throw new ArgumentException(
-                    ErrorMessages.Default.OnlySolidBrushInstancesSupported,
-                    nameof(brush));
-            }
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="Pen"/> parameter is ok.
-        /// </summary>
-        /// <param name="value">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugPenAssert(Pen value)
-        {
-            if (value is null)
-                throw new Exception("Pen is null");
-            if (value.IsDisposed)
-                throw new Exception("Pen was disposed");
-        }
-
-        /// <summary>
-        /// Checks whether array of <see cref="PointD"/> parameter is ok.
-        /// </summary>
-        /// <param name="points">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugBezierPointsAssert(PointD[] points)
-        {
-            if (points.Length == 0)
-                return;
-
-            if ((points.Length - 1) % 3 != 0)
-            {
-                throw new ArgumentException(
-                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
-                    nameof(points));
-            }
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="Color"/> parameter is ok.
-        /// </summary>
-        /// <param name="value">Parameter value.</param>
-        /// <param name="paramName">Parameter name.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugColorAssert(Color value, string? paramName = default)
-        {
-            if (value is null)
-                throw new Exception($"{Fn()} is null");
-            if (!value.IsOk)
-                throw new Exception($"{Fn()} is not ok");
-
-            string Fn()
-            {
-                if (paramName is null)
-                    return "Color";
-                else
-                    return $"Color '{paramName}'";
-            }
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="Image"/> parameter is ok.
-        /// </summary>
-        /// <param name="image">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugImageAssert(Image image)
-        {
-            if (image is null)
-                throw new Exception("Image is null");
-            if(image.IsDisposed)
-                throw new Exception("Image was disposed");
-            if (image.Width <= 0 || image.Height <= 0)
-                throw new Exception("Image has invalid size");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="string"/> parameter is ok.
-        /// </summary>
-        /// <param name="text">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugTextAssert(string text)
-        {
-            if (text is null)
-                throw new Exception("Text is null");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="Font"/> parameter is ok.
-        /// </summary>
-        /// <param name="font">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugFontAssert(Font font)
-        {
-            if (font is null)
-                throw new Exception("Font is null");
-            if (font.IsDisposed)
-                throw new Exception("Font is disposed");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="TextFormat"/> parameter is ok.
-        /// </summary>
-        /// <param name="format">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugFormatAssert(TextFormat format)
-        {
-            if (format is null)
-                throw new Exception("Text format is null");
-        }
     }
 }
