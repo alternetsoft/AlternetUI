@@ -12,7 +12,7 @@ namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies the attributes of a bitmap image. The <see cref="BitmapData" /> class is
-    /// used by the <see cref="Image.LockBits" /> and
+    /// used by the <see cref="Image.LockSurface" /> and
     /// <see cref="UnlockBits" /> methods of the <see cref="Image" /> class.</summary>
     internal class BitmapData : DisposableObject, IBitmapData
     {

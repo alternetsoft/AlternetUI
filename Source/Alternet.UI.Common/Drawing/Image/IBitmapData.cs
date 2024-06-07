@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
-    public interface IBitmapData : IDisposable
+    internal interface IBitmapData : IDisposable
     {
         int Width { get; }
+        
         int Height { get; }
 
         int Stride { get; }

@@ -10,9 +10,9 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    internal class SkiaBitmapData: BitmapData, ISkiaBitmapData
+    internal class SkiaBitmapData: BitmapData, ISkiaSurface
     {
-        private readonly Image image;
+        private readonly IImageHandler image;
         private readonly SKSurface surface;
         private readonly SKCanvas canvas;
         private readonly SKColorType colorType = GraphicsFactory.LockBitsColorType;
@@ -23,11 +23,11 @@ namespace Alternet.Drawing
         {
         }
 
-        public SkiaBitmapData(Image image)
+        public SkiaBitmapData(IImageHandler image)
         {
             this.image = image;
-            Width = image.Width;
-            Height = image.Height;
+            Width = image.PixelSize.Width;
+            Height = image.PixelSize.Height;
 
             var info = new SKImageInfo(
                 Width,
@@ -35,10 +35,8 @@ namespace Alternet.Drawing
                 colorType,
                 alphaType);
 
-            var handler = image.Handler;
-
-            var ptr = handler.LockBits();
-            var stride = handler.GetStride();
+            var ptr = image.LockBits();
+            var stride = image.GetStride();
             var negative = stride < 0;
             isOk = ptr != default;
 
@@ -68,7 +66,7 @@ namespace Alternet.Drawing
 
         public SKAlphaType AlphaType => alphaType;
 
-        public Image Image => image;
+        public IImageHandler Image => image;
 
         public SKSurface Surface => surface;
 

@@ -102,6 +102,11 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        public ISkiaSurface LockSurface()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual bool Rescale(SizeI sizeNeeded)
         {
             throw new NotImplementedException();

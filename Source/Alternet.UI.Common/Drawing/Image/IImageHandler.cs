@@ -50,5 +50,7 @@ namespace Alternet.Drawing
         public void UnlockBits();
 
         int GetStride();
+
+        ISkiaSurface LockSurface();
     }
 }

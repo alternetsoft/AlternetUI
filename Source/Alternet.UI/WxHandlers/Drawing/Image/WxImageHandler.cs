@@ -9,6 +9,11 @@ namespace Alternet.UI.Native
 {
     internal partial class Image : Alternet.Drawing.IImageHandler
     {
+        public Alternet.Drawing.ISkiaSurface LockSurface()
+        {
+            return Alternet.Drawing.GraphicsFactory.CreateSkiaBitmapData(this);
+        }
+
         public bool SaveToStream(Stream stream, Alternet.Drawing.ImageFormat format, int quality)
         {
             var outputStream = new UI.Native.OutputStream(stream);

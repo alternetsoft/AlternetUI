@@ -70,6 +70,11 @@ namespace Alternet.Drawing
             }
         }
 
+        public static ISkiaSurface CreateSkiaBitmapData(IImageHandler image)
+        {
+            return new SkiaBitmapData(image);
+        }
+
         public static IGraphicsFactoryHandler Handler
         {
             get => handler ??= App.Handler.CreateGraphicsFactoryHandler();

@@ -8,13 +8,15 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    public interface ISkiaBitmapData : IBitmapData
+    public interface ISkiaSurface : IDisposable
     {
+        int Width { get; }
+
+        int Height { get; }
+
         SKColorType ColorType { get; }
 
         SKAlphaType AlphaType { get; }
-
-        Image Image { get; }
 
         SKSurface Surface { get; }
 

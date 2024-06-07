@@ -818,21 +818,21 @@ namespace Alternet.Drawing
         /// Gets the size of the image in device-independent units (1/96th inch
         /// per unit).
         /// </summary>
-        public virtual SizeD SizeDip(IControl control)
+        public virtual SizeD SizeDip(Control control)
             => control.PixelToDip(PixelSize);
 
         /// <summary>
         /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
         /// </summary>
-        public virtual RectD BoundsDip(IControl control)
+        public virtual RectD BoundsDip(Control control)
         {
             var size = SizeDip(control);
             return (0, 0, size.Width, size.Height);
         }
 
-        public virtual ISkiaBitmapData LockBits()
+        public virtual ISkiaSurface LockSurface()
         {
-            return new SkiaBitmapData(this);
+            return Handler.LockSurface();
         }
 
         /// <summary>

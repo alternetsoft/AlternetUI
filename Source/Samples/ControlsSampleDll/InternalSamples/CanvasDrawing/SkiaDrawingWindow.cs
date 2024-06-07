@@ -209,7 +209,7 @@ namespace ControlsSample
             bitmap.HasAlpha = true;
             bitmap.SetDPI(GetDPI());
 
-            using var canvasLock = bitmap.LockBits();
+            using var canvasLock = bitmap.LockSurface();
 
             var canvas = canvasLock.Canvas;
             canvas.Scale((float)GetPixelScaleFactor());
