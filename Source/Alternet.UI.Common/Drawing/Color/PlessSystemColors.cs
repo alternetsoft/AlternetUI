@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SkiaSharp;
 
 using Alternet.UI;
+using System.Runtime.CompilerServices;
 
 namespace Alternet.Drawing
 {
@@ -338,11 +339,13 @@ namespace Alternet.Drawing
             set => SetColor(KnownSystemColor.ControlText, value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ColorStruct GetColor(KnownSystemColor id)
         {
             return Colors[(int)id];
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetColor(KnownSystemColor id, ColorStruct value)
         {
             Colors[(int)id] = value;

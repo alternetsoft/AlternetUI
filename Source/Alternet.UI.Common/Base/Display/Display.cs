@@ -285,13 +285,7 @@ namespace Alternet.UI
         public Coord PixelToDip(int value)
         {
             if (control is null)
-            {
-                var scaleFactor = ScaleFactor;
-                if (scaleFactor == 1)
-                    return value;
-                else
-                    return value / scaleFactor;
-            }
+                return GraphicsFactory.PixelToDip(value, ScaleFactor);
             else
                 return control.PixelToDip(value);
         }
@@ -304,12 +298,7 @@ namespace Alternet.UI
         public int PixelFromDip(Coord value)
         {
             if (control is null)
-            {
-                var scaleFactor = ScaleFactor;
-                if (scaleFactor == 1)
-                    return (int)value;
-                return (int)Math.Round(value * scaleFactor);
-            }
+                return GraphicsFactory.PixelFromDip(value, ScaleFactor);
             else
                 return control.PixelFromDip(value);
         }
