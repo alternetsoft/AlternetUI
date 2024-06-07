@@ -12,6 +12,70 @@ namespace Alternet::UI
 
     typedef wxPixelData<wxBitmap, wxAlphaPixelFormat> ImageAlphaPixelData;
 
+    enum ImageStaticObjectId
+    {
+        ImageStaticObjectId_NativePixelFormat = 0,
+        ImageStaticObjectId_AlphaPixelFormat = 1,
+        ImageStaticObjectId_GenericPixelFormat = 2,
+    };
+
+    enum ImageStaticPropertyId
+    {
+        ImageStaticPropertyId_BitsPerPixel = 0,
+        ImageStaticPropertyId_HasAlpha = 1,
+        ImageStaticPropertyId_SizePixel = 2,
+        ImageStaticPropertyId_Red = 3,
+        ImageStaticPropertyId_Green = 4,
+        ImageStaticPropertyId_Blue = 5,
+        ImageStaticPropertyId_Alpha = 6,
+    };
+
+    struct ImagePixelFormat
+    {
+    public:
+        int BitsPerPixel = 0;
+        int HasAlpha = 0;
+        int SizePixel = 0;
+        int Red = 0;
+        int Green = 0;
+        int Blue = 0;
+        int Alpha = 0;
+
+        void Log() const
+        {
+            LogMessage("BitsPerPixel = " + std::to_string(BitsPerPixel));
+            LogMessage("HasAlpha = " + std::to_string(HasAlpha));
+            LogMessage("SizePixel = " + std::to_string(SizePixel));
+            LogMessage("RED = " + std::to_string(Red));
+            LogMessage("GREEN = " + std::to_string(Green));
+            LogMessage("BLUE = " + std::to_string(Blue));
+            LogMessage("ALPHA = " + std::to_string(Alpha));
+        }
+
+        int GetProperty(ImageStaticPropertyId propId) const
+        {
+            switch (propId)
+            {
+                case ImageStaticPropertyId_BitsPerPixel:
+                    return BitsPerPixel;
+                case ImageStaticPropertyId_HasAlpha:
+                    return HasAlpha;
+                case ImageStaticPropertyId_SizePixel:
+                    return SizePixel;
+                case ImageStaticPropertyId_Red:
+                    return Red;
+                case ImageStaticPropertyId_Green:
+                    return Green;
+                case ImageStaticPropertyId_Blue:
+                    return Blue;
+                case ImageStaticPropertyId_Alpha:
+                    return Alpha;
+                default:
+                    return 0;
+            }
+        }
+    };
+
     class Image : public Object
     {
 #include "Api/Image.inc"       

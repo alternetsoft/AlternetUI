@@ -72,7 +72,7 @@ namespace Alternet.Drawing
 
         public static ISkiaSurface CreateSkiaBitmapData(IImageHandler image)
         {
-            return new SkiaBitmapData(image);
+            return new SkiaSurfaceOnBitmap(image);
         }
 
         public static IGraphicsFactoryHandler Handler

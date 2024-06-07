@@ -23,6 +23,8 @@ namespace Alternet.Drawing
 
         SizeI PixelSize { get; }
 
+        bool HasMask { get; }
+
         bool IsOk { get; }
 
         bool HasAlpha { get; set; }
@@ -38,8 +40,6 @@ namespace Alternet.Drawing
         GenericImage ToGenericImage();
 
         IImageHandler GetSubBitmap(RectI rect);
-
-        bool GrayScale();
 
         bool ResetAlpha();
 

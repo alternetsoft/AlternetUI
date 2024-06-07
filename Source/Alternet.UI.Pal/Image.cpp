@@ -19,51 +19,67 @@ namespace Alternet::UI
 		return _stride;
 	}
 
-	static void LogPixelFormat(
-		int bitsPerPixel, int hasAlpha, int sizePixel, int red, int green, int blue, int alpha)
+	bool Image::GetHasMask()
 	{
-		LogMessage("BitsPerPixel = " + std::to_string(bitsPerPixel));
-		LogMessage("HasAlpha = " + std::to_string(hasAlpha));
-		LogMessage("SizePixel = " + std::to_string(sizePixel));
-		LogMessage("RED = " + std::to_string(red));
-		LogMessage("GREEN = " + std::to_string(green));
-		LogMessage("BLUE = " + std::to_string(blue));
-		LogMessage("ALPHA = " + std::to_string(alpha));
+		return _bitmap.GetMask() != nullptr;
+	}
+
+	ImagePixelFormat NativePixelFormat;
+	ImagePixelFormat AlphaPixelFormat;
+	ImagePixelFormat GenericImagePixelFormat;
+	bool PixelFormatsInitialized = false;
+
+	static void InitPixelFormats()
+	{
+		if (PixelFormatsInitialized)
+			return;
+		PixelFormatsInitialized = true;
+
+		auto npf = wxNativePixelFormat();
+
+		NativePixelFormat.BitsPerPixel = npf.BitsPerPixel;
+		NativePixelFormat.HasAlpha = (int)npf.HasAlpha;
+		NativePixelFormat.SizePixel = npf.SizePixel;
+		NativePixelFormat.Red = (int)npf.RED;
+		NativePixelFormat.Green = (int)npf.GREEN;
+		NativePixelFormat.Blue = (int)npf.BLUE;
+		NativePixelFormat.Alpha = (int)npf.ALPHA;
+
+		auto apf = wxAlphaPixelFormat();
+
+		AlphaPixelFormat.BitsPerPixel = apf.BitsPerPixel;
+		AlphaPixelFormat.HasAlpha = (int)apf.HasAlpha;
+		AlphaPixelFormat.SizePixel = apf.SizePixel;
+		AlphaPixelFormat.Red = (int)apf.RED;
+		AlphaPixelFormat.Green = (int)apf.GREEN;
+		AlphaPixelFormat.Blue = (int)apf.BLUE;
+		AlphaPixelFormat.Alpha = (int)apf.ALPHA;
+	}
+
+	int Image::GetStaticOption(int objectId, int propId)
+	{
+		switch ((ImageStaticObjectId)objectId)
+		{
+		case ImageStaticObjectId_NativePixelFormat:
+			return NativePixelFormat.GetProperty((ImageStaticPropertyId)propId);
+		case ImageStaticObjectId_AlphaPixelFormat:
+			return AlphaPixelFormat.GetProperty((ImageStaticPropertyId)propId);
+		case ImageStaticObjectId_GenericPixelFormat:
+			return 0;
+		default:
+			return 0;
+		}
 	}
 
 	void Image::Log()
 	{
+		InitPixelFormats();
 		wxLogMessage("==============");
 		wxLogMessage("wxNativePixelFormat");
-
-		auto npf = wxNativePixelFormat();
-
-		auto bitsPerPixel = npf.BitsPerPixel;
-		auto hasAlpha = (int)npf.HasAlpha;
-		auto sizePixel = npf.SizePixel;
-		auto red = (int)npf.RED;
-		auto green = (int)npf.GREEN;
-		auto blue = (int)npf.BLUE;
-		auto alpha = (int)npf.ALPHA;
-
-		LogPixelFormat(bitsPerPixel, hasAlpha, sizePixel, red, green, blue, alpha);
-
+		NativePixelFormat.Log();
 		wxLogMessage("==============");
-
 		wxLogMessage("wxAlphaPixelFormat");
-
-		auto apf = wxAlphaPixelFormat();
-
-		bitsPerPixel = apf.BitsPerPixel;
-		hasAlpha = (int)apf.HasAlpha;
-		sizePixel = apf.SizePixel;
-		red = (int)apf.RED;
-		green = (int)apf.GREEN;
-		blue = (int)apf.BLUE;
-		alpha = (int)apf.ALPHA;
-
-		LogPixelFormat(bitsPerPixel, hasAlpha, sizePixel, red, green, blue, alpha);
-
+		AlphaPixelFormat.Log();
 		wxLogMessage("==============");
 	}
 

@@ -90,36 +90,37 @@ namespace Alternet.UI
 
         public SKBitmap Bitmap => bitmap;
 
-        public override Coord ScaleFactor
+        public Coord ScaleFactor
         {
             get => 1;
 
             set
             {
+                throw new NotImplementedException();
             }
         }
 
-        public override SizeI DipSize
+        public SizeI DipSize
         {
             get => PixelSize;
         }
 
-        public override Coord ScaledHeight
+        public Coord ScaledHeight
         {
             get => PixelSize.Height;
         }
 
-        public override SizeI ScaledSize
+        public SizeI ScaledSize
         {
             get => new((int)ScaledHeight, (int)ScaledWidth);
         }
 
-        public override Coord ScaledWidth
+        public Coord ScaledWidth
         {
             get => PixelSize.Width;
         }
 
-        public override SizeI PixelSize
+        public SizeI PixelSize
         {
             get
             {
@@ -127,12 +128,12 @@ namespace Alternet.UI
             }
         }
 
-        public override bool IsOk
+        public bool IsOk
         {
             get => bitmap.ReadyToDraw && bitmap.Height > 0 && bitmap.Width > 0;
         }
 
-        public override bool HasAlpha
+        public bool HasAlpha
         {
             get => !bitmap.Info.IsOpaque;
             
@@ -155,18 +156,23 @@ namespace Alternet.UI
             }
         }
 
-        public override int Depth
+        public bool HasMask
         {
             get
             {
-                if (HasAlpha)
-                    return 32;
-                else
-                    return 24;
+                return false;
             }
         }
 
-        public override bool Rescale(SizeI sizeNeeded)
+        public int Depth
+        {
+            get
+            {
+                return bitmap.BytesPerPixel * 8;
+            }
+        }
+
+        public bool Rescale(SizeI sizeNeeded)
         {
             SKBitmap? newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);
             var result = bitmap.ScalePixels(newBitmap, GraphicsFactory.DefaultScaleQuality);
@@ -180,12 +186,12 @@ namespace Alternet.UI
             return result;
         }
 
-        public override GenericImage ToGenericImage()
+        public GenericImage ToGenericImage()
         {
             return (GenericImage)bitmap;
         }
 
-        public override IImageHandler GetSubBitmap(RectI rect)
+        public IImageHandler GetSubBitmap(RectI rect)
         {
             var resultBitmap = new SKBitmap(rect.Width, rect.Height);
             if(!bitmap.ExtractSubset(resultBitmap, rect))
@@ -193,20 +199,10 @@ namespace Alternet.UI
             return new SkiaImageHandler(resultBitmap);
         }
 
-        public override bool ResetAlpha()
+        public bool ResetAlpha()
         {
             HasAlpha = false;
             return HasAlpha == false;
-        }
-
-        public override IImageHandler ConvertToDisabled(byte brightness = 255)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool GrayScale()
-        {
-            throw new NotImplementedException();
         }
 
         public override bool LoadFromStream(Stream stream)
@@ -258,8 +254,27 @@ namespace Alternet.UI
 
         private void DisposeBitmap()
         {
-            bitmap.Dispose();
-            bitmap = null!;
+            SafeDispose(ref bitmap);
+        }
+
+        public nint LockBits()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnlockBits()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetStride()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ISkiaSurface LockSurface()
+        {
+            throw new NotImplementedException();
         }
     }
 }

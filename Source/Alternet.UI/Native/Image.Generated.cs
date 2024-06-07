@@ -23,6 +23,16 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool HasMask
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetHasMask_(NativePointer);
+            }
+            
+        }
+        
         public double ScaleFactor
         {
             get
@@ -141,6 +151,11 @@ namespace Alternet.UI.Native
                 return NativeApi.Image_GetDepth_(NativePointer);
             }
             
+        }
+        
+        public static int GetStaticOption(int objectId, int propId)
+        {
+            return NativeApi.Image_GetStaticOption_(objectId, propId);
         }
         
         public static void Log()
@@ -313,6 +328,9 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Image_GetHasMask_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern double Image_GetScaleFactor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -350,6 +368,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDepth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Image_GetStaticOption_(int objectId, int propId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_Log_();

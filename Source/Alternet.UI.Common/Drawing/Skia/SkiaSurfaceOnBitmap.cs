@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 using SkiaSharp;
 
 using Alternet.UI;
+using System.Diagnostics;
 
 namespace Alternet.Drawing
 {
-    internal class SkiaBitmapData: BitmapData, ISkiaSurface
+    internal class SkiaSurfaceOnBitmap: DisposableObject, ISkiaSurface
     {
+        private readonly int width;
+        private readonly int height;
         private readonly IImageHandler image;
         private readonly SKSurface surface;
         private readonly SKCanvas canvas;
@@ -19,19 +22,23 @@ namespace Alternet.Drawing
         private readonly SKAlphaType alphaType = GraphicsFactory.LockBitsAlphaType;
         private readonly bool isOk;
 
-        static SkiaBitmapData()
+        static SkiaSurfaceOnBitmap()
         {
         }
 
-        public SkiaBitmapData(IImageHandler image)
+        public SkiaSurfaceOnBitmap(IImageHandler image)
         {
+            Debug.Assert(image.IsOk, "Image.IsOk == true is required.");
+            Debug.Assert(image.HasAlpha, "Image.HasAlpha == true is required.");
+            Debug.Assert(image.IsOk, "Image.HasMask == false is required.");
+
             this.image = image;
-            Width = image.PixelSize.Width;
-            Height = image.PixelSize.Height;
+            width = image.PixelSize.Width;
+            height = image.PixelSize.Height;
 
             var info = new SKImageInfo(
-                Width,
-                Height,
+                width,
+                height,
                 colorType,
                 alphaType);
 
@@ -45,20 +52,24 @@ namespace Alternet.Drawing
                 if (negative)
                 {
                     stride = -stride;
-                    ptr -= stride * (Height - 1);
+                    ptr -= stride * (height - 1);
                 }
 
                 surface = SKSurface.Create(info, ptr, stride);
             }
             else
             {
-                surface = SKSurface.CreateNull(Width, Height);
+                surface = SKSurface.CreateNull(width, height);
             }
 
             canvas = surface.Canvas;
             if(negative)
-                canvas.Scale(1, -1, 0, Height / 2.0f);
+                canvas.Scale(1, -1, 0, height / 2.0f);
         }
+
+        public int Width => width;
+
+        public int Height => height;
 
         public bool IsOk => isOk;
 
