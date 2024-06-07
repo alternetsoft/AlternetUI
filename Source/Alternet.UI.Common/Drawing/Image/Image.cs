@@ -127,6 +127,8 @@ namespace Alternet.Drawing
             }
         }
 
+        public virtual bool HasMask => Handler.HasMask;
+
         /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
