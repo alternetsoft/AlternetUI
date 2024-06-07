@@ -18,7 +18,7 @@ namespace Alternet.Drawing
 
         public SizeD? Size;
 
-        public RectD? SourceRect = null;
+        public RectI? SourceRect = null;
 
         public bool Stretch = true;
 

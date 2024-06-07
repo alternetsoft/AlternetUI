@@ -194,7 +194,7 @@ namespace Alternet.UI
             var offsetX = patchSrc.X - src.X;
             var offsetY = patchSrc.Y - src.Y;
 
-            RectI patchDst = patchSrc;
+            RectD patchDst = patchSrc;
 
             NineRects srcNine = new(src, patchSrc);
 
@@ -211,22 +211,24 @@ namespace Alternet.UI
             CopyRect(srcNine.CenterLeft, dstNine.CenterLeft);
             CopyRect(srcNine.CenterRight, dstNine.CenterRight);
 
-            canvas.DrawImageI(e.Image, dstNine.TopLeft, srcNine.TopLeft);
-            canvas.DrawImageI(e.Image, dstNine.TopRight, srcNine.TopRight);
-            canvas.DrawImageI(e.Image, dstNine.BottomLeft, srcNine.BottomLeft);
-            canvas.DrawImageI(e.Image, dstNine.BottomRight, srcNine.BottomRight);
+            canvas.DrawImage(e.Image, dstNine.TopLeft, srcNine.TopLeft);
+            canvas.DrawImage(e.Image, dstNine.TopRight, srcNine.TopRight);
+            canvas.DrawImage(e.Image, dstNine.BottomLeft, srcNine.BottomLeft);
+            canvas.DrawImage(e.Image, dstNine.BottomRight, srcNine.BottomRight);
 
-            void CopyRect(RectI srcRect, RectI dstRect)
+            void CopyRect(RectD srcRect, RectD dstRect)
             {
                 if (e.Tile)
                 {
-                    var subImage = e.Image.GetSubBitmap(srcRect);
+                    var srcRectI = GraphicsFactory.PixelFromDip(srcRect, canvas.ScaleFactor);
+
+                    var subImage = e.Image.GetSubBitmap(srcRectI);
                     var brush = subImage.AsBrush;
-                    canvas.FillRectangleI(brush, dstRect);
+                    canvas.FillRectangle(brush, dstRect);
                 }
                 else
                 {
-                    canvas.DrawImageI(e.Image, dstRect, srcRect);
+                    canvas.DrawImage(e.Image, dstRect, srcRect);
                 }
             }
         }

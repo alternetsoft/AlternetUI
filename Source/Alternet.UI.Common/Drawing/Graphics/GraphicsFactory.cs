@@ -212,7 +212,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Coord ScaleFactorFromDpi(int dpi)
         {
-            if (dpi == 96)
+            if (dpi == 96 || dpi <=0)
                 return 1;
             return (Coord)dpi / (Coord)96;
         }

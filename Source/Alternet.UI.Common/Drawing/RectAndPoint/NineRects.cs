@@ -16,8 +16,8 @@ namespace Alternet.Drawing
     /// </remarks>
     public struct NineRects
     {
-        private RectI container;
-        private RectI patch;
+        private RectD container;
+        private RectD patch;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NineRects"/> struct.
@@ -28,7 +28,7 @@ namespace Alternet.Drawing
         /// <paramref name="patch"/> coordinates are not counted from top-left corner of
         /// the <paramref name="container"/>, these rectangles are assumed to be siblings.
         /// </remarks>
-        public NineRects(RectI container, RectI patch)
+        public NineRects(RectD container, RectD patch)
         {
             this.container = container;
             this.patch = patch;
@@ -37,21 +37,21 @@ namespace Alternet.Drawing
         /// <summary>
         /// Rectangle which is sliced.
         /// </summary>
-        public readonly RectI Container => container;
+        public readonly RectD Container => container;
 
         /// <summary>
         /// Rectangle which defines sliced parts.
         /// </summary>
-        public readonly RectI Patch => patch;
+        public readonly RectD Patch => patch;
 
         /// <summary>
         /// Top-left corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI TopLeft
+        public readonly RectD TopLeft
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     container.Location,
                     patch.Location);
             }
@@ -60,11 +60,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Top-center corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI TopCenter
+        public readonly RectD TopCenter
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     (patch.X, container.Y),
                     (patch.Right, patch.Y));
             }
@@ -73,11 +73,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Top-right corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI TopRight
+        public readonly RectD TopRight
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     (patch.Right, container.Y),
                     (container.Right, patch.Y));
             }
@@ -86,11 +86,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Center-left corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI CenterLeft
+        public readonly RectD CenterLeft
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     (container.X, patch.Y),
                     (patch.X, patch.Bottom));
             }
@@ -99,16 +99,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// Same as <see cref="Patch"/>.
         /// </summary>
-        public readonly RectI Center => patch;
+        public readonly RectD Center => patch;
 
         /// <summary>
         /// Center-right corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI CenterRight
+        public readonly RectD CenterRight
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     (patch.Right, patch.Y),
                     (container.Right, patch.Bottom));
             }
@@ -117,11 +117,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Bottom-left corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI BottomLeft
+        public readonly RectD BottomLeft
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     (container.X, patch.Bottom),
                     (patch.X, container.Bottom));
             }
@@ -130,11 +130,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Bottom-center corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI BottomCenter
+        public readonly RectD BottomCenter
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     (patch.X, patch.Bottom),
                     (patch.Right, container.Bottom));
             }
@@ -143,11 +143,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Bottom-right corner of the <see cref="Container"/>.
         /// </summary>
-        public readonly RectI BottomRight
+        public readonly RectD BottomRight
         {
             get
             {
-                return RectI.FromLTRB(
+                return RectD.FromLTRB(
                     (patch.Right, patch.Bottom),
                     (container.Right, container.Bottom));
             }
@@ -174,7 +174,7 @@ namespace Alternet.Drawing
         /// <paramref name="vert"/> params. Only left, center, right, top, bottom
         /// values are supported.
         /// </summary>
-        public readonly RectI GetRect(HorizontalAlignment horz, VerticalAlignment vert)
+        public readonly RectD GetRect(HorizontalAlignment horz, VerticalAlignment vert)
         {
             switch (horz)
             {

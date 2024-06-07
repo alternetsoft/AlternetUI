@@ -121,9 +121,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawRotatedTextI(
+        public override void DrawRotatedText(
             string text,
-            PointI location,
+            PointD location,
             Font font,
             Color foreColor,
             Color backColor,
@@ -132,7 +132,7 @@ namespace Alternet.Drawing
             DebugTextAssert(text);
             DebugFontAssert(font);
             DebugColorAssert(foreColor);
-            dc.DrawRotatedTextI(
+            dc.DrawRotatedText(
                 text,
                 location,
                 (UI.Native.Font)font.Handler,
@@ -142,17 +142,17 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool BlitI(
-            PointI destPt,
-            SizeI sz,
+        public override bool Blit(
+            PointD destPt,
+            SizeD sz,
             Graphics source,
-            PointI srcPt,
+            PointD srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null)
+            PointD? srcPtMask = null)
         {
             srcPtMask ??= PointI.MinusOne;
-            return dc.BlitI(
+            return dc.Blit(
                         destPt,
                         sz,
                         (UI.Native.DrawingContext)source.NativeObject,
@@ -163,18 +163,18 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool StretchBlitI(
-            PointI dstPt,
-            SizeI dstSize,
+        public override bool StretchBlit(
+            PointD dstPt,
+            SizeD dstSize,
             Graphics source,
-            PointI srcPt,
-            SizeI srcSize,
+            PointD srcPt,
+            SizeD srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null)
+            PointD? srcPtMask = null)
         {
             srcPtMask ??= PointI.MinusOne;
-            return dc.StretchBlitI(
+            return dc.StretchBlit(
                 dstPt,
                 dstSize,
                 (UI.Native.DrawingContext)source.NativeObject,
@@ -287,13 +287,6 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             dc.FillRectangle((UI.Native.Brush)brush.Handler, rectangle);
-        }
-
-        /// <inheritdoc/>
-        public override void FillRectangleI(Brush brush, RectI rectangle)
-        {
-            DebugBrushAssert(brush);
-            dc.FillRectangleI((UI.Native.Brush)brush.Handler, rectangle);
         }
 
         /// <inheritdoc/>
@@ -488,43 +481,23 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawImage(Image image, PointD origin, bool useMask = false)
+        public override void DrawImage(Image image, PointD origin)
         {
             DebugImageAssert(image);
             dc.DrawImageAtPoint(
                 (UI.Native.Image)image.Handler,
                 origin,
-                useMask);
+                false);
         }
 
         /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, bool useMask = false)
+        public override void DrawImage(Image image, RectD destinationRect)
         {
             DebugImageAssert(image);
             dc.DrawImageAtRect(
                 (UI.Native.Image)image.Handler,
                 destinationRect,
-                useMask);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
-        {
-            DebugImageAssert(image);
-            dc.DrawImagePortionAtRect(
-                (UI.Native.Image)image.Handler,
-                destinationRect,
-                sourceRect);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
-        {
-            DebugImageAssert(image);
-            dc.DrawImagePortionAtPixelRect(
-                (UI.Native.Image)image.Handler,
-                destinationRect,
-                sourceRect);
+                false);
         }
 
         /// <inheritdoc/>
@@ -561,26 +534,37 @@ namespace Alternet.Drawing
             RectD sourceRect,
             GraphicsUnit unit)
         {
-            if(unit != GraphicsUnit.Pixel)
+            if(unit != GraphicsUnit.Dip)
             {
                 var dpi = GetDPI();
                 var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
                 destinationRect = GraphicsUnitConverter.ConvertRect(
                     unit,
-                    GraphicsUnit.Pixel,
+                    GraphicsUnit.Dip,
                     dpi,
                     destinationRect,
                     graphicsType);
                 sourceRect = GraphicsUnitConverter.ConvertRect(
                     unit,
-                    GraphicsUnit.Pixel,
+                    GraphicsUnit.Dip,
                     dpi,
                     sourceRect,
                     graphicsType);
             }
 
-            DrawImageI(image, destinationRect.ToRect(), sourceRect.ToRect());
+            DrawImage(image, destinationRect, sourceRect);
         }
+
+        /// <inheritdoc/>
+        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
+        {
+            DebugImageAssert(image);
+            dc.DrawImagePortionAtRect(
+                (UI.Native.Image)image.Handler,
+                destinationRect,
+                sourceRect);
+        }
+
 
         /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, RectD bounds)
@@ -603,12 +587,6 @@ namespace Alternet.Drawing
                 (UI.Native.Font)font.Handler,
                 (UI.Native.Brush)brush.Handler);
         }
-
-        /*/// <inheritdoc/>
-        public override void Push()
-        {
-            dc.Push();
-        }*/
 
         /// <inheritdoc/>
         public override void DrawText(
@@ -655,16 +633,10 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetDPI()
+        public override SizeI GetDPI()
         {
             return dc.GetDpi();
         }
-
-        /*/// <inheritdoc/>
-        public override void Pop()
-        {
-            dc.Pop();
-        }*/
 
         /// <inheritdoc/>
         public override void DestroyClippingRegion()

@@ -87,9 +87,9 @@ namespace ControlsSample
 
                     var dc = Graphics.FromScreen();
 
-                    dc.FillRectangleI(Color.White.AsBrush, (rect.Location, (500, 400)));
+                    dc.FillRectangle(Color.White.AsBrush, (rect.Location, (500, 400)));
 
-                    dc.DrawRotatedTextI(
+                    dc.DrawRotatedText(
                         $"Display {index}",
                         rect.Location + (50, 250),
                         (Font ?? Control.DefaultFont).Scaled(2.7),
@@ -110,17 +110,17 @@ namespace ControlsSample
 
             NinePatchImagePaintParams args = new(image1);
             args.SourceRect = (24, 24, 16, 16);
-            args.PatchRect = RectI.Inflate(args.SourceRect, -2, -2);
+            args.PatchRect = RectD.Inflate(args.SourceRect, -2, -2);
             args.DestRect = (70, 70, 64, 64);
             e.Graphics.DrawImageSliced(args);
 
             NinePatchImagePaintParams args2 = new(image2);
             args2.SourceRect = image2.Bounds;
-            args2.PatchRect = RectI.Inflate(args2.SourceRect, -10, -10);
+            args2.PatchRect = RectD.Inflate(args2.SourceRect, -10, -10);
             args2.DestRect = (170, 170, 250, 160);
             e.Graphics.DrawImageSliced(args2);
 
-            e.Graphics.DrawRotatedTextI(
+            e.Graphics.DrawRotatedText(
                 "Hello",
                 (190, 250),
                 (Font ?? Control.DefaultFont).Scaled(2.7),
@@ -128,14 +128,14 @@ namespace ControlsSample
                 Color.Empty,
                 40);
 
-            e.Graphics.BlitI(
+            e.Graphics.Blit(
                 (450, 200),
                 args2.DestRect.Size,
                 e.Graphics,
                 args2.DestRect.Location,
                 RasterOperationMode.Copy);
 
-            e.Graphics.StretchBlitI(
+            e.Graphics.StretchBlit(
                 (450, 400),
                 args2.DestRect.Size * 2,
                 e.Graphics,

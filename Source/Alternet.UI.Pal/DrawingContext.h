@@ -21,6 +21,8 @@ namespace Alternet::UI
     {
 #include "Api/DrawingContext.inc"
     public:                                
+        void FillRectangleI(Brush* brush, const RectI& rectangle);
+
         DrawingContext(wxDC* dc, optional<std::function<void()>> onUseDC = nullopt);
 
         wxGraphicsContext* GetGraphicsContext();     
