@@ -221,7 +221,7 @@ namespace Alternet.UI
             if (result is not null)
                 return result;
 
-            var nameAndSize = SampleFonts.GetNameAndSize(font);
+            var nameAndSize = FontFactory.GetSampleNameAndSize(font);
 
             if (FontFamily.IsFamilyValid(nameAndSize.Name))
                 return new(nameAndSize);

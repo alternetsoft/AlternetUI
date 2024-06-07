@@ -11,23 +11,23 @@ namespace Alternet.Drawing
         None = 0,
 
         /// <summary>
-        /// A generic Sans Serif <see cref="FontFamily"/> object.
+        /// A generic 'Sans Serif' (Swiss) <see cref="FontFamily"/> object.
         /// </summary>        
-        SansSerif = 1, // wxFONTFAMILY_SWISS
+        SansSerif = 1,
 
         /// <summary>
-        /// A generic Serif <see cref="FontFamily"/> object.
+        /// A generic 'Serif' (Roman) <see cref="FontFamily"/> object.
         /// </summary>
-        Serif = 2, // wxFONTFAMILY_ROMAN
+        Serif = 2,
 
         /// <summary>
-        /// A generic Monospace <see cref="FontFamily"/> object.
+        /// A generic 'Monospace' (Teletype, fixed pitch font) <see cref="FontFamily"/> object.
         /// </summary>
-        Monospace = 3, // wxFONTFAMILY_TELETYPE
+        Monospace = 3,
 
         /// <summary>
         /// Default <see cref="FontFamily"/> object.
         /// </summary>
-        Default = 4, // wxFONTFAMILY_DEFAULT
+        Default = 4,
     }
 }

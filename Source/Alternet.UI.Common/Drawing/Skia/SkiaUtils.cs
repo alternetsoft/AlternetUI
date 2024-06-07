@@ -91,7 +91,7 @@ namespace Alternet.Drawing
             {
                 if(DefaultMonoFontName is null)
                 {
-                    var result = SampleFonts.GetFixedPitchFont();
+                    var result = FontFactory.GetSampleFixedPitchFont();
                     if (result is not null)
                     {
                         DefaultMonoFontName = result;
@@ -106,7 +106,7 @@ namespace Alternet.Drawing
                 }
             }
 
-            var nameAndSize = SampleFonts.GetNameAndSize(genericFamily);
+            var nameAndSize = FontFactory.GetSampleNameAndSize(genericFamily);
 
             if (!FontFamily.IsFamilyValid(nameAndSize.Name))
                 return SkiaUtils.DefaultFontName;
