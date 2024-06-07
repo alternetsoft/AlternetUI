@@ -29,7 +29,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// All known color values (in order of definition in the <see cref="KnownColor"/>).
         /// </summary>
-        public static readonly uint[] ColorValueTable =
+        public static readonly ColorStruct[] ColorValueTable =
         {
             /*"not a known color"*/
             0,
@@ -415,28 +415,14 @@ namespace Alternet.Drawing
         /// Gets ARGB from <see cref="KnownColor"/>.
         /// </summary>
         /// <param name="color">Known color.</param>
-        public static uint KnownColorToArgb(KnownColor color)
+        public static ColorStruct KnownColorToArgb(KnownColor color)
         {
             Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple, nameof(KnownColorToArgb));
 
-            return ColorKindTable[(int)color] == KnownColorKindSystem
-                 ? GetSystemColorArgb(color)
-                 : ColorValueTable[(int)color];
-
-            /// <summary>
-            /// Gets ARGB color value of the system color.
-            /// </summary>
-            /// <param name="color">System color.</param>
-            /// <remarks><paramref name="color"/> must be a system color, web colors (which are
-            /// also in <see cref="KnownColor"/>) are not supported here.</remarks>
-            /// <returns></returns>
-            static uint GetSystemColorArgb(KnownColor knownColor)
-            {
-                Debug.Assert(Color.IsKnownColorSystem(knownColor), nameof(GetSystemColorArgb));
-                var color = SystemSettings.GetColor((KnownSystemColor)knownColor);
-                var result = color.AsUInt();
-                return result;
-            }
+            if (ColorKindTable[(int)color] == KnownColorKindSystem)
+                return SystemSettings.GetColor((KnownSystemColor)color);
+            else
+                return ColorValueTable[(int)color];
         }
 
         /// <summary>

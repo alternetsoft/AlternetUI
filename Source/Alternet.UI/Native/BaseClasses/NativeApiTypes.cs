@@ -41,7 +41,15 @@ namespace Alternet.UI.Native
                 if (v.IsEmpty)
                     return Alternet.Drawing.Color.Empty;
                 else
-                    return Alternet.Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
+                    return new Alternet.Drawing.Color(v.A, v.R, v.G, v.B);
+            }
+
+            public static explicit operator Alternet.Drawing.ColorStruct(Color v)
+            {
+                if (v.IsEmpty)
+                    return Alternet.Drawing.ColorStruct.Default;
+                else
+                    return new Alternet.Drawing.ColorStruct(v.A, v.R, v.G, v.B);
             }
 
             public static implicit operator Color(Alternet.Drawing.Color color)

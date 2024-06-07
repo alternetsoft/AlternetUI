@@ -28,14 +28,99 @@ namespace Alternet.Drawing
 
         [FieldOffset(0)] public uint Value;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ColorStruct(byte red, byte green, byte blue)
+        {
+            A = 255;
+            R = red;
+            G = green;
+            B = blue;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ColorStruct(byte alpha, byte red, byte green, byte blue)
+        {
+            A = alpha;
+            R = red;
+            G = green;
+            B = blue;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct()
         {
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ColorStruct(SKColor color)
+        {
+            Color = color;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct(uint value)
         {
             Value = value;
         }
+
+        /// <summary>
+        /// Converts the specified <see cref='SKColor'/> to a <see cref='ColorStruct'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator ColorStruct(SKColor color)
+        {
+            return new(color);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='Color'/> to a <see cref='ColorStruct'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator ColorStruct(Color color)
+        {
+            return new(color.Value);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='SKColor'/> to a <see cref='ColorStruct'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator SKColor(ColorStruct color)
+        {
+            return new(color);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator ColorStruct(uint d) => new(d);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator uint(ColorStruct d) => d.Value;
+
+        /// <summary>
+        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// to <see cref="Color"/>. Tuple values define RGB of the color.
+        /// </summary>
+        /// <param name="d">New color value.</param>
+        /// <remarks>
+        /// This operator uses
+        /// <see cref="Color.FromRgb(byte, byte, byte)"/> internally.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator ColorStruct((byte, byte, byte) d) =>
+            new(d.Item1, d.Item2, d.Item3);
+
+        /// <summary>
+        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// to <see cref="Color"/>. Tuple values define ARGB of the color.
+        /// </summary>
+        /// <param name="d">New color value.</param>
+        /// <remarks>
+        /// This operator uses
+        /// <see cref="Color.FromArgb(byte, byte, byte, byte)"/> internally.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator ColorStruct((byte, byte, byte, byte) d) =>
+            new(d.Item1, d.Item2, d.Item3, d.Item4);
 
         /// <summary>
         /// Tests whether two specified <see cref="ColorStruct"/> structures are equivalent.

@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Specifies the system known colors.
     /// </summary>
-    public enum KnownSystemColor
+    public enum KnownSystemColor : short
     {
         /// <summary>
         /// The system-defined color of the active window's border.

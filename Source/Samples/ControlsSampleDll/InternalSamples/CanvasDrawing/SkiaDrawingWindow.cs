@@ -200,7 +200,7 @@ namespace ControlsSample
             dc.DrawBeziers(blackPen, bezierPoints);
         }
 
-        private Bitmap bitmap;
+        private Bitmap? bitmap;
         private bool flag;
 
         private void DrawTextOnSkia2()

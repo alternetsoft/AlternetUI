@@ -82,9 +82,9 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public Color GetColor(KnownSystemColor index)
+        public ColorStruct? GetColor(KnownSystemColor index)
         {
-            return PlessSystemColors.GetColor(index);
+            return null;
         }
 
         public LangDirection GetLangDirection()

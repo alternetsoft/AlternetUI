@@ -34,7 +34,7 @@ namespace Alternet.UI
             return 96;
         }
 
-        public int GetFromControl(IControl control)
+        public int GetFromControl(Control control)
         {
             return 1;
         }

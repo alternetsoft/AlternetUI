@@ -79,7 +79,7 @@ namespace Alternet.Drawing
         public static readonly uint ARGBBlueMask = 0xFFu << ARGBBlueShift;
 
         /// <summary>
-        /// Represents a color that is <c>null</c>.
+        /// Represents an empty color.
         /// </summary>
         public static readonly Color Empty = new();
 
@@ -126,13 +126,6 @@ namespace Alternet.Drawing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Color(SKColor value)
-        {
-            color.Color = value;
-            state = StateFlags.ValueValid;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color(ColorStruct value)
         {
             color = value;
@@ -145,6 +138,14 @@ namespace Alternet.Drawing
             color.Value = 0;
             state = StateFlags.KnownColorValid;
             this.knownColor = knownColor;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color(KnownSystemColor knownColor)
+        {
+            color.Value = 0;
+            state = StateFlags.KnownColorValid;
+            this.knownColor = (KnownColor)knownColor;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1842,7 +1843,7 @@ namespace Alternet.Drawing
         private void RequireArgb()
         {
             if (state.HasFlag(StateFlags.KnownColorValid))
-                color.Value = KnownColorTable.KnownColorToArgb(knownColor);
+                color = KnownColorTable.KnownColorToArgb(knownColor);
         }
     }
 }

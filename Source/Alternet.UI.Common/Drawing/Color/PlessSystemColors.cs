@@ -4,23 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SkiaSharp;
+
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     public static class PlessSystemColors
     {
-        private static readonly Color[] Colors;
+        private static readonly ColorStruct[] Colors;
 
         static PlessSystemColors()
         {
-            Colors = new Color[(int)KnownSystemColor.MenuHighlight + 1];
-            Reset();
+            Colors = new ColorStruct[(int)KnownSystemColor.MenuHighlight + 1];
+            ResetFromConsts();
         }
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color
         /// of the active window's border.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the
         /// active window's border.</returns>
-        public static Color ActiveBorder
+        public static ColorStruct ActiveBorder
         {
             get => GetColor(KnownSystemColor.ActiveBorder);
             set => SetColor(KnownSystemColor.ActiveBorder, value);
@@ -30,7 +34,7 @@ namespace Alternet.Drawing
         /// of the background of the active window's title bar.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the
         /// active window's title bar.</returns>
-        public static Color ActiveCaption
+        public static ColorStruct ActiveCaption
         {
             get => GetColor(KnownSystemColor.ActiveCaption);
             set => SetColor(KnownSystemColor.ActiveCaption, value);
@@ -40,7 +44,7 @@ namespace Alternet.Drawing
         /// of the text in the active window's title bar.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the text in
         /// the active window's title bar.</returns>
-        public static Color ActiveCaptionText
+        public static ColorStruct ActiveCaptionText
         {
             get => GetColor(KnownSystemColor.ActiveCaptionText);
             set => SetColor(KnownSystemColor.ActiveCaptionText, value);
@@ -50,7 +54,7 @@ namespace Alternet.Drawing
         /// of the application workspace. </summary>
         /// <returns>A <see cref="Color" /> that is the color of the
         /// application workspace.</returns>
-        public static Color AppWorkspace
+        public static ColorStruct AppWorkspace
         {
             get => GetColor(KnownSystemColor.AppWorkspace);
             set => SetColor(KnownSystemColor.AppWorkspace, value);
@@ -60,7 +64,7 @@ namespace Alternet.Drawing
         /// color of a 3-D element.</summary>
         /// <returns>A <see cref="Color" /> that is the face color of
         /// a 3-D element.</returns>
-        public static Color ButtonFace
+        public static ColorStruct ButtonFace
         {
             get => GetColor(KnownSystemColor.ButtonFace);
             set => SetColor(KnownSystemColor.ButtonFace, value);
@@ -70,7 +74,7 @@ namespace Alternet.Drawing
         /// highlight color of a 3-D element. </summary>
         /// <returns>A <see cref="Color" /> that is the highlight color
         /// of a 3-D element.</returns>
-        public static Color ButtonHighlight
+        public static ColorStruct ButtonHighlight
         {
             get => GetColor(KnownSystemColor.ButtonHighlight);
             set => SetColor(KnownSystemColor.ButtonHighlight, value);
@@ -80,7 +84,7 @@ namespace Alternet.Drawing
         /// color of a 3-D element. </summary>
         /// <returns>A <see cref="Color" /> that is the shadow color of
         /// a 3-D element.</returns>
-        public static Color ButtonShadow
+        public static ColorStruct ButtonShadow
         {
             get => GetColor(KnownSystemColor.ButtonShadow);
             set => SetColor(KnownSystemColor.ButtonShadow, value);
@@ -90,7 +94,7 @@ namespace Alternet.Drawing
         /// face color of a 3-D element.</summary>
         /// <returns>A <see cref="Color" /> that is the face color of
         /// a 3-D element.</returns>
-        public static Color Control
+        public static ColorStruct Control
         {
             get => GetColor(KnownSystemColor.Control);
             set => SetColor(KnownSystemColor.Control, value);
@@ -99,7 +103,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the shadow color of a 3-D
         /// element. </summary>
         /// <returns>A <see cref="Color" /> that is the shadow color of a 3-D element.</returns>
-        public static Color ControlDark
+        public static ColorStruct ControlDark
         {
             get => GetColor(KnownSystemColor.ControlDark);
             set => SetColor(KnownSystemColor.ControlDark, value);
@@ -108,7 +112,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the dark shadow color
         /// of a 3-D element. </summary>
         /// <returns>A <see cref="Color" /> that is the dark shadow color of a 3-D element.</returns>
-        public static Color ControlDarkDark
+        public static ColorStruct ControlDarkDark
         {
             get => GetColor(KnownSystemColor.ControlDarkDark);
             set => SetColor(KnownSystemColor.ControlDarkDark, value);
@@ -117,7 +121,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the light color of a 3-D
         /// element. </summary>
         /// <returns>A <see cref="Color" /> that is the light color of a 3-D element.</returns>
-        public static Color ControlLight
+        public static ColorStruct ControlLight
         {
             get => GetColor(KnownSystemColor.ControlLight);
             set => SetColor(KnownSystemColor.ControlLight, value);
@@ -126,7 +130,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the highlight color of
         /// a 3-D element. </summary>
         /// <returns>A <see cref="Color" /> that is the highlight color of a 3-D element.</returns>
-        public static Color ControlLightLight
+        public static ColorStruct ControlLightLight
         {
             get => GetColor(KnownSystemColor.ControlLightLight);
             set => SetColor(KnownSystemColor.ControlLightLight, value);
@@ -134,7 +138,7 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color of the desktop.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the desktop.</returns>
-        public static Color Desktop
+        public static ColorStruct Desktop
         {
             get => GetColor(KnownSystemColor.Desktop);
             set => SetColor(KnownSystemColor.Desktop, value);
@@ -144,7 +148,7 @@ namespace Alternet.Drawing
         /// color gradient of an active window's title bar.</summary>
         /// <returns>A <see cref="Color" /> that is the lightest color in the color gradient
         /// of an active window's title bar.</returns>
-        public static Color GradientActiveCaption
+        public static ColorStruct GradientActiveCaption
         {
             get => GetColor(KnownSystemColor.GradientActiveCaption);
             set => SetColor(KnownSystemColor.GradientActiveCaption, value);
@@ -154,7 +158,7 @@ namespace Alternet.Drawing
         /// color gradient of an inactive window's title bar.</summary>
         /// <returns>A <see cref="Color" /> that is the lightest color in the color gradient
         /// of an inactive window's title bar.</returns>
-        public static Color GradientInactiveCaption
+        public static ColorStruct GradientInactiveCaption
         {
             get => GetColor(KnownSystemColor.GradientInactiveCaption);
             set => SetColor(KnownSystemColor.GradientInactiveCaption, value);
@@ -163,7 +167,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the color of dimmed
         /// text. </summary>
         /// <returns>A <see cref="Color" /> that is the color of dimmed text.</returns>
-        public static Color GrayText
+        public static ColorStruct GrayText
         {
             get => GetColor(KnownSystemColor.GrayText);
             set => SetColor(KnownSystemColor.GrayText, value);
@@ -173,7 +177,7 @@ namespace Alternet.Drawing
         /// of selected items.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the background of selected
         /// items.</returns>
-        public static Color Highlight
+        public static ColorStruct Highlight
         {
             get => GetColor(KnownSystemColor.Highlight);
             set => SetColor(KnownSystemColor.Highlight, value);
@@ -183,7 +187,7 @@ namespace Alternet.Drawing
         /// selected items.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the text of selected
         /// items.</returns>
-        public static Color HighlightText
+        public static ColorStruct HighlightText
         {
             get => GetColor(KnownSystemColor.HighlightText);
             set => SetColor(KnownSystemColor.HighlightText, value);
@@ -193,7 +197,7 @@ namespace Alternet.Drawing
         /// a hot-tracked item. </summary>
         /// <returns>A <see cref="Color" /> that is the color used to designate a hot-tracked
         /// item.</returns>
-        public static Color HotTrack
+        public static ColorStruct HotTrack
         {
             get => GetColor(KnownSystemColor.HotTrack);
             set => SetColor(KnownSystemColor.HotTrack, value);
@@ -203,7 +207,7 @@ namespace Alternet.Drawing
         /// window's border.</summary>
         /// <returns>A <see cref="Color" /> that is the color of an inactive window's
         /// border.</returns>
-        public static Color InactiveBorder
+        public static ColorStruct InactiveBorder
         {
             get => GetColor(KnownSystemColor.InactiveBorder);
             set => SetColor(KnownSystemColor.InactiveBorder, value);
@@ -213,7 +217,7 @@ namespace Alternet.Drawing
         /// of an inactive window's title bar.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the background of an
         /// inactive window's title bar.</returns>
-        public static Color InactiveCaption
+        public static ColorStruct InactiveCaption
         {
             get => GetColor(KnownSystemColor.InactiveCaption);
             set => SetColor(KnownSystemColor.InactiveCaption, value);
@@ -223,7 +227,7 @@ namespace Alternet.Drawing
         /// in an inactive window's title bar.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the text in an inactive
         /// window's title bar.</returns>
-        public static Color InactiveCaptionText
+        public static ColorStruct InactiveCaptionText
         {
             get => GetColor(KnownSystemColor.InactiveCaptionText);
             set => SetColor(KnownSystemColor.InactiveCaptionText, value);
@@ -233,7 +237,7 @@ namespace Alternet.Drawing
         /// of a ToolTip.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the background of a
         /// ToolTip.</returns>
-        public static Color Info
+        public static ColorStruct Info
         {
             get => GetColor(KnownSystemColor.Info);
             set => SetColor(KnownSystemColor.Info, value);
@@ -242,7 +246,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the color of the text
         /// of a ToolTip.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the text of a ToolTip.</returns>
-        public static Color InfoText
+        public static ColorStruct InfoText
         {
             get => GetColor(KnownSystemColor.InfoText);
             set => SetColor(KnownSystemColor.InfoText, value);
@@ -251,7 +255,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the color of a menu's
         /// background.</summary>
         /// <returns>A <see cref="Color" /> that is the color of a menu's background.</returns>
-        public static Color Menu
+        public static ColorStruct Menu
         {
             get => GetColor(KnownSystemColor.Menu);
             set => SetColor(KnownSystemColor.Menu, value);
@@ -261,7 +265,7 @@ namespace Alternet.Drawing
         /// background of a menu bar.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the background of a menu
         /// bar.</returns>
-        public static Color MenuBar
+        public static ColorStruct MenuBar
         {
             get => GetColor(KnownSystemColor.MenuBar);
             set => SetColor(KnownSystemColor.MenuBar, value);
@@ -271,7 +275,7 @@ namespace Alternet.Drawing
         /// menu items when the menu appears as a flat menu.</summary>
         /// <returns>A <see cref="Color" /> that is the color used to highlight menu items
         /// when the menu appears as a flat menu.</returns>
-        public static Color MenuHighlight
+        public static ColorStruct MenuHighlight
         {
             get => GetColor(KnownSystemColor.MenuHighlight);
             set => SetColor(KnownSystemColor.MenuHighlight, value);
@@ -280,7 +284,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the color of a menu's
         /// text.</summary>
         /// <returns>A <see cref="Color" /> that is the color of a menu's text.</returns>
-        public static Color MenuText
+        public static ColorStruct MenuText
         {
             get => GetColor(KnownSystemColor.MenuText);
             set => SetColor(KnownSystemColor.MenuText, value);
@@ -290,7 +294,7 @@ namespace Alternet.Drawing
         /// of a scroll bar.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the background of a scroll
         /// bar.</returns>
-        public static Color ScrollBar
+        public static ColorStruct ScrollBar
         {
             get => GetColor(KnownSystemColor.ScrollBar);
             set => SetColor(KnownSystemColor.ScrollBar, value);
@@ -299,7 +303,7 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the color of
         /// a window frame.</summary>
         /// <returns>A <see cref="Color" /> that is the color of a window frame.</returns>
-        public static Color WindowFrame
+        public static ColorStruct WindowFrame
         {
             get => GetColor(KnownSystemColor.WindowFrame);
             set => SetColor(KnownSystemColor.WindowFrame, value);
@@ -309,7 +313,7 @@ namespace Alternet.Drawing
         /// in the client area of a window.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the background in the client
         /// area of a window.</returns>
-        public static Color Window
+        public static ColorStruct Window
         {
             get => GetColor(KnownSystemColor.Window);
             set => SetColor(KnownSystemColor.Window, value);
@@ -319,7 +323,7 @@ namespace Alternet.Drawing
         /// client area of a window.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the text in the client area
         /// of a window.</returns>
-        public static Color WindowText
+        public static ColorStruct WindowText
         {
             get => GetColor(KnownSystemColor.WindowText);
             set => SetColor(KnownSystemColor.WindowText, value);
@@ -328,23 +332,71 @@ namespace Alternet.Drawing
         /// <summary>Gets a <see cref="Color" /> structure that is the color of text in a
         /// 3-D element.</summary>
         /// <returns>A <see cref="Color" /> that is the color of text in a 3-D element.</returns>
-        public static Color ControlText
+        public static ColorStruct ControlText
         {
             get => GetColor(KnownSystemColor.ControlText);
             set => SetColor(KnownSystemColor.ControlText, value);
         }
 
-        public static Color GetColor(KnownSystemColor id)
+        public static ColorStruct GetColor(KnownSystemColor id)
         {
             return Colors[(int)id];
         }
 
-        public static void SetColor(KnownSystemColor id, Color value)
+        public static void SetColor(KnownSystemColor id, ColorStruct value)
         {
             Colors[(int)id] = value;
         }
 
-        public static void Reset()
+        public static void ResetFromPlatform()
+        {
+            if(SystemSettings.Handler.GetColor(KnownSystemColor.Window) is null)
+            {
+                ResetFromConsts();
+                return;
+            }
+
+            ResetColor(KnownSystemColor.ActiveBorder);
+            ResetColor(KnownSystemColor.ActiveCaption);
+            ResetColor(KnownSystemColor.ActiveCaptionText);
+            ResetColor(KnownSystemColor.AppWorkspace);
+            ResetColor(KnownSystemColor.ButtonFace);
+            ResetColor(KnownSystemColor.ButtonHighlight);
+            ResetColor(KnownSystemColor.ButtonShadow);
+            ResetColor(KnownSystemColor.Control);
+            ResetColor(KnownSystemColor.ControlDark);
+            ResetColor(KnownSystemColor.ControlDarkDark);
+            ResetColor(KnownSystemColor.ControlLight);
+            ResetColor(KnownSystemColor.ControlLightLight);
+            ResetColor(KnownSystemColor.Desktop);
+            ResetColor(KnownSystemColor.GradientActiveCaption);
+            ResetColor(KnownSystemColor.GradientInactiveCaption);
+            ResetColor(KnownSystemColor.GrayText);
+            ResetColor(KnownSystemColor.Highlight);
+            ResetColor(KnownSystemColor.HighlightText);
+            ResetColor(KnownSystemColor.HotTrack);
+            ResetColor(KnownSystemColor.InactiveBorder);
+            ResetColor(KnownSystemColor.InactiveCaption);
+            ResetColor(KnownSystemColor.InactiveCaptionText);
+            ResetColor(KnownSystemColor.Info);
+            ResetColor(KnownSystemColor.InfoText);
+            ResetColor(KnownSystemColor.Menu);
+            ResetColor(KnownSystemColor.MenuBar);
+            ResetColor(KnownSystemColor.MenuHighlight);
+            ResetColor(KnownSystemColor.MenuText);
+            ResetColor(KnownSystemColor.ScrollBar);
+            ResetColor(KnownSystemColor.WindowFrame);
+            ResetColor(KnownSystemColor.Window);
+            ResetColor(KnownSystemColor.WindowText);
+            ResetColor(KnownSystemColor.ControlText);
+
+            void ResetColor(KnownSystemColor color)
+            {
+                SetColor(color, SystemSettings.Handler.GetColor(color)!.Value);
+            }
+        }
+
+        public static void ResetFromConsts()
         {
             SetColor(KnownSystemColor.ActiveBorder, (255, 180, 180, 180));
             SetColor(KnownSystemColor.ActiveCaption, (255, 153, 180, 209));

@@ -287,5 +287,10 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
