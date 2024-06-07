@@ -125,6 +125,17 @@ ALTERNET_UI_API void DrawingContext_DrawRotatedText_(DrawingContext* obj, const 
     #endif
 }
 
+ALTERNET_UI_API void DrawingContext_DrawRotatedTextI_(DrawingContext* obj, const char16_t* text, PointI location, Font* font, Color foreColor, Color backColor, double angle)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DrawRotatedTextI(text, location, font, foreColor, backColor, angle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API Image* DrawingContext_GetAsBitmapI_(DrawingContext* obj, RectI subrect)
 {
     #if !defined(__WXMSW__)
@@ -153,6 +164,28 @@ ALTERNET_UI_API c_bool DrawingContext_StretchBlit_(DrawingContext* obj, PointD d
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->StretchBlit(dstPt, dstSize, source, srcPt, srcSize, rop, useMask, srcMaskPt);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool DrawingContext_BlitI_(DrawingContext* obj, PointI destPt, SizeI sz, DrawingContext* source, PointI srcPt, int rop, c_bool useMask, PointI srcPtMask)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->BlitI(destPt, sz, source, srcPt, rop, useMask, srcPtMask);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool DrawingContext_StretchBlitI_(DrawingContext* obj, PointI dstPt, SizeI dstSize, DrawingContext* source, PointI srcPt, SizeI srcSize, int rop, c_bool useMask, PointI srcMaskPt)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->StretchBlitI(dstPt, dstSize, source, srcPt, srcSize, rop, useMask, srcMaskPt);
     #if !defined(__WXMSW__)
     });
     #endif
@@ -395,6 +428,17 @@ ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* b
     MarshalExceptions<void>([&](){
     #endif
         obj->FillRectangle(brush, rectangle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void DrawingContext_FillRectangleI_(DrawingContext* obj, Brush* brush, RectI rectangle)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->FillRectangleI(brush, rectangle);
     #if !defined(__WXMSW__)
     });
     #endif

@@ -110,13 +110,13 @@ namespace ControlsSample
 
             NinePatchImagePaintParams args = new(image1);
             args.SourceRect = (24, 24, 16, 16);
-            args.PatchRect = RectD.Inflate(args.SourceRect, -2, -2);
+            args.PatchRect = RectI.Inflate(args.SourceRect, -2, -2);
             args.DestRect = (70, 70, 64, 64);
             e.Graphics.DrawImageSliced(args);
 
             NinePatchImagePaintParams args2 = new(image2);
             args2.SourceRect = image2.Bounds;
-            args2.PatchRect = RectD.Inflate(args2.SourceRect, -10, -10);
+            args2.PatchRect = RectI.Inflate(args2.SourceRect, -10, -10);
             args2.DestRect = (170, 170, 250, 160);
             e.Graphics.DrawImageSliced(args2);
 
@@ -126,14 +126,14 @@ namespace ControlsSample
                 (Font ?? Control.DefaultFont).Scaled(2.7),
                 Color.Red,
                 Color.Empty,
-                40);
+                40, GraphicsUnit.Pixel);
 
             e.Graphics.Blit(
                 (450, 200),
                 args2.DestRect.Size,
                 e.Graphics,
                 args2.DestRect.Location,
-                RasterOperationMode.Copy);
+                RasterOperationMode.Copy, false, null, GraphicsUnit.Pixel);
 
             e.Graphics.StretchBlit(
                 (450, 400),
@@ -141,7 +141,7 @@ namespace ControlsSample
                 e.Graphics,
                 args2.DestRect.Location,
                 args2.DestRect.Size,
-                RasterOperationMode.Copy);
+                RasterOperationMode.Copy, false, null, GraphicsUnit.Pixel);
         }
     }
 }

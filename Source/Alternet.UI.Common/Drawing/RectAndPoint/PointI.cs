@@ -281,6 +281,11 @@ namespace Alternet.Drawing
             }
         }
 
+        public readonly PointD PixelToDip(Coord scaleFactor)
+        {
+            return GraphicsFactory.PixelToDip(this, scaleFactor);
+        }
+
         /// <summary>
         /// Translates this <see cref='Drawing.PointI'/> by the specified amount.
         /// </summary>

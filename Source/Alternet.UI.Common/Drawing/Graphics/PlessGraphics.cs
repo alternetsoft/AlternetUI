@@ -40,7 +40,15 @@ namespace Alternet.Drawing
             get => AssemblyUtils.Default;
         }
 
-        public override bool Blit(PointD destPt, SizeD sz, Graphics source, PointD srcPt, RasterOperationMode rop = RasterOperationMode.Copy, bool useMask = false, PointD? srcPtMask = null)
+        public override bool Blit(
+            PointD destPt,
+            SizeD sz,
+            Graphics source,
+            PointD srcPt,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             return false;
         }
@@ -126,7 +134,14 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void DrawRotatedText(string text, PointD location, Font font, Color foreColor, Color backColor, Coord angle)
+        public override void DrawRotatedText(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
         }
 
@@ -172,6 +187,11 @@ namespace Alternet.Drawing
 
         public override void FillRectangle(Brush brush, RectD rectangle)
         {
+        }
+
+        public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
+        {
+            throw new NotImplementedException();
         }
 
         public override void FillRectangles(Brush brush, RectD[] rects)
@@ -247,7 +267,16 @@ namespace Alternet.Drawing
         {
         }
 
-        public override bool StretchBlit(PointD dstPt, SizeD dstSize, Graphics source, PointD srcPt, SizeD srcSize, RasterOperationMode rop = RasterOperationMode.Copy, bool useMask = false, PointD? srcPtMask = null)
+        public override bool StretchBlit(
+            PointD dstPt,
+            SizeD dstSize,
+            Graphics source,
+            PointD srcPt,
+            SizeD srcSize,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             return default;
         }

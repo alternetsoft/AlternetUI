@@ -289,7 +289,8 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            Coord angle);
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
         /*/// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -391,7 +392,8 @@ namespace Alternet.Drawing
             PointD srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointD? srcPtMask = null);
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
         /// <summary>
         /// Copies from a source <see cref="Graphics"/> to this graphics
@@ -456,7 +458,8 @@ namespace Alternet.Drawing
             SizeD srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointD? srcPtMask = null);
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
         /// <summary>
         /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.
@@ -578,6 +581,8 @@ namespace Alternet.Drawing
         /// lower and bottom edges.
         /// </remarks>
         public abstract void FillRectangle(Brush brush, RectD rectangle);
+
+        public abstract void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit);
 
         /// <summary>
         /// Draws an arc representing a portion of a circle specified by a center
@@ -1232,5 +1237,50 @@ namespace Alternet.Drawing
         /// on success, or <see cref="RectD.Empty"/> otherwise.
         /// </returns>
         public abstract RectD GetClippingBox();
+
+        public virtual void ToDip(ref PointD point, GraphicsUnit unit)
+        {
+            if (unit != GraphicsUnit.Dip)
+            {
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                point = GraphicsUnitConverter.ConvertPoint(
+                    unit,
+                    GraphicsUnit.Dip,
+                    dpi,
+                    point,
+                    graphicsType);
+            }
+        }
+
+        public virtual void ToDip(ref SizeD size, GraphicsUnit unit)
+        {
+            if (unit != GraphicsUnit.Dip)
+            {
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                size = GraphicsUnitConverter.ConvertSize(
+                    unit,
+                    GraphicsUnit.Dip,
+                    dpi,
+                    size,
+                    graphicsType);
+            }
+        }
+
+        public virtual void ToDip(ref RectD rect, GraphicsUnit unit)
+        {
+            if (unit != GraphicsUnit.Dip)
+            {
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                rect = GraphicsUnitConverter.ConvertRect(
+                    unit,
+                    GraphicsUnit.Dip,
+                    dpi,
+                    rect,
+                    graphicsType);
+            }
+        }
     }
 }

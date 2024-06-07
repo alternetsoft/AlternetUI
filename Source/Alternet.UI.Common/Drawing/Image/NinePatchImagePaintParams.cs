@@ -29,7 +29,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets rectangle inside the image that will be used for painting.
         /// </summary>
-        public RectD SourceRect { get; set; }
+        public RectI SourceRect { get; set; }
 
         /// <summary>
         /// Gets or sets destination rectangle. It supposed to be larger than
@@ -37,12 +37,12 @@ namespace Alternet.Drawing
         /// bottom-right, bottom-left parts will be filled with <see cref="TextureBrush"/>
         /// constructed with correspoding parts of the image.
         /// </summary>
-        public RectD DestRect { get; set; }
+        public RectI DestRect { get; set; }
 
         /// <summary>
         /// Rectangle that slices image into 9 parts.
         /// </summary>
-        public RectD PatchRect { get; set; }
+        public RectI PatchRect { get; set; }
 
         internal bool Tile { get; set; } = true;
     }

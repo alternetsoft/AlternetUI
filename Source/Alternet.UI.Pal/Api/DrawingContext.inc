@@ -20,9 +20,12 @@ void SetInterpolationMode(InterpolationMode value);
 
 void* GetHandle();
 void DrawRotatedText(const string& text, const PointD& location, Font* font, const Color& foreColor, const Color& backColor, double angle);
+void DrawRotatedTextI(const string& text, const PointI& location, Font* font, const Color& foreColor, const Color& backColor, double angle);
 Image* GetAsBitmapI(const RectI& subrect);
 bool Blit(const PointD& destPt, const SizeD& sz, DrawingContext* source, const PointD& srcPt, int rop, bool useMask, const PointD& srcPtMask);
 bool StretchBlit(const PointD& dstPt, const SizeD& dstSize, DrawingContext* source, const PointD& srcPt, const SizeD& srcSize, int rop, bool useMask, const PointD& srcMaskPt);
+bool BlitI(const PointI& destPt, const SizeI& sz, DrawingContext* source, const PointI& srcPt, int rop, bool useMask, const PointI& srcPtMask);
+bool StretchBlitI(const PointI& dstPt, const SizeI& dstSize, DrawingContext* source, const PointI& srcPt, const SizeI& srcSize, int rop, bool useMask, const PointI& srcMaskPt);
 RectD DrawLabel(const string& text, Font* font, const Color& foreColor, const Color& backColor, Image* image, const RectD& rect, int alignment, int indexAccel);
 void DestroyClippingRegion();
 void SetClippingRegion(const RectD& rect);
@@ -45,6 +48,7 @@ void Pie(Pen* pen, Brush* brush, const PointD& center, double radius, double sta
 void Circle(Pen* pen, Brush* brush, const PointD& center, double radius);
 void Polygon(Pen* pen, Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
 void FillRectangle(Brush* brush, const RectD& rectangle);
+void FillRectangleI(Brush* brush, const RectI& rectangle);
 void DrawRectangle(Pen* pen, const RectD& rectangle);
 void FillEllipse(Brush* brush, const RectD& bounds);
 void DrawEllipse(Pen* pen, const RectD& bounds);

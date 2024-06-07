@@ -15,6 +15,9 @@ namespace NativeApi.Api
 
         public void DrawRotatedText(string text, PointD location, Font font,
             Color foreColor, Color backColor, Coord angle) {}
+        public void DrawRotatedTextI(string text, PointI location, Font font,
+            Color foreColor, Color backColor, Coord angle)
+        { }
 
         public Image GetAsBitmapI(RectI subrect) => default;
 
@@ -27,6 +30,16 @@ namespace NativeApi.Api
                      DrawingContext source, PointD srcPt, SizeD srcSize,
                      int rop, bool useMask /*= false*/,
                      PointD srcMaskPt) => default;
+
+        public bool BlitI(PointI destPt, SizeI sz,
+              DrawingContext source, PointI srcPt,
+              int rop /*= wxCOPY RasterOperationMode*/, bool useMask /*= false*/,
+              PointI srcPtMask /*= wxDefaultPosition*/) => default;
+
+        public bool StretchBlitI(PointI dstPt, SizeI dstSize,
+                     DrawingContext source, PointI srcPt, SizeI srcSize,
+                     int rop, bool useMask /*= false*/,
+                     PointI srcMaskPt) => default;
 
         public RectD DrawLabel(string text, Font font,
             Color foreColor, Color backColor, Image? image, RectD rect,
@@ -107,6 +120,9 @@ namespace NativeApi.Api
         public void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode) { }
 
         public void FillRectangle(Brush brush, RectD rectangle) { }
+
+        public void FillRectangleI(Brush brush, RectI rectangle) { }
+
         public void DrawRectangle(Pen pen, RectD rectangle) { }
 
         public void FillEllipse(Brush brush, RectD bounds) { }

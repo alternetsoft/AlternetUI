@@ -20,6 +20,13 @@ namespace Alternet::UI
     void DrawingContext::DrawRotatedText(const string& text, const PointD& location, Font* font,
         const Color& foreColor, const Color& backColor, double angle)
     {
+        auto point = fromDip(location, _dc->GetWindow());
+        DrawRotatedTextI(text, point, font, foreColor, backColor, angle);
+    }
+
+    void DrawingContext::DrawRotatedTextI(const string& text, const PointI& location, Font* font,
+        const Color& foreColor, const Color& backColor, double angle)
+    {
         bool useBackColor = !backColor.IsEmpty();
 
         UseDC();
@@ -43,7 +50,7 @@ namespace Alternet::UI
         auto& oldFont = _dc->GetFont();
         _dc->SetFont(font->GetWxFont());
 
-        auto point = fromDip(location, _dc->GetWindow());
+        auto point = location;
 
         if (useBackColor)
         {
@@ -97,6 +104,16 @@ namespace Alternet::UI
             useMask, srcPtMaskI);
     }
 
+    bool DrawingContext::BlitI(const PointI& destPt, const SizeI& sz,
+        DrawingContext* source, const PointI& srcPt, int rop,
+        bool useMask, const PointI& srcPtMask)
+    {
+        UseDC();
+
+        return _dc->Blit(destPt, sz, source->GetDC(), srcPt, (wxRasterOperationMode)rop,
+            useMask, srcPtMask);
+    }
+
     bool DrawingContext::StretchBlit(const PointD& dstPt, const SizeD& dstSize,
         DrawingContext* source, const PointD& srcPt, const SizeD& srcSize,
         int rop, bool useMask, const PointD& srcMaskPt)
@@ -111,6 +128,16 @@ namespace Alternet::UI
 
         return _dc->StretchBlit(dstPtI, dstSizeI, source->GetDC(), srcPtI, srcSizeI,
             (wxRasterOperationMode)rop, useMask, srcMaskPtI);
+    }
+
+    bool DrawingContext::StretchBlitI(const PointI& dstPt, const SizeI& dstSize,
+        DrawingContext* source, const PointI& srcPt, const SizeI& srcSize,
+        int rop, bool useMask, const PointI& srcMaskPt)
+    {
+        UseDC();
+
+        return _dc->StretchBlit(dstPt, dstSize, source->GetDC(), srcPt, srcSize,
+            (wxRasterOperationMode)rop, useMask, srcMaskPt);
     }
 
     void DrawingContext::ImageFromDrawingContext(Image * image,

@@ -127,11 +127,27 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            Coord angle)
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
             DebugColorAssert(foreColor);
+
+            if(unit == GraphicsUnit.Pixel)
+            {
+                dc.DrawRotatedTextI(
+                    text,
+                    location.ToPoint(),
+                    (UI.Native.Font)font.Handler,
+                    foreColor,
+                    backColor,
+                    angle);
+                return;
+            }
+
+            ToDip(ref location, unit);
+
             dc.DrawRotatedText(
                 text,
                 location,
@@ -149,9 +165,31 @@ namespace Alternet.Drawing
             PointD srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointD? srcPtMask = null)
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
-            srcPtMask ??= PointI.MinusOne;
+            var srcPtMaskValue = srcPtMask ?? PointI.MinusOne;
+
+            if (unit == GraphicsUnit.Pixel)
+            {
+                var result = dc.BlitI(
+                            destPt.ToPoint(),
+                            sz.ToSize(),
+                            (UI.Native.DrawingContext)source.NativeObject,
+                            srcPt.ToPoint(),
+                            (int)rop,
+                            useMask,
+                            srcPtMaskValue.ToPoint());
+                return result;
+            }
+
+            ToDip(ref destPt, unit);
+            ToDip(ref sz, unit);
+            ToDip(ref srcPt, unit);
+
+            if (srcPtMaskValue != PointI.MinusOne)
+                ToDip(ref srcPtMaskValue, unit);
+
             return dc.Blit(
                         destPt,
                         sz,
@@ -159,7 +197,7 @@ namespace Alternet.Drawing
                         srcPt,
                         (int)rop,
                         useMask,
-                        srcPtMask.Value);
+                        srcPtMaskValue);
         }
 
         /// <inheritdoc/>
@@ -171,9 +209,33 @@ namespace Alternet.Drawing
             SizeD srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointD? srcPtMask = null)
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
-            srcPtMask ??= PointI.MinusOne;
+            var srcPtMaskValue = srcPtMask ?? PointI.MinusOne;
+
+            if (unit == GraphicsUnit.Pixel)
+            {
+                var result = dc.StretchBlitI(
+                    dstPt.ToPoint(),
+                    dstSize.ToSize(),
+                    (UI.Native.DrawingContext)source.NativeObject,
+                    srcPt.ToPoint(),
+                    srcSize.ToSize(),
+                    (int)rop,
+                    useMask,
+                    srcPtMaskValue.ToPoint());
+                return result;
+            }
+
+            ToDip(ref dstPt, unit);
+            ToDip(ref dstSize, unit);
+            ToDip(ref srcPt, unit);
+            ToDip(ref srcSize, unit);
+
+            if (srcPtMaskValue != PointI.MinusOne)
+                ToDip(ref srcPtMaskValue, unit);
+
             return dc.StretchBlit(
                 dstPt,
                 dstSize,
@@ -182,7 +244,7 @@ namespace Alternet.Drawing
                 srcSize,
                 (int)rop,
                 useMask,
-                srcPtMask.Value);
+                srcPtMaskValue);
         }
 
         /// <inheritdoc/>
@@ -534,23 +596,17 @@ namespace Alternet.Drawing
             RectD sourceRect,
             GraphicsUnit unit)
         {
-            if(unit != GraphicsUnit.Dip)
+            if(unit == GraphicsUnit.Pixel)
             {
-                var dpi = GetDPI();
-                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
-                destinationRect = GraphicsUnitConverter.ConvertRect(
-                    unit,
-                    GraphicsUnit.Dip,
-                    dpi,
-                    destinationRect,
-                    graphicsType);
-                sourceRect = GraphicsUnitConverter.ConvertRect(
-                    unit,
-                    GraphicsUnit.Dip,
-                    dpi,
-                    sourceRect,
-                    graphicsType);
+                dc.DrawImagePortionAtPixelRect(
+                    (UI.Native.Image)image.Handler,
+                    destinationRect.ToRect(),
+                    sourceRect.ToRect());
+                return;
             }
+
+            ToDip(ref destinationRect, unit);
+            ToDip(ref sourceRect, unit);
 
             DrawImage(image, destinationRect, sourceRect);
         }
@@ -663,6 +719,18 @@ namespace Alternet.Drawing
             if (dispose)
                 dc.Dispose();
             dc = null!;
+        }
+
+        public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
+        {
+            if (unit == GraphicsUnit.Pixel)
+            {
+                dc.FillRectangleI((UI.Native.Brush)brush.Handler, rectangle.ToRect());
+                return;
+            }
+
+            ToDip(ref rectangle, unit);
+            FillRectangle(brush, rectangle);
         }
     }
 }

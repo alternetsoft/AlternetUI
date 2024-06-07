@@ -196,7 +196,8 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            Coord angle)
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }
@@ -208,7 +209,8 @@ namespace Alternet.Drawing
             PointD srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointD? srcPtMask = null)
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }
@@ -221,7 +223,8 @@ namespace Alternet.Drawing
             SizeD srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointD? srcPtMask = null)
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }
@@ -428,6 +431,11 @@ namespace Alternet.Drawing
         }
 
         public override RectD GetClippingBox()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
         {
             throw new NotImplementedException();
         }

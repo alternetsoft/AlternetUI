@@ -261,6 +261,15 @@ namespace Alternet.Drawing
             return new(PixelToDip(value.Width, scaleFactor), PixelToDip(value.Height, scaleFactor));
         }
 
+        public static RectD[] PixelToDip(RectI[] rects, Coord scaleFactor)
+        {
+            var length = rects.Length;
+            var result = new RectD[length];
+            for (int i = 0; i < length; i++)
+                result[i] = rects[i].PixelToDip(scaleFactor);
+            return result;
+        }
+
         /// <summary>
         /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
         /// </summary>
