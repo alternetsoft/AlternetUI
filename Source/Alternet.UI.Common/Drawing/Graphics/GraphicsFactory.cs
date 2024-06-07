@@ -16,6 +16,11 @@ namespace Alternet.Drawing
     /// </summary>
     public static class GraphicsFactory
     {
+        private static bool ImageBitsFormatsLoaded = false;
+        private static ImageBitsFormat nativeBitsFormat;
+        private static ImageBitsFormat alphaBitsFormat;
+        private static ImageBitsFormat genericBitsFormat;
+
         public static SKColorType LockBitsColorType;
 
         public static SKAlphaType LockBitsAlphaType;
@@ -70,7 +75,62 @@ namespace Alternet.Drawing
             }
         }
 
-        public static ISkiaSurface CreateSkiaBitmapData(IImageHandler image)
+        public static ImageBitsFormat NativeBitsFormat
+        {
+            get
+            {
+                LoadImageBitsFormats();
+                return nativeBitsFormat;
+            }
+
+            set
+            {
+                LoadImageBitsFormats();
+                nativeBitsFormat = value;
+            }
+        }
+
+        public static ImageBitsFormat AlphaBitsFormat
+        {
+            get
+            {
+                LoadImageBitsFormats();
+                return alphaBitsFormat;
+            }
+
+            set
+            {
+                LoadImageBitsFormats();
+                alphaBitsFormat = value;
+            }
+        }
+
+        public static ImageBitsFormat GenericBitsFormat
+        {
+            get
+            {
+                LoadImageBitsFormats();
+                return genericBitsFormat;
+            }
+
+            set
+            {
+                LoadImageBitsFormats();
+                genericBitsFormat = value;
+            }
+        }
+
+        private static void LoadImageBitsFormats()
+        {
+            if (ImageBitsFormatsLoaded)
+                return;
+            ImageBitsFormatsLoaded = true;
+            nativeBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Native);
+            alphaBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Alpha);
+            genericBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Generic);
+        }
+
+        public static ISkiaSurface CreateSkiaBitmapData(ILockImageBits image)
         {
             return new SkiaSurfaceOnBitmap(image);
         }

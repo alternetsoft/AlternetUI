@@ -200,40 +200,46 @@ namespace ControlsSample
             dc.DrawBeziers(blackPen, bezierPoints);
         }
 
+        private Bitmap bitmap;
+        private bool flag;
+
         private void DrawTextOnSkia2()
         {
             var width = 700;
             var height = 500;
 
-            var bitmap = new Bitmap(PixelFromDip(width), PixelFromDip(height));
+            bitmap ??= new Bitmap(PixelFromDip(width), PixelFromDip(height));
             bitmap.HasAlpha = true;
             bitmap.SetDPI(GetDPI());
 
-            using var canvasLock = bitmap.LockSurface();
+            using (var canvasLock = bitmap.LockSurface())
+            {
+                var canvas = canvasLock.Canvas;
+                canvas.Scale((float)GetPixelScaleFactor());
 
-            var canvas = canvasLock.Canvas;
-            canvas.Scale((float)GetPixelScaleFactor());
+                canvas.Clear(flag ? Color.Yellow : Color.GreenYellow);
+                flag = !flag;
+                canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);
 
-            canvas.Clear(Color.Yellow);
-            canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);
+                PointD pt = new(10, 10);
+                PointD pt2 = new(10, 150);
 
-            PointD pt = new(10, 10);
-            PointD pt2 = new(10, 150);
+                var font = SkiaSampleControl.SampleFont;
 
-            var font = SkiaSampleControl.SampleFont;
+                canvas.DrawText(SkiaSampleControl.S1, pt, font, Color.Black, Color.LightGreen);
 
-            canvas.DrawText(SkiaSampleControl.S1, pt, font, Color.Black, Color.LightGreen);
+                canvas.DrawText(SkiaSampleControl.S2, pt2, font, Color.Red, Color.LightGreen);
 
-            canvas.DrawText(SkiaSampleControl.S2, pt2, font, Color.Red, Color.LightGreen);
+                canvas.DrawPoint(pt, Color.Red);
+                canvas.DrawPoint(pt2, Color.Red);
 
-            canvas.DrawPoint(pt, Color.Red);
-            canvas.DrawPoint(pt2, Color.Red);
+                DrawBeziersPoint(canvas);
 
-            DrawBeziersPoint(canvas);
-
-            canvas.Flush();
+                canvas.Flush();
+            }
 
             pictureBox.Image = bitmap;
+            pictureBox.Refresh();
         }
 
         private class DrawTextParams

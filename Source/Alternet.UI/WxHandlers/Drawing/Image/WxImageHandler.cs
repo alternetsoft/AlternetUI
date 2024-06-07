@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,16 @@ namespace Alternet.UI.Native
 {
     internal partial class Image : Alternet.Drawing.IImageHandler
     {
+        public int Width => PixelWidth;
+
+        public int Height => PixelHeight;
+
         public Alternet.Drawing.ISkiaSurface LockSurface()
         {
+            Debug.Assert(IsOk, "Image.IsOk == true is required.");
+            Debug.Assert(HasAlpha, "Image.HasAlpha == true is required.");
+            Debug.Assert(!HasMask, "Image.HasMask == false is required.");
+
             return Alternet.Drawing.GraphicsFactory.CreateSkiaBitmapData(this);
         }
 

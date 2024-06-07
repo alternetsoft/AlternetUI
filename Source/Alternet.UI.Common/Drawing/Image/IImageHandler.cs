@@ -9,7 +9,7 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    public interface IImageHandler : IDisposable
+    public interface IImageHandler : IDisposable, ILockImageBits
     {
         Coord ScaleFactor { get; set; }
 
@@ -44,12 +44,6 @@ namespace Alternet.Drawing
         bool ResetAlpha();
 
         bool Rescale(SizeI sizeNeeded);
-
-        public IntPtr LockBits();
-
-        public void UnlockBits();
-
-        int GetStride();
 
         ISkiaSurface LockSurface();
     }

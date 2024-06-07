@@ -54,21 +54,41 @@ namespace Alternet::UI
 		AlphaPixelFormat.Green = (int)apf.GREEN;
 		AlphaPixelFormat.Blue = (int)apf.BLUE;
 		AlphaPixelFormat.Alpha = (int)apf.ALPHA;
+
+		auto gpf = wxImagePixelFormat();
+
+		GenericImagePixelFormat.BitsPerPixel = gpf.BitsPerPixel;
+		GenericImagePixelFormat.HasAlpha = (int)gpf.HasAlpha;
+		GenericImagePixelFormat.SizePixel = gpf.SizePixel;
+		GenericImagePixelFormat.Red = (int)gpf.RED;
+		GenericImagePixelFormat.Green = (int)gpf.GREEN;
+		GenericImagePixelFormat.Blue = (int)gpf.BLUE;
+		GenericImagePixelFormat.Alpha = (int)gpf.ALPHA;
 	}
 
 	int Image::GetStaticOption(int objectId, int propId)
 	{
+		InitPixelFormats();
+
+		int result;
+
 		switch ((ImageStaticObjectId)objectId)
 		{
-		case ImageStaticObjectId_NativePixelFormat:
-			return NativePixelFormat.GetProperty((ImageStaticPropertyId)propId);
-		case ImageStaticObjectId_AlphaPixelFormat:
-			return AlphaPixelFormat.GetProperty((ImageStaticPropertyId)propId);
-		case ImageStaticObjectId_GenericPixelFormat:
-			return 0;
-		default:
-			return 0;
+			case ImageStaticObjectId_NativePixelFormat:
+				result = NativePixelFormat.GetProperty((ImageStaticPropertyId)propId);
+				break;
+			case ImageStaticObjectId_AlphaPixelFormat:
+				result = AlphaPixelFormat.GetProperty((ImageStaticPropertyId)propId);
+				break;
+			case ImageStaticObjectId_GenericPixelFormat:
+				result = GenericImagePixelFormat.GetProperty((ImageStaticPropertyId)propId);
+				break;
+			default:
+				result = 0;
+				break;
 		}
+
+		return result;
 	}
 
 	void Image::Log()

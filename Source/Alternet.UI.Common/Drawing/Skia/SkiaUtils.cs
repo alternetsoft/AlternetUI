@@ -72,6 +72,11 @@ namespace Alternet.Drawing
             return index >= 0;
         }
 
+        public static bool BitmapIsOk(SKBitmap? bitmap)
+        {
+            return bitmap is not null && bitmap.ReadyToDraw && bitmap.Height > 0 && bitmap.Width > 0;
+        }
+
         public static void ResetFonts()
         {
             fontFamilies = null;

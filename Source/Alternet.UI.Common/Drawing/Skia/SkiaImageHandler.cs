@@ -88,6 +88,10 @@ namespace Alternet.UI
             bitmap = new(size.Width, size.Height, depth != 32);
         }
 
+        public int Width => bitmap.Width;
+
+        public int Height => bitmap.Height;
+
         public SKBitmap Bitmap => bitmap;
 
         public Coord ScaleFactor
@@ -130,7 +134,7 @@ namespace Alternet.UI
 
         public bool IsOk
         {
-            get => bitmap.ReadyToDraw && bitmap.Height > 0 && bitmap.Width > 0;
+            get => SkiaUtils.BitmapIsOk(bitmap);
         }
 
         public bool HasAlpha
@@ -254,27 +258,26 @@ namespace Alternet.UI
 
         private void DisposeBitmap()
         {
-            SafeDispose(ref bitmap);
+            SafeDispose(ref bitmap!);
         }
 
         public nint LockBits()
         {
-            throw new NotImplementedException();
+            return default;
         }
 
         public void UnlockBits()
         {
-            throw new NotImplementedException();
         }
 
         public int GetStride()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public ISkiaSurface LockSurface()
         {
-            throw new NotImplementedException();
+            return new SkiaSurfaceOnSkia(bitmap);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Alternet.UI
     public partial class BaseObject : IBaseObject
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SafeDispose<T>(ref T disposable) where T : IDisposable
+        public static void SafeDispose<T>(ref T? disposable) where T : IDisposable
         {
             var t = disposable;
             disposable = default!;

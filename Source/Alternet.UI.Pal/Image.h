@@ -12,6 +12,8 @@ namespace Alternet::UI
 
     typedef wxPixelData<wxBitmap, wxAlphaPixelFormat> ImageAlphaPixelData;
 
+    typedef wxPixelData<wxImage, wxImagePixelFormat> ImageGenericPixelData;    
+
     enum ImageStaticObjectId
     {
         ImageStaticObjectId_NativePixelFormat = 0,

@@ -15,26 +15,22 @@ namespace Alternet.Drawing
     {
         private readonly int width;
         private readonly int height;
-        private readonly IImageHandler image;
         private readonly SKSurface surface;
         private readonly SKCanvas canvas;
         private readonly SKColorType colorType = GraphicsFactory.LockBitsColorType;
         private readonly SKAlphaType alphaType = GraphicsFactory.LockBitsAlphaType;
         private readonly bool isOk;
+        private readonly ILockImageBits image;
 
         static SkiaSurfaceOnBitmap()
         {
         }
 
-        public SkiaSurfaceOnBitmap(IImageHandler image)
+        public SkiaSurfaceOnBitmap(ILockImageBits image)
         {
-            Debug.Assert(image.IsOk, "Image.IsOk == true is required.");
-            Debug.Assert(image.HasAlpha, "Image.HasAlpha == true is required.");
-            Debug.Assert(image.IsOk, "Image.HasMask == false is required.");
-
+            width = image.Width;
+            height = image.Height;
             this.image = image;
-            width = image.PixelSize.Width;
-            height = image.PixelSize.Height;
 
             var info = new SKImageInfo(
                 width,
@@ -77,9 +73,9 @@ namespace Alternet.Drawing
 
         public SKAlphaType AlphaType => alphaType;
 
-        public IImageHandler Image => image;
+        public SKBitmap? Bitmap => null;
 
-        public SKSurface Surface => surface;
+        public SKSurface? Surface => surface;
 
         public SKCanvas Canvas => canvas;
 
@@ -87,6 +83,7 @@ namespace Alternet.Drawing
         {
             canvas.Flush();
             surface.Dispose();
+            image.UnlockBits();
             base.DisposeManaged();
         }
     }

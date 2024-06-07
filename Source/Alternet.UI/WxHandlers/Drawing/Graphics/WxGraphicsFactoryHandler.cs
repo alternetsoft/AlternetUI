@@ -13,6 +13,63 @@ namespace Alternet.Drawing
 {
     internal class WxGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
     {
+        static WxGraphicsFactoryHandler()
+        {
+        }
+
+        enum ImageStaticObjectId
+        {
+            NativePixelFormat = 0,
+            AlphaPixelFormat = 1,
+            GenericPixelFormat = 2,
+        };
+
+        enum ImageStaticPropertyId
+        {
+            BitsPerPixel = 0,
+            HasAlpha = 1,
+            SizePixel = 2,
+            Red = 3,
+            Green = 4,
+            Blue = 5,
+            Alpha = 6,
+        };
+
+        private static ImageBitsFormat GetImageBitsFormat(ImageStaticObjectId objectId)
+        {
+            ImageBitsFormat result = new();
+
+            result.BitsPerPixel = GetProp(ImageStaticPropertyId.BitsPerPixel);
+            result.HasAlpha = GetProp(ImageStaticPropertyId.HasAlpha) != 0;
+            result.SizePixel = GetProp(ImageStaticPropertyId.SizePixel);
+            result.Red = GetProp(ImageStaticPropertyId.Red);
+            result.Green = GetProp(ImageStaticPropertyId.Green);
+            result.Blue = GetProp(ImageStaticPropertyId.Blue);
+            result.Alpha = GetProp(ImageStaticPropertyId.Alpha);
+
+            return result;
+
+            int GetProp(ImageStaticPropertyId propId)
+            {
+                var result = UI.Native.Image.GetStaticOption((int)objectId, (int)propId);
+                return result;
+            }
+        }
+
+        public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
+        {
+            switch (kind)
+            {
+                case ImageBitsFormatKind.Native:
+                    return GetImageBitsFormat(ImageStaticObjectId.NativePixelFormat);
+                default:
+                case ImageBitsFormatKind.Alpha:
+                    return GetImageBitsFormat(ImageStaticObjectId.AlphaPixelFormat);
+                case ImageBitsFormatKind.Generic:
+                    return GetImageBitsFormat(ImageStaticObjectId.GenericPixelFormat);
+            }
+        }
+
         /// <inheritdoc/>
         public IFontFactoryHandler CreateFontFactoryHandler()
         {

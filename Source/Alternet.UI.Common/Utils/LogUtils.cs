@@ -788,6 +788,14 @@ namespace Alternet.UI
             addLogAction("Log SKFont", LogUtils.LogSkiaFont);
             addLogAction("Log SKBitmap", LogUtils.LogSkiaBitmap);
             addLogAction("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
+            addLogAction("Log image bits formats", LogImageBitsFormats);
+        }
+
+        public static void LogImageBitsFormats()
+        {
+            GraphicsFactory.NativeBitsFormat.Log("NativeBitsFormat");
+            GraphicsFactory.AlphaBitsFormat.Log("AlphaBitsFormat");
+            GraphicsFactory.GenericBitsFormat.Log("GenericBitsFormat");
         }
 
         internal static void LogAppDomainTargetFrameworkName()

@@ -18,7 +18,9 @@ namespace Alternet.Drawing
 
         SKAlphaType AlphaType { get; }
 
-        SKSurface Surface { get; }
+        SKSurface? Surface { get; }
+
+        SKBitmap? Bitmap { get; }
 
         SKCanvas Canvas { get; }
         
