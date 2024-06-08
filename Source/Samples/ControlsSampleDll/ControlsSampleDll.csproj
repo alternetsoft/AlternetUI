@@ -391,6 +391,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+        <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
+        <ProjectReference Include="..\SkiaSharpSampleDll\SkiaSharpSampleDll.csproj" />
     </ItemGroup>
 
 </Project>
