@@ -335,6 +335,11 @@ namespace Alternet.Drawing
             return StringUtils.ToString<int>(names, values);
         }
 
+        public readonly SizeD PixelToDip(Coord scaleFactor)
+        {
+            return GraphicsFactory.PixelToDip(this, scaleFactor);
+        }
+
         /// <summary>
         /// Multiplies <see cref="SizeI"/> by an <see cref="int"/>
         /// producing <see cref="SizeI"/>.

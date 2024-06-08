@@ -16,6 +16,8 @@ namespace Alternet.UI
 
         Action<DragEventArgs>? DragEnter { get; set; }
 
+        Action? SystemColorsChanged { get; set; }
+
         Action? Idle { get; set; }
 
         Action? Paint { get; set; }

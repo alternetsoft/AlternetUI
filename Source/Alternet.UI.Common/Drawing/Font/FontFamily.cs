@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -24,6 +26,8 @@ namespace Alternet.Drawing
 
         private string? name;
         private bool? isOk;
+        private SKTypeface? typeface;
+        private bool? isFixedPitch;
 
         /// <summary>
         /// Initializes a new <see cref="FontFamily"/> with the specified name.
@@ -156,6 +160,12 @@ namespace Alternet.Drawing
                 {
                     if (name is null)
                         continue;
+                    if (FontFactory.OnlySkiaFonts)
+                    {
+                        if (!SkiaUtils.IsFamilySkia(name))
+                            continue;
+                    }
+
                     items.TryAdd(name, new FontFamily(name, false));
                 }
             }
@@ -195,6 +205,22 @@ namespace Alternet.Drawing
                     FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
 
                 return items!;
+            }
+        }
+
+        public virtual bool IsFixedPitch
+        {
+            get
+            {
+                return isFixedPitch ??= IsFixedPitchFontFamily(Name);
+            }
+        }
+
+        public virtual SKTypeface SkiaTypeface
+        {
+            get
+            {
+                return typeface ??= SKFontManager.Default.MatchFamily(Name);
             }
         }
 
@@ -265,6 +291,12 @@ namespace Alternet.Drawing
             }
         }
 
+        public static IEnumerable<string> RemoveNonSkiaFonts(IEnumerable<string> fonts)
+        {
+            var result = fonts.Where(x => SkiaUtils.IsFamilySkia(x));
+            return result;
+        }
+
         /// <summary>
         /// Gets name of the font family specified with <see cref="GenericFontFamily"/> enum.
         /// </summary>
@@ -286,73 +318,21 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public static (string Name, FontSize Size) GetSampleFontNameAndSize(SystemSettingsFont font)
-        {
-            switch (App.BackendOS)
-            {
-                case OperatingSystems.Windows:
-                case OperatingSystems.Linux:
-                case OperatingSystems.MacOs:
-                case OperatingSystems.Android:
-                case OperatingSystems.IOS:
-                default:
-                    return GetSampleFontNameAndSizeWindows(font);
-            }
-        }
-
-        public static (string Name, FontSize Size) GetSampleFontNameAndSizeWindows(SystemSettingsFont font)
-        {
-            switch (font)
-            {
-                case SystemSettingsFont.OemFixed:
-                    return ("Terminal", 7.5);
-                case SystemSettingsFont.AnsiFixed:
-                    return ("Courier", 4.5);
-                case SystemSettingsFont.AnsiVar:
-                    return ("MS Sans Serif", 4.5);
-                case SystemSettingsFont.System:
-                    return ("System", 7.5);
-                case SystemSettingsFont.DeviceDefault:
-                    return ("System", 7.5);
-                case SystemSettingsFont.DefaultGui:
-                default:
-                    return ("Segoe UI", 9);
-            }
-        }
-
-        public static (string Name, FontSize Size) GetSampleFontNameAndSize(GenericFontFamily family)
-        {
-            switch (App.BackendOS)
-            {
-                case OperatingSystems.Windows:
-                case OperatingSystems.Linux:
-                case OperatingSystems.MacOs:
-                case OperatingSystems.Android:
-                case OperatingSystems.IOS:
-                default:
-                    return GetSampleFontNameAndSizeWindows(family);
-            }
-        }
-
         public static void SetFontFamilyName(GenericFontFamily genericFamily, string? name)
         {
             GenericFamilyNames[(int)genericFamily] = name;
         }
 
-        public static (string Name, FontSize Size) GetSampleFontNameAndSizeWindows(GenericFontFamily family)
+        public static bool IsFixedPitchFontFamily(string name)
         {
-            switch (family)
+            if (FontFactory.OnlySkiaFonts)
             {
-                case GenericFontFamily.Default:
-                default:
-                case GenericFontFamily.None:
-                    return ("Segoe UI", 9);
-                case GenericFontFamily.SansSerif:
-                    return ("Arial", 9);
-                case GenericFontFamily.Serif:
-                    return ("Times New Roman", 9);
-                case GenericFontFamily.Monospace:
-                    return ("Courier New", 9);
+                var family = SKFontManager.Default.MatchFamily(name);
+                return family.IsFixedPitch;
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
     }

@@ -1,3 +1,56 @@
+# 0.9.606 (2024 June 8)
+
+- Display.Reset, Image.HasMask.
+- Display: AllScreens property checks whether display were added/removed from system.
+- Control: ForEachChild(action, recursive), ResetMeasureCanvas(), ResetDisplay().
+- Window: DpiChanged event is raised when form is moved to another display and it has other dpi.
+- Window: Child's Display and MeasureCanvas properties are updated when form is moved to another display.
+- Color: Used ColorStruct inside, AsStruct property, speed optimizations.
+- Color: Constructors made public, MinMaxRgb method.
+- Image.LockSurface - allows to get SKCanvas from Image.
+- ImageBitsFormat class.
+- GraphicsFactory: Definable converters from color, pen, font to SKPaint.
+- GraphicsFactory: NativeBitsFormat, AlphaBitsFormat, GenericBitsFormat.
+- GraphicsFactory: ScaleFactorFromDpi, PixelFromDip, PixelToDip for Coord, Point, Rect, Size.
+- Simplify and speed up system color to rgb conversion.
+- Graphics: GetDPI now returns SizeI.
+- Graphics: HorizontalScaleFactor, VerticalScaleFactor, ScaleFactor.
+- Graphics: Removed "I" suffix from DrawRotatedTextI, StretchBlitI, BlitI. Added GraphicsUnit optional parameter instead of it.
+- Graphics: Removed optional useMask param in DrawImage.
+- Graphics: ToDip for Point, Size, Rect.
+- Graphics: FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit).
+- Added SkiaSharpSampleDll with SkiaSharp samples.
+
+# 0.9.605 (2024 June 5)
+
+- Color: GetRgbValues, WithRed, WithGreen, WithBlue, WithAlpha.
+- Color: Optimization of the internal structure (occupy less memory and speed up).
+- Color: SkiaColor, State properties.
+- Color: Optimization of AsPen and GetAsPen.
+- Color: Optimization of Color to SKColor conversion.
+- Image and GenericImage: static Create(int width, int height, SKColor[] pixels).
+- Image and GenericImage: Correct pixel conversion in case when image has alpha or mask color
+- Image: static Create(int width, int height, Color color).
+- Image and GenericImage: ConvertToDisabled implemented internally
+- Image: ChangeLightness(int ialpha).
+- Image: Load methods now understand urls.
+- Image: Save to file now uses file system.
+- Image: Exceptions are not raised during load/save, only false is returned in case of error.
+- GenericImage: Pixels, RgbData, AlphaData properties.
+- GenericImage: FillPixels, FillAlphaData, FillRgbData, CreatePixels, CreateRgbData, CreateAlphaData, SetRgbValuesFromPtr, SetAlphaValuesFromPtr.
+- GenericImage: Removed GetNativeData, SetNativeData, GetNativeAlphaData, SetNativeAlphaData. Use Pixels, AlphaData, RgbData instead of them.
+- GraphicsFactory: Many new create SkPaint methods.
+- GraphicsFactory: DefaultScaleQuality, DefaultAntialias
+- SkiaUtils: IsFamilySkia, FontFamilies, ResetFonts.
+- Font.SkiaMetrics property.
+- By default only Skia compatible fonts are available in library.
+- FontFamily: SkiaTypeface, IsFixedPitch, IsFixedPitchFontFamily
+- New classes: FontListBox, FontNameAndSize, SampleFonts.
+- Correct implementation of default fixed pitch font search for maui/skia.
+- Included assets required by SkiaSharp in library csproj.
+- DialogFactory: AskByte and other methods.
+- Impoved installation scripts. Now TargetPlatfroms override can be specified using bool flags (See Source/Version/SampleFrameworksOverride.props).
+
 # 0.9.604 (2024 June 3)
 
 - Fixed exception when maximized window is closed.

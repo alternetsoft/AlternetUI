@@ -573,6 +573,11 @@ namespace Alternet.Drawing
             return StringUtils.ToString<int>(names, values);
         }
 
+        public readonly RectD PixelToDip(Coord scaleFactor)
+        {
+            return GraphicsFactory.PixelToDip(this, scaleFactor);
+        }
+
         /// <summary>
         /// Creates a string representation of this object based on the format string
         /// and IFormatProvider passed in.

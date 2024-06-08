@@ -119,7 +119,7 @@ namespace Alternet.UI
 
             set
             {
-                if (HScrollBarVisible == value)
+                if (HScrollBarVisible == value || !App.IsWindowsOS)
                     return;
                 Handler.HScrollBarVisible = value;
                 Refresh();
@@ -664,7 +664,7 @@ namespace Alternet.UI
                 if (itemFont is not null)
                     result = itemFont;
                 if (item.FontStyle is not null)
-                    result = result.GetWithStyle(item.FontStyle.Value);
+                    result = result.WithStyle(item.FontStyle.Value);
             }
 
             return result;
@@ -1490,6 +1490,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnScroll(ScrollEventArgs e)
         {
+            if (!App.IsWindowsOS)
+                return;
             double CharWidth() => MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
 
             void IncOffset(double delta)

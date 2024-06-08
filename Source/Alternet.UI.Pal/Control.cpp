@@ -458,6 +458,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
+        wxWindow->Unbind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
 
         if (bindScrollEvents) 
         {
@@ -479,6 +480,12 @@ namespace Alternet::UI
         if (IsRecreatingWxWindow())
             SetRecreatingWxWindow(false);
         RaiseEvent(ControlEvent::HandleDestroyed);
+    }
+
+    void Control::OnSysColorChanged(wxSysColourChangedEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(ControlEvent::SystemColorsChanged);
     }
 
     bool Control::GetIsActive()
@@ -986,6 +993,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);
+        _wxWindow->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
 
         if (bindScrollEvents)
         {

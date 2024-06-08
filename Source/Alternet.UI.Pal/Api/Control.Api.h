@@ -814,6 +814,28 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     #endif
 }
 
+ALTERNET_UI_API PointD_C Control_ClientToScreen_(Control* obj, PointD point)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->ClientToScreen(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API PointD_C Control_ScreenToClient_(Control* obj, PointD point)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<PointD_C>([&](){
+    #endif
+        return obj->ScreenToClient(point);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API PointI_C Control_ScreenToDevice_(Control* obj, PointD point)
 {
     #if !defined(__WXMSW__)
@@ -1315,28 +1337,6 @@ ALTERNET_UI_API void Control_ResetForegroundColor_(Control* obj)
     MarshalExceptions<void>([&](){
     #endif
         obj->ResetForegroundColor();
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API PointD_C Control_ClientToScreen_(Control* obj, PointD point)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<PointD_C>([&](){
-    #endif
-        return obj->ClientToScreen(point);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API PointD_C Control_ScreenToClient_(Control* obj, PointD point)
-{
-    #if !defined(__WXMSW__)
-    return MarshalExceptions<PointD_C>([&](){
-    #endif
-        return obj->ScreenToClient(point);
     #if !defined(__WXMSW__)
     });
     #endif

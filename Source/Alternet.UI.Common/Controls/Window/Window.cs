@@ -27,6 +27,7 @@ namespace Alternet.UI
         private Window? owner;
         private bool needLayout = false;
         private Collection<InputBinding>? inputBindings;
+        private int? oldDisplay;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -41,6 +42,12 @@ namespace Alternet.UI
             if (Control.DefaultFont != Font.Default)
                 Font = Control.DefaultFont;
         }
+
+        /// <summary>
+        /// Occurs when the DPI setting changes on the display device
+        /// where the form is currently displayed.
+        /// </summary>
+        public event DpiChangedEventHandler? DpiChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Menu"/> property changes.
@@ -1310,6 +1317,55 @@ namespace Alternet.UI
             Handler.StateChanged = null;
             Handler.Closing = null;
             Handler.InputBindingCommandExecuted = null;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandlerLocationChanged(EventArgs e)
+        {
+            base.OnHandlerLocationChanged(e);
+
+            InsideTryCatch(ReportDisplayChanged);            
+        }
+
+        private void ReportDisplayChanged()
+        {
+            var newDisplay = Display.GetFromControl(this);
+
+            if (oldDisplay is null)
+            {
+                oldDisplay = newDisplay;
+                return;
+            }
+
+            if (oldDisplay == newDisplay)
+                return;
+
+            var allScreens = Display.AllScreens;
+
+            var oldDisplayObject = allScreens[oldDisplay.Value];
+            var newDisplayObject = allScreens[newDisplay];
+
+            var oldDpi = oldDisplayObject.DPI.Width;
+            var newDpi = newDisplayObject.DPI.Width;
+
+            if(oldDpi != newDpi)
+            {
+                if(DpiChanged is not null)
+                {
+                    var e = new DpiChangedEventArgs(oldDpi, newDpi);
+                    DpiChanged(this, e);
+                }
+            }
+
+            oldDisplay = newDisplay;
+
+            ForEachChild(Fn, true);
+
+            void Fn(Control control)
+            {
+                control.ResetDisplay();
+                control.ResetMeasureCanvas();
+            }
         }
     }
 }

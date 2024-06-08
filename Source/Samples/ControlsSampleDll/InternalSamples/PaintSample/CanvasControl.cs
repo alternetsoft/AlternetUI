@@ -5,14 +5,14 @@ namespace PaintSample
 {
     public class CanvasControl : Control
     {
-        private Document? document;
+        private PaintSampleDocument? document;
 
         public CanvasControl()
         {
             UserPaint = true;
         }
 
-        public Document? Document
+        public PaintSampleDocument? Document
         {
             get => document;
             set

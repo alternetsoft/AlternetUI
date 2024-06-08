@@ -77,7 +77,22 @@ namespace Alternet.UI
             {
                 if (control == value)
                     return;
+
+                if (control is not null)
+                {
+                    if (control.Handler is MauiControlHandler handler)
+                        handler.Container = null;
+                }
+
                 control = value;
+
+                if(control is not null)
+                {
+                    if (control.Handler is MauiControlHandler handler)
+                        handler.Container = this;
+                }
+
+                InvalidateSurface();
             }
         }
 
@@ -112,6 +127,8 @@ namespace Alternet.UI
             var bounds = Bounds;
 
             control.Bounds = (0, 0, bounds.Width, bounds.Height);
+
+            dc.Clear(control.BackColor);
 
             control.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
         }

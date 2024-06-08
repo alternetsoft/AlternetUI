@@ -46,7 +46,7 @@ namespace Alternet.Drawing
         /// Returns a string array that contains all font families names
         /// currently available in the system.
         /// </summary>
-        string[] GetFontFamiliesNames();
+        IEnumerable<string> GetFontFamiliesNames();
 
         /// <summary>
         /// Gets the name of the font family specified using <see cref="GenericFontFamily"/>.

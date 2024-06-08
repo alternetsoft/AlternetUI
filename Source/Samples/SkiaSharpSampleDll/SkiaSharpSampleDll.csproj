@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\TargetFrameworks.props" />
+
+    <PropertyGroup>
+      <Platforms>AnyCPU;x64</Platforms>
+      <LangVersion>12.0</LangVersion>
+      <Nullable>enable</Nullable>
+      <UseStyleCop>false</UseStyleCop>
+      <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    </PropertyGroup>                 
+
+  <ItemGroup>
+      <Compile Remove="build\**" />
+      <EmbeddedResource Remove="build\**" />
+      <None Remove="build\**" />
+    </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+    </ItemGroup>
+
+</Project>

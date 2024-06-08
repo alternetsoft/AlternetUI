@@ -143,6 +143,7 @@ namespace Alternet.UI
         public virtual bool IsHandleCreated { get; set; }
         
         public virtual bool IsFocusable { get; set; }
+        public Action? SystemColorsChanged { get; set; }
 
         public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {

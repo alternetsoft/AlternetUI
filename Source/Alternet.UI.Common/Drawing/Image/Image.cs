@@ -16,7 +16,7 @@ namespace Alternet.Drawing
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
-    public class Image : HandledObject<IImageHandler>
+    public partial class Image : HandledObject<IImageHandler>
     {
         private static readonly string[] DefaultExtensionsForLoad =
         {
@@ -126,6 +126,8 @@ namespace Alternet.Drawing
                 return Handler.ToGenericImage();
             }
         }
+
+        public virtual bool HasMask => Handler.HasMask;
 
         /// <summary>
         /// Gets the size of the image in pixels.
@@ -339,6 +341,20 @@ namespace Alternet.Drawing
         public static bool IsNullOrEmpty([NotNullWhen(false)] Image? image)
         {
             return (image is null) || image.IsEmpty;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Image Create(int width, int height, Color color)
+        {
+            var image = GenericImage.Create(width, height, color);
+            return (Image)image;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Image Create(int width, int height, SKColor[] pixels)
+        {
+            var image = new GenericImage(width, height, pixels);
+            return (Image)image;
         }
 
         /// <summary>
@@ -570,8 +586,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Loads an image from a file or resource.
         /// </summary>
-        /// <param name="name">Either a filename or a resource name. The meaning of name
-        /// is determined by the type parameter.</param>
+        /// <param name="url">Path to file or url with the image data.</param>
         /// <param name="type">One of the <see cref="BitmapType"/> values</param>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         /// <remarks>
@@ -583,9 +598,16 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats
         /// for the load operation.</remarks>
-        public virtual bool Load(string name, BitmapType type)
+        public virtual bool Load(string url, BitmapType type)
         {
-            return Handler.Load(name, type);
+            return InsideTryCatch(() =>
+            {
+                using var stream = ResourceLoader.StreamFromUrl(url);
+                if (stream is null)
+                    return false;
+                var result = Handler.LoadFromStream(stream);
+                return result;
+            });
         }
 
         /// <summary>
@@ -605,7 +627,12 @@ namespace Alternet.Drawing
         public virtual bool Save(string name, BitmapType type, int? quality = null)
         {
             quality ??= DefaultSaveQuality;
-            return Handler.SaveToFile(name, type, quality.Value);
+
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(name);
+                return Save(stream, type, quality.Value);
+            });
         }
 
         /// <summary>
@@ -669,6 +696,14 @@ namespace Alternet.Drawing
             this.ScaleFactor = factor;
         }
 
+        public virtual Image ChangeLightness(int ialpha)
+        {
+            GenericImage image = (GenericImage)this;
+            var converted = image.ConvertLightness(ialpha);
+            var result = (Image)converted;
+            return result;
+        }
+
         /// <summary>
         /// Returns disabled (dimmed) version of the image.
         /// </summary>
@@ -676,8 +711,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image ConvertToDisabled(byte brightness = 255)
         {
-            var converted = Handler.ConvertToDisabled(brightness);
-            return new Image(converted);
+            GenericImage image = (GenericImage)this;
+            image.ChangeToDisabled(brightness);
+            return (Image)image;
         }
 
         /// <summary>
@@ -748,14 +784,14 @@ namespace Alternet.Drawing
         public virtual bool Save(Stream stream, ImageFormat format, int? quality = null)
         {
             if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
+                return false;
 
             if (format is null)
-                throw new ArgumentNullException(nameof(format));
+                return false;
 
             quality ??= DefaultSaveQuality;
 
-            return Handler.SaveToStream(stream, format, quality.Value);
+            return Handler.SaveToStream(stream, format.AsBitmapType(), quality.Value);
         }
 
         /// <summary>
@@ -768,27 +804,37 @@ namespace Alternet.Drawing
         public virtual bool Save(string fileName, int? quality = null)
         {
             if (fileName is null)
-                throw new ArgumentNullException(nameof(fileName));
+                return false;
 
             quality ??= DefaultSaveQuality;
 
-            return Handler.SaveToFile(fileName, quality.Value);
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(fileName);
+                var bitmapType = Image.GetBitmapTypeFromFileName(fileName);
+                return Save(stream, bitmapType, quality.Value);
+            });
         }
 
         /// <summary>
         /// Gets the size of the image in device-independent units (1/96th inch
         /// per unit).
         /// </summary>
-        public virtual SizeD SizeDip(IControl control)
+        public virtual SizeD SizeDip(Control control)
             => control.PixelToDip(PixelSize);
 
         /// <summary>
         /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
         /// </summary>
-        public virtual RectD BoundsDip(IControl control)
+        public virtual RectD BoundsDip(Control control)
         {
             var size = SizeDip(control);
             return (0, 0, size.Width, size.Height);
+        }
+
+        public virtual ISkiaSurface LockSurface()
+        {
+            return Handler.LockSurface();
         }
 
         /// <summary>

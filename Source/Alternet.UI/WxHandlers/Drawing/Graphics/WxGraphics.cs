@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a drawing surface managed by WxWidgets library.
     /// </summary>
-    public partial class WxGraphics : Graphics, IWxGraphics
+    internal partial class WxGraphics : Graphics, IWxGraphics
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;
@@ -88,8 +88,7 @@ namespace Alternet.Drawing
             get => dc;
         }
 
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(
+        public SizeD GetTextExtent(
             string text,
             Font font,
             out Coord? descent,
@@ -122,18 +121,34 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawRotatedTextI(
+        public override void DrawRotatedText(
             string text,
-            PointI location,
+            PointD location,
             Font font,
             Color foreColor,
             Color backColor,
-            Coord angle)
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
             DebugColorAssert(foreColor);
-            dc.DrawRotatedTextI(
+
+            if(unit == GraphicsUnit.Pixel)
+            {
+                dc.DrawRotatedTextI(
+                    text,
+                    location.ToPoint(),
+                    (UI.Native.Font)font.Handler,
+                    foreColor,
+                    backColor,
+                    angle);
+                return;
+            }
+
+            ToDip(ref location, unit);
+
+            dc.DrawRotatedText(
                 text,
                 location,
                 (UI.Native.Font)font.Handler,
@@ -143,39 +158,85 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool BlitI(
-            PointI destPt,
-            SizeI sz,
+        public override bool Blit(
+            PointD destPt,
+            SizeD sz,
             Graphics source,
-            PointI srcPt,
+            PointD srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null)
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
-            srcPtMask ??= PointI.MinusOne;
-            return dc.BlitI(
+            var srcPtMaskValue = srcPtMask ?? PointI.MinusOne;
+
+            if (unit == GraphicsUnit.Pixel)
+            {
+                var result = dc.BlitI(
+                            destPt.ToPoint(),
+                            sz.ToSize(),
+                            (UI.Native.DrawingContext)source.NativeObject,
+                            srcPt.ToPoint(),
+                            (int)rop,
+                            useMask,
+                            srcPtMaskValue.ToPoint());
+                return result;
+            }
+
+            ToDip(ref destPt, unit);
+            ToDip(ref sz, unit);
+            ToDip(ref srcPt, unit);
+
+            if (srcPtMaskValue != PointI.MinusOne)
+                ToDip(ref srcPtMaskValue, unit);
+
+            return dc.Blit(
                         destPt,
                         sz,
                         (UI.Native.DrawingContext)source.NativeObject,
                         srcPt,
                         (int)rop,
                         useMask,
-                        srcPtMask.Value);
+                        srcPtMaskValue);
         }
 
         /// <inheritdoc/>
-        public override bool StretchBlitI(
-            PointI dstPt,
-            SizeI dstSize,
+        public override bool StretchBlit(
+            PointD dstPt,
+            SizeD dstSize,
             Graphics source,
-            PointI srcPt,
-            SizeI srcSize,
+            PointD srcPt,
+            SizeD srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null)
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
-            srcPtMask ??= PointI.MinusOne;
-            return dc.StretchBlitI(
+            var srcPtMaskValue = srcPtMask ?? PointI.MinusOne;
+
+            if (unit == GraphicsUnit.Pixel)
+            {
+                var result = dc.StretchBlitI(
+                    dstPt.ToPoint(),
+                    dstSize.ToSize(),
+                    (UI.Native.DrawingContext)source.NativeObject,
+                    srcPt.ToPoint(),
+                    srcSize.ToSize(),
+                    (int)rop,
+                    useMask,
+                    srcPtMaskValue.ToPoint());
+                return result;
+            }
+
+            ToDip(ref dstPt, unit);
+            ToDip(ref dstSize, unit);
+            ToDip(ref srcPt, unit);
+            ToDip(ref srcSize, unit);
+
+            if (srcPtMaskValue != PointI.MinusOne)
+                ToDip(ref srcPtMaskValue, unit);
+
+            return dc.StretchBlit(
                 dstPt,
                 dstSize,
                 (UI.Native.DrawingContext)source.NativeObject,
@@ -183,7 +244,7 @@ namespace Alternet.Drawing
                 srcSize,
                 (int)rop,
                 useMask,
-                srcPtMask.Value);
+                srcPtMaskValue);
         }
 
         /// <inheritdoc/>
@@ -288,13 +349,6 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             dc.FillRectangle((UI.Native.Brush)brush.Handler, rectangle);
-        }
-
-        /// <inheritdoc/>
-        public override void FillRectangleI(Brush brush, RectI rectangle)
-        {
-            DebugBrushAssert(brush);
-            dc.FillRectangleI((UI.Native.Brush)brush.Handler, rectangle);
         }
 
         /// <inheritdoc/>
@@ -489,43 +543,23 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawImage(Image image, PointD origin, bool useMask = false)
+        public override void DrawImage(Image image, PointD origin)
         {
             DebugImageAssert(image);
             dc.DrawImageAtPoint(
                 (UI.Native.Image)image.Handler,
                 origin,
-                useMask);
+                false);
         }
 
         /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, bool useMask = false)
+        public override void DrawImage(Image image, RectD destinationRect)
         {
             DebugImageAssert(image);
             dc.DrawImageAtRect(
                 (UI.Native.Image)image.Handler,
                 destinationRect,
-                useMask);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
-        {
-            DebugImageAssert(image);
-            dc.DrawImagePortionAtRect(
-                (UI.Native.Image)image.Handler,
-                destinationRect,
-                sourceRect);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
-        {
-            DebugImageAssert(image);
-            dc.DrawImagePortionAtPixelRect(
-                (UI.Native.Image)image.Handler,
-                destinationRect,
-                sourceRect);
+                false);
         }
 
         /// <inheritdoc/>
@@ -562,26 +596,31 @@ namespace Alternet.Drawing
             RectD sourceRect,
             GraphicsUnit unit)
         {
-            if(unit != GraphicsUnit.Pixel)
+            if(unit == GraphicsUnit.Pixel)
             {
-                var dpi = GetDPI();
-                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
-                destinationRect = GraphicsUnitConverter.ConvertRect(
-                    unit,
-                    GraphicsUnit.Pixel,
-                    dpi,
-                    destinationRect,
-                    graphicsType);
-                sourceRect = GraphicsUnitConverter.ConvertRect(
-                    unit,
-                    GraphicsUnit.Pixel,
-                    dpi,
-                    sourceRect,
-                    graphicsType);
+                dc.DrawImagePortionAtPixelRect(
+                    (UI.Native.Image)image.Handler,
+                    destinationRect.ToRect(),
+                    sourceRect.ToRect());
+                return;
             }
 
-            DrawImageI(image, destinationRect.ToRect(), sourceRect.ToRect());
+            ToDip(ref destinationRect, unit);
+            ToDip(ref sourceRect, unit);
+
+            DrawImage(image, destinationRect, sourceRect);
         }
+
+        /// <inheritdoc/>
+        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
+        {
+            DebugImageAssert(image);
+            dc.DrawImagePortionAtRect(
+                (UI.Native.Image)image.Handler,
+                destinationRect,
+                sourceRect);
+        }
+
 
         /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, RectD bounds)
@@ -604,12 +643,6 @@ namespace Alternet.Drawing
                 (UI.Native.Font)font.Handler,
                 (UI.Native.Brush)brush.Handler);
         }
-
-        /*/// <inheritdoc/>
-        public override void Push()
-        {
-            dc.Push();
-        }*/
 
         /// <inheritdoc/>
         public override void DrawText(
@@ -656,16 +689,10 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetDPI()
+        public override SizeI GetDPI()
         {
             return dc.GetDpi();
         }
-
-        /*/// <inheritdoc/>
-        public override void Pop()
-        {
-            dc.Pop();
-        }*/
 
         /// <inheritdoc/>
         public override void DestroyClippingRegion()
@@ -692,6 +719,18 @@ namespace Alternet.Drawing
             if (dispose)
                 dc.Dispose();
             dc = null!;
+        }
+
+        public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
+        {
+            if (unit == GraphicsUnit.Pixel)
+            {
+                dc.FillRectangleI((UI.Native.Brush)brush.Handler, rectangle.ToRect());
+                return;
+            }
+
+            ToDip(ref rectangle, unit);
+            FillRectangle(brush, rectangle);
         }
     }
 }

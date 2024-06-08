@@ -87,9 +87,9 @@ namespace ControlsSample
 
                     var dc = Graphics.FromScreen();
 
-                    dc.FillRectangleI(Color.White.AsBrush, (rect.Location, (500, 400)));
+                    dc.FillRectangle(Color.White.AsBrush, (rect.Location, (500, 400)));
 
-                    dc.DrawRotatedTextI(
+                    dc.DrawRotatedText(
                         $"Display {index}",
                         rect.Location + (50, 250),
                         (Font ?? Control.DefaultFont).Scaled(2.7),
@@ -120,28 +120,28 @@ namespace ControlsSample
             args2.DestRect = (170, 170, 250, 160);
             e.Graphics.DrawImageSliced(args2);
 
-            e.Graphics.DrawRotatedTextI(
+            e.Graphics.DrawRotatedText(
                 "Hello",
                 (190, 250),
                 (Font ?? Control.DefaultFont).Scaled(2.7),
                 Color.Red,
                 Color.Empty,
-                40);
+                40, GraphicsUnit.Pixel);
 
-            e.Graphics.BlitI(
+            e.Graphics.Blit(
                 (450, 200),
                 args2.DestRect.Size,
                 e.Graphics,
                 args2.DestRect.Location,
-                RasterOperationMode.Copy);
+                RasterOperationMode.Copy, false, null, GraphicsUnit.Pixel);
 
-            e.Graphics.StretchBlitI(
+            e.Graphics.StretchBlit(
                 (450, 400),
                 args2.DestRect.Size * 2,
                 e.Graphics,
                 args2.DestRect.Location,
                 args2.DestRect.Size,
-                RasterOperationMode.Copy);
+                RasterOperationMode.Copy, false, null, GraphicsUnit.Pixel);
         }
     }
 }

@@ -65,7 +65,15 @@ namespace Alternet.Drawing
             }
         }
 
-        public override bool BlitI(PointI destPt, SizeI sz, Graphics source, PointI srcPt, RasterOperationMode rop = RasterOperationMode.Copy, bool useMask = false, PointI? srcPtMask = null)
+        public override bool Blit(
+            PointD destPt,
+            SizeD sz,
+            Graphics source,
+            PointD srcPt,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }
@@ -105,12 +113,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawImage(Image image, PointD origin, bool useMask = false)
+        public override void DrawImage(Image image, PointD origin)
         {
             throw new NotImplementedException();
         }
 
-        public override void DrawImage(Image image, RectD destinationRect, bool useMask = false)
+        public override void DrawImage(Image image, RectD destinationRect)
         {
             throw new NotImplementedException();
         }
@@ -121,11 +129,6 @@ namespace Alternet.Drawing
         }
 
         public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect, GraphicsUnit unit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
         {
             throw new NotImplementedException();
         }
@@ -175,7 +178,14 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void DrawRotatedTextI(string text, PointI location, Font font, Color foreColor, Color backColor, Coord angle)
+        public override void DrawRotatedText(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }
@@ -235,7 +245,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override void FillRectangleI(Brush brush, RectI rectangle)
+        public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
         {
             throw new NotImplementedException();
         }
@@ -260,17 +270,12 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override SizeD GetDPI()
+        public override SizeI GetDPI()
         {
             throw new NotImplementedException();
         }
 
         public override Color GetPixel(PointD point)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override SizeD GetTextExtent(string text, Font font, out Coord? descent, out Coord? externalLeading, IControl? control = null)
         {
             throw new NotImplementedException();
         }
@@ -330,7 +335,16 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
-        public override bool StretchBlitI(PointI dstPt, SizeI dstSize, Graphics source, PointI srcPt, SizeI srcSize, RasterOperationMode rop = RasterOperationMode.Copy, bool useMask = false, PointI? srcPtMask = null)
+        public override bool StretchBlit(
+            PointD dstPt,
+            SizeD dstSize,
+            Graphics source,
+            PointD srcPt,
+            SizeD srcSize,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }

@@ -21,6 +21,17 @@ ALTERNET_UI_API Image* Image_Create_()
     #endif
 }
 
+ALTERNET_UI_API c_bool Image_GetHasMask_(Image* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetHasMask();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API double Image_GetScaleFactor_(Image* obj)
 {
     #if !defined(__WXMSW__)
@@ -159,6 +170,28 @@ ALTERNET_UI_API int Image_GetDepth_(Image* obj)
     return MarshalExceptions<int>([&](){
     #endif
         return obj->GetDepth();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int Image_GetStaticOption_(int objectId, int propId)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return Image::GetStaticOption(objectId, propId);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Image_Log_()
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Image::Log();
     #if !defined(__WXMSW__)
     });
     #endif
@@ -401,6 +434,39 @@ ALTERNET_UI_API int Image_GetDefaultBitmapType_()
     return MarshalExceptions<int>([&](){
     #endif
         return Image::GetDefaultBitmapType();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* Image_LockBits_(Image* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->LockBits();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int Image_GetStride_(Image* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetStride();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Image_UnlockBits_(Image* obj)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->UnlockBits();
     #if !defined(__WXMSW__)
     });
     #endif

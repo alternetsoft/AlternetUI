@@ -75,10 +75,6 @@ MainMenu* GetMenu();
 void SetMenu(MainMenu* value);
 
 
-Toolbar* GetToolbar();
-void SetToolbar(Toolbar* value);
-
-
 void* GetWxStatusBar();
 void SetWxStatusBar(void* value);
 

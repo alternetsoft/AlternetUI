@@ -22,50 +22,46 @@ namespace Alternet.Drawing
 
         object NativeObject { get; }
 
-        void DrawRotatedTextI(
+        void DrawRotatedText(
             string text,
-            PointI location,
+            PointD location,
             Font font,
             Color foreColor,
             Color backColor,
-            double angle);
-
-        SizeD GetTextExtent(
-            string text,
-            Font font,
-            out double? descent,
-            out double? externalLeading,
-            IControl? control = null);
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
         SizeD GetTextExtent(
             string text,
             Font font,
             IControl? control);
 
-        bool BlitI(
-            PointI destPt,
-            SizeI sz,
+        bool Blit(
+            PointD destPt,
+            SizeD sz,
             Graphics source,
-            PointI srcPt,
+            PointD srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null);
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
-        bool StretchBlitI(
-            PointI dstPt,
-            SizeI dstSize,
+        bool StretchBlit(
+            PointD dstPt,
+            SizeD dstSize,
             Graphics source,
-            PointI srcPt,
-            SizeI srcSize,
+            PointD srcPt,
+            SizeD srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null);
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
         void RoundedRectangle(
             Pen pen,
             Brush brush,
             RectD rectangle,
-            double cornerRadius);
+            Coord cornerRadius);
 
         SizeD GetTextExtent(string text, Font font);
 
@@ -79,40 +75,38 @@ namespace Alternet.Drawing
             Pen pen,
             Brush brush,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
-        void Circle(Pen pen, Brush brush, PointD center, double radius);
+        void Circle(Pen pen, Brush brush, PointD center, Coord radius);
 
         void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode);
 
         void FillRectangle(Brush brush, RectD rectangle);
 
-        void FillRectangleI(Brush brush, RectI rectangle);
-
         void DrawArc(
             Pen pen,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
-        void DrawPoint(Pen pen, double x, double y);
+        void DrawPoint(Pen pen, Coord x, Coord y);
 
         void FillPie(
             Brush brush,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
         void DrawPie(
             Pen pen,
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
         void DrawBezier(
             Pen pen,
@@ -123,13 +117,13 @@ namespace Alternet.Drawing
 
         void DrawBeziers(Pen pen, PointD[] points);
 
-        void DrawCircle(Pen pen, PointD center, double radius);
+        void DrawCircle(Pen pen, PointD center, Coord radius);
 
-        void FillCircle(Brush brush, PointD center, double radius);
+        void FillCircle(Brush brush, PointD center, Coord radius);
 
-        void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius);
+        void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius);
 
-        void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius);
+        void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius);
 
         void DrawPolygon(Pen pen, PointD[] points);
 
@@ -154,25 +148,23 @@ namespace Alternet.Drawing
 
         void DrawLine(Pen pen, PointD a, PointD b);
 
-        void DrawLine(Pen pen, double x1, double y1, double x2, double y2);
+        void DrawLine(Pen pen, Coord x1, Coord y1, Coord x2, Coord y2);
 
         void DrawEllipse(Pen pen, RectD bounds);
 
         void DrawImageUnscaled(Image image, PointD origin);
 
-        void DrawImage(Image image, PointD origin, bool useMask = false);
+        void DrawImage(Image image, PointD origin);
 
-        void DrawImage(Image image, RectD destinationRect, bool useMask = false);
+        void DrawImage(Image image, RectD destinationRect);
 
         void DrawImage(Image image, RectD destinationRect, RectD sourceRect);
 
-        void DrawImageI(Image image, RectI destinationRect, RectI sourceRect);
-
         void SetPixel(PointD point, Pen pen);
 
-        void SetPixel(double x, double y, Pen pen);
+        void SetPixel(Coord x, Coord y, Pen pen);
 
-        void SetPixel(double x, double y, Color color);
+        void SetPixel(Coord x, Coord y, Color color);
 
         Color GetPixel(PointD point);
 
@@ -217,7 +209,7 @@ namespace Alternet.Drawing
             GenericAlignment alignment = GenericAlignment.TopLeft,
             int indexAccel = -1);
 
-        SizeD GetDPI();
+        SizeI GetDPI();
 
         void DestroyClippingRegion();
 

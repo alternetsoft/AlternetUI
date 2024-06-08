@@ -10,7 +10,7 @@ namespace PaintSample
     {
         private State? state;
 
-        protected PenLikeTool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService) :
+        protected PenLikeTool(Func<PaintSampleDocument> getDocument, ISelectedColors selectedColors, UndoService undoService) :
             base(getDocument, selectedColors, undoService)
         {
         }

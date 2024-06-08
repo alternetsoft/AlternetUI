@@ -211,10 +211,10 @@ namespace Alternet.UI
             CopyRect(srcNine.CenterLeft, dstNine.CenterLeft);
             CopyRect(srcNine.CenterRight, dstNine.CenterRight);
 
-            canvas.DrawImageI(e.Image, dstNine.TopLeft, srcNine.TopLeft);
-            canvas.DrawImageI(e.Image, dstNine.TopRight, srcNine.TopRight);
-            canvas.DrawImageI(e.Image, dstNine.BottomLeft, srcNine.BottomLeft);
-            canvas.DrawImageI(e.Image, dstNine.BottomRight, srcNine.BottomRight);
+            canvas.DrawImage(e.Image, dstNine.TopLeft, srcNine.TopLeft, GraphicsUnit.Pixel);
+            canvas.DrawImage(e.Image, dstNine.TopRight, srcNine.TopRight, GraphicsUnit.Pixel);
+            canvas.DrawImage(e.Image, dstNine.BottomLeft, srcNine.BottomLeft, GraphicsUnit.Pixel);
+            canvas.DrawImage(e.Image, dstNine.BottomRight, srcNine.BottomRight, GraphicsUnit.Pixel);
 
             void CopyRect(RectI srcRect, RectI dstRect)
             {
@@ -222,11 +222,11 @@ namespace Alternet.UI
                 {
                     var subImage = e.Image.GetSubBitmap(srcRect);
                     var brush = subImage.AsBrush;
-                    canvas.FillRectangleI(brush, dstRect);
+                    canvas.FillRectangle(brush, dstRect, GraphicsUnit.Pixel);
                 }
                 else
                 {
-                    canvas.DrawImageI(e.Image, dstRect, srcRect);
+                    canvas.DrawImage(e.Image, dstRect, srcRect, GraphicsUnit.Pixel);
                 }
             }
         }

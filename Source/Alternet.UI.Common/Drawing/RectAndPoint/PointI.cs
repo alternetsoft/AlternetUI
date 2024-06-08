@@ -14,12 +14,8 @@ namespace Alternet.Drawing
     /// Represents an ordered pair of x and y coordinates that define a point
     /// in a two-dimensional plane.
     /// </summary>
-    /*
-     Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
-     Also do not change order of the fields.
-    */
     [Serializable]
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
     public struct PointI : IEquatable<PointI>
     {
         /// <summary>
@@ -37,8 +33,9 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly PointI One = new(1, 1);
 
-        private int x; // Do not rename (binary serialization)
-        private int y; // Do not rename (binary serialization)
+        [FieldOffset(0)] private int x; // Do not rename (binary serialization)
+        [FieldOffset(4)] private int y; // Do not rename (binary serialization)
+        [FieldOffset(0)] private SKPointI point;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.PointI'/>
@@ -49,6 +46,16 @@ namespace Alternet.Drawing
         {
             this.x = x;
             this.y = y;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='Drawing.PointI'/>
+        /// class with the specified coordinates.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public PointI(SKPointI point)
+        {
+            this.point = point;
         }
 
         /// <summary>
@@ -75,6 +82,13 @@ namespace Alternet.Drawing
         {
             x = MathUtils.LowInt16(dw);
             y = MathUtils.HighInt16(dw);
+        }
+
+        [Browsable(false)]
+        public SKPointI SkiaPoint
+        {
+            readonly get => point;
+            set => point = value;
         }
 
         /// <summary>
@@ -115,6 +129,20 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Point(PointI p) => new(p.X, p.Y);
+
+        /// <summary>
+        /// Creates a <see cref='SKPointI'/> with the coordinates of the
+        /// specified <see cref='PointI'/>
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator SKPointI(PointI p) => p.SkiaPoint;
+
+        /// <summary>
+        /// Creates a <see cref='PointI'/> with the coordinates of the
+        /// specified <see cref='SKPointI'/>
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator PointI(SKPointI p) => new(p);
 
         /// <summary>
         /// Creates a <see cref='PointI'/> with the coordinates of the
@@ -251,6 +279,11 @@ namespace Alternet.Drawing
                 x += dx;
                 y += dy;
             }
+        }
+
+        public readonly PointD PixelToDip(Coord scaleFactor)
+        {
+            return GraphicsFactory.PixelToDip(this, scaleFactor);
         }
 
         /// <summary>

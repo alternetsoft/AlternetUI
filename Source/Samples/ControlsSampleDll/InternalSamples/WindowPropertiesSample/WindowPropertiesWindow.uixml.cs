@@ -35,6 +35,13 @@ namespace WindowPropertiesSample
 
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
+
+            SystemColorsChanged += WindowPropertiesWindow_SystemColorsChanged;
+        }
+
+        private void WindowPropertiesWindow_SystemColorsChanged(object? sender, EventArgs e)
+        {
+            App.Log("System Colors Changed");
         }
 
         private void Page1Button_Click(object? sender, EventArgs e)
@@ -157,6 +164,7 @@ namespace WindowPropertiesSample
             testWindow.StateChanged += TestWindow_StateChanged;
             testWindow.SizeChanged += TestWindow_SizeChanged;
             testWindow.LocationChanged += TestWindow_LocationChanged;
+            testWindow.DpiChanged += TestWindow_DpiChanged;
 
             testWindow.Disposed += (s, e) =>
             {
@@ -179,6 +187,11 @@ namespace WindowPropertiesSample
             };
 
             listBox.BindApplicationLog();
+        }
+
+        private void TestWindow_DpiChanged(object? sender, DpiChangedEventArgs e)
+        {
+            App.Log($"DpiChanged {e}");
         }
 
         private void OkButton_Click(object? sender, EventArgs e)
@@ -315,6 +328,7 @@ namespace WindowPropertiesSample
             testWindow.StateChanged -= TestWindow_StateChanged;
             testWindow.SizeChanged -= TestWindow_SizeChanged;
             testWindow.LocationChanged -= TestWindow_LocationChanged;
+            testWindow.DpiChanged -= TestWindow_DpiChanged;
 
             testWindow = null;
 

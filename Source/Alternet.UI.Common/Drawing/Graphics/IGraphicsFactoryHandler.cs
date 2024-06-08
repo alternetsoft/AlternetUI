@@ -69,6 +69,8 @@ namespace Alternet.Drawing
 
         IGraphicsPathHandler CreateGraphicsPathHandler();
 
+        ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind);
+
         IGraphicsPathHandler CreateGraphicsPathHandler(Graphics drawingContext);
 
         Graphics CreateGraphicsFromImage(Image image);

@@ -31,6 +31,35 @@ namespace Alternet.UI
             DeveloperToolsPanel.ShowDeveloperTools();
         }
 
+        public static byte? AskLightness(byte defaultValue = 100)
+        {
+            return AskByte("Lightness", 100, 200);
+        }
+
+        public static byte? AskByte(string title, byte defaultValue = 0, byte maxValue = 255)
+        {
+            var result = DialogFactory.GetNumberFromUser(
+                null,
+                $"{title} (0..{maxValue})",
+                null,
+                defaultValue,
+                0,
+                maxValue);
+            if (result is null)
+                return null;
+            return (byte)result.Value;
+        }
+
+        public static byte? AskTransparency(byte defaultValue)
+        {
+            return AskByte("Transparency", defaultValue);
+        }
+
+        public static byte? AskBrightness(byte defaultValue = 255)
+        {
+            return AskByte("Brightness", defaultValue);
+        }
+
         /// <summary>
         /// Shows a dialog asking the user for numeric input.
         /// </summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,19 @@ namespace Alternet.UI.Native
 {
     internal partial class Image : Alternet.Drawing.IImageHandler
     {
+        public int Width => PixelWidth;
+
+        public int Height => PixelHeight;
+
+        public Alternet.Drawing.ISkiaSurface LockSurface()
+        {
+            Debug.Assert(IsOk, "Image.IsOk == true is required.");
+            Debug.Assert(HasAlpha, "Image.HasAlpha == true is required.");
+            Debug.Assert(!HasMask, "Image.HasMask == false is required.");
+
+            return Alternet.Drawing.GraphicsFactory.CreateSkiaBitmapData(this);
+        }
+
         public bool SaveToStream(Stream stream, Alternet.Drawing.ImageFormat format, int quality)
         {
             var outputStream = new UI.Native.OutputStream(stream);
@@ -39,16 +53,6 @@ namespace Alternet.UI.Native
             return SaveToFile(name);
         }
 
-        bool Alternet.Drawing.IImageHandler.SaveToFile(string name, int quality)
-        {
-            return SaveToFile(name);
-        }
-
-        bool Alternet.Drawing.IImageHandler.SaveToFile(string name, BitmapType type, int quality)
-        {
-            return SaveFile(name, (int)type);
-        }
-
         public bool SaveToStream(Stream stream, BitmapType type, int quality)
         {
             using var outputStream = new UI.Native.OutputStream(stream);
@@ -58,11 +62,6 @@ namespace Alternet.UI.Native
         public Alternet.Drawing.GenericImage ToGenericImage()
         {
             return Alternet.Drawing.WxGenericImageHandler.Create(ConvertToGenericImage());
-        }
-
-        Alternet.Drawing.IImageHandler Alternet.Drawing.IImageHandler.ConvertToDisabled(byte brightness)
-        {
-            return ConvertToDisabled(brightness);
         }
 
         Alternet.Drawing.IImageHandler Alternet.Drawing.IImageHandler.GetSubBitmap(Alternet.Drawing.RectI rect)

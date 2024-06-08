@@ -23,6 +23,16 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool HasMask
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetHasMask_(NativePointer);
+            }
+            
+        }
+        
         public double ScaleFactor
         {
             get
@@ -141,6 +151,16 @@ namespace Alternet.UI.Native
                 return NativeApi.Image_GetDepth_(NativePointer);
             }
             
+        }
+        
+        public static int GetStaticOption(int objectId, int propId)
+        {
+            return NativeApi.Image_GetStaticOption_(objectId, propId);
+        }
+        
+        public static void Log()
+        {
+            NativeApi.Image_Log_();
         }
         
         public bool InitializeFromDipSize(int width, int height, double scale, int depth)
@@ -280,6 +300,24 @@ namespace Alternet.UI.Native
             return NativeApi.Image_GetDefaultBitmapType_();
         }
         
+        public System.IntPtr LockBits()
+        {
+            CheckDisposed();
+            return NativeApi.Image_LockBits_(NativePointer);
+        }
+        
+        public int GetStride()
+        {
+            CheckDisposed();
+            return NativeApi.Image_GetStride_(NativePointer);
+        }
+        
+        public void UnlockBits()
+        {
+            CheckDisposed();
+            NativeApi.Image_UnlockBits_(NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -288,6 +326,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Image_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Image_GetHasMask_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern double Image_GetScaleFactor_(IntPtr obj);
@@ -327,6 +368,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDepth_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Image_GetStaticOption_(int objectId, int propId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_Log_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, double scale, int depth);
@@ -393,6 +440,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDefaultBitmapType_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Image_LockBits_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Image_GetStride_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_UnlockBits_(IntPtr obj);
             
         }
     }

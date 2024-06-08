@@ -132,6 +132,7 @@ namespace Alternet::UI
         virtual void OnDestroy(wxWindowDestroyEvent& event);
         virtual void OnIdle(wxIdleEvent& event);
         virtual void OnActivate(wxActivateEvent& event);
+        virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
 
         virtual void OnScrollTop(wxScrollWinEvent& event);
         virtual void OnScrollBottom(wxScrollWinEvent& event);

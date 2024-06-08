@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -241,5 +243,5 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Bitmap(GenericImage image) => new(image);
-    }
+     }
 }

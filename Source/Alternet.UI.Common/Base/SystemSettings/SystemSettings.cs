@@ -14,6 +14,7 @@ namespace Alternet.UI
     public static class SystemSettings
     {
         private static ISystemSettingsHandler? handler;
+        private static bool validColors = false;
 
         public static ISystemSettingsHandler Handler
         {
@@ -176,9 +177,21 @@ namespace Alternet.UI
         /// Gets a standard system color.
         /// </summary>
         /// <param name="index">System color identifier.</param>
-        public static Color GetColor(KnownSystemColor index)
+        public static ColorStruct GetColor(KnownSystemColor index)
         {
-            return Handler.GetColor(index);
+            if (!validColors)
+            {
+                ResetColors();
+                validColors = true;
+            }
+
+            return PlessSystemColors.GetColor(index);
+        }
+
+        public static void ResetColors()
+        {
+            validColors = true;
+            PlessSystemColors.ResetFromPlatform();
         }
 
         public static Font GetFont(SystemSettingsFont font) => SystemFonts.GetFont(font);

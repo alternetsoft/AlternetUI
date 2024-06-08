@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #include "Image.h"
 #include "Api/InputStream.h"
 #include "Api/OutputStream.h"
@@ -6,13 +8,120 @@
 #include "GenericImage.h"
 
 #include <wx/wxprec.h>
-#include <wx/rawbmp.h>
 
 #include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvg.h"
 #include "../../External/WxWidgets/3rdparty/nanosvg/src/nanosvgrast.h"
 
 namespace Alternet::UI
 {
+	int Image::GetStride()
+	{
+		return _stride;
+	}
+
+	bool Image::GetHasMask()
+	{
+		return _bitmap.GetMask() != nullptr;
+	}
+
+	ImagePixelFormat NativePixelFormat;
+	ImagePixelFormat AlphaPixelFormat;
+	ImagePixelFormat GenericImagePixelFormat;
+	bool PixelFormatsInitialized = false;
+
+	static void InitPixelFormats()
+	{
+		if (PixelFormatsInitialized)
+			return;
+		PixelFormatsInitialized = true;
+
+		auto npf = wxNativePixelFormat();
+
+		NativePixelFormat.BitsPerPixel = npf.BitsPerPixel;
+		NativePixelFormat.HasAlpha = (int)npf.HasAlpha;
+		NativePixelFormat.SizePixel = npf.SizePixel;
+		NativePixelFormat.Red = (int)npf.RED;
+		NativePixelFormat.Green = (int)npf.GREEN;
+		NativePixelFormat.Blue = (int)npf.BLUE;
+		NativePixelFormat.Alpha = (int)npf.ALPHA;
+
+		auto apf = wxAlphaPixelFormat();
+
+		AlphaPixelFormat.BitsPerPixel = apf.BitsPerPixel;
+		AlphaPixelFormat.HasAlpha = (int)apf.HasAlpha;
+		AlphaPixelFormat.SizePixel = apf.SizePixel;
+		AlphaPixelFormat.Red = (int)apf.RED;
+		AlphaPixelFormat.Green = (int)apf.GREEN;
+		AlphaPixelFormat.Blue = (int)apf.BLUE;
+		AlphaPixelFormat.Alpha = (int)apf.ALPHA;
+
+		auto gpf = wxImagePixelFormat();
+
+		GenericImagePixelFormat.BitsPerPixel = gpf.BitsPerPixel;
+		GenericImagePixelFormat.HasAlpha = (int)gpf.HasAlpha;
+		GenericImagePixelFormat.SizePixel = gpf.SizePixel;
+		GenericImagePixelFormat.Red = (int)gpf.RED;
+		GenericImagePixelFormat.Green = (int)gpf.GREEN;
+		GenericImagePixelFormat.Blue = (int)gpf.BLUE;
+		GenericImagePixelFormat.Alpha = (int)gpf.ALPHA;
+	}
+
+	int Image::GetStaticOption(int objectId, int propId)
+	{
+		InitPixelFormats();
+
+		int result;
+
+		switch ((ImageStaticObjectId)objectId)
+		{
+			case ImageStaticObjectId_NativePixelFormat:
+				result = NativePixelFormat.GetProperty((ImageStaticPropertyId)propId);
+				break;
+			case ImageStaticObjectId_AlphaPixelFormat:
+				result = AlphaPixelFormat.GetProperty((ImageStaticPropertyId)propId);
+				break;
+			case ImageStaticObjectId_GenericPixelFormat:
+				result = GenericImagePixelFormat.GetProperty((ImageStaticPropertyId)propId);
+				break;
+			default:
+				result = 0;
+				break;
+		}
+
+		return result;
+	}
+
+	void Image::Log()
+	{
+		InitPixelFormats();
+		wxLogMessage("==============");
+		wxLogMessage("wxNativePixelFormat");
+		NativePixelFormat.Log();
+		wxLogMessage("==============");
+		wxLogMessage("wxAlphaPixelFormat");
+		AlphaPixelFormat.Log();
+		wxLogMessage("==============");
+	}
+
+	void* Image::LockBits()
+	{
+		pixelData = new ImageAlphaPixelData(_bitmap);
+		if (!pixelData)
+			return nullptr;
+		_stride = pixelData->GetRowStride();
+		auto pixels = pixelData->GetPixels();
+		return pixels.m_ptr;
+	}
+
+	void Image::UnlockBits()
+	{
+		if (pixelData)
+		{
+			delete pixelData;
+			pixelData = nullptr;
+		}
+	}
+
 	Int32Size Image::GetDipSize()
 	{
 		return _bitmap.GetDIPSize();

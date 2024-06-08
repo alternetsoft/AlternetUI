@@ -344,6 +344,7 @@ namespace Alternet.UI
         /// all <see cref="Button"/> or <see cref="CheckBox"/> child controls.
         /// </remarks>
         public virtual IEnumerable<T> ChildrenOfType<T>()
+            where T: Control
         {
             if (HasChildren)
                 return Children.OfType<T>();
@@ -946,7 +947,7 @@ namespace Alternet.UI
         /// Forces the control to invalidate itself and immediately redraw itself
         /// and any child controls. Calls <see cref="Invalidate()"/> and <see cref="Update"/>.
         /// </summary>
-        public virtual void Refresh()
+        public void Refresh()
         {
             Invalidate();
             Update();
@@ -958,10 +959,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Invalidate()
         {
-            if (Parent != null || this is Window)
-            {
-                Handler.Invalidate();
-            }
+            Handler.Invalidate();
         }
 
         /// <summary>
@@ -969,10 +967,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Update()
         {
-            if (Parent != null || this is Window)
-            {
-                Handler.Update();
-            }
+            Handler.Update();
         }
 
         /// <summary>
@@ -1001,7 +996,10 @@ namespace Alternet.UI
         /// Gets <see cref="Display"/> where this control is shown.
         /// </summary>
         /// <returns></returns>
-        public virtual Display GetDisplay() => display ??= new(this);
+        public virtual Display GetDisplay()
+        {
+            return display ??= new(this);
+        }
 
         /// <summary>
         /// Changes size of the control to fit the size of its content.
@@ -1218,7 +1216,17 @@ namespace Alternet.UI
             MouseDoubleClick?.Invoke(this, e);
         }
 
-        public virtual void RaiseKeyDown(KeyEventArgs e)
+        public void RaiseKeyDown(KeyEventArgs e)
+        {
+            KeyDown?.Invoke(this, e);
+            OnKeyDown(e);
+#if DEBUG
+            if(!e.Handled)
+                KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
+#endif
+        }
+
+        public virtual void BubbleKeyDown(KeyEventArgs e)
         {
             var control = this;
             var form = ParentWindow;
@@ -1227,7 +1235,7 @@ namespace Alternet.UI
                 if (form.KeyPreview)
                 {
                     e.CurrentTarget = form;
-                    form.OnKeyDown(e);
+                    form.RaiseKeyDown(e);
                     if (e.Handled)
                         return;
                 }
@@ -1238,7 +1246,7 @@ namespace Alternet.UI
             while (control is not null && control != form)
             {
                 e.CurrentTarget = control;
-                control.OnKeyDown(e);
+                control.RaiseKeyDown(e);
 
                 if (e.Handled)
                     return;
@@ -1251,14 +1259,14 @@ namespace Alternet.UI
             return Handler.GetHandle();
         }
 
-        public virtual void RaiseKeyUp(KeyEventArgs e)
+        public virtual void BubbleKeyUp(KeyEventArgs e)
         {
             var control = this;
             var form = ParentWindow;
             if (form is not null && form.KeyPreview)
             {
                 e.CurrentTarget = form;
-                form.OnKeyUp(e);
+                form.RaiseKeyUp(e);
                 if (e.Handled)
                     return;
             }
@@ -1268,20 +1276,32 @@ namespace Alternet.UI
             while (control is not null && control != form)
             {
                 e.CurrentTarget = control;
-                control.OnKeyUp(e);
+                control.RaiseKeyUp(e);
                 if (e.Handled)
                     return;
                 control = control.Parent;
             }
         }
 
-        public virtual void RaiseKeyPress(KeyPressEventArgs e)
+        public void RaiseKeyUp(KeyEventArgs e)
+        {
+            KeyUp?.Invoke(this, e);
+            OnKeyUp(e);
+        }
+
+        public void RaiseKeyPress(KeyPressEventArgs e)
+        {
+            KeyPress?.Invoke(this, e);
+            OnKeyPress(e);
+        }
+
+        public virtual void BubbleKeyPress(KeyPressEventArgs e)
         {
             var control = this;
             var form = ParentWindow;
             if (form is not null && form.KeyPreview)
             {
-                form.OnKeyPress(e);
+                form.RaiseKeyPress(e);
                 if (e.Handled)
                     return;
             }
@@ -1290,7 +1310,7 @@ namespace Alternet.UI
 
             while (control is not null && control != form)
             {
-                control.OnKeyPress(e);
+                control.RaiseKeyPress(e);
 
                 if (e.Handled)
                     return;
@@ -1300,35 +1320,108 @@ namespace Alternet.UI
 
         public void RaiseMouseMove(MouseEventArgs e)
         {
+            MouseMove?.Invoke(this, e);
+            if (dragEventArgs is null)
+                return;
+            var mousePos = Mouse.GetPosition(this);
+            var args = new DragStartEventArgs(dragEventMousePos, mousePos, dragEventArgs, e);
+            RaiseDragStart(args);
+            if (args.DragStarted || args.Cancel)
+                dragEventArgs = null;
             OnMouseMove(e);
+        }
+
+        public void BubbleHelpRequested(HelpEventArgs e)
+        {
+            RaiseHelpRequested(e);
+
+            if (!e.Handled)
+                Parent?.BubbleHelpRequested(e);
+        }
+
+        public void RaiseHelpRequested(HelpEventArgs e)
+        {
+            OnHelpRequested(e);
+            HelpRequested?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ParentChanged"/>event and <see cref="OnParentChanged"/> .
+        /// </summary>
+        public void RaiseParentChanged()
+        {
+            Designer?.RaiseParentChanged(this);
+            ParentChanged?.Invoke(this, EventArgs.Empty);
+            OnParentChanged(EventArgs.Empty);
         }
 
         public void RaiseMouseUp(MouseEventArgs e)
         {
+            MouseUp?.Invoke(this, e);
+            dragEventArgs = null;
+
             OnMouseUp(e);
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                OnMouseLeftButtonUp(e);
+                RaiseMouseLeftButtonUp(e);
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
-                OnMouseRightButtonUp(e);
+                RaiseMouseRightButtonUp(e);
             }
         }
 
-        public virtual void RaiseMouseDown(MouseEventArgs e)
+        public void RaiseMouseLeftButtonUp(MouseEventArgs e)
         {
+            IsMouseLeftButtonDown = false;
+            RaiseVisualStateChanged();
+            MouseLeftButtonUp?.Invoke(this, e);
+            OnMouseLeftButtonUp(e);
+        }
+
+        public void RaiseMouseRightButtonUp(MouseEventArgs e)
+        {
+            MouseRightButtonUp?.Invoke(this, e);
+            OnMouseRightButtonUp(e);
+        }
+
+        public void RaiseMouseDown(MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                dragEventArgs = e;
+                dragEventMousePos = Mouse.GetPosition(this);
+            }
+
+            MouseDown?.Invoke(this, e);
+
             OnMouseDown(e);
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                OnMouseLeftButtonDown(e);
+                RaiseMouseLeftButtonDown(e);
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
-                OnMouseRightButtonDown(e);
+                RaiseMouseRightButtonDown(e);
             }
+        }
+
+        public void RaiseMouseLeftButtonDown(MouseEventArgs e)
+        {
+            IsMouseLeftButtonDown = true;
+            RaiseVisualStateChanged();
+            Designer?.RaiseMouseLeftButtonDown(this, e);
+            MouseLeftButtonDown?.Invoke(this, e);
+            OnMouseLeftButtonDown(e);
+        }
+
+        public void RaiseMouseRightButtonDown(MouseEventArgs e)
+        {
+            MouseRightButtonDown?.Invoke(this, e);
+            ShowPopupMenu(ContextMenuStrip);
+            OnMouseRightButtonDown(e);
         }
 
         /// <summary>
@@ -1750,9 +1843,34 @@ namespace Alternet.UI
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
         public virtual void ForEachChild<T>(Action<T> action)
+            where T: Control
         {
-            foreach (var child in ChildrenOfType<T>())
+            if (!HasChildren)
+                return;
+
+            foreach (var child in Children)
+            {
+                if(child is T control)
+                    action(control);
+            }
+        }
+
+        /// <summary>
+        /// Performs some action for the each child of the control.
+        /// </summary>
+        /// <param name="action">Specifies action which will be called for the each child.</param>
+        /// <param name="recursive">Whether to call action for all child controls recursively.</param>
+        public virtual void ForEachChild(Action<Control> action, bool recursive = false)
+        {
+            if (!HasChildren)
+                return;
+
+            foreach (var child in Children)
+            {
                 action(child);
+                if (recursive)
+                    child.ForEachChild(action, true);
+            }
         }
 
         /// <summary>
@@ -2071,6 +2189,16 @@ namespace Alternet.UI
             ReportBoundsChanged();
         }
 
+        public virtual void ResetMeasureCanvas()
+        {
+            SafeDispose(ref measureCanvas);
+        }
+
+        public virtual void ResetDisplay()
+        {
+            SafeDispose(ref display);
+        }
+
         public void RaiseHandlerLocationChanged()
         {
             OnHandlerLocationChanged(EventArgs.Empty);
@@ -2083,20 +2211,39 @@ namespace Alternet.UI
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
+        public void RaiseSystemColorsChanged()
+        {
+            SystemColorsChanged?.Invoke(this, EventArgs.Empty);
+            OnSystemColorsChanged(EventArgs.Empty);
+        }
+
+        public void RaiseQueryContinueDrag(QueryContinueDragEventArgs e)
+        {
+            QueryContinueDrag?.Invoke(this, e);
+            OnQueryContinueDrag(e);
+        }
+
         public void RaiseHandleCreated()
         {
+            if (BackgroundColor is not null)
+                Handler.BackgroundColor = BackgroundColor;
+            if (ForegroundColor is not null)
+                Handler.ForegroundColor = ForegroundColor;
             OnHandleCreated(EventArgs.Empty);
             HandleCreated?.Invoke(this, EventArgs.Empty);
         }
 
         public void RaiseHandleDestroyed()
         {
+            ResetMeasureCanvas();
+            ResetDisplay();
             OnHandleDestroyed(EventArgs.Empty);
             HandleDestroyed?.Invoke(this, EventArgs.Empty);
         }
 
         public void RaiseMouseCaptureLost()
         {
+            IsMouseLeftButtonDown = false;
             OnMouseCaptureLost(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
         }
@@ -2110,12 +2257,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="SizeChanged"/> event.
+        /// Raises the <see cref="SizeChanged"/>, <see cref="Resize"/> events and
+        /// <see cref="OnSizeChanged"/>, <see cref="OnResize"/> methods.
         /// </summary>
         public void RaiseSizeChanged()
         {
             OnSizeChanged(EventArgs.Empty);
             SizeChanged?.Invoke(this, EventArgs.Empty);
+            Resize?.Invoke(this, EventArgs.Empty);
             OnResize(EventArgs.Empty);
         }
 
@@ -2142,6 +2291,7 @@ namespace Alternet.UI
         public void RaiseMouseLeave()
         {
             RaiseIsMouseOverChanged();
+            IsMouseLeftButtonDown = false;
             OnMouseLeave(EventArgs.Empty);
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }

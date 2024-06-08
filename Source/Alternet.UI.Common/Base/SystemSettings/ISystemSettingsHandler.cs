@@ -38,7 +38,7 @@ namespace Alternet.UI
 
         bool HasFeature(SystemSettingsFeature index);
 
-        Color GetColor(KnownSystemColor index);
+        ColorStruct? GetColor(KnownSystemColor index);
 
         int GetMetric(SystemSettingsMetric index, IControl? control);
 

@@ -221,10 +221,10 @@ namespace Alternet.UI
             if (result is not null)
                 return result;
 
-            var (name, size) = FontFamily.GetSampleFontNameAndSize(font);
+            var nameAndSize = FontFactory.GetSampleNameAndSize(font);
 
-            if (FontFamily.IsFamilyValid(name))
-                return new(name, size);
+            if (FontFamily.IsFamilyValid(nameAndSize.Name))
+                return new(nameAndSize);
 
             return new Font(Font.Default);
         }

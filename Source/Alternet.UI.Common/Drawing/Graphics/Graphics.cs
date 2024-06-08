@@ -30,6 +30,30 @@ namespace Alternet.Drawing
         /// </summary>
         public abstract TransformMatrix Transform { get; set; }
 
+        public Coord ScaleFactor
+        {
+            get
+            {
+                return GraphicsFactory.ScaleFactorFromDpi(GetDPI().Width);
+            }
+        }
+
+        public Coord HorizontalScaleFactor
+        {
+            get
+            {
+                return GraphicsFactory.ScaleFactorFromDpi(GetDPI().Width);
+            }
+        }
+
+        public Coord VerrticalScaleFactor
+        {
+            get
+            {
+                return GraphicsFactory.ScaleFactorFromDpi(GetDPI().Height);
+            }
+        }
+
         /// <summary>
         /// Gets or sets clippring region.
         /// </summary>
@@ -49,6 +73,165 @@ namespace Alternet.Drawing
         /// Gets native drawing context.
         /// </summary>
         public abstract object NativeObject { get; }
+
+        /// <summary>
+        /// Checks whether <see cref="Brush"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugBrushAssert(Brush value)
+        {
+            if (value is null)
+                throw new Exception("Brush is null");
+            if (value.IsDisposed)
+                throw new Exception("Brush was disposed");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="SolidBrush"/> parameter is ok.
+        /// </summary>
+        /// <param name="brush">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugSolidBrushAssert(Brush brush)
+        {
+            DebugBrushAssert(brush);
+            if (brush is not SolidBrush)
+            {
+                throw new ArgumentException(
+                    ErrorMessages.Default.OnlySolidBrushInstancesSupported,
+                    nameof(brush));
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Pen"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugPenAssert(Pen value)
+        {
+            if (value is null)
+                throw new Exception("Pen is null");
+            if (value.IsDisposed)
+                throw new Exception("Pen was disposed");
+        }
+
+        /// <summary>
+        /// Checks whether array of <see cref="PointD"/> parameter is ok.
+        /// </summary>
+        /// <param name="points">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugBezierPointsAssert(PointD[] points)
+        {
+            if (points.Length == 0)
+                return;
+
+            if ((points.Length - 1) % 3 != 0)
+            {
+                throw new ArgumentException(
+                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
+                    nameof(points));
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Color"/> parameter is ok.
+        /// </summary>
+        /// <param name="value">Parameter value.</param>
+        /// <param name="paramName">Parameter name.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugColorAssert(Color value, string? paramName = default)
+        {
+            if (value is null)
+                throw new Exception($"{Fn()} is null");
+            if (!value.IsOk)
+                throw new Exception($"{Fn()} is not ok");
+
+            string Fn()
+            {
+                if (paramName is null)
+                    return "Color";
+                else
+                    return $"Color '{paramName}'";
+            }
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Image"/> parameter is ok.
+        /// </summary>
+        /// <param name="image">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugImageAssert(Image image)
+        {
+            if (image is null)
+                throw new Exception("Image is null");
+            if (image.IsDisposed)
+                throw new Exception("Image was disposed");
+            if (image.Width <= 0 || image.Height <= 0)
+                throw new Exception("Image has invalid size");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="string"/> parameter is ok.
+        /// </summary>
+        /// <param name="text">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugTextAssert(string text)
+        {
+            if (text is null)
+                throw new Exception("Text is null");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="Font"/> parameter is ok.
+        /// </summary>
+        /// <param name="font">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugFontAssert(Font font)
+        {
+            if (font is null)
+                throw new Exception("Font is null");
+            if (font.IsDisposed)
+                throw new Exception("Font is disposed");
+        }
+
+        /// <summary>
+        /// Checks whether <see cref="TextFormat"/> parameter is ok.
+        /// </summary>
+        /// <param name="format">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugFormatAssert(TextFormat format)
+        {
+            if (format is null)
+                throw new Exception("Text format is null");
+        }
 
         /// <summary>
         /// Creates a new <see cref="Graphics"/> from the specified
@@ -86,7 +269,7 @@ namespace Alternet.Drawing
         /// the full angle is 360 degrees) with the specified font, background and
         /// foreground colors.
         /// </summary>
-        /// <param name="location">Location used to draw the text. Specified in pixels.</param>
+        /// <param name="location">Location used to draw the text. Specified in dips.</param>
         /// <param name="text">Text to draw.</param>
         /// <param name="angle">Text angle.</param>
         /// <param name="font">Font used to draw the text.</param>
@@ -100,15 +283,16 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Under Windows only TrueType fonts can be drawn by this function.
         /// </remarks>
-        public abstract void DrawRotatedTextI(
+        public abstract void DrawRotatedText(
             string text,
-            PointI location,
+            PointD location,
             Font font,
             Color foreColor,
             Color backColor,
-            Coord angle);
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
-        /// <summary>
+        /*/// <summary>
         /// Gets the dimensions of the string using the specified font.
         /// </summary>
         /// <param name="text">The text string to measure.</param>
@@ -129,7 +313,7 @@ namespace Alternet.Drawing
             Font font,
             out Coord? descent,
             out Coord? externalLeading,
-            IControl? control = null);
+            IControl? control = null);*/
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -201,14 +385,15 @@ namespace Alternet.Drawing
         /// This sequence of operations ensures that the source's transparent area
         /// need not be black, and logical functions are supported.
         /// </remarks>
-        public abstract bool BlitI(
-            PointI destPt,
-            SizeI sz,
+        public abstract bool Blit(
+            PointD destPt,
+            SizeD sz,
             Graphics source,
-            PointI srcPt,
+            PointD srcPt,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null);
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
         /// <summary>
         /// Copies from a source <see cref="Graphics"/> to this graphics
@@ -265,15 +450,16 @@ namespace Alternet.Drawing
         /// This sequence of operations ensures that the source's transparent area
         /// need not be black, and logical functions are supported.
         /// </remarks>
-        public abstract bool StretchBlitI(
-            PointI dstPt,
-            SizeI dstSize,
+        public abstract bool StretchBlit(
+            PointD dstPt,
+            SizeD dstSize,
             Graphics source,
-            PointI srcPt,
-            SizeI srcSize,
+            PointD srcPt,
+            SizeD srcSize,
             RasterOperationMode rop = RasterOperationMode.Copy,
             bool useMask = false,
-            PointI? srcPtMask = null);
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip);
 
         /// <summary>
         /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.
@@ -396,20 +582,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public abstract void FillRectangle(Brush brush, RectD rectangle);
 
-        /// <summary>
-        /// Fills the interior of a rectangle specified by a <see cref="RectI"/> structure.
-        /// Rectangle is specified in pixels.
-        /// </summary>
-        /// <param name="brush"><see cref="Brush"/> that determines the characteristics
-        /// of the fill.</param>
-        /// <param name="rectangle"><see cref="RectI"/> structure that represents the
-        /// rectangle to fill.</param>
-        /// <remarks>
-        /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
-        /// including the specified upper-left corner and up to the calculated lower and
-        /// bottom edges.
-        /// </remarks>
-        public abstract void FillRectangleI(Brush brush, RectI rectangle);
+        public abstract void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit);
 
         /// <summary>
         /// Draws an arc representing a portion of a circle specified by a center
@@ -734,14 +907,11 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="PointD"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
-        /// <param name="useMask">If useMask is true and the bitmap has a transparency mask,
-        /// the bitmap will be drawn transparently.</param>
-        /// <remarks>
         /// When drawing a mono-bitmap, the current text foreground color will
         /// be used to draw the foreground of the bitmap (all bits set to 1), and
         /// the current text background color to draw the background (all bits set to 0).
         /// </remarks>
-        public abstract void DrawImage(Image image, PointD origin, bool useMask = false);
+        public abstract void DrawImage(Image image, PointD origin);
 
         /// <summary>
         /// Draws an image into the region defined by the specified <see cref="RectD"/>.
@@ -749,14 +919,11 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="destinationRect">The region in which to draw
         /// <paramref name="image"/>.</param>
-        /// <param name="useMask">If useMask is true and the bitmap has a transparency mask,
-        /// the bitmap will be drawn transparently.</param>
-        /// <remarks>
         /// When drawing a mono-bitmap, the current text foreground color will
         /// be used to draw the foreground of the bitmap (all bits set to 1), and
         /// the current text background color to draw the background (all bits set to 0).
         /// </remarks>
-        public abstract void DrawImage(Image image, RectD destinationRect, bool useMask = false);
+        public abstract void DrawImage(Image image, RectD destinationRect);
 
         /// <summary>
         /// Draws the specified portion of the image into the region defined by the specified
@@ -764,33 +931,12 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="destinationRect">The region in which to draw
-        /// <paramref name="image"/>.</param>
+        /// <paramref name="image"/>. Specified in dips (1/96 inch).</param>
         /// <param name="sourceRect">
         /// <see cref="RectD"/> structure that specifies the portion of the
         /// <paramref name="image"/> object to draw.
         /// </param>
-        /// <remarks>
-        /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
-        /// are specified in dips (1/96 inch).
-        /// </remarks>
         public abstract void DrawImage(Image image, RectD destinationRect, RectD sourceRect);
-
-        /// <summary>
-        /// Draws the specified portion of the image into the region defined by the specified
-        /// <see cref="RectI"/>.
-        /// </summary>
-        /// <param name="image"><see cref="Image"/> to draw.</param>
-        /// <param name="destinationRect">The region in which to draw
-        /// <paramref name="image"/>.</param>
-        /// <param name="sourceRect">
-        /// <see cref="RectI"/> structure that specifies the portion of the
-        /// <paramref name="image"/> object to draw.
-        /// </param>
-        /// <remarks>
-        /// Parameters <paramref name="destinationRect"/> and <paramref name="sourceRect"/>
-        /// are specified in pixels.
-        /// </remarks>
-        public abstract void DrawImageI(Image image, RectI destinationRect, RectI sourceRect);
 
         /// <summary>
         /// Sets the color of the specified pixel in this <see cref="Graphics" />.</summary>
@@ -1053,7 +1199,7 @@ namespace Alternet.Drawing
         /// used by this control. If the DPI is not available,
         /// returns Size(0,0) object.
         /// </returns>
-        public abstract SizeD GetDPI();
+        public abstract SizeI GetDPI();
 
         /// <summary>
         /// Destroys the current clipping region so that none of the DC is clipped.
@@ -1092,163 +1238,49 @@ namespace Alternet.Drawing
         /// </returns>
         public abstract RectD GetClippingBox();
 
-        /// <summary>
-        /// Checks whether <see cref="Brush"/> parameter is ok.
-        /// </summary>
-        /// <param name="value">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugBrushAssert(Brush value)
+        public virtual void ToDip(ref PointD point, GraphicsUnit unit)
         {
-            if (value is null)
-                throw new Exception("Brush is null");
-            if (value.IsDisposed)
-                throw new Exception("Brush was disposed");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="SolidBrush"/> parameter is ok.
-        /// </summary>
-        /// <param name="brush">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugSolidBrushAssert(Brush brush)
-        {
-            DebugBrushAssert(brush);
-            if (brush is not SolidBrush)
+            if (unit != GraphicsUnit.Dip)
             {
-                throw new ArgumentException(
-                    ErrorMessages.Default.OnlySolidBrushInstancesSupported,
-                    nameof(brush));
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                point = GraphicsUnitConverter.ConvertPoint(
+                    unit,
+                    GraphicsUnit.Dip,
+                    dpi,
+                    point,
+                    graphicsType);
             }
         }
 
-        /// <summary>
-        /// Checks whether <see cref="Pen"/> parameter is ok.
-        /// </summary>
-        /// <param name="value">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugPenAssert(Pen value)
+        public virtual void ToDip(ref SizeD size, GraphicsUnit unit)
         {
-            if (value is null)
-                throw new Exception("Pen is null");
-            if (value.IsDisposed)
-                throw new Exception("Pen was disposed");
-        }
-
-        /// <summary>
-        /// Checks whether array of <see cref="PointD"/> parameter is ok.
-        /// </summary>
-        /// <param name="points">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugBezierPointsAssert(PointD[] points)
-        {
-            if (points.Length == 0)
-                return;
-
-            if ((points.Length - 1) % 3 != 0)
+            if (unit != GraphicsUnit.Dip)
             {
-                throw new ArgumentException(
-                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
-                    nameof(points));
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                size = GraphicsUnitConverter.ConvertSize(
+                    unit,
+                    GraphicsUnit.Dip,
+                    dpi,
+                    size,
+                    graphicsType);
             }
         }
 
-        /// <summary>
-        /// Checks whether <see cref="Color"/> parameter is ok.
-        /// </summary>
-        /// <param name="value">Parameter value.</param>
-        /// <param name="paramName">Parameter name.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugColorAssert(Color value, string? paramName = default)
+        public virtual void ToDip(ref RectD rect, GraphicsUnit unit)
         {
-            if (value is null)
-                throw new Exception($"{Fn()} is null");
-            if (!value.IsOk)
-                throw new Exception($"{Fn()} is not ok");
-
-            string Fn()
+            if (unit != GraphicsUnit.Dip)
             {
-                if (paramName is null)
-                    return "Color";
-                else
-                    return $"Color '{paramName}'";
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                rect = GraphicsUnitConverter.ConvertRect(
+                    unit,
+                    GraphicsUnit.Dip,
+                    dpi,
+                    rect,
+                    graphicsType);
             }
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="Image"/> parameter is ok.
-        /// </summary>
-        /// <param name="image">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugImageAssert(Image image)
-        {
-            if (image is null)
-                throw new Exception("Image is null");
-            if(image.IsDisposed)
-                throw new Exception("Image was disposed");
-            if (image.Width <= 0 || image.Height <= 0)
-                throw new Exception("Image has invalid size");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="string"/> parameter is ok.
-        /// </summary>
-        /// <param name="text">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugTextAssert(string text)
-        {
-            if (text is null)
-                throw new Exception("Text is null");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="Font"/> parameter is ok.
-        /// </summary>
-        /// <param name="font">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugFontAssert(Font font)
-        {
-            if (font is null)
-                throw new Exception("Font is null");
-            if (font.IsDisposed)
-                throw new Exception("Font is disposed");
-        }
-
-        /// <summary>
-        /// Checks whether <see cref="TextFormat"/> parameter is ok.
-        /// </summary>
-        /// <param name="format">Parameter value.</param>
-        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
-        [Conditional("DEBUG")]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static void DebugFormatAssert(TextFormat format)
-        {
-            if (format is null)
-                throw new Exception("Text format is null");
         }
     }
 }

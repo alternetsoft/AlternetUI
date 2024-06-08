@@ -5,7 +5,7 @@ namespace PaintSample
 {
     public class UndoService
     {
-        private Document? document;
+        private PaintSampleDocument? document;
 
         const int StackSize = 20;
 
@@ -19,7 +19,7 @@ namespace PaintSample
 
         public bool CanRedo => redoStack.Count > 0;
 
-        public Document? Document
+        public PaintSampleDocument? Document
         {
             get => document;
             set

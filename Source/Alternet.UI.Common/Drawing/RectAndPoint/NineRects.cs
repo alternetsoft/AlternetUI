@@ -156,11 +156,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets all 9 rectangles.
         /// </summary>
-        public readonly RectD[] Rects
+        public readonly RectI[] Rects
         {
             get
             {
-                return new RectD[]
+                return new RectI[]
                 {
                         TopLeft, TopCenter, TopRight,
                         CenterLeft, Center, CenterRight,
@@ -273,13 +273,21 @@ namespace Alternet.Drawing
             /// <inheritdoc/>
             protected override void OnPaint(PaintEventArgs e)
             {
+                var scaleFactor = GetPixelScaleFactor();
                 NineRects rects = new(e.ClipRectangle.ToRect(), PatchRect);
-                DrawingUtils.FillRectanglesBorder(e.Graphics, Color.Red.AsBrush, rects.Rects);
-                DrawingUtils.FillRectangleBorder(e.Graphics, Color.Navy.AsBrush, PatchRect);
+                DrawingUtils.FillRectanglesBorder(
+                    e.Graphics,
+                    Color.Red.AsBrush,
+                    GraphicsFactory.PixelToDip(rects.Rects, scaleFactor));
+                DrawingUtils.FillRectangleBorder(
+                    e.Graphics,
+                    Color.Navy.AsBrush,
+                    PatchRect.PixelToDip(scaleFactor));
+                var borderRect = rects.GetRect(SelectedHorz, SelectedVert);
                 DrawingUtils.FillRectangleBorder(
                     e.Graphics,
                     Color.Green.AsBrush,
-                    rects.GetRect(SelectedHorz, SelectedVert));
+                    borderRect.PixelToDip(scaleFactor));
             }
         }
     }

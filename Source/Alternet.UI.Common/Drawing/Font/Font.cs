@@ -445,7 +445,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokeAndFillPaint ??= SkiaGraphics.CreateStrokeAndFillPaint(SkiaFont);
+                strokeAndFillPaint ??= GraphicsFactory.FontToStrokeAndFillPaint(this);
                 return strokeAndFillPaint;
             }
         }
@@ -459,7 +459,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                strokePaint ??= SkiaGraphics.CreateStrokePaint(SkiaFont);
+                strokePaint ??= GraphicsFactory.FontToStrokePaint(this);
                 return strokePaint;
             }
         }
@@ -473,8 +473,16 @@ namespace Alternet.Drawing
         {
             get
             {
-                fillPaint ??= SkiaGraphics.CreateFillPaint(SkiaFont);
+                fillPaint ??= GraphicsFactory.FontToFillPaint(this);
                 return fillPaint;
+            }
+        }
+
+        public virtual SKFontMetrics SkiaMetrics
+        {
+            get
+            {
+                return SkiaFont.Metrics;
             }
         }
 
@@ -485,21 +493,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (skiaFont is not null)
-                    return skiaFont;
-
-                SKFontStyleWeight skiaWeight = (SKFontStyleWeight)Weight;
-                SKFontStyleSlant skiaSlant = IsItalic ?
-                    SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
-
-                var typeFace = SKTypeface.FromFamilyName(
-                    Name,
-                    skiaWeight,
-                    SKFontStyleWidth.Normal,
-                    skiaSlant);
-
-                skiaFont = new(typeFace, (float)(SizeInPixels));
-                return skiaFont;
+                return skiaFont ??= GraphicsFactory.FontToSkiaFont(this);
             }
 
             set
@@ -589,7 +583,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return GetWithStyle(Style | FontStyle.Bold);
+                return WithStyle(Style | FontStyle.Bold);
             }
         }
 
@@ -605,7 +599,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return GetWithStyle(Style | FontStyle.Underline);
+                return WithStyle(Style | FontStyle.Underline);
             }
         }
 
@@ -733,11 +727,24 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref='Font'/> to a <see cref='SKFont'/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKFont(Font font)
         {
             font ??= Font.Default;
-
             return font.SkiaFont;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator FontNameAndSize(Font font)
+        {
+            font ??= Font.Default;
+            return new(font.Name, font.SizeInPoints);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Font(FontNameAndSize font)
+        {
+            return new(font.Name, font.Size);
         }
 
         /// <summary>
@@ -820,7 +827,7 @@ namespace Alternet.Drawing
             var sameNameAndSize = result.Name == name && result.SizeInPoints == sizeInPoints;
 
             if (sameNameAndSize)
-                return result.GetWithStyle(style);
+                return result.WithStyle(style);
             else
                 return Get(name, sizeInPoints, style);
         }
@@ -897,6 +904,24 @@ namespace Alternet.Drawing
             return new(familyName, emSize, style);
         }
 
+        [Obsolete("Use Font.WithStyle")]
+        public Font GetWithStyle(FontStyle style)
+        {
+            return WithStyle(style);
+        }
+
+        /// <summary>
+        /// Returns font with same parameters, but with different name.
+        /// </summary>
+        /// <param name="name">New font name.</param>
+        /// <returns></returns>
+        public virtual Font WithName(string name)
+        {
+            FontInfo info = this;
+            info.Name = name;
+            return new(info);
+        }
+
         /// <summary>
         /// Returns font with same name and size, but with different <see cref="FontStyle"/>.
         /// </summary>
@@ -906,7 +931,7 @@ namespace Alternet.Drawing
         /// This function saves created fonts in the base font and is memory efficient.
         /// creates 
         /// </remarks>
-        public virtual Font GetWithStyle(FontStyle style)
+        public virtual Font WithStyle(FontStyle style)
         {
             if (Style == style)
                 return this;

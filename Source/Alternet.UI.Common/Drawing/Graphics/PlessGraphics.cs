@@ -40,12 +40,20 @@ namespace Alternet.Drawing
             get => AssemblyUtils.Default;
         }
 
-        public override bool BlitI(PointI destPt, SizeI sz, Graphics source, PointI srcPt, RasterOperationMode rop = RasterOperationMode.Copy, bool useMask = false, PointI? srcPtMask = null)
+        public override bool Blit(
+            PointD destPt,
+            SizeD sz,
+            Graphics source,
+            PointD srcPt,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             return false;
         }
 
-        public override void Circle(Pen pen, Brush brush, PointD center, double radius)
+        public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
         }
 
@@ -53,7 +61,7 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void DrawArc(Pen pen, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void DrawArc(Pen pen, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
         }
 
@@ -65,7 +73,7 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void DrawCircle(Pen pen, PointD center, double radius)
+        public override void DrawCircle(Pen pen, PointD center, Coord radius)
         {
         }
 
@@ -73,11 +81,11 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void DrawImage(Image image, PointD origin, bool useMask = false)
+        public override void DrawImage(Image image, PointD origin)
         {
         }
 
-        public override void DrawImage(Image image, RectD destinationRect, bool useMask = false)
+        public override void DrawImage(Image image, RectD destinationRect)
         {
         }
 
@@ -86,10 +94,6 @@ namespace Alternet.Drawing
         }
 
         public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect, GraphicsUnit unit)
-        {
-        }
-
-        public override void DrawImageI(Image image, RectI destinationRect, RectI sourceRect)
         {
         }
 
@@ -110,11 +114,11 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void DrawPie(Pen pen, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void DrawPie(Pen pen, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
         }
 
-        public override void DrawPoint(Pen pen, double x, double y)
+        public override void DrawPoint(Pen pen, Coord x, Coord y)
         {
         }
 
@@ -130,11 +134,18 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void DrawRotatedTextI(string text, PointI location, Font font, Color foreColor, Color backColor, double angle)
+        public override void DrawRotatedText(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            Coord angle,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
         }
 
-        public override void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
+        public override void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius)
         {
         }
 
@@ -154,7 +165,7 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void FillCircle(Brush brush, PointD center, double radius)
+        public override void FillCircle(Brush brush, PointD center, Coord radius)
         {
         }
 
@@ -166,7 +177,7 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void FillPie(Brush brush, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void FillPie(Brush brush, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
         }
 
@@ -178,15 +189,16 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void FillRectangleI(Brush brush, RectI rectangle)
+        public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
         {
+            throw new NotImplementedException();
         }
 
         public override void FillRectangles(Brush brush, RectD[] rects)
         {
         }
 
-        public override void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
+        public override void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
         {
         }
 
@@ -199,21 +211,14 @@ namespace Alternet.Drawing
             return default;
         }
 
-        public override SizeD GetDPI()
+        public override SizeI GetDPI()
         {
-            return default;
+            return 96;
         }
 
         public override Color GetPixel(PointD point)
         {
             return Color.Black;
-        }
-
-        public override SizeD GetTextExtent(string text, Font font, out double? descent, out double? externalLeading, IControl? control = null)
-        {
-            descent = null;
-            externalLeading = null;
-            return default;
         }
 
         public override SizeD GetTextExtent(string text, Font font, IControl? control)
@@ -230,7 +235,7 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void Pie(Pen pen, Brush brush, PointD center, double radius, double startAngle, double sweepAngle)
+        public override void Pie(Pen pen, Brush brush, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
         }
 
@@ -242,7 +247,7 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, double cornerRadius)
+        public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
         {
         }
 
@@ -254,15 +259,24 @@ namespace Alternet.Drawing
         {
         }
 
-        public override void SetPixel(double x, double y, Pen pen)
+        public override void SetPixel(Coord x, Coord y, Pen pen)
         {
         }
 
-        public override void SetPixel(double x, double y, Color color)
+        public override void SetPixel(Coord x, Coord y, Color color)
         {
         }
 
-        public override bool StretchBlitI(PointI dstPt, SizeI dstSize, Graphics source, PointI srcPt, SizeI srcSize, RasterOperationMode rop = RasterOperationMode.Copy, bool useMask = false, PointI? srcPtMask = null)
+        public override bool StretchBlit(
+            PointD dstPt,
+            SizeD dstSize,
+            Graphics source,
+            PointD srcPt,
+            SizeD srcSize,
+            RasterOperationMode rop = RasterOperationMode.Copy,
+            bool useMask = false,
+            PointD? srcPtMask = null,
+            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             return default;
         }

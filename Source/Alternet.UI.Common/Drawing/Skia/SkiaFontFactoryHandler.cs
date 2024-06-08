@@ -12,6 +12,8 @@ namespace Alternet.Drawing
 {
     public class SkiaFontFactoryHandler : DisposableObject, IFontFactoryHandler
     {
+        public static readonly SkiaFontFactoryHandler Default = new();
+
         static SkiaFontFactoryHandler()
         {
         }
@@ -43,7 +45,7 @@ namespace Alternet.Drawing
             return null;
         }
 
-        public virtual string[] GetFontFamiliesNames() => SkiaUtils.GetFontFamiliesNames();
+        public virtual IEnumerable<string> GetFontFamiliesNames() => SkiaUtils.GetFontFamiliesNames();
 
         public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
             => SkiaUtils.GetFontFamilyName(genericFamily);

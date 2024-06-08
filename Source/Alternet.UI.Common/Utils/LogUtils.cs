@@ -426,9 +426,16 @@ namespace Alternet.UI
         /// </summary>
         public static void LogSkiaBitmap()
         {
+            App.LogNameValue("SKImageInfo.PlatformColorType", SKImageInfo.PlatformColorType);
+
+            App.LogNameValue("SKImageInfo.PlatformColorAlphaShift", SKImageInfo.PlatformColorAlphaShift);
+            App.LogNameValue("SKImageInfo.PlatformColorRedShift", SKImageInfo.PlatformColorRedShift);
+            App.LogNameValue("SKImageInfo.PlatformColorGreenShift", SKImageInfo.PlatformColorGreenShift);
+            App.LogNameValue("SKImageInfo.PlatformColorBlueShift", SKImageInfo.PlatformColorBlueShift);
+
             LogSkiaBitmap(new SKBitmap(), "new SKBitmap():");
             LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: true), "new SKBitmap(50, 50, isOpaque: true):");
-            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: false), "new SKBitmap(50, 50, isOpaque: true):");
+            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: false), "new SKBitmap(50, 50, isOpaque: false):");
         }
 
         /// <summary>
@@ -565,6 +572,20 @@ namespace Alternet.UI
             LogUtils.LogToFile(LogUtils.SectionSeparator);
 
             App.Log($"{count} Skia font families logged to file.");
+
+            App.LogSeparator();
+            LogFamily("serif");
+            LogFamily("sans-serif");
+            LogFamily("cursive");
+            LogFamily("fantasy");
+            LogFamily("monospace");
+            App.LogSeparator();
+
+            void LogFamily(string name)
+            {
+                var family = SKFontManager.Default.MatchFamily(name);
+                App.Log($"{name} -> {family?.FamilyName}");
+            }
         }
 
         /// <summary>
@@ -781,6 +802,14 @@ namespace Alternet.UI
             addLogAction("Log SKFont", LogUtils.LogSkiaFont);
             addLogAction("Log SKBitmap", LogUtils.LogSkiaBitmap);
             addLogAction("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
+            addLogAction("Log image bits formats", LogImageBitsFormats);
+        }
+
+        public static void LogImageBitsFormats()
+        {
+            GraphicsFactory.NativeBitsFormat.Log("NativeBitsFormat");
+            GraphicsFactory.AlphaBitsFormat.Log("AlphaBitsFormat");
+            GraphicsFactory.GenericBitsFormat.Log("GenericBitsFormat");
         }
 
         internal static void LogAppDomainTargetFrameworkName()

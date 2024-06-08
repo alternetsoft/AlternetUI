@@ -19,6 +19,94 @@ namespace Alternet.Drawing
             get => GenericImage.PixelStrategy.RgbData;
         }
 
+        public unsafe SKColor[] Pixels
+        {
+            get
+            {
+                if (!IsOk)
+                    return Array.Empty<SKColor>();
+                var pixels = GenericImage.CreatePixels(Width, Height);
+
+                var rgb = UI.Native.GenericImage.GetData(Handle);
+                GenericImage.SetRgbValuesFromPtr(pixels, (RGBValue*)rgb);
+
+                if (HasAlpha)
+                {
+                    var alpha = UI.Native.GenericImage.GetAlphaData(Handle);
+                    GenericImage.SetAlphaValuesFromPtr(pixels, (byte*)alpha);
+                }
+                else
+                {
+                    GenericImage.FillAlphaData(pixels, 255);
+                }
+
+                return pixels;
+            }
+
+            set
+            {
+                if (!IsOk)
+                    return;
+                GenericImage.SeparateAlphaData(value, out var rgb, out var alpha);
+                var alphaPtr = AllocAlphaData(Width, Height, alpha);
+                var dataPtr = AllocData(Width, Height, rgb);
+                UI.Native.GenericImage.SetData(Handle, dataPtr, false);
+                UI.Native.GenericImage.SetAlphaData(Handle, alphaPtr, false);
+            }
+        }
+
+        public RGBValue[] RgbData
+        {
+            get
+            {
+                if (!IsOk)
+                    return Array.Empty<RGBValue>();
+
+                var dataPtr = UI.Native.GenericImage.GetData(Handle);
+                var result = GenericImage.CreateRgbDataFromPtr(Width, Height, dataPtr);
+                return result;
+            }
+
+            set
+            {
+                if (!IsOk)
+                    return;
+                var dataPtr = AllocData(Width, Height, value);
+                UI.Native.GenericImage.SetData(Handle, dataPtr, false);
+            }
+        }
+
+        public byte[] AlphaData
+        {
+            get
+            {
+                if (!IsOk)
+                    return Array.Empty<byte>();
+
+                byte[] result;
+
+                if (!HasAlpha)
+                {
+                    result = GenericImage.CreateAlphaData(Width, Height, 255);
+                    return result;
+                }
+
+                var alphaPtr = UI.Native.GenericImage.GetAlphaData(Handle);
+                result = GenericImage.CreateAlphaDataFromPtr(Width, Height, alphaPtr);
+                return result;
+            }
+
+            set
+            {
+                if (!IsOk)
+                    return;
+                if(!HasAlpha)
+                    InitAlpha();
+                var alphaPtr = AllocAlphaData(Width, Height, value);
+                UI.Native.GenericImage.SetAlphaData(Handle, alphaPtr, false);
+            }
+        }
+
         public int Width => UI.Native.GenericImage.GetWidth(Handle);
 
         public int Height => UI.Native.GenericImage.GetHeight(Handle);
@@ -102,10 +190,9 @@ namespace Alternet.Drawing
         public WxGenericImageHandler(int width, int height, SKColor[] data)
             : base(true)
         {
-            GenericImage.SeparateAlphaData(data, out var rgb, out var alpha);
-            var alphaPtr = AllocAlphaData(width, height, alpha);
-            var dataPtr = AllocData(width, height, rgb);
-            Handle = UI.Native.GenericImage.CreateImageWithAlpha(width, height, dataPtr, alphaPtr, false);
+            Handle = UI.Native.GenericImage.CreateImageWithSize(width, height, false);
+            InitAlpha();
+            Pixels = data;
         }
 
         public WxGenericImageHandler(int width, int height, RGBValue[] data)
@@ -447,7 +534,7 @@ namespace Alternet.Drawing
             var r = GetRed(x, y);
             var g = GetGreen(x, y);
             var b = GetBlue(x, y);
-            var a = (withAlpha && HasAlpha) ? GetAlpha(x, y) : 255;
+            var a = (withAlpha && HasAlpha) ? GetAlpha(x, y) : (byte)255;
             return Color.FromArgb(a, r, g, b);
         }
 

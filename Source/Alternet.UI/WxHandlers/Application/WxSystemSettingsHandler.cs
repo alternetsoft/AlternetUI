@@ -161,10 +161,10 @@ namespace Alternet.UI
                 ?? LangDirection.LeftToRight;
         }
 
-        public Color GetColor(KnownSystemColor index)
+        public ColorStruct? GetColor(KnownSystemColor index)
         {
             SystemSettingsColor systemSettingsColor = WxColorUtils.Convert(index);
-            return UI.Native.WxOtherFactory.SystemSettingsGetColor((int)systemSettingsColor);
+            return (ColorStruct)UI.Native.WxOtherFactory.SystemSettingsGetColor((int)systemSettingsColor);
         }
 
         public int GetMetric(SystemSettingsMetric index, IControl? control)

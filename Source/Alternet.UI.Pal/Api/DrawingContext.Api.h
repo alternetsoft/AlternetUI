@@ -114,6 +114,17 @@ ALTERNET_UI_API void* DrawingContext_GetHandle_(DrawingContext* obj)
     #endif
 }
 
+ALTERNET_UI_API void DrawingContext_DrawRotatedText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Color backColor, double angle)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DrawRotatedText(text, location, font, foreColor, backColor, angle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void DrawingContext_DrawRotatedTextI_(DrawingContext* obj, const char16_t* text, PointI location, Font* font, Color foreColor, Color backColor, double angle)
 {
     #if !defined(__WXMSW__)
@@ -131,6 +142,28 @@ ALTERNET_UI_API Image* DrawingContext_GetAsBitmapI_(DrawingContext* obj, RectI s
     return MarshalExceptions<Image*>([&](){
     #endif
         return obj->GetAsBitmapI(subrect);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool DrawingContext_Blit_(DrawingContext* obj, PointD destPt, SizeD sz, DrawingContext* source, PointD srcPt, int rop, c_bool useMask, PointD srcPtMask)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Blit(destPt, sz, source, srcPt, rop, useMask, srcPtMask);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool DrawingContext_StretchBlit_(DrawingContext* obj, PointD dstPt, SizeD dstSize, DrawingContext* source, PointD srcPt, SizeD srcSize, int rop, c_bool useMask, PointD srcMaskPt)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->StretchBlit(dstPt, dstSize, source, srcPt, srcSize, rop, useMask, srcMaskPt);
     #if !defined(__WXMSW__)
     });
     #endif
@@ -213,10 +246,10 @@ ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_
     #endif
 }
 
-ALTERNET_UI_API SizeD_C DrawingContext_GetDpi_(DrawingContext* obj)
+ALTERNET_UI_API SizeI_C DrawingContext_GetDpi_(DrawingContext* obj)
 {
     #if !defined(__WXMSW__)
-    return MarshalExceptions<SizeD_C>([&](){
+    return MarshalExceptions<SizeI_C>([&](){
     #endif
         return obj->GetDpi();
     #if !defined(__WXMSW__)
@@ -389,23 +422,23 @@ ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brus
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_FillRectangleI_(DrawingContext* obj, Brush* brush, RectI rectangle)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->FillRectangleI(brush, rectangle);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, RectD rectangle)
 {
     #if !defined(__WXMSW__)
     MarshalExceptions<void>([&](){
     #endif
         obj->FillRectangle(brush, rectangle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void DrawingContext_FillRectangleI_(DrawingContext* obj, Brush* brush, RectI rectangle)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->FillRectangleI(brush, rectangle);
     #if !defined(__WXMSW__)
     });
     #endif

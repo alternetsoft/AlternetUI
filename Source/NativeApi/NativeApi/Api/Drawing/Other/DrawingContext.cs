@@ -4,16 +4,32 @@ using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
+
+    using Coord = double;
+
     public class DrawingContext
     {
         public bool IsOk { get; }
         public IntPtr WxWidgetDC { get; }
         public IntPtr GetHandle() => default; 
 
+        public void DrawRotatedText(string text, PointD location, Font font,
+            Color foreColor, Color backColor, Coord angle) {}
         public void DrawRotatedTextI(string text, PointI location, Font font,
-            Color foreColor, Color backColor, double angle) {}
+            Color foreColor, Color backColor, Coord angle)
+        { }
 
         public Image GetAsBitmapI(RectI subrect) => default;
+
+        public bool Blit(PointD destPt, SizeD sz,
+              DrawingContext source, PointD srcPt,
+              int rop /*= wxCOPY RasterOperationMode*/, bool useMask /*= false*/,
+              PointD srcPtMask /*= wxDefaultPosition*/) => default;
+
+        public bool StretchBlit(PointD dstPt, SizeD dstSize,
+                     DrawingContext source, PointD srcPt, SizeD srcSize,
+                     int rop, bool useMask /*= false*/,
+                     PointD srcMaskPt) => default;
 
         public bool BlitI(PointI destPt, SizeI sz,
               DrawingContext source, PointI srcPt,
@@ -39,7 +55,7 @@ namespace NativeApi.Api
         public void DrawText(string text, PointD location, Font font,
             Color foreColor, Color backColor) { }
 
-        public SizeD GetDpi() => default;
+        public SizeI GetDpi() => default;
 
         protected DrawingContext() { }
 
@@ -86,7 +102,7 @@ namespace NativeApi.Api
         public SizeD MeasureText(
             string text,
             Font font,
-            double maximumWidth,
+            Coord maximumWidth,
             TextWrapping textWrapping) => throw new Exception();
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
@@ -94,17 +110,19 @@ namespace NativeApi.Api
         public static DrawingContext FromScreen() => throw new Exception();
 
         public void RoundedRectangle(Pen pen, Brush brush, RectD rectangle,
-            double cornerRadius) { }
+            Coord cornerRadius) { }
         public void Rectangle(Pen pen, Brush brush, RectD rectangle) { }
         public void Ellipse(Pen pen, Brush brush, RectD rectangle) { }
         public void Path(Pen pen, Brush brush, GraphicsPath path) { }
-        public void Pie(Pen pen, Brush brush, PointD center, double radius, double startAngle,
-            double sweepAngle) { }
-        public void Circle(Pen pen, Brush brush, PointD center, double radius) { }
+        public void Pie(Pen pen, Brush brush, PointD center, Coord radius, Coord startAngle,
+            Coord sweepAngle) { }
+        public void Circle(Pen pen, Brush brush, PointD center, Coord radius) { }
         public void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode) { }
 
-        public void FillRectangleI(Brush brush, RectI rectangle) { }
         public void FillRectangle(Brush brush, RectD rectangle) { }
+
+        public void FillRectangleI(Brush brush, RectI rectangle) { }
+
         public void DrawRectangle(Pen pen, RectD rectangle) { }
 
         public void FillEllipse(Brush brush, RectD bounds) { }
@@ -152,30 +170,30 @@ namespace NativeApi.Api
 
         public void DrawLines(Pen pen, PointD[] points) => throw new Exception();
 
-        public void DrawArc(Pen pen, PointD center, double radius, double startAngle,
-            double sweepAngle) => throw new Exception();
+        public void DrawArc(Pen pen, PointD center, Coord radius, Coord startAngle,
+            Coord sweepAngle) => throw new Exception();
 
-        public void FillPie(Brush brush, PointD center, double radius, double startAngle,
-            double sweepAngle) => throw new Exception();
+        public void FillPie(Brush brush, PointD center, Coord radius, Coord startAngle,
+            Coord sweepAngle) => throw new Exception();
         
-        public void DrawPie(Pen pen, PointD center, double radius, double startAngle,
-            double sweepAngle) => throw new Exception();
+        public void DrawPie(Pen pen, PointD center, Coord radius, Coord startAngle,
+            Coord sweepAngle) => throw new Exception();
 
         public void DrawBezier(Pen pen, PointD startPoint, PointD controlPoint1,
             PointD controlPoint2, PointD endPoint) => throw new Exception();
 
         public void DrawBeziers(Pen pen, PointD[] points) => throw new Exception();
 
-        public void DrawPoint(Pen pen, double x, double y) { }
+        public void DrawPoint(Pen pen, Coord x, Coord y) { }
 
-        public void DrawCircle(Pen pen, PointD center, double radius) => throw new Exception();
+        public void DrawCircle(Pen pen, PointD center, Coord radius) => throw new Exception();
 
-        public void FillCircle(Brush brush, PointD center, double radius) => throw new Exception();
+        public void FillCircle(Brush brush, PointD center, Coord radius) => throw new Exception();
 
-        public void DrawRoundedRectangle(Pen pen, RectD rect, double cornerRadius)
+        public void DrawRoundedRectangle(Pen pen, RectD rect, Coord cornerRadius)
             => throw new Exception();
 
-        public void FillRoundedRectangle(Brush brush, RectD rect, double cornerRadius)
+        public void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
             => throw new Exception();
 
         public void DrawPolygon(Pen pen, PointD[] points) => throw new Exception();

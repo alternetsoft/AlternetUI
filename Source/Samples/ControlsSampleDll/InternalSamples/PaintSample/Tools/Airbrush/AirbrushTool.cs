@@ -8,7 +8,7 @@ namespace PaintSample
     {
         private State? state;
 
-        public AirbrushTool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService) :
+        public AirbrushTool(Func<PaintSampleDocument> getDocument, ISelectedColors selectedColors, UndoService undoService) :
             base(getDocument, selectedColors, undoService)
         {
         }
