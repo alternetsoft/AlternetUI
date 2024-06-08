@@ -60,7 +60,7 @@ namespace ControlsSample
 
         private void AddDefaultItems()
         {
-            Add("SkiaSharp Drawing Sample", () => new SkiaDrawingWindow());
+            Add("Test Page", () => new SkiaDrawingWindow());
             Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
             Add("Threading Sample", () => new ThreadingSample.MainWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
@@ -71,6 +71,7 @@ namespace ControlsSample
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
             Add("Drawing Sample", () => new DrawingSample.MainWindow());
             Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
+            Add("SkiaSharp MegaDemo", () => new SkiaSharpExamplesWindow());
             Add("Paint Sample", () => new PaintSample.PaintMainWindow());
             Add("Custom Controls", () => new CustomControlsSample.CustomControlsWindow());
             Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());

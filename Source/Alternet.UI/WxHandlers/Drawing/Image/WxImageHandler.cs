@@ -14,10 +14,24 @@ namespace Alternet.UI.Native
 
         public int Height => PixelHeight;
 
+        public Alternet.Drawing.ImageBitsFormatKind BitsFormat
+        {
+            get
+            {
+                if(Depth != 24 && Depth != 32)
+                    return Alternet.Drawing.ImageBitsFormatKind.Unknown;
+                if (HasMask)
+                    return Alternet.Drawing.ImageBitsFormatKind.Unknown;
+                if (HasAlpha)
+                    return Alternet.Drawing.ImageBitsFormatKind.Alpha;
+                else
+                    return Alternet.Drawing.ImageBitsFormatKind.Native;
+            }
+        }
+
         public Alternet.Drawing.ISkiaSurface LockSurface()
         {
             Debug.Assert(IsOk, "Image.IsOk == true is required.");
-            Debug.Assert(HasAlpha, "Image.HasAlpha == true is required.");
             Debug.Assert(!HasMask, "Image.HasMask == false is required.");
 
             return Alternet.Drawing.GraphicsFactory.CreateSkiaBitmapData(this);

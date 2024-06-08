@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// If result path doesn't exist, an application folder is returned.
         /// </remarks>
         /// <returns></returns>
-        public static string GetAppSubFolder(string subFolder)
+        public static string GetAppSubFolder(string subFolder, bool create = false)
         {
             var appFolder = GetAppFolder();
             var result = Path.Combine(appFolder, subFolder);
@@ -140,9 +140,17 @@ namespace Alternet.UI
 
             if(Directory.Exists(result))
                 return result;
+            else
+            if(create)
+            {
+                Directory.CreateDirectory(result);
+                return result;
+            }
 
             return appFolder;
         }
+
+        public static string GetTempAppSubFolder() => GetAppSubFolder("Temp", true);
 
         /// <summary>
         /// Returns path to the application folder.

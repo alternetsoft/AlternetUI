@@ -615,4 +615,34 @@ namespace Alternet::UI
 	{
 		return ((GenericImage*)handle)->_image.Create(width, height, clear);
 	}
+
+	int GenericImage::GetStride(void* handle)
+	{
+		return ((GenericImage*)handle)->_stride;
+	}
+
+	void* GenericImage::LockBits(void* handle)
+	{
+		if (((GenericImage*)handle)->pixelData)
+			return nullptr;
+
+		 auto pixelData = new ImageGenericPixelData(((GenericImage*)handle)->_image);
+
+		 ((GenericImage*)handle)->pixelData = pixelData;
+
+		if (!pixelData)
+			return nullptr;
+		((GenericImage*)handle)->_stride = pixelData->GetRowStride();
+		auto pixels = pixelData->GetPixels();
+		return pixels.m_pRGB;
+	}
+
+	void GenericImage::UnlockBits(void* handle)
+	{
+		if (((GenericImage*)handle)->pixelData)
+		{
+			delete ((GenericImage*)handle)->pixelData;
+			((GenericImage*)handle)->pixelData = nullptr;
+		}
+	}
 }

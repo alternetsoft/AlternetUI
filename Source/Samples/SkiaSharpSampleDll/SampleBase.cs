@@ -16,7 +16,12 @@ namespace SkiaSharpSample
 
 		public abstract string Title { get; }
 
-		public virtual string Description { get; } = string.Empty;
+        public override string ToString()
+        {
+            return Title;
+        }
+
+        public virtual string Description { get; } = string.Empty;
 
 		public virtual SamplePlatforms SupportedPlatform { get; } = SamplePlatforms.All;
 
@@ -136,7 +141,7 @@ namespace SkiaSharpSample
 				Description.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) != -1;
 		}
 
-		public event EventHandler RefreshRequested;
+		public event EventHandler? RefreshRequested;
 
 		protected void Refresh()
 		{

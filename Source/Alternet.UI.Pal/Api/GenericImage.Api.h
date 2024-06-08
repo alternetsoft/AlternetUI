@@ -186,6 +186,39 @@ ALTERNET_UI_API void GenericImage_SetDataWithSize_(void* handle, void* data, int
     #endif
 }
 
+ALTERNET_UI_API void* GenericImage_LockBits_(void* handle)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::LockBits(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int GenericImage_GetStride_(void* handle)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GenericImage::GetStride(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void GenericImage_UnlockBits_(void* handle)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        GenericImage::UnlockBits(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API Color_C GenericImage_FindFirstUnusedColor_(void* handle, uint8_t startR, uint8_t startG, uint8_t startB)
 {
     #if !defined(__WXMSW__)

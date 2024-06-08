@@ -8,10 +8,12 @@ namespace Alternet.Drawing
 {
     public enum ImageBitsFormatKind
     {
-        Native,
+        Native = 0,
         
-        Alpha,
+        Alpha = 1,
 
-        Generic,
+        Generic = 2,
+
+        Unknown = -1,
     }
 }

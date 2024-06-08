@@ -13,7 +13,35 @@
       <Compile Remove="build\**" />
       <EmbeddedResource Remove="build\**" />
       <None Remove="build\**" />
-    </ItemGroup>
+    </ItemGroup>                 
+
+  <ItemGroup>
+    <None Remove="Media\adobe-dng.dng" />
+    <None Remove="Media\animated-heart.gif" />
+    <None Remove="Media\baboon.png" />
+    <None Remove="Media\baby_tux.webp" />
+    <None Remove="Media\color-wheel.png" />
+    <None Remove="Media\content-font.ttf" />
+    <None Remove="Media\embedded-font.ttf" />
+    <None Remove="Media\logos.svg" />
+    <None Remove="Media\LottieLogo1.json" />
+    <None Remove="Media\nine-patch.png" />
+    <None Remove="Media\opacity.svg" />
+  </ItemGroup>                 
+
+  <ItemGroup>
+    <EmbeddedResource Include="Media\adobe-dng.dng" />
+    <EmbeddedResource Include="Media\animated-heart.gif" />
+    <EmbeddedResource Include="Media\baboon.png" />
+    <EmbeddedResource Include="Media\baby_tux.webp" />
+    <EmbeddedResource Include="Media\color-wheel.png" />
+    <EmbeddedResource Include="Media\content-font.ttf" />
+    <EmbeddedResource Include="Media\embedded-font.ttf" />
+    <EmbeddedResource Include="Media\logos.svg" />
+    <EmbeddedResource Include="Media\LottieLogo1.json" />
+    <EmbeddedResource Include="Media\nine-patch.png" />
+    <EmbeddedResource Include="Media\opacity.svg" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />

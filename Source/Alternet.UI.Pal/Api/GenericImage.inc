@@ -15,6 +15,9 @@ static bool CreateAlphaData(void* handle, int width, int height, void* data, voi
 static void SetAlphaData(void* handle, void* alpha, bool static_data);
 static void SetData(void* handle, void* data, bool static_data);
 static void SetDataWithSize(void* handle, void* data, int new_width, int new_height, bool static_data);
+static void* LockBits(void* handle);
+static int GetStride(void* handle);
+static void UnlockBits(void* handle);
 static Color FindFirstUnusedColor(void* handle, uint8_t startR, uint8_t startG, uint8_t startB);
 static void* CreateImage();
 static void* CreateImageWithSize(int width, int height, bool clear);

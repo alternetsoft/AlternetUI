@@ -5,7 +5,6 @@
 #include "Api/OutputStream.h"
 #include "ManagedInputStream.h"
 #include "ManagedOutputStream.h"
-#include "GenericImage.h"
 
 #include <wx/wxprec.h>
 
@@ -14,11 +13,6 @@
 
 namespace Alternet::UI
 {
-	int Image::GetStride()
-	{
-		return _stride;
-	}
-
 	bool Image::GetHasMask()
 	{
 		return _bitmap.GetMask() != nullptr;
@@ -103,22 +97,44 @@ namespace Alternet::UI
 		wxLogMessage("==============");
 	}
 
+	int Image::GetStride()
+	{
+		return _stride;
+	}
+
 	void* Image::LockBits()
 	{
-		pixelData = new ImageAlphaPixelData(_bitmap);
-		if (!pixelData)
-			return nullptr;
-		_stride = pixelData->GetRowStride();
-		auto pixels = pixelData->GetPixels();
-		return pixels.m_ptr;
+		if (GetHasAlpha())
+		{
+			alphaPixelData = new ImageAlphaPixelData(_bitmap);
+			if (!alphaPixelData)
+				return nullptr;
+			_stride = alphaPixelData->GetRowStride();
+			auto pixels = alphaPixelData->GetPixels();
+			return pixels.m_ptr;
+		}
+		else
+		{
+			nativePixelData = new ImageNativePixelData(_bitmap);
+			if (!nativePixelData)
+				return nullptr;
+			_stride = nativePixelData->GetRowStride();
+			auto pixels = nativePixelData->GetPixels();
+			return pixels.m_ptr;
+		}
 	}
 
 	void Image::UnlockBits()
 	{
-		if (pixelData)
+		if (alphaPixelData)
 		{
-			delete pixelData;
-			pixelData = nullptr;
+			delete alphaPixelData;
+			alphaPixelData = nullptr;
+		}
+		else
+		{
+			delete nativePixelData;
+			nativePixelData = nullptr;
 		}
 	}
 

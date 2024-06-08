@@ -16,8 +16,8 @@ namespace SkiaSharpSample
 			var assembly = samplesBase.Assembly;
 
 			sampleList = assembly.DefinedTypes
-				.Where(t => samplesBase.IsAssignableFrom(t) && !t.IsAbstract)
-				.Select(t => (SampleBase)Activator.CreateInstance(t.AsType()))
+                .Where(t => samplesBase.IsAssignableFrom(t) && !t.IsAbstract)
+				.Select(t => (SampleBase)Activator.CreateInstance(t.AsType())!)
 				.ToArray();
 
 			SkiaSharpVersion = GetAssemblyVersion<SkiaSharp.SKSurface>();
@@ -25,7 +25,7 @@ namespace SkiaSharpSample
 
 		public static string SkiaSharpVersion { get; }
 
-		public static string TempDataPath { get; set; }
+		public static string TempDataPath { get; set; } = Alternet.UI.PathUtils.GetTempAppSubFolder();
 
 		public static string EnsureTempDataDirectory(string name)
 		{
@@ -41,7 +41,7 @@ namespace SkiaSharpSample
 			set { SampleMedia.Fonts.ContentFontPath = value; }
 		}
 
-		public static event Action<string> OpenFile;
+		public static event Action<string>? OpenFile;
 
 		public static void OnOpenFile(string path)
 		{
@@ -58,7 +58,7 @@ namespace SkiaSharpSample
 			return sampleList.Where(s => s.SupportedPlatform.HasFlag(platform));
 		}
 
-		public static SampleBase GetSample(string title)
+		public static SampleBase? GetSample(string title)
 		{
 			return sampleList.Where(s => s.Title == title).FirstOrDefault();
 		}
@@ -67,7 +67,7 @@ namespace SkiaSharpSample
 		{
 			var apiAssembly = typeof(T).Assembly;
 			var attributes = apiAssembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute));
-			var attribute = (AssemblyInformationalVersionAttribute)attributes.FirstOrDefault();
+			var attribute = (AssemblyInformationalVersionAttribute?)attributes.FirstOrDefault();
 			return attribute?.InformationalVersion ?? "<unavailable>";
 		}
 	}

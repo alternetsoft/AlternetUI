@@ -17,8 +17,8 @@ namespace Alternet.Drawing
         private readonly int height;
         private readonly SKSurface surface;
         private readonly SKCanvas canvas;
-        private readonly SKColorType colorType = GraphicsFactory.LockBitsColorType;
-        private readonly SKAlphaType alphaType = GraphicsFactory.LockBitsAlphaType;
+        private readonly SKColorType colorType;
+        private readonly SKAlphaType alphaType;
         private readonly bool isOk;
         private readonly ILockImageBits image;
 
@@ -28,6 +28,29 @@ namespace Alternet.Drawing
 
         public SkiaSurfaceOnBitmap(ILockImageBits image)
         {
+            if (App.IsWindowsOS)
+            {
+                colorType = SKColorType.Bgra8888;
+                alphaType = SKAlphaType.Premul;
+            }
+            else
+            if (App.IsLinuxOS)
+            {
+                colorType = SKColorType.Rgba8888;
+                alphaType = SKAlphaType.Unpremul;
+            }
+            else
+            if (App.IsMacOS)
+            {
+                colorType = SKColorType.Rgba8888;
+                alphaType = SKAlphaType.Premul;
+            }
+            else
+            {
+                colorType = SKColorType.Unknown;
+                alphaType = SKAlphaType.Premul;
+            }
+
             width = image.Width;
             height = image.Height;
             this.image = image;

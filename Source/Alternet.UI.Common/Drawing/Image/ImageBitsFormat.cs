@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public struct ImageBitsFormat
@@ -23,6 +25,80 @@ namespace Alternet.Drawing
         public int Blue;
 
         public int Alpha;
+
+        public static ImageBitsFormat Rgba8888
+        {
+            get
+            {
+                var result = new ImageBitsFormat();
+
+                result.BitsPerPixel = 32;
+                result.HasAlpha = true;
+                result.SizePixel = 4;
+                result.Red = 0;
+                result.Green = 1;
+                result.Blue = 2;
+                result.Alpha = 3;
+
+                return result;
+            }
+        }
+
+        public static ImageBitsFormat Rgb888x
+        {
+            get
+            {
+                var result = new ImageBitsFormat();
+
+                result.BitsPerPixel = 24;
+                result.HasAlpha = false;
+                result.SizePixel = 3;
+                result.Red = 0;
+                result.Green = 1;
+                result.Blue = 2;
+                result.Alpha = -1;
+
+                return result;
+            }
+        }
+
+        public static ImageBitsFormat Bgra8888
+        {
+            get
+            {
+                var result = new ImageBitsFormat();
+
+                result.BitsPerPixel = 32;
+                result.HasAlpha = true;
+                result.SizePixel = 4;
+                result.Red = 2;
+                result.Green = 1;
+                result.Blue = 0;
+                result.Alpha = 3;
+
+                return result;
+            }
+        }
+
+        public readonly bool IsBgra8888 => Bgra8888 == this;
+
+        public readonly bool IsRgb888x => Rgb888x == this;
+
+        public readonly bool IsRgba8888 => Rgba8888 == this;
+
+        public readonly SKColorType ColorType
+        {
+            get
+            {
+                if (IsBgra8888)
+                    return SKColorType.Bgra8888;
+                if (IsRgba8888)
+                    return SKColorType.Rgba8888;
+                if (IsRgb888x)
+                    return SKColorType.Rgb888x;
+                return SKColorType.Unknown;
+            }
+        }
 
         /// <summary>
         /// Tests whether two specified <see cref="ImageBitsFormat"/> structures are equivalent.

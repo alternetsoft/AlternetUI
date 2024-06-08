@@ -26,7 +26,7 @@ namespace ControlsSample
         {
             LeftPanelWidth = Display.Primary.BoundsDip.Width / 2,
             RightPanelWidth = 300,
-            TopVisible = false,
+            TopPanelHeight = 400,
             BottomVisible = false,
         };
 
@@ -114,6 +114,13 @@ namespace ControlsSample
 
             propGrid.SuggestedInitDefaults();
 
+            RefreshPreviewControl();
+
+            propGrid.FitColumns();
+        }
+
+        private void RefreshPreviewControl()
+        {
             DrawTextOnSkia2();
         }
 
@@ -123,8 +130,7 @@ namespace ControlsSample
 
             SkiaSampleControl.SampleFont = SkiaSampleControl.SampleFont.WithName(s);
             control.Font = SkiaSampleControl.SampleFont;
-            DrawTextOnSkia2();
-            propGrid.CenterSplitter();
+            RefreshPreviewControl();
         }
 
         private void GenericToSkia()
@@ -217,7 +223,7 @@ namespace ControlsSample
                 var canvas = canvasLock.Canvas;
                 canvas.Scale((float)GetPixelScaleFactor());
 
-                canvas.Clear(flag ? Color.Yellow : Color.GreenYellow);
+                canvas.Clear(flag ? prm.BackColor1 : prm.BackColor2);
                 flag = !flag;
                 canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);
 
@@ -246,9 +252,34 @@ namespace ControlsSample
         {
             private readonly SkiaDrawingWindow owner;
 
+            private Color backColor1 = Color.Yellow;
+            private Color backColor2 = Color.LightGoldenrodYellow;
+
             public DrawTextParams(SkiaDrawingWindow owner)
             {
                 this.owner = owner;
+            }
+
+            public Color BackColor1
+            {
+                get => backColor1;
+
+                set
+                {
+                    backColor1 = value;
+                    owner.RefreshPreviewControl();
+                } 
+            }
+
+            public Color BackColor2
+            {
+                get => backColor2;
+
+                set
+                {
+                    backColor2 = value;
+                    owner.RefreshPreviewControl();
+                }
             }
 
             public Font Font

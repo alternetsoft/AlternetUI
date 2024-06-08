@@ -98,6 +98,21 @@ namespace Alternet.UI.Native
             NativeApi.GenericImage_SetDataWithSize_(handle, data, new_width, new_height, static_data);
         }
         
+        public static System.IntPtr LockBits(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_LockBits_(handle);
+        }
+        
+        public static int GetStride(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetStride_(handle);
+        }
+        
+        public static void UnlockBits(System.IntPtr handle)
+        {
+            NativeApi.GenericImage_UnlockBits_(handle);
+        }
+        
         public static Alternet.Drawing.Color FindFirstUnusedColor(System.IntPtr handle, byte startR, byte startG, byte startB)
         {
             return NativeApi.GenericImage_FindFirstUnusedColor_(handle, startR, startG, startB);
@@ -576,6 +591,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_SetDataWithSize_(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_LockBits_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetStride_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_UnlockBits_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color GenericImage_FindFirstUnusedColor_(System.IntPtr handle, byte startR, byte startG, byte startB);

@@ -28,6 +28,8 @@ namespace Alternet.UI
         public static LogFlags Flags;
 
         private static readonly ICustomFlags EventLoggedFlags = Factory.CreateCustomFlags();
+
+        private static List<(string Name, Action Action)>? registeredLogActions;
         private static int id;
         private static int logUseMaxLength;
 
@@ -755,8 +757,14 @@ namespace Alternet.UI
             Test(KnownSystemColor.MenuHighlight);
         }
 
+        public static void RegisterLogAction(string name, Action action)
+        {
+            registeredLogActions ??= new();
+            registeredLogActions.Add((name, action));
+        }
+
         /// <summary>
-        /// Enumerates log actions.
+        /// Enumerates registered log actions.
         /// </summary>
         public static void EnumLogActions(Action<string, Action> addLogAction)
         {
@@ -803,6 +811,14 @@ namespace Alternet.UI
             addLogAction("Log SKBitmap", LogUtils.LogSkiaBitmap);
             addLogAction("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
             addLogAction("Log image bits formats", LogImageBitsFormats);
+
+            if (registeredLogActions is not null)
+            {
+                foreach(var item in registeredLogActions)
+                {
+                    addLogAction(item.Name, item.Action);
+                }
+            }
         }
 
         public static void LogImageBitsFormats()
@@ -810,6 +826,12 @@ namespace Alternet.UI
             GraphicsFactory.NativeBitsFormat.Log("NativeBitsFormat");
             GraphicsFactory.AlphaBitsFormat.Log("AlphaBitsFormat");
             GraphicsFactory.GenericBitsFormat.Log("GenericBitsFormat");
+
+            App.LogSeparator();
+            App.LogNameValue("NativeBitsFormat.ColorType", GraphicsFactory.NativeBitsFormat.ColorType);
+            App.LogNameValue("AlphaBitsFormat.ColorType", GraphicsFactory.AlphaBitsFormat.ColorType);
+            App.LogNameValue("GenericBitsFormat.ColorType", GraphicsFactory.GenericBitsFormat.ColorType);
+            App.LogSeparator();
         }
 
         internal static void LogAppDomainTargetFrameworkName()
