@@ -3,10 +3,9 @@ using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
-    internal class MouseInputProvider : IDisposable
+    internal class MouseInputProvider : DisposableObject
     {
         private readonly Native.Mouse nativeMouse;
-        private bool isDisposed;
 
         public MouseInputProvider(Native.Mouse nativeMouse)
         {
@@ -18,27 +17,13 @@ namespace Alternet.UI
             nativeMouse.MouseDoubleClick += NativeMouse_MouseDoubleClick;
         }
 
-        public void Dispose()
+        protected override void DisposeManaged()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    nativeMouse.MouseMove -= NativeMouse_MouseMove;
-                    nativeMouse.MouseDown -= NativeMouse_MouseDown;
-                    nativeMouse.MouseUp -= NativeMouse_MouseUp;
-                    nativeMouse.MouseWheel -= NativeMouse_MouseWheel;
-                    nativeMouse.MouseDoubleClick -= NativeMouse_MouseDoubleClick;
-                }
-
-                isDisposed = true;
-            }
+            nativeMouse.MouseMove -= NativeMouse_MouseMove;
+            nativeMouse.MouseDown -= NativeMouse_MouseDown;
+            nativeMouse.MouseUp -= NativeMouse_MouseUp;
+            nativeMouse.MouseWheel -= NativeMouse_MouseWheel;
+            nativeMouse.MouseDoubleClick -= NativeMouse_MouseDoubleClick;
         }
 
         private static Control? GetTargetControl(IntPtr targetControlPointer)
@@ -51,14 +36,6 @@ namespace Alternet.UI
                 null);
             if (nobj is not Native.Control c)
                 return null;
-
-            /*
-            Do not uncomment this. For what reason it was here?
-            If uncommented, under Linux, mouse events will be send to wrong windows
-            as wxFindWindowAtPoint gets wrong window.
-            */
-            /*if (!c.IsMouseCaptured)
-                return null;*/
 
             return WxControlHandler.NativeControlToHandler(c)?.Control;
         }

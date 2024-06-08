@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// </remarks>
         public const int MouseWheelDeltaForOneLine = 120;
 
-        private static MouseDevice mouseDevice = MouseDevice.Empty;
+        private static MouseDevice mouseDevice = MouseDevice.Default;
         private static long? mouseWheelTimestamp;
 
         /// <summary>

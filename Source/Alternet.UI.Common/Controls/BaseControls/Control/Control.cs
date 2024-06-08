@@ -34,6 +34,7 @@ namespace Alternet.UI
         private static int groupIndexCounter;
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
+        private static Control? focusedControl;
 
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick

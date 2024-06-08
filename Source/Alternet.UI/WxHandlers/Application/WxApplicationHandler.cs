@@ -267,6 +267,21 @@ namespace Alternet.UI
             WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
         }
 
+        public MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
+        {
+            return WxApplicationHandler.NativeMouse.GetButtonState(mouseButton);
+        }
+
+        public PointD GetScreenPositionFromSystem()
+        {
+            return WxApplicationHandler.NativeMouse.GetPosition();
+        }
+
+        public KeyStates GetKeyStatesFromSystem(Key key)
+        {
+            return WxApplicationHandler.NativeKeyboard.GetKeyState(key);
+        }
+
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {

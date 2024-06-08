@@ -131,6 +131,9 @@ namespace Alternet.UI
         /// </summary>
         public static Control? GetFocusedControl()
         {
+            if (focusedControl?.Focused ?? false)
+                return focusedControl;
+
             var result = App.Handler.GetFocusedControl();
             return (Control?)result;
         }
@@ -2403,6 +2406,7 @@ namespace Alternet.UI
 
         public void RaiseGotFocus()
         {
+            focusedControl = this;
             OnGotFocus(EventArgs.Empty);
             GotFocus?.Invoke(this, EventArgs.Empty);
             Designer?.RaiseGotFocus(this);
@@ -2411,6 +2415,8 @@ namespace Alternet.UI
 
         public void RaiseLostFocus()
         {
+            if (focusedControl == this)
+                focusedControl = null;
             OnLostFocus(EventArgs.Empty);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();

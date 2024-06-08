@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// </summary>
     public static class Keyboard
     {
-        private static KeyboardDevice keyboardDevice = KeyboardDevice.Empty;
+        private static KeyboardDevice keyboardDevice = KeyboardDevice.Default;
 
         /// <summary>
         ///     The primary keyboard device.

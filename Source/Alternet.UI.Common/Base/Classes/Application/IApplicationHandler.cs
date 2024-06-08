@@ -12,6 +12,32 @@ namespace Alternet.UI
     public interface IApplicationHandler : IDisposable
     {
         /// <summary>
+        /// Gets the current state of the specified key from the device
+        /// from the underlying system
+        /// </summary>
+        /// <param name="key">
+        /// Key to get the state of.
+        /// </param>
+        /// <returns>
+        /// The state of the specified key.
+        /// </returns>
+        KeyStates GetKeyStatesFromSystem(Key key);
+
+        /// <summary>
+        /// Gets the current state of the specified button from
+        /// the device from the underlying system.
+        /// </summary>
+        /// <param name="mouseButton">
+        /// The mouse button to get the state of.
+        /// </param>
+        /// <returns>
+        /// The state of the specified mouse button.
+        /// </returns>
+        MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton);
+
+        PointD GetScreenPositionFromSystem();
+
+        /// <summary>
         /// Allows the programmer to specify whether the application will exit when the
         /// top-level frame is deleted.
         /// Returns true if the application will exit when the top-level frame is deleted.
