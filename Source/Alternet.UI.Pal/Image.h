@@ -2,23 +2,19 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
+#include "GenericImage.h"
 
 #include <wx/bitmap.h>
 #include <wx/rawbmp.h>
 
 namespace Alternet::UI
 {
-    typedef wxPixelData<wxBitmap, wxNativePixelFormat> ImageNativePixelData;
-
-    typedef wxPixelData<wxBitmap, wxAlphaPixelFormat> ImageAlphaPixelData;
-
-    typedef wxPixelData<wxImage, wxImagePixelFormat> ImageGenericPixelData;    
-
     enum ImageStaticObjectId
     {
         ImageStaticObjectId_NativePixelFormat = 0,
         ImageStaticObjectId_AlphaPixelFormat = 1,
         ImageStaticObjectId_GenericPixelFormat = 2,
+        ImageStaticObjectId_Unknown = -1,
     };
 
     enum ImageStaticPropertyId
@@ -103,7 +99,8 @@ namespace Alternet::UI
 
         wxBitmap _bitmap; // reference-counted, so use copy-by-value.
     private:
-        ImageAlphaPixelData* pixelData = nullptr;
+        ImageAlphaPixelData* alphaPixelData = nullptr;
+        ImageNativePixelData* nativePixelData = nullptr;
         int _stride = 0;
     };
 }

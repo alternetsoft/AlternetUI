@@ -176,6 +176,11 @@ namespace Alternet.UI
             }
         }
 
+        public ImageBitsFormatKind BitsFormat
+        {
+            get => ImageBitsFormatKind.Unknown;
+        }
+
         public bool Rescale(SizeI sizeNeeded)
         {
             SKBitmap? newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);

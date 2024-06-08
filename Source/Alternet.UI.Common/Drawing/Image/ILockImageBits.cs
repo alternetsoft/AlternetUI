@@ -17,5 +17,9 @@ namespace Alternet.Drawing
         void UnlockBits();
 
         int GetStride();
+
+        ImageBitsFormatKind BitsFormat { get; }
+
+        ISkiaSurface LockSurface();
     }
 }

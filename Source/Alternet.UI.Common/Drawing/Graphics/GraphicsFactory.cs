@@ -22,10 +22,6 @@ namespace Alternet.Drawing
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
 
-        public static SKColorType LockBitsColorType;
-
-        public static SKAlphaType LockBitsAlphaType;
-
         public static Func<Font, SKPaint> FontToFillPaint
             = (font) => GraphicsFactory.CreateFillPaint(font.SkiaFont);
 
@@ -55,25 +51,6 @@ namespace Alternet.Drawing
 
         static GraphicsFactory()
         {
-            if (App.IsWindowsOS)
-            {
-                LockBitsColorType = SKColorType.Bgra8888;
-                LockBitsAlphaType = SKAlphaType.Premul;
-                return;
-            }
-
-            if (App.IsLinuxOS)
-            {
-                LockBitsColorType = SKColorType.Rgba8888;
-                LockBitsAlphaType = SKAlphaType.Unpremul;
-                return;
-            }
-
-            if (App.IsMacOS)
-            {
-                LockBitsColorType = SKColorType.Rgba8888;
-                LockBitsAlphaType = SKAlphaType.Premul;
-            }
         }
 
         public static ImageBitsFormat NativeBitsFormat
@@ -129,6 +106,21 @@ namespace Alternet.Drawing
             nativeBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Native);
             alphaBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Alpha);
             genericBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Generic);
+        }
+
+        public static ImageBitsFormat GetBitsFormat(ImageBitsFormatKind kind)
+        {
+            switch (kind)
+            {
+                case ImageBitsFormatKind.Native:
+                    return NativeBitsFormat;
+                case ImageBitsFormatKind.Alpha:
+                    return AlphaBitsFormat;
+                case ImageBitsFormatKind.Generic:
+                case ImageBitsFormatKind.Unknown:
+                default:
+                    return GenericBitsFormat;
+            }
         }
 
         public static ISkiaSurface CreateSkiaBitmapData(ILockImageBits image)

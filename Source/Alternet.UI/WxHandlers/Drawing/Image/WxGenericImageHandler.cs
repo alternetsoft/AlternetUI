@@ -14,6 +14,14 @@ namespace Alternet.Drawing
 {
     internal class WxGenericImageHandler : DisposableObject<IntPtr>, IGenericImageHandler
     {
+        public ImageBitsFormatKind BitsFormat
+        {
+            get
+            {
+                return ImageBitsFormatKind.Generic;
+            }
+        }
+
         public GenericImage.PixelStrategy BestStrategy
         {
             get => GenericImage.PixelStrategy.RgbData;
@@ -106,6 +114,20 @@ namespace Alternet.Drawing
                 UI.Native.GenericImage.SetAlphaData(Handle, alphaPtr, false);
             }
         }
+
+        public ISkiaSurface LockSurface()
+        {
+            Debug.Assert(IsOk, "Image.IsOk == true is required.");
+            Debug.Assert(!HasMask, "Image.HasMask == false is required.");
+
+            return GraphicsFactory.CreateSkiaBitmapData(this);
+        }
+
+        public IntPtr LockBits() => UI.Native.GenericImage.LockBits(Handle);
+
+        public void UnlockBits() => UI.Native.GenericImage.UnlockBits(Handle);
+
+        public int GetStride() => UI.Native.GenericImage.GetStride(Handle);
 
         public int Width => UI.Native.GenericImage.GetWidth(Handle);
 

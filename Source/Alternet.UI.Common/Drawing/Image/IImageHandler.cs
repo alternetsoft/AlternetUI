@@ -44,7 +44,5 @@ namespace Alternet.Drawing
         bool ResetAlpha();
 
         bool Rescale(SizeI sizeNeeded);
-
-        ISkiaSurface LockSurface();
     }
 }

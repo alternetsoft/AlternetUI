@@ -11,7 +11,7 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    public interface IGenericImageHandler : IDisposable
+    public interface IGenericImageHandler : IDisposable, ILockImageBits
     {
         SKColor[] Pixels { get; set; }
 
@@ -27,12 +27,7 @@ namespace Alternet.Drawing
 
         bool HasMask { get; }
 
-        int Width { get; }
-
-        int Height { get; }
-
         bool IsOk { get; }
-
 
         void SetAlpha(int x, int y, byte alpha);
 

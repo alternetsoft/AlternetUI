@@ -377,40 +377,11 @@ namespace NativeApi.Api
         public static void SetDataWithSize(IntPtr handle, IntPtr data, int new_width,
             int new_height, bool static_data = false) { }
 
+        public static IntPtr LockBits(IntPtr handle) => default;
+
+        public static int GetStride(IntPtr handle) => default;
+
+        public static void UnlockBits(IntPtr handle) { }
+
     }
 }
-
-/*
-
-// Converts a color in RGB color space to HSV color space.
-public static wxImage::HSVValue RGBtoHSV(wxImage::RGBValue &rgb) => default;// real static
- 
-// Converts a color in HSV color space to RGB color space.
-public static wxImage::RGBValue HSVtoRGB(wxImage::HSVValue &hsv) => default;// real static
- 
-// Associates a palette with the image.
-public static void 	SetPalette(wxPalette &palette){}
- 
-// Creates an image from XPM data.
-public static IntPtr CreateImage(char **xpmData) => default;
-
-// Computes the histogram of the image.
-public static ulong ComputeHistogram(wxImageHistogram &histogram) => default;
-
-// Finds the first color that is never used in the image.
-public static bool FindFirstUnusedColor(byte* r, byte* g, byte* b, byte startR = 1,
-    byte startG = 0, byte startB = 0) => default;
-
-// Get the current mask color or find a suitable unused color that could be used as a mask color.
-public static bool 	GetOrFindMaskColor(byte *r, byte *g, byte *b) => default;
- 
-// Returns the palette associated with the image.
-public static wxPalette & 	GetPalette() => default;
-
-// Returns the static list of image format handlers.
-public static wxList & 	GetHandlers() => default;// real static
-
-        //Rotates the image about the given point, by angle radians.
-        public static IntPtr Rotate(IntPtr handle, double angle, Int32Point rotationCentre,
-            bool interpolating = true, out Int32Point offsetAfterRotation = NULL) => default;
-*/

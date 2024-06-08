@@ -12,8 +12,8 @@ namespace Alternet.Drawing
 {
     internal class SkiaSurfaceOnSkia : DisposableObject, ISkiaSurface
     {
-        private SKBitmap bitmap;
-        private SKCanvas canvas;
+        private readonly SKBitmap bitmap;
+        private readonly SKCanvas canvas;
 
         public SkiaSurfaceOnSkia(SKBitmap bitmap)
         {

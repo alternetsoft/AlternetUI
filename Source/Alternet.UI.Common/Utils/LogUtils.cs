@@ -810,6 +810,12 @@ namespace Alternet.UI
             GraphicsFactory.NativeBitsFormat.Log("NativeBitsFormat");
             GraphicsFactory.AlphaBitsFormat.Log("AlphaBitsFormat");
             GraphicsFactory.GenericBitsFormat.Log("GenericBitsFormat");
+
+            App.LogSeparator();
+            App.LogNameValue("NativeBitsFormat.ColorType", GraphicsFactory.NativeBitsFormat.ColorType);
+            App.LogNameValue("AlphaBitsFormat.ColorType", GraphicsFactory.AlphaBitsFormat.ColorType);
+            App.LogNameValue("GenericBitsFormat.ColorType", GraphicsFactory.GenericBitsFormat.ColorType);
+            App.LogSeparator();
         }
 
         internal static void LogAppDomainTargetFrameworkName()

@@ -217,6 +217,40 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns <c>true</c> if this image has alpha channel, <c>false</c> otherwise.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool HasAlpha
+        {
+            get
+            {
+                return Handler.HasAlpha;
+            }
+
+            set
+            {
+                if (HasAlpha == value)
+                    return;
+                if (value)
+                    InitAlpha();
+                else
+                    ClearAlpha();
+            }
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if there is a mask active, <c>false</c> otherwise.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool HasMask
+        {
+            get
+            {
+                return Handler.HasMask;
+            }
+        }
+
+        /// <summary>
         /// Gets the width of the image in pixels.
         /// </summary>
         public virtual int Width
@@ -686,7 +720,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual void ClearAlpha()
         {
-            if (HasAlpha())
+            if (HasAlpha)
                 Handler.ClearAlpha();
         }
 
@@ -734,7 +768,7 @@ namespace Alternet.Drawing
         {
             if (!IsOk)
                 return false;
-            if (!HasAlpha())
+            if (!HasAlpha)
             {
                 InitAlpha();
                 AlphaData = CreateAlphaData(Width, Height, value);
@@ -917,7 +951,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual void InitAlpha()
         {
-            if (HasAlpha())
+            if (HasAlpha)
                 return;
             Handler.InitAlpha();
         }
@@ -1307,7 +1341,7 @@ namespace Alternet.Drawing
             if (!IsOk)
                 return false;
 
-            if (HasMask())
+            if (HasMask)
             {
                 SKColor mask = GetMaskRGB();
                 return ForEachPixelInternal(MaskAction, param);
@@ -1320,7 +1354,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                if (HasAlpha())
+                if (HasAlpha)
                 {
                     return ForEachPixelInternal(TransparentAction, param);
   
@@ -1375,7 +1409,7 @@ namespace Alternet.Drawing
             if (!IsOk)
                 return false;
 
-            if (HasMask())
+            if (HasMask)
             {
                 var mask = GetMaskRGB();
                 return ForEachPixelInternal(MaskAction, param);
@@ -1388,7 +1422,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                if (HasAlpha())
+                if (HasAlpha)
                 {
                     return ForEachPixel(TransparentAction, param);
 
@@ -1626,24 +1660,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns <c>true</c> if this image has alpha channel, <c>false</c> otherwise.
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool HasAlpha()
-        {
-            return Handler.HasAlpha;
-        }
-
-        /// <summary>
-        /// Returns <c>true</c> if there is a mask active, <c>false</c> otherwise.
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool HasMask()
-        {
-            return Handler.HasMask;
-        }
-
-        /// <summary>
         /// Returns <c>true</c> if the given option is present.
         /// </summary>
         /// <remarks>
@@ -1814,6 +1830,11 @@ namespace Alternet.Drawing
                 var bitmapType = Image.GetBitmapTypeFromFileName(filename);
                 return SaveToStream(stream, bitmapType);
             });
+        }
+
+        public virtual ISkiaSurface LockSurface()
+        {
+            return Handler.LockSurface();
         }
 
         /// <summary>
