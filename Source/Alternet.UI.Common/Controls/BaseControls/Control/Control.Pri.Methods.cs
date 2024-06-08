@@ -65,6 +65,7 @@ namespace Alternet.UI
         /// event data.</param>
         private void RaiseEnabledChanged(EventArgs e)
         {
+            RaiseVisualStateChanged();
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
             Handler.SetEnabled(Enabled);

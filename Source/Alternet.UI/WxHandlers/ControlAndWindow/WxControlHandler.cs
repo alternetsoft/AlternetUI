@@ -20,6 +20,12 @@ namespace Alternet.UI
         {
         }
 
+        public Action? SystemColorsChanged
+        {
+            get => NativeControl.SystemColorsChanged;
+            set => NativeControl.SystemColorsChanged = value;
+        }
+
         public Action<DragEventArgs>? DragDrop { get; set; }
 
         public Action<DragEventArgs>? DragOver { get; set; }

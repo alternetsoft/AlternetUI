@@ -84,6 +84,7 @@ namespace NativeApi.Api
         public event EventHandler? Deactivated;
         public event EventHandler? HandleCreated;
         public event EventHandler? HandleDestroyed;
+        public event EventHandler? SystemColorsChanged;
 
         public virtual string Text { get; set; }
         public bool IsActive { get; }

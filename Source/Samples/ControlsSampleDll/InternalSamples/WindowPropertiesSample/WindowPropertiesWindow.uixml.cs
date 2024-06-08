@@ -35,6 +35,13 @@ namespace WindowPropertiesSample
 
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
+
+            SystemColorsChanged += WindowPropertiesWindow_SystemColorsChanged;
+        }
+
+        private void WindowPropertiesWindow_SystemColorsChanged(object? sender, EventArgs e)
+        {
+            App.Log("System Colors Changed");
         }
 
         private void Page1Button_Click(object? sender, EventArgs e)

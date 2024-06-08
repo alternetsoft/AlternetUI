@@ -447,5 +447,11 @@ namespace Alternet.UI
         /// </summary>
         [Category("Drag Drop")]
         public event EventHandler? DragLeave;
+
+        /// <summary>
+        /// Occurs when the system colors change.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? SystemColorsChanged;
     }
 }

@@ -615,6 +615,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.PointD ClientToScreen(Alternet.Drawing.PointD point)
+        {
+            CheckDisposed();
+            return NativeApi.Control_ClientToScreen_(NativePointer, point);
+        }
+        
+        public Alternet.Drawing.PointD ScreenToClient(Alternet.Drawing.PointD point)
+        {
+            CheckDisposed();
+            return NativeApi.Control_ScreenToClient_(NativePointer, point);
+        }
+        
         public Alternet.Drawing.PointI ScreenToDevice(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
@@ -898,18 +910,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Control_ResetForegroundColor_(NativePointer);
-        }
-        
-        public Alternet.Drawing.PointD ClientToScreen(Alternet.Drawing.PointD point)
-        {
-            CheckDisposed();
-            return NativeApi.Control_ClientToScreen_(NativePointer, point);
-        }
-        
-        public Alternet.Drawing.PointD ScreenToClient(Alternet.Drawing.PointD point)
-        {
-            CheckDisposed();
-            return NativeApi.Control_ScreenToClient_(NativePointer, point);
         }
         
         public bool BeginRepositioningChildren()
@@ -1208,6 +1208,10 @@ namespace Alternet.UI.Native
                 {
                     HandleDestroyed?.Invoke(); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.SystemColorsChanged:
+                {
+                    SystemColorsChanged?.Invoke(); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -1235,6 +1239,7 @@ namespace Alternet.UI.Native
         public Action? Deactivated;
         public Action? HandleCreated;
         public Action? HandleDestroyed;
+        public Action? SystemColorsChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -1269,6 +1274,7 @@ namespace Alternet.UI.Native
                 Deactivated,
                 HandleCreated,
                 HandleDestroyed,
+                SystemColorsChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1494,6 +1500,12 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.PointD Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.PointD point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.PointD Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.PointD point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.PointI Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1630,12 +1642,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_ResetForegroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.PointD point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_BeginRepositioningChildren_(IntPtr obj);

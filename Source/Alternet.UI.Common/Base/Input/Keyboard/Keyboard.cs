@@ -89,7 +89,7 @@ namespace Alternet.UI
             }
 
             var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
-            control.RaiseKeyDown(eventArgs);
+            control.BubbleKeyDown(eventArgs);
             handled = eventArgs.Handled;
         }
 
@@ -103,7 +103,7 @@ namespace Alternet.UI
             }
 
             var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
-            control.RaiseKeyUp(eventArgs);
+            control.BubbleKeyUp(eventArgs);
             handled = eventArgs.Handled;
         }
 
@@ -117,7 +117,7 @@ namespace Alternet.UI
             }
 
             var eventArgs = new KeyPressEventArgs(control, keyChar, Keyboard.PrimaryDevice);
-            control.RaiseKeyPress(eventArgs);
+            control.BubbleKeyPress(eventArgs);
             handled = eventArgs.Handled;
         }
 

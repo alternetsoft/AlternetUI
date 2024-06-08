@@ -161,6 +161,8 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+PointD ClientToScreen(const PointD& point);
+PointD ScreenToClient(const PointD& point);
 PointI ScreenToDevice(const PointD& point);
 PointD DeviceToScreen(const PointI& point);
 bool SetFocus();
@@ -207,8 +209,6 @@ void EndUpdate();
 void RecreateWindow();
 void ResetBackgroundColor();
 void ResetForegroundColor();
-PointD ClientToScreen(const PointD& point);
-PointD ScreenToClient(const PointD& point);
 bool BeginRepositioningChildren();
 void EndRepositioningChildren();
 RectI GetUpdateClientRect();
@@ -263,6 +263,7 @@ enum class ControlEvent
     Deactivated,
     HandleCreated,
     HandleDestroyed,
+    SystemColorsChanged,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

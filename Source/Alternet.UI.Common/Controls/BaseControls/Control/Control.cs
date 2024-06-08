@@ -1019,7 +1019,7 @@ namespace Alternet.UI
                     return;
                 parent?.Children.Remove(this);
                 value?.Children.Add(this);
-                OnParentChanged(EventArgs.Empty);
+                RaiseParentChanged();
                 stateFlags |= ControlFlags.ParentAssigned;
             }
         }
