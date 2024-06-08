@@ -572,6 +572,20 @@ namespace Alternet.UI
             LogUtils.LogToFile(LogUtils.SectionSeparator);
 
             App.Log($"{count} Skia font families logged to file.");
+
+            App.LogSeparator();
+            LogFamily("serif");
+            LogFamily("sans-serif");
+            LogFamily("cursive");
+            LogFamily("fantasy");
+            LogFamily("monospace");
+            App.LogSeparator();
+
+            void LogFamily(string name)
+            {
+                var family = SKFontManager.Default.MatchFamily(name);
+                App.Log($"{name} -> {family?.FamilyName}");
+            }
         }
 
         /// <summary>
