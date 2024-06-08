@@ -690,12 +690,18 @@ namespace Alternet.UI
 
         public void Update()
         {
-            NativeControl.Update();
+            if (Control != null || Control is Window)
+            {
+                NativeControl.Update();
+            }
         }
 
         public void Invalidate()
         {
-            NativeControl.Invalidate();
+            if (Control.Parent != null || Control is Window)
+            {
+                NativeControl.Invalidate();
+            }
         }
 
         public nint GetHandle()

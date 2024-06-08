@@ -947,7 +947,7 @@ namespace Alternet.UI
         /// Forces the control to invalidate itself and immediately redraw itself
         /// and any child controls. Calls <see cref="Invalidate()"/> and <see cref="Update"/>.
         /// </summary>
-        public virtual void Refresh()
+        public void Refresh()
         {
             Invalidate();
             Update();
@@ -959,10 +959,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Invalidate()
         {
-            if (Parent != null || this is Window)
-            {
-                Handler.Invalidate();
-            }
+            Handler.Invalidate();
         }
 
         /// <summary>
@@ -970,10 +967,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Update()
         {
-            if (Parent != null || this is Window)
-            {
-                Handler.Update();
-            }
+            Handler.Update();
         }
 
         /// <summary>

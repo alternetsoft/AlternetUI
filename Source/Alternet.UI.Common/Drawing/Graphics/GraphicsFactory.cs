@@ -204,7 +204,7 @@ namespace Alternet.Drawing
             var paint = GraphicsFactory.CreateStrokePaint(pen.Color);
             paint.StrokeCap = pen.LineCap.ToSkia();
             paint.StrokeJoin = pen.LineJoin.ToSkia();
-            paint.StrokeWidth = (float)(pen.Width * Display.Default.ScaleFactor);
+            paint.StrokeWidth = (float)(pen.Width);
             paint.IsStroke = true;
             return paint;
         }
@@ -319,7 +319,7 @@ namespace Alternet.Drawing
                 SKFontStyleWidth.Normal,
                 skiaSlant);
 
-            SKFont skiaFont = new(typeFace, (float)(font.SizeInPixels / Display.Default.ScaleFactor));
+            SKFont skiaFont = new(typeFace, (float)(font.SizeInPixels));
             return skiaFont;
         }
     }
