@@ -86,7 +86,12 @@ namespace Alternet.UI
             set
             {
                 if (Image == value)
+                {
+                    if (ImageVisible)
+                        Invalidate();
                     return;
+                }
+
                 StateObjects ??= new();
                 StateObjects.Images ??= new();
                 StateObjects.Images.Normal = value;
