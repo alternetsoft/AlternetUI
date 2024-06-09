@@ -46,12 +46,73 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Time, in milliseconds, for how long a blinking caret should stay visible during a
+        /// single blink cycle before it disappears.
+        /// </summary>
+        /// <remarks>
+        /// If this value is zero, caret should be visible all the time instead of blinking.
+        /// If the value is negative, the platform does not support the user setting.
+        /// </remarks>
+        /// <remarks>
+        /// Default on Windows = 530;
+        /// </remarks>
+        public static int CaretOnMSec
+        {
+            get
+            {
+                return SystemSettings.GetMetric(SystemSettingsMetric.CaretOnMSec);
+            }
+        }
+
+        /// <summary>
+        /// Time, in milliseconds, for how long a blinking caret should stay invisible during
+        /// a single blink cycle before it reappears.
+        /// </summary>
+        /// <remarks>
+        /// If this value is zero, caret should be visible all the time instead of blinking.
+        /// If the value is negative, the platform does not support the user setting.
+        /// </remarks>
+        /// <remarks>
+        /// Default on Windows = 530;
+        /// </remarks>
+        public static int CaretOffMSec
+        {
+            get
+            {
+                return SystemSettings.GetMetric(SystemSettingsMetric.CaretOffMSec);
+            }
+        }
+
+        /// <summary>
+        /// Time, in milliseconds, for how long a caret should blink after a user interaction.
+        /// </summary>
+        /// <remarks>
+        /// After this timeout has expired, the caret should stay continuously visible until
+        /// the user interacts with the caret again(for example by entering, deleting or
+        /// cutting text). If this value is negative, carets should blink forever;
+        /// if it is zero, carets should not blink at all.
+        /// </remarks>
+        /// <remarks>
+        /// Default on Windows = -1;
+        /// </remarks>
+        public static int CaretTimeoutMSec
+        {
+            get
+            {
+                return SystemSettings.GetMetric(SystemSettingsMetric.CaretTimeoutMSec);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets blink time of the carets.
         /// </summary>
         /// <remarks>
         /// Blink time is measured in milliseconds and is the time elapsed
         /// between 2 inversions of the caret (blink time of the caret is common
         /// to all carets in the application).
+        /// </remarks>
+        /// <remarks>
+        /// Default on Windows: 530.
         /// </remarks>
         public virtual int BlinkTime
         {

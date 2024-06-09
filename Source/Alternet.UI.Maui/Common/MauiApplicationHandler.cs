@@ -13,7 +13,7 @@ namespace Alternet.UI
     {
         public static MouseButtonState MouseButtonState;
 
-        public static PointD ScreenPosition;
+        public static PointI ScreenPosition;
 
         public static KeyStates KeyStates;
 
@@ -189,12 +189,12 @@ namespace Alternet.UI
             return KeyStates;
         }
 
-        public MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
+        public MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton)
         {
             return MouseButtonState;
         }
 
-        public PointD GetScreenPositionFromSystem()
+        public PointI GetMousePositionFromSystem()
         {
             return ScreenPosition;
         }

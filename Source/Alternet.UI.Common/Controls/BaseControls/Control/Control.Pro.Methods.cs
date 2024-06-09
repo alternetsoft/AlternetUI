@@ -288,6 +288,18 @@ namespace Alternet.UI
             return ControlFactory.Handler.CreateControlHandler(this);
         }
 
+        protected virtual void PaintCaret(PaintEventArgs e)
+        {
+            if (!Focused || !UserPaint || caretInfo is null || !caretInfo.Visible)
+                return;
+            var position = PixelToDip(caretInfo.Position);
+            var size = PixelToDip(caretInfo.Size);
+            RectD rect = (position, size);
+
+            var caretColor = PlessCaretHandler.CaretColor.Get(IsDarkBackground);
+            e.Graphics.FillRectangle(caretColor.AsBrush, rect);
+        }
+
         protected void SetVisibleValue(bool value) => visible = value;
 
         /// <summary>

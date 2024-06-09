@@ -2338,6 +2338,8 @@ namespace Alternet.UI
         {
             OnPaint(e);
             Paint?.Invoke(this, e);
+
+            PaintCaret(e);
         }
 
         /// <summary>
@@ -2432,6 +2434,7 @@ namespace Alternet.UI
             GotFocus?.Invoke(this, EventArgs.Empty);
             Designer?.RaiseGotFocus(this);
             RaiseVisualStateChanged();
+            InvalidateCaret();
         }
 
         public void RaiseLostFocus()
@@ -2441,6 +2444,7 @@ namespace Alternet.UI
             OnLostFocus(EventArgs.Empty);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
+            InvalidateCaret();
         }
 
         public void RaiseActivated()

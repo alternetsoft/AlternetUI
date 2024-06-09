@@ -653,6 +653,8 @@ namespace Alternet.UI
                 App.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
             }
 
+            App.LogNameValue("Caret.BlinkTime", new Caret().BlinkTime);
+
             App.LogEndSection();
         }
 

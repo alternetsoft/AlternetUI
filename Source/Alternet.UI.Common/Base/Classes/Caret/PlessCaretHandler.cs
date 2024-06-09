@@ -10,13 +10,11 @@ namespace Alternet.UI
 {
     public class PlessCaretHandler : DisposableObject, ICaretHandler
     {
-        private static int blinkTime;
+        private static int blinkTime = 530;
+        private static LightDarkColor? color;
 
-        private SizeI size;
-        private PointI position;
-        private bool visible;
-        private bool isOk = true;
         private Control? control;
+        private readonly CaretInfo info = new();
 
         public PlessCaretHandler()
         {
@@ -25,45 +23,108 @@ namespace Alternet.UI
 
         public PlessCaretHandler(Control control, int width, int height)
         {
-            size = (width, height);
+            info.Size = (width, height);
             this.control = control;
+            control.CaretInfo = info;
+        }
+
+        public static LightDarkColor CaretColor
+        {
+            get
+            {
+                return color ??= new(Color.Black, Color.White);
+            }
+
+            set
+            {
+                color = value;
+            }
+        }
+
+        public static int CaretBlinkTime
+        {
+            get
+            {
+                return blinkTime;
+            }
+
+            set
+            {
+                blinkTime = value;
+            }
         }
 
         public Control? Control
         {
             get => control;
-
-            set => control = value;
         }
 
-        public int BlinkTime
+        /// <summary>
+        /// Gets or sets blink time of the carets.
+        /// </summary>
+        /// <remarks>
+        /// Blink time is measured in milliseconds and is the time elapsed
+        /// between 2 inversions of the caret (blink time of the caret is common
+        /// to all carets in the application).
+        /// </remarks>
+        public virtual int BlinkTime
         {
-            get => blinkTime;
-            set => blinkTime = value;
+            get => CaretBlinkTime;
+
+            set
+            {
+                CaretBlinkTime = value;
+            }
         }
 
-        public SizeI Size
+        public virtual SizeI Size
         {
-            get => size;
-            set => size = value;
+            get => info.Size;
+
+            set
+            {
+                if (info.Size == value)
+                    return;
+                info.Size = value;
+                control?.InvalidateCaret();
+            }
         }
 
-        public PointI Position
+        public virtual PointI Position
         {
-            get => position;
-            set => position = value;
+            get => info.Position;
+
+            set
+            {
+                if (info.Position == value)
+                    return;
+                info.Position = value;
+                control?.InvalidateCaret();
+            }
         }
 
-        public bool Visible
+        public virtual bool Visible
         {
-            get => visible;
-            set => visible = value;
+            get => info.Visible;
+
+            set
+            {
+                if (info.Visible == value)
+                    return;
+                info.Visible = value;
+                control?.InvalidateCaret();
+            }
         }
 
-        public bool IsOk
+        public virtual bool IsOk
         {
-            get => isOk;
-            set => isOk = value;
+            get => control != null && !IsDisposed && !control.IsDisposed;
+        }
+
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
+            control = null;
         }
     }
 }

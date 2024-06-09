@@ -136,7 +136,11 @@ namespace Alternet.UI
         protected override void OnTouch(SKTouchEventArgs e)
         {
             base.OnTouch(e);
-            if(control is not null)
+
+            /*if(e.ActionType == SKTouchAction.Pressed)
+                Focus();*/
+
+            if (control is not null)
             {
                 TouchEventArgs args = MauiTouchUtils.Convert(e);
                 control.RaiseTouch(args);
@@ -150,10 +154,14 @@ namespace Alternet.UI
 
         private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
         {
+            UI.Control.FocusedControl = null;
+            control?.RaiseLostFocus();
         }
 
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
         {
+            UI.Control.FocusedControl = control;
+            control?.RaiseGotFocus();
         }
     }
 }

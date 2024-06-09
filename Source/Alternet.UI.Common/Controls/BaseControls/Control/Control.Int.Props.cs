@@ -10,7 +10,22 @@ namespace Alternet.UI
 {
     public partial class Control
     {
+        private CaretInfo? caretInfo;
+
         internal static int ScreenShotCounter { get; set; } = 0;
+
+        internal CaretInfo? CaretInfo
+        {
+            get => caretInfo;
+
+            set
+            {
+                if (caretInfo == value)
+                    return;
+                caretInfo = value;
+                InvalidateCaret();
+            }
+        }
 
         internal bool ProcessUIUpdates
         {
