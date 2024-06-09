@@ -13,12 +13,24 @@ namespace Alternet.UI
 {
     internal class WxApplicationHandler : DisposableObject, IApplicationHandler
     {
+        private static readonly int[] eventIdentifiers = new int[(int)WxEventIdentifiers.Max + 1];
+        private static readonly int minEventIdentifier;
+        private static readonly WxEventIdentifiers[] eventIdentifierToEnum;
         private static Native.Application nativeApplication;
         private static readonly KeyboardInputProvider keyboardInputProvider;
         private static readonly MouseInputProvider mouseInputProvider;
 
         static WxApplicationHandler()
         {
+            Native.Application.GetEventIdentifiers(eventIdentifiers);
+
+            minEventIdentifier = eventIdentifiers.Min();
+            var maxEventIdentifier = eventIdentifiers.Max();
+            var length = maxEventIdentifier - minEventIdentifier + 1;
+            eventIdentifierToEnum = new WxEventIdentifiers[length];
+            for (int i = 0; i < eventIdentifiers.Length; i++)
+                eventIdentifierToEnum[eventIdentifiers[i] - minEventIdentifier] = (WxEventIdentifiers)i;
+
             if (App.SupressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);
 
@@ -34,11 +46,19 @@ namespace Alternet.UI
 
             Keyboard.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
             Mouse.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
+
         }
 
         public WxApplicationHandler()
         {
         }
+
+        public static WxEventIdentifiers MapToEventIdentifier(int eventId)
+        {
+            return eventIdentifierToEnum[eventId - minEventIdentifier];
+        }
+
+        public static int MinEventIdentifier => minEventIdentifier;
 
         /// <summary>
         /// Allows the programmer to specify whether the application will exit when the
@@ -267,12 +287,12 @@ namespace Alternet.UI
             WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
         }
 
-        public MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
+        public MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton)
         {
             return WxApplicationHandler.NativeMouse.GetButtonState(mouseButton);
         }
 
-        public PointD GetScreenPositionFromSystem()
+        public PointI GetMousePositionFromSystem()
         {
             return WxApplicationHandler.NativeMouse.GetPosition();
         }
@@ -292,6 +312,18 @@ namespace Alternet.UI
             mouseInputProvider.Dispose();
             nativeApplication.Dispose();
             nativeApplication = null!;
+        }
+
+        private static void LogEventIdentifiers()
+        {
+            App.LogSeparator();
+
+            foreach(var item in Enum.GetValues(typeof(WxEventIdentifiers)))
+            {
+                App.LogNameValue(item, eventIdentifiers[(int)item]);
+            }
+
+            App.LogSeparator();
         }
     }
 }

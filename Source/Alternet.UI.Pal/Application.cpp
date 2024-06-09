@@ -98,98 +98,14 @@ namespace Alternet::UI
         return wxApp::OnExceptionInMainLoop();
     }
 
-/*
-
-wxDEFINE_EVENT( wxEVT_LEFT_DOWN, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_LEFT_UP, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_MIDDLE_DOWN, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_MIDDLE_UP, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_RIGHT_DOWN, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_RIGHT_UP, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_MOTION, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_ENTER_WINDOW, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_LEAVE_WINDOW, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_LEFT_DCLICK, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_MIDDLE_DCLICK, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_RIGHT_DCLICK, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_SET_FOCUS, wxFocusEvent );
-wxDEFINE_EVENT( wxEVT_KILL_FOCUS, wxFocusEvent );
-wxDEFINE_EVENT( wxEVT_CHILD_FOCUS, wxChildFocusEvent );
-wxDEFINE_EVENT( wxEVT_MOUSEWHEEL, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_AUX1_DOWN, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_AUX1_UP, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_AUX1_DCLICK, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_AUX2_DOWN, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_AUX2_UP, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_AUX2_DCLICK, wxMouseEvent );
-wxDEFINE_EVENT( wxEVT_MAGNIFY, wxMouseEvent );
-*/
     void App::ProcessMouseEvent(wxMouseEvent& e, bool& handled)
     {
         auto eventType = e.GetEventType();
 
-        if (eventType == wxEVT_MOTION)
-        {
-            _owner->GetMouseInternal()->OnMouseMove(e, handled);
-            return;
-        }      
+        _owner->GetMouseInternal()->OnMouse(eventType, e, handled);
 
-        if (eventType == wxEVT_MOUSEWHEEL)
-            _owner->GetMouseInternal()->OnMouseWheel(e, handled);
-        else if (eventType == wxEVT_LEFT_DOWN)
-        {
-            _owner->GetMouseInternal()->OnMouseDown(e, MouseButton::Left, handled);
-        }
-        else if (eventType == wxEVT_MIDDLE_DOWN)
-            _owner->GetMouseInternal()->OnMouseDown(e, MouseButton::Middle, handled);
-        else if (eventType == wxEVT_RIGHT_DOWN)
-            _owner->GetMouseInternal()->OnMouseDown(e, MouseButton::Right, handled);
-        else if (eventType == wxEVT_AUX1_DOWN)
-            _owner->GetMouseInternal()->OnMouseDown(
-                e, MouseButton::XButton1, handled);
-        else if (eventType == wxEVT_AUX2_DOWN)
-            _owner->GetMouseInternal()->OnMouseDown(
-                e, MouseButton::XButton2, handled);
-        else if (eventType == wxEVT_LEFT_UP)
-        {
-            _owner->GetMouseInternal()->OnMouseUp(e, MouseButton::Left, handled);
-        }
-        else if (eventType == wxEVT_MIDDLE_UP)
-            _owner->GetMouseInternal()->OnMouseUp(e, MouseButton::Middle, handled);
-        else if (eventType == wxEVT_RIGHT_UP)
-            _owner->GetMouseInternal()->OnMouseUp(e, MouseButton::Right, handled);
-        else if (eventType == wxEVT_AUX1_UP)
-            _owner->GetMouseInternal()->OnMouseUp(e, MouseButton::XButton1, handled);
-        else if (eventType == wxEVT_AUX2_UP)
-            _owner->GetMouseInternal()->OnMouseUp(e, MouseButton::XButton2, handled);
-        else if (eventType == wxEVT_LEFT_DCLICK)
-            _owner->GetMouseInternal()->OnMouseDoubleClick(
-                e, MouseButton::Left, handled);
-        else if (eventType == wxEVT_MIDDLE_DCLICK)
-            _owner->GetMouseInternal()->OnMouseDoubleClick(
-                e, MouseButton::Middle, handled);
-        else if (eventType == wxEVT_RIGHT_DCLICK)
-            _owner->GetMouseInternal()->OnMouseDoubleClick(
-                e, MouseButton::Right, handled);
-        else if (eventType == wxEVT_AUX1_DCLICK)
-            _owner->GetMouseInternal()->OnMouseDoubleClick(
-                e, MouseButton::XButton1, handled);
-        else if (eventType == wxEVT_AUX2_DCLICK)
-            _owner->GetMouseInternal()->OnMouseDoubleClick(
-                e, MouseButton::XButton2, handled);
     }
 
-/*
-wxDEFINE_EVENT( wxEVT_CHAR, wxKeyEvent );
-wxDEFINE_EVENT( wxEVT_AFTER_CHAR, wxKeyEvent );
-wxDEFINE_EVENT( wxEVT_CHAR_HOOK, wxKeyEvent );
-wxDEFINE_EVENT( wxEVT_NAVIGATION_KEY, wxNavigationKeyEvent );
-wxDEFINE_EVENT( wxEVT_KEY_DOWN, wxKeyEvent );
-wxDEFINE_EVENT( wxEVT_KEY_UP, wxKeyEvent );
-#if wxUSE_HOTKEY
-wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
-#endif
-*/
     void App::ProcessKeyEvent(wxKeyEvent& e, bool& handled)
     {
         auto eventType = e.GetEventType();
@@ -302,6 +218,58 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
 
         _clipboard->Release();
         _clipboard = nullptr;
+    }
+
+    void Application::GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount)
+    {
+#define Event_MouseMove 0
+#define Event_MouseWheel 1
+
+#define Event_MouseDoubleClick_Left 2
+#define Event_MouseDoubleClick_Middle 3
+#define Event_MouseDoubleClick_Right 4
+#define Event_MouseDoubleClick_XButton1 5
+#define Event_MouseDoubleClick_XButton2 6  
+
+#define Event_MouseDown_Left 7
+#define Event_MouseDown_Middle 8
+#define Event_MouseDown_Right 9
+#define Event_MouseDown_XButton1 10
+#define Event_MouseDown_XButton2 11
+
+#define Event_MouseUp_Left 12
+#define Event_MouseUp_Middle 13
+#define Event_MouseUp_Right 14
+#define Event_MouseUp_XButton1 15
+#define Event_MouseUp_XButton2 16
+
+#define Event_Char 17
+#define Event_Char_Hook 18
+#define Event_Key_Down 19
+#define Event_Key_Up 20 
+
+        eventIdentifiers[Event_MouseMove] = wxEVT_MOTION;
+        eventIdentifiers[Event_MouseWheel] = wxEVT_MOUSEWHEEL;
+        eventIdentifiers[Event_MouseDoubleClick_Left] = wxEVT_LEFT_DCLICK;
+        eventIdentifiers[Event_MouseDoubleClick_Middle] = wxEVT_MIDDLE_DCLICK;
+        eventIdentifiers[Event_MouseDoubleClick_Right] = wxEVT_RIGHT_DCLICK;
+        eventIdentifiers[Event_MouseDoubleClick_XButton1] = wxEVT_AUX1_DCLICK;
+        eventIdentifiers[Event_MouseDoubleClick_XButton2] = wxEVT_AUX2_DCLICK;
+        eventIdentifiers[Event_MouseDown_Left] = wxEVT_LEFT_DOWN;
+        eventIdentifiers[Event_MouseDown_Middle] = wxEVT_MIDDLE_DOWN;
+        eventIdentifiers[Event_MouseDown_Right] = wxEVT_RIGHT_DOWN;
+        eventIdentifiers[Event_MouseDown_XButton1] = wxEVT_AUX1_DOWN;
+        eventIdentifiers[Event_MouseDown_XButton2] = wxEVT_AUX2_DOWN;
+        eventIdentifiers[Event_MouseUp_Left] = wxEVT_LEFT_UP;
+        eventIdentifiers[Event_MouseUp_Middle] = wxEVT_MIDDLE_UP;
+        eventIdentifiers[Event_MouseUp_Right] = wxEVT_RIGHT_UP;
+        eventIdentifiers[Event_MouseUp_XButton1] = wxEVT_AUX1_UP;
+        eventIdentifiers[Event_MouseUp_XButton2] = wxEVT_AUX2_UP;
+
+        eventIdentifiers[Event_Char] = wxEVT_CHAR;
+        eventIdentifiers[Event_Char_Hook] = wxEVT_CHAR_HOOK;
+        eventIdentifiers[Event_Key_Down] = wxEVT_KEY_DOWN;
+        eventIdentifiers[Event_Key_Up] = wxEVT_KEY_UP;
     }
 
     void* Application::GetDisplayMode()

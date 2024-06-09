@@ -76,23 +76,9 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class MouseButtonEventData
-    {
-        public long timestamp;
-        public System.IntPtr targetControl;
-        public MouseButton changedButton;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class MouseEventData
     {
-        public long timestamp;
-        public System.IntPtr targetControl;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class MouseWheelEventData
-    {
+        public int mouseEventKind;
         public long timestamp;
         public System.IntPtr targetControl;
         public int delta;

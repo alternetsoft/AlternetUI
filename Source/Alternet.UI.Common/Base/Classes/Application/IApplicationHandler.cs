@@ -33,9 +33,9 @@ namespace Alternet.UI
         /// <returns>
         /// The state of the specified mouse button.
         /// </returns>
-        MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton);
+        MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton);
 
-        PointD GetScreenPositionFromSystem();
+        PointI GetMousePositionFromSystem();
 
         /// <summary>
         /// Allows the programmer to specify whether the application will exit when the

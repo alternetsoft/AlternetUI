@@ -93,35 +93,13 @@ namespace Alternet.UI
         /// <returns>
         ///     The current mouse location in screen co-ords
         /// </returns>
-        public PointD GetScreenPosition()
+        public virtual PointD GetScreenPosition()
         {
-            return GetScreenPositionFromSystem();
-        }
-
-        /// <summary>
-        ///     Gets the current state of the specified button from the device from the
-        ///     underlying system
-        /// </summary>
-        /// <param name="mouseButton">
-        ///     The mouse button to get the state of
-        /// </param>
-        /// <returns>
-        ///     The state of the specified mouse button
-        /// </returns>
-        protected virtual MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
-        {
-            return App.Handler.GetButtonStateFromSystem(mouseButton);
-        }
-
-        /// <summary>
-        ///     Gets the current position of the mouse in screen co-ords from the underlying system
-        /// </summary>
-        /// <returns>
-        ///     The current mouse location in screen co-ords
-        /// </returns>
-        protected virtual PointD GetScreenPositionFromSystem()
-        {
-            return App.Handler.GetScreenPositionFromSystem();
+            var resultI = App.Handler.GetMousePositionFromSystem();
+            var index = Display.GetFromPoint(resultI);
+            var display = Display.AllScreens[index];
+            var result = display.PixelToDip(resultI);
+            return result;
         }
 
         /// <summary>
@@ -134,19 +112,9 @@ namespace Alternet.UI
         /// <returns>
         ///     The state of the specified mouse button
         /// </returns>
-        protected MouseButtonState GetButtonState(MouseButton mouseButton)
+        protected virtual MouseButtonState GetButtonState(MouseButton mouseButton)
         {
-            return GetButtonStateFromSystem(mouseButton);
-        }
-
-        private class EmptyMouseDevice : MouseDevice
-        {
-            protected override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
-            {
-                return MouseButtonState.Released;
-            }
-
-            protected override PointD GetScreenPositionFromSystem() => PointD.Empty;
+            return App.Handler.GetMouseButtonStateFromSystem(mouseButton);;
         }
     }
 }

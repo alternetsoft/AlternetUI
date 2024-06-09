@@ -19,10 +19,10 @@ ALTERNET_UI_API Mouse* Mouse_Create_()
     #endif
 }
 
-ALTERNET_UI_API PointD_C Mouse_GetPosition_(Mouse* obj)
+ALTERNET_UI_API PointI_C Mouse_GetPosition_(Mouse* obj)
 {
     #if !defined(__WXMSW__)
-    return MarshalExceptions<PointD_C>([&](){
+    return MarshalExceptions<PointI_C>([&](){
     #endif
         return obj->GetPosition();
     #if !defined(__WXMSW__)

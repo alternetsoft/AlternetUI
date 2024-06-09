@@ -39,6 +39,7 @@ void SetInUixmlPreviewerMode(bool value);
 
 bool GetInvokeRequired();
 
+static void GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount);
 static void ThrowError(int value);
 static void SetSystemOptionInt(const string& name, int value);
 void Run(Window* window);

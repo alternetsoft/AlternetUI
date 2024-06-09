@@ -658,7 +658,7 @@ namespace Alternet.UI
         /// <param name="hint">Hint string. Optinal. If present, it is
         /// shown in () after the value.</param>
         public static void LogNameValue(
-            string name,
+            object name,
             object? value,
             LogItemKind? kind = null,
             string? hint = null)
@@ -893,7 +893,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void LogReplace(
             object? obj,
-            string? prefix = null,
+            object? prefix = null,
             LogItemKind kind = LogItemKind.Information)
         {
             var msg = obj?.ToString();
@@ -902,9 +902,9 @@ namespace Alternet.UI
             WriteToLogFileIfAllowed(msg);
             if (DebugWriteLine.HasKind(kind))
                 Debug.WriteLine(msg);
-            prefix ??= msg;
+            var prefixStr = prefix?.ToString() ?? msg;
 
-            var args = new LogMessageEventArgs(msg, prefix, true);
+            var args = new LogMessageEventArgs(msg, prefixStr, true);
             args.Kind = kind;
 
             LogMessage?.Invoke(null, args);

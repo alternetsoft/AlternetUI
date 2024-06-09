@@ -5,25 +5,57 @@ namespace Alternet.UI
 {
     internal class MouseInputProvider : DisposableObject
     {
+        private readonly Action?[] events = new Action?[(int)WxEventIdentifiers.Max + 1];
         private readonly Native.Mouse nativeMouse;
+
+        private Control? targetControl;
+        private long timestamp;
+        private int delta;
 
         public MouseInputProvider(Native.Mouse nativeMouse)
         {
             this.nativeMouse = nativeMouse;
-            nativeMouse.MouseMove += NativeMouse_MouseMove;
-            nativeMouse.MouseDown += NativeMouse_MouseDown;
-            nativeMouse.MouseUp += NativeMouse_MouseUp;
-            nativeMouse.MouseWheel += NativeMouse_MouseWheel;
-            nativeMouse.MouseDoubleClick += NativeMouse_MouseDoubleClick;
+
+            nativeMouse.MouseChanged += NativeMouse_MouseChanged;
+
+            events[(int)WxEventIdentifiers.MouseMove] = ReportMouseMove;
+            events[(int)WxEventIdentifiers.MouseWheel] = ReportMouseWheel;
+
+            events[(int)WxEventIdentifiers.MouseDoubleClickLeft]        = () => { ReportMouseDoubleClick(MouseButton.Left); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickMiddle]      = () => { ReportMouseDoubleClick(MouseButton.Middle); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickRight]       = () => { ReportMouseDoubleClick(MouseButton.Right); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickXButton1]    = () => { ReportMouseDoubleClick(MouseButton.XButton1); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickXButton2]    = () => { ReportMouseDoubleClick(MouseButton.XButton2); };
+
+            events[(int)WxEventIdentifiers.MouseDownLeft]       = () => { ReportMouseDown(MouseButton.Left); };
+            events[(int)WxEventIdentifiers.MouseDownMiddle]     = () => { ReportMouseDown(MouseButton.Middle); };
+            events[(int)WxEventIdentifiers.MouseDownRight]      = () => { ReportMouseDown(MouseButton.Right); };
+            events[(int)WxEventIdentifiers.MouseDownXButton1]   = () => { ReportMouseDown(MouseButton.XButton1); };
+            events[(int)WxEventIdentifiers.MouseDownXButton2]   = () => { ReportMouseDown(MouseButton.XButton2); };
+
+            events[(int)WxEventIdentifiers.MouseUpLeft]         = () => { ReportMouseUp(MouseButton.Left); };
+            events[(int)WxEventIdentifiers.MouseUpMiddle]       = () => { ReportMouseUp(MouseButton.Middle); };
+            events[(int)WxEventIdentifiers.MouseUpRight]        = () => { ReportMouseUp(MouseButton.Right); };
+            events[(int)WxEventIdentifiers.MouseUpXButton1]     = () => { ReportMouseUp(MouseButton.XButton1); };
+            events[(int)WxEventIdentifiers.MouseUpXButton2]     = () => { ReportMouseUp(MouseButton.XButton2); };
+        }
+
+        private void NativeMouse_MouseChanged(object? sender, NativeEventArgs<MouseEventData> e)
+        {
+            var mappedEvent = WxApplicationHandler.MapToEventIdentifier(e.Data.mouseEventKind);
+
+            targetControl = GetTargetControl(e.Data.targetControl, true);
+            timestamp = e.Data.timestamp;
+            delta = e.Data.delta;
+
+            events[(int)mappedEvent]?.Invoke();
+
+            e.Handled = false;
         }
 
         protected override void DisposeManaged()
         {
-            nativeMouse.MouseMove -= NativeMouse_MouseMove;
-            nativeMouse.MouseDown -= NativeMouse_MouseDown;
-            nativeMouse.MouseUp -= NativeMouse_MouseUp;
-            nativeMouse.MouseWheel -= NativeMouse_MouseWheel;
-            nativeMouse.MouseDoubleClick -= NativeMouse_MouseDoubleClick;
+            nativeMouse.MouseChanged -= NativeMouse_MouseChanged;
         }
 
         private static Control? GetTargetControl(IntPtr targetControlPointer, bool setHoveredControl)
@@ -54,61 +86,29 @@ namespace Alternet.UI
             return result;
         }
 
-        private void NativeMouse_MouseDoubleClick(
-            object? sender,
-            NativeEventArgs<MouseButtonEventData> e)
+        private void ReportMouseDoubleClick(MouseButton button)
         {
-            Mouse.ReportMouseDoubleClick(
-                GetTargetControl(e.Data.targetControl, true),
-                e.Data.timestamp,
-                (MouseButton)e.Data.changedButton,
-                out _);
-
-            e.Handled = false;
+            Mouse.ReportMouseDoubleClick(targetControl, timestamp, button, out _);
         }
 
-        private void NativeMouse_MouseWheel(object? sender, NativeEventArgs<MouseWheelEventData> e)
+        private void ReportMouseWheel()
         {
-            Mouse.ReportMouseWheel(
-                GetTargetControl(e.Data.targetControl, true),
-                e.Data.timestamp,
-                e.Data.delta,
-                out _);
-            e.Handled = false;
+            Mouse.ReportMouseWheel(targetControl, timestamp, delta, out _);
         }
 
-        private void NativeMouse_MouseUp(object? sender, NativeEventArgs<MouseButtonEventData> e)
+        private void ReportMouseUp(MouseButton button)
         {
-            Mouse.ReportMouseUp(
-                GetTargetControl(e.Data.targetControl, true),
-                e.Data.timestamp,
-                (MouseButton)e.Data.changedButton,
-                out _);
-
-            e.Handled = false;
+            Mouse.ReportMouseUp(targetControl, timestamp, button, out _);
         }
 
-        private void NativeMouse_MouseDown(object? sender, NativeEventArgs<MouseButtonEventData> e)
+        private void ReportMouseDown(MouseButton button)
         {
-            Mouse.ReportMouseDown(
-                GetTargetControl(e.Data.targetControl, true),
-                e.Data.timestamp,
-                (MouseButton)e.Data.changedButton,
-                out _);
-
-            e.Handled = false;
+            Mouse.ReportMouseDown(targetControl, timestamp, button, out _);
         }
 
-        private void NativeMouse_MouseMove(
-            object? sender,
-            Native.NativeEventArgs<Native.MouseEventData> e)
+        private void ReportMouseMove()
         {
-            Mouse.ReportMouseMove(
-                GetTargetControl(e.Data.targetControl, true),
-                e.Data.timestamp,
-                out _);
-
-            e.Handled = false;
+            Mouse.ReportMouseMove(targetControl, timestamp, out _);
         }
      }
 }

@@ -210,6 +210,17 @@ ALTERNET_UI_API c_bool Application_GetInvokeRequired_(Application* obj)
     #endif
 }
 
+ALTERNET_UI_API void Application_GetEventIdentifiers_(int* eventIdentifiers, int eventIdentifiersCount)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        Application::GetEventIdentifiers(eventIdentifiers, eventIdentifiersCount);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Application_ThrowError_(int value)
 {
     #if !defined(__WXMSW__)

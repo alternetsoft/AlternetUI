@@ -173,6 +173,11 @@ namespace Alternet.UI.Native
             
         }
         
+        public static void GetEventIdentifiers(System.Int32[] eventIdentifiers)
+        {
+            NativeApi.Application_GetEventIdentifiers_(eventIdentifiers, eventIdentifiers.Length);
+        }
+        
         public static void ThrowError(int value)
         {
             NativeApi.Application_ThrowError_(value);
@@ -485,6 +490,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInvokeRequired_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_GetEventIdentifiers_(System.Int32[] eventIdentifiers, int eventIdentifiersCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_ThrowError_(int value);
