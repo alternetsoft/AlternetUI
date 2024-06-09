@@ -11,6 +11,12 @@ namespace Alternet.UI
 {
     public class MauiApplicationHandler : DisposableObject, IApplicationHandler
     {
+        public static MouseButtonState MouseButtonState;
+
+        public static PointD ScreenPosition;
+
+        public static KeyStates KeyStates;
+
         /// <inheritdoc/>
         bool IApplicationHandler.ExitOnFrameDelete
         {
@@ -176,6 +182,21 @@ namespace Alternet.UI
 
         void IApplicationHandler.CrtSetDbgFlag(int value)
         {
+        }
+
+        public KeyStates GetKeyStatesFromSystem(Key key)
+        {
+            return KeyStates;
+        }
+
+        public MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
+        {
+            return MouseButtonState;
+        }
+
+        public PointD GetScreenPositionFromSystem()
+        {
+            return ScreenPosition;
         }
     }
 }
