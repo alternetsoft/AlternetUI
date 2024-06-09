@@ -9,6 +9,7 @@ using Alternet.UI.Extensions;
 using Alternet.Drawing;
 
 using SkiaSharp;
+using System.Diagnostics;
 
 namespace ControlsSample
 {
@@ -37,6 +38,7 @@ namespace ControlsSample
         };
 
         private bool refreshRequested;
+        private SkiaSharpSample.SampleBase? currentSample;
 
         public SkiaSharpExamplesWindow()
         {
@@ -74,6 +76,8 @@ namespace ControlsSample
 
             var samples = SkiaSharpSample.SamplesManager.GetSamples(platforms);
 
+            SkiaSharpSample.SamplesManager.OpenFile += SamplesManager_OpenFile;
+
             var memorySamples = samples
                 .Where(s => s.SupportedBackends.HasFlag(SkiaSharpSample.SampleBackends.Memory));
 
@@ -85,6 +89,7 @@ namespace ControlsSample
                 actionsListBox.Add(sample.Title,
                 () =>
                 {
+                    currentSample = sample;
                     Draw(sample.DrawSample);
                 });
             }
@@ -98,6 +103,17 @@ namespace ControlsSample
                 refreshRequested = true;
             }
 
+            pictureBox.Click += PictureBox_Click;
+        }
+
+        private void PictureBox_Click(object? sender, EventArgs e)
+        {
+            currentSample?.Tap();
+        }
+
+        private void SamplesManager_OpenFile(string obj)
+        {
+            AppUtils.ShellExecute(obj);
         }
 
         private void SkiaSharpExamplesWindow_Idle(object? sender, EventArgs e)

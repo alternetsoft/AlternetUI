@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -242,6 +243,7 @@ namespace Alternet.Drawing
         /// Returns <c>true</c> if there is a mask active, <c>false</c> otherwise.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual bool HasMask
         {
             get
