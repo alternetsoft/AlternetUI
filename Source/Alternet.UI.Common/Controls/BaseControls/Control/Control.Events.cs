@@ -10,6 +10,16 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Occurs when hovered control is changed. Control is hovered when mouse pointer is over it.
+        /// </summary>
+        public static event EventHandler? HoveredControlChanged;
+
+        /// <summary>
+        /// Occurs when focused control is changed.
+        /// </summary>
+        public static event EventHandler? FocusedControlChanged;
+
+        /// <summary>
         /// Occurs inside <see cref="Control.GetPreferredSize(SizeD)"/> method.
         /// </summary>
         /// <remarks>

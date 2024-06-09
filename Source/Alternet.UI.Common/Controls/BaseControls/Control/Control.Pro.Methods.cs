@@ -221,8 +221,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            if (focusedControl == this)
-                focusedControl = null;
+            if (FocusedControl == this)
+                FocusedControl = null;
+            if (HoveredControl == this)
+                HoveredControl = null;
 
             Designer?.RaiseDisposed(this);
             /*var children = Handler.AllChildren.ToArray();*/

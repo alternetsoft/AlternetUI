@@ -26,10 +26,20 @@ namespace Alternet.UI
             nativeMouse.MouseDoubleClick -= NativeMouse_MouseDoubleClick;
         }
 
-        private static Control? GetTargetControl(IntPtr targetControlPointer)
+        private static Control? GetTargetControl(IntPtr targetControlPointer, bool setHoveredControl)
         {
             if (targetControlPointer == IntPtr.Zero)
                 return null;
+
+            var hoveredControl = Control.GetHoveredControl();
+
+            var nativeHoveredHandler = hoveredControl?.Handler as WxControlHandler;
+
+            if(nativeHoveredHandler is not null)
+            {
+                if (nativeHoveredHandler.NativeControl.NativePointer == targetControlPointer)
+                    return hoveredControl;
+            }
 
             var nobj = NativeObject.GetFromNativePointer<NativeObject>(
                 targetControlPointer,
@@ -37,7 +47,11 @@ namespace Alternet.UI
             if (nobj is not Native.Control c)
                 return null;
 
-            return WxControlHandler.NativeControlToHandler(c)?.Control;
+            var result = WxControlHandler.NativeControlToHandler(c)?.Control;
+            if(setHoveredControl && result is not null)
+                Control.HoveredControl = result;
+
+            return result;
         }
 
         private void NativeMouse_MouseDoubleClick(
@@ -45,7 +59,7 @@ namespace Alternet.UI
             NativeEventArgs<MouseButtonEventData> e)
         {
             Mouse.ReportMouseDoubleClick(
-                GetTargetControl(e.Data.targetControl),
+                GetTargetControl(e.Data.targetControl, true),
                 e.Data.timestamp,
                 (MouseButton)e.Data.changedButton,
                 out _);
@@ -56,7 +70,7 @@ namespace Alternet.UI
         private void NativeMouse_MouseWheel(object? sender, NativeEventArgs<MouseWheelEventData> e)
         {
             Mouse.ReportMouseWheel(
-                GetTargetControl(e.Data.targetControl),
+                GetTargetControl(e.Data.targetControl, true),
                 e.Data.timestamp,
                 e.Data.delta,
                 out _);
@@ -66,7 +80,7 @@ namespace Alternet.UI
         private void NativeMouse_MouseUp(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
             Mouse.ReportMouseUp(
-                GetTargetControl(e.Data.targetControl),
+                GetTargetControl(e.Data.targetControl, true),
                 e.Data.timestamp,
                 (MouseButton)e.Data.changedButton,
                 out _);
@@ -77,7 +91,7 @@ namespace Alternet.UI
         private void NativeMouse_MouseDown(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
             Mouse.ReportMouseDown(
-                GetTargetControl(e.Data.targetControl),
+                GetTargetControl(e.Data.targetControl, true),
                 e.Data.timestamp,
                 (MouseButton)e.Data.changedButton,
                 out _);
@@ -90,7 +104,7 @@ namespace Alternet.UI
             Native.NativeEventArgs<Native.MouseEventData> e)
         {
             Mouse.ReportMouseMove(
-                GetTargetControl(e.Data.targetControl),
+                GetTargetControl(e.Data.targetControl, true),
                 e.Data.timestamp,
                 out _);
 

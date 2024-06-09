@@ -35,6 +35,7 @@ namespace Alternet.UI
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
         private static Control? focusedControl;
+        private static Control? hoveredControl;
 
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
@@ -152,6 +153,44 @@ namespace Alternet.UI
             {
                 defaultFont = value;
                 FontFactory.Handler.SetDefaultFont(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets focused control.
+        /// </summary>
+        /// <remarks>
+        /// Do not change this property, this is done by the library.
+        /// </remarks>
+        public static Control? FocusedControl
+        {
+            get => focusedControl;
+
+            set
+            {
+                if (focusedControl == value)
+                    return;
+                focusedControl = value;
+                FocusedControlChanged?.Invoke(focusedControl, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets hovered control.
+        /// </summary>
+        /// <remarks>
+        /// Do not change this property, this is done by the library.
+        /// </remarks>
+        public static Control? HoveredControl
+        {
+            get => hoveredControl;
+
+            set
+            {
+                if (hoveredControl == value)
+                    return;
+                hoveredControl = value;
+                HoveredControlChanged?.Invoke(hoveredControl, EventArgs.Empty);
             }
         }
 
