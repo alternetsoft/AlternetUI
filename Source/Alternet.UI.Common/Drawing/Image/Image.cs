@@ -148,7 +148,19 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether image is empty (is disposed or has an empty width or height).
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsEmpty => !IsOk || Size.AnyIsEmpty;
+
+        [Browsable(false)]
+        public virtual ImageBitsFormat BitsFormat
+        {
+            get
+            {
+                var formatKind = Handler.BitsFormat;
+                var format = GraphicsFactory.GetBitsFormat(formatKind);
+                return format;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether this image has an alpha channel.

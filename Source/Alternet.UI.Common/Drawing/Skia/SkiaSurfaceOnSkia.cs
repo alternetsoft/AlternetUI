@@ -12,29 +12,53 @@ namespace Alternet.Drawing
 {
     internal class SkiaSurfaceOnSkia : DisposableObject, ISkiaSurface
     {
-        private readonly SKBitmap bitmap;
-        private readonly SKCanvas canvas;
+        private SKBitmap? bitmap;
+        private SKSurface? surface;
+        private SKCanvas? canvas;
 
-        public SkiaSurfaceOnSkia(SKBitmap bitmap)
+        public SkiaSurfaceOnSkia()
         {
-            this.bitmap = bitmap;
-            canvas = new SKCanvas(bitmap);
         }
 
-        public int Width => bitmap.Width;
+        public SkiaSurfaceOnSkia(SKBitmap? bitmap)
+        {
+            CreateCanvas(bitmap);
+        }
 
-        public int Height => bitmap.Height;
+        public int Width => bitmap?.Width ?? 0;
 
-        public SKColorType ColorType => bitmap.Info.ColorType;
+        public int Height => bitmap?.Height ?? 0;
 
-        public SKAlphaType AlphaType => bitmap.Info.AlphaType;
+        public SKColorType ColorType => bitmap?.Info.ColorType ?? SKColorType.Unknown;
 
-        public SKSurface? Surface => null;
+        public SKAlphaType AlphaType => bitmap?.Info.AlphaType ?? SKAlphaType.Unknown;
 
-        public SKCanvas Canvas => canvas;
+        public SKSurface? Surface => surface;
+
+        public SKCanvas Canvas => canvas!;
 
         public SKBitmap? Bitmap => bitmap;
 
-        public bool IsOk => SkiaUtils.BitmapIsOk(bitmap);
+        public virtual bool IsOk => SkiaUtils.BitmapIsOk(bitmap);
+
+        protected override void DisposeManaged()
+        {
+            canvas?.Flush();
+            base.DisposeManaged();
+        }
+
+        protected virtual void CreateCanvas(SKBitmap? bitmap)
+        {
+            if (bitmap is null)
+            {
+                surface = SKSurface.CreateNull(0, 0);
+                canvas = surface.Canvas;
+            }
+            else
+            {
+                this.bitmap = bitmap;
+                canvas = new SKCanvas(bitmap);
+            }
+        }
     }
 }
