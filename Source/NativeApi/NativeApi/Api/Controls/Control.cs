@@ -60,6 +60,11 @@ namespace NativeApi.Api
         public int LayoutDirection { get; set; }
         public string Name { get; set; }
         public int Id { get; set; }
+
+        public SizeI EventOldDpi { get; }
+
+        public SizeI EventNewDpi { get; }
+
         public event EventHandler? Idle;
         public event EventHandler? Paint;
         public event EventHandler? MouseEnter;
@@ -67,6 +72,7 @@ namespace NativeApi.Api
         public event EventHandler? MouseClick;
         public event EventHandler? VisibleChanged;
         public event EventHandler? MouseCaptureLost;
+        public event EventHandler? DpiChanged;
 
         [NativeEvent(cancellable: true)]
         public event EventHandler? Destroyed;

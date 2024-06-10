@@ -68,6 +68,7 @@ namespace Alternet::UI
 #include "Api/Control.inc"
     public:
         void OnTextChanged(wxCommandEvent& event);
+        void OnDpiChanged(wxDPIChangedEvent& event);
 
         long BuildStyle(long style, long element, bool value);
         void UpdateWindowStyle(long element, bool value);
@@ -117,6 +118,8 @@ namespace Alternet::UI
         int _ignoreRecreate = 0;
         int _borderStyle = 0;
         int _disableRecreateCounter = 0;
+        SizeI _eventOldDpi;
+        SizeI _eventNewDpi;
 
         virtual void OnPaint(wxPaintEvent& event);
         void OnEraseBackground(wxEraseEvent& event);

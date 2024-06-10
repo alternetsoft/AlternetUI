@@ -581,6 +581,11 @@ namespace Alternet::UI
 		return ((wxDisplay*)handle)->GetScaleFactor();
 	}
 
+	bool WxOtherFactory::DisplayIsOk(void* handle)
+	{
+		return ((wxDisplay*)handle)->IsOk();
+	}
+
 	bool WxOtherFactory::DisplayIsPrimary(void* handle)
 	{
 		return ((wxDisplay*)handle)->IsPrimary();

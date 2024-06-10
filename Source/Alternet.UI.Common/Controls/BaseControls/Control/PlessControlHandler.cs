@@ -144,6 +144,9 @@ namespace Alternet.UI
         
         public virtual bool IsFocusable { get; set; }
         public Action? SystemColorsChanged { get; set; }
+        public SizeI EventOldDpi { get; }
+        public SizeI EventNewDpi { get; }
+        public Action? DpiChanged { get; set; }
 
         public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {
@@ -239,7 +242,7 @@ namespace Alternet.UI
 
         public virtual SizeD GetDPI()
         {
-            return Control.GetDisplay().DPI;
+            return 96 * GetPixelScaleFactor();
         }
 
         public virtual nint GetHandle()
@@ -252,9 +255,9 @@ namespace Alternet.UI
             return AssemblyUtils.Default;
         }
 
-        public virtual double GetPixelScaleFactor()
+        public virtual Coord GetPixelScaleFactor()
         {
-            return Control.GetDisplay().ScaleFactor;
+            return Display.Primary.ScaleFactor;
         }
 
         public virtual SizeD GetPreferredSize(SizeD availableSize)
@@ -327,19 +330,14 @@ namespace Alternet.UI
             return PlessGraphics.Default;
         }
 
-        public virtual int PixelFromDip(double value)
+        public virtual int PixelFromDip(Coord value)
         {
-            return Control.GetDisplay().PixelFromDip(value);
+            return GraphicsFactory.PixelFromDip(value, Control.GetPixelScaleFactor());
         }
 
-        public virtual double PixelFromDipF(double value)
+        public virtual Coord PixelToDip(int value)
         {
-            return Control.GetDisplay().PixelFromDip(value);
-        }
-
-        public virtual double PixelToDip(int value)
-        {
-            return Control.GetDisplay().PixelToDip(value);
+            return GraphicsFactory.PixelToDip(value, Control.GetPixelScaleFactor()); 
         }
 
         public virtual void Raise()

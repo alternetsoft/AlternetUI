@@ -1680,12 +1680,6 @@ namespace Alternet.UI
         void SuspendLayout();
 
         /// <summary>
-        /// Gets <see cref="Display"/> where this control is shown.
-        /// </summary>
-        /// <returns></returns>
-        Display GetDisplay();
-
-        /// <summary>
         /// Changes size of the control to fit the size of its content.
         /// </summary>
         /// <param name="mode">Specifies how a control will size itself to fit the size of
@@ -2111,13 +2105,6 @@ namespace Alternet.UI
         /// <returns> A <see cref="PointD" /> that represents the converted
         /// <see cref="PointD" />, <paramref name="p" />, in client coordinates.</returns>
         PointD PointToClient(PointD p);
-
-        /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
-        /// </summary>
-        /// <param name="value">Value in device-independent units.</param>
-        /// <returns></returns>
-        Coord PixelFromDipF(Coord value);
 
         /// <summary>
         /// Invalidates the specified region of the control (adds it to the control's update

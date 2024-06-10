@@ -1012,15 +1012,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="Display"/> where this control is shown.
-        /// </summary>
-        /// <returns></returns>
-        public virtual Display GetDisplay()
-        {
-            return display ??= new(this);
-        }
-
-        /// <summary>
         /// Changes size of the control to fit the size of its content.
         /// </summary>
         /// <param name="mode">Specifies how a control will size itself to fit the size of
@@ -2152,16 +2143,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
-        /// </summary>
-        /// <param name="value">Value in device-independent units.</param>
-        /// <returns></returns>
-        public virtual Coord PixelFromDipF(Coord value)
-        {
-            return Handler.PixelFromDipF(value);
-        }
-
-        /// <summary>
         /// Invalidates the specified region of the control (adds it to the control's update
         /// region, which is the area that will be repainted at the next paint operation), and
         /// causes a paint message to be sent to the control. Optionally, invalidates the
@@ -2221,7 +2202,6 @@ namespace Alternet.UI
 
         public virtual void ResetDisplay()
         {
-            SafeDispose(ref display);
         }
 
         public void RaiseHandlerLocationChanged()
@@ -2388,6 +2368,19 @@ namespace Alternet.UI
         {
             OnDragOver(e);
             DragOver?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DpiChanged"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DpiChangedEventArgs"/> that contains the
+        /// event data.</param>
+        public void RaiseDpiChanged(DpiChangedEventArgs e)
+        {
+            ResetDisplay();
+            ResetMeasureCanvas();
+            OnDpiChanged(e);
+            DpiChanged?.Invoke(this, e);
         }
 
         /// <summary>

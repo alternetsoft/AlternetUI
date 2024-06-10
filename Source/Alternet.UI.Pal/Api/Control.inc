@@ -49,6 +49,12 @@ int GetId();
 void SetId(int value);
 
 
+SizeI GetEventOldDpi();
+
+
+SizeI GetEventNewDpi();
+
+
 virtual string GetText();
 virtual void SetText(const string& value);
 
@@ -161,6 +167,10 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+void EndUpdate();
+void RecreateWindow();
+void ResetBackgroundColor();
+void ResetForegroundColor();
 PointD ClientToScreen(const PointD& point);
 PointD ScreenToClient(const PointD& point);
 PointI ScreenToDevice(const PointD& point);
@@ -205,10 +215,6 @@ DragDropEffects DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEff
 DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
 void BeginUpdate();
-void EndUpdate();
-void RecreateWindow();
-void ResetBackgroundColor();
-void ResetForegroundColor();
 bool BeginRepositioningChildren();
 void EndRepositioningChildren();
 RectI GetUpdateClientRect();
@@ -247,6 +253,7 @@ enum class ControlEvent
     MouseClick,
     VisibleChanged,
     MouseCaptureLost,
+    DpiChanged,
     Destroyed,
     TextChanged,
     GotFocus,

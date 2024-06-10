@@ -246,6 +246,15 @@ namespace Alternet.UI
             RefreshRects(caretInfo.Region);
         }
 
+        internal virtual void OnHandlerDpiChanged()
+        {
+            var oldDpi = Handler.EventOldDpi;
+            var newDpi = Handler.EventNewDpi;
+
+            var e = new DpiChangedEventArgs(oldDpi, newDpi);
+            RaiseDpiChanged(e);
+        }
+
         internal virtual void OnHandlerVerticalScrollBarValueChanged()
         {
             var args = new ScrollEventArgs

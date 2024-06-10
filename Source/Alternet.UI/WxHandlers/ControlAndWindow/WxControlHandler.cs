@@ -20,6 +20,28 @@ namespace Alternet.UI
         {
         }
 
+        public SizeI EventOldDpi
+        {
+            get
+            {
+                return NativeControl.EventOldDpi;
+            }
+        }
+
+        public SizeI EventNewDpi
+        {
+            get
+            {
+                return NativeControl.EventNewDpi;
+            }
+        }
+
+        public Action? DpiChanged
+        {
+            get => NativeControl.DpiChanged;
+            set => NativeControl.DpiChanged = value;
+        }
+
         public Action? SystemColorsChanged
         {
             get => NativeControl.SystemColorsChanged;

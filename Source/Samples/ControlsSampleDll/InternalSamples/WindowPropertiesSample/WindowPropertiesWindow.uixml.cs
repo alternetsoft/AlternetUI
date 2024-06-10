@@ -37,6 +37,12 @@ namespace WindowPropertiesSample
             eventsListBox.ContextMenu.Required();
 
             SystemColorsChanged += WindowPropertiesWindow_SystemColorsChanged;
+            DpiChanged += WindowPropertiesWindow_DpiChanged;
+        }
+
+        private void WindowPropertiesWindow_DpiChanged(object? sender, DpiChangedEventArgs e)
+        {
+            App.Log("Dpi Changed");
         }
 
         private void WindowPropertiesWindow_SystemColorsChanged(object? sender, EventArgs e)

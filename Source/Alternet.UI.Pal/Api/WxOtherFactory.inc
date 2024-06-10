@@ -4,6 +4,7 @@ public:
 static bool GetRichToolTipUseGeneric();
 static void SetRichToolTipUseGeneric(bool value);
 
+static void RendererDrawCheckMark(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 static SizeI RendererGetCheckBoxSize(void* renderer, void* win, int flags);
 static SizeI RendererGetCheckMarkSize(void* renderer, void* win);
 static SizeI RendererGetExpanderSize(void* renderer, void* win);
@@ -105,6 +106,7 @@ static void* CreateDisplay2(uint32_t index);
 static void* CreateDisplay3(void* window);
 static void DeleteDisplay(void* handle);
 static uint32_t DisplayGetCount();
+static bool DisplayIsOk(void* handle);
 static int DisplayGetFromPoint(const PointI& pt);
 static int DisplayGetFromWindow(void* win);
 static int DisplayGetStdPPIValue();
@@ -138,7 +140,6 @@ static void RendererDrawSplitterSash(void* renderer, void* win, DrawingContext* 
 static void RendererDrawComboBoxDropButton(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 static void RendererDrawDropArrow(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 static void RendererDrawCheckBox(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
-static void RendererDrawCheckMark(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 public:
 WxOtherFactory();
 protected:

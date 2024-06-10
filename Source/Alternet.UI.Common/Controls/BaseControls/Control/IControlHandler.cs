@@ -10,6 +10,10 @@ namespace Alternet.UI
 {
     public interface IControlHandler : IDisposableObject
     {
+        SizeI EventOldDpi { get; }
+
+        SizeI EventNewDpi { get; }
+
         Action<DragEventArgs>? DragDrop { get; set; }
 
         Action<DragEventArgs>? DragOver { get; set; }
@@ -17,6 +21,8 @@ namespace Alternet.UI
         Action<DragEventArgs>? DragEnter { get; set; }
 
         Action? SystemColorsChanged { get; set; }
+
+        Action? DpiChanged { get; set; }
 
         Action? Idle { get; set; }
 
@@ -214,8 +220,6 @@ namespace Alternet.UI
         Coord PixelToDip(int value);
 
         int PixelFromDip(Coord value);
-
-        Coord PixelFromDipF(Coord value);
 
         void SetScrollBar(
             bool isVertical,

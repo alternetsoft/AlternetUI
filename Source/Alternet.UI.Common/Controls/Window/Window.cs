@@ -44,12 +44,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the DPI setting changes on the display device
-        /// where the form is currently displayed.
-        /// </summary>
-        public event DpiChangedEventHandler? DpiChanged;
-
-        /// <summary>
         /// Occurs when the value of the <see cref="Menu"/> property changes.
         /// </summary>
         public event EventHandler? MenuChanged;
@@ -1209,12 +1203,18 @@ namespace Alternet.UI
         {
         }
 
+        protected override void OnDpiChanged(DpiChangedEventArgs e)
+        {
+            base.OnDpiChanged(e);
+            Display.Reset();
+        }
+
         /// <summary>
         /// Applies <see cref="Window.StartLocation"/> to the location of the window.
         /// </summary>
         protected virtual void ApplyStartLocation(Control? owner)
         {
-            RectD displayRect = GetDisplay().ClientAreaDip;
+            RectD displayRect = new Display(this).ClientAreaDip;
             RectD parentRect = RectD.Empty;
             bool center = true;
 
@@ -1339,21 +1339,6 @@ namespace Alternet.UI
 
             if (oldDisplay == newDisplay)
                 return;
-
-            var oldDisplayObject = Display.GetDisplay(oldDisplay.Value);
-            var newDisplayObject = Display.GetDisplay(newDisplay);
-
-            var oldDpi = oldDisplayObject.DPI.Width;
-            var newDpi = newDisplayObject.DPI.Width;
-
-            if(oldDpi != newDpi)
-            {
-                if(DpiChanged is not null)
-                {
-                    var e = new DpiChangedEventArgs(oldDpi, newDpi);
-                    DpiChanged(this, e);
-                }
-            }
 
             oldDisplay = newDisplay;
 
