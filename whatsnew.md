@@ -1,3 +1,19 @@
+# 0.9.607 (2024 June 10)
+
+- Added SkiaSharp mega demo in ControlsSample.
+- Control: SystemColorsChanged event.
+- Control: All event calls and other code move out from On* methods to Raise* methods, so now we do not need to call base method when overriding On* methods.
+- Control: Added Bubble* methods.
+- Control: GetFocusedControl speed optimization.
+- Control: static events FocusedControlChanged, HoveredControlChanged
+- GenericImage: HasAlpha, HasMask are now properties and not methods (similar to Image).
+- GenericImage: LockSurface() which allows to lock SKCanvas.
+- Key and mouse events handling speed optimization.
+- Mouse and Keyboard classes are now not abstract and have Default property.
+- PictureBox is invalidated when Image prop is set.
+- Fixed exception in get mouse pos from system (occured in some cases).
+- Platformless caret implemented in Control.
+
 # 0.9.606 (2024 June 8)
 
 - Display.Reset, Image.HasMask.
