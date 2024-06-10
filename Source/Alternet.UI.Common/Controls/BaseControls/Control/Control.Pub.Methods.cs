@@ -403,6 +403,12 @@ namespace Alternet.UI
             Handler.RefreshRect(rect, eraseBackground);
         }
 
+        public virtual void RefreshRects(IEnumerable<RectI> rects, bool eraseBackground = true)
+        {
+            foreach (var rect in rects)
+                RefreshRect(PixelToDip(rect), eraseBackground);
+        }
+
         /// <summary>
         /// Creates native control if its not already created.
         /// </summary>
@@ -2434,7 +2440,12 @@ namespace Alternet.UI
             GotFocus?.Invoke(this, EventArgs.Empty);
             Designer?.RaiseGotFocus(this);
             RaiseVisualStateChanged();
-            InvalidateCaret();
+
+            if(CaretInfo is not null)
+            {
+                CaretInfo.ControlFocused = true;
+                InvalidateCaret();
+            }
         }
 
         public void RaiseLostFocus()
@@ -2444,7 +2455,12 @@ namespace Alternet.UI
             OnLostFocus(EventArgs.Empty);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
-            InvalidateCaret();
+
+            if (CaretInfo is not null)
+            {
+                CaretInfo.ControlFocused = false;
+                Invalidate();
+            }
         }
 
         public void RaiseActivated()

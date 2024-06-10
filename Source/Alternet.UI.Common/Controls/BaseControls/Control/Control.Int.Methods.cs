@@ -243,10 +243,7 @@ namespace Alternet.UI
         {
             if (caretInfo is null || !caretInfo.Visible)
                 return;
-            var position = PixelToDip(caretInfo.Position);
-            var size = PixelToDip(caretInfo.Size);
-            var rect = (position, size);
-            RefreshRect(rect);
+            RefreshRects(caretInfo.Region);
         }
 
         internal virtual void OnHandlerVerticalScrollBarValueChanged()

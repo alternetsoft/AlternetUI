@@ -290,14 +290,17 @@ namespace Alternet.UI
 
         protected virtual void PaintCaret(PaintEventArgs e)
         {
-            if (!Focused || !UserPaint || caretInfo is null || !caretInfo.Visible)
+            if (!Focused || !UserPaint || caretInfo is null)
                 return;
-            var position = PixelToDip(caretInfo.Position);
-            var size = PixelToDip(caretInfo.Size);
-            RectD rect = (position, size);
+
+            if (caretInfo.IsDisposed)
+                CaretInfo = null;
+
+            if (!caretInfo.Visible)
+                return;
 
             var caretColor = PlessCaretHandler.CaretColor.Get(IsDarkBackground);
-            e.Graphics.FillRectangle(caretColor.AsBrush, rect);
+            e.Graphics.FillRectangle(caretColor.AsBrush, PixelToDip(caretInfo.Rect));
         }
 
         protected void SetVisibleValue(bool value) => visible = value;

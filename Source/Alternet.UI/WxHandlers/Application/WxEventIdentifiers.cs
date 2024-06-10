@@ -8,6 +8,8 @@ namespace Alternet.UI
 {
     internal enum WxEventIdentifiers
     {
+        None = -1,
+
         MouseMove = 0,
         MouseWheel = 1,
 
@@ -32,7 +34,7 @@ namespace Alternet.UI
         Char = 17,
         CharHook = 18,
         KeyDown  =19,
-        KeyUp = 20 ,
+        KeyUp = 20,
 
         Max = KeyUp,
     }

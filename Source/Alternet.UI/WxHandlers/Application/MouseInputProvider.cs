@@ -44,11 +44,17 @@ namespace Alternet.UI
         {
             var mappedEvent = WxApplicationHandler.MapToEventIdentifier(e.Data.mouseEventKind);
 
+            if (mappedEvent == WxEventIdentifiers.None)
+                return;
+
             targetControl = GetTargetControl(e.Data.targetControl, true);
             timestamp = e.Data.timestamp;
             delta = e.Data.delta;
 
-            events[(int)mappedEvent]?.Invoke();
+            if ((int)mappedEvent >= events.Length)
+                return;
+
+            InsideTryCatchIfDebug(events[(int)mappedEvent]);
 
             e.Handled = false;
         }

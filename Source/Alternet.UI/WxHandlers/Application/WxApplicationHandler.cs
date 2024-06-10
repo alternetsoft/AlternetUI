@@ -46,16 +46,23 @@ namespace Alternet.UI
 
             Keyboard.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
             Mouse.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
-
         }
 
         public WxApplicationHandler()
         {
+            LogUtils.RegisterLogAction("Use Pless Caret", () => { UsePlessCaret = true; });
         }
+
+        public static bool UsePlessCaret { get; set; } = false;
 
         public static WxEventIdentifiers MapToEventIdentifier(int eventId)
         {
-            return eventIdentifierToEnum[eventId - minEventIdentifier];
+            var id = eventId - minEventIdentifier;
+
+            if (id < 0 || id >= eventIdentifierToEnum.Length)
+                return WxEventIdentifiers.None;
+
+            return eventIdentifierToEnum[id];
         }
 
         public static int MinEventIdentifier => minEventIdentifier;
@@ -218,11 +225,15 @@ namespace Alternet.UI
 
         public ICaretHandler CreateCaretHandler()
         {
+            if (UsePlessCaret)
+                return new PlessCaretHandler();
             return new WxCaretHandler();
         }
 
         public ICaretHandler CreateCaretHandler(Control control, int width, int height)
         {
+            if (UsePlessCaret)
+                return new PlessCaretHandler(control, width, height);
             return new WxCaretHandler(control, width, height);
         }
 

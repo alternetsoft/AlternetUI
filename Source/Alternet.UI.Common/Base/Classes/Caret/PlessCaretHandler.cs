@@ -124,7 +124,11 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             base.DisposeManaged();
-            control = null;
+            info.IsDisposed = true;
+            if(control is not null)
+            {
+                control = null;
+            }
         }
     }
 }

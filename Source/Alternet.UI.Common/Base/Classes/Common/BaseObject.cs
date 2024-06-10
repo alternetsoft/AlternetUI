@@ -98,16 +98,25 @@ namespace Alternet.UI
         /// exception is logged.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void InsideTryCatch(Action action)
+        public static void InsideTryCatch(Action? action)
         {
             try
             {
-                action();
+                action?.Invoke();
             }
             catch (Exception e)
             {
                 LogUtils.LogException(e);
             }
+        }
+
+        public static void InsideTryCatchIfDebug(Action? action)
+        {
+#if DEBUG
+            InsideTryCatch(action);
+#else
+            action?.Invoke();
+#endif
         }
 
         /// <inheritdoc/>
