@@ -14,13 +14,13 @@ namespace Alternet.UI
 {
     internal class MauiControlHandler : PlessControlHandler, IControlHandler
     {
-        private View? container;
+        private SkiaContainer? container;
 
         public MauiControlHandler()
         {
         }
 
-        public View? Container
+        public SkiaContainer? Container
         {
             get => container;
 

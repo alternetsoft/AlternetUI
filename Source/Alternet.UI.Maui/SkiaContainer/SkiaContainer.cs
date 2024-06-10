@@ -25,7 +25,7 @@ SKPaint https://learn.microsoft.com/en-us/dotnet/api/skiasharp.skpaint?view=skia
 
 namespace Alternet.UI
 {
-    public class SkiaContainer : ContentView, IView
+    public class SkiaContainer : ContentView
     {
         private readonly SKCanvasView canvas = new();
         private SkiaGraphics? graphics;
@@ -71,17 +71,14 @@ namespace Alternet.UI
                 bool IsLoaded
             */
 
-            canvas.Focused += SkiaContainer_Focused;
-            canvas.Unfocused += SkiaContainer_Unfocused;
+            Focused += SkiaContainer_Focused;
+            Unfocused += SkiaContainer_Unfocused;
+            FocusChangeRequested += SkiaContainer_FocusChangeRequested;
         }
 
-        bool IView.Focus()
+        private void SkiaContainer_FocusChangeRequested(object? sender, FocusRequestArgs e)
         {
-            return true;
-        }
-
-        void IView.Unfocus()
-        {
+            e.Result = true;
         }
 
         public SKCanvasView CanvasView => canvas;
