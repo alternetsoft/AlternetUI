@@ -30,19 +30,14 @@ namespace ControlsSample
             BottomVisible = false,
         };
 
-        private readonly FontListBox fontListBox = new()
+        private readonly ActionsListBox actionsListBox = new()
         {
             HasBorder = false,
         };
 
-        private readonly Button button = new("Paint on SKCanvas")
+        private readonly FontListBox fontListBox = new()
         {
-            Visible = true,
-        };
-
-        private readonly Button button2 = new("GenericImage to SKBitmap")
-        {
-            Visible = true,
+            HasBorder = false,
         };
 
         private readonly PropertyGrid propGrid = new()
@@ -60,6 +55,8 @@ namespace ControlsSample
         private readonly SideBarPanel rightPanel = new()
         {
         };
+
+        private int counter;
 
         static SkiaDrawingWindow()
         {
@@ -79,6 +76,7 @@ namespace ControlsSample
 
             fontListBox.SelectionChanged += FontListBox_SelectionChanged;
 
+            rightPanel.Add("Actions", actionsListBox);
             rightPanel.Add("Fonts", fontListBox);
             rightPanel.Add("Properties", propGrid);
 
@@ -96,21 +94,12 @@ namespace ControlsSample
             Size = (900, 700);
             IsMaximized = true;
 
-            var buttonPanel = AddHorizontalStackPanel();
-
-            button.Margin = 10;
-            button.VerticalAlignment = VerticalAlignment.Bottom;
-            button.HorizontalAlignment = HorizontalAlignment.Left;
-            button.Parent = buttonPanel;
-
-            button2.Margin = 10;
-            button2.VerticalAlignment = VerticalAlignment.Bottom;
-            button2.HorizontalAlignment = HorizontalAlignment.Left;
-            button2.Parent = buttonPanel;
-
-            button2.ClickAction = GenericToSkia;
-
-            button.ClickAction = PaintOnCanvas;
+            actionsListBox.AddAction("GenericImage to SKBitmap", GenericToSkia);
+            actionsListBox.AddAction("Paint on SKCanvas", PaintOnCanvas);
+            actionsListBox.AddAction("Draw text on SKSurface (alpha Bitmap)", DrawTextOnSkiaA);
+            actionsListBox.AddAction("Draw text on SKSurface (opaque Bitmap)", DrawTextOnSkia);
+            actionsListBox.AddAction("Lock SKSurface (alpha GenericImage)", LockSurfaceOnGenericImageA);
+            actionsListBox.AddAction("Lock SKSurface (opaque GenericImage)", LockSurfaceOnGenericImage);
 
             propGrid.SuggestedInitDefaults();
 
@@ -121,7 +110,7 @@ namespace ControlsSample
 
         private void RefreshPreviewControl()
         {
-            DrawTextOnSkia2();
+            DrawTextOnSkiaA();
         }
 
         private void FontListBox_SelectionChanged(object? sender, EventArgs e)
@@ -159,7 +148,7 @@ namespace ControlsSample
             pictureBox.Image = (Image)bitmap;
         }
 
-        internal void DrawTextOnSkia()
+        /*internal void DrawTextOnSkia()
         {
             RectD rect = (0, 0, 800, 600);
 
@@ -182,8 +171,7 @@ namespace ControlsSample
             canvas.DrawPoint(pt2, Color.Red);
 
             pictureBox.Image = (Image)bitmap;
-
-        }
+        }*/
 
         private void DrawBeziersPoint(SKCanvas dc)
         {
@@ -207,15 +195,50 @@ namespace ControlsSample
         }
 
         private Bitmap? bitmap;
-        private bool flag;
 
-        private void DrawTextOnSkia2()
+        private void LockSurfaceOnGenericImageA() => LockSurfaceOnGenericImage(true);
+
+        private void LockSurfaceOnGenericImage() => LockSurfaceOnGenericImage(false);
+
+        private void LockSurfaceOnGenericImage(bool hasAlpha)
+        {
+            var width = 700;
+            var height = 500;
+
+            var image = GenericImage.Create(PixelFromDip(width), PixelFromDip(height), Color.Aquamarine);
+            image.HasAlpha = hasAlpha;
+
+            using (var canvasLock = image.LockSurface())
+            {
+                var canvas = canvasLock.Canvas;
+                canvas.Scale((float)GetPixelScaleFactor());
+
+                canvas.Clear(prm.BackColor);
+
+                var font = SkiaSampleControl.SampleFont;
+
+                canvas.DrawText((counter++).ToString(), (600, 0), font, Color.Black, Color.LightGreen);
+
+                canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);
+
+                DrawBeziersPoint(canvas);
+                canvas.Flush();
+            }
+
+            pictureBox.Image = (Image)image;
+        }
+
+        private void DrawTextOnSkia() => DrawTextOnSkia(false);
+
+        private void DrawTextOnSkiaA() => DrawTextOnSkia(true);
+
+        private void DrawTextOnSkia(bool hasAlpha)
         {
             var width = 700;
             var height = 500;
 
             bitmap ??= new Bitmap(PixelFromDip(width), PixelFromDip(height));
-            bitmap.HasAlpha = true;
+            bitmap.HasAlpha = hasAlpha;
             bitmap.SetDPI(GetDPI());
 
             using (var canvasLock = bitmap.LockSurface())
@@ -223,14 +246,15 @@ namespace ControlsSample
                 var canvas = canvasLock.Canvas;
                 canvas.Scale((float)GetPixelScaleFactor());
 
-                canvas.Clear(flag ? prm.BackColor1 : prm.BackColor2);
-                flag = !flag;
+                canvas.Clear(prm.BackColor);
                 canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);
 
                 PointD pt = new(10, 10);
                 PointD pt2 = new(10, 150);
 
                 var font = SkiaSampleControl.SampleFont;
+
+                canvas.DrawText((counter++).ToString(), (600,0), font, Color.Black, Color.LightGreen);
 
                 canvas.DrawText(SkiaSampleControl.S1, pt, font, Color.Black, Color.LightGreen);
 
@@ -245,41 +269,28 @@ namespace ControlsSample
             }
 
             pictureBox.Image = bitmap;
-            pictureBox.Refresh();
         }
 
         private class DrawTextParams
         {
             private readonly SkiaDrawingWindow owner;
 
-            private Color backColor1 = Color.Yellow;
-            private Color backColor2 = Color.LightGoldenrodYellow;
+            private Color backColor = Color.LightGoldenrodYellow;
 
             public DrawTextParams(SkiaDrawingWindow owner)
             {
                 this.owner = owner;
             }
 
-            public Color BackColor1
+            public Color BackColor
             {
-                get => backColor1;
+                get => backColor;
 
                 set
                 {
-                    backColor1 = value;
+                    backColor = value;
                     owner.RefreshPreviewControl();
                 } 
-            }
-
-            public Color BackColor2
-            {
-                get => backColor2;
-
-                set
-                {
-                    backColor2 = value;
-                    owner.RefreshPreviewControl();
-                }
             }
 
             public Font Font

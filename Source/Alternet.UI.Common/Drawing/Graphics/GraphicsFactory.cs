@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -123,9 +124,48 @@ namespace Alternet.Drawing
             }
         }
 
-        public static ISkiaSurface CreateSkiaBitmapData(ILockImageBits image)
+        public static ISkiaSurface CreateSkiaSurface(Image image)
         {
+            Debug.Assert(image.IsOk, "Image.IsOk == true is required.");
+
+            if (image.Handler is SkiaImageHandler skiaHandler)
+                return new SkiaSurfaceOnSkia(skiaHandler.Bitmap);
+
+            Debug.Assert(!image.HasMask, "Image.HasMask == false is required.");
+
+            var formatKind = image.Handler.BitsFormat;
+            var format = GraphicsFactory.GetBitsFormat(formatKind);
+
+            if (!image.HasAlpha || App.IsMacOS || formatKind == ImageBitsFormatKind.Unknown
+                || format.ColorType == SKColorType.Unknown)
+            {
+                SKBitmap bitmap = (SKBitmap)image;
+
+                var result = new SkiaSurfaceOnSkia(bitmap);
+
+                result.Disposed += (s, e) =>
+                {
+                    image.Assign(bitmap);
+                };
+
+                return result;
+            }
+
             return new SkiaSurfaceOnBitmap(image);
+        }
+
+        public static ISkiaSurface CreateSkiaSurface(GenericImage image)
+        {
+            SKBitmap bitmap = (SKBitmap)image;
+
+            var result = new SkiaSurfaceOnSkia(bitmap);
+
+            result.Disposed += (s, e) =>
+            {
+                image.Assign(bitmap);
+            };
+
+            return result;
         }
 
         public static IGraphicsFactoryHandler Handler

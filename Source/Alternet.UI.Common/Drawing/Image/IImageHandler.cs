@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public interface IImageHandler : IDisposable, ILockImageBits
@@ -44,5 +46,9 @@ namespace Alternet.Drawing
         bool ResetAlpha();
 
         bool Rescale(SizeI sizeNeeded);
+
+        void Assign(GenericImage image);
+
+        void Assign(SKBitmap image);
     }
 }

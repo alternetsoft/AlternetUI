@@ -20,40 +20,37 @@ namespace Alternet.Drawing
         private readonly SKColorType colorType;
         private readonly SKAlphaType alphaType;
         private readonly bool isOk;
-        private readonly ILockImageBits image;
+        private readonly Image image;
 
-        static SkiaSurfaceOnBitmap()
+        public SkiaSurfaceOnBitmap(Image image)
         {
-        }
+            this.image = image;
 
-        public SkiaSurfaceOnBitmap(ILockImageBits image)
-        {
             if (App.IsWindowsOS)
             {
-                colorType = SKColorType.Bgra8888;
                 alphaType = SKAlphaType.Premul;
             }
             else
             if (App.IsLinuxOS)
             {
-                colorType = SKColorType.Rgba8888;
                 alphaType = SKAlphaType.Unpremul;
             }
             else
             if (App.IsMacOS)
             {
-                colorType = SKColorType.Rgba8888;
                 alphaType = SKAlphaType.Premul;
             }
             else
             {
-                colorType = SKColorType.Unknown;
                 alphaType = SKAlphaType.Premul;
             }
 
             width = image.Width;
             height = image.Height;
-            this.image = image;
+
+            var formatKind = image.Handler.BitsFormat;
+            var format = GraphicsFactory.GetBitsFormat(formatKind);
+            colorType = format.ColorType;
 
             var info = new SKImageInfo(
                 width,
@@ -61,10 +58,10 @@ namespace Alternet.Drawing
                 colorType,
                 alphaType);
 
-            var ptr = image.LockBits();
-            var stride = image.GetStride();
+            var ptr = image.Handler.LockBits();
+            var stride = image.Handler.GetStride();
             var negative = stride < 0;
-            isOk = ptr != default;
+            isOk = ptr != default;            
 
             if (isOk)
             {
@@ -82,6 +79,7 @@ namespace Alternet.Drawing
             }
 
             canvas = surface.Canvas;
+
             if(negative)
                 canvas.Scale(1, -1, 0, height / 2.0f);
         }
@@ -106,7 +104,7 @@ namespace Alternet.Drawing
         {
             canvas.Flush();
             surface.Dispose();
-            image.UnlockBits();
+            image.Handler.UnlockBits();
             base.DisposeManaged();
         }
     }

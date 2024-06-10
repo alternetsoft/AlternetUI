@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SkiaSharp;
+
 namespace Alternet.UI.Native
 {
     internal partial class Image : Alternet.Drawing.IImageHandler
@@ -29,12 +31,16 @@ namespace Alternet.UI.Native
             }
         }
 
-        public Alternet.Drawing.ISkiaSurface LockSurface()
+        public void Assign(SKBitmap bitmap)
         {
-            Debug.Assert(IsOk, "Image.IsOk == true is required.");
-            Debug.Assert(!HasMask, "Image.HasMask == false is required.");
+            Alternet.Drawing.GenericImage image = (Alternet.Drawing.GenericImage)bitmap;
+            Assign(image);
+        }
 
-            return Alternet.Drawing.GraphicsFactory.CreateSkiaBitmapData(this);
+        public void Assign(Alternet.Drawing.GenericImage image)
+        {
+            var depth = image.HasAlpha ? 32 : 24;
+            LoadFromGenericImage(Alternet.Drawing.WxGenericImageHandler.GetPtr(image), depth);
         }
 
         public bool SaveToStream(Stream stream, Alternet.Drawing.ImageFormat format, int quality)

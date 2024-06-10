@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -1834,9 +1835,17 @@ namespace Alternet.Drawing
             });
         }
 
+        public virtual void Assign(SKBitmap bitmap)
+        {
+            Pixels = bitmap.Pixels;
+        }
+
         public virtual ISkiaSurface LockSurface()
         {
-            return Handler.LockSurface();
+            Debug.Assert(IsOk, "Image.IsOk == true is required.");
+            Debug.Assert(!HasMask, "Image.HasMask == false is required.");
+
+            return GraphicsFactory.CreateSkiaSurface(this);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     internal class CaretInfo
     {
-        private List<RectI> region = new();
+        private readonly List<RectI> region = new();
         private SizeI size;
         private PointI position;
         private bool visible;

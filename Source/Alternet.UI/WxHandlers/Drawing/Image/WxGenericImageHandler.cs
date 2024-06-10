@@ -115,14 +115,6 @@ namespace Alternet.Drawing
             }
         }
 
-        public ISkiaSurface LockSurface()
-        {
-            Debug.Assert(IsOk, "Image.IsOk == true is required.");
-            Debug.Assert(!HasMask, "Image.HasMask == false is required.");
-
-            return GraphicsFactory.CreateSkiaBitmapData(this);
-        }
-
         public IntPtr LockBits() => UI.Native.GenericImage.LockBits(Handle);
 
         public void UnlockBits() => UI.Native.GenericImage.UnlockBits(Handle);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -653,7 +654,11 @@ namespace Alternet.UI
                 App.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
             }
 
+            App.LogSeparator();
+
             App.LogNameValue("Caret.BlinkTime", new Caret().BlinkTime);
+
+            App.LogNameValue("Vector.IsHardwareAccelerated", Vector.IsHardwareAccelerated);
 
             App.LogEndSection();
         }

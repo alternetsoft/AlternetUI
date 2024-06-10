@@ -325,7 +325,7 @@ namespace Alternet.UI
             nativeApplication = null!;
         }
 
-        private static void LogEventIdentifiers()
+        internal static void LogEventIdentifiers()
         {
             App.LogSeparator();
 
