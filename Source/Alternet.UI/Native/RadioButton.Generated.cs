@@ -61,14 +61,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.RadioButtonEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.RadioButtonEvent.CheckedChanged:
-                {
-                    CheckedChanged?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected RadioButtonEvent value: " + e);
-            }
+            CheckedChanged?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? CheckedChanged;

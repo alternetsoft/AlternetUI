@@ -251,14 +251,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.ButtonEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.ButtonEvent.Click:
-                {
-                    Click?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected ButtonEvent value: " + e);
-            }
+            Click?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? Click;

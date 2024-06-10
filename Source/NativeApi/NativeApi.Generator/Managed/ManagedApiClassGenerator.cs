@@ -473,46 +473,66 @@ using System.Security;");
             w.WriteLine();
 
             w.WriteLine($"IntPtr OnEvent(NativeApi.{declaringTypeName}Event e, IntPtr parameter)");
+
+            // ===========================
+
             using (new BlockIndent(w))
             {
-                w.WriteLine("switch (e)");
-                using (new BlockIndent(w))
+                if(events.Length == 1)
                 {
-                    foreach(var e in events)
-                    {
-                        w.WriteLine($"case NativeApi.{declaringTypeName}Event.{e.Name}:");
+                    FnSingle(events[0]);
+                }
+                else
+                    FnMultiple();
 
-                        using (new BlockIndent(w))
+                void FnSingle(EventInfo e)
+                {
+                    var dataType = MemberProvider.TryGetNativeEventDataType(e);
+                    if (dataType != null)
+                    {
+                        w.WriteLine($"var ea = new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter));");
+                        w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Result;");
+                    }
+                    else
+                    {
+                        var attribute = MemberProvider.GetEventAttribute(e);
+                        if (attribute.Cancellable)
                         {
-                            var dataType = MemberProvider.TryGetNativeEventDataType(e);
-                            if (dataType != null)
+                            using (new BlockIndent(w))
                             {
-                                w.WriteLine($"var ea = new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter));");
-                                w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Result;");
-                            }
-                            else
-                            {
-                                var attribute = MemberProvider.GetEventAttribute(e);
-                                if (attribute.Cancellable)
-                                {
-                                    using (new BlockIndent(w))
-                                    {
-                                        w.WriteLine($"var cea = new CancelEventArgs();");
-                                        w.WriteLine($"{e.Name}?.Invoke(this, cea);");
-                                        w.WriteLine(
-                                            $"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
-                                    }
-                                }
-                                else
-                                    w.WriteLine(
-                                        $"{e.Name}?.Invoke(); return IntPtr.Zero;");
+                                w.WriteLine($"var cea = new CancelEventArgs();");
+                                w.WriteLine($"{e.Name}?.Invoke(this, cea);");
+                                w.WriteLine(
+                                    $"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
                             }
                         }
+                        else
+                            w.WriteLine(
+                                $"{e.Name}?.Invoke(); return IntPtr.Zero;");
                     }
+                }
 
-                    w.WriteLine($"default: throw new Exception(\"Unexpected {declaringTypeName}Event value: \" + e);");
+                void FnMultiple()
+                {
+                    w.WriteLine("switch (e)");
+                    using (new BlockIndent(w))
+                    {
+                        foreach (var e in events)
+                        {
+                            w.WriteLine($"case NativeApi.{declaringTypeName}Event.{e.Name}:");
+
+                            using (new BlockIndent(w))
+                            {
+                                FnSingle(e);
+                            }
+                        }
+
+                        w.WriteLine($"default: throw new Exception(\"Unexpected {declaringTypeName}Event value: \" + e);");
+                    }
                 }
             }
+
+            // ===========================
 
             w.WriteLine();
 

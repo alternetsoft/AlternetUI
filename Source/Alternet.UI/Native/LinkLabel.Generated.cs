@@ -134,17 +134,10 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.LinkLabelEvent e, IntPtr parameter)
         {
-            switch (e)
             {
-                case NativeApi.LinkLabelEvent.HyperlinkClick:
-                {
-                    {
-                        var cea = new CancelEventArgs();
-                        HyperlinkClick?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
-                    }
-                }
-                default: throw new Exception("Unexpected LinkLabelEvent value: " + e);
+                var cea = new CancelEventArgs();
+                HyperlinkClick?.Invoke(this, cea);
+                return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
             }
         }
         

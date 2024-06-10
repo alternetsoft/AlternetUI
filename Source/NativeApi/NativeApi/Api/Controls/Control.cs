@@ -6,6 +6,8 @@ using ApiCommon;
 
 namespace NativeApi.Api
 {
+    using Coord = double;
+
     public abstract class Control
     {
         public bool BindScrollEvents { get; set; }
@@ -39,10 +41,10 @@ namespace NativeApi.Api
         public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant) => default;
         public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant) => default;
 
-        public static int DrawingFromDip(double value, IntPtr window) => default;
-        public static double DrawingDPIScaleFactor(IntPtr window) => default;
-        public static double DrawingToDip(int value, IntPtr window) => default;
-        public static double DrawingFromDipF(double value, IntPtr window) => default;
+        public static int DrawingFromDip(Coord value, IntPtr window) => default;
+        public static Coord DrawingDPIScaleFactor(IntPtr window) => default;
+        public static Coord DrawingToDip(int value, IntPtr window) => default;
+        public static Coord DrawingFromDipF(double value, IntPtr window) => default;
 
         public bool ProcessIdle { get; set; }
         public bool ProcessUIUpdates { get; set; }
@@ -126,7 +128,7 @@ namespace NativeApi.Api
         public static void NotifyCaptureLost() { }
         public void Freeze() { }
         public void Thaw() { }
-        public void ShowPopupMenu(IntPtr menu, double x, double y) { }
+        public void ShowPopupMenu(IntPtr menu, Coord x, Coord y) { }
         public void BeginIgnoreRecreate() {}
         public void EndIgnoreRecreate() {}
         public SizeD GetDPI() => default;

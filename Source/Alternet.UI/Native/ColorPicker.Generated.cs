@@ -61,14 +61,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.ColorPickerEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.ColorPickerEvent.ValueChanged:
-                {
-                    ValueChanged?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected ColorPickerEvent value: " + e);
-            }
+            ValueChanged?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? ValueChanged;

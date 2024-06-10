@@ -58,15 +58,8 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.MouseEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.MouseEvent.MouseChanged:
-                {
-                    var ea = new NativeEventArgs<MouseEventData>(MarshalEx.PtrToStructure<MouseEventData>(parameter));
-                    MouseChanged?.Invoke(this, ea); return ea.Result;
-                }
-                default: throw new Exception("Unexpected MouseEvent value: " + e);
-            }
+            var ea = new NativeEventArgs<MouseEventData>(MarshalEx.PtrToStructure<MouseEventData>(parameter));
+            MouseChanged?.Invoke(this, ea); return ea.Result;
         }
         
         public event NativeEventHandler<MouseEventData>? MouseChanged;
