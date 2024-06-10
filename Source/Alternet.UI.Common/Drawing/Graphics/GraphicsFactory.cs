@@ -139,6 +139,8 @@ namespace Alternet.Drawing
             if (!image.HasAlpha || App.IsMacOS || formatKind == ImageBitsFormatKind.Unknown
                 || format.ColorType == SKColorType.Unknown)
             {
+                App.DebugLogIf("CreateSkiaSurface for image using GenericImage", true);
+
                 SKBitmap bitmap = (SKBitmap)image;
 
                 var result = new SkiaSurfaceOnSkia(bitmap);

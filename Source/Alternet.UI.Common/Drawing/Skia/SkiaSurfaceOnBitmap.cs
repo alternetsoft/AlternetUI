@@ -26,31 +26,13 @@ namespace Alternet.Drawing
         {
             this.image = image;
 
-            if (App.IsWindowsOS)
-            {
-                alphaType = SKAlphaType.Premul;
-            }
-            else
-            if (App.IsLinuxOS)
-            {
-                alphaType = SKAlphaType.Unpremul;
-            }
-            else
-            if (App.IsMacOS)
-            {
-                alphaType = SKAlphaType.Premul;
-            }
-            else
-            {
-                alphaType = SKAlphaType.Premul;
-            }
-
             width = image.Width;
             height = image.Height;
 
             var formatKind = image.Handler.BitsFormat;
             var format = GraphicsFactory.GetBitsFormat(formatKind);
             colorType = format.ColorType;
+            alphaType = image.Handler.AlphaType;
 
             var info = new SKImageInfo(
                 width,
