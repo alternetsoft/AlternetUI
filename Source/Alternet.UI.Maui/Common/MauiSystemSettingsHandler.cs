@@ -109,7 +109,7 @@ namespace Alternet.UI
 
         public UIPlatformKind GetPlatformKind()
         {
-            throw new NotImplementedException();
+            return UIPlatformKind.Maui;
         }
 
         public string? GetUIVersion()

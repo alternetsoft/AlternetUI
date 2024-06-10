@@ -12,15 +12,10 @@ namespace Alternet.UI
     ///     The InputManager class is responsible for coordinating all of the
     ///     input system in Alternet UI.
     /// </summary>
-    public class InputManager : Port.DispatcherObject
+    internal class InputManager : Port.DispatcherObject
     {
-        private static readonly KeyboardDevice KeyboardDevice;
-        private static readonly MouseDevice MouseDevice;
-
         static InputManager()
         {
-            KeyboardDevice = new NativeKeyboardDevice();
-            MouseDevice = new NativeMouseDevice();
         }
 
         private InputManager()
@@ -44,7 +39,10 @@ namespace Alternet.UI
         /// </summary>
         public KeyboardDevice PrimaryKeyboardDevice
         {
-            get { return KeyboardDevice; }
+            get
+            {
+                return KeyboardDevice.Default;
+            }
         }
 
         /// <summary>
@@ -52,7 +50,10 @@ namespace Alternet.UI
         /// </summary>
         public MouseDevice PrimaryMouseDevice
         {
-            get { return MouseDevice; }
+            get
+            {
+                return MouseDevice.Default;
+            }
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace Alternet.UI
 
         internal static Control? GetControlUnderMouse()
         {
-            var controlUnderMouse = Native.Control.HitTest(MouseDevice.GetScreenPosition());
+            var controlUnderMouse = Native.Control.HitTest(MouseDevice.Default.GetScreenPosition());
             if (controlUnderMouse == null)
                 return null;
 

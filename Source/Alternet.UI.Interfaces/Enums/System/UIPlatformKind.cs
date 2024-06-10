@@ -25,5 +25,10 @@ namespace Alternet.UI
         /// Platform is AvaloniaUI.
         /// </summary>
         Avalonia,
+
+        /// <summary>
+        /// Platform is WinForms.
+        /// </summary>
+        WinForms,
     }
 }

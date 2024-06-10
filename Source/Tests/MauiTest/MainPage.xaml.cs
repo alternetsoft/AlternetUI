@@ -15,7 +15,6 @@ public partial class MainPage : ContentPage
 
     static MainPage()
     {
-        Alternet.UI.App.Handler = new Alternet.UI.MauiApplicationHandler();
     }
 
     public MainPage()
@@ -47,6 +46,8 @@ public partial class MainPage : ContentPage
 
 
         openLogFileButton.Clicked += OpenLogFileButton_Clicked;
+
+        Alternet.UI.App.Log("Hello Maui");
     }
 
     private void OpenLogFileButton_Clicked(object? sender, EventArgs e)

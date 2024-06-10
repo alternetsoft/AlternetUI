@@ -65,7 +65,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         public IXamlConstructor ThicknessFullConstructor { get; }
         public IXamlType Point { get; }
         public IXamlConstructor PointFullConstructor { get; }
-        public IXamlType Vector { get; }
+        /*public IXamlType Vector { get; }*/
         public IXamlConstructor VectorFullConstructor { get; }
         public IXamlType Size { get; }
         public IXamlConstructor SizeFullConstructor { get; }

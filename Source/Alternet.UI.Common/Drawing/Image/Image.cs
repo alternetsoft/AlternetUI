@@ -834,7 +834,17 @@ namespace Alternet.Drawing
 
         public virtual ISkiaSurface LockSurface()
         {
-            return Handler.LockSurface();
+            return GraphicsFactory.CreateSkiaSurface(this);
+        }
+
+        public virtual void Assign(SKBitmap bitmap)
+        {
+            Handler.Assign(bitmap);
+        }
+
+        public virtual void Assign(GenericImage genericImage)
+        {
+            Handler.Assign(genericImage);
         }
 
         /// <summary>

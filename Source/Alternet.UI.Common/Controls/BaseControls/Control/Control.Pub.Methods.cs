@@ -126,13 +126,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the currently hovered control, or <see langword="null"/> if
+        /// no control is under the mouse.
+        /// </summary>
+        public static Control? GetHoveredControl()
+        {
+            return HoveredControl;
+        }
+
+        /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
         /// </summary>
         public static Control? GetFocusedControl()
         {
+            if (FocusedControl?.Focused ?? false)
+                return FocusedControl;
+
             var result = App.Handler.GetFocusedControl();
-            return (Control?)result;
+            FocusedControl = result;
+            return result;
         }
 
         /// <summary>
@@ -388,6 +401,12 @@ namespace Alternet.UI
         public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
         {
             Handler.RefreshRect(rect, eraseBackground);
+        }
+
+        public virtual void RefreshRects(IEnumerable<RectI> rects, bool eraseBackground = true)
+        {
+            foreach (var rect in rects)
+                RefreshRect(PixelToDip(rect), eraseBackground);
         }
 
         /// <summary>
@@ -1205,6 +1224,7 @@ namespace Alternet.UI
 
         public void RaiseMouseWheel(MouseEventArgs e)
         {
+            HoveredControl = this;
             OnMouseWheel(e);
             MouseWheel?.Invoke(this, e);
         }
@@ -1320,6 +1340,7 @@ namespace Alternet.UI
 
         public void RaiseMouseMove(MouseEventArgs e)
         {
+            HoveredControl = this;
             MouseMove?.Invoke(this, e);
             if (dragEventArgs is null)
                 return;
@@ -1357,6 +1378,8 @@ namespace Alternet.UI
 
         public void RaiseMouseUp(MouseEventArgs e)
         {
+            HoveredControl = this;
+
             MouseUp?.Invoke(this, e);
             dragEventArgs = null;
 
@@ -1388,6 +1411,8 @@ namespace Alternet.UI
 
         public void RaiseMouseDown(MouseEventArgs e)
         {
+            HoveredControl = this;
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 dragEventArgs = e;
@@ -2243,6 +2268,8 @@ namespace Alternet.UI
 
         public void RaiseMouseCaptureLost()
         {
+            if(HoveredControl == this)
+                HoveredControl = null;
             IsMouseLeftButtonDown = false;
             OnMouseCaptureLost(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
@@ -2270,6 +2297,7 @@ namespace Alternet.UI
 
         public void RaiseMouseEnter()
         {
+            HoveredControl = this;
             RaiseIsMouseOverChanged();
             OnMouseEnter(EventArgs.Empty);
             MouseEnter?.Invoke(this, EventArgs.Empty);
@@ -2290,6 +2318,8 @@ namespace Alternet.UI
 
         public void RaiseMouseLeave()
         {
+            if (HoveredControl == this)
+                HoveredControl = null;
             RaiseIsMouseOverChanged();
             IsMouseLeftButtonDown = false;
             OnMouseLeave(EventArgs.Empty);
@@ -2314,6 +2344,8 @@ namespace Alternet.UI
         {
             OnPaint(e);
             Paint?.Invoke(this, e);
+
+            PaintCaret(e);
         }
 
         /// <summary>
@@ -2403,17 +2435,32 @@ namespace Alternet.UI
 
         public void RaiseGotFocus()
         {
+            FocusedControl = this;
             OnGotFocus(EventArgs.Empty);
             GotFocus?.Invoke(this, EventArgs.Empty);
             Designer?.RaiseGotFocus(this);
             RaiseVisualStateChanged();
+
+            if(CaretInfo is not null)
+            {
+                CaretInfo.ControlFocused = true;
+                InvalidateCaret();
+            }
         }
 
         public void RaiseLostFocus()
         {
+            if (FocusedControl == this)
+                FocusedControl = null;
             OnLostFocus(EventArgs.Empty);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
+
+            if (CaretInfo is not null)
+            {
+                CaretInfo.ControlFocused = false;
+                Invalidate();
+            }
         }
 
         public void RaiseActivated()

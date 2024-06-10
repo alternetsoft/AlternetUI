@@ -10,9 +10,9 @@ namespace Alternet::UI
     {
     }
 
-    Point Mouse::GetPosition()
+    PointI Mouse::GetPosition()
     {
-        return toDip(wxGetMousePosition(), nullptr);
+        return wxGetMousePosition();
     }
 
     MouseButtonState Mouse::GetButtonState(MouseButton button)
@@ -46,33 +46,9 @@ namespace Alternet::UI
         return targetControl;
     }
 
-    void Mouse::OnMouseMove(wxMouseEvent& e, bool& handled)
+    void Mouse::OnMouse(int eventKind, wxMouseEvent& e, bool& handled)
     {
-        MouseEventData data { e.GetTimestamp(), GetEventTargetControl(e)};
-        handled = RaiseEvent(MouseEvent::MouseMove, &data);
-    }
-    
-    void Mouse::OnMouseDown(wxMouseEvent& e, MouseButton changedButton, bool& handled)
-    {
-        MouseButtonEventData data { e.GetTimestamp(), GetEventTargetControl(e), changedButton };
-        handled = RaiseEvent(MouseEvent::MouseDown, &data);
-    }
-    
-    void Mouse::OnMouseUp(wxMouseEvent& e, MouseButton changedButton, bool& handled)
-    {
-        MouseButtonEventData data{ e.GetTimestamp(), GetEventTargetControl(e), changedButton };
-        handled = RaiseEvent(MouseEvent::MouseUp, &data);
-    }
-    
-    void Mouse::OnMouseWheel(wxMouseEvent& e, bool& handled)
-    {
-        MouseWheelEventData data{ e.GetTimestamp(), GetEventTargetControl(e), e.GetWheelRotation()};
-        handled = RaiseEvent(MouseEvent::MouseWheel, &data);
-    }
-
-    void Mouse::OnMouseDoubleClick(wxMouseEvent& e, MouseButton changedButton, bool& handled)
-    {
-        MouseButtonEventData data{ e.GetTimestamp(), GetEventTargetControl(e), changedButton };
-        handled = RaiseEvent(MouseEvent::MouseDoubleClick, &data);
+        MouseEventData data { eventKind, e.GetTimestamp(), GetEventTargetControl(e), e.GetWheelRotation()};
+        handled = RaiseEvent(MouseEvent::MouseChanged, &data);
     }
 }

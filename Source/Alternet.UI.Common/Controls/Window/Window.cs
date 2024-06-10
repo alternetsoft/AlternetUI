@@ -1340,10 +1340,8 @@ namespace Alternet.UI
             if (oldDisplay == newDisplay)
                 return;
 
-            var allScreens = Display.AllScreens;
-
-            var oldDisplayObject = allScreens[oldDisplay.Value];
-            var newDisplayObject = allScreens[newDisplay];
+            var oldDisplayObject = Display.GetDisplay(oldDisplay.Value);
+            var newDisplayObject = Display.GetDisplay(newDisplay);
 
             var oldDpi = oldDisplayObject.DPI.Width;
             var newDpi = newDisplayObject.DPI.Width;

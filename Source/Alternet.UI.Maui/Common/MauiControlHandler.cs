@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
+using Microsoft.Maui.Controls;
+
 using SkiaSharp;
 
 namespace Alternet.UI
 {
     internal class MauiControlHandler : PlessControlHandler, IControlHandler
     {
-        private object? container;
+        private View? container;
 
         public MauiControlHandler()
         {
         }
 
-        public object? Container
+        public View? Container
         {
             get => container;
 

@@ -15,9 +15,9 @@ namespace Alternet.UI
     /// <summary>
     /// <c>KeyboardDevice</c> class represents the mouse device.
     /// </summary>
-    public abstract class KeyboardDevice : DisposableObject
+    public class KeyboardDevice : DisposableObject
     {
-        public static KeyboardDevice Empty = new EmptyKeyboardDevice();
+        public static KeyboardDevice Default = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyboardDevice"/> class.
@@ -148,16 +148,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Gets the current state of the specified key from the device from
-        ///     the underlying system
+        /// Gets the current state of the specified key from the device from
+        /// the underlying system
         /// </summary>
         /// <param name="key">
-        ///     Key to get the state of
+        /// Key to get the state of
         /// </param>
         /// <returns>
-        ///     The state of the specified key
+        /// The state of the specified key
         /// </returns>
-        protected abstract KeyStates GetKeyStatesFromSystem(Key key);
+        protected virtual KeyStates GetKeyStatesFromSystem(Key key)
+        {
+            return App.Handler.GetKeyStatesFromSystem(key);
+        }
 
         /// <summary>
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
@@ -177,14 +180,6 @@ namespace Alternet.UI
         private bool IsKeyDown_private(Key key)
         {
             return (GetKeyStatesFromSystem(key) & KeyStates.Down) == KeyStates.Down;
-        }
-
-        private class EmptyKeyboardDevice : KeyboardDevice
-        {
-            protected override KeyStates GetKeyStatesFromSystem(Key key)
-            {
-                return KeyStates.None;
-            }
         }
     }
 }

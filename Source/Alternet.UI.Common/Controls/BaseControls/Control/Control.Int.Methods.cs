@@ -239,6 +239,13 @@ namespace Alternet.UI
             RaiseScroll(args);
         }
 
+        internal virtual void InvalidateCaret()
+        {
+            if (caretInfo is null || !caretInfo.Visible)
+                return;
+            RefreshRects(caretInfo.Region);
+        }
+
         internal virtual void OnHandlerVerticalScrollBarValueChanged()
         {
             var args = new ScrollEventArgs

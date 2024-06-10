@@ -135,10 +135,12 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DebugBezierPointsAssert(PointD[] points)
         {
-            if (points.Length == 0)
+            var length = points.Length;
+
+            if (length == 0)
                 return;
 
-            if ((points.Length - 1) % 3 != 0)
+            if ((length - 1) % 3 != 0)
             {
                 throw new ArgumentException(
                     "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",

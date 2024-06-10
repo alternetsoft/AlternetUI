@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.PointD GetPosition()
+        public Alternet.Drawing.PointI GetPosition()
         {
             CheckDisposed();
             return NativeApi.Mouse_GetPosition_(NativePointer);
@@ -60,40 +60,16 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
-                case NativeApi.MouseEvent.MouseMove:
+                case NativeApi.MouseEvent.MouseChanged:
                 {
                     var ea = new NativeEventArgs<MouseEventData>(MarshalEx.PtrToStructure<MouseEventData>(parameter));
-                    MouseMove?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.MouseEvent.MouseDown:
-                {
-                    var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
-                    MouseDown?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.MouseEvent.MouseUp:
-                {
-                    var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
-                    MouseUp?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.MouseEvent.MouseDoubleClick:
-                {
-                    var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
-                    MouseDoubleClick?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.MouseEvent.MouseWheel:
-                {
-                    var ea = new NativeEventArgs<MouseWheelEventData>(MarshalEx.PtrToStructure<MouseWheelEventData>(parameter));
-                    MouseWheel?.Invoke(this, ea); return ea.Result;
+                    MouseChanged?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected MouseEvent value: " + e);
             }
         }
         
-        public event NativeEventHandler<MouseEventData>? MouseMove;
-        public event NativeEventHandler<MouseButtonEventData>? MouseDown;
-        public event NativeEventHandler<MouseButtonEventData>? MouseUp;
-        public event NativeEventHandler<MouseButtonEventData>? MouseDoubleClick;
-        public event NativeEventHandler<MouseWheelEventData>? MouseWheel;
+        public event NativeEventHandler<MouseEventData>? MouseChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -105,11 +81,7 @@ namespace Alternet.UI.Native
             
             public enum MouseEvent
             {
-                MouseMove,
-                MouseDown,
-                MouseUp,
-                MouseDoubleClick,
-                MouseWheel,
+                MouseChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -119,7 +91,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Mouse_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Mouse_GetPosition_(IntPtr obj);
+            public static extern Alternet.Drawing.PointI Mouse_GetPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.MouseButtonState Mouse_GetButtonState_(IntPtr obj, Alternet.UI.MouseButton button);

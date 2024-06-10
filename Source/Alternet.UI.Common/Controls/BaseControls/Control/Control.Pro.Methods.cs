@@ -221,6 +221,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            if (FocusedControl == this)
+                FocusedControl = null;
+            if (HoveredControl == this)
+                HoveredControl = null;
+
             Designer?.RaiseDisposed(this);
             /*var children = Handler.AllChildren.ToArray();*/
 
@@ -281,6 +286,21 @@ namespace Alternet.UI
         protected virtual IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateControlHandler(this);
+        }
+
+        protected virtual void PaintCaret(PaintEventArgs e)
+        {
+            if (!Focused || !UserPaint || caretInfo is null)
+                return;
+
+            if (caretInfo.IsDisposed)
+                CaretInfo = null;
+
+            if (!caretInfo.Visible)
+                return;
+
+            var caretColor = PlessCaretHandler.CaretColor.Get(IsDarkBackground);
+            e.Graphics.FillRectangle(caretColor.AsBrush, PixelToDip(caretInfo.Rect));
         }
 
         protected void SetVisibleValue(bool value) => visible = value;

@@ -280,9 +280,15 @@ namespace Alternet.UI
             return 0;
         }
 
-        public ISkiaSurface LockSurface()
+        public void Assign(GenericImage image)
         {
-            return new SkiaSurfaceOnSkia(bitmap);
+            bitmap.Pixels = image.Pixels;
+        }
+
+        public void Assign(SKBitmap image)
+        {
+            if (!image.CopyTo(bitmap))
+                bitmap = image.Copy();
         }
     }
 }

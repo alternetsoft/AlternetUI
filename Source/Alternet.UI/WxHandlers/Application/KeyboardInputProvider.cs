@@ -2,10 +2,9 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class KeyboardInputProvider : IDisposable
+    internal class KeyboardInputProvider : DisposableObject
     {
         private readonly Native.Keyboard nativeKeyboard;
-        private bool isDisposed;
 
         public KeyboardInputProvider(Native.Keyboard nativeKeyboard)
         {
@@ -15,25 +14,11 @@ namespace Alternet.UI
             nativeKeyboard.TextInput += NativeKeyboard_TextInput;
         }
 
-        public void Dispose()
+        protected override void DisposeManaged()
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    nativeKeyboard.KeyDown -= NativeKeyboard_KeyDown;
-                    nativeKeyboard.KeyUp -= NativeKeyboard_KeyUp;
-                    nativeKeyboard.TextInput -= NativeKeyboard_TextInput;
-                }
-
-                isDisposed = true;
-            }
+            nativeKeyboard.KeyDown -= NativeKeyboard_KeyDown;
+            nativeKeyboard.KeyUp -= NativeKeyboard_KeyUp;
+            nativeKeyboard.TextInput -= NativeKeyboard_TextInput;
         }
 
         private void NativeKeyboard_TextInput(
