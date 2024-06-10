@@ -93,6 +93,13 @@ namespace Alternet.UI
             }
         }
 
+        public static Display GetDisplay(int index)
+        {
+            if (index < 0 || index >= AllScreens.Length)
+                return Default;
+            return AllScreens[index];
+        }
+
         /// <summary>
         /// Gets primary display.
         /// </summary>

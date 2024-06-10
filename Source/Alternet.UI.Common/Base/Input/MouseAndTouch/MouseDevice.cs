@@ -97,7 +97,7 @@ namespace Alternet.UI
         {
             var resultI = App.Handler.GetMousePositionFromSystem();
             var index = Display.GetFromPoint(resultI);
-            var display = Display.AllScreens[index];
+            var display = Display.GetDisplay(index);
             var result = display.PixelToDip(resultI);
             return result;
         }
