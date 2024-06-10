@@ -25,7 +25,7 @@ SKPaint https://learn.microsoft.com/en-us/dotnet/api/skiasharp.skpaint?view=skia
 
 namespace Alternet.UI
 {
-    public class SkiaContainer : ContentView
+    public class SkiaContainer : ScrollView
     {
         private readonly SKCanvasView canvas = new();
         private SkiaGraphics? graphics;
@@ -38,6 +38,10 @@ namespace Alternet.UI
 
         public SkiaContainer()
         {
+            Orientation = Microsoft.Maui.ScrollOrientation.Both;
+            VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
+
             canvas = new SKCanvasView();
             canvas.EnableTouchEvents = true;
             canvas.Touch += Canvas_Touch;
@@ -73,12 +77,6 @@ namespace Alternet.UI
 
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
-            FocusChangeRequested += SkiaContainer_FocusChangeRequested;
-        }
-
-        private void SkiaContainer_FocusChangeRequested(object? sender, FocusRequestArgs e)
-        {
-            e.Result = true;
         }
 
         public SKCanvasView CanvasView => canvas;
