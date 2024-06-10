@@ -40,7 +40,7 @@ namespace Alternet.UI
         public override void Invalidate()
         {
             if (container is SkiaContainer skiaContainer)
-                skiaContainer.InvalidateSurface();
+                skiaContainer.CanvasView.InvalidateSurface();
         }
 
         public override Graphics CreateDrawingContext()

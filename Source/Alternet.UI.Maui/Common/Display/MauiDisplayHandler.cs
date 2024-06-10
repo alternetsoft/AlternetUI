@@ -20,6 +20,8 @@ namespace Alternet.UI
         {
         }
 
+        public bool IsOk => true;
+
         public void Log()
         {
             App.LogFileIsEnabled = true;
