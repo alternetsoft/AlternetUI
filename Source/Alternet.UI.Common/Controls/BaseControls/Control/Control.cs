@@ -83,7 +83,6 @@ namespace Alternet.UI
         private string? text;
         private DockStyle dock;
         private LayoutStyle? layout;
-        private Graphics? measureCanvas;
         private RectD reportedBounds = RectD.MinusOne;
 
         /// <summary>
@@ -222,7 +221,7 @@ namespace Alternet.UI
         {
             get
             {
-                measureCanvas ??= CreateDrawingContext();
+                var measureCanvas = GraphicsFactory.GetOrCreateMemoryDC(GetPixelScaleFactor());
                 return measureCanvas;
             }
         }

@@ -2197,7 +2197,6 @@ namespace Alternet.UI
 
         public virtual void ResetMeasureCanvas()
         {
-            SafeDispose(ref measureCanvas);
         }
 
         public virtual void ResetDisplay()
