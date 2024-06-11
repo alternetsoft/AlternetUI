@@ -165,32 +165,23 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public static ISkiaSurface CreateSkiaSurface(Image image)
+        public static ISkiaSurface CreateSkiaSurface(Image image, ImageLockMode lockMode)
         {
             Debug.Assert(image.IsOk, "Image.IsOk == true is required.");
 
             if (image.Handler is SkiaImageHandler skiaHandler)
-                return new SkiaSurfaceOnSkia(skiaHandler.Bitmap);
+                return new SkiaSurfaceOnSkia(skiaHandler.Bitmap, lockMode);
 
             Debug.Assert(!image.HasMask, "Image.HasMask == false is required.");
 
             var formatKind = image.Handler.BitsFormat;
             var format = GraphicsFactory.GetBitsFormat(formatKind);
 
-            /*var isArgbOpaque = format.IsArgb8888Opaque;
-            var isArgb = format.IsArgb8888;
-
-            if (isArgbOpaque || isArgb)
-            {
-                App.DebugLogIf("CreateSkiaSurface for image using SkiaSurfaceOnArgb8888", true);
-                return new SkiaSurfaceOnArgb8888(image, opaque: isArgbOpaque);
-            }*/
-
             if (!image.HasAlpha || App.IsMacOS || formatKind == ImageBitsFormatKind.Unknown
                 || format.ColorType == SKColorType.Unknown)
                 return CreateUsingGenericImage();
 
-            return new SkiaSurfaceOnBitmap(image);
+            return new SkiaSurfaceOnBitmap(image, lockMode);
 
             ISkiaSurface CreateUsingGenericImage()
             {
@@ -198,7 +189,7 @@ namespace Alternet.Drawing
 
                 SKBitmap bitmap = (SKBitmap)image;
 
-                var result = new SkiaSurfaceOnSkia(bitmap);
+                var result = new SkiaSurfaceOnSkia(bitmap, lockMode);
 
                 result.Disposed += (s, e) =>
                 {
@@ -209,11 +200,11 @@ namespace Alternet.Drawing
             }
         }
 
-        public static ISkiaSurface CreateSkiaSurface(GenericImage image)
+        public static ISkiaSurface CreateSkiaSurface(GenericImage image, ImageLockMode lockMode)
         {
             SKBitmap bitmap = (SKBitmap)image;
 
-            var result = new SkiaSurfaceOnSkia(bitmap);
+            var result = new SkiaSurfaceOnSkia(bitmap, lockMode);
 
             result.Disposed += (s, e) =>
             {

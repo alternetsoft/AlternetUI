@@ -1840,12 +1840,12 @@ namespace Alternet.Drawing
             Pixels = bitmap.Pixels;
         }
 
-        public virtual ISkiaSurface LockSurface()
+        public virtual ISkiaSurface LockSurface(ImageLockMode lockMode = ImageLockMode.ReadWrite)
         {
             Debug.Assert(IsOk, "Image.IsOk == true is required.");
             Debug.Assert(!HasMask, "Image.HasMask == false is required.");
 
-            return GraphicsFactory.CreateSkiaSurface(this);
+            return GraphicsFactory.CreateSkiaSurface(this, lockMode);
         }
 
         /// <summary>

@@ -20,9 +20,9 @@ namespace Alternet.Drawing
         {
         }
 
-        public SkiaSurfaceOnSkia(SKBitmap? bitmap)
+        public SkiaSurfaceOnSkia(SKBitmap? bitmap, ImageLockMode lockMode)
         {
-            CreateCanvas(bitmap);
+            CreateCanvas(bitmap, lockMode);
         }
 
         public int Width => bitmap?.Width ?? 0;
@@ -47,7 +47,7 @@ namespace Alternet.Drawing
             base.DisposeManaged();
         }
 
-        protected virtual void CreateCanvas(SKBitmap? bitmap)
+        protected virtual void CreateCanvas(SKBitmap? bitmap, ImageLockMode lockMode)
         {
             if (bitmap is null)
             {
