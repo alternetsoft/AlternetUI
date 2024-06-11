@@ -17,8 +17,8 @@ namespace ControlsSample
 
         static MainWindow()
         {
-            UixmlLoader.LoadFromResName = LoadFormFromResName;
-            UixmlLoader.LoadFromStream = LoadFormFromStream;
+            UixmlLoader.LoadFromResName = FormLoadFromResName;
+            UixmlLoader.LoadFromStream = FormLoadFromStream;
             UixmlLoader.ReportLoadException = ReportFormLoadException;
 
             UseDebugBackgroundColor = false;
@@ -53,12 +53,12 @@ namespace ControlsSample
             DoInsideLayout(Initialize);
         }
 
-        public static bool LoadFormFromResName(string resName, object obj, UixmlLoader.Flags flags)
+        public static bool FormLoadFromResName(string resName, object obj, UixmlLoader.Flags flags)
         {
             return false;
         }
 
-        public static bool LoadFormFromStream(
+        public static bool FormLoadFromStream(
             Stream stream,
             object obj,
             string? resName,
