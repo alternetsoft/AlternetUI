@@ -165,6 +165,19 @@ namespace Alternet.Drawing
             return result;
         }
 
+        private static AdvDictionary<double, Graphics> memoryCanvases = new();
+
+        public static Graphics GetOrCreateMemoryDC(double scaleFactor)
+        {
+            var result = memoryCanvases.GetOrCreate(scaleFactor, () => CreateMemoryDC(scaleFactor));
+            return result;
+        }
+
+        public static Graphics CreateMemoryDC(double scaleFactor)
+        {
+            return Handler.CreateMemoryDC(scaleFactor);
+        }
+
         public static ISkiaSurface CreateSkiaSurface(Image image, ImageLockMode lockMode)
         {
             Debug.Assert(image.IsOk, "Image.IsOk == true is required.");

@@ -52,7 +52,14 @@ namespace ControlsSample
 
                 tabControl.SetTabImage(0, image);
                 tabControl.SetTabImage(2, svgImage);
+
+                tabControl.TabSizeChanged += TabControl_TabSizeChanged;
             }
+        }
+
+        private void TabControl_TabSizeChanged(object? sender, BaseEventArgs<Control> e)
+        {
+            App.DebugLogIf($"TabSizeChanged: {e.Value.Text}, {PixelFromDip(e.Value.Size)}, {e.Value.GetDPI()}", true);
         }
 
         private void TabControl_SelectedIndexChanged(object? sender, EventArgs e)

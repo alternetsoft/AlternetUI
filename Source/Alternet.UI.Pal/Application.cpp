@@ -159,6 +159,7 @@ namespace Alternet::UI
     void IdleCallback()
     {
         Application::GetCurrent()->RaiseIdle();
+
     }
 
     void LogExceptionInfo(const wxString& s)

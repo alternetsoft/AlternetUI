@@ -15,6 +15,8 @@ namespace Alternet.Drawing
     {
         GenericImageLoadFlags GenericImageDefaultLoadFlags { get; set; }
 
+        Graphics CreateMemoryDC(double scaleFactor);
+
         BitmapType GetDefaultBitmapType();
 
         IFontFactoryHandler CreateFontFactoryHandler();

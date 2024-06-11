@@ -103,6 +103,17 @@ ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, I
     #endif
 }
 
+ALTERNET_UI_API DrawingContext* DrawingContext_CreateMemoryDC_(double scaleFactor)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return DrawingContext::CreateMemoryDC(scaleFactor);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void* DrawingContext_GetHandle_(DrawingContext* obj)
 {
     #if !defined(__WXMSW__)
