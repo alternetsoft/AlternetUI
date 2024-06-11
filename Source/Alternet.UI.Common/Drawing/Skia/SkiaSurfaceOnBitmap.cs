@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         private readonly bool isOk;
         private readonly Image image;
 
-        public SkiaSurfaceOnBitmap(Image image)
+        public SkiaSurfaceOnBitmap(Image image, ImageLockMode lockMode)
         {
             this.image = image;
 

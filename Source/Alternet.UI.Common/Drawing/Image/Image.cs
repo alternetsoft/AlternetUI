@@ -844,9 +844,9 @@ namespace Alternet.Drawing
             return (0, 0, size.Width, size.Height);
         }
 
-        public virtual ISkiaSurface LockSurface()
+        public virtual ISkiaSurface LockSurface(ImageLockMode lockMode = ImageLockMode.ReadWrite)
         {
-            return GraphicsFactory.CreateSkiaSurface(this);
+            return GraphicsFactory.CreateSkiaSurface(this, lockMode);
         }
 
         public virtual void Assign(SKBitmap bitmap)

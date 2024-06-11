@@ -121,6 +121,7 @@ namespace Alternet.UI
         public static void ReportMouseMove(
             Control? targetControl,
             long timestamp,
+            PointD position,
             out bool handled)
         {
             handled = false;
@@ -132,7 +133,24 @@ namespace Alternet.UI
                 control,
                 targetControl!,
                 timestamp,
-                Mouse.PrimaryDevice,
+                position);
+            control.RaiseMouseMove(eventArgs);
+        }
+
+        public static void ReportMouseMove(
+            Control? targetControl,
+            long timestamp,
+            out bool handled)
+        {
+            handled = false;
+            var control = Control.GetMouseTargetControl(targetControl);
+            if (control == null)
+                return;
+
+            var eventArgs = new MouseEventArgs(
+                control,
+                targetControl!,
+                timestamp,
                 Mouse.GetPosition(control));
             control.RaiseMouseMove(eventArgs);
         }
@@ -143,6 +161,8 @@ namespace Alternet.UI
             MouseButton changedButton,
             out bool handled)
         {
+            PlessMouse.SetButtonPressed(changedButton);
+
             handled = false;
             var control = Control.GetMouseTargetControl(targetControl);
             if (control == null)
@@ -153,7 +173,6 @@ namespace Alternet.UI
                 targetControl!,
                 changedButton,
                 timestamp,
-                Mouse.PrimaryDevice,
                 Mouse.GetPosition(control));
 
             control.RaiseMouseDown(eventArgs);
@@ -176,7 +195,6 @@ namespace Alternet.UI
                     targetControl!,
                     changedButton,
                     timestamp,
-                    Mouse.PrimaryDevice,
                     Mouse.GetPosition(control));
             control.RaiseMouseDoubleClick(eventArgs);
         }
@@ -187,6 +205,8 @@ namespace Alternet.UI
             MouseButton changedButton,
             out bool handled)
         {
+            PlessMouse.SetButtonPressed(changedButton, false);
+
             handled = false;
             var control = Control.GetMouseTargetControl(targetControl);
             if (control == null)
@@ -198,7 +218,6 @@ namespace Alternet.UI
                     targetControl!,
                     changedButton,
                     timestamp,
-                    Mouse.PrimaryDevice,
                     Mouse.GetPosition(control));
             control.RaiseMouseUp(eventArgs);
         }
@@ -224,7 +243,6 @@ namespace Alternet.UI
                     control,
                     targetControl!,
                     timestamp,
-                    Mouse.PrimaryDevice,
                     Mouse.GetPosition(control));
             eventArgs.Delta = delta;
             control.RaiseMouseWheel(eventArgs);
