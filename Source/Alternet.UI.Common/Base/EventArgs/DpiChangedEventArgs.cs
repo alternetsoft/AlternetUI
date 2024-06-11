@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
 
@@ -18,24 +20,47 @@ namespace Alternet.UI
     /// </summary>
     public sealed class DpiChangedEventArgs : BaseCancelEventArgs
     {
+        private SizeI dpiOld;
+        private SizeI dpiNew;
+
         /// <summary>
         /// Gets the DPI value for the display device where the control or form was previously
         /// displayed.
         /// </summary>
         /// <returns>A DPI value.</returns>
-        public int DeviceDpiOld { get; set; }
+        public int DeviceDpiOld
+        {
+            get => dpiOld.Width;
+            set => dpiOld.Width = value;
+        }
 
         /// <summary>
         /// Gets the DPI value for the new display device where the control or form is
         /// currently being displayed.
         /// </summary>
         /// <returns>The DPI value.</returns>
-        public int DeviceDpiNew { get; set; }
-
-        public DpiChangedEventArgs(int oldDpi, int newDpi)
+        public int DeviceDpiNew
         {
-            DeviceDpiOld = oldDpi;
-            DeviceDpiNew = newDpi;
+            get => dpiNew.Width;
+            set => dpiNew.Width = value;
+        }
+
+        public SizeI DpiOld
+        {
+            get => dpiOld;
+            set => dpiOld = value;
+        }
+
+        public SizeI DpiNew
+        {
+            get => dpiNew;
+            set => dpiNew = value;
+        }
+
+        public DpiChangedEventArgs(SizeI oldDpi, SizeI newDpi)
+        {
+            DpiOld = oldDpi;
+            DpiNew = newDpi;
         }
 
         /// <summary>

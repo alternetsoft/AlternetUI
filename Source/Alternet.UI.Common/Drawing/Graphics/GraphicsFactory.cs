@@ -124,6 +124,47 @@ namespace Alternet.Drawing
             }
         }
 
+        public static unsafe RGBAValue[] PixelsArgbToRgba(
+            int width,
+            int height,
+            ARGBValue* buffer,
+            bool opaque)
+        {
+            var numPixels = width * height;
+
+            if (numPixels <= 0)
+                return Array.Empty<RGBAValue>();
+
+            var numBytes = numPixels * 4;
+
+            var result = new RGBAValue[numPixels];
+
+            fixed(RGBAValue* ptrDestColor = result)
+            {
+                IntPtr ptrDest = (IntPtr)ptrDestColor;
+                IntPtr ptrSource = ((IntPtr)buffer) + 1;
+
+                BaseMemory.Move(dest: ptrDest, src: ptrSource, count: numBytes - 1);
+
+                if (opaque)
+                {
+                    for (int i = 0; i < numPixels; i++)
+                    {
+                        ptrDestColor[i].A = 255;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < numPixels; i++)
+                    {
+                        ptrDestColor[i].A = buffer[i].A;
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public static ISkiaSurface CreateSkiaSurface(Image image)
         {
             Debug.Assert(image.IsOk, "Image.IsOk == true is required.");
@@ -136,9 +177,25 @@ namespace Alternet.Drawing
             var formatKind = image.Handler.BitsFormat;
             var format = GraphicsFactory.GetBitsFormat(formatKind);
 
+            /*var isArgbOpaque = format.IsArgb8888Opaque;
+            var isArgb = format.IsArgb8888;
+
+            if (isArgbOpaque || isArgb)
+            {
+                App.DebugLogIf("CreateSkiaSurface for image using SkiaSurfaceOnArgb8888", true);
+                return new SkiaSurfaceOnArgb8888(image, opaque: isArgbOpaque);
+            }*/
+
             if (!image.HasAlpha || App.IsMacOS || formatKind == ImageBitsFormatKind.Unknown
                 || format.ColorType == SKColorType.Unknown)
+                return CreateUsingGenericImage();
+
+            return new SkiaSurfaceOnBitmap(image);
+
+            ISkiaSurface CreateUsingGenericImage()
             {
+                App.DebugLogIf("CreateSkiaSurface for image using GenericImage", true);
+
                 SKBitmap bitmap = (SKBitmap)image;
 
                 var result = new SkiaSurfaceOnSkia(bitmap);
@@ -150,8 +207,6 @@ namespace Alternet.Drawing
 
                 return result;
             }
-
-            return new SkiaSurfaceOnBitmap(image);
         }
 
         public static ISkiaSurface CreateSkiaSurface(GenericImage image)

@@ -14,6 +14,8 @@ namespace Alternet.Drawing
 {
     internal class WxGenericImageHandler : DisposableObject<IntPtr>, IGenericImageHandler
     {
+        public SKAlphaType AlphaType => HasAlpha ? SKAlphaType.Unpremul : SKAlphaType.Opaque;
+
         public ImageBitsFormatKind BitsFormat
         {
             get

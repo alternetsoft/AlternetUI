@@ -204,6 +204,26 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.SizeI EventOldDpi
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetEventOldDpi_(NativePointer);
+            }
+            
+        }
+        
+        public Alternet.Drawing.SizeI EventNewDpi
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetEventNewDpi_(NativePointer);
+            }
+            
+        }
+        
         public string Text
         {
             get
@@ -615,6 +635,30 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void EndUpdate()
+        {
+            CheckDisposed();
+            NativeApi.Control_EndUpdate_(NativePointer);
+        }
+        
+        public void RecreateWindow()
+        {
+            CheckDisposed();
+            NativeApi.Control_RecreateWindow_(NativePointer);
+        }
+        
+        public void ResetBackgroundColor()
+        {
+            CheckDisposed();
+            NativeApi.Control_ResetBackgroundColor_(NativePointer);
+        }
+        
+        public void ResetForegroundColor()
+        {
+            CheckDisposed();
+            NativeApi.Control_ResetForegroundColor_(NativePointer);
+        }
+        
         public Alternet.Drawing.PointD ClientToScreen(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
@@ -888,30 +932,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_BeginUpdate_(NativePointer);
         }
         
-        public void EndUpdate()
-        {
-            CheckDisposed();
-            NativeApi.Control_EndUpdate_(NativePointer);
-        }
-        
-        public void RecreateWindow()
-        {
-            CheckDisposed();
-            NativeApi.Control_RecreateWindow_(NativePointer);
-        }
-        
-        public void ResetBackgroundColor()
-        {
-            CheckDisposed();
-            NativeApi.Control_ResetBackgroundColor_(NativePointer);
-        }
-        
-        public void ResetForegroundColor()
-        {
-            CheckDisposed();
-            NativeApi.Control_ResetForegroundColor_(NativePointer);
-        }
-        
         public bool BeginRepositioningChildren()
         {
             CheckDisposed();
@@ -1137,6 +1157,10 @@ namespace Alternet.UI.Native
                 {
                     MouseCaptureLost?.Invoke(); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.DpiChanged:
+                {
+                    DpiChanged?.Invoke(); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.Destroyed:
                 {
                     {
@@ -1223,6 +1247,7 @@ namespace Alternet.UI.Native
         public Action? MouseClick;
         public Action? VisibleChanged;
         public Action? MouseCaptureLost;
+        public Action? DpiChanged;
         public event EventHandler<CancelEventArgs>? Destroyed;
         public Action? TextChanged;
         public Action? GotFocus;
@@ -1258,6 +1283,7 @@ namespace Alternet.UI.Native
                 MouseClick,
                 VisibleChanged,
                 MouseCaptureLost,
+                DpiChanged,
                 Destroyed,
                 TextChanged,
                 GotFocus,
@@ -1351,6 +1377,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetId_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.SizeI Control_GetEventOldDpi_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.SizeI Control_GetEventNewDpi_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Control_GetText_(IntPtr obj);
@@ -1500,6 +1532,18 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_EndUpdate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_RecreateWindow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_ResetBackgroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_ResetForegroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.PointD Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1630,18 +1674,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginUpdate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_EndUpdate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_RecreateWindow_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_ResetBackgroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_ResetForegroundColor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_BeginRepositioningChildren_(IntPtr obj);

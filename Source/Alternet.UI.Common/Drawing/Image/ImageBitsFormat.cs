@@ -80,6 +80,42 @@ namespace Alternet.Drawing
             }
         }
 
+        public static ImageBitsFormat Argb8888Opaque
+        {
+            get
+            {
+                var result = new ImageBitsFormat();
+
+                result.BitsPerPixel = 32;
+                result.HasAlpha = false;
+                result.SizePixel = 4;
+                result.Red = 1;
+                result.Green = 2;
+                result.Blue = 3;
+                result.Alpha = -1;
+
+                return result;
+            }
+        }
+
+        public static ImageBitsFormat Argb8888
+        {
+            get
+            {
+                var result = new ImageBitsFormat();
+
+                result.BitsPerPixel = 32;
+                result.HasAlpha = true;
+                result.SizePixel = 4;
+                result.Red = 1;
+                result.Green = 2;
+                result.Blue = 3;
+                result.Alpha = 0;
+
+                return result;
+            }
+        }
+
         public static ImageBitsFormat Bgr888
         {
             get
@@ -105,6 +141,10 @@ namespace Alternet.Drawing
         public readonly bool IsRgba8888 => Rgba8888 == this;
 
         public readonly bool IsRgb888 => Rgb888 == this;
+
+        public readonly bool IsArgb8888 => Argb8888 == this;
+
+        public readonly bool IsArgb8888Opaque => Argb8888Opaque == this;
 
         public readonly SKColorType ColorType
         {

@@ -14,13 +14,54 @@ namespace Alternet.UI
 {
     internal class MauiControlHandler : PlessControlHandler, IControlHandler
     {
-        private View? container;
+        private SkiaContainer? container;
 
         public MauiControlHandler()
         {
         }
 
-        public View? Container
+        public override bool UserPaint
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
+
+        public override bool IsNativeControlCreated
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
+
+        public override bool IsHandleCreated
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
+
+        public override bool IsFocused
+        {
+            get => Control.FocusedControl == container?.Control;
+
+            set
+            {
+                if (IsFocused == value)
+                    return;
+                Control.FocusedControl?.RaiseLostFocus();
+                Control.FocusedControl = container?.Control;
+                Control.FocusedControl?.RaiseGotFocus();
+            }
+        }
+
+        public SkiaContainer? Container
         {
             get => container;
 
@@ -40,7 +81,7 @@ namespace Alternet.UI
         public override void Invalidate()
         {
             if (container is SkiaContainer skiaContainer)
-                skiaContainer.InvalidateSurface();
+                skiaContainer.CanvasView.InvalidateSurface();
         }
 
         public override Graphics CreateDrawingContext()

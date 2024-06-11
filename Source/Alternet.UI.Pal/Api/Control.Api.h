@@ -275,6 +275,28 @@ ALTERNET_UI_API void Control_SetId_(Control* obj, int value)
     #endif
 }
 
+ALTERNET_UI_API SizeI_C Control_GetEventOldDpi_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return obj->GetEventOldDpi();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API SizeI_C Control_GetEventNewDpi_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return obj->GetEventNewDpi();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API char16_t* Control_GetText_(Control* obj)
 {
     #if !defined(__WXMSW__)
@@ -814,6 +836,50 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     #endif
 }
 
+ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EndUpdate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_RecreateWindow_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RecreateWindow();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_ResetBackgroundColor_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ResetBackgroundColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_ResetForegroundColor_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ResetForegroundColor();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API PointD_C Control_ClientToScreen_(Control* obj, PointD point)
 {
     #if !defined(__WXMSW__)
@@ -1293,50 +1359,6 @@ ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
     MarshalExceptions<void>([&](){
     #endif
         obj->BeginUpdate();
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->EndUpdate();
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_RecreateWindow_(Control* obj)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->RecreateWindow();
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_ResetBackgroundColor_(Control* obj)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->ResetBackgroundColor();
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_ResetForegroundColor_(Control* obj)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->ResetForegroundColor();
     #if !defined(__WXMSW__)
     });
     #endif

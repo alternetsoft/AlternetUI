@@ -16,6 +16,34 @@ namespace Alternet.UI.Native
 
         public int Height => PixelHeight;
 
+        public SKAlphaType AlphaType
+        {
+            get
+            {
+                if(!HasAlpha)
+                    return SKAlphaType.Opaque;
+
+                if (App.IsWindowsOS)
+                {
+                    return SKAlphaType.Premul;
+                }
+                else
+                if (App.IsLinuxOS)
+                {
+                    return SKAlphaType.Unpremul;
+                }
+                else
+                if (App.IsMacOS)
+                {
+                    return SKAlphaType.Premul;
+                }
+                else
+                {
+                    return SKAlphaType.Premul;
+                }
+            }
+        }
+
         public Alternet.Drawing.ImageBitsFormatKind BitsFormat
         {
             get

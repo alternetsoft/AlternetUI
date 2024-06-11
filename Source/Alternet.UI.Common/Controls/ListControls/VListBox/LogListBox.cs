@@ -37,6 +37,7 @@ namespace Alternet.UI
         private ContextMenuStrip? contextMenu;
         private string? lastLogMessage;
         private MenuItem? menuItemShowDevTools;
+        private bool boundToApplicationLog;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogListBox"/> class.
@@ -67,12 +68,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether <see cref="BindApplicationLog"/> was called.
+        /// Gets or sets whether to bind this control to the application log.
         /// </summary>
         public bool BoundToApplicationLog
         {
-            get;
-            internal set;
+            get
+            {
+                return boundToApplicationLog;
+            }
+
+            set
+            {
+                if (boundToApplicationLog == value)
+                    return;
+                if (value)
+                    BindApplicationLog();
+                else
+                    UnbindApplicationLog();
+            }
         }
 
         /// <summary>
@@ -122,11 +135,27 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BindApplicationLog()
         {
-            BoundToApplicationLog = true;
+            if (boundToApplicationLog)
+                return;
+
+            boundToApplicationLog = true;
             ContextMenu.Required();
             App.LogMessage += Application_LogMessage;
             App.LogRefresh += Application_LogRefresh;
             LogUtils.DebugLogVersion();
+        }
+
+        /// <summary>
+        /// Unbinds this control from the application log.
+        /// </summary>
+        public virtual void UnbindApplicationLog()
+        {
+            if (!boundToApplicationLog)
+                return;
+            boundToApplicationLog = false;
+
+            App.LogMessage -= Application_LogMessage;
+            App.LogRefresh -= Application_LogRefresh;
         }
 
         /// <summary>
@@ -168,8 +197,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            App.LogMessage -= Application_LogMessage;
-            App.LogRefresh -= Application_LogRefresh;
+            UnbindApplicationLog();
             base.DisposeManaged();
         }
 

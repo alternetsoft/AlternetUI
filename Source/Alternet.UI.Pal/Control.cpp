@@ -443,6 +443,7 @@ namespace Alternet::UI
         if (!IsRecreatingWxWindow())
             _wxWindow = nullptr;
 
+        wxWindow->Unbind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
         wxWindow->Unbind(wxEVT_TEXT, &Control::OnTextChanged, this);
         wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
@@ -978,6 +979,7 @@ namespace Alternet::UI
         if (!GetTabStop())
             _wxWindow->DisableFocusFromKeyboard();
 
+        _wxWindow->Bind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
         _wxWindow->Bind(wxEVT_TEXT, &Control::OnTextChanged, this);
         _wxWindow->Bind(wxEVT_ACTIVATE, &Control::OnActivate, this);
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
@@ -2247,6 +2249,24 @@ namespace Alternet::UI
         default:
             return NullVisualAttributes;
         }
+    }
+
+    SizeI Control::GetEventOldDpi()
+    {
+        return _eventOldDpi;
+    }
+
+    SizeI Control::GetEventNewDpi()
+    {
+        return _eventNewDpi;
+    }
+
+    void Control::OnDpiChanged(wxDPIChangedEvent& event)
+    {
+        event.Skip();
+        _eventOldDpi = event.GetOldDPI();
+        _eventNewDpi = event.GetNewDPI();
+        RaiseEvent(ControlEvent::DpiChanged);
     }
 
     void Control::OnTextChanged(wxCommandEvent& event)

@@ -24,10 +24,10 @@ namespace ControlsSample
 
         private readonly SplittedPanel mainPanel = new()
         {
-            LeftPanelWidth = Display.Primary.BoundsDip.Width / 2,
+            LeftPanelWidth = 300,
             RightPanelWidth = 300,
-            TopPanelHeight = 400,
-            BottomVisible = false,
+            TopVisible = false,
+            BottomPanelHeight = 300,
         };
 
         private readonly ActionsListBox actionsListBox = new()
@@ -56,6 +56,12 @@ namespace ControlsSample
         {
         };
 
+        private readonly LogListBox logListBox = new()
+        {
+            HasBorder = false,
+            BoundToApplicationLog = true,
+        };
+
         private int counter;
 
         static SkiaDrawingWindow()
@@ -72,6 +78,8 @@ namespace ControlsSample
             mainPanel.Parent = this;
             mainPanel.VerticalAlignment = VerticalAlignment.Fill;
 
+            logListBox.Parent = mainPanel.BottomPanel;
+
             rightPanel.Parent = mainPanel.RightPanel;
 
             fontListBox.SelectionChanged += FontListBox_SelectionChanged;
@@ -80,7 +88,7 @@ namespace ControlsSample
             rightPanel.Add("Fonts", fontListBox);
             rightPanel.Add("Properties", propGrid);
 
-            pictureBox.Parent = mainPanel.LeftPanel;
+            pictureBox.Parent = mainPanel.FillPanel;
             propGrid.SetProps(prm, true);
 
             propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
@@ -89,7 +97,7 @@ namespace ControlsSample
 
             Title = "SkiaSharp drawing demo";
 
-            control.Parent = mainPanel.FillPanel;
+            control.Parent = mainPanel.LeftPanel;
 
             Size = (900, 700);
             IsMaximized = true;

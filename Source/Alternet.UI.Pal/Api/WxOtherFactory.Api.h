@@ -45,6 +45,17 @@ ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
     #endif
 }
 
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCheckBoxSize_(void* renderer, void* win, int flags)
 {
     #if !defined(__WXMSW__)
@@ -1156,6 +1167,17 @@ ALTERNET_UI_API uint32_t WxOtherFactory_DisplayGetCount_()
     #endif
 }
 
+ALTERNET_UI_API c_bool WxOtherFactory_DisplayIsOk_(void* handle)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WxOtherFactory::DisplayIsOk(handle);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API int WxOtherFactory_DisplayGetFromPoint_(PointI pt)
 {
     #if !defined(__WXMSW__)
@@ -1514,17 +1536,6 @@ ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* 
     MarshalExceptions<void>([&](){
     #endif
         WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
     #if !defined(__WXMSW__)
     });
     #endif

@@ -88,6 +88,8 @@ namespace Alternet.UI
             bitmap = new(size.Width, size.Height, depth != 32);
         }
 
+        public SKAlphaType AlphaType => bitmap.AlphaType;
+
         public int Width => bitmap.Width;
 
         public int Height => bitmap.Height;

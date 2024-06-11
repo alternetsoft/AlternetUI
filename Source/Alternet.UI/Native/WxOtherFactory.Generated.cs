@@ -36,6 +36,11 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static void RendererDrawCheckMark(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        {
+            NativeApi.WxOtherFactory_RendererDrawCheckMark_(renderer, win, dc.NativePointer, rect, flags);
+        }
+        
         public static Alternet.Drawing.SizeI RendererGetCheckBoxSize(System.IntPtr renderer, System.IntPtr win, int flags)
         {
             return NativeApi.WxOtherFactory_RendererGetCheckBoxSize_(renderer, win, flags);
@@ -541,6 +546,11 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_DisplayGetCount_();
         }
         
+        public static bool DisplayIsOk(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_DisplayIsOk_(handle);
+        }
+        
         public static int DisplayGetFromPoint(Alternet.Drawing.PointI pt)
         {
             return NativeApi.WxOtherFactory_DisplayGetFromPoint_(pt);
@@ -709,11 +719,6 @@ namespace Alternet.UI.Native
             NativeApi.WxOtherFactory_RendererDrawCheckBox_(renderer, win, dc.NativePointer, rect, flags);
         }
         
-        public static void RendererDrawCheckMark(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
-        {
-            NativeApi.WxOtherFactory_RendererDrawCheckMark_(renderer, win, dc.NativePointer, rect, flags);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -728,6 +733,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_SetRichToolTipUseGeneric_(bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_RendererDrawCheckMark_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetCheckBoxSize_(System.IntPtr renderer, System.IntPtr win, int flags);
@@ -1033,6 +1041,9 @@ namespace Alternet.UI.Native
             public static extern uint WxOtherFactory_DisplayGetCount_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WxOtherFactory_DisplayIsOk_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxOtherFactory_DisplayGetFromPoint_(Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1130,9 +1141,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_RendererDrawCheckBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawCheckMark_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
             
         }
     }

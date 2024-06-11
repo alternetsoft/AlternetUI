@@ -60,9 +60,9 @@ namespace ControlsSample
 
         private void AddDefaultItems()
         {
-            Add("Test Page", () => new SkiaDrawingWindow());
             Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
             Add("Threading Sample", () => new ThreadingSample.MainWindow());
+            Add("Test Page", () => new SkiaDrawingWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
             Add("Preview Uixml and other files", () => new PreviewSampleWindow());
             Add("Printing Sample", () => new PrintingSample.MainWindow());

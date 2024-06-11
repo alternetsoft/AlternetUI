@@ -307,6 +307,12 @@ namespace Alternet.UI
         }
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnDpiChanged(DpiChangedEventArgs e)
+        {
+
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragOver(DragEventArgs e)
         {
         }

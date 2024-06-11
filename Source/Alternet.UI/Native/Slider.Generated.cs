@@ -172,14 +172,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.SliderEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.SliderEvent.ValueChanged:
-                {
-                    ValueChanged?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected SliderEvent value: " + e);
-            }
+            ValueChanged?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? ValueChanged;

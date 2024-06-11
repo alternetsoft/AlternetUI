@@ -10,6 +10,8 @@ namespace Alternet.UI
 {
     public interface IDisplayHandler : IDisposable
     {
+        public bool IsOk { get; }
+
         public string GetName();
 
         public SizeI GetDPI();

@@ -142,14 +142,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.DateTimePickerEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.DateTimePickerEvent.ValueChanged:
-                {
-                    ValueChanged?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected DateTimePickerEvent value: " + e);
-            }
+            ValueChanged?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? ValueChanged;

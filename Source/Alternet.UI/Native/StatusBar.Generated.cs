@@ -71,14 +71,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.StatusBarEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.StatusBarEvent.ControlRecreated:
-                {
-                    ControlRecreated?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected StatusBarEvent value: " + e);
-            }
+            ControlRecreated?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? ControlRecreated;

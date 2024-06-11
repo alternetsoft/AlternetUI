@@ -20,7 +20,7 @@ namespace Alternet.Drawing
     /// Stores the location and size of a rectangular region.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
     public struct RectI : IEquatable<RectI>
     {
         /// <summary>
@@ -28,10 +28,15 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly RectI Empty;
 
-        private int x; // Do not rename (binary serialization)
-        private int y; // Do not rename (binary serialization)
-        private int width; // Do not rename (binary serialization)
-        private int height; // Do not rename (binary serialization)
+        [FieldOffset(0)] private int x;
+        [FieldOffset(4)] private int y;
+        [FieldOffset(0)] private PointI location;
+        [FieldOffset(0)] private ulong xy;
+
+        [FieldOffset(8)] private int width;
+        [FieldOffset(12)] private int height;
+        [FieldOffset(8)] private SizeI size;
+        [FieldOffset(8)] private ulong wh;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.RectI'/> class with the
@@ -54,10 +59,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectI(PointI location, SizeI size)
         {
-            x = location.X;
-            y = location.Y;
-            width = size.Width;
-            height = size.Height;
+            this.location = location;
+            this.size = size;
         }
 
         /// <summary>
@@ -68,11 +71,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public PointI Location
         {
-            readonly get => new(x, y);
+            readonly get => location;
             set
             {
-                x = value.X;
-                y = value.Y;
+                location = value;
             }
         }
 
@@ -82,11 +84,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public SizeI Size
         {
-            readonly get => new(width, height);
+            readonly get => size;
             set
             {
-                width = value.Width;
-                height = value.Height;
+                size = value;
             }
         }
 
@@ -103,8 +104,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the y-coordinate of the upper-left corner of the rectangular region
-        /// defined by this
-        /// <see cref='Drawing.RectI'/>.
+        /// defined by this <see cref='Drawing.RectI'/>.
         /// </summary>
         public int Y
         {
@@ -169,7 +169,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return new(x, y);
+                return location;
             }
         }
 
@@ -217,11 +217,10 @@ namespace Alternet.Drawing
         public readonly int Bottom => unchecked(y + height);
 
         /// <summary>
-        /// Tests whether this <see cref='RectI'/> has
-        /// all properties equal to 0.
+        /// Tests whether this <see cref='RectI'/> has all properties equal to 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsEmpty => height == 0 && width == 0 && x == 0 && y == 0;
+        public readonly bool IsEmpty => xy == 0UL && wh == 0UL;
 
         /// <summary>
         /// Tests whether this <see cref='RectI'/> has a <see cref='Width'/>
@@ -276,8 +275,7 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(RectI left, RectI right) =>
-            left.x == right.x && left.y == right.y && left.width == right.width
-            && left.height == right.height;
+            left.xy == right.xy && left.wh == right.wh;
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.RectI'/> objects differ in location or size.
@@ -350,7 +348,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectI Create(int width, int height)
         {
-            return new RectI(0, 0, width, height);
+            return new(0, 0, width, height);
         }
 
         /// <summary>

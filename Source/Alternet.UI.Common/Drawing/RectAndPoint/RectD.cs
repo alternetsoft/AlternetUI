@@ -13,11 +13,6 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    /*
-        Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
-        Also do not change order of the fields.
-    */
-
     /// <summary>
     /// Stores the location and size of a rectangular region.
     /// </summary>
@@ -42,10 +37,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly RectD MinusOne = new(-1, -1, -1, -1);
 
-        private Coord x; // Do not rename (binary serialization)
-        private Coord y; // Do not rename (binary serialization)
-        private Coord width; // Do not rename (binary serialization)
-        private Coord height; // Do not rename (binary serialization)
+        private Coord x;
+        private Coord y;
+        private Coord width;
+        private Coord height;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='RectD'/> class with the

@@ -142,14 +142,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.ScrollBarEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.ScrollBarEvent.Scroll:
-                {
-                    Scroll?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected ScrollBarEvent value: " + e);
-            }
+            Scroll?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? Scroll;

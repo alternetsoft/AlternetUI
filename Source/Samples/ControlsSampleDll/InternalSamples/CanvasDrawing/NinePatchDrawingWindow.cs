@@ -83,7 +83,7 @@ namespace ControlsSample
 
                 void DrawOnDisplay(int index)
                 {
-                    var rect = Display.AllScreens[index].Bounds;
+                    var rect = new Display(index).Bounds;
 
                     var dc = Graphics.FromScreen();
 

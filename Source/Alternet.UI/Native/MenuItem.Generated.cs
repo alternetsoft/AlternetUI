@@ -166,14 +166,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.MenuItemEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.MenuItemEvent.Click:
-                {
-                    Click?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected MenuItemEvent value: " + e);
-            }
+            Click?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? Click;

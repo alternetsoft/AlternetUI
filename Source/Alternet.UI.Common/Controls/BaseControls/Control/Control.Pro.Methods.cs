@@ -147,6 +147,7 @@ namespace Alternet.UI
             Handler.DragEnter = null;
             Handler.DragDrop = null;
             Handler.SystemColorsChanged = null;
+            Handler.DpiChanged = null;
         }
 
         protected virtual void BindHandlerEvents()
@@ -173,6 +174,7 @@ namespace Alternet.UI
             Handler.DragDrop = RaiseDragDrop;
             Handler.TextChanged = OnHandlerTextChanged;
             Handler.SystemColorsChanged = RaiseSystemColorsChanged;
+            Handler.DpiChanged = OnHandlerDpiChanged;
         }
 
         /// <summary>
@@ -290,7 +292,11 @@ namespace Alternet.UI
 
         protected virtual void PaintCaret(PaintEventArgs e)
         {
-            if (!Focused || !UserPaint || caretInfo is null)
+            if (!UserPaint)
+                return;
+            if (!Focused)
+                return;
+            if (caretInfo is null)
                 return;
 
             if (caretInfo.IsDisposed)

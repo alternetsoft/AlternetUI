@@ -33,12 +33,14 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly PointI One = new(1, 1);
 
-        [FieldOffset(0)] private int x; // Do not rename (binary serialization)
-        [FieldOffset(4)] private int y; // Do not rename (binary serialization)
+        [FieldOffset(0)] private int x;
+        [FieldOffset(4)] private int y;
         [FieldOffset(0)] private SKPointI point;
+        [FieldOffset(0)] private SizeI size;
+        [FieldOffset(0)] private ulong xy;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.PointI'/>
+        /// Initializes a new instance of the <see cref='PointI'/>
         /// class with the specified coordinates.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -49,7 +51,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.PointI'/>
+        /// Initializes a new instance of the <see cref='PointI'/>
         /// class with the specified coordinates.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,7 +61,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.PointI'/>
+        /// Initializes a new instance of the <see cref='PointI'/>
         /// class from a <see cref='Drawing.SizeD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -92,14 +94,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref='Drawing.PointI'/>
+        /// Gets a value indicating whether this <see cref='PointI'/>
         /// is empty.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsEmpty => x == 0 && y == 0;
+        public readonly bool IsEmpty => xy == 0UL;
 
         /// <summary>
-        /// Gets the x-coordinate of this <see cref='Drawing.PointI'/>.
+        /// Gets the x-coordinate of this <see cref='PointI'/>.
         /// </summary>
         public int X
         {
@@ -108,7 +110,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the y-coordinate of this <see cref='Drawing.PointI'/>.
+        /// Gets the y-coordinate of this <see cref='PointI'/>.
         /// </summary>
         public int Y
         {
@@ -135,7 +137,7 @@ namespace Alternet.Drawing
         /// specified <see cref='PointI'/>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator SKPointI(PointI p) => p.SkiaPoint;
+        public static implicit operator SKPointI(PointI p) => p.point;
 
         /// <summary>
         /// Creates a <see cref='PointI'/> with the coordinates of the
@@ -156,7 +158,7 @@ namespace Alternet.Drawing
         /// the specified <see cref='Drawing.PointI'/> .
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator SizeI(PointI p) => new(p.X, p.Y);
+        public static explicit operator SizeI(PointI p) => p.size;
 
         /// <summary>
         /// Implicit operator convertion from tuple with two <see cref="int"/> values
@@ -171,16 +173,14 @@ namespace Alternet.Drawing
         /// <see cref='SizeI'/> .
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointI operator +(PointI pt, SizeI sz) =>
-            Add(pt, sz);
+        public static PointI operator +(PointI pt, SizeI sz) => Add(pt, sz);
 
         /// <summary>
         /// Translates a <see cref='PointI'/> by the negative of
         /// a given <see cref='SizeI'/> .
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointI operator -(PointI pt, SizeI sz) =>
-            Subtract(pt, sz);
+        public static PointI operator -(PointI pt, SizeI sz) => Subtract(pt, sz);
 
         /// <summary>
         /// Compares two <see cref='PointI'/> objects. The result
@@ -190,8 +190,7 @@ namespace Alternet.Drawing
         /// <see cref='PointI'/> objects are equal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(PointI left, PointI right) =>
-            left.X == right.X && left.Y == right.Y;
+        public static bool operator ==(PointI left, PointI right) => left.xy == right.xy;
 
         /// <summary>
         /// Compares two <see cref='PointI'/> objects.
@@ -201,8 +200,7 @@ namespace Alternet.Drawing
         /// <see cref='PointI'/>  objects are unequal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(PointI left, PointI right) =>
-            !(left == right);
+        public static bool operator !=(PointI left, PointI right) => (left.xy != right.xy);
 
         /// <summary>
         /// Translates a <see cref='PointI'/> by a given
@@ -246,7 +244,7 @@ namespace Alternet.Drawing
                 unchecked((int)Math.Round(value.Y)));
 
         /// <summary>
-        /// Specifies whether this <see cref='Drawing.PointI'/> contains
+        /// Specifies whether this <see cref='PointI'/> contains
         /// the same coordinates as the specified
         /// <see cref='object'/>.
         /// </summary>

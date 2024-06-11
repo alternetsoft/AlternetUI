@@ -11,11 +11,6 @@ namespace Alternet.UI
     public class Display : HandledObject<IDisplayHandler>
     {
         private static IDisplayFactoryHandler? factory;
-        private static Display? primary;
-        private static Display[]? allScreens;
-        private static Display? defaultDisplay;
-
-        private readonly Control? control;
 
         static Display()
         {
@@ -47,11 +42,15 @@ namespace Alternet.UI
         public Display(Control control)
             : this(GetFromControl(control))
         {
-            this.control = control;
         }
 
-        public static IDisplayFactoryHandler Factory =>
-            factory ??= SystemSettings.Handler.CreateDisplayFactoryHandler();
+        public static IDisplayFactoryHandler Factory
+        {
+            get
+            {
+                return factory ??= SystemSettings.Handler.CreateDisplayFactoryHandler();
+            }
+        }            
 
         /// <summary>
         /// Gets the number of connected displays.
@@ -75,16 +74,12 @@ namespace Alternet.UI
         {
             get
             {
+                // Do not keep displays in memory,
+                // otherwise when DPI is changed we will have an exception.
+
                 var count = Count;
-
-                if (allScreens is not null)
-                {
-                    if(allScreens.Length == count)
-                        return allScreens;
-                }
-
-                allScreens = new Display[count];
-                for(int i = 0; i < count; i++)
+                var allScreens = new Display[count];
+                for (int i = 0; i < count; i++)
                 {
                     allScreens[i] = new Display(i);
                 }
@@ -95,9 +90,7 @@ namespace Alternet.UI
 
         public static Display GetDisplay(int index)
         {
-            if (index < 0 || index >= AllScreens.Length)
-                return Default;
-            return AllScreens[index];
+            return new Display(index);
         }
 
         /// <summary>
@@ -108,23 +101,7 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return primary ??= new Display();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets default display. By default it equals <see cref="Primary"/>.
-        /// </summary>
-        public static Display Default
-        {
-            get
-            {
-                return defaultDisplay ?? Primary;
-            }
-
-            set
-            {
-                defaultDisplay = value;
+                return new Display();
             }
         }
 
@@ -149,6 +126,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Same as <see cref="DeviceName"/></remarks>
         public string Name => Handler.GetName();
+
+        public bool IsOk => Handler.IsOk;
 
         /// <summary>
         /// Gets display resolution in pixels per inch.
@@ -248,9 +227,6 @@ namespace Alternet.UI
         /// </summary>
         public static void Reset()
         {
-            SafeDispose(ref primary);
-            allScreens = null;
-            SafeDispose(ref defaultDisplay);
         }
 
         /// <summary>
@@ -291,10 +267,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public Coord PixelToDip(int value)
         {
-            if (control is null)
-                return GraphicsFactory.PixelToDip(value, ScaleFactor);
-            else
-                return control.PixelToDip(value);
+            return GraphicsFactory.PixelToDip(value, ScaleFactor);
         }
 
         /// <summary>
@@ -304,10 +277,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public int PixelFromDip(Coord value)
         {
-            if (control is null)
-                return GraphicsFactory.PixelFromDip(value, ScaleFactor);
-            else
-                return control.PixelFromDip(value);
+            return GraphicsFactory.PixelFromDip(value, ScaleFactor);
         }
 
         /// <summary>

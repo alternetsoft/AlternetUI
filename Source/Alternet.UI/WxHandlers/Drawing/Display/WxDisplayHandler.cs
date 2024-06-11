@@ -10,6 +10,14 @@ namespace Alternet.UI
 {
     internal class WxDisplayHandler : DisposableObject<IntPtr>, IDisplayHandler
     {
+        public bool IsOk
+        {
+            get
+            {
+                return UI.Native.WxOtherFactory.DisplayIsOk(Handle);
+            }
+        }
+
         public WxDisplayHandler(int index)
             : base(UI.Native.WxOtherFactory.CreateDisplay2((uint)index), true)
         {

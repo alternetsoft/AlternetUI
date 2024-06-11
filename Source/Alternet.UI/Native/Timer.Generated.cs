@@ -97,14 +97,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.TimerEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.TimerEvent.Tick:
-                {
-                    Tick?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected TimerEvent value: " + e);
-            }
+            Tick?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? Tick;

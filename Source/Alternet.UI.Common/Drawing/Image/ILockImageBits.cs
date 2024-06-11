@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public interface ILockImageBits
@@ -19,5 +21,7 @@ namespace Alternet.Drawing
         int GetStride();
 
         ImageBitsFormatKind BitsFormat { get; }
+
+        SKAlphaType AlphaType { get; }
     }
 }

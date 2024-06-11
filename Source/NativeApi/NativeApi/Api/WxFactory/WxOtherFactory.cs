@@ -182,6 +182,8 @@ namespace NativeApi.Api
         // Returns the number of connected displays.
         public static uint DisplayGetCount() => default;
 
+        public static bool DisplayIsOk(IntPtr handle) => default;
+
         // Returns the index of the display on which the given point lies,
         // or -1 if the point is not on any connected display.
         public static int DisplayGetFromPoint(PointI pt) => default;

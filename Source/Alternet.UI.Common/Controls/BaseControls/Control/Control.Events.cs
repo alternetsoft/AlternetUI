@@ -459,6 +459,12 @@ namespace Alternet.UI
         public event EventHandler? DragLeave;
 
         /// <summary>
+        /// Occurs when the DPI setting changes on the display device
+        /// where the form is currently displayed.
+        /// </summary>
+        public event DpiChangedEventHandler? DpiChanged;
+
+        /// <summary>
         /// Occurs when the system colors change.
         /// </summary>
         [Category("Behavior")]

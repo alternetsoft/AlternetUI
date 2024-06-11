@@ -106,14 +106,7 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.NumericUpDownEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.NumericUpDownEvent.ValueChanged:
-                {
-                    ValueChanged?.Invoke(); return IntPtr.Zero;
-                }
-                default: throw new Exception("Unexpected NumericUpDownEvent value: " + e);
-            }
+            ValueChanged?.Invoke(); return IntPtr.Zero;
         }
         
         public Action? ValueChanged;
