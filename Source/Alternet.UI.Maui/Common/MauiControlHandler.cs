@@ -20,6 +20,47 @@ namespace Alternet.UI
         {
         }
 
+        public override bool UserPaint
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
+
+        public override bool IsNativeControlCreated
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
+
+        public override bool IsHandleCreated
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
+
+        public override bool IsFocused
+        {
+            get => Control.FocusedControl == container?.Control;
+
+            set
+            {
+                if (IsFocused == value)
+                    return;
+                Control.FocusedControl?.RaiseLostFocus();
+                Control.FocusedControl = container?.Control;
+                Control.FocusedControl?.RaiseGotFocus();
+            }
+        }
+
         public SkiaContainer? Container
         {
             get => container;

@@ -292,7 +292,11 @@ namespace Alternet.UI
 
         protected virtual void PaintCaret(PaintEventArgs e)
         {
-            if (!Focused || !UserPaint || caretInfo is null)
+            if (!UserPaint)
+                return;
+            if (!Focused)
+                return;
+            if (caretInfo is null)
                 return;
 
             if (caretInfo.IsDisposed)

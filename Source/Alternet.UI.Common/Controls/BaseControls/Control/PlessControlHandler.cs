@@ -70,7 +70,15 @@ namespace Alternet.UI
         
         public virtual bool IsNativeControlCreated { get; set; }
         
-        public virtual bool IsFocused { get; set; }
+        public virtual bool IsFocused
+        {
+            get => false;
+
+            set
+            {
+
+            }
+        }
         
         public virtual Thickness IntrinsicLayoutPadding { get; set; }
         

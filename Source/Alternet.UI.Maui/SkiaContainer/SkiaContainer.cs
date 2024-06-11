@@ -25,7 +25,7 @@ SKPaint https://learn.microsoft.com/en-us/dotnet/api/skiasharp.skpaint?view=skia
 
 namespace Alternet.UI
 {
-    public class SkiaContainer : ScrollView
+    public class SkiaContainer : ScrollView, IScrollViewController
     {
         private readonly SKCanvasView canvas = new();
         private SkiaGraphics? graphics;
@@ -41,6 +41,11 @@ namespace Alternet.UI
             Orientation = Microsoft.Maui.ScrollOrientation.Both;
             VerticalScrollBarVisibility = ScrollBarVisibility.Always;
             HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
+
+            SetScrolledPosition(350, 500);
+
+            ScrollToRequested += SkiaContainer_ScrollToRequested;
+            Scrolled += SkiaContainer_Scrolled;
 
             canvas = new SKCanvasView();
             canvas.EnableTouchEvents = true;
@@ -79,6 +84,46 @@ namespace Alternet.UI
             Unfocused += SkiaContainer_Unfocused;
         }
 
+
+        public event EventHandler<ScrollToRequestedEventArgs>? NewScrollToRequested;
+
+        protected override void LayoutChildren(double x, double y, double width, double height)
+        {
+            base.LayoutChildren(x, y, width, height);
+        }
+
+        Point IScrollViewController.GetScrollPositionForElement(
+            VisualElement item,
+            ScrollToPosition position)
+        {
+            var result = GetScrollPositionForElement(item, position);
+            return new(100, 100);
+        }
+
+        event EventHandler<ScrollToRequestedEventArgs> IScrollViewController.ScrollToRequested
+        {
+            add => NewScrollToRequested += value;
+            remove => NewScrollToRequested -= value;
+        }
+
+        void IScrollViewController.SendScrollFinished()
+        {
+        }
+
+        void IScrollViewController.SetScrolledPosition(double x, double y)
+        {
+        }
+
+        Rect IScrollViewController.LayoutAreaOverride
+        {
+            get => new(0, 0, 5000, 500);
+
+            set
+            {
+
+            }
+        }
+
         public SKCanvasView CanvasView => canvas;
 
         public Alternet.UI.Control? Control
@@ -108,6 +153,16 @@ namespace Alternet.UI
             }
         }
 
+        private void SkiaContainer_Scrolled(object? sender, ScrolledEventArgs e)
+        {
+            Alternet.UI.App.Log("SkiaContainer_Scrolled");
+        }
+
+        private void SkiaContainer_ScrollToRequested(object? sender, ScrollToRequestedEventArgs e)
+        {
+            Alternet.UI.App.Log("SkiaContainer_ScrollToRequested");
+        }
+
         protected override void OnChildAdded(Element child)
         {
             base.OnChildAdded(child);
@@ -131,8 +186,11 @@ namespace Alternet.UI
         {
             if (e.ActionType == SKTouchAction.Pressed)
             {
-                if (!IsFocused)
-                    Focus();
+                Log($"PlatformView: {canvas.Handler?.PlatformView?.GetType()}");
+                control?.RaiseGotFocus();
+
+                /*if (!IsFocused)
+                    Focus();*/
             }
 
             if (control is not null)
@@ -149,6 +207,8 @@ namespace Alternet.UI
                 return;
 
             var dc = e.Surface.Canvas;
+
+            dc.Scale((float)control.GetPixelScaleFactor());
 
             if (graphics is null)
                 graphics = new(dc);
@@ -168,16 +228,21 @@ namespace Alternet.UI
             control.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
         }
 
+        private void Log(object? s)
+        {
+            Alternet.UI.App.Log(s);
+        }
+
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
         {
-            Alternet.UI.App.Log("Focused");
+            Log("Focused");
             UI.Control.FocusedControl = control;
             control?.RaiseGotFocus();
         }
 
         private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
         {
-            Alternet.UI.App.Log("Unfocused");
+            Log("Unfocused");
             UI.Control.FocusedControl = null;
             control?.RaiseLostFocus();
         }
