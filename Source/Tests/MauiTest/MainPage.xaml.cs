@@ -24,8 +24,6 @@ public partial class MainPage : ContentPage
         skiaContainer.BackgroundColor = Colors.Cornsilk;
         skiaContainer.Margin = new(5);
 
-        skiaContainer.HeightRequest = 300;
-        skiaContainer.WidthRequest = 500;
         skiaContainer.Control = skiaSample;
 
         button.Text = "Hello";
@@ -40,10 +38,17 @@ public partial class MainPage : ContentPage
 
         App.LogMessage += App_LogMessage;
 
-        //panel.Children.Add(mauiContainer);
-        //panel.Children.Add(button);
-        panel.Children.Add(skiaContainer);
+        var ho = skiaContainer.HorizontalOptions;
+        ho.Expands = true;
+        ho.Alignment = LayoutAlignment.Fill;
+        skiaContainer.HorizontalOptions = ho;
 
+        var vo = skiaContainer.VerticalOptions;
+        vo.Expands = true;
+        vo.Alignment = LayoutAlignment.Fill;
+        skiaContainer.VerticalOptions = vo;
+
+        panel.Children.Add(skiaContainer);
 
         openLogFileButton.Clicked += OpenLogFileButton_Clicked;
 

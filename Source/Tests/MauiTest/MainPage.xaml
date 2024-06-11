@@ -15,7 +15,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <FlexLayout x:Name="panel"
+        <StackLayout x:Name="panel"
                            Grid.Row="1"/>
         <Button Grid.Row="2"
                 Margin="0,20"

@@ -11,11 +11,7 @@ namespace Alternet.UI
 {
     public class MauiApplicationHandler : DisposableObject, IApplicationHandler
     {
-        public static MouseButtonState MouseButtonState;
-
-        public static PointI ScreenPosition;
-
-        public static KeyStates KeyStates;
+        public static PointI MousePosition;
 
         /// <inheritdoc/>
         bool IApplicationHandler.ExitOnFrameDelete
@@ -186,17 +182,17 @@ namespace Alternet.UI
 
         public KeyStates GetKeyStatesFromSystem(Key key)
         {
-            return KeyStates;
+            return KeyStates.None;
         }
 
         public MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton)
         {
-            return MouseButtonState;
+            return PlessMouse.GetButtonState(mouseButton);
         }
 
         public PointI GetMousePositionFromSystem()
         {
-            return ScreenPosition;
+            return MousePosition;
         }
     }
 }

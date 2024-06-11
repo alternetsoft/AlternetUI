@@ -15,6 +15,8 @@ namespace Alternet.UI
     /// </summary>
     public class MouseEventArgs : HandledEventArgs
     {
+        public static new readonly MouseEventArgs Empty = new();
+
         private readonly object currentTarget;
         private readonly object originalTarget;
         private PointD location;
@@ -27,9 +29,8 @@ namespace Alternet.UI
             object originalTarget,
             MouseButton button,
             long timestamp,
-            MouseDevice mouseDevice,
             PointD location)
-            : this(currentTarget, originalTarget, timestamp, mouseDevice, location)
+            : this(currentTarget, originalTarget, timestamp, location)
         {
             ChangedButton = button;
             ClickCount = 1;
@@ -42,14 +43,18 @@ namespace Alternet.UI
             object currentTarget,
             object originalTarget,
             long timestamp,
-            MouseDevice mouseDevice,
             PointD location)
         {
             this.currentTarget = currentTarget;
             this.originalTarget = originalTarget;
-            MouseDevice = mouseDevice;
             Timestamp = timestamp;
             this.location = location;
+        }
+
+        internal MouseEventArgs()
+        {
+            currentTarget = AssemblyUtils.Default;
+            originalTarget = AssemblyUtils.Default;
         }
 
         /// <summary>
@@ -71,7 +76,7 @@ namespace Alternet.UI
         ///     Read-only access to the logical mouse device associated with
         ///     this event.
         /// </summary>
-        public MouseDevice MouseDevice { get; }
+        public MouseDevice MouseDevice => Mouse.PrimaryDevice;
 
         /// <summary>
         ///     Read-only access to the button being described.

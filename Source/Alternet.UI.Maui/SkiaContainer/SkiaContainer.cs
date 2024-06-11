@@ -15,14 +15,6 @@ using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 
-/*
-SkiaSharp.SKRect (float)
-https://learn.microsoft.com/en-us/dotnet/api/skiasharp.skrect?view=skiasharp-2.88
-
-This is brush?
-SKPaint https://learn.microsoft.com/en-us/dotnet/api/skiasharp.skpaint?view=skiasharp-2.88
-*/
-
 namespace Alternet.UI
 {
     public class SkiaContainer : ScrollView, IScrollViewController
@@ -84,46 +76,6 @@ namespace Alternet.UI
             Unfocused += SkiaContainer_Unfocused;
         }
 
-
-        public event EventHandler<ScrollToRequestedEventArgs>? NewScrollToRequested;
-
-        protected override void LayoutChildren(double x, double y, double width, double height)
-        {
-            base.LayoutChildren(x, y, width, height);
-        }
-
-        Point IScrollViewController.GetScrollPositionForElement(
-            VisualElement item,
-            ScrollToPosition position)
-        {
-            var result = GetScrollPositionForElement(item, position);
-            return new(100, 100);
-        }
-
-        event EventHandler<ScrollToRequestedEventArgs> IScrollViewController.ScrollToRequested
-        {
-            add => NewScrollToRequested += value;
-            remove => NewScrollToRequested -= value;
-        }
-
-        void IScrollViewController.SendScrollFinished()
-        {
-        }
-
-        void IScrollViewController.SetScrolledPosition(double x, double y)
-        {
-        }
-
-        Rect IScrollViewController.LayoutAreaOverride
-        {
-            get => new(0, 0, 5000, 500);
-
-            set
-            {
-
-            }
-        }
-
         public SKCanvasView CanvasView => canvas;
 
         public Alternet.UI.Control? Control
@@ -153,14 +105,9 @@ namespace Alternet.UI
             }
         }
 
-        private void SkiaContainer_Scrolled(object? sender, ScrolledEventArgs e)
+        protected override void LayoutChildren(double x, double y, double width, double height)
         {
-            Alternet.UI.App.Log("SkiaContainer_Scrolled");
-        }
-
-        private void SkiaContainer_ScrollToRequested(object? sender, ScrollToRequestedEventArgs e)
-        {
-            Alternet.UI.App.Log("SkiaContainer_ScrollToRequested");
+            base.LayoutChildren(x, y, width, height);
         }
 
         protected override void OnChildAdded(Element child)
@@ -178,12 +125,25 @@ namespace Alternet.UI
             base.OnParentChanged();
         }
 
+        private void SkiaContainer_Scrolled(object? sender, ScrolledEventArgs e)
+        {
+            Log("SkiaContainer_Scrolled");
+        }
+
+        private void SkiaContainer_ScrollToRequested(object? sender, ScrollToRequestedEventArgs e)
+        {
+            Log("SkiaContainer_ScrollToRequested");
+        }
+
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
         {
         }
 
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
         {
+            if (control is null)
+                return;
+
             if (e.ActionType == SKTouchAction.Pressed)
             {
                 Log($"PlatformView: {canvas.Handler?.PlatformView?.GetType()}");
@@ -193,12 +153,9 @@ namespace Alternet.UI
                     Focus();*/
             }
 
-            if (control is not null)
-            {
-                TouchEventArgs args = MauiTouchUtils.Convert(e);
-                control.RaiseTouch(args);
-                e.Handled = args.Handled;
-            }
+            TouchEventArgs args = MauiTouchUtils.Convert(e);
+            control?.RaiseTouch(args);
+            e.Handled = args.Handled;
         }
 
         private void Canvas_PaintSurface(object? sender, SKPaintSurfaceEventArgs e)
