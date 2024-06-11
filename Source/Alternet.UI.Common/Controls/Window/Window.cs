@@ -1207,6 +1207,7 @@ namespace Alternet.UI
         {
             base.OnDpiChanged(e);
             Display.Reset();
+            PerformLayoutAndInvalidate();
         }
 
         /// <summary>
