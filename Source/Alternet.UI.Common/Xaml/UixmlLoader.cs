@@ -27,6 +27,40 @@ namespace Alternet.UI
         public static bool ShowExceptionDialog { get; set; } = true;
 
         /// <summary>
+        /// Custom method for loading Uixml from resource. Overrides default behavior.
+        /// </summary>
+        public static Func<string, object, Flags, bool>? LoadFromResName;
+
+        /// <summary>
+        /// Custom method for loading Uixml from stream. Overrides default behavior.
+        /// </summary>
+        public static Func<Stream, object, string?, Flags, bool>? LoadFromStream;
+
+        /// <summary>
+        /// Custom method for showing errors occured during load process. Overrides default behavior.
+        /// </summary>
+        public static Func<Exception, string?, Flags, bool>? ReportLoadException;
+
+        [Flags]
+        public enum Flags
+        {
+            /// <summary>
+            /// Specifies whether to report error.
+            /// </summary>
+            ReportError = 1,
+
+            /// <summary>
+            /// Specifies whether to show error dialog.
+            /// </summary>
+            ShowErrorDialog = 2,
+
+            /// <summary>
+            /// Specifies whether to supress exception throw.
+            /// </summary>
+            NoThrowException = 3,
+        }
+
+        /// <summary>
         /// Returns an object graph created from a source XAML.
         /// </summary>
         public object Load(Stream xamlStream, Assembly localAssembly)
@@ -40,16 +74,23 @@ namespace Alternet.UI
         /// </summary>
         public static void LoadExisting(string resName, object existingObject)
         {
+            if(LoadFromResName is not null)
+            {
+                var result = LoadFromResName(resName, existingObject, 0);
+                if (result)
+                    return;
+            }
+
             try
             {
                 var uixmlStream = existingObject.GetType().Assembly.GetManifestResourceStream(resName);
                 if (uixmlStream == null)
                     throw new InvalidOperationException();
-                LoadExistingEx(uixmlStream, existingObject, false, resName);
+                LoadExistingEx(uixmlStream, existingObject, 0, resName);
             }
             catch (Exception e)
             {
-                ReportException(e, resName);
+                DefaultReportLoadException(e, resName, 0);
                 throw;
             }
         }
@@ -60,7 +101,7 @@ namespace Alternet.UI
         /// </summary>
         public void LoadExisting(Stream xamlStream, object existingObject)
         {
-            LoadExistingEx(xamlStream, existingObject, true);
+            LoadExistingEx(xamlStream, existingObject, Flags.ReportError);
         }
 
         /// <summary>
@@ -70,9 +111,16 @@ namespace Alternet.UI
         public static void LoadExistingEx(
             Stream xamlStream,
             object existingObject,
-            bool report = true,
+            Flags flags = 0,
             string? resName = default)
         {
+            if(LoadFromStream is not null)
+            {
+                var result = LoadFromStream(xamlStream, existingObject, resName, flags);
+                if (result)
+                    return;
+            }
+
             try
             {
                 Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
@@ -82,21 +130,24 @@ namespace Alternet.UI
             }
             catch (Exception e)
             {
-                if(report)
-                    ReportException(e, resName);
-                if (App.Initialized && !App.Current.InUixmlPreviewerMode
-                    && ShowExceptionDialog)
-                {
-                    var s = $"Resource Name: {resName}";
-                    App.ShowExceptionWindow(e, s, false);
-                }
-
-                throw e;
+                DefaultReportLoadException(e, resName, flags);
+                if(!flags.HasFlag(Flags.NoThrowException))
+                    throw e;
             }
         }
 
-        private static void ReportException(Exception e, string? resName)
+        public static void DefaultReportLoadException(Exception e, string? resName, Flags flags)
         {
+            if(ReportLoadException is not null)
+            {
+                var result = ReportLoadException(e, resName, flags);
+                if (result)
+                    return;
+            }
+
+            if (!flags.HasFlag(Flags.ReportError))
+                return;
+
             void BeginSection()
             {
             }
@@ -149,6 +200,15 @@ namespace Alternet.UI
             WriteLine($"Exception type: {e.GetType()}");
             Unindent();
             EndSection();
+
+            if (!flags.HasFlag(Flags.ShowErrorDialog))
+                return;
+            if (App.Initialized && !App.Current.InUixmlPreviewerMode
+                && ShowExceptionDialog)
+            {
+                var s = $"Resource Name: {resName}";
+                App.ShowExceptionWindow(e, s, false);
+            }
         }
     }
 }

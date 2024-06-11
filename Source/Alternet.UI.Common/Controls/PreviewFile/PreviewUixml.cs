@@ -140,7 +140,7 @@ namespace Alternet.UI
                     UixmlLoader.LoadExistingEx(
                         stream,
                         previewWindow,
-                        false,
+                        0,
                         fileName);
                 }
                 finally
