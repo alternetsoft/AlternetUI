@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// ConvertFrom - Attempt to convert to a length from the given object
         /// </summary>
         /// <returns>
-        /// The double representing the size in 1/96th of an inch.
+        /// The double representing the size in device-independent units.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.

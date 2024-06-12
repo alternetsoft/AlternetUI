@@ -27,6 +27,16 @@ namespace Alternet.Drawing
     public struct PointD : IEquatable<PointD>
     {
         /// <summary>
+        /// Gets minimal possible value.
+        /// </summary>
+        public static readonly PointD MinValue = new(Coord.MinValue);
+
+        /// <summary>
+        /// Gets maximal possible value.
+        /// </summary>
+        public static readonly PointD MaxValue = new(Coord.MaxValue);
+
+        /// <summary>
         /// Gets an empty point with (0, 0) ccordinates.
         /// </summary>
         public static readonly PointD Empty;
@@ -53,6 +63,17 @@ namespace Alternet.Drawing
         {
             this.x = x;
             this.y = y;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='Drawing.PointD'/> class with the
+        /// specified coordinate.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public PointD(Coord xy)
+        {
+            this.x = xy;
+            this.y = xy;
         }
 
         /// <summary>

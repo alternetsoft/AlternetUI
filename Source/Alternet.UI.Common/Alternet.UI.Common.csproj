@@ -9,6 +9,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

@@ -14,8 +14,6 @@ namespace Alternet.UI
 
         public string GetName();
 
-        public SizeI GetDPI();
-
         public double GetScaleFactor();
 
         public bool IsPrimary();

@@ -283,6 +283,14 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
+        public Graphics CreateMemoryDC(double scaleFactor)
+        {
+            SKBitmap bitmap = new();
+            SKCanvas canvas = new(bitmap);
+            canvas.Scale((float)scaleFactor);
+            return new SkiaGraphics(canvas);
+        }
+
         public IGenericImageHandler CreateGenericImageHandler(int width, int height, SKColor[] data)
         {
             throw new NotImplementedException();

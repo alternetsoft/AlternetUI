@@ -652,7 +652,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='Color'/> to a <see cref='Pen'/>.
         /// </summary>
         /// <remarks>
-        /// Pen width is set to 1 dip (1/96 inch).
+        /// Pen width is set to 1 device-independent unit.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Pen(Color color) => color.AsPen;

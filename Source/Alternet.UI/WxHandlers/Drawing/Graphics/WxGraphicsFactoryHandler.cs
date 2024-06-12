@@ -56,6 +56,11 @@ namespace Alternet.Drawing
             }
         }
 
+        public Graphics CreateMemoryDC(double scaleFactor)
+        {
+            return new WxGraphics(UI.Native.DrawingContext.CreateMemoryDC(scaleFactor));
+        }
+
         public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
         {
             switch (kind)

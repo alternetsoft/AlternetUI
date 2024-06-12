@@ -81,12 +81,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units (1/96th inch per unit).
+        /// be fitted, in device-independent units.
         /// </summary>
         /// <param name="availableSize">The available space that a parent element
         /// can allocate a child control.</param>
         /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        /// a rectangle, in device-independent units.</returns>
         /// <remarks>
         /// This is a default implementation which is called from
         /// <see cref="Control.GetPreferredSize(SizeD)"/>.
@@ -270,14 +270,6 @@ namespace Alternet.UI
         public virtual Brush? GetForeground(VisualControlState state)
         {
             return Foregrounds?.GetObjectOrNull(state);
-        }
-
-        /// <summary>
-        /// Sends size event.
-        /// </summary>
-        public virtual void SendSizeEvent()
-        {
-            Handler.SendSizeEvent();
         }
 
         /// <summary>
@@ -614,8 +606,73 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseTouch(TouchEventArgs e)
         {
+            TouchToMouseEvents(e);
             OnTouch(e);
             Touch?.Invoke(this, e);
+        }
+
+        public virtual void TouchToMouseEvents(TouchEventArgs e)
+        {
+            var handled = e.Handled;
+
+            switch (e.DeviceType)
+            {
+                case TouchDeviceType.Touch:
+                    break;
+                case TouchDeviceType.Mouse:
+                    switch (e.ActionType)
+                    {
+                        case TouchAction.Entered:
+                            RaiseMouseEnter();
+                            break;
+                        case TouchAction.Pressed:
+                            Mouse.ReportMouseDown(
+                                this,
+                                DateTime.Now.Ticks,
+                                e.MouseButton,
+                                e.Location,
+                                out handled);
+                            break;
+                        case TouchAction.Moved:
+                            Mouse.ReportMouseMove(
+                                this,
+                                DateTime.Now.Ticks,
+                                e.Location,
+                                out handled);
+                            break;
+                        case TouchAction.Released:
+                            Mouse.ReportMouseUp(
+                                this,
+                                DateTime.Now.Ticks,
+                                e.MouseButton,
+                                e.Location,
+                                out handled);
+                            break;
+                        case TouchAction.Cancelled:
+                            break;
+                        case TouchAction.Exited:
+                            RaiseMouseLeave();
+                            break;
+                        case TouchAction.WheelChanged:
+                            Mouse.ReportMouseWheel(
+                                        this,
+                                        DateTime.Now.Ticks,
+                                        e.WheelDelta,
+                                        e.Location,
+                                        out handled);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case TouchDeviceType.Pen:
+                    break;
+                default:
+                    break;
+            }
+
+            e.Handled = handled;
         }
 
         /// <summary>
@@ -1038,7 +1095,7 @@ namespace Alternet.UI
                 ClientSize = newSize + new SizeD(1, 0);
                 ClientSize = newSize;
                 Refresh();
-                SendSizeEvent();
+                PerformLayout();
             }
         }
 
@@ -1064,30 +1121,6 @@ namespace Alternet.UI
         public virtual PointD ClientToScreen(PointD point)
         {
             return Handler.ClientToScreen(point);
-        }
-
-        /// <summary>
-        /// Converts the screen coordinates of a specified point in
-        /// device-independent units (1/96th inch per unit) to device (pixel) coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that specifies the
-        /// screen device-independent coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public virtual PointI ScreenToDevice(PointD point)
-        {
-            return Handler.ScreenToDevice(point);
-        }
-
-        /// <summary>
-        /// Converts the device (pixel) coordinates of a specified point
-        /// to coordinates in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that contains the coordinates
-        /// in device-independent units (1/96th inch per unit) to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        public virtual PointD DeviceToScreen(PointI point)
-        {
-            return Handler.DeviceToScreen(point);
         }
 
         /// <summary>
@@ -1472,16 +1505,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets bounds of the control using <paramref name="rect"/> and <paramref name="flags"/>.
-        /// </summary>
-        /// <param name="rect">Rectangle.</param>
-        /// <param name="flags">Flags.</param>
-        public virtual void SetBounds(RectD rect, SetBoundsFlags flags)
-        {
-            Handler.SetBounds(rect, flags);
-        }
-
-        /// <summary>
         /// Starts the initialization process for this control.
         /// </summary>
         /// <remarks>
@@ -1759,7 +1782,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual SizeD GetDPI()
         {
-            return Handler.GetDPI();
+            return dpi ??= GraphicsFactory.ScaleFactorToDpi(ScaleFactor);
         }
 
         /// <summary>
@@ -1821,12 +1844,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units (1/96th inch per unit).
+        /// be fitted, in device-independent units.
         /// </summary>
         /// <param name="availableSize">The available space that a parent element
         /// can allocate a child control.</param>
         /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        /// a rectangle, in device-independent units.</returns>
         public virtual SizeD GetPreferredSize(SizeD availableSize)
         {
             var layoutType = Layout ?? GetDefaultLayout();
@@ -1890,15 +1913,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Disable control recreate when properties that require control
-        /// recreation are changed.
-        /// </summary>
-        public virtual void BeginIgnoreRecreate()
-        {
-            Handler.BeginIgnoreRecreate();
-        }
-
-        /// <summary>
         /// Gets whether one of this control's parents equals <paramref name="testParent"/>.
         /// </summary>
         /// <param name="testParent">Control to test as an indirect parent.</param>
@@ -1933,26 +1947,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Enable control recreate if it's required after it was previously
-        /// disabled by <see cref="BeginIgnoreRecreate"/>
-        /// </summary>
-        public virtual void EndIgnoreRecreate()
-        {
-            Handler.EndIgnoreRecreate();
-        }
-
-        /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         public virtual int PixelFromDip(Coord value)
         {
-            return Handler.PixelFromDip(value);
+            return GraphicsFactory.PixelFromDip(value, ScaleFactor);
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -1962,7 +1967,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -1972,7 +1977,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -1982,17 +1987,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets scale factor used in device-independent units (1/96th inch per unit) to/from
-        /// pixels conversions.
-        /// </summary>
-        /// <returns></returns>
-        public virtual Coord GetPixelScaleFactor()
-        {
-            return Handler.GetPixelScaleFactor();
-        }
-
-        /// <summary>
-        /// Converts <see cref="SizeI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="SizeI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
@@ -2002,7 +1997,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="PointI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
@@ -2023,7 +2018,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the update rectangle region bounding box in client coords. This method
-        /// can be used in paint events. Returns rectangle in dips (1/96 inch).
+        /// can be used in paint events. Returns rectangle in device-independent units.
         /// </summary>
         /// <returns></returns>
         public virtual RectD GetUpdateClientRect()
@@ -2034,7 +2029,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="RectI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
@@ -2133,13 +2128,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts pixels to device-independent units (1/96th inch per unit).
+        /// Converts pixels to device-independent units.
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
         public virtual Coord PixelToDip(int value)
         {
-            return Handler.PixelToDip(value);
+            return GraphicsFactory.PixelToDip(value, ScaleFactor);
         }
 
         /// <summary>
@@ -2197,7 +2192,6 @@ namespace Alternet.UI
 
         public virtual void ResetMeasureCanvas()
         {
-            SafeDispose(ref measureCanvas);
         }
 
         public virtual void ResetDisplay()
@@ -2277,6 +2271,7 @@ namespace Alternet.UI
 
         public void RaiseMouseEnter()
         {
+            IsMouseOver = true;
             HoveredControl = this;
             RaiseIsMouseOverChanged();
             OnMouseEnter(EventArgs.Empty);
@@ -2298,6 +2293,7 @@ namespace Alternet.UI
 
         public void RaiseMouseLeave()
         {
+            IsMouseOver = false;
             if (HoveredControl == this)
                 HoveredControl = null;
             RaiseIsMouseOverChanged();
@@ -2377,6 +2373,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDpiChanged(DpiChangedEventArgs e)
         {
+            scaleFactor = null;
+            dpi = null;
             ResetDisplay();
             ResetMeasureCanvas();
             OnDpiChanged(e);
@@ -2479,7 +2477,7 @@ namespace Alternet.UI
         /// <param name="menu">The menu to pop up.</param>
         /// <param name="x">The X position in dips where the menu will appear.</param>
         /// <param name="y">The Y position in dips where the menu will appear.</param>
-        /// <remarks>Position is specified in device independent units (1/96 inch).</remarks>
+        /// <remarks>Position is specified in device independent units.</remarks>
         public virtual void ShowPopupMenu(ContextMenu? menu, Coord x = -1, Coord y = -1)
         {
             menu?.Show(this, (x, y));

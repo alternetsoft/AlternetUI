@@ -10,38 +10,13 @@ using Microsoft.Maui.Devices;
 
 namespace Alternet.UI
 {
-    public class MauiDisplayFactoryHandler : DisposableObject, IDisplayFactoryHandler
+    public class MauiDisplayFactoryHandler : PlessDisplayFactoryHandler, IDisplayFactoryHandler
     {
-        public IDisplayHandler CreateDisplay()
-        {
-            return new MauiDisplayHandler();
-        }
+        private IDisplayHandler? primaryDisplay;
 
-        public IDisplayHandler CreateDisplay(int index)
+        public override IDisplayHandler CreateDisplay()
         {
-            return new MauiDisplayHandler(index);
-        }
-
-        public int GetCount()
-        {
-            return 1;
-        }
-
-        public SizeI GetDefaultDPI()
-        {
-            if (App.IsIOS || App.IsMacOS)
-                return 72;
-            return 96;
-        }
-
-        public int GetFromControl(Control control)
-        {
-            return 1;
-        }
-
-        public int GetFromPoint(PointI pt)
-        {
-            return 1;
+            return primaryDisplay ??= new MauiDisplayHandler();
         }
     }
 }

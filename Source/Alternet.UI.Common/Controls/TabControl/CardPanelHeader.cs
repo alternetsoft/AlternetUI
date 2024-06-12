@@ -73,7 +73,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when size of any button is changed.
         /// </summary>
-        public event EventHandler? ButtonSizeChanged;
+        public event EventHandler<BaseEventArgs<Control>>? ButtonSizeChanged;
 
         /// <summary>
         /// Occurs when the tab is clicked.
@@ -807,7 +807,8 @@ namespace Alternet.UI
 
         private void Button_SizeChanged(object? sender, EventArgs e)
         {
-            ButtonSizeChanged?.Invoke(this, EventArgs.Empty);
+            if(sender is Control control)
+                ButtonSizeChanged?.Invoke(this, new BaseEventArgs<Control>(control));
         }
 
         private IReadOnlyFontAndColor GetColors(bool isActive)

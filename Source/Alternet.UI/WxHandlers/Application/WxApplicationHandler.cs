@@ -303,9 +303,11 @@ namespace Alternet.UI
             return WxApplicationHandler.NativeMouse.GetButtonState(mouseButton);
         }
 
-        public PointI GetMousePositionFromSystem()
+        public PointD GetMousePositionFromSystem()
         {
-            return WxApplicationHandler.NativeMouse.GetPosition();
+            var resultI = WxApplicationHandler.NativeMouse.GetPosition();
+            var result = GraphicsFactory.PixelToDip(resultI);
+            return result;
         }
 
         public KeyStates GetKeyStatesFromSystem(Key key)

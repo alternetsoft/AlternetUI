@@ -43,8 +43,8 @@
         Millimeter, // Each unit is 1 millimeter.
 
         /// <summary>
-        /// Specifies a device-independent point (1/96 inch) as the unit of measure.
+        /// Specifies a device-independent point as the unit of measure.
         /// </summary>
-        Dip, // Each unit is 1/96 inch.
+        Dip,
     }
 }

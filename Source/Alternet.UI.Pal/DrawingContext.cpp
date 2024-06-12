@@ -6,6 +6,30 @@
 
 namespace Alternet::UI
 {
+    DrawingContext* DrawingContext::CreateMemoryDC(double scaleFactor)
+    {
+        /*
+        wxMemoryDC memoryDC;
+        auto pp1 = memoryDC.GetPPI().x;
+
+        double x, y;
+        double x1, y1;
+
+        memoryDC.GetUserScale(&x,&y);
+        memoryDC.GetLogicalScale(&x1, &y1);
+
+        wxMemoryDC memoryDC2;
+        memoryDC2.SetLogicalScale(2, 2);
+        auto pp2 = memoryDC2.GetPPI().x;
+        */
+
+        auto bitmap = wxBitmap(10, 10);
+        bitmap.SetScaleFactor(scaleFactor);
+        auto memoryDC = new wxMemoryDC(bitmap);
+        auto ppi = memoryDC->GetPPI();
+        return new DrawingContext(memoryDC);
+    }
+
     SizeI DrawingContext::GetDpi()
     {
         UseDC();

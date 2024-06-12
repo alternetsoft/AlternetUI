@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI;
 
+using Microsoft.Maui.Controls;
+
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
@@ -15,6 +17,24 @@ namespace Alternet.UI.Extensions
 {
     public static class MauiExtensionsPrivate
     {
+        public static PointD GetAbsolutePosition(this VisualElement visualElement)
+        {
+            var ancestors = visualElement.Ancestors();
+            var x = ancestors.Sum(ancestor => ancestor.X);
+            var y = ancestors.Sum(ancestor => ancestor.Y);
+
+            return new(x, y);
+        }
+
+        public static IEnumerable<VisualElement> Ancestors(this VisualElement? element)
+        {
+            while (element != null)
+            {
+                yield return element;
+                element = element.Parent as VisualElement;
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Microsoft.Maui.Graphics.IFont ToMaui(this Alternet.Drawing.Font font)
         {

@@ -40,7 +40,9 @@ namespace Alternet.UI
 
         public double GetScaleFactor()
         {
-            return UI.Native.WxOtherFactory.DisplayGetScaleFactor(Handle);
+            if (App.IsWindowsOS)
+                return UI.Native.WxOtherFactory.DisplayGetScaleFactor(Handle);
+            return 1D;
         }
 
         public bool IsPrimary()

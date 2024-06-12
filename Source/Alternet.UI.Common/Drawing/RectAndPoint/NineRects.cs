@@ -273,7 +273,7 @@ namespace Alternet.Drawing
             /// <inheritdoc/>
             protected override void OnPaint(PaintEventArgs e)
             {
-                var scaleFactor = GetPixelScaleFactor();
+                var scaleFactor = ScaleFactor;
                 NineRects rects = new(e.ClipRectangle.ToRect(), PatchRect);
                 DrawingUtils.FillRectanglesBorder(
                     e.Graphics,

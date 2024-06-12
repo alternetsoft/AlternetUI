@@ -234,7 +234,7 @@ namespace Alternet.Drawing
         public SkiaBitmap(SizeI size, IControl control)
             : this(size)
         {
-            ScaleFactor = control.GetPixelScaleFactor();
+            ScaleFactor = control.ScaleFactor;
         }
 
         /// <summary>

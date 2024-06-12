@@ -139,8 +139,6 @@ namespace Alternet.UI
 
         bool CanAcceptFocus { get; }
 
-        bool IsMouseOver { get; }
-
         bool ProcessUIUpdates { get; set; }
 
         bool IsMouseCaptured { get; }
@@ -158,8 +156,6 @@ namespace Alternet.UI
         void SetToolTip(string? value);
 
         void Lower();
-
-        void SendSizeEvent();
 
         void UnsetToolTip();
 
@@ -181,10 +177,6 @@ namespace Alternet.UI
 
         PointD ClientToScreen(PointD point);
 
-        PointI ScreenToDevice(PointD point);
-
-        PointD DeviceToScreen(PointI point);
-
         void FocusNextControl(bool forward = true, bool nested = true);
 
         DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects);
@@ -195,8 +187,6 @@ namespace Alternet.UI
 
         void EndUpdate();
 
-        void SetBounds(RectD rect, SetBoundsFlags flags);
-
         void BeginInit();
 
         void EndInit();
@@ -205,21 +195,11 @@ namespace Alternet.UI
 
         void SaveScreenshot(string fileName);
 
-        SizeD GetDPI();
-
         bool IsTransparentBackgroundSupported();
-
-        void EndIgnoreRecreate();
-
-        void BeginIgnoreRecreate();
 
         Coord GetPixelScaleFactor();
 
         RectI GetUpdateClientRectI();
-
-        Coord PixelToDip(int value);
-
-        int PixelFromDip(Coord value);
 
         void SetScrollBar(
             bool isVertical,
@@ -247,10 +227,6 @@ namespace Alternet.UI
         Color GetDefaultAttributesFgColor();
 
         Font? GetDefaultAttributesFont();
-
-        void SendMouseDownEvent(int x, int y);
-
-        void SendMouseUpEvent(int x, int y);
 
         bool BeginRepositioningChildren();
 

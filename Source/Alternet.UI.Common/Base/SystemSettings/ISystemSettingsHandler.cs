@@ -40,7 +40,7 @@ namespace Alternet.UI
 
         ColorStruct? GetColor(KnownSystemColor index);
 
-        int GetMetric(SystemSettingsMetric index, IControl? control);
+        int GetMetric(SystemSettingsMetric index, Control? control);
 
         string GetLibraryVersionString();
 

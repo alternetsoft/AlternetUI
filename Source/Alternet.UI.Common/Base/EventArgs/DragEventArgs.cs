@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="data">The data associated with this event.</param>
         /// <param name="mouseClientLocation">The client coordinates of the mouse pointer
-        /// in logical units (1/96th of an inch).</param>
+        /// in device-independent units.</param>
         /// <param name="effect">One of the <see cref="DragDropEffects"/> values.</param>
         public DragEventArgs(
             IDataObject data,
@@ -33,7 +33,7 @@ namespace Alternet.UI
         public IDataObject Data { get; }
 
         /// <summary>
-        /// Gets the client coordinates of the mouse pointer in logical units (1/96th of an inch).
+        /// Gets the client coordinates of the mouse pointer in device-independent units.
         /// </summary>
         public PointD MouseClientLocation { get; }
 

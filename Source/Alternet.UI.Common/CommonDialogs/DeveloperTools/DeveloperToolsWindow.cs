@@ -140,7 +140,7 @@ namespace Alternet.UI
             LogUtils.LogColor("BackgroundColor (real)", control.RealBackgroundColor);
             LogUtils.LogColor("BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
-            App.LogNameValue("PixelScaleFactor", control.GetPixelScaleFactor());
+            App.LogNameValue("PixelScaleFactor", control.ScaleFactor);
             App.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
             App.LogNameValue("DPI", control.GetDPI());
             App.LogSeparator();

@@ -63,12 +63,6 @@ namespace Alternet.UI
             return GetGeometry();
         }
 
-        public SizeI GetDPI()
-        {
-            var result = GetScaleFactor() * 96;
-            return ((int)result, (int)result);
-        }
-
         public RectI GetGeometry()
         {
             var info = DeviceDisplay.Current.MainDisplayInfo;

@@ -1,3 +1,30 @@
+# 0.9.608 (2024 June 12)
+
+- Control: DpiChanged event.
+- Control: MeasureCanvas optimized (uses global memory dc and is not created for every control).
+- Control: Enabled is returned correctly if parent control is disabled.
+- Control: GetPixelScaleFactor() -> ScaleFactor.
+- Control: IsMouseOver implemented inside Control and not passed to platform.
+- Control: Removed SendSizeEvent as not possible to implement on Maui.
+- Control: Removed ScreenToDevice, DeviceToScreen as we have similar PixelToDip/PixelFromDip methods.
+- Control: Removed BeginIgnoreRecreate/EndIgnoreRecreate as were buggy and confusing, use BeginInit/EndInit.
+- Control: Dpi and ScaleFactor are cached.
+- Control: IsParentEnabled, IsThisEnabled.
+- LogListBox: BoundToApplicationLog can be set.
+- Image.BitsFormat.
+- NativeApiGenerator: No switch clause is generated if there is only one event.
+- Display: Removed exceptions.
+- Display: IsOk, MaxScaleFactor, AllScalefactors, speed optimizations.
+- UixmlLoader: new static Func properties LoadFromResName, LoadFromStream, ReportLoadException.
+- TabControl: TabSizeChanged event.
+- Window: Call PerformLayout on DpiChanged event.
+- SystemColors: Updated on SystemColorsChanged.
+- PlessMouse: LastMousePosition, LastMousePositionChanged.
+- GraphicsFactory: GetOrCreateMemoryDC, CreateMemoryDC.
+- Graphicsfactory: ScaleFactor param is now optional in all PixelFromDip/PixelToDip and other methods that have it. If it is not specified, Display.MaxScaleFactor is used.
+- PointD: MinValue, MacValue, new constructor.
+- ARGBValue, RGBAValue structs and PlessSystemSettingsHandler class.
+
 # 0.9.607 (2024 June 10)
 
 - Added SkiaSharp mega demo in ControlsSample.

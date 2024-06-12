@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of this
         /// <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
-        /// device-independent units (1/96th inch per unit).</param>
+        /// device-independent units.</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this
         /// <see cref="Pen"/>.</param>
         public Pen(Color color, double width, DashStyle dashStyle)
@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of
         /// this <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
-        /// device-independent units (1/96th inch per unit).</param>
+        /// device-independent units.</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this
         /// <see cref="Pen"/>.</param>
         /// <param name="lineCap">Specifies the available cap styles with which a
@@ -70,7 +70,7 @@ namespace Alternet.Drawing
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of this
         /// <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
-        /// device-independent units (1/96th inch per unit).</param>
+        /// device-independent units.</param>
         public Pen(Color color, double width)
             : this(color, width, DashStyle.Solid)
         {
@@ -241,11 +241,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the width of this <see cref="Pen"/>, in device-independent units
-        /// (1/96th inch per unit).
+        /// Gets or sets the width of this <see cref="Pen"/>, in device-independent units.
         /// </summary>
-        /// <value>The width of this <see cref="Pen"/>, in device-independent units
-        /// (1/96th inch per unit).</value>
+        /// <value>The width of this <see cref="Pen"/>, in device-independent units.</value>
         /// <remarks>
         /// If <see cref="Pen"/> is immutable (for example <see cref="Pens.Black"/>),
         /// this property is readonly.

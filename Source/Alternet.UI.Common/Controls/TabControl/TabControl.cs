@@ -60,6 +60,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the size of the tab has changed.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<Control>>? TabSizeChanged;
+
+        /// <summary>
         /// Occurs when the <see cref="SelectedIndex" /> property has changed.
         /// </summary>
         [Category("Behavior")]
@@ -857,8 +862,9 @@ namespace Alternet.UI
                 TabAlignment);
         }
 
-        private void CardPanelHeader_ButtonSizeChanged(object? sender, EventArgs e)
+        private void CardPanelHeader_ButtonSizeChanged(object? sender, BaseEventArgs<Control> e)
         {
+            TabSizeChanged?.Invoke(this, e);
             Invalidate();
         }
 

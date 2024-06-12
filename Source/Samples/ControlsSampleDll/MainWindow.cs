@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
+
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -15,6 +17,10 @@ namespace ControlsSample
 
         static MainWindow()
         {
+            UixmlLoader.LoadFromResName = FormLoadFromResName;
+            UixmlLoader.LoadFromStream = FormLoadFromStream;
+            UixmlLoader.ReportLoadException = ReportFormLoadException;
+
             UseDebugBackgroundColor = false;
 
             ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl;
@@ -45,6 +51,25 @@ namespace ControlsSample
             ConsoleUtils.BindConsoleOutput();
             ConsoleUtils.BindConsoleError();
             DoInsideLayout(Initialize);
+        }
+
+        public static bool FormLoadFromResName(string resName, object obj, UixmlLoader.Flags flags)
+        {
+            return false;
+        }
+
+        public static bool FormLoadFromStream(
+            Stream stream,
+            object obj,
+            string? resName,
+            UixmlLoader.Flags flags)
+        {
+            return false;
+        }
+
+        public static bool ReportFormLoadException(Exception e, string? resName, UixmlLoader.Flags flags)
+        {
+            return false;
         }
 
         internal void SetDebugColors()

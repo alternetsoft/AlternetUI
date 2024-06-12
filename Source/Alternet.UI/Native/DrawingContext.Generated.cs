@@ -93,6 +93,14 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static DrawingContext CreateMemoryDC(double scaleFactor)
+        {
+            var _nnn = NativeApi.DrawingContext_CreateMemoryDC_(scaleFactor);
+            var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
+        }
+        
         public System.IntPtr GetHandle()
         {
             CheckDisposed();
@@ -505,6 +513,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, Alternet.Drawing.InterpolationMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr DrawingContext_CreateMemoryDC_(double scaleFactor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr DrawingContext_GetHandle_(IntPtr obj);

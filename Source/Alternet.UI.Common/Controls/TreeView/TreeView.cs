@@ -691,8 +691,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Provides tree view item information, at a given client point, in
-        /// device-independent units (1/96th inch per
-        /// unit).
+        /// device-independent units.
         /// </summary>
         /// <param name="point">The <see cref="PointD"/> at which to retrieve
         /// item information.</param>

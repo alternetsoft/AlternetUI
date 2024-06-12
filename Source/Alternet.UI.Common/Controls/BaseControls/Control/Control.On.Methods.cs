@@ -429,63 +429,6 @@ namespace Alternet.UI
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnTouch(TouchEventArgs e)
         {
-            var handled = e.Handled;
-
-            switch (e.DeviceType)
-            {
-                case TouchDeviceType.Touch:
-                    break;
-                case TouchDeviceType.Mouse:
-                    switch (e.ActionType)
-                    {
-                        case TouchAction.Entered:
-                            RaiseMouseEnter();
-                            break;
-                        case TouchAction.Pressed:
-                            Mouse.ReportMouseDown(
-                                this,
-                                DateTime.Now.Ticks,
-                                e.MouseButton,
-                                out handled);
-                            break;
-                        case TouchAction.Moved:
-                            Mouse.ReportMouseMove(
-                                this,
-                                DateTime.Now.Ticks,
-                                e.Location,
-                                out handled);
-                            break;
-                        case TouchAction.Released:
-                            Mouse.ReportMouseUp(
-                                this,
-                                DateTime.Now.Ticks,
-                                e.MouseButton,
-                                out handled);
-                            break;
-                        case TouchAction.Cancelled:
-                            break;
-                        case TouchAction.Exited:
-                            RaiseMouseLeave();
-                            break;
-                        case TouchAction.WheelChanged:
-                            Mouse.ReportMouseWheel(
-                                        this,
-                                        DateTime.Now.Ticks,
-                                        e.WheelDelta,
-                                        out handled);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    break;
-                case TouchDeviceType.Pen:
-                    break;
-                default:
-                    break;
-            }
-
-            e.Handled = handled;
         }
 
         /// <summary>

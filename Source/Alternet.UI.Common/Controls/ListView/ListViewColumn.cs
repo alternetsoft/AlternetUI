@@ -100,11 +100,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the fixed width of the column, in device-independent units (1/96th inch
-        /// per unit).
+        /// Gets or sets the fixed width of the column, in device-independent units.
         /// </summary>
         /// <value>
-        /// The fixed width of the column, in device-independent units (1/96th inch per unit).
+        /// The fixed width of the column, in device-independent units.
         /// Default value is 80.
         /// </value>
         public double Width

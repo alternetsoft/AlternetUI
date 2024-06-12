@@ -52,8 +52,7 @@ namespace Alternet.Drawing.Printing
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page
-        /// inside the margins, in device-independent
-        /// units (1/96th inch per unit).
+        /// inside the margins, in device-independent units.
         /// </summary>
         public RectD MarginBounds
         {
@@ -70,11 +69,10 @@ namespace Alternet.Drawing.Printing
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside
-        /// the margins, in device-independent
-        /// units (1/96th inch per unit).
+        /// the margins, in device-independent units.
         /// </summary>
         /// <value>
-        /// The rectangular area, measured in device-independent units (1/96th inch per unit)
+        /// The rectangular area, measured in device-independent units
         /// that represents the total area of the page.
         /// </value>
         public RectD PageBounds
@@ -84,11 +82,10 @@ namespace Alternet.Drawing.Printing
 
         /// <summary>
         /// Gets the rectangular area that represents the printable portion of the page,
-        /// in device-independent
-        /// units (1/96th inch per unit).
+        /// in device-independent units.
         /// </summary>
         /// <value>
-        /// The rectangular area, measured in device-independent units (1/96th inch per unit)
+        /// The rectangular area, measured in device-independent units
         /// that represents the printable area of the page.
         /// </value>
         public RectD PrintablePageBounds

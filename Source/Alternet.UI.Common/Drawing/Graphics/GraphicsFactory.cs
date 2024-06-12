@@ -18,10 +18,17 @@ namespace Alternet.Drawing
     /// </summary>
     public static class GraphicsFactory
     {
+        private static readonly AdvDictionary<double, Graphics> memoryCanvases = new();
+
         private static bool ImageBitsFormatsLoaded = false;
         private static ImageBitsFormat nativeBitsFormat;
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
+
+        /// <summary>
+        /// Gets or sets default dpi value used in conversions pixels from/to device-independent units.
+        /// </summary>
+        public static int DefaultDPI = 96;
 
         public static Func<Font, SKPaint> FontToFillPaint
             = (font) => GraphicsFactory.CreateFillPaint(font.SkiaFont);
@@ -165,6 +172,18 @@ namespace Alternet.Drawing
             return result;
         }
 
+        public static Graphics GetOrCreateMemoryDC(double? scaleFactor = null)
+        {
+            var factor = ScaleFactorOrDefault(scaleFactor);
+            var result = memoryCanvases.GetOrCreate(factor, () => CreateMemoryDC(factor));
+            return result;
+        }
+
+        public static Graphics CreateMemoryDC(double? scaleFactor = null)
+        {
+            return Handler.CreateMemoryDC(ScaleFactorOrDefault(scaleFactor));
+        }
+
         public static ISkiaSurface CreateSkiaSurface(Image image, ImageLockMode lockMode)
         {
             Debug.Assert(image.IsOk, "Image.IsOk == true is required.");
@@ -287,59 +306,70 @@ namespace Alternet.Drawing
             return paint;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Coord ScaleFactorFromDpi(int dpi)
         {
-            if (dpi == 96 || dpi <=0)
+            if (dpi == DefaultDPI || dpi <=0)
                 return 1;
-            return (Coord)dpi / (Coord)96;
+            return (Coord)dpi / (Coord)DefaultDPI;
+        }
+
+        public static int ScaleFactorToDpi(Coord scaleFactor)
+        {
+            if (scaleFactor == 1)
+                return DefaultDPI;
+            return (int)(scaleFactor * DefaultDPI);
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeI PixelFromDip(SizeD value, Coord scaleFactor)
+        public static SizeI PixelFromDip(SizeD value, Coord? scaleFactor = null)
         {
             return new(PixelFromDip(value.Width, scaleFactor), PixelFromDip(value.Height, scaleFactor));
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointI PixelFromDip(PointD value, Coord scaleFactor)
+        public static PointI PixelFromDip(PointD value, Coord? scaleFactor = null)
         {
             return new(PixelFromDip(value.X, scaleFactor), PixelFromDip(value.Y, scaleFactor));
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RectI PixelFromDip(RectD value, Coord scaleFactor)
+        public static RectI PixelFromDip(RectD value, Coord? scaleFactor = null)
         {
             return new(PixelFromDip(value.Location, scaleFactor), PixelFromDip(value.Size, scaleFactor));
         }
 
         /// <summary>
-        /// Converts <see cref="SizeI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="SizeI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD PixelToDip(SizeI value, Coord scaleFactor)
+        public static SizeD PixelToDip(SizeI value, Coord? scaleFactor = null)
         {
             return new(PixelToDip(value.Width, scaleFactor), PixelToDip(value.Height, scaleFactor));
         }
 
-        public static RectD[] PixelToDip(RectI[] rects, Coord scaleFactor)
+        public static Coord ScaleFactorOrDefault(Coord? scaleFactor = null)
+        {
+            return scaleFactor ?? Display.MaxScaleFactor;
+        }
+
+        public static RectD[] PixelToDip(RectI[] rects, Coord? scaleFactor = null)
         {
             var length = rects.Length;
             var result = new RectD[length];
@@ -349,40 +379,44 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="PointI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD PixelToDip(PointI value, Coord scaleFactor)
+        public static PointD PixelToDip(PointI value, Coord? scaleFactor = null)
         {
             return new(PixelToDip(value.X, scaleFactor), PixelToDip(value.Y, scaleFactor));
         }
 
         /// <summary>
-        /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="RectI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RectD PixelToDip(RectI value, Coord scaleFactor)
+        public static RectD PixelToDip(RectI value, Coord? scaleFactor = null)
         {
             return new(PixelToDip(value.Location, scaleFactor), PixelToDip(value.Size, scaleFactor));
         }
 
-        public static int PixelFromDip(Coord value, Coord scaleFactor)
+        public static int PixelFromDip(Coord value, Coord? scaleFactor = null)
         {
-            if (scaleFactor == 1)
+            var factor = ScaleFactorOrDefault(scaleFactor);
+
+            if (factor == 1)
                 return (int)value;
-            return (int)Math.Round(value * scaleFactor);
+            return (int)Math.Round(value * factor);
         }
 
-        public static Coord PixelToDip(int value, Coord scaleFactor)
+        public static Coord PixelToDip(int value, Coord? scaleFactor = null)
         {
-            if (scaleFactor == 1)
+            var factor = ScaleFactorOrDefault(scaleFactor);
+
+            if (factor == 1)
                 return value;
             else
-                return value / scaleFactor;
+                return value / factor;
         }
 
         public static SKFont DefaultFontToSkiaFont(Font font)

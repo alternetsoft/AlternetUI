@@ -56,7 +56,7 @@ namespace Alternet.UI
             App.IsWindowsOS ? 3 : 2;
 
         /// <summary>
-        /// Gets or sets minimum splitter sash size in dips (1/96 inch).
+        /// Gets or sets minimum splitter sash size in device-independent units.
         /// </summary>
         public int MinSplitterSashSize { get; set; } = 7;
 

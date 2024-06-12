@@ -101,7 +101,6 @@ namespace Alternet.UI
             picture.Parent = this;
             picture.BubbleMouse = true;
             spacer.Parent = this;
-            label.Visible = false;
             label.Parent = this;
             label.BubbleMouse = true;
 

@@ -606,7 +606,7 @@ namespace PaintSample
         {
             CreateNewDocument();
             var bitmap = new Bitmap(1000, 800);
-            bitmap.ScaleFactor = this.GetPixelScaleFactor();
+            bitmap.ScaleFactor = this.ScaleFactor;
             var dc = bitmap.Canvas;
 
             DrawSample(dc, (15, 15), bitmap.Bounds);

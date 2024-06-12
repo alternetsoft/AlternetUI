@@ -571,7 +571,7 @@ namespace Alternet.Drawing
             return StringUtils.ToString<int>(names, values);
         }
 
-        public readonly RectD PixelToDip(Coord scaleFactor)
+        public readonly RectD PixelToDip(Coord? scaleFactor)
         {
             return GraphicsFactory.PixelToDip(this, scaleFactor);
         }

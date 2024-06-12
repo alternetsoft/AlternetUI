@@ -9,6 +9,8 @@ namespace NativeApi.Api
 
     public class DrawingContext
     {
+        public static DrawingContext CreateMemoryDC(double scaleFactor) => default;
+
         public bool IsOk { get; }
         public IntPtr WxWidgetDC { get; }
         public IntPtr GetHandle() => default; 

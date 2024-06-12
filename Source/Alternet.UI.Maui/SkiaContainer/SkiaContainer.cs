@@ -46,32 +46,6 @@ namespace Alternet.UI
             Content = canvas;
             canvas.PaintSurface += Canvas_PaintSurface;
 
-            /*
-                IsEnabled
-                IsVisible
-                Width
-                Height
-                BackgroundColor
-                Background
-                IsFocused
-                Window
-                Bounds
-                MinimumWidthRequest
-                MinimumHeightRequest
-                MaximumWidthRequest
-                MaximumHeightRequest
-
-                bool Focus()
-                event EventHandler MeasureInvalidated;
-                event EventHandler ChildrenReordered;
-                event EventHandler? WindowChanged;
-
-                // Window != null
-                event EventHandler? Loaded
-                event EventHandler? Unloaded
-                bool IsLoaded
-            */
-
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
         }
@@ -127,12 +101,12 @@ namespace Alternet.UI
 
         private void SkiaContainer_Scrolled(object? sender, ScrolledEventArgs e)
         {
-            Log("SkiaContainer_Scrolled");
+            /*Log("SkiaContainer_Scrolled");*/
         }
 
         private void SkiaContainer_ScrollToRequested(object? sender, ScrollToRequestedEventArgs e)
         {
-            Log("SkiaContainer_ScrollToRequested");
+            /*Log("SkiaContainer_ScrollToRequested");*/
         }
 
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
@@ -143,15 +117,6 @@ namespace Alternet.UI
         {
             if (control is null)
                 return;
-
-            if (e.ActionType == SKTouchAction.Pressed)
-            {
-                Log($"PlatformView: {canvas.Handler?.PlatformView?.GetType()}");
-                control?.RaiseGotFocus();
-
-                /*if (!IsFocused)
-                    Focus();*/
-            }
 
             TouchEventArgs args = MauiTouchUtils.Convert(e);
             control?.RaiseTouch(args);
@@ -165,7 +130,7 @@ namespace Alternet.UI
 
             var dc = e.Surface.Canvas;
 
-            dc.Scale((float)control.GetPixelScaleFactor());
+            dc.Scale((float)control.ScaleFactor);
 
             if (graphics is null)
                 graphics = new(dc);
@@ -192,14 +157,14 @@ namespace Alternet.UI
 
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
         {
-            Log("Focused");
+            /*Log("Focused");*/
             UI.Control.FocusedControl = control;
             control?.RaiseGotFocus();
         }
 
         private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
         {
-            Log("Unfocused");
+            /*Log("Unfocused");*/
             UI.Control.FocusedControl = null;
             control?.RaiseLostFocus();
         }

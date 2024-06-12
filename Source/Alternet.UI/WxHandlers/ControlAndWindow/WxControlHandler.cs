@@ -592,7 +592,9 @@ namespace Alternet.UI
 
         public Coord GetPixelScaleFactor()
         {
-            return Native.Control.DrawingDPIScaleFactor(NativeControl.WxWidget);
+            if(App.IsWindowsOS)
+                return Native.Control.DrawingDPIScaleFactor(NativeControl.WxWidget);
+            return 1D;
         }
 
         public RectI GetUpdateClientRectI()

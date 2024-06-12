@@ -351,6 +351,13 @@ namespace Alternet.UI
         event EventHandler? DragLeave;
 
         /// <summary>
+        /// Gets scale factor used in device-independent units to/from
+        /// pixels conversions.
+        /// </summary>
+        /// <returns></returns>
+        Coord ScaleFactor { get; }
+
+        /// <summary>
         /// Gets <see cref="Graphics"/> which can be used to measure text size
         /// and for other measure purposes.
         /// </summary>
@@ -484,7 +491,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in
-        /// device-independent units (1/96th inch per unit).
+        /// device-independent units.
         /// </summary>
         SizeD ClientSize { get; set; }
 
@@ -598,7 +605,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the <see cref="Control"/> bounds relative to the parent,
-        /// in device-independent units (1/96th inch per unit).
+        /// in device-independent units.
         /// </summary>
         RectD Bounds { get; set; }
 
@@ -616,10 +623,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the location of upper-left corner of the control, in
-        /// device-independent units (1/96th inch per unit).
+        /// device-independent units.
         /// </summary>
-        /// <value>The position of the control's upper-left corner, in logical
-        /// units (1/96th of an inch).</value>
+        /// <value>The position of the control's upper-left corner, in device-independent units.</value>
         PointD Location { get; set; }
 
         /// <summary>
@@ -688,7 +694,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the size of the control.
         /// </summary>
-        /// <value>The size of the control, in device-independent units (1/96th inch per unit).
+        /// <value>The size of the control, in device-independent units.
         /// The default value is <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
         /// <see cref="Coord.NaN"/>)/>.
         /// </value>
@@ -703,7 +709,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the width of the control.
         /// </summary>
-        /// <value>The width of the control, in device-independent units (1/96th inch per unit).
+        /// <value>The width of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -716,8 +722,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the height of the control.
         /// </summary>
-        /// <value>The height of the control, in device-independent units
-        /// (1/96th inch per unit).
+        /// <value>The height of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -730,8 +735,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the suggested size of the control.
         /// </summary>
-        /// <value>The suggested size of the control, in device-independent
-        /// units (1/96th inch per unit).
+        /// <value>The suggested size of the control, in device-independent units.
         /// The default value is <see cref="SizeD"/>
         /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>)/>.
         /// </value>
@@ -749,8 +753,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the suggested width of the control.
         /// </summary>
-        /// <value>The suggested width of the control, in device-independent
-        /// units (1/96th inch per unit).
+        /// <value>The suggested width of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -766,8 +769,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the suggested height of the control.
         /// </summary>
-        /// <value>The suggested height of the control, in device-independent
-        /// units (1/96th inch per unit).
+        /// <value>The suggested height of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -1112,15 +1114,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a rectangle which describes the client area inside of the
         /// <see cref="Control"/>,
-        /// in device-independent units (1/96th inch per unit).
+        /// in device-independent units.
         /// </summary>
         RectD ClientRectangle { get; }
 
         /// <summary>
         /// Gets a rectangle which describes an area inside of the
         /// <see cref="Control"/> available
-        /// for positioning (layout) of its child controls, in device-independent
-        /// units (1/96th inch per unit).
+        /// for positioning (layout) of its child controls, in device-independent units.
         /// </summary>
         RectD ChildrenLayoutBounds { get; }
 
@@ -1194,56 +1195,56 @@ namespace Alternet.UI
         bool ProcessIdle { get; set; }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         int PixelFromDip(Coord value);
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         SizeI PixelFromDip(SizeD value);
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         PointI PixelFromDip(PointD value);
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         RectI PixelFromDip(RectD value);
 
         /// <summary>
-        /// Converts <see cref="SizeI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="SizeI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
         SizeD PixelToDip(SizeI value);
 
         /// <summary>
-        /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="PointI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
         PointD PixelToDip(PointI value);
 
         /// <summary>
-        /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="RectI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
         RectD PixelToDip(RectI value);
 
         /// <summary>
-        /// Converts pixels to device-independent units (1/96th inch per unit).
+        /// Converts pixels to device-independent units.
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
@@ -1270,13 +1271,6 @@ namespace Alternet.UI
         /// returns Size(0,0) object.
         /// </returns>
         SizeD GetDPI();
-
-        /// <summary>
-        /// Gets scale factor used in device-independent units (1/96th inch per unit) to/from
-        /// pixels conversions.
-        /// </summary>
-        /// <returns></returns>
-        Coord GetPixelScaleFactor();
 
         /// <summary>
         /// Raises the window to the top of the window hierarchy (Z-order).
@@ -1336,11 +1330,6 @@ namespace Alternet.UI
         /// Gets the foreground brush for specified state of the control.
         /// </summary>
         Brush? GetForeground(VisualControlState state);
-
-        /// <summary>
-        /// Sends size event.
-        /// </summary>
-        void SendSizeEvent();
 
         /// <summary>
         /// Gets known svg color depending on the value of
@@ -1623,14 +1612,6 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the specified bounds of the control to new location and size.
         /// </summary>
-        /// <param name="newBounds">New location and size.</param>
-        /// <param name="specified">Specifies which bounds to use when applying new
-        /// location and size.</param>
-        void SetBounds(RectD newBounds, BoundsSpecified specified);
-
-        /// <summary>
-        /// Sets the specified bounds of the control to new location and size.
-        /// </summary>
         /// <param name="x">The new <see cref="Left"/> property value of
         /// the control.</param>
         /// <param name="y">The new <see cref="Top"/> property value
@@ -1703,24 +1684,6 @@ namespace Alternet.UI
         /// client coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
         PointD ClientToScreen(PointD point);
-
-        /// <summary>
-        /// Converts the screen coordinates of a specified point in
-        /// device-independent units (1/96th inch per unit) to device (pixel) coordinates.
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that specifies the
-        /// screen device-independent coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        PointI ScreenToDevice(PointD point);
-
-        /// <summary>
-        /// Converts the device (pixel) coordinates of a specified point
-        /// to coordinates in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <param name="point">A <see cref="PointD"/> that contains the coordinates
-        /// in device-independent units (1/96th inch per unit) to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
-        PointD DeviceToScreen(PointI point);
 
         /// <summary>
         /// Changes <see cref="Cursor"/> property.
@@ -1801,13 +1764,6 @@ namespace Alternet.UI
         /// <param name="layoutParent">Specifies whether to call parent's
         /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
         void PerformLayout(bool layoutParent = true);
-
-        /// <summary>
-        /// Sets bounds of the control using <paramref name="rect"/> and <paramref name="flags"/>.
-        /// </summary>
-        /// <param name="rect">Rectangle.</param>
-        /// <param name="flags">Flags.</param>
-        void SetBounds(RectD rect, SetBoundsFlags flags);
 
         /// <summary>
         /// Starts the initialization process for this control.
@@ -1989,12 +1945,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units (1/96th inch per unit).
+        /// be fitted, in device-independent units.
         /// </summary>
         /// <param name="availableSize">The available space that a parent element
         /// can allocate a child control.</param>
         /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        /// a rectangle, in device-independent units.</returns>
         SizeD GetPreferredSize(SizeD availableSize);
 
         /// <summary>
@@ -2023,18 +1979,6 @@ namespace Alternet.UI
         /// each child.</param>
         void ForEachChild<T>(Action<T> action)
             where T: Control;
-
-        /// <summary>
-        /// Disable control recreate when properties that require control
-        /// recreation are changed.
-        /// </summary>
-        void BeginIgnoreRecreate();
-
-        /// <summary>
-        /// Enable control recreate if it's required after it was previously
-        /// disabled by <see cref="BeginIgnoreRecreate"/>
-        /// </summary>
-        void EndIgnoreRecreate();
 
         /// <summary>
         /// Same as <see cref="App.Log"/>.
