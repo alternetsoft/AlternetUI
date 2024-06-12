@@ -376,7 +376,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether mouse events are bubbled to parent control.
         /// </summary>
-        bool BubbleMouse { get; set; }
+        bool InputTransparent { get; set; }
 
         /// <summary>
         /// Gets or sets whether layout rules are ignored for this control.

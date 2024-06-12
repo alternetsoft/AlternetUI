@@ -279,10 +279,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether mouse events are bubbled to parent control.
+        /// Gets or sets a value indicating whether this element responds to hit testing during
+        /// user interaction.
         /// </summary>
+        /// <remarks>
+        /// The default value is <c>false</c>. Setting <see cref="InputTransparent"/> to <c>true</c>
+        /// makes the element invisible to touch and pointer input. The input is passed to the first
+        /// non-input-transparent element that is visually behind the input transparent element.
+        /// </remarks>
         [Browsable(false)]
-        public virtual bool BubbleMouse { get; set; }
+        public virtual bool InputTransparent { get; set; }
 
         /// <summary>
         /// Gets or sets whether layout rules are ignored for this control.

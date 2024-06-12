@@ -16,7 +16,7 @@ namespace Alternet.UI
 
             while (result is not null)
             {
-                if (result.BubbleMouse)
+                if (result.InputTransparent)
                     result = result.Parent;
                 else
                     return result;
