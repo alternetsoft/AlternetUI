@@ -248,22 +248,22 @@ namespace Alternet.UI
 
         IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler()
         {
-            throw new NotImplementedException();
+            return new SkiaRegionHandler();
         }
 
         IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler(RectD rect)
         {
-            throw new NotImplementedException();
+            return new SkiaRegionHandler(rect);
         }
 
         IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler(Region region)
         {
-            throw new NotImplementedException();
+            return new SkiaRegionHandler(region);
         }
 
         IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler(PointD[] points, FillMode fillMode)
         {
-            throw new NotImplementedException();
+            return new SkiaRegionHandler(points, fillMode);
         }
 
         BitmapType IGraphicsFactoryHandler.GetDefaultBitmapType()

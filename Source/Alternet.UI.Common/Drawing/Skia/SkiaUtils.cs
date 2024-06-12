@@ -119,6 +119,19 @@ namespace Alternet.Drawing
             return new SKFont(SKTypeface.Default, (float)DefaultFontSize);
         }
 
+        public static SKPathFillType ToSkia(this FillMode fillMode)
+        {
+            switch (fillMode)
+            {
+                case FillMode.Alternate:
+                    return SKPathFillType.EvenOdd;
+                case FillMode.Winding:
+                    return SKPathFillType.Winding;
+                default:
+                    return SKPathFillType.EvenOdd;
+            }
+        }
+
         public static SizeD GetTextExtent(
             this SKCanvas canvas,
             string text,

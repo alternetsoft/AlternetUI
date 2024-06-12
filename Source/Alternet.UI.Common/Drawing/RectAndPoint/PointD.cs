@@ -413,6 +413,11 @@ namespace Alternet.Drawing
             return StringUtils.ToString<Coord>(names, values);
         }
 
+        public readonly PointI PixelFromDip(Coord? scaleFactor = null)
+        {
+            return GraphicsFactory.PixelFromDip(this, scaleFactor);
+        }
+
         /// <summary>
         /// Creates a string representation of this object based on the format string
         /// and IFormatProvider passed in.

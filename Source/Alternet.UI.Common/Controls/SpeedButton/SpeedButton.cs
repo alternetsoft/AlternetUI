@@ -99,10 +99,10 @@ namespace Alternet.UI
             Padding = 4;
             Layout = LayoutStyle.Horizontal;
             picture.Parent = this;
-            picture.BubbleMouse = true;
+            picture.InputTransparent = true;
             spacer.Parent = this;
             label.Parent = this;
-            label.BubbleMouse = true;
+            label.InputTransparent = true;
 
             AcceptsFocusAll = false;
             RefreshOptions = ControlRefreshOptions.RefreshOnState;

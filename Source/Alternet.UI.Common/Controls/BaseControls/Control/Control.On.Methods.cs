@@ -10,6 +10,15 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Raises the <see cref="CellChanged" /> event.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public virtual void OnCellChanged()
+        {
+            CellChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Called when the <see cref="SystemColorsChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>

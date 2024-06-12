@@ -18,6 +18,29 @@ namespace Alternet.UI
         /// </summary>
         public static event EventHandler? LastMousePositionChanged;
 
+        public static bool ShowTestMouseInControl = false;
+
+        public static Color TestMouseColor = Color.Red;
+
+        public static SizeD TestMouseSize = 5;
+
+        public static RectD GetTestMouseRect(Control control)
+        {
+            var mouseLocation = Mouse.GetPosition(control);
+            return (mouseLocation, PlessMouse.TestMouseSize);
+        }
+
+        public static void DrawTestMouseRect(Control control, Graphics dc)
+        {
+            if (control != Control.HoveredControl)
+                return;
+
+            if (control.UserPaint && ShowTestMouseInControl)
+            {
+                dc.FillRectangle(TestMouseColor.AsBrush, GetTestMouseRect(control));
+            }
+        }
+
         /// <summary>
         /// Gets last mouse position passed to mouse event handlers.
         /// </summary>
@@ -32,9 +55,15 @@ namespace Alternet.UI
             {
                 if (lastMousePosition == value)
                     return;
+                
                 lastMousePosition = value;
 
                 LastMousePositionChanged?.Invoke(null, EventArgs.Empty);
+
+                if (ShowTestMouseInControl)
+                {
+                    Control.HoveredControl?.Refresh();
+                }
             }
         }
 

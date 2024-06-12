@@ -254,6 +254,12 @@ namespace Alternet.Drawing
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator RectI(SKRectI rect)
+        {
+            return new(rect.Left, rect.Top, rect.Width, rect.Height);
+        }
+
         /// <summary>
         /// Creates a <see cref='System.Drawing.Rectangle'/> with the coordinates of the
         /// specified <see cref='RectI'/>
@@ -571,7 +577,7 @@ namespace Alternet.Drawing
             return StringUtils.ToString<int>(names, values);
         }
 
-        public readonly RectD PixelToDip(Coord? scaleFactor)
+        public readonly RectD PixelToDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelToDip(this, scaleFactor);
         }
