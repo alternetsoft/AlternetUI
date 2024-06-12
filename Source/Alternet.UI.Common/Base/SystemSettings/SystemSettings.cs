@@ -190,8 +190,7 @@ namespace Alternet.UI
 
         public static void ResetColors()
         {
-            validColors = true;
-            PlessSystemColors.ResetFromPlatform();
+            validColors = false;
         }
 
         public static Font GetFont(SystemSettingsFont font) => SystemFonts.GetFont(font);

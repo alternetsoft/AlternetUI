@@ -1203,6 +1203,12 @@ namespace Alternet.UI
         {
         }
 
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            SystemSettings.ResetColors();
+        }
+
         protected override void OnDpiChanged(DpiChangedEventArgs e)
         {
             base.OnDpiChanged(e);

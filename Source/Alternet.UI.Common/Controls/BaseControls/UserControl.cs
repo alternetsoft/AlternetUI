@@ -294,5 +294,12 @@ namespace Alternet.UI
             Handler.ShowVertScrollBar = vert;
             Handler.ScrollBarAlwaysVisible = always;
         }
+
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            SystemSettings.ResetColors();
+            Invalidate();
+        }
     }
 }

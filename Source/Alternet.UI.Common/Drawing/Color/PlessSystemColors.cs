@@ -351,7 +351,7 @@ namespace Alternet.Drawing
             Colors[(int)id] = value;
         }
 
-        public static void ResetFromPlatform()
+        public static void Reset()
         {
             if(SystemSettings.Handler.GetColor(KnownSystemColor.Window) is null)
             {
