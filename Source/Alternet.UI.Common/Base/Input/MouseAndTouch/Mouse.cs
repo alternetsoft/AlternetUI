@@ -31,7 +31,7 @@ namespace Alternet.UI
         ///     choose your scroll granularity and accumulate deltas until it
         ///     is reached.
         /// </remarks>
-        public const int MouseWheelDeltaForOneLine = 120;
+        public static int MouseWheelDeltaForOneLine = 120;
 
         private static MouseDevice mouseDevice = MouseDevice.Default;
         private static long? mouseWheelTimestamp;
@@ -108,124 +108,132 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// </summary>
+        public static PointD GetPosition()
+        {
+            return App.Handler.GetMousePositionFromSystem();
+        }
+
+        /// <summary>
         ///     Calculates the position of the mouse relative to
         ///     a particular element.
         /// </summary>
         public static PointD GetPosition(Control? relativeTo)
         {
-            if (relativeTo is null)
-                return Mouse.PrimaryDevice.GetScreenPosition();
-            return relativeTo.ScreenToClient(Mouse.PrimaryDevice.GetScreenPosition());
+            if(relativeTo is not null)
+                return relativeTo.ScreenToClient(GetPosition());
+            return GetPosition();
         }
 
         public static void ReportMouseMove(
-            Control? targetControl,
+            Control originalTarget,
             long timestamp,
-            PointD position,
+            PointD? position,
             out bool handled)
         {
             handled = false;
-            var control = Control.GetMouseTargetControl(targetControl);
-            if (control == null)
+            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            if (currentTarget == null)
                 return;
 
-            var eventArgs = new MouseEventArgs(
-                control,
-                targetControl!,
-                timestamp,
-                position);
-            control.RaiseMouseMove(eventArgs);
-        }
-
-        public static void ReportMouseMove(
-            Control? targetControl,
-            long timestamp,
-            out bool handled)
-        {
-            handled = false;
-            var control = Control.GetMouseTargetControl(targetControl);
-            if (control == null)
-                return;
+            position = UpdateMousePosition(position, currentTarget);
 
             var eventArgs = new MouseEventArgs(
-                control,
-                targetControl!,
+                currentTarget,
+                originalTarget,
                 timestamp,
-                Mouse.GetPosition(control));
-            control.RaiseMouseMove(eventArgs);
+                position.Value);
+            currentTarget.RaiseMouseMove(eventArgs);
         }
 
         public static void ReportMouseDown(
-            Control? targetControl,
+            Control originalTarget,
             long timestamp,
             MouseButton changedButton,
+            PointD? position,
             out bool handled)
         {
             PlessMouse.SetButtonPressed(changedButton);
 
             handled = false;
-            var control = Control.GetMouseTargetControl(targetControl);
-            if (control == null)
+            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            if (currentTarget == null)
                 return;
 
+            position = UpdateMousePosition(position, currentTarget);
+
             var eventArgs = new MouseEventArgs(
-                control,
-                targetControl!,
+                currentTarget,
+                originalTarget,
                 changedButton,
                 timestamp,
-                Mouse.GetPosition(control));
+                position.Value);
 
-            control.RaiseMouseDown(eventArgs);
+            currentTarget.RaiseMouseDown(eventArgs);
         }
 
         public static void ReportMouseDoubleClick(
-            Control? targetControl,
+            Control originalTarget,
             long timestamp,
             MouseButton changedButton,
+            PointD? position,
             out bool handled)
         {
             handled = false;
-            var control = Control.GetMouseTargetControl(targetControl);
-            if (control == null)
+            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            if (currentTarget == null)
                 return;
+
+            position = UpdateMousePosition(position, currentTarget);
 
             var eventArgs =
                 new MouseEventArgs(
-                    control,
-                    targetControl!,
+                    currentTarget,
+                    originalTarget,
                     changedButton,
                     timestamp,
-                    Mouse.GetPosition(control));
-            control.RaiseMouseDoubleClick(eventArgs);
+                    position.Value);
+            currentTarget.RaiseMouseDoubleClick(eventArgs);
         }
 
         public static void ReportMouseUp(
-            Control? targetControl,
+            Control originalTarget,
             long timestamp,
             MouseButton changedButton,
+            PointD? position,
             out bool handled)
         {
             PlessMouse.SetButtonPressed(changedButton, false);
 
             handled = false;
-            var control = Control.GetMouseTargetControl(targetControl);
-            if (control == null)
+            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            if (currentTarget == null)
                 return;
+
+            position = UpdateMousePosition(position, currentTarget);
 
             var eventArgs
                 = new MouseEventArgs(
-                    control,
-                    targetControl!,
+                    currentTarget,
+                    originalTarget,
                     changedButton,
                     timestamp,
-                    Mouse.GetPosition(control));
-            control.RaiseMouseUp(eventArgs);
+                    position.Value);
+            currentTarget.RaiseMouseUp(eventArgs);
+        }
+
+        private static PointD UpdateMousePosition(PointD? position, Control control)
+        {
+            position ??= Mouse.GetPosition(control);
+            PlessMouse.LastMousePosition = (position, control);
+            return position.Value;
         }
 
         public static void ReportMouseWheel(
-            Control? targetControl,
+            Control originalTarget,
             long timestamp,
             int delta,
+            PointD? position,
             out bool handled)
         {
             handled = false;
@@ -234,18 +242,20 @@ namespace Alternet.UI
                 return;
             mouseWheelTimestamp = timestamp;
 
-            var control = Control.GetMouseTargetControl(targetControl);
-            if (control == null)
+            var currentTarget = Control.GetMouseTargetControl(originalTarget);            
+            if (currentTarget == null)
                 return;
+
+            position = UpdateMousePosition(position, currentTarget);
 
             var eventArgs
                 = new MouseEventArgs(
-                    control,
-                    targetControl!,
+                    currentTarget,
+                    originalTarget,
                     timestamp,
-                    Mouse.GetPosition(control));
+                    position.Value);
             eventArgs.Delta = delta;
-            control.RaiseMouseWheel(eventArgs);
+            currentTarget.RaiseMouseWheel(eventArgs);
         }
     }
 }

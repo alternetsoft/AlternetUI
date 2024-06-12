@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 using Alternet.Drawing.Printing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
     public class MauiApplicationHandler : DisposableObject, IApplicationHandler
     {
-        public static PointI MousePosition;
-
         /// <inheritdoc/>
         bool IApplicationHandler.ExitOnFrameDelete
         {
@@ -41,6 +40,45 @@ namespace Alternet.UI
         bool IApplicationHandler.InvokeRequired
         {
             get => false;
+        }
+
+        public static PointD ScreenToClient(PointD position, Control control)
+        {
+            var topLeft = ClientToScreen(PointD.Empty, control);
+
+            var x = position.X - topLeft.X;
+            var y = position.Y - topLeft.Y;
+
+            return (x, y);
+        }
+
+        public static PointD ClientToScreen(PointD position, Control control)
+        {
+            PointD absolutePos;
+            PointD windowPos;
+
+            if (control.Handler is not MauiControlHandler handler
+                || handler.Container is null)
+            {
+                absolutePos = PointD.MinValue;
+                windowPos = PointD.Empty;
+            }
+            else
+            {
+                absolutePos = handler.Container.GetAbsolutePosition();
+
+                var window = handler.Container.Window;
+
+                if (window is null)
+                    windowPos = PointD.Empty;
+                else
+                    windowPos = new(window.X, window.Y);
+            }
+
+            var x = absolutePos.X + windowPos.X + position.X;
+            var y = absolutePos.Y + windowPos.Y + position.Y;
+
+            return (x, y);
         }
 
         /// <inheritdoc/>
@@ -190,9 +228,14 @@ namespace Alternet.UI
             return PlessMouse.GetButtonState(mouseButton);
         }
 
-        public PointI GetMousePositionFromSystem()
+        public PointD GetMousePositionFromSystem()
         {
-            return MousePosition;
+            var (position, control) = PlessMouse.LastMousePosition;
+
+            if (control is null || position is null)
+                return PointD.MinValue;
+
+            return ClientToScreen(position.Value, control);
         }
     }
 }

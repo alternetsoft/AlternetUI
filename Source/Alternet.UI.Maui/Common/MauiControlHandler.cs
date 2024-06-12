@@ -264,9 +264,14 @@ namespace Alternet.UI
         {
         }
 
+        public virtual PointD ScreenToClient(PointD point)
+        {
+            return MauiApplicationHandler.ScreenToClient(point, Control);
+        }
+
         public virtual PointD ClientToScreen(PointD point)
         {
-            return point;
+            return MauiApplicationHandler.ClientToScreen(point, Control);
         }
 
         public virtual void DisableRecreate()
@@ -437,11 +442,6 @@ namespace Alternet.UI
 
         public virtual void SaveScreenshot(string fileName)
         {
-        }
-
-        public virtual PointD ScreenToClient(PointD point)
-        {
-            return point;
         }
 
         public virtual void SetCursor(Cursor? value)

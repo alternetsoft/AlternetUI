@@ -95,10 +95,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual PointD GetScreenPosition()
         {
-            var resultI = App.Handler.GetMousePositionFromSystem();
-            var index = Display.GetFromPoint(resultI);
-            var display = Display.GetDisplay(index);
-            var result = display.PixelToDip(resultI);
+            var result = App.Handler.GetMousePositionFromSystem();
             return result;
         }
 

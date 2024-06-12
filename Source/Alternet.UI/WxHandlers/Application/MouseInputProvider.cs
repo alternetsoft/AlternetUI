@@ -94,27 +94,27 @@ namespace Alternet.UI
 
         private void ReportMouseDoubleClick(MouseButton button)
         {
-            Mouse.ReportMouseDoubleClick(targetControl, timestamp, button, out _);
+            Mouse.ReportMouseDoubleClick(targetControl, timestamp, button, null, out _);
         }
 
         private void ReportMouseWheel()
         {
-            Mouse.ReportMouseWheel(targetControl, timestamp, delta, out _);
+            Mouse.ReportMouseWheel(targetControl, timestamp, delta, null, out _);
         }
 
         private void ReportMouseUp(MouseButton button)
         {
-            Mouse.ReportMouseUp(targetControl, timestamp, button, out _);
+            Mouse.ReportMouseUp(targetControl, timestamp, button, null, out _);
         }
 
         private void ReportMouseDown(MouseButton button)
         {
-            Mouse.ReportMouseDown(targetControl, timestamp, button, out _);
+            Mouse.ReportMouseDown(targetControl, timestamp, button, null, out _);
         }
 
         private void ReportMouseMove()
         {
-            Mouse.ReportMouseMove(targetControl, timestamp, out _);
+            Mouse.ReportMouseMove(targetControl, timestamp, null, out _);
         }
      }
 }

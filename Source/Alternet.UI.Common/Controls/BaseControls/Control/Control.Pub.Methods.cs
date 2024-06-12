@@ -630,6 +630,7 @@ namespace Alternet.UI
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
+                                e.Location,
                                 out handled);
                             break;
                         case TouchAction.Moved:
@@ -644,6 +645,7 @@ namespace Alternet.UI
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
+                                e.Location,
                                 out handled);
                             break;
                         case TouchAction.Cancelled:
@@ -656,6 +658,7 @@ namespace Alternet.UI
                                         this,
                                         DateTime.Now.Ticks,
                                         e.WheelDelta,
+                                        e.Location,
                                         out handled);
                             break;
                         default:

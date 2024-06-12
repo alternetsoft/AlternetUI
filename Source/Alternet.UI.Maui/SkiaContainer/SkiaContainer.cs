@@ -46,32 +46,6 @@ namespace Alternet.UI
             Content = canvas;
             canvas.PaintSurface += Canvas_PaintSurface;
 
-            /*
-                IsEnabled
-                IsVisible
-                Width
-                Height
-                BackgroundColor
-                Background
-                IsFocused
-                Window
-                Bounds
-                MinimumWidthRequest
-                MinimumHeightRequest
-                MaximumWidthRequest
-                MaximumHeightRequest
-
-                bool Focus()
-                event EventHandler MeasureInvalidated;
-                event EventHandler ChildrenReordered;
-                event EventHandler? WindowChanged;
-
-                // Window != null
-                event EventHandler? Loaded
-                event EventHandler? Unloaded
-                bool IsLoaded
-            */
-
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
         }
