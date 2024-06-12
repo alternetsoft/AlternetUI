@@ -120,9 +120,14 @@ namespace Alternet.UI
         /// </summary>
         public static PointD GetPosition(Control? relativeTo)
         {
-            if(relativeTo is not null)
-                return relativeTo.ScreenToClient(GetPosition());
-            return GetPosition();
+            var position = GetPosition();
+            if (relativeTo is not null)
+            {
+                var clientPosition = relativeTo.ScreenToClient(position);
+                return clientPosition;
+            }
+
+            return position;
         }
 
         public static void ReportMouseMove(

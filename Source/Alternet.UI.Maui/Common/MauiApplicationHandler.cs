@@ -72,11 +72,11 @@ namespace Alternet.UI
                 if (window is null)
                     windowPos = PointD.Empty;
                 else
-                    windowPos = new(window.X, window.Y);
+                    windowPos = PointD.Empty/*new(window.X, window.Y)*/;
             }
 
-            var x = absolutePos.X + windowPos.X + position.X;
-            var y = absolutePos.Y + windowPos.Y + position.Y;
+            var x = absolutePos.X + /*windowPos.X +*/ position.X;
+            var y = absolutePos.Y + /*windowPos.Y +*/ position.Y;
 
             return (x, y);
         }

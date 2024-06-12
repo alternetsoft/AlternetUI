@@ -19,15 +19,17 @@ namespace Alternet.UI.Extensions
     {
         public static PointD GetAbsolutePosition(this VisualElement visualElement)
         {
-            var ancestors = visualElement.Ancestors();
+            var ancestors = visualElement.AllParents();
             var x = ancestors.Sum(ancestor => ancestor.X);
             var y = ancestors.Sum(ancestor => ancestor.Y);
 
             return new(x, y);
         }
 
-        public static IEnumerable<VisualElement> Ancestors(this VisualElement? element)
+        public static IEnumerable<VisualElement> AllParents(this VisualElement? element)
         {
+            element = element?.Parent as VisualElement;
+
             while (element != null)
             {
                 yield return element;
