@@ -10,7 +10,12 @@ namespace Alternet.UI
 {
     public abstract class PlessSystemSettingsHandler : DisposableObject, ISystemSettingsHandler
     {
-        private int[] metrics = new int[(int)SystemSettingsMetric.Max + 1];
+        private readonly int[] metrics = new int[(int)SystemSettingsMetric.Max + 1];
+
+        public PlessSystemSettingsHandler()
+        {
+            Reset();
+        }
 
         public virtual string AppName { get; set; } = string.Empty;
 
@@ -25,11 +30,6 @@ namespace Alternet.UI
         public virtual bool UseBestVisual { get; set; } = true;
 
         public abstract IDisplayFactoryHandler CreateDisplayFactoryHandler();
-
-        PlessSystemSettingsHandler()
-        {
-            Reset();
-        }
 
         public virtual bool GetAppearanceIsDark()
         {
