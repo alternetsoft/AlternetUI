@@ -172,15 +172,16 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public static Graphics GetOrCreateMemoryDC(double scaleFactor)
+        public static Graphics GetOrCreateMemoryDC(double? scaleFactor = null)
         {
-            var result = memoryCanvases.GetOrCreate(scaleFactor, () => CreateMemoryDC(scaleFactor));
+            var factor = ScaleFactorOrDefault(scaleFactor);
+            var result = memoryCanvases.GetOrCreate(factor, () => CreateMemoryDC(factor));
             return result;
         }
 
-        public static Graphics CreateMemoryDC(double scaleFactor)
+        public static Graphics CreateMemoryDC(double? scaleFactor = null)
         {
-            return Handler.CreateMemoryDC(scaleFactor);
+            return Handler.CreateMemoryDC(ScaleFactorOrDefault(scaleFactor));
         }
 
         public static ISkiaSurface CreateSkiaSurface(Image image, ImageLockMode lockMode)
@@ -325,7 +326,7 @@ namespace Alternet.Drawing
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeI PixelFromDip(SizeD value, Coord scaleFactor)
+        public static SizeI PixelFromDip(SizeD value, Coord? scaleFactor = null)
         {
             return new(PixelFromDip(value.Width, scaleFactor), PixelFromDip(value.Height, scaleFactor));
         }
@@ -336,7 +337,7 @@ namespace Alternet.Drawing
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointI PixelFromDip(PointD value, Coord scaleFactor)
+        public static PointI PixelFromDip(PointD value, Coord? scaleFactor = null)
         {
             return new(PixelFromDip(value.X, scaleFactor), PixelFromDip(value.Y, scaleFactor));
         }
@@ -347,7 +348,7 @@ namespace Alternet.Drawing
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RectI PixelFromDip(RectD value, Coord scaleFactor)
+        public static RectI PixelFromDip(RectD value, Coord? scaleFactor = null)
         {
             return new(PixelFromDip(value.Location, scaleFactor), PixelFromDip(value.Size, scaleFactor));
         }
@@ -358,12 +359,17 @@ namespace Alternet.Drawing
         /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD PixelToDip(SizeI value, Coord scaleFactor)
+        public static SizeD PixelToDip(SizeI value, Coord? scaleFactor = null)
         {
             return new(PixelToDip(value.Width, scaleFactor), PixelToDip(value.Height, scaleFactor));
         }
 
-        public static RectD[] PixelToDip(RectI[] rects, Coord scaleFactor)
+        public static Coord ScaleFactorOrDefault(Coord? scaleFactor = null)
+        {
+            return scaleFactor ?? Display.MaxScaleFactor;
+        }
+
+        public static RectD[] PixelToDip(RectI[] rects, Coord? scaleFactor = null)
         {
             var length = rects.Length;
             var result = new RectD[length];
@@ -378,7 +384,7 @@ namespace Alternet.Drawing
         /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD PixelToDip(PointI value, Coord scaleFactor)
+        public static PointD PixelToDip(PointI value, Coord? scaleFactor = null)
         {
             return new(PixelToDip(value.X, scaleFactor), PixelToDip(value.Y, scaleFactor));
         }
@@ -389,24 +395,28 @@ namespace Alternet.Drawing
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RectD PixelToDip(RectI value, Coord scaleFactor)
+        public static RectD PixelToDip(RectI value, Coord? scaleFactor = null)
         {
             return new(PixelToDip(value.Location, scaleFactor), PixelToDip(value.Size, scaleFactor));
         }
 
-        public static int PixelFromDip(Coord value, Coord scaleFactor)
+        public static int PixelFromDip(Coord value, Coord? scaleFactor = null)
         {
-            if (scaleFactor == 1)
+            var factor = ScaleFactorOrDefault(scaleFactor);
+
+            if (factor == 1)
                 return (int)value;
-            return (int)Math.Round(value * scaleFactor);
+            return (int)Math.Round(value * factor);
         }
 
-        public static Coord PixelToDip(int value, Coord scaleFactor)
+        public static Coord PixelToDip(int value, Coord? scaleFactor = null)
         {
-            if (scaleFactor == 1)
+            var factor = ScaleFactorOrDefault(scaleFactor);
+
+            if (factor == 1)
                 return value;
             else
-                return value / scaleFactor;
+                return value / factor;
         }
 
         public static SKFont DefaultFontToSkiaFont(Font font)
