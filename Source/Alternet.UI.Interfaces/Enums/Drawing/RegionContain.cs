@@ -16,11 +16,11 @@ namespace Alternet.Drawing
         /// </summary>
         OutRegion = 0,
 
-        /// <summary>
+        /*/// <summary>
         /// The specified value is partially contained within this region.
         /// On Windows, this result is not supported. <see cref="InRegion"/> will be returned instead.
         /// </summary>
-        PartRegion = 1,
+        PartRegion = 1,*/
 
         /// <summary>
         /// The specified value is fully contained within this region.
