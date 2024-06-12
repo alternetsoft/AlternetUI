@@ -4,11 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public static class PlessMouse
     {
-        private static bool[] buttons = new bool[(int)MouseButton.Unknown + 1];
+        private static (PointD? Position, Control? Control) lastMousePosition;
+        private static readonly bool[] buttons = new bool[(int)MouseButton.Unknown + 1];
+
+        /// <summary>
+        /// Occurs when <see cref="LastMousePosition"/> property is changed.
+        /// </summary>
+        public static event EventHandler? LastMousePositionChanged;
+
+        /// <summary>
+        /// Gets last mouse position passed to mouse event handlers.
+        /// </summary>
+        public static (PointD? Position, Control? Control) LastMousePosition
+        {
+            get
+            {
+                return lastMousePosition;
+            }
+
+            set
+            {
+                if (lastMousePosition == value)
+                    return;
+                lastMousePosition = value;
+
+                LastMousePositionChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
 
         public static bool IsButtonPressed(MouseButton mouseButton)
         {
