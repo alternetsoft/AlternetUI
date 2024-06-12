@@ -614,8 +614,70 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseTouch(TouchEventArgs e)
         {
+            TouchToMouseEvents(e);
             OnTouch(e);
             Touch?.Invoke(this, e);
+        }
+
+        public virtual void TouchToMouseEvents(TouchEventArgs e)
+        {
+            var handled = e.Handled;
+
+            switch (e.DeviceType)
+            {
+                case TouchDeviceType.Touch:
+                    break;
+                case TouchDeviceType.Mouse:
+                    switch (e.ActionType)
+                    {
+                        case TouchAction.Entered:
+                            RaiseMouseEnter();
+                            break;
+                        case TouchAction.Pressed:
+                            Mouse.ReportMouseDown(
+                                this,
+                                DateTime.Now.Ticks,
+                                e.MouseButton,
+                                out handled);
+                            break;
+                        case TouchAction.Moved:
+                            Mouse.ReportMouseMove(
+                                this,
+                                DateTime.Now.Ticks,
+                                e.Location,
+                                out handled);
+                            break;
+                        case TouchAction.Released:
+                            Mouse.ReportMouseUp(
+                                this,
+                                DateTime.Now.Ticks,
+                                e.MouseButton,
+                                out handled);
+                            break;
+                        case TouchAction.Cancelled:
+                            break;
+                        case TouchAction.Exited:
+                            RaiseMouseLeave();
+                            break;
+                        case TouchAction.WheelChanged:
+                            Mouse.ReportMouseWheel(
+                                        this,
+                                        DateTime.Now.Ticks,
+                                        e.WheelDelta,
+                                        out handled);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    break;
+                case TouchDeviceType.Pen:
+                    break;
+                default:
+                    break;
+            }
+
+            e.Handled = handled;
         }
 
         /// <summary>
@@ -1988,7 +2050,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Coord GetPixelScaleFactor()
         {
-            return Handler.GetPixelScaleFactor();
+            return scaleFactor ??= Handler.GetPixelScaleFactor();
         }
 
         /// <summary>
@@ -2376,6 +2438,7 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDpiChanged(DpiChangedEventArgs e)
         {
+            scaleFactor = null;
             ResetDisplay();
             ResetMeasureCanvas();
             OnDpiChanged(e);

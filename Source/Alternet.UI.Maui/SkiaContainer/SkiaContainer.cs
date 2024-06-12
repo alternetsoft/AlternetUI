@@ -127,12 +127,12 @@ namespace Alternet.UI
 
         private void SkiaContainer_Scrolled(object? sender, ScrolledEventArgs e)
         {
-            Log("SkiaContainer_Scrolled");
+            /*Log("SkiaContainer_Scrolled");*/
         }
 
         private void SkiaContainer_ScrollToRequested(object? sender, ScrollToRequestedEventArgs e)
         {
-            Log("SkiaContainer_ScrollToRequested");
+            /*Log("SkiaContainer_ScrollToRequested");*/
         }
 
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
@@ -143,15 +143,6 @@ namespace Alternet.UI
         {
             if (control is null)
                 return;
-
-            if (e.ActionType == SKTouchAction.Pressed)
-            {
-                Log($"PlatformView: {canvas.Handler?.PlatformView?.GetType()}");
-                control?.RaiseGotFocus();
-
-                /*if (!IsFocused)
-                    Focus();*/
-            }
 
             TouchEventArgs args = MauiTouchUtils.Convert(e);
             control?.RaiseTouch(args);
@@ -192,14 +183,14 @@ namespace Alternet.UI
 
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
         {
-            Log("Focused");
+            /*Log("Focused");*/
             UI.Control.FocusedControl = control;
             control?.RaiseGotFocus();
         }
 
         private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
         {
-            Log("Unfocused");
+            /*Log("Unfocused");*/
             UI.Control.FocusedControl = null;
             control?.RaiseLostFocus();
         }

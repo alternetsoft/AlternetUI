@@ -84,6 +84,7 @@ namespace Alternet.UI
         private DockStyle dock;
         private LayoutStyle? layout;
         private RectD reportedBounds = RectD.MinusOne;
+        private Coord? scaleFactor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
