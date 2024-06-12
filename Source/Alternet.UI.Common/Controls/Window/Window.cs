@@ -44,6 +44,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when window moves to another display.
+        /// </summary>
+        public event EventHandler? DisplayChanged;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Menu"/> property changes.
         /// </summary>
         public event EventHandler? MenuChanged;
@@ -1331,11 +1336,14 @@ namespace Alternet.UI
         {
             base.OnHandlerLocationChanged(e);
 
-            InsideTryCatch(ReportDisplayChanged);            
+            InsideTryCatch(RaiseDisplayChanged);            
         }
 
-        private void ReportDisplayChanged()
+        private void RaiseDisplayChanged()
         {
+            if (DisplayChanged is null)
+                return;
+
             var newDisplay = Display.GetFromControl(this);
 
             if (oldDisplay is null)
@@ -1347,15 +1355,9 @@ namespace Alternet.UI
             if (oldDisplay == newDisplay)
                 return;
 
+            DisplayChanged?.Invoke(this, EventArgs.Empty);
+
             oldDisplay = newDisplay;
-
-            ForEachChild(Fn, true);
-
-            void Fn(Control control)
-            {
-                control.ResetDisplay();
-                control.ResetMeasureCanvas();
-            }
         }
     }
 }
