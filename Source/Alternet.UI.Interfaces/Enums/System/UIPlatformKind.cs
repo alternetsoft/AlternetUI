@@ -30,5 +30,15 @@ namespace Alternet.UI
         /// Platform is WinForms.
         /// </summary>
         WinForms,
+
+        /// <summary>
+        /// Platform is WinUI.
+        /// </summary>
+        WinUI,
+
+        /// <summary>
+        /// Platformless.
+        /// </summary>
+        Plarformless,
     }
 }

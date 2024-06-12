@@ -167,7 +167,7 @@ namespace Alternet.UI
             return (ColorStruct)UI.Native.WxOtherFactory.SystemSettingsGetColor((int)systemSettingsColor);
         }
 
-        public int GetMetric(SystemSettingsMetric index, IControl? control)
+        public int GetMetric(SystemSettingsMetric index, Control? control)
         {
             return Native.WxOtherFactory.SystemSettingsGetMetric(
                 (int)index,

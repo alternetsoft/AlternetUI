@@ -19,196 +19,192 @@ namespace Alternet.UI
         /// <summary>
         /// Width of single border.
         /// </summary>
-        BorderX,
+        BorderX = 2,
 
         /// <summary>
         /// Height of single border.
         /// </summary>
-        BorderY,
+        BorderY = 3,
 
         /// <summary>
         /// Width of cursor.
         /// </summary>
-        CursorX,
+        CursorX = 4,
 
         /// <summary>
         /// Height of cursor.
         /// </summary>
-        CursorY,
+        CursorY = 5,
 
         /// <summary>
         /// Width in pixels of rectangle within which two successive mouse clicks must fall
         /// to generate a double-click.
         /// </summary>
-        DClickX,
+        DClickX = 6,
 
         /// <summary>
         /// Height in pixels of rectangle within which two successive mouse clicks must
         /// fall to generate a double-click.
         /// </summary>
-        DClickY,
+        DClickY = 7,
 
         /// <summary>
         /// Width in pixels of a rectangle centered on a drag point to allow for limited
         /// movement of the mouse pointer before a drag operation begins.
         /// </summary>
-        DragX,
+        DragX = 8,
 
         /// <summary>
         /// Height in pixels of a rectangle centered on a drag point to allow for limited
         /// movement of the mouse pointer before a drag operation begins.
         /// </summary>
-        DragY,
+        DragY = 9,
 
         /// <summary>
         /// Width of a 3D border, in pixels.
         /// </summary>
-        EdgeX,
+        EdgeX = 10,
 
         /// <summary>
         /// Height of a 3D border, in pixels.
         /// </summary>
-        EdgeY,
+        EdgeY = 11,
 
         /// <summary>
         /// Width of arrow bitmap on horizontal scrollbar.
         /// </summary>
-        HScrollArrowX,
+        HScrollArrowX = 12,
 
         /// <summary>
         /// Height of arrow bitmap on horizontal scrollbar.
         /// </summary>
-        HScrollArrowY,
+        HScrollArrowY = 13,
 
         /// <summary>
         /// Width of horizontal scrollbar thumb.
         /// </summary>
-        HThumbX,
+        HThumbX = 14,
 
         /// <summary>
         /// The default width of an icon.
         /// </summary>
-        IconX,
+        IconX = 15,
 
         /// <summary>
         /// The default height of an icon.
         /// </summary>
-        IconY,
+        IconY = 16,
 
         /// <summary>
         /// Width of a grid cell for items in large icon view, in pixels. Each item
         /// fits into a rectangle of this size when arranged.
         /// </summary>
-        IconSpacingX,
+        IconSpacingX = 17,
 
         /// <summary>
         /// Height of a grid cell for items in large icon view, in pixels. Each item
         /// fits into a rectangle of this size when arranged.
         /// </summary>
-        IconSpacingY,
+        IconSpacingY = 18,
 
         /// <summary>
         /// Minimum width of a window.
         /// </summary>
-        WindowMinX,
+        WindowMinX = 19,
 
         /// <summary>
         /// Minimum height of a window.
         /// </summary>
-        WindowMinY,
+        WindowMinY = 20,
 
-        /// <summary>
-        /// Width of the screen in pixels.
-        /// </summary>
-        ScreenX,
+        /*
+        ScreenX = 21,
 
-        /// <summary>
-        /// Height of the screen in pixels.
-        /// </summary>
-        ScreenY,
+        ScreenY = 22,
+        */
 
         /// <summary>
         /// Width of the window frame for a wxTHICK_FRAME window.
         /// </summary>
-        FrameSizeX,
+        FrameSizeX = 23,
 
         /// <summary>
         /// Height of the window frame for a wxTHICK_FRAME window.
         /// </summary>
-        FrameSizeY,
+        FrameSizeY = 24,
 
         /// <summary>
         /// Recommended width of a small icon (in window captions, and small icon view).
         /// </summary>
-        SmallIconX,
+        SmallIconX = 25,
 
         /// <summary>
         /// Recommended height of a small icon (in window captions, and small icon view).
         /// </summary>
-        SmallIconY,
+        SmallIconY = 26,
 
         /// <summary>
         /// Height of horizontal scrollbar in pixels.
         /// </summary>
-        HScrollY,
+        HScrollY = 27,
 
         /// <summary>
         /// Width of vertical scrollbar in pixels.
         /// </summary>
-        VScrollX,
+        VScrollX = 28,
 
         /// <summary>
         /// Width of arrow bitmap on a vertical scrollbar.
         /// </summary>
-        VScrollArrowX,
+        VScrollArrowX = 29,
 
         /// <summary>
         /// Height of arrow bitmap on a vertical scrollbar.
         /// </summary>
-        VScrollArrowY,
+        VScrollArrowY = 30,
 
         /// <summary>
         /// Height of vertical scrollbar thumb.
         /// </summary>
-        VThumbY,
+        VThumbY = 31,
 
         /// <summary>
         /// Height of normal caption area.
         /// </summary>
-        CaptionY,
+        CaptionY = 32,
 
         /// <summary>
         /// Height of single-line menu bar.
         /// </summary>
-        MenuY,
+        MenuY = 33,
 
         /// <summary>
         /// Equals 1 if there is a network present, 0 otherwise.
         /// </summary>
-        NetworkPresent,
+        NetworkPresent = 34,
 
         /// <summary>
         /// Equals 1 if PenWindows is installed, 0 otherwise.
         /// </summary>
-        PenWindowsPresent,
+        PenWindowsPresent = 35,
 
         /// <summary>
         /// Non-zero if the user requires an application to present information visually
         /// in situations where it would otherwise present the information only in
         /// audible form; zero otherwise.
         /// </summary>
-        ShowSounds,
+        ShowSounds = 36,
 
         /// <summary>
         /// Non-zero if the meanings of the left and right mouse buttons are swapped; zero otherwise.
         /// </summary>
-        SwapButtons,
+        SwapButtons = 37,
 
         /// <summary>
         /// Maximal time, in milliseconds, which may pass between subsequent clicks for
         /// a double click to be generated.
         /// </summary>
-        DClickMSec,
+        DClickMSec = 38,
 
         /// <summary>
         /// Time, in milliseconds, for how long a blinking caret should stay visible during a
@@ -216,7 +212,7 @@ namespace Alternet.UI
         /// visible all the time instead of blinking. If the value is negative, the platform
         /// does not support the user setting.
         /// </summary>
-        CaretOnMSec,
+        CaretOnMSec = 39,
 
         /// <summary>
         /// Time, in milliseconds, for how long a blinking caret should stay invisible during
@@ -224,7 +220,7 @@ namespace Alternet.UI
         /// visible all the time instead of blinking. If the value is negative, the
         /// platform does not support the user setting.
         /// </summary>
-        CaretOffMSec,
+        CaretOffMSec = 40,
 
         /// <summary>
         /// Time, in milliseconds, for how long a caret should blink after a user interaction.
@@ -233,6 +229,8 @@ namespace Alternet.UI
         /// or cutting text). If this value is negative, carets should blink forever;
         /// if it is zero, carets should not blink at all.
         /// </summary>
-        CaretTimeoutMSec,
+        CaretTimeoutMSec = 41,
+
+        Max = CaretTimeoutMSec,
     }
 }

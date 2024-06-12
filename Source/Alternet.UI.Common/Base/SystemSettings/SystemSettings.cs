@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// one should still be given, as for example it might determine which displays
         /// cursor width is requested with <see cref="SystemSettingsMetric.CursorX"/>.
         /// </remarks>
-        public static int GetMetric(SystemSettingsMetric index, IControl? control)
+        public static int GetMetric(SystemSettingsMetric index, Control? control)
         {
             return Handler.GetMetric(index, control);
         }

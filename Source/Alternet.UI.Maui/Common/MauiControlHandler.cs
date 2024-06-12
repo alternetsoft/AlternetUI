@@ -225,7 +225,14 @@ namespace Alternet.UI
 
         public virtual bool IsMouseCaptured { get; set; }
 
-        public virtual bool IsFocusable { get; set; }
+        public virtual bool IsFocusable
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
 
         public Action? SystemColorsChanged { get; set; }
 
