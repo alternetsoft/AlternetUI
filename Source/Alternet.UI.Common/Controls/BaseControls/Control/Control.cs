@@ -28,8 +28,6 @@ namespace Alternet.UI
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
 
-        internal bool enabled = true;
-
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
         private static int groupIndexCounter;
         private static Font? defaultFont;
@@ -41,6 +39,7 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private bool enabled = true;
         private int handlerTextChanging;
         private int rowIndex;
         private int columnIndex;
@@ -85,6 +84,7 @@ namespace Alternet.UI
         private LayoutStyle? layout;
         private RectD reportedBounds = RectD.MinusOne;
         private Coord? scaleFactor;
+        private SizeD? dpi;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -214,6 +214,19 @@ namespace Alternet.UI
         object IControl.NativeControl => Handler.GetNativeControl();
 
         /// <summary>
+        /// Gets scale factor used in device-independent units to/from
+        /// pixels conversions.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Coord ScaleFactor
+        {
+            get
+            {
+                return scaleFactor ??= Handler.GetPixelScaleFactor();
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="Graphics"/> which can be used to measure text size
         /// and for other measure purposes.
         /// </summary>
@@ -222,7 +235,7 @@ namespace Alternet.UI
         {
             get
             {
-                var measureCanvas = GraphicsFactory.GetOrCreateMemoryDC(GetPixelScaleFactor());
+                var measureCanvas = GraphicsFactory.GetOrCreateMemoryDC(ScaleFactor);
                 return measureCanvas;
             }
         }
@@ -520,7 +533,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in
-        /// device-independent units (1/96th inch per unit).
+        /// device-independent units.
         /// </summary>
         [Browsable(false)]
         public virtual SizeD ClientSize
@@ -605,10 +618,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsMouseOver
         {
-            get
-            {
-                return Handler.IsMouseOver;
-            }
+            get;
+            private set;
         }
 
         /// <summary>
@@ -820,7 +831,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the <see cref="Control"/> bounds relative to the parent,
-        /// in device-independent units (1/96th inch per unit).
+        /// in device-independent units.
         /// </summary>
         [Browsable(false)]
         public virtual RectD Bounds
@@ -876,10 +887,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the location of upper-left corner of the control, in
-        /// device-independent units (1/96th inch per unit).
+        /// device-independent units.
         /// </summary>
-        /// <value>The position of the control's upper-left corner, in logical
-        /// units (1/96th of an inch).</value>
+        /// <value>The position of the control's upper-left corner, in device-independent units.</value>
         [Browsable(false)]
         public virtual PointD Location
         {
@@ -940,7 +950,9 @@ namespace Alternet.UI
         {
             get
             {
-                return enabled;
+                var parentEnabled = Parent?.Enabled ?? true;
+
+                return enabled && parentEnabled;
             }
 
             set
@@ -1086,7 +1098,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the size of the control.
         /// </summary>
-        /// <value>The size of the control, in device-independent units (1/96th inch per unit).
+        /// <value>The size of the control, in device-independent units.
         /// The default value is <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
         /// <see cref="Coord.NaN"/>)/>.
         /// </value>
@@ -1113,7 +1125,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the width of the control.
         /// </summary>
-        /// <value>The width of the control, in device-independent units (1/96th inch per unit).
+        /// <value>The width of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -1130,8 +1142,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the height of the control.
         /// </summary>
-        /// <value>The height of the control, in device-independent units
-        /// (1/96th inch per unit).
+        /// <value>The height of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -1148,8 +1159,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the suggested size of the control.
         /// </summary>
-        /// <value>The suggested size of the control, in device-independent
-        /// units (1/96th inch per unit).
+        /// <value>The suggested size of the control, in device-independent units.
         /// The default value is <see cref="SizeD"/>
         /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>)/>.
         /// </value>
@@ -1183,8 +1193,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the suggested width of the control.
         /// </summary>
-        /// <value>The suggested width of the control, in device-independent
-        /// units (1/96th inch per unit).
+        /// <value>The suggested width of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -1208,8 +1217,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the suggested height of the control.
         /// </summary>
-        /// <value>The suggested height of the control, in device-independent
-        /// units (1/96th inch per unit).
+        /// <value>The suggested height of the control, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
@@ -1289,7 +1297,7 @@ namespace Alternet.UI
                 if (VisualStateOverride is not null)
                     return VisualStateOverride.Value;
 
-                if (!enabled)
+                if (!Enabled)
                     return VisualControlState.Disabled;
                 if (IsMouseOver)
                 {
@@ -2207,8 +2215,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a rectangle which describes the client area inside of the
-        /// <see cref="Control"/>,
-        /// in device-independent units (1/96th inch per unit).
+        /// <see cref="Control"/>, in device-independent units.
         /// </summary>
         [Browsable(false)]
         public virtual RectD ClientRectangle => new(PointD.Empty, ClientSize);
@@ -2216,8 +2223,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a rectangle which describes an area inside of the
         /// <see cref="Control"/> available
-        /// for positioning (layout) of its child controls, in device-independent
-        /// units (1/96th inch per unit).
+        /// for positioning (layout) of its child controls, in device-independent units.
         /// </summary>
         [Browsable(false)]
         public virtual RectD ChildrenLayoutBounds

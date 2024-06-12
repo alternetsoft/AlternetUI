@@ -11,8 +11,6 @@ namespace Alternet.UI
     public class Display : HandledObject<IDisplayHandler>
     {
         private static IDisplayFactoryHandler? factory;
-        private static SizeI? defaultDPI;
-
         private SizeI? dpi;
 
         static Display()
@@ -60,7 +58,7 @@ namespace Alternet.UI
         /// </summary>
         public static int Count => Factory.GetCount();
 
-        /// <summary>
+        /*/// <summary>
         /// Gets default display resolution for the current platform in pixels per inch.
         /// </summary>
         /// <remarks>
@@ -68,7 +66,7 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static int DefaultDPIValue => DefaultDPI.Width;
+        public static int DefaultDPIValue => DefaultDPI.Width;*/
 
         /// <summary>
         ///  Gets an array of all of the displays on the system.
@@ -108,7 +106,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Gets default display resolution for the current platform as <see cref="SizeI"/>.
         /// </summary>
         /// <remarks>
@@ -116,7 +114,7 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static SizeI DefaultDPI => defaultDPI ??= Factory.GetDefaultDPI();
+        public static SizeI DefaultDPI => defaultDPI ??= Factory.GetDefaultDPI();*/
 
         /// <summary>
         /// Gets the display's name.
@@ -139,14 +137,20 @@ namespace Alternet.UI
         {
             get
             {
-                return dpi ??= (ScaleFactor * DefaultDPI).ToSize();
+                return dpi ??= GraphicsFactory.ScaleFactorToDpi(ScaleFactor);
             }
         }
 
         /// <summary>
         /// Gets scaling factor used by this display.
         /// </summary>
-        public Coord ScaleFactor => Handler.GetScaleFactor();
+        public Coord ScaleFactor
+        {
+            get
+            {
+                return Handler.GetScaleFactor();
+            }
+        }
 
         /// <summary>
         /// Gets <c>true</c> if the display is the primary display.
@@ -183,8 +187,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the client area of the display in the
-        /// device-independent units (1/96th inch per unit).
+        /// Gets the client area of the display in the device-independent units.
         /// </summary>
         public RectD ClientAreaDip
         {
@@ -202,7 +205,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Returns the bounding rectangle of the display in the
-        /// device-independent units (1/96th inch per unit).
+        /// device-independent units.
         /// </summary>
         public RectD GeometryDip
         {
@@ -248,7 +251,7 @@ namespace Alternet.UI
             method(LogUtils.SectionSeparator);
             method("Display:");
             method($"Count: {Count}");
-            method($"DefaultDPI: {DefaultDPI}");
+            method($"DefaultDPI: {GraphicsFactory.DefaultDPI}");
 
             for (int i = 0; i < Display.AllScreens.Length; i++)
             {
@@ -270,7 +273,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts pixels to device-independent units (1/96th inch per unit).
+        /// Converts pixels to device-independent units.
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <returns></returns>
@@ -280,7 +283,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -290,7 +293,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -300,7 +303,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -311,7 +314,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -322,7 +325,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts <see cref="SizeI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="SizeI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
@@ -333,7 +336,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="PointI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
@@ -344,7 +347,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="RectI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>

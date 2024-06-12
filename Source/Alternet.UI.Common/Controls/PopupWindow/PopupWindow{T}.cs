@@ -329,7 +329,7 @@ namespace Alternet.UI
             ClientSize = newSize + new SizeD(1, 0);
             ClientSize = newSize;
             Refresh();
-            SendSizeEvent();
+            PerformLayout();
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <remarks>
         /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
-        /// device-inpependent units (1/96 inch).
+        /// device-inpependent units.
         /// </remarks>
         public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
@@ -425,7 +425,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <remarks>
         /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
-        /// device-inpependent units (1/96 inch).
+        /// device-inpependent units.
         /// </remarks>
         internal virtual void SetPositionInDips(PointD ptOrigin, SizeD size)
         {

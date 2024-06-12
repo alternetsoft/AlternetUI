@@ -142,8 +142,6 @@ namespace Alternet.UI
         
         public virtual bool CanAcceptFocus { get; }
         
-        public virtual bool IsMouseOver { get; set; }
-        
         public virtual bool ProcessUIUpdates { get; set; }
         
         public virtual bool IsMouseCaptured { get; set; }
@@ -195,11 +193,6 @@ namespace Alternet.UI
             return PlessGraphics.Default;
         }
 
-        public virtual PointD DeviceToScreen(PointI point)
-        {
-            return point;
-        }
-
         public virtual void DisableRecreate()
         {
         }
@@ -246,11 +239,6 @@ namespace Alternet.UI
         public virtual Font? GetDefaultAttributesFont()
         {
             return default;
-        }
-
-        public virtual SizeD GetDPI()
-        {
-            return 96 * GetPixelScaleFactor();
         }
 
         public virtual nint GetHandle()
@@ -338,16 +326,6 @@ namespace Alternet.UI
             return PlessGraphics.Default;
         }
 
-        public virtual int PixelFromDip(Coord value)
-        {
-            return GraphicsFactory.PixelFromDip(value, Control.GetPixelScaleFactor());
-        }
-
-        public virtual Coord PixelToDip(int value)
-        {
-            return GraphicsFactory.PixelToDip(value, Control.GetPixelScaleFactor()); 
-        }
-
         public virtual void Raise()
         {
         }
@@ -379,27 +357,6 @@ namespace Alternet.UI
         public virtual PointD ScreenToClient(PointD point)
         {
             return point;
-        }
-
-        public virtual PointI ScreenToDevice(PointD point)
-        {
-            return point.ToPoint();
-        }
-
-        public virtual void SendMouseDownEvent(int x, int y)
-        {
-        }
-
-        public virtual void SendMouseUpEvent(int x, int y)
-        {
-        }
-
-        public virtual void SendSizeEvent()
-        {
-        }
-
-        public virtual void SetBounds(RectD rect, SetBoundsFlags flags)
-        {
         }
 
         public virtual void SetCursor(Cursor? value)

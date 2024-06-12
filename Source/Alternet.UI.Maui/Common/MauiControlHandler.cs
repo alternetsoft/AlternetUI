@@ -221,8 +221,6 @@ namespace Alternet.UI
             get => true;
         }
 
-        public virtual bool IsMouseOver { get; set; }
-
         public virtual bool ProcessUIUpdates { get; set; }
 
         public virtual bool IsMouseCaptured { get; set; }
@@ -267,11 +265,6 @@ namespace Alternet.UI
         }
 
         public virtual PointD ClientToScreen(PointD point)
-        {
-            return point;
-        }
-
-        public virtual PointD DeviceToScreen(PointI point)
         {
             return point;
         }
@@ -412,12 +405,12 @@ namespace Alternet.UI
 
         public virtual int PixelFromDip(Coord value)
         {
-            return GraphicsFactory.PixelFromDip(value, Control.GetPixelScaleFactor());
+            return GraphicsFactory.PixelFromDip(value, Control.ScaleFactor);
         }
 
         public virtual Coord PixelToDip(int value)
         {
-            return GraphicsFactory.PixelToDip(value, Control.GetPixelScaleFactor());
+            return GraphicsFactory.PixelToDip(value, Control.ScaleFactor);
         }
 
         public virtual void Raise()
@@ -451,45 +444,19 @@ namespace Alternet.UI
             return point;
         }
 
-        public virtual PointI ScreenToDevice(PointD point)
-        {
-            return point.ToPoint();
-        }
-
-        public virtual void SendMouseDownEvent(int x, int y)
-        {
-            Log("");
-        }
-
-        public virtual void SendMouseUpEvent(int x, int y)
-        {
-            Log("");
-        }
-
-        public virtual void SendSizeEvent()
-        {
-            Log("");
-        }
-
-        public virtual void SetBounds(RectD rect, SetBoundsFlags flags)
-        {
-            Log("");
-        }
-
         public virtual void SetCursor(Cursor? value)
         {
-            Log("");
         }
 
         public virtual void SetEnabled(bool value)
         {
-            Log("");
+            if (container is not null)
+                container.IsEnabled = value;
         }
 
         public virtual bool SetFocus()
         {
-            Log("");
-            return default;
+            return true;
         }
 
         public virtual void SetScrollBar(
@@ -521,8 +488,7 @@ namespace Alternet.UI
 
         public virtual void Invalidate()
         {
-            if (container is SkiaContainer skiaContainer)
-                skiaContainer.CanvasView.InvalidateSurface();
+            container?.CanvasView.InvalidateSurface();
         }
 
         public virtual Graphics CreateDrawingContext()

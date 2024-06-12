@@ -16,11 +16,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="text">String to measure.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="maximumWidth">Maximum width of the string in device-independent
-        /// units (1/96th inch per unit).</param>
+        /// <param name="maximumWidth">Maximum width of the string in device-independent units.</param>
         /// <returns>
         /// This method returns a <see cref="SizeD"/> structure that represents the size,
-        /// in device-independent units (1/96th inch per unit), of the
+        /// in device-independent units, of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
         SizeD MeasureText(string text, Font font, double maximumWidth);
@@ -31,14 +30,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="text">String to measure.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="maximumWidth">Maximum width of the string in device-independent
-        /// units (1/96th inch per unit).</param>
+        /// <param name="maximumWidth">Maximum width of the string in device-independent units.</param>
         /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
         /// such as
         /// alignment and trimming, that are applied to the drawn text.</param>
         /// <returns>
         /// This method returns a <see cref="SizeD"/> structure that represents the size,
-        /// in device-independent units (1/96th inch per unit), of the
+        /// in device-independent units, of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
         SizeD MeasureText(

@@ -219,7 +219,7 @@ namespace ControlsSample
             using (var canvasLock = image.LockSurface())
             {
                 var canvas = canvasLock.Canvas;
-                canvas.Scale((float)GetPixelScaleFactor());
+                canvas.Scale((float)ScaleFactor);
 
                 canvas.Clear(prm.BackColor);
 
@@ -252,7 +252,7 @@ namespace ControlsSample
             using (var canvasLock = bitmap.LockSurface())
             {
                 var canvas = canvasLock.Canvas;
-                canvas.Scale((float)GetPixelScaleFactor());
+                canvas.Scale((float)ScaleFactor);
 
                 canvas.Clear(prm.BackColor);
                 canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);

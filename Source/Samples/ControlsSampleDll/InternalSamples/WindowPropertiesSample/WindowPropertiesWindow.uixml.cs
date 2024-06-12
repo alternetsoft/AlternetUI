@@ -68,7 +68,8 @@ namespace WindowPropertiesSample
         private void PopupSetBounds_AfterHide(object? sender, EventArgs e)
         {
             var rect = (setBoundsProperties.X, setBoundsProperties.Y, setBoundsProperties.Width, setBoundsProperties.Height);
-            testWindow?.SetBounds(rect, setBoundsProperties.Flags);
+            if(testWindow is not null)
+                testWindow.Bounds = rect;
         }
 
         private void PropertiesButton_Click(object? sender, EventArgs e)
@@ -524,11 +525,6 @@ namespace WindowPropertiesSample
             }
 
             public double Height
-            {
-                get; set;
-            }
-
-            public SetBoundsFlags Flags
             {
                 get; set;
             }

@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="DragStartEventArgs"/> class.
         /// </summary>
         /// <param name="mouseClientLocation">The client coordinates of the mouse pointer
-        /// in logical units (1/96th of an inch).</param>
+        /// in device-independent units.</param>
         /// <param name="mouseDownLocation">Coordinates of the mouse pointer in the moment when
         /// <see cref="Control.MouseDown"/> event was fired.</param>
         /// <param name="mouseDownArgs"></param>
@@ -51,7 +51,7 @@ namespace Alternet.UI
         public static double MinDragStartDistance { get; set; } = 7;
 
         /// <summary>
-        /// Gets the client coordinates of the mouse pointer in logical units (1/96th of an inch).
+        /// Gets the client coordinates of the mouse pointer in device-independent units.
         /// </summary>
         public PointD MouseClientLocation => mouseClientLocation;
 
@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// <see cref="Control.MouseDown"/> event was fired.
         /// </summary>
         /// <remarks>
-        /// Coordinates of the mouse pointer are in logical units (1/96th of an inch).
+        /// Coordinates of the mouse pointer are in device-independent units.
         /// </remarks>
         public PointD MouseDownLocation => mouseDownLocation;
 

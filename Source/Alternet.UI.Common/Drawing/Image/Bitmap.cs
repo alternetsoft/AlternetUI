@@ -225,7 +225,7 @@ namespace Alternet.Drawing
         public Bitmap(SizeI size, Control control)
             : this(size)
         {
-            ScaleFactor = control.GetPixelScaleFactor();
+            ScaleFactor = control.ScaleFactor;
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace Alternet.Drawing
 
         public SizeI GetPreferredBitmapSizeFor(IControl control)
         {
-            return GetPreferredBitmapSizeAtScale(control.GetPixelScaleFactor());
+            return GetPreferredBitmapSizeAtScale(control.ScaleFactor);
         }
     }
 }

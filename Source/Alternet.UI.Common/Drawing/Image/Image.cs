@@ -829,8 +829,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the size of the image in device-independent units (1/96th inch
-        /// per unit).
+        /// Gets the size of the image in device-independent units.
         /// </summary>
         public virtual SizeD SizeDip(Control control)
             => control.PixelToDip(PixelSize);

@@ -156,7 +156,7 @@ namespace Alternet.UI
 
             var dc = e.Surface.Canvas;
 
-            dc.Scale((float)control.GetPixelScaleFactor());
+            dc.Scale((float)control.ScaleFactor);
 
             if (graphics is null)
                 graphics = new(dc);

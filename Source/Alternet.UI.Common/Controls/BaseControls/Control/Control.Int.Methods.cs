@@ -189,16 +189,6 @@ namespace Alternet.UI
             return preferredSize;
         }
 
-        internal void SendMouseDownEvent(int x, int y)
-        {
-            Handler.SendMouseDownEvent(x, y);
-        }
-
-        internal void SendMouseUpEvent(int x, int y)
-        {
-            Handler.SendMouseUpEvent(x, y);
-        }
-
         internal bool BeginRepositioningChildren()
         {
             return Handler.BeginRepositioningChildren();

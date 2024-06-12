@@ -288,7 +288,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets the margins between the image and the text of the button.
-        /// Value is in dips (1/96 inch).
+        /// Value is in device-independent units.
         /// </summary>
         /// <remarks>
         /// This method is currently only implemented under Windows.

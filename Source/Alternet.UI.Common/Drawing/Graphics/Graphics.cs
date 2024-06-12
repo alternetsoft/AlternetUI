@@ -571,7 +571,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectD"/> structure.
-        /// Rectangle is specified in dips (1/96 inch).
+        /// Rectangle is specified in device-independent units.
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics
         /// of the fill.</param>
@@ -933,7 +933,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="destinationRect">The region in which to draw
-        /// <paramref name="image"/>. Specified in dips (1/96 inch).</param>
+        /// <paramref name="image"/>. Specified in device-independent units.</param>
         /// <param name="sourceRect">
         /// <see cref="RectD"/> structure that specifies the portion of the
         /// <paramref name="image"/> object to draw.
@@ -1113,7 +1113,7 @@ namespace Alternet.Drawing
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         /// <returns>
         /// This method returns a <see cref="SizeD"/> structure that represents the size,
-        /// in device-independent units (1/96th inch per unit), of the
+        /// in device-independent units, of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

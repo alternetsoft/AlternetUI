@@ -18,10 +18,17 @@ namespace Alternet.Drawing
     /// </summary>
     public static class GraphicsFactory
     {
+        private static readonly AdvDictionary<double, Graphics> memoryCanvases = new();
+
         private static bool ImageBitsFormatsLoaded = false;
         private static ImageBitsFormat nativeBitsFormat;
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
+
+        /// <summary>
+        /// Gets or sets default dpi value used in conversions pixels from/to device-independent units.
+        /// </summary>
+        public static int DefaultDPI = 96;
 
         public static Func<Font, SKPaint> FontToFillPaint
             = (font) => GraphicsFactory.CreateFillPaint(font.SkiaFont);
@@ -165,8 +172,6 @@ namespace Alternet.Drawing
             return result;
         }
 
-        private static AdvDictionary<double, Graphics> memoryCanvases = new();
-
         public static Graphics GetOrCreateMemoryDC(double scaleFactor)
         {
             var result = memoryCanvases.GetOrCreate(scaleFactor, () => CreateMemoryDC(scaleFactor));
@@ -300,16 +305,22 @@ namespace Alternet.Drawing
             return paint;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Coord ScaleFactorFromDpi(int dpi)
         {
-            if (dpi == 96 || dpi <=0)
+            if (dpi == DefaultDPI || dpi <=0)
                 return 1;
-            return (Coord)dpi / (Coord)96;
+            return (Coord)dpi / (Coord)DefaultDPI;
+        }
+
+        public static int ScaleFactorToDpi(Coord scaleFactor)
+        {
+            if (scaleFactor == 1)
+                return DefaultDPI;
+            return (int)(scaleFactor * DefaultDPI);
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -320,7 +331,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -331,7 +342,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts device-independent units (1/96th inch per unit) to pixels.
+        /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <returns></returns>
@@ -342,7 +353,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="SizeI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="SizeI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="SizeI"/> in pixels.</param>
         /// <returns></returns>
@@ -362,7 +373,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="PointI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="PointI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="PointI"/> in pixels.</param>
         /// <returns></returns>
@@ -373,7 +384,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="RectI"/> to device-independent units (1/96th inch per unit).
+        /// Converts <see cref="RectI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
         /// <returns></returns>
