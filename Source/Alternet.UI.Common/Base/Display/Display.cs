@@ -11,7 +11,10 @@ namespace Alternet.UI
     public class Display : HandledObject<IDisplayHandler>
     {
         private static IDisplayFactoryHandler? factory;
+        private static Coord? maxScaleFactor;
+        
         private SizeI? dpi;
+        private Coord? scaleFactor;
 
         static Display()
         {
@@ -45,11 +48,24 @@ namespace Alternet.UI
         {
         }
 
+        public static Coord MaxScaleFactor
+        {
+            get
+            {
+                return maxScaleFactor ??= MathUtils.Max(AllScaleFactors);
+            }
+        }
+
         public static IDisplayFactoryHandler Factory
         {
             get
             {
                 return factory ??= SystemSettings.Handler.CreateDisplayFactoryHandler();
+            }
+
+            set
+            {
+                factory = value;
             }
         }            
 
@@ -86,6 +102,21 @@ namespace Alternet.UI
                 }
 
                 return allScreens;
+            }
+        }
+
+        public static Coord[] AllScaleFactors
+        {
+            get
+            {
+                var screens = AllScreens;
+                var length = screens.Length;
+                var result = new Coord[length];
+
+                for (int i = 0; i < length; i++)
+                    result[i] = screens[i].ScaleFactor;
+
+                return result;
             }
         }
 
@@ -148,7 +179,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.GetScaleFactor();
+                return scaleFactor ??= Handler.GetScaleFactor();
             }
         }
 
@@ -239,6 +270,7 @@ namespace Alternet.UI
         /// </summary>
         public static void Reset()
         {
+            maxScaleFactor = null;
         }
 
         /// <summary>
