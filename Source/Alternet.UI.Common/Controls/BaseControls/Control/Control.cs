@@ -946,13 +946,16 @@ namespace Alternet.UI
         /// You can also disable a control to restrict its use. For example, a
         /// button can be disabled to prevent the user from clicking it.
         /// </remarks>
+        /// <remarks>
+        /// Notice that this property can return false even if this control itself hadn't been
+        /// explicitly disabled when one of its parent controls is disabled. To get the intrinsic
+        /// status of this control, use <see cref="IsThisEnabled"/>.
+        /// </remarks>
         public virtual bool Enabled
         {
             get
             {
-                var parentEnabled = Parent?.Enabled ?? true;
-
-                return enabled && parentEnabled;
+                return enabled && IsParentEnabled;
             }
 
             set
@@ -962,6 +965,41 @@ namespace Alternet.UI
                 enabled = value;
                 RaiseEnabledChanged(EventArgs.Empty);
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is intrinsically enabled.
+        /// </summary>
+        /// <remarks>
+        /// This property is mostly used for the library itself, user code should normally use
+        /// <see cref="Enabled"/> instead.
+        /// </remarks>
+        public virtual bool IsThisEnabled
+        {
+            get
+            {
+                return enabled;
+            }
+
+            set
+            {
+                Enabled = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="Parent"/> of this control can respond
+        /// to user interaction.
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="Parent"/> is not specified, returns <c>true</c>.
+        /// </remarks>
+        public virtual bool IsParentEnabled
+        {
+            get
+            {
+                return Parent?.Enabled ?? true;
             }
         }
 
