@@ -34,6 +34,35 @@ namespace Alternet.UI.Extensions
             return result;
         }
 
+        public static SKPointI[] PixelFromDipI(this PointD[] points, Coord? scaleFactor = null)
+        {
+            var length = points.Length;
+            SKPointI[] result = new SKPointI[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = GraphicsFactory.PixelFromDip(points[i], scaleFactor);
+            }
+
+            return result;
+        }
+
+        public static SKPoint[] PixelFromDipD(this PointD[] points, Coord? scaleFactor = null)
+        {
+            var length = points.Length;
+            SKPoint[] result = new SKPoint[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = GraphicsFactory.PixelFromDip(points[i], scaleFactor).SkiaPoint;
+            }
+
+            return result;
+        }
+
+        public static int PixelFromDip(this Coord value, Coord? scaleFactor = null)
+        {
+            return GraphicsFactory.PixelFromDip(value, scaleFactor);
+        }
+
         public static SKStrokeJoin ToSkia(this LineJoin value)
         {
             switch (value)

@@ -877,6 +877,11 @@ namespace Alternet.Drawing
             return StringUtils.ToString<Coord>(names, values);
         }
 
+        public readonly RectI PixelFromDip(Coord? scaleFactor = null)
+        {
+            return GraphicsFactory.PixelFromDip(this, scaleFactor);
+        }
+
         /// <summary>
         /// Creates a string representation of this object based on the format string
         /// and <see cref="IFormatProvider"/> passed in.
