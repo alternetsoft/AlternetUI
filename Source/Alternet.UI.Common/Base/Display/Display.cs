@@ -11,6 +11,9 @@ namespace Alternet.UI
     public class Display : HandledObject<IDisplayHandler>
     {
         private static IDisplayFactoryHandler? factory;
+        private static SizeI? defaultDPI;
+
+        private SizeI? dpi;
 
         static Display()
         {
@@ -113,7 +116,7 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static SizeI DefaultDPI => Factory.GetDefaultDPI();
+        public static SizeI DefaultDPI => defaultDPI ??= Factory.GetDefaultDPI();
 
         /// <summary>
         /// Gets the display's name.
@@ -132,7 +135,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets display resolution in pixels per inch.
         /// </summary>
-        public SizeI DPI => Handler.GetDPI();
+        public SizeI DPI
+        {
+            get
+            {
+                return dpi ??= (ScaleFactor * DefaultDPI).ToSize();
+            }
+        }
 
         /// <summary>
         /// Gets scaling factor used by this display.
