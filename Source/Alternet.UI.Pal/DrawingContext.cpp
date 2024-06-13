@@ -30,6 +30,13 @@ namespace Alternet::UI
         return new DrawingContext(memoryDC);
     }
 
+    DrawingContext* DrawingContext::CreateMemoryDCFromImage(Image* image)
+    {
+        wxBitmap bitmap = image->GetBitmap();
+        auto memoryDC = new wxMemoryDC(bitmap);
+        return new DrawingContext(memoryDC);
+    }
+
     SizeI DrawingContext::GetDpi()
     {
         UseDC();

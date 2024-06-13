@@ -172,16 +172,21 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public static Graphics GetOrCreateMemoryDC(double? scaleFactor = null)
+        public static Graphics GetOrCreateMemoryCanvas(double? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
-            var result = memoryCanvases.GetOrCreate(factor, () => CreateMemoryDC(factor));
+            var result = memoryCanvases.GetOrCreate(factor, () => CreateMemoryCanvas(factor));
             return result;
         }
 
-        public static Graphics CreateMemoryDC(double? scaleFactor = null)
+        public static Graphics CreateMemoryCanvas(Image image)
         {
-            return Handler.CreateMemoryDC(ScaleFactorOrDefault(scaleFactor));
+            return Handler.CreateMemoryCanvas(image);
+        }
+
+        public static Graphics CreateMemoryCanvas(double? scaleFactor = null)
+        {
+            return Handler.CreateMemoryCanvas(ScaleFactorOrDefault(scaleFactor));
         }
 
         public static ISkiaSurface CreateSkiaSurface(Image image, ImageLockMode lockMode)

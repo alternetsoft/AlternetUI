@@ -19,6 +19,7 @@ InterpolationMode GetInterpolationMode();
 void SetInterpolationMode(InterpolationMode value);
 
 static DrawingContext* CreateMemoryDC(double scaleFactor);
+static DrawingContext* CreateMemoryDCFromImage(Image* image);
 void* GetHandle();
 void DrawRotatedText(const string& text, const PointD& location, Font* font, const Color& foreColor, const Color& backColor, double angle);
 void DrawRotatedTextI(const string& text, const PointI& location, Font* font, const Color& foreColor, const Color& backColor, double angle);

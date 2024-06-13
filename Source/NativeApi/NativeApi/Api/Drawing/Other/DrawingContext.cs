@@ -4,12 +4,13 @@ using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
-
     using Coord = double;
 
     public class DrawingContext
     {
         public static DrawingContext CreateMemoryDC(double scaleFactor) => default;
+
+        public static DrawingContext CreateMemoryDCFromImage(Image image) => default;
 
         public bool IsOk { get; }
         public IntPtr WxWidgetDC { get; }
