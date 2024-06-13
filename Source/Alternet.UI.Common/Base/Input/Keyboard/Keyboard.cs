@@ -8,6 +8,17 @@ namespace Alternet.UI
     public static class Keyboard
     {
         private static KeyboardDevice keyboardDevice = KeyboardDevice.Default;
+        private static IKeyboardHandler? handler;
+
+        /// <summary>
+        /// Gets or sets handler.
+        /// </summary>
+        public static IKeyboardHandler Handler
+        {
+            get => handler ??= App.Handler.CreateKeyboardHandler();
+
+            set => handler = value;
+        }
 
         /// <summary>
         ///     The primary keyboard device.

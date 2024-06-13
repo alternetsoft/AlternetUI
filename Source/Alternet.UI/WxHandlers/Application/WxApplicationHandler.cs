@@ -310,11 +310,6 @@ namespace Alternet.UI
             return result;
         }
 
-        public KeyStates GetKeyStatesFromSystem(Key key)
-        {
-            return WxApplicationHandler.NativeKeyboard.GetKeyState(key);
-        }
-
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
@@ -337,6 +332,11 @@ namespace Alternet.UI
             }
 
             App.LogSeparator();
+        }
+
+        public IKeyboardHandler CreateKeyboardHandler()
+        {
+            return new WxKeyboardHandler();
         }
     }
 }

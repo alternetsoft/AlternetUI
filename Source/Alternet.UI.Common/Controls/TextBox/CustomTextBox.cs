@@ -48,7 +48,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetErrors().Count() > 0;
+                return GetErrors().Any();
             }
         }
 

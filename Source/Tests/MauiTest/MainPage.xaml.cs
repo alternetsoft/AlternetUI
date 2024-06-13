@@ -5,13 +5,14 @@ using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 using SharpHook;
 
+using CommunityToolkit.Maui.Core.Platform;
+
 namespace SpinPaint;
 
 public partial class MainPage : ContentPage
 {
     private readonly Alternet.UI.SkiaContainer skiaContainer = new();
     private readonly Alternet.UI.SkiaSampleControl skiaSample = new();
-    private readonly Button button = new();
 
     static MainPage()
     {
@@ -25,8 +26,6 @@ public partial class MainPage : ContentPage
         skiaContainer.Margin = new(5);
 
         skiaContainer.Control = skiaSample;
-
-        button.Text = "Hello";
 
         InitializeComponent();
 
@@ -51,8 +50,18 @@ public partial class MainPage : ContentPage
         panel.Children.Add(skiaContainer);
 
         openLogFileButton.Clicked += OpenLogFileButton_Clicked;
+        keyboardButton.Clicked += KeyboardButton_Clicked;
 
         Alternet.UI.App.Log("Hello Maui");
+    }
+
+    private void KeyboardButton_Clicked(object? sender, EventArgs e)
+    {
+        var handler = Alternet.UI.Keyboard.Handler;
+        if (handler.IsSoftKeyboardShowing(null))
+            handler.HideKeyboard(null);
+        else
+            handler.ShowKeyboard(null);
     }
 
     private void OpenLogFileButton_Clicked(object? sender, EventArgs e)

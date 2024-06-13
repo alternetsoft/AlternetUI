@@ -209,11 +209,6 @@ namespace Alternet.UI
         {
         }
 
-        public KeyStates GetKeyStatesFromSystem(Key key)
-        {
-            return KeyStates.None;
-        }
-
         public MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton)
         {
             return PlessMouse.GetButtonState(mouseButton);
@@ -227,6 +222,15 @@ namespace Alternet.UI
                 return PointD.MinValue;
 
             return ClientToScreen(position.Value, control);
+        }
+
+        public IKeyboardHandler CreateKeyboardHandler()
+        {
+#if WINDOWS
+            return new MauiKeyboardHandler();
+#else
+            return new PlessKeyboardHandler();
+#endif
         }
     }
 }
