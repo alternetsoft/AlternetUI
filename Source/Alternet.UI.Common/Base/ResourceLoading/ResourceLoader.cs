@@ -94,6 +94,13 @@ namespace Alternet.UI
             return DefaultStreamFromUrl(url);
         }
 
+        public static Stream? StreamFromUrlOrDefault(string url, Func<Stream?>? func = null)
+        {
+            var result = BaseObject.InsideTryCatch(() => StreamFromUrl(url));
+            result ??= func?.Invoke();
+            return result;
+        }
+
         /// <summary>
         /// Default implementation of <see cref="StreamFromUrl"/>.
         /// See <see cref="StreamFromUrl"/> for details.
