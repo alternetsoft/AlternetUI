@@ -300,5 +300,13 @@ namespace Alternet.UI
         {
             throw new NotImplementedException();
         }
+
+        public Graphics CreateMemoryCanvas(Image image)
+        {
+            if (image.Handler is not SkiaImageHandler skiaHandler)
+                throw new Exception("SkiaImageHandler is required in CreateMemoryCanvas(Image)");
+            SKCanvas canvas = new(skiaHandler.Bitmap);
+            return new SkiaGraphics(canvas);
+        }
     }
 }
