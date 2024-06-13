@@ -27,7 +27,7 @@ namespace Alternet.Drawing
         /// Represents a <see cref="RectI"/> structure with its properties left uninitialized.
         /// </summary>
         public static readonly RectI Empty;
-
+#pragma warning disable
         [FieldOffset(0)] private int x;
         [FieldOffset(4)] private int y;
         [FieldOffset(0)] private PointI location;
@@ -37,6 +37,7 @@ namespace Alternet.Drawing
         [FieldOffset(12)] private int height;
         [FieldOffset(8)] private SizeI size;
         [FieldOffset(8)] private ulong wh;
+#pragma warning restore
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.RectI'/> class with the

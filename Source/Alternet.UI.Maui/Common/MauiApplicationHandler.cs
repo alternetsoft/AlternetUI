@@ -55,28 +55,19 @@ namespace Alternet.UI
         public static PointD ClientToScreen(PointD position, Control control)
         {
             PointD absolutePos;
-            PointD windowPos;
 
             if (control.Handler is not MauiControlHandler handler
                 || handler.Container is null)
             {
                 absolutePos = PointD.MinValue;
-                windowPos = PointD.Empty;
             }
             else
             {
                 absolutePos = handler.Container.GetAbsolutePosition();
-
-                var window = handler.Container.Window;
-
-                if (window is null)
-                    windowPos = PointD.Empty;
-                else
-                    windowPos = PointD.Empty/*new(window.X, window.Y)*/;
             }
 
-            var x = absolutePos.X + /*windowPos.X +*/ position.X;
-            var y = absolutePos.Y + /*windowPos.Y +*/ position.Y;
+            var x = absolutePos.X + position.X;
+            var y = absolutePos.Y + position.Y;
 
             return (x, y);
         }
