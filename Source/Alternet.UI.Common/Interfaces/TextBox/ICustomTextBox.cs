@@ -97,19 +97,19 @@ namespace Alternet.UI
         T TextAsNumberOrDefault<T>(T defValue);
 
         /// <inheritdoc cref="CustomTextBox.ReportErrorEmptyText"/>
-        bool ReportErrorEmptyText();
+        bool ReportErrorEmptyText(Action<string>? errorEnumerator = null);
 
         /// <inheritdoc cref="CustomTextBox.ReportErrorMinMaxValue"/>
-        bool ReportErrorMinMaxValue(object? value);
+        bool ReportErrorMinMaxValue(object? value, Action<string>? errorEnumerator = null);
 
         /// <inheritdoc cref="CustomTextBox.ReportErrorBadNumber"/>
-        bool ReportErrorBadNumber();
+        bool ReportErrorBadNumber(Action<string>? errorEnumerator = null);
 
         /// <inheritdoc cref="CustomTextBox.ReportErrorMinMaxLength"/>
-        bool ReportErrorMinMaxLength();
+        bool ReportErrorMinMaxLength(Action<string>? errorEnumerator = null);
 
         /// <inheritdoc cref="CustomTextBox.RunDefaultValidation"/>
-        void RunDefaultValidation();
+        bool RunDefaultValidation(Action<string>? errorEnumerator = null);
 
         /// <inheritdoc cref="CustomTextBox.GetDataTypeCode"/>
         TypeCode GetDataTypeCode();
@@ -160,7 +160,10 @@ namespace Alternet.UI
         void SetTextAsObject(object? value);
 
         /// <inheritdoc cref="CustomTextBox.ReportValidatorError"/>
-        void ReportValidatorError(bool showError, string? errorText = null);
+        string? ReportValidatorError(
+            bool showError,
+            string? errorText = null,
+            Action<string>? errorEnumerator = null);
 
         /// <inheritdoc cref="CustomTextBox.GetKnownErrorText"/>
         string GetKnownErrorText(ValueValidatorKnownError kind);
