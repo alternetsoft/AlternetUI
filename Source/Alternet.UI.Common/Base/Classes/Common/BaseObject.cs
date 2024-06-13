@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// exception is logged and <c>false</c> is returned.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool InsideTryCatch(Func<bool> func)
+        public static T InsideTryCatch<T>(Func<T> func)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Alternet.UI
             catch (Exception e)
             {
                 LogUtils.LogException(e);
-                return false;
+                return default!;
             }
         }
 

@@ -5,8 +5,8 @@
 #include "DrawingContext.h"
 #include "TransformMatrix.h"
 #include "Region.h"
-#include "Font.h"
 #include "Image.h"
+#include "Font.h"
 #include "Pen.h"
 #include "Brush.h"
 #include "GraphicsPath.h"
@@ -109,6 +109,17 @@ ALTERNET_UI_API DrawingContext* DrawingContext_CreateMemoryDC_(double scaleFacto
     return MarshalExceptions<DrawingContext*>([&](){
     #endif
         return DrawingContext::CreateMemoryDC(scaleFactor);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
+ALTERNET_UI_API DrawingContext* DrawingContext_CreateMemoryDCFromImage_(Image* image)
+{
+    #if !defined(__WXMSW__)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return DrawingContext::CreateMemoryDCFromImage(image);
     #if !defined(__WXMSW__)
     });
     #endif

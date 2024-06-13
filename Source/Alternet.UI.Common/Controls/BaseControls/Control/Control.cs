@@ -235,7 +235,7 @@ namespace Alternet.UI
         {
             get
             {
-                var measureCanvas = GraphicsFactory.GetOrCreateMemoryDC(ScaleFactor);
+                var measureCanvas = GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
                 return measureCanvas;
             }
         }

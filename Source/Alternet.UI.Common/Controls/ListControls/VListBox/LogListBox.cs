@@ -277,6 +277,9 @@ namespace Alternet.UI
             item.Text = ConstructLogMessage(message);
             item.Kind = kind;
             Add(item);
+            SelectedIndex = Count - 1;
+            RefreshRow(Count - 1);
+            EnsureVisible(Count - 1);
             return item;
         }
 
@@ -303,7 +306,9 @@ namespace Alternet.UI
                 var item = (LogListBoxItem)LastItem!;
                 item.Text = ConstructLogMessage(message);
                 item.Kind = kind;
+                SelectedIndex = Count - 1;
                 RefreshRow(Count - 1);
+                EnsureVisible(Count - 1);
                 return item;
             }
             else

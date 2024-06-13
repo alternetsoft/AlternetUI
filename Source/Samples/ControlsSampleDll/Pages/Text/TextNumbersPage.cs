@@ -22,6 +22,8 @@ namespace ControlsSample
         private readonly CheckBox bellOnErrorCheckBox = new("Bell On Error");
         private readonly Label label = new("Try to enter invalid numbers");
 
+        private readonly ValueEditorByte twoDigitsEdit = new("Two digits", 15);
+
         public TextNumbersPage()
         {
             Margin = 10;
@@ -31,7 +33,10 @@ namespace ControlsSample
                 control.TextChanged += TextInputPage.ReportValueChanged;
             }
 
-            Group(shortEdit,byteEdit,doubleEdit,udoubleEdit,uint32HexEdit)
+            twoDigitsEdit.TextBox.MaxLength = 2;
+            twoDigitsEdit.TextBox.ErrorsChanged += TextInputPage.TextBox_ErrorsChanged;
+
+            Group(shortEdit, byteEdit, doubleEdit, udoubleEdit, uint32HexEdit, twoDigitsEdit)
                 .Margin(0, 5, 5, 5).Parent(this).InnerSuggestedWidth(200)
                 .Action<ValueEditorCustom>(BindTextChanged).LabelSuggestedWidthToMax();
 

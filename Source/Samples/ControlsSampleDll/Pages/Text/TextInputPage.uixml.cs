@@ -27,6 +27,7 @@ namespace ControlsSample
             InitializeComponent();
 
             textBox.EmptyTextHint = "Sample Hint";
+            textBox.ErrorsChanged += TextBox_ErrorsChanged;
             textBox.Text = "sample text";
             textBox.ValidatorReporter = textImage;
             textBox.TextMaxLength += TextBox_TextMaxLength;
@@ -58,6 +59,21 @@ namespace ControlsSample
             maxLengthEdit.TextBox.IsRequired = true;
 
             Idle += TextInputPage_Idle;
+        }
+
+        internal static void TextBox_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
+        {
+            if (sender is not TextBox textBox)
+                return;
+
+            App.LogSection(() =>
+            {
+                App.LogNameValue("HasErrors", textBox.HasErrors);
+                var errors = textBox.GetErrors();
+                var index = 1;
+                foreach (var error in errors)
+                    App.LogNameValue($"Error {index++}", error);
+            });
         }
 
         private void ShowProperties_Click(object? sender, EventArgs e)

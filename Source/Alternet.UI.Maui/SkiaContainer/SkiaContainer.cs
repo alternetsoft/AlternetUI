@@ -79,6 +79,11 @@ namespace Alternet.UI
             }
         }
 
+        internal void Log(object? s)
+        {
+            Alternet.UI.App.Log(s);
+        }
+
         protected override void LayoutChildren(double x, double y, double width, double height)
         {
             base.LayoutChildren(x, y, width, height);
@@ -125,10 +130,12 @@ namespace Alternet.UI
 
         private void Canvas_PaintSurface(object? sender, SKPaintSurfaceEventArgs e)
         {
+            var dc = e.Surface.Canvas;
+
+            /*dc.DrawRect(SKRect.Create(50, 50), Alternet.Drawing.Color.Red.AsFillPaint);*/
+
             if (control is null)
                 return;
-
-            var dc = e.Surface.Canvas;
 
             dc.Scale((float)control.ScaleFactor);
 
@@ -148,11 +155,6 @@ namespace Alternet.UI
             dc.Clear(control.BackColor);
 
             control.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
-        }
-
-        private void Log(object? s)
-        {
-            Alternet.UI.App.Log(s);
         }
 
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)

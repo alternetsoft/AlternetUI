@@ -283,7 +283,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public Graphics CreateMemoryDC(double scaleFactor)
+        public Graphics CreateMemoryCanvas(double scaleFactor)
         {
             SKBitmap bitmap = new();
             SKCanvas canvas = new(bitmap);
@@ -299,6 +299,14 @@ namespace Alternet.UI
         public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
         {
             throw new NotImplementedException();
+        }
+
+        public Graphics CreateMemoryCanvas(Image image)
+        {
+            if (image.Handler is not SkiaImageHandler skiaHandler)
+                throw new Exception("SkiaImageHandler is required in CreateMemoryCanvas(Image)");
+            SKCanvas canvas = new(skiaHandler.Bitmap);
+            return new SkiaGraphics(canvas);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Alternet.Drawing
 {
     public class SkiaRegionHandler : DisposableObject, IRegionHandler
     {
-        private SKRegion region;
+        private readonly SKRegion region;
 
         public SkiaRegionHandler()
         {
