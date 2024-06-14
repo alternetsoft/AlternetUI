@@ -246,17 +246,8 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void BeginIgnoreRecreate()
-        {
-        }
-
         public virtual void BeginInit()
         {
-        }
-
-        public virtual bool BeginRepositioningChildren()
-        {
-            return default;
         }
 
         public virtual void BeginUpdate()
@@ -281,28 +272,12 @@ namespace Alternet.UI
             return MauiApplicationHandler.ClientToScreen(point, Control);
         }
 
-        public virtual void DisableRecreate()
-        {
-        }
-
         public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
             return default;
         }
 
-        public virtual void EnableRecreate()
-        {
-        }
-
-        public virtual void EndIgnoreRecreate()
-        {
-        }
-
         public virtual void EndInit()
-        {
-        }
-
-        public virtual void EndRepositioningChildren()
         {
         }
 

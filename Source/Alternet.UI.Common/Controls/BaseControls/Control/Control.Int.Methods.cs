@@ -189,39 +189,11 @@ namespace Alternet.UI
             return preferredSize;
         }
 
-        internal bool BeginRepositioningChildren()
-        {
-            return Handler.BeginRepositioningChildren();
-        }
-
-        internal void EndRepositioningChildren()
-        {
-            Handler.EndRepositioningChildren();
-        }
-
         internal virtual void InvalidateCaret()
         {
             if (caretInfo is null || !caretInfo.Visible)
                 return;
             RefreshRects(caretInfo.Region);
-        }
-
-        internal void DoInsideRepositioningChildren(Action action)
-        {
-            var repositioning = BeginRepositioningChildren();
-            if (repositioning)
-            {
-                try
-                {
-                    action();
-                }
-                finally
-                {
-                    EndRepositioningChildren();
-                }
-            }
-            else
-                action();
         }
 
         public class AlignedPosition

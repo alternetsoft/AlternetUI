@@ -1548,22 +1548,6 @@ namespace Alternet.UI
         bool MemberOfGroup(int groupIndex);
 
         /// <summary>
-        /// Notifies that no more native control recreates are allowed.
-        /// </summary>
-        /// <remarks>
-        /// When some properties are assigned, native control could be recreated.
-        /// Sometimes it is not desired.
-        /// This method sets a restriction on a control recreate, so debug message will be logged.
-        /// </remarks>
-        void DisableRecreate();
-
-        /// <summary>
-        /// Allows control recreate which was previously disabled using <see cref="DisableRecreate"/>.
-        /// </summary>
-        /// See more details in <see cref="DisableRecreate"/>.
-        void EnableRecreate();
-
-        /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="SuspendLayout"/>
         /// and <see cref="ResumeLayout"/>.
         /// </summary>

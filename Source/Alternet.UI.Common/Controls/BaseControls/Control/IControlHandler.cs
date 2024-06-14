@@ -167,10 +167,6 @@ namespace Alternet.UI
 
         void ReleaseMouseCapture();
 
-        void DisableRecreate();
-
-        void EnableRecreate();
-
         Graphics CreateDrawingContext();
 
         PointD ScreenToClient(PointD point);
@@ -227,10 +223,6 @@ namespace Alternet.UI
         Color GetDefaultAttributesFgColor();
 
         Font? GetDefaultAttributesFont();
-
-        bool BeginRepositioningChildren();
-
-        void EndRepositioningChildren();
 
         void AlwaysShowScrollbars(bool hflag = true, bool vflag = true);
 
