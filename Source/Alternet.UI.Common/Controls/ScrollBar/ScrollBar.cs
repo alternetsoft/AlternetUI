@@ -34,6 +34,8 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class ScrollBar : Control
     {
+        private static Metrics? defaultMetrics;
+
         private int minimum;
         private int maximum = 100;
         private int smallChange = 1;
@@ -294,6 +296,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets metrix used to paint non-system scrollbars.
+        /// </summary>
+        public static Metrics DefaultMetrics
+        {
+            get
+            {
+                return defaultMetrics ??= new Metrics();
+            }
+
+            set
+            {
+                defaultMetrics = value;
+            }
+        }
+
+        /// <summary>
         /// Returns a string that represents the <see cref="ScrollBar" /> control.
         /// </summary>
         /// <returns>A string that represents the current <see cref="ScrollBar" />.</returns>
@@ -417,6 +435,66 @@ namespace Alternet.UI
         {
             base.UnbindHandlerEvents();
             Handler.Scroll = null;
+        }
+
+        public struct Metrics
+        {
+            /// <summary>
+            /// Height of horizontal scrollbar in pixels.
+            /// </summary>
+            public int HScrollY;
+
+            /// <summary>
+            /// Width of vertical scrollbar in pixels.
+            /// </summary>
+            public int VScrollX;
+
+            /// <summary>
+            /// Width of arrow bitmap on a vertical scrollbar.
+            /// </summary>
+            public int VScrollArrowX;
+
+            /// <summary>
+            /// Height of arrow bitmap on a vertical scrollbar.
+            /// </summary>
+            public int VScrollArrowY;
+
+            /// <summary>
+            /// Height of vertical scrollbar thumb.
+            /// </summary>
+            public int VThumbY;
+
+            /// <summary>
+            /// Width of arrow bitmap on horizontal scrollbar.
+            /// </summary>
+            public int HScrollArrowX;
+
+            /// <summary>
+            /// Height of arrow bitmap on horizontal scrollbar.
+            /// </summary>
+            public int HScrollArrowY;
+
+            /// <summary>
+            /// Width of horizontal scrollbar thumb.
+            /// </summary>
+            public int HThumbX;
+
+            public Metrics()
+            {
+                Reset();
+            }
+
+            public void Reset()
+            {
+                HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY);
+                VScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX);
+                VScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowX);
+                VScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowY);
+                VThumbY = SystemSettings.GetMetric(SystemSettingsMetric.VThumbY);
+                HScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowX);
+                HScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowY);
+                HThumbX = SystemSettings.GetMetric(SystemSettingsMetric.HThumbX);             
+            }
         }
     }
 }
