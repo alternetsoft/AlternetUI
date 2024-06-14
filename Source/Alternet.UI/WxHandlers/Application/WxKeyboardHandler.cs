@@ -13,17 +13,17 @@ namespace Alternet.UI
             return WxApplicationHandler.NativeKeyboard.GetKeyState(key);
         }
 
-        public virtual bool HideKeyboard(Control control)
+        public virtual bool HideKeyboard(Control? control)
         {
             return false;
         }
 
-        public virtual bool IsSoftKeyboardShowing(Control control)
+        public virtual bool IsSoftKeyboardShowing(Control? control)
         {
             return false;
         }
 
-        public virtual bool ShowKeyboard(Control control)
+        public virtual bool ShowKeyboard(Control? control)
         {
             return false;
         }
