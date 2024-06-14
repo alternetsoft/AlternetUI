@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,12 +16,12 @@ namespace Alternet.UI
     /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel"/>
     /// in order to implement your own custom labeled control.</remarks>
     [ControlCategory("Hidden")]
-    public abstract partial class ControlAndLabel : Control, IControlAndLabel
+    public abstract partial class ControlAndLabel : Control, IControlAndLabel, INotifyDataErrorInfo
     {
         /// <summary>
         /// Gets or sets default distance between control and label.
         /// </summary>
-        public static double DefaultControlLabelDistance = 5;
+        public static Coord DefaultControlLabelDistance = 5;
 
         /// <summary>
         /// Gets or sets function that creates default labels for the <see cref="ControlAndLabel"/>
@@ -40,7 +41,6 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
         /// </summary>
         public ControlAndLabel()
-            : base()
         {
             label = CreateLabel();
             label.Margin = new Thickness(0, 0, DefaultControlLabelDistance, 0);
@@ -53,12 +53,17 @@ namespace Alternet.UI
             mainControl.Parent = this;
             CustomTextBox.InitErrorPicture(errorPicture);
             errorPicture.Parent = this;
+
+            if (MainControl is INotifyDataErrorInfo notifyDataErrorInfo)
+            {
+                notifyDataErrorInfo.ErrorsChanged += (s, e) => OnErrorsChanged(e);
+            }
         }
 
         /// <summary>
         /// Gets or sets <see cref="Control.SuggestedWidth"/> property of the main child control.
         /// </summary>
-        public double LabelSuggestedWidth
+        public virtual Coord LabelSuggestedWidth
         {
             get => Label.SuggestedWidth;
             set => Label.SuggestedWidth = value;
@@ -67,7 +72,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="Control.SuggestedWidth"/> property of the main child control.
         /// </summary>
-        public double InnerSuggestedWidth
+        public virtual Coord InnerSuggestedWidth
         {
             get => MainControl.SuggestedWidth;
             set => MainControl.SuggestedWidth = value;
@@ -76,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="Control.SuggestedHeight"/> property of the main child control.
         /// </summary>
-        public double InnerSuggestedHeight
+        public virtual Coord InnerSuggestedHeight
         {
             get => MainControl.SuggestedHeight;
             set => MainControl.SuggestedHeight = value;
@@ -85,7 +90,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="Control.SuggestedSize"/> property of the main child control.
         /// </summary>
-        public SizeD InnerSuggestedSize
+        public virtual SizeD InnerSuggestedSize
         {
             get => MainControl.SuggestedSize;
             set => MainControl.SuggestedSize = value;
@@ -100,7 +105,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets visibility of the attached <see cref="Label"/> control.
         /// </summary>
-        public bool LabelVisible
+        public virtual bool LabelVisible
         {
             get => Label.Visible;
             set => Label.Visible = value;
@@ -110,7 +115,7 @@ namespace Alternet.UI
         /// Gets or sets visibility of the attached <see cref="PictureBox"/> control which
         /// displays validation error information.
         /// </summary>
-        public bool ErrorPictureVisible
+        public virtual bool ErrorPictureVisible
         {
             get => ErrorPicture.Visible;
             set => ErrorPicture.Visible = value;
@@ -138,9 +143,21 @@ namespace Alternet.UI
         [Browsable(false)]
         public Control MainControl => mainControl;
 
+        public virtual bool HasErrors
+        {
+            get => (MainControl as INotifyDataErrorInfo)?.HasErrors ?? false;
+        }
+
         Control IControlAndLabel.Label => Label;
 
         Control IControlAndLabel.MainControl => MainControl;
+
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        public virtual IEnumerable GetErrors(string? propertyName)
+        {
+            return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName) ?? Array.Empty<string>();
+        }
 
         /// <summary>
         /// Creates main child control.
@@ -157,5 +174,10 @@ namespace Alternet.UI
         /// By default <see cref="Label"/> is created.
         /// </remarks>
         protected virtual Control CreateLabel() => CreateDefaultLabel();
+
+        protected virtual void OnErrorsChanged(DataErrorsChangedEventArgs e)
+        {
+            ErrorsChanged?.Invoke(this, e);
+        }
     }
 }
