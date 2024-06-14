@@ -590,7 +590,7 @@ namespace Alternet.UI
                             RaiseMouseEnter();
                             break;
                         case TouchAction.Pressed:
-                            Mouse.ReportMouseDown(
+                            Control.BubbleMouseDown(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
@@ -598,14 +598,14 @@ namespace Alternet.UI
                                 out handled);
                             break;
                         case TouchAction.Moved:
-                            Mouse.ReportMouseMove(
+                            Control.BubbleMouseMove(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.Location,
                                 out handled);
                             break;
                         case TouchAction.Released:
-                            Mouse.ReportMouseUp(
+                            Control.BubbleMouseUp(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
@@ -618,7 +618,7 @@ namespace Alternet.UI
                             RaiseMouseLeave();
                             break;
                         case TouchAction.WheelChanged:
-                            Mouse.ReportMouseWheel(
+                            Control.BubbleMouseWheel(
                                         this,
                                         DateTime.Now.Ticks,
                                         e.WheelDelta,
