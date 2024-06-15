@@ -34,13 +34,14 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class ScrollBar : Control
     {
-        private static Metrics? defaultMetrics;
+        private static MetricsInfo? defaultMetrics;
 
         private int minimum;
         private int maximum = 100;
         private int smallChange = 1;
         private int largeChange = 10;
         private int value;
+        private MetricsInfo? metrics;
 
         /// <summary>
         /// Occurs when the <see cref="Value" /> property is changed, either
@@ -53,6 +54,22 @@ namespace Alternet.UI
         /// Occurs when the <see cref="IsVertical" /> property is changed.
         /// </summary>
         public event EventHandler? IsVerticalChanged;
+
+        /// <summary>
+        /// Gets or sets metrix used to paint non-system scrollbars.
+        /// </summary>
+        public static MetricsInfo DefaultMetrics
+        {
+            get
+            {
+                return defaultMetrics ??= new MetricsInfo();
+            }
+
+            set
+            {
+                defaultMetrics = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value to be added to or subtracted from the
@@ -295,19 +312,18 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
-        /// <summary>
-        /// Gets or sets metrix used to paint non-system scrollbars.
-        /// </summary>
-        public static Metrics DefaultMetrics
+        [Browsable(false)]
+        public MetricsInfo Metrics
         {
             get
             {
-                return defaultMetrics ??= new Metrics();
+                return metrics ?? DefaultMetrics;
             }
 
             set
             {
-                defaultMetrics = value;
+                metrics = value;
+                PerformLayout();
             }
         }
 
@@ -437,7 +453,7 @@ namespace Alternet.UI
             Handler.Scroll = null;
         }
 
-        public struct Metrics
+        public struct MetricsInfo
         {
             /// <summary>
             /// Height of horizontal scrollbar in pixels.
@@ -479,7 +495,7 @@ namespace Alternet.UI
             /// </summary>
             public int HThumbX;
 
-            public Metrics()
+            public MetricsInfo()
             {
                 Reset();
             }
