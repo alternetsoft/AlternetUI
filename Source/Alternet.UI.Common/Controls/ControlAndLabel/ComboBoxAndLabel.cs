@@ -43,21 +43,21 @@ namespace Alternet.UI
         public ComboBox ComboBox => (ComboBox)base.MainControl;
 
         /// <inheritdoc cref="ComboBox.SelectedItem"/>
-        public object? SelectedItem
+        public virtual object? SelectedItem
         {
             get => ComboBox.SelectedItem;
             set => ComboBox.SelectedItem = value;
         }
 
         /// <inheritdoc cref="ComboBox.IsEditable"/>
-        public bool IsEditable
+        public virtual bool IsEditable
         {
             get => ComboBox.IsEditable;
             set => ComboBox.IsEditable = value;
         }
 
         /// <inheritdoc cref="ComboBox.SelectedIndex"/>
-        public int? SelectedIndex
+        public virtual int? SelectedIndex
         {
             get => ComboBox.SelectedIndex;
             set => ComboBox.SelectedIndex = value;
@@ -65,7 +65,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="ListControl.Items"/>
         [Content]
-        public IListControlItems<object> Items
+        public virtual IListControlItems<object> Items
         {
             get => ComboBox.Items;
             set => ComboBox.Items = value;

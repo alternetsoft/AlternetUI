@@ -17,11 +17,24 @@
         </ListView>
         <StackLayout x:Name="panel"
                            Grid.Row="1"/>
-        <Button Grid.Row="2"
+
+        <HorizontalStackLayout x:Name="buttonPanel"
+                           Grid.Row="2">
+            <Entry Text="" x:Name="entryToFocus"></Entry>
+            <Button
                 Margin="0,20"
                 FontSize="12"
                 Text="OpenLogFile"
                 x:Name="openLogFileButton"
                 HorizontalOptions="Center" />
+            <Button
+                Margin="0,20"
+                FontSize="12"
+                Text="Keyboard"
+                x:Name="keyboardButton"
+                HorizontalOptions="Center" />
+        </HorizontalStackLayout>
+
+
     </Grid>
 </ContentPage>

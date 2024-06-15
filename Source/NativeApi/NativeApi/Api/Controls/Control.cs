@@ -144,6 +144,9 @@ namespace NativeApi.Api
         public void Invalidate() { }
         public void Update() { }
         public virtual SizeD GetPreferredSize(SizeD availableSize) => default;
+
+        public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively) { }
+
         public DragDropEffects DoDragDrop(UnmanagedDataObject data,
             DragDropEffects allowedEffects) => default;
         public DrawingContext OpenPaintDrawingContext() => default;

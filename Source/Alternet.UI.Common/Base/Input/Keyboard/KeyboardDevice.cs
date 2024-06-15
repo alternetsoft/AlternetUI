@@ -159,7 +159,7 @@ namespace Alternet.UI
         /// </returns>
         protected virtual KeyStates GetKeyStatesFromSystem(Key key)
         {
-            return App.Handler.GetKeyStatesFromSystem(key);
+            return Keyboard.Handler.GetKeyStatesFromSystem(key);
         }
 
         /// <summary>

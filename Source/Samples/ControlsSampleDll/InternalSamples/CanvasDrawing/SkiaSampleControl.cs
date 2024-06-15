@@ -69,6 +69,8 @@ namespace Alternet.UI
             dc.SetPixel(5, 0, Color.Red);
             dc.SetPixel(160, 0, Color.Red);
             dc.SetPixel(50, 150, Color.Red);
+
+            dc.DrawRectangle(Color.Red.AsPen, e.ClipRectangle);
         }
     }
 }

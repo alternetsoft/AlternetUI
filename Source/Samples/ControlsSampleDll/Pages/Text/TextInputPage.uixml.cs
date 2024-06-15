@@ -27,7 +27,6 @@ namespace ControlsSample
             InitializeComponent();
 
             textBox.EmptyTextHint = "Sample Hint";
-            textBox.ErrorsChanged += TextBox_ErrorsChanged;
             textBox.Text = "sample text";
             textBox.ValidatorReporter = textImage;
             textBox.TextMaxLength += TextBox_TextMaxLength;
@@ -35,6 +34,8 @@ namespace ControlsSample
             textBox.Options |= TextBoxOptions.DefaultValidation;
             textBox.TextChanged += ReportValueChanged;
             TextBox.InitErrorPicture(textImage);
+
+            ErrorsChanged += TextBox_ErrorsChanged;
 
             // ==== Other initializations
 
@@ -63,13 +64,13 @@ namespace ControlsSample
 
         internal static void TextBox_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
         {
-            if (sender is not TextBox textBox)
+            if (sender is not Control control)
                 return;
 
             App.LogSection(() =>
             {
-                App.LogNameValue("HasErrors", textBox.HasErrors);
-                var errors = textBox.GetErrors();
+                App.LogNameValue("HasErrors", control.HasErrors);
+                var errors = control.GetErrors(null);
                 var index = 1;
                 foreach (var error in errors)
                     App.LogNameValue($"Error {index++}", error);

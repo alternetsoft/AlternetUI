@@ -30,6 +30,13 @@ namespace Alternet.UI
             return (mouseLocation, PlessMouse.TestMouseSize);
         }
 
+        public static PointD UpdateMousePosition(PointD? position, Control control)
+        {
+            position ??= Mouse.GetPosition(control);
+            PlessMouse.LastMousePosition = (position, control);
+            return position.Value;
+        }
+
         public static void DrawTestMouseRect(Control control, Graphics dc)
         {
             if (control != Control.HoveredControl)

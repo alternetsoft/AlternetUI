@@ -70,7 +70,7 @@ namespace Alternet.UI
             richTextBox.ShowPosition(newPosition);
             if (textBox is IFocusable focusable)
             {
-                if (focusable.CanAcceptFocus)
+                if (focusable.CanFocus)
                     focusable.SetFocus();
             }
 

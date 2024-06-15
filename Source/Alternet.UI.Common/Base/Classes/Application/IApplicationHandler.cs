@@ -11,17 +11,7 @@ namespace Alternet.UI
 {
     public interface IApplicationHandler : IDisposable
     {
-        /// <summary>
-        /// Gets the current state of the specified key from the device
-        /// from the underlying system
-        /// </summary>
-        /// <param name="key">
-        /// Key to get the state of.
-        /// </param>
-        /// <returns>
-        /// The state of the specified key.
-        /// </returns>
-        KeyStates GetKeyStatesFromSystem(Key key);
+        IKeyboardHandler CreateKeyboardHandler();
 
         /// <summary>
         /// Gets the current state of the specified button from

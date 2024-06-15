@@ -21,9 +21,11 @@ namespace Alternet.Drawing
         private readonly SKAlphaType alphaType;
         private readonly bool isOk;
         private readonly Image image;
+        private readonly ImageLockMode lockMode;
 
         public SkiaSurfaceOnBitmap(Image image, ImageLockMode lockMode)
         {
+            this.lockMode = lockMode;
             this.image = image;
 
             width = image.Width;
@@ -79,6 +81,8 @@ namespace Alternet.Drawing
         public SKBitmap? Bitmap => null;
 
         public SKSurface? Surface => surface;
+
+        public ImageLockMode LockMode => lockMode;
 
         public SKCanvas Canvas => canvas;
 

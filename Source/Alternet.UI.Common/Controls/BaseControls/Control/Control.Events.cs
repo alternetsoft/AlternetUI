@@ -469,5 +469,10 @@ namespace Alternet.UI
         /// </summary>
         [Category("Behavior")]
         public event EventHandler? SystemColorsChanged;
+
+        /// <summary>
+        /// Occurs when the validation errors have changed for this control or it's child controls.
+        /// </summary>
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
     }
 }

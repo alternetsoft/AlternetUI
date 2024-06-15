@@ -836,6 +836,17 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     #endif
 }
 
+ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->BeginUpdate();
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
 {
     #if !defined(__WXMSW__)
@@ -1320,6 +1331,17 @@ ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD availableS
     #endif
 }
 
+ALTERNET_UI_API void Control_SetFocusFlags_(Control* obj, c_bool canSelect, c_bool tabStop, c_bool acceptsFocusRecursively)
+{
+    #if !defined(__WXMSW__)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
+    #if !defined(__WXMSW__)
+    });
+    #endif
+}
+
 ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataObject* data, DragDropEffects allowedEffects)
 {
     #if !defined(__WXMSW__)
@@ -1348,17 +1370,6 @@ ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
     return MarshalExceptions<DrawingContext*>([&](){
     #endif
         return obj->OpenClientDrawingContext();
-    #if !defined(__WXMSW__)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
-{
-    #if !defined(__WXMSW__)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->BeginUpdate();
     #if !defined(__WXMSW__)
     });
     #endif

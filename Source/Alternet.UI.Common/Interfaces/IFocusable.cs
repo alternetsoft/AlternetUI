@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// If this property returns true, it means that calling <see cref="SetFocus"/> will put
         /// focus either to this control or one of its children.
         /// </remarks>
-        bool CanAcceptFocus { get; }
+        bool CanFocus { get; }
 
         /// <summary>
         /// Sets input focus to the control.

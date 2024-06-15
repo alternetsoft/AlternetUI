@@ -8,6 +8,17 @@ namespace Alternet.UI
     public static class Keyboard
     {
         private static KeyboardDevice keyboardDevice = KeyboardDevice.Default;
+        private static IKeyboardHandler? handler;
+
+        /// <summary>
+        /// Gets or sets handler.
+        /// </summary>
+        public static IKeyboardHandler Handler
+        {
+            get => handler ??= App.Handler.CreateKeyboardHandler();
+
+            set => handler = value;
+        }
 
         /// <summary>
         ///     The primary keyboard device.
@@ -77,48 +88,6 @@ namespace Alternet.UI
         public static KeyStates GetKeyStates(Key key)
         {
             return Keyboard.PrimaryDevice.GetKeyStates(key);
-        }
-
-        public static void ReportKeyDown(Key key, bool isRepeat, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
-            control.BubbleKeyDown(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
-        public static void ReportKeyUp(Key key, bool isRepeat, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
-            control.BubbleKeyUp(eventArgs);
-            handled = eventArgs.Handled;
-        }
-
-        public static void ReportTextInput(char keyChar, out bool handled)
-        {
-            var control = Control.GetFocusedControl();
-            if (control is null)
-            {
-                handled = false;
-                return;
-            }
-
-            var eventArgs = new KeyPressEventArgs(control, keyChar, Keyboard.PrimaryDevice);
-            control.BubbleKeyPress(eventArgs);
-            handled = eventArgs.Handled;
         }
 
         // Check for Valid enum, as any int can be casted to the enum.

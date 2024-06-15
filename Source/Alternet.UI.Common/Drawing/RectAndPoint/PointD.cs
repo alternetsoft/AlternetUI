@@ -175,11 +175,24 @@ namespace Alternet.Drawing
         public static PointD operator +(PointD pt, SizeI sz) => Add(pt, sz);
 
         /// <summary>
+        /// Translates a <see cref='PointD'/> by a given <see cref='PointD'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PointD operator +(PointD pt, PointD pt2) => Add(pt, pt2);
+
+        /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
         /// <see cref='Drawing.SizeI'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointD operator -(PointD pt, SizeI sz) => Subtract(pt, sz);
+
+        /// <summary>
+        /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
+        /// <see cref='Drawing.PointD'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PointD operator -(PointD pt, PointD pt2) => Subtract(pt, pt2);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.SizeD'/>.
@@ -226,12 +239,24 @@ namespace Alternet.Drawing
         public static PointD Add(PointD pt, SizeI sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
+        /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.PointD'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PointD Add(PointD pt, PointD pt2) => new(pt.X + pt2.X, pt.Y + pt2.Y);
+
+        /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
         /// <see cref='Drawing.SizeI'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD Subtract(PointD pt, SizeI sz) =>
-            new(pt.X - sz.Width, pt.Y - sz.Height);
+        public static PointD Subtract(PointD pt, SizeI sz) => new(pt.X - sz.Width, pt.Y - sz.Height);
+
+        /// <summary>
+        /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
+        /// <see cref='Drawing.PointD'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static PointD Subtract(PointD pt, PointD pt2) => new(pt.X - pt2.X, pt.Y - pt2.Y);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.SizeD'/>.

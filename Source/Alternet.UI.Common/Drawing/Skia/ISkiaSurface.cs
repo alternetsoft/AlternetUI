@@ -10,6 +10,8 @@ namespace Alternet.Drawing
 {
     public interface ISkiaSurface : IDisposable
     {
+        ImageLockMode LockMode { get; }
+
         int Width { get; }
 
         int Height { get; }

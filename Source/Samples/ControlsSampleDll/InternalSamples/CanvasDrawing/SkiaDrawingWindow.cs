@@ -139,47 +139,24 @@ namespace ControlsSample
 
         private void PaintOnCanvas()
         {
-            RectD rect = (0, 0, control.Width, control.Height);
+            RectD rectDip = (0, 0, control.Width, control.Height);
+            RectI rect = rectDip.PixelFromDip();
 
-            SKBitmap bitmap = new((int)rect.Width, (int)rect.Height);
+            SKBitmap bitmap = new(rect.Width, rect.Height);
 
             SKCanvas canvas = new(bitmap);
+            canvas.Scale((float)control.ScaleFactor);
 
-            canvas.DrawRect(rect, Brushes.White);
+            canvas.Clear(Color.White);
 
             SkiaGraphics graphics = new(canvas);
 
-            PaintEventArgs e = new(graphics, rect);
+            PaintEventArgs e = new(graphics, rectDip);
 
             control.RaisePaint(e);
 
             pictureBox.Image = (Image)bitmap;
         }
-
-        /*internal void DrawTextOnSkia()
-        {
-            RectD rect = (0, 0, 800, 600);
-
-            SKBitmap bitmap = new((int)rect.Width, (int)rect.Height);
-
-            SKCanvas canvas = new(bitmap);
-
-            canvas.DrawRect(rect, Brushes.White);
-
-            PointD pt = new(20, 150);
-            PointD pt2 = new(300, 150);
-
-            var font = SkiaSampleControl.SampleFont;
-
-            canvas.DrawText("He|l lo", pt, font, Color.Black, Color.LightGreen);
-
-            canvas.DrawText("; hello ", pt2, font, Color.Red, Color.LightGreen);
-
-            canvas.DrawPoint(pt, Color.Red);
-            canvas.DrawPoint(pt2, Color.Red);
-
-            pictureBox.Image = (Image)bitmap;
-        }*/
 
         private void DrawBeziersPoint(SKCanvas dc)
         {

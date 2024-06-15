@@ -28,8 +28,7 @@ namespace Alternet.UI
         {
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, 24);
-            TabStop = false;
-            AcceptsFocusAll = false;
+            IsGraphicControl = true;
         }
 
         /// <summary>
@@ -772,7 +771,7 @@ namespace Alternet.UI
         {
             PictureBox picture = new()
             {
-                AcceptsFocusAll = false,
+                IsGraphicControl = true,
                 ImageStretch = false,
                 ImageSet = image,
                 ToolTip = toolTip ?? string.Empty,

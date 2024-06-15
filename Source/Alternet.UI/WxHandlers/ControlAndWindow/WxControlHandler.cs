@@ -878,5 +878,10 @@ namespace Alternet.UI
             nativeControl.Destroyed -= NativeControl_Destroyed;
             DisposeNativeControlCore(nativeControl);
         }
+
+        public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
+        {
+            NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
+        }
     }
 }

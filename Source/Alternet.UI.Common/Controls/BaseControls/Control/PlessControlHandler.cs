@@ -10,369 +10,333 @@ namespace Alternet.UI
 {
     public class PlessControlHandler : BaseControlHandler, IControlHandler
     {
-        public Action<DragEventArgs>? DragDrop { get; set; }
+        Action<DragEventArgs>? IControlHandler.DragDrop { get; set; }
         
-        public Action<DragEventArgs>? DragOver { get; set; }
+        Action<DragEventArgs>? IControlHandler.DragOver { get; set; }
         
-        public Action<DragEventArgs>? DragEnter { get; set; }
+        Action<DragEventArgs>? IControlHandler.DragEnter { get; set; }
         
-        public Action? Idle { get; set; }
+        Action? IControlHandler.Idle { get; set; }
 
-        public virtual string Text { get; set; } = string.Empty;
+        public string Text { get; set; } = string.Empty;
 
-        public Action? TextChanged { get; set; }
+        Action? IControlHandler.TextChanged { get; set; }
 
-        public Action? Paint { get; set; }
+        Action? IControlHandler.Paint { get; set; }
         
-        public Action? MouseEnter { get; set; }
+        Action? IControlHandler.MouseEnter { get; set; }
         
-        public Action? MouseLeave { get; set; }
+        Action? IControlHandler.MouseLeave { get; set; }
         
-        public Action? MouseClick { get; set; }
+        Action? IControlHandler.MouseClick { get; set; }
         
-        public Action? VisibleChanged { get; set; }
+        Action? IControlHandler.VisibleChanged { get; set; }
         
-        public Action? MouseCaptureLost { get; set; }
+        Action? IControlHandler.MouseCaptureLost { get; set; }
         
-        public Action? GotFocus { get; set; }
+        Action? IControlHandler.GotFocus { get; set; }
         
-        public Action? LostFocus { get; set; }
+        Action? IControlHandler.LostFocus { get; set; }
         
-        public Action? DragLeave { get; set; }
+        Action? IControlHandler.DragLeave { get; set; }
         
-        public Action? VerticalScrollBarValueChanged { get; set; }
+        Action? IControlHandler.VerticalScrollBarValueChanged { get; set; }
         
-        public Action? HorizontalScrollBarValueChanged { get; set; }
+        Action? IControlHandler.HorizontalScrollBarValueChanged { get; set; }
         
-        public Action? SizeChanged { get; set; }
+        Action? IControlHandler.SizeChanged { get; set; }
 
-        public Action? LocationChanged { get; set; }
+        Action? IControlHandler.LocationChanged { get; set; }
 
-        public Action? Activated { get; set; }
+        Action? IControlHandler.Activated { get; set; }
         
-        public Action? Deactivated { get; set; }
+        Action? IControlHandler.Deactivated { get; set; }
         
-        public Action? HandleCreated { get; set; }
+        Action? IControlHandler.HandleCreated { get; set; }
         
-        public Action? HandleDestroyed { get; set; }
+        Action? IControlHandler.HandleDestroyed { get; set; }
         
-        public virtual bool WantChars { get; set; }
+        bool IControlHandler.WantChars { get; set; }
         
-        public virtual bool ShowHorzScrollBar { get; set; }
+        bool IControlHandler.ShowHorzScrollBar { get; set; }
         
-        public virtual bool ShowVertScrollBar { get; set; }
+        bool IControlHandler.ShowVertScrollBar { get; set; }
         
-        public virtual bool ScrollBarAlwaysVisible { get; set; }
+        bool IControlHandler.ScrollBarAlwaysVisible { get; set; }
         
-        public virtual LangDirection LangDirection { get; set; }
+        LangDirection IControlHandler.LangDirection { get; set; }
         
-        public virtual ControlBorderStyle BorderStyle { get; set; }
+        ControlBorderStyle IControlHandler.BorderStyle { get; set; }
         
-        public virtual bool IsNativeControlCreated { get; set; }
+        bool IControlHandler.IsNativeControlCreated { get; }
         
-        public virtual bool IsFocused
+        bool IControlHandler.IsFocused
         {
             get => false;
-
-            set
-            {
-
-            }
         }
         
-        public virtual Thickness IntrinsicLayoutPadding { get; set; }
+        Thickness IControlHandler.IntrinsicLayoutPadding { get; }
         
-        public virtual Thickness IntrinsicPreferredSizePadding { get; set; }
+        Thickness IControlHandler.IntrinsicPreferredSizePadding { get; }
         
-        public virtual bool IsScrollable { get; set; }
+        bool IControlHandler.IsScrollable { get; set; }
         
-        public virtual RectD Bounds { get; set; }
+        public RectD Bounds { get; set; }
 
-        public virtual RectD EventBounds { get; set; }
+        RectD IControlHandler.EventBounds { get; }
 
-        public virtual bool Visible { get; set; }
+        bool IControlHandler.Visible { get; set; }
         
-        public virtual bool UserPaint { get; set; }
+        bool IControlHandler.UserPaint { get; set; }
         
-        public virtual SizeD MinimumSize { get; set; }
+        SizeD IControlHandler.MinimumSize { get; set; }
         
-        public virtual SizeD MaximumSize { get; set; }
+        SizeD IControlHandler.MaximumSize { get; set; }
 
-        public virtual Color BackgroundColor
+        Color IControlHandler.BackgroundColor
         {
             get;
             set;
         } = SystemColors.Window;
 
 
-        public virtual Color ForegroundColor
+        Color IControlHandler.ForegroundColor
         {
             get;
 
             set;
         } = SystemColors.WindowText;
 
-        public virtual Font? Font { get; set; }
+        Font? IControlHandler.Font { get; set; }
         
-        public virtual bool IsBold { get; set; }
+        bool IControlHandler.IsBold { get; set; }
         
-        public virtual bool TabStop { get; set; }
+        bool IControlHandler.AllowDrop { get; set; }
         
-        public virtual bool AllowDrop { get; set; }
+        ControlBackgroundStyle IControlHandler.BackgroundStyle { get; set; }
         
-        public virtual bool AcceptsFocus { get; set; }
+        bool IControlHandler.ProcessIdle { get; set; }
         
-        public virtual ControlBackgroundStyle BackgroundStyle { get; set; }
+        bool IControlHandler.BindScrollEvents { get; set; }
         
-        public virtual bool AcceptsFocusFromKeyboard { get; set; }
-        
-        public virtual bool AcceptsFocusRecursively { get; set; }
-        
-        public virtual bool AcceptsFocusAll { get; set; }
-        
-        public virtual bool ProcessIdle { get; set; }
-        
-        public virtual bool BindScrollEvents { get; set; }
-        
-        public virtual SizeD ClientSize
+        public SizeD ClientSize
         {
             get => Bounds.Size;
             set => Bounds = (Bounds.Location, value);
         }
         
-        public virtual bool CanAcceptFocus { get; }
+        bool IControlHandler.ProcessUIUpdates { get; set; }
         
-        public virtual bool ProcessUIUpdates { get; set; }
+        bool IControlHandler.IsMouseCaptured { get; }
         
-        public virtual bool IsMouseCaptured { get; set; }
+        bool IControlHandler.IsHandleCreated { get; }
         
-        public virtual bool IsHandleCreated { get; set; }
+        Action? IControlHandler.SystemColorsChanged { get; set; }
         
-        public virtual bool IsFocusable { get; set; }
-        public Action? SystemColorsChanged { get; set; }
-        public SizeI EventOldDpi { get; }
-        public SizeI EventNewDpi { get; }
-        public Action? DpiChanged { get; set; }
+        SizeI IControlHandler.EventOldDpi { get; }
+        
+        SizeI IControlHandler.EventNewDpi { get; }
+        
+        Action? IControlHandler.DpiChanged { get; set; }
 
-        public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
+        void IControlHandler.AlwaysShowScrollbars(bool hflag, bool vflag)
         {
         }
 
-        public virtual void BeginIgnoreRecreate()
+        void IControlHandler.BeginInit()
         {
         }
 
-        public virtual void BeginInit()
+        void IControlHandler.BeginUpdate()
         {
         }
 
-        public virtual bool BeginRepositioningChildren()
-        {
-            return default;
-        }
-
-        public virtual void BeginUpdate()
+        void IControlHandler.CaptureMouse()
         {
         }
 
-        public virtual void CaptureMouse()
+        void IControlHandler.CenterOnParent(GenericOrientation direction)
         {
         }
 
-        public virtual void CenterOnParent(GenericOrientation direction)
-        {
-        }
-
-        public virtual PointD ClientToScreen(PointD point)
+        PointD IControlHandler.ClientToScreen(PointD point)
         {
             return point;
         }
 
-        public virtual Graphics CreateDrawingContext()
+        Graphics IControlHandler.CreateDrawingContext()
         {
             return PlessGraphics.Default;
         }
 
-        public virtual void DisableRecreate()
-        {
-        }
-
-        public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
+        DragDropEffects IControlHandler.DoDragDrop(object data, DragDropEffects allowedEffects)
         {
             return default;
         }
 
-        public virtual void EnableRecreate()
+        void IControlHandler.EndInit()
         {
         }
 
-        public virtual void EndIgnoreRecreate()
+        void IControlHandler.EndUpdate()
         {
         }
 
-        public virtual void EndInit()
+        void IControlHandler.FocusNextControl(bool forward, bool nested)
         {
         }
 
-        public virtual void EndRepositioningChildren()
-        {
-        }
-
-        public virtual void EndUpdate()
-        {
-        }
-
-        public virtual void FocusNextControl(bool forward = true, bool nested = true)
-        {
-        }
-
-        public virtual Color GetDefaultAttributesBgColor()
+        Color IControlHandler.GetDefaultAttributesBgColor()
         {
             return SystemColors.Window;
         }
 
-        public virtual Color GetDefaultAttributesFgColor()
+        Color IControlHandler.GetDefaultAttributesFgColor()
         {
             return SystemColors.WindowText;
         }
 
-        public virtual Font? GetDefaultAttributesFont()
+        Font? IControlHandler.GetDefaultAttributesFont()
         {
             return default;
         }
 
-        public virtual nint GetHandle()
+        nint IControlHandler.GetHandle()
         {
             return default;
         }
 
-        public virtual object GetNativeControl()
+        object IControlHandler.GetNativeControl()
         {
             return AssemblyUtils.Default;
         }
 
-        public virtual Coord GetPixelScaleFactor()
+        Coord IControlHandler.GetPixelScaleFactor()
         {
             return Display.Primary.ScaleFactor;
         }
 
-        public virtual SizeD GetPreferredSize(SizeD availableSize)
+        SizeD IControlHandler.GetPreferredSize(SizeD availableSize)
         {
             return availableSize;
         }
 
-        public virtual ScrollEventType GetScrollBarEvtKind()
+        ScrollEventType IControlHandler.GetScrollBarEvtKind()
         {
             return default;
         }
 
-        public virtual int GetScrollBarEvtPosition()
+        int IControlHandler.GetScrollBarEvtPosition()
         {
             return default;
         }
 
-        public virtual int GetScrollBarLargeChange(bool isVertical)
+        int IControlHandler.GetScrollBarLargeChange(bool isVertical)
         {
             return default;
         }
 
-        public virtual int GetScrollBarMaximum(bool isVertical)
+        int IControlHandler.GetScrollBarMaximum(bool isVertical)
         {
             return default;
         }
 
-        public virtual int GetScrollBarValue(bool isVertical)
+        int IControlHandler.GetScrollBarValue(bool isVertical)
         {
             return default;
         }
 
-        public virtual RectI GetUpdateClientRectI()
+        RectI IControlHandler.GetUpdateClientRectI()
         {
             return new RectI((0, 0), Control.PixelFromDip(ClientSize));
         }
 
-        public virtual void HandleNeeded()
+        void IControlHandler.HandleNeeded()
         {
         }
 
-        public virtual void Invalidate()
+        void IControlHandler.Invalidate()
         {
         }
 
-        public virtual bool IsScrollBarVisible(bool isVertical)
-        {
-            return default;
-        }
-
-        public virtual bool IsTransparentBackgroundSupported()
+        bool IControlHandler.IsScrollBarVisible(bool isVertical)
         {
             return default;
         }
 
-        public virtual void Lower()
+        bool IControlHandler.IsTransparentBackgroundSupported()
+        {
+            return default;
+        }
+
+        void IControlHandler.Lower()
         {
         }
 
-        public virtual void OnChildInserted(Control childControl)
+        void IControlHandler.OnChildInserted(Control childControl)
         {
         }
 
-        public virtual void OnChildRemoved(Control childControl)
+        void IControlHandler.OnChildRemoved(Control childControl)
         {
         }
 
-        public virtual Graphics OpenPaintDrawingContext()
+        Graphics IControlHandler.OpenPaintDrawingContext()
         {
             return PlessGraphics.Default;
         }
 
-        public virtual void Raise()
+        void IControlHandler.Raise()
         {
         }
 
-        public virtual void RecreateWindow()
+        void IControlHandler.RecreateWindow()
         {
         }
 
-        public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
+        void IControlHandler.RefreshRect(RectD rect, bool eraseBackground)
         {
         }
 
-        public virtual void ReleaseMouseCapture()
+        void IControlHandler.ReleaseMouseCapture()
         {
         }
 
-        public virtual void ResetBackgroundColor()
+        void IControlHandler.ResetBackgroundColor()
         {
         }
 
-        public virtual void ResetForegroundColor()
+        void IControlHandler.ResetForegroundColor()
         {
         }
 
-        public virtual void SaveScreenshot(string fileName)
+        void IControlHandler.SaveScreenshot(string fileName)
         {
         }
 
-        public virtual PointD ScreenToClient(PointD point)
+        PointD IControlHandler.ScreenToClient(PointD point)
         {
             return point;
         }
 
-        public virtual void SetCursor(Cursor? value)
+        void IControlHandler.SetCursor(Cursor? value)
         {
         }
 
-        public virtual void SetEnabled(bool value)
+        void IControlHandler.SetEnabled(bool value)
         {
         }
 
-        public virtual bool SetFocus()
+        bool IControlHandler.SetFocus()
         {
             return default;
         }
 
-        public virtual void SetScrollBar(
+        void IControlHandler.SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
+        {
+        }
+
+        void IControlHandler.SetScrollBar(
             bool isVertical,
             bool visible,
             int value,
@@ -381,15 +345,15 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void SetToolTip(string? value)
+        void IControlHandler.SetToolTip(string? value)
         {
         }
 
-        public virtual void UnsetToolTip()
+        void IControlHandler.UnsetToolTip()
         {
         }
 
-        public virtual void Update()
+        void IControlHandler.Update()
         {
         }
     }

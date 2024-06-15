@@ -12,7 +12,9 @@ namespace Alternet.UI
     /// </summary>
     public class GraphicControl : UserControl
     {
-        /// <inheritdoc/>
-        public override bool IsGraphicControl => true;
+        public GraphicControl()
+        {
+            IsGraphicControl = true;
+        }
     }
 }

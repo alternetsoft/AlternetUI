@@ -38,8 +38,8 @@ namespace PaintSample
             dc.FillRectangle(backgroundHatchBrush, e.ClipRectangle);
             dc.DrawLine(
                 Pens.Gray,
-                e.ClipRectangle.TopRight + (-1, 0),
-                e.ClipRectangle.BottomRight + (-1, 0));
+                e.ClipRectangle.TopRight + new PointD(-1, 0),
+                e.ClipRectangle.BottomRight + new PointD(-1, 0));
 
             var innerRect = e.ClipRectangle;
             innerRect.Inflate(-10, -10);

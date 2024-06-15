@@ -671,6 +671,14 @@ namespace Alternet.UI
             Log($"{name} = {value}{hint}", kind ?? LogItemKind.Information);
         }
 
+        public static void LogNameValueReplace(
+            object name,
+            object? value,
+            LogItemKind? kind = null)
+        {
+            LogReplace($"{name} = {value}", name, kind ?? LogItemKind.Information);
+        }
+
         /// <summary>
         /// Logs name and value pair as "{name} = {value}" if <paramref name="condition"/>
         /// is <c>true</c>.

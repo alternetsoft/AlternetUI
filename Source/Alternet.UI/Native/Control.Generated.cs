@@ -635,6 +635,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void BeginUpdate()
+        {
+            CheckDisposed();
+            NativeApi.Control_BeginUpdate_(NativePointer);
+        }
+        
         public void EndUpdate()
         {
             CheckDisposed();
@@ -902,6 +908,12 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
         }
         
+        public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetFocusFlags_(NativePointer, canSelect, tabStop, acceptsFocusRecursively);
+        }
+        
         public Alternet.UI.DragDropEffects DoDragDrop(UnmanagedDataObject data, Alternet.UI.DragDropEffects allowedEffects)
         {
             CheckDisposed();
@@ -924,12 +936,6 @@ namespace Alternet.UI.Native
             var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
             ReleaseNativeObjectPointer(_nnn);
             return _mmm;
-        }
-        
-        public void BeginUpdate()
-        {
-            CheckDisposed();
-            NativeApi.Control_BeginUpdate_(NativePointer);
         }
         
         public bool BeginRepositioningChildren()
@@ -1532,6 +1538,9 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_BeginUpdate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_EndUpdate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1664,6 +1673,9 @@ namespace Alternet.UI.Native
             public static extern Alternet.Drawing.SizeD Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.SizeD availableSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetFocusFlags_(IntPtr obj, bool canSelect, bool tabStop, bool acceptsFocusRecursively);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.DragDropEffects Control_DoDragDrop_(IntPtr obj, IntPtr data, Alternet.UI.DragDropEffects allowedEffects);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1671,9 +1683,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_OpenClientDrawingContext_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_BeginUpdate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_BeginRepositioningChildren_(IntPtr obj);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -20,7 +21,6 @@ namespace Alternet.UI
         /// <param name="title">Label text.</param>
         /// <param name="text">Default value of the <see cref="Text"/> property.</param>
         public TextBoxAndLabel(string title, string? text = default)
-            : this()
         {
             Title = title;
             if (text is not null)
@@ -32,7 +32,6 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
         /// </summary>
         public TextBoxAndLabel()
-            : base()
         {
             Init();
         }
@@ -76,13 +75,13 @@ namespace Alternet.UI
         /// Gets whether <see cref="Text"/> is null or empty.
         /// </summary>
         [Browsable(false)]
-        public bool IsNullOrEmpty => string.IsNullOrEmpty(Text);
+        public virtual bool IsNullOrEmpty => string.IsNullOrEmpty(Text);
 
         /// <summary>
         /// Gets whether <see cref="Text"/> is null or white space.
         /// </summary>
         [Browsable(false)]
-        public bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
+        public virtual bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
         /// <inheritdoc/>
         protected override Control CreateControl() => new TextBox();

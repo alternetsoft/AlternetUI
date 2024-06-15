@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -132,20 +133,6 @@ namespace Alternet.UI
         public static Control? GetHoveredControl()
         {
             return HoveredControl;
-        }
-
-        /// <summary>
-        /// Returns the currently focused control, or <see langword="null"/> if
-        /// no control is focused.
-        /// </summary>
-        public static Control? GetFocusedControl()
-        {
-            if (FocusedControl?.Focused ?? false)
-                return FocusedControl;
-
-            var result = App.Handler.GetFocusedControl();
-            FocusedControl = result;
-            return result;
         }
 
         /// <summary>
@@ -590,7 +577,7 @@ namespace Alternet.UI
                             RaiseMouseEnter();
                             break;
                         case TouchAction.Pressed:
-                            Mouse.ReportMouseDown(
+                            Control.BubbleMouseDown(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
@@ -598,14 +585,14 @@ namespace Alternet.UI
                                 out handled);
                             break;
                         case TouchAction.Moved:
-                            Mouse.ReportMouseMove(
+                            Control.BubbleMouseMove(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.Location,
                                 out handled);
                             break;
                         case TouchAction.Released:
-                            Mouse.ReportMouseUp(
+                            Control.BubbleMouseUp(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
@@ -618,7 +605,7 @@ namespace Alternet.UI
                             RaiseMouseLeave();
                             break;
                         case TouchAction.WheelChanged:
-                            Mouse.ReportMouseWheel(
+                            Control.BubbleMouseWheel(
                                         this,
                                         DateTime.Now.Ticks,
                                         e.WheelDelta,
@@ -794,28 +781,6 @@ namespace Alternet.UI
             if (indexes is null)
                 return false;
             return Array.IndexOf<int>(indexes, groupIndex) >= 0;
-        }
-
-        /// <summary>
-        /// Notifies that no more native control recreates are allowed.
-        /// </summary>
-        /// <remarks>
-        /// When some properties are assigned, native control could be recreated.
-        /// Sometimes it is not desired.
-        /// This method sets a restriction on a control recreate, so debug message will be logged.
-        /// </remarks>
-        public virtual void DisableRecreate()
-        {
-            Handler.DisableRecreate();
-        }
-
-        /// <summary>
-        /// Allows control recreate which was previously disabled using <see cref="DisableRecreate"/>.
-        /// </summary>
-        /// See more details in <see cref="DisableRecreate"/>.
-        public virtual void EnableRecreate()
-        {
-            Handler.EnableRecreate();
         }
 
         /// <summary>
@@ -1274,42 +1239,6 @@ namespace Alternet.UI
         public void SetEnabled(bool value) => Enabled = value;
 
         /// <summary>
-        /// Sets input focus to the control.
-        /// </summary>
-        /// <returns><see langword="true"/> if the input focus request was
-        /// successful; otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="SetFocus"/> method returns true if the
-        /// control successfully received input focus.</remarks>
-        public virtual bool SetFocus()
-        {
-            return Handler.SetFocus();
-        }
-
-        /// <summary>
-        /// Sets input focus to the control.
-        /// </summary>
-        /// <returns>
-        ///   <see langword="true" /> if the input focus request was successful;
-        ///   otherwise, <see langword="false" />.
-        /// </returns>
-        /// <remarks>
-        /// Same as <see cref="SetFocus"/>.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public bool Focus() => SetFocus();
-
-        /// <summary>
-        /// Sets input focus to the control if it can accept it.
-        /// </summary>
-        public virtual bool SetFocusIfPossible()
-        {
-            if (CanAcceptFocus)
-                return SetFocus();
-            else
-                return false;
-        }
-
-        /// <summary>
         /// Saves screenshot of this control.
         /// </summary>
         /// <param name="fileName">Name of the file to which screenshot
@@ -1376,6 +1305,28 @@ namespace Alternet.UI
         public virtual string? GetRealToolTip()
         {
             return ToolTip;
+        }
+
+        /// <summary>
+        /// Gets the validation errors for this control and it's child controls.
+        /// </summary>
+        /// <param name="propertyName">
+        /// The name of the property to retrieve validation errors for; or <c>null</c>
+        /// or <see cref="System.String.Empty"/>, to retrieve entity-level errors.
+        /// </param>
+        /// <returns>The validation errors for this control and it's child controls.</returns>
+        public virtual IEnumerable GetErrors(string? propertyName = null)
+        {
+            foreach (var item in AllChildren)
+            {
+                if (item is INotifyDataErrorInfo errorInfo)
+                {
+                    foreach (var error in errorInfo.GetErrors(null))
+                    {
+                        yield return error;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -1454,20 +1405,6 @@ namespace Alternet.UI
         public virtual void SetChildrenForegroundColor<T>(Color? color, bool recursive = false)
         {
             GetChildren<T>(recursive).ForegroundColor(color);
-        }
-
-        /// <summary>
-        /// Focuses the next control.
-        /// </summary>
-        /// <param name="forward"><see langword="true"/> to move forward in the
-        /// tab order; <see langword="false"/> to move backward in the tab
-        /// order.</param>
-        /// <param name="nested"><see langword="true"/> to include nested
-        /// (children of child controls) child controls; otherwise,
-        /// <see langword="false"/>.</param>
-        public virtual void FocusNextControl(bool forward = true, bool nested = true)
-        {
-            Handler.FocusNextControl(forward, nested);
         }
 
         /// <summary>
