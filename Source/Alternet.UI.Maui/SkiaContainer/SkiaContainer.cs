@@ -146,15 +146,17 @@ namespace Alternet.UI
                 graphics.Canvas = dc;
             }
 
-            RectD dirtyRect = dc.LocalClipBounds;
+            var dirtyRect = dc.LocalClipBounds;
 
             var bounds = Bounds;
 
-            control.Bounds = (0, 0, bounds.Width, bounds.Height);
+            control.Bounds = (0, 0, Math.Min(bounds.Width, dirtyRect.Width), Math.Min(bounds.Height, dirtyRect.Height));
 
             dc.Clear(control.BackColor);
 
-            control.RaisePaint(new PaintEventArgs(graphics, dirtyRect));
+            control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
+
+            dc.Flush();
         }
 
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
