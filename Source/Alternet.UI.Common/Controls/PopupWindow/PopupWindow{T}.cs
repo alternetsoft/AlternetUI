@@ -302,13 +302,11 @@ namespace Alternet.UI
         {
             if (mainControl is not null)
             {
-                if (mainControl.IsFocusable)
-                    mainControl.SetFocus();
+                mainControl.SetFocusIfPossible();
             }
             else
             {
-                if (IsFocusable)
-                    SetFocus();
+                SetFocusIfPossible();
             }
         }
 
@@ -406,8 +404,7 @@ namespace Alternet.UI
                 if (PopupOwner is not null && FocusPopupOwnerOnHide)
                 {
                     PopupOwner.ParentWindow?.Activate();
-                    if (PopupOwner.CanAcceptFocus)
-                        PopupOwner.SetFocus();
+                    PopupOwner.SetFocusIfPossible();
                 }
 
                 PopupOwner = null;

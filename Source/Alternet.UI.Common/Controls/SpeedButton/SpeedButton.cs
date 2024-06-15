@@ -104,7 +104,7 @@ namespace Alternet.UI
             label.Parent = this;
             label.InputTransparent = true;
 
-            AcceptsFocusAll = false;
+            IsGraphicControl = true;
             RefreshOptions = ControlRefreshOptions.RefreshOnState;
         }
 

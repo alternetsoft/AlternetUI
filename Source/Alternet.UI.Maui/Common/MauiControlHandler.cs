@@ -175,36 +175,7 @@ namespace Alternet.UI
 
         public virtual bool AllowDrop { get; set; }
 
-        public virtual bool AcceptsFocus { get; set; }
-
         public virtual ControlBackgroundStyle BackgroundStyle { get; set; }
-
-        public virtual bool AcceptsFocusFromKeyboard
-        {
-            get => true;
-
-            set
-            {
-            }
-        }
-
-        public virtual bool AcceptsFocusRecursively
-        {
-            get => true;
-
-            set
-            {
-            }
-        }
-
-        public virtual bool AcceptsFocusAll
-        {
-            get => true;
-
-            set
-            {
-            }
-        }
 
         public virtual bool ProcessIdle { get; set; }
 
@@ -216,23 +187,9 @@ namespace Alternet.UI
             set => Bounds = (Bounds.Location, value);
         }
 
-        public virtual bool CanAcceptFocus
-        {
-            get => true;
-        }
-
         public virtual bool ProcessUIUpdates { get; set; }
 
         public virtual bool IsMouseCaptured { get; set; }
-
-        public virtual bool IsFocusable
-        {
-            get => true;
-
-            set
-            {
-            }
-        }
 
         public Action? SystemColorsChanged { get; set; }
 
@@ -478,6 +435,10 @@ namespace Alternet.UI
             SKBitmap bitmap = new();
             SKCanvas canvas = new(bitmap);
             return new SkiaGraphics(canvas);
+        }
+
+        public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
+        {
         }
     }
 }

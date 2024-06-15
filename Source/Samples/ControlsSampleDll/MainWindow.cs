@@ -9,6 +9,8 @@ namespace ControlsSample
 {
     public partial class MainWindow : Window
     {
+        public static bool LogFocusedControl = false;
+
         private SplittedTreeAndCards? pageContainer;
         private readonly LogListBox eventsControl;
         private readonly LayoutPanel splitterPanel;
@@ -25,6 +27,17 @@ namespace ControlsSample
 
             ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl;
             ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl2;
+
+            Control.FocusedControlChanged += (s, e) =>
+            {
+                if(LogFocusedControl)
+                    App.LogReplace($"FocusedControl: {FocusedControl?.GetType()}", "FocusedControl:");
+            };
+
+            LogUtils.RegisterLogAction("Toggle LogFocusedControl", () =>
+            {
+                LogFocusedControl = !LogFocusedControl;
+            });
         }
 
         public MainWindow()

@@ -135,20 +135,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the currently focused control, or <see langword="null"/> if
-        /// no control is focused.
-        /// </summary>
-        public static Control? GetFocusedControl()
-        {
-            if (FocusedControl?.Focused ?? false)
-                return FocusedControl;
-
-            var result = App.Handler.GetFocusedControl();
-            FocusedControl = result;
-            return result;
-        }
-
-        /// <summary>
         /// Generates new group index.
         /// </summary>
         public static int NewGroupIndex() => groupIndexCounter++;
@@ -1252,42 +1238,6 @@ namespace Alternet.UI
         public void SetEnabled(bool value) => Enabled = value;
 
         /// <summary>
-        /// Sets input focus to the control.
-        /// </summary>
-        /// <returns><see langword="true"/> if the input focus request was
-        /// successful; otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="SetFocus"/> method returns true if the
-        /// control successfully received input focus.</remarks>
-        public virtual bool SetFocus()
-        {
-            return Handler.SetFocus();
-        }
-
-        /// <summary>
-        /// Sets input focus to the control.
-        /// </summary>
-        /// <returns>
-        ///   <see langword="true" /> if the input focus request was successful;
-        ///   otherwise, <see langword="false" />.
-        /// </returns>
-        /// <remarks>
-        /// Same as <see cref="SetFocus"/>.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public bool Focus() => SetFocus();
-
-        /// <summary>
-        /// Sets input focus to the control if it can accept it.
-        /// </summary>
-        public virtual bool SetFocusIfPossible()
-        {
-            if (CanAcceptFocus)
-                return SetFocus();
-            else
-                return false;
-        }
-
-        /// <summary>
         /// Saves screenshot of this control.
         /// </summary>
         /// <param name="fileName">Name of the file to which screenshot
@@ -1432,20 +1382,6 @@ namespace Alternet.UI
         public virtual void SetChildrenForegroundColor<T>(Color? color, bool recursive = false)
         {
             GetChildren<T>(recursive).ForegroundColor(color);
-        }
-
-        /// <summary>
-        /// Focuses the next control.
-        /// </summary>
-        /// <param name="forward"><see langword="true"/> to move forward in the
-        /// tab order; <see langword="false"/> to move backward in the tab
-        /// order.</param>
-        /// <param name="nested"><see langword="true"/> to include nested
-        /// (children of child controls) child controls; otherwise,
-        /// <see langword="false"/>.</param>
-        public virtual void FocusNextControl(bool forward = true, bool nested = true)
-        {
-            Handler.FocusNextControl(forward, nested);
         }
 
         /// <summary>

@@ -544,11 +544,6 @@ namespace Alternet.UI
         ControlStateBrushes? Foregrounds { get; set; }
 
         /// <summary>
-        /// Gets whether this control itself can have focus.
-        /// </summary>
-        bool IsFocusable { get; }
-
-        /// <summary>
         /// Gets the distance, in dips, between the right edge of the control and the left
         /// edge of its container's client area.
         /// </summary>
@@ -573,16 +568,6 @@ namespace Alternet.UI
         /// Gets next visible sibling control.
         /// </summary>
         IControl? NextSibling { get; }
-
-        /// <summary>
-        /// Gets whether this control can have focus right now.
-        /// </summary>
-        /// <remarks>
-        /// If this property returns true, it means that calling <see cref="SetFocus"/> will put
-        /// focus either to this control or one of its children. If you need to know whether
-        /// this control accepts focus itself, use <see cref="IsFocusable"/>.
-        /// </remarks>
-        bool CanAcceptFocus { get; }
 
         /// <summary>
         /// Gets or sets the object that contains data about the control.
@@ -1150,44 +1135,6 @@ namespace Alternet.UI
         /// Returns control identifier.
         /// </summary>
         ControlTypeId ControlKind { get; }
-
-        /// <summary>
-        /// Gets or sets value indicating whether this control accepts
-        /// input or not (i.e. behaves like a static text) and so doesn't need focus.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        bool AcceptsFocus { get; set; }
-
-        /// <summary>
-        /// Gets or sets value indicating whether this control accepts
-        /// focus from keyboard or not.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        /// <returns>
-        /// Return false to indicate that while this control can,
-        /// in principle, have focus if the user clicks
-        /// it with the mouse, it shouldn't be included
-        /// in the TAB traversal chain when using the keyboard.
-        /// </returns>
-        bool AcceptsFocusFromKeyboard { get; set; }
-
-        /// <summary>
-        /// Indicates whether this control or one of its children accepts focus.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        bool AcceptsFocusRecursively { get; set; }
-
-        /// <summary>
-        /// Sets all focus related properties (<see cref="AcceptsFocus"/>,
-        /// <see cref="AcceptsFocusFromKeyboard"/>, <see cref="AcceptsFocusRecursively"/>) in one call.
-        /// </summary>
-        bool AcceptsFocusAll { get; set; }
 
         /// <summary>
         /// Gets or sets whether <see cref="Idle"/> event is fired.

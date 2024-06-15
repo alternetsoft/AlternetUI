@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public interface IControlHandler : IDisposableObject
+    public partial interface IControlHandler : IDisposableObject
     {
         SizeI EventOldDpi { get; }
 
@@ -39,10 +39,6 @@ namespace Alternet.UI
         Action? TextChanged { get; set; }
 
         Action? MouseCaptureLost { get; set; }
-
-        Action? GotFocus { get; set; }
-
-        Action? LostFocus { get; set; }
 
         Action? DragLeave { get; set; }
 
@@ -91,8 +87,6 @@ namespace Alternet.UI
 
         bool IsNativeControlCreated { get; }
 
-        bool IsFocused { get; }
-
         Thickness IntrinsicLayoutPadding { get; }
 
         Thickness IntrinsicPreferredSizePadding { get; }
@@ -117,19 +111,9 @@ namespace Alternet.UI
 
         bool IsBold { get; set; }
 
-        bool TabStop { get; set; }
-
         bool AllowDrop { get; set; }
 
-        bool AcceptsFocus { get; set; }
-
         ControlBackgroundStyle BackgroundStyle { get; set; }
-
-        bool AcceptsFocusFromKeyboard { get; set; }
-
-        bool AcceptsFocusRecursively { get; set; }
-
-        bool AcceptsFocusAll { get; set; }
 
         bool ProcessIdle { get; set; }
 
@@ -137,15 +121,11 @@ namespace Alternet.UI
 
         SizeD ClientSize { get; set; }
 
-        bool CanAcceptFocus { get; }
-
         bool ProcessUIUpdates { get; set; }
 
         bool IsMouseCaptured { get; }
 
         bool IsHandleCreated { get; }
-
-        bool IsFocusable { get; }
 
         void Raise();
 
@@ -173,8 +153,6 @@ namespace Alternet.UI
 
         PointD ClientToScreen(PointD point);
 
-        void FocusNextControl(bool forward = true, bool nested = true);
-
         DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects);
 
         void RecreateWindow();
@@ -186,8 +164,6 @@ namespace Alternet.UI
         void BeginInit();
 
         void EndInit();
-
-        bool SetFocus();
 
         void SaveScreenshot(string fileName);
 

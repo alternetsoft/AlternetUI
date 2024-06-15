@@ -49,7 +49,7 @@ namespace PropertyGridSample
 
             static void VisualStateChanged(object? sender, EventArgs e)
             {
-                App.LogNameValue("PictureBox.VisualState", (sender as PictureBox)?.VisualState);
+                App.LogNameValueReplace("PictureBox.VisualState", (sender as PictureBox)?.VisualState);
             }
         }
     }

@@ -899,6 +899,22 @@ namespace Alternet::UI
         return _acceptsFocus;
     }
 
+    void Control::SetTabStop(bool value)
+    {
+        _flags.Set(ControlFlags::TabStop, value);
+        RecreateWxWindowIfNeeded();
+    }
+
+    void Control::SetFocusFlags(bool canSelect, bool tabStop, bool canSelectChildren)
+    {
+        if (_acceptsFocus == canSelect && GetTabStop() == tabStop)
+            return;
+        _acceptsFocus = canSelect;
+        _acceptsFocusFromKeyboard = tabStop;
+        _acceptsFocusRecursively = canSelect;
+        SetTabStop(tabStop);
+    }
+
     void Control::SetAcceptsFocus(bool value)
     {
         if (_acceptsFocus == value)
@@ -1827,12 +1843,6 @@ namespace Alternet::UI
     bool Control::GetTabStop()
     {
         return _flags.IsSet(ControlFlags::TabStop);
-    }
-
-    void Control::SetTabStop(bool value)
-    {
-        _flags.Set(ControlFlags::TabStop, value);
-        RecreateWxWindowIfNeeded();
     }
 
     bool Control::GetIsFocused()

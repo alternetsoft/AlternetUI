@@ -32,7 +32,6 @@ namespace Alternet.UI
         private static int groupIndexCounter;
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
-        private static Control? focusedControl;
         private static Control? hoveredControl;
 
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
@@ -152,25 +151,6 @@ namespace Alternet.UI
             {
                 defaultFont = value;
                 FontFactory.Handler.SetDefaultFont(value);
-            }
-        }
-
-        /// <summary>
-        /// Gets focused control.
-        /// </summary>
-        /// <remarks>
-        /// Do not change this property, this is done by the library.
-        /// </remarks>
-        public static Control? FocusedControl
-        {
-            get => focusedControl;
-
-            set
-            {
-                if (focusedControl == value)
-                    return;
-                focusedControl = value;
-                FocusedControlChanged?.Invoke(focusedControl, EventArgs.Empty);
             }
         }
 
@@ -379,19 +359,6 @@ namespace Alternet.UI
         public virtual ImeMode ImeMode { get; set; } = ImeMode.Off;
 
         /// <summary>
-        /// Gets a value indicating whether the control can receive focus.
-        /// </summary>
-        /// <returns>
-        /// <see langword="true" /> if the control can receive focus;
-        /// otherwise, <see langword="false" />.
-        /// </returns>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        [Category("Focus")]
-        public bool CanFocus => IsFocusable;
-
-        /// <summary>
         /// Gets or sets the text associated with this control.
         /// </summary>
         /// <returns>
@@ -446,30 +413,6 @@ namespace Alternet.UI
                     return;
                 cursor = value;
                 Handler.SetCursor(value);
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the control, or one of its child
-        /// controls, currently has the input focus.
-        /// </summary>
-        /// <returns>
-        /// <see langword="true" /> if the control or one of its child controls
-        /// currently has the input focus; otherwise, <see langword="false" />.</returns>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool ContainsFocus
-        {
-            get
-            {
-                var focused = GetFocusedControl();
-                if (focused is null)
-                    return false;
-                if (focused == this)
-                    return true;
-                var result = focused.HasIndirectParent(this);
-                return result;
             }
         }
 
@@ -695,18 +638,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether this control itself can have focus.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsFocusable
-        {
-            get
-            {
-                return Handler.IsFocusable;
-            }
-        }
-
-        /// <summary>
         /// Gets the distance, in dips, between the right edge of the control and the left
         /// edge of its container's client area.
         /// </summary>
@@ -774,23 +705,6 @@ namespace Alternet.UI
                 }
 
                 return null;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether this control can have focus right now.
-        /// </summary>
-        /// <remarks>
-        /// If this property returns true, it means that calling <see cref="SetFocus"/> will put
-        /// focus either to this control or one of its children. If you need to know whether
-        /// this control accepts focus itself, use <see cref="IsFocusable"/>.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual bool CanAcceptFocus
-        {
-            get
-            {
-                return Handler.CanAcceptFocus;
             }
         }
 
@@ -2186,23 +2100,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can give the focus to this control
-        /// using the TAB key.
-        /// </summary>
-        public virtual bool TabStop
-        {
-            get
-            {
-                return Handler.TabStop;
-            }
-
-            set
-            {
-                Handler.TabStop = value;
-            }
-        }
-
-        /// <summary>
         /// Returns rectangle in which custom drawing need to be performed.
         /// Useful for custom draw controls
         /// </summary>
@@ -2249,13 +2146,6 @@ namespace Alternet.UI
                 Handler.BackgroundStyle = value;
             }
         }
-
-        /// <summary>
-        /// Gets whether control is graphic control. Graphic controls do not accept focus
-        /// and ignore keyboard.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsGraphicControl => false;
 
         /// <summary>
         /// Gets a rectangle which describes the client area inside of the
@@ -2339,108 +2229,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the control has input focus.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool Focused
-        {
-            get
-            {
-                return Handler.IsFocused;
-            }
-        }
-
-        /// <summary>
         /// Returns control identifier.
         /// </summary>
         [Browsable(false)]
         public virtual ControlTypeId ControlKind => ControlTypeId.Control;
-
-        /// <summary>
-        /// Gets or sets value indicating whether this control accepts
-        /// input or not (i.e. behaves like a static text) and so doesn't need focus.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual bool AcceptsFocus
-        {
-            get
-            {
-                return Handler.AcceptsFocusAll;
-            }
-
-            set
-            {
-                Handler.AcceptsFocusAll = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets value indicating whether this control accepts
-        /// focus from keyboard or not.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        /// <returns>
-        /// Return false to indicate that while this control can,
-        /// in principle, have focus if the user clicks
-        /// it with the mouse, it shouldn't be included
-        /// in the TAB traversal chain when using the keyboard.
-        /// </returns>
-        [Browsable(false)]
-        public virtual bool AcceptsFocusFromKeyboard
-        {
-            get
-            {
-                return Handler.AcceptsFocusFromKeyboard;
-            }
-
-            set
-            {
-                Handler.AcceptsFocusFromKeyboard = value;
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether this control or one of its children accepts focus.
-        /// </summary>
-        /// <remarks>
-        /// Default value is true.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual bool AcceptsFocusRecursively
-        {
-            get
-            {
-                return Handler.AcceptsFocusRecursively;
-            }
-
-            set
-            {
-                Handler.AcceptsFocusRecursively = value;
-            }
-        }
-
-        /// <summary>
-        /// Sets all focus related properties (<see cref="AcceptsFocus"/>,
-        /// <see cref="AcceptsFocusFromKeyboard"/>, <see cref="AcceptsFocusRecursively"/>) in one call.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool AcceptsFocusAll
-        {
-            get
-            {
-                return Handler.AcceptsFocusAll;
-            }
-
-            set
-            {
-                Handler.AcceptsFocusAll = value;
-            }
-        }
 
         /// <summary>
         /// Gets or sets whether <see cref="Idle"/> event is fired.
