@@ -13,7 +13,6 @@ namespace Alternet.UI
 
         private bool tabStop = true;
         private bool canSelect = true;
-        private bool acceptsFocusRecursively = true;
 
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
@@ -161,7 +160,6 @@ namespace Alternet.UI
                     return;
                 tabStop = !value;
                 canSelect = !value;
-                acceptsFocusRecursively = !value;
                 UpdateFocusFlags();
             }
         }
@@ -242,7 +240,7 @@ namespace Alternet.UI
 
         private void UpdateFocusFlags()
         {
-            Handler.SetFocusFlags(canSelect, tabStop && canSelect, acceptsFocusRecursively);
+            Handler.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
         }
     }
 }
