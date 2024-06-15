@@ -413,12 +413,20 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the pixel size.
         /// </summary>
+        [Browsable(false)]
         public virtual int SizeInPixels => Handler.GetPixelSize();
+
+        /// <summary>
+        /// Gets the size in dips.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Coord SizeInDips => GraphicsFactory.PixelToDip(SizeInPixels);
 
         /// <summary>
         /// Gets whether font size is in pixels.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual bool IsUsingSizeInPixels => Handler.IsUsingSizeInPixels();
 
         /// <summary>
@@ -478,6 +486,7 @@ namespace Alternet.Drawing
             }
         }
 
+        [Browsable(false)]
         public virtual SKFontMetrics SkiaMetrics
         {
             get
@@ -489,6 +498,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets <see cref="SKFont"/> for this font.
         /// </summary>
+        [Browsable(false)]
         public virtual SKFont SkiaFont
         {
             get
@@ -511,12 +521,14 @@ namespace Alternet.Drawing
         /// <returns>
         /// A byte value that specifies the GDI character set that this
         /// <see cref="Font" /> uses. The default is 1. Currently always returns 1. </returns>
+        [Browsable(false)]
         public virtual byte GdiCharSet => 1;
 
         /// <summary>
         /// Gets the unit of measure for this <see cref="Font" />.</summary>
         /// <returns>A value that represents the unit of
         /// measure for this <see cref="Font" />.</returns>
+        [Browsable(false)]
         public virtual GraphicsUnit Unit
         {
             get
@@ -531,6 +543,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets this font with <see cref="FontStyle.Regular"/> style.
         /// </summary>
+        [Browsable(false)]
         public virtual Font Base
         {
             get
@@ -547,6 +560,7 @@ namespace Alternet.Drawing
         /// <remarks>
         ///  See <see cref="FontWeight"/> for the numeric weight values.
         /// </remarks>
+        [Browsable(false)]
         public virtual int NumericWeight
         {
             get => Handler.GetNumericWeight();
@@ -563,12 +577,14 @@ namespace Alternet.Drawing
         /// platform-specific functions are used for the check (resulting in a more accurate
         /// return value).
         /// </remarks>
+        [Browsable(false)]
         public virtual bool IsFixedWidth => Handler.IsFixedWidth();
 
         /// <summary>
         /// Gets the font weight.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual FontWeight Weight => Handler.GetWeight();
 
         /// <summary>
@@ -621,6 +637,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is bold;
         /// otherwise, <c>false</c>.</value>
+        [Browsable(false)]
         public virtual bool IsBold => GetIsBold(Weight);
 
         /// <summary>
@@ -628,6 +645,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is italic;
         /// otherwise, <c>false</c>.</value>
+        [Browsable(false)]
         public virtual bool IsItalic => Handler.GetItalic();
 
         /// <summary>
@@ -636,11 +654,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
+        [Browsable(false)]
         public virtual bool IsStrikethrough => Handler.GetStrikethrough();
 
         /// <summary>
         /// Same as <see cref="IsStrikethrough"/>.
         /// </summary>
+        [Browsable(false)]
         public bool IsStrikeout => Handler.GetStrikethrough();
 
         /// <summary>
@@ -649,6 +669,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
+        [Browsable(false)]
         public virtual bool IsUnderlined => Handler.GetUnderlined();
 
         /// <summary>
@@ -670,6 +691,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>The <see cref="FontFamily"/> associated with this
         /// <see cref="Font"/>.</value>
+        [Browsable(false)]
         public virtual FontFamily FontFamily
         {
             get
@@ -681,6 +703,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets native font.
         /// </summary>
+        [Browsable(false)]
         public virtual IFontHandler Handler { get; private set; }
 
         /// <summary>
