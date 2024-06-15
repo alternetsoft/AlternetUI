@@ -1,3 +1,31 @@
+# 0.9.609 (2024 June 15)
+
+- Size and Rect: PixelToDip/PixelFromDip.
+- Window: DisplayChanged event.
+- LogListBox: Fixed scrolling to end when item added.
+- TextBox: Supports INotifyDataErrorInfo interface.
+- TextBox: ErrorsChanged event.
+- TextBox: HasErrors property.
+- TextBox: HasErrorEmptyText(), HasErrorMinLength(), HasErrorMaxLength(), GetErrors().
+- TextBox: Added new optional 'errorEnumerator' param in RunDefaultValidation and Report* methods.
+- ResourceLoader.StreamFromUrlOrDefault.
+- GraphicsFactory: CreateMemoryCanvas(Image image), CreateMemoryDC renamed to CreateMemoryCanvas.
+- TextBoxAndLabel: Fixed double Init() in constructor.
+- ControlAndLabel: supports INotifyDataErrorInfo.
+- Control: e.CurrentTarget is correctly assigned in KeyPress event.
+- Control: BubbleMouse renamed to InputTransparent as in Maui.
+- Control: Simplified Focus related methods/props.
+- Control: AbsolutePosition, AllParents.
+- Control: INotifyDataErrorInfo is supported.
+- Control: HasErrors - returns whether this control or it's child controls have validation errors.
+- Control: GetErrors - gets the validation errors for this control and it's child controls.
+- Control: ErrorsChanged event - Occurs when the validation errors have changed for this control or it's child controls.
+- Font.SizeInDips.
+- ScrollBar: DefaultMetrics, Metrics.
+- PointD: +/- operators for (PointD, PointD).
+- ImageLockMode is used in LockSurface.
+- Improvements related to drawing on Skia and using Control in Maui.
+
 # 0.9.608 (2024 June 12)
 
 - Control: DpiChanged event.
