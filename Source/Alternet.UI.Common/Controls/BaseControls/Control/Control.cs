@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -1046,8 +1047,8 @@ namespace Alternet.UI
                 {
                     if (result == null)
                         return null;
-                    if (result is Window)
-                        return (Window?)result;
+                    if (result is Window window)
+                        return window;
                     result = result.Parent;
                 }
             }
@@ -2248,6 +2249,49 @@ namespace Alternet.UI
             set
             {
                 Handler.ProcessIdle = value;
+            }
+        }
+
+        [Browsable(false)]
+        public PointD AbsolutePosition
+        {
+            get
+            {
+                PointD origin;
+
+                if (ParentWindow == null)
+                    origin = PointD.MinValue;
+                else
+                    origin = PointD.Empty;
+
+                var ancestors = AllParents;
+
+                var result = Location;
+
+                foreach(var item in ancestors)
+                {
+                    result += item.Location;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Enumerates all parent controls.
+        /// </summary>
+        [Browsable(false)]
+        public IEnumerable<Control> AllParents
+        {
+            get
+            {
+                var result = Parent;
+
+                while (result != null)
+                {
+                    yield return result;
+                    result = result.Parent;
+                }
             }
         }
 
