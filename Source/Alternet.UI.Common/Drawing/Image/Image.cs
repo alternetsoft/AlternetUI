@@ -538,13 +538,18 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="bitmap"><see cref="SKBitmap"/> with image data.</param>
         /// <returns></returns>
-        public static SKBitmap ToSkia(Image bitmap)
+        public static SKBitmap ToSkia(Image bitmap, bool assignPixels = true)
         {
             if (bitmap.Handler is SkiaImageHandler skiaHandler)
                 return skiaHandler.Bitmap;
 
-            var genericImage = (GenericImage)bitmap;
-            return (SKBitmap)genericImage;
+            if (assignPixels)
+            {
+                var genericImage = (GenericImage)bitmap;
+                return GenericImage.ToSkia(genericImage, assignPixels);
+            }
+            else
+                return GenericImage.CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
         }
 
         /// <summary>

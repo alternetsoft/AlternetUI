@@ -14,6 +14,18 @@ namespace Alternet.UI.Extensions
     public static class ExtensionsPrivate
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool CanRead(this ImageLockMode lockMode)
+        {
+            return lockMode != ImageLockMode.WriteOnly;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool CanWrite(this ImageLockMode lockMode)
+        {
+            return lockMode != ImageLockMode.ReadOnly;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Abs(this double value)
         {
             return Math.Abs(value);

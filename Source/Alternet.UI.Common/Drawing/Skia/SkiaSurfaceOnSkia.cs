@@ -15,15 +15,15 @@ namespace Alternet.Drawing
         private SKBitmap? bitmap;
         private SKSurface? surface;
         private SKCanvas? canvas;
-
-        public SkiaSurfaceOnSkia()
-        {
-        }
+        private readonly ImageLockMode lockMode;
 
         public SkiaSurfaceOnSkia(SKBitmap? bitmap, ImageLockMode lockMode)
         {
+            this.lockMode = lockMode;
             CreateCanvas(bitmap, lockMode);
         }
+
+        public ImageLockMode LockMode => lockMode;
 
         public int Width => bitmap?.Width ?? 0;
 

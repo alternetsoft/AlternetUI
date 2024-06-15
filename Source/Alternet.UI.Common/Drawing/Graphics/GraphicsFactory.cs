@@ -211,13 +211,14 @@ namespace Alternet.Drawing
             {
                 App.DebugLogIf("CreateSkiaSurface for image using GenericImage", true);
 
-                SKBitmap bitmap = (SKBitmap)image;
+                SKBitmap bitmap = Image.ToSkia(image, lockMode.CanRead());
 
                 var result = new SkiaSurfaceOnSkia(bitmap, lockMode);
 
                 result.Disposed += (s, e) =>
                 {
-                    image.Assign(bitmap);
+                    if (lockMode.CanWrite())
+                        image.Assign(bitmap);
                 };
 
                 return result;
@@ -226,13 +227,14 @@ namespace Alternet.Drawing
 
         public static ISkiaSurface CreateSkiaSurface(GenericImage image, ImageLockMode lockMode)
         {
-            SKBitmap bitmap = (SKBitmap)image;
+            SKBitmap bitmap = GenericImage.ToSkia(image, lockMode.CanRead());
 
             var result = new SkiaSurfaceOnSkia(bitmap, lockMode);
 
             result.Disposed += (s, e) =>
             {
-                image.Assign(bitmap);
+                if(lockMode.CanWrite())
+                    image.Assign(bitmap);
             };
 
             return result;
@@ -436,7 +438,7 @@ namespace Alternet.Drawing
                 SKFontStyleWidth.Normal,
                 skiaSlant);
 
-            SKFont skiaFont = new(typeFace, (float)(font.SizeInPixels));
+            SKFont skiaFont = new(typeFace, (float)(font.SizeInDips));
             return skiaFont;
         }
     }

@@ -575,21 +575,28 @@ namespace Alternet.Drawing
             alpha = GetAlphaValues(data);
         }
 
-        public static SKBitmap ToSkia(GenericImage bitmap)
+        public static SKBitmap ToSkia(GenericImage bitmap, bool assignPixels = true)
         {
-            return ToSkia(bitmap.Handler);
+            return ToSkia(bitmap.Handler, assignPixels);
         }
 
-        public static SKBitmap ToSkia(IGenericImageHandler bitmap)
+        public static SKBitmap CreateSkiaBitmapForImage(int width, int height, bool hasAlpha)
         {
-            var width = bitmap.Width;
-            var height = bitmap.Height;
             var count = width * height;
             if (count == 0)
                 return new SKBitmap();
 
-            var result = new SKBitmap(width, height, isOpaque: !bitmap.HasAlpha);
-            result.Pixels = bitmap.Pixels;
+            var result = new SKBitmap(width, height, isOpaque: !hasAlpha);
+
+            return result;
+        }
+
+        public static SKBitmap ToSkia(IGenericImageHandler bitmap, bool assignPixels = true)
+        {
+            var result = CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
+
+            if (assignPixels)
+                result.Pixels = bitmap.Pixels;
             return result;
         }
 
