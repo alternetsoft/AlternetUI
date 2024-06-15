@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -237,6 +238,18 @@ namespace Alternet.UI
 
             if (!e.Handled)
                 Parent?.BubbleHelpRequested(e);
+        }
+
+        public virtual void BubbleErrorsChanged(DataErrorsChangedEventArgs e)
+        {
+            var currentTarget = this;
+
+            while(currentTarget != null)
+            {
+                currentTarget.ErrorsChanged?.Invoke(currentTarget, e);
+                currentTarget = currentTarget.Parent;
+            }
+
         }
     }
 }

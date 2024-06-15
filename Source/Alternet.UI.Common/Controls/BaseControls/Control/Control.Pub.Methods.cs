@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -1304,6 +1305,28 @@ namespace Alternet.UI
         public virtual string? GetRealToolTip()
         {
             return ToolTip;
+        }
+
+        /// <summary>
+        /// Gets the validation errors for this control and it's child controls.
+        /// </summary>
+        /// <param name="propertyName">
+        /// The name of the property to retrieve validation errors for; or <c>null</c>
+        /// or <see cref="System.String.Empty"/>, to retrieve entity-level errors.
+        /// </param>
+        /// <returns>The validation errors for this control and it's child controls.</returns>
+        public virtual IEnumerable GetErrors(string? propertyName = null)
+        {
+            foreach (var item in AllChildren)
+            {
+                if (item is INotifyDataErrorInfo errorInfo)
+                {
+                    foreach (var error in errorInfo.GetErrors(null))
+                    {
+                        yield return error;
+                    }
+                }
+            }
         }
 
         /// <summary>

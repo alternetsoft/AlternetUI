@@ -17,7 +17,7 @@ namespace Alternet.UI
     [DefaultEvent("Click")]
     public partial class Control
         : FrameworkElement, ISupportInitialize, IDisposable, IFocusable,
-        IWin32Window, ITextProperty, IComponent, IControl
+        IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo
     {
         /// <summary>
         /// Gets or sets min element size.
@@ -2273,7 +2273,21 @@ namespace Alternet.UI
                     result += item.Location;
                 }
 
-                return result;
+                return origin + result;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value that indicates whether this control or it's child controls have validation errors.
+        /// </summary>
+        /// <returns><c>true</c> if the control currently has validation errors;
+        /// otherwise, <c>false</c>.</returns>
+        [Browsable(false)]
+        public virtual bool HasErrors
+        {
+            get
+            {
+                return GetErrors(null).Cast<object>().Any();
             }
         }
 

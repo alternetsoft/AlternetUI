@@ -33,18 +33,8 @@ namespace Alternet.UI
         /// </remarks>
         public event ErrorStatusEventHandler? ErrorStatusChanged;
 
-        /// <summary>
-        /// Occurs when the validation errors have changed for a property or for the entire entity.
-        /// </summary>
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
-        /// <summary>
-        /// Gets a value that indicates whether the entity has validation errors.
-        /// </summary>
-        /// <returns><c>true</c> if the entity currently has validation errors;
-        /// otherwise, <c>false</c>.</returns>
-        [Browsable(false)]
-        public virtual bool HasErrors
+        /// <inheritdoc/>
+        public override bool HasErrors
         {
             get
             {
@@ -715,15 +705,8 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets the validation errors.
-        /// </summary>
-        /// <param name="propertyName">
-        /// The name of the property to retrieve validation errors for; or <c>null</c>
-        /// or <see cref="System.String.Empty"/>, to retrieve entity-level errors.
-        /// </param>
-        /// <returns>The validation errors for the property or entity.</returns>
-        public IEnumerable GetErrors(string? propertyName)
+        /// <inheritdoc/>
+        public override IEnumerable GetErrors(string? propertyName)
         {
             return GetErrors();
         }
@@ -757,7 +740,7 @@ namespace Alternet.UI
                 if (errorCount != oldErrorCount)
                 {
                     oldErrorCount = errorCount;
-                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(null));
+                    BubbleErrorsChanged(new DataErrorsChangedEventArgs(null));
                 }
             }
 

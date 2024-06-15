@@ -53,11 +53,6 @@ namespace Alternet.UI
             mainControl.Parent = this;
             CustomTextBox.InitErrorPicture(errorPicture);
             errorPicture.Parent = this;
-
-            if (MainControl is INotifyDataErrorInfo notifyDataErrorInfo)
-            {
-                notifyDataErrorInfo.ErrorsChanged += (s, e) => OnErrorsChanged(e);
-            }
         }
 
         /// <summary>
@@ -143,7 +138,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Control MainControl => mainControl;
 
-        public virtual bool HasErrors
+        /// <inheritdoc/>
+        public override bool HasErrors
         {
             get => (MainControl as INotifyDataErrorInfo)?.HasErrors ?? false;
         }
@@ -152,9 +148,8 @@ namespace Alternet.UI
 
         Control IControlAndLabel.MainControl => MainControl;
 
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
-        public virtual IEnumerable GetErrors(string? propertyName)
+        /// <inheritdoc/>
+        public override IEnumerable GetErrors(string? propertyName)
         {
             return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName) ?? Array.Empty<string>();
         }
@@ -174,10 +169,5 @@ namespace Alternet.UI
         /// By default <see cref="Label"/> is created.
         /// </remarks>
         protected virtual Control CreateLabel() => CreateDefaultLabel();
-
-        protected virtual void OnErrorsChanged(DataErrorsChangedEventArgs e)
-        {
-            ErrorsChanged?.Invoke(this, e);
-        }
     }
 }
