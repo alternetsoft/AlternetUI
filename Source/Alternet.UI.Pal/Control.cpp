@@ -896,7 +896,8 @@ namespace Alternet::UI
 
     bool Control::GetAcceptsFocus()
     {
-        return _acceptsFocus;
+        auto wxWindow = GetWxWindow();
+        return wxWindow->AcceptsFocus();
     }
 
     void Control::SetTabStop(bool value)
@@ -925,7 +926,7 @@ namespace Alternet::UI
 
     bool Control::GetAcceptsFocusAll()
     {
-        return _acceptsFocus && _acceptsFocusFromKeyboard && _acceptsFocusRecursively;
+        return GetAcceptsFocus() && GetAcceptsFocusFromKeyboard() && GetAcceptsFocusRecursively();
     }
 
     void Control::SetAcceptsFocusAll(bool value)
@@ -941,7 +942,8 @@ namespace Alternet::UI
 
     bool Control::GetAcceptsFocusFromKeyboard()
     {
-        return _acceptsFocusFromKeyboard;
+        auto wxWindow = GetWxWindow();
+        return wxWindow->AcceptsFocusFromKeyboard();
     }
 
     void Control::SetAcceptsFocusFromKeyboard(bool value)
@@ -954,7 +956,8 @@ namespace Alternet::UI
 
     bool Control::GetAcceptsFocusRecursively()
     {
-        return _acceptsFocusRecursively;
+        auto wxWindow = GetWxWindow();
+        return wxWindow->AcceptsFocusRecursively();
     }
 
     void Control::SetAcceptsFocusRecursively(bool value)

@@ -11,9 +11,6 @@ namespace Alternet.UI
     {
         private static Control? focusedControl;
 
-        private bool tabStop = true;
-        private bool canSelect = true;
-
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
@@ -129,15 +126,14 @@ namespace Alternet.UI
         {
             get
             {
-                return tabStop;
+                return Handler.TabStop;
             }
 
             set
             {
-                if (tabStop == value)
+                if (TabStop == value)
                     return;
-                tabStop = value;
-                UpdateFocusFlags();
+                UpdateFocusFlags(CanSelect, value);
             }
         }
 
@@ -151,16 +147,14 @@ namespace Alternet.UI
         {
             get
             {
-                return !canSelect;
+                return !Handler.CanSelect;
             }
 
             set
             {
                 if (IsGraphicControl == value)
                     return;
-                tabStop = !value;
-                canSelect = !value;
-                UpdateFocusFlags();
+                UpdateFocusFlags(!value, !value);
             }
         }
 
@@ -172,19 +166,19 @@ namespace Alternet.UI
         /// Default value is true.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [Browsable(true)]
         public virtual bool CanSelect
         {
             get
             {
-                return canSelect;
+                return Handler.CanSelect;
             }
 
             set
             {
-                if (canSelect == value)
+                if (CanSelect == value)
                     return;
-                canSelect = value;
-                UpdateFocusFlags();
+                UpdateFocusFlags(value, TabStop);
             }
         }
 
@@ -238,7 +232,7 @@ namespace Alternet.UI
             Handler.FocusNextControl(forward, nested);
         }
 
-        private void UpdateFocusFlags()
+        private void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
             Handler.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
         }

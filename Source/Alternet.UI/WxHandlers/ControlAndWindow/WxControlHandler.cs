@@ -334,6 +334,8 @@ namespace Alternet.UI
             set => NativeControl.AllowDrop = value;
         }
 
+        public bool CanSelect => AcceptsFocus;
+
         public bool AcceptsFocus
         {
             get => NativeControl.AcceptsFocus;
@@ -771,10 +773,6 @@ namespace Alternet.UI
         internal virtual Native.Control CreateNativeControl()
         {
             var result = new Native.Panel();
-
-            if (Control.IsGraphicControl)
-                result.AcceptsFocusAll = false;
-
             return result;
         }
 
