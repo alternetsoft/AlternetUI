@@ -130,11 +130,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets source url of this image. 
+        /// Gets or sets source url of this image. This is informational property and
+        /// doesn't reload the image.
         /// </summary>
         public virtual string? Url
         {
             get => url;
+
+            set => url = value;
         }
 
         public virtual bool HasMask => Handler.HasMask;
@@ -663,7 +666,10 @@ namespace Alternet.Drawing
             return InsideTryCatch(() =>
             {
                 using var stream = FileSystem.Default.Create(name);
-                return Save(stream, type, quality.Value);
+                var result = Save(stream, type, quality.Value);
+                if (result)
+                    url = name;
+                return result;
             });
         }
 
