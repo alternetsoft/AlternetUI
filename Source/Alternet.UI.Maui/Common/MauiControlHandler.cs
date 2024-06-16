@@ -199,6 +199,11 @@ namespace Alternet.UI
 
         public Action? DpiChanged { get; set; }
 
+        public bool CanSelect
+        {
+            get => true;
+        }
+
         public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
         {
         }

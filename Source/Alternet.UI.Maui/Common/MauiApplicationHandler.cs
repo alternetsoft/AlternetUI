@@ -150,11 +150,6 @@ namespace Alternet.UI
             Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
-        ICursorFactoryHandler IApplicationHandler.CreateCursorFactoryHandler()
-        {
-            return new PlessCursorFactoryHandler();
-        }
-
         IMemoryHandler IApplicationHandler.CreateMemoryHandler()
         {
             throw new NotImplementedException();
@@ -209,19 +204,9 @@ namespace Alternet.UI
         {
         }
 
-        public MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton)
+        public IMouseHandler CreateMouseHandler()
         {
-            return PlessMouse.GetButtonState(mouseButton);
-        }
-
-        public PointD GetMousePositionFromSystem()
-        {
-            var (position, control) = PlessMouse.LastMousePosition;
-
-            if (control is null || position is null)
-                return PointD.MinValue;
-
-            return ClientToScreen(position.Value, control);
+            return new PlessMouseHandler();
         }
 
         public IKeyboardHandler CreateKeyboardHandler()
