@@ -265,7 +265,7 @@ namespace Alternet.UI
             ListView?.Handler.EnsureItemVisible(RequiredIndex);
 
         /// <inheritdoc cref="ListControlItem.ToString"/>
-        public override string ToString()
+        public override string? ToString()
         {
             if (string.IsNullOrWhiteSpace(Text))
                 return base.ToString() ?? nameof(ListViewItem);
