@@ -89,7 +89,7 @@
           <Border Name="contextMenuBorder"
                     MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp"
                     Margin="10">
-            <Label Margin="5" Text="Right-click shows context menu" BubbleMouse="true"
+            <Label Margin="5" Text="Right-click shows context menu" InputTransparent="true"
                    Name="contextMenuLabel"/>
           </Border>
         </VerticalStackPanel>
