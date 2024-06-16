@@ -284,15 +284,15 @@ namespace PropertyGridSample
 
         private static ControlStateImages? buttonImages;
 
-        public static ControlStateImages ButtonImages => buttonImages ??= LoadButtonImages();
+        public static ControlStateImages GetButtonImages(Control control) =>
+            buttonImages ??= LoadButtonImages();
 
         private static ControlStateImages LoadButtonImages()
         {
-            static Image LoadImage(string stateName) =>
-                new Bitmap(
-                    Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                        $"ControlsSampleDll.Resources.ButtonImages.ButtonImage{stateName}.png")
-                    ?? throw new Exception());
+            static Image LoadImage(string stateName)
+            {
+                return new Bitmap($"embres:ControlsSampleDll.Resources.ButtonImages.ButtonImage{stateName}.png");
+            }
 
             var normal = LoadImage("Normal");
             var disabled = normal.ToGrayScale();
