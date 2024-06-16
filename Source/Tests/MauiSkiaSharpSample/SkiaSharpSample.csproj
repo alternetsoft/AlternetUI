@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0-ios;net8.0-maccatalyst;net8.0-android</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ApplicationTitle>SkiaSharp Sample</ApplicationTitle>
+    <ApplicationId>com.companyname.SkiaSharpSample</ApplicationId>
+    <ApplicationIdGuid>AC63F9E5-DBE5-4F04-9EBC-2694661FE99B</ApplicationIdGuid>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-ios'))">14.2</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-maccatalyst'))">14.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-android'))">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-tizen'))">6.5</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MauiIcon Include="Resources\appicon.png" IsAppIcon="true" Color="#F8F8F8" />
+    <MauiSplashScreen Include="Resources\skiasharplogo.png" BaseSize="256" Color="#F8F8F8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Core" Version="8.0.60" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.60" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.60" />
+    <PackageReference Include="SharpHook" Version="5.3.6" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
+  </ItemGroup>
+
+  <Import Project="IncludeNativeAssets.SkiaSharp.targets" />
+  <Import Project="IncludeNativeAssets.SkiaSharp.WinUI.targets" />
+
+</Project>
