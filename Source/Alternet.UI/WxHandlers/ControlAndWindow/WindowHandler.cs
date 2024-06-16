@@ -254,7 +254,7 @@ namespace Alternet.UI
         private void SetStatusBar(object? oldValue, object? value)
         {
             var nc = NativeControl;
-
+            
             if (value is StatusBar asStatusBar)
             {
                 if ((value as IDisposableObject)?.IsDisposed ?? false)
@@ -274,13 +274,15 @@ namespace Alternet.UI
             }
 
             if (value is StatusBar asStatusBar3)
+            {
                 SetWindow(asStatusBar3, Control);
+            }
             else
                 nc.WxStatusBar = default;
 
             void SetWindow(StatusBar sb, Window? window)
             {
-                if(sb.Handler is StatusBarHandler handler)
+                if (sb.Handler is StatusBarHandler handler)
                     handler.Window = window;
             }
         }

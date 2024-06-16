@@ -99,7 +99,7 @@ namespace MenuSample
 
         private void StatusAddButton_Click(object? sender, System.EventArgs e)
         {
-            StatusBar ??= new();
+            StatusBar ??= new StatusBar();
             GetStatusBar()?.Add($"Panel {GenItemIndex()}");
         }
 
@@ -122,7 +122,7 @@ namespace MenuSample
 
         private void StatusEditButton_Click(object? sender, EventArgs e)
         {
-            StatusBar ??= new();
+            StatusBar ??= new StatusBar();
             DialogFactory.EditItemsWithListEditor(GetStatusBar());
         }
 
