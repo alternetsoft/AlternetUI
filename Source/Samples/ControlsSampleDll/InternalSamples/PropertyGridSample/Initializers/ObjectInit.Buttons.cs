@@ -21,7 +21,8 @@ namespace PropertyGridSample
                 return;
             button.Text = "Butt&on";
             button.Click += LogClick;
-            button.StateImages = ButtonImages;
+            button.StateImages = GetButtonImages(button);
+            button.SetImageMargins(5);
             button.SuggestedHeight = 100;
             button.HorizontalAlignment = HorizontalAlignment.Left;
             button.MouseWheel += Button_MouseWheel;

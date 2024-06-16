@@ -106,6 +106,8 @@ namespace Alternet.Drawing
                 App.LogError($"Image not loaded from: {url}");
                 return;
             }
+
+            this.url = url;
         }
 
         /// <summary>

@@ -262,9 +262,9 @@ namespace Alternet.UI
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
-        public override string ToString()
+        public override string? ToString()
         {
-            return Text;
+            return Text ?? base.ToString();
         }
     }
 }

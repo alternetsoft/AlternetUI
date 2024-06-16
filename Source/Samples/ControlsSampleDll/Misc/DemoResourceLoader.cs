@@ -17,7 +17,10 @@ namespace ControlsSample
             return imageLists;
         }
 
-        internal static ControlStateImages LoadButtonImages(Control? control)
+        internal static ControlStateImages LoadButtonImages(
+            Control? control,
+            string? url = null,
+            SizeI? size = null)
         {
             Image LoadImage(string stateName, bool disabled = false)
             {
@@ -33,11 +36,13 @@ namespace ControlsSample
                         color = SvgColors.GetSvgColor(KnownSvgColor.Normal, isDark);
                 }
 
-                return Image.FromSvgUrl(
-                    $"embres:ControlsSampleDll.Resources.ButtonImages.ButtonImage{stateName}.svg",
-                    16,
-                    16,
-                    color);
+                url ??= "embres:ControlsSampleDll.Resources.ButtonImages.ButtonImage{0}.svg";
+
+                url = string.Format(url, stateName);
+
+                size ??= 16;
+
+                return Image.FromSvgUrl(url, size.Value.Width, size.Value.Height, color);
             }
 
             var normalImage = LoadImage("Normal");

@@ -63,6 +63,8 @@ namespace Alternet.Drawing
         private static IEnumerable<string>? extensionsForLoad;
         private static IEnumerable<string>? extensionsForSave;
 
+        internal string? url;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
@@ -125,6 +127,17 @@ namespace Alternet.Drawing
             {
                 return Handler.ToGenericImage();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets source url of this image. This is informational property and
+        /// doesn't reload the image.
+        /// </summary>
+        public virtual string? Url
+        {
+            get => url;
+
+            set => url = value;
         }
 
         public virtual bool HasMask => Handler.HasMask;
@@ -396,10 +409,12 @@ namespace Alternet.Drawing
         /// button1.Image = Bitmap.FromUrl(url);
         /// </code>
         /// </example>
-        public static Image FromUrl(string url)
+        public static Image FromUrl(string url, BitmapType bitmapType = BitmapType.Any)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
-            return new Bitmap(stream);
+            var result = new Bitmap(stream, bitmapType);
+            result.url = url;
+            return result;
         }
 
         /// <summary>
@@ -432,6 +447,7 @@ namespace Alternet.Drawing
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
             var result = FromSvgStream(stream, width, height, color);
+            result.url = url;
             return result;
         }
 
@@ -615,14 +631,16 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats
         /// for the load operation.</remarks>
-        public virtual bool Load(string url, BitmapType type)
+        public virtual bool Load(string url, BitmapType type = BitmapType.Any)
         {
             return InsideTryCatch(() =>
             {
                 using var stream = ResourceLoader.StreamFromUrl(url);
                 if (stream is null)
                     return false;
-                var result = Handler.LoadFromStream(stream);
+                var result = Handler.LoadFromStream(stream, type);
+                if(result)
+                    this.url = url;
                 return result;
             });
         }
@@ -648,7 +666,10 @@ namespace Alternet.Drawing
             return InsideTryCatch(() =>
             {
                 using var stream = FileSystem.Default.Create(name);
-                return Save(stream, type, quality.Value);
+                var result = Save(stream, type, quality.Value);
+                if (result)
+                    url = name;
+                return result;
             });
         }
 
@@ -871,6 +892,15 @@ namespace Alternet.Drawing
         {
             var dc = Graphics.FromImage(this);
             return dc;
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string? ToString()
+        {
+            return url ?? base.ToString();
         }
 
         /// <inheritdoc/>
