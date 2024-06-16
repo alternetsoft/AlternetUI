@@ -139,6 +139,10 @@ namespace Alternet.UI
         
         Action? IControlHandler.DpiChanged { get; set; }
 
+        public bool TabStop => true;
+
+        public bool CanSelect => true;
+
         void IControlHandler.AlwaysShowScrollbars(bool hflag, bool vflag)
         {
         }

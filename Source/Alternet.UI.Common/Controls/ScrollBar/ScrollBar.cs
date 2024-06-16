@@ -56,7 +56,7 @@ namespace Alternet.UI
         public event EventHandler? IsVerticalChanged;
 
         /// <summary>
-        /// Gets or sets metrix used to paint non-system scrollbars.
+        /// Gets or sets default metrics used to paint non-system scrollbars.
         /// </summary>
         public static MetricsInfo DefaultMetrics
         {
@@ -70,6 +70,25 @@ namespace Alternet.UI
                 defaultMetrics = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets metrics used to paint this scrollbar when it's style is non-system.
+        /// </summary>
+        [Browsable(false)]
+        public MetricsInfo Metrics
+        {
+            get
+            {
+                return metrics ?? DefaultMetrics;
+            }
+
+            set
+            {
+                metrics = value;
+                PerformLayout();
+            }
+        }
+
 
         /// <summary>
         /// Gets or sets a value to be added to or subtracted from the
@@ -313,18 +332,38 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        public MetricsInfo Metrics
+        internal new LayoutStyle? Layout
         {
-            get
-            {
-                return metrics ?? DefaultMetrics;
-            }
+            get => base.Layout;
+            set => base.Layout = value;
+        }
 
-            set
-            {
-                metrics = value;
-                PerformLayout();
-            }
+        [Browsable(false)]
+        internal new bool ParentFont
+        {
+            get => base.ParentFont;
+            set => base.ParentFont = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentForeColor
+        {
+            get => base.ParentForeColor;
+            set => base.ParentForeColor = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentBackColor
+        {
+            get => base.ParentBackColor;
+            set => base.ParentBackColor = value;
         }
 
         /// <summary>
@@ -451,6 +490,65 @@ namespace Alternet.UI
         {
             base.UnbindHandlerEvents();
             Handler.Scroll = null;
+        }
+
+        protected virtual SizeD SizeFromMetrics()
+        {
+            Coord width;
+            Coord height;
+
+            if (IsVertical)
+            {
+                width = PixelToDip(Metrics.VScrollX);
+                height = Coord.NaN;
+            }
+            else
+            {
+                width = Coord.NaN;
+                height = PixelToDip(Metrics.HScrollY);
+            }
+
+            return new(width, height);
+        }
+
+        protected virtual SizeD ArrowBitmapSizeFromMetrics()
+        {
+            Coord width;
+            Coord height;
+
+            if (IsVertical)
+            {
+                width = PixelToDip(Metrics.VScrollArrowX);
+                height = PixelToDip(Metrics.VScrollArrowY);
+            }
+            else
+            {
+                width = PixelToDip(Metrics.HScrollArrowX);
+                height = PixelToDip(Metrics.HScrollArrowY);
+            }
+
+            return new(width, height);
+        }
+
+        protected virtual SizeD ThumbSizeFromMetrics()
+        {
+            Coord width;
+            Coord height;
+
+            var clientSize = ClientSize;
+
+            if (IsVertical)
+            {
+                width = clientSize.Width;
+                height = PixelToDip(Metrics.VThumbY);
+            }
+            else
+            {
+                width = PixelToDip(Metrics.HThumbX);
+                height = clientSize.Height;
+            }
+
+            return new(width, height);
         }
 
         public struct MetricsInfo

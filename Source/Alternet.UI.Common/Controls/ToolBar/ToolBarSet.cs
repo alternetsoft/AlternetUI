@@ -25,6 +25,7 @@ namespace Alternet.UI
         {
             Layout = LayoutStyle.Vertical;
             ToolBarCount = 1;
+            IsGraphicControl = true;
         }
 
         /// <summary>

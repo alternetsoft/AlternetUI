@@ -643,6 +643,13 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
         internal new string Text
         {
             get => base.Text;

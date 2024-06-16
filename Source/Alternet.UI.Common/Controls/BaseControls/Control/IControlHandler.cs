@@ -66,6 +66,10 @@ namespace Alternet.UI
 
         bool ShowVertScrollBar { get; set; }
 
+        bool TabStop { get; }
+
+        bool CanSelect { get; }
+
         bool ScrollBarAlwaysVisible { get; set; }
 
         RectD EventBounds { get; }

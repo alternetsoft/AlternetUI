@@ -599,6 +599,13 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
         /// <summary>
         /// Gets a <see cref="ListViewHandler"/> associated with this class.
         /// </summary>

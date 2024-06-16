@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -203,6 +205,90 @@ namespace Alternet.UI
                 CheckDisposed();
                 MaximumChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        [Browsable(false)]
+        internal new Thickness Padding
+        {
+            get => base.Padding;
+            set => base.Padding = value;
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
+        internal new bool CanSelect
+        {
+            get => base.CanSelect;
+            set => base.CanSelect = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentFont
+        {
+            get => base.ParentFont;
+            set => base.ParentFont = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentForeColor
+        {
+            get => base.ParentForeColor;
+            set => base.ParentForeColor = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentBackColor
+        {
+            get => base.ParentBackColor;
+            set => base.ParentBackColor = value;
+        }
+
+        [Browsable(false)]
+        internal new bool TabStop
+        {
+            get => base.TabStop;
+            set => base.TabStop = value;
+        }
+
+        [Browsable(false)]
+        internal new bool IsBold
+        {
+            get => base.IsBold;
+            set => base.IsBold = value;
+        }
+
+        [Browsable(false)]
+        internal new Color? ForegroundColor
+        {
+            get => base.ForegroundColor;
+            set => base.ForegroundColor = value;
+        }
+
+        [Browsable(false)]
+        internal new Color? BackgroundColor
+        {
+            get => base.BackgroundColor;
+            set => base.BackgroundColor = value;
+        }
+
+        [Browsable(false)]
+        internal new Font? Font
+        {
+            get => base.Font;
+            set => base.Font = value;
         }
 
         [Browsable(false)]
