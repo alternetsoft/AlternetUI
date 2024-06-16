@@ -105,13 +105,25 @@ namespace Alternet.UI
             var bitsOS = App.Is64BitOS ? "x64" : "x86";
             var bitsApp = App.Is64BitProcess ? "x64" : "x86";
             var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
-            var dpi = $"DPI: {App.FirstWindow()?.GetDPI().Width}";
+
+            var minDPI = Display.MinDPI;
+            var maxDPI = Display.MaxDPI;
+            string dpiValue;
+
+            if (minDPI == maxDPI)
+                dpiValue = $"{minDPI}";
+            else
+                dpiValue = $"{minDPI}..{maxDPI}";
+
+            var dpi = $"DPI: {dpiValue}";
             var ui = $"UI: {SystemSettings.Handler.GetUIVersion()}";
             var counterStr = $"Counter: {App.BuildCounter}";
             var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
             App.Log(s);
             if (App.LogFileIsEnabled)
                 App.DebugLog($"Log File = {App.LogFilePath}");
+            if (Display.MinScaleFactor != Display.MaxScaleFactor)
+                App.LogWarning("Displays have different ScaleFactor");
         }
 
         /// <summary>

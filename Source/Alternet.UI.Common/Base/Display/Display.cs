@@ -12,7 +12,8 @@ namespace Alternet.UI
     {
         private static IDisplayFactoryHandler? factory;
         private static Coord? maxScaleFactor;
-        
+        private static SizeI? baseDPI;
+
         private SizeI? dpi;
         private Coord? scaleFactor;
 
@@ -56,6 +57,14 @@ namespace Alternet.UI
             }
         }
 
+        public static Coord MinScaleFactor
+        {
+            get
+            {
+                return maxScaleFactor ??= MathUtils.Min(AllScaleFactors);
+            }
+        }
+
         public static IDisplayFactoryHandler Factory
         {
             get
@@ -74,15 +83,15 @@ namespace Alternet.UI
         /// </summary>
         public static int Count => Factory.GetCount();
 
-        /*/// <summary>
-        /// Gets default display resolution for the current platform in pixels per inch.
+        /// <summary>
+        /// Gets base display resolution for the current platform in pixels per inch.
         /// </summary>
         /// <remarks>
-        /// Currently the default DPI is the same in both horizontal and vertical
+        /// Currently the base DPI is the same in both horizontal and vertical
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static int DefaultDPIValue => DefaultDPI.Width;*/
+        public static int BaseDPIValue => BaseDPI.Width;
 
         /// <summary>
         ///  Gets an array of all of the displays on the system.
@@ -120,6 +129,39 @@ namespace Alternet.UI
             }
         }
 
+        public static int[] AllDPI
+        {
+            get
+            {
+                var screens = AllScreens;
+                var length = screens.Length;
+                var result = new int[length];
+
+                for (int i = 0; i < length; i++)
+                    result[i] = screens[i].DPI.Height;
+
+                return result;
+            }
+        }
+
+        public static int MinDPI
+        {
+            get
+            {
+                return MathUtils.Min(AllDPI);
+            }
+        }
+
+        public static int MaxDPI
+        {
+            get
+            {
+                return MathUtils.Max(AllDPI);
+            }
+        }
+
+        public static bool HasDifferentDPI => MaxDPI != MinDPI;
+
         public static Display GetDisplay(int index)
         {
             return new Display(index);
@@ -137,15 +179,15 @@ namespace Alternet.UI
             }
         }
 
-        /*/// <summary>
-        /// Gets default display resolution for the current platform as <see cref="SizeI"/>.
+        /// <summary>
+        /// Gets default base display resolution for the current platform as <see cref="SizeI"/>.
         /// </summary>
         /// <remarks>
-        /// Currently the default DPI is the same in both horizontal and vertical
+        /// Currently the base DPI is the same in both horizontal and vertical
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static SizeI DefaultDPI => defaultDPI ??= Factory.GetDefaultDPI();*/
+        public static SizeI BaseDPI => baseDPI ??= Factory.GetDefaultDPI();
 
         /// <summary>
         /// Gets the display's name.

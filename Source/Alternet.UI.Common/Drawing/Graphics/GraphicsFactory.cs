@@ -209,7 +209,7 @@ namespace Alternet.Drawing
 
             ISkiaSurface CreateUsingGenericImage()
             {
-                App.DebugLogIf("CreateSkiaSurface for image using GenericImage", true);
+                App.DebugLogIf("CreateSkiaSurface for image using GenericImage", false);
 
                 SKBitmap bitmap = Image.ToSkia(image, lockMode.CanRead());
 
