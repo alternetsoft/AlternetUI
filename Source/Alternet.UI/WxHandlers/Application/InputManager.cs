@@ -46,17 +46,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Read-only access to the primary mouse device.
-        /// </summary>
-        public MouseDevice PrimaryMouseDevice
-        {
-            get
-            {
-                return MouseDevice.Default;
-            }
-        }
-
-        /// <summary>
         ///     Internal implementation of InputManager.Current.
         ///     Critical but not TAS - for internal's to use.
         ///     Only exists for perf. The link demand check
@@ -72,7 +61,7 @@ namespace Alternet.UI
 
         internal static Control? GetControlUnderMouse()
         {
-            var controlUnderMouse = Native.Control.HitTest(MouseDevice.Default.GetScreenPosition());
+            var controlUnderMouse = Native.Control.HitTest(Mouse.GetPosition());
             if (controlUnderMouse == null)
                 return null;
 

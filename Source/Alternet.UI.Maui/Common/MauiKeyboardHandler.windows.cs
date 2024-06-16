@@ -18,7 +18,6 @@ namespace Alternet.UI
     {
         static MauiKeyboardHandler()
         {
-
         }
 
         public KeyStates GetKeyStatesFromSystem(Key key)
