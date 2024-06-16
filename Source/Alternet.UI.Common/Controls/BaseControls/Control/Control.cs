@@ -108,7 +108,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Mouse.PrimaryDevice.GetScreenPosition();
+                return Mouse.GetPosition();
             }
         }
 

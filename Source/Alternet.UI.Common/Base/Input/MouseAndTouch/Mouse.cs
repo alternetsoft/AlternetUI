@@ -15,6 +15,8 @@ namespace Alternet.UI
     /// </remarks>
     public static class Mouse
     {
+        public static IMouseHandler? handler;
+
         /// <summary>
         ///     The number of units the mouse wheel should be rotated to scroll one line.
         /// </summary>
@@ -33,7 +35,18 @@ namespace Alternet.UI
         /// </remarks>
         public static int MouseWheelDeltaForOneLine = 120;
 
-        private static MouseDevice mouseDevice = MouseDevice.Default;
+        public static IMouseHandler Handler
+        {
+            get
+            {
+                return handler ??= App.Handler.CreateMouseHandler();
+            }
+
+            set
+            {
+                handler = value;
+            }
+        }
 
         /// <summary>
         ///     The state of the left button.
@@ -42,7 +55,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Mouse.PrimaryDevice.LeftButton;
+                return GetButtonState(MouseButton.Left);
             }
         }
 
@@ -53,23 +66,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Mouse.PrimaryDevice.RightButton;
-            }
-        }
-
-        /// <summary>
-        ///     The primary mouse device.
-        /// </summary>
-        public static MouseDevice PrimaryDevice
-        {
-            get
-            {
-                return mouseDevice;
-            }
-
-            set
-            {
-                mouseDevice = value;
+                return GetButtonState(MouseButton.Right);
             }
         }
 
@@ -80,7 +77,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Mouse.PrimaryDevice.MiddleButton;
+                return GetButtonState(MouseButton.Middle);
             }
         }
 
@@ -91,7 +88,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Mouse.PrimaryDevice.XButton1;
+                return GetButtonState(MouseButton.XButton1);
             }
         }
 
@@ -102,15 +99,18 @@ namespace Alternet.UI
         {
             get
             {
-                return Mouse.PrimaryDevice.XButton2;
+                return GetButtonState(MouseButton.XButton2);
             }
         }
 
-        /// <summary>
-        /// </summary>
+        public static MouseButtonState GetButtonState(MouseButton mouseButton)
+        {
+            return Handler.GetButtonState(mouseButton);
+        }
+
         public static PointD GetPosition()
         {
-            return App.Handler.GetMousePositionFromSystem();
+            return Handler.GetPosition();
         }
 
         /// <summary>

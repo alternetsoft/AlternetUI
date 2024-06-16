@@ -11,21 +11,9 @@ namespace Alternet.UI
 {
     public interface IApplicationHandler : IDisposable
     {
+        IMouseHandler CreateMouseHandler();
+
         IKeyboardHandler CreateKeyboardHandler();
-
-        /// <summary>
-        /// Gets the current state of the specified button from
-        /// the device from the underlying system.
-        /// </summary>
-        /// <param name="mouseButton">
-        /// The mouse button to get the state of.
-        /// </param>
-        /// <returns>
-        /// The state of the specified mouse button.
-        /// </returns>
-        MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton);
-
-        PointD GetMousePositionFromSystem();
 
         /// <summary>
         /// Allows the programmer to specify whether the application will exit when the
@@ -83,8 +71,6 @@ namespace Alternet.UI
         IControlPainterHandler CreateControlPainterHandler();
 
         IMemoryHandler CreateMemoryHandler();
-
-        ICursorFactoryHandler CreateCursorFactoryHandler();
 
         ITimerHandler CreateTimerHandler(Timer timer);
 

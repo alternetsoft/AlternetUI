@@ -45,7 +45,6 @@ namespace Alternet.UI
             mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
 
             Keyboard.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
-            Mouse.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
         }
 
         public WxApplicationHandler()
@@ -259,12 +258,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ICursorFactoryHandler CreateCursorFactoryHandler()
-        {
-            return new WxCursorFactoryHandler();
-        }
-
-        /// <inheritdoc/>
         public IToolTipFactoryHandler CreateToolTipFactoryHandler()
         {
             return new WxToolTipFactoryHandler();
@@ -298,18 +291,6 @@ namespace Alternet.UI
             WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
         }
 
-        public MouseButtonState GetMouseButtonStateFromSystem(MouseButton mouseButton)
-        {
-            return WxApplicationHandler.NativeMouse.GetButtonState(mouseButton);
-        }
-
-        public PointD GetMousePositionFromSystem()
-        {
-            var resultI = WxApplicationHandler.NativeMouse.GetPosition();
-            var result = GraphicsFactory.PixelToDip(resultI);
-            return result;
-        }
-
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
@@ -332,6 +313,11 @@ namespace Alternet.UI
             }
 
             App.LogSeparator();
+        }
+
+        public IMouseHandler CreateMouseHandler()
+        {
+            return new WxMouseHandler();
         }
 
         public IKeyboardHandler CreateKeyboardHandler()

@@ -73,12 +73,6 @@ namespace Alternet.UI
         public long Timestamp { get; }
 
         /// <summary>
-        ///     Read-only access to the logical mouse device associated with
-        ///     this event.
-        /// </summary>
-        public MouseDevice MouseDevice => Mouse.PrimaryDevice;
-
-        /// <summary>
         ///     Read-only access to the button being described.
         /// </summary>
         public MouseButton ChangedButton
@@ -146,32 +140,7 @@ namespace Alternet.UI
         {
             get
             {
-                MouseButtonState state = MouseButtonState.Released;
-
-                switch (ChangedButton)
-                {
-                    case MouseButton.Left:
-                        state = this.MouseDevice.LeftButton;
-                        break;
-
-                    case MouseButton.Right:
-                        state = this.MouseDevice.RightButton;
-                        break;
-
-                    case MouseButton.Middle:
-                        state = this.MouseDevice.MiddleButton;
-                        break;
-
-                    case MouseButton.XButton1:
-                        state = this.MouseDevice.XButton1;
-                        break;
-
-                    case MouseButton.XButton2:
-                        state = this.MouseDevice.XButton2;
-                        break;
-                }
-
-                return state;
+                return Mouse.GetButtonState(ChangedButton);
             }
         }
 
@@ -213,7 +182,7 @@ namespace Alternet.UI
         {
             get
             {
-                return this.MouseDevice.LeftButton;
+                return Mouse.LeftButton;
             }
         }
 
@@ -224,7 +193,7 @@ namespace Alternet.UI
         {
             get
             {
-                return this.MouseDevice.RightButton;
+                return Mouse.RightButton;
             }
         }
 
@@ -235,7 +204,7 @@ namespace Alternet.UI
         {
             get
             {
-                return this.MouseDevice.MiddleButton;
+                return Mouse.MiddleButton;
             }
         }
 
@@ -246,7 +215,7 @@ namespace Alternet.UI
         {
             get
             {
-                return this.MouseDevice.XButton1;
+                return Mouse.XButton1;
             }
         }
 
@@ -257,7 +226,7 @@ namespace Alternet.UI
         {
             get
             {
-                return this.MouseDevice.XButton2;
+                return Mouse.XButton2;
             }
         }
 
