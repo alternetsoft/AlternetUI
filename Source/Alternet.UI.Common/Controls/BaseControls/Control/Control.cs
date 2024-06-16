@@ -199,6 +199,7 @@ namespace Alternet.UI
         /// pixels conversions.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual Coord ScaleFactor
         {
             get
@@ -896,6 +897,7 @@ namespace Alternet.UI
         /// This property is mostly used for the library itself, user code should normally use
         /// <see cref="Enabled"/> instead.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool IsThisEnabled
         {
             get
@@ -916,6 +918,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If <see cref="Parent"/> is not specified, returns <c>true</c>.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool IsParentEnabled
         {
             get
