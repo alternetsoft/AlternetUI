@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 
 using Alternet.Base.Collections;
@@ -761,6 +762,8 @@ namespace Alternet.UI
             get => Handler.Bounds;
             set
             {
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
                 if (Bounds == value)
                     return;
                 Handler.Bounds = value;
