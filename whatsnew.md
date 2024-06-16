@@ -1,3 +1,16 @@
+# 0.9.610 (2024 June 16)
+
+- **Critical** StatusBar: Fixed StatusBar was not shown in the window.
+- **Critical** SystemSettings: Fixed bug in ResetColors().
+- **Critical** Control: Fixed Bounds property set method. Now min width or height is always 0, previously it was possible to set negative values, so it caused Gtk exceptions on Linux.
+- Demo: Fixed uixml InputTransparent prop related exceptions.
+- ScrollBar: SizeFromMetrics(), ArrowBitmapSizeFromMetrics(), ThumbSizeFromMetrics().
+- Hide some properties in controls from PropertyGrid.
+- Control: Focus related fixes.
+- Image.Url property.
+- Demo: Fixed doubling of browsable types in PropGrid demo.
+- Demo: Fixed 'Add Panel', 'Set Null' actions for StatusBar demo.
+
 # 0.9.609 (2024 June 15)
 
 - Size and Rect: PixelToDip/PixelFromDip.
