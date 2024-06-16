@@ -12,7 +12,9 @@ namespace PropertyGridSample
 {
     public partial class MainWindow
     {
-        public static List<Type> LimitedTypes = new();
+        public static readonly List<Type> LimitedTypesStatic = new();
+
+        private List<Type> LimitedTypes = new();
 
         private T? GetSelectedControl<T>()
         {
@@ -90,6 +92,8 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(ColorListBox));
                 LimitedTypes.Add(typeof(VListBox));
                 LimitedTypes.Add(typeof(UserControl));
+
+                LimitedTypes.AddRange(LimitedTypesStatic);
 
                 List<ControlListBoxItem> items = new();
                 

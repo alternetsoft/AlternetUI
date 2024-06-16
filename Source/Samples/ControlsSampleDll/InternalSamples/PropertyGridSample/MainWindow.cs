@@ -90,6 +90,8 @@ namespace PropertyGridSample
 
             void Fn()
             {
+                PropertyGridSettings.Default = new(this);
+                SetBackground(SystemColors.Window);
 
                 Title = "Alternet UI PropertyGrid Sample";
                 Size = (900, 700);
@@ -115,7 +117,6 @@ namespace PropertyGridSample
                     | PropertyGridApplyFlags.ReloadAfterSetValue;
                 PropGrid.PropertyRightClick += PropGrid_PropertyRightClick;
                 PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
-                PropertyGridSettings.Default = new(this);
                 PropGrid.ProcessException += PropertyGrid_ProcessException;
                 InitIgnorePropNames(PropGrid.IgnorePropNames);
 
@@ -129,8 +130,6 @@ namespace PropertyGridSample
                 panel.ActionsControl.Required();
 
                 controlPanel.Parent = controlPanelBorder;
-
-                var parentParentColor = SystemColors.Window;
 
                 controlPanelBorder.Parent = parentParent;
 
@@ -409,15 +408,16 @@ namespace PropertyGridSample
 
             DoAction();
 
-            void SetBackground(Color color)
-            {
-                if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
-                    color = Color.White;
+        }
 
-                parentParent.BackgroundColor = color;
-                controlPanelBorder.BackgroundColor = color;
-                controlPanel.BackgroundColor = color;
-            }
+        private void SetBackground(Color color)
+        {
+            if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
+                color = Color.White;
+
+            parentParent.BackgroundColor = color;
+            controlPanelBorder.BackgroundColor = color;
+            controlPanel.BackgroundColor = color;
         }
 
         public class SettingsControl : Control

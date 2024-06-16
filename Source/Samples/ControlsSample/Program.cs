@@ -12,7 +12,7 @@ namespace ControlsSample
         {
             InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
 
-            PropertyGridSample.MainWindow.LimitedTypes.Add(typeof(PropertyGridSample.ControlPainterPreview));
+            PropertyGridSample.MainWindow.LimitedTypesStatic.Add(typeof(PropertyGridSample.ControlPainterPreview));
 
             PropertyGridSample.ObjectInit.Actions.Add(typeof(PropertyGridSample.ControlPainterPreview), (c) =>
             {

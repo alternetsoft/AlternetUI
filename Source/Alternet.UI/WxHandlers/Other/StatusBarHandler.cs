@@ -32,6 +32,7 @@ namespace Alternet.UI
                 if (window == value)
                     return;
                 window = value;
+                RecreateWidget();
             }
         }
 
