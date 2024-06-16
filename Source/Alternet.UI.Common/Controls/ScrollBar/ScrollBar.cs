@@ -331,6 +331,41 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentFont
+        {
+            get => base.ParentFont;
+            set => base.ParentFont = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentForeColor
+        {
+            get => base.ParentForeColor;
+            set => base.ParentForeColor = value;
+        }
+
+        [Browsable(false)]
+        internal new bool ParentBackColor
+        {
+            get => base.ParentBackColor;
+            set => base.ParentBackColor = value;
+        }
+
         /// <summary>
         /// Returns a string that represents the <see cref="ScrollBar" /> control.
         /// </summary>

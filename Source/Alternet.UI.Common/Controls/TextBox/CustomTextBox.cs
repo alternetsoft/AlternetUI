@@ -437,6 +437,20 @@ namespace Alternet.UI
             }
         }
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
         /// <summary>
         /// Initializes <see cref="PictureBox"/> with error image and other options.
         /// </summary>
