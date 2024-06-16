@@ -222,7 +222,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets border for all states of the control.
+        /// Gets or sets border for all states of the control.
         /// </summary>
         [Browsable(false)]
         public virtual ControlStateBorders? Borders
