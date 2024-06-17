@@ -17,9 +17,9 @@ using SkiaSharp.Views.Maui.Controls;
 
 namespace Alternet.UI
 {
-    public class SkiaContainer : ScrollView, IScrollViewController
+    public class SkiaContainer : SKCanvasView
     {
-        private readonly SKCanvasView canvas = new();
+        /*private readonly SKCanvasView canvas = new();*/
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
 
@@ -30,27 +30,27 @@ namespace Alternet.UI
 
         public SkiaContainer()
         {
-            Orientation = Microsoft.Maui.ScrollOrientation.Both;
-            VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-            HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
+            /*Orientation = Microsoft.Maui.ScrollOrientation.Both;*/
 
-            SetScrolledPosition(350, 500);
+            /*VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Always;*/
+
+            /*SetScrolledPosition(350, 500);
 
             ScrollToRequested += SkiaContainer_ScrollToRequested;
-            Scrolled += SkiaContainer_Scrolled;
+            Scrolled += SkiaContainer_Scrolled;*/
 
-            canvas = new SKCanvasView();
-            canvas.EnableTouchEvents = true;
-            canvas.Touch += Canvas_Touch;
-            canvas.SizeChanged += SkiaContainer_SizeChanged;
-            Content = canvas;
-            canvas.PaintSurface += Canvas_PaintSurface;
+            EnableTouchEvents = true;
+            Touch += Canvas_Touch;
+            SizeChanged += SkiaContainer_SizeChanged;
+            /*Content = canvas;*/
+            PaintSurface += Canvas_PaintSurface;
 
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
         }
 
-        public SKCanvasView CanvasView => canvas;
+        /*public SKCanvasView CanvasView => canvas;*/
 
         public Alternet.UI.Control? Control
         {
@@ -75,19 +75,24 @@ namespace Alternet.UI
                         handler.Container = this;
                 }
 
-                canvas.InvalidateSurface();
+                InvalidateSurface();
             }
         }
 
-        internal void Log(object? s)
+        public virtual void Invalidate()
+        {
+            InvalidateSurface();
+        }
+
+        public virtual void Log(object? s)
         {
             Alternet.UI.App.Log(s);
         }
 
-        protected override void LayoutChildren(double x, double y, double width, double height)
+        /*protected override void LayoutChildren(double x, double y, double width, double height)
         {
             base.LayoutChildren(x, y, width, height);
-        }
+        }*/
 
         protected override void OnChildAdded(Element child)
         {

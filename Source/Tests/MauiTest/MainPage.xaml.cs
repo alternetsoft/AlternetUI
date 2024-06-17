@@ -11,8 +11,7 @@ namespace SpinPaint;
 
 public partial class MainPage : ContentPage
 {
-    private readonly Alternet.UI.SkiaContainer skiaContainer = new();
-    private readonly Alternet.UI.SkiaSampleControl skiaSample = new();
+    private readonly Alternet.UI.SkiaSampleControl skiaSample;
 
     static MainPage()
     {
@@ -22,12 +21,14 @@ public partial class MainPage : ContentPage
     {
         /*var testForm = new DrawingSample.MainWindow();*/
 
+        InitializeComponent();
+
+        skiaSample = new();
+
         skiaContainer.BackgroundColor = Colors.Cornsilk;
         skiaContainer.Margin = new(5);
 
         skiaContainer.Control = skiaSample;
-
-        InitializeComponent();
 
         panel.BackgroundColor = Colors.CornflowerBlue;
         panel.Padding = new(10);
@@ -46,8 +47,6 @@ public partial class MainPage : ContentPage
         vo.Expands = true;
         vo.Alignment = LayoutAlignment.Fill;
         skiaContainer.VerticalOptions = vo;
-
-        panel.Children.Add(skiaContainer);
 
         openLogFileButton.Clicked += OpenLogFileButton_Clicked;
         keyboardButton.Clicked += KeyboardButton_Clicked;
