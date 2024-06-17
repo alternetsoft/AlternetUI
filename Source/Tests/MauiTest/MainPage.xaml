@@ -28,14 +28,14 @@
             <Button
                 Margin="0,20"
                 FontSize="12"
-                Text="OpenLogFile"
-                x:Name="openLogFileButton"
+                Text="1"
+                x:Name="button1"
                 HorizontalOptions="Center" />
             <Button
                 Margin="0,20"
                 FontSize="12"
-                Text="Keyboard"
-                x:Name="keyboardButton"
+                Text="2"
+                x:Name="button2"
                 HorizontalOptions="Center" />
         </HorizontalStackLayout>
 

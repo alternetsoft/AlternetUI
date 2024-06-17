@@ -48,24 +48,27 @@ public partial class MainPage : ContentPage
         vo.Alignment = LayoutAlignment.Fill;
         skiaContainer.VerticalOptions = vo;
 
-        openLogFileButton.Clicked += OpenLogFileButton_Clicked;
-        keyboardButton.Clicked += KeyboardButton_Clicked;
-
-        Alternet.UI.App.Log("Hello Maui");
+        button1.Clicked += Button1_Clicked;
+        button2.Clicked += Button2_Clicked;
     }
 
-    private void KeyboardButton_Clicked(object? sender, EventArgs e)
+    private void Button2_Clicked(object? sender, EventArgs e)
     {
+        Alternet.UI.MauiUtils.EnumViewsToLog(panel);
+        Alternet.UI.AppUtils.OpenLogFile();
+        /*
         var handler = Alternet.UI.Keyboard.Handler;
         if (handler.IsSoftKeyboardShowing(null))
             handler.HideKeyboard(null);
         else
             handler.ShowKeyboard(null);
+        */
     }
 
-    private void OpenLogFileButton_Clicked(object? sender, EventArgs e)
+    private void Button1_Clicked(object? sender, EventArgs e)
     {
-        Alternet.UI.AppUtils.OpenLogFile();
+        skiaContainer.Log($"Uses {skiaContainer.Handler?.PlatformView?.GetType().Name}");
+        Alternet.UI.MauiUtils.AddAllViewsToParent(panel);
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = new();
