@@ -17,7 +17,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <StackLayout x:Name="panel" Grid.Row="1">
-            <alternet:SkiaContainer x:Name="skiaContainer">
+            <alternet:SkiaContainer x:Name="skiaContainer" SampleProp="5">
                 
             </alternet:SkiaContainer>                
         </StackLayout>

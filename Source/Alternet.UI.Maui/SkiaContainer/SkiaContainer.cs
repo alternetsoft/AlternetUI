@@ -19,6 +19,13 @@ namespace Alternet.UI
 {
     public class SkiaContainer : SKCanvasView
     {
+        public static readonly BindableProperty SampleProperty = BindableProperty.Create(
+            nameof(SampleProp),
+            typeof(float),
+            typeof(SkiaContainer),
+            0.0f,
+            propertyChanged: OnSamplePropChanged);
+
         /*private readonly SKCanvasView canvas = new();*/
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
@@ -48,6 +55,12 @@ namespace Alternet.UI
 
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
+        }
+
+        public float SampleProp
+        {
+            get => (float)GetValue(SampleProperty);
+            set => SetValue(SampleProperty, value);
         }
 
         /*public SKCanvasView CanvasView => canvas;*/
@@ -107,6 +120,14 @@ namespace Alternet.UI
         protected override void OnParentChanged()
         {
             base.OnParentChanged();
+        }
+
+        private static void OnSamplePropChanged(
+            BindableObject bindable,
+            object oldValue,
+            object newValue)
+        {
+            ((SkiaContainer)bindable).InvalidateSurface();
         }
 
         private void SkiaContainer_Scrolled(object? sender, ScrolledEventArgs e)
