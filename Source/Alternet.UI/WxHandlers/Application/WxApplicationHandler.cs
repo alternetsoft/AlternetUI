@@ -13,6 +13,8 @@ namespace Alternet.UI
 {
     internal class WxApplicationHandler : DisposableObject, IApplicationHandler
     {
+        private const string RequireVersion = "3.2.5";
+
         private static readonly int[] eventIdentifiers = new int[(int)WxEventIdentifiers.Max + 1];
         private static readonly int minEventIdentifier;
         private static readonly WxEventIdentifiers[] eventIdentifierToEnum;
@@ -49,6 +51,17 @@ namespace Alternet.UI
 
         public WxApplicationHandler()
         {
+            var wxWidgets = WebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
+
+            var condition = wxWidgets.ToLower().Replace("wxwidgets ", string.Empty) != RequireVersion;
+            if (condition)
+            {
+                App.LogSeparator();
+                App.LogError($"Requires WxWidgets {RequireVersion}, yours is {wxWidgets}");
+                App.Log(@"Delete External\WxWidgets\ sub-folder and call Install script");
+                App.LogSeparator();
+            }
+
             LogUtils.RegisterLogAction("Use Pless Caret", () => { UsePlessCaret = true; });
         }
 
