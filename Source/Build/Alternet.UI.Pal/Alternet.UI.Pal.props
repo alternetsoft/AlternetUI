@@ -72,7 +72,7 @@
     <WebViewDownloadTargetPath>$(WebViewDownloadDirectory)\$(WebViewDownloadFileName)</WebViewDownloadTargetPath>
     <!-- ========================================== -->
     <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
-    <WxWidgetsDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrlOld>
+    <WxWidgetsDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.3.zip</WxWidgetsDownloadUrlOld>
     <WxWidgetsDownloadUrlNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.3.zip</WxWidgetsDownloadUrlNew>
 
     <WxWidgetsDownloadUrlLocalHost>http://localhost/wxWidgets-3.2.5.zip</WxWidgetsDownloadUrlLocalHost>
@@ -82,13 +82,11 @@
     <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
     <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
     <!-- ========================================== -->
-    <WxWidgetsBinDownloadUrlWindowsZipNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.3.zip</WxWidgetsBinDownloadUrlWindowsZipNew>
+    <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.5.zip</WxWidgetsBinDownloadUrlWindowsZip>
     <WxWidgetsBinDownloadUrlWindowsLocalHost>http://localhost/wxWidgets-bin-noobjpch-3.2.5.zip</WxWidgetsBinDownloadUrlWindowsLocalHost>
-    <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindowsZip>
-    <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.7z</WxWidgetsBinDownloadUrlWindows7z>
-    <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZipNew)</WxWidgetsBinDownloadUrlWindows>
+    <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZip)</WxWidgetsBinDownloadUrlWindows>
     <!-- ========================================== -->
-    <WxWidgetsBinDownloadUrlMacOSZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-macos-3.2.2.1.zip</WxWidgetsBinDownloadUrlMacOSZip>
+    <WxWidgetsBinDownloadUrlMacOSZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-macos-3.2.3.zip</WxWidgetsBinDownloadUrlMacOSZip>
     <WxWidgetsBinDownloadUrlMacOSLocalHost></WxWidgetsBinDownloadUrlMacOSLocalHost>
     <WxWidgetsBinDownloadUrlMacOSTest></WxWidgetsBinDownloadUrlMacOSTest>
     <WxWidgetsBinDownloadUrlMacOS>$(WxWidgetsBinDownloadUrlMacOSZip)</WxWidgetsBinDownloadUrlMacOS>
@@ -97,7 +95,7 @@
     <WxWidgetsBinDownloadFileNameMacOS>WxWidgetsBinMacOs.zip</WxWidgetsBinDownloadFileNameMacOS>
     <WxWidgetsBinDownloadTargetPathMacOS>$(WxWidgetsBinDownloadDirectoryMacOS)\$(WxWidgetsBinDownloadFileNameMacOS)</WxWidgetsBinDownloadTargetPathMacOS>
     <!-- ========================================== -->
-    <WxWidgetsBinDownloadUrlLinuxZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-linux-3.2.2.1.zip</WxWidgetsBinDownloadUrlLinuxZip>
+    <WxWidgetsBinDownloadUrlLinuxZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-linux-3.2.3.zip</WxWidgetsBinDownloadUrlLinuxZip>
     <WxWidgetsBinDownloadUrlLinuxLocalHost></WxWidgetsBinDownloadUrlLinuxLocalHost>
     <WxWidgetsBinDownloadUrlLinuxTest></WxWidgetsBinDownloadUrlLinuxTest>
     <WxWidgetsBinDownloadUrlLinux>$(WxWidgetsBinDownloadUrlLinuxZip)</WxWidgetsBinDownloadUrlLinux>
