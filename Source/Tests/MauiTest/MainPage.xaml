@@ -16,11 +16,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout x:Name="panel" Grid.Row="1">
-            <alternet:SkiaContainer x:Name="skiaContainer" SampleProp="5">
-                
-            </alternet:SkiaContainer>                
-        </StackLayout>
+        <HorizontalStackLayout x:Name="panel" Grid.Row="1">
+            <alternet:SkiaContainer x:Name="skiaContainer" SampleProp="5"/>
+            <GraphicsView x:Name="graphicsView"/>
+        </HorizontalStackLayout>
 
         <HorizontalStackLayout x:Name="buttonPanel"
                            Grid.Row="2">
