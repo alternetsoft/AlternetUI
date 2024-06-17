@@ -569,8 +569,6 @@ namespace Alternet.UI
             switch (e.DeviceType)
             {
                 case TouchDeviceType.Touch:
-                    App.Log(e.ActionType);
-                    break;
                 case TouchDeviceType.Mouse:
                     switch (e.ActionType)
                     {
@@ -624,7 +622,7 @@ namespace Alternet.UI
                     break;
             }
 
-            e.Handled = handled;
+            e.Handled = true;
         }
 
         /// <summary>
