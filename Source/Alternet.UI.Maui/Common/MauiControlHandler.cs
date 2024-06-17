@@ -432,7 +432,7 @@ namespace Alternet.UI
 
         public virtual void Invalidate()
         {
-            container?.CanvasView.InvalidateSurface();
+            container?.Invalidate();
         }
 
         public virtual Graphics CreateDrawingContext()
