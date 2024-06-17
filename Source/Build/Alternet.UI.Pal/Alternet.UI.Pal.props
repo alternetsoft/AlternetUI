@@ -73,8 +73,9 @@
     <!-- ========================================== -->
     <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
     <WxWidgetsDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrlOld>
-    <WxWidgetsDownloadUrlLocalHost>http://localhost/wxWidgets-3.2.3.zip</WxWidgetsDownloadUrlLocalHost>
     <WxWidgetsDownloadUrlNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.3.zip</WxWidgetsDownloadUrlNew>
+
+    <WxWidgetsDownloadUrlLocalHost>http://localhost/wxWidgets-3.2.5.zip</WxWidgetsDownloadUrlLocalHost>
     <WxWidgetsDownloadUrl>$(WxWidgetsDownloadUrlLocalHost)</WxWidgetsDownloadUrl>
     <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
     <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
@@ -82,7 +83,7 @@
     <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
     <!-- ========================================== -->
     <WxWidgetsBinDownloadUrlWindowsZipNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.3.zip</WxWidgetsBinDownloadUrlWindowsZipNew>
-    <WxWidgetsBinDownloadUrlWindowsLocalHost>http://localhost/wxWidgets-bin-noobjpch-3.2.3.zip</WxWidgetsBinDownloadUrlWindowsLocalHost>
+    <WxWidgetsBinDownloadUrlWindowsLocalHost>http://localhost/wxWidgets-bin-noobjpch-3.2.5.zip</WxWidgetsBinDownloadUrlWindowsLocalHost>
     <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindowsZip>
     <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.7z</WxWidgetsBinDownloadUrlWindows7z>
     <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZipNew)</WxWidgetsBinDownloadUrlWindows>
