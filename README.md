@@ -74,6 +74,9 @@ This will speed up the build process.
 If you want to use UI on single platform, run install script only there.
 
 - Exit Visual Studio before running Install script.
+- By default installation script doesn't download and compile used WxWidgets library if it was done previously. For overriding this 
+behavior, you can delete "WxWidgets" sub-folder in the "External" folder of the Alternet.UI installation. In this case full installation will be performed. 
+This could be useful when, for example, we switch to the new WxWidgets builds.
 - Run Install.sh (or Install.ps1) on macOs Machine.
 - Run Install.sh (or Install.ps1) on Linux Machine.
 - Run Install.bat (or Install.ps1) on Windows Machine.
