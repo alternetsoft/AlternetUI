@@ -17,6 +17,27 @@ namespace Alternet.UI.Extensions
 {
     public static class MauiExtensionsPrivate
     {
+#if WINDOWS
+        public static bool Focus(this GraphicsView graphicsView, Alternet.UI.FocusState focusState)
+        {
+            var platformView = graphicsView.GetPlatformView();
+            return platformView?.Focus((Microsoft.UI.Xaml.FocusState)focusState) ?? false;
+        }
+#else
+        public static bool Focus(this GraphicsView graphicsView, Alternet.UI.FocusState focusState)
+        {
+            return false;
+        }
+#endif
+
+        public static Microsoft.Maui.Platform.PlatformTouchGraphicsView? GetPlatformView(
+            this GraphicsView graphicsView)
+        {
+            var result = graphicsView.Handler?.PlatformView
+                as Microsoft.Maui.Platform.PlatformTouchGraphicsView;
+            return result;
+        }
+
         public static PointD GetAbsolutePosition(this VisualElement visualElement)
         {
             var ancestors = AllParents(visualElement);

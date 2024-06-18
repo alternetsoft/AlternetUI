@@ -7,6 +7,8 @@ using SharpHook;
 
 using CommunityToolkit.Maui.Core.Platform;
 
+using Alternet.UI.Extensions;
+
 namespace SpinPaint;
 
 public partial class MainPage : ContentPage, IDrawable
@@ -57,19 +59,68 @@ public partial class MainPage : ContentPage, IDrawable
         graphicsView.Focused += GraphicsView_Focused;
         graphicsView.Unfocused += GraphicsView_Unfocused;
         graphicsView.StartInteraction += GraphicsView_StartInteraction;
+        graphicsView.HandlerChanged += GraphicsView_HandlerChanged;
+        graphicsView.HandlerChanging += GraphicsView_HandlerChanging;
+
+        var platformView = graphicsView.GetPlatformView();
+
+        if (platformView is not null)
+        {
+
+        }
+    }
+
+    private void GraphicsView_HandlerChanging(object? sender, HandlerChangingEventArgs e)
+    {
+    }
+
+    private void GraphicsView_HandlerChanged(object? sender, EventArgs e)
+    {
+        var platformView = graphicsView.GetPlatformView();
+
+        if (platformView is null)
+            return;
+
+#if WINDOWS
+        platformView.AllowFocusOnInteraction = true;
+        platformView.IsTabStop = true;
+        platformView.PointerEntered += (s, e) =>
+        {
+
+        };
+        platformView.PointerExited += (s, e) =>
+        {
+
+        };
+        platformView.PointerPressed += (s, e) =>
+        {
+
+        };
+        platformView.PointerWheelChanged += (s, e) =>
+        {
+
+        };
+        platformView.PointerReleased += (s, e) =>
+        {
+
+        };
+        platformView.KeyDown += (s, e) =>
+        {
+
+        };
+#elif IOS || MACCATALYST
+#elif ANDROID
+        platformView.HorizontalScrollBarEnabled = true;
+        platformView.VerticalScrollBarEnabled = true;
+        platformView.Focusable = true;
+        platformView.FocusableInTouchMode = true;
+#endif
 
     }
 
     private void GraphicsView_StartInteraction(object? sender, TouchEventArgs e)
     {
-#if WINDOWS
-        var platformView = graphicsView.Handler?.PlatformView as Microsoft.Maui.Graphics.Platform.PlatformGraphicsView;
-
-        if (platformView is null)
-            return;
-
-        platformView.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
-#endif
+        graphicsView.Focus(Alternet.UI.FocusState.Pointer);
     }
 
     private void GraphicsView_Unfocused(object? sender, FocusEventArgs e)
@@ -99,20 +150,11 @@ public partial class MainPage : ContentPage, IDrawable
     {
         skiaContainer.Log($"Uses {graphicsView.Handler?.PlatformView?.GetType().Name}");
 
-#if WINDOWS
-
-        var platformView = graphicsView.Handler?.PlatformView as Microsoft.Maui.Graphics.Platform.PlatformGraphicsView;
+        var platformView = graphicsView.GetPlatformView();
 
         if (platformView is null)
             return;
 
-        platformView.AllowFocusOnInteraction = true;
-        platformView.FocusEngaged += (s, e) =>
-        {
-            skiaContainer.Log("Focused");
-        };
-
-#endif
 
         /*skiaContainer.Log($"Uses {skiaContainer.Handler?.PlatformView?.GetType().Name}");
         Alternet.UI.MauiUtils.AddAllViewsToParent(panel);*/
