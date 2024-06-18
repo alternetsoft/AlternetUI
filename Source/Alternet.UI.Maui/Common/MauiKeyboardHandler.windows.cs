@@ -10,6 +10,7 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.ViewManagement.Core;
 
@@ -243,8 +244,24 @@ namespace Alternet.UI
 #pragma warning restore
         }
 
+        public static KeyStates Convert(CoreVirtualKeyStates keyStates)
+        {
+            KeyStates result = default;
+
+            if (keyStates.HasFlag(CoreVirtualKeyStates.Down))
+                result |= KeyStates.Down;
+
+            if (keyStates.HasFlag(CoreVirtualKeyStates.Locked))
+                result |= KeyStates.Toggled;
+
+            return result;
+        }
+
         public KeyStates GetKeyStatesFromSystem(Key key)
         {
+            Windows.System.VirtualKey windowsKey = Windows.System.VirtualKey.Control;
+
+            var keyState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(windowsKey);
             return KeyStates.None;
         }
 

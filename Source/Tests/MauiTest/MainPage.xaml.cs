@@ -81,7 +81,9 @@ public partial class MainPage : ContentPage, IDrawable
         if (platformView is null)
             return;
 
+
 #if WINDOWS
+
         platformView.AllowFocusOnInteraction = true;
         platformView.IsTabStop = true;
         platformView.PointerEntered += (s, e) =>
