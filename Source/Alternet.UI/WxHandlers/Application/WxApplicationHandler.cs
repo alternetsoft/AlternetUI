@@ -45,8 +45,6 @@ namespace Alternet.UI
             keyboardInputProvider = new KeyboardInputProvider(
                 nativeApplication.Keyboard);
             mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
-
-            Keyboard.PrimaryDevice = InputManager.UnsecureCurrent.PrimaryKeyboardDevice;
         }
 
         public WxApplicationHandler()

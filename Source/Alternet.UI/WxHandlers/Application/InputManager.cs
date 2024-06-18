@@ -35,17 +35,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Read-only access to the primary keyboard device.
-        /// </summary>
-        public KeyboardDevice PrimaryKeyboardDevice
-        {
-            get
-            {
-                return KeyboardDevice.Default;
-            }
-        }
-
-        /// <summary>
         ///     Internal implementation of InputManager.Current.
         ///     Critical but not TAS - for internal's to use.
         ///     Only exists for perf. The link demand check

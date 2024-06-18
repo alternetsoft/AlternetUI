@@ -10,14 +10,19 @@ namespace Alternet.UI
         private readonly object originalTarget;
         private object currentTarget;
 
+        public KeyboardEventArgs()
+        {
+            this.originalTarget = AssemblyUtils.Default;
+            this.currentTarget = AssemblyUtils.Default;
+        }
+
         /// <summary>
         ///     Initializes a new instance of the KeyboardEventArgs class.
         /// </summary>
-        public KeyboardEventArgs(object originalTarget, KeyboardDevice keyboardDevice)
+        public KeyboardEventArgs(object originalTarget)
         {
             this.originalTarget = originalTarget;
             this.currentTarget = originalTarget;
-            KeyboardDevice = keyboardDevice;
         }
 
         /// <summary>
@@ -33,10 +38,5 @@ namespace Alternet.UI
         /// Gets original target control for the event.
         /// </summary>
         public object OriginalTarget => originalTarget;
-
-        /// <summary>
-        /// Gets logical keyboard device associated with this event.
-        /// </summary>
-        public KeyboardDevice KeyboardDevice { get; set; }
     }
 }

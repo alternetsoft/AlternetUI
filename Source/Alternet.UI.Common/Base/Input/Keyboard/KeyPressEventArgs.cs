@@ -15,16 +15,13 @@ namespace Alternet.UI
     /// </summary>
     public class KeyPressEventArgs : KeyboardEventArgs
     {
-        private readonly char keyChar;
+        private char keyChar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
         /// </summary>
-        public KeyPressEventArgs(
-            object originalTarget,
-            char keyChar,
-            KeyboardDevice keyboardDevice)
-            : base(originalTarget, keyboardDevice)
+        public KeyPressEventArgs(object originalTarget, char keyChar)
+            : base(originalTarget)
         {
             this.keyChar = keyChar;
         }
@@ -32,9 +29,17 @@ namespace Alternet.UI
         /// <summary>
         ///     The Key referenced by the event.
         /// </summary>
-        public char KeyChar
+        public virtual char KeyChar
         {
-            get { return keyChar; }
+            get
+            {
+                return keyChar;
+            }
+
+            set
+            {
+                keyChar = value;
+            }
         }
     }
 }

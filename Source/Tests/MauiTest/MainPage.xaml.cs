@@ -104,10 +104,15 @@ public partial class MainPage : ContentPage, IDrawable
         {
 
         };
+        platformView.CharacterReceived += (s, e) =>
+        {
+            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Convert(null!, e);
+            Log($" KeyPress => {alternetArgs.KeyChar}");
+        };
         platformView.KeyDown += (s, e) =>
         {
-            var alternetKey = Alternet.UI.MauiKeyboardHandler.Convert(e.Key);
-            Log($"{e.Key} => {alternetKey}");
+            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Convert(null!, e);
+            Log($"KeyDown {e.Key} => {alternetArgs.Key}");
         };
 #elif IOS || MACCATALYST
 #elif ANDROID

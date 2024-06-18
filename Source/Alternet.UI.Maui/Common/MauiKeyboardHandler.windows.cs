@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
 
 using Windows.UI.ViewManagement;
 using Windows.UI.ViewManagement.Core;
@@ -22,6 +23,23 @@ namespace Alternet.UI
         static MauiKeyboardHandler()
         {
             RegisterKeyMappings();
+        }
+
+        public static Alternet.UI.KeyPressEventArgs Convert(
+            Control control,
+            CharacterReceivedRoutedEventArgs e)
+        {
+            Alternet.UI.KeyPressEventArgs result = new(control, e.Character);
+            return result;
+        }
+
+        public static Alternet.UI.KeyEventArgs Convert(Control control, KeyRoutedEventArgs e)
+        {
+            var alternetKey = Alternet.UI.MauiKeyboardHandler.Convert(e.Key);
+
+            Alternet.UI.KeyEventArgs result = new(control, alternetKey, e.KeyStatus.RepeatCount);
+
+            return result;
         }
 
         public static Alternet.UI.Key Convert(Windows.System.VirtualKey key)
