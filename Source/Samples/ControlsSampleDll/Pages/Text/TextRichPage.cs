@@ -412,15 +412,15 @@ namespace ControlsSample
 
             // Move key help to KeyInfo
             // Move this to control
-            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleBold)} - Toggle Bold style.\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleItalic)} - Toggle Italic style.\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleUnderline)} - Toggle Underline style.\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.ToggleStrikethrough)} - Toggle Strikethrough style.\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.LeftAlign)} - Left Align\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.CenterAlign)} - Center Align.\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.RightAlign)} - Right Align.\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.Justify)} - Justify.\n");
-            r.WriteText($"{St(KnownKeys.RichEditKeys.ClearTextFormatting)} - Clear formatting.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.ToggleBold)} - Toggle Bold style.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.ToggleItalic)} - Toggle Italic style.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.ToggleUnderline)} - Toggle Underline style.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.ToggleStrikethrough)} - Toggle Strikethrough style.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.LeftAlign)} - Left Align\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.CenterAlign)} - Center Align.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.RightAlign)} - Right Align.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.Justify)} - Justify.\n");
+            r.WriteText($"{St(KnownShortcuts.RichEditKeys.ClearTextFormatting)} - Clear formatting.\n");
 
             r.EndParagraphSpacing();
             r.EndSuppressUndo();
@@ -433,7 +433,7 @@ namespace ControlsSample
             {
             }
 
-            if (KnownKeys.RunTest.Run(e, Test))
+            if (KnownShortcuts.RunTest.Run(e, Test))
                 return;
         }
 

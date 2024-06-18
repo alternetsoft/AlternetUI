@@ -64,7 +64,7 @@ namespace ControlsSample
             {
             }
 
-            if (KnownKeys.RunTest.Run(e, Test))
+            if (KnownShortcuts.RunTest.Run(e, Test))
                 return;
         }
 

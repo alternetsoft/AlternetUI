@@ -909,7 +909,7 @@ namespace Alternet.UI
         public static Keys GetKeyCode(Keys keys)
         {
             Keys result = keys & Keys.KeyCode;
-            if (!Enum.IsDefined(typeof(Keys), (int)result))
+            if (result < 0 || result > Keys.OemClear)
                 return Keys.None;
             return result;
         }

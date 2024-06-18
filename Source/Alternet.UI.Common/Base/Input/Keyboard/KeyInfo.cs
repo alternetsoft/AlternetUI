@@ -8,7 +8,16 @@ namespace Alternet.UI
     /// </summary>
     public class KeyInfo
     {
+        public static readonly KeyInfo Empty = new();
+
         private static AdvDictionary<Key, string>? customKeyLabels;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyInfo"/> class.
+        /// </summary>
+        public KeyInfo()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyInfo"/> class.

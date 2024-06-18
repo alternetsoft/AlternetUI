@@ -106,23 +106,23 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool HandleAdditionalKeys(KeyEventArgs e)
         {
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleBold, e, SelectionToggleBold))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ToggleBold, e, SelectionToggleBold))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleItalic, e, SelectionToggleItalic))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ToggleItalic, e, SelectionToggleItalic))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleUnderline, e, SelectionToggleUnderlined))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ToggleUnderline, e, SelectionToggleUnderlined))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ToggleStrikethrough, e, SelectionToggleStrikethrough))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ToggleStrikethrough, e, SelectionToggleStrikethrough))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.CenterAlign, e, SelectionAlignCenter))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.CenterAlign, e, SelectionAlignCenter))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.RightAlign, e, SelectionAlignRight))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.RightAlign, e, SelectionAlignRight))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.Justify, e, SelectionAlignJustified))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.Justify, e, SelectionAlignJustified))
                 return true;
-            if (KeyInfo.Run(KnownKeys.RichEditKeys.ClearTextFormatting, e, SelectionClearFormatting))
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ClearTextFormatting, e, SelectionClearFormatting))
                 return true;
             return false;
         }
