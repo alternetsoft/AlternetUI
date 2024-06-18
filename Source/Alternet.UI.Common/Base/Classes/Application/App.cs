@@ -776,6 +776,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="LogError"/> if <paramref name="condition"/>
+        /// is <c>true</c>.
+        /// </summary>
+        /// <param name="obj">Error text or object to log.</param>
+        /// <param name="condition">Log if <c>true</c>.</param>
+        public static void LogErrorIf(
+            object? obj,
+            bool condition)
+        {
+            if (condition)
+                LogError(obj);
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>

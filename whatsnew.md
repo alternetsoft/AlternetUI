@@ -1,8 +1,15 @@
+# 0.9.611 (2024 June 18)
+
+- <u>**Critical**</u> Updated to use WxWidgets 3.2.5. Fixes different problems on Linux.
+- Display: MinScaleFactor, AllDPI, MinDPI, MaxDPI, HasDifferentDPI, BaseDPI, BaseDPIValue.
+- Maui platform related improvements.
+- EnumMapping class.
+
 # 0.9.610 (2024 June 16)
 
-- **Critical** StatusBar: Fixed StatusBar was not shown in the window.
-- **Critical** SystemSettings: Fixed bug in ResetColors().
-- **Critical** Control: Fixed Bounds property set method. Now min width or height is always 0, previously it was possible to set negative values, so it caused Gtk exceptions on Linux.
+- <u>**Critical**</u> StatusBar: Fixed StatusBar was not shown in the window.
+- <u>**Critical**</u> SystemSettings: Fixed bug in ResetColors().
+- <u>**Critical**</u> Control: Fixed Bounds property set method. Now min width or height is always 0, previously it was possible to set negative values, so it caused Gtk exceptions on Linux.
 - Demo: Fixed uixml InputTransparent prop related exceptions.
 - ScrollBar: SizeFromMetrics(), ArrowBitmapSizeFromMetrics(), ThumbSizeFromMetrics().
 - Hide some properties in controls from PropertyGrid.

@@ -59,7 +59,7 @@ namespace ControlsSample
 
         private void TabControl_TabSizeChanged(object? sender, BaseEventArgs<Control> e)
         {
-            App.DebugLogIf($"TabSizeChanged: {e.Value.Text}, {PixelFromDip(e.Value.Size)}, {e.Value.GetDPI()}", true);
+            App.DebugLogIf($"TabSizeChanged: {e.Value.Text}, {PixelFromDip(e.Value.Size)}, {e.Value.GetDPI()}", false);
         }
 
         private void TabControl_SelectedIndexChanged(object? sender, EventArgs e)

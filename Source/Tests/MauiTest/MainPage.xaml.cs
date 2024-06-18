@@ -7,9 +7,11 @@ using SharpHook;
 
 using CommunityToolkit.Maui.Core.Platform;
 
+using Alternet.UI.Extensions;
+
 namespace SpinPaint;
 
-public partial class MainPage : ContentPage
+public partial class MainPage : ContentPage, IDrawable
 {
     private readonly Alternet.UI.SkiaSampleControl skiaSample;
 
@@ -26,19 +28,18 @@ public partial class MainPage : ContentPage
         skiaSample = new();
 
         skiaContainer.BackgroundColor = Colors.Cornsilk;
-        skiaContainer.Margin = new(5);
 
         skiaContainer.Control = skiaSample;
 
         panel.BackgroundColor = Colors.CornflowerBlue;
         panel.Padding = new(10);
 
-        ListView1.ItemsSource = MyItems;
+        logControl.ItemsSource = MyItems;
         BindingContext = this;
 
         App.LogMessage += App_LogMessage;
 
-        var ho = skiaContainer.HorizontalOptions;
+        /*var ho = skiaContainer.HorizontalOptions;
         ho.Expands = true;
         ho.Alignment = LayoutAlignment.Fill;
         skiaContainer.HorizontalOptions = ho;
@@ -46,26 +47,124 @@ public partial class MainPage : ContentPage
         var vo = skiaContainer.VerticalOptions;
         vo.Expands = true;
         vo.Alignment = LayoutAlignment.Fill;
-        skiaContainer.VerticalOptions = vo;
+        skiaContainer.VerticalOptions = vo;*/
 
-        openLogFileButton.Clicked += OpenLogFileButton_Clicked;
-        keyboardButton.Clicked += KeyboardButton_Clicked;
+        button1.Clicked += Button1_Clicked;
+        button2.Clicked += Button2_Clicked;
 
-        Alternet.UI.App.Log("Hello Maui");
+        skiaContainer.WidthRequest = 350;
+        graphicsView.WidthRequest = 350;
+        graphicsView.Drawable = this;
+
+        graphicsView.Focused += GraphicsView_Focused;
+        graphicsView.Unfocused += GraphicsView_Unfocused;
+        graphicsView.StartInteraction += GraphicsView_StartInteraction;
+        graphicsView.HandlerChanged += GraphicsView_HandlerChanged;
+        graphicsView.HandlerChanging += GraphicsView_HandlerChanging;
+
+        var platformView = graphicsView.GetPlatformView();
+
+        if (platformView is not null)
+        {
+
+        }
     }
 
-    private void KeyboardButton_Clicked(object? sender, EventArgs e)
+    private void GraphicsView_HandlerChanging(object? sender, HandlerChangingEventArgs e)
     {
+    }
+
+    private void GraphicsView_HandlerChanged(object? sender, EventArgs e)
+    {
+        var platformView = graphicsView.GetPlatformView();
+
+        if (platformView is null)
+            return;
+
+
+#if WINDOWS
+
+        platformView.AllowFocusOnInteraction = true;
+        platformView.IsTabStop = true;
+        platformView.PointerEntered += (s, e) =>
+        {
+
+        };
+        platformView.PointerExited += (s, e) =>
+        {
+
+        };
+        platformView.PointerPressed += (s, e) =>
+        {
+
+        };
+        platformView.PointerWheelChanged += (s, e) =>
+        {
+
+        };
+        platformView.PointerReleased += (s, e) =>
+        {
+
+        };
+        platformView.CharacterReceived += (s, e) =>
+        {
+            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Convert(null!, e);
+            Log($" KeyPress => {alternetArgs.KeyChar}");
+        };
+        platformView.KeyDown += (s, e) =>
+        {
+            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Convert(null!, e);
+            Log($"KeyDown {e.Key} => {alternetArgs.Key}");
+        };
+#elif IOS || MACCATALYST
+#elif ANDROID
+        platformView.HorizontalScrollBarEnabled = true;
+        platformView.VerticalScrollBarEnabled = true;
+        platformView.Focusable = true;
+        platformView.FocusableInTouchMode = true;
+#endif
+
+    }
+
+    private void Log(object? s)
+    {
+        Alternet.UI.App.Log(s);
+    }
+
+    private void GraphicsView_StartInteraction(object? sender, TouchEventArgs e)
+    {
+        graphicsView.Focus(Alternet.UI.FocusState.Pointer);
+    }
+
+    private void GraphicsView_Unfocused(object? sender, FocusEventArgs e)
+    {
+        Log("GraphicsView_Unfocused");
+    }
+
+    private void GraphicsView_Focused(object? sender, FocusEventArgs e)
+    {
+        Log("GraphicsView_Focused");
+    }
+
+    private void Button2_Clicked(object? sender, EventArgs e)
+    {
+        Alternet.UI.MauiUtils.EnumViewsToLog(panel);
+        Alternet.UI.AppUtils.OpenLogFile();
+        /*
         var handler = Alternet.UI.Keyboard.Handler;
         if (handler.IsSoftKeyboardShowing(null))
             handler.HideKeyboard(null);
         else
             handler.ShowKeyboard(null);
+        */
     }
 
-    private void OpenLogFileButton_Clicked(object? sender, EventArgs e)
+    private void Button1_Clicked(object? sender, EventArgs e)
     {
-        Alternet.UI.AppUtils.OpenLogFile();
+        var platformView = graphicsView.GetPlatformView();
+
+        if (platformView is null)
+            return;
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = new();
@@ -75,6 +174,13 @@ public partial class MainPage : ContentPage
         SimpleItem OneNewitem = new();
         OneNewitem.Text = e;
         MyItems.Add(OneNewitem);
+        logControl.SelectedItem = MyItems[MyItems.Count - 1];
+    }
+
+    public void Draw(ICanvas canvas, RectF dirtyRect)
+    {
+        canvas.FillColor = Colors.Yellow;
+        canvas.FillRectangle(dirtyRect);
     }
 
     public class SimpleItem

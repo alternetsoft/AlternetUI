@@ -139,7 +139,7 @@ namespace Alternet.UI
             currentTarget.RaiseMouseUp(eventArgs);
         }
 
-        public static void BubbleKeyDown(Key key, bool isRepeat, out bool handled)
+        public static void BubbleKeyDown(Key key, uint repeatCount, out bool handled)
         {
             var control = Control.GetFocusedControl();
             if (control is null)
@@ -148,12 +148,12 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
+            var eventArgs = new KeyEventArgs(control, key, repeatCount);
             control.BubbleKeyDown(eventArgs);
             handled = eventArgs.Handled;
         }
 
-        public static void BubbleKeyUp(Key key, bool isRepeat, out bool handled)
+        public static void BubbleKeyUp(Key key, uint repeatCount, out bool handled)
         {
             var control = Control.GetFocusedControl();
             if (control is null)
@@ -162,7 +162,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, isRepeat, Keyboard.PrimaryDevice);
+            var eventArgs = new KeyEventArgs(control, key, repeatCount);
             control.BubbleKeyUp(eventArgs);
             handled = eventArgs.Handled;
         }
@@ -176,7 +176,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyPressEventArgs(control, keyChar, Keyboard.PrimaryDevice);
+            var eventArgs = new KeyPressEventArgs(control, keyChar);
             control.BubbleKeyPress(eventArgs);
             handled = eventArgs.Handled;
         }

@@ -1,0 +1,1 @@
+dotnet restore --configfile NuGet.config

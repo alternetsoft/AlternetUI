@@ -397,7 +397,7 @@ namespace Alternet.UI
             OnKeyDown(e);
 #if DEBUG
             if (!e.Handled)
-                KeyInfo.Run(KnownKeys.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
+                KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
 #endif
         }
 

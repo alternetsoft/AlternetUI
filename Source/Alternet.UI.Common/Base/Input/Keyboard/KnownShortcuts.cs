@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines different key and modifier combinations.
     /// </summary>
-    public class KnownKeys
+    public class KnownShortcuts
     {
         /// <summary>
         /// Gets or sets keys used to show 'Developer Tools' in debug mode.
