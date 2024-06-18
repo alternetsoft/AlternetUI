@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal static class EnumUtils
+    public static class EnumUtils
     {
+        public static T GetMaxValue<T>()
+            where T: struct, Enum
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>().Last();
+        }
+
+        public static int GetMaxValueAsInt<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<int>().Last();
+        }
     }
 }
