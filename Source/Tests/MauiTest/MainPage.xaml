@@ -6,7 +6,7 @@
              x:Class="SpinPaint.MainPage"
              Title="Alternet.UI MauiTest">
     <Grid RowDefinitions="Auto,*,Auto">
-        <ListView x:Name="ListView1" 
+        <ListView x:Name="logControl" 
                            Grid.Row="0"
                   HeightRequest="100"
                   >

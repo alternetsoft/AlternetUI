@@ -34,7 +34,7 @@ public partial class MainPage : ContentPage, IDrawable
         panel.BackgroundColor = Colors.CornflowerBlue;
         panel.Padding = new(10);
 
-        ListView1.ItemsSource = MyItems;
+        logControl.ItemsSource = MyItems;
         BindingContext = this;
 
         App.LogMessage += App_LogMessage;
@@ -106,7 +106,8 @@ public partial class MainPage : ContentPage, IDrawable
         };
         platformView.KeyDown += (s, e) =>
         {
-
+            var alternetKey = Alternet.UI.MauiKeyboardHandler.Convert(e.Key);
+            Log($"{e.Key} => {alternetKey}");
         };
 #elif IOS || MACCATALYST
 #elif ANDROID
@@ -118,6 +119,11 @@ public partial class MainPage : ContentPage, IDrawable
 
     }
 
+    private void Log(object? s)
+    {
+        Alternet.UI.App.Log(s);
+    }
+
     private void GraphicsView_StartInteraction(object? sender, TouchEventArgs e)
     {
         graphicsView.Focus(Alternet.UI.FocusState.Pointer);
@@ -125,12 +131,12 @@ public partial class MainPage : ContentPage, IDrawable
 
     private void GraphicsView_Unfocused(object? sender, FocusEventArgs e)
     {
-        Alternet.UI.App.Log("GraphicsView_Unfocused");
+        Log("GraphicsView_Unfocused");
     }
 
     private void GraphicsView_Focused(object? sender, FocusEventArgs e)
     {
-        Alternet.UI.App.Log("GraphicsView_Focused");
+        Log("GraphicsView_Focused");
     }
 
     private void Button2_Clicked(object? sender, EventArgs e)
@@ -148,16 +154,10 @@ public partial class MainPage : ContentPage, IDrawable
 
     private void Button1_Clicked(object? sender, EventArgs e)
     {
-        skiaContainer.Log($"Uses {graphicsView.Handler?.PlatformView?.GetType().Name}");
-
         var platformView = graphicsView.GetPlatformView();
 
         if (platformView is null)
             return;
-
-
-        /*skiaContainer.Log($"Uses {skiaContainer.Handler?.PlatformView?.GetType().Name}");
-        Alternet.UI.MauiUtils.AddAllViewsToParent(panel);*/
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = new();
@@ -167,6 +167,7 @@ public partial class MainPage : ContentPage, IDrawable
         SimpleItem OneNewitem = new();
         OneNewitem.Text = e;
         MyItems.Add(OneNewitem);
+        logControl.SelectedItem = MyItems[MyItems.Count - 1];
     }
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
