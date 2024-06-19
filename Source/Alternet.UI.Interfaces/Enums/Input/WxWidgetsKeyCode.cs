@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Native key codes.
+    /// Enumerates key codes for the WxWidgets platform.
     /// </summary>
-    public enum NativeKeyCode
+    public enum WxWidgetsKeyCode
     {
         None = 0,
 

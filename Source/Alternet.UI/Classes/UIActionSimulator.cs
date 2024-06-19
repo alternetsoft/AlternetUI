@@ -111,7 +111,7 @@ namespace Alternet.UI
         /// pressed with the given keycode.</param>
         /// <returns></returns>
         public virtual bool SendChar(
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             var result = Native.WxOtherFactory.UIActionSimulatorChar(Handle, (int)keyCode, (int)modifiers);
@@ -132,7 +132,7 @@ namespace Alternet.UI
         /// not be released (Windows and macOS).
         /// </remarks>
         public virtual bool SendKeyDown(
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             var result = Native.WxOtherFactory.UIActionSimulatorKeyDown(Handle, (int)keyCode, (int)modifiers);
@@ -146,7 +146,7 @@ namespace Alternet.UI
         /// <param name="keyCode"></param>
         /// <param name="modifiers"></param>
         public virtual bool SendKey(
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             var result1 = SendKeyDown(keyCode, modifiers);
@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// <returns></returns>
         /// <returns></returns>
         public virtual bool SendKeyUp(
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             var result = Native.WxOtherFactory.UIActionSimulatorKeyUp(Handle, (int)keyCode, (int)modifiers);
@@ -320,7 +320,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendCharIf(
             ref bool condition,
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             if (!condition)
@@ -335,7 +335,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyDownIf(
             ref bool condition,
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             if (!condition)
@@ -350,7 +350,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyIf(
             ref bool condition,
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             if (!condition)
@@ -365,7 +365,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyUpIf(
             ref bool condition,
-            NativeKeyCode keyCode,
+            WxWidgetsKeyCode keyCode,
             KeyModifier modifiers = KeyModifier.None)
         {
             if (!condition)

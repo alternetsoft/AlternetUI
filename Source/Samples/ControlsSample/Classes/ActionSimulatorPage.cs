@@ -78,7 +78,7 @@ namespace ControlsSample
                         Clipboard.SetText($"({++counter}) Text from clipboard using Ctrl+V");
                         editor2.Focus();
                         editor2.Text = string.Empty;
-                        simulator.SendKeyIf(ref condition, NativeKeyCode.V, UIActionSimulator.KeyModifier.Control);
+                        simulator.SendKeyIf(ref condition, WxWidgetsKeyCode.V, UIActionSimulator.KeyModifier.Control);
                         return condition;
                     }
                 });
