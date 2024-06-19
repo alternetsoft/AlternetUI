@@ -17,7 +17,7 @@ using SkiaSharp.Views.Maui.Controls;
 
 namespace Alternet.UI
 {
-    public class SkiaContainer : SKCanvasView
+    public partial class SkiaContainer : SKCanvasView
     {
         public static readonly BindableProperty SampleProperty = BindableProperty.Create(
             nameof(SampleProp),
@@ -26,7 +26,6 @@ namespace Alternet.UI
             0.0f,
             propertyChanged: OnSamplePropChanged);
 
-        /*private readonly SKCanvasView canvas = new();*/
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
 
@@ -50,7 +49,7 @@ namespace Alternet.UI
             EnableTouchEvents = true;
             Touch += Canvas_Touch;
             SizeChanged += SkiaContainer_SizeChanged;
-            /*Content = canvas;*/
+
             PaintSurface += Canvas_PaintSurface;
 
             Focused += SkiaContainer_Focused;
@@ -122,6 +121,55 @@ namespace Alternet.UI
             base.OnParentChanged();
         }
 
+        protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+        {
+            base.OnHandlerChanging(args);
+
+#if WINDOWS
+            var platformView = args.OldHandler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
+            if (platformView is null)
+                return;
+            platformView.PointerEntered -= PlatformView_PointerEntered;
+            platformView.PointerExited -= PlatformView_PointerExited;
+            platformView.PointerPressed -= PlatformView_PointerPressed;
+            platformView.PointerWheelChanged -= PlatformView_PointerWheelChanged;
+            platformView.PointerReleased -= PlatformView_PointerReleased;
+            platformView.KeyDown -= PlatformView_KeyDown;
+            platformView.KeyUp -= PlatformView_KeyUp;
+            platformView.CharacterReceived -= PlatformView_CharacterReceived;
+            platformView.GotFocus -= PlatformView_GotFocus;
+            platformView.LostFocus -= PlatformView_LostFocus;
+#endif
+        }
+
+        protected override void OnHandlerChanged()
+        {
+            base.OnHandlerChanged();
+
+#if WINDOWS
+            var platformView = Handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
+            if (platformView is null)
+                return;
+
+            platformView.AllowFocusOnInteraction = true;
+            platformView.IsTabStop = true;
+
+            platformView.PointerEntered += PlatformView_PointerEntered;
+            platformView.PointerExited += PlatformView_PointerExited;
+            platformView.PointerPressed += PlatformView_PointerPressed;
+            platformView.PointerWheelChanged += PlatformView_PointerWheelChanged;
+            platformView.PointerReleased += PlatformView_PointerReleased;
+            platformView.KeyDown += PlatformView_KeyDown;
+            platformView.KeyUp += PlatformView_KeyUp;
+            platformView.CharacterReceived += PlatformView_CharacterReceived;
+            platformView.GotFocus += PlatformView_GotFocus;
+            platformView.LostFocus += PlatformView_LostFocus;
+#endif
+        }
+
+#if WINDOWS
+#endif
+
         private static void OnSamplePropChanged(
             BindableObject bindable,
             object oldValue,
@@ -146,6 +194,13 @@ namespace Alternet.UI
 
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
         {
+#if WINDOWS
+            var platformView = Handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
+            if (platformView is null)
+                return;
+            platformView.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+#endif
+
             if (control is null)
                 return;
 
