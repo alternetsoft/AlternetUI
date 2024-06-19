@@ -292,26 +292,6 @@ namespace Alternet.UI
 
         public virtual KeyStates GetKeyStatesFromSystem(Key key)
         {
-            if (key == Key.Shift)
-            {
-                return Fn(Windows.System.VirtualKey.LeftShift) | Fn(Windows.System.VirtualKey.RightShift);
-            }
-            else
-            if (key == Key.Control)
-            {
-                return Fn(Windows.System.VirtualKey.LeftControl) | Fn(Windows.System.VirtualKey.RightControl);
-            }
-            else
-            if (key == Key.Menu)
-            {
-                return Fn(Windows.System.VirtualKey.LeftMenu) | Fn(Windows.System.VirtualKey.RightMenu);
-            }
-            else
-            if (key == Key.Windows)
-            {
-                return Fn(Windows.System.VirtualKey.LeftWindows) | Fn(Windows.System.VirtualKey.RightWindows);
-            }
-
             return Fn(Convert(key));
 
             KeyStates Fn(Windows.System.VirtualKey key)
