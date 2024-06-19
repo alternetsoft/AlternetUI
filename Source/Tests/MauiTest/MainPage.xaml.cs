@@ -8,16 +8,13 @@ using SharpHook;
 using CommunityToolkit.Maui.Core.Platform;
 
 using Alternet.UI.Extensions;
+using Microsoft.Maui.Graphics.Platform;
 
 namespace SpinPaint;
 
-public partial class MainPage : ContentPage, IDrawable
+public partial class MainPage : ContentPage
 {
     private readonly Alternet.UI.SkiaSampleControl skiaSample;
-
-#if WINDOWS
-    private readonly Alternet.UI.SkiaWritableBitmap bitmap = new();
-#endif
 
     static MainPage()
     {
@@ -25,8 +22,6 @@ public partial class MainPage : ContentPage, IDrawable
 
     public MainPage()
     {
-        /*var testForm = new DrawingSample.MainWindow();*/
-
         InitializeComponent();
 
         skiaSample = new();
@@ -43,7 +38,7 @@ public partial class MainPage : ContentPage, IDrawable
 
         App.LogMessage += App_LogMessage;
 
-        /*var ho = skiaContainer.HorizontalOptions;
+        var ho = skiaContainer.HorizontalOptions;
         ho.Expands = true;
         ho.Alignment = LayoutAlignment.Fill;
         skiaContainer.HorizontalOptions = ho;
@@ -51,42 +46,23 @@ public partial class MainPage : ContentPage, IDrawable
         var vo = skiaContainer.VerticalOptions;
         vo.Expands = true;
         vo.Alignment = LayoutAlignment.Fill;
-        skiaContainer.VerticalOptions = vo;*/
+        skiaContainer.VerticalOptions = vo;
 
         button1.Clicked += Button1_Clicked;
         button2.Clicked += Button2_Clicked;
 
-        skiaContainer.WidthRequest = 350;
-        graphicsView.WidthRequest = 350;
-        graphicsView.Drawable = this;
-
-        graphicsView.Focused += GraphicsView_Focused;
-        graphicsView.Unfocused += GraphicsView_Unfocused;
-        graphicsView.StartInteraction += GraphicsView_StartInteraction;
-        graphicsView.HandlerChanged += GraphicsView_HandlerChanged;
-        graphicsView.HandlerChanging += GraphicsView_HandlerChanging;
-
-        var platformView = graphicsView.GetPlatformView();
-
-        if (platformView is not null)
-        {
-
-        }
+        skiaContainer.HandlerChanged += SkiaContainer_HandlerChanged;
+        skiaContainer.Focused += GraphicsView_Focused;
+        skiaContainer.Unfocused += GraphicsView_Unfocused;
     }
 
-    private void GraphicsView_HandlerChanging(object? sender, HandlerChangingEventArgs e)
+    private void SkiaContainer_HandlerChanged(object? sender, EventArgs e)
     {
-    }
-
-    private void GraphicsView_HandlerChanged(object? sender, EventArgs e)
-    {
-        var platformView = graphicsView.GetPlatformView();
+#if WINDOWS
+        var platformView = skiaContainer.Handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
 
         if (platformView is null)
             return;
-
-
-#if WINDOWS
 
         platformView.AllowFocusOnInteraction = true;
         platformView.IsTabStop = true;
@@ -124,10 +100,17 @@ public partial class MainPage : ContentPage, IDrawable
         };
 #elif IOS || MACCATALYST
 #elif ANDROID
+        var platformView = skiaContainer.Handler?.PlatformView;
+
+        if (platformView is null)
+            return;
+
+        /*
         platformView.HorizontalScrollBarEnabled = true;
         platformView.VerticalScrollBarEnabled = true;
         platformView.Focusable = true;
         platformView.FocusableInTouchMode = true;
+        */
 #endif
 
     }
@@ -135,11 +118,6 @@ public partial class MainPage : ContentPage, IDrawable
     private void Log(object? s)
     {
         Alternet.UI.App.Log(s);
-    }
-
-    private void GraphicsView_StartInteraction(object? sender, TouchEventArgs e)
-    {
-        graphicsView.Focus(Alternet.UI.FocusState.Pointer);
     }
 
     private void GraphicsView_Unfocused(object? sender, FocusEventArgs e)
@@ -167,10 +145,6 @@ public partial class MainPage : ContentPage, IDrawable
 
     private void Button1_Clicked(object? sender, EventArgs e)
     {
-        var platformView = graphicsView.GetPlatformView();
-
-        if (platformView is null)
-            return;
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = new();
@@ -181,28 +155,6 @@ public partial class MainPage : ContentPage, IDrawable
         OneNewitem.Text = e;
         MyItems.Add(OneNewitem);
         logControl.SelectedItem = MyItems[MyItems.Count - 1];
-    }
-
-    public void Draw(ICanvas canvas, RectF dirtyRect)
-    {
-        canvas.FillColor = Colors.Yellow;
-        canvas.FillRectangle(dirtyRect);
-
-#if WINDOWS
-        bitmap.ActualHeight = graphicsView.Height;
-        bitmap.ActualWidth = graphicsView.Width;
-        bitmap.Dpi = (float)graphicsView.Scale;
-
-        bitmap.DoInvalidate(OnPaintSurface);
-
-        void OnPaintSurface(SKPaintSurfaceEventArgs e)
-        {
-            var canvas = e.Surface.Canvas;
-
-            canvas.Clear(SKColors.Brown);
-        }
-#endif
-
     }
 
     public class SimpleItem

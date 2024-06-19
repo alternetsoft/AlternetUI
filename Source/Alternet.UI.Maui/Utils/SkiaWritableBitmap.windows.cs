@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Maui.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 
@@ -13,6 +14,8 @@ using SkiaSharp.Views.Windows;
 using Windows.Storage.Streams;
 
 using WinRT;
+
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -75,7 +78,7 @@ namespace Alternet.UI
                 ImageSource = Bitmap,
                 AlignmentX = AlignmentX.Left,
                 AlignmentY = AlignmentY.Top,
-                Stretch = Stretch.Fill,
+                Stretch = Microsoft.UI.Xaml.Media.Stretch.Fill,
             };
 
             return background;
@@ -116,7 +119,9 @@ namespace Alternet.UI
             return result;
         }
 
-        public void DoInvalidate(Action<SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs> onPaintSurface)
+        public void DoInvalidate(
+            GraphicsView graphicsView,
+            Action<SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs> onPaintSurface)
         {
             bool ignorePixelScaling = false;
 
