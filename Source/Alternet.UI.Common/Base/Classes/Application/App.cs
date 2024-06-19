@@ -13,8 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
-using Alternet.UI.Localization;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -240,7 +240,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsActive => Handler.IsActive;
 
-        /// <inheritdoc/>
         public virtual bool InUixmlPreviewerMode
         {
             get => Handler.InUixmlPreviewerMode;
@@ -562,7 +561,6 @@ namespace Alternet.UI
             Exit();
             Environment.Exit(exitCode);
         }
-
 
         /// <summary>
         /// Executes the specified delegate on the thread that owns the application.

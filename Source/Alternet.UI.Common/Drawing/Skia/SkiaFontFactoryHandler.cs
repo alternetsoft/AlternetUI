@@ -18,11 +18,7 @@ namespace Alternet.Drawing
         {
         }
 
-        public virtual FontEncoding DefaultFontEncoding
-        {
-            get;
-            set;
-        } = FontEncoding.Default;
+        public virtual FontEncoding DefaultFontEncoding { get; set; } = FontEncoding.Default;
 
         public virtual bool AllowNullFontName
         {

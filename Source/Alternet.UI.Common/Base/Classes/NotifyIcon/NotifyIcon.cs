@@ -32,7 +32,7 @@ namespace Alternet.UI
         public NotifyIcon()
         {
         }
-        
+
         /// <summary>
         /// Occurs when the user clicks the icon in the notification area.
         /// </summary>

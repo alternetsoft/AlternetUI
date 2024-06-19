@@ -8,7 +8,6 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-
     /// <summary>
     /// Represents the method that will handle a DPI changed event of a form or control.</summary>
     /// <param name="sender">The source of the event.</param>

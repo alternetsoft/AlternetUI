@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class EnumMapping<TSource, TDest>: AbstractEnumMapping<TSource, TDest>
+    public class EnumMapping<TSource, TDest> : AbstractEnumMapping<TSource, TDest>
         where TSource : struct, Enum
         where TDest : struct, Enum
     {

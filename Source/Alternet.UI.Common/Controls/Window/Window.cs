@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -612,7 +613,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value)
+                if (value)
                     State = WindowState.Maximized;
                 else
                     State = WindowState.Normal;
@@ -784,7 +785,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(inputBindings is null)
+                if (inputBindings is null)
                 {
                     inputBindings = new();
 
@@ -1155,7 +1156,7 @@ namespace Alternet.UI
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if(e.Key == Key.Escape && SupressEsc)
+            if (e.Key == Key.Escape && SupressEsc)
             {
                 e.Handled = true;
                 return;
@@ -1336,7 +1337,7 @@ namespace Alternet.UI
         {
             base.OnHandlerLocationChanged(e);
 
-            InsideTryCatch(RaiseDisplayChanged);            
+            InsideTryCatch(RaiseDisplayChanged);
         }
 
         private void RaiseDisplayChanged()

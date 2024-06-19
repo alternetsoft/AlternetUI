@@ -424,7 +424,7 @@ namespace Alternet.UI
             // The "Alt" key on Windows and Linux or "Option" key on macOS.
             Keys.Alt,
 
-            // The "Command" key on Apple keyboard. 
+            // The "Command" key on Apple keyboard.
             Keys.None,
 
             // The "Option" key on Apple keyboard.
@@ -1039,7 +1039,6 @@ namespace Alternet.UI
             // Fn(Keys.RMenu, Key.Menu);
             // Fn(Keys.LWin, Key.Windows);
             // Fn(Keys.RWin, Key.Windows);
-
             void Fn(Keys keys, Key key)
             {
                 KeyAndKeysMapping.Add(keys, key);

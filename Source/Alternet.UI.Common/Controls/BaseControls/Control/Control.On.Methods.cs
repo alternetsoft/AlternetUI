@@ -25,7 +25,6 @@ namespace Alternet.UI
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnSystemColorsChanged(EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -318,7 +317,6 @@ namespace Alternet.UI
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDpiChanged(DpiChangedEventArgs e)
         {
-
         }
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -470,7 +468,6 @@ namespace Alternet.UI
         protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e)
         {
         }
-
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnKeyUp(KeyEventArgs e)

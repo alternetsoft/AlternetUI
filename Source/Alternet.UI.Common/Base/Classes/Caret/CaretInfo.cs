@@ -78,9 +78,11 @@ namespace Alternet.UI
                 if (visible == value)
                     return;
                 visible = value;
-                if(!visible)
+
+                if (!visible)
                 {
                 }
+
                 AddToUpdateRegion(Rect);
             }
         }

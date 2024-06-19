@@ -142,7 +142,7 @@ namespace Alternet.UI
         public bool HasAlpha
         {
             get => !bitmap.Info.IsOpaque;
-            
+
             set
             {
                 if (HasAlpha == value)
@@ -205,7 +205,7 @@ namespace Alternet.UI
         public IImageHandler GetSubBitmap(RectI rect)
         {
             var resultBitmap = new SKBitmap(rect.Width, rect.Height);
-            if(!bitmap.ExtractSubset(resultBitmap, rect))
+            if (!bitmap.ExtractSubset(resultBitmap, rect))
                 App.LogError($"SkiaImageHandler.GetSubBitmap({rect})");
             return new SkiaImageHandler(resultBitmap);
         }

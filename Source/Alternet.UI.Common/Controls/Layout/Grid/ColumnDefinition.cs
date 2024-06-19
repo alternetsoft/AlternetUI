@@ -15,7 +15,8 @@ namespace Alternet.UI
 
         /// <summary>Initializes a new instance of the <see cref="ColumnDefinition" />
         /// class.</summary>
-        public ColumnDefinition() : base(true)
+        public ColumnDefinition()
+            : base(true)
         {
         }
 
@@ -32,6 +33,7 @@ namespace Alternet.UI
             {
                 return width;
             }
+
             set
             {
                 if (!IsUserSizePropertyValueValid(value))
@@ -54,6 +56,7 @@ namespace Alternet.UI
             {
                 return minWidth;
             }
+
             set
             {
                 if (!IsUserMinSizePropertyValueValid(value))
@@ -67,7 +70,7 @@ namespace Alternet.UI
         /// <summary>Gets or sets a value that represents the maximum width of a
         /// <see cref="ColumnDefinition" />.   </summary>
         /// <returns>A <see cref="double" /> that represents the maximum width.
-        /// The default value is <see cref="System.Double.PositiveInfinity" />.</returns>
+        /// The default value is <see cref="souble.PositiveInfinity" />.</returns>
         [TypeConverter(typeof(LengthConverter))]
         public double MaxWidth
         {
@@ -95,10 +98,11 @@ namespace Alternet.UI
             get
             {
                 double result = 0;
-                if (base.InParentLogicalTree)
+                if (InParentLogicalTree)
                 {
-                    result = ((Grid)base.LogicalParent).GetFinalColumnDefinitionWidth(base.Index);
+                    result = ((Grid)LogicalParent).GetFinalColumnDefinitionWidth(Index);
                 }
+
                 return result;
             }
         }
@@ -112,10 +116,11 @@ namespace Alternet.UI
             get
             {
                 double result = 0;
-                if (base.Index != 0)
+                if (Index != 0)
                 {
-                    result = base.FinalOffset;
+                    result = FinalOffset;
                 }
+
                 return result;
             }
         }

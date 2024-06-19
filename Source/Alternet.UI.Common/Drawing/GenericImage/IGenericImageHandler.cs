@@ -21,7 +21,7 @@ namespace Alternet.Drawing
 
         GenericImageLoadFlags LoadFlags { get; set; }
 
-        GenericImage.PixelStrategy BestStrategy {get;}
+        GenericImage.PixelStrategy BestStrategy { get; }
 
         bool HasAlpha { get; }
 

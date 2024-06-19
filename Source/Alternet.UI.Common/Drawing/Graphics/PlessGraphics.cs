@@ -16,25 +16,24 @@ namespace Alternet.Drawing
         {
             get;
         }
-        
+
         public override TransformMatrix Transform
         {
             get => TransformMatrix.Default;
 
             set
             {
-
             }
         }
-        
+
         public override Region? Clip
         {
             get;
             set;
         }
-        
+
         public override InterpolationMode InterpolationMode { get; set; }
-        
+
         public override object NativeObject
         {
             get => AssemblyUtils.Default;

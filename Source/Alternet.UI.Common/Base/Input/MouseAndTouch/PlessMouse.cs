@@ -10,19 +10,20 @@ namespace Alternet.UI
 {
     public static class PlessMouse
     {
-        private static (PointD? Position, Control? Control) lastMousePosition;
-        private static readonly bool[] buttons = new bool[(int)MouseButton.Unknown + 1];
-
-        /// <summary>
-        /// Occurs when <see cref="LastMousePosition"/> property is changed.
-        /// </summary>
-        public static event EventHandler? LastMousePositionChanged;
-
         public static bool ShowTestMouseInControl = false;
 
         public static Color TestMouseColor = Color.Red;
 
         public static SizeD TestMouseSize = 5;
+
+        private static readonly bool[] Buttons = new bool[(int)MouseButton.Unknown + 1];
+
+        private static (PointD? Position, Control? Control) lastMousePosition;
+
+        /// <summary>
+        /// Occurs when <see cref="LastMousePosition"/> property is changed.
+        /// </summary>
+        public static event EventHandler? LastMousePositionChanged;
 
         public static RectD GetTestMouseRect(Control control)
         {
@@ -62,7 +63,7 @@ namespace Alternet.UI
             {
                 if (lastMousePosition == value)
                     return;
-                
+
                 lastMousePosition = value;
 
                 LastMousePositionChanged?.Invoke(null, EventArgs.Empty);
@@ -78,7 +79,7 @@ namespace Alternet.UI
         {
             if (mouseButton >= MouseButton.Unknown || mouseButton < 0)
                 return false;
-            return buttons[(int)mouseButton];
+            return Buttons[(int)mouseButton];
         }
 
         public static MouseButtonState GetButtonState(MouseButton mouseButton)
@@ -88,7 +89,7 @@ namespace Alternet.UI
 
         public static void SetButtonPressed(MouseButton button, bool value = true)
         {
-            buttons[(int)button] = value;
+            Buttons[(int)button] = value;
         }
     }
 }

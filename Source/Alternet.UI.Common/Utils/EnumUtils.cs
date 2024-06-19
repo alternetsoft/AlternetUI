@@ -9,7 +9,7 @@ namespace Alternet.UI
     public static class EnumUtils
     {
         public static T GetMaxValue<T>()
-            where T: struct, Enum
+            where T : struct, Enum
         {
             return Enum.GetValues(typeof(T)).Cast<T>().Last();
         }

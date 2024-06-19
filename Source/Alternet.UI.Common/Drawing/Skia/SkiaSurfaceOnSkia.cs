@@ -12,10 +12,10 @@ namespace Alternet.Drawing
 {
     internal class SkiaSurfaceOnSkia : DisposableObject, ISkiaSurface
     {
+        private readonly ImageLockMode lockMode;
         private SKBitmap? bitmap;
         private SKSurface? surface;
         private SKCanvas? canvas;
-        private readonly ImageLockMode lockMode;
 
         public SkiaSurfaceOnSkia(SKBitmap? bitmap, ImageLockMode lockMode)
         {

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using SkiaSharp;
-
 using Alternet.UI;
-using System.Diagnostics;
+using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    internal class SkiaSurfaceOnBitmap: DisposableObject, ISkiaSurface
+    internal class SkiaSurfaceOnBitmap : DisposableObject, ISkiaSurface
     {
         private readonly int width;
         private readonly int height;
@@ -45,7 +43,7 @@ namespace Alternet.Drawing
             var ptr = image.Handler.LockBits();
             var stride = image.Handler.GetStride();
             var negative = stride < 0;
-            isOk = ptr != default;            
+            isOk = ptr != default;
 
             if (isOk)
             {
@@ -64,7 +62,7 @@ namespace Alternet.Drawing
 
             canvas = surface.Canvas;
 
-            if(negative)
+            if (negative)
                 canvas.Scale(1, -1, 0, height / 2.0f);
         }
 

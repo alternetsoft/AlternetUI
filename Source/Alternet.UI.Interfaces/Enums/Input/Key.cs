@@ -851,7 +851,6 @@ namespace Alternet.UI
         /// </summary>
         OemPipe = VerticalLine,
 
-
         /// <summary>
         ///     The gamepad A button.
         /// </summary>
@@ -972,7 +971,6 @@ namespace Alternet.UI
         /// </summary>
         GamepadRightThumbstickLeft = 178,
 
-
         /// <summary>
         ///     The Kana symbol key-shift button
         /// </summary>
@@ -1003,7 +1001,6 @@ namespace Alternet.UI
         /// </summary>
         Kanji = Hanja,
 
-
         /// <summary>
         ///     The IME convert button or key.
         /// </summary>
@@ -1030,12 +1027,12 @@ namespace Alternet.UI
         Select = 187,
 
         /// <summary>
-        //     The execute key or button.
+        ///     The execute key or button.
         /// </summary>
         Execute = 188,
 
         /// <summary>
-        //     The snapshot key or button.
+        ///     The snapshot key or button.
         /// </summary>
         Snapshot = 189,
 
@@ -1043,7 +1040,6 @@ namespace Alternet.UI
         ///     The sleep key or button.
         /// </summary>
         Sleep = 190,
-
 
         /// <summary>
         ///     The navigation up button.

@@ -39,12 +39,12 @@ namespace Alternet.Drawing
     {
         public static readonly TransformMatrix Default = new();
 
-        Coord m11;
-        Coord m12;
-        Coord m21;
-        Coord m22;
-        Coord dx;
-        Coord dy;
+        private Coord m11;
+        private Coord m12;
+        private Coord m21;
+        private Coord m22;
+        private Coord dx;
+        private Coord dy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
@@ -90,7 +90,7 @@ namespace Alternet.Drawing
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator SKMatrix (TransformMatrix m)
+        public static explicit operator SKMatrix(TransformMatrix m)
         {
             var result = new SKMatrix(
                 (float)m.ScaleX,
@@ -166,7 +166,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the skew in the x-direction. 
+        /// Gets or sets the skew in the x-direction.
         /// This is the value in the second row and first column of the matrix.
         /// This is the same as <see cref="SkewX"/>.
         /// </summary>
@@ -246,6 +246,7 @@ namespace Alternet.Drawing
             {
                 return m11;
             }
+
             set
             {
                 m11 = value;
@@ -280,7 +281,7 @@ namespace Alternet.Drawing
             {
                 return dx;
             }
-            
+
             set
             {
                 dx = value;
@@ -298,7 +299,7 @@ namespace Alternet.Drawing
             {
                 return m12;
             }
-            
+
             set
             {
                 m12 = value;
@@ -446,12 +447,12 @@ namespace Alternet.Drawing
             var matrixM21 = matrix.m21;
             var matrixM22 = matrix.m22;
 
-            dx += matrixDX * m11 + matrixDY * m21;
-            dy += matrixDX * m12 + matrixDY * m22;
-            var e11 = matrixM11 * m11 + matrixM12 * m21;
-            var e12 = matrixM11 * m12 + matrixM12 * m22;
-            var e21 = matrixM21 * m11 + matrixM22 * m21;
-            m22 = matrixM21 * m12 + matrixM22 * m22;
+            dx += (matrixDX * m11) + (matrixDY * m21);
+            dy += (matrixDX * m12) + (matrixDY * m22);
+            var e11 = (matrixM11 * m11) + (matrixM12 * m21);
+            var e12 = (matrixM11 * m12) + (matrixM12 * m22);
+            var e21 = (matrixM21 * m11) + (matrixM22 * m21);
+            m22 = (matrixM21 * m12) + (matrixM22 * m22);
             m11 = e11;
             m12 = e12;
             m21 = e21;
@@ -474,8 +475,8 @@ namespace Alternet.Drawing
             | dx  dy   1 |   | m_tx  m_ty   1 |
             */
 
-            dx += m11 * offsetX + m21 * offsetY;
-            dy += m12 * offsetX + m22 * offsetY;
+            dx += (m11 * offsetX) + (m21 * offsetY);
+            dy += (m12 * offsetX) + (m22 * offsetY);
         }
 
         /// <summary>
@@ -530,10 +531,10 @@ namespace Alternet.Drawing
             var c = Math.Cos(angleRadians);
             var s = Math.Sin(angleRadians);
 
-            var e11 = c * m11 + s * m21;
-            var e12 = c * m12 + s * m22;
-            m21 = c * m21 - s * m11;
-            m22 = c * m22 - s * m12;
+            var e11 = (c * m11) + (s * m21);
+            var e12 = (c * m12) + (s * m22);
+            m21 = (c * m21) - (s * m11);
+            m22 = (c * m22) - (s * m12);
             m11 = e11;
             m12 = e12;
         }
@@ -556,8 +557,8 @@ namespace Alternet.Drawing
             if (det == 0)
                 return false;
 
-            var ex = (m21 * dy - m22 * dx) / det;
-            dy = (-m11 * dy + m12 * dx) / det;
+            var ex = ((m21 * dy) - (m22 * dx)) / det;
+            dy = ((-m11 * dy) + (m12 * dx)) / det;
             dx = ex;
             var e11 = m22 / det;
             m12 = -m12 / det;
@@ -585,10 +586,10 @@ namespace Alternet.Drawing
             if (IsIdentity)
                 return src;
 
-            var x = src.X * m11 + src.Y * m21 + DX;
-            var y = src.X * m12 + src.Y * m22 + DY;
+            var x = (src.X * m11) + (src.Y * m21) + DX;
+            var y = (src.X * m12) + (src.Y * m22) + DY;
 
-            return new(x,y);
+            return new(x, y);
         }
 
         /// <summary>
@@ -608,9 +609,9 @@ namespace Alternet.Drawing
             if (IsIdentity)
                 return src;
 
-            var width = src.Width * m11 + src.Height * m21;
-            var height = src.Width * m12 + src.Height * m22;
-            
+            var width = (src.Width * m11) + (src.Height * m21);
+            var height = (src.Width * m12) + (src.Height * m22);
+
             return new(width, height);
         }
 
@@ -625,7 +626,7 @@ namespace Alternet.Drawing
                 m12 == matrix.m12 &&
                 m21 == matrix.m21 &&
                 m22 == matrix.m22 &&
-                dx  == matrix.dx &&
+                dx == matrix.dx &&
                 dy == matrix.dy;
             return result;
         }

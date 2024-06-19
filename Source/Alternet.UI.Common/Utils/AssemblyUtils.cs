@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets initialized instance of the <see cref="BaseObject"/> for the different purposes.
         /// </summary>
-        public static BaseObject Default = new();
+        public static readonly BaseObject Default = new();
 
         /// <summary>
         /// Gets <c>true</c> value as <see cref="object"/>.
@@ -235,7 +235,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly object DefaultDateTime = default(DateTime);
 
-        private static AdvDictionary<string, Assembly>? ResNameToAssembly;
+        private static AdvDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
 
         /// <summary>
@@ -874,9 +874,9 @@ namespace Alternet.UI
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            if (ResNameToAssembly is null || assemblies.Length != resNameToAssemblySavedLength)
+            if (resNameToAssembly is null || assemblies.Length != resNameToAssemblySavedLength)
             {
-                ResNameToAssembly ??= new();
+                resNameToAssembly ??= new();
                 resNameToAssemblySavedLength = assemblies.Length;
 
                 foreach (var assembly in assemblies)
@@ -888,12 +888,12 @@ namespace Alternet.UI
 
                     foreach (var resource in resources)
                     {
-                        ResNameToAssembly.TryAdd(resource, assembly);
+                        resNameToAssembly.TryAdd(resource, assembly);
                     }
                 }
             }
 
-            if (ResNameToAssembly.TryGetValue(resName, out var result))
+            if (resNameToAssembly.TryGetValue(resName, out var result))
                 return result;
             return null;
         }

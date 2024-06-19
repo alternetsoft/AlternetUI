@@ -28,5 +28,5 @@ namespace Alternet.UI
         /// Object obtained focus through a deliberate call to Focus or a related API.
         /// </summary>
         Programmatic,
-    }    
+    }
 }

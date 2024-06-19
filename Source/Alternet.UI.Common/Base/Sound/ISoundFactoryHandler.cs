@@ -9,9 +9,9 @@ namespace Alternet.UI
     public interface ISoundFactoryHandler : IDisposable
     {
         void StopSound();
-        
+
         void MessageBeep(SystemSoundType soundType);
-        
+
         void Bell();
 
         ISoundPlayerHandler CreateSoundPlayerHandler(string fileName);

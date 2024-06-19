@@ -12,7 +12,6 @@ namespace Alternet.UI
 
         public void GetAllAssemblies()
         {
-
         }
 
         public IAssemblyDescriptor? GetAssemblyFromUrl(Uri url)

@@ -18,17 +18,12 @@ namespace Alternet.Drawing
     /// </summary>
     public static class GraphicsFactory
     {
-        private static readonly AdvDictionary<double, Graphics> memoryCanvases = new();
-
-        private static bool ImageBitsFormatsLoaded = false;
-        private static ImageBitsFormat nativeBitsFormat;
-        private static ImageBitsFormat alphaBitsFormat;
-        private static ImageBitsFormat genericBitsFormat;
-
         /// <summary>
         /// Gets or sets default dpi value used in conversions pixels from/to device-independent units.
         /// </summary>
         public static int DefaultDPI = 96;
+
+        public static SKFilterQuality DefaultScaleQuality = SKFilterQuality.High;
 
         public static Func<Font, SKPaint> FontToFillPaint
             = (font) => GraphicsFactory.CreateFillPaint(font.SkiaFont);
@@ -54,8 +49,13 @@ namespace Alternet.Drawing
 
         public static bool DefaultAntialias = true;
 
+        private static readonly AdvDictionary<double, Graphics> MemoryCanvases = new();
+
+        private static bool imageBitsFormatsLoaded = false;
+        private static ImageBitsFormat nativeBitsFormat;
+        private static ImageBitsFormat alphaBitsFormat;
+        private static ImageBitsFormat genericBitsFormat;
         private static IGraphicsFactoryHandler? handler;
-        public static SKFilterQuality DefaultScaleQuality = SKFilterQuality.High;
 
         static GraphicsFactory()
         {
@@ -108,9 +108,9 @@ namespace Alternet.Drawing
 
         private static void LoadImageBitsFormats()
         {
-            if (ImageBitsFormatsLoaded)
+            if (imageBitsFormatsLoaded)
                 return;
-            ImageBitsFormatsLoaded = true;
+            imageBitsFormatsLoaded = true;
             nativeBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Native);
             alphaBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Alpha);
             genericBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Generic);
@@ -175,7 +175,7 @@ namespace Alternet.Drawing
         public static Graphics GetOrCreateMemoryCanvas(double? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
-            var result = memoryCanvases.GetOrCreate(factor, () => CreateMemoryCanvas(factor));
+            var result = MemoryCanvases.GetOrCreate(factor, () => CreateMemoryCanvas(factor));
             return result;
         }
 
@@ -308,14 +308,14 @@ namespace Alternet.Drawing
             var paint = GraphicsFactory.CreateStrokePaint(pen.Color);
             paint.StrokeCap = pen.LineCap.ToSkia();
             paint.StrokeJoin = pen.LineJoin.ToSkia();
-            paint.StrokeWidth = (float)(pen.Width);
+            paint.StrokeWidth = (float)pen.Width;
             paint.IsStroke = true;
             return paint;
         }
 
         public static Coord ScaleFactorFromDpi(int dpi)
         {
-            if (dpi == DefaultDPI || dpi <=0)
+            if (dpi == DefaultDPI || dpi <= 0)
                 return 1;
             return (Coord)dpi / (Coord)DefaultDPI;
         }
@@ -438,7 +438,7 @@ namespace Alternet.Drawing
                 SKFontStyleWidth.Normal,
                 skiaSlant);
 
-            SKFont skiaFont = new(typeFace, (float)(font.SizeInDips));
+            SKFont skiaFont = new(typeFace, (float)font.SizeInDips);
             return skiaFont;
         }
     }

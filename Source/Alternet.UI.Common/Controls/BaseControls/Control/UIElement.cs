@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using Alternet.UI.Port;
 using Alternet.UI.Localization;
+using Alternet.UI.Port;
 
 namespace Alternet.UI
 {

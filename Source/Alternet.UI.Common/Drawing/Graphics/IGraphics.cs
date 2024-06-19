@@ -183,7 +183,7 @@ namespace Alternet.Drawing
         void DrawText(string text, Font font, Brush brush, RectD bounds);
 
         void DrawWave(RectD rect, Color color);
- 
+
         SizeD MeasureText(string text, Font font);
 
         void Pop();

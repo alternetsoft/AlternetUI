@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Alternet.UI;
 
 using SkiaSharp;
@@ -87,7 +88,7 @@ namespace Alternet.Drawing
         public static FontFamily GenericSerif
         {
             get => genericSerif ??= new FontFamily(GenericFontFamily.Serif);
-        }            
+        }
 
         /// <summary>
         /// Gets a generic default <see cref="FontFamily"/>.
@@ -95,7 +96,7 @@ namespace Alternet.Drawing
         /// <value>A <see cref="FontFamily"/> that represents a generic default
         /// font.</value>
         public static FontFamily GenericDefault
-        { 
+        {
             get => genericDefault ??= new FontFamily(GenericFontFamily.Default);
         }
 
@@ -107,7 +108,7 @@ namespace Alternet.Drawing
         public static FontFamily GenericSansSerif
         {
             get => genericSansSerif ??= new FontFamily(GenericFontFamily.SansSerif);
-        }            
+        }
 
         /// <summary>
         /// Gets a generic monospace <see cref="FontFamily"/>.
@@ -117,7 +118,7 @@ namespace Alternet.Drawing
         public static FontFamily GenericMonospace
         {
             get => genericMonospace ??= new FontFamily(GenericFontFamily.Monospace);
-        } 
+        }
 
         /// <summary>
         /// Returns an array that contains all the <see cref="FontFamily"/>
@@ -185,7 +186,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                if(namesAscending is null)
+                if (namesAscending is null)
                 {
                     var names = FamiliesNames;
                     namesAscending = new();

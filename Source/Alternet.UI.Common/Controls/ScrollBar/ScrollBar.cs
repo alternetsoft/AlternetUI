@@ -89,7 +89,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Gets or sets a value to be added to or subtracted from the
         /// <see cref="Value" /> property when the scroll box is moved a large distance.
@@ -607,7 +606,7 @@ namespace Alternet.UI
                 VThumbY = SystemSettings.GetMetric(SystemSettingsMetric.VThumbY);
                 HScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowX);
                 HScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowY);
-                HThumbX = SystemSettings.GetMetric(SystemSettingsMetric.HThumbX);             
+                HThumbX = SystemSettings.GetMetric(SystemSettingsMetric.HThumbX);
             }
         }
     }
