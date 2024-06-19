@@ -1005,22 +1005,22 @@ namespace Alternet.UI
 
 
         /// <summary>
-        ///     The convert button or key.
+        ///     The IME convert button or key.
         /// </summary>
         Convert = 183,
 
         /// <summary>
-        ///     The nonconvert button or key.
+        ///     The IME nonconvert button or key.
         /// </summary>
         NonConvert = 184,
 
         /// <summary>
-        ///     The accept button or key.
+        ///     The IME accept button or key.
         /// </summary>
         Accept = 185,
 
         /// <summary>
-        ///     The mode change key.
+        ///     The IME mode change key.
         /// </summary>
         ModeChange = 186,
 

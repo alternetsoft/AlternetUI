@@ -13,11 +13,14 @@ namespace Alternet.UI
         private readonly TDest[] values;
         private readonly int maxValue;
 
-        public EnumMapping()
+        public EnumMapping(TSource? maxValue = null)
         {
-            maxValue = EnumUtils.GetMaxValueAsInt<TSource>();
+            if (maxValue is null)
+                this.maxValue = EnumUtils.GetMaxValueAsInt<TSource>();
+            else
+                this.maxValue = System.Convert.ToInt32(maxValue.Value);
 
-            values = new TDest[maxValue + 1];
+            values = new TDest[this.maxValue + 1];
         }
 
         public override void Add(TSource from, TDest to)

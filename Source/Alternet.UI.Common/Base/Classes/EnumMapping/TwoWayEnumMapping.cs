@@ -13,10 +13,10 @@ namespace Alternet.UI
         private readonly AbstractEnumMapping<TSource, TDest> sourceToDest;
         private readonly AbstractEnumMapping<TDest, TSource> destToSource;
 
-        public TwoWayEnumMapping()
+        public TwoWayEnumMapping(TSource? sourceMaxValue = null, TDest? destMaxValue = null)
         {
-            sourceToDest = CreateEnumMapping<TSource, TDest>();
-            destToSource = CreateEnumMapping<TDest, TSource>();
+            sourceToDest = CreateEnumMapping<TSource, TDest>(sourceMaxValue);
+            destToSource = CreateEnumMapping<TDest, TSource>(destMaxValue);
         }
 
         public override void Add(TSource from, TDest to)
@@ -45,11 +45,11 @@ namespace Alternet.UI
             return destToSource.Convert(value, defaultValue);
         }
 
-        protected virtual AbstractEnumMapping<T1, T2> CreateEnumMapping<T1, T2>()
+        protected virtual AbstractEnumMapping<T1, T2> CreateEnumMapping<T1, T2>(T1? maxValue)
             where T1 : struct, Enum
             where T2 : struct, Enum
         {
-            return new EnumMapping<T1, T2>();
+            return new EnumMapping<T1, T2>(maxValue);
         }
     }
 }
