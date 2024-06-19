@@ -11,10 +11,6 @@ namespace Alternet.UI
 {
     public interface IApplicationHandler : IDisposable
     {
-        IMouseHandler CreateMouseHandler();
-
-        IKeyboardHandler CreateKeyboardHandler();
-
         /// <summary>
         /// Allows the programmer to specify whether the application will exit when the
         /// top-level frame is deleted.
@@ -31,6 +27,10 @@ namespace Alternet.UI
         bool InUixmlPreviewerMode { get; set; }
 
         bool InvokeRequired { get; }
+
+        IMouseHandler CreateMouseHandler();
+
+        IKeyboardHandler CreateKeyboardHandler();
 
         /// <summary>
         /// Gets attribute value. Returns <c>null</c> if there is no such attribute.
@@ -84,7 +84,7 @@ namespace Alternet.UI
 
         IPrintingHandler CreatePrintingHandler();
 
-        ICaretHandler CreateCaretHandler();
+        /*ICaretHandler CreateCaretHandler();*/
 
         ICaretHandler CreateCaretHandler(Control control, int width, int height);
 

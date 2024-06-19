@@ -16,6 +16,9 @@ namespace Alternet.UI
         private readonly CaretInfo info = new();
         private Control? control;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlessCaretHandler"/> class.
+        /// </summary>
         public PlessCaretHandler()
         {
         }
@@ -53,7 +56,12 @@ namespace Alternet.UI
             }
         }
 
-        public Control? Control
+        public virtual bool IsOk
+        {
+            get => control != null && !IsDisposed && !control.IsDisposed;
+        }
+
+        public virtual Control? Control
         {
             get => control;
         }
@@ -73,6 +81,7 @@ namespace Alternet.UI
             set
             {
                 CaretBlinkTime = value;
+                Changed();
             }
         }
 
@@ -85,7 +94,7 @@ namespace Alternet.UI
                 if (info.Size == value)
                     return;
                 info.Size = value;
-                control?.InvalidateCaret();
+                Changed();
             }
         }
 
@@ -98,7 +107,7 @@ namespace Alternet.UI
                 if (info.Position == value)
                     return;
                 info.Position = value;
-                control?.InvalidateCaret();
+                Changed();
             }
         }
 
@@ -111,15 +120,16 @@ namespace Alternet.UI
                 if (info.Visible == value)
                     return;
                 info.Visible = value;
-                control?.InvalidateCaret();
+                Changed();
             }
         }
 
-        public virtual bool IsOk
+        protected virtual void Changed()
         {
-            get => control != null && !IsDisposed && !control.IsDisposed;
+            control?.InvalidateCaret();
         }
 
+        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             base.DisposeManaged();
