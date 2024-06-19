@@ -52,7 +52,7 @@ namespace Alternet.Drawing
         {
             get => true;
         }
-        
+
         public override Region? Clip
         {
             get => throw new NotImplementedException();

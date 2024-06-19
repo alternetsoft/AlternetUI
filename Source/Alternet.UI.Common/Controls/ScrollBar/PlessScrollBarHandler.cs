@@ -9,21 +9,21 @@ namespace Alternet.UI
     public class PlessScrollBarHandler : PlessControlHandler, IScrollBarHandler
     {
         public Action? Scroll { get; set; }
-        
+
         public int ThumbPosition { get; set; }
-        
+
         public int Range { get; set; }
-        
+
         public int ThumbSize { get; set; }
-        
+
         public int PageSize { get; set; }
-        
+
         public bool IsVertical { get; set; }
-        
+
         public ScrollEventType EventTypeID { get; set; }
-        
+
         public int EventOldPos { get; set; }
-        
+
         public int EventNewPos { get; set; }
 
         public void SetScrollbar(

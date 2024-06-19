@@ -6,33 +6,36 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class EnumMapping<TSource, TDest>: BaseObject
+    public class EnumMapping<TSource, TDest> : AbstractEnumMapping<TSource, TDest>
         where TSource : struct, Enum
         where TDest : struct, Enum
     {
         private readonly TDest[] values;
         private readonly int maxValue;
 
-        public EnumMapping()
+        public EnumMapping(TSource? maxValue = null)
         {
-            maxValue = EnumUtils.GetMaxValueAsInt<TSource>();
+            if (maxValue is null)
+                this.maxValue = EnumUtils.GetMaxValueAsInt<TSource>();
+            else
+                this.maxValue = System.Convert.ToInt32(maxValue.Value);
 
-            values = new TDest[maxValue + 1];
+            values = new TDest[this.maxValue + 1];
         }
 
-        public void Add(TSource from, TDest to)
+        public override void Add(TSource from, TDest to)
         {
             var intValue = System.Convert.ToInt32(from);
             values[intValue] = to;
         }
 
-        public void Remove(TSource from)
+        public override void Remove(TSource from)
         {
             var intValue = System.Convert.ToInt32(from);
             values[intValue] = default;
         }
 
-        public TDest Convert(TSource value, TDest defaultValue = default)
+        public override TDest Convert(TSource value, TDest defaultValue = default)
         {
             var intValue = System.Convert.ToInt32(value);
 

@@ -182,7 +182,7 @@ namespace Alternet.UI
         }
 
         public virtual void BubbleAction<T>(T e, Action<Control, T> action)
-            where T: HandledEventArgs
+            where T : HandledEventArgs
         {
             var control = this;
             var form = ParentWindow;
@@ -249,7 +249,6 @@ namespace Alternet.UI
                 currentTarget.ErrorsChanged?.Invoke(currentTarget, e);
                 currentTarget = currentTarget.Parent;
             }
-
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Alternet.Drawing
 
             set
             {
-                paint = value;                
+                paint = value;
             }
         }
 

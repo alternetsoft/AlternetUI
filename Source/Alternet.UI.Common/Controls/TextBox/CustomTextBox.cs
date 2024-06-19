@@ -571,6 +571,7 @@ namespace Alternet.UI
             {
                 ReportValidatorError(true, null, errorEnumerator);
             }
+
             return result;
         }
 

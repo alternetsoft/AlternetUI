@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Alternet.UI
 {
@@ -99,17 +100,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns whether or not the specified key state is down.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsKeyDown(KeyStates keyStates)
+        {
+            return (keyStates & KeyStates.Down) == KeyStates.Down;
+        }
+
+        /// <summary>
+        /// Returns whether or not the specified key state is toggled.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsKeyToggled(KeyStates keyStates)
+        {
+            return (keyStates & KeyStates.Toggled) == KeyStates.Toggled;
+        }
+
+        /// <summary>
         /// Returns whether or not the specified key is down.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsKeyDown(Key key)
         {
-            var result = (GetKeyStates(key) & KeyStates.Down) == KeyStates.Down;
-            return result;
+            return IsKeyDown(GetKeyStates(key));
         }
 
         /// <summary>
         /// Returns whether or not the specified key is up.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsKeyUp(Key key)
         {
             return !IsKeyDown(key);
@@ -118,9 +138,10 @@ namespace Alternet.UI
         /// <summary>
         /// Returns whether or not the specified key is toggled.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsKeyToggled(Key key)
         {
-            return (GetKeyStates(key) & KeyStates.Toggled) == KeyStates.Toggled;
+            return IsKeyToggled(GetKeyStates(key));
         }
 
         /// <summary>
@@ -130,14 +151,23 @@ namespace Alternet.UI
         {
             if (!IsValidKey(key))
                 return KeyStates.None;
-            return Keyboard.Handler.GetKeyStatesFromSystem(key);
+            try
+            {
+                return Keyboard.Handler.GetKeyStatesFromSystem(key);
+            }
+            catch(Exception e)
+            {
+                App.DebugLogError(e);
+                return KeyStates.None;
+            }
         }
 
         public static bool IsValidKey(Key key)
         {
-            return (int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/;
+            return Handler.IsValidKey(key);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint IsRepeatToRepeatCount(bool isRepeat)
         {
             if (isRepeat)

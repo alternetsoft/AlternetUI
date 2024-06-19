@@ -15,7 +15,8 @@ namespace Alternet.UI
         private double maxHeight = double.PositiveInfinity;
 
         /// <summary>Initializes a new instance of the <see cref="RowDefinition" /> class.</summary>
-        public RowDefinition() : base(false)
+        public RowDefinition()
+            : base(false)
         {
         }
 
@@ -100,10 +101,11 @@ namespace Alternet.UI
             get
             {
                 double result = 0;
-                if (base.InParentLogicalTree)
+                if (InParentLogicalTree)
                 {
-                    result = ((Grid)base.LogicalParent).GetFinalRowDefinitionHeight(base.Index);
+                    result = ((Grid)LogicalParent).GetFinalRowDefinitionHeight(Index);
                 }
+
                 return result;
             }
         }
@@ -117,10 +119,11 @@ namespace Alternet.UI
             get
             {
                 double result = 0;
-                if (base.Index != 0)
+                if (Index != 0)
                 {
-                    result = base.FinalOffset;
+                    result = FinalOffset;
                 }
+
                 return result;
             }
         }

@@ -336,7 +336,7 @@ namespace Alternet.UI
         /// all <see cref="Button"/> or <see cref="CheckBox"/> child controls.
         /// </remarks>
         public virtual IEnumerable<T> ChildrenOfType<T>()
-            where T: Control
+            where T : Control
         {
             if (HasChildren)
                 return Children.OfType<T>();
@@ -564,8 +564,6 @@ namespace Alternet.UI
 
         public virtual void TouchToMouseEvents(TouchEventArgs e)
         {
-            var handled = e.Handled;
-
             switch (e.DeviceType)
             {
                 case TouchDeviceType.Touch:
@@ -581,14 +579,14 @@ namespace Alternet.UI
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
                                 e.Location,
-                                out handled);
+                                out _);
                             break;
                         case TouchAction.Moved:
                             Control.BubbleMouseMove(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.Location,
-                                out handled);
+                                out _);
                             break;
                         case TouchAction.Released:
                             Control.BubbleMouseUp(
@@ -596,7 +594,7 @@ namespace Alternet.UI
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
                                 e.Location,
-                                out handled);
+                                out _);
                             break;
                         case TouchAction.Cancelled:
                             break;
@@ -609,7 +607,7 @@ namespace Alternet.UI
                                         DateTime.Now.Ticks,
                                         e.WheelDelta,
                                         e.Location,
-                                        out handled);
+                                        out _);
                             break;
                         default:
                             break;
@@ -1311,7 +1309,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="propertyName">
         /// The name of the property to retrieve validation errors for; or <c>null</c>
-        /// or <see cref="System.String.Empty"/>, to retrieve entity-level errors.
+        /// or <see cref="string.Empty"/>, to retrieve entity-level errors.
         /// </param>
         /// <returns>The validation errors for this control and it's child controls.</returns>
         public virtual IEnumerable GetErrors(string? propertyName = null)
@@ -1549,7 +1547,7 @@ namespace Alternet.UI
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
         public virtual void ForEachChild<T>(Action<T> action)
-            where T: Control
+            where T : Control
         {
             if (!HasChildren)
                 return;
@@ -1863,7 +1861,6 @@ namespace Alternet.UI
 
             if(Handler.EventBounds != Bounds)
             {
-
             }
 
             var locationChanged = reportedBounds.Location != newBounds.Location;

@@ -11,9 +11,9 @@ namespace Alternet.UI
     public interface INotifyIconHandler : IDisposable
     {
         string? Text { get; set; }
-        
+
         Action? Click { get; set; }
-        
+
         Action? DoubleClick { get; set; }
 
         Image? Icon { set; }

@@ -76,7 +76,7 @@ namespace Alternet.UI
             {
                 factory = value;
             }
-        }            
+        }
 
         /// <summary>
         /// Gets the number of connected displays.
@@ -102,7 +102,6 @@ namespace Alternet.UI
             {
                 // Do not keep displays in memory,
                 // otherwise when DPI is changed we will have an exception.
-
                 var count = Count;
                 var allScreens = new Display[count];
                 for (int i = 0; i < count; i++)

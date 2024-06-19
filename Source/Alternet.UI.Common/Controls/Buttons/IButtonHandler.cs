@@ -13,11 +13,11 @@ namespace Alternet.UI
         Image? NormalImage { set; }
 
         Image? HoveredImage { set; }
-        
+
         Image? PressedImage { set; }
-        
+
         Image? DisabledImage { set; }
-        
+
         Image? FocusedImage { set; }
 
         Action? Click { get; set; }

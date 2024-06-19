@@ -20,33 +20,33 @@ namespace Alternet.UI
             set => handler = value;
         }
 
-    /// <summary>
-    /// Allocates size bytes of uninitialized storage.
-    /// </summary>
-    /// <param name="size">Number of bytes to allocate.</param>
-    /// <returns>
-    /// On success, returns the pointer to the beginning of newly allocated memory.
-    /// To avoid a memory leak,
-    /// the returned pointer must be deallocated with <see cref="FreeMem"/> or <see cref="Realloc"/>.
-    /// On failure, returns a null pointer.
-    /// </returns>
-    /// <remarks>
-    /// If allocation succeeds, returns a pointer to the lowest (first) byte in the allocated
-    /// memory block
-    /// that is suitably aligned for any scalar type
-    /// (implicitly creating objects in the destination area).
-    /// </remarks>
-    /// <remarks>
-    /// If <paramref name="size"/> is zero, the behavior is implementation defined
-    /// (null pointer may be returned, or some non-null pointer may be returned that may not be
-    /// used to access storage, but has to be passed to <see cref="FreeMem"/>).
-    /// </remarks>
-    /// <remarks>
-    /// This function does not call constructors or initialize memory in any way.
-    /// There are no ready-to-use smart pointers that could guarantee that the matching deallocation
-    /// function is called.
-    /// </remarks>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        /// Allocates size bytes of uninitialized storage.
+        /// </summary>
+        /// <param name="size">Number of bytes to allocate.</param>
+        /// <returns>
+        /// On success, returns the pointer to the beginning of newly allocated memory.
+        /// To avoid a memory leak,
+        /// the returned pointer must be deallocated with <see cref="FreeMem"/> or <see cref="Realloc"/>.
+        /// On failure, returns a null pointer.
+        /// </returns>
+        /// <remarks>
+        /// If allocation succeeds, returns a pointer to the lowest (first) byte in the allocated
+        /// memory block
+        /// that is suitably aligned for any scalar type
+        /// (implicitly creating objects in the destination area).
+        /// </remarks>
+        /// <remarks>
+        /// If <paramref name="size"/> is zero, the behavior is implementation defined
+        /// (null pointer may be returned, or some non-null pointer may be returned that may not be
+        /// used to access storage, but has to be passed to <see cref="FreeMem"/>).
+        /// </remarks>
+        /// <remarks>
+        /// This function does not call constructors or initialize memory in any way.
+        /// There are no ready-to-use smart pointers that could guarantee that the matching deallocation
+        /// function is called.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IntPtr Alloc(int size)
         {
             return Handler.Alloc(size);

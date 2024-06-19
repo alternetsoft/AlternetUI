@@ -34,6 +34,7 @@ namespace Alternet.Drawing
             {
                 return width;
             }
+
             set
             {
                 width = value;
@@ -51,6 +52,7 @@ namespace Alternet.Drawing
             {
                 return height;
             }
+
             set
             {
                 height = value;
@@ -69,6 +71,7 @@ namespace Alternet.Drawing
             {
                 return stride;
             }
+
             set
             {
                 stride = value;
@@ -86,6 +89,7 @@ namespace Alternet.Drawing
             {
                 return pixelFormat;
             }
+
             set
             {
                 pixelFormat = value;
@@ -103,6 +107,7 @@ namespace Alternet.Drawing
             {
                 return scan0;
             }
+
             set
             {
                 scan0 = value;
@@ -118,6 +123,7 @@ namespace Alternet.Drawing
             {
                 return reserved;
             }
+
             set
             {
                 reserved = value;

@@ -15,12 +15,12 @@ namespace Alternet.Drawing
         /// Specifies that a portion of the image is locked for reading.
         /// </summary>
         ReadOnly = 1,
-        
+
         /// <summary>
         /// Specifies that a portion of the image is locked for writing.
         /// </summary>
         WriteOnly = 2,
-        
+
         /// <summary>
         /// Specifies that a portion of the image is locked for reading or writing.
         /// </summary>

@@ -12,7 +12,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// A generic 'Sans Serif' (Swiss) <see cref="FontFamily"/> object.
-        /// </summary>        
+        /// </summary>
         SansSerif = 1,
 
         /// <summary>

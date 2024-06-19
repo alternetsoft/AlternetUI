@@ -25,7 +25,7 @@ namespace Alternet.Drawing
         SKBitmap? Bitmap { get; }
 
         SKCanvas Canvas { get; }
-        
+
         bool IsOk { get; }
     }
 }

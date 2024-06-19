@@ -118,7 +118,8 @@ namespace Alternet.UI
             return GetCallbacks(created, da);
         }
 
-        (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly) GetCallbacks(Type created, Assembly assembly)
+        private (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly)
+            GetCallbacks(Type created, Assembly assembly)
         {
             var isp = System.Linq.Expressions.Expression.Parameter(typeof(IServiceProvider));
             var createCb = System.Linq.Expressions.Expression.Lambda<Func<IServiceProvider?, object>>(

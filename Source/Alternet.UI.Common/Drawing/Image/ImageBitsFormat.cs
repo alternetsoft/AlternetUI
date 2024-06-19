@@ -197,16 +197,18 @@ namespace Alternet.Drawing
         {
             var self = this;
 
-            App.LogSection(() =>
-            {
-                App.LogNameValue("BitsPerPixel", self.BitsPerPixel);
-                App.LogNameValue("HasAlpha", self.HasAlpha);
-                App.LogNameValue("SizePixel", self.SizePixel);
-                App.LogNameValue("Red", self.Red);
-                App.LogNameValue("Green", self.Green);
-                App.LogNameValue("Blue", self.Blue);
-                App.LogNameValue("Alpha", self.Alpha);
-            }, sectionName);
+            App.LogSection(
+                () =>
+                {
+                    App.LogNameValue("BitsPerPixel", self.BitsPerPixel);
+                    App.LogNameValue("HasAlpha", self.HasAlpha);
+                    App.LogNameValue("SizePixel", self.SizePixel);
+                    App.LogNameValue("Red", self.Red);
+                    App.LogNameValue("Green", self.Green);
+                    App.LogNameValue("Blue", self.Blue);
+                    App.LogNameValue("Alpha", self.Alpha);
+                },
+                sectionName);
         }
 
         public readonly override bool Equals(object? obj)

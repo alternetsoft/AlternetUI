@@ -16,17 +16,23 @@ namespace Alternet.Drawing
     {
         public static readonly ColorStruct Default = new();
 
-        [FieldOffset(0)] public byte B;
+        [FieldOffset(0)]
+        public byte B;
 
-        [FieldOffset(1)] public byte G;
+        [FieldOffset(1)]
+        public byte G;
 
-        [FieldOffset(2)] public byte R;
+        [FieldOffset(2)]
+        public byte R;
 
-        [FieldOffset(3)] public byte A;
+        [FieldOffset(3)]
+        public byte A;
 
-        [FieldOffset(0)] public SKColor Color;
+        [FieldOffset(0)]
+        public SKColor Color;
 
-        [FieldOffset(0)] public uint Value;
+        [FieldOffset(0)]
+        public uint Value;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct(byte red, byte green, byte blue)

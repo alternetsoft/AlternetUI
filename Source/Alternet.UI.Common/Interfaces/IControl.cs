@@ -1909,7 +1909,7 @@ namespace Alternet.UI
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
         void ForEachChild<T>(Action<T> action)
-            where T: Control;
+            where T : Control;
 
         /// <summary>
         /// Same as <see cref="App.Log"/>.

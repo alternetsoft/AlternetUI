@@ -13,8 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
-using Alternet.UI.Localization;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -240,7 +240,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsActive => Handler.IsActive;
 
-        /// <inheritdoc/>
         public virtual bool InUixmlPreviewerMode
         {
             get => Handler.InUixmlPreviewerMode;
@@ -563,7 +562,6 @@ namespace Alternet.UI
             Environment.Exit(exitCode);
         }
 
-
         /// <summary>
         /// Executes the specified delegate on the thread that owns the application.
         /// </summary>
@@ -772,7 +770,10 @@ namespace Alternet.UI
         /// <param name="obj">Message text or object to log.</param>
         public static void LogError(object? obj)
         {
-            Log($"Error: {obj}", LogItemKind.Error);
+            if (obj is Exception e)
+                LogUtils.LogException(e);
+            else
+                Log($"Error: {obj}", LogItemKind.Error);
         }
 
         /// <summary>
@@ -866,6 +867,16 @@ namespace Alternet.UI
         public static void DebugLog(object? msg)
         {
             Log(msg);
+        }
+
+        /// <inheritdoc cref="LogError"/>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLogError(object? msg)
+        {
+            LogError(msg);
         }
 
         /// <inheritdoc cref="LogIf"/>

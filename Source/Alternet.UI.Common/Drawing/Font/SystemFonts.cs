@@ -55,7 +55,7 @@ namespace Alternet.UI
         {
             get => system ??= CreateSystemFont(SystemSettingsFont.System);
             set => system = value ?? CreateSystemFont(SystemSettingsFont.System);
-        } 
+        }
 
         /// <summary>
         /// Device-dependent font.

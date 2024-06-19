@@ -8,6 +8,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -494,7 +495,7 @@ namespace Alternet.UI
 
             var names = SKFontManager.Default.GetFontFamilies();
 
-            foreach(var name in names)
+            foreach (var name in names)
             {
                 var family = SKFontManager.Default.MatchFamily(name);
                 if (family.IsFixedPitch)
@@ -511,9 +512,9 @@ namespace Alternet.UI
 
             App.LogNameValue("Typeface.UnitsPerEm", font.Typeface.UnitsPerEm);
             App.LogNameValue("ForceAutoHinting", font.ForceAutoHinting);
-            App.LogNameValue("Subpixel",font.Subpixel);
+            App.LogNameValue("Subpixel", font.Subpixel);
             App.LogNameValue("EmbeddedBitmaps", font.EmbeddedBitmaps);
-            App.LogNameValue("LinearMetrics",font.LinearMetrics);
+            App.LogNameValue("LinearMetrics", font.LinearMetrics);
             App.LogNameValue("Embolden", font.Embolden);
             App.LogNameValue("BaselineSnap", font.BaselineSnap);
             App.LogNameValue("Size", font.Size);
@@ -833,7 +834,7 @@ namespace Alternet.UI
 
             if (registeredLogActions is not null)
             {
-                foreach(var item in registeredLogActions)
+                foreach (var item in registeredLogActions)
                 {
                     addLogAction(item.Name, item.Action);
                 }

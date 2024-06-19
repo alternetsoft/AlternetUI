@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
 using Alternet.UI;
 using Alternet.UI.Localization;
 
@@ -33,11 +34,20 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly PointI One = new(1, 1);
 
-        [FieldOffset(0)] private int x;
-        [FieldOffset(4)] private int y;
-        [FieldOffset(0)] private SKPointI point;
-        [FieldOffset(0)] private SizeI size;
-        [FieldOffset(0)] private ulong xy;
+        [FieldOffset(0)]
+        private readonly ulong xy;
+
+        [FieldOffset(0)]
+        private int x;
+
+        [FieldOffset(4)]
+        private int y;
+
+        [FieldOffset(0)]
+        private SKPointI point;
+
+        [FieldOffset(0)]
+        private SizeI size;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='PointI'/>
@@ -200,7 +210,7 @@ namespace Alternet.Drawing
         /// <see cref='PointI'/>  objects are unequal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(PointI left, PointI right) => (left.xy != right.xy);
+        public static bool operator !=(PointI left, PointI right) => left.xy != right.xy;
 
         /// <summary>
         /// Translates a <see cref='PointI'/> by a given

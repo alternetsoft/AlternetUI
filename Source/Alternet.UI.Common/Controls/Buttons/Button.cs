@@ -67,7 +67,7 @@ namespace Alternet.UI
                 }
 
                 return stateImages;
-            } 
+            }
 
             set
             {

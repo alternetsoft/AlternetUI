@@ -1127,7 +1127,7 @@ namespace Alternet.Drawing
         public virtual void Pop()
         {
             stack ??= new();
-            Transform = stack.Pop(); 
+            Transform = stack.Pop();
         }
 
         /// <summary>

@@ -13,12 +13,11 @@ namespace Alternet.UI
         private static int blinkTime = 530;
         private static LightDarkColor? color;
 
-        private Control? control;
         private readonly CaretInfo info = new();
+        private Control? control;
 
         public PlessCaretHandler()
         {
-
         }
 
         public PlessCaretHandler(Control control, int width, int height)

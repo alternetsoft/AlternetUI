@@ -20,7 +20,7 @@ namespace Alternet.UI
     public class KeyEventArgs : KeyboardEventArgs
     {
         private ModifierKeys modifiers;
-        private Key key;        
+        private Key key;
         private KeyStates keyStates;
         private Keys? keyData;
         private bool suppressKeyPress;
@@ -84,7 +84,7 @@ namespace Alternet.UI
             {
                 return modifiers;
             }
- 
+
             set
             {
                 modifiers = value;
@@ -230,5 +230,11 @@ namespace Alternet.UI
         /// Whether or not the key referenced by the event is toggled.
         /// </summary>
         public virtual bool IsToggled => keyStates == KeyStates.Toggled;
+
+        public override string ToString()
+        {
+            KeyInfo keyInfo = new(Key, ModifierKeys);
+            return $"{{{base.ToString()}: {keyInfo}}}";
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     internal interface IBitmapData : IDisposable
     {
         int Width { get; }
-        
+
         int Height { get; }
 
         int Stride { get; }

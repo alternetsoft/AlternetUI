@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     public enum ImageBitsFormatKind
     {
         Native = 0,
-        
+
         Alpha = 1,
 
         Generic = 2,

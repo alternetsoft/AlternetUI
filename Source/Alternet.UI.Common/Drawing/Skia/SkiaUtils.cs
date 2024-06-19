@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using SkiaSharp;
-
 using Alternet.UI;
 using Alternet.UI.Extensions;
+using SkiaSharp;
 
 namespace Alternet.Drawing
 {
@@ -24,7 +22,7 @@ namespace Alternet.Drawing
             get => defaultSkiaFont ??= CreateDefaultFont();
             set => defaultSkiaFont = value ?? CreateDefaultFont();
         }
-        
+
         public static double DefaultFontSize
         {
             get => defaultFontSize;
@@ -209,6 +207,7 @@ namespace Alternet.Drawing
             {
                 path.CubicTo(points[i], points[i + 1], points[i + 2]);
             }
+
             canvas.DrawPath(path, pen);
         }
 

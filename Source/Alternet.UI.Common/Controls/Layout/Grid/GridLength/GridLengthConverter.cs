@@ -9,27 +9,21 @@ using System.Reflection;
 namespace Alternet.UI
 {
     /// <summary>
-    /// GridLengthConverter - Converter class for converting 
+    /// GridLengthConverter - Converter class for converting
     /// instances of other types to and from GridLength instances.
-    /// </summary> 
+    /// </summary>
     public class GridLengthConverter : TypeConverter
     {
-        //-------------------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //-------------------------------------------------------------------
-
         #region Public Methods
 
         /// <summary>
         /// Checks whether or not this class can convert from a given type.
         /// </summary>
-        /// <param name="typeDescriptorContext">The ITypeDescriptorContext 
+        /// <param name="typeDescriptorContext">The ITypeDescriptorContext
         /// for this call.</param>
         /// <param name="sourceType">The Type being queried for support.</param>
         /// <returns>
-        /// <c>true</c> if thie converter can convert from the provided type, 
+        /// <c>true</c> if thie converter can convert from the provided type,
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertFrom(
@@ -59,11 +53,11 @@ namespace Alternet.UI
         /// <summary>
         /// Checks whether or not this class can convert to a given type.
         /// </summary>
-        /// <param name="typeDescriptorContext">The ITypeDescriptorContext 
+        /// <param name="typeDescriptorContext">The ITypeDescriptorContext
         /// for this call.</param>
         /// <param name="destinationType">The Type being queried for support.</param>
         /// <returns>
-        /// <c>true</c> if this converter can convert to the provided type, 
+        /// <c>true</c> if this converter can convert to the provided type,
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertTo(
@@ -87,7 +81,7 @@ namespace Alternet.UI
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// An ArgumentException is thrown if the example object is not null 
+        /// An ArgumentException is thrown if the example object is not null
         /// and is not a valid type which can be converted to a GridLength.
         /// </exception>
         public override object ConvertFrom(
@@ -111,7 +105,7 @@ namespace Alternet.UI
 
                     if (DoubleUtils.IsNaN(value))
                     {
-                        // this allows for conversion from Width / Height = "Auto" 
+                        // this allows for conversion from Width / Height = "Auto"
                         value = 1.0f;
                         type = GridUnitType.Auto;
                     }
@@ -162,28 +156,26 @@ namespace Alternet.UI
 
                 if (destinationType == typeof(string))
                 {
-                    return (ToString(gl, cultureInfo));
+                    return ToString(gl, cultureInfo);
                 }
 
                 if (destinationType == typeof(InstanceDescriptor))
                 {
                     ConstructorInfo ci =
                         typeof(GridLength).GetConstructor(
-                            new Type[] { typeof(double),
-                                typeof(GridUnitType) });
-                    return (new InstanceDescriptor(ci, new object[] { gl.Value, gl.GridUnitType }));
+                            new Type[]
+                            {
+                                typeof(double),
+                                typeof(GridUnitType),
+                            });
+                    return new InstanceDescriptor(ci, new object[] { gl.Value, gl.GridUnitType });
                 }
             }
+
             throw GetConvertToException(value, destinationType);
         }
 
         #endregion Public Methods
-
-        //-------------------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //-------------------------------------------------------------------
 
         #region Internal Methods
 
@@ -193,26 +185,24 @@ namespace Alternet.UI
         /// <param name="gl">GridLength instance to convert.</param>
         /// <param name="cultureInfo">Culture Info.</param>
         /// <returns>String representation of the object.</returns>
-        static internal string ToString(GridLength gl, CultureInfo cultureInfo)
+        internal static string ToString(GridLength gl, CultureInfo cultureInfo)
         {
             switch (gl.GridUnitType)
             {
-                //  for Auto print out "Auto". value is always "1.0"
-                case (GridUnitType.Auto):
-                    return ("Auto");
+                // for Auto print out "Auto". value is always "1.0"
+                case GridUnitType.Auto:
+                    return "Auto";
 
-                //  Star has one special case when value is "1.0".
-                //  in this case drop value part and print only "Star"
-                case (GridUnitType.Star):
-                    return (
+                // Star has one special case when value is "1.0".
+                // in this case drop value part and print only "Star"
+                case GridUnitType.Star:
+                    return
                         DoubleUtils.IsOne(gl.Value)
-                        ? "*"
-                        : Convert.ToString(gl.Value, cultureInfo) + "*");
+                        ? "*" : Convert.ToString(gl.Value, cultureInfo) + "*";
 
-                //  for Pixel print out the numeric value. "px" can be omitted.
+                // for Pixel print out the numeric value. "px" can be omitted.
                 default:
-                    return (Convert.ToString(gl.Value, cultureInfo));
-
+                    return Convert.ToString(gl.Value, cultureInfo);
             }
         }
 
@@ -223,7 +213,7 @@ namespace Alternet.UI
         /// <param name="cultureInfo">Culture Info.</param>
         /// <returns>Newly created GridLength instance.</returns>
         /// <remarks>
-        /// Formats: 
+        /// Formats:
         /// "[value][unit]"
         ///     [value] is a double
         ///     [unit] is a string in GridLength._unitTypes connected to a GridUnitType
@@ -233,15 +223,17 @@ namespace Alternet.UI
         ///     As above, but the value is assumed to be 1.0
         ///     This is only acceptable for a subset of GridUnitType: Auto
         /// </remarks>
-        static internal GridLength FromString(string s, CultureInfo cultureInfo)
+        internal static GridLength FromString(string s, CultureInfo cultureInfo)
         {
-            XamlGridLengthSerializer.FromString(s, cultureInfo,
-                out double value, out GridUnitType unit);
+            XamlGridLengthSerializer.FromString(
+                s,
+                cultureInfo,
+                out double value,
+                out GridUnitType unit);
 
-            return (new GridLength(value, unit));
+            return new GridLength(value, unit);
         }
 
         #endregion Internal Methods
-
     }
 }

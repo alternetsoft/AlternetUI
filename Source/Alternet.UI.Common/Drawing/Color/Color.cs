@@ -90,7 +90,9 @@ namespace Alternet.Drawing
         private ColorStruct color;
 
         // Ignored, unless "state" says it is valid
+#pragma warning disable
         private readonly KnownColor knownColor;
+#pragma warning restore
 
         private readonly StateFlags state;
 
@@ -1640,7 +1642,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns a new color based on this current instance, but with the new red channel value. 
+        /// Returns a new color based on this current instance, but with the new red channel value.
         /// </summary>
         /// <param name="red">The new red component.</param>
         /// <returns></returns>
@@ -1653,7 +1655,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns a new color based on this current instance, but with the new green channel value. 
+        /// Returns a new color based on this current instance, but with the new green channel value.
         /// </summary>
         /// <param name="green">The new green component.</param>
         /// <returns></returns>
@@ -1829,6 +1831,13 @@ namespace Alternet.Drawing
             return new(argb, StateFlags.ValueValid);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void RequireArgb()
+        {
+            if (state.HasFlag(StateFlags.KnownColorValid))
+                color = KnownColorTable.KnownColorToArgb(knownColor);
+        }
+
         internal class ColorNameComparer : IComparer<Color>
         {
             public int Compare(Color? color1, Color? color2)
@@ -1837,13 +1846,6 @@ namespace Alternet.Drawing
                 var name2 = color2?.Name;
                 return string.Compare(name1, name2);
             }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void RequireArgb()
-        {
-            if (state.HasFlag(StateFlags.KnownColorValid))
-                color = KnownColorTable.KnownColorToArgb(knownColor);
         }
     }
 }

@@ -19,6 +19,5 @@ namespace Alternet.UI
         void FocusNextControl(bool forward = true, bool nested = true);
 
         bool SetFocus();
-
     }
 }

@@ -353,6 +353,7 @@ namespace Alternet.Drawing
                 App.LogError($"GenericImage not loaded from: {url}");
                 return false;
             }
+
             return CanRead(stream);
         }
 
@@ -476,7 +477,7 @@ namespace Alternet.Drawing
 
                     for (int i = 0; i < length; i++)
                     {
-                        *aptr = (*ptr);
+                        *aptr = *ptr;
                         ptr++;
                         aptr++;
                     }
@@ -1367,7 +1368,7 @@ namespace Alternet.Drawing
                 if (HasAlpha)
                 {
                     return ForEachPixelInternal(TransparentAction, param);
-  
+
                     void TransparentAction(ref SKColor color, T param)
                     {
                         if (color.Alpha != 0)
@@ -1443,7 +1444,7 @@ namespace Alternet.Drawing
                         if (alpha == 0)
                             return;
 
-                        RGBValue rgb = color;                        
+                        RGBValue rgb = color;
                         action(ref rgb, param);
                         color = rgb.WithAlpha(alpha);
                     }
