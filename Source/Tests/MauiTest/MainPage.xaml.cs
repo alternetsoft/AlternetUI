@@ -15,6 +15,10 @@ public partial class MainPage : ContentPage, IDrawable
 {
     private readonly Alternet.UI.SkiaSampleControl skiaSample;
 
+#if WINDOWS
+    private readonly Alternet.UI.SkiaWritableBitmap bitmap = new();
+#endif
+
     static MainPage()
     {
     }
@@ -183,6 +187,22 @@ public partial class MainPage : ContentPage, IDrawable
     {
         canvas.FillColor = Colors.Yellow;
         canvas.FillRectangle(dirtyRect);
+
+#if WINDOWS
+        bitmap.ActualHeight = graphicsView.Height;
+        bitmap.ActualWidth = graphicsView.Width;
+        bitmap.Dpi = (float)graphicsView.Scale;
+
+        bitmap.DoInvalidate(OnPaintSurface);
+
+        void OnPaintSurface(SKPaintSurfaceEventArgs e)
+        {
+            var canvas = e.Surface.Canvas;
+
+            canvas.Clear(SKColors.Brown);
+        }
+#endif
+
     }
 
     public class SimpleItem

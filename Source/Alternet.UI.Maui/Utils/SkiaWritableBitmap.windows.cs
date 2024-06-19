@@ -22,7 +22,9 @@ namespace Alternet.UI
 
         public double ActualHeight;
 
-        public float Dpi;
+        public float Dpi = 1.0f;
+
+        public SKSize CanvasSize;
 
         public SKSizeI UnscaledSize;
 
@@ -31,6 +33,8 @@ namespace Alternet.UI
         public IntPtr Pixels;
 
         public WriteableBitmap? Bitmap;
+
+        internal const float DpiBase = 96f;
 
         public void UpdateSize()
         {
@@ -43,7 +47,9 @@ namespace Alternet.UI
 
             UnscaledSize = new SKSizeI((int)ActualWidth, (int)ActualHeight);
 
-            ScaledSize = new SKSizeI((int)(ActualWidth * (double)Dpi), (int)(ActualHeight * (double)Dpi));
+            ScaledSize = new SKSizeI(
+                (int)(ActualWidth * (double)Dpi),
+                (int)(ActualHeight * (double)Dpi));
 
             static bool IsPositive(double value)
             {
@@ -64,7 +70,7 @@ namespace Alternet.UI
 
         public ImageBrush CreateBrush()
         {
-            ImageBrush background = new ImageBrush
+            ImageBrush background = new()
             {
                 ImageSource = Bitmap,
                 AlignmentX = AlignmentX.Left,
@@ -77,13 +83,8 @@ namespace Alternet.UI
 
         public IntPtr GetByteBuffer(IBuffer buffer)
         {
-            IBufferByteAccess bufferByteAccess = buffer.As<IBufferByteAccess>();
-
-            if (bufferByteAccess == null)
-            {
-                throw new InvalidCastException("Unable to convert WriteableBitmap.PixelBuffer to IBufferByteAccess.");
-            }
-
+            IBufferByteAccess bufferByteAccess = buffer.As<IBufferByteAccess>()
+                ?? throw new InvalidCastException("Unable to convert WriteableBitmap.PixelBuffer to IBufferByteAccess.");
             return bufferByteAccess.Buffer;
         }
 
@@ -113,6 +114,42 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        public void DoInvalidate(Action<SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs> onPaintSurface)
+        {
+            bool ignorePixelScaling = false;
+
+            SKImageInfo sKImageInfo = UpdateBitmap();
+            if (sKImageInfo.Width <= 0 || sKImageInfo.Height <= 0)
+            {
+                CanvasSize = SKSize.Empty;
+                return;
+            }
+
+            SKSizeI sKSizeI = ignorePixelScaling ? UnscaledSize : sKImageInfo.Size;
+
+            CanvasSize = sKSizeI;
+
+            using (SKSurface sKSurface = SKSurface.Create(sKImageInfo, Pixels, sKImageInfo.RowBytes))
+            {
+                SKCanvas canvas = sKSurface.Canvas;
+
+                if (ignorePixelScaling)
+                {
+                    canvas.Scale(Dpi);
+                    canvas.Save();
+                }
+
+                SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e =
+                    new(sKSurface, sKImageInfo.WithSize(sKSizeI), sKImageInfo);
+
+                onPaintSurface(e);
+
+                canvas.Flush();
+            }
+
+            Bitmap?.Invalidate();
         }
     }
 }
