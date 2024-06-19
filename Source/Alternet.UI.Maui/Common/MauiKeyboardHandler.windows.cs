@@ -16,14 +16,35 @@ using Windows.UI.ViewManagement.Core;
 
 namespace Alternet.UI
 {
+    using VirtualKeyToAlternetMapping
+        = AbstractTwoWayEnumMapping<Windows.System.VirtualKey, Alternet.UI.Key>;
+
     public class MauiKeyboardHandler : DisposableObject, IKeyboardHandler
     {
-        public static readonly EnumMapping<Windows.System.VirtualKey, Alternet.UI.Key>
-            VirtualKeyToAlternet = new();
+        private static VirtualKeyToAlternetMapping? virtualKeyToAlternet;
 
         static MauiKeyboardHandler()
         {
-            RegisterKeyMappings();
+        }
+
+        public static VirtualKeyToAlternetMapping VirtualKeyToAlternet
+        {
+            get
+            {
+                if (virtualKeyToAlternet is null)
+                {
+                    virtualKeyToAlternet =
+                        new TwoWayEnumMapping<Windows.System.VirtualKey, Alternet.UI.Key>();
+                    RegisterKeyMappings();
+                }
+
+                return virtualKeyToAlternet;
+            }
+
+            set
+            {
+                virtualKeyToAlternet = value;
+            }
         }
 
         public static Alternet.UI.KeyPressEventArgs Convert(
@@ -48,6 +69,11 @@ namespace Alternet.UI
             return VirtualKeyToAlternet.Convert(key);
         }
 
+        public static Windows.System.VirtualKey Convert(Alternet.UI.Key key)
+        {
+            return VirtualKeyToAlternet.Convert(key);
+        }
+
         public static void RegisterKeyMapping(Windows.System.VirtualKey windowsKey, Alternet.UI.Key key)
         {
             VirtualKeyToAlternet.Add(windowsKey, key);
@@ -64,7 +90,7 @@ namespace Alternet.UI
             RegisterKeyMapping(Windows.System.VirtualKey.Enter, Alternet.UI.Key.Enter);
             RegisterKeyMapping(Windows.System.VirtualKey.Shift, Alternet.UI.Key.Shift);
             RegisterKeyMapping(Windows.System.VirtualKey.Control, Alternet.UI.Key.Control);
-            RegisterKeyMapping(Windows.System.VirtualKey.Menu, Alternet.UI.Key.Menu);
+            RegisterKeyMapping(Windows.System.VirtualKey.Menu, Alternet.UI.Key.Alt);
             RegisterKeyMapping(Windows.System.VirtualKey.Pause, Alternet.UI.Key.Pause);
             RegisterKeyMapping(Windows.System.VirtualKey.CapitalLock, Alternet.UI.Key.CapsLock);
 
@@ -163,83 +189,90 @@ namespace Alternet.UI
             RegisterKeyMapping(Windows.System.VirtualKey.F23, Alternet.UI.Key.F23);
             RegisterKeyMapping(Windows.System.VirtualKey.F24, Alternet.UI.Key.F24);
 
-            // MapKey(Windows.System.VirtualKey.LeftButton     , Alternet.UI.Key.LeftButton     );
-            // MapKey(Windows.System.VirtualKey.RightButton    , Alternet.UI.Key.RightButton    );
-            // MapKey(Windows.System.VirtualKey.Cancel         , Alternet.UI.Key.Cancel         );
-            // MapKey(Windows.System.VirtualKey.MiddleButton   , Alternet.UI.Key.MiddleButton   );
-            // MapKey(Windows.System.VirtualKey.XButton1       , Alternet.UI.Key.XButton1       );
-            // MapKey(Windows.System.VirtualKey.XButton2       , Alternet.UI.Key.XButton2       );
+            RegisterKeyMapping(Windows.System.VirtualKey.Print, Alternet.UI.Key.PrintScreen);
+            RegisterKeyMapping(Windows.System.VirtualKey.Help, Alternet.UI.Key.F1);
 
-            // MapKey(Windows.System.VirtualKey.Kana           , Alternet.UI.Key.Kana           );
-            // MapKey(Windows.System.VirtualKey.Hangul         , Alternet.UI.Key.Hangul         );
-            // MapKey(Windows.System.VirtualKey.Junja          , Alternet.UI.Key.Junja          );
-            // MapKey(Windows.System.VirtualKey.Final          , Alternet.UI.Key.Final          );
-            // MapKey(Windows.System.VirtualKey.Hanja          , Alternet.UI.Key.Hanja          );
-            // MapKey(Windows.System.VirtualKey.Kanji          , Alternet.UI.Key.Kanji          );
-            // MapKey(Windows.System.VirtualKey.Escape         , Alternet.UI.Key.Escape         );
-            // MapKey(Windows.System.VirtualKey.Convert        , Alternet.UI.Key.Convert        );
-            // MapKey(Windows.System.VirtualKey.NonConvert     , Alternet.UI.Key.NonConvert     );
-            // MapKey(Windows.System.VirtualKey.Accept         , Alternet.UI.Key.Accept         );
-            // MapKey(Windows.System.VirtualKey.ModeChange     , Alternet.UI.Key.ModeChange     );
+            RegisterKeyMapping(Windows.System.VirtualKey.NumberKeyLock, Alternet.UI.Key.NumLock);
+            RegisterKeyMapping(Windows.System.VirtualKey.Scroll, Alternet.UI.Key.ScrollLock);
 
-            // MapKey(Windows.System.VirtualKey.Select         , Alternet.UI.Key.Select         );
-            // MapKey(Windows.System.VirtualKey.Print          , Alternet.UI.Key.Print          );
-            // MapKey(Windows.System.VirtualKey.Execute        , Alternet.UI.Key.Execute        );
-            // MapKey(Windows.System.VirtualKey.Snapshot       , Alternet.UI.Key.Snapshot);
+            RegisterKeyMapping(Windows.System.VirtualKey.GoBack, Alternet.UI.Key.BrowserBack);
+            RegisterKeyMapping(Windows.System.VirtualKey.GoForward, Alternet.UI.Key.BrowserForward);
+            RegisterKeyMapping(Windows.System.VirtualKey.Refresh, Alternet.UI.Key.BrowserRefresh);
+            RegisterKeyMapping(Windows.System.VirtualKey.Stop, Alternet.UI.Key.BrowserStop);
+            RegisterKeyMapping(Windows.System.VirtualKey.Search, Alternet.UI.Key.BrowserSearch);
+            RegisterKeyMapping(Windows.System.VirtualKey.Favorites, Alternet.UI.Key.BrowserFavorites);
+            RegisterKeyMapping(Windows.System.VirtualKey.GoHome, Alternet.UI.Key.BrowserHome);
 
-            // MapKey(Windows.System.VirtualKey.Help           , Alternet.UI.Key.Help           );
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadA, Alternet.UI.Key.GamepadA);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadB, Alternet.UI.Key.GamepadB);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadX, Alternet.UI.Key.GamepadX);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadY, Alternet.UI.Key.GamepadY);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadRightShoulder, Alternet.UI.Key.GamepadRightShoulder);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadLeftShoulder, Alternet.UI.Key.GamepadLeftShoulder);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadLeftTrigger, Alternet.UI.Key.GamepadLeftTrigger);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadRightTrigger, Alternet.UI.Key.GamepadRightTrigger);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadDPadUp, Alternet.UI.Key.GamepadDPadUp);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadDPadDown, Alternet.UI.Key.GamepadDPadDown);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadDPadLeft, Alternet.UI.Key.GamepadDPadLeft);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadDPadRight, Alternet.UI.Key.GamepadDPadRight);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadMenu, Alternet.UI.Key.GamepadMenu);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadView, Alternet.UI.Key.GamepadView);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadLeftThumbstickButton, Alternet.UI.Key.GamepadLeftThumbstickButton);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadRightThumbstickButton, Alternet.UI.Key.GamepadRightThumbstickButton);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadLeftThumbstickUp, Alternet.UI.Key.GamepadLeftThumbstickUp);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadLeftThumbstickDown, Alternet.UI.Key.GamepadLeftThumbstickDown);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadLeftThumbstickRight, Alternet.UI.Key.GamepadLeftThumbstickRight);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadLeftThumbstickLeft, Alternet.UI.Key.GamepadLeftThumbstickLeft);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadRightThumbstickUp, Alternet.UI.Key.GamepadRightThumbstickUp);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadRightThumbstickDown, Alternet.UI.Key.GamepadRightThumbstickDown);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadRightThumbstickRight, Alternet.UI.Key.GamepadRightThumbstickRight);
+            RegisterKeyMapping(Windows.System.VirtualKey.GamepadRightThumbstickLeft, Alternet.UI.Key.GamepadRightThumbstickLeft);
 
-            // MapKey(Windows.System.VirtualKey.Application    , Alternet.UI.Key.Application    );
-            // MapKey(Windows.System.VirtualKey.Sleep          , Alternet.UI.Key.Sleep          );
-            // MapKey(Windows.System.VirtualKey.Separator      , Alternet.UI.Key.Separator      );
+            RegisterKeyMapping(Windows.System.VirtualKey.Escape, Alternet.UI.Key.Escape);
 
-            // MapKey(Windows.System.VirtualKey.NavigationView , Alternet.UI.Key.NavigationView);
-            // MapKey(Windows.System.VirtualKey.NavigationMenu , Alternet.UI.Key.NavigationMenu );
-            // MapKey(Windows.System.VirtualKey.NavigationUp   , Alternet.UI.Key.NavigationUp   );
-            // MapKey(Windows.System.VirtualKey.NavigationDown , Alternet.UI.Key.NavigationDown );
-            // MapKey(Windows.System.VirtualKey.NavigationLeft , Alternet.UI.Key.NavigationLeft );
-            // MapKey(Windows.System.VirtualKey.NavigationRight, Alternet.UI.Key.NavigationRight);
-            // MapKey(Windows.System.VirtualKey.NavigationAccept, Alternet.UI.Key.NavigationAccept);
-            // MapKey(Windows.System.VirtualKey.NavigationCancel, Alternet.UI.Key.NavigationCancel);
-            // MapKey(Windows.System.VirtualKey.NumberKeyLock  , Alternet.UI.Key.NumberKeyLock);
-            // MapKey(Windows.System.VirtualKey.Scroll         , Alternet.UI.Key.Scroll         );
-            // MapKey(Windows.System.VirtualKey.LeftShift      , Alternet.UI.Key.LeftShift      );
-            // MapKey(Windows.System.VirtualKey.RightShift     , Alternet.UI.Key.RightShift     );
-            // MapKey(Windows.System.VirtualKey.LeftControl    , Alternet.UI.Key.LeftControl    );
-            // MapKey(Windows.System.VirtualKey.RightControl   , Alternet.UI.Key.RightControl   );
-            // MapKey(Windows.System.VirtualKey.LeftMenu       , Alternet.UI.Key.LeftMenu       );
-            // MapKey(Windows.System.VirtualKey.RightMenu      , Alternet.UI.Key.RightMenu      );
-            // MapKey(Windows.System.VirtualKey.GoBack         , Alternet.UI.Key.GoBack         );
-            // MapKey(Windows.System.VirtualKey.GoForward      , Alternet.UI.Key.GoForward      );
-            // MapKey(Windows.System.VirtualKey.Refresh        , Alternet.UI.Key.Refresh        );
-            // MapKey(Windows.System.VirtualKey.Stop           , Alternet.UI.Key.Stop           );
-            // MapKey(Windows.System.VirtualKey.Search         , Alternet.UI.Key.Search         );
-            // MapKey(Windows.System.VirtualKey.Favorites      , Alternet.UI.Key.Favorites      );
-            // MapKey(Windows.System.VirtualKey.GoHome         , Alternet.UI.Key.GoHome         );
-            // MapKey(Windows.System.VirtualKey.GamepadA       , Alternet.UI.Key.GamepadA       );
-            // MapKey(Windows.System.VirtualKey.GamepadB       , Alternet.UI.Key.GamepadB       );
-            // MapKey(Windows.System.VirtualKey.GamepadX       , Alternet.UI.Key.GamepadX       );
-            // MapKey(Windows.System.VirtualKey.GamepadY       , Alternet.UI.Key.GamepadY       );
-            // MapKey(Windows.System.VirtualKey.GamepadRightShoulder   , Alternet.UI.Key.GamepadRightShoulder);
-            // MapKey(Windows.System.VirtualKey.GamepadLeftShoulder    , Alternet.UI.Key.GamepadLeftShoulder    );
-            // MapKey(Windows.System.VirtualKey.GamepadLeftTrigger     , Alternet.UI.Key.GamepadLeftTrigger     );
-            // MapKey(Windows.System.VirtualKey.GamepadRightTrigger    , Alternet.UI.Key.GamepadRightTrigger    );
-            // MapKey(Windows.System.VirtualKey.GamepadDPadUp          , Alternet.UI.Key.GamepadDPadUp          );
-            // MapKey(Windows.System.VirtualKey.GamepadDPadDown        , Alternet.UI.Key.GamepadDPadDown        );
-            // MapKey(Windows.System.VirtualKey.GamepadDPadLeft        , Alternet.UI.Key.GamepadDPadLeft        );
-            // MapKey(Windows.System.VirtualKey.GamepadDPadRight       , Alternet.UI.Key.GamepadDPadRight       );
-            // MapKey(Windows.System.VirtualKey.GamepadMenu            , Alternet.UI.Key.GamepadMenu            );
-            // MapKey(Windows.System.VirtualKey.GamepadView            , Alternet.UI.Key.GamepadView            );
-            // MapKey(Windows.System.VirtualKey.GamepadLeftThumbstickButton    , Alternet.UI.Key.GamepadLeftThumbstickButton);
-            // MapKey(Windows.System.VirtualKey.GamepadRightThumbstickButton   , Alternet.UI.Key.GamepadRightThumbstickButton   );
-            // MapKey(Windows.System.VirtualKey.GamepadLeftThumbstickUp        , Alternet.UI.Key.GamepadLeftThumbstickUp        );
-            // MapKey(Windows.System.VirtualKey.GamepadLeftThumbstickDown      , Alternet.UI.Key.GamepadLeftThumbstickDown      );
-            // MapKey(Windows.System.VirtualKey.GamepadLeftThumbstickRight     , Alternet.UI.Key.GamepadLeftThumbstickRight     );
-            // MapKey(Windows.System.VirtualKey.GamepadLeftThumbstickLeft      , Alternet.UI.Key.GamepadLeftThumbstickLeft      );
-            // MapKey(Windows.System.VirtualKey.GamepadRightThumbstickUp       , Alternet.UI.Key.GamepadRightThumbstickUp       );
-            // MapKey(Windows.System.VirtualKey.GamepadRightThumbstickDown     , Alternet.UI.Key.GamepadRightThumbstickDown     );
-            // MapKey(Windows.System.VirtualKey.GamepadRightThumbstickRight    , Alternet.UI.Key.GamepadRightThumbstickRight    );
-            // MapKey(Windows.System.VirtualKey.GamepadRightThumbstickLeft     , Alternet.UI.Key.GamepadRightThumbstickLeft     );
+            // RegisterKeyMapping(Windows.System.VirtualKey.LeftButton     , Alternet.UI.Key.LeftButton     );
+            // RegisterKeyMapping(Windows.System.VirtualKey.RightButton    , Alternet.UI.Key.RightButton    );
+            // RegisterKeyMapping(Windows.System.VirtualKey.Cancel         , Alternet.UI.Key.Cancel         );
+            // RegisterKeyMapping(Windows.System.VirtualKey.MiddleButton   , Alternet.UI.Key.MiddleButton   );
+            // RegisterKeyMapping(Windows.System.VirtualKey.XButton1       , Alternet.UI.Key.XButton1       );
+            // RegisterKeyMapping(Windows.System.VirtualKey.XButton2       , Alternet.UI.Key.XButton2       );
+
+            RegisterKeyMapping(Windows.System.VirtualKey.Kana           , Alternet.UI.Key.Kana           );
+            RegisterKeyMapping(Windows.System.VirtualKey.Hangul         , Alternet.UI.Key.Hangul         );
+            RegisterKeyMapping(Windows.System.VirtualKey.Junja          , Alternet.UI.Key.Junja          );
+            RegisterKeyMapping(Windows.System.VirtualKey.Final          , Alternet.UI.Key.Final          );
+            RegisterKeyMapping(Windows.System.VirtualKey.Hanja          , Alternet.UI.Key.Hanja          );
+            RegisterKeyMapping(Windows.System.VirtualKey.Kanji          , Alternet.UI.Key.Kanji          );
+
+            RegisterKeyMapping(Windows.System.VirtualKey.Convert        , Alternet.UI.Key.Convert        );
+            RegisterKeyMapping(Windows.System.VirtualKey.NonConvert     , Alternet.UI.Key.NonConvert     );
+            RegisterKeyMapping(Windows.System.VirtualKey.Accept         , Alternet.UI.Key.Accept         );
+            RegisterKeyMapping(Windows.System.VirtualKey.ModeChange     , Alternet.UI.Key.ModeChange     );
+
+            RegisterKeyMapping(Windows.System.VirtualKey.Select         , Alternet.UI.Key.Select         );
+            RegisterKeyMapping(Windows.System.VirtualKey.Execute        , Alternet.UI.Key.Execute        );
+            RegisterKeyMapping(Windows.System.VirtualKey.Snapshot       , Alternet.UI.Key.Snapshot);
+
+            RegisterKeyMapping(Windows.System.VirtualKey.Application    , Alternet.UI.Key.Menu    );
+            RegisterKeyMapping(Windows.System.VirtualKey.Sleep          , Alternet.UI.Key.Sleep          );
+
+            RegisterKeyMapping(Windows.System.VirtualKey.Separator      , Alternet.UI.Key.Comma      );
+
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationView , Alternet.UI.Key.NavigationView);
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationMenu , Alternet.UI.Key.NavigationMenu );
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationUp   , Alternet.UI.Key.NavigationUp   );
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationDown , Alternet.UI.Key.NavigationDown );
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationLeft , Alternet.UI.Key.NavigationLeft );
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationRight, Alternet.UI.Key.NavigationRight);
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationAccept, Alternet.UI.Key.NavigationAccept);
+            RegisterKeyMapping(Windows.System.VirtualKey.NavigationCancel, Alternet.UI.Key.NavigationCancel);
+
+            // RegisterKeyMapping(Windows.System.VirtualKey.LeftShift      , Alternet.UI.Key.LeftShift);
+            // RegisterKeyMapping(Windows.System.VirtualKey.RightShift     , Alternet.UI.Key.RightShift);
+            // RegisterKeyMapping(Windows.System.VirtualKey.LeftControl    , Alternet.UI.Key.LeftControl);
+            // RegisterKeyMapping(Windows.System.VirtualKey.RightControl   , Alternet.UI.Key.RightControl);
+            // RegisterKeyMapping(Windows.System.VirtualKey.LeftMenu       , Alternet.UI.Key.LeftMenu);
+            // RegisterKeyMapping(Windows.System.VirtualKey.RightMenu      , Alternet.UI.Key.RightMenu      );
 
 #pragma warning restore
         }
@@ -257,27 +290,55 @@ namespace Alternet.UI
             return result;
         }
 
-        public KeyStates GetKeyStatesFromSystem(Key key)
+        public virtual KeyStates GetKeyStatesFromSystem(Key key)
         {
-            Windows.System.VirtualKey windowsKey = Windows.System.VirtualKey.Control;
+            if (key == Key.Shift)
+            {
+                return Fn(Windows.System.VirtualKey.LeftShift) | Fn(Windows.System.VirtualKey.RightShift);
+            }
+            else
+            if (key == Key.Control)
+            {
+                return Fn(Windows.System.VirtualKey.LeftControl) | Fn(Windows.System.VirtualKey.RightControl);
+            }
+            else
+            if (key == Key.Menu)
+            {
+                return Fn(Windows.System.VirtualKey.LeftMenu) | Fn(Windows.System.VirtualKey.RightMenu);
+            }
+            else
+            if (key == Key.Windows)
+            {
+                return Fn(Windows.System.VirtualKey.LeftWindows) | Fn(Windows.System.VirtualKey.RightWindows);
+            }
 
-            var keyState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(windowsKey);
-            return KeyStates.None;
+            return Fn(Convert(key));
+
+            KeyStates Fn(Windows.System.VirtualKey key)
+            {
+                var keyState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(key);
+                return Convert(keyState);
+            }
         }
 
-        public bool HideKeyboard(Control? control)
+        public virtual bool HideKeyboard(Control? control)
         {
             return HideKeyboard();
         }
 
-        public bool IsSoftKeyboardShowing(Control? control)
+        public virtual bool IsSoftKeyboardShowing(Control? control)
         {
             return IsSoftKeyboardShowing();
         }
 
-        public bool ShowKeyboard(Control? control)
+        public virtual bool ShowKeyboard(Control? control)
         {
             return ShowKeyboard();
+        }
+
+        public virtual bool IsValidKey(Key key)
+        {
+            return (int)key >= (int)Key.None && (int)key <= (int)Key.MaxMaui;
         }
 
         private static bool HideKeyboard()

@@ -24,7 +24,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="key">Key value.</param>
         /// <param name="modifiers">Key modifier.</param>
-        /// <param name="os"><see cref="OperatingSystems"/> in which this key combination is available.</param>
+        /// <param name="os"><see cref="OperatingSystems"/> in which this key combination
+        /// is available.</param>
         public KeyInfo(
             Key key,
             ModifierKeys modifiers = ModifierKeys.None,

@@ -772,7 +772,10 @@ namespace Alternet.UI
         /// <param name="obj">Message text or object to log.</param>
         public static void LogError(object? obj)
         {
-            Log($"Error: {obj}", LogItemKind.Error);
+            if (obj is Exception e)
+                LogUtils.LogException(e);
+            else
+                Log($"Error: {obj}", LogItemKind.Error);
         }
 
         /// <summary>
@@ -866,6 +869,16 @@ namespace Alternet.UI
         public static void DebugLog(object? msg)
         {
             Log(msg);
+        }
+
+        /// <inheritdoc cref="LogError"/>
+        /// <remarks>
+        /// Works only if DEBUG conditional is defined.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugLogError(object? msg)
+        {
+            LogError(msg);
         }
 
         /// <inheritdoc cref="LogIf"/>

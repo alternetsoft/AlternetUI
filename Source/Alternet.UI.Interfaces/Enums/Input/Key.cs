@@ -850,5 +850,247 @@ namespace Alternet.UI
         /// What is it exactly? Currently mapped as VerticalLine.
         /// </summary>
         OemPipe = VerticalLine,
+
+
+        /// <summary>
+        ///     The gamepad A button.
+        /// </summary>
+        GamepadA = 155,
+
+        /// <summary>
+        ///     The gamepad B button.
+        /// </summary>
+        GamepadB = 156,
+
+        /// <summary>
+        ///     The gamepad X button.
+        /// </summary>
+        GamepadX = 157,
+
+        /// <summary>
+        ///     The gamepad Y button.
+        /// </summary>
+        GamepadY = 158,
+
+        /// <summary>
+        ///     The gamepad right shoulder.
+        /// </summary>
+        GamepadRightShoulder = 159,
+
+        /// <summary>
+        ///     The gamepad left shoulder.
+        /// </summary>
+        GamepadLeftShoulder = 160,
+
+        /// <summary>
+        ///     The gamepad left trigger.
+        /// </summary>
+        GamepadLeftTrigger = 161,
+
+        /// <summary>
+        ///     The gamepad right trigger.
+        /// </summary>
+        GamepadRightTrigger = 162,
+
+        /// <summary>
+        ///     The gamepad d-pad up.
+        /// </summary>
+        GamepadDPadUp = 163,
+
+        /// <summary>
+        ///     The gamepad d-pad down.
+        /// </summary>
+        GamepadDPadDown = 164,
+
+        /// <summary>
+        ///     The gamepad d-pad left.
+        /// </summary>
+        GamepadDPadLeft = 165,
+
+        /// <summary>
+        ///     The gamepad d-pad right.
+        /// </summary>
+        GamepadDPadRight = 166,
+
+        /// <summary>
+        ///     The gamepad menu button.
+        /// </summary>
+        GamepadMenu = 167,
+
+        /// <summary>
+        ///     The gamepad view button.
+        /// </summary>
+        GamepadView = 168,
+
+        /// <summary>
+        ///     The gamepad left thumbstick button.
+        /// </summary>
+        GamepadLeftThumbstickButton = 169,
+
+        /// <summary>
+        ///     The gamepad right thumbstick button.
+        /// </summary>
+        GamepadRightThumbstickButton = 170,
+
+        /// <summary>
+        ///     The gamepad left thumbstick up.
+        /// </summary>
+        GamepadLeftThumbstickUp = 171,
+
+        /// <summary>
+        ///     The gamepad left thumbstick down.
+        /// </summary>
+        GamepadLeftThumbstickDown = 172,
+
+        /// <summary>
+        ///     The gamepad left thumbstick right.
+        /// </summary>
+        GamepadLeftThumbstickRight = 173,
+
+        /// <summary>
+        ///     The gamepad left thumbstick left.
+        /// </summary>
+        GamepadLeftThumbstickLeft = 174,
+
+        /// <summary>
+        ///     The gamepad right thumbstick up.
+        /// </summary>
+        GamepadRightThumbstickUp = 175,
+
+        /// <summary>
+        ///     The gamepad right thumbstick down.
+        /// </summary>
+        GamepadRightThumbstickDown = 176,
+
+        /// <summary>
+        ///     The gamepad right thumbstick right.
+        /// </summary>
+        GamepadRightThumbstickRight = 177,
+
+        /// <summary>
+        ///     The gamepad right thumbstick left.
+        /// </summary>
+        GamepadRightThumbstickLeft = 178,
+
+
+        /// <summary>
+        ///     The Kana symbol key-shift button
+        /// </summary>
+        Kana = 179,
+
+        /// <summary>
+        ///   The Hangul symbol key-shift button.
+        /// </summary>
+        Hangul = Kana,
+
+        /// <summary>
+        ///     The Junja symbol key-shift button.
+        /// </summary>
+        Junja = 180,
+
+        /// <summary>
+        ///     The Final symbol key-shift button.
+        /// </summary>
+        Final = 181,
+
+        /// <summary>
+        ///     The Hanja symbol key shift button.
+        /// </summary>
+        Hanja = 182,
+
+        /// <summary>
+        ///     The Kanji symbol key-shift button.
+        /// </summary>
+        Kanji = Hanja,
+
+
+        /// <summary>
+        ///     The convert button or key.
+        /// </summary>
+        Convert = 183,
+
+        /// <summary>
+        ///     The nonconvert button or key.
+        /// </summary>
+        NonConvert = 184,
+
+        /// <summary>
+        ///     The accept button or key.
+        /// </summary>
+        Accept = 185,
+
+        /// <summary>
+        ///     The mode change key.
+        /// </summary>
+        ModeChange = 186,
+
+        /// <summary>
+        ///     The Select key or button.
+        /// </summary>
+        Select = 187,
+
+        /// <summary>
+        //     The execute key or button.
+        /// </summary>
+        Execute = 188,
+
+        /// <summary>
+        //     The snapshot key or button.
+        /// </summary>
+        Snapshot = 189,
+
+        /// <summary>
+        ///     The sleep key or button.
+        /// </summary>
+        Sleep = 190,
+
+
+        /// <summary>
+        ///     The navigation up button.
+        /// </summary>
+        NavigationView = 191,
+
+        /// <summary>
+        ///     The navigation menu button.
+        /// </summary>
+        NavigationMenu = 192,
+
+        /// <summary>
+        ///     The navigation up button.
+        /// </summary>
+        NavigationUp = 193,
+
+        /// <summary>
+        ///     The navigation down button.
+        /// </summary>
+        NavigationDown = 194,
+
+        /// <summary>
+        ///     The navigation left button.
+        /// </summary>
+        NavigationLeft = 195,
+
+        /// <summary>
+        ///     The navigation right button.
+        /// </summary>
+        NavigationRight = 196,
+
+        /// <summary>
+        ///     The navigation accept button.
+        /// </summary>
+        NavigationAccept = 197,
+
+        /// <summary>
+        ///     The navigation cancel button.
+        /// </summary>
+        NavigationCancel = 198,
+
+        /* max values */
+
+        MaxWxWidgets = Tilde,
+
+        MaxMaui = NavigationCancel,
+
+        Max = MaxMaui,
     }
 }

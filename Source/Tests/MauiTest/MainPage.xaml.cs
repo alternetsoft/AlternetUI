@@ -114,7 +114,9 @@ public partial class MainPage : ContentPage, IDrawable
         platformView.KeyDown += (s, e) =>
         {
             var alternetArgs = Alternet.UI.MauiKeyboardHandler.Convert(null!, e);
-            Log($"KeyDown {e.Key} => {alternetArgs.Key}");
+            var isPressed = Alternet.UI.Keyboard.IsKeyDown(alternetArgs.Key);
+            Log($"KeyDown {e.Key} => {alternetArgs.Key} {isPressed}");
+            Window.Title = alternetArgs.ToString();
         };
 #elif IOS || MACCATALYST
 #elif ANDROID

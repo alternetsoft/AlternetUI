@@ -13,6 +13,11 @@ namespace Alternet.UI
             return KeyStates.None;
         }
 
+        public bool IsValidKey(Key key)
+        {
+            return (int)key >= (int)Key.None && (int)key <= (int)Key.Max;
+        }
+
         public bool HideKeyboard(Control? control)
         {
             return false;

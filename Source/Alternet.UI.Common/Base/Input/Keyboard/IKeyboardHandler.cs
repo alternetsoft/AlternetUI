@@ -25,5 +25,7 @@ namespace Alternet.UI
         bool ShowKeyboard(Control? control);
 
         bool IsSoftKeyboardShowing(Control? control);
+
+        bool IsValidKey(Key key);
     }
 }

@@ -230,5 +230,11 @@ namespace Alternet.UI
         /// Whether or not the key referenced by the event is toggled.
         /// </summary>
         public virtual bool IsToggled => keyStates == KeyStates.Toggled;
+
+        public override string ToString()
+        {
+            KeyInfo keyInfo = new(Key, ModifierKeys);
+            return $"{{{base.ToString()}: {keyInfo}}}";
+        }
     }
 }
