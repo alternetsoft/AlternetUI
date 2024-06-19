@@ -15,7 +15,7 @@ using SkiaSharp.Views.Maui;
 
 namespace Alternet.UI
 {
-    public static class MauiUtils
+    public static partial class MauiUtils
     {
         private static PlatformApplication? platformApplication;
 
