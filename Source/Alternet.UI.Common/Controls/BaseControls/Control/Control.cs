@@ -2258,6 +2258,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets absolute position of the control. Returned value is <see cref="Location"/>
+        /// plus all control's parents locations.
+        /// </summary>
         [Browsable(false)]
         public PointD AbsolutePosition
         {
@@ -2378,6 +2382,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether this control is dummy control.
+        /// </summary>
         protected virtual bool IsDummy => false;
 
         /// <summary>
