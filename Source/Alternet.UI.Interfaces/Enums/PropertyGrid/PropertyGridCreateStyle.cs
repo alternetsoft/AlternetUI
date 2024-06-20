@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines <see cref="PropertyGrid"/> options.
+    /// Defines create options for a property grid control.
     /// </summary>
     [Flags]
     public enum PropertyGridCreateStyle

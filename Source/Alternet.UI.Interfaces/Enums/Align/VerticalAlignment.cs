@@ -4,9 +4,6 @@ namespace Alternet.UI
     /// Used to describe how a control is positioned or stretched
     /// vertically within a parent's layout slot.
     /// </summary>
-    /// <remarks>
-    /// See <see cref="Control.VerticalAlignment"/> for more details.
-    /// </remarks>
     public enum VerticalAlignment
     {
         /// <summary>

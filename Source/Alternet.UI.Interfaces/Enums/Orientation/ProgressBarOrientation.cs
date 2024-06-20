@@ -1,17 +1,17 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the orientation of a <see cref="ProgressBar"/>.
+    /// Specifies the orientation of a progress bar.
     /// </summary>
     public enum ProgressBarOrientation
     {
         /// <summary>
-        /// The <see cref="ProgressBar"/> is oriented horizontally.
+        /// Contgrol is oriented horizontally.
         /// </summary>
         Horizontal,
 
         /// <summary>
-        /// The <see cref="ProgressBar"/> is oriented vertically.
+        /// Control is oriented vertically.
         /// </summary>
         Vertical,
     }

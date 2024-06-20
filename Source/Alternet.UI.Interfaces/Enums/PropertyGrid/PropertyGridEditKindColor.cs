@@ -13,34 +13,34 @@ namespace Alternet.UI
     public enum PropertyGridEditKindColor
     {
         /// <summary>
-        /// Uses default color editor specified in <see cref="PropertyGrid.DefaultEditKindColor"/>.
+        /// Uses default color editor specified in 'DefaultEditKindColor' property.
         /// </summary>
         Default,
 
         /// <summary>
-        /// Uses <see cref="TextBox"/> and ellispsis button with <see cref="ColorDialog"/>.
+        /// Uses text box and ellispsis button with a color dialog.
         /// </summary>
         TextBoxAndButton,
 
         /// <summary>
-        /// Uses <see cref="UI.ComboBox"/> with list of system colors.
+        /// Uses combo box with list of system colors.
         /// </summary>
         SystemColors,
 
         /// <summary>
-        /// Uses <see cref="UI.ComboBox"/> with list of colors. When 'Custom' color is selected,
-        /// <see cref="ColorDialog"/> is opened.
+        /// Uses combo box with list of colors. When 'Custom' color is selected,
+        /// color dialog is opened.
         /// </summary>
         ComboBox,
 
         /// <summary>
-        /// Uses choice color editor (non-editable <see cref="UI.ComboBox"/>).
+        /// Uses choice color editor (non-editable).
         /// </summary>
         Choice,
 
         /// <summary>
-        /// Uses choice color editor (non-editable <see cref="UI.ComboBox"/>)
-        /// and ellispsis button with <see cref="ColorDialog"/>.
+        /// Uses choice color editor (non-editable)
+        /// and ellispsis button with a color dialog.
         /// </summary>
         ChoiceAndButton,
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies result of calling <see cref="MathUtils.ValueInRange"/> and similar methods.
+    /// Specifies result of the 'value in range' operation.
     /// </summary>
     public enum ValueInRangeResult
     {

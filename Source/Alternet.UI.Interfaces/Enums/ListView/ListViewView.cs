@@ -1,9 +1,8 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies how list items are displayed in a <see cref="ListView"/> control.
+    /// Specifies how list items are displayed in a list view control.
     /// </summary>
-    /// <remarks>Use the members of this enumeration to set the value of the <see cref="ListView.View"/> property of the <see cref="ListView"/> control.</remarks>
     public enum ListViewView
     {
         /// <summary>
@@ -13,9 +12,11 @@ namespace Alternet.UI
         List,
 
         /// <summary>
-        /// Each item appears on a separate line with further information about each item arranged in columns.
+        /// Each item appears on a separate line with further information about
+        /// each item arranged in columns.
         /// The left-most column can contain an optional small icon.
-        /// A column can display a header with a caption for the column. The user can resize each column.
+        /// A column can display a header with a caption for the column.
+        /// The user can resize each column.
         /// </summary>
         Details,
 

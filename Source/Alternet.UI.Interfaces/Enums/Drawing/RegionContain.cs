@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Types of results returned from a call to <see cref="Region.Contains(RectD)"/>.
+    /// Types of results returned from a call to 'Contains' methods of the region.
     /// </summary>
     public enum RegionContain
     {
@@ -15,12 +15,6 @@ namespace Alternet.Drawing
         /// The specified value is not contained within this region.
         /// </summary>
         OutRegion = 0,
-
-        /*/// <summary>
-        /// The specified value is partially contained within this region.
-        /// On Windows, this result is not supported. <see cref="InRegion"/> will be returned instead.
-        /// </summary>
-        PartRegion = 1,*/
 
         /// <summary>
         /// The specified value is fully contained within this region.

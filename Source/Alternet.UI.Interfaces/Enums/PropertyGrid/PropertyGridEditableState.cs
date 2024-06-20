@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Flags for <see cref="PropertyGrid.SaveEditableState"/> and
-    /// <see cref="PropertyGrid.RestoreEditableState"/>.
+    /// Flags for save/restore of the editable state of the property grid control.
     /// </summary>
     [Flags]
     public enum PropertyGridEditableState

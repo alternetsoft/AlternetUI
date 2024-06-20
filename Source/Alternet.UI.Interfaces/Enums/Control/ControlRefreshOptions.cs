@@ -7,51 +7,46 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines different options for the <see cref="Control"/>.
+    /// Defines how to refresh control after it's visual state is changed.
     /// </summary>
     [Flags]
     public enum ControlRefreshOptions : ulong
     {
         /// <summary>
-        /// No flags are specified.
+        /// Do not refresh.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.VisualState"/> property is changed, control has
-        /// border specified in <see cref="Control.StateObjects"/> and
-        /// <see cref="ControlStateSettings.HasOtherBorders"/> returns <c>true</c>.
+        /// Specifies whether to refresh control after it's visual state is changed.
+        /// Control is refreshed only if it has
+        /// different borders specified in the state objects.
         /// </summary>
         RefreshOnBorder = 1,
 
         /// <summary>
-        /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.VisualState"/> property is changed, control has
-        /// image specified in <see cref="Control.StateObjects"/> and
-        /// <see cref="ControlStateSettings.HasOtherImages"/> returns <c>true</c>.
+        /// Specifies whether to refresh control after it's visual state is changed.
+        /// Control is refreshed only if it has
+        /// different images specified in the state objects.
         /// </summary>
         RefreshOnImage = 2,
 
         /// <summary>
-        /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.VisualState"/> property is changed, control has
-        /// background specified in <see cref="Control.StateObjects"/> and
-        /// <see cref="ControlStateSettings.HasOtherBackgrounds"/> returns <c>true</c>.
+        /// Specifies whether to refresh control after it's visual state is changed.
+        /// Control is refreshed only if it has
+        /// different backgrounds specified in the state objects.
         /// </summary>
         RefreshOnBackground = 4,
 
         /// <summary>
-        /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.VisualState"/> property is changed, control has
-        /// colors specified in <see cref="Control.StateObjects"/> and
-        /// <see cref="ControlStateSettings.HasOtherColors"/> returns <c>true</c>.
+        /// Specifies whether to refresh control after it's visual state is changed.
+        /// Control is refreshed only if it has
+        /// different colors specified in the state objects.
         /// </summary>
         RefreshOnColor = 8,
 
         /// <summary>
-        /// Specifies whether to call <see cref="Control.Refresh"/> when
-        /// <see cref="Control.VisualState"/> property is changed.
+        /// Specifies whether to refresh control after it's visual state is changed.
         /// </summary>
         RefreshOnState = 16,
     }

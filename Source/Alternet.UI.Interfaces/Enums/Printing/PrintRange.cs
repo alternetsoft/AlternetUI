@@ -16,8 +16,7 @@ namespace Alternet.Drawing.Printing
         Selection,
 
         /// <summary>
-        /// The pages between <see cref="PrinterSettings.FromPage"/>
-        /// and <see cref="PrinterSettings.ToPage"/> are printed.
+        /// The pages in range [FromPage..ToPage] are printed.
         /// </summary>
         SomePages,
     }
