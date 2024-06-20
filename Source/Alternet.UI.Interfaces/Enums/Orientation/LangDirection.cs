@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This is the layout direction stored returned by <see cref="Application.LangDirection"/>
-    /// and other methods for RTL(right-to-left) languages support.
+    /// This is the language layout direction used for RTL(right-to-left) languages support.
     /// </summary>
     public enum LangDirection
     {

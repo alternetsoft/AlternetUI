@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines border types for a date in the <see cref="Calendar"/> control.
+    /// Defines border types for a date in the calendar control.
     /// </summary>
     public enum CalendarDateBorder
     {

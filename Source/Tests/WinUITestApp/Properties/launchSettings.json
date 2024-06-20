@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "WinUITestApp (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinUITestApp (Unpackaged)": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    }
+  }
+}

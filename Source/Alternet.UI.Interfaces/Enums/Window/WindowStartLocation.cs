@@ -11,7 +11,7 @@ namespace Alternet.UI
         Default,
 
         /// <summary>
-        /// The position of the window is determined by the <see cref="Control.Location"/> property.
+        /// The position of the window is determined by 'Location' property of the window.
         /// </summary>
         Manual,
 
@@ -22,9 +22,9 @@ namespace Alternet.UI
         CenterScreen,
 
         /// <summary>
-        /// The startup location of a <see cref="Window"/> is the center of the
-        /// <see cref="Window"/> that owns it,
-        /// as specified by the <see cref="Window.Owner"/> property.
+        /// The startup location of a window is the center of the
+        /// window that owns it,
+        /// as specified by the 'Owner' property.
         /// </summary>
         CenterOwner,
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates load flags for <see cref="GenericImage"/>.
+    /// Enumerates image load flags.
     /// </summary>
     [Flags]
     public enum GenericImageLoadFlags

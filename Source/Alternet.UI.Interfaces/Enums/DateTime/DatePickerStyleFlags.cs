@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines <see cref="DateTimePicker"/> flags when it is in date editing mode.
+    /// Defines flags for the date-time picker when it is in the date editing mode.
     /// </summary>
     public enum DatePickerStyleFlags
     {

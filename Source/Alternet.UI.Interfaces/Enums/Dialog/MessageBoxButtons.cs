@@ -1,7 +1,7 @@
 ﻿namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies constants defining which buttons to display on a <see cref="MessageBox"/>.
+    /// Specifies constants defining which buttons to display on a message box.
     /// </summary>
     public enum MessageBoxButtons
     {

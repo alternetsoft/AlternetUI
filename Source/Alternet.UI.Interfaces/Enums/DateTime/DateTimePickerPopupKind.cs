@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies look and behavior of the <see cref="DateTimePicker"/> control
+    /// Specifies type of the popup for the date-time picker control
     /// in the date editing mode.
     /// </summary>
     public enum DateTimePickerPopupKind

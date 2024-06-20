@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates Tiff photometric values for use with <see cref="GenericImage"/>.
+    /// Enumerates Tiff photometric values.
     /// </summary>
     public enum GenericImageTiffPhotometric
     {

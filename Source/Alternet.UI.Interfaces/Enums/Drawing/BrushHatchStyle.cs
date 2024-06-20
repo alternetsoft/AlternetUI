@@ -1,7 +1,7 @@
 ﻿namespace Alternet.Drawing
 {
     /// <summary>
-    /// Specifies the different patterns available for <see cref="HatchBrush"/> objects.
+    /// Specifies the different patterns available for the hatch brushes.
     /// </summary>
     public enum BrushHatchStyle
     {

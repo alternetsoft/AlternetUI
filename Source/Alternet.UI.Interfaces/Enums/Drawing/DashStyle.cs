@@ -1,7 +1,7 @@
 ﻿namespace Alternet.Drawing
 {
     /// <summary>
-    /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
+    /// Gets or sets the style used for dashed lines drawn with the pen.
     /// </summary>
     public enum DashStyle
     {

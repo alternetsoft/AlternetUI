@@ -51,7 +51,7 @@ namespace Alternet.Drawing
         {
             if (bitmap is null)
             {
-                surface = SKSurface.CreateNull(0, 0);
+                surface = SkiaUtils.CreateNullSurface(0, 0);
                 canvas = surface.Canvas;
             }
             else

@@ -18,7 +18,7 @@ namespace Alternet.UI
         Checked = 8,
 
         /// <summary>
-        /// The item is the editing portion of a <see cref="ComboBox" />.
+        /// The item is the editing portion of a combo-box control.
         /// </summary>
         ComboBoxEdit = 0x1000,
 

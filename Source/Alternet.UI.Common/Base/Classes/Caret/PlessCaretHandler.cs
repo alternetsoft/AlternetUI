@@ -8,6 +8,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Platform independent implementation of the <see cref="ICaretHandler"/> interface.
+    /// </summary>
     public class PlessCaretHandler : DisposableObject, ICaretHandler
     {
         private static int blinkTime = 530;
@@ -16,17 +19,29 @@ namespace Alternet.UI
         private readonly CaretInfo info = new();
         private Control? control;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlessCaretHandler"/> class.
+        /// </summary>
         public PlessCaretHandler()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlessCaretHandler"/> class.
+        /// </summary>
         public PlessCaretHandler(Control control, int width, int height)
         {
             info.Size = (width, height);
-            this.control = control;
-            control.CaretInfo = info;
+            if(control is not null)
+            {
+                this.control = control;
+                control.CaretInfo = info;
+            }
         }
 
+        /// <summary>
+        /// Gets or sets caret colors.
+        /// </summary>
         public static LightDarkColor CaretColor
         {
             get
@@ -40,6 +55,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets caret blonk time. This is a dummy property and is not currently used.
+        /// </summary>
         public static int CaretBlinkTime
         {
             get
@@ -53,7 +71,14 @@ namespace Alternet.UI
             }
         }
 
-        public Control? Control
+        /// <inheritdoc/>
+        public virtual bool IsOk
+        {
+            get => control != null && !IsDisposed && !control.IsDisposed;
+        }
+
+        /// <inheritdoc/>
+        public virtual Control? Control
         {
             get => control;
         }
@@ -73,9 +98,11 @@ namespace Alternet.UI
             set
             {
                 CaretBlinkTime = value;
+                Changed();
             }
         }
 
+        /// <inheritdoc/>
         public virtual SizeI Size
         {
             get => info.Size;
@@ -85,10 +112,11 @@ namespace Alternet.UI
                 if (info.Size == value)
                     return;
                 info.Size = value;
-                control?.InvalidateCaret();
+                Changed();
             }
         }
 
+        /// <inheritdoc/>
         public virtual PointI Position
         {
             get => info.Position;
@@ -98,10 +126,11 @@ namespace Alternet.UI
                 if (info.Position == value)
                     return;
                 info.Position = value;
-                control?.InvalidateCaret();
+                Changed();
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool Visible
         {
             get => info.Visible;
@@ -111,15 +140,19 @@ namespace Alternet.UI
                 if (info.Visible == value)
                     return;
                 info.Visible = value;
-                control?.InvalidateCaret();
+                Changed();
             }
         }
 
-        public virtual bool IsOk
+        /// <summary>
+        /// Called to update the caret on screen when it's position, size or visibility were changed.
+        /// </summary>
+        protected virtual void Changed()
         {
-            get => control != null && !IsDisposed && !control.IsDisposed;
+            control?.InvalidateCaret();
         }
 
+        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             base.DisposeManaged();

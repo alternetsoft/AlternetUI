@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates possible values for the image resolution option in <see cref="GenericImage"/>.
+    /// Enumerates possible values for the image resolution option.
     /// </summary>
     public enum GenericImageResolutionUnit
     {

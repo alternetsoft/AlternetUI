@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates Tiff compression methods for use with <see cref="GenericImage"/>
+    /// Enumerates Tiff compression methods.
     /// </summary>
     public enum GenericImageTiffCompression
     {

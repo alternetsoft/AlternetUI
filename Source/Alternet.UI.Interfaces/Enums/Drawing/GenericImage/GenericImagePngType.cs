@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates PNG image types for use with <see cref="GenericImage"/>.
+    /// Enumerates PNG image types.
     /// </summary>
     public enum GenericImagePngType
     {

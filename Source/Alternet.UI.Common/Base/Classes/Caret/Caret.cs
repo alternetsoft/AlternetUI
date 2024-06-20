@@ -215,7 +215,7 @@ namespace Alternet.UI
         protected override ICaretHandler CreateHandler()
         {
             if(control is null || size is null)
-                return App.Handler.CreateCaretHandler();
+                return new PlessCaretHandler();
             return App.Handler.CreateCaretHandler(
                 control,
                 size.Value.Width,

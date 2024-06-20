@@ -12,26 +12,72 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Implements <see cref="Graphics"/> over <see cref="SKCanvas"/> or <see cref="SKBitmap"/>.
+    /// </summary>
     public class SkiaGraphics : Graphics
     {
         private SKCanvas canvas;
+        private SKBitmap? bitmap;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkiaGraphics"/> class.
+        /// </summary>
+        /// <param name="bitmap"><see cref="SKBitmap"/> where drawing will be performed.</param>
         public SkiaGraphics(SKBitmap bitmap)
         {
+            this.bitmap = bitmap;
             canvas = new SKCanvas(bitmap);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkiaGraphics"/> class.
+        /// </summary>
+        /// <param name="canvas"><see cref="SKCanvas"/> where painting will be performed.</param>
         public SkiaGraphics(SKCanvas canvas)
         {
             this.canvas = canvas;
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="SKBitmap"/> where drawing will be performed.
+        /// </summary>
+        public SKBitmap? Bitmap
+        {
+            get => bitmap;
+
+            set
+            {
+                if (bitmap == value && bitmap is not null)
+                    return;
+                bitmap = value;
+                if (value is null)
+                    canvas = SkiaUtils.CreateNullCanvas();
+                else
+                    canvas = new SKCanvas(bitmap);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="SKCanvas"/>  where drawing will be performed.
+        /// </summary>
         public SKCanvas Canvas
         {
             get => canvas;
-            set => canvas = value;
+
+            set
+            {
+                if (canvas == value)
+                    return;
+                bitmap = null;
+                if (value is null)
+                    canvas = SkiaUtils.CreateNullCanvas();
+                else
+                    canvas = value;
+            }
         }
 
+        /// <inheritdoc/>
         public override TransformMatrix Transform
         {
             get
@@ -48,28 +94,47 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <inheritdoc/>
         public override bool IsOk
         {
             get => true;
         }
 
+        /// <inheritdoc/>
         public override Region? Clip
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
+        /// <inheritdoc/>
         public override InterpolationMode InterpolationMode
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
+        /// <inheritdoc/>
         public override object NativeObject
         {
             get => canvas;
         }
 
+        /// <inheritdoc/>
         public override SizeD GetTextExtent(
             string text,
             Font font,
@@ -190,6 +255,7 @@ namespace Alternet.Drawing
             canvas.DrawBeziers(pen, points);
         }
 
+        /// <inheritdoc/>
         public override void DrawRotatedText(
             string text,
             PointD location,
@@ -202,6 +268,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override bool Blit(
             PointD destPt,
             SizeD sz,
@@ -212,9 +279,10 @@ namespace Alternet.Drawing
             PointD? srcPtMask = null,
             GraphicsUnit unit = GraphicsUnit.Dip)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
+        /// <inheritdoc/>
         public override bool StretchBlit(
             PointD dstPt,
             SizeD dstSize,
@@ -226,29 +294,34 @@ namespace Alternet.Drawing
             PointD? srcPtMask = null,
             GraphicsUnit unit = GraphicsUnit.Dip)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
+        /// <inheritdoc/>
         public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Rectangle(Pen pen, Brush brush, RectD rectangle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Ellipse(Pen pen, Brush brush, RectD rectangle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Path(Pen pen, Brush brush, GraphicsPath path)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Pie(
             Pen pen,
             Brush brush,
@@ -260,16 +333,19 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawArc(
             Pen pen,
             PointD center,
@@ -280,11 +356,13 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawPoint(Pen pen, Coord x, Coord y)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FillPie(
             Brush brush,
             PointD center,
@@ -295,6 +373,7 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawPie(
             Pen pen,
             PointD center,
@@ -305,16 +384,19 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawCircle(Pen pen, PointD center, Coord radius)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FillCircle(Brush brush, PointD center, Coord radius)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FillPolygon(
             Brush brush,
             PointD[] points,
@@ -323,71 +405,85 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawRectangles(Pen pen, RectD[] rects)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FillRectangles(Brush brush, RectD[] rects)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FillEllipse(Brush brush, RectD bounds)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FloodFill(Brush brush, PointD point)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawPath(Pen pen, GraphicsPath path)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FillPath(Brush brush, GraphicsPath path)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawLines(Pen pen, PointD[] points)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawEllipse(Pen pen, RectD bounds)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void SetPixel(PointD point, Pen pen)
         {
             canvas.DrawPoint((float)point.X, (float)point.Y, pen.Color.AsFillPaint);
         }
 
+        /// <inheritdoc/>
         public override void SetPixel(Coord x, Coord y, Pen pen)
         {
             canvas.DrawPoint((float)x, (float)y, pen.Color.AsFillPaint);
         }
 
+        /// <inheritdoc/>
         public override Color GetPixel(PointD point)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawImage(
             Image image,
             RectD destinationRect,
@@ -397,11 +493,13 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override RectD DrawLabel(
             string text,
             Font font,
@@ -415,26 +513,36 @@ namespace Alternet.Drawing
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override SizeI GetDPI()
         {
-            return 96;
+            var m = canvas.TotalMatrix;
+            if (m.IsIdentity)
+                return new(96, 96);
+            var dpiX = 96f * m.ScaleX;
+            var dpiY = 96f * m.ScaleY;
+            return new((int)dpiX, (int)dpiY);
         }
 
+        /// <inheritdoc/>
         public override void DestroyClippingRegion()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void SetClippingRegion(RectD rect)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override RectD GetClippingBox()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
         {
             throw new NotImplementedException();
