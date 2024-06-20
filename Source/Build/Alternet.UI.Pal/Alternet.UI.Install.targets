@@ -89,6 +89,12 @@
 		<DeleteBinObjCs MyFolderPath="$(RootDirectoryPath)\Documentation\Alternet.UI.Documentation\"/>	
 	</Target>	
     <!-- ========================================== -->
+	<Target Name="ClearStudioBin">
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec ClearStudioBin" Importance="high" />	
+		<DeleteBinObjCs MyFolderPath="$(RootDirectoryPath)\..\AlternetStudio\"/>	
+	</Target>	
+    <!-- ========================================== -->
 	<Target Name="ClearProjectBin">
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec ClearProjectBin" Importance="high" />
