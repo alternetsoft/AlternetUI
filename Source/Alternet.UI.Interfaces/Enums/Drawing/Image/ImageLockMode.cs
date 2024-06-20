@@ -5,9 +5,8 @@ using System.Text;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Specifies flags that are passed to the flags parameter of
-    /// the <see cref="Image.LockBits" /> method. The <see cref="Image.LockBits" /> method locks
-    /// a portion of an image so that you can read or write the pixel data.
+    /// Specifies flags that are used when
+    /// a portion of an image is locked so that you can read or write the pixel data.
     /// </summary>
     public enum ImageLockMode
     {

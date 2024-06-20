@@ -1083,10 +1083,19 @@ namespace Alternet.UI
 
         /* max values */
 
+        /// <summary>
+        /// Max supported enum value when library is running on WxWidgets platform.
+        /// </summary>
         MaxWxWidgets = Tilde,
 
+        /// <summary>
+        /// Max supported enum value when library is running on Maui platform.
+        /// </summary>
         MaxMaui = NavigationCancel,
 
+        /// <summary>
+        /// Max enum value.
+        /// </summary>
         Max = MaxMaui,
     }
 }

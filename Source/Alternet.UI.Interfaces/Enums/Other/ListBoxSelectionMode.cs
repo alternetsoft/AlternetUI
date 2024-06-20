@@ -3,7 +3,6 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the selection behavior of a list box.
     /// </summary>
-    /// <remarks>This enumeration is used by the <see cref="ListBox"/> class.</remarks>
     public enum ListBoxSelectionMode
     {
         /// <summary>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates constants for specifying alpha blending option in <see cref="GenericImage"/>.
+    /// Enumerates constants for specifying alpha blending options.
     /// </summary>
     public enum GenericImageAlphaBlendMode
     {

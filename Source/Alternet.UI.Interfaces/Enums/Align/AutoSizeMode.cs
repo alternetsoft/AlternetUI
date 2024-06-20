@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies how a control will be sized by the <see cref="LayoutPanel"/>
+    /// Specifies how a control will be sized by the control layout methods
     /// when its AutoSize setting is enabled.
     /// </summary>
     public enum AutoSizeMode

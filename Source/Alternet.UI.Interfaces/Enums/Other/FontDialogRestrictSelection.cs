@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Flags restricting the font selection in the <see cref="FontDialog"/>.
+    /// Flags restricting the font selection in the font dialog.
     /// </summary>
     [Flags]
     public enum FontDialogRestrictSelection

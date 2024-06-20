@@ -1,7 +1,7 @@
 ﻿namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies an icon to display in a <see cref="MessageBox"/> or any other places.
+    /// Specifies an icon to display in a message box or any other places.
     /// </summary>
     public enum MessageBoxIcon
     {

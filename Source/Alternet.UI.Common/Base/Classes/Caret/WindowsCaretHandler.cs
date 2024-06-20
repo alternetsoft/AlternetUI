@@ -11,8 +11,17 @@ namespace Alternet.UI
 {
     /* https://learn.microsoft.com/en-us/windows/win32/menurc/using-carets */
 
+    /// <summary>
+    /// Implements caret on the Windows platform.
+    /// </summary>
     public class WindowsCaretHandler : PlessCaretHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowsCaretHandler"/> class.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public WindowsCaretHandler(Control control, int width, int height)
             : base(control, width, height)
         {

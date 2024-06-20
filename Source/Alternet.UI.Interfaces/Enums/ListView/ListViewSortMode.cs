@@ -1,7 +1,7 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the sorting behavior of <see cref="ListView"/>.
+    /// Specifies the sorting behavior of the control.
     /// </summary>
     public enum ListViewSortMode
     {

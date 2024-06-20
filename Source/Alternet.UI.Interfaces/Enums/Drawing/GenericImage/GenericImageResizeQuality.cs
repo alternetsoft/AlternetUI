@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates levels of quality for different <see cref="GenericImage"/>
+    /// Enumerates levels of quality for different
     /// resizing algorithms used by scaling and rescaling methods.
     /// </summary>
     public enum GenericImageResizeQuality

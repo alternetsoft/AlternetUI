@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// This enumeration supports a bitwise combination of its member values.
     /// </remarks>
     /// <remarks>
-    /// This enumeration is used in the <see cref="LayoutPanel"/>.
+    /// This enumeration is used in the control layout.
     /// </remarks>
     [Flags]
     public enum AnchorStyles

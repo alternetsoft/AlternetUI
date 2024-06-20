@@ -3,7 +3,7 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies options on a <see cref="MessageBox" />.
+    /// Specifies options for a message box.
     /// Currently these options are ignored and are added for the compatibility.
     /// </summary>
     [Flags]
@@ -13,7 +13,8 @@ namespace Alternet.UI
         /// The message box is displayed on the active desktop.
         /// </summary>
         /// <remarks>
-        /// The caller is a service notifying the user of an event. Show displays a message box on the current
+        /// The caller is a service notifying the user of an event. Show displays a message
+        /// box on the current
         /// active desktop, even if there is no user logged on to the computer.
         /// </remarks>
         ServiceNotification = 0x200000,
@@ -22,8 +23,10 @@ namespace Alternet.UI
         /// The message box is displayed on the active desktop.
         /// </summary>
         /// <remarks>
-        /// This constant is similar to ServiceNotification, except that the system displays the message
-        /// box only on the default desktop of the interactive window station. The application that displayed
+        /// This constant is similar to ServiceNotification, except that the system
+        /// displays the message
+        /// box only on the default desktop of the interactive window station. The application
+        /// that displayed
         /// the message box loses focus, and the message box is displayed without using visual styles.
         /// </remarks>
         DefaultDesktopOnly = 0x20000,
