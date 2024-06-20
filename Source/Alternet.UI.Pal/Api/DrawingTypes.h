@@ -545,7 +545,7 @@ namespace Alternet::UI
 			*/
 
 			return wxDateTime(Day, (wxDateTime::Month)(Month - 1),
-				Year, Hour, Minute, Second, Millisecond);
+				Year > 3000 ? 3000 : Year, Hour, Minute, Second, Millisecond);
 		}
 	};
 
