@@ -211,6 +211,17 @@ namespace Alternet.Drawing
             canvas.DrawPath(path, pen);
         }
 
+        public static SKSurface CreateNullSurface(int width = 0, int height = 0)
+        {
+            return SKSurface.CreateNull(width, height);
+        }
+
+        public static SKCanvas CreateNullCanvas(int width = 0, int height = 0)
+        {
+            var surface = CreateNullSurface(width, height);
+            return surface.Canvas;
+        }
+
         /// <summary>
         /// Creates <see cref="SKCanvas"/> on the memory buffer and calls specified action.
         /// </summary>

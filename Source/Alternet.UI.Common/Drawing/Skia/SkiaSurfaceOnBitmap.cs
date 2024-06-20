@@ -57,7 +57,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                surface = SKSurface.CreateNull(width, height);
+                surface = SkiaUtils.CreateNullSurface(width, height);
             }
 
             canvas = surface.Canvas;
