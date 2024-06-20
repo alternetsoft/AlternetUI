@@ -9,6 +9,9 @@ namespace Alternet.Drawing
     /// <summary>
     /// Enumerates image load flags.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum GenericImageLoadFlags
     {

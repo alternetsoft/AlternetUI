@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Enumerates flags used when value is set in the property grid control.
+    /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     internal enum PropertyGridSetValueFlags
     {

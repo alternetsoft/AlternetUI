@@ -12,27 +12,27 @@ namespace Alternet.UI
     public enum LayoutStyle
     {
         /// <summary>
-        /// Do not perform any layout, use <see cref="Control.Bounds"/> to set control position.
+        /// Do not perform any layout, use <c>Control.Bounds</c> to set control position.
         /// </summary>
         None,
 
         /// <summary>
-        /// Uses <see cref="Control.Dock"/> setting for layout of the children.
+        /// Uses <c>Control.Dock</c> setting for layout of the children.
         /// </summary>
         Dock,
 
         /// <summary>
-        /// Default layout style implemented in the <see cref="Control"/>.
+        /// Default layout style implemented in the control.
         /// </summary>
         Basic,
 
         /// <summary>
-        /// Layout as <see cref="VerticalStackPanel"/>.
+        /// Layout as in vertical stack panel.
         /// </summary>
         Vertical,
 
         /// <summary>
-        /// Layout as <see cref="HorizontalStackPanel"/>.
+        /// Layout as in horizontal stack panel.
         /// </summary>
         Horizontal,
     }

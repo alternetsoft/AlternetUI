@@ -8,8 +8,11 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Possible flags for <see cref="Control.SetBounds(RectD,SetBoundsFlags)"/>.
+    /// Possible flags for the methods that change bounds of the controls.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum SetBoundsFlags
     {

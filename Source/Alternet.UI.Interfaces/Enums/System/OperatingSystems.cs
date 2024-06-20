@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Enumeration flags with supported operating systems.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum OperatingSystems
     {

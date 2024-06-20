@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Flags restricting the font selection in the font dialog.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum FontDialogRestrictSelection
     {

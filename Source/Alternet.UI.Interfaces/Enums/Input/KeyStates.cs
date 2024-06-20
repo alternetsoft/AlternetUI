@@ -10,6 +10,9 @@ namespace Alternet.UI
     ///     The KeyStates enumeration describes the state that keyboard keys
     ///     can be in.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum KeyStates : byte
     {

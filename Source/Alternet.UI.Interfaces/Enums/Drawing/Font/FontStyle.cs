@@ -6,7 +6,8 @@ namespace Alternet.Drawing
     /// Specifies style information applied to text.
     /// </summary>
     /// <remarks>
-    /// This enumeration has a <see cref="FlagsAttribute"/> attribute that allows a bitwise combination of its member values.
+    /// This enumeration has a <see cref="FlagsAttribute"/> attribute that allows
+    /// a bitwise combination of its member values.
     /// </remarks>
     [Flags]
     public enum FontStyle

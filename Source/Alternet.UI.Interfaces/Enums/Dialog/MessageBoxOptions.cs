@@ -6,6 +6,9 @@ namespace Alternet.UI
     /// Specifies options for a message box.
     /// Currently these options are ignored and are added for the compatibility.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum MessageBoxOptions
     {

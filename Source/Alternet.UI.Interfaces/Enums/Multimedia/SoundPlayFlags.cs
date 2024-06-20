@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Defines flags for the sound play methods.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum SoundPlayFlags : uint
     {

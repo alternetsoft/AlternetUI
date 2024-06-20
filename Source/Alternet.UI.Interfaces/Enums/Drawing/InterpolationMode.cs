@@ -1,7 +1,8 @@
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// The <see cref="InterpolationMode"/> enumeration specifies the algorithm that is used when images are scaled.
+    /// The <see cref="InterpolationMode"/> enumeration specifies the algorithm that is
+    /// used when images are scaled.
     /// </summary>
     public enum InterpolationMode
     {

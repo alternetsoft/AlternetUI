@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies constants that define which mouse button was pressed.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum MouseButtons
     {

@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Flags for save/restore of the editable state of the property grid control.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum PropertyGridEditableState
     {

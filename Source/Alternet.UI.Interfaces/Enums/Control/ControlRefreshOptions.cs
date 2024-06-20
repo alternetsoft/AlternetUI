@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Defines how to refresh control after it's visual state is changed.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum ControlRefreshOptions : ulong
     {

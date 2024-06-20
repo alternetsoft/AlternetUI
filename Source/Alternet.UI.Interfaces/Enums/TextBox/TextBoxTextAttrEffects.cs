@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Styles for <see cref="ITextBoxTextAttr.SetTextEffects"/>
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum TextBoxTextAttrEffects
     {

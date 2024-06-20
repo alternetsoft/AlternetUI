@@ -5,6 +5,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the possible effects of a drag-and-drop operation.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum DragDropEffects
     {

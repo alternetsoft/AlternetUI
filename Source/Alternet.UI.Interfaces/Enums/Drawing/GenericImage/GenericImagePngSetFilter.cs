@@ -13,6 +13,9 @@ namespace Alternet.Drawing
     /// See libpng (http://www.libpng.org/pub/png/libpng-1.2.5-manual.html)
     /// for more information.
     /// </remarks>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum GenericImagePngSetFilter
     {

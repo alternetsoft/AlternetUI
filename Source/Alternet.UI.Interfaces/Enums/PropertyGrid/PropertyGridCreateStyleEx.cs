@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Defines <see cref="PropertyGrid"/> extended options.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum PropertyGridCreateStyleEx
     {

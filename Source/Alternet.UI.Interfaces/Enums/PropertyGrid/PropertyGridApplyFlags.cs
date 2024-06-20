@@ -11,6 +11,9 @@ namespace Alternet.UI
     /// Defines all flags used in <see cref="PropertyGrid"/> when property value
     /// is applied back to object instance.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum PropertyGridApplyFlags
     {

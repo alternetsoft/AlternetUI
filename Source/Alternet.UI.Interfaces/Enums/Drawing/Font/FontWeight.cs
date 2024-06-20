@@ -10,6 +10,9 @@ namespace Alternet.Drawing
     /// Refers to the density of a typeface, in terms of the
     /// lightness or heaviness of the strokes.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum FontWeight
     {

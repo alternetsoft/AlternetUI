@@ -5,6 +5,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the sides of a rectangle to apply a three-dimensional border to.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum Border3DSide
     {

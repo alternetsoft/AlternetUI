@@ -8,6 +8,9 @@ namespace Alternet.UI
     ///     The ModifierKeys enumeration describes a set of common keys
     ///     used to modify other input operations.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [TypeConverter("Alternet.UI.ModifierKeysConverter")]
     [ValueSerializer("Alternet.UI.ModifierKeysValueSerializer")]
     [Flags]

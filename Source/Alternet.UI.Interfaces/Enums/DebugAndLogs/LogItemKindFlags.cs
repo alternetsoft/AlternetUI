@@ -7,6 +7,9 @@ namespace Alternet.UI
     /// <summary>
     /// Enumerates possible log item kinds.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum LogItemKindFlags
     {

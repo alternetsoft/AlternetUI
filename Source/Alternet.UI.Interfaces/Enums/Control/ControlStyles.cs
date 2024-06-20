@@ -10,6 +10,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the style and behavior of a control.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum ControlStyles
     {
@@ -20,9 +23,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// If <see langword="true" />, the control paints itself rather than the operating
-        /// system doing so. If <see langword="false" />, the <see cref="Control.Paint" />
-        /// event is not raised. This style only applies to classes derived from
-        /// <see cref="Control" />.
+        /// system doing so. If <see langword="false" />, the paint
+        /// event is not raised. This style only applies to classes derived from <c>Control</c>.
         /// </summary>
         UserPaint = 2,
 
@@ -40,22 +42,20 @@ namespace Alternet.UI
         /// <summary>
         /// If <see langword="true" />, the control has a fixed
         /// width when auto-scaled. For example, if a layout operation attempts to rescale
-        /// the control to accommodate a new <see cref="Alternet.Drawing.Font" />, the control's
-        /// <see cref="Control.Width" /> remains unchanged.
+        /// the control to accommodate a new font, the control's width remains unchanged.
         /// </summary>
         FixedWidth = 0x20,
 
         /// <summary>
         /// If <see langword="true" />, the control has a fixed height when
         /// auto-scaled. For example, if a layout operation attempts to rescale the control
-        /// to accommodate a new <see cref="Alternet.Drawing.Font" />, the control's
-        /// <see cref="Control.Height" /> remains unchanged.
+        /// to accommodate a new font, the control's height remains unchanged.
         /// </summary>
         FixedHeight = 0x40,
 
         /// <summary>
         /// If <see langword="true" />, the control implements the standard
-        /// <see cref="Control.Click" /> behavior.
+        /// click behavior.
         /// </summary>
         StandardClick = 0x100,
 
@@ -71,10 +71,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// If <see langword="true" />, the control accepts
-        /// a <see cref="Control.BackColor" /> with an alpha component of less than
+        /// a background color with an alpha component of less than
         /// 255 to simulate transparency. Transparency will be simulated only if
         /// the <see cref="ControlStyles.UserPaint" /> bit is set to <see langword="true" />
-        /// and the parent control is derived from <see cref="Control" />.</summary>
+        /// and the parent control is derived from <c>Control</c>.</summary>
         SupportsTransparentBackColor = 0x800,
 
         /// <summary>
