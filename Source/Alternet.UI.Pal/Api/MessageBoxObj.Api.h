@@ -11,11 +11,11 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API MessageBoxResult MessageBoxObj_Show_(Window* owner, const char16_t* text, const char16_t* caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<MessageBoxResult>([&](){
     #endif
         return MessageBoxObj::Show(owner, text, ToOptional(caption), buttons, icon, defaultButton);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

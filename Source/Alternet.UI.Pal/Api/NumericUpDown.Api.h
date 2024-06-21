@@ -10,99 +10,99 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API NumericUpDown* NumericUpDown_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<NumericUpDown*>([&](){
     #endif
         return new NumericUpDown();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API c_bool NumericUpDown_GetHasBorder_(NumericUpDown* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->GetHasBorder();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void NumericUpDown_SetHasBorder_(NumericUpDown* obj, c_bool value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetHasBorder(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API int NumericUpDown_GetMinimum_(NumericUpDown* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
     #endif
         return obj->GetMinimum();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void NumericUpDown_SetMinimum_(NumericUpDown* obj, int value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetMinimum(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API int NumericUpDown_GetMaximum_(NumericUpDown* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
     #endif
         return obj->GetMaximum();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void NumericUpDown_SetMaximum_(NumericUpDown* obj, int value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetMaximum(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API int NumericUpDown_GetValue_(NumericUpDown* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
     #endif
         return obj->GetValue();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void NumericUpDown_SetValue_(NumericUpDown* obj, int value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetValue(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

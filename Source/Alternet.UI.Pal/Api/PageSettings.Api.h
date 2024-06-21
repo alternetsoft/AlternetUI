@@ -10,165 +10,165 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API PageSettings* PageSettings_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<PageSettings*>([&](){
     #endif
         return new PageSettings();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API c_bool PageSettings_GetColor_(PageSettings* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->GetColor();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetColor_(PageSettings* obj, c_bool value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetColor(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API c_bool PageSettings_GetLandscape_(PageSettings* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->GetLandscape();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetLandscape_(PageSettings* obj, c_bool value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetLandscape(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API Thickness_C PageSettings_GetMargins_(PageSettings* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Thickness_C>([&](){
     #endif
         return obj->GetMargins();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetMargins_(PageSettings* obj, Thickness value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetMargins(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API SizeD_C PageSettings_GetCustomPaperSize_(PageSettings* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<SizeD_C>([&](){
     #endif
         return obj->GetCustomPaperSize();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetCustomPaperSize_(PageSettings* obj, SizeD value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetCustomPaperSize(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API c_bool PageSettings_GetUseCustomPaperSize_(PageSettings* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->GetUseCustomPaperSize();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetUseCustomPaperSize_(PageSettings* obj, c_bool value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetUseCustomPaperSize(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API PaperKind PageSettings_GetPaperSize_(PageSettings* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<PaperKind>([&](){
     #endif
         return obj->GetPaperSize();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetPaperSize_(PageSettings* obj, PaperKind value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetPaperSize(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API PrinterResolutionKind PageSettings_GetPrinterResolution_(PageSettings* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<PrinterResolutionKind>([&](){
     #endif
         return obj->GetPrinterResolution();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void PageSettings_SetPrinterResolution_(PageSettings* obj, PrinterResolutionKind value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetPrinterResolution(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

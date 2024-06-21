@@ -10,44 +10,44 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API StatusBar* StatusBar_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<StatusBar*>([&](){
     #endif
         return new StatusBar();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void* StatusBar_GetRealHandle_(StatusBar* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
         return obj->GetRealHandle();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API c_bool StatusBar_GetSizingGripVisible_(StatusBar* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->GetSizingGripVisible();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void StatusBar_SetSizingGripVisible_(StatusBar* obj, c_bool value)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetSizingGripVisible(value);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

@@ -10,22 +10,22 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API LinearGradientBrush* LinearGradientBrush_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<LinearGradientBrush*>([&](){
     #endif
         return new LinearGradientBrush();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, PointD startPoint, PointD endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->Initialize(startPoint, endPoint, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

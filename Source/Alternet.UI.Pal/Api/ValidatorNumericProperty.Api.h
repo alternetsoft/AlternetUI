@@ -10,33 +10,33 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ValidatorNumericProperty* ValidatorNumericProperty_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ValidatorNumericProperty*>([&](){
     #endif
         return new ValidatorNumericProperty();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void ValidatorNumericProperty_DeleteValidatorNumericProperty_(void* handle)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         ValidatorNumericProperty::DeleteValidatorNumericProperty(handle);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void* ValidatorNumericProperty_CreateValidatorNumericProperty_(int numericType, int valBase)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
         return ValidatorNumericProperty::CreateValidatorNumericProperty(numericType, valBase);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
