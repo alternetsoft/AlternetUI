@@ -154,10 +154,8 @@ namespace Alternet.UI
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
         {
 #if WINDOWS
-            var platformView = Handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
-            if (platformView is null)
-                return;
-            platformView.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+            var platformView = GetPlatformView();
+            platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
 #endif
 
             if (control is null)
