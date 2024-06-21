@@ -11,7 +11,10 @@ using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
 {
-    internal class WxApplicationHandler : DisposableObject, IApplicationHandler
+    /// <summary>
+    /// Implementation of the <see cref="IApplicationHandler"/> for the WxWidgets library.
+    /// </summary>
+    public class WxApplicationHandler : DisposableObject, IApplicationHandler
     {
         private const string RequireVersion = "3.2.5";
 
@@ -65,7 +68,9 @@ namespace Alternet.UI
 
         public static bool UsePlessCaret { get; set; } = false;
 
-        public static WxEventIdentifiers MapToEventIdentifier(int eventId)
+        public static bool UseDummyTimer { get; set; } = false;
+
+        internal static WxEventIdentifiers MapToEventIdentifier(int eventId)
         {
             var id = eventId - minEventIdentifier;
 
@@ -75,7 +80,7 @@ namespace Alternet.UI
             return eventIdentifierToEnum[id];
         }
 
-        public static int MinEventIdentifier => minEventIdentifier;
+        internal static int MinEventIdentifier => minEventIdentifier;
 
         /// <summary>
         /// Allows the programmer to specify whether the application will exit when the
@@ -293,6 +298,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public ITimerHandler CreateTimerHandler(Timer timer)
         {
+            if (UseDummyTimer)
+                return new DummyTimerHandler();
             return new UI.Native.Timer();
         }
 

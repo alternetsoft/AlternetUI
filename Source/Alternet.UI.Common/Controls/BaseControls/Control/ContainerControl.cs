@@ -104,7 +104,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="buttons">Array of title and action.</param>
         /// <returns><see cref="ControlSet"/> with list of created buttons.</returns>
-        /// <param name="control">Parent control.</param>
         public virtual ControlSet AddButtons(params (string, Action?)[] buttons)
         {
             List<Control> result = new();
@@ -186,7 +185,6 @@ namespace Alternet.UI
         /// <summary>
         /// Adds multiple labels.
         /// </summary>
-        /// <param name="control">Parent control.</param>
         /// <param name="text">Array of label text.</param>
         /// <returns><see cref="ControlSet"/> with list of created labels.</returns>
         public virtual ControlSet AddLabels(params string[] text)
