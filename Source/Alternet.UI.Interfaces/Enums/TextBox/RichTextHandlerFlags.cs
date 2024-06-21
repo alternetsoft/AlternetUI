@@ -13,6 +13,9 @@ namespace Alternet.UI
     /// You can use these flags in <see cref="RichTextBox.SetFileHandlerFlags"/> method
     /// in order to customize save and load operations.
     /// </remarks>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum RichTextHandlerFlags
     {

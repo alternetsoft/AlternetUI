@@ -63,8 +63,16 @@ namespace Alternet.UI
         /// </returns>
         public ModalResult ShowModal()
         {
-            CheckDisposed();
             return ShowModal(null);
+        }
+
+        /// <summary>
+        /// Same as <see cref="ShowModal()"/>. Added for compatibility.
+        /// </summary>
+        /// <returns></returns>
+        public DialogResult ShowDialog()
+        {
+            return EnumUtils.Convert(ShowModal(null));
         }
 
         /// <summary>
@@ -92,6 +100,7 @@ namespace Alternet.UI
             return null!;
         }
 
+        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             base.DisposeManaged();

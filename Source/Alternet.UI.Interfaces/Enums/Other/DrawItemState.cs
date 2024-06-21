@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the state of an item that is being drawn.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum DrawItemState
     {

@@ -17,8 +17,14 @@ using SkiaSharp.Views.Maui.Controls;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements <see cref="Alternet.UI.Control"/> container using <see cref="SKCanvasView"/>.
+    /// </summary>
     public partial class SkiaContainer : SKCanvasView
     {
+        /// <summary>
+        /// This is sample bindable property declaration.
+        /// </summary>
         public static readonly BindableProperty SampleProperty = BindableProperty.Create(
             nameof(SampleProp),
             typeof(float),
@@ -34,6 +40,9 @@ namespace Alternet.UI
             App.Handler ??= new MauiApplicationHandler();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkiaContainer"/> class.
+        /// </summary>
         public SkiaContainer()
         {
             /*Orientation = Microsoft.Maui.ScrollOrientation.Both;*/
@@ -56,14 +65,18 @@ namespace Alternet.UI
             Unfocused += SkiaContainer_Unfocused;
         }
 
+        /// <summary>
+        /// This is sample bindable property.
+        /// </summary>
         public float SampleProp
         {
             get => (float)GetValue(SampleProperty);
             set => SetValue(SampleProperty, value);
         }
 
-        /*public SKCanvasView CanvasView => canvas;*/
-
+        /// <summary>
+        /// Gets or sets attached <see cref="Alternet.UI.Control"/>.
+        /// </summary>
         public Alternet.UI.Control? Control
         {
             get => control;
@@ -91,84 +104,40 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Repaints the control.
+        /// </summary>
         public virtual void Invalidate()
         {
             InvalidateSurface();
         }
 
+        /// <summary>
+        /// Adds message to log.
+        /// </summary>
+        /// <param name="s">Message text.</param>
         public virtual void Log(object? s)
         {
             Alternet.UI.App.Log(s);
         }
 
-        /*protected override void LayoutChildren(double x, double y, double width, double height)
-        {
-            base.LayoutChildren(x, y, width, height);
-        }*/
-
+        /// <inheritdoc/>
         protected override void OnChildAdded(Element child)
         {
             base.OnChildAdded(child);
         }
 
+        /// <inheritdoc/>
         protected override void OnChildRemoved(Element child, int oldLogicalIndex)
         {
             base.OnChildRemoved(child, oldLogicalIndex);
         }
 
+        /// <inheritdoc/>
         protected override void OnParentChanged()
         {
             base.OnParentChanged();
         }
-
-        protected override void OnHandlerChanging(HandlerChangingEventArgs args)
-        {
-            base.OnHandlerChanging(args);
-
-#if WINDOWS
-            var platformView = args.OldHandler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
-            if (platformView is null)
-                return;
-            platformView.PointerEntered -= PlatformView_PointerEntered;
-            platformView.PointerExited -= PlatformView_PointerExited;
-            platformView.PointerPressed -= PlatformView_PointerPressed;
-            platformView.PointerWheelChanged -= PlatformView_PointerWheelChanged;
-            platformView.PointerReleased -= PlatformView_PointerReleased;
-            platformView.KeyDown -= PlatformView_KeyDown;
-            platformView.KeyUp -= PlatformView_KeyUp;
-            platformView.CharacterReceived -= PlatformView_CharacterReceived;
-            platformView.GotFocus -= PlatformView_GotFocus;
-            platformView.LostFocus -= PlatformView_LostFocus;
-#endif
-        }
-
-        protected override void OnHandlerChanged()
-        {
-            base.OnHandlerChanged();
-
-#if WINDOWS
-            var platformView = Handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
-            if (platformView is null)
-                return;
-
-            platformView.AllowFocusOnInteraction = true;
-            platformView.IsTabStop = true;
-
-            platformView.PointerEntered += PlatformView_PointerEntered;
-            platformView.PointerExited += PlatformView_PointerExited;
-            platformView.PointerPressed += PlatformView_PointerPressed;
-            platformView.PointerWheelChanged += PlatformView_PointerWheelChanged;
-            platformView.PointerReleased += PlatformView_PointerReleased;
-            platformView.KeyDown += PlatformView_KeyDown;
-            platformView.KeyUp += PlatformView_KeyUp;
-            platformView.CharacterReceived += PlatformView_CharacterReceived;
-            platformView.GotFocus += PlatformView_GotFocus;
-            platformView.LostFocus += PlatformView_LostFocus;
-#endif
-        }
-
-#if WINDOWS
-#endif
 
         private static void OnSamplePropChanged(
             BindableObject bindable,
@@ -178,16 +147,6 @@ namespace Alternet.UI
             ((SkiaContainer)bindable).InvalidateSurface();
         }
 
-        private void SkiaContainer_Scrolled(object? sender, ScrolledEventArgs e)
-        {
-            /*Log("SkiaContainer_Scrolled");*/
-        }
-
-        private void SkiaContainer_ScrollToRequested(object? sender, ScrollToRequestedEventArgs e)
-        {
-            /*Log("SkiaContainer_ScrollToRequested");*/
-        }
-
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
         {
         }
@@ -195,10 +154,8 @@ namespace Alternet.UI
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
         {
 #if WINDOWS
-            var platformView = Handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
-            if (platformView is null)
-                return;
-            platformView.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+            var platformView = GetPlatformView();
+            platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
 #endif
 
             if (control is null)
@@ -213,11 +170,10 @@ namespace Alternet.UI
         {
             var dc = e.Surface.Canvas;
 
-            /*dc.DrawRect(SKRect.Create(50, 50), Alternet.Drawing.Color.Red.AsFillPaint);*/
-
             if (control is null)
                 return;
 
+            dc.Save();
             dc.Scale((float)control.ScaleFactor);
 
             if (graphics is null)
@@ -231,26 +187,27 @@ namespace Alternet.UI
 
             var bounds = Bounds;
 
-            control.Bounds = (0, 0, Math.Min(bounds.Width, dirtyRect.Width), Math.Min(bounds.Height, dirtyRect.Height));
+            control.Bounds = (
+                0,
+                0,
+                Math.Min(bounds.Width, dirtyRect.Width),
+                Math.Min(bounds.Height, dirtyRect.Height));
 
             dc.Clear(control.BackColor);
 
             control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
 
             dc.Flush();
+            dc.Restore();
         }
 
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
         {
-            /*Log("Focused");*/
-            UI.Control.FocusedControl = control;
             control?.RaiseGotFocus();
         }
 
         private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
         {
-            /*Log("Unfocused");*/
-            UI.Control.FocusedControl = null;
             control?.RaiseLostFocus();
         }
     }

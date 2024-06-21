@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines flags for the date-time picker when it is in the date editing mode.
     /// </summary>
+    [Flags]
     public enum DatePickerStyleFlags
     {
         /// <summary>

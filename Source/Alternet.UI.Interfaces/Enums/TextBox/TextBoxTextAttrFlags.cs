@@ -12,6 +12,9 @@ namespace Alternet.UI
     /// <see cref="ITextBoxTextAttr.AddFlag"/>,
     /// <see cref="ITextBoxTextAttr.RemoveFlag"/>.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum TextBoxTextAttrFlags
     {

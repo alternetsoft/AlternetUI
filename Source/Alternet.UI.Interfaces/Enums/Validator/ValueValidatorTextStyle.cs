@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Styles used by <see cref="IValueValidatorText"/>.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum ValueValidatorTextStyle
     {

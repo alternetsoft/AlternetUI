@@ -14,6 +14,10 @@ namespace Alternet.UI
     /// At higher 16-bits, there are same flags, but to instead check if children
     /// will be included.
     /// </remarks>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
+    [Flags]
     public enum PropertyGridIteratorFlags
     {
         /// <summary>

@@ -92,6 +92,11 @@ namespace Alternet.UI
         public event EventHandler? SelectedItemChanged;
 
         /// <summary>
+        /// Same as <see cref="SelectedItemChanged"/>. Added for the compatibility.
+        /// </summary>
+        public event EventHandler? SelectedIndexChanged;
+
+        /// <summary>
         /// Occurs when the <see cref="IsEditable"/> property value changes.
         /// </summary>
         public event EventHandler? IsEditableChanged;
@@ -262,6 +267,8 @@ namespace Alternet.UI
         /// </summary>
         /// <value><c>true</c> if the <see cref="ComboBox"/> can be edited;
         /// otherwise <c>false</c>. The default is <c>false</c>.</value>
+        [Category("Appearance")]
+        [DefaultValue(true)]
         public virtual bool IsEditable
         {
             get
@@ -276,6 +283,42 @@ namespace Alternet.UI
                 CheckDisposed();
                 isEditable = value;
                 IsEditableChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value specifying the style of the combo box.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="ComboBoxStyle" /> values. The default is <see langword="DropDown" />.
+        /// </returns>
+        [Category("Appearance")]
+        [DefaultValue(ComboBoxStyle.DropDown)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [Browsable(false)]
+        public virtual ComboBoxStyle DropDownStyle
+        {
+            get
+            {
+                if (IsEditable)
+                    return ComboBoxStyle.DropDown;
+                else
+                    return ComboBoxStyle.DropDownList;
+            }
+
+            set
+            {
+                if (DropDownStyle == value)
+                    return;
+                switch (value)
+                {
+                    case ComboBoxStyle.DropDown:
+                        IsEditable = true;
+                        break;
+                    case ComboBoxStyle.DropDownList:
+                        IsEditable = false;
+                        break;
+                }
             }
         }
 
@@ -332,7 +375,7 @@ namespace Alternet.UI
         /// Gets or sets whether background of the item is owner drawn.
         /// </summary>
         [Browsable(false)]
-        public bool OwnerDrawItemBackground
+        public virtual bool OwnerDrawItemBackground
         {
             get
             {
@@ -349,7 +392,7 @@ namespace Alternet.UI
         /// Gets or sets whether item is owner drawn.
         /// </summary>
         [Browsable(false)]
-        public bool OwnerDrawItem
+        public virtual bool OwnerDrawItem
         {
             get
             {
@@ -413,12 +456,11 @@ namespace Alternet.UI
         /// Raises the <see cref="SelectedItemChanged"/> event and calls
         /// <see cref="OnSelectedItemChanged(EventArgs)"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
         public void RaiseSelectedItemChanged()
         {
             OnSelectedItemChanged(EventArgs.Empty);
             SelectedItemChanged?.Invoke(this, EventArgs.Empty);
+            SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

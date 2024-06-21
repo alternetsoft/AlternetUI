@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines <see cref="PropertyGrid"/> options.
+    /// Defines create options for a property grid control.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum PropertyGridCreateStyle
     {

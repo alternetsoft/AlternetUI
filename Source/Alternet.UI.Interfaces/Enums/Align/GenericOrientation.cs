@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies orientation (vertical, horizontal or both).
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum GenericOrientation
     {

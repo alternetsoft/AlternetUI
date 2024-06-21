@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Defines possible <see cref="Brush"/> types.
+    /// Defines possible brush types.
     /// </summary>
     public enum BrushType
     {
@@ -17,22 +17,22 @@ namespace Alternet.Drawing
         None,
 
         /// <summary>
-        /// Brush is <see cref="SolidBrush"/>.
+        /// Brush is solid.
         /// </summary>
         Solid,
 
         /// <summary>
-        /// Brush is <see cref="HatchBrush"/>.
+        /// Brush is hatch.
         /// </summary>
         Hatch,
 
         /// <summary>
-        /// Brush is <see cref="LinearGradientBrush"/>.
+        /// Brush is linear gradient.
         /// </summary>
         LinearGradient,
 
         /// <summary>
-        /// Brush is <see cref="RadialGradientBrush"/>.
+        /// Brush is radial gradient.
         /// </summary>
         RadialGradient,
 
@@ -42,7 +42,7 @@ namespace Alternet.Drawing
         Transparent,
 
         /// <summary>
-        /// Brush is <see cref="TextureBrush"/>.
+        /// Brush is texture.
         /// </summary>
         Texture,
     }

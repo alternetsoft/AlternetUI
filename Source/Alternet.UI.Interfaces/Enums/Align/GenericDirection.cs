@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies content alignment or general direction.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum GenericDirection
     {

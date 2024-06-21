@@ -12,28 +12,28 @@ namespace Alternet.UI
     public enum ListViewHitTestLocations
     {
         /// <summary>
-        /// A position in the client area of the <see cref="ListView"/> control, but not on a node or a portion of a
+        /// A position in the client area of the control, but not on a node or a portion of a
         /// node.
         /// </summary>
         None = 1 << 1,
 
         /// <summary>
-        /// A position above the client portion of a <see cref="ListView"/> control.
+        /// A position above the client portion of a control.
         /// </summary>
         AboveClientArea = 1 << 2,
 
         /// <summary>
-        /// A position below the client portion of a <see cref="ListView"/> control.
+        /// A position below the client portion of a control.
         /// </summary>
         BelowClientArea = 1 << 3,
 
         /// <summary>
-        /// A position to the left of the client area of a <see cref="ListView"/> control.
+        /// A position to the left of the client area of a control.
         /// </summary>
         LeftOfClientArea = 1 << 4,
 
         /// <summary>
-        /// A position to the right of the client area of the <see cref="ListView"/> control.
+        /// A position to the right of the client area of the control.
         /// </summary>
         RightOfClientArea = 1 << 5,
 

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Defines logical raster operations which can be used with <see cref="Graphics.BlitI"/>,
-    /// <see cref="Graphics.StretchBlitI"/> and some other functions.
+    /// Defines logical raster operations which can be used with blit, stretch-blit
+    /// and some other functions.
     /// </summary>
     /// <remarks>
     /// The description of the enum values refer to how a generic src source pixel

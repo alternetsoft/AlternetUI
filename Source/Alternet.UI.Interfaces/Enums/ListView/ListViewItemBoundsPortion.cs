@@ -6,7 +6,8 @@ namespace Alternet.UI
     public enum ListViewItemBoundsPortion
     {
         /// <summary>
-        /// The bounding rectangle of the entire item, including the icon, the item text should be retrieved.
+        /// The bounding rectangle of the entire item, including the icon, the item
+        /// text should be retrieved.
         /// </summary>
         EntireItem,
 

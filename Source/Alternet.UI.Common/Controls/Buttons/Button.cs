@@ -183,6 +183,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value that determines if the background is drawn using visual styles,
+        /// if supported.</summary>
+        /// <returns>
+        /// <see langword="true" /> if the background is drawn using visual styles;
+        /// otherwise, <see langword="false" />.</returns>
+        /// <remarks>
+        /// Currently this property doesn't do anything and is added for compatibility.
+        /// </remarks>
+        [Category("Appearance")]
+        [Browsable(false)]
+        public virtual bool UseVisualStyleBackColor { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value that indicates whether a <see cref="Button"/> is
         /// the default button. In a modal dialog,
         /// a user invokes the default button by pressing the ENTER key.

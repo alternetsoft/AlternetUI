@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies flags used when splitter position is set in <see cref="PropertyGrid"/>.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum PropertyGridSplitterPosFlags
     {

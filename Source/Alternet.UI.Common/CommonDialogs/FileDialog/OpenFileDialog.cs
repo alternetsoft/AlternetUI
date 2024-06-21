@@ -76,9 +76,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets dialog handler.
+        /// </summary>
         [Browsable(false)]
         public new IOpenFileDialogHandler Handler => (IOpenFileDialogHandler)base.Handler;
 
+        /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
         {
             return DialogFactory.Handler.CreateOpenFileDialogHandler(this);

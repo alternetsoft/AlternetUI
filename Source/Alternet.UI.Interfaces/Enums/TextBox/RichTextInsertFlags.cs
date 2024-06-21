@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Flags for object insertion in <see cref="RichTextBox"/>.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum RichTextInsertFlags
     {

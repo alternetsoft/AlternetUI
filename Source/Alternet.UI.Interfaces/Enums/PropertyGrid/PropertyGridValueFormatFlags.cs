@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    // Misc. argument flags.
+    /// <summary>
+    /// Misc. argument flags.
+    /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum PropertyGridValueFormatFlags
     {

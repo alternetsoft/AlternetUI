@@ -185,11 +185,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        ICaretHandler IApplicationHandler.CreateCaretHandler()
-        {
-            return new PlessCaretHandler();
-        }
-
         ICaretHandler IApplicationHandler.CreateCaretHandler(Control control, int width, int height)
         {
             return new PlessCaretHandler(control, width, height);

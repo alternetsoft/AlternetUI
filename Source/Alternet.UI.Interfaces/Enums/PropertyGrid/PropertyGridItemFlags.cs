@@ -11,6 +11,10 @@ namespace Alternet.UI
     /// <summary>
     /// Flags of the <see cref="PropertyGrid"/> items.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
+    [Flags]
     public enum PropertyGridItemFlags
     {
         /// <summary>

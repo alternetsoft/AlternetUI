@@ -152,6 +152,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="SelectedFilterIndex"/>. Added for the compatibility.
+        /// </summary>
+        [Browsable(false)]
+        public int FilterIndex
+        {
+            get
+            {
+                return SelectedFilterIndex;
+            }
+
+            set
+            {
+                SelectedFilterIndex = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the index of the filter currently selected in the file dialog window.
         /// </summary>
         public virtual int SelectedFilterIndex
@@ -187,6 +204,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets dialog handler.
+        /// </summary>
         [Browsable(false)]
         public new IFileDialogHandler Handler => (IFileDialogHandler)base.Handler;
     }

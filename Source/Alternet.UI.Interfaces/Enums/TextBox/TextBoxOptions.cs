@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Enumerates options for <see cref="TextBox"/> behavior and visual style customization.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum TextBoxOptions
     {

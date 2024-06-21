@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Enumerates properties assign flags for <see cref="RichTextBox"/>.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum RichTextSetPropFlags
     {

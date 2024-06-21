@@ -9,6 +9,9 @@ namespace Alternet.UI
     ///     The RawModifierKeys enumeration describes a set of keys
     ///     used to modify other input operations, including macOS-specific keys.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [TypeConverter("Alternet.UI.ModifierKeysConverter")]
     [ValueSerializer("Alternet.UI.ModifierKeysValueSerializer")]
     [Flags]

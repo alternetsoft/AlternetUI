@@ -9,6 +9,9 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to turn on/off different features in <see cref="PropertyGrid"/>.
     /// </summary>
+    /// <remarks>
+    /// This enumeration supports a bitwise combination of its member values.
+    /// </remarks>
     [Flags]
     public enum PropertyGridFeature
     {

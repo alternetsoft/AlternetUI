@@ -3,14 +3,13 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the position and manner in which a control is docked
-    /// in the <see cref="LayoutPanel"/>.
+    /// Specifies the position and manner in which a control is docked inside the container.
     /// </summary>
     public enum DockStyle
     {
         /// <summary>
         /// The control is not docked and is positioned absolutely using its
-        /// <see cref="Control.Bounds"/> property.
+        /// 'Bounds' property.
         /// </summary>
         None = 0,
 
