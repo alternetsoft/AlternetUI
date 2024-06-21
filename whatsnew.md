@@ -1,3 +1,11 @@
+# 0.9.612 (2024 June 21)
+
+- <u>**Critical**</u>: Fix exception when year > 3000.
+- Optimized Keys to/from Key conversions.
+- SkiaContainer now handles focus and keyboard input.
+- ComboBox: SelectedIndexChanged, DropDownStyle.
+- Application.StartuPath, CommonDialog.ShowModal, FileDialog.FilterIndex, Button.UseVisualStyleBackColor, ListControl.SelectedIndexAsInt.
+
 # 0.9.611 (2024 June 18)
 
 - <u>**Critical**</u> Updated to use WxWidgets 3.2.5. Fixes different problems on Linux.
