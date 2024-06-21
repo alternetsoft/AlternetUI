@@ -224,6 +224,22 @@ namespace Alternet.UI
         public static event EventHandler? Idle;
 
         /// <summary>
+        /// Gets the path for the executable file that started the application, not including
+        /// the executable name.</summary>
+        /// <returns>
+        /// The path for the executable file that started the application.
+        /// </returns>
+        public static string StartupPath
+        {
+            get
+            {
+                string location = Assembly.GetExecutingAssembly().Location;
+                string s = Path.GetDirectoryName(location)!;
+                return s;
+            }
+        }
+
+        /// <summary>
         /// Allows the programmer to specify whether the application will exit when the
         /// top-level frame is deleted.
         /// Returns true if the application will exit when the top-level frame is deleted.
@@ -240,6 +256,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsActive => Handler.IsActive;
 
+        /// <summary>
+        /// Gets whether application in Uixml previewer mode.
+        /// </summary>
         public virtual bool InUixmlPreviewerMode
         {
             get => Handler.InUixmlPreviewerMode;

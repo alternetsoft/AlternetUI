@@ -48,12 +48,38 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in
-        /// the control/>.
+        /// the control.
         /// </summary>
         /// <value>A zero-based index of the currently selected item. A value
         /// of <c>null</c> is returned if no item is selected.</value>
         [Browsable(false)]
         public abstract int? SelectedIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the zero-based index of the currently selected item in
+        /// the control. Same as <see cref="SelectedIndex"/> but is not nullable.
+        /// </summary>
+        [Browsable(false)]
+        public virtual int SelectedIndexAsInt
+        {
+            get
+            {
+                var result = SelectedIndex;
+                if (result is null)
+                    return -1;
+                return result.Value;
+            }
+
+            set
+            {
+                if (SelectedIndexAsInt == value)
+                    return;
+                if (value < 0)
+                    SelectedIndex = null;
+                else
+                    SelectedIndex = value;
+            }
+        }
 
         /// <summary>
         /// Returns <see cref="Action"/> associated with the <see cref="SelectedItem"/> if it is
