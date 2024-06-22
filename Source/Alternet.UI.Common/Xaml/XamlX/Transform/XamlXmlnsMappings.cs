@@ -24,6 +24,8 @@ namespace XamlX.Transform
             var rv = new XamlXmlnsMappings();
             foreach (var asm in typeSystem.Assemblies.ToArray())
             {
+                Alternet.UI.App.LogIf(asm.Name, false);
+
                 foreach (var attr in asm.CustomAttributes)
                 {
                     foreach (var xmlnsType in typeMappings.XmlnsAttributes)

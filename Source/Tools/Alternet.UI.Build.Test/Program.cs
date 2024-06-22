@@ -3,7 +3,6 @@ using System.Xml;
 using Alternet.UI;
 using Alternet.UI.Build.Tasks;
 
-// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Alternet.UI.Build.Test");
 
 void GenerateCSharpOutput(string filename)
@@ -22,7 +21,12 @@ void GenerateCSharpOutput(string filename)
 
 try
 {
-    GenerateCSharpOutput(CommonUtils.GetAppFolder() + "sample.xml");
+#pragma warning disable
+    var sample1 = "sample.xml";
+    var sample2 = "sample-editorscheme.xml";
+#pragma warning restore
+
+    GenerateCSharpOutput(CommonUtils.GetAppFolder() + sample2);
 }
 catch (Exception e)
 {

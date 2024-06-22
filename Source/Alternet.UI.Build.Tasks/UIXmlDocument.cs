@@ -8,6 +8,7 @@ namespace Alternet.UI.Build.Tasks
 {
     public class UIXmlDocument
     {
+        private const string EditorNamespace = "http://schemas.alternetsoft.com/editor/2024";
         private const string UINamespace = "http://schemas.alternetsoft.com/ui/2021";
         private const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
         private const string ClassAttributeNotFound = "x:Class attribute on root node was not found.";
@@ -155,6 +156,8 @@ namespace Alternet.UI.Build.Tasks
             var ns = name.NamespaceName;
             if (ns == UINamespace)
                 return "Alternet.UI";
+            if(ns == EditorNamespace)
+                return "Alternet.Editor";
 
             return ParseClrNamespaceFromXmlns(ns);
         }
@@ -164,6 +167,8 @@ namespace Alternet.UI.Build.Tasks
             var ns = name.NamespaceName;
             if (ns == UINamespace)
                 return "Alternet.UI";
+            if (ns == EditorNamespace)
+                return "Alternet.Editor.X.v9";
 
             return "<unknown-assembly>";
         }

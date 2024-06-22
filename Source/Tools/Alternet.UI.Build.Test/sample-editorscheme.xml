@@ -1,0 +1,38 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:editor="http://schemas.alternetsoft.com/editor/2024"
+        x:Class="RoslynSyntaxParsing.Form1"
+        Title="Roslyn-Based Parsing" StartLocation="CenterScreen"
+        MinWidth="800" MinHeight="600" Size="900,700" Layout="Dock"
+        Icon="embres:RoslynSyntaxParsing.Sample.ico">
+
+  <Panel Name="pnSettings" Layout="Vertical" Padding = "5" Dock="Top">
+    <Panel Name="pnDescription" Layout="Vertical" Padding = "5">
+      <Label Text="This demo shows how to use the dedicated parsers for"/>
+      <Label Text="C# and VB.NET languages based on .NET Compiler Platform (Roslyn)."/>
+      <Label Text="These parsers support automatic code completion, code outlining,"/>
+      <Label Text="smart formatting, and syntax error underlining."/>
+    </Panel>
+
+    <Panel Name="pnLanguages" Layout="Horizontal" Padding = "5">
+      <Label Name="lbLanguages" Text="Language:"/>
+
+      <ComboBox Name="cbLanguages" Margin = "5, 0, 0, 5"
+          ToolTip = "Choose programming language" DropDownStyle = "DropDownList"/>
+      <Button Name="btLoad" Text = "Load" HorizontalAlignment = "Right"
+          ToolTip = "Load code file"/>
+    </Panel>
+  </Panel>
+
+  <!--
+  <SplittedPanel Name="pnSplitted" VerticalAlignment="Fill" BottomPanelHeight="200"
+                 TopVisible="false" LeftRightVisible="false">    
+  </SplittedPanel>
+  -->
+
+  <editor:SyntaxEdit Dock="Fill" Name="syntaxEdit1"/>
+  <Splitter Dock="Bottom"/>
+  <LogListBox Name="logListBox" SuggestedHeight="200" Dock="Bottom"/>
+
+</Window>
+
