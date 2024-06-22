@@ -16,7 +16,17 @@ namespace XamlX.Transform
     {
         public class NamespaceResolveResult
         {
-            public string ClrNamespace { get; set; }
+            private string clrNamespace;
+
+            public string ClrNamespace
+            {
+                get => clrNamespace;
+                
+                set
+                {
+                    clrNamespace = value;
+                }
+            }
 
             public IXamlAssembly Assembly { get; set; }
 

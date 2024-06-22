@@ -9,17 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="sample-editorscheme.xml" />
     <None Remove="sample.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="sample-editorscheme.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="sample.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.9.20" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="17.10.4" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.10.4" />
   </ItemGroup>
 
   <ItemGroup>
