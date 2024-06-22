@@ -2,7 +2,6 @@ using Alternet.Drawing;
 using Alternet.UI;
 using System;
 using System.Linq;
-using System.Security.Policy;
 
 namespace MenuSample
 {

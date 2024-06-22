@@ -115,7 +115,7 @@ namespace Alternet.UI
             // be used. In order to create the delegate that will
             // handle the event, a MethodInfo from the finished type
             // is required.
-            Type? finished = tb.CreateType();
+            Type? finished = tb.CreateTypeInfo();
             MethodInfo? eventHandler = finished?.GetMethod(dynamicHandlerName);
 
             // Use the MethodInfo to create a delegate of the correct

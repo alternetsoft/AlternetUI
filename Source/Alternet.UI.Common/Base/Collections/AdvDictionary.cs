@@ -14,7 +14,7 @@ namespace Alternet.UI
     public class AdvDictionary<TKey, TValue> : Dictionary<TKey, TValue>
         where TKey : notnull
     {
-#if NETFRAMEWORK
+#if NETFRAMEWORK || NETSTANDARD2_0
         /// <summary>
         /// Attempts to add the specified key and value to the dictionary.
         /// </summary>

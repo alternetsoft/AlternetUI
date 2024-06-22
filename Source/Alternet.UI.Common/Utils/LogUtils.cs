@@ -857,18 +857,5 @@ namespace Alternet.UI
             App.LogNameValue("GenericBitsFormat.ColorType", GraphicsFactory.GenericBitsFormat.ColorType);
             App.LogSeparator();
         }
-
-        internal static void LogAppDomainTargetFrameworkName()
-        {
-            App.Log(AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName);
-
-            var frameworkName = new System.Runtime.Versioning.FrameworkName(
-                AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName!);
-
-            if (frameworkName.Version >= new Version(4, 5))
-            {
-                // run code
-            }
-        }
     }
 }
