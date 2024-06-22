@@ -20,7 +20,6 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
