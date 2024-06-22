@@ -10,33 +10,33 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Mouse* Mouse_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Mouse*>([&](){
     #endif
         return new Mouse();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API PointI_C Mouse_GetPosition_(Mouse* obj)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<PointI_C>([&](){
     #endif
         return obj->GetPosition();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API MouseButtonState Mouse_GetButtonState_(Mouse* obj, MouseButton button)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<MouseButtonState>([&](){
     #endif
         return obj->GetButtonState(button);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

@@ -20,8 +20,12 @@ namespace XamlX.Transform.Transformers
                 new Dictionary<(string, string, bool), IXamlType>();
         }
 
-        public static XamlAstClrTypeReference ResolveType(AstTransformationContext context,
-            string xmlns, string name, bool isMarkupExtension, List<XamlAstXmlTypeReference> typeArguments,
+        public static XamlAstClrTypeReference ResolveType(
+            AstTransformationContext context,
+            string xmlns,
+            string name,
+            bool isMarkupExtension,
+            List<XamlAstXmlTypeReference> typeArguments,
             IXamlLineInfo lineInfo,
             bool strict)
         {
@@ -36,12 +40,29 @@ namespace XamlX.Transform.Transformers
                     return new XamlAstClrTypeReference(lineInfo, type, isMarkupExtension);
                 }
 
-                var res = ResolveTypeCore(context, xmlns, name, isMarkupExtension, typeArguments, lineInfo, strict);
+                var res =
+                    ResolveTypeCore(
+                        context,
+                        xmlns,
+                        name,
+                        isMarkupExtension,
+                        typeArguments,
+                        lineInfo,
+                        strict);
                 cache.CacheDictionary[cacheKey] = res?.Type;
                 return res;
             }
             else
-                return ResolveTypeCore(context, xmlns, name, isMarkupExtension, typeArguments, lineInfo, strict);
+            {
+                return ResolveTypeCore(
+                    context,
+                    xmlns,
+                    name,
+                    isMarkupExtension,
+                    typeArguments,
+                    lineInfo,
+                    strict);
+            }
         }
 
         private static XamlAstClrTypeReference ResolveTypeCore(
@@ -56,7 +77,14 @@ namespace XamlX.Transform.Transformers
             typeArguments ??= new List<XamlAstXmlTypeReference>();
             var targs = typeArguments
                 .Select(ta =>
-                    ResolveType(context, ta.XmlNamespace, ta.Name, false, ta.GenericArguments, lineInfo, strict)
+                    ResolveType(
+                        context,
+                        ta.XmlNamespace,
+                        ta.Name,
+                        false,
+                        ta.GenericArguments,
+                        lineInfo,
+                        strict)
                         ?.Type)
                 .ToList();
 

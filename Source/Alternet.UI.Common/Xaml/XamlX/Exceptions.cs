@@ -10,7 +10,7 @@ namespace XamlX
 #if !XAMLX_INTERNAL
     public
 #endif
-    class XamlParseException : XmlException
+    class XamlParseException : Alternet.UI.BaseXmlException
     {
         public XamlParseException(string message)
             : base(message, null, 0, 0)

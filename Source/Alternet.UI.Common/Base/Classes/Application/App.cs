@@ -90,8 +90,14 @@ namespace Alternet.UI
         /// </remarks>
         public static bool FastThreadExceptions;
 
+        /// <summary>
+        /// Gets application handler.
+        /// </summary>
         public static IApplicationHandler Handler = null!;
 
+        /// <summary>
+        /// Gets invariant <see cref="CultureInfo"/>.
+        /// </summary>
         public static CultureInfo InvariantEnglishUS = CultureInfo.InvariantCulture;
 
         internal static readonly Destructor MyDestructor = new();
@@ -125,7 +131,9 @@ namespace Alternet.UI
 
             if (IsWindowsOS)
             {
+#if !DEBUG
                 FastThreadExceptions = true;
+#endif
 
                 BackendOS = OperatingSystems.Windows;
                 return;
@@ -171,6 +179,10 @@ namespace Alternet.UI
 #endif
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="App"/> class.
+        /// </summary>
+        /// <param name="handler">Application handler.</param>
         public App(IApplicationHandler? handler)
         {
             if(handler is not null)
@@ -240,37 +252,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Allows the programmer to specify whether the application will exit when the
-        /// top-level frame is deleted.
-        /// Returns true if the application will exit when the top-level frame is deleted.
-        /// </summary>
-        public virtual bool ExitOnFrameDelete
-        {
-            get => Handler.ExitOnFrameDelete;
-            set => Handler.ExitOnFrameDelete = value;
-        }
-
-        /// <summary>
-        /// Gets whether the application is active, i.e. if one of its windows is currently in
-        /// the foreground.
-        /// </summary>
-        public virtual bool IsActive => Handler.IsActive;
-
-        /// <summary>
-        /// Gets whether application in Uixml previewer mode.
-        /// </summary>
-        public virtual bool InUixmlPreviewerMode
-        {
-            get => Handler.InUixmlPreviewerMode;
-            set => Handler.InUixmlPreviewerMode = value;
-        }
-
-        /// <summary>
         /// Gets or sets whether to call <see cref="Debug.WriteLine(string)"/> when
-        /// <see cref="Application.Log"/> is called. Default is <c>false</c>.
+        /// <see cref="App.Log"/> is called. Default is <c>false</c>.
         /// </summary>
         public static LogItemKindFlags DebugWriteLine { get; set; } = LogItemKindFlags.Error;
 
+        /// <summary>
+        /// Gets whether <see cref="ThreadException"/> event is assigned.
+        /// </summary>
         public static bool ThreadExceptionAssigned => ThreadException is not null;
 
         /// <summary>
@@ -279,7 +268,7 @@ namespace Alternet.UI
         public static UIPlatformKind PlatformKind => SystemSettings.Handler.GetPlatformKind();
 
         /// <summary>
-        /// Gets the <see cref="Application"/> object for the currently
+        /// Gets the <see cref="App"/> object for the currently
         /// runnning application.
         /// </summary>
         public static App Current
@@ -447,6 +436,32 @@ namespace Alternet.UI
                 var result = Windows.Where(x => x.Visible);
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Allows the programmer to specify whether the application will exit when the
+        /// top-level frame is deleted.
+        /// Returns true if the application will exit when the top-level frame is deleted.
+        /// </summary>
+        public virtual bool ExitOnFrameDelete
+        {
+            get => Handler.ExitOnFrameDelete;
+            set => Handler.ExitOnFrameDelete = value;
+        }
+
+        /// <summary>
+        /// Gets whether the application is active, i.e. if one of its windows is currently in
+        /// the foreground.
+        /// </summary>
+        public virtual bool IsActive => Handler.IsActive;
+
+        /// <summary>
+        /// Gets whether application in Uixml previewer mode.
+        /// </summary>
+        public virtual bool InUixmlPreviewerMode
+        {
+            get => Handler.InUixmlPreviewerMode;
+            set => Handler.InUixmlPreviewerMode = value;
         }
 
         /// <summary>
@@ -688,12 +703,20 @@ namespace Alternet.UI
             Log($"{name} = {value}{hint}", kind ?? LogItemKind.Information);
         }
 
+        /// <summary>
+        /// Logs name and value as "{name} = {value}". If last logged item starts from "{name} = ",
+        /// it is repaced with the new item.
+        /// </summary>
+        /// <param name="name">Name.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="kind">Item kind.</param>
         public static void LogNameValueReplace(
             object name,
             object? value,
             LogItemKind? kind = null)
         {
-            LogReplace($"{name} = {value}", name, kind ?? LogItemKind.Information);
+            var prefix = $"{name} = ";
+            LogReplace($"{prefix}{value}", prefix, kind ?? LogItemKind.Information);
         }
 
         /// <summary>
@@ -1320,6 +1343,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="Idle"/> event.
+        /// </summary>
+        public static void RaiseIdle()
+        {
+            if (HasForms)
+            {
+                ProcessLogQueue(true);
+                ProcessIdleTasks();
+            }
+
+            Idle?.Invoke(current, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Instructs the application how to respond to unhandled exceptions.
+        /// </summary>
+        /// <param name="value">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
+        /// behave if an exception is thrown without being caught.</param>
+        public static void SetUnhandledExceptionModes(UnhandledExceptionMode value)
+        {
+            unhandledExceptionModeDebug = value;
+            unhandledExceptionMode = value;
+        }
+
+        /// <summary>
         /// Processes all pending events.
         /// </summary>
         public virtual void ProcessPendingEvents()
@@ -1357,20 +1406,6 @@ namespace Alternet.UI
             SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
         }
 
-        /// <summary>
-        /// Raises <see cref="Idle"/> event.
-        /// </summary>
-        public static void RaiseIdle()
-        {
-            if (HasForms)
-            {
-                ProcessLogQueue(true);
-                ProcessIdleTasks();
-            }
-
-            Idle?.Invoke(current, EventArgs.Empty);
-        }
-
         public void BeginInvoke(Action action)
         {
             Handler.BeginInvoke(action);
@@ -1385,6 +1420,11 @@ namespace Alternet.UI
         public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
         {
             unhandledExceptionModeDebug = mode;
+        }
+
+        public virtual void WakeUpIdle()
+        {
+            Handler.WakeUpIdle();
         }
 
         internal void RegisterWindow(Window window)
@@ -1408,20 +1448,10 @@ namespace Alternet.UI
             Handler.SetTopWindow(window);
         }
 
-        public void WakeUpIdle()
-        {
-            Handler.WakeUpIdle();
-        }
-
         internal void RecreateAllHandlers()
         {
             foreach (var window in Windows)
                 window.RecreateAllHandlers();
-        }
-
-        protected override void DisposeManaged()
-        {
-            App.Current = null!;
         }
 
         /// <summary>
@@ -1436,6 +1466,10 @@ namespace Alternet.UI
                 return unhandledExceptionMode;
         }
 
+        /// <summary>
+        /// Processes log queue.
+        /// </summary>
+        /// <param name="refresh">Specifies whether to refresh attached log controls.</param>
         protected static void ProcessLogQueue(bool refresh)
         {
             if (LogQueue.IsEmpty || LogInUpdates())
@@ -1456,6 +1490,12 @@ namespace Alternet.UI
             {
                 LogEndUpdate();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            App.Current = null!;
         }
 
         private static void OnLogRefresh()

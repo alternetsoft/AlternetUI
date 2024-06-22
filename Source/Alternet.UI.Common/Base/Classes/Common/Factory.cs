@@ -20,12 +20,12 @@ namespace Alternet.UI
         /// <summary>
         /// Creates <see cref="ICustomFlags"/> implementation.
         /// </summary>
-        public static Func<ICustomFlags> CreateCustomFlags { get; set; } = CreateDefaultCustomFlags;
+        public static Func<ICustomFlags> CreateFlags { get; set; } = CreateDefaultCustomFlags;
 
         /// <summary>
         /// Creates <see cref="ICustomAttributes"/> implementation.
         /// </summary>
-        public static Func<ICustomAttributes> CreateCustomAttributes
+        public static Func<ICustomAttributes> CreateAttributes
             { get; set; } = CreateDefaultCustomAttributes;
 
         /// <summary>

@@ -10,22 +10,22 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Pen* Pen_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Pen*>([&](){
     #endif
         return new Pen();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API void Pen_Initialize_(Pen* obj, DashStyle style, Color color, double width, LineCap lineCap, LineJoin lineJoin)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         obj->Initialize(style, color, width, lineCap, lineJoin);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

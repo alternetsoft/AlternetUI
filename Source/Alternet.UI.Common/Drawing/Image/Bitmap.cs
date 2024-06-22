@@ -89,10 +89,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="url">Url to the image.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(string url)
+        public Bitmap(string? url, Uri? baseUri = null)
             : base(GraphicsFactory.Handler.CreateImageHandler())
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!, baseUri);
             if (stream is null)
             {
                 App.LogError($"Image not loaded from: {url}");
@@ -147,7 +150,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified
         /// existing image.
         /// </summary>
-        /// <param name="image">The <see cref="Image"/> from which to create the
+        /// <param name="original">The <see cref="Image"/> from which to create the
         /// new <see cref="Bitmap"/>.</param>
         /// <remarks>
         /// Full image data is copied from the original image.

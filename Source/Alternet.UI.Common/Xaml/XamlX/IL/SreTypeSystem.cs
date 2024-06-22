@@ -34,6 +34,7 @@ namespace XamlX.IL
                 try
                 {
                     ResolveAssembly(asm);
+                    Alternet.UI.App.LogIf(asm.FullName, false);
                 }
                 catch
                 {

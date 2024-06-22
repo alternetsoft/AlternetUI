@@ -10,22 +10,22 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Keyboard* Keyboard_Create_()
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Keyboard*>([&](){
     #endif
         return new Keyboard();
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
 ALTERNET_UI_API KeyStates Keyboard_GetKeyState_(Keyboard* obj, Key key)
 {
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<KeyStates>([&](){
     #endif
         return obj->GetKeyState(key);
-    #if !defined(__WXMSW__)
+    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }

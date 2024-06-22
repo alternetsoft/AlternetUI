@@ -4,7 +4,8 @@ using Alternet.UI;
 namespace Alternet.Base.Collections
 {
     /// <summary>
-    /// Provides data for the <see cref="Collection{T}.ItemInserted"/> and <see cref="Collection{T}.ItemRemoved"/> events.
+    /// Provides data for the <see cref="Collection{T}.ItemInserted"/>
+    /// and <see cref="Collection{T}.ItemRemoved"/> events.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
     public class CollectionChangeEventArgs<T> : BaseEventArgs

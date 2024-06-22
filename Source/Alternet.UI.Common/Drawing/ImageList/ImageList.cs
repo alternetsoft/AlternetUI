@@ -46,8 +46,7 @@ namespace Alternet.Drawing
         /// </value>
         /// <remarks>
         /// Setting the <see cref="ImageSize"/> to a different value than the actual size
-        /// of the images in
-        /// the <see cref="Images"/>collection causes the images to be resized to the size
+        /// of the images in the image collection causes the images to be resized to the size
         /// specified.
         /// </remarks>
         public virtual SizeI ImageSize

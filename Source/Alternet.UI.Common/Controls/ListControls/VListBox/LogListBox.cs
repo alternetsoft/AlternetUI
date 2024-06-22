@@ -38,6 +38,7 @@ namespace Alternet.UI
         private string? lastLogMessage;
         private MenuItem? menuItemShowDevTools;
         private bool boundToApplicationLog;
+        private bool showDebugWelcomeMessage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogListBox"/> class.
@@ -57,13 +58,31 @@ namespace Alternet.UI
         /// Gets the last logged message.
         /// </summary>
         [Browsable(false)]
-        public string? LastLogMessage
+        public virtual string? LastLogMessage
         {
             get
             {
                 if(Items.Count > 0)
                     return lastLogMessage;
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether debug welcome message is logged at the application start.
+        /// Default value is <c>false</c>.
+        /// </summary>
+        public bool ShowDebugWelcomeMessage
+        {
+            get => showDebugWelcomeMessage;
+
+            set
+            {
+                if (showDebugWelcomeMessage == value || showDebugWelcomeMessage)
+                    return;
+                showDebugWelcomeMessage = value;
+                LogUtils.ShowDebugWelcomeMessage = true;
+                LogUtils.DebugLogVersion();
             }
         }
 
@@ -201,6 +220,7 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
+        /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);

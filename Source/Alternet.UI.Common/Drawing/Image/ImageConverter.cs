@@ -8,7 +8,8 @@ using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
 {
-    /// <summary>Converts brushes from one data type to another.
+    /// <summary>
+    /// Converts <see cref="Image"/> from one data type to another.
     /// Access this class through the
     /// <see cref="System.ComponentModel.TypeDescriptor" />.</summary>
     public class ImageConverter : TypeConverter
@@ -30,18 +31,8 @@ namespace Alternet.Drawing
             var s = (string?)value;
             if (s == null)
                 return null;
-            var uri = s.StartsWith("/")
-                ? new Uri(s, UriKind.Relative)
-                : new Uri(s, UriKind.RelativeOrAbsolute);
 
-            if (uri.IsAbsoluteUri && uri.IsFile)
-            {
-                using var stream = File.OpenRead(uri.LocalPath);
-                return new Bitmap(stream);
-            }
-
-            var assets = new UI.ResourceLoader();
-            return new Bitmap(assets.Open(uri, GetContextBaseUri(context)));
+            return new Bitmap(s, ImageConverter.GetContextBaseUri(context));
         }
 
         internal static Uri? GetContextBaseUri(IServiceProvider? ctx)

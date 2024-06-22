@@ -29,7 +29,7 @@ namespace Alternet.UI
 
         public static LogFlags Flags;
 
-        private static readonly ICustomFlags EventLoggedFlags = Factory.CreateCustomFlags();
+        private static readonly ICustomFlags EventLoggedFlags = Factory.CreateFlags();
 
         private static List<(string Name, Action Action)>? registeredLogActions;
         private static int id;
@@ -95,10 +95,14 @@ namespace Alternet.UI
         /// Works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
-        public static void DebugLogVersion()
+        public static void DebugLogVersion(bool showAnyway = false)
         {
-            if (!LogUtils.ShowDebugWelcomeMessage)
-                return;
+            if (!showAnyway)
+            {
+                if (!LogUtils.ShowDebugWelcomeMessage)
+                    return;
+            }
+
             if (LogUtils.Flags.HasFlag(LogUtils.LogFlags.VersionLogged))
                 return;
             LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
