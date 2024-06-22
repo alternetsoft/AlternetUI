@@ -166,23 +166,10 @@
 		<Message Text="MacOs or Linux specific UI build..." Importance="high" />
 
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net6.0" Condition="$(BoolNet6)"/>
+			Command="$(DotNetBuildDebugCmdNoIncremental)"/>
 		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net6.0"
-			Condition="$(BoolNet6) and '$(OnlyDebug)' != 'true'"/>
-
-		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net7.0" Condition="$(BoolNet7)"/>
-		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net7.0"
-			Condition="$(BoolNet7) and '$(OnlyDebug)' != 'true'"/>
-
-		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net8.0" Condition="$(BoolNet8)"/>
-		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net8.0"
-			Condition="$(BoolNet8) and '$(OnlyDebug)' != 'true'"
-			/>
+			Command="$(DotNetBuildReleaseCmdNoIncremental)"
+			Condition="'$(OnlyDebug)' != 'true'"/>
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
