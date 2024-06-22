@@ -3,10 +3,11 @@
 
     <PropertyGroup>
       <Platforms>AnyCPU;x64</Platforms>
-      <LangVersion>11.0</LangVersion>
+      <LangVersion>12.0</LangVersion>
       <Nullable>enable</Nullable>
       <UseStyleCop>false</UseStyleCop>
       <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+      <TargetFrameworks>netstandard2.0</TargetFrameworks>
     </PropertyGroup>                 
 
   <ItemGroup>
