@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// <paramref name="url"/> with "embres" protocol can include assembly name. Example:
         /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
         /// </remarks>
-        public static Stream StreamFromUrl(string url)
+        public static Stream StreamFromUrl(string url, Uri? baseUri = null)
         {
             if(CustomStreamFromUrl is not null)
             {
@@ -91,7 +91,7 @@ namespace Alternet.UI
                 }
             }
 
-            return DefaultStreamFromUrl(url);
+            return DefaultStreamFromUrl(url, baseUri);
         }
 
         public static Stream? StreamFromUrlOrDefault(string url, Func<Stream?>? func = null)
@@ -106,7 +106,7 @@ namespace Alternet.UI
         /// See <see cref="StreamFromUrl"/> for details.
         /// </summary>
         /// <returns></returns>
-        public static Stream DefaultStreamFromUrl(string url)
+        public static Stream DefaultStreamFromUrl(string url, Uri? baseUri = null)
         {
             var s = url.Trim();
 
@@ -119,12 +119,22 @@ namespace Alternet.UI
             if (hasScheme)
             {
                 var uri = new Uri(s, UriKind.Absolute);
-                return DefaultStreamFromUri(uri);
+                return DefaultStreamFromUri(uri, baseUri);
             }
             else
             {
-                var fullPath = PathUtils.GetFullPath(s, PathUtils.GetAppFolder());
-                var stream = FileSystem.Default.OpenRead(fullPath);
+                string path;
+
+                if (baseUri is null)
+                {
+                    path = PathUtils.GetFullPath(s, PathUtils.GetAppFolder());
+                }
+                else
+                {
+                    path = PathUtils.GetFullPath(s, baseUri.LocalPath);
+                }
+
+                var stream = FileSystem.Default.OpenRead(path);
                 return stream;
             }
         }
@@ -134,16 +144,17 @@ namespace Alternet.UI
         /// Used in <see cref="DefaultStreamFromUrl"/>.
         /// </summary>
         /// <param name="uri"></param>
+        /// <param name="baseUri"></param>
         /// <returns></returns>
-        public static Stream DefaultStreamFromUri(Uri uri)
+        public static Stream DefaultStreamFromUri(Uri uri, Uri? baseUri = null)
         {
             if (uri.IsAbsoluteUri && uri.IsFile)
             {
-                var stream = File.OpenRead(uri.LocalPath);
+                var stream = FileSystem.OpenRead(uri.LocalPath);
                 return stream;
             }
 
-            var result = ResourceLoader.Default.Open(uri);
+            var result = ResourceLoader.Default.Open(uri, baseUri);
             return result;
         }
 

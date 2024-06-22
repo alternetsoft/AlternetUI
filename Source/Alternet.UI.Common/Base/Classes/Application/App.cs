@@ -1343,6 +1343,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="Idle"/> event.
+        /// </summary>
+        public static void RaiseIdle()
+        {
+            if (HasForms)
+            {
+                ProcessLogQueue(true);
+                ProcessIdleTasks();
+            }
+
+            Idle?.Invoke(current, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Instructs the application how to respond to unhandled exceptions.
+        /// </summary>
+        /// <param name="value">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
+        /// behave if an exception is thrown without being caught.</param>
+        public static void SetUnhandledExceptionModes(UnhandledExceptionMode value)
+        {
+            unhandledExceptionModeDebug = value;
+            unhandledExceptionMode = value;
+        }
+
+        /// <summary>
         /// Processes all pending events.
         /// </summary>
         public virtual void ProcessPendingEvents()
@@ -1378,20 +1404,6 @@ namespace Alternet.UI
         public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
         {
             SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
-        }
-
-        /// <summary>
-        /// Raises <see cref="Idle"/> event.
-        /// </summary>
-        public static void RaiseIdle()
-        {
-            if (HasForms)
-            {
-                ProcessLogQueue(true);
-                ProcessIdleTasks();
-            }
-
-            Idle?.Invoke(current, EventArgs.Empty);
         }
 
         public void BeginInvoke(Action action)

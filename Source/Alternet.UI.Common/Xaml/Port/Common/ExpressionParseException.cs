@@ -7,7 +7,7 @@ namespace Alternet.UI.Data.Core
     /// Exception thrown when ExpressionObserver could not parse the provided
     /// expression string.
     /// </summary>
-    class ExpressionParseException : Exception
+    class ExpressionParseException : BaseException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpressionParseException"/> class.

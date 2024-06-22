@@ -29,7 +29,7 @@ namespace Alternet.UI
 
         public static LogFlags Flags;
 
-        private static readonly ICustomFlags EventLoggedFlags = Factory.CreateCustomFlags();
+        private static readonly ICustomFlags EventLoggedFlags = Factory.CreateFlags();
 
         private static List<(string Name, Action Action)>? registeredLogActions;
         private static int id;

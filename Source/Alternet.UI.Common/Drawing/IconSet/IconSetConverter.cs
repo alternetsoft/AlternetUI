@@ -7,10 +7,10 @@ using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
 {
-    /// <summary>Converts <see cref="ImageSet"/> from one data type to another. Access this
+    /// <summary>Converts <see cref="IconSet"/> from one data type to another. Access this
     /// class through the
     /// <see cref="System.ComponentModel.TypeDescriptor" />.</summary>
-    public class ImageSetConverter : TypeConverter
+    public class IconSetConverter : TypeConverter
     {
         /// <inheritdoc/>
         public override bool CanConvertFrom(
@@ -30,7 +30,7 @@ namespace Alternet.Drawing
             if (s == null)
                 return null;
 
-            return new ImageSet(s, ImageConverter.GetContextBaseUri(context));
+            return new IconSet(s, ImageConverter.GetContextBaseUri(context));
         }
     }
 }

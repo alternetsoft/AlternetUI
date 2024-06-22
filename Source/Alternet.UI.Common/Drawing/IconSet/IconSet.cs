@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Allows to use icons in the application.
     /// </summary>
+    [TypeConverter(typeof(IconSetConverter))]
     public class IconSet : ImageContainer<IIconSetHandler>
     {
         /// <summary>
@@ -48,12 +50,21 @@ namespace Alternet.Drawing
         /// No exceptions are raised if error occurs during icon load.
         /// If DEBUG is defined, exception info is logged.
         /// </remarks>
-        public IconSet(string url)
+        public IconSet(string? url, Uri? baseUri = null)
             : base(false)
         {
+            if (string.IsNullOrEmpty(url))
+                return;
+
             try
             {
-                using var stream = ResourceLoader.StreamFromUrl(url);
+                using var stream = ResourceLoader.StreamFromUrl(url!, baseUri);
+                if (stream is null)
+                {
+                    App.LogError($"Image not loaded from: {url}");
+                    return;
+                }
+
                 Add(stream);
             }
             catch (Exception e)

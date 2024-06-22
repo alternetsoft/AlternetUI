@@ -57,6 +57,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObject : IBaseObject
     {
+        /// <summary>
+        /// Safely disposes specified object.
+        /// </summary>
+        /// <typeparam name="T">Type of the object.</typeparam>
+        /// <param name="disposable">Object to dispose.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SafeDispose<T>(ref T? disposable)
             where T : IDisposable
@@ -111,6 +116,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Calls the specified action inside try catch block when DEBUG is specified; otherwise
+        /// simply calls the action without try catch block.
+        /// </summary>
         public static void InsideTryCatchIfDebug(Action? action)
         {
 #if DEBUG
@@ -144,6 +153,15 @@ namespace Alternet.UI
         public virtual void Log(object? s) => App.Log(s);
 
         /// <summary>
+        /// Throws exception.
+        /// </summary>
+        /// <param name="e">Exception to throw.</param>
+        public virtual void Throw(Exception e)
+        {
+            throw e;
+        }
+
+        /// <summary>
         /// Checks current thread on <see cref="ApartmentState.STA"/>.
         /// </summary>
         /// <exception cref="InvalidOperationException">Raised if
@@ -151,7 +169,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method performs checks only on MSW, on other os it does nothing.
         /// </remarks>
-        protected void CheckSTARequirement()
+        public virtual void CheckSTARequirement()
         {
             if (!App.IsWindowsOS)
                 return;

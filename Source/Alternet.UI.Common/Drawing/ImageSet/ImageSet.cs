@@ -71,10 +71,13 @@ namespace Alternet.UI
         /// <remarks>
         /// See <see cref="ImageSet.FromUrl(string)"/> for the details.
         /// </remarks>
-        public ImageSet(string url)
+        public ImageSet(string? url, Uri? baseUri = null)
             : this()
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!, baseUri);
             if (stream is null)
             {
                 App.LogError($"ImageSet not loaded from: {url}");

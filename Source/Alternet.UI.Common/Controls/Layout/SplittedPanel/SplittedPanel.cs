@@ -198,6 +198,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether both top and bottom panels are visible.
+        /// </summary>
+        public bool TopBottomVisible
+        {
+            get
+            {
+                return TopVisible && BottomVisible;
+            }
+
+            set
+            {
+                TopVisible = value;
+                BottomVisible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether both left and right panels are visible.
+        /// </summary>
+        public bool LeftRightVisible
+        {
+            get
+            {
+                return LeftVisible && RightVisible;
+            }
+
+            set
+            {
+                LeftVisible = value;
+                RightVisible = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether bottom panel is visible.
         /// </summary>
         public virtual bool BottomVisible

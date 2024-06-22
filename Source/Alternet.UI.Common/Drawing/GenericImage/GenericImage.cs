@@ -83,9 +83,12 @@ namespace Alternet.Drawing
         /// "choose the default image" and is interpreted as the first image(index= 0) by the GIF and
         /// TIFF handler and as the largest and most colorful one by the ICO handler.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string url, BitmapType bitmapType = BitmapType.Any, int index = -1)
+        public GenericImage(string? url, BitmapType bitmapType = BitmapType.Any, int index = -1)
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
@@ -107,9 +110,12 @@ namespace Alternet.Drawing
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string url, string mimetype, int index = -1)
+        public GenericImage(string? url, string mimetype, int index = -1)
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
@@ -345,9 +351,12 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="url">Path or url to file with image data.</param>
         /// <returns></returns>
-        public static bool CanRead(string url)
+        public static bool CanRead(string? url)
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
@@ -653,10 +662,13 @@ namespace Alternet.Drawing
         /// returns the number of frames in the animation).</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetImageCount(
-            string url,
+            string? url,
             BitmapType bitmapType = BitmapType.Any)
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return 0;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
@@ -1729,11 +1741,14 @@ namespace Alternet.Drawing
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
         public virtual bool LoadFromFile(
-            string url,
+            string? url,
             BitmapType bitmapType = BitmapType.Any,
             int index = -1)
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
@@ -1754,9 +1769,12 @@ namespace Alternet.Drawing
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromFile(string url, string mimetype, int index = -1)
+        public virtual bool LoadFromFile(string? url, string mimetype, int index = -1)
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            using var stream = ResourceLoader.StreamFromUrl(url!);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
