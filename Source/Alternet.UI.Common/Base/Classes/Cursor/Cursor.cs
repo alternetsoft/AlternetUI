@@ -43,19 +43,22 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class
-        /// by passing a string resource name or filename.
+        /// by passing a filename.
         /// </summary>
-        /// <param name="cursorName"></param>
-        /// <param name="type"></param>
-        /// <param name="hotSpotX"></param>
-        /// <param name="hotSpotY"></param>
+        /// <param name="cursorName">Cursor filename.</param>
+        /// <param name="type">Type of the bitmap.</param>
+        /// <param name="hotSpotX">Hot spot X.</param>
+        /// <param name="hotSpotY">Hot spot Y.</param>
         public Cursor(
             string cursorName,
             BitmapType type,
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            Handler = Factory.CreateCursorHandler(cursorName, type, hotSpotX, hotSpotY);
+            if (AllowCustomCursors)
+                Handler = Factory.CreateCursorHandler(cursorName, type, hotSpotX, hotSpotY);
+            else
+                Handler = Factory.CreateCursorHandler(CursorType.Arrow);
         }
 
         /// <summary>
@@ -74,8 +77,20 @@ namespace Alternet.UI
         /// <param name="image">Image with cursor.</param>
         public Cursor(Image image)
         {
-            Handler = Factory.CreateCursorHandler(image);
+            if(AllowCustomCursors)
+                Handler = Factory.CreateCursorHandler(image);
+            else
+                Handler = Factory.CreateCursorHandler(CursorType.Arrow);
         }
+
+        /// <summary>
+        /// Gets or sets whether custom cursors are allowed. Default is <c>true</c>.
+        /// </summary>
+        /// <remarks>
+        /// When this property is <c>false</c>, all cursors which are not of <see cref="CursorType"/>
+        /// will be created as <see cref="CursorType.Arrow"/>.
+        /// </remarks>
+        public static bool AllowCustomCursors { get; set; } = true;
 
         /// <summary>
         /// Gets or sets factory handler.
