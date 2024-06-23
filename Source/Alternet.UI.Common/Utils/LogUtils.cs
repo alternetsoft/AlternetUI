@@ -27,6 +27,9 @@ namespace Alternet.UI
         /// </summary>
         public static bool ShowDebugWelcomeMessage = false;
 
+        /// <summary>
+        /// Log related flags.
+        /// </summary>
         public static LogFlags Flags;
 
         private static readonly ICustomFlags EventLoggedFlags = Factory.CreateFlags();
@@ -35,11 +38,25 @@ namespace Alternet.UI
         private static int id;
         private static int logUseMaxLength;
 
+        /// <summary>
+        /// Enumerates log related flags.
+        /// </summary>
         [Flags]
         public enum LogFlags
         {
+            /// <summary>
+            /// Message on application start were logged.
+            /// </summary>
             AppStartLogged = 1,
+
+            /// <summary>
+            /// Message on application finish were logged.
+            /// </summary>
             AppFinishLogged = 2,
+
+            /// <summary>
+            /// Application welcome message were logged.
+            /// </summary>
             VersionLogged = 4,
         }
 
@@ -61,8 +78,19 @@ namespace Alternet.UI
             return id++;
         }
 
+        /// <summary>
+        /// Returns whether specified event is logged.
+        /// </summary>
+        /// <param name="eventId">Event id.</param>
+        /// <returns></returns>
         public static bool IsEventLogged(string eventId) => EventLoggedFlags.HasFlag(eventId);
 
+        /// <summary>
+        /// Gets event key.
+        /// </summary>
+        /// <param name="type">Type of the object.</param>
+        /// <param name="evt">Event information.</param>
+        /// <returns>Event id.</returns>
         public static string? GetEventKey(Type? type, EventInfo? evt)
         {
             if (type is null || evt is null)
@@ -71,6 +99,12 @@ namespace Alternet.UI
             return key;
         }
 
+        /// <summary>
+        /// Returns whether specified event is logged.
+        /// </summary>
+        /// <param name="type">Type of the object.</param>
+        /// <param name="evt">Event information.</param>
+        /// <returns></returns>
         public static bool IsEventLogged(Type? type, EventInfo? evt)
         {
             var key = GetEventKey(type, evt);
@@ -80,6 +114,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Sets whether to log specified event.
+        /// </summary>
+        /// <param name="type">Type of the object.</param>
+        /// <param name="evt">Event information.</param>
+        /// <param name="logged">Flag which enables/disables event logging.</param>
         public static void SetEventLogged(Type? type, EventInfo? evt, bool logged)
         {
             var key = GetEventKey(type, evt);
@@ -148,7 +188,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="IEnumerable"/>.
         /// </summary>
-        public static void Log(IEnumerable? items, LogItemKind kind = LogItemKind.Information)
+        public static void LogEnumerable(IEnumerable? items, LogItemKind kind = LogItemKind.Information)
         {
             if (items is null)
                 return;
@@ -164,7 +204,7 @@ namespace Alternet.UI
             if (items is null)
                 return;
             App.LogBeginSection();
-            Log(items, kind);
+            LogEnumerable(items, kind);
             App.LogEndSection();
         }
 
@@ -172,7 +212,7 @@ namespace Alternet.UI
         /// Gets logging method based on the <paramref name="toFile"/> parameter value.
         /// </summary>
         /// <param name="toFile">If <c>true</c>, <see cref="LogToFile"/> is returned;
-        /// otherwise <see cref="Application.Log"/> is returned.</param>
+        /// otherwise <see cref="App.Log"/> is returned.</param>
         /// <returns></returns>
         /// <param name="kind">Log item kind.</param>
         public static Action<object?> GetLogMethod(
@@ -275,7 +315,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Deletes application log file (specified in <see cref="Application.LogFilePath"/>).
+        /// Deletes application log file (specified in <see cref="App.LogFilePath"/>).
         /// </summary>
         public static void DeleteLog()
         {
@@ -287,7 +327,7 @@ namespace Alternet.UI
         /// Logs message to the specified file or to default application log file.
         /// </summary>
         /// <param name="obj">Log message or object.</param>
-        /// <param name="filename">Log file path. <see cref="Application.LogFilePath"/> is used
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
         public static void LogToFile(object? obj = null, string? filename = null)
         {
@@ -309,7 +349,7 @@ namespace Alternet.UI
         /// (DEBUG conditional is defined).
         /// </summary>
         /// <param name="obj">Log message or object.</param>
-        /// <param name="filename">Log file path. <see cref="Application.LogFilePath"/> is used
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
         [Conditional("DEBUG")]
         public static void DebugLogToFile(object? obj = null, string? filename = null)
@@ -409,6 +449,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Logs to file all resource names.
+        /// </summary>
         public static void LogResourceNames()
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -509,6 +552,10 @@ namespace Alternet.UI
             App.LogEndSection();
         }
 
+        /// <summary>
+        /// Logs <see cref="SKFont"/>.
+        /// </summary>
+        /// <param name="font">Font to log.</param>
         public static void LogSkiaFont(SKFont font)
         {
             App.LogBeginSection("SKFont");
@@ -546,6 +593,11 @@ namespace Alternet.UI
             App.LogEndSection();
         }
 
+        /// <summary>
+        /// Logs measurements of the specified string for the given font.
+        /// </summary>
+        /// <param name="text">Text string.</param>
+        /// <param name="font">Font.</param>
         public static void LogMeasureSkiaFont(string text, SKFont font)
         {
             SKRect bounds = SKRect.Empty;
@@ -614,9 +666,9 @@ namespace Alternet.UI
         public static void LogControlInfo(Control control)
         {
             App.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(control)}");
-            Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
-            Log($"Font.Default: {Font.Default.ToInfoString()}");
-            Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
+            App.Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
+            App.Log($"Font.Default: {Font.Default.ToInfoString()}");
+            App.Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
         }
 
         /// <summary>
@@ -781,6 +833,11 @@ namespace Alternet.UI
             Test(KnownSystemColor.MenuHighlight);
         }
 
+        /// <summary>
+        /// Registers log action which will be shown in the Developer Tools window.
+        /// </summary>
+        /// <param name="name">Action name.</param>
+        /// <param name="action">Action.</param>
         public static void RegisterLogAction(string name, Action action)
         {
             registeredLogActions ??= new();
@@ -845,6 +902,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Logs image pixel formats.
+        /// </summary>
         public static void LogImageBitsFormats()
         {
             GraphicsFactory.NativeBitsFormat.Log("NativeBitsFormat");
