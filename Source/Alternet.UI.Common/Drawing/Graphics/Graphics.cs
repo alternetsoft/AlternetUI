@@ -30,6 +30,9 @@ namespace Alternet.Drawing
         /// </summary>
         public abstract TransformMatrix Transform { get; set; }
 
+        /// <summary>
+        /// Gets used scale factor.
+        /// </summary>
         public Coord ScaleFactor
         {
             get
@@ -38,6 +41,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets horizontal scale factor.
+        /// </summary>
         public Coord HorizontalScaleFactor
         {
             get
@@ -46,6 +52,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets vertical scale factor.
+        /// </summary>
         public Coord VerrticalScaleFactor
         {
             get
@@ -285,6 +294,8 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Under Windows only TrueType fonts can be drawn by this function.
         /// </remarks>
+        /// <param name="unit"><see cref="GraphicsUnit"/> that determines
+        /// the unit of measure for the point parameter.</param>
         public abstract void DrawRotatedText(
             string text,
             PointD location,
@@ -338,7 +349,7 @@ namespace Alternet.Drawing
         /// Copy from a source <see cref="Graphics"/> to this graphics.
         /// With this method you can specify the destination coordinates and the
         /// size of area to copy which will be the same for both the source and target.
-        /// If you need to apply scaling while copying, use <see cref="StretchBlitI"/>.
+        /// If you need to apply scaling while copying, use <see cref="StretchBlit"/>.
         /// Sizes and positions are specified in pixels.
         /// </summary>
         /// <param name="destPt">Destination device context position.</param>
@@ -363,7 +374,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <remarks>
         /// You can influence whether MaskBlt or the explicit mask blitting code
-        /// is used, by using <see cref="Application.SetSystemOption(string, int)"/>
+        /// is used, by using <see cref="App.SetSystemOption(string, int)"/>
         /// and setting the 'no-maskblt' option to 1.
         /// </remarks>
         /// <remarks>
@@ -387,6 +398,8 @@ namespace Alternet.Drawing
         /// This sequence of operations ensures that the source's transparent area
         /// need not be black, and logical functions are supported.
         /// </remarks>
+        /// <param name="unit"><see cref="GraphicsUnit"/> that determines
+        /// the unit of measure for the point and size parameters.</param>
         public abstract bool Blit(
             PointD destPt,
             SizeD sz,
@@ -399,10 +412,10 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Copies from a source <see cref="Graphics"/> to this graphics
-        /// possibly changing the scale. Unlike <see cref="BlitI"/>, this method
+        /// possibly changing the scale. Unlike <see cref="Blit"/>, this method
         /// allows specifying different source and destination region sizes,
         /// meaning that it can stretch or shrink it while copying.
-        /// The meaning of its other parameters is the same as with <see cref="BlitI"/>.
+        /// The meaning of its other parameters is the same as with <see cref="Blit"/>.
         /// Sizes and positions are specified in pixels.
         /// </summary>
         /// <param name="dstPt">Destination device context position.</param>
@@ -428,7 +441,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <remarks>
         /// You can influence whether MaskBlt or the explicit mask blitting code
-        /// is used, by using <see cref="Application.SetSystemOption(string, int)"/>
+        /// is used, by using <see cref="App.SetSystemOption(string, int)"/>
         /// and setting the 'no-maskblt' option to 1.
         /// </remarks>
         /// <remarks>
@@ -452,6 +465,8 @@ namespace Alternet.Drawing
         /// This sequence of operations ensures that the source's transparent area
         /// need not be black, and logical functions are supported.
         /// </remarks>
+        /// <param name="unit"><see cref="GraphicsUnit"/> that determines
+        /// the unit of measure for the point and size parameters.</param>
         public abstract bool StretchBlit(
             PointD dstPt,
             SizeD dstSize,
@@ -493,7 +508,7 @@ namespace Alternet.Drawing
         public abstract SizeD GetTextExtent(string text, Font font);
 
         /// <summary>
-        /// Calls <see cref="FillRectangle"/> and than <see cref="DrawRectangle"/>.
+        /// Calls <see cref="FillRectangle(Brush, RectD)"/> and than <see cref="DrawRectangle"/>.
         /// </summary>
         /// <param name="pen"></param>
         /// <param name="brush"></param>
@@ -584,6 +599,21 @@ namespace Alternet.Drawing
         /// </remarks>
         public abstract void FillRectangle(Brush brush, RectD rectangle);
 
+        /// <summary>
+        /// Fills the interior of a rectangle specified by a <see cref="RectD"/> structure.
+        /// Rectangle is specified in device-independent units.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics
+        /// of the fill.</param>
+        /// <param name="rectangle"><see cref="RectD"/> structure that represents the
+        /// rectangle to fill.</param>
+        /// <remarks>
+        /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
+        /// including the specified upper-left corner and up to the calculated
+        /// lower and bottom edges.
+        /// </remarks>
+        /// <param name="unit"><see cref="GraphicsUnit"/> that determines
+        /// the unit of measure for the rectangle parameter.</param>
         public abstract void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit);
 
         /// <summary>
@@ -909,6 +939,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="PointD"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
+        /// <remarks>
         /// When drawing a mono-bitmap, the current text foreground color will
         /// be used to draw the foreground of the bitmap (all bits set to 1), and
         /// the current text background color to draw the background (all bits set to 0).
@@ -921,6 +952,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="destinationRect">The region in which to draw
         /// <paramref name="image"/>.</param>
+        /// <remarks>
         /// When drawing a mono-bitmap, the current text foreground color will
         /// be used to draw the foreground of the bitmap (all bits set to 1), and
         /// the current text background color to draw the background (all bits set to 0).
@@ -1012,7 +1044,17 @@ namespace Alternet.Drawing
         /// corner of the drawn text.</param>
         public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
 
-        public void DrawText(string[] text, Font font, Brush brush, PointD origin)
+        /// <summary>
+        /// Draws multiple text strings at the specified location with the specified
+        /// <see cref="Brush"/> and <see cref="Font"/> objects.
+        /// </summary>
+        /// <param name="text">Strings  to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
+        /// the drawn text.</param>
+        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
+        /// corner of the drawn text.</param>
+        public virtual void DrawText(string[] text, Font font, Brush brush, PointD origin)
         {
             foreach(var s in text)
             {
@@ -1240,6 +1282,11 @@ namespace Alternet.Drawing
         /// </returns>
         public abstract RectD GetClippingBox();
 
+        /// <summary>
+        /// Converts point to device-independent units.
+        /// </summary>
+        /// <param name="point">Point.</param>
+        /// <param name="unit">The unit of measure for the point.</param>
         public virtual void ToDip(ref PointD point, GraphicsUnit unit)
         {
             if (unit != GraphicsUnit.Dip)
@@ -1255,6 +1302,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Converts <see cref="SizeD"/> to device-independent units.
+        /// </summary>
+        /// <param name="size">Size.</param>
+        /// <param name="unit">The unit of measure for the size.</param>
         public virtual void ToDip(ref SizeD size, GraphicsUnit unit)
         {
             if (unit != GraphicsUnit.Dip)
@@ -1270,6 +1322,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Converts rectangle to device-independent units.
+        /// </summary>
+        /// <param name="rect">Rectangle.</param>
+        /// <param name="unit">The unit of measure for the rectangle.</param>
         public virtual void ToDip(ref RectD rect, GraphicsUnit unit)
         {
             if (unit != GraphicsUnit.Dip)
