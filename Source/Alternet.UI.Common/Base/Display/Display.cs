@@ -161,11 +161,6 @@ namespace Alternet.UI
 
         public static bool HasDifferentDPI => MaxDPI != MinDPI;
 
-        public static Display GetDisplay(int index)
-        {
-            return new Display(index);
-        }
-
         /// <summary>
         /// Gets primary display.
         /// </summary>
@@ -286,6 +281,16 @@ namespace Alternet.UI
             {
                 return PixelToDip(Geometry);
             }
+        }
+
+        /// <summary>
+        /// Gets display with the specified index.
+        /// </summary>
+        /// <param name="index">Index of the display.</param>
+        /// <returns></returns>
+        public static Display GetDisplay(int index)
+        {
+            return new Display(index);
         }
 
         /// <summary>

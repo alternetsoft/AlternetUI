@@ -8,6 +8,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Internal mouse handler not binded to the platform.
+    /// </summary>
     public class PlessMouseHandler : DisposableObject, IMouseHandler
     {
         /// <inheritdoc/>
