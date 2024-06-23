@@ -23,10 +23,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public PointD GetPosition()
+        public PointD GetPosition(Coord? scaleFactor)
         {
             var resultI = WxApplicationHandler.NativeMouse.GetPosition();
-            var result = GraphicsFactory.PixelToDip(resultI);
+            var result = GraphicsFactory.PixelToDip(resultI, scaleFactor);
             return result;
         }
     }

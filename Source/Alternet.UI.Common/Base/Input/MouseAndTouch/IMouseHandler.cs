@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// </returns>
         MouseButtonState GetButtonState(MouseButton mouseButton);
 
-        PointD GetPosition();
+        PointD GetPosition(Coord? scaleFactor);
 
         ICursorFactoryHandler CreateCursorFactoryHandler();
     }
