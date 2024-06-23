@@ -665,10 +665,11 @@ namespace Alternet.UI
         /// </summary>
         public static void LogControlInfo(Control control)
         {
-            App.Log($"Toolbar images: {ToolBarUtils.GetDefaultImageSize(control)}");
-            App.Log($"Control.DefaultFont: {Control.DefaultFont.ToInfoString()}");
-            App.Log($"Font.Default: {Font.Default.ToInfoString()}");
-            App.Log($"Splitter.MinSashSize: {AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize}");
+            App.LogNameValue("Toolbar images",ToolBarUtils.GetDefaultImageSize(control));
+            App.LogNameValue("Control.DefaultFont", Control.DefaultFont.ToInfoString());
+            App.LogNameValue("Font.Default", Font.Default.ToInfoString());
+            App.LogNameValue("Splitter.MinSashSize", AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize);
+            App.LogNameValue("Control.DPI", control.GetDPI());
         }
 
         /// <summary>
