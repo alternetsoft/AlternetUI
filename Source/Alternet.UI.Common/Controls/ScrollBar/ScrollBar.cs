@@ -416,8 +416,8 @@ namespace Alternet.UI
                 return;
             value = pos;
             var eventType = Handler.EventTypeID;
-            var orientation = Handler.IsVertical ? ScrollOrientation.VerticalScroll
-                : ScrollOrientation.HorizontalScroll;
+            var orientation = Handler.IsVertical ? ScrollBarOrientation.Vertical
+                : ScrollBarOrientation.Horizontal;
             RaiseScroll(new ScrollEventArgs(eventType, oldPos, pos, orientation));
             OnValueChanged(EventArgs.Empty);
         }
@@ -491,6 +491,10 @@ namespace Alternet.UI
             Handler.Scroll = null;
         }
 
+        /// <summary>
+        /// Gets size of the scrollbar from the system metrics.
+        /// </summary>
+        /// <returns></returns>
         protected virtual SizeD SizeFromMetrics()
         {
             Coord width;
@@ -510,6 +514,10 @@ namespace Alternet.UI
             return new(width, height);
         }
 
+        /// <summary>
+        /// Gets size of the arrow bitmap from the system metrics.
+        /// </summary>
+        /// <returns></returns>
         protected virtual SizeD ArrowBitmapSizeFromMetrics()
         {
             Coord width;
@@ -529,6 +537,10 @@ namespace Alternet.UI
             return new(width, height);
         }
 
+        /// <summary>
+        /// Gets size of the scroll thumb from the system metrics.
+        /// </summary>
+        /// <returns></returns>
         protected virtual SizeD ThumbSizeFromMetrics()
         {
             Coord width;
@@ -550,6 +562,9 @@ namespace Alternet.UI
             return new(width, height);
         }
 
+        /// <summary>
+        /// Contains properties which specify different scrollbar metrics.
+        /// </summary>
         public struct MetricsInfo
         {
             /// <summary>
@@ -592,11 +607,17 @@ namespace Alternet.UI
             /// </summary>
             public int HThumbX;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MetricsInfo"/> struct.
+            /// </summary>
             public MetricsInfo()
             {
                 Reset();
             }
 
+            /// <summary>
+            /// Resets all properties, reloading them from the system settings.
+            /// </summary>
             public void Reset()
             {
                 HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY);
