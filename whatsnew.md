@@ -1,3 +1,19 @@
+# 0.9.613 (2024 June 25)
+
+- Used netstandard2.0 in the library.
+- Fixed bug in splitter movement, get mouse pos from system.
+- Window.Icon can be specified in uixml. Example: "embres:RoslynSyntaxParsing.Sample.ico".
+- Application.SetUnhandledExceptionModes.
+- BaseException, BaseXmlException, ExceptionCreatedEventArgs classes.
+- SplittedPanel: TopBottomVisible, LeftRightVisible.
+- LogListBox.ShowDebugWelcomeMessage.
+- Alternet.UI.Build.Tasks: Support Alternet.Editor in uixml.
+- Cursor.AllowCustomCursors.
+- Used ScrollBarOrientation instead of ScrollOrientation beacuse it was a duplicate.
+- Clipboard.SetDataObject(IDataObject? data, bool copy).
+- new properties in DataFormats as in WinForms.
+- DataObject.SetText(string textData, TextDataFormat format).
+
 # 0.9.612 (2024 June 21)
 
 - <u>**Critical**</u>: Fix exception when year > 3000.
