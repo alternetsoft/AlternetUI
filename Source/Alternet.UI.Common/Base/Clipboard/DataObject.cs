@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace Alternet.UI
     [DebuggerDisplay("{ToDebugString()}")]
     public class DataObject : IDataObject
     {
+        /// <summary>
+        /// Gets an empty <see cref="DataObject"/>.
+        /// </summary>
         public static readonly DataObject Empty = new EmptyDataObject();
 
         private readonly Dictionary<string, object> data = new(StringComparer.Ordinal);
@@ -191,7 +195,31 @@ namespace Alternet.UI
         /// Adds a text string to the data object in the
         /// <see cref="DataFormats.Text"/> format.
         /// </summary>
-        public virtual void SetText(string value) => SetData(DataFormats.Text, value);
+        public virtual void SetText(string value) => SetData(DataFormats.UnicodeText, value);
+
+        /// <summary>
+        /// Stores text data in this data object. The format of the text data to store is specified
+        /// with a member of <see cref="TextDataFormat" />.</summary>
+        /// <param name="textData">A string that contains the text data to store
+        /// in the data object.</param>
+        /// <param name="format">A member of <see cref="TextDataFormat" /> that specifies the
+        /// text data format to store.</param>
+        /// <exception cref="ArgumentNullException">
+        ///   <paramref name="textData" /> is <see langword="null" />.</exception>
+        public void SetText(string textData, TextDataFormat format)
+        {
+            if (textData == null)
+            {
+                throw new ArgumentNullException(nameof(textData));
+            }
+
+            if (!DataFormats.IsValidTextDataFormat(format))
+            {
+                throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat));
+            }
+
+            SetData(DataFormats.ConvertToDataFormats(format), textData);
+        }
 
         internal class EmptyDataObject : DataObject
         {
