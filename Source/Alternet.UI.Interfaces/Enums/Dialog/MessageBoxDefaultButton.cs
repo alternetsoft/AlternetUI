@@ -1,7 +1,7 @@
 ﻿namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies identifiers to indicate the default button of a <see cref="MessageBox"/>.
+    /// Specifies identifiers to indicate the default button of a message box.
     /// </summary>
     public enum MessageBoxDefaultButton
     {
@@ -11,22 +11,22 @@
         Button1,
 
         /// <summary>
-        /// The <see cref="MessageBox"/> box default button is OK.
+        /// The message box default button is 'OK'.
         /// </summary>
         OK = Button1,
 
         /// <summary>
-        /// The <see cref="MessageBox"/> box default button is Cancel.
+        /// The message box default button is 'Cancel'.
         /// </summary>
         Cancel,
 
         /// <summary>
-        /// The <see cref="MessageBox"/> box default button is Yes.
+        /// The message box default button is 'Yes'.
         /// </summary>
         Yes,
 
         /// <summary>
-        /// The <see cref="MessageBox"/> box default button is No.
+        /// The message box default button is 'No'.
         /// </summary>
         No,
 

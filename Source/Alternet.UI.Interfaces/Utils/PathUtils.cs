@@ -124,6 +124,7 @@ namespace Alternet.UI
         /// Gets sub-folder path in the application folder.
         /// </summary>
         /// <param name="subFolder">Name of the sub folder.</param>
+        /// <param name="create">Specifies whether to create sub-folder if it doesn't exist.</param>
         /// <remarks>
         /// Application folder is combined with the <paramref name="subFolder"/>
         /// using <see cref="Path.Combine(string, string)"/>
@@ -150,6 +151,10 @@ namespace Alternet.UI
             return appFolder;
         }
 
+        /// <summary>
+        /// Gets path to the 'Temp' sub-folder of the application folder.
+        /// </summary>
+        /// <returns></returns>
         public static string GetTempAppSubFolder() => GetAppSubFolder("Temp", true);
 
         /// <summary>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// File types in <see cref="RichTextBox"/> context.
+    /// File types in the rich text box control context.
     /// </summary>
     public enum RichTextFileType
     {

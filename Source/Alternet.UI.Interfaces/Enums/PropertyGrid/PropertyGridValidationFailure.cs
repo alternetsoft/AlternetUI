@@ -8,7 +8,6 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Specifies action which is performed on property value validation error.
-    /// Used in <see cref="PropertyGrid"/>.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

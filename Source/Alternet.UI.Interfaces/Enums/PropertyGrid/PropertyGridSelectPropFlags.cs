@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies <see cref="PropertyGrid"/> select property flags.
+    /// Specifies customization flags for the methods which select items in the property grid control.
     /// </summary>
     [Flags]
     public enum PropertyGridSelectPropFlags

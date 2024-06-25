@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies flags used when splitter position is set in <see cref="PropertyGrid"/>.
+    /// Specifies flags used when splitter position is set in the property grid control.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

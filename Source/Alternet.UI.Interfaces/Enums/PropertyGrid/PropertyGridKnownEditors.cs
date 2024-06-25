@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines known <see cref="PropertyGrid"/> property editors.
+    /// Defines known property editors in the property grid control.
     /// </summary>
     public enum PropertyGridKnownEditors
     {
         /// <summary>
-        /// Use <see cref="CheckBox"/> as property editor.
+        /// Use <c>CheckBox</c> as property editor.
         /// </summary>
         CheckBox,
 
@@ -22,7 +22,7 @@ namespace Alternet.UI
         Choice,
 
         /// <summary>
-        /// Use <see cref="TextBox"/> as property editor.
+        /// Use <c>TextBox</c> as property editor.
         /// </summary>
         TextCtrl,
 
@@ -32,22 +32,22 @@ namespace Alternet.UI
         ChoiceAndButton,
 
         /// <summary>
-        /// Use <see cref="ComboBox"/> as property editor.
+        /// Use <c>ComboBox</c> as property editor.
         /// </summary>
         ComboBox,
 
         /// <summary>
-        /// Use <see cref="TextBox"/> with up/down buttons as property editor.
+        /// Use <c>TextBox</c> with up/down buttons as property editor.
         /// </summary>
         SpinCtrl,
 
         /// <summary>
-        /// Use <see cref="TextBox"/> with ellipsis button as property editor.
+        /// Use <c>TextBox</c> with ellipsis button as property editor.
         /// </summary>
         TextCtrlAndButton,
 
         /// <summary>
-        /// Uses <see cref="DateTimePicker"/> as property editor.
+        /// Uses date-picker control as property editor.
         /// </summary>
         DatePickerCtrl,
     }

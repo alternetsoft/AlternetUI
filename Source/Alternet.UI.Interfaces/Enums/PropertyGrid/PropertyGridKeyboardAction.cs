@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Keyboard actions used in <see cref="PropertyGrid.AddActionTrigger"/>
-    /// and <see cref="PropertyGrid.ClearActionTriggers"/>.
+    /// Keyboard actions used in <c>PropertyGrid.AddActionTrigger</c> and
+    /// <c>PropertyGrid.ClearActionTriggers</c> methods.
     /// </summary>
     public enum PropertyGridKeyboardAction
     {

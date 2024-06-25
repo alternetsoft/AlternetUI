@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates tip kinds of the <see cref="RichToolTip"/>.
+    /// Enumerates tip kinds of the tooltip.
     /// </summary>
     /// <remarks>
     /// This enum describes the kind of the tip shown which combines both the tip position

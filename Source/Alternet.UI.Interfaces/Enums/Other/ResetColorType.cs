@@ -8,9 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates possible reset color methods for
-    /// <see cref="Control.ResetBackgroundColor(ResetColorType)"/>
-    /// and <see cref="Control.ResetForegroundColor(ResetColorType)"/>.
+    /// Enumerates possible reset color methods.
     /// </summary>
     public enum ResetColorType
     {
@@ -20,7 +18,7 @@ namespace Alternet.UI
         Auto,
 
         /// <summary>
-        /// Uses <see cref="Color.Empty"/>.
+        /// Uses an empty color.
         /// </summary>
         EmptyColor,
 
@@ -30,66 +28,64 @@ namespace Alternet.UI
         NullColor,
 
         /// <summary>
-        /// Uses colors from the default attributes record using
-        /// <see cref="Control.GetDefaultAttributesBgColor"/> for the background color and
-        /// <see cref="Control.GetDefaultAttributesFgColor"/> for the foreground color.
+        /// Uses colors from the default attributes record for the control.
         /// </summary>
         DefaultAttributes,
 
         /// <summary>
-        /// Uses colors from the default attributes record for the <see cref="TextBox"/> control.
+        /// Uses colors from the default attributes record for the <c>TextBox</c> control.
         /// </summary>
         DefaultAttributesTextBox,
 
         /// <summary>
-        /// Uses colors from the default attributes record for the <see cref="ListBox"/> control.
+        /// Uses colors from the default attributes record for the <c>ListBox</c> control.
         /// </summary>
         DefaultAttributesListBox,
 
         /// <summary>
-        /// Uses colors from the default attributes record for the <see cref="Button"/> control.
+        /// Uses colors from the default attributes record for the <c>Button</c> control.
         /// </summary>
         DefaultAttributesButton,
 
         /// <summary>
-        /// Uses <see cref="SystemColors.Menu"/> for the background color and
-        /// <see cref="SystemColors.MenuText"/> for the foreground color.
+        /// Uses "SystemColors.Menu" for the background color and
+        /// "SystemColors.MenuText" for the foreground color.
         /// </summary>
         ColorMenu,
 
         /// <summary>
-        /// Uses <see cref="SystemColors.ActiveCaption"/> for the background color and
-        /// <see cref="SystemColors.ActiveCaptionText"/> for the foreground color.
+        /// Uses "SystemColors.ActiveCaption" for the background color and
+        /// "SystemColors.ActiveCaptionText" for the foreground color.
         /// </summary>
         ColorActiveCaption,
 
         /// <summary>
-        /// Uses <see cref="SystemColors.InactiveCaption"/> for the background color and
-        /// <see cref="SystemColors.InactiveCaptionText"/> for the foreground color.
+        /// Uses "SystemColors.InactiveCaption" for the background color and
+        /// "SystemColors.InactiveCaptionText" for the foreground color.
         /// </summary>
         ColorInactiveCaption,
 
         /// <summary>
-        /// Uses <see cref="SystemColors.Info"/> for the background color and
-        /// <see cref="SystemColors.InfoText"/> for the foreground color.
+        /// Uses "SystemColors.Info" for the background color and
+        /// "SystemColors.InfoText" for the foreground color.
         /// </summary>
         ColorInfo,
 
         /// <summary>
-        /// Uses <see cref="SystemColors.Window"/> for the background color and
-        /// <see cref="SystemColors.WindowText"/> for the foreground color.
+        /// Uses "SystemColors.Window" for the background color and
+        /// "SystemColors.WindowText" for the foreground color.
         /// </summary>
         ColorWindow,
 
         /// <summary>
-        /// Uses <see cref="SystemColors.Highlight"/> for the background color and
-        /// <see cref="SystemColors.HighlightText"/> for the foreground color.
+        /// Uses "SystemColors.Highlight" for the background color and
+        /// "SystemColors.HighlightText" for the foreground color.
         /// </summary>
         ColorHighlight,
 
         /// <summary>
-        /// Uses <see cref="SystemColors.ButtonFace"/> for the background color and
-        /// <see cref="SystemColors.ControlText"/> for the foreground color.
+        /// Uses "SystemColors.ButtonFace" for the background color and
+        /// "SystemColors.ControlText" for the foreground color.
         /// </summary>
         ColorButtonFace,
     }

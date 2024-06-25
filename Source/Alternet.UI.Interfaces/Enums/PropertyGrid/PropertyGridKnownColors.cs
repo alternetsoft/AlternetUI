@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines known <see cref="PropertyGrid"/> color schemes.
+    /// Defines known color schemes in the property grid control.
     /// </summary>
     public enum PropertyGridKnownColors
     {

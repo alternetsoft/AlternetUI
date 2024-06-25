@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates properties assign flags for <see cref="RichTextBox"/>.
+    /// Enumerates property assign flags used in the rich text box control.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

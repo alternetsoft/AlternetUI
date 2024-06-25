@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines all flags used in <see cref="PropertyGrid"/> when property value
+    /// Defines all flags used in the property grid and other property editing controls when property value
     /// is applied back to object instance.
     /// </summary>
     /// <remarks>
@@ -18,28 +18,27 @@ namespace Alternet.UI
     public enum PropertyGridApplyFlags
     {
         /// <summary>
-        /// Raises <see cref="IPropertyGridItem.PropertyChanged"/> event when property is changed
-        /// in the <see cref="PropertyGrid"/>.
+        /// Raises 'PropertyChanged' event of the item when property is changed
+        /// in the control.
         /// </summary>
         PropEvent = 0x01,
 
         /// <summary>
         /// Calls <see cref="PropertyInfo.SetValue(object?, object?)"/> when property is changed
-        /// in the <see cref="PropertyGrid"/>. This requires <see cref="IPropInfoAndInstance.Instance"/>
-        /// and <see cref="IPropInfoAndInstance.PropInfo"/> to be specified in the
-        /// <see cref="IPropertyGridItem"/>.
+        /// in the control. This requires 'Instance'
+        /// and 'PropInfo' properties to be specified in the item.
         /// </summary>
         PropInfoSetValue = 0x02,
 
         /// <summary>
         /// Reloads property value again after set value (<see cref="PropInfoSetValue"/>)
-        /// and updates <see cref="PropertyGrid"/>.
+        /// and updates the control.
         /// </summary>
         ReloadAfterSetValue = 0x04,
 
         /// <summary>
-        /// Reloads all property value again after set value (<see cref="PropInfoSetValue"/>)
-        /// and updates <see cref="PropertyGrid"/>.
+        /// Reloads all property values again after set value (<see cref="PropInfoSetValue"/>)
+        /// and updates the control.
         /// </summary>
         ReloadAllAfterSetValue = 0x08,
 
@@ -56,7 +55,7 @@ namespace Alternet.UI
         SetValueAndReloadAll = ReloadAllAfterSetValue | PropInfoSetValue,
 
         /// <summary>
-        /// Default value for the <see cref="PropertyGrid.ApplyFlags"/> property.
+        /// Default value for the 'ApplyFlags' property.
         /// </summary>
         Default = PropertyGridApplyFlags.PropEvent,
     }
