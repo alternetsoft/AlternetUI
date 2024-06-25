@@ -15,8 +15,6 @@ namespace Alternet.UI
     /// </remarks>
     public static class Mouse
     {
-        public static IMouseHandler? handler;
-
         /// <summary>
         ///     The number of units the mouse wheel should be rotated to scroll one line.
         /// </summary>
@@ -35,6 +33,11 @@ namespace Alternet.UI
         /// </remarks>
         public static int MouseWheelDeltaForOneLine = 120;
 
+        private static IMouseHandler? handler;
+
+        /// <summary>
+        /// Gets or sets <see cref="IMouseHandler"/> used to access mouse.
+        /// </summary>
         public static IMouseHandler Handler
         {
             get
@@ -103,14 +106,33 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets mouse button state.
+        /// </summary>
+        /// <param name="mouseButton">Mouse button.</param>
+        /// <returns></returns>
         public static MouseButtonState GetButtonState(MouseButton mouseButton)
         {
             return Handler.GetButtonState(mouseButton);
         }
 
+        /// <summary>
+        /// Gets mouse button position.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor to use when converting pixels to dips.</param>
+        /// <returns></returns>
+        public static PointD GetPosition(Coord scaleFactor)
+        {
+            return Handler.GetPosition(scaleFactor);
+        }
+
+        /// <summary>
+        /// Gets mouse button position.
+        /// </summary>
+        /// <returns></returns>
         public static PointD GetPosition()
         {
-            return Handler.GetPosition();
+            return Handler.GetPosition(null);
         }
 
         /// <summary>
@@ -119,7 +141,7 @@ namespace Alternet.UI
         /// </summary>
         public static PointD GetPosition(Control? relativeTo)
         {
-            var position = GetPosition();
+            var position = Handler.GetPosition(relativeTo?.ScaleFactor);
             if (relativeTo is not null)
             {
                 var clientPosition = relativeTo.ScreenToClient(position);

@@ -9,7 +9,7 @@ namespace Alternet.UI
     // property.h wxPGPropertyFlags
 
     /// <summary>
-    /// Flags of the <see cref="PropertyGrid"/> items.
+    /// Flags of the items in the property grid control.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

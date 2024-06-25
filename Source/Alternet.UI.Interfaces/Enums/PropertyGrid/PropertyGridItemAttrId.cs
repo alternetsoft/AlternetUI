@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines supported property attributes for <see cref="PropertyGrid"/> items.
+    /// Defines supported property attributes for the items in the property grid control.
     /// </summary>
     public enum PropertyGridItemAttrId
     {

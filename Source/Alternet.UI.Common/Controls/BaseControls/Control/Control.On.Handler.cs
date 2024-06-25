@@ -21,7 +21,7 @@ namespace Alternet.UI
         {
             var args = new ScrollEventArgs
             {
-                ScrollOrientation = ScrollOrientation.VerticalScroll,
+                ScrollOrientation = ScrollBarOrientation.Vertical,
                 NewValue = Handler.GetScrollBarEvtPosition(),
                 Type = Handler.GetScrollBarEvtKind(),
             };
@@ -67,7 +67,7 @@ namespace Alternet.UI
         {
             var args = new ScrollEventArgs
             {
-                ScrollOrientation = ScrollOrientation.HorizontalScroll,
+                ScrollOrientation = ScrollBarOrientation.Horizontal,
                 NewValue = Handler.GetScrollBarEvtPosition(),
                 Type = Handler.GetScrollBarEvtKind(),
             };

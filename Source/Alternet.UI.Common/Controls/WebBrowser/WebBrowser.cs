@@ -28,7 +28,7 @@ namespace Alternet.UI
     /// <para>
     /// WebBrowser has many asynchronous methods.They return immediately and
     /// perform their work in the background.This includes functions such as
-    /// <see cref = "Reload()" /> and < see cref= "LoadURL" />.
+    /// <see cref = "Reload()" /> and <see cref= "LoadURL" />.
     /// </para >
     /// <para >
     /// To receive notification of the progress and completion of these functions
@@ -2151,9 +2151,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///   <para>
-        ///     Runs the given JavaScript code.
-        ///   </para>
+        /// Runs the given JavaScript code.
         /// </summary>
         /// <remarks>
         ///   <para>
@@ -2178,6 +2176,17 @@ namespace Alternet.UI
         /// <param name="javascript">
         ///   JavaScript code to execute.
         /// </param>
+        /// <returns>
+        ///   <see langword="true"/> if there is a result, <see langword="false"/> if there is an error.
+        /// </returns>
+        internal virtual bool RunScript(string javascript)
+        {
+            return RunScript(javascript, out _);
+        }
+
+        /// <param name="javascript">
+        ///   JavaScript code to execute.
+        /// </param>
         /// <param name="result">
         ///   <para>
         ///     Result of the script execution.
@@ -2189,14 +2198,6 @@ namespace Alternet.UI
         ///     or JSON representation for non-primitive types such as arrays and objects.
         ///   </para>
         /// </param>
-        /// <returns>
-        ///   <see langword="true"/> if there is a result, <see langword="false"/> if there is an error.
-        /// </returns>
-        internal virtual bool RunScript(string javascript)
-        {
-            return RunScript(javascript, out _);
-        }
-
         internal virtual bool RunScript(string javascript, out string result)
         {
             CheckDisposed();

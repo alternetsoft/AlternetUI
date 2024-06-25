@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines flags used in <see cref="PropertyGrid"/> methods.
+    /// Defines flags used in different methods of the property grid control.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

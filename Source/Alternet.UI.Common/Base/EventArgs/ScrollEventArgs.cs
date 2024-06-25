@@ -20,7 +20,7 @@ namespace Alternet.UI
     {
         private int oldValue = -1;
         private ScrollEventType type;
-        private ScrollOrientation scrollOrientation;
+        private ScrollBarOrientation scrollOrientation;
         private int newValue;
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// <param name="type">One of the <see cref="ScrollEventType" /> values.</param>
         /// <param name="newValue">The new value for the scroll bar.</param>
         /// <param name="scroll">One of the <see cref="ScrollOrientation" /> values.</param>
-        public ScrollEventArgs(ScrollEventType type, int newValue, ScrollOrientation scroll)
+        public ScrollEventArgs(ScrollEventType type, int newValue, ScrollBarOrientation scroll)
         {
             this.type = type;
             this.newValue = newValue;
@@ -77,7 +77,7 @@ namespace Alternet.UI
             ScrollEventType type,
             int oldValue,
             int newValue,
-            ScrollOrientation scroll)
+            ScrollBarOrientation scroll)
         {
             this.type = type;
             this.newValue = newValue;
@@ -85,6 +85,9 @@ namespace Alternet.UI
             this.oldValue = oldValue;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollEventArgs" />.
+        /// </summary>
         public ScrollEventArgs()
         {
         }
@@ -95,14 +98,14 @@ namespace Alternet.UI
         /// </summary>
         public bool IsVertical
         {
-            get => ScrollOrientation == ScrollOrientation.VerticalScroll;
+            get => ScrollOrientation == ScrollBarOrientation.Vertical;
 
             set
             {
                 if (value)
-                    ScrollOrientation = ScrollOrientation.VerticalScroll;
+                    ScrollOrientation = ScrollBarOrientation.Vertical;
                 else
-                    ScrollOrientation = ScrollOrientation.HorizontalScroll;
+                    ScrollOrientation = ScrollBarOrientation.Horizontal;
             }
         }
 
@@ -112,14 +115,14 @@ namespace Alternet.UI
         /// </summary>
         public bool IsHorizontal
         {
-            get => ScrollOrientation == ScrollOrientation.HorizontalScroll;
+            get => ScrollOrientation == ScrollBarOrientation.Horizontal;
 
             set
             {
                 if (value)
-                    ScrollOrientation = ScrollOrientation.HorizontalScroll;
+                    ScrollOrientation = ScrollBarOrientation.Horizontal;
                 else
-                    ScrollOrientation = ScrollOrientation.VerticalScroll;
+                    ScrollOrientation = ScrollBarOrientation.Vertical;
             }
         }
 
@@ -127,7 +130,7 @@ namespace Alternet.UI
         /// Gets or sets the scroll bar orientation that raised the <see langword="Scroll" /> event.
         /// </summary>
         /// <returns>One of the <see cref="ScrollOrientation" /> values.</returns>
-        public ScrollOrientation ScrollOrientation
+        public ScrollBarOrientation ScrollOrientation
         {
             get => scrollOrientation;
             set => scrollOrientation = value;

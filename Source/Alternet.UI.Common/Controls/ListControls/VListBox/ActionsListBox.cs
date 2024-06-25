@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements list box control with list of actions. When item is double clicked,
+    /// associated action is executed.
+    /// </summary>
     public class ActionsListBox : VListBox
     {
         /// <summary>

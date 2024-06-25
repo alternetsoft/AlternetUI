@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the formats used with text-related methods of
-    /// the <see cref="Clipboard" /> and <see cref="DataObject" /> classes.</summary>
+    /// Specifies the formats used with text-related methods of the clipboard.</summary>
     public enum TextDataFormat
     {
         /// <summary>
@@ -36,5 +35,10 @@ namespace Alternet.UI
         /// format used by spreadsheets.
         /// </summary>
         CommaSeparatedValue,
+
+        /// <summary>
+        /// Specifies that the text data is in the Xaml data format.
+        /// </summary>
+        Xaml,
     }
 }

@@ -7,35 +7,35 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates all possible <see cref="string"/> edit kinds in <see cref="PropertyGrid"/>.
+    /// Enumerates all possible <see cref="string"/> property editor kinds in the property grid control.
     /// </summary>
     public enum PropertyGridEditKindString
     {
         /// <summary>
-        /// Uses simple <see cref="TextBox"/>.
+        /// Uses simple <c>TextBox</c>.
         /// </summary>
         Simple,
 
         /// <summary>
-        /// Uses <see cref="TextBox"/> with dialog which allows to edit long string values.
+        /// Uses <c>TextBox</c> with dialog which allows to edit long string values.
         /// </summary>
         Long,
 
         /// <summary>
-        /// Uses <see cref="TextBox"/> with ellipsis button. Use
-        /// <see cref="PropertyGrid.ButtonClick"/> to handle button clicks.
+        /// Uses <c>TextBox</c> with ellipsis button. Use
+        /// <c>PropertyGrid.ButtonClick</c> to handle button clicks.
         /// </summary>
         Ellipsis,
 
         /// <summary>
-        /// Uses <see cref="TextBox"/> with <see cref="OpenFileDialog"/> dialog which allows
+        /// Uses <c>TextBox</c> with open file dialog which allows
         /// to select filename. It is possible to specify file masks, default path and
         /// dialog title in the property attributes.
         /// </summary>
         FileName,
 
         /// <summary>
-        /// Uses <see cref="TextBox"/> with <see cref="OpenFileDialog"/> dialog which allows
+        /// Uses <c>TextBox</c> with open file dialog which allows
         /// to select image filename. It is possible to specify default path and
         /// dialog title in the property attributes. File mask is setup to
         /// supported image extensions.
@@ -43,7 +43,7 @@ namespace Alternet.UI
         ImageFileName,
 
         /// <summary>
-        /// Uses <see cref="TextBox"/> with <see cref="SelectDirectoryDialog"/> dialog which allows
+        /// Uses <c>TextBox</c> with select directory dialog which allows
         /// to select path. It is possible to specify file masks, default path and
         /// dialog title in the property attributes.
         /// </summary>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines <see cref="PropertyGrid"/> extended options.
+    /// Defines extended options which can be specified when property grid control is created.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.
@@ -77,7 +77,7 @@ namespace Alternet.UI
         MultipleSelection = 0x02000000,
 
         /// <summary>
-        /// This enables top-level window tracking which allows <see cref="PropertyGrid"/> to
+        /// This enables top-level window tracking which allows control to
         /// notify the application of last-minute property value changes by user.
         /// This style is not enabled by default because it may cause crashes when
         /// wxPropertyGrid is used in with wxAUI or similar system.
@@ -99,7 +99,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Allows to take focus on the entire area (on canvas)
-        /// even if <see cref="PropertyGrid"/> is not a standalone control.
+        /// even if control is not in a standalone mode.
         /// </summary>
         AlwaysAllowFocus = 0x00100000,
 

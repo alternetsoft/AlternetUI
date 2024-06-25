@@ -50,6 +50,9 @@ namespace Alternet.UI
             mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WxApplicationHandler"/> class.
+        /// </summary>
         public WxApplicationHandler()
         {
             var wxWidgets = WebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
@@ -66,8 +69,15 @@ namespace Alternet.UI
             LogUtils.RegisterLogAction("Use Pless Caret", () => { UsePlessCaret = true; });
         }
 
+        /// <summary>
+        /// Gets or sets whether to use internal caret. This can be used for testing purposes.
+        /// </summary>
         public static bool UsePlessCaret { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets whether to use dummy timer which doesn't call timer event.
+        /// This can be used for testing purposes.
+        /// </summary>
         public static bool UseDummyTimer { get; set; } = false;
 
         internal static WxEventIdentifiers MapToEventIdentifier(int eventId)
@@ -116,6 +126,11 @@ namespace Alternet.UI
 
         internal static string EventArgString => nativeApplication.EventArgString;
 
+        /// <summary>
+        /// Gets pointer to WxWidget control.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         public static IntPtr WxWidget(IControl? control)
         {
             if (control is null)
@@ -132,53 +147,62 @@ namespace Alternet.UI
             nativeApplication.Exit();
         }
 
+        /// <inheritdoc/>
         public IControlFactoryHandler CreateControlFactoryHandler()
         {
             return new WxControlFactoryHandler();
         }
 
+        /// <inheritdoc/>
         public bool HasPendingEvents()
         {
             return nativeApplication.HasPendingEvents();
         }
 
+        /// <inheritdoc/>
         public void Run(Window window)
         {
             nativeApplication.Run(
                 ((WindowHandler)window.Handler).NativeControl);
         }
 
+        /// <inheritdoc/>
         public IDialogFactoryHandler CreateDialogFactoryHandler()
         {
             return new WxDialogFactoryHandler();
         }
 
+        /// <inheritdoc/>
         public IClipboardHandler CreateClipboardHandler()
         {
             return new WxClipboardHandler();
         }
 
-
+        /// <inheritdoc/>
         public void ProcessPendingEvents()
         {
             nativeApplication.ProcessPendingEvents();
         }
 
+        /// <inheritdoc/>
         public void ExitMainLoop()
         {
             nativeApplication.ExitMainLoop();
         }
 
+        /// <inheritdoc/>
         public void SetTopWindow(Window window)
         {
             nativeApplication.SetTopWindow(WxApplicationHandler.WxWidget(window));
         }
 
+        /// <inheritdoc/>
         public void WakeUpIdle()
         {
             nativeApplication.WakeUpIdle();
         }
 
+        /// <inheritdoc/>
         public void BeginInvoke(Action action)
         {
             nativeApplication.BeginInvoke(action);
@@ -191,6 +215,7 @@ namespace Alternet.UI
             App.LogNativeMessage(s);
         }
 
+        /// <inheritdoc/>
         public ISystemSettingsHandler CreateSystemSettingsHandler()
         {
             return new WxSystemSettingsHandler();
@@ -228,16 +253,19 @@ namespace Alternet.UI
             return ((WindowHandler)handler).Control;
         }
 
+        /// <inheritdoc/>
         public IPrintingHandler CreatePrintingHandler()
         {
             return new WxPrintingHandler();
         }
 
+        /// <inheritdoc/>
         public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
         {
             return new WxGraphicsFactoryHandler();
         }
 
+        /// <inheritdoc/>
         public ICaretHandler CreateCaretHandler()
         {
             if (UsePlessCaret)
@@ -245,6 +273,7 @@ namespace Alternet.UI
             return new WxCaretHandler();
         }
 
+        /// <inheritdoc/>
         public ICaretHandler CreateCaretHandler(Control control, int width, int height)
         {
             if (UsePlessCaret)
@@ -279,6 +308,7 @@ namespace Alternet.UI
             return new WxToolTipFactoryHandler();
         }
 
+        /// <inheritdoc/>
         public object? GetAttributeValue(string name)
         {
             if(name == "NotifyIcon.IsAvailable")
@@ -333,11 +363,13 @@ namespace Alternet.UI
             App.LogSeparator();
         }
 
+        /// <inheritdoc/>
         public IMouseHandler CreateMouseHandler()
         {
             return new WxMouseHandler();
         }
 
+        /// <inheritdoc/>
         public IKeyboardHandler CreateKeyboardHandler()
         {
             return new WxKeyboardHandler();

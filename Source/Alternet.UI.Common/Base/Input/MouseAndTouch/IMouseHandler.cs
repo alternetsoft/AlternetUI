@@ -8,6 +8,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to control the mouse behavior.
+    /// </summary>
     public interface IMouseHandler : IDisposable
     {
         /// <summary>
@@ -22,8 +25,17 @@ namespace Alternet.UI
         /// </returns>
         MouseButtonState GetButtonState(MouseButton mouseButton);
 
-        PointD GetPosition();
+        /// <summary>
+        /// Gets mouse position.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor used to convert pixels to dips.</param>
+        /// <returns></returns>
+        PointD GetPosition(Coord? scaleFactor);
 
+        /// <summary>
+        /// Creates <see cref="ICursorFactoryHandler"/> object.
+        /// </summary>
+        /// <returns></returns>
         ICursorFactoryHandler CreateCursorFactoryHandler();
     }
 }

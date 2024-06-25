@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates all possible edit kinds in <see cref="PropertyGrid"/>.
+    /// Enumerates all possible property editor kinds in the property grid.
     /// </summary>
     public enum PropertyGridEditKindAll
     {
@@ -110,12 +110,12 @@ namespace Alternet.UI
         // ==== Colors.
 
         /// <summary>
-        /// Uses <see cref="Alternet.Drawing.Color"/> editor.
+        /// Uses color editor.
         /// </summary>
         Color,
 
         /// <summary>
-        /// Uses <see cref="Alternet.Drawing.Color"/> editor with system colors list.
+        /// Uses color editor with system colors list.
         /// </summary>
         ColorSystem,
 

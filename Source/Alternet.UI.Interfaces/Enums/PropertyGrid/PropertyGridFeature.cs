@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Allows to turn on/off different features in <see cref="PropertyGrid"/>.
+    /// Allows to turn on/off different features in the property grid control.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

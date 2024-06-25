@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Flags for the <see cref="PropertyGrid"/> iterator functions.
+    /// Flags for the iterator functions in the property grid control.
     /// </summary>
     /// <remarks>
     /// NOTES: At lower 16-bits, there are flags to check if item will be included.

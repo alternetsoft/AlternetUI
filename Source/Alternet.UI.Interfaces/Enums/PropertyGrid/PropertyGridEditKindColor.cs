@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates all possible <see cref="Color"/> edit kinds in <see cref="PropertyGrid"/>.
+    /// Enumerates all possible color property editor kinds in the property grid control.
     /// </summary>
     public enum PropertyGridEditKindColor
     {
