@@ -21,13 +21,13 @@ namespace Alternet.UI
         Synchronous = 0,
 
         /// <summary>
-        /// Sound is played asynchronously, <see cref="Play"/> returns immediately.
+        /// Sound is played asynchronously, 'Play' method returns immediately.
         /// </summary>
         Asynchronous = 1,
 
         /// <summary>
         /// Sound is played asynchronously and loops until another sound is played,
-        /// <see cref="Stop"/> is called or the program terminates.
+        /// 'Stop' is called or the program terminates.
         /// </summary>
         AsynchronousLoop = 2 | Asynchronous,
     }

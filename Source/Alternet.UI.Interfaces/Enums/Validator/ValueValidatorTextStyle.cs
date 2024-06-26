@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Styles used by <see cref="IValueValidatorText"/>.
+    /// Enumerates possible behavior styles of a value validator.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.
@@ -58,13 +58,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Use an include list. The validator checks if the user input is on the list,
-        /// complaining if not. See <see cref="IValueValidatorText.AddCharIncludes"/>.
+        /// complaining if not.
         /// </summary>
         IncludeList = 0x40,
 
         /// <summary>
         /// Use an include char list. Characters in the include char list will be allowed to
-        /// be in the user input. See <see cref="IValueValidatorText.CharIncludes"/>. If this
+        /// be in the user input. If this
         /// style is set with one or more of the following styles: <see cref="Ascii"/>,
         /// <see cref="Alpha"/>, <see cref="AlphaNumeric"/>, <see cref="Digits"/>,
         /// <see cref="XDigits"/>, <see cref="Numeric"/> it just extends the character
@@ -77,13 +77,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Use an exclude list. The validator checks if the user input is on the list,
-        /// complaining if it is. See <see cref="IValueValidatorText.AddCharExcludes"/>.
+        /// complaining if it is.
         /// </summary>
         ExcludeList = 0x100,
 
         /// <summary>
         /// Use an exclude char list. Characters in the exclude char list won't be allowed
-        /// to be in the user input. See <see cref="IValueValidatorText.CharExcludes"/>.
+        /// to be in the user input.
         /// </summary>
         ExcludeCharList = 0x200,
 
@@ -95,8 +95,7 @@ namespace Alternet.UI
         /// <summary>
         /// A convenience flag for use with the other flags. The space character is more
         /// often used with alphanumeric characters which makes setting a flag more
-        /// easier than calling <see cref="IValueValidatorText.AddCharIncludes"/> ") for
-        /// that matter.
+        /// easier than calling a method for that matter.
         /// </summary>
         Space = 0x800,
     }

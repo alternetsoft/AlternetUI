@@ -1,17 +1,17 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the orientation of a <see cref="Slider"/>.
+    /// Specifies the orientation of a slider control.
     /// </summary>
     public enum SliderOrientation
     {
         /// <summary>
-        /// The <see cref="Slider"/> is oriented horizontally.
+        /// The slider is oriented horizontally.
         /// </summary>
         Horizontal,
 
         /// <summary>
-        /// The <see cref="Slider"/> is oriented vertically.
+        /// The slider is oriented vertically.
         /// </summary>
         Vertical,
     }

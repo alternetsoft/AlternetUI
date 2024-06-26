@@ -1,12 +1,8 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the location of tick marks in a <see cref="Slider"/> control.
+    /// Specifies the location of tick marks in a slider control.
     /// </summary>
-    /// <remarks>
-    /// Use the members of this enumeration to set the value of the <see cref="Slider.TickStyle"/>
-    /// property of the <see cref="Slider"/> control.
-    /// </remarks>
     public enum SliderTickStyle
     {
         /// <summary>

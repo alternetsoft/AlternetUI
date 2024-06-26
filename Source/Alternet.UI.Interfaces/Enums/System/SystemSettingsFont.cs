@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Possible values for <see cref="SystemSettings.GetFont"/> parameter.
+    /// Enumerates known system fonts.
     /// </summary>
     /// <remarks>
     /// These values map 1:1 the native values supported by the Windows' GetStockObject function.
     /// Note that other ports (other than Windows) will try to provide meaningful fonts but
-    /// they usually map the same font to various <see cref="SystemSettingsFont"/> values.
+    /// they usually map the same font to various font values.
     /// </remarks>
     public enum SystemSettingsFont
     {

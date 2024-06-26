@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates styles of the <see cref="StatusBarPanel"/>
+    /// Enumerates styles of the individual panel in the status bar.
     /// </summary>
     public enum StatusBarPanelStyle
     {

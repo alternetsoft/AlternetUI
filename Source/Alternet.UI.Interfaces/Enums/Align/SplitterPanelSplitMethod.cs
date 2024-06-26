@@ -7,32 +7,29 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines automatic behavior of the <see cref="SplitterPanel"/> control.
+    /// Defines how the container control will be splitted.
     /// </summary>
     public enum SplitterPanelSplitMethod
     {
         /// <summary>
-        /// <see cref="SplitterPanel"/> will be splitted manually by the programmer
-        /// using <see cref="SplitterPanel.SplitVertical"/>,
-        /// <see cref="SplitterPanel.SplitHorizontal"/> or
-        /// <see cref="SplitterPanel.InitUnsplitted"/> methods.
+        /// Container will be splitted manually by the programmer.
         /// </summary>
         Manual,
 
         /// <summary>
-        /// First two visible child controls of the <see cref="SplitterPanel"/>
+        /// First two visible child controls of the container
         /// will be splitted horizontally.
         /// </summary>
         Horizontal,
 
         /// <summary>
-        /// First two visible child controls of the <see cref="SplitterPanel"/>
+        /// First two visible child controls of the container
         /// will be splitted vertically.
         /// </summary>
         Vertical,
 
         /// <summary>
-        /// <see cref="SplitterPanel"/> will be initialized as unsplitted
+        /// Container will be initialized as unsplitted
         /// with the first visible control.
         /// </summary>
         Unsplitted,

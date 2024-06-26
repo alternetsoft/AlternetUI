@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Styles for <see cref="ITextBoxTextAttr.SetTextEffects"/>
+    /// Enumerates styles used when text effects are specified.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

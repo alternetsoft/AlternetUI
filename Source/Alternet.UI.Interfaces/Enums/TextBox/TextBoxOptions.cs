@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates options for <see cref="TextBox"/> behavior and visual style customization.
+    /// Enumerates behavior and styling options for a text box control.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.
@@ -16,13 +16,12 @@ namespace Alternet.UI
     public enum TextBoxOptions
     {
         /// <summary>
-        /// Indicates whether to set value of <see cref="TextBox.MaxLength"/> property
-        /// to the native control.
+        /// Indicates whether to assign value of the 'MaxLength' property
+        /// to the handler.
         /// </summary>
         /// <remarks>
-        /// When this flag is specified, value of <see cref="TextBox.MaxLength"/> is set to the
-        /// native control and <see cref="TextBox.TextMaxLength"/> event is fired when max length
-        /// is reached.
+        /// When this flag is specified, value of 'MaxLength' is set to the
+        /// handler and 'TextMaxLength' event is fired when max length is reached.
         /// </remarks>
         SetNativeMaxLength = 1,
 
@@ -32,7 +31,7 @@ namespace Alternet.UI
         IntRangeInError = 2,
 
         /// <summary>
-        /// Perform default value validation using <see cref="CustomTextBox.RunDefaultValidation"/>.
+        /// Performs default value validation.
         /// </summary>
         DefaultValidation = 4,
     }
