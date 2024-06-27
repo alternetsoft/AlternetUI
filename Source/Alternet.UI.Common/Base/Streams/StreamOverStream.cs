@@ -7,20 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.Syntax.Parsers.Lsp.Fx
+namespace Alternet.UI
 {
     public class StreamOverStream : Stream
     {
-        private readonly Stream inner;
+        private Stream inner;
 
         public StreamOverStream(Stream? inner = null)
         {
             this.inner = inner ?? new MemoryStream();
         }
 
+        public static event EventHandler<StreamReadWriteEventArgs>? GlobalAfterRead;
+
+        public static event EventHandler<StreamReadWriteEventArgs>? GlobalAfterWrite;
+
         public event EventHandler<StreamReadWriteEventArgs>? AfterRead;
 
         public event EventHandler<StreamReadWriteEventArgs>? AfterWrite;
+
+        public Stream BaseStream
+        {
+            get => inner;
+            set => inner = value;
+        }
 
         public override bool CanRead => inner.CanRead;
 
@@ -44,15 +54,22 @@ namespace Alternet.Syntax.Parsers.Lsp.Fx
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            var result = inner.Read(buffer, offset, count);
-            AfterRead?.Invoke(this, new StreamReadWriteEventArgs(buffer, offset, count, result));
-            return result;
+            try
+            {
+                var result = inner.Read(buffer, offset, count);
+                var args = new StreamReadWriteEventArgs(buffer, offset, count, result);
+                GlobalAfterRead?.Invoke(this, args);
+                AfterRead?.Invoke(this, args);
+                return result;
+            }
+            finally
+            {
+            }
         }
 
-        public override long Seek(long offset, SeekOrigin origin)
+        public override long Seek(long offset, SeekOrigin loc)
         {
-            var result = inner.Seek(offset, origin);
-            return result;
+            return inner.Seek(offset, loc);
         }
 
         public override void SetLength(long value)
@@ -62,8 +79,16 @@ namespace Alternet.Syntax.Parsers.Lsp.Fx
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            inner.Write(buffer, offset, count);
-            AfterWrite?.Invoke(this, new StreamReadWriteEventArgs(buffer, offset, count));
+            try
+            {
+                inner.Write(buffer, offset, count);
+                var args = new StreamReadWriteEventArgs(buffer, offset, count);
+                GlobalAfterWrite?.Invoke(this, args);
+                AfterWrite?.Invoke(this, args);
+            }
+            finally
+            {
+            }
         }
     }
 }
