@@ -26,6 +26,14 @@ namespace Alternet.UI
             Generic,
         }
 
+        /// <summary>
+        /// Calculates horizontal <see cref="AlignedPosition"/> using align parameters.
+        /// </summary>
+        /// <param name="layoutBounds">Rectangle in which alignment is performed.</param>
+        /// <param name="childControl">Control to align.</param>
+        /// <param name="childPreferredSize">Preferred size.</param>
+        /// <param name="alignment">Alignment of the control.</param>
+        /// <returns></returns>
         public static AlignedPosition AlignHorizontal(
                     RectD layoutBounds,
                     Control childControl,
@@ -58,6 +66,14 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Calculates vertical <see cref="AlignedPosition"/> using align parameters.
+        /// </summary>
+        /// <param name="layoutBounds">Rectangle in which alignment is performed.</param>
+        /// <param name="control">Control to align.</param>
+        /// <param name="childPreferredSize">Preferred size.</param>
+        /// <param name="alignment">Alignment of the control.</param>
+        /// <returns></returns>
         public static AlignedPosition AlignVertical(
             RectD layoutBounds,
             Control control,
@@ -191,16 +207,30 @@ namespace Alternet.UI
             RefreshRects(caretInfo.Region);
         }
 
+        /// <summary>
+        /// Contains location and size calculated by the align method.
+        /// </summary>
         public class AlignedPosition
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="AlignedPosition"/> class.
+            /// </summary>
+            /// <param name="origin">Location.</param>
+            /// <param name="size">Size.</param>
             public AlignedPosition(double origin, double size)
             {
                 Origin = origin;
                 Size = size;
             }
 
+            /// <summary>
+            /// Gets location.
+            /// </summary>
             public double Origin { get; }
 
+            /// <summary>
+            /// Gets size.
+            /// </summary>
             public double Size { get; }
         }
     }

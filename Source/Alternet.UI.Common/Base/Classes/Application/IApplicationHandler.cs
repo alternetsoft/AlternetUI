@@ -68,6 +68,7 @@ namespace Alternet.UI
         /// <returns></returns>
         Control? GetFocusedControl();
 
+        /// <inheritdoc cref="App.Run"/>
         void Run(Window window);
 
         /// <inheritdoc cref="App.SetTopWindow(Window)"/>
@@ -145,6 +146,7 @@ namespace Alternet.UI
         /// <returns></returns>
         ISystemSettingsHandler CreateSystemSettingsHandler();
 
+        /// <inheritdoc cref="App.ProcessPendingEvents"/>
         void ProcessPendingEvents();
 
         /// <summary>
@@ -165,6 +167,10 @@ namespace Alternet.UI
         /// <returns></returns>
         ICaretHandler CreateCaretHandler(Control control, int width, int height);
 
+        /// <summary>
+        /// Sets log debug flag of the used C++ libraries.
+        /// </summary>
+        /// <param name="value">Value.</param>
         void CrtSetDbgFlag(int value);
     }
 }
