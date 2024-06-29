@@ -46,8 +46,6 @@ namespace Alternet.UI
 
         void SetTopWindow(Window window);
 
-        void WakeUpIdle();
-
         void BeginInvoke(Action action);
 
         bool HasPendingEvents();

@@ -54,7 +54,12 @@ namespace Alternet.UI.Integration
 
             queueTimer = new Timer(TimeSpan.FromMilliseconds(100), OnQueueTimerTick);
 
-            wakeUpIdleTimer = new System.Threading.Timer(_ => application.WakeUpIdle(), null, 0, 200);
+            wakeUpIdleTimer = new System.Threading.Timer(WakeUpIdle, null, 0, 200);
+
+            void WakeUpIdle(object? state)
+            {
+                (App.Handler as WxApplicationHandler)?.WakeUpIdle();
+            }
 
             application.Run(
                 new Window

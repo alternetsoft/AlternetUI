@@ -140,6 +140,15 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Returns default property value for the control on the
+        /// specific platform.
+        /// </summary>
+        /// <param name="control">Control which default property value
+        /// is returned.</param>
+        /// <param name="prop">Property identifier.</param>
+        /// <returns></returns>
+        /// <param name="platform">Platform.</param>
         public static object? GetPropValue(
             PlatformDefaults platform,
             ControlTypeId control,
@@ -149,6 +158,14 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Returns default property value as <see cref="Thickness"/> for the control on the
+        /// specific platform.
+        /// </summary>
+        /// <param name="control">Control which default property value
+        /// is returned.</param>
+        /// <param name="prop">Property identifier.</param>
+        /// <returns></returns>
         public static Thickness GetAsThickness(
             ControlTypeId control,
             ControlDefaultsId prop)

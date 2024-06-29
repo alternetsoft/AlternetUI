@@ -564,8 +564,16 @@ namespace Alternet.UI
             }
         }
 
-        protected internal virtual bool InvokeRequired => Handler.InvokeRequired;
+        /// <summary>
+        /// Gets a value indicating whether the caller must call an invoke method when making method
+        /// calls to the control because the caller is on a different thread than the one the control
+        /// was created on.
+        /// </summary>
+        internal virtual bool InvokeRequired => Handler.InvokeRequired;
 
+        /// <summary>
+        /// Gets or sets main window.
+        /// </summary>
         protected Window? MainWindow
         {
             get => window;
@@ -753,6 +761,13 @@ namespace Alternet.UI
                 Log(obj, kind);
         }
 
+        /// <summary>
+        /// Calls <paramref name="func"/> inside try-catch block if specified by the exception handling
+        /// settings <see cref="FastThreadExceptions"/> and <see cref="GetUnhandledExceptionMode()"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of the function result.</typeparam>
+        /// <param name="func">Function to call.</param>
+        /// <returns></returns>
         [return: MaybeNull]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T HandleThreadExceptions<T>(Func<T> func)
@@ -763,6 +778,11 @@ namespace Alternet.UI
             return HandleThreadExceptionsCore(func);
         }
 
+        /// <summary>
+        /// Calls <paramref name="action"/> inside try-catch block if specified by the exception handling
+        /// settings <see cref="FastThreadExceptions"/> and <see cref="GetUnhandledExceptionMode()"/>.
+        /// </summary>
+        /// <param name="action">Action to call.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void HandleThreadExceptions(Action action)
         {
@@ -846,6 +866,10 @@ namespace Alternet.UI
             ProcessLogQueue(true);
         }
 
+        /// <summary>
+        /// Calls <see cref="Log"/> after calling <see cref="BeforeNativeLogMessage"/> event.
+        /// </summary>
+        /// <param name="s">Message to log.</param>
         public static void LogNativeMessage(string s)
         {
             if (BeforeNativeLogMessage is not null)
@@ -1094,6 +1118,11 @@ namespace Alternet.UI
             Log(LogUtils.SectionSeparator, kind);
         }
 
+        /// <summary>
+        /// Raises <see cref="ThreadException"/> event.
+        /// </summary>
+        /// <param name="sender">Sender parameter of the event.</param>
+        /// <param name="args">Event arguments.</param>
         public static void RaiseThreadException(object sender, ThreadExceptionEventArgs args)
         {
             ThreadException?.Invoke(sender, args);
@@ -1202,64 +1231,11 @@ namespace Alternet.UI
                 OnLogRefresh();
         }
 
-        /// <summary>Processes all messages currently in the message queue.</summary>
-        public static void DoEvents()
-        {
-            Current?.ProcessPendingEvents();
-        }
-
         /// <summary>
-        /// Checks whether there are any pending events in the queue.
+        /// Handles exception showing <see cref="ThreadExceptionWindow"/> dialog and calling exception
+        /// related events if specified in the exception handling settings.
         /// </summary>
-        /// <returns><c>true</c> if there are any pending events in the queue,
-        /// <c>false</c> otherwise.</returns>
-        public bool HasPendingEvents()
-        {
-            return Handler.HasPendingEvents();
-        }
-
-        /// <summary>
-        /// Starts an application UI event loop and makes the specified window
-        /// visible.
-        /// Begins running a UI event processing loop on the current thread.
-        /// </summary>
-        /// <param name="window">A <see cref="Window"/> that opens automatically
-        /// when an application starts.</param>
-        /// <remarks>Typically, the main function of an application calls this
-        /// method and passes to it the main window of the application.</remarks>
-        public void Run(Window window)
-        {
-            IsRunning = true;
-
-            try
-            {
-                this.MainWindow = window ?? throw new ArgumentNullException(nameof(window));
-                CheckDisposed();
-                window.Show();
-
-                while (true)
-                {
-                    try
-                    {
-                        Handler.Run(window);
-                        break;
-                    }
-                    catch (Exception e)
-                    {
-                        OnThreadException(e);
-                    }
-                }
-
-                SynchronizationContext.Uninstall();
-                this.MainWindow = null;
-            }
-            finally
-            {
-                Terminating = true;
-                IsRunning = false;
-            }
-        }
-
+        /// <param name="exception">Exception to process.</param>
         public static void OnThreadException(Exception exception)
         {
             if (inOnThreadException)
@@ -1307,39 +1283,12 @@ namespace Alternet.UI
             }
         }
 
-        [return: MaybeNull]
-        private static T HandleThreadExceptionsCore<T>(Func<T> func)
+        /// <summary>
+        /// Processes all messages currently in the message queue.
+        /// </summary>
+        public static void DoEvents()
         {
-            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
-                return func();
-
-            try
-            {
-                return func();
-            }
-            catch (Exception e)
-            {
-                OnThreadException(e);
-                return default!;
-            }
-        }
-
-        private static void HandleThreadExceptionsCore(Action action)
-        {
-            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
-            {
-                action();
-                return;
-            }
-
-            try
-            {
-                action();
-            }
-            catch (Exception e)
-            {
-                OnThreadException(e);
-            }
+            Current?.ProcessPendingEvents();
         }
 
         /// <summary>
@@ -1388,6 +1337,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Checks whether there are any pending events in the queue.
+        /// </summary>
+        /// <returns><c>true</c> if there are any pending events in the queue,
+        /// <c>false</c> otherwise.</returns>
+        public virtual bool HasPendingEvents()
+        {
+            return Handler.HasPendingEvents();
+        }
+
+        /// <summary>
+        /// Starts an application UI event loop and makes the specified window
+        /// visible.
+        /// Begins running a UI event processing loop on the current thread.
+        /// </summary>
+        /// <param name="window">A <see cref="Window"/> that opens automatically
+        /// when an application starts.</param>
+        /// <remarks>Typically, the main function of an application calls this
+        /// method and passes to it the main window of the application.</remarks>
+        public virtual void Run(Window window)
+        {
+            IsRunning = true;
+
+            try
+            {
+                this.MainWindow = window ?? throw new ArgumentNullException(nameof(window));
+                CheckDisposed();
+                window.Show();
+
+                while (true)
+                {
+                    try
+                    {
+                        Handler.Run(window);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        OnThreadException(e);
+                    }
+                }
+
+                SynchronizationContext.Uninstall();
+                this.MainWindow = null;
+            }
+            finally
+            {
+                Terminating = true;
+                IsRunning = false;
+            }
+        }
+
+        /// <summary>
         /// Allows runtime switching of the UI environment theme.
         /// </summary>
         /// <param name="theme">Theme name</param>
@@ -1406,11 +1407,6 @@ namespace Alternet.UI
             SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
         }
 
-        public void BeginInvoke(Action action)
-        {
-            Handler.BeginInvoke(action);
-        }
-
         /// <summary>
         /// Instructs the application how to respond to unhandled exceptions in debug mode.
         /// </summary>
@@ -1420,11 +1416,6 @@ namespace Alternet.UI
         public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
         {
             unhandledExceptionModeDebug = mode;
-        }
-
-        public virtual void WakeUpIdle()
-        {
-            Handler.WakeUpIdle();
         }
 
         internal void RegisterWindow(Window window)
@@ -1496,6 +1487,41 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             App.Current = null!;
+        }
+
+        [return: MaybeNull]
+        private static T HandleThreadExceptionsCore<T>(Func<T> func)
+        {
+            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
+                return func();
+
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
+                return default!;
+            }
+        }
+
+        private static void HandleThreadExceptionsCore(Action action)
+        {
+            if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
+            {
+                action();
+                return;
+            }
+
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
+            }
         }
 
         private static void OnLogRefresh()
