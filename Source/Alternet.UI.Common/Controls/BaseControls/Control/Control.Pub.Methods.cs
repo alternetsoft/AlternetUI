@@ -11,6 +11,13 @@ namespace Alternet.UI
 {
     public partial class Control
     {
+        /// <summary>
+        /// Finds control which accepts mouse events (checks whether <see cref="InputTransparent"/>
+        /// property is <c>true</c>). Returns control specified as a parameter or one
+        /// of it's parent controls.
+        /// </summary>
+        /// <param name="control">Control to check.</param>
+        /// <returns></returns>
         public static Control? GetMouseTargetControl(Control? control)
         {
             var result = control;
@@ -382,6 +389,11 @@ namespace Alternet.UI
             Handler.RefreshRect(rect, eraseBackground);
         }
 
+        /// <summary>
+        /// Repaints rectangles (coordinates in pixels) in the control.
+        /// </summary>
+        /// <param name="rects">Array of rectangles with coordinates specified in pixels.</param>
+        /// <param name="eraseBackground">Specifies whether to erase background.</param>
         public virtual void RefreshRects(IEnumerable<RectI> rects, bool eraseBackground = true)
         {
             foreach (var rect in rects)
@@ -562,6 +574,10 @@ namespace Alternet.UI
             Handler.ReleaseMouseCapture();
         }
 
+        /// <summary>
+        /// Calls appropriate mouse events using specified <see cref="TouchEventArgs"/>.
+        /// </summary>
+        /// <param name="e">Touch event arguments.</param>
         public virtual void TouchToMouseEvents(TouchEventArgs e)
         {
             switch (e.DeviceType)
@@ -1161,6 +1177,10 @@ namespace Alternet.UI
             return null;
         }
 
+        /// <summary>
+        /// Gets native handler of the control. You should not use this property.
+        /// </summary>
+        /// <returns></returns>
         public IntPtr GetHandle()
         {
             return Handler.GetHandle();
@@ -1849,12 +1869,20 @@ namespace Alternet.UI
             return Handler.GetDefaultAttributesFont();
         }
 
+        /// <summary>
+        /// Resets cached value of the <see cref="ScaleFactor"/> property, so it will be retrieved
+        /// from the handler next time it is used.
+        /// </summary>
         public virtual void ResetScaleFactor()
         {
             scaleFactor = null;
             dpi = null;
         }
 
+        /// <summary>
+        /// Calls <see cref="LocationChanged"/> and <see cref="SizeChanged"/> events
+        /// if <see cref="Bounds"/> property was changed.
+        /// </summary>
         public virtual void ReportBoundsChanged()
         {
             var newBounds = Bounds;

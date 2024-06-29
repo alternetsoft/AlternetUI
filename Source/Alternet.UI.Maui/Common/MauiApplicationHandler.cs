@@ -103,10 +103,6 @@ namespace Alternet.UI
             return null;
         }
 
-        void IApplicationHandler.NotifyCaptureLost()
-        {
-        }
-
         ISystemSettingsHandler IApplicationHandler.CreateSystemSettingsHandler()
         {
             return new MauiSystemSettingsHandler();
@@ -128,10 +124,6 @@ namespace Alternet.UI
         }
 
         void IApplicationHandler.SetTopWindow(Window window)
-        {
-        }
-
-        void IApplicationHandler.WakeUpIdle()
         {
         }
 

@@ -89,11 +89,6 @@ namespace Alternet.UI
             }
         }
 
-        internal static void NotifyCaptureLost()
-        {
-            App.Handler.NotifyCaptureLost();
-        }
-
         internal static void PerformDefaultLayout(
             Control container,
             RectD childrenLayoutBounds,
