@@ -39,7 +39,7 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Build managed packages.
 
-echo ====================================
+echo ====================================1
 
 call "%SCRIPT_HOME%\MSW.Publish.SubTool.1.Build.Managed.bat" %CERT_PASSWORD%
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
@@ -54,9 +54,7 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Build integration components.
 
-echo ====================================
-echo ====================================
-echo ====================================
+echo ====================================2
 echo SubTool.2
 call "%SCRIPT_HOME%\MSW.Publish.SubTool.2.Build.Integration.bat" %CERT_PASSWORD%
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
@@ -68,7 +66,7 @@ set VersionToolProject=%SOURCE_DIR%\Tools\Versioning\Alternet.UI.VersionTool.Cli
 copy "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release\*.vsix" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ====================================3
 echo SET VSIX VERSION
 
 dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
@@ -81,13 +79,13 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Generate public source.
 
-echo ====================================
+echo ====================================4
 
 call "MSW.Publish.SubTool.3.Gen.Public.Components.bat"
 
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ====================================5
 
 call "MSW.Publish.SubTool.4.Gen.Public.Samples.bat"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)

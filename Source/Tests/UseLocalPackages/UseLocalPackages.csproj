@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.505-beta" />
+    <PackageReference Include="Alternet.UI" Version="0.9.613-beta" />
   </ItemGroup>
 
 </Project>

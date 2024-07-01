@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.Syntax.Parsers.Lsp.Fx
+namespace Alternet.UI
 {
     public class StreamReadWriteEventArgs : EventArgs
     {
-        public StreamReadWriteEventArgs(byte[] buffer, int offset, int count, int readCount = 0)
+        public StreamReadWriteEventArgs(byte[] buffer, int offset, int count, int? readCount = null)
         {
             Buffer = buffer;
             Offset = offset;
@@ -22,6 +22,15 @@ namespace Alternet.Syntax.Parsers.Lsp.Fx
 
         public int Count { get; set; }
 
-        public int ReadCount { get; set; }
+        public int? ReadCount { get; set; }
+
+        public string BufferAsString
+        {
+            get
+            {
+                var result = System.Text.Encoding.UTF8.GetString(Buffer, Offset, ReadCount ?? Count);
+                return result;
+            }
+        }
     }
 }

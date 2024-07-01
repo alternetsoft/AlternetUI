@@ -31,6 +31,10 @@ using Microsoft.Extensions.Logging;
 
 using Microsoft.PowerFx.LanguageServerProtocol;
 
+using Alternet.UI;
+using StreamJsonRpc;
+using StreamJsonRpc.Protocol;
+
 namespace Alternet.Syntax.Parsers.Lsp.Fx
 {
     public class FxServerProcess
@@ -40,8 +44,25 @@ namespace Alternet.Syntax.Parsers.Lsp.Fx
         // This lets the LanguageServer object get the symbols in the RecalcEngine to use for intellisense.
         private readonly PowerFxScopeFactory scopeFactory = new PowerFxScopeFactory();
 
-        private readonly StreamOverStream inputStream = new StreamOverStream();
-        private readonly StreamOverStream outputStream = new StreamOverStream();
+        public readonly JsonMessageFormatter formatter = new JsonMessageFormatter(Encoding.UTF8);
+
+        private readonly StreamOverStream inputStream;
+        private readonly StreamOverStream outputStream;
+        private readonly StreamOverStream serverInputStream;
+        private readonly StreamOverStream serverOutputStream;
+        private readonly Stream inputMemoryStream;
+        private readonly Stream outputMemoryStream;
+        private readonly HeaderDelimitedMessageHandler msgHandler;
+        private readonly Stream syncInputStream;
+        private readonly Stream syncOutputStream;
+        private readonly LanguageServer languageServer;
+
+        // The source for the StreamJsonRpc.JsonRpc.DisconnectedToken property.
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly CancellationTokenSource disconnectedSource = new CancellationTokenSource();
+
+        // Gets a token that is cancelled when the connection is lost.
+        internal CancellationToken DisconnectedToken => disconnectedSource.Token;
 
         /// <summary>
         ///     Create a new <see cref="FxServerProcess"/>.
@@ -52,8 +73,48 @@ namespace Alternet.Syntax.Parsers.Lsp.Fx
         public FxServerProcess(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            inputMemoryStream = new MemoryStream();
+            outputMemoryStream = new MemoryStream();
+            syncInputStream = Stream.Synchronized(inputMemoryStream);
+            syncOutputStream = Stream.Synchronized(inputMemoryStream);
+            inputStream = new StreamOverStream(syncInputStream);
+            outputStream = new StreamOverStream(syncOutputStream);
+            serverInputStream = new StreamOverStream(syncInputStream);
+            serverOutputStream = new StreamOverStream(syncOutputStream);
+
             inputStream.AfterWrite += InputStream_AfterWrite;
             outputStream.AfterRead += OutputStream_AfterRead;
+
+            msgHandler = new HeaderDelimitedMessageHandler(
+                serverOutputStream,
+                serverInputStream,
+                formatter);
+
+            languageServer = new LanguageServer(SendToClient, scopeFactory);
+        }
+
+        public static void LogToFile(object? obj = null)
+        {
+            var msg = obj?.ToString() ?? string.Empty;
+            var filename = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
+
+            string contents = $"{msg}{Environment.NewLine}";
+            File.AppendAllText(filename, contents);
+        }
+
+        private void SendToClient(string data)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(data);
+
+            System.Buffers.ReadOnlySequence<byte> contentBuffer = new(bytes);
+
+            JsonRpcMessage jsonRpcMessage =
+                formatter.Deserialize(contentBuffer, Encoding.UTF8);
+
+            LogToFile("==== SEND TO CLIENT");
+            LogToFile(data);
+            LogToFile("==== END SEND TO CLIENT");
+            msgHandler.WriteAsync(jsonRpcMessage, DisconnectedToken);
         }
 
         /// <summary>
@@ -144,14 +205,72 @@ namespace Alternet.Syntax.Parsers.Lsp.Fx
             }
         }
 
+        public class RpcMessageProps
+        {
+            public string? jsonrpc { get; set; }
+
+            public int? id { get; set; }
+
+            public string method { get; set; }
+        }
+
+        public static string? GetMethodName(string s, out int id)
+        {
+            var obj = JsonSerializer.Deserialize<RpcMessageProps>(s);
+            if (obj is null)
+            {
+                id = 0;
+                return default;
+            }
+
+            var result = obj.method;
+            id = obj.id ?? -1;
+            return result;
+        }
+
         private void OutputStream_AfterRead(object sender, StreamReadWriteEventArgs e)
         {
         }
 
         private void InputStream_AfterWrite(object sender, StreamReadWriteEventArgs e)
         {
-            string s = System.Text.Encoding.UTF8.GetString(e.Buffer, 0, e.Count);
-            ProcessData(s);
+            var jsonRpcMessage =
+                msgHandler.ReadAsync(DisconnectedToken).ConfigureAwait(true).GetAwaiter().GetResult();
+
+            var s = jsonRpcMessage.ToString();
+
+            if (s is null)
+                return;
+
+            LogToFile(s);
+
+            var methodName = GetMethodName(s, out var idValue);
+
+            if (methodName == "initialize")
+            {
+                LogToFile("initialize");
+                var result =
+                    "{\"jsonrpc\":\"2.0\",\"id\":" + idValue.ToString() + ",\"result\":{\"capabilities\":{\"textDocumentSync\":2,\"hoverProvider\":true,\"completionProvider\":{\"resolveProvider\":true,\"triggerCharacters\":[\".\",\"-\",\":\",\"\\\\\"]},\"signatureHelpProvider\":{\"triggerCharacters\":[\" \"]},\"definitionProvider\":true,\"referencesProvider\":true,\"documentHighlightProvider\":true,\"documentSymbolProvider\":true,\"workspaceSymbolProvider\":true,\"codeActionProvider\":true,\"codeLensProvider\":{\"resolveProvider\":true},\"documentFormattingProvider\":false,\"documentRangeFormattingProvider\":false,\"documentOnTypeFormattingProvider\":null,\"renameProvider\":false,\"documentLinkProvider\":null,\"executeCommandProvider\":null,\"experimental\":null,\"foldingRangeProvider\":true}}}\r\n";
+                SendToClient(result);
+            }
+            else
+            if (methodName == "initialized")
+            {
+                LogToFile("initialized");
+            }
+            else
+            {
+                LogToFile("other");
+                try
+                {
+                    languageServer.OnDataReceived(s);
+                }
+                catch (Exception ex)
+                {
+                    LogToFile(ex);
+                    throw;
+                }
+            }
         }
 
         /*public static string GetWebStatusCodeString(HttpStatusCode statusCode, string statusDescription)

@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Underline types that can be used in
-    /// <see cref="ITextBoxTextAttr.SetFontUnderlinedEx"/>.
+    /// Enumerates underline styles that can be used when text attributes are set.
     /// </summary>
     public enum TextBoxTextAttrUnderlineType
     {

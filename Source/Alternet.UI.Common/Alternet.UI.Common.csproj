@@ -12,6 +12,8 @@
     <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>

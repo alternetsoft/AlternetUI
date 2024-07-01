@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines values representing <see cref="TabControl" /> events.
+    /// Defines values representing tab control events.
     /// </summary>
     public enum TabControlAction
     {

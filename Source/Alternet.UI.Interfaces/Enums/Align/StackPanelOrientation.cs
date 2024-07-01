@@ -1,7 +1,7 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines the different orientations that a <see cref="StackPanel"/> can have.
+    /// Defines the different orientations that a stack panel can have.
     /// </summary>
     public enum StackPanelOrientation
     {

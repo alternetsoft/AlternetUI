@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Flags to indicate which attributes are being applied.
-    /// Used in <see cref="ITextBoxTextAttr.SetFlags"/>,
-    /// <see cref="ITextBoxTextAttr.AddFlag"/>,
-    /// <see cref="ITextBoxTextAttr.RemoveFlag"/>.
+    /// Enumerates possible flags used to indicate which attributes are being applied.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.

@@ -231,6 +231,9 @@ namespace Alternet.UI
         /// </summary>
         CaretTimeoutMSec = 41,
 
+        /// <summary>
+        /// Max value in the <see cref="SystemSettingsMetric"/> enumeration.
+        /// </summary>
         Max = CaretTimeoutMSec,
     }
 }

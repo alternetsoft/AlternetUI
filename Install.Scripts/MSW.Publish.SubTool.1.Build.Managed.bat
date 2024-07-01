@@ -27,28 +27,28 @@ dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:AlternetUIPac
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ====================================BM1
 ::Alternet.UI.Build.Tasks.ApiInfoCollector
 pushd "%SOURCE_DIR%\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.ApiInfoCollector\"
 dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ====================================BM2
 ::Alternet.UI.Build.Tasks.csproj
 pushd "%SOURCE_DIR%\Alternet.UI.Build.Tasks\"
 dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ====================================BM3
 ::Alternet.UI Pack
 pushd "%SOURCE_DIR%\Alternet.UI\"
 dotnet msbuild /restore /t:Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true /p:WarningLevel=0
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ====================================BM4
 
 :: call MSW.Publish.SubTool.3.Nuget.Sign.bat "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" %CERT_PASSWORD%
 

@@ -11,8 +11,6 @@ It is built on top of the .NET Framework and uses a XAML-like approach to define
 
 The framework includes a platform-independent graphic device interface for rendering graphical objects, such as fonts, brushes, images, and a layout engine.
 
-AlterNET UI 0.9.x - final betas of AlterNET UI before we wrap things up and announce the first public release.
-
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 An example of an application made with AlterNET UI running on different operating systems:

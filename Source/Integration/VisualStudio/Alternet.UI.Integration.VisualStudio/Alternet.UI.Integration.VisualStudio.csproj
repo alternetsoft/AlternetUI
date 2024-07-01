@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="17.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\Version\Version.props" />
   <Import Project="..\..\..\Version\TargetFrameworks.props" />
   <Import Project="..\..\..\Keys\Keys.props" />
   <Import Project="..\..\..\Keys\Private.props" Condition="Exists('..\..\..\Keys\Private.props')" />
+
+
+  <ItemGroup>
+	<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VSSDK.Vsixsigntool" Version="16.2.29116.78" />
+  </ItemGroup>
+
   <PropertyGroup>
+ 	<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <UseCodebase>true</UseCodebase>
@@ -21,6 +29,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Alternet.UI.Integration.VisualStudio</RootNamespace>
+    <TargetFramework></TargetFramework>
+    <TargetFrameworks></TargetFrameworks>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
@@ -47,6 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="AlternetUIPackage.cs" />
     <Compile Include="Converters\EnumToIntConverter.cs" />
@@ -102,9 +113,6 @@
     <Compile Include="Views\VsTheme.cs" />
   </ItemGroup>
   <!-- ========================================== -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.VSSDK.Vsixsigntool" Version="16.2.29116.78" />
-  </ItemGroup>
   <Target Name="SignPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <PropertyGroup>
       <VsixSignTool>$(NuGetPackageRoot)Microsoft.VSSDK.Vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe</VsixSignTool>
@@ -121,7 +129,6 @@
     <IntermediateOutputPath>obj\$(VsTargetVersion)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AssemblyName>Alternet.UI.Integration.VisualStudio.VS2022</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
@@ -158,36 +165,43 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.pdb">
       <Link>UIXmlHostApp\$(TargetFramework46Version)\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.pdb">
       <Link>UIXmlHostApp\$(TargetFramework48Version)\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.pdb">
       <Link>UIXmlHostApp\DotNetFx\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.pdb">
       <Link>UIXmlHostApp\net6.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net7.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net7.0-windows\**\*.pdb">
       <Link>UIXmlHostApp\net7.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.pdb">
       <Link>UIXmlHostApp\net8.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="AlternetUI.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

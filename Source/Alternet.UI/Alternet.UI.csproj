@@ -23,6 +23,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Common" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.2.2" />
+    <PackageReference Include="SkiaSharp" Version="2.88.8" />
+    <PackageReference Include="SkiaSharp.Extended" Version="2.0.0" />
+    <PackageReference Include="SkiaSharp.Extended.Iconify" Version="1.60.0" />
+    <PackageReference Include="SkiaSharp.Extended.Iconify.FontAwesome" Version="5.0.0" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.8" />
+    <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="2.88.8" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.8" />
+    <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
@@ -59,16 +70,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Build.Result.Log" />
-    <None Remove="Find.Not.Documented.log" />
+    <None Remove="*.log" />
   </ItemGroup>
-
-  <!-- Uncomment this to debug in release build. -->
-  <!-- <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-  </PropertyGroup> -->
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
     <PackageReference Include="Alternet.UI.Pal" Version="$(Version)">
@@ -88,52 +91,44 @@
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
 <!--
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net7.0" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net481" />
--->	
-  </ItemGroup>
-
-  <!-- ================================================= -->
-
-  <!--  
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
+    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Visible="false" Pack="True" PackagePath="lib\$(TargetFramework)" />
+    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Visible="false" Pack="True" PackagePath="lib\$(TargetFramework)" />
 -->
-
-  <ItemGroup>
-    <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
-    <ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
   </ItemGroup>
 
   <!-- ================================================= -->
 
+  <ItemGroup>
+	<ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" PrivateAssets="All">
+		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		<IncludeAssets>Alternet.UI.Common.dll</IncludeAssets>
+	</ProjectReference>
+	<ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
+		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		<IncludeAssets>Alternet.UI.Interfaces.dll</IncludeAssets>
+	</ProjectReference>
+  </ItemGroup>
+
   <!-- ================================================= -->
-  <!-- remove .. in path -->
-  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
 
-    <PropertyGroup>
-      <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
-      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
-      <ApiInfoCollectorInputAssemblyPath>$(BaseOutputPath)\$(Configuration)\net6.0\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
-    </PropertyGroup>
 
-    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>"$(ApiInfoCollectorToolPath).exe" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
-    </PropertyGroup>
-    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>dotnet "$(ApiInfoCollectorToolPath).dll" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
-    </PropertyGroup>
-    <Message Text="=====&gt;&gt;&gt;&gt;&gt;       $(ApiInfoCollectorCommand)" Importance="high" Condition="true" />
-    <Exec Command="$(ApiInfoCollectorCommand)" Condition="false" />
+<PropertyGroup>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <!-- Filter out unnecessary files -->
+      <_ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))"/>
+    </ItemGroup>
+
+    <!-- Print batches for debug purposes -->
+    <Message Text="Batch for .nupkg: ReferenceCopyLocalPaths = @(_ReferenceCopyLocalPaths), ReferenceCopyLocalPaths.DestinationSubDirectory = %(_ReferenceCopyLocalPaths.DestinationSubDirectory) Filename = %(_ReferenceCopyLocalPaths.Filename) Extension = %(_ReferenceCopyLocalPaths.Extension)" Importance="High" Condition="'@(_ReferenceCopyLocalPaths)' != ''" />
+
+    <ItemGroup>
+      <!-- Add file to package with consideration of sub folder. If empty, the root folder is chosen. -->
+      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)" TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)"/>
+    </ItemGroup>
   </Target>
-  <!-- ================================================= -->
+
 </Project>

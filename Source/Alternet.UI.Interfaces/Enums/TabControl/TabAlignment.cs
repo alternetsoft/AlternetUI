@@ -3,9 +3,6 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the locations of the tabs in a tab control.
     /// </summary>
-    /// <remarks>
-    /// This enumeration is used by members such as <see cref="TabControl.TabAlignment"/>.
-    /// </remarks>
     public enum TabAlignment
     {
         /// <summary>

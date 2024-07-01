@@ -179,7 +179,10 @@ namespace ThreadingSample
                             App.IdleLog($"Form {counter} is already diposed");
                         }
                         else
+                        {
                             longOperationProgressBar.Value = i;
+                            Log($"Performing operation {i} of {Maximum}");
+                        }
                     });
                 }
             }, ct);

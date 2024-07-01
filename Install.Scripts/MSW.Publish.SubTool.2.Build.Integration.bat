@@ -34,32 +34,31 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 set /p FOUND_MSBUILD_PATH_VS_2022= < tmpFile 
 del tmpFile 
 
-echo ====================================
+:: Command Line Templates  =========================
+
+echo ==================================== BI4
+echo  Integration\Templates\Alternet.UI.Templates
+dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release /p:WarningLevel=0 "%SOURCE_DIR%\Integration\Templates\Alternet.UI.Templates.csproj"
+if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+
+echo ==================================== BI5
+
+dotnet msbuild /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" "%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj"
+
+echo ==================================== BI1
 echo ====================================
 echo ====================================
 echo  Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
 "%FOUND_MSBUILD_PATH_VS_2022%" /restore /p:VsTargetVersion=VS2022 /p:WarningLevel=0  "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ==================================== BI2
 echo  Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp
 "%FOUND_MSBUILD_PATH_VS_2022%" /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%SOURCE_DIR%\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.csproj"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================
+echo ==================================== BI3
 echo  Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
 "%FOUND_MSBUILD_PATH_VS_2022%" /restore /t:Clean,Build /p:Configuration=Release;DeployExtension=False /p:WarningLevel=0 "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-:: Command Line Templates  =========================
-
-echo ====================================
-echo  Integration\Templates\Alternet.UI.Templates
-dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release /p:WarningLevel=0 "%SOURCE_DIR%\Integration\Templates\Alternet.UI.Templates.csproj"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
-echo ====================================
-
-:: call MSW.Publish.SubTool.3.Nuget.Sign.bat "%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" %CERT_PASSWORD%
-
-dotnet msbuild /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" "%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj"

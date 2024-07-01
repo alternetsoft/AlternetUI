@@ -46,6 +46,7 @@ namespace Alternet.UI
     /// this delegate encapsulates.</typeparam>
     /// <param name="arg1">The first parameter of the method that this delegate encapsulates.</param>
     /// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
+    /// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
     /// <remarks>
     /// This delegate is different from <see cref="Action{T1,T2, T3}"/> in the first parameter definition.
     /// Here it is defined as "ref" parameter.
