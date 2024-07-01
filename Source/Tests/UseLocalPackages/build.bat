@@ -1,0 +1,1 @@
+dotnet build --framework net6.0
