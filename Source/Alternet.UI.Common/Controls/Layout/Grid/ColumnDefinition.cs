@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// <summary>Gets or sets a value that represents the maximum width of a
         /// <see cref="ColumnDefinition" />.   </summary>
         /// <returns>A <see cref="double" /> that represents the maximum width.
-        /// The default value is <see cref="souble.PositiveInfinity" />.</returns>
+        /// The default value is <see cref="double.PositiveInfinity" />.</returns>
         [TypeConverter(typeof(LengthConverter))]
         public double MaxWidth
         {

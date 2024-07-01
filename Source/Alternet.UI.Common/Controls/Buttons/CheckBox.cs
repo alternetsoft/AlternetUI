@@ -194,7 +194,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="WxControlHandler"/> associated with this class.
+        /// Gets a <see cref="ICheckBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         internal new ICheckBoxHandler Handler => (ICheckBoxHandler)base.Handler;

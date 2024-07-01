@@ -9,6 +9,9 @@ using Alternet.Drawing.Printing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Base class for all print dialogs.
+    /// </summary>
     public class BasePrintDialog : CommonDialog
     {
         private PrintDocument? document;
@@ -33,6 +36,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets attached <see cref="IBasePrintDialogHandler"/> object.
+        /// </summary>
         [Browsable(false)]
         public new IBasePrintDialogHandler Handler => (IBasePrintDialogHandler)base.Handler;
 

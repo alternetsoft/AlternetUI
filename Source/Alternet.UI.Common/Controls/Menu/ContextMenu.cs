@@ -69,13 +69,33 @@ namespace Alternet.UI
 
         internal new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
 
+        /// <summary>
+        /// Raises the <see cref="Closing" /> event and <see cref="OnClosing"/> method.</summary>
+        /// <param name="e">A <see cref="EventArgs" /> that contains
+        /// the event data.</param>
         public void RaiseClosing(EventArgs e)
         {
+            Closing?.Invoke(this, e);
             OnClosing(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Opening" /> event and <see cref="OnOpening"/> method.</summary>
+        /// <param name="e">A <see cref="EventArgs" /> that contains
+        /// the event data.</param>
         public void RaiseOpening(CancelEventArgs e)
         {
+            ForEachItem(UpdateEnabled, true);
+            Opening?.Invoke(this, e);
+
+            static void UpdateEnabled(MenuItem item)
+            {
+                var func = item.EnabledFunc;
+                if (func is null)
+                    return;
+                item.Enabled = func();
+            }
+
             OnOpening(e);
         }
 
@@ -122,30 +142,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="Opening" /> event.</summary>
+        /// Called when menu is opening.
+        /// </summary>
         /// <param name="e">A <see cref="CancelEventArgs" /> that contains
         /// the event data.</param>
         protected virtual void OnOpening(CancelEventArgs e)
         {
-            ForEachItem(UpdateEnabled, true);
-            Opening?.Invoke(this, e);
-
-            static void UpdateEnabled(MenuItem item)
-            {
-                var func = item.EnabledFunc;
-                if (func is null)
-                    return;
-                item.Enabled = func();
-            }
         }
 
         /// <summary>
-        /// Raises the <see cref="Closing" /> event.</summary>
+        /// Called when menu is closing.
+        /// </summary>
         /// <param name="e">A <see cref="EventArgs" /> that contains
         /// the event data.</param>
         protected virtual void OnClosing(EventArgs e)
         {
-            Closing?.Invoke(this, e);
         }
     }
 }

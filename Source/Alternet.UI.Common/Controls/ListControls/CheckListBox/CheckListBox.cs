@@ -156,7 +156,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="CheckListBoxHandler"/> associated with this class.
+        /// Gets a <see cref="ICheckListBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         internal new ICheckListBoxHandler Handler
