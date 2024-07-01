@@ -59,16 +59,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Build.Result.Log" />
-    <None Remove="Find.Not.Documented.log" />
+    <None Remove="*.log" />
   </ItemGroup>
-
-  <!-- Uncomment this to debug in release build. -->
-  <!-- <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-  </PropertyGroup> -->
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
     <PackageReference Include="Alternet.UI.Pal" Version="$(Version)">
@@ -87,53 +79,17 @@
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
-<!--
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net7.0" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net481" />
--->	
+
+    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Visible="false" Pack="True" PackagePath="lib" />
+    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Visible="false" Pack="True" PackagePath="lib" />
   </ItemGroup>
 
   <!-- ================================================= -->
-
-  <!--  
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
--->
 
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
     <ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
   </ItemGroup>
 
-  <!-- ================================================= -->
-
-  <!-- ================================================= -->
-  <!-- remove .. in path -->
-  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
-
-    <PropertyGroup>
-      <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
-      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
-      <ApiInfoCollectorInputAssemblyPath>$(BaseOutputPath)\$(Configuration)\net6.0\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>"$(ApiInfoCollectorToolPath).exe" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
-    </PropertyGroup>
-    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>dotnet "$(ApiInfoCollectorToolPath).dll" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
-    </PropertyGroup>
-    <Message Text="=====&gt;&gt;&gt;&gt;&gt;       $(ApiInfoCollectorCommand)" Importance="high" Condition="true" />
-    <Exec Command="$(ApiInfoCollectorCommand)" Condition="false" />
-  </Target>
   <!-- ================================================= -->
 </Project>

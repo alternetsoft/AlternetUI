@@ -47,25 +47,29 @@
         <!-- Windows ============================ -->
         
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native"/>
-        <Copy SourceFiles="@(NugetPayload_Native_Windows_X86)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native" />
+        <Copy SourceFiles="@(NugetPayload_Native_Windows_X86)"
+		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native" />
 
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native"/>
-        <Copy SourceFiles="@(NugetPayload_Native_Windows_X64)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native" />
+        <Copy SourceFiles="@(NugetPayload_Native_Windows_X64)"
+		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native" />
 
         <!-- MacOS  ============================ -->
 
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native"/>
-        <Copy SourceFiles="@(NugetPayload_Native_MacOS)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native" />
+        <Copy SourceFiles="@(NugetPayload_Native_MacOS)"
+		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native" />
 
         <!-- Linux  ============================ -->
 
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native"/>
-        <Copy SourceFiles="@(NugetPayload_Native_Linux)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native" />
+        <Copy SourceFiles="@(NugetPayload_Native_Linux)"
+		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native" />
 
     </Target>
 <!-- ========================================== -->
     <Target Name="NuGet_Sign"  Condition="Exists($(SignKeyPath)) and '$(VsixSignPassword)' != ''">
-		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(VsixSignPassword)" 			/>
+		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(VsixSignPassword)"/>
 		<Message Text="Exec NuGet_Sign" Importance="high" />
 	</Target>
 <!-- ========================================== -->
