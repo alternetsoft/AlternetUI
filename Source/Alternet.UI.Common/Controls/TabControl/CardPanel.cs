@@ -37,7 +37,7 @@ namespace Alternet.UI
         public event EventHandler<ObjectPropertyChangedEventArgs>? CardPropertyChanged;
 
         /// <summary>
-        /// Gets or sets whether to call <see cref="Application.BeginBusyCursor"/> when
+        /// Gets or sets whether to call <see cref="App.BeginBusyCursor"/> when
         /// page is created. By default is <c>true</c>.
         /// </summary>
         public bool UseBusyCursor { get; set; } = true;

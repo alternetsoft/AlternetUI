@@ -88,6 +88,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Bitmap"/> class.
         /// </summary>
         /// <param name="url">Url to the image.</param>
+        /// <param name="baseUri">Specifies base url if <paramref name="url"/> is not absolute.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(string? url, Uri? baseUri = null)
             : base(GraphicsFactory.Handler.CreateImageHandler())

@@ -640,30 +640,55 @@ namespace Alternet.UI
             Handler.SetAttr(day, dateAttr);
         }
 
+        /// <summary>
+        /// Raises <see cref="SelectionChanged"/> event and calls
+        /// <see cref="OnSelectionChanged"/> method
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseSelectionChanged(EventArgs e)
         {
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="PageChanged"/> event and calls
+        /// <see cref="OnPageChanged"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaisePageChanged(EventArgs e)
         {
             OnPageChanged(e);
             PageChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="WeekNumberClick"/> event and calls
+        /// <see cref="OnWeekNumberClick"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseWeekNumberClick(EventArgs e)
         {
             OnWeekNumberClick(e);
             WeekNumberClick?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="DayHeaderClick"/> event and calls
+        /// <see cref="OnDayHeaderClick"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseDayHeaderClick(EventArgs e)
         {
             OnDayHeaderClick(e);
             DayHeaderClick?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="DayDoubleClick"/> event and calls
+        /// <see cref="OnDayDoubleClick"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseDayDoubleClick(EventArgs e)
         {
             OnDayDoubleClick(e);

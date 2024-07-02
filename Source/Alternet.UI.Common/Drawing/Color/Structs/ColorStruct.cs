@@ -10,30 +10,64 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// <see cref="ColorStruct"/> used inside the <see cref="Color"/> object in order to store
+    /// color value. This structure stores color as BGRA and is compatible with <see cref="SKColor"/>.
+    /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Explicit, Pack = 1)]
     public struct ColorStruct
     {
+        /// <summary>
+        /// Gets default value with all fields assigned to default values.
+        /// </summary>
         public static readonly ColorStruct Default = new();
 
+        /// <summary>
+        /// Gets or sets blue component of the color.
+        /// </summary>
         [FieldOffset(0)]
         public byte B;
 
+        /// <summary>
+        /// Gets or sets green component of the color.
+        /// </summary>
         [FieldOffset(1)]
         public byte G;
 
+        /// <summary>
+        /// Gets or sets red component of the color.
+        /// </summary>
         [FieldOffset(2)]
         public byte R;
 
+        /// <summary>
+        /// Gets or sets alpha component of the color.
+        /// </summary>
         [FieldOffset(3)]
         public byte A;
 
+        /// <summary>
+        /// Gets or sets color as <see cref="SKColor"/>.
+        /// </summary>
         [FieldOffset(0)]
         public SKColor Color;
 
+        /// <summary>
+        /// Gets or sets color as <see cref="uint"/>.
+        /// </summary>
         [FieldOffset(0)]
         public uint Value;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorStruct"/> with the specified parameters.
+        /// </summary>
+        /// <param name="red">Red component of the color.</param>
+        /// <param name="green">Green component of the color.</param>
+        /// <param name="blue">Blue component of the color.</param>
+        /// <remarks>
+        /// Alpha component is assigned with 255.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct(byte red, byte green, byte blue)
         {
@@ -43,6 +77,13 @@ namespace Alternet.Drawing
             B = blue;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorStruct"/> with the specified parameters.
+        /// </summary>
+        /// <param name="red">Red component of the color.</param>
+        /// <param name="green">Green component of the color.</param>
+        /// <param name="blue">Blue component of the color.</param>
+        /// <param name="alpha">Alpha component of the color.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct(byte alpha, byte red, byte green, byte blue)
         {
@@ -52,17 +93,28 @@ namespace Alternet.Drawing
             B = blue;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorStruct"/> struct.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorStruct"/> struct.
+        /// </summary>
+        /// <param name="color">Color value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct(SKColor color)
         {
             Color = color;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorStruct"/> struct.
+        /// </summary>
+        /// <param name="value">Color value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ColorStruct(uint value)
         {
@@ -158,13 +210,23 @@ namespace Alternet.Drawing
             return left.Color != right.Color;
         }
 
-        public override readonly bool Equals(object? obj)
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the
+        /// current object; otherwise, <c>false</c>.</returns>
+        public override readonly bool Equals([NotNullWhen(true)] object? obj)
         {
             if (obj is ColorStruct color)
                 return color == this;
             return false;
         }
 
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override readonly int GetHashCode()
         {
             return Value.GetHashCode();

@@ -286,7 +286,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="ButtonHandler"/> associated with this class.
+        /// Gets a <see cref="IButtonHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         internal new IButtonHandler Handler => (IButtonHandler)base.Handler;
@@ -322,26 +322,6 @@ namespace Alternet.UI
             Handler.SetImageMargins(x, y.Value);
         }
 
-        /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateButtonHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.Click = RaiseClick;
-        }
-
-        /// <inheritdoc/>
-        protected override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            Handler.Click = null;
-        }
-
         void IControlStateObjectChanged.DisabledChanged(object? sender)
         {
             Handler.DisabledImage = stateImages?.Disabled;
@@ -370,6 +350,26 @@ namespace Alternet.UI
         {
             Handler.PressedImage = stateImages?.Pressed;
             PerformLayoutAndInvalidate();
+        }
+
+        /// <inheritdoc/>
+        protected override IControlHandler CreateHandler()
+        {
+            return ControlFactory.Handler.CreateButtonHandler(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.Click = RaiseClick;
+        }
+
+        /// <inheritdoc/>
+        protected override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.Click = null;
         }
     }
 }

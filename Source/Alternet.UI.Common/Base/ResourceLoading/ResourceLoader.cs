@@ -72,6 +72,7 @@ namespace Alternet.UI
         /// </code>
         /// </example>
         /// <remarks>
+        /// <param name="baseUri">Specifies base url if <paramref name="url"/> is not absolute.</param>
         /// <paramref name="url"/> with "embres" protocol can include assembly name. Example:
         /// "embres:Alternet.UI.Resources.Svg.ImageName.svg?assembly=Alternet.UI"
         /// </remarks>
@@ -94,6 +95,17 @@ namespace Alternet.UI
             return DefaultStreamFromUrl(url, baseUri);
         }
 
+        /// <summary>
+        /// Calls <see cref="StreamFromUrlOrDefault"/> and if it returns <c>null</c>,
+        /// calls <paramref name="func"/>.
+        /// </summary>
+        /// <param name="url">Url used to load the data. By default "file" and "embres"
+        /// protocols are supported but you can extend it with <see cref="CustomStreamFromUrl"/>
+        /// event.
+        /// </param>
+        /// <param name="func">Function used to get stream from url in case if
+        /// <see cref="StreamFromUrl"/> returns <c>null</c>.</param>
+        /// <returns></returns>
         public static Stream? StreamFromUrlOrDefault(string url, Func<Stream?>? func = null)
         {
             var result = BaseObject.InsideTryCatch(() => StreamFromUrl(url));
@@ -105,6 +117,11 @@ namespace Alternet.UI
         /// Default implementation of <see cref="StreamFromUrl"/>.
         /// See <see cref="StreamFromUrl"/> for details.
         /// </summary>
+        /// <param name="url">Url used to load the data. By default "file" and "embres"
+        /// protocols are supported but you can extend it with <see cref="CustomStreamFromUrl"/>
+        /// event.
+        /// </param>
+        /// <param name="baseUri">Specifies base url if <paramref name="url"/> is not absolute.</param>
         /// <returns></returns>
         public static Stream DefaultStreamFromUrl(string url, Uri? baseUri = null)
         {

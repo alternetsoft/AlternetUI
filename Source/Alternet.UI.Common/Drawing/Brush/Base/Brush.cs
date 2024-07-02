@@ -72,23 +72,6 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <inheritdoc/>
-        protected override bool UpdateRequired
-        {
-            get => base.UpdateRequired;
-
-            set
-            {
-                if (UpdateRequired == value)
-                    return;
-                base.UpdateRequired = value;
-                if (value)
-                {
-                    SafeDispose(ref paint);
-                }
-            }
-        }
-
         /// <summary>
         /// Creates <see cref="Pen"/> with this brush as a parameter.
         /// </summary>
@@ -114,6 +97,23 @@ namespace Alternet.Drawing
         /// Gets color of the brush.
         /// </summary>
         public virtual Color AsColor => Color.Black;
+
+        /// <inheritdoc/>
+        protected override bool UpdateRequired
+        {
+            get => base.UpdateRequired;
+
+            set
+            {
+                if (UpdateRequired == value)
+                    return;
+                base.UpdateRequired = value;
+                if (value)
+                {
+                    SafeDispose(ref paint);
+                }
+            }
+        }
 
         /// <summary>
         /// Converts the specified <see cref='Pen'/> to a <see cref='SKPaint'/>.

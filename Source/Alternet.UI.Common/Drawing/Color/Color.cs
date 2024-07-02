@@ -102,11 +102,20 @@ namespace Alternet.Drawing
         private SKPaint? strokePaint;
         private SKPaint? strokeAndFillPaint;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class with the specified parameters.
+        /// </summary>
+        /// <param name="red">Red component of the color.</param>
+        /// <param name="green">Green component of the color.</param>
+        /// <param name="blue">Blue component of the color.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color(byte red, byte green, byte blue)
         {
@@ -117,6 +126,13 @@ namespace Alternet.Drawing
             state = StateFlags.ValueValid;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class with the specified parameters.
+        /// </summary>
+        /// <param name="red">Red component of the color.</param>
+        /// <param name="green">Green component of the color.</param>
+        /// <param name="blue">Blue component of the color.</param>
+        /// <param name="alpha">Alpha component of the color.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color(byte alpha, byte red, byte green, byte blue)
         {
@@ -127,6 +143,10 @@ namespace Alternet.Drawing
             state = StateFlags.ValueValid;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class from the <see cref="ColorStruct"/>.
+        /// </summary>
+        /// <param name="value">Color specified using <see cref="ColorStruct"/> value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color(ColorStruct value)
         {
@@ -134,6 +154,10 @@ namespace Alternet.Drawing
             state = StateFlags.ValueValid;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class from the <see cref="KnownColor"/>.
+        /// </summary>
+        /// <param name="knownColor">Color specified using <see cref="KnownColor"/> value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color(KnownColor knownColor)
         {
@@ -142,6 +166,11 @@ namespace Alternet.Drawing
             this.knownColor = knownColor;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class from
+        /// the <see cref="KnownSystemColor"/>.
+        /// </summary>
+        /// <param name="knownColor">Color specified using <see cref="KnownSystemColor"/> value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color(KnownSystemColor knownColor)
         {
@@ -150,6 +179,11 @@ namespace Alternet.Drawing
             this.knownColor = (KnownColor)knownColor;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class with the specified parameters.
+        /// </summary>
+        /// <param name="value">Value specified as <see cref="uint"/>.</param>
+        /// <param name="state">State flags.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal Color(uint value, StateFlags state)
         {
@@ -157,6 +191,13 @@ namespace Alternet.Drawing
             this.state = state;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class with the specified parameters.
+        /// </summary>
+        /// <param name="value">Value specified as <see cref="uint"/>.</param>
+        /// <param name="state">State flags.</param>
+        /// <param name="name">Name of the color.</param>
+        /// <param name="knownColor"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal Color(uint value, StateFlags state, string? name, KnownColor knownColor)
         {
@@ -164,16 +205,6 @@ namespace Alternet.Drawing
             this.state = state;
             this.name = name;
             this.knownColor = knownColor;
-        }
-
-        [Flags]
-        public enum StateFlags : short
-        {
-            KnownColorValid = 0x0001,
-
-            ValueValid = 0x0002,
-
-            NameValid = 0x0004,
         }
 
         /// <summary>
@@ -190,6 +221,28 @@ namespace Alternet.Drawing
         /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
         /// </summary>
         public static event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToDisplayString;
+
+        /// <summary>
+        /// Enumerates color value state flags.
+        /// </summary>
+        [Flags]
+        public enum StateFlags : short
+        {
+            /// <summary>
+            /// KnownColor property is specified and valid.
+            /// </summary>
+            KnownColorValid = 0x0001,
+
+            /// <summary>
+            /// Value property is valid.
+            /// </summary>
+            ValueValid = 0x0002,
+
+            /// <summary>
+            /// Name property is valid.
+            /// </summary>
+            NameValid = 0x0004,
+        }
 
         /// <summary>
         /// Gets the red component value of this <see cref="Color"/> structure.
@@ -295,6 +348,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets state flags of this object.
+        /// </summary>
         [Browsable(false)]
         public StateFlags State
         {
@@ -589,6 +645,23 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets this color as <see cref="SKColor"/>.
+        /// </summary>
+        [Browsable(false)]
+        public SKColor SkiaColor
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                RequireArgb();
+                return color.Color;
+            }
+        }
+
+        /// <summary>
+        /// Gets this color as <see cref="ColorStruct"/>.
+        /// </summary>
         public ColorStruct AsStruct
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -614,17 +687,6 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color(RGBValue rgb) => new(rgb.R, rgb.G, rgb.B);
-
-        [Browsable(false)]
-        public SKColor SkiaColor
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                RequireArgb();
-                return color.Color;
-            }
-        }
 
         /// <summary>
         /// Converts the specified <see cref='Color'/> to a <see cref='SKColor'/>.
@@ -905,9 +967,9 @@ namespace Alternet.Drawing
         /// components (255, <paramref name="red"/>, <paramref name="green"/>,
         /// and <paramref name="blue"/>) values.
         /// </summary>
-        /// <param name="red"></param>
-        /// <param name="green"></param>
-        /// <param name="blue"></param>
+        /// <param name="red">Red component of the color.</param>
+        /// <param name="green">Green component of the color.</param>
+        /// <param name="blue">Blue component of the color.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Color FromRgb(byte red, byte green, byte blue)
@@ -1286,6 +1348,39 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calculates minimal and maximal values from <paramref name="r"/>, <paramref name="g"/>,
+        /// <paramref name="b"/> parameters.
+        /// </summary>
+        /// <param name="min">Contains minimal value after method is called.</param>
+        /// <param name="max">Contains maximal value after method is called.</param>
+        /// <param name="r">Red component of the color.</param>
+        /// <param name="g">Green component of the color.</param>
+        /// <param name="b">Blue component of the color.</param>
+        public static void MinMaxRgb(out byte min, out byte max, byte r, byte g, byte b)
+        {
+            if (r > g)
+            {
+                max = r;
+                min = g;
+            }
+            else
+            {
+                max = g;
+                min = r;
+            }
+
+            if (b > max)
+            {
+                max = b;
+            }
+            else
+            if (b < min)
+            {
+                min = b;
+            }
+        }
+
+        /// <summary>
         /// Enumerates colors defined in <see cref="KnownColor"/> for the specified
         /// color categories.
         /// </summary>
@@ -1436,7 +1531,6 @@ namespace Alternet.Drawing
         /// filled with this color.
         /// </summary>
         /// <param name="size">Size of the created image.</param>
-        /// <param name="color">Color.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage AsImage(SizeI size)
@@ -1741,35 +1835,16 @@ namespace Alternet.Drawing
                 return true;
         }
 
+        /// <summary>
+        /// Calculates minimal and maximal values from all RGB color components.
+        /// </summary>
+        /// <param name="min">Contains minimal value after method is called.</param>
+        /// <param name="max">Contains maximal value after method is called</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void MinMaxRgb(out byte min, out byte max)
         {
             RequireArgb();
             MinMaxRgb(out min, out max, color.R, color.G, color.B);
-        }
-
-        public static void MinMaxRgb(out byte min, out byte max, byte r, byte g, byte b)
-        {
-            if (r > g)
-            {
-                max = r;
-                min = g;
-            }
-            else
-            {
-                max = g;
-                min = r;
-            }
-
-            if (b > max)
-            {
-                max = b;
-            }
-            else
-            if (b < min)
-            {
-                min = b;
-            }
         }
 
         /// <summary>

@@ -12,8 +12,7 @@ namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies the attributes of a bitmap image. The <see cref="BitmapData" /> class is
-    /// used by the <see cref="Image.LockSurface" /> and
-    /// <see cref="UnlockBits" /> methods of the <see cref="Image" /> class.</summary>
+    /// used by the <see cref="Image.LockSurface" />.</summary>
     internal class BitmapData : DisposableObject, IBitmapData
     {
         private int width;
@@ -22,6 +21,13 @@ namespace Alternet.Drawing
         private PixelFormat pixelFormat = PixelFormat.Format32bppArgb;
         private IntPtr scan0;
         private int reserved;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitmapData" /> class.
+        /// </summary>
+        public BitmapData()
+        {
+        }
 
         /// <summary>
         /// Gets or sets the pixel width of the <see cref="Image" /> object.
@@ -128,13 +134,6 @@ namespace Alternet.Drawing
             {
                 reserved = value;
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BitmapData" /> class.
-        /// </summary>
-        public BitmapData()
-        {
         }
     }
 }

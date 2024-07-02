@@ -870,6 +870,11 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Finds assembly for the specified resource name.
+        /// </summary>
+        /// <param name="resName">Resource name.</param>
+        /// <returns></returns>
         public static Assembly? FindAssemblyForResource(string resName)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();

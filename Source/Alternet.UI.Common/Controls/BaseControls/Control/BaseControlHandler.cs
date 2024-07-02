@@ -8,6 +8,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which help to implement custom control handler.
+    /// </summary>
     public abstract class BaseControlHandler : DisposableObject
     {
         private Control? control;
@@ -21,7 +24,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="WxControlHandler"/> is attached
+        /// Gets a value indicating whether this object is attached
         /// to a <see cref="Control"/>.
         /// </summary>
         public bool IsAttached => control != null;
