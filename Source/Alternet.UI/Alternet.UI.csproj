@@ -90,10 +90,10 @@
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
-<!--
-    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Visible="false" Pack="True" PackagePath="lib\$(TargetFramework)" />
-    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Visible="false" Pack="True" PackagePath="lib\$(TargetFramework)" />
--->
+
+    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Pack="True" PackagePath="lib\netstandard2.0" />
+    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Pack="True" PackagePath="lib\netstandard2.0" />
+
   </ItemGroup>
 
   <!-- ================================================= -->

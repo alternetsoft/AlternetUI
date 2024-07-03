@@ -3,14 +3,14 @@
 
     <PropertyGroup>
       <OutputType>WinExe</OutputType>
-      <Platforms>AnyCPU;x86;x64</Platforms>
+      <Platforms>AnyCPU</Platforms>
       <ApplicationManifest>app.manifest</ApplicationManifest>
       <LangVersion>11.0</LangVersion>
       <Nullable>enable</Nullable>
       <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
     </PropertyGroup>
 
-	<ItemGroup>
+    <ItemGroup>
       <Compile Remove="build\**" />
       <EmbeddedResource Remove="build\**" />
       <None Remove="build\**" />
@@ -22,5 +22,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+        <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+        <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
     </ItemGroup>
 </Project>

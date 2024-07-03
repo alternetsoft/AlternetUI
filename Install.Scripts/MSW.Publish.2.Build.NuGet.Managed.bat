@@ -91,6 +91,4 @@ call "MSW.Publish.SubTool.4.Gen.Public.Samples.bat"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 
-call PublicExamples.Zip.bat
-
 exit /b

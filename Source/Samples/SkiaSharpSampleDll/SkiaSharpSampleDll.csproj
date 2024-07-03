@@ -44,10 +44,6 @@
     <EmbeddedResource Include="Media\opacity.svg" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
     <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
     </ItemGroup>

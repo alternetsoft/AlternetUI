@@ -1,5 +1,6 @@
 ﻿using Alternet.UI.Versioning;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -17,7 +18,12 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
 
                 var samplesRootRelativePath = @"Source\Samples";
                 var samplesRootFullPath = Path.GetFullPath(Path.Combine(repository.RootPath, samplesRootRelativePath));
-                var sampleDirectoryNames = Directory.GetDirectories(samplesRootFullPath, "*Sample").Select(x => Path.GetFileName(x)!);
+                var sampleDirectoryNames1 = Directory.GetDirectories(samplesRootFullPath, "*Sample").Select(x => Path.GetFileName(x)!);
+                var sampleDirectoryNames2 = Directory.GetDirectories(samplesRootFullPath, "*SampleDll").Select(x => Path.GetFileName(x)!);
+
+                List<string> sampleDirectoryNames = new();
+                sampleDirectoryNames.AddRange(sampleDirectoryNames1);
+                sampleDirectoryNames.AddRange(sampleDirectoryNames2);
 
                 foreach (var sampleDirectoryName in sampleDirectoryNames)
                 {
@@ -28,7 +34,13 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                         targetName: sampleDirectoryName,
                         ignoredDirectores: new[] { "build", "Testing" });
 
-                    var projectFiles = Directory.GetFiles(Path.Combine(targetDirectoryPath, sampleDirectoryName), "*Sample.csproj");
+                    var projectFiles1 = Directory.GetFiles(Path.Combine(targetDirectoryPath, sampleDirectoryName), "*Sample.csproj");
+                    var projectFiles2 = Directory.GetFiles(Path.Combine(targetDirectoryPath, sampleDirectoryName), "*SampleDll.csproj");
+
+                    List<string> projectFiles = new();
+                    projectFiles.AddRange(projectFiles1);
+                    projectFiles.AddRange(projectFiles2);
+
                     PatchSampleProjectFile(projectFiles.Single(), productVersion.GetPackageVersion(buildNumber));
                 }
 
@@ -44,7 +56,17 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                     Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\readme.md"),
                     Path.Combine(targetDirectoryPath, "readme.md"));
 
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\NuGet.config"),
+                    Path.Combine(targetDirectoryPath, "NuGet.config"));                
+
                 Directory.CreateDirectory(Path.Combine(targetDirectoryPath, "CommonData"));
+                Directory.CreateDirectory(Path.Combine(targetDirectoryPath, "LocalPackages"));
+
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\LocalPackages\readme.md"),
+                    Path.Combine(targetDirectoryPath, @"LocalPackages\readme.md"));
+
                 void CopyCommonData(string filename)
                 {
                     File.Copy(
@@ -75,7 +97,9 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
             csproj.AddPackageReference("Alternet.UI", version);
             
             csproj.RemoveProjectReference("Alternet.UI.csproj");
-            
+            csproj.RemoveProjectReference("Alternet.UI.Interfaces.csproj");
+            csproj.RemoveProjectReference("Alternet.UI.Common.csproj");
+
             csproj.Save();
         }
     }
