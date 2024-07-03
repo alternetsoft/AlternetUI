@@ -1,0 +1,1 @@
+dotnet run --framework net6.0

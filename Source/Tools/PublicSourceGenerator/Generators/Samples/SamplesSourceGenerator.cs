@@ -56,7 +56,17 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                     Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\readme.md"),
                     Path.Combine(targetDirectoryPath, "readme.md"));
 
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\NuGet.config"),
+                    Path.Combine(targetDirectoryPath, "NuGet.config"));                
+
                 Directory.CreateDirectory(Path.Combine(targetDirectoryPath, "CommonData"));
+                Directory.CreateDirectory(Path.Combine(targetDirectoryPath, "LocalPackages"));
+
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\LocalPackages\readme.md"),
+                    Path.Combine(targetDirectoryPath, @"LocalPackages\readme.md"));
+
                 void CopyCommonData(string filename)
                 {
                     File.Copy(

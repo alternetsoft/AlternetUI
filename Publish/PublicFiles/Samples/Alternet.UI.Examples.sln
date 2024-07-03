@@ -5,41 +5,12 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsSample", "ControlsSample\ControlsSample.csproj", "{C6102375-00C5-4A00-8BD0-2F8C56EB11F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingSample", "DrawingSample\DrawingSample.csproj", "{843F735E-1636-48AD-9B00-4AA23F232EED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsSampleDll", "Samples\ControlsSampleDll\ControlsSampleDll.csproj", "{3AE86D98-336B-4DB1-ADFE-02084044BB5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExplorerUISample", "ExplorerUISample\ExplorerUISample.csproj", "{D84D14A2-3AA1-43A9-912F-7F0DA8761708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiaSharpSampleDll", "Samples\SkiaSharpSampleDll\SkiaSharpSampleDll.csproj", "{2F2373A4-333E-4955-9B6D-52E7D84A9FE8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldSample", "HelloWorldSample\HelloWorldSample.csproj", "{61431CC9-F1B7-4382-9094-C66CE8626754}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomControlsSample", "CustomControlsSample\CustomControlsSample.csproj", "{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBindingSample", "DataBindingSample\DataBindingSample.csproj", "{F2FB57D4-35C3-47E8-A35D-A2CD1AE80A28}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeFormSample", "EmployeeFormSample\EmployeeFormSample.csproj", "{7DE266E2-9147-4507-92D9-A5159B569B57}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputSample", "InputSample\InputSample.csproj", "{340C4EF7-A1C2-4202-ADBF-BDE852448E65}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayoutSample", "LayoutSample\LayoutSample.csproj", "{402869FF-F76D-4740-9A19-3E32148F4BBF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaintSample", "PaintSample\PaintSample.csproj", "{299E3B82-1CB7-4AE6-B5EB-A93AD01DDAA0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MenuSample", "MenuSample\MenuSample.csproj", "{D8974B94-9884-40DE-9D38-E218CD6C2BCE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowPropertiesSample", "WindowPropertiesSample\WindowPropertiesSample.csproj", "{12361FB2-4EA3-44AB-B595-1EB7A87A2397}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonDialogsSample", "CommonDialogsSample\CommonDialogsSample.csproj", "{8F54CEAC-1F27-4C0B-A647-FBBD65FCCE61}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragAndDropSample", "DragAndDropSample\DragAndDropSample.csproj", "{719F6B7F-7CE0-43FA-AA55-C7B153F576C3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreadingSample", "ThreadingSample\ThreadingSample.csproj", "{F211B821-A35B-4313-AC1A-1FD8D32DC020}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingSample", "PrintingSample\PrintingSample.csproj", "{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuiManagerSample", "AuiManagerSample\AuiManagerSample.csproj", "{53189757-746A-45BB-979F-D463151DC856}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyGridSample", "PropertyGridSample\PropertyGridSample.csproj", "{95AC7440-7C78-477C-829E-59A73449D447}"
-EndProject
-
 
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
