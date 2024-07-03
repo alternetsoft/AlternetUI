@@ -65,7 +65,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators
             }
 
             if (groupContainingFoundElement == null)
-                throw new InvalidOperationException();
+                return;
 
             if (!groupContainingFoundElement.Elements().Any())
                 groupContainingFoundElement.Remove();
