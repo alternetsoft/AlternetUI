@@ -34,9 +34,6 @@ namespace ControlsSample
 
             InitSamples();
 
-            /*application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
-            DebugUtils.HookExceptionEvents();*/
-
             if (testBadFont)
                 Control.DefaultFont = new Font("abrakadabra", 12);
 

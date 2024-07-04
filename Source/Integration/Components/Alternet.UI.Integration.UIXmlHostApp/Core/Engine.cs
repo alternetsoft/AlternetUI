@@ -51,13 +51,19 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         public void Run()
         {
-            previewerService = InternalsAccessor.CreateObject(
+            previewerService = new DummyService(
+                (Action<IDictionary<string, object>>)OnUixmlUpdateSuccess,
+                (Action<IDictionary<string, object>>)OnUixmlUpdateFailure,
+                (Action)OnTick,
+                ResourceLocator.ScreenshotsDirectory);
+
+            /*previewerService = InternalsAccessor.CreateObject(
                 alternetUIAssembly,
                 "Alternet.UI.Integration.UIXmlPreviewerService",
                 (Action<IDictionary<string, object>>)OnUixmlUpdateSuccess,
                 (Action<IDictionary<string, object>>)OnUixmlUpdateFailure,
                 (Action)OnTick,
-                ResourceLocator.ScreenshotsDirectory);
+                ResourceLocator.ScreenshotsDirectory);*/
 
             transport.OnMessage += OnTransportMessage;
             transport.Start();

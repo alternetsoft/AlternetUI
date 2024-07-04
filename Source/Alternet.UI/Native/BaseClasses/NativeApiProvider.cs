@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 
+using Alternet.UI.Integration;
+
 [module: DefaultCharSet(CharSet.Unicode)]
 
 namespace Alternet.UI.Native
@@ -13,13 +15,13 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal abstract class NativeApiProvider
     {
-        public const string NativeModuleNameNoExt = "Alternet.UI.Pal";
+        internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
 
 #if NETCOREAPP
-        public const string NativeModuleName = NativeModuleNameNoExt;
-        private static IntPtr libHandle = default;
+        internal const string NativeModuleName = NativeModuleNameNoExt;
+        internal static IntPtr libHandle = default;
 #else
-        public const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
+        internal const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
 #endif
 
         private static bool initialized;
@@ -27,7 +29,7 @@ namespace Alternet.UI.Native
         private static GCHandle caughtExceptionCallbackHandle;
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-        public delegate void PInvokeCallbackActionType();
+        internal delegate void PInvokeCallbackActionType();
 
         internal static string NativeModuleNameWithExt
         {
@@ -59,9 +61,12 @@ namespace Alternet.UI.Native
             if (!initialized)
             {
 #if NETCOREAPP
-                NativeLibrary.SetDllImportResolver(
-                    typeof(NativeApiProvider).Assembly,
-                    ImportResolver);
+                if (UIXmlPreviewLoader.SetDllResolver)
+                {
+                    NativeLibrary.SetDllImportResolver(
+                        typeof(NativeApiProvider).Assembly,
+                        ImportResolver);
+                }
 #else
                 WindowsNativeModulesLocator.SetNativeModulesDirectory();
 #endif
@@ -133,10 +138,8 @@ namespace Alternet.UI.Native
         {
             public static void SetNativeModulesDirectory()
             {
-/*#if NETCOREAPP*/
                 if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     return;
-/*#endif*/
                 /*
                 var assemblyDirectory = Path.GetDirectoryName(
                     new Uri(

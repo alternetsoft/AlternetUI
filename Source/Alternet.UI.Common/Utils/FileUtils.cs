@@ -56,14 +56,17 @@ namespace Alternet.UI
         /// This parameter can contain a combination of valid literal path and
         /// wildcard (* and ?) characters. It doesn't support regular expressions.
         /// </param>
+        /// <param name="appFolderOverride">Path to use instead of app folder. Optional. </param>
         /// <returns>
         /// The full name (including path) for the first found file that match the
         /// specified search pattern. Returns <c>null</c> if no file was found.
         /// </returns>
-        public static string? FindFileRecursiveInAppFolder(string searchPattern)
+        public static string? FindFileRecursiveInAppFolder(
+            string searchPattern,
+            string? appFolderOverride = null)
         {
             var result = FindFirstFile(
-                CommonUtils.GetAppFolder(),
+                appFolderOverride ?? CommonUtils.GetAppFolder(),
                 searchPattern,
                 SearchOption.AllDirectories);
             return result;

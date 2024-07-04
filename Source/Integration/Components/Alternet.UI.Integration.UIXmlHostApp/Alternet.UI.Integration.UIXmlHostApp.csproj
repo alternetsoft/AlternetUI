@@ -2,20 +2,24 @@
 <Import Project="..\..\..\Version\Version.props" />
 <Import Project="..\..\..\Version\TargetFrameworks.props" />
 <Import Project="..\..\..\Keys\Keys.props" />
-     
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <LangVersion>latest</LangVersion>
     <UseWindowsForms>true</UseWindowsForms>
-   </PropertyGroup>
+    <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\..\</AlternetUIPath>
+  </PropertyGroup>
+
+  <!-- <Import Project="$(MSBuildProjectDirectory)\..\..\..\Build\Alternet.UI.Copy.props"/> -->
+
 
       <PropertyGroup>
         <TargetFrameworks>$(UIIntegrationUIXmlHostAppTargetFrameworks)</TargetFrameworks>
       </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
-    <PackageReference Include="Serilog" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="ExposedObject" Version="2.2.0" />
   </ItemGroup>
 </Project>

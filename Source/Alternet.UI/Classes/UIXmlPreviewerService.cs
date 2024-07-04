@@ -198,7 +198,11 @@ namespace Alternet.UI.Integration
                 System.Runtime.Loader.AssemblyLoadContext.Default.Resolving -= AssemblyLoadContext_Resolving;
 
                 if (name.Name == "Alternet.UI")
+                    return typeof(Application).Assembly;
+                if (name.Name == "Alternet.UI.Common")
                     return typeof(Alternet.UI.Window).Assembly;
+                if (name.Name == "Alternet.UI.Interfaces")
+                    return typeof(Alternet.UI.Keys).Assembly;
 
                 if (name.Name == null)
                     throw new Exception();
