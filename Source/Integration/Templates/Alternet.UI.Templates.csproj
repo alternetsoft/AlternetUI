@@ -5,7 +5,7 @@
     <PackageType>Template</PackageType>
     <PackageId>Alternet.UI.Templates</PackageId>
     <Title>AlterNET UI Templates</Title>
-    <Description>Templates for creating AlterNET UI projects and project items.</Description>
+    <Description>Templates for creating AlterNET UI projects and project items. Template installed from nupkg.</Description>
     <PackageTags>alternet-ui;gui;ui</PackageTags>
     <PackageProjectUrl>https://github.com/alternetsoft/Alternet.UI</PackageProjectUrl>
     <RepositoryUrl>https://github.com/alternetsoft/Alternet.UI</RepositoryUrl>
