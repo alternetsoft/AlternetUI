@@ -378,14 +378,21 @@ namespace Alternet.UI
             set
             {
                 value ??= string.Empty;
-                if (text == value)
+
+                var forced = StateFlags.HasFlag(ControlFlags.ForceTextChange);
+                if (forced)
+                    StateFlags &= ~ControlFlags.ForceTextChange;
+
+                if (!forced && text == value)
                     return;
                 text = value;
 
                 if (handlerTextChanging == 0)
                 {
-                    if (Handler.Text != value)
-                        Handler.Text = value;
+                    var coercedText = CoerceTextForHandler(value);
+
+                    if (forced || Handler.Text != coercedText)
+                        Handler.Text = coercedText;
                 }
 
                 RaiseTextChanged();

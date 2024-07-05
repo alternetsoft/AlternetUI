@@ -31,5 +31,10 @@ namespace Alternet.UI
         /// This flag is set after start location was applied.
         /// </remarks>
         StartLocationApplied = 2,
+
+        /// <summary>
+        /// Indicates that control is forced to update handler's text next time Text property is changed.
+        /// </summary>
+        ForceTextChange = 4,
     }
 }
