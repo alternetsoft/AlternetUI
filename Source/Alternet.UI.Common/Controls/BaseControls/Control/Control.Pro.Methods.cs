@@ -123,6 +123,9 @@ namespace Alternet.UI
             return new SizeD(maxWidth, maxHeight);
         }
 
+        /// <summary>
+        /// Unbinds events from the handler.
+        /// </summary>
         protected virtual void UnbindHandlerEvents()
         {
             Handler.TextChanged = null;
@@ -150,6 +153,9 @@ namespace Alternet.UI
             Handler.DpiChanged = null;
         }
 
+        /// <summary>
+        /// Binds events to the handler.
+        /// </summary>
         protected virtual void BindHandlerEvents()
         {
             Handler.MouseEnter = RaiseMouseEnterOnTarget;
@@ -175,6 +181,34 @@ namespace Alternet.UI
             Handler.TextChanged = OnHandlerTextChanged;
             Handler.SystemColorsChanged = RaiseSystemColorsChanged;
             Handler.DpiChanged = OnHandlerDpiChanged;
+        }
+
+        /// <summary>
+        /// Called to modify text before it is assigned to the handler.
+        /// </summary>
+        /// <param name="s">New text.</param>
+        protected virtual string CoerceTextForHandler(string s)
+        {
+            return s;
+        }
+
+        /// <summary>
+        /// Called when handler's text property is changed.
+        /// </summary>
+        protected virtual void OnHandlerTextChanged()
+        {
+            if (handlerTextChanging > 0)
+                return;
+
+            handlerTextChanging++;
+            try
+            {
+                Text = Handler.Text;
+            }
+            finally
+            {
+                handlerTextChanging--;
+            }
         }
 
         /// <summary>

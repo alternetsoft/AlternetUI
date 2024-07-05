@@ -47,22 +47,6 @@ namespace Alternet.UI
             }
         }
 
-        internal virtual void OnHandlerTextChanged()
-        {
-            if (handlerTextChanging > 0)
-                return;
-
-            handlerTextChanging++;
-            try
-            {
-                Text = Handler.Text;
-            }
-            finally
-            {
-                handlerTextChanging--;
-            }
-        }
-
         internal virtual void OnHandlerHorizontalScrollBarValueChanged()
         {
             var args = new ScrollEventArgs

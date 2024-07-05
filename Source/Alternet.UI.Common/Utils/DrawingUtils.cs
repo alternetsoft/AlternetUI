@@ -37,7 +37,7 @@ namespace Alternet.UI
             SetParentBackground(control, Brushes.Yellow);
         }
 
-        /// <inheritdoc cref="ControlPainter.GetCheckBoxSize"/>
+        /// <inheritdoc cref="IControlPainterHandler.GetCheckBoxSize"/>
         public static SizeD GetCheckBoxSize(
             Control control,
             CheckState checkState,
@@ -46,7 +46,7 @@ namespace Alternet.UI
             return ControlPainter.Handler.GetCheckBoxSize(control, checkState, controlState);
         }
 
-        /// <inheritdoc cref="ControlPainter.DrawCheckBox"/>
+        /// <inheritdoc cref="IControlPainterHandler.DrawCheckBox"/>
         public static void DrawCheckBox(
             this Graphics canvas,
             Control control,
@@ -341,7 +341,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws horizontal line using <see cref="Graphics.FillRectangle"/>.
+        /// Draws horizontal line using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw line.</param>
@@ -360,7 +360,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws vertical line using <see cref="Graphics.FillRectangle"/>.
+        /// Draws vertical line using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw line.</param>
@@ -417,7 +417,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws rectangle border using <see cref="Graphics.FillRectangle"/>.
+        /// Draws rectangle border using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw border.</param>
@@ -436,7 +436,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws rectangle border using <see cref="Graphics.FillRectangle"/>.
+        /// Draws rectangle border using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw border.</param>
@@ -459,7 +459,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws rectangles border using <see cref="Graphics.FillRectangle"/>.
+        /// Draws rectangles border using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw border.</param>
@@ -499,6 +499,70 @@ namespace Alternet.UI
             var point = new PointD(rect.Right - width, rect.Top);
             var size = new SizeD(width, rect.Height);
             return new RectD(point, size);
+        }
+
+        public static string WrapTextToMultipleLines(
+            string text,
+            Coord pixels,
+            Font font,
+            double? scaleFactor = null)
+        {
+            var list = WrapTextToList(text, pixels, font, scaleFactor);
+            if (list.Count == 0)
+                return string.Empty;
+            if (list.Count == 1)
+                return list[0];
+            StringBuilder result = new();
+            bool firstLine = true;
+            foreach(var s in list)
+            {
+                if(!firstLine)
+                    result.AppendLine();
+                result.Append(s);
+                firstLine = false;
+            }
+
+            return result.ToString();
+        }
+
+        public static List<string> WrapTextToList(
+            string text,
+            Coord pixels,
+            Font font,
+            double? scaleFactor = null)
+        {
+            List<string> wrappedLines = new();
+
+            if (string.IsNullOrEmpty(text))
+                return wrappedLines;
+
+            var canvas = GraphicsFactory.GetOrCreateMemoryCanvas(scaleFactor);
+            var spaceWidth = canvas.MeasureText(StringUtils.OneSpace, font).Width;
+
+            string[] originalLines = text.Split(' ');
+
+            StringBuilder actualLine = new StringBuilder();
+            Coord actualWidth = 0;
+
+            foreach (var item in originalLines)
+            {
+                Coord w = canvas.MeasureText(item, font).Width + spaceWidth;
+                actualWidth += w;
+
+                if (actualWidth > pixels)
+                {
+                    wrappedLines.Add(actualLine.ToString());
+                    actualLine.Clear();
+                    actualWidth = w;
+                }
+
+                actualLine.Append(item + StringUtils.OneSpace);
+            }
+
+            if (actualLine.Length > 0)
+                wrappedLines.Add(actualLine.ToString());
+
+            return wrappedLines;
         }
     }
 }

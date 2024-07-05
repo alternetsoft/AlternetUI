@@ -57,6 +57,7 @@ namespace PropertyGridSample
             if (control is not RichTextBox textBox)
                 return;
             textBox.SuggestedSize = defaultListSize;
+            textBox.Text = LoremIpsum;
         }
 
         public static void InitMultilineTextBox(object control)

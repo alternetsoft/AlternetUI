@@ -45,8 +45,9 @@ namespace PropertyGridSample
         {
             if (control is not Label label)
                 return;
-            label.Text = "La&bel";
+            label.Text = LoremIpsum.Replace("\n",StringUtils.OneSpace).Trim();
             label.HorizontalAlignment = HorizontalAlignment.Left;
+            label.MaxTextWidth = 200;
         }
 
         public static void InitLinkLabel(object control)
