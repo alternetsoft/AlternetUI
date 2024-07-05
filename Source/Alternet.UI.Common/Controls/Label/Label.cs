@@ -77,9 +77,12 @@ namespace Alternet.UI
                     value = null;
                 if (maxTextWidth == value)
                     return;
-                maxTextWidth = value;
-                StateFlags |= ControlFlags.ForceTextChange;
-                Text = Text;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    maxTextWidth = value;
+                    StateFlags |= ControlFlags.ForceTextChange;
+                    Text = Text;
+                });
             }
         }
 
