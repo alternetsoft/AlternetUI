@@ -34,14 +34,21 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string PrettyJson(string unPrettyJson)
         {
-            var options = new JsonSerializerOptions()
+            try
             {
-                WriteIndented = true,
-            };
+                var options = new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                };
 
-            var jsonElement = JsonSerializer.Deserialize<JsonElement>(unPrettyJson);
+                var jsonElement = JsonSerializer.Deserialize<JsonElement>(unPrettyJson);
 
-            return JsonSerializer.Serialize(jsonElement, options);
+                return JsonSerializer.Serialize(jsonElement, options);
+            }
+            catch
+            {
+                return unPrettyJson;
+            }
         }
     }
 }
