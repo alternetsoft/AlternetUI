@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Alternet.UI
 {
@@ -10,6 +11,27 @@ namespace Alternet.UI
     /// </summary>
     public static class WebUtils
     {
+        /// <summary>
+        /// Checks whether specified string a valid json text.
+        /// </summary>
+        /// <param name="s">String to check.</param>
+        /// <returns>
+        /// <c>true</c> if <paramref name="s"/> is a valid json string;
+        /// otherwise returns <c>false</c>.
+        /// </returns>
+        public static bool IsValidJson(string s)
+        {
+            try
+            {
+                var tmpObj = JsonValue.Parse(s);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static string Base64Encode(string? plainText)
         {
             if (string.IsNullOrEmpty(plainText))
