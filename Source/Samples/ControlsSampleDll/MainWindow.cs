@@ -95,7 +95,7 @@ namespace ControlsSample
         {
             pageContainer = new(SplittedTreeAndCards.TreeKind.ListBox);
             panel.Parent = this;
-            Title = "Alternet UI Controls Sample";
+            Title = "AlterNET UI Demo";
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
