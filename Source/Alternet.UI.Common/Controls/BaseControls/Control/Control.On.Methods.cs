@@ -10,12 +10,12 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
-        /// Raises the <see cref="CellChanged" /> event.
+        /// Called when the <see cref="CellChanged" /> event is raised.
         /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public virtual void OnCellChanged()
+        public virtual void OnCellChanged(EventArgs e)
         {
-            CellChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="Control.Resize" /> event.
+        /// Called when the <see cref="Resize" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -56,6 +56,10 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="LocationChanged" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnLocationChanged(EventArgs e)
         {
@@ -99,11 +103,19 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="Activated" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnActivated(EventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="Deactivated" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDeactivated(EventArgs e)
         {
@@ -130,7 +142,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="KeyPress" /> event.
+        /// Called when the <see cref="KeyPress" /> event is raised.
         /// </summary>
         /// <param name="e">A <see cref="KeyPressEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -138,6 +150,10 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="TextChanged" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnTextChanged(EventArgs e)
         {
@@ -180,7 +196,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting the left mouse button was pressed
+        /// Called when the left mouse button was pressed.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseLeftButtonDown(MouseEventArgs e)
@@ -188,7 +204,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting the left mouse button was released
+        /// Called when the left mouse button was released.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseLeftButtonUp(MouseEventArgs e)
@@ -252,13 +268,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting the right mouse button was pressed
+        /// Called when the right mouse button was pressed.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseRightButtonDown(MouseEventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="KeyDown" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnKeyDown(KeyEventArgs e)
         {
@@ -304,31 +324,55 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="DragDrop" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragDrop(DragEventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="DragStart" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="DragStartEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragStart(DragStartEventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="DpiChanged" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="DpiChangedEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDpiChanged(DpiChangedEventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="DragOver" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragOver(DragEventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="DragEnter" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragEnter(DragEventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="DragLeave" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragLeave(EventArgs e)
         {
@@ -355,16 +399,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting the mouse button was pressed
+        /// Called when the mouse button was double-clicked.
         /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseDoubleClick(MouseEventArgs e)
         {
         }
 
         /// <summary>
-        ///     Virtual method reporting a mouse wheel rotation
+        /// Called when the <see cref="MouseWheel" /> event is raised.
         /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseWheel(MouseEventArgs e)
         {
@@ -381,16 +427,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting a mouse move
+        /// Called when the mouse is moved.
         /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseMove(MouseEventArgs e)
         {
         }
 
         /// <summary>
-        ///     Virtual method reporting the mouse button was released
+        /// Called when the mouse button was released.
         /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseUp(MouseEventArgs e)
         {
@@ -405,6 +453,10 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Called when <see cref="Parent"/> property is changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnParentChanged(EventArgs e)
         {
@@ -421,7 +473,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="HelpRequested" /> event.</summary>
+        /// Called when the <see cref="HelpRequested" /> event is raised.</summary>
         /// <param name="e">A <see cref="HelpEventArgs" /> that
         /// contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -439,16 +491,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Virtual method reporting the right mouse button was released
+        /// Called when the right mouse button was released.
         /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseRightButtonUp(MouseEventArgs e)
         {
         }
 
         /// <summary>
-        ///     Virtual method reporting the mouse button was pressed
+        /// Called when the mouse button was pressed.
         /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseDown(MouseEventArgs e)
         {

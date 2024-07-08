@@ -9,6 +9,15 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Raises the <see cref="CellChanged" /> event and <see cref="OnCellChanged"/> method.
+        /// </summary>
+        public void RaiseCellChanged()
+        {
+            CellChanged?.Invoke(this, EventArgs.Empty);
+            OnCellChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Idle"/> event and calls
         /// <see cref="OnIdle(EventArgs)"/>.
         /// See <see cref="Idle"/> event description for more details.
