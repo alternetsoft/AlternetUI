@@ -1790,7 +1790,7 @@ namespace Alternet.UI
                 if (value == columnIndex)
                     return;
                 columnIndex = value;
-                OnCellChanged();
+                RaiseCellChanged();
             }
         }
 
@@ -1813,7 +1813,7 @@ namespace Alternet.UI
                 if (value == rowIndex)
                     return;
                 rowIndex = value;
-                OnCellChanged();
+                RaiseCellChanged();
             }
         }
 
@@ -1835,7 +1835,7 @@ namespace Alternet.UI
                 if (value == columnSpan)
                     return;
                 columnSpan = value;
-                OnCellChanged();
+                RaiseCellChanged();
             }
         }
 
@@ -1858,7 +1858,7 @@ namespace Alternet.UI
                 if (value == rowSpan)
                     return;
                 rowSpan = value;
-                OnCellChanged();
+                RaiseCellChanged();
             }
         }
 

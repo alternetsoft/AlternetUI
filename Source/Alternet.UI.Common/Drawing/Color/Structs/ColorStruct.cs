@@ -148,9 +148,15 @@ namespace Alternet.Drawing
             return new(color);
         }
 
+        /// <summary>
+        /// Converts the specified <see cref='uint'/> to a <see cref='ColorStruct'/>.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator ColorStruct(uint d) => new(d);
 
+        /// <summary>
+        /// Converts the specified <see cref='ColorStruct'/> to a <see cref='uint'/>.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator uint(ColorStruct d) => d.Value;
 
