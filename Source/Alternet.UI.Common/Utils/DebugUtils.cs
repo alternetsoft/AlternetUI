@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,6 +16,31 @@ namespace Alternet.UI
     {
         private static bool insideUnhandledException;
         private static bool hookedExceptionEvents;
+
+        /// <summary>
+        /// Waits until debugger is attached. Uses <paramref name="debugOptionFileName"/>
+        /// file existance in order to get "wait" setting on/off.
+        /// </summary>
+        /// <param name="debugOptionFileName">Path to file name which existance specifies
+        /// whether wait for debugger is on. Optional. When not specified, file
+        /// "e:\debugserver.on" is used.</param>
+        public static void WaitDebugger(string? debugOptionFileName = null)
+        {
+            try
+            {
+                bool waitDebug = File.Exists(debugOptionFileName ?? @"e:\debugserver.on");
+                if (waitDebug)
+                {
+                    while (!Debugger.IsAttached)
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
 
         /// <summary>
         /// Hooks exception events for the debug purposes.
