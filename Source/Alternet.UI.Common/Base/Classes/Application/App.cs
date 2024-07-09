@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,21 +41,6 @@ namespace Alternet.UI
         public static readonly bool IsMacOS;
 
         /// <summary>
-        /// Indicates whether the current application is running on Android.
-        /// </summary>
-        public static readonly bool IsAndroidOS;
-
-        /// <summary>
-        /// Indicates whether the current application is running on unknown OS.
-        /// </summary>
-        public static readonly bool IsUnknownOS;
-
-        /// <summary>
-        /// Indicates whether the current application is running on Apple iOS.
-        /// </summary>
-        public static readonly bool IsIOS;
-
-        /// <summary>
         /// Gets a value that indicates whether the current operating system is
         /// a 64-bit operating system.
         /// </summary>
@@ -68,7 +54,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
         /// </summary>
-        public static readonly OperatingSystems BackendOS;
+        public static OperatingSystems BackendOS;
+
+        /// <summary>
+        /// Indicates whether the current application is running on Android.
+        /// </summary>
+        public static bool IsAndroidOS;
+
+        /// <summary>
+        /// Indicates whether the current application is running on unknown OS.
+        /// </summary>
+        public static bool IsUnknownOS;
+
+        /// <summary>
+        /// Indicates whether the current application is running on Apple iOS.
+        /// </summary>
+        public static bool IsIOS;
 
         /// <summary>
         /// Gets or sets application exit code used when application terminates
@@ -105,6 +106,8 @@ namespace Alternet.UI
         private static readonly ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
         private static readonly ConcurrentQueue<(string Msg, LogItemKind Kind)> LogQueue = new();
 
+        private static bool? isMono;
+
         private static UnhandledExceptionMode unhandledExceptionMode
             = UnhandledExceptionMode.CatchException;
 
@@ -126,8 +129,7 @@ namespace Alternet.UI
             Is64BitOS = Environment.Is64BitOperatingSystem;
             Is64BitProcess = Environment.Is64BitProcess;
 
-#if NET5_0_OR_GREATER
-            IsWindowsOS = OperatingSystem.IsWindows();
+            IsWindowsOS = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
             if (IsWindowsOS)
             {
@@ -139,7 +141,7 @@ namespace Alternet.UI
                 return;
             }
 
-            IsMacOS = OperatingSystem.IsMacOS();
+            IsMacOS = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
             if (IsMacOS)
             {
@@ -147,7 +149,7 @@ namespace Alternet.UI
                 return;
             }
 
-            IsLinuxOS = OperatingSystem.IsLinux();
+            IsLinuxOS = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
             if (IsLinuxOS)
             {
@@ -155,28 +157,8 @@ namespace Alternet.UI
                 return;
             }
 
-            IsAndroidOS = OperatingSystem.IsAndroid();
-
-            if (IsAndroidOS)
-            {
-                BackendOS = OperatingSystems.Android;
-                return;
-            }
-
-            IsIOS = OperatingSystem.IsIOS();
-
-            if (IsIOS)
-            {
-                BackendOS = OperatingSystems.IOS;
-                return;
-            }
-
             BackendOS = OperatingSystems.Unknown;
             IsUnknownOS = true;
-#else
-            BackendOS = OperatingSystems.Windows;
-            IsWindowsOS = true;
-#endif
         }
 
         /// <summary>
@@ -285,6 +267,11 @@ namespace Alternet.UI
                 current = value;
             }
         }
+
+        /// <summary>
+        /// Indicates whether the current application is running on Mono runtime.
+        /// </summary>
+        public static bool IsMono => isMono ??= Type.GetType("Mono.Runtime") != null;
 
         /// <summary>
         /// Gets how the application responds to unhandled exceptions.

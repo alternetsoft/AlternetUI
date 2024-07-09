@@ -12,20 +12,6 @@ namespace Alternet.UI
         private static Control? focusedControl;
 
         /// <summary>
-        /// Returns the currently focused control, or <see langword="null"/> if
-        /// no control is focused.
-        /// </summary>
-        public static Control? GetFocusedControl()
-        {
-            if (FocusedControl?.Focused ?? false)
-                return FocusedControl;
-
-            var result = App.Handler.GetFocusedControl();
-            FocusedControl = result;
-            return result;
-        }
-
-        /// <summary>
         /// Gets or sets focused control for internal purposes. Use <see cref="GetFocusedControl"/>
         /// instead of this property.
         /// </summary>
@@ -54,8 +40,7 @@ namespace Alternet.UI
         /// </returns>
         /// <remarks>
         /// If this property returns true, it means that calling <see cref="SetFocus"/> will put
-        /// focus either to this control or one of its children. If you need to know whether
-        /// this control accepts focus itself, use <see cref="IsFocusable"/>.
+        /// focus either to this control or one of its children.
         /// </remarks>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
@@ -180,6 +165,20 @@ namespace Alternet.UI
                     return;
                 UpdateFocusFlags(value, TabStop);
             }
+        }
+
+        /// <summary>
+        /// Returns the currently focused control, or <see langword="null"/> if
+        /// no control is focused.
+        /// </summary>
+        public static Control? GetFocusedControl()
+        {
+            if (FocusedControl?.Focused ?? false)
+                return FocusedControl;
+
+            var result = App.Handler.GetFocusedControl();
+            FocusedControl = result;
+            return result;
         }
 
         /// <summary>

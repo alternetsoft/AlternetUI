@@ -1944,7 +1944,7 @@ namespace Alternet.UI
             {
                 rowIndex = row;
                 columnIndex = col;
-                OnCellChanged();
+                RaiseCellChanged();
             }
         }
     }

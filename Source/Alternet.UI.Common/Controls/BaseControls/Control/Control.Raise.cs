@@ -9,6 +9,15 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Raises the <see cref="CellChanged" /> event and <see cref="OnCellChanged"/> method.
+        /// </summary>
+        public void RaiseCellChanged()
+        {
+            CellChanged?.Invoke(this, EventArgs.Empty);
+            OnCellChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Idle"/> event and calls
         /// <see cref="OnIdle(EventArgs)"/>.
         /// See <see cref="Idle"/> event description for more details.
@@ -19,6 +28,9 @@ namespace Alternet.UI
             Idle?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseMove" /> event and <see cref="OnMouseMove"/> method.
+        /// </summary>
         public void RaiseMouseMove(MouseEventArgs e)
         {
             HoveredControl = this;
@@ -33,6 +45,9 @@ namespace Alternet.UI
             OnMouseMove(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="HelpRequested" /> event and <see cref="OnHelpRequested"/> method.
+        /// </summary>
         public void RaiseHelpRequested(HelpEventArgs e)
         {
             OnHelpRequested(e);
@@ -49,6 +64,9 @@ namespace Alternet.UI
             OnParentChanged(EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseUp" /> event and <see cref="OnMouseUp"/> method.
+        /// </summary>
         public void RaiseMouseUp(MouseEventArgs e)
         {
             HoveredControl = this;
@@ -68,6 +86,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseLeftButtonUp" /> event and <see cref="OnMouseLeftButtonUp"/> method.
+        /// </summary>
         public void RaiseMouseLeftButtonUp(MouseEventArgs e)
         {
             IsMouseLeftButtonDown = false;
@@ -76,12 +97,19 @@ namespace Alternet.UI
             OnMouseLeftButtonUp(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseRightButtonUp" /> event
+        /// and <see cref="OnMouseRightButtonUp"/> method.
+        /// </summary>
         public void RaiseMouseRightButtonUp(MouseEventArgs e)
         {
             MouseRightButtonUp?.Invoke(this, e);
             OnMouseRightButtonUp(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseDown" /> event and <see cref="OnMouseDown"/> method.
+        /// </summary>
         public void RaiseMouseDown(MouseEventArgs e)
         {
             HoveredControl = this;
@@ -106,6 +134,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="GotFocus" /> event and <see cref="OnGotFocus"/> method.
+        /// </summary>
         public void RaiseGotFocus()
         {
             FocusedControl = this;
@@ -121,6 +152,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="LostFocus" /> event and <see cref="OnLostFocus"/> method.
+        /// </summary>
         public void RaiseLostFocus()
         {
             if (FocusedControl == this)
@@ -136,36 +170,57 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="Activated" /> event and <see cref="OnActivated"/> method.
+        /// </summary>
         public void RaiseActivated()
         {
             OnActivated(EventArgs.Empty);
             Activated?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="OnHandlerLocationChanged" /> and <see cref="ReportBoundsChanged"/>
+        /// methods.
+        /// </summary>
         public void RaiseHandlerLocationChanged()
         {
             OnHandlerLocationChanged(EventArgs.Empty);
             ReportBoundsChanged();
         }
 
+        /// <summary>
+        /// Raises the <see cref="Deactivated" /> event and <see cref="OnDeactivated"/> method.
+        /// </summary>
         public void RaiseDeactivated()
         {
             OnDeactivated(EventArgs.Empty);
             Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="SystemColorsChanged" /> event
+        /// and <see cref="OnSystemColorsChanged"/> method.
+        /// </summary>
         public void RaiseSystemColorsChanged()
         {
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
             OnSystemColorsChanged(EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="QueryContinueDrag" /> event
+        /// and <see cref="OnQueryContinueDrag"/> method.
+        /// </summary>
         public void RaiseQueryContinueDrag(QueryContinueDragEventArgs e)
         {
             QueryContinueDrag?.Invoke(this, e);
             OnQueryContinueDrag(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="HandleCreated" /> event and <see cref="OnHandleCreated"/> method.
+        /// </summary>
         public void RaiseHandleCreated()
         {
             if (BackgroundColor is not null)
@@ -176,6 +231,9 @@ namespace Alternet.UI
             HandleCreated?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="HandleDestroyed" /> event and <see cref="OnHandleDestroyed"/> method.
+        /// </summary>
         public void RaiseHandleDestroyed()
         {
             ResetScaleFactor();
@@ -183,6 +241,9 @@ namespace Alternet.UI
             HandleDestroyed?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseCaptureLost" /> event and <see cref="OnMouseCaptureLost"/> method.
+        /// </summary>
         public void RaiseMouseCaptureLost()
         {
             if (HoveredControl == this)
@@ -212,6 +273,9 @@ namespace Alternet.UI
             OnResize(EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseEnter" /> event and <see cref="OnMouseEnter"/> method.
+        /// </summary>
         public void RaiseMouseEnter()
         {
             IsMouseOver = true;
@@ -221,6 +285,10 @@ namespace Alternet.UI
             MouseEnter?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="VisualStateChanged" /> event
+        /// and <see cref="OnVisualStateChanged"/> method.
+        /// </summary>
         public void RaiseVisualStateChanged()
         {
             OnVisualStateChanged(EventArgs.Empty);
@@ -414,7 +482,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="Touch"/> event and calls
-        /// <see cref="OnTouch()"/>.
+        /// <see cref="OnTouch"/> method.
         /// </summary>
         /// <param name="e">An <see cref="TouchEventArgs"/> that contains the event
         /// data.</param>
@@ -429,7 +497,6 @@ namespace Alternet.UI
         /// Raises the <see cref="TitleChanged"/> event and calls
         /// <see cref="OnTitleChanged(EventArgs)"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         public void RaiseTitleChanged()
         {
             OnTitleChanged(EventArgs.Empty);

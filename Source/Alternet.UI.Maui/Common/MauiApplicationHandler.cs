@@ -10,8 +10,35 @@ using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements <see cref="IApplicationHandler"/> for the MAUI platform.
+    /// </summary>
     public class MauiApplicationHandler : DisposableObject, IApplicationHandler
     {
+        static MauiApplicationHandler()
+        {
+            if (App.IsUnknownOS)
+            {
+                App.IsAndroidOS = OperatingSystem.IsAndroid();
+
+                if (App.IsAndroidOS)
+                {
+                    App.IsUnknownOS = false;
+                    App.BackendOS = OperatingSystems.Android;
+                    return;
+                }
+
+                App.IsIOS = OperatingSystem.IsIOS();
+
+                if (App.IsIOS)
+                {
+                    App.IsUnknownOS = false;
+                    App.BackendOS = OperatingSystems.IOS;
+                    return;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         bool IApplicationHandler.ExitOnFrameDelete
         {

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public partial class Control
@@ -20,7 +22,7 @@ namespace Alternet.UI
         public static event EventHandler? FocusedControlChanged;
 
         /// <summary>
-        /// Occurs inside <see cref="Control.GetPreferredSize(SizeD)"/> method.
+        /// Occurs inside <see cref="GetPreferredSize(SizeD)"/> method.
         /// </summary>
         /// <remarks>
         /// If default <see cref="Control.GetPreferredSize(SizeD)"/> call is not needed,
