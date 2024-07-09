@@ -11,8 +11,37 @@ using SkiaSharp;
 
 namespace Alternet.UI.Extensions
 {
+    /// <summary>
+    /// Contains extension methods for the different classes.
+    /// </summary>
     public static class ExtensionsPrivate
     {
+        /// <summary>
+        /// Copies the contents of this string into the destination span.
+        /// </summary>
+        /// <param name="destination">The span into which to copy string's contents.</param>
+        /// <exception cref="ArgumentException">The destination span is shorter
+        /// than the source string.</exception>
+        /// <param name="s">String to copy.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe void CopyToSpan(this string s, Span<char> destination)
+        {
+            if ((uint)s.Length <= (uint)destination.Length)
+            {
+                fixed(char* sourceChar = s)
+                {
+                    fixed(char* destChar = destination)
+                    {
+                        BaseMemory.Move((IntPtr)destChar, (IntPtr)sourceChar, sizeof(char));
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Destination is too short");
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CanRead(this ImageLockMode lockMode)
         {

@@ -871,30 +871,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Checks if the Android version (returned by the Linux command uname) is greater than
-        /// or equal to the specified version. This method can be used to guard APIs that were
-        /// added in the specified version.
-        /// </summary>
-        /// <param name="major">The major release number.</param>
-        /// <param name="minor">The minor release number.</param>
-        /// <param name="build">The build release number.</param>
-        /// <param name="revision">The revision release number.</param>
-        /// <returns><c>true</c> if the current application is running on an Android version that
-        /// is at least what was specified in the parameters; <c>false</c> otherwise.</returns>
-        public static bool IsAndroidVersionAtLeast(
-            int major,
-            int minor = 0,
-            int build = 0,
-            int revision = 0)
-        {
-#if NET5_0_OR_GREATER
-            return OperatingSystem.IsAndroidVersionAtLeast(major, minor, build, revision);
-#else
-            return false;
-#endif
-        }
-
-        /// <summary>
         /// Sets system option value by name.
         /// </summary>
         /// <param name="name">Option name.</param>

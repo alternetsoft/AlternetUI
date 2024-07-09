@@ -7,9 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
-#if NET6_0_OR_GREATER
     [DefaultMember("Item")]
     internal ref struct ValueStringBuilder
     {
@@ -143,9 +144,8 @@ namespace Alternet.UI
                 Grow(s.Length);
             }
 
-            s.CopyTo(fchars.Slice(pos));
+            s.CopyToSpan(fchars.Slice(pos));
             fpos += s.Length;
         }
     }
-#endif
 }
