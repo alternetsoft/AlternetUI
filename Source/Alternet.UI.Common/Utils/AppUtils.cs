@@ -88,11 +88,13 @@ namespace Alternet.UI
         public static string GetMyTargetFrameworkName()
         {
             var version = Environment.Version;
-#if NETFRAMEWORK
-            var result = $"net{version.Major}{version.Minor}";
-#else
-            var result = $"net{version.Major}.{version.Minor}";
-#endif
+
+            string result;
+
+            if(FrameworkIdentifier == NetFrameworkIdentifier.NetFramework)
+                result = $"net{version.Major}{version.Minor}";
+            else
+                result = $"net{version.Major}.{version.Minor}";
             return result;
         }
 
@@ -312,28 +314,29 @@ namespace Alternet.UI
         /// Splits command line string into array.
         /// </summary>
         /// <param name="cmdLine">Command line string.</param>
+        /// <param name="useSplit">Specifies whether to use simple string.Split.</param>
         /// <returns></returns>
-        public static string[] SegmentCommandLine(string? cmdLine)
+        public static string[] SegmentCommandLine(string? cmdLine, bool useSplit = false)
         {
             if (cmdLine is null)
                 return Array.Empty<string>();
 
             var s = cmdLine.Trim();
 
-#if NET6_0_OR_GREATER
-            unsafe
+            if(useSplit)
+                return cmdLine.Split(' ');
+            else
             {
-                fixed (char* p = s)
+                unsafe
                 {
-                    return SegmentCommandLineChar(p);
+                    fixed (char* p = s)
+                    {
+                        return SegmentCommandLineChar(p);
+                    }
                 }
             }
-#else
-            return cmdLine.Split(' ');
-#endif
         }
 
-#if NET6_0_OR_GREATER
         private static unsafe string[] SegmentCommandLineChar(char* cmdLine)
         {
             ArrayBuilder<string> arrayBuilder = default;
@@ -469,6 +472,5 @@ namespace Alternet.UI
 
             return arrayBuilder.ToArray();
         }
-#endif
     }
 }
