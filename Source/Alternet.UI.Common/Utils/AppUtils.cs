@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI.Extensions;
@@ -14,6 +15,49 @@ namespace Alternet.UI
     /// </summary>
     public static class AppUtils
     {
+        private static NetFrameworkIdentifier? frameworkIdentifier;
+
+        /// <summary>
+        /// Gets identifier for the net framework used in the application.
+        /// </summary>
+        public static NetFrameworkIdentifier FrameworkIdentifier
+        {
+            get
+            {
+                if (frameworkIdentifier is not null)
+                    return frameworkIdentifier.Value;
+
+                var description = RuntimeInformation.FrameworkDescription;
+
+                if (description.StartsWith(".NET Core"))
+                {
+                    frameworkIdentifier = NetFrameworkIdentifier.NetCore;
+                    return NetFrameworkIdentifier.NetCore;
+                }
+
+                if (description.StartsWith(".NET Framework"))
+                {
+                    frameworkIdentifier = NetFrameworkIdentifier.NetFramework;
+                    return NetFrameworkIdentifier.NetFramework;
+                }
+
+                if (description.StartsWith(".NET Native"))
+                {
+                    frameworkIdentifier = NetFrameworkIdentifier.NetNative;
+                    return NetFrameworkIdentifier.NetNative;
+                }
+
+                if (description.StartsWith(".NET"))
+                {
+                    frameworkIdentifier = NetFrameworkIdentifier.Net;
+                    return NetFrameworkIdentifier.Net;
+                }
+
+                frameworkIdentifier = NetFrameworkIdentifier.Other;
+                return NetFrameworkIdentifier.Other;
+            }
+        }
+
         /// <summary>
         /// Opens log file <see cref="App.LogFilePath"/> in the default editor
         /// of the operating system.

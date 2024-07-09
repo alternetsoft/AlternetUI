@@ -679,11 +679,22 @@ namespace Alternet.UI
         {
             var os = Environment.OSVersion;
             App.Log("Current OS Information:\n");
-            App.Log($"Platform: {os.Platform:G}");
-            App.Log($"Version String: {os.VersionString}");
-            App.Log($"Major version: {os.Version.Major}");
-            App.Log($"Minor version: {os.Version.Minor}");
-            App.Log($"Service Pack: '{os.ServicePack}'");
+            App.Log($"Environment.OSVersion.Platform: {os.Platform:G}");
+            App.Log($"Environment.OSVersion.VersionString: {os.VersionString}");
+            App.Log($"Environment.OSVersion.Version.Major: {os.Version.Major}");
+            App.Log($"Environment.OSVersion.Version.Minor: {os.Version.Minor}");
+            App.Log($"Environment.OSVersion.ServicePack: '{os.ServicePack}'");
+            App.LogNameValue("App.IsWindowsOS", App.IsWindowsOS);
+
+            App.LogNameValue("App.IsLinuxOS", App.IsLinuxOS);
+            App.LogNameValue("App.IsMacOS", App.IsMacOS);
+            App.LogNameValue("App.IsAndroidOS", App.IsAndroidOS);
+            App.LogNameValue("App.IsUnknownOS", App.IsUnknownOS);
+            App.LogNameValue("App.IsIOS", App.IsIOS);
+            App.LogNameValue("App.Is64BitProcess", App.Is64BitProcess);
+            App.LogNameValue("App.Is64BitOS", App.Is64BitOS);
+
+            App.LogNameValue("AppUtils.FrameworkIdentifier", AppUtils.FrameworkIdentifier);
         }
 
         /// <summary>
