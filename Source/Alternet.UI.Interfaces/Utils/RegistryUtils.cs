@@ -215,6 +215,24 @@ namespace Alternet.UI
             return value;
         }
 
+        /// <summary>
+        /// Writes to registry path to the UIXmlPreview application.
+        /// </summary>
+        /// <param name="path">Path to the UIXmlPreview application</param>
+        /// <returns></returns>
+        public static bool WriteUIXmlPreviewPath(string path)
+        {
+            return WriteRelativeValue("UIXmlPreview", "Path", path, RegistryValueKind.String);
+        }
+
+        /// <summary>
+        /// Reads from registry path to the UIXmlPreview application.
+        /// </summary>
+        public static string? ReadUIXmlPreviewPath()
+        {
+            return ReadRelativeString("UIXmlPreview", "Path");
+        }
+
         internal class RegistryKeyLock : IDisposable
         {
             public RegistryKeyLock(RegistryHive hive, string keyPath)
