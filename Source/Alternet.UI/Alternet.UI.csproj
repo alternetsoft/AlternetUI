@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
     <PackageReference Include="CommunityToolkit.Common" Version="8.2.2" />
     <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.2.2" />
     <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.2.2" />
@@ -120,7 +120,7 @@
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
     <ItemGroup>
       <!-- Filter out unnecessary files -->
-      <_ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))"/>
+      <_ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
     </ItemGroup>
 
     <!-- Print batches for debug purposes -->
@@ -128,7 +128,7 @@
 
     <ItemGroup>
       <!-- Add file to package with consideration of sub folder. If empty, the root folder is chosen. -->
-      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)" TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)"/>
+      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)" TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)" />
     </ItemGroup>
   </Target>
 
