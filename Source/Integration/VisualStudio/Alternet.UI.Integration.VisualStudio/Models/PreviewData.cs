@@ -3,7 +3,6 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
-using Serilog;
 using System;
 using System.Drawing;
 

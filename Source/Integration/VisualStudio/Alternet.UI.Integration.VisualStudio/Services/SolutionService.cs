@@ -215,16 +215,17 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                     if (!string.IsNullOrWhiteSpace(targetPath))
                     {
-                        var hostAppDirectory = Path.Combine(Path.GetDirectoryName(typeof(SolutionService).Assembly.Location), @"UIXmlHostApp");
-                        var hostAppDotNetFx = Path.Combine(hostAppDirectory, "DotNetFx", "Alternet.UI.Integration.UIXmlHostApp.exe");
+                        /*var hostAppDirectory = Path.Combine(Path.GetDirectoryName(typeof(SolutionService).Assembly.Location), @"UIXmlHostApp");*/
+                        /*var hostAppDotNetFx = Path.Combine(hostAppDirectory, "DotNetFx", "Alternet.UI.Integration.UIXmlHostApp.exe");*/
 
                         var frameworkMoniker = GetFrameworkInfo(loaded, msbuildProperties, "TargetFramework");
                         var frameworkID = GetFrameworkInfo(loaded, msbuildProperties, "TargetFrameworkIdentifier");
-                        var hostApp = FrameworkInfoUtils.IsNetFramework(frameworkID) ?
+                        /*var hostApp = FrameworkInfoUtils.IsNetFramework(frameworkID) ?
                             hostAppDotNetFx :
-                            GetDotNetCoreHostAppPath(hostAppDirectory, frameworkMoniker);
+                            GetDotNetCoreHostAppPath(hostAppDirectory, frameworkMoniker);*/
 
-                        alternatives[frameworkMoniker] = new ProjectOutputInfo(targetPath, frameworkMoniker, frameworkID, hostApp);
+                        alternatives[frameworkMoniker] =
+                            new ProjectOutputInfo(targetPath, frameworkMoniker, frameworkID, string.Empty);
                     }
                 }
             }

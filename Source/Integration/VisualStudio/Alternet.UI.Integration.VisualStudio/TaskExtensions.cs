@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Serilog;
 
 namespace Alternet.UI.Integration.VisualStudio
 {
@@ -11,7 +10,7 @@ namespace Alternet.UI.Integration.VisualStudio
             {
                 if (t.IsFaulted)
                 {
-                    Log.Error(t.Exception, "Exception caught by FireAndForget");
+                    Log.Error($"Exception caught by FireAndForget: {t.Exception}");
                 }
             }, TaskScheduler.Default);
         }

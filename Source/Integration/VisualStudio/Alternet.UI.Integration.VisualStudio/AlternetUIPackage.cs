@@ -4,8 +4,6 @@ using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Serilog;
-using Serilog.Core;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -113,7 +111,7 @@ namespace Alternet.UI.Integration.VisualStudio
             var dte = (DTE)await GetServiceAsync(typeof(DTE));
             SolutionService = new SolutionService(dte);
 
-            Log.Logger.Information("AlterNET UI Package initialized");
+            Log.Information("AlterNET UI Package initialized");
         }
 
         bool outputPaneLoggingEnabled = true;
@@ -129,16 +127,6 @@ namespace Alternet.UI.Integration.VisualStudio
             const string format = "{Timestamp:HH:mm:ss.fff} [{Level}] {Pid} {Message}{NewLine}{Exception}";
             var ouput = this.GetService<IVsOutputWindow, SVsOutputWindow>();
             var settings = this.GetMefService<IAlternetUIVisualStudioSettings>();
-            var levelSwitch = new LoggingLevelSwitch() { MinimumLevel = settings.MinimumLogVerbosity };
-
-            settings.PropertyChanged += (s, e) => levelSwitch.MinimumLevel = settings.MinimumLogVerbosity;
-
-            var sink = new OutputPaneEventSink(ouput, outputTemplate: format);
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.ControlledBy(levelSwitch)
-                .WriteTo.Sink(sink, levelSwitch: levelSwitch)
-                .WriteTo.Trace(outputTemplate: format)
-                .CreateLogger();
         }
     }
 }

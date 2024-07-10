@@ -11,7 +11,6 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
-using Serilog;
 using IOleServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 
 namespace Alternet.UI.Integration.VisualStudio.Services
@@ -75,7 +74,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            Log.Logger.Verbose("Started EditorFactory.CreateEditorInstance({Filename})", pszMkDocument);
+            Log.Verbose($"Started EditorFactory.CreateEditorInstance({pszMkDocument})");
 
             ppunkDocView = IntPtr.Zero;
             ppunkDocData = IntPtr.Zero;
@@ -101,7 +100,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             ppunkDocView = Marshal.GetIUnknownForObject(pane);
             ppunkDocData = Marshal.GetIUnknownForObject(textBuffer);
 
-            Log.Logger.Verbose("Finished EditorFactory.CreateEditorInstance({Filename})", pszMkDocument);
+            Log.Verbose($"Finished EditorFactory.CreateEditorInstance({pszMkDocument})");
             return VSConstants.S_OK;
         }
 
@@ -122,7 +121,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             IVsTextLines result;
 
-            Log.Logger.Verbose("Started EditorFactory.GetTextBuffer({Filename})", fileName);
+            Log.Verbose($"Started EditorFactory.GetTextBuffer({fileName})");
 
             if (punkDocDataExisting == IntPtr.Zero)
             {
@@ -162,13 +161,13 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             // hard-coded as to the XAML dialects it supports and Avalonia isn't one of them :(
             ErrorHandler.ThrowOnFailure(result.SetLanguageServiceID(XmlLanguageServiceGuid));
 
-            Log.Logger.Verbose("Finished EditorFactory.GetTextBuffer({Filename})", fileName);
+            Log.Verbose($"Finished EditorFactory.GetTextBuffer({fileName})");
             return result;
         }
 
         private (IVsCodeWindow, IWpfTextViewHost) CreateEditorControl(IVsTextLines bufferAdapter)
         {
-            Log.Logger.Verbose("Started EditorFactory.CreateEditorControl()");
+            Log.Verbose("Started EditorFactory.CreateEditorControl()");
 
             var componentModel = _serviceProvider.GetService<IComponentModel, SComponentModel>();
             var eafs = componentModel.GetService<IVsEditorAdaptersFactoryService>();
@@ -209,7 +208,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 parent.Child = null;
             }
 
-            Log.Logger.Verbose("Finished EditorFactory.CreateEditorControl()");
+            Log.Verbose("Finished EditorFactory.CreateEditorControl()");
             return (codeWindow, textViewHost);
         }
 
