@@ -49,7 +49,7 @@ echo ==================================== BI1
 echo ====================================
 echo ====================================
 echo  Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
-"%FOUND_MSBUILD_PATH_VS_2022%" /restore /p:VsTargetVersion=VS2022 /p:WarningLevel=0  "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+"%FOUND_MSBUILD_PATH_VS_2022%" /restore /p:WarningLevel=0  "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ==================================== BI2
