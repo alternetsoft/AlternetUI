@@ -42,30 +42,65 @@ namespace Alternet.UI.Extensions
             }
         }
 
+        /// <summary>
+        /// Checks whether <paramref name="lockMode"/> is not equal <see cref="ImageLockMode.WriteOnly"/>.
+        /// </summary>
+        /// <param name="lockMode">Value to check.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CanRead(this ImageLockMode lockMode)
         {
             return lockMode != ImageLockMode.WriteOnly;
         }
 
+        /// <summary>
+        /// Checks whether <paramref name="lockMode"/> is not equal <see cref="ImageLockMode.ReadOnly"/>.
+        /// </summary>
+        /// <param name="lockMode">Value to check.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool CanWrite(this ImageLockMode lockMode)
         {
             return lockMode != ImageLockMode.ReadOnly;
         }
 
+        /// <summary>
+        /// Returns the absolute value of a double-precision floating-point number.
+        /// Same as <see cref="Math.Abs(double)"/>.
+        /// </summary>
+        /// <param name="value">
+        /// A number that is greater than or equal to <see cref="double.MinValue"/>, but less than
+        /// or equal to <see cref="double.MaxValue"/>.
+        /// </param>
+        /// <returns>A double-precision floating-point number,
+        /// x, such that 0 ≤ x ≤ double.MaxValue.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Abs(this double value)
         {
             return Math.Abs(value);
         }
 
+        /// <summary>
+        /// Returns the absolute value of a single-precision floating-point number.
+        /// Same as <see cref="Math.Abs(float)"/>.
+        /// </summary>
+        /// <param name="value">
+        /// A number that is greater than or equal to <see cref="float.MinValue"/>, but less than
+        /// or equal to <see cref="float.MaxValue"/>.
+        /// </param>
+        /// <returns>A single-precision floating-point number,
+        /// x, such that 0 ≤ x ≤ float.MaxValue.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Abs(this float value)
         {
             return Math.Abs(value);
         }
 
+        /// <summary>
+        /// Converts array of <see cref="PointD"/> to array of <see cref="SKPoint"/>.
+        /// </summary>
+        /// <param name="points">Array of points.</param>
+        /// <returns></returns>
         public static SKPoint[] ToSkia(this PointD[] points)
         {
             var length = points.Length;
@@ -75,6 +110,14 @@ namespace Alternet.UI.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts array of <see cref="PointD"/> to array of <see cref="SKPointI"/>
+        /// using the specified <paramref name="scaleFactor"/>.
+        /// </summary>
+        /// <param name="points">Array of points.</param>
+        /// <param name="scaleFactor">Scale factor. Optional. If not specified,
+        /// the default scale factor is used.</param>
+        /// <returns></returns>
         public static SKPointI[] PixelFromDipI(this PointD[] points, Coord? scaleFactor = null)
         {
             var length = points.Length;
@@ -87,6 +130,14 @@ namespace Alternet.UI.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts array of <see cref="PointD"/> to array of <see cref="SKPoint"/>
+        /// using the specified <paramref name="scaleFactor"/>.
+        /// </summary>
+        /// <param name="points">Array of points.</param>
+        /// <param name="scaleFactor">Scale factor. Optional. If not specified,
+        /// the default scale factor is used.</param>
+        /// <returns></returns>
         public static SKPoint[] PixelFromDipD(this PointD[] points, Coord? scaleFactor = null)
         {
             var length = points.Length;
@@ -99,11 +150,24 @@ namespace Alternet.UI.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Converts value in device-independent units to pixels using the specified scale factor.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <param name="scaleFactor">Scale factor. Optional. If not specified,
+        /// the default scale factor is used.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int PixelFromDip(this Coord value, Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelFromDip(value, scaleFactor);
         }
 
+        /// <summary>
+        /// Converts <see cref="LineJoin"/> to <see cref="SKStrokeJoin"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
         public static SKStrokeJoin ToSkia(this LineJoin value)
         {
             switch (value)
@@ -118,6 +182,11 @@ namespace Alternet.UI.Extensions
             }
         }
 
+        /// <summary>
+        /// Converts <see cref="LineCap"/> to <see cref="SKStrokeCap"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
         public static SKStrokeCap ToSkia(this LineCap value)
         {
             switch (value)
@@ -132,6 +201,14 @@ namespace Alternet.UI.Extensions
             }
         }
 
+        /// <summary>
+        /// Converts <see cref="BitmapType"/> to <see cref="SKEncodedImageFormat"/>.
+        /// </summary>
+        /// <param name="type">Bitmap type</param>
+        /// <returns>
+        /// <see cref="SKEncodedImageFormat"/> if <see cref="BitmapType"/> can be converted,
+        /// <c>null</c> otherwise.
+        /// </returns>
         public static SKEncodedImageFormat? ToSKEncodedImageFormat(this BitmapType type)
         {
             switch (type)
@@ -207,34 +284,68 @@ namespace Alternet.UI.Extensions
             return dock == DockStyle.Left || dock == DockStyle.Right;
         }
 
+        /// <summary>
+        /// Reports whether the specified Unicode character is found in the string.
+        /// </summary>
+        /// <param name="s">String to check.</param>
+        /// <param name="ch">A Unicode character to seek.</param>
+        /// <returns>
+        /// <c>true</c> if that character is found, or <c>false</c> if it is not.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsChar(this string s, char ch)
         {
-#if NET5_0_OR_GREATER
-            return s.Contains(ch);
-#else
-            return s.Contains(ch);
-#endif
+            if (string.IsNullOrEmpty(s))
+                return false;
+            return s.IndexOf(ch) >= 0;
         }
 
+        /// <summary>
+        /// Reports whether space character is found in the string.
+        /// </summary>
+        /// <param name="s">String to check.</param>
+        /// <returns>
+        /// <c>true</c> if space is found, or <c>false</c> if it is not.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsSpace(this string s)
         {
             return ContainsChar(s, ' ');
         }
 
+        /// <summary>
+        /// Reports whether semicolon character is found in the string.
+        /// </summary>
+        /// <param name="s">String to check.</param>
+        /// <returns>
+        /// <c>true</c> if semicolon is found, or <c>false</c> if it is not.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsSemicolon(this string s)
         {
             return ContainsChar(s, ';');
         }
 
+        /// <summary>
+        /// Reports whether dot character is found in the string.
+        /// </summary>
+        /// <param name="s">String to check.</param>
+        /// <returns>
+        /// <c>true</c> if dot is found, or <c>false</c> if it is not.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsDot(this string s)
         {
             return ContainsChar(s, '.');
         }
 
+        /// <summary>
+        /// Reports whether comma character is found in the string.
+        /// </summary>
+        /// <param name="s">String to check.</param>
+        /// <returns>
+        /// <c>true</c> if comma is found, or <c>false</c> if it is not.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsComma(this string s)
         {

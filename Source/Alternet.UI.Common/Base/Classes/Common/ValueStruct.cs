@@ -24,7 +24,7 @@ namespace Alternet.UI
             RaiseChanged();
         }
 
-        public void RaiseChanged()
+        public readonly void RaiseChanged()
         {
             Changed?.Invoke();
         }

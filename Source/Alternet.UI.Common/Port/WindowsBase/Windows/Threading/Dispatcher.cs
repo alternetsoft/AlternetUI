@@ -592,13 +592,13 @@ namespace Alternet.UI.Port
                 try
                 {
                     DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                    if(BaseCompatibilityPreferences.ReuseDispatcherSynchronizationContextInstance)
                     {
                         newSynchronizationContext = _defaultDispatcherSynchronizationContext;
                     }
                     else
                     {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                        if(BaseCompatibilityPreferences.FlowDispatcherSynchronizationContextPriority)
                         {
                             newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
                         }
@@ -737,13 +737,13 @@ namespace Alternet.UI.Port
                 try
                 {
                     DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                    if(BaseCompatibilityPreferences.ReuseDispatcherSynchronizationContextInstance)
                     {
                         newSynchronizationContext = _defaultDispatcherSynchronizationContext;
                     }
                     else
                     {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                        if(BaseCompatibilityPreferences.FlowDispatcherSynchronizationContextPriority)
                         {
                             newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
                         }
@@ -1308,13 +1308,13 @@ namespace Alternet.UI.Port
                 try
                 {
                     DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                    if(BaseCompatibilityPreferences.ReuseDispatcherSynchronizationContextInstance)
                     {
                         newSynchronizationContext = _defaultDispatcherSynchronizationContext;
                     }
                     else
                     {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                        if(BaseCompatibilityPreferences.FlowDispatcherSynchronizationContextPriority)
                         {
                             newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
                         }
