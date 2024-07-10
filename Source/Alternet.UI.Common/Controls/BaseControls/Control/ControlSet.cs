@@ -476,7 +476,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"><c>true</c> enables editing of the text;
         /// <c>false</c> disables it.</param>
-        /// <param name="controlSet">Set of controls.</param>
         public ControlSet IsEditable(bool value)
         {
             foreach (var item in Items)
