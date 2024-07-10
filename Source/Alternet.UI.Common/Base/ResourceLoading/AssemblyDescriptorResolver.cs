@@ -59,7 +59,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-#if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER || NETSTANDARD2_1
                     if (!RuntimeFeature.IsDynamicCodeSupported)
                     {
                         throw new InvalidOperationException(

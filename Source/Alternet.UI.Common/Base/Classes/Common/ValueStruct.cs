@@ -21,6 +21,11 @@ namespace Alternet.UI
             if (((IEquatable<T>)this.value).Equals(value))
                 return;
             this.value = value;
+            RaiseChanged();
+        }
+
+        public void RaiseChanged()
+        {
             Changed?.Invoke();
         }
     }

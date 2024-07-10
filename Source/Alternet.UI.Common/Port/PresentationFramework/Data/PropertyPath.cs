@@ -897,14 +897,14 @@ namespace Alternet.UI.Port
             DependencyObject hostElement = context as DependencyObject;
             if (hostElement == null)
             {
-                if (FrameworkCompatibilityPreferences.TargetsDesktop_V4_0)
+                /*if (FrameworkCompatibilityPreferences.TargetsDesktop_V4_0)
                 {
                     // Alternet UI "OneTime" Data binding can work inconsistently when running
                     // a .NET 4 application on .NET 4.5 compared to running it on .NET 4
                     // app targets 4.0, so return null, for compat 
                     return null;
                 }
-                else
+                else*/
                 {
                     hostElement = new DependencyObject();   // at least pick up the default namespaces
                 }
