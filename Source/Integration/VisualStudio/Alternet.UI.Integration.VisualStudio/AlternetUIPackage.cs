@@ -4,6 +4,8 @@ using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Threading;
+
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -54,6 +56,10 @@ namespace Alternet.UI.Integration.VisualStudio
     [ProvideOptionPage(typeof(OptionsDialogPage), Name, "General", 113, 0, supportsAutomation: true)]
     internal sealed class AlternetUIPackage : AsyncPackage
     {
+        internal static IVsOutputWindow? OutputWindow;        
+        internal static IVsOutputWindowPane OutputPane;
+
+        private static Guid _guid;
         private static ErrorListProvider _errorListProvider;
 
         public static void InitializeMsg(IServiceProvider serviceProvider)
@@ -97,11 +103,15 @@ namespace Alternet.UI.Integration.VisualStudio
 
         public static SolutionService SolutionService { get; private set; }
 
+        public static JoinableTaskFactory JTF { get; private set; }
+
         protected override async Task InitializeAsync(
             CancellationToken cancellationToken,
             IProgress<ServiceProgressData> progress)
         {
             await base.InitializeAsync(cancellationToken, progress);
+
+            JTF = JoinableTaskFactory;
 
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
@@ -124,8 +134,17 @@ namespace Alternet.UI.Integration.VisualStudio
 
         private void InitializeOutputPaneLogging()
         {
-            const string format = "{Timestamp:HH:mm:ss.fff} [{Level}] {Pid} {Message}{NewLine}{Exception}";
-            var ouput = this.GetService<IVsOutputWindow, SVsOutputWindow>();
+            /*const string format = "{Timestamp:HH:mm:ss.fff} [{Level}] {Pid} {Message}{NewLine}{Exception}";*/
+
+            ThreadHelper.ThrowIfNotOnUIThread();
+            OutputWindow = this.GetService<IVsOutputWindow, SVsOutputWindow>();
+
+            InitializeMsg(this);
+
+            _guid = Guid.NewGuid();
+            OutputWindow?.CreatePane(ref _guid, "Alternet.UI", 1, 1);
+            OutputWindow?.GetPane(ref _guid, out OutputPane);
+
             var settings = this.GetMefService<IAlternetUIVisualStudioSettings>();
         }
     }
