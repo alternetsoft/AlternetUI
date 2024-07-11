@@ -12,19 +12,26 @@ namespace Alternet.UI
     public static class RegistryUtils
     {
         /// <summary>
+        /// Gets or sets whether to use <see cref="RegKeyWow6432Node"/> when
+        /// <see cref="WriteRelativeValue"/> and other relative read/write operatiions are performed.
+        /// Default is <c>false</c>.
+        /// </summary>
+        public static bool UseWow6432Node = false;
+
+        /// <summary>
         /// Default reg key suffix for the Alternet.UI.
         /// </summary>
-        public static string RegKeySuffix = "\\Alternet\\Alternet.UI\\";
+        public static string RegKeySuffix = "\\AlterNET Software\\Alternet.UI\\";
 
         /// <summary>
         /// Default reg key for the Alternet.UI.
         /// </summary>
-        public static string RegKey = "SOFTWARE" + RegKeySuffix;
+        public static string RegKey = "Software" + RegKeySuffix;
 
         /// <summary>
         /// Default reg key for the Alternet.UI on Wow6432.
         /// </summary>
-        public static string RegKeyWow6432Node = "SOFTWARE\\WOW6432Node" + RegKeySuffix;
+        public static string RegKeyWow6432Node = "Software\\WOW6432Node" + RegKeySuffix;
 
         /// <summary>
         /// Writes value to Windows registry.
@@ -42,11 +49,18 @@ namespace Alternet.UI
             RegistryValueKind valueKind,
             RegistryHive hive = RegistryHive.LocalMachine)
         {
-            using var lockedKey = new RegistryKeyLock(hive, keyPath);
-            if (lockedKey.SubKey is null)
+            try
+            {
+                using var lockedKey = new RegistryKeyLock(hive, keyPath, true);
+                if (lockedKey.SubKey is null)
+                    return false;
+                lockedKey.SubKey.SetValue(valueName, value, valueKind);
+                return true;
+            }
+            catch
+            {
                 return false;
-            lockedKey.SubKey.SetValue(valueName, value, valueKind);
-            return true;
+            }
         }
 
         /// <summary>
@@ -59,15 +73,6 @@ namespace Alternet.UI
         /// <param name="valueName">Name of the value.</param>
         /// <param name="hive"><see cref="RegistryHive"/> value which specifies base path.</param>
         /// <returns></returns>
-        /// <remarks>
-        /// This method calls <see cref="WriteValue"/> using <see cref="RegKeyWow6432Node"/>
-        /// as a base key path with <paramref name="relativeKeyPath"/> as a subkey path.
-        /// If call is not successful, <see cref="WriteValue"/> is called again with
-        /// <see cref="RegKey"/> as a base key path with <paramref name="relativeKeyPath"/>
-        /// as a subkey path.
-        /// So this method allows transparent access to the registry making it independent from
-        /// the bitness (64 bit or 32 bit) of the application and operating system.
-        /// </remarks>
         public static bool WriteRelativeValue(
             string relativeKeyPath,
             string valueName,
@@ -75,9 +80,13 @@ namespace Alternet.UI
             RegistryValueKind valueKind,
             RegistryHive hive = RegistryHive.LocalMachine)
         {
-            var result = WriteValue(RegKeyWow6432Node + relativeKeyPath, valueName, value, valueKind, hive);
-            if (result)
-                return true;
+            if (UseWow6432Node)
+            {
+                var result = WriteValue(RegKeyWow6432Node + relativeKeyPath, valueName, value, valueKind, hive);
+                if (result)
+                    return true;
+            }
+
             return WriteValue(RegKey + relativeKeyPath, valueName, value, valueKind, hive);
         }
 
@@ -93,9 +102,16 @@ namespace Alternet.UI
             string keyPath,
             RegistryHive hive = RegistryHive.LocalMachine)
         {
-            using var lockedKey = new RegistryKeyLock(hive, keyPath);
-            var subKeyNames = lockedKey.SubKey?.GetSubKeyNames();
-            return subKeyNames;
+            try
+            {
+                using var lockedKey = new RegistryKeyLock(hive, keyPath);
+                var subKeyNames = lockedKey.SubKey?.GetSubKeyNames();
+                return subKeyNames;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -107,24 +123,19 @@ namespace Alternet.UI
         /// <returns>
         /// An array of strings that contains the names of the subkeys for the current key.
         /// </returns>
-        /// <remarks>
-        /// This method calls <see cref="GetSubKeyNames"/> using <see cref="RegKeyWow6432Node"/>
-        /// as a base key path with <paramref name="relativeKeyPath"/> as a subkey path.
-        /// If call is not successful, <see cref="GetSubKeyNames"/> is called again with
-        /// <see cref="RegKey"/> as a base key path with <paramref name="relativeKeyPath"/>
-        /// as a subkey path.
-        /// So this method allows transparent access to the registry making it independent from
-        /// the bitness (64 bit or 32 bit) of the application and operating system.
-        /// </remarks>
         public static string[]? GetRelativeSubKeyNames(
             string relativeKeyPath,
             RegistryHive hive = RegistryHive.LocalMachine)
         {
-            var result = GetSubKeyNames(RegKeyWow6432Node + relativeKeyPath, hive);
-            if (result != null)
-                return result;
-            result = GetSubKeyNames(RegKey + relativeKeyPath, hive);
-            return result;
+            if (UseWow6432Node)
+            {
+                var result = GetSubKeyNames(RegKeyWow6432Node + relativeKeyPath, hive);
+                if (result != null)
+                    return result;
+            }
+
+            var result2 = GetSubKeyNames(RegKey + relativeKeyPath, hive);
+            return result2;
         }
 
         /// <summary>
@@ -135,23 +146,18 @@ namespace Alternet.UI
         /// <param name="valueName">Name of the value.</param>
         /// <param name="hive"><see cref="RegistryHive"/> value which specifies base path.</param>
         /// <returns></returns>
-        /// <remarks>
-        /// This method calls <see cref="ReadString"/> using <see cref="RegKeyWow6432Node"/>
-        /// as a base key path with <paramref name="relativeKeyPath"/> as a subkey path.
-        /// If call is not successful, <see cref="ReadString"/> is called again with
-        /// <see cref="RegKey"/> as a base key path with <paramref name="relativeKeyPath"/>
-        /// as a subkey path.
-        /// So this method allows transparent access to the registry making it independent from
-        /// the bitness (64 bit or 32 bit) of the application and operating system.
-        /// </remarks>
         public static string? ReadRelativeString(
             string relativeKeyPath,
             string valueName,
             RegistryHive hive = RegistryHive.LocalMachine)
         {
-            var text = ReadString(RegKeyWow6432Node + relativeKeyPath, valueName, hive);
-            if (text != null)
-                return text;
+            if (UseWow6432Node)
+            {
+                var text = ReadString(RegKeyWow6432Node + relativeKeyPath, valueName, hive);
+                if (text != null)
+                    return text;
+            }
+
             return ReadString(RegKey + relativeKeyPath, valueName, hive);
         }
 
@@ -178,23 +184,18 @@ namespace Alternet.UI
         /// <param name="valueName">Name of the value.</param>
         /// <param name="hive"><see cref="RegistryHive"/> value which specifies base path.</param>
         /// <returns></returns>
-        /// <remarks>
-        /// This method calls <see cref="ReadValue"/> using <see cref="RegKeyWow6432Node"/>
-        /// as a base key path with <paramref name="relativeKeyPath"/> as a subkey path.
-        /// If call is not successful, <see cref="ReadValue"/> is called again with
-        /// <see cref="RegKey"/> as a base key path with <paramref name="relativeKeyPath"/>
-        /// as a subkey path.
-        /// So this method allows transparent access to the registry making it independent from
-        /// the bitness (64 bit or 32 bit) of the application and operating system.
-        /// </remarks>
         public static object? ReadRelativeValue(
             string relativeKeyPath,
             string valueName,
             RegistryHive hive = RegistryHive.LocalMachine)
         {
-            var text = ReadValue(RegKeyWow6432Node + relativeKeyPath, valueName, hive);
-            if (text != null)
-                return text;
+            if (UseWow6432Node)
+            {
+                var text = ReadValue(RegKeyWow6432Node + relativeKeyPath, valueName, hive);
+                if (text != null)
+                    return text;
+            }
+
             return ReadValue(RegKey + relativeKeyPath, valueName, hive);
         }
 
@@ -210,9 +211,16 @@ namespace Alternet.UI
             string valueName,
             RegistryHive hive = RegistryHive.LocalMachine)
         {
-            using var lockedKey = new RegistryKeyLock(hive, keyPath);
-            var value = lockedKey.SubKey?.GetValue(valueName);
-            return value;
+            try
+            {
+                using var lockedKey = new RegistryKeyLock(hive, keyPath);
+                var value = lockedKey.SubKey?.GetValue(valueName);
+                return value;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -222,7 +230,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static bool WriteUIXmlPreviewPath(string path)
         {
-            return WriteRelativeValue("UIXmlPreview", "Path", path, RegistryValueKind.String);
+            return WriteRelativeValue("UIXmlPreview", "Path", path, RegistryValueKind.String, RegistryHive.CurrentUser);
         }
 
         /// <summary>
@@ -230,20 +238,22 @@ namespace Alternet.UI
         /// </summary>
         public static string? ReadUIXmlPreviewPath()
         {
-            return ReadRelativeString("UIXmlPreview", "Path");
+            return ReadRelativeString("UIXmlPreview", "Path", RegistryHive.CurrentUser);
         }
 
         internal class RegistryKeyLock : IDisposable
         {
-            public RegistryKeyLock(RegistryHive hive, string keyPath)
+            public RegistryKeyLock(RegistryHive hive, string keyPath, bool create = false)
             {
                 RegistryView view = Environment.Is64BitOperatingSystem
                     ? RegistryView.Registry64 : RegistryView.Registry32;
                 BaseKey = RegistryKey.OpenBaseKey(hive, view);
                 if (BaseKey == null)
                     return;
-
-                SubKey = BaseKey.OpenSubKey(keyPath);
+                if (create)
+                    SubKey = BaseKey.CreateSubKey(keyPath, writable: true);
+                else
+                    SubKey = BaseKey.OpenSubKey(keyPath);
                 if (SubKey == null)
                 {
                     BaseKey.Close();
