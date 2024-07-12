@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Alternet.UI.Integration.VisualStudio
+namespace Alternet.UI.Integration
 {
     internal static class TaskExtensions
     {

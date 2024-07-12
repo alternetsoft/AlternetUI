@@ -86,7 +86,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             Update(null);
         }
 
-        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi) => Update(_process?.PreviewData);
+        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
+            => Update(_process?.PreviewData);
 
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
         {
@@ -161,7 +162,9 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             {
                 if (cachedDpiScale == null)
                 {
-                    var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+                    var dpiXProperty = typeof(SystemParameters).GetProperty(
+                        "DpiX",
+                        BindingFlags.NonPublic | BindingFlags.Static);
                     var dpiX = (int)dpiXProperty.GetValue(null, null);
                     cachedDpiScale = dpiX / 96.0;
                 }

@@ -78,14 +78,11 @@
     <Compile Include="Services\AlternetUIVisualStudioSettings.cs" />
     <Compile Include="Services\IAlternetUIVisualStudioSettings.cs" />
     <Compile Include="Services\IVsFindTarget3.cs" />
-    <Compile Include="Services\PreviewerProcess.cs" />
     <Compile Include="Services\SolutionService.cs" />
     <Compile Include="Services\Throttle.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="ServiceProviderExtensions.cs" />
-    <Compile Include="TaskExtensions.cs" />
     <Compile Include="Utils\FileContentProvider.cs" />
-    <Compile Include="Utils\Log.cs" />
     <Compile Include="Utils\DocumentOperations.cs" />
     <Compile Include="Utils\WindowHelper.cs" />
     <Compile Include="Utils\TextBufferHelper.cs" />
@@ -96,7 +93,6 @@
     <Compile Include="Views\AlternetUIPreviewer.xaml.cs">
       <DependentUpon>AlternetUIPreviewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\PreviewData.cs" />
     <Compile Include="Views\DesignerPane.cs" />
     <Compile Include="Views\EditorHostPane.cs" />
     <Compile Include="Views\OptionsDialogPage.cs">
@@ -156,41 +152,31 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
 
-    <Content 
-	Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.*" 
-	Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.pdb">
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.pdb">
       <Link>UIXmlHostApp\$(TargetFramework46Version)\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
-    <Content 
-	Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.*" 
-	Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.pdb">
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework48Version)\**\*.pdb">
       <Link>UIXmlHostApp\$(TargetFramework48Version)\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
-    <Content 
-	Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.*" 
-	Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.pdb">
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.pdb">
       <Link>UIXmlHostApp\net6.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
-    <Content 
-	Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net7.0-windows\**\*.*" 
-	Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net7.0-windows\**\*.pdb">
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net7.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net7.0-windows\**\*.pdb">
       <Link>UIXmlHostApp\net7.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 
-    <Content 
-	Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.*" 
-	Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.pdb">
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.pdb">
       <Link>UIXmlHostApp\net8.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

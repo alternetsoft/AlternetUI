@@ -62,6 +62,11 @@ namespace Alternet.UI.Integration.VisualStudio
         private static Guid _guid;
         private static ErrorListProvider _errorListProvider;
 
+        static AlternetUIPackage()
+        {
+            Log.Write = Write;
+        }
+
         public static void InitializeMsg(IServiceProvider serviceProvider)
         {
             _errorListProvider = new ErrorListProvider(serviceProvider);
@@ -126,6 +131,27 @@ namespace Alternet.UI.Integration.VisualStudio
 
         bool outputPaneLoggingEnabled = true;
 
+        private static void Write(string message)
+        {
+            AlternetUIPackage.JTF.Run(() =>
+            {
+                return WriteAsync(message);
+            });
+        }
+
+        private static async Task WriteAsync(string message)
+        {
+            var jtf = AlternetUIPackage.JTF;
+
+            if (jtf is null)
+                return;
+
+            await jtf.SwitchToMainThreadAsync();
+
+            AlternetUIPackage.OutputPane?.OutputStringThreadSafe(
+                DateTime.Now + ": " + message + Environment.NewLine);
+        }
+
         private void InitializeLogging()
         {
             if (outputPaneLoggingEnabled)
@@ -147,5 +173,56 @@ namespace Alternet.UI.Integration.VisualStudio
 
             var settings = this.GetMefService<IAlternetUIVisualStudioSettings>();
         }
+
+        /*/// <summary>
+         /// Removes all text from the Output Window pane.
+         /// </summary>
+         public static void Clear()
+         {
+             Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+             pane?.Clear();
+         }*/
+
+        /*/// <summary>
+        /// Deletes the Output Window pane.
+        /// </summary>
+        public static void DeletePane()
+        {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+            if (pane != null)
+            {
+                try
+                {
+                    var output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
+                    output.DeletePane(ref _guid);
+                    pane = null;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Write(ex);
+                }
+            }
+        }*/
+
+        /*private static bool EnsurePane()
+        {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (pane == null)
+            {
+                lock (_syncRoot)
+                {
+                    if (pane == null)
+                    {
+                        _guid = Guid.NewGuid();
+                        IVsOutputWindow output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
+                        output.CreatePane(ref _guid, _name, 1, 1);
+                        output.GetPane(ref _guid, out pane);
+                    }
+                }
+            }
+
+            return pane != null;
+        }*/
     }
 }

@@ -4,16 +4,10 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Xaml;
 using Alternet.UI.Integration.Remoting;
-using Alternet.UI.Integration.VisualStudio.Models;
-using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace Alternet.UI.Integration.VisualStudio.Services
+namespace Alternet.UI.Integration
 {
     /// <summary>
     /// Manages running a XAML previewer process.
@@ -97,16 +91,9 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// </summary>
         public event EventHandler ProcessExited;
 
-        public void LogErrorVS(Exception exception, string messageTemplate)
+        public void LogError(string title, Exception exception, int lineNumber, int linePos)
         {
-            Log.Error($"{messageTemplate}: {exception}");
-
-            if (exception is XamlException xamplE)
-            {
-                var lineNumber = xamplE.LineNumber;
-                var linePos = xamplE.LinePosition;
-            }
-
+            Log.Error($"{title}: {exception}");
         }
 
         /// <summary>
@@ -255,13 +242,15 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             void Abort(object sender, EventArgs e)
             {
-                Log.Information("Process exited while waiting for connection to be initialized.");
-                tcs.TrySetException(new ApplicationException($"The previewer process exited unexpectedly with code {process.ExitCode}."));
+                Log.Information("Process exited while waiting for connection init.");
+                tcs.TrySetException(
+                    new ApplicationException($"The previewer exited unexpectedly with code {process.ExitCode}."));
             }
 
             try
             {
-                Log.Information($"Started previewer process for '{_executablePath}'. Waiting for connection to be initialized.");
+                Log.Information(
+                    $"Started previewer process for '{_executablePath}'. Waiting for connection init.");
                 await tcs.Task;
             }
             finally
@@ -297,7 +286,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                 try
                 {
-                    // Kill the process. Do not set _process to null here, wait for ProcessExited to be called.
+                    // Kill the process. Do not set _process to null here,
+                    // wait for ProcessExited to be called.
                     _process.Kill();
                 }
                 catch (InvalidOperationException ex)
@@ -384,7 +374,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 throw new InvalidOperationException("Process not finished initializing.");
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Sends an input message to the process.
         /// </summary>
         /// <param name="message">The message.</param>
@@ -402,7 +392,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
 
             await SendAsync(message);
-        }
+        }*/
 
         /// <summary>
         /// Stops the process and disposes of all resources.
@@ -453,8 +443,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             {
                 case PreviewDataMessage frame:
                     {
-                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
                         PreviewData = null;
                         PreviewData = new PreviewData(frame.ImageFileName);
 
@@ -477,12 +465,11 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                     if (exception != null)
                     {
-                        LogErrorVS(new XamlException(
-                            exception.Message + "\n" + exception.StackTrace,
-                            null,
+                        LogError(
+                            "UpdateXamlResult error",
+                            new Exception(exception.Message + "\n" + exception.StackTrace),
                             exception.UixmlLineNumber ?? 0,
-                            exception.UixmlLinePosition ?? 0),
-                            "UpdateXamlResult error");
+                            exception.UixmlLinePosition ?? 0);
                     }
 
                     break;
@@ -492,7 +479,9 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             Log.Verbose("Finished PreviewerProcess.OnMessageAsync()");
         }
 
-        private void ConnectionMessageReceived(IAlternetUIRemoteTransportConnection connection, object message)
+        private void ConnectionMessageReceived(
+            IAlternetUIRemoteTransportConnection connection,
+            object message)
         {
             OnMessageAsync(message).FireAndForget();
         }
