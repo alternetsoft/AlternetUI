@@ -375,7 +375,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="ListBoxHandler"/> associated with this class.
+        /// Gets a <see cref="IListBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         internal new IListBoxHandler Handler

@@ -446,7 +446,7 @@ namespace Alternet.UI
         /// <see cref="ListViewItem.ImageIndex"/> property of each <see cref="ListViewItem"/>
         /// in the <see cref="ListView"/> control to the index position of the appropriate
         /// image in the <see cref="ImageList"/>. The size of the icons for the
-        /// <see cref="SmallImageList"/> is specified by the <see cref="ImageList.PixelImageSize"/>
+        /// <see cref="SmallImageList"/> is specified by the <see cref="ImageList.ImageSize"/>
         /// property.
         /// </para>
         /// <para>
@@ -508,7 +508,7 @@ namespace Alternet.UI
         /// <see cref="ListViewItem.ImageIndex"/> property of each <see cref="ListViewItem"/>
         /// in the <see cref="ListView"/> control to the index position of the appropriate
         /// image in the <see cref="ImageList"/>. The size of the icons for the
-        /// <see cref="LargeImageList"/> is specified by the <see cref="ImageList.PixelImageSize"/>
+        /// <see cref="LargeImageList"/> is specified by the <see cref="ImageList.ImageSize"/>
         /// property.
         /// </para>
         /// <para>
@@ -607,7 +607,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="ListViewHandler"/> associated with this class.
+        /// Gets a <see cref="IListViewHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         internal new IListViewHandler Handler
@@ -686,7 +686,9 @@ namespace Alternet.UI
         /// <returns>A <see cref="RectD"/> that represents the bounding rectangle
         /// for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
-        public RectD GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
+        public RectD GetItemBounds(
+            long itemIndex,
+            ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
             Handler.GetItemBounds(itemIndex, portion);
 
         ///// <summary>
@@ -819,6 +821,9 @@ namespace Alternet.UI
             RaiseSelectionChanged(EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Internal method. Do not call it directly.
+        /// </summary>
         public virtual void SelectedIndicesAreDirty()
         {
             selectedIndices = null;

@@ -20,7 +20,7 @@ namespace Alternet.UI
         private T? handler;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HandledObject"/> class.
+        /// Initializes a new instance of the <see cref="HandledObject{T}"/> class.
         /// </summary>
         /// <param name="immutable">Whether this object is immutable (properties are readonly).</param>
         public HandledObject(bool immutable)
@@ -29,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HandledObject"/> class.
+        /// Initializes a new instance of the <see cref="HandledObject{T}"/> class.
         /// </summary>
         public HandledObject()
         {

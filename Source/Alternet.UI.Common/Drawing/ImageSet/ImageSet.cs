@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with <see cref="Image"/>.
         /// </summary>
-        /// <param name="image">This image will be added to <see cref="Images"/>.</param>
+        /// <param name="image">This image will be added to <see cref="ImageContainer{T}.Images"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ImageSet(Image image)
             : this()
@@ -71,6 +71,7 @@ namespace Alternet.UI
         /// <remarks>
         /// See <see cref="ImageSet.FromUrl(string)"/> for the details.
         /// </remarks>
+        /// <param name="baseUri">Base url. Optional. Used if <paramref name="url"/> is relative.</param>
         public ImageSet(string? url, Uri? baseUri = null)
             : this()
         {

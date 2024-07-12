@@ -154,7 +154,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="SkiaBitmap"/> class from the specified
         /// existing image.
         /// </summary>
-        /// <param name="image">The <see cref="Image"/> from which to create the
+        /// <param name="original">The <see cref="Image"/> from which to create the
         /// new <see cref="Bitmap"/>.</param>
         /// <remarks>
         /// Full image data is copied from the original image.

@@ -177,7 +177,7 @@ namespace Alternet.Drawing
         public static implicit operator SizeD((Coord, Coord) d) => new(d.Item1, d.Item2);
 
         /// <summary>
-        /// Converts the specified <see cref="Drawing.Size"/> to a
+        /// Converts the specified <see cref="SizeD"/> to a
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -546,8 +546,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector2"/> from this
-        /// <see cref="Drawing.Size"/>.
+        /// Creates a new <see cref="System.Numerics.Vector2"/> from this object.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2 ToVector2()
