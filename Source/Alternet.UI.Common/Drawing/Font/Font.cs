@@ -330,9 +330,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new <see cref="Font" /> using a specified native font.
+        /// Initializes a new <see cref="Font" /> using a specified font handler.
         /// </summary>
-        /// <param name="nativeFont">Native font instance.</param>
+        /// <param name="handler">Font handler.</param>
         public Font(IFontHandler handler)
         {
             Handler = handler;
@@ -486,6 +486,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="SKFontMetrics"/> for this font.
+        /// </summary>
         [Browsable(false)]
         public virtual SKFontMetrics SkiaMetrics
         {
@@ -757,6 +760,9 @@ namespace Alternet.Drawing
             return font.SkiaFont;
         }
 
+        /// <summary>
+        /// Converts the specified <see cref='Font'/> to a <see cref='FontNameAndSize'/>.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator FontNameAndSize(Font font)
         {
@@ -764,6 +770,9 @@ namespace Alternet.Drawing
             return new(font.Name, font.SizeInPoints);
         }
 
+        /// <summary>
+        /// Converts the specified <see cref='FontNameAndSize'/> to a <see cref='Font'/>.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Font(FontNameAndSize font)
         {

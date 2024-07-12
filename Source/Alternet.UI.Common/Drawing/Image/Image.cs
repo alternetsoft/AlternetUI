@@ -18,6 +18,19 @@ namespace Alternet.Drawing
     [TypeConverter(typeof(ImageConverter))]
     public partial class Image : HandledObject<IImageHandler>
     {
+        /// <summary>
+        /// Gets or sets default quality used when images are saved and quality parameter is omitted.
+        /// </summary>
+        public static int DefaultSaveQuality = 70;
+
+        /// <summary>
+        /// Occurs when <see cref="ToGrayScale"/> is called. Used to override default
+        /// grayscale method.
+        /// </summary>
+        public static EventHandler<BaseEventArgs<Image>>? GrayScale;
+
+        internal string? url;
+
         private static readonly string[] DefaultExtensionsForLoad =
         {
             ".bmp",
@@ -49,26 +62,13 @@ namespace Alternet.Drawing
             ".xpm",
         };
 
-        /// <summary>
-        /// Gets or sets default quality used when images are saved and quality parameter is omitted.
-        /// </summary>
-        public static int DefaultSaveQuality = 70;
-
-        /// <summary>
-        /// Occurs when <see cref="ToGrayScale"/> is called. Used to override default
-        /// grayscale method.
-        /// </summary>
-        public static EventHandler<BaseEventArgs<Image>>? GrayScale;
-
         private static IEnumerable<string>? extensionsForLoad;
         private static IEnumerable<string>? extensionsForSave;
-
-        internal string? url;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
-        /// <param name="nativeImage">Native image instance.</param>
+        /// <param name="handler">Image handler.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected Image(IImageHandler handler)
         {
@@ -140,6 +140,9 @@ namespace Alternet.Drawing
             set => url = value;
         }
 
+        /// <summary>
+        /// Gets whether this image has mask.
+        /// </summary>
         public virtual bool HasMask => Handler.HasMask;
 
         /// <summary>
@@ -164,6 +167,9 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public virtual bool IsEmpty => !IsOk || Size.AnyIsEmpty;
 
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for this image.
+        /// </summary>
         [Browsable(false)]
         public virtual ImageBitsFormat BitsFormat
         {
@@ -368,6 +374,13 @@ namespace Alternet.Drawing
             return (image is null) || image.IsEmpty;
         }
 
+        /// <summary>
+        /// Creates image with the specified size, filled with <paramref name="color"/>.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="color">Color to fill.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image Create(int width, int height, Color color)
         {
@@ -375,6 +388,13 @@ namespace Alternet.Drawing
             return (Image)image;
         }
 
+        /// <summary>
+        /// Creates image with the specified size and pixel data.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="pixels">Pixel data.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image Create(int width, int height, SKColor[] pixels)
         {
@@ -409,6 +429,7 @@ namespace Alternet.Drawing
         /// button1.Image = Bitmap.FromUrl(url);
         /// </code>
         /// </example>
+        /// <param name="bitmapType">Type of the bitmap. Optional.</param>
         public static Image FromUrl(string url, BitmapType bitmapType = BitmapType.Any)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
@@ -553,6 +574,8 @@ namespace Alternet.Drawing
         /// Creates <see cref="SKBitmap"/> from <see cref="Image"/>.
         /// </summary>
         /// <param name="bitmap"><see cref="SKBitmap"/> with image data.</param>
+        /// <param name="assignPixels">Whether to assign pixel data to the result image.
+        /// Optional. Default is true</param>
         /// <returns></returns>
         public static SKBitmap ToSkia(Image bitmap, bool assignPixels = true)
         {
@@ -629,7 +652,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// You can specify <see cref="BitmapType.Any"/> to guess image type using file extension.
         /// </remarks>
-        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats
+        /// <remarks>Use <see cref="ExtensionsForLoad"/> to get supported formats
         /// for the load operation.</remarks>
         public virtual bool Load(string url, BitmapType type = BitmapType.Any)
         {
@@ -657,8 +680,10 @@ namespace Alternet.Drawing
         /// may be supported by the library and operating system for the save operation.
         /// </remarks>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for
+        /// <remarks>Use <see cref="ExtensionsForSave"/> to get supported formats for
         /// the save operation.</remarks>
+        /// <param name="quality">Image quality. Optional. If not specified,
+        /// <see cref="DefaultSaveQuality"/> is used. Can be ignored on some platforms.</param>
         public virtual bool Save(string name, BitmapType type, int? quality = null)
         {
             quality ??= DefaultSaveQuality;
@@ -686,8 +711,10 @@ namespace Alternet.Drawing
         /// may be supported by the library and operating system for the save operation.
         /// </remarks>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats for
+        /// <remarks>Use <see cref="ExtensionsForSave"/> to get supported formats for
         /// the save operation.</remarks>
+        /// <param name="quality">Image quality. Optional. If not specified,
+        /// <see cref="DefaultSaveQuality"/> is used. Can be ignored on some platforms.</param>
         public virtual bool Save(Stream stream, BitmapType type, int? quality = null)
         {
             quality ??= DefaultSaveQuality;
@@ -705,7 +732,7 @@ namespace Alternet.Drawing
         /// may be supported by the library and operating system for the load operation.
         /// </remarks>
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>Use <see cref="GetExtensionsForLoad"/> to get supported formats
+        /// <remarks>Use <see cref="ExtensionsForLoad"/> to get supported formats
         /// for the load operation.</remarks>
         public virtual bool Load(Stream stream, BitmapType type)
         {
@@ -819,6 +846,8 @@ namespace Alternet.Drawing
         /// There are other save methods in the <see cref="Image"/> that support image formats not
         /// included in <see cref="ImageFormat"/>.
         /// </remarks>
+        /// <param name="quality">Image quality. Optional. If not specified,
+        /// <see cref="DefaultSaveQuality"/> is used. Can be ignored on some platforms.</param>
         public virtual bool Save(Stream stream, ImageFormat format, int? quality = null)
         {
             if (stream is null)
@@ -837,8 +866,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="fileName">A string that contains the name of the file
         /// to which to save this <see cref="Image"/>.</param>
-        /// <remarks>Use <see cref="GetExtensionsForSave"/> to get supported formats
+        /// <remarks>Use <see cref="ExtensionsForSave"/> to get supported formats
         /// for the save operation.</remarks>
+        /// <param name="quality">Image quality. Optional. If not specified,
+        /// <see cref="DefaultSaveQuality"/> is used. Can be ignored on some platforms.</param>
         public virtual bool Save(string fileName, int? quality = null)
         {
             if (fileName is null)
@@ -869,16 +900,29 @@ namespace Alternet.Drawing
             return (0, 0, size.Width, size.Height);
         }
 
+        /// <summary>
+        /// Gets <see cref="ISkiaSurface"/> for this image.
+        /// </summary>
+        /// <param name="lockMode">Lock mode.</param>
+        /// <returns></returns>
         public virtual ISkiaSurface LockSurface(ImageLockMode lockMode = ImageLockMode.ReadWrite)
         {
             return GraphicsFactory.CreateSkiaSurface(this, lockMode);
         }
 
+        /// <summary>
+        /// Assigns <see cref="SKBitmap"/> to this image.
+        /// </summary>
+        /// <param name="bitmap">Bitmap to assign.</param>
         public virtual void Assign(SKBitmap bitmap)
         {
             Handler.Assign(bitmap);
         }
 
+        /// <summary>
+        /// Assigns <see cref="GenericImage"/> to this image.
+        /// </summary>
+        /// <param name="genericImage">Image to assign.</param>
         public virtual void Assign(GenericImage genericImage)
         {
             Handler.Assign(genericImage);

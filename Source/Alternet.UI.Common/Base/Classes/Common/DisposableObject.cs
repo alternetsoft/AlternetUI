@@ -80,7 +80,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to dispose <see cref="Handle"/>.
+        /// Gets or sets whether to call <see cref="DisposeUnmanaged"/> method when this object is disposed.
         /// </summary>
         [Browsable(false)]
         public bool DisposeHandle

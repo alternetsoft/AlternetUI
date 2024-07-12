@@ -23,10 +23,24 @@ namespace Alternet.UI
         private SizeI dpiNew;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DpiChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="oldDpi">Old DPI value.</param>
+        /// <param name="newDpi">New DPI value.</param>
+        public DpiChangedEventArgs(SizeI oldDpi, SizeI newDpi)
+        {
+            DpiOld = oldDpi;
+            DpiNew = newDpi;
+        }
+
+        /// <summary>
         /// Gets the DPI value for the display device where the control or form was previously
         /// displayed.
         /// </summary>
         /// <returns>A DPI value.</returns>
+        /// <remarks>
+        /// Same as <see cref="DpiOld"/> property.
+        /// </remarks>
         public int DeviceDpiOld
         {
             get => dpiOld.Width;
@@ -38,28 +52,37 @@ namespace Alternet.UI
         /// currently being displayed.
         /// </summary>
         /// <returns>The DPI value.</returns>
+        /// <remarks>
+        /// Same as <see cref="DpiNew"/> property.
+        /// </remarks>
         public int DeviceDpiNew
         {
             get => dpiNew.Width;
             set => dpiNew.Width = value;
         }
 
+        /// <summary>
+        /// Gets or sets old DPI value.
+        /// </summary>
+        /// <remarks>
+        /// Same as <see cref="DeviceDpiOld"/> property.
+        /// </remarks>
         public SizeI DpiOld
         {
             get => dpiOld;
             set => dpiOld = value;
         }
 
+        /// <summary>
+        /// Gets or sets new DPI value.
+        /// </summary>
+        /// <remarks>
+        /// Same as <see cref="DeviceDpiNew"/> property.
+        /// </remarks>
         public SizeI DpiNew
         {
             get => dpiNew;
             set => dpiNew = value;
-        }
-
-        public DpiChangedEventArgs(SizeI oldDpi, SizeI newDpi)
-        {
-            DpiOld = oldDpi;
-            DpiNew = newDpi;
         }
 
         /// <summary>

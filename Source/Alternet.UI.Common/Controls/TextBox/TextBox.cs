@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// <see cref="IValueValidator"/> allows to set limitations on possible values of
-        /// the <see cref="Text"/> property. See <see cref="IValueValidatorText"/> and
+        /// the <see cref="Control.Text"/> property. See <see cref="IValueValidatorText"/> and
         /// <see cref="ValueValidatorFactory.CreateValueValidatorText"/>.
         /// </remarks>
         [Browsable(false)]
@@ -271,7 +271,7 @@ namespace Alternet.UI
         /// When this property is set to <see langword="true"/>, the contents
         /// of the control cannot be changed by the user at runtime.
         /// With this property set to <see langword="true"/>, you can still
-        /// set the value of the <see cref="Text"/> property in code.
+        /// set the value of the <see cref="Control.Text"/> property in code.
         /// </remarks>
         public virtual bool ReadOnly
         {

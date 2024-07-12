@@ -140,6 +140,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets dialog handler.
+        /// </summary>
         [Browsable(false)]
         public new IFontDialogHandler Handler => (IFontDialogHandler)base.Handler;
 

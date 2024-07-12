@@ -15,11 +15,17 @@ namespace Alternet.Drawing
     {
         private static IFontFactoryHandler? handler;
 
+        /// <summary>
+        /// Gets whether only SkiaSharp compatible font are allowed.
+        /// </summary>
         public static bool OnlySkiaFonts
         {
             get => true;
         }
 
+        /// <summary>
+        /// Gets or sets handler which is used to perform font related operations.
+        /// </summary>
         public static IFontFactoryHandler Handler
         {
             get => handler ??= GraphicsFactory.Handler.CreateFontFactoryHandler();
@@ -27,6 +33,10 @@ namespace Alternet.Drawing
             set => handler = value;
         }
 
+        /// <summary>
+        /// Gets sample fixed pitch font for the current operating system.
+        /// </summary>
+        /// <returns></returns>
         public static string? GetSampleFixedPitchFont()
         {
             IEnumerable<string> fonts = GetFixedPitchFonts();
@@ -38,6 +48,12 @@ namespace Alternet.Drawing
             return null;
         }
 
+        /// <summary>
+        /// Gets sample <see cref="FontNameAndSize"/> for the specified <see cref="SystemSettingsFont"/>
+        /// for the current operating system.
+        /// </summary>
+        /// <param name="font">Known system font.</param>
+        /// <returns></returns>
         public static FontNameAndSize GetSampleNameAndSize(SystemSettingsFont font)
         {
             FontNameAndSize result;
@@ -75,6 +91,12 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets sample <see cref="FontNameAndSize"/> for the specified <see cref="GenericFontFamily"/>
+        /// for the current operating system.
+        /// </summary>
+        /// <param name="family">Font family.</param>
+        /// <returns></returns>
         public static FontNameAndSize GetSampleNameAndSize(GenericFontFamily family)
         {
             FontNameAndSize result;
@@ -149,6 +171,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets collection of the fixed pitch fonts which supposed to be supported
+        /// by the current operating system.
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<string> GetFixedPitchFonts()
         {
             IEnumerable<string> result;
@@ -204,6 +231,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets first fixed pitch font in the collection of the fonts.
+        /// </summary>
+        /// <param name="fonts">Collection of the fonts.</param>
+        /// <returns></returns>
         public static string? GetFixedPitchFont(IEnumerable<string> fonts)
         {
             foreach (var font in fonts)

@@ -298,6 +298,11 @@ namespace Alternet.UI
             return !control.Visible || control.IgnoreLayout;
         }
 
+        /// <summary>
+        /// Gets size of the native control based on the specified available size.
+        /// </summary>
+        /// <param name="availableSize">Available size for the control.</param>
+        /// <returns></returns>
         protected virtual SizeD GetNativeControlSize(SizeD availableSize)
         {
             if (IsDummy)
@@ -324,6 +329,12 @@ namespace Alternet.UI
             return ControlFactory.Handler.CreateControlHandler(this);
         }
 
+        /// <summary>
+        /// Paints internal caret for user-painted controls.
+        /// This method is used on some platforms when system caret
+        /// is not available.
+        /// </summary>
+        /// <param name="e">Paint arguments.</param>
         protected virtual void PaintCaret(PaintEventArgs e)
         {
             if (!UserPaint)
@@ -343,6 +354,11 @@ namespace Alternet.UI
             e.Graphics.FillRectangle(caretColor.AsBrush, PixelToDip(caretInfo.Rect));
         }
 
+        /// <summary>
+        /// Sets visible field value. This is internal method and should not be called
+        /// directly.
+        /// </summary>
+        /// <param name="value"></param>
         protected void SetVisibleValue(bool value) => visible = value;
 
         /// <summary>

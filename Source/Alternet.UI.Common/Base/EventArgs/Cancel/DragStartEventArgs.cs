@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public class DragStartEventArgs : BaseCancelEventArgs
     {
+        /// <summary>
+        /// Gets or set time period limit used in <see cref="TimeIsGreater"/> property.
+        /// </summary>
+        public static long DefaultTimePeriodLimit = 10;
+
         private readonly MouseEventArgs mouseDownArgs;
         private readonly MouseEventArgs mouseMoveArgs;
         private readonly PointD mouseClientLocation;
@@ -89,18 +94,30 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether <see cref="TimePeriod"/> is greater than <see cref="DefaultTimePeriodLimit"/>.
+        /// </summary>
         public bool TimeIsGreater
         {
             get
             {
-                return TimePeriod > 10;
+                return TimePeriod > DefaultTimePeriodLimit;
             }
         }
 
-        internal long TimestampStart => mouseDownArgs.Timestamp;
+        /// <summary>
+        /// Gets the time when mouse down event was received.
+        /// </summary>
+        public long TimestampStart => mouseDownArgs.Timestamp;
 
-        internal long TimestampEnd => mouseMoveArgs.Timestamp;
+        /// <summary>
+        /// Gets the time when mouse move event was received.
+        /// </summary>
+        public long TimestampEnd => mouseMoveArgs.Timestamp;
 
-        internal long TimePeriod => Math.Abs(TimestampEnd - TimestampStart);
+        /// <summary>
+        /// Gets time period between <see cref="TimestampEnd"/> and <see cref="TimestampStart"/>.
+        /// </summary>
+        public long TimePeriod => Math.Abs(TimestampEnd - TimestampStart);
     }
 }

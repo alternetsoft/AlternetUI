@@ -402,7 +402,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="PointD"/> value with ceiling of the <see cref="X"/> and
-        /// <see cref="Y"/>. Uses <see cref="Math.Ceiling"/> on values.
+        /// <see cref="Y"/>. Uses <see cref="Math.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -37,6 +37,9 @@ namespace Alternet.Drawing
     /// </summary>
     public partial class TransformMatrix : BaseObject
     {
+        /// <summary>
+        /// Gets identity matrix.
+        /// </summary>
         public static readonly TransformMatrix Default = new();
 
         private Coord m11;
@@ -80,29 +83,6 @@ namespace Alternet.Drawing
             this.m22 = m22;
             this.dx = dx;
             this.dy = dy;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator TransformMatrix(SKMatrix m)
-        {
-            var result = new TransformMatrix(m.ScaleX, m.SkewY, m.SkewX, m.ScaleY, m.TransX, m.TransY);
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator SKMatrix(TransformMatrix m)
-        {
-            var result = new SKMatrix(
-                (float)m.ScaleX,
-                (float)m.SkewX,
-                (float)m.TransX,
-                (float)m.SkewY,
-                (float)m.ScaleY,
-                (float)m.TransY,
-                0,
-                0,
-                1);
-            return result;
         }
 
         /// <summary>
@@ -372,6 +352,37 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts <see cref="SKMatrix"/> to <see cref="TransformMatrix"/>.
+        /// </summary>
+        /// <param name="m">Value to convert.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator TransformMatrix(SKMatrix m)
+        {
+            var result = new TransformMatrix(m.ScaleX, m.SkewY, m.SkewX, m.ScaleY, m.TransX, m.TransY);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts <see cref="TransformMatrix"/> to <see cref="SKMatrix"/>.
+        /// </summary>
+        /// <param name="m">Value to convert.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator SKMatrix(TransformMatrix m)
+        {
+            var result = new SKMatrix(
+                (float)m.ScaleX,
+                (float)m.SkewX,
+                (float)m.TransX,
+                (float)m.SkewY,
+                (float)m.ScaleY,
+                (float)m.TransY,
+                0,
+                0,
+                1);
+            return result;
+        }
+
+        /// <summary>
         /// Creates a <see cref="TransformMatrix"/> with the specified translation vector.
         /// </summary>
         /// <param name="offsetX">The x value by which to translate
@@ -518,7 +529,7 @@ namespace Alternet.Drawing
         /// Applies a clockwise rotation of the specified angle (radians) about the
         /// origin to this <see cref="TransformMatrix"/>.
         /// </summary>
-        /// <param name="angle">The angle of the clockwise rotation, in radians.</param>
+        /// <param name="angleRadians">The angle of the clockwise rotation, in radians.</param>
         public void RotateRadians(Coord angleRadians)
         {
             /*
@@ -572,7 +583,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a point.
         /// </summary>
-        /// <param name="point">A <see cref="PointD"/> to transform.</param>
+        /// <param name="src">A <see cref="PointD"/> to transform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointD TransformPoint(PointD src)
         {
@@ -595,7 +606,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a size.
         /// </summary>
-        /// <param name="size">A <see cref="SizeD"/> to transform.</param>
+        /// <param name="src">A <see cref="SizeD"/> to transform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD TransformSize(SizeD src)
         {

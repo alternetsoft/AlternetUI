@@ -477,7 +477,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="SizeD"/> value with ceiling of the <see cref="Width"/> and
-        /// <see cref="Height"/>. Uses <see cref="Math.Ceiling"/> on values.
+        /// <see cref="Height"/>. Uses <see cref="Math.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

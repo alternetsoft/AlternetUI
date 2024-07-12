@@ -183,27 +183,45 @@ namespace Alternet.UI
             action?.Invoke();
         }
 
+        /// <summary>
+        /// Allows to get font and color defaults for the control.
+        /// </summary>
         public class ControlDefaultFontAndColor : IReadOnlyFontAndColor
         {
             private readonly IControl control;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ControlDefaultFontAndColor"/> class.
+            /// </summary>
+            /// <param name="control">Control for which font and color defaults are returned.</param>
             public ControlDefaultFontAndColor(IControl control)
             {
                 this.control = control;
             }
 
+            /// <inheritdoc/>
             public Color? BackgroundColor => control.GetDefaultAttributesBgColor();
 
+            /// <inheritdoc/>
             public Color? ForegroundColor => control.GetDefaultAttributesFgColor();
 
+            /// <inheritdoc/>
             public Font? Font => control.GetDefaultAttributesFont();
         }
 
+        /// <summary>
+        /// Allows to get font and color default for the specified <see cref="ControlTypeId"/>.
+        /// </summary>
         public class ControlStaticDefaultFontAndColor : IReadOnlyFontAndColor
         {
             private readonly ControlTypeId controlType;
             private readonly ControlRenderSizeVariant renderSize;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ControlStaticDefaultFontAndColor"/> class.
+            /// </summary>
+            /// <param name="controlType">Type of the control.</param>
+            /// <param name="renderSize">Render size. Optional.</param>
             public ControlStaticDefaultFontAndColor(
                 ControlTypeId controlType,
                 ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
@@ -212,12 +230,15 @@ namespace Alternet.UI
                 this.renderSize = renderSize;
             }
 
+            /// <inheritdoc/>
             public Color? BackgroundColor =>
                 Control.GetClassDefaultAttributesBgColor(controlType, renderSize);
 
+            /// <inheritdoc/>
             public Color? ForegroundColor =>
                 Control.GetClassDefaultAttributesFgColor(controlType, renderSize);
 
+            /// <inheritdoc/>
             public Font? Font =>
                 Control.GetClassDefaultAttributesFont(controlType, renderSize);
         }

@@ -55,7 +55,7 @@ namespace Alternet.UI
         public virtual bool IsValidMail => ValidationUtils.IsValidMailAddress(Text);
 
         /// <summary>
-        /// Gets or sets <see cref="TextBox.Text"/> property of the main child control.
+        /// Gets or sets <see cref="Control.Text"/> property of the main child control.
         /// </summary>
         [Browsable(true)]
         public override string Text
