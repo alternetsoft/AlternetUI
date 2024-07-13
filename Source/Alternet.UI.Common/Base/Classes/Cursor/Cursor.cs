@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// <param name="hotSpotY">Hot spot Y.</param>
         public Cursor(
             string cursorName,
-            BitmapType type,
+            BitmapType type = BitmapType.CursorDefaultType,
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
@@ -75,10 +75,32 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Cursor"/> class from an image.
         /// </summary>
         /// <param name="image">Image with cursor.</param>
-        public Cursor(Image image)
+        /// <param name="hotSpotX">Hot spot X.</param>
+        /// <param name="hotSpotY">Hot spot Y.</param>
+        public Cursor(
+            Image image,
+            int hotSpotX = 0,
+            int hotSpotY = 0)
         {
             if(AllowCustomCursors)
-                Handler = Factory.CreateCursorHandler(image);
+                Handler = Factory.CreateCursorHandler(image, hotSpotX, hotSpotY);
+            else
+                Handler = Factory.CreateCursorHandler(CursorType.Arrow);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Cursor"/> class from an image.
+        /// </summary>
+        /// <param name="image">Image with cursor.</param>
+        /// <param name="hotSpotX">Hot spot X.</param>
+        /// <param name="hotSpotY">Hot spot Y.</param>
+        public Cursor(
+            GenericImage image,
+            int hotSpotX = 0,
+            int hotSpotY = 0)
+        {
+            if (AllowCustomCursors)
+                Handler = Factory.CreateCursorHandler(image, hotSpotX, hotSpotY);
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
         }
@@ -125,19 +147,6 @@ namespace Alternet.UI
             {
                 return Handler.GetHotSpot();
             }
-        }
-
-        /// <summary>
-        /// Sets global cursor for the application.
-        /// </summary>
-        /// <param name="cursor">Cursor.</param>
-        /// <remarks>
-        /// Pass <c>null</c> to reset global cursor. Use <see cref="Control.Cursor"/>
-        /// to set cursor for the control.
-        /// </remarks>
-        public static void SetGlobal(Cursor? cursor = null)
-        {
-            Factory.SetGlobal(cursor);
         }
 
         /// <summary>

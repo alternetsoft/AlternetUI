@@ -12,21 +12,25 @@ namespace Alternet.UI
     {
         private int busyCursorCounter;
 
+        /// <inheritdoc/>
         public virtual void BeginBusyCursor()
         {
             busyCursorCounter++;
         }
 
+        /// <inheritdoc/>
         public virtual ICursorHandler CreateCursorHandler()
         {
             return new PlessCursorHandler();
         }
 
+        /// <inheritdoc/>
         public virtual ICursorHandler CreateCursorHandler(CursorType cursor)
         {
             return new PlessCursorHandler();
         }
 
+        /// <inheritdoc/>
         public virtual ICursorHandler CreateCursorHandler(
             string cursorName,
             BitmapType type,
@@ -36,24 +40,34 @@ namespace Alternet.UI
             return new PlessCursorHandler();
         }
 
-        public virtual ICursorHandler CreateCursorHandler(Image image)
+        /// <inheritdoc/>
+        public virtual ICursorHandler CreateCursorHandler(
+            Image image,
+            int hotSpotX = 0,
+            int hotSpotY = 0)
         {
             return new PlessCursorHandler();
         }
 
+        /// <inheritdoc/>
+        public virtual ICursorHandler CreateCursorHandler(
+            GenericImage image,
+            int hotSpotX = 0,
+            int hotSpotY = 0)
+        {
+            return new PlessCursorHandler();
+        }
+
+        /// <inheritdoc/>
         public virtual void EndBusyCursor()
         {
             busyCursorCounter--;
         }
 
+        /// <inheritdoc/>
         public virtual bool IsBusyCursor()
         {
             return busyCursorCounter > 0;
-        }
-
-        public virtual bool SetGlobal(Cursor? cursor)
-        {
-            return false;
         }
     }
 }

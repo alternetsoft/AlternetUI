@@ -4,6 +4,7 @@ public:
 static bool GetRichToolTipUseGeneric();
 static void SetRichToolTipUseGeneric(bool value);
 
+static void RendererDrawCheckBox(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 static void RendererDrawCheckMark(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 static SizeI RendererGetCheckBoxSize(void* renderer, void* win, int flags);
 static SizeI RendererGetCheckMarkSize(void* renderer, void* win);
@@ -82,7 +83,8 @@ static void ToolTipSetReshow(int64_t msecs);
 static void* CreateCursor();
 static void* CreateCursor2(int cursorId);
 static void* CreateCursor3(const string& cursorName, int type, int hotSpotX, int hotSpotY);
-static void* CreateCursor4(Image* image);
+static void* CreateCursor4(Image* image, int hotSpotX, int hotSpotY);
+static void* CreateCursor5(void* image, int hotSpotX, int hotSpotY);
 static void DeleteCursor(void* handle);
 static bool CursorIsOk(void* handle);
 static PointI CursorGetHotSpot(void* handle);
@@ -139,7 +141,6 @@ static void RendererDrawSplitterBorder(void* renderer, void* win, DrawingContext
 static void RendererDrawSplitterSash(void* renderer, void* win, DrawingContext* dcReal, const SizeI& sizeReal, int position, int orientation, int flags);
 static void RendererDrawComboBoxDropButton(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 static void RendererDrawDropArrow(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
-static void RendererDrawCheckBox(void* renderer, void* win, DrawingContext* dc, const RectI& rect, int flags);
 public:
 WxOtherFactory();
 protected:

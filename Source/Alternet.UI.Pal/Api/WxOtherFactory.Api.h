@@ -45,6 +45,17 @@ ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
     #endif
 }
 
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -903,12 +914,23 @@ ALTERNET_UI_API void* WxOtherFactory_CreateCursor3_(const char16_t* cursorName, 
     #endif
 }
 
-ALTERNET_UI_API void* WxOtherFactory_CreateCursor4_(Image* image)
+ALTERNET_UI_API void* WxOtherFactory_CreateCursor4_(Image* image, int hotSpotX, int hotSpotY)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return WxOtherFactory::CreateCursor4(image);
+        return WxOtherFactory::CreateCursor4(image, hotSpotX, hotSpotY);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* WxOtherFactory_CreateCursor5_(void* image, int hotSpotX, int hotSpotY)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return WxOtherFactory::CreateCursor5(image, hotSpotX, hotSpotY);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -1525,17 +1547,6 @@ ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void*
     MarshalExceptions<void>([&](){
     #endif
         WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, rect, flags);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

@@ -115,5 +115,10 @@ namespace Alternet.UI
         /// Any bitmap type.
         /// </summary>
         Any = 50,
+
+        /// <summary>
+        /// Default cursor type for the current operating system.
+        /// </summary>
+        CursorDefaultType = -1,
     }
 }
