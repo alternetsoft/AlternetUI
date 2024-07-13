@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// to height of the <see cref="ComboBox"/> control.
         /// </summary>
         /// <remarks>
-        /// Used in <see cref="LayoutFactory.AdjustTextBoxesHeight"/>.
+        /// Used in <see cref="TextBoxUtils.AdjustTextBoxesHeight"/>.
         /// </remarks>
         public bool AdjustTextBoxesHeight { get; set; } = false;
 

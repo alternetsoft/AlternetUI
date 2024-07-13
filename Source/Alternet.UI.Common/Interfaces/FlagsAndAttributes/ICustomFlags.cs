@@ -12,7 +12,7 @@ namespace Alternet.UI
     public interface ICustomFlags : IReadOnlyCustomFlags
     {
         /// <summary>
-        /// Calls <see cref="HasFlag"/> and <see cref="SetFlag"/>.
+        /// Calls <see cref="IReadOnlyCustomFlags.HasFlag"/> and <see cref="SetFlag"/>.
         /// </summary>
         /// <param name="name">Flag name.</param>
         /// <returns></returns>

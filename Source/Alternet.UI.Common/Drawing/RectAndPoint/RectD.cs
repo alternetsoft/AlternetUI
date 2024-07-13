@@ -658,7 +658,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="Rect"/>.
+        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="RectD"/>.
         /// </summary>
         public readonly Vector4 ToVector4()
             => new(CoordToFloat(x), CoordToFloat(y), CoordToFloat(width), CoordToFloat(height));

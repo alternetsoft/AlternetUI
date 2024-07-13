@@ -12,7 +12,7 @@ namespace Alternet.UI
     public interface ICustomAttributes : IReadOnlyCustomAttributes
     {
         /// <summary>
-        /// Calls <see cref="SetAttribute"/> and <see cref="GetAttribute"/>.
+        /// Calls <see cref="SetAttribute"/> and <see cref="IReadOnlyCustomAttributes.GetAttribute"/>.
         /// </summary>
         /// <param name="name">Attribute name.</param>
         /// <returns></returns>

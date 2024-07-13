@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Extends <see cref="DisposableObject"/> with immutable feature.
+    /// Allows to implement immutable objects with properties that can not be changed.
+    /// </summary>
     public class ImmutableObject : DisposableObject, INotifyPropertyChanged
     {
         private bool immutable;
