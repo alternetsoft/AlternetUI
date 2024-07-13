@@ -396,4 +396,9 @@
         <ProjectReference Include="..\SkiaSharpSampleDll\SkiaSharpSampleDll.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Include="..\CommonDialogsSample\CommonDialogsWindow.uixml.cs" />
+      <UIXml Include="..\CommonDialogsSample\CommonDialogsWindow.uixml"/>
+    </ItemGroup>
+
 </Project>

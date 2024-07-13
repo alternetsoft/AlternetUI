@@ -826,6 +826,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs error message if DEBUG is defined.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        [Conditional("DEBUG")]
+        public static void LogErrorIfDebug(object? obj)
+        {
+            LogError(obj);
+        }
+
+        /// <summary>
         /// Calls <see cref="LogError"/> if <paramref name="condition"/>
         /// is <c>true</c>.
         /// </summary>
