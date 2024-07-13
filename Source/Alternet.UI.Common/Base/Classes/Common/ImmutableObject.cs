@@ -32,9 +32,9 @@ namespace Alternet.UI
                 return immutable;
             }
 
-            set
+            protected set
             {
-                immutable = true;
+                immutable = value;
             }
         }
 
