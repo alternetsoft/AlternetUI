@@ -133,13 +133,40 @@ namespace Alternet.Drawing
         {
             try
             {
-                var result = IconSet.FromUrl(url);
-                return result;
+                var stream = ResourceLoader.StreamFromUrl(url);
+                if (stream is not null)
+                    return new IconSet(stream);
+                else
+                {
+                    App.LogErrorIfDebug($"Image not loaded from: {url}");
+                    return null;
+                }
             }
             catch(Exception e)
             {
                 LogUtils.LogExceptionIfDebug(e);
                 return null;
+            }
+        }
+
+        /// <inheritdoc cref="FromUrl"/>
+        /// <remarks>
+        /// Returns <paramref name="defaultIcon"/> if error occurs during icon load.
+        /// No exceptions are raised.
+        /// </remarks>
+        public static IconSet? FromUrlOrDefault(string url, IconSet? defaultIcon)
+        {
+            try
+            {
+                var stream = ResourceLoader.StreamFromUrl(url);
+                if (stream is not null)
+                    return new IconSet(stream);
+                else
+                    return defaultIcon;
+            }
+            catch
+            {
+                return defaultIcon;
             }
         }
 
