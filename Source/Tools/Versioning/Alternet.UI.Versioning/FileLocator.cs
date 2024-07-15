@@ -60,7 +60,7 @@ namespace Alternet.UI.Versioning
         {
             var files = new[]
             {
-                "Source/Integration/VisualStudio/Alternet.UI.Integration.VisualStudio/Manifests/VS2022/source.extension.vsixmanifest",
+                "Source/Integration/VisualStudio/Alternet.UI.Integration.VisualStudio/source.extension.vsixmanifest",
             };
 
             return files.Select(file => GetValidFullFilePath(file));
