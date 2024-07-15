@@ -3,7 +3,6 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
-using Serilog;
 
 namespace Alternet.UI.Integration.VisualStudio.Views
 {
@@ -65,7 +64,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         protected override void Initialize()
         {
-            Log.Logger.Verbose("Started DesignerPane.Initialize()");
+            Log.Verbose("Started DesignerPane.Initialize()");
 
             base.Initialize();
 
@@ -78,7 +77,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             xamlEditorView.Start(_project, _xamlPath, _editorHost);
             _content = xamlEditorView;
 
-            Log.Logger.Verbose("Finished DesignerPane.Initialize()");
+            Log.Verbose("Finished DesignerPane.Initialize()");
         }
 
         private void HandleModeChanged(vsIDEMode lastMode)
@@ -91,7 +90,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private void HandleBuildBegin(vsBuildScope Scope, vsBuildAction Action)
         {
-            Log.Logger.Debug("Build started");
+            Log.Debug("Build started");
 
             _isPaused = true;
 
@@ -103,7 +102,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private void HandleBuildDone(vsBuildScope Scope, vsBuildAction Action)
         {
-            Log.Logger.Debug("Build finished");
+            Log.Debug("Build finished");
 
             _isPaused = false;
 

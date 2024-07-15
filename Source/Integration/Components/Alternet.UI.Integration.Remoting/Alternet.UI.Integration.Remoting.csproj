@@ -7,7 +7,9 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <!--
   <ItemGroup>
     <ProjectReference Include="..\..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
   </ItemGroup>
+  -->
 </Project>

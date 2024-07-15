@@ -8,6 +8,9 @@ namespace Alternet.UI
     /// </summary>
     public class KeyInfo
     {
+        /// <summary>
+        /// Gets an empty <see cref="KeyInfo"/> object.
+        /// </summary>
         public static readonly KeyInfo Empty = new();
 
         private static AdvDictionary<Key, string>? customKeyLabels;
@@ -118,6 +121,11 @@ namespace Alternet.UI
             SetCustomKeyLabel(Key.Backslash, @"\");
         }
 
+        /// <summary>
+        /// Sets custom key label.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="label">Key label.</param>
         public static void SetCustomKeyLabel(Key key, string label)
         {
             customKeyLabels ??= new();

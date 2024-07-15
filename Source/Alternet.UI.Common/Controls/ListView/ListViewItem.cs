@@ -308,12 +308,20 @@ namespace Alternet.UI
             ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
                 => RequiredListView.GetItemBounds(RequiredIndex, portion);
 
+        /// <summary>
+        /// Sets owner control and item index. Do not call directly.
+        /// </summary>
+        /// <param name="control">Owner control.</param>
+        /// <param name="newIndex">Item index.</param>
         public virtual void InternalSetListViewAndIndex(ListView? control, long? newIndex)
         {
             ListView = control;
             Index = newIndex;
         }
 
+        /// <summary>
+        /// Appllies columns to the owner control. Do not call directly.
+        /// </summary>
         public virtual void ApplyColumns()
         {
             if (listView == null)

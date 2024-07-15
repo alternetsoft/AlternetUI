@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string GetFullPath(string path, string basePath)
         {
-#if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
             var result = Path.GetFullPath(path, basePath);
             return result;
 #else

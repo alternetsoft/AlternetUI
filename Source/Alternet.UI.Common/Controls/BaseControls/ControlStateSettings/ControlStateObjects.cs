@@ -40,6 +40,10 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? DisabledChanged;
 
+        /// <summary>
+        /// Gets or sets <see cref="IControlStateObjectChanged"/> object
+        /// which is used for the notifications.
+        /// </summary>
         public IControlStateObjectChanged? ChangedHandler { get; set; }
 
         /// <summary>

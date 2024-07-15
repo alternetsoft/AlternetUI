@@ -657,7 +657,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="TreeViewHandler"/> associated with this class.
+        /// Gets a <see cref="ITreeViewHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
         internal new ITreeViewHandler Handler

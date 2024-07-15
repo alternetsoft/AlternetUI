@@ -7,7 +7,9 @@ namespace Alternet.UI
     internal struct ValueStruct<T>
         where T : notnull, IEquatable<T>
     {
+#pragma warning disable
         public Action? Changed;
+#pragma warning restore
 
         private T value;
 
@@ -21,6 +23,11 @@ namespace Alternet.UI
             if (((IEquatable<T>)this.value).Equals(value))
                 return;
             this.value = value;
+            RaiseChanged();
+        }
+
+        public readonly void RaiseChanged()
+        {
             Changed?.Invoke();
         }
     }

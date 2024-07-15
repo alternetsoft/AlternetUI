@@ -8,6 +8,9 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Base class for gradient brushes.
+    /// </summary>
     public abstract class GradientBrush : Brush
     {
         private GradientStop[] gradientStops;
@@ -18,6 +21,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Brush"/> class.
         /// </summary>
         /// <param name="immutable">Whether this brush is immutable.</param>
+        /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
         protected GradientBrush(GradientStop[] gradientStops, bool immutable)
             : base(immutable)
         {
@@ -46,6 +50,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="SKMatrix"/> for this brush.
+        /// </summary>
         public virtual SKMatrix LocalMatrix
         {
             get
@@ -63,6 +70,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="SKShaderTileMode"/> for this brush.
+        /// </summary>
         public virtual SKShaderTileMode TileMode
         {
             get => tileMode;
@@ -76,6 +86,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Converts array of <see cref="GradientStop"/> to string.
+        /// </summary>
+        /// <param name="stops">Array of <see cref="GradientStop"/>.</param>
+        /// <returns></returns>
         public static string ToString(GradientStop[] stops)
         {
             string result = string.Empty;
@@ -89,12 +104,22 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Converts array of <see cref="GradientStop"/> to array of <see cref="SKColor"/>.
+        /// </summary>
+        /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
+        /// <returns></returns>
         public static SKColor[] ToSkiaGradientColors(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => (SKColor)item.Color);
             return result;
         }
 
+        /// <summary>
+        /// Converts array of <see cref="GradientStop"/> to array of <see cref="Color"/>.
+        /// </summary>
+        /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
+        /// <returns></returns>
         public static Color[] ToGradientColors(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => item.Color);
@@ -118,12 +143,22 @@ namespace Alternet.Drawing
             };
         }
 
+        /// <summary>
+        /// Converts array of <see cref="GradientStop"/> to array of gradient offsets.
+        /// </summary>
+        /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
+        /// <returns></returns>
         public static Coord[] ToGradientOffsets(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => (Coord)item.Offset);
             return result;
         }
 
+        /// <summary>
+        /// Converts array of <see cref="GradientStop"/> to array of gradient offsets.
+        /// </summary>
+        /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
+        /// <returns></returns>
         public static float[] ToGradientOffsetsF(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => (float)item.Offset);

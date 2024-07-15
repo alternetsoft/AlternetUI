@@ -1,3 +1,20 @@
+# 0.9.614 (2024 July 15)
+
+- Label: MaxTextWidth, Wrap.
+- <u>**Critical**</u>: Fixed bug in Color == operator.
+- <u>**Critical**</u>: Fixed os detection.
+- Added NamedColors, RegistryUtils, WebUtils classes.
+- Cursor: New constructor: Cursor(Image image, int hotSpotX = 0, int hotSpotY = 0).
+- Cursor: New constructor: Cursor(GenericImage image, int hotSpotX = 0, int hotSpotY = 0).
+- Fixed ImmutableObject.Immutable set method.
+- IconSet.FromUrlOrDefault.
+- Color.AsPen now returns immutable pens.
+- Speedup in string to color convertion.
+- Pens class now use Color.AsPen in order to get pen for the color (speedup and less resources).
+- Pens: GetPen, TryGetPen.
+- Speedup: Name to brush/color/pen now uses the same names dictionary. Brush names dictionary is removed.
+- Now it is possible to register name to color mapping. See NamedColors class.
+
 # 0.9.613 (2024 June 25)
 
 - Used netstandard2.0 in the library.

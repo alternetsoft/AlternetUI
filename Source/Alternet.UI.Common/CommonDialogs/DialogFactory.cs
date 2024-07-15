@@ -16,6 +16,9 @@ namespace Alternet.UI
     {
         private static IDialogFactoryHandler? handler;
 
+        /// <summary>
+        /// Gets or sets <see cref="IDialogFactoryHandler"/> object used to create dialogs.
+        /// </summary>
         public static IDialogFactoryHandler Handler
         {
             get => handler ??= App.Handler.CreateDialogFactoryHandler();
@@ -31,11 +34,23 @@ namespace Alternet.UI
             DeveloperToolsPanel.ShowDeveloperTools();
         }
 
+        /// <summary>
+        /// Shows dialog which asks to enter the lightness value. Possible values are 0..200.
+        /// </summary>
+        /// <param name="defaultValue">Default value. Optional. If not specified, uses 100.</param>
+        /// <returns></returns>
         public static byte? AskLightness(byte defaultValue = 100)
         {
             return AskByte("Lightness", 100, 200);
         }
 
+        /// <summary>
+        /// Shows dialog which asks to enter a <see cref="byte"/> value.
+        /// </summary>
+        /// <param name="title">Dialog title.</param>
+        /// <param name="defaultValue">Default value. Optional. If not specified, uses 0.</param>
+        /// <param name="maxValue">Maximal value. Optional. If not specified, uses 255.</param>
+        /// <returns></returns>
         public static byte? AskByte(string title, byte defaultValue = 0, byte maxValue = 255)
         {
             var result = DialogFactory.GetNumberFromUser(
@@ -50,11 +65,21 @@ namespace Alternet.UI
             return (byte)result.Value;
         }
 
+        /// <summary>
+        /// Shows dialog which asks to enter the transparency value. Possible values are 0..255.
+        /// </summary>
+        /// <param name="defaultValue">Default value.</param>
+        /// <returns></returns>
         public static byte? AskTransparency(byte defaultValue)
         {
             return AskByte("Transparency", defaultValue);
         }
 
+        /// <summary>
+        /// Shows dialog which asks to enter the brightness value. Possible values are 0..255.
+        /// </summary>
+        /// <param name="defaultValue">Default value. Optional. If not specified, uses 255.</param>
+        /// <returns></returns>
         public static byte? AskBrightness(byte defaultValue = 255)
         {
             return AskByte("Brightness", defaultValue);

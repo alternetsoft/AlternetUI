@@ -501,6 +501,14 @@ namespace Alternet.UI
             return new RectD(point, size);
         }
 
+        /// <summary>
+        /// Performs word wrapping of the text.
+        /// </summary>
+        /// <param name="text">Text to wrap.</param>
+        /// <param name="pixels">Width of the text in device-independent units.</param>
+        /// <param name="font">Text font.</param>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <returns></returns>
         public static string WrapTextToMultipleLines(
             string text,
             Coord pixels,
@@ -525,6 +533,14 @@ namespace Alternet.UI
             return result.ToString();
         }
 
+        /// <summary>
+        /// Performs word wrapping of the text.
+        /// </summary>
+        /// <param name="text">Text to wrap.</param>
+        /// <param name="pixels">Width of the text in device-independent units.</param>
+        /// <param name="font">Text font.</param>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <returns></returns>
         public static List<string> WrapTextToList(
             string text,
             Coord pixels,

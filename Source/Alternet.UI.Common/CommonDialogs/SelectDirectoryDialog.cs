@@ -58,9 +58,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets dialog handler.
+        /// </summary>
         [Browsable(false)]
         public new ISelectDirectoryDialogHandler Handler => (ISelectDirectoryDialogHandler)base.Handler;
 
+        /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
         {
             return DialogFactory.Handler.CreateSelectDirectoryDialogHandler(this);

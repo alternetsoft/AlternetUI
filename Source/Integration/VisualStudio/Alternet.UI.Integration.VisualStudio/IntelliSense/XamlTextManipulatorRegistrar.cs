@@ -6,7 +6,6 @@ using Alternet.UI.Integration.IntelliSense;
 using Alternet.UI.Integration.VisualStudio.Models;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
-using Serilog;
 
 namespace Alternet.UI.Integration.VisualStudio.IntelliSense
 {
@@ -51,7 +50,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
                         {
                             _isChangingText = true;
                             ApplyManipulations(manipulations);
-                            Log.Logger.Verbose("XAML manipulation took {Time}", sw.Elapsed);
+                            Log.Verbose($"XAML manipulation took {sw.Elapsed}");
                         }
                     }
                     sw.Stop();

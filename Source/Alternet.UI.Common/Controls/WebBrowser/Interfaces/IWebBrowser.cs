@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="WebBrowser.ZoomOut"/>
         void ZoomOut();
 
-        /// <inheritdoc cref="WebBrowser.NavigateToStream(stream)"/>
+        /// <inheritdoc cref="WebBrowser.NavigateToStream(Stream)"/>
         void NavigateToStream(Stream stream);
 
         /// <inheritdoc cref="WebBrowser.Navigate(Uri)"/>

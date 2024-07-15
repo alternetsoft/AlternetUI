@@ -6,6 +6,7 @@
  */
 namespace Alternet.UI.Integration.Remoting
 {
+/*
     public abstract class InputEventMessageBase
     {
         public ModifierKeys[] Modifiers { get; set; }
@@ -54,5 +55,5 @@ namespace Alternet.UI.Integration.Remoting
     {
         public string Text { get; set; }
     }
-
+*/
 }

@@ -39,9 +39,8 @@ namespace Alternet.UI
         /// <param name="key">
         /// The key referenced by the event.
         /// </param>
-        /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
+        /// <param name="repeatCount">Number of repeated key presses.</param>
         /// <param name="originalTarget"></param>
-        /// <param name="keyboardDevice"></param>
         public KeyEventArgs(object originalTarget, Key key, uint repeatCount)
             : base(originalTarget)
         {
@@ -199,6 +198,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets key repeat count.
+        /// </summary>
         public virtual uint RepeatCount
         {
             get => repeatCount;
@@ -231,6 +233,10 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsToggled => keyStates == KeyStates.Toggled;
 
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
             KeyInfo keyInfo = new(Key, ModifierKeys);

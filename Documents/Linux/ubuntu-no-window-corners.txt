@@ -1,0 +1,15 @@
+Adding the following lines to ~/.config/gtk-3.0/gtk.css have made the corners square:
+
+.titlebar,
+.titlebar .background {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+For Ubuntu22.04+, add the following lines to ~/.config/gtk-3.0/gtk.css worked for me
+
+decoratio, window, window.backgroud, window.titlebar, *{
+    border-radius:0px;
+}

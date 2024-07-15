@@ -295,6 +295,7 @@ namespace Alternet.UI
             Handler.ScrollBarAlwaysVisible = always;
         }
 
+        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);

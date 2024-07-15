@@ -8,7 +8,6 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -90,8 +89,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         //};
 
 
-        private static readonly GridLength ZeroStar = new GridLength(0, GridUnitType.Star);
-        private static readonly GridLength OneStar = new GridLength(1, GridUnitType.Star);
+        private static readonly GridLength ZeroStar = new GridLength(0, System.Windows.GridUnitType.Star);
+        private static readonly GridLength OneStar = new GridLength(1, System.Windows.GridUnitType.Star);
         private readonly Throttle<string> _throttle;
         private readonly ColumnDefinition _previewCol = new ColumnDefinition { Width = OneStar };
         private readonly ColumnDefinition _codeCol = new ColumnDefinition { Width = OneStar };
@@ -140,7 +139,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             {
                 if (_isPaused != value)
                 {
-                    Log.Logger.Debug("Setting pause state to {State}", value);
+                    Alternet.UI.Integration.VisualStudio.Log.Debug($"Setting pause state to {value}");
 
                     _isPaused = value;
                     StartStopProcessAsync().FireAndForget();
@@ -218,7 +217,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         /// <param name="editor">The VS text editor control host.</param>
         public void Start(Project project, string xamlPath, IWpfTextViewHost editor)
         {
-            Log.Logger.Verbose("Started AlternetUIDesigner.Start()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Started AlternetUIDesigner.Start()");
 
             if (_isStarted)
             {
@@ -232,7 +231,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             InitializeEditor();
             LoadTargetsAndStartProcessAsync().FireAndForget();
 
-            Log.Logger.Verbose("Finished AlternetUIDesigner.Start()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Finished AlternetUIDesigner.Start()");
         }
 
         /// <summary>
@@ -301,7 +300,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private async Task LoadTargetsAndStartProcessAsync()
         {
-            Log.Logger.Verbose("Started AlternetUIDesigner.LoadTargetsAndStartProcessAsync()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Started AlternetUIDesigner.LoadTargetsAndStartProcessAsync()");
 
             await LoadTargetsAsync();
 
@@ -311,12 +310,12 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 await StartStopProcessAsync();
             }
 
-            Log.Logger.Verbose("Finished AlternetUIDesigner.LoadTargetsAndStartProcessAsync()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Finished AlternetUIDesigner.LoadTargetsAndStartProcessAsync()");
         }
 
         private async Task LoadTargetsAsync()
         {
-            Log.Logger.Verbose("Started AvaloniaDesigner.LoadTargetsAsync()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Started AlternetUIDesigner.LoadTargetsAsync()");
 
             _loadingTargets = true;
 
@@ -371,7 +370,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 _loadingTargets = false;
             }
 
-            Log.Logger.Verbose("Finished AvaloniaDesigner.LoadTargetsAsync()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Finished AlternetUIDesigner.LoadTargetsAsync()");
         }
 
         private async Task StartStopProcessAsync()
@@ -444,7 +443,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private async Task StartProcessAsync()
         {
-            Log.Logger.Verbose("Started AlternetUIDesigner.StartProcessAsync()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Started AlternetUIDesigner.StartProcessAsync()");
 
             ShowPreview();
 
@@ -470,17 +469,17 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 catch (ApplicationException ex)
                 {
                     // Don't display an error here: ProcessExited should handle that.
-                    Log.Logger.Debug(ex, "Process.StartAsync exited with error");
+                    Alternet.UI.Integration.VisualStudio.Log.Debug($"Process.StartAsync exited with error: {ex}");
                 }
                 catch (FileNotFoundException ex)
                 {
                     ShowError("Build Required", ex.Message);
-                    Log.Logger.Debug(ex, "StartAsync could not find executable");
+                    Alternet.UI.Integration.VisualStudio.Log.Debug($"StartAsync could not find executable: {ex}");
                 }
                 catch (Exception ex)
                 {
                     ShowError("Error", ex.Message);
-                    Log.Logger.Debug(ex, "StartAsync exception");
+                    Alternet.UI.Integration.VisualStudio.Log.Debug($"StartAsync exception: {ex}");
                 }
                 finally
                 {
@@ -489,7 +488,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
             else
             {
-                Log.Logger.Error("No executable found");
+                Alternet.UI.Integration.VisualStudio.Log.Error("No executable found");
 
                 // This message is unfortunate but I can't work out how to tell when all references
                 // have finished loading for all projects in the solution.
@@ -498,7 +497,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                     "Reference the library from an executable or wait for the solution to finish loading.");
             }
 
-            Log.Logger.Verbose("Finished AlternetUIDesigner.StartProcessAsync()");
+            Alternet.UI.Integration.VisualStudio.Log.Verbose("Finished AlternetUIDesigner.StartProcessAsync()");
         }
 
         private void RebuildMetadata(string assemblyPath, string executablePath)
@@ -537,7 +536,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 dte.Events.BuildEvents.OnBuildBegin += (s, e) => _metadataCache.Clear();
             }
 
-            Log.Logger.Verbose("Started AlternetUIDesigner.CreateCompletionMetadataAsync() for {ExecutablePath}", executablePath);
+            Alternet.UI.Integration.VisualStudio.Log.Verbose($"Started AlternetUIDesigner.CreateCompletionMetadataAsync() for {executablePath}");
 
             try
             {
@@ -561,15 +560,15 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
                 sw.Stop();
 
-                Log.Logger.Verbose("Finished AlternetUIDesigner.CreateCompletionMetadataAsync() took {Time} for {ExecutablePath}", sw.Elapsed, executablePath);
+                Alternet.UI.Integration.VisualStudio.Log.Verbose($"Finished AlternetUIDesigner.CreateCompletionMetadataAsync() took {sw.Elapsed} for {executablePath}");
             }
             catch (Exception ex)
             {
-                Log.Logger.Error(ex, "Error creating XAML completion metadata");
+                Alternet.UI.Integration.VisualStudio.Log.Error($"Error creating XAML completion metadata: {ex}");
             }
             finally
             {
-                Log.Logger.Verbose("Finished AlternetUIDesigner.CreateCompletionMetadataAsync()");
+                Alternet.UI.Integration.VisualStudio.Log.Verbose("Finished AlternetUIDesigner.CreateCompletionMetadataAsync()");
             }
         }
 
@@ -693,10 +692,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             var oldValue = (DesignerRunTarget)e.OldValue;
             var newValue = (DesignerRunTarget)e.NewValue;
 
-            Log.Logger.Debug(
-                "AlternetUIDesigner.SelectedTarget changed from {OldTarget} to {NewTarget}",
-                oldValue?.ExecutableAssembly,
-                newValue?.ExecutableAssembly);
+            Alternet.UI.Integration.VisualStudio.Log.Debug(
+                $"AlternetUIDesigner.SelectedTarget changed from {oldValue?.ExecutableAssembly} to {newValue?.ExecutableAssembly}");
 
             if (oldValue?.ExecutableAssembly != newValue?.ExecutableAssembly)
             {
@@ -704,7 +701,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 {
                     try
                     {
-                        Log.Logger.Debug("Waiting for StartProcessAsync to finish");
+                        Alternet.UI.Integration.VisualStudio.Log.Debug("Waiting for StartProcessAsync to finish");
                         await _startingProcess.WaitAsync();
                         Process.Stop();
                         StartProcessAsync().FireAndForget();

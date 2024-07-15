@@ -33,15 +33,6 @@ namespace Alternet.UI
         /// </remarks>
         public event ErrorStatusEventHandler? ErrorStatusChanged;
 
-        /// <inheritdoc/>
-        public override bool HasErrors
-        {
-            get
-            {
-                return GetErrors().Any();
-            }
-        }
-
         /// <summary>
         /// Gets or sets a text string that can be used as a default validator error message.
         /// </summary>
@@ -95,6 +86,15 @@ namespace Alternet.UI
         /// property.
         /// </summary>
         public static ResetColorType DefaultResetErrorForegroundMethod { get; set; } = ResetColorType.Auto;
+
+        /// <inheritdoc/>
+        public override bool HasErrors
+        {
+            get
+            {
+                return GetErrors().Any();
+            }
+        }
 
         /// <inheritdoc cref="IObjectToStringOptions.NumberStyles"/>
         /// <remarks>
@@ -422,6 +422,20 @@ namespace Alternet.UI
 
         int IReadOnlyStrings.Count => GetNumberOfLines();
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
         string? IReadOnlyStrings.this[int index]
         {
             get
@@ -435,20 +449,6 @@ namespace Alternet.UI
                     return string.Empty;
                 }
             }
-        }
-
-        [Browsable(false)]
-        internal new LayoutStyle? Layout
-        {
-            get => base.Layout;
-            set => base.Layout = value;
-        }
-
-        [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
         }
 
         /// <summary>
@@ -547,6 +547,10 @@ namespace Alternet.UI
             return (T)result;
         }
 
+        /// <summary>
+        /// Gets 'Empty Text' error status if empty text is not allowed.
+        /// </summary>
+        /// <returns></returns>
         public virtual bool HasErrorEmptyText()
         {
             if (string.IsNullOrEmpty(Text))
@@ -640,6 +644,10 @@ namespace Alternet.UI
             return false;
         }
 
+        /// <summary>
+        /// Gets 'Min Length' error status if <see cref="MinLength"/> is specified.
+        /// </summary>
+        /// <returns></returns>
         public virtual bool HasErrorMinLength()
         {
             if (MinLength > 0)
@@ -653,6 +661,10 @@ namespace Alternet.UI
             return false;
         }
 
+        /// <summary>
+        /// Gets 'Max Length' error status if <see cref="MaxLength"/> is specified.
+        /// </summary>
+        /// <returns></returns>
         public virtual bool HasErrorMaxLength()
         {
             if (MaxLength > 0)
@@ -951,6 +963,7 @@ namespace Alternet.UI
         /// Reports text validation error.
         /// </summary>
         /// <param name="showError">Indicates whether to show/hide error.</param>
+        /// <param name="errorEnumerator">Optional action which is called for every error.</param>
         /// <param name="errorText">Specifies error text.</param>
         /// <remarks>
         /// Uses <see cref="CustomTextBox.DefaultErrorBackgroundColor"/>,
@@ -992,7 +1005,7 @@ namespace Alternet.UI
             Report(this);
 
             if (!string.IsNullOrEmpty(hint))
-                errorEnumerator?.Invoke(hint);
+                errorEnumerator?.Invoke(hint!);
 
             return hint;
 

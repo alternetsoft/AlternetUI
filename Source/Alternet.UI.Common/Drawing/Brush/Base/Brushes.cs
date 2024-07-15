@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Alternet.Drawing
 {
@@ -12,152 +13,6 @@ namespace Alternet.Drawing
     /// </remarks>
     public static class Brushes
     {
-        private static readonly Dictionary<string, Func<Brush>> BrushGettersByName =
-            new(StringComparer.Ordinal)
-        {
-            { "Transparent", () => Transparent },
-            { "AliceBlue", () => AliceBlue },
-            { "AntiqueWhite", () => AntiqueWhite },
-            { "Aqua", () => Aqua },
-            { "Aquamarine", () => Aquamarine },
-            { "Azure", () => Azure },
-            { "Beige", () => Beige },
-            { "Bisque", () => Bisque },
-            { "Black", () => Black },
-            { "BlanchedAlmond", () => BlanchedAlmond },
-            { "Blue", () => Blue },
-            { "BlueViolet", () => BlueViolet },
-            { "Brown", () => Brown },
-            { "BurlyWood", () => BurlyWood },
-            { "CadetBlue", () => CadetBlue },
-            { "Chartreuse", () => Chartreuse },
-            { "Chocolate", () => Chocolate },
-            { "Coral", () => Coral },
-            { "CornflowerBlue", () => CornflowerBlue },
-            { "Cornsilk", () => Cornsilk },
-            { "Crimson", () => Crimson },
-            { "Cyan", () => Cyan },
-            { "DarkBlue", () => DarkBlue },
-            { "DarkCyan", () => DarkCyan },
-            { "DarkGoldenrod", () => DarkGoldenrod },
-            { "DarkGray", () => DarkGray },
-            { "DarkGreen", () => DarkGreen },
-            { "DarkKhaki", () => DarkKhaki },
-            { "DarkMagenta", () => DarkMagenta },
-            { "DarkOliveGreen", () => DarkOliveGreen },
-            { "DarkOrange", () => DarkOrange },
-            { "DarkOrchid", () => DarkOrchid },
-            { "DarkRed", () => DarkRed },
-            { "DarkSalmon", () => DarkSalmon },
-            { "DarkSeaGreen", () => DarkSeaGreen },
-            { "DarkSlateBlue", () => DarkSlateBlue },
-            { "DarkSlateGray", () => DarkSlateGray },
-            { "DarkTurquoise", () => DarkTurquoise },
-            { "DarkViolet", () => DarkViolet },
-            { "DeepPink", () => DeepPink },
-            { "DeepSkyBlue", () => DeepSkyBlue },
-            { "DimGray", () => DimGray },
-            { "DodgerBlue", () => DodgerBlue },
-            { "Firebrick", () => Firebrick },
-            { "FloralWhite", () => FloralWhite },
-            { "ForestGreen", () => ForestGreen },
-            { "Fuchsia", () => Fuchsia },
-            { "Gainsboro", () => Gainsboro },
-            { "GhostWhite", () => GhostWhite },
-            { "Gold", () => Gold },
-            { "Goldenrod", () => Goldenrod },
-            { "Gray", () => Gray },
-            { "Green", () => Green },
-            { "GreenYellow", () => GreenYellow },
-            { "Honeydew", () => Honeydew },
-            { "HotPink", () => HotPink },
-            { "IndianRed", () => IndianRed },
-            { "Indigo", () => Indigo },
-            { "Ivory", () => Ivory },
-            { "Khaki", () => Khaki },
-            { "Lavender", () => Lavender },
-            { "LavenderBlush", () => LavenderBlush },
-            { "LawnGreen", () => LawnGreen },
-            { "LemonChiffon", () => LemonChiffon },
-            { "LightBlue", () => LightBlue },
-            { "LightCoral", () => LightCoral },
-            { "LightCyan", () => LightCyan },
-            { "LightGoldenrodYellow", () => LightGoldenrodYellow },
-            { "LightGreen", () => LightGreen },
-            { "LightGray", () => LightGray },
-            { "LightPink", () => LightPink },
-            { "LightSalmon", () => LightSalmon },
-            { "LightSeaGreen", () => LightSeaGreen },
-            { "LightSkyBlue", () => LightSkyBlue },
-            { "LightSlateGray", () => LightSlateGray },
-            { "LightSteelBlue", () => LightSteelBlue },
-            { "LightYellow", () => LightYellow },
-            { "Lime", () => Lime },
-            { "LimeGreen", () => LimeGreen },
-            { "Linen", () => Linen },
-            { "Magenta", () => Magenta },
-            { "Maroon", () => Maroon },
-            { "MediumAquamarine", () => MediumAquamarine },
-            { "MediumBlue", () => MediumBlue },
-            { "MediumOrchid", () => MediumOrchid },
-            { "MediumPurple", () => MediumPurple },
-            { "MediumSeaGreen", () => MediumSeaGreen },
-            { "MediumSlateBlue", () => MediumSlateBlue },
-            { "MediumSpringGreen", () => MediumSpringGreen },
-            { "MediumTurquoise", () => MediumTurquoise },
-            { "MediumVioletRed", () => MediumVioletRed },
-            { "MidnightBlue", () => MidnightBlue },
-            { "MintCream", () => MintCream },
-            { "MistyRose", () => MistyRose },
-            { "Moccasin", () => Moccasin },
-            { "NavajoWhite", () => NavajoWhite },
-            { "Navy", () => Navy },
-            { "OldLace", () => OldLace },
-            { "Olive", () => Olive },
-            { "OliveDrab", () => OliveDrab },
-            { "Orange", () => Orange },
-            { "OrangeRed", () => OrangeRed },
-            { "Orchid", () => Orchid },
-            { "PaleGoldenrod", () => PaleGoldenrod },
-            { "PaleGreen", () => PaleGreen },
-            { "PaleTurquoise", () => PaleTurquoise },
-            { "PaleVioletRed", () => PaleVioletRed },
-            { "PapayaWhip", () => PapayaWhip },
-            { "PeachPuff", () => PeachPuff },
-            { "Peru", () => Peru },
-            { "Pink", () => Pink },
-            { "Plum", () => Plum },
-            { "PowderBlue", () => PowderBlue },
-            { "Purple", () => Purple },
-            { "Red", () => Red },
-            { "RosyBrown", () => RosyBrown },
-            { "RoyalBlue", () => RoyalBlue },
-            { "SaddleBrown", () => SaddleBrown },
-            { "Salmon", () => Salmon },
-            { "SandyBrown", () => SandyBrown },
-            { "SeaGreen", () => SeaGreen },
-            { "SeaShell", () => SeaShell },
-            { "Sienna", () => Sienna },
-            { "Silver", () => Silver },
-            { "SkyBlue", () => SkyBlue },
-            { "SlateBlue", () => SlateBlue },
-            { "SlateGray", () => SlateGray },
-            { "Snow", () => Snow },
-            { "SpringGreen", () => SpringGreen },
-            { "SteelBlue", () => SteelBlue },
-            { "Tan", () => Tan },
-            { "Teal", () => Teal },
-            { "Thistle", () => Thistle },
-            { "Tomato", () => Tomato },
-            { "Turquoise", () => Turquoise },
-            { "Violet", () => Violet },
-            { "Wheat", () => Wheat },
-            { "White", () => White },
-            { "WhiteSmoke", () => WhiteSmoke },
-            { "Yellow", () => Yellow },
-            { "YellowGreen", () => YellowGreen },
-        };
-
         /// <summary>
         /// Gets a system-defined <see cref="Brush"/> object.
         /// </summary>
@@ -1287,26 +1142,24 @@ namespace Alternet.Drawing
         public static Brush YellowGreen => Color.YellowGreen.AsBrush;
 
         /// <summary>
-        /// Gets a named brush by its name.
+        /// Gets a brush by its name.
         /// </summary>
         /// <exception cref="ArgumentException">The brush was not found.</exception>
         public static Brush GetBrush(string name)
         {
             var b = TryGetBrush(name) ?? throw new ArgumentException(
-                    "Cannot find a named brush with the specified name: " + name,
+                    "Cannot find a brush with the name: " + name,
                     nameof(name));
             return b;
         }
 
         /// <summary>
-        /// Tries to get a named brush by its name.
+        /// Tries to get a brush by its name.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Brush? TryGetBrush(string name)
         {
-            if (!BrushGettersByName.TryGetValue(name, out var brushGetter))
-                return null;
-
-            return brushGetter();
+            return NamedColors.GetColorOrNull(name)?.AsBrush;
         }
     }
 }

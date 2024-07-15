@@ -108,7 +108,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="RaiseCheckedChanged"/> for all sibling <see cref="RadioButtons"/>.
+        /// Calls <see cref="RaiseCheckedChanged"/> for all sibling <see cref="RadioButton"/> controls.
         /// </summary>
         protected virtual void RaiseSiblingsCheckedChanged()
         {

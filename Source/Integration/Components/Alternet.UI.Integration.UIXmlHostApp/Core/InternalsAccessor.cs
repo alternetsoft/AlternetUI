@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using ExposedObject;
-using Serilog;
 using System;
 using System.IO;
 using System.Reflection;

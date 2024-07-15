@@ -7,10 +7,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Alternet.UI.Integration.VisualStudio.Services;
 using Microsoft.VisualStudio.Shell;
-using Serilog;
-
-/*using UIMouseButton = Alternet.UI.MouseButton;
-using UIModifierKeys = Alternet.UI.ModifierKeys;*/
 
 using WpfMouseButton = System.Windows.Input.MouseButton;
 using WpfModifierKeys = System.Windows.Input.ModifierKeys;
@@ -90,7 +86,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             Update(null);
         }
 
-        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi) => Update(_process?.PreviewData);
+        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
+            => Update(_process?.PreviewData);
 
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
         {
@@ -143,7 +140,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
             catch (Exception ex)
             {
-                Log.Logger.Error(ex, "Error updating previewer");
+                Log.Error($"Error updating previewer: {ex}");
             }
         }
 
@@ -165,7 +162,9 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             {
                 if (cachedDpiScale == null)
                 {
-                    var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+                    var dpiXProperty = typeof(SystemParameters).GetProperty(
+                        "DpiX",
+                        BindingFlags.NonPublic | BindingFlags.Static);
                     var dpiX = (int)dpiXProperty.GetValue(null, null);
                     cachedDpiScale = dpiX / 96.0;
                 }

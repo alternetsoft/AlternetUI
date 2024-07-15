@@ -58,7 +58,8 @@ namespace Alternet.UI.Port
         {
             // Call the Invoke overload that preserves the behavior of passing
             // exceptions to Dispatcher.UnhandledException.  
-            if(BaseCompatibilityPreferences.GetInlineDispatcherSynchronizationContextSend() && _dispatcher.CheckAccess())
+            if(BaseCompatibilityPreferences.InlineDispatcherSynchronizationContextSend
+                && _dispatcher.CheckAccess())
             {
                 // Same-thread, use send priority to avoid any reentrancy.
                 _dispatcher.Invoke(DispatcherPriority.Send, d, state);
@@ -111,13 +112,13 @@ namespace Alternet.UI.Port
         {
             DispatcherSynchronizationContext copy;
             
-            if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+            if(BaseCompatibilityPreferences.ReuseDispatcherSynchronizationContextInstance)
             {
                 copy = this;
             }
             else
             {
-                if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                if(BaseCompatibilityPreferences.FlowDispatcherSynchronizationContextPriority)
                 {
                     copy = new DispatcherSynchronizationContext(_dispatcher, _priority);
                 }

@@ -115,7 +115,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="Scroll"/> event.
+        /// Raises the <see cref="Scroll"/> event and <see cref="OnScroll"/> method.
         /// </summary>
         /// <param name="e">A <see cref="ScrollEventArgs"/> that contains the event
         /// data.</param>
@@ -125,6 +125,11 @@ namespace Alternet.UI
             Scroll?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Called when <see cref="Scroll"/> event is raised.
+        /// </summary>
+        /// <param name="e">A <see cref="ScrollEventArgs"/> that contains the event
+        /// data.</param>
         protected virtual void OnScroll(ScrollEventArgs e)
         {
         }

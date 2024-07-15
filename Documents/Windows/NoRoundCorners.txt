@@ -1,0 +1,1 @@
+https://github.com/valinet/Win11DisableRoundedCorners/releases/tag/1.0.0.3

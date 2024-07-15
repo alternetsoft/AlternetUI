@@ -282,7 +282,7 @@ namespace Alternet.Drawing
         public readonly PointD Center => Location + (Size / 2);
 
         /// <summary>
-        /// Converts the specified <see cref="Rect"/> to a
+        /// Converts the specified <see cref="RectD"/> to a
         /// <see cref="System.Numerics.Vector4"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -304,6 +304,11 @@ namespace Alternet.Drawing
         public static implicit operator RectD((Coord, Coord, Coord, Coord) d) =>
             new(d.Item1, d.Item2, d.Item3, d.Item4);
 
+        /// <summary>
+        /// Implicit operator convertion from <see cref="RectD"/>
+        /// to <see cref="SKRect"/>.
+        /// </summary>
+        /// <param name="rect">Value to convert.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKRect(RectD rect)
         {
@@ -312,6 +317,11 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Implicit operator convertion from <see cref="SKRect"/>
+        /// to <see cref="RectD"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RectD(SKRect value)
         {
@@ -323,7 +333,8 @@ namespace Alternet.Drawing
         /// specified <see cref='System.Drawing.Rectangle'/>
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator RectD(System.Drawing.Rectangle p) => new(p.X, p.Y, p.Width, p.Height);
+        public static implicit operator RectD(System.Drawing.Rectangle p)
+            => new(p.X, p.Y, p.Width, p.Height);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Rectangle'/> with the properties of the
@@ -647,7 +658,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="Rect"/>.
+        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="RectD"/>.
         /// </summary>
         public readonly Vector4 ToVector4()
             => new(CoordToFloat(x), CoordToFloat(y), CoordToFloat(width), CoordToFloat(height));
@@ -719,7 +730,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="RectD"/> value with ceiling of location and size.
-        /// Uses <see cref="Math.Ceiling"/> on values.
+        /// Uses <see cref="Math.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -877,6 +888,11 @@ namespace Alternet.Drawing
             return StringUtils.ToString<Coord>(names, values);
         }
 
+        /// <summary>
+        /// Gets pixel rectangle from this object using specified scaling factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <returns></returns>
         public readonly RectI PixelFromDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelFromDip(this, scaleFactor);

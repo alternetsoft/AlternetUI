@@ -103,15 +103,14 @@ namespace NativeApi.Api
 
         public static IntPtr CreateCursor() => default;
 
-        //ructs a cursor using a cursor identifier.
         public static IntPtr CreateCursor2(int cursorId) => default; // wxStockCursor     
 
-        //ructs a cursor by passing a string resource name or filename.
         public static IntPtr CreateCursor3(string cursorName, int type,
             int hotSpotX = 0, int hotSpotY = 0) => default; // =wxCURSOR_DEFAULT_TYPE
 
-        //ructs a cursor from an image.
-        public static IntPtr CreateCursor4(Image image) => default;
+        public static IntPtr CreateCursor4(Image image, int hotSpotX = 0, int hotSpotY = 0) => default;
+
+        public static IntPtr CreateCursor5(IntPtr image, int hotSpotX = 0, int hotSpotY = 0) => default;
 
         public static void DeleteCursor(IntPtr handle) { }
 

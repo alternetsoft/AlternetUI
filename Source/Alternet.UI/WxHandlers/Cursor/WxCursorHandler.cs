@@ -35,8 +35,26 @@ namespace Alternet.UI
         {
         }
 
-        public WxCursorHandler(Image image)
-            : base(UI.Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.Handler), true)
+        public WxCursorHandler(
+            Image image,
+            int hotSpotX = 0,
+            int hotSpotY = 0)
+            : base(
+                  UI.Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.Handler, hotSpotX, hotSpotY),
+                  true)
+        {
+        }
+
+        public WxCursorHandler(
+            GenericImage image,
+            int hotSpotX = 0,
+            int hotSpotY = 0)
+            : base(
+                  UI.Native.WxOtherFactory.CreateCursor5(
+                      ((WxGenericImageHandler)image.Handler).Handle,
+                      hotSpotX,
+                      hotSpotY),
+                  true)
         {
         }
 

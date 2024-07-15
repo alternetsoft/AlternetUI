@@ -45,6 +45,12 @@ namespace ControlsSample
 
         public static Stack<ListControlItem> SampleItems = new();
 
+        [Conditional("DEBUG")]
+        public static void AddIfDebug(string text, Func<Window> createForm)
+        {
+            Add(text, createForm);
+        }
+
         public static void Add(string text, Func<Window> createForm)
         {
             ListControlItem item = new(text);
@@ -62,9 +68,9 @@ namespace ControlsSample
         {
             Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
             Add("Threading Sample", () => new ThreadingSample.MainWindow());
-            Add("Test Page", () => new SkiaDrawingWindow());
+            AddIfDebug("Test Page", () => new SkiaDrawingWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
-            Add("Preview Uixml and other files", () => new PreviewSampleWindow());
+            AddIfDebug("Preview Uixml and other files", () => new PreviewSampleWindow());
             Add("Printing Sample", () => new PrintingSample.MainWindow());
             Add("Menu Sample", () => new MenuSample.MainWindow());
             Add("Mouse Input", () => new InputSample.MouseInputWindow());

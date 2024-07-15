@@ -79,9 +79,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets dialog handler.
+        /// </summary>
         [Browsable(false)]
         public new IPrintDialogHandler Handler => (IPrintDialogHandler)base.Handler;
 
+        /// <summary>
+        /// Creates <see cref="IDialogHandler"/> object used in this dialog.
+        /// </summary>
+        /// <returns></returns>
         protected override IDialogHandler CreateHandler()
         {
             return PrintingFactory.Handler.CreatePrintDialogHandler();

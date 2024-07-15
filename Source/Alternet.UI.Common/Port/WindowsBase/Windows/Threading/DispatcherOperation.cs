@@ -497,13 +497,13 @@ namespace Alternet.UI.Port
                 // SynchronizationContext must be for the correct dispatcher and
                 // priority.
                 DispatcherSynchronizationContext newSynchronizationContext;
-                if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                if(BaseCompatibilityPreferences.ReuseDispatcherSynchronizationContextInstance)
                 {
                     newSynchronizationContext = Dispatcher._defaultDispatcherSynchronizationContext;
                 }
                 else
                 {
-                    if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                    if(BaseCompatibilityPreferences.FlowDispatcherSynchronizationContextPriority)
                     {
                         newSynchronizationContext = new DispatcherSynchronizationContext(_dispatcher, _priority);
                     }

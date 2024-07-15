@@ -12,6 +12,9 @@ namespace Alternet.UI
     /// </summary>
     public class GraphicControl : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GraphicControl"/> class.
+        /// </summary>
         public GraphicControl()
         {
             IsGraphicControl = true;

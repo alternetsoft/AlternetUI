@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="TargetFrameworks.props" />
+
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <Platforms>AnyCPU</Platforms>
+      <ApplicationManifest>$(MSBuildThisFileDirectory)\app.manifest</ApplicationManifest>
+      <LangVersion>11.0</LangVersion>
+      <Nullable>enable</Nullable>
+      <ApplicationIcon>$(MSBuildThisFileDirectory)\Sample.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+        <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+        <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
+    </ItemGroup>
+</Project>
+

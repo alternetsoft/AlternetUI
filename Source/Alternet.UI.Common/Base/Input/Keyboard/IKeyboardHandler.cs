@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to access keyboard.
+    /// </summary>
     public interface IKeyboardHandler : IDisposable
     {
         /// <summary>
@@ -20,12 +23,32 @@ namespace Alternet.UI
         /// </returns>
         KeyStates GetKeyStatesFromSystem(Key key);
 
+        /// <summary>
+        /// Hide on-screen keyboard for the specified control.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         bool HideKeyboard(Control? control);
 
+        /// <summary>
+        /// Show on-screen keyboard for the specified control.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         bool ShowKeyboard(Control? control);
 
+        /// <summary>
+        /// Gets whether on-screen keyboard is shown for the specified control.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         bool IsSoftKeyboardShowing(Control? control);
 
+        /// <summary>
+        /// Checks whether key is valid for the current platform.
+        /// </summary>
+        /// <param name="key">Key to check.</param>
+        /// <returns></returns>
         bool IsValidKey(Key key);
     }
 }

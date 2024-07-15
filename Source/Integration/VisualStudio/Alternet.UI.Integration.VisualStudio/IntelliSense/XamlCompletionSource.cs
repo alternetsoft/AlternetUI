@@ -8,7 +8,6 @@ using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
-using Serilog;
 using CompletionEngine = Alternet.UI.Integration.IntelliSense.CompletionEngine;
 
 namespace Alternet.UI.Integration.VisualStudio.IntelliSense
@@ -87,7 +86,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
                         "no completions found" :
                         $"{completions.Completions.Count} completions found (First:{completions.Completions.FirstOrDefault()?.DisplayText})";
 
-                    Log.Logger.Verbose("XAML completion took {Time}, {CompletionHint}", sw.Elapsed, completionHint);
+                    Log.Verbose($"XAML completion took {sw.Elapsed}, {completionHint}");
                 }
 
                 sw.Stop();

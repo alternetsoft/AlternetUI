@@ -162,11 +162,22 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether specified key is valid for the current platform.
+        /// </summary>
+        /// <param name="key">key to check.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsValidKey(Key key)
         {
             return Handler.IsValidKey(key);
         }
 
+        /// <summary>
+        /// Converts <paramref name="isRepeat"/> boolean to repeat count.
+        /// </summary>
+        /// <param name="isRepeat">Whether key was repeated.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint IsRepeatToRepeatCount(bool isRepeat)
         {

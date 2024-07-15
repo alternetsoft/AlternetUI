@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements static methods and properties which are related to the controls creation.
+    /// </summary>
     public static class ControlFactory
     {
         private static IControlFactoryHandler? handler;
 
+        /// <summary>
+        /// Gets or sets <see cref="IControlFactoryHandler"/> which is used to create controls.
+        /// </summary>
         public static IControlFactoryHandler Handler
         {
             get

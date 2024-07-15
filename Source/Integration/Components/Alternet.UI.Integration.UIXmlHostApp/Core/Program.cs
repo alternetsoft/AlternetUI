@@ -16,9 +16,9 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         private static CommandLineArgs commandLineArgs;
         private static Engine engine;
 
-        /*private static Assembly interfacesUIAssembly;
+        private static Assembly interfacesUIAssembly;
         private static Assembly commonUIAssembly;
-        private static Assembly alternetUIAssembly;*/
+        private static Assembly alternetUIAssembly;
 
         [STAThread]
         public static void Main(string[] cmdline)
@@ -46,14 +46,17 @@ namespace Alternet.UI.Integration.UIXmlHostApp
                 commandLineArgs.Method = enforcedMethod.PreviewerMethod;
             transport.OnException += (t, e) => Die(e.ToString());
 
-            /*var interfacesUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Interfaces.dll"));*/
+            interfacesUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Interfaces.dll"));
 
             /*AppDomain.CurrentDomain.AssemblyResolve += AppDomain_AssemblyResolve;*/
 
-            /*var commonUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Common.dll"));
-            var alternetUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.dll"));*/
+            commonUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Common.dll"));
 
+            var alternetUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.dll"));
 
+#if NETCOREAPP
+            /*SetDotNetCoreNativeDllImportResolver(alternetUIAssembly);*/
+#endif
 
             /*var loaderType = alternetUIAssembly.GetType("Alternet.UI.Integration.UIXmlPreviewLoader");
 
@@ -61,14 +64,10 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
             propInfo?.SetValue(null, dllPath);*/
 
-#if NETCOREAPP
-            /*SetDotNetCoreNativeDllImportResolver(alternetUIAssembly);*/
-#endif
 
-            
             /*var alternetUIAssembly = typeof(Alternet.UI.Application).Assembly;*/
 
-            engine = new Engine(transport, commandLineArgs.SessionId, default);
+            engine = new Engine(transport, commandLineArgs.SessionId, alternetUIAssembly);
             engine.Run();
         }
 
@@ -84,11 +83,17 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         }*/
 
 #if NETCOREAPP
+        
+        static IntPtr palDll = default;
+
         private static void SetDotNetCoreNativeDllImportResolver(Assembly alternetUIAssembly)
         {
             NativeLibrary.SetDllImportResolver(alternetUIAssembly,
                 (libraryName, assembly, searchPath) =>
                 {
+
+                    if (palDll != default)
+                        return palDll;
 
                     IntPtr LoadL(string name, string subFolder)
                     {
@@ -104,15 +109,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
                     if (libraryName == "Alternet.UI.Pal")
                     {
-                        return LoadL("Alternet.UI.Pal", @"runtimes\win-x64\native\");
-                    }
-                    if (libraryName == "Alternet.UI.Common")
-                    {
-                        return LoadL(libraryName, string.Empty);
-                    }
-                    if (libraryName == "Alternet.UI.Interfaces")
-                    {
-                        return LoadL(libraryName, string.Empty);
+                        palDll = LoadL("Alternet.UI.Pal", @"runtimes\win-x64\native\");
+                        return palDll;
                     }
                     else
                         return LoadL(libraryName, string.Empty);

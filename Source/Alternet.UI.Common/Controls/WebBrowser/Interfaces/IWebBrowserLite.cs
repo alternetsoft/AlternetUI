@@ -134,10 +134,10 @@ namespace Alternet.UI
         /// <inheritdoc cref="WebBrowser.EnableHistory"/>
         void EnableHistory(bool enable = true);
 
-        /// <inheritdoc cref="WebBrowser.Reload"/>
+        /// <inheritdoc cref="WebBrowser.Reload()"/>
         void Reload();
 
-        /// <inheritdoc cref="WebBrowser.Reload"/>
+        /// <inheritdoc cref="WebBrowser.Reload(bool)"/>
         void Reload(bool noCache);
 
         /// <inheritdoc cref="WebBrowser.SelectAll"/>

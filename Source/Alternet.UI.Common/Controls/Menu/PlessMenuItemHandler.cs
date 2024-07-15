@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements dummy <see cref="IMenuItemHandler"/> provider.
+    /// </summary>
     public class PlessMenuItemHandler : PlessControlHandler, IMenuItemHandler
     {
     }

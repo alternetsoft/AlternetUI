@@ -10,20 +10,44 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Contains properties which describe format of the image pixels.
+    /// </summary>
     public struct ImageBitsFormat
     {
+        /// <summary>
+        /// Number of bits per pixel.
+        /// </summary>
         public int BitsPerPixel;
 
+        /// <summary>
+        /// Whether alpha component is present in pixel data.
+        /// </summary>
         public bool HasAlpha;
 
+        /// <summary>
+        /// Size of the pixel in bytes.
+        /// </summary>
         public int SizePixel;
 
+        /// <summary>
+        /// Offset of the red component.
+        /// </summary>
         public int Red;
 
+        /// <summary>
+        /// Offset of the green component.
+        /// </summary>
         public int Green;
 
+        /// <summary>
+        /// Offset of the blue component.
+        /// </summary>
         public int Blue;
 
+        /// <summary>
+        /// Offset of the alpha component.
+        /// </summary>
         public int Alpha;
 
         public static ImageBitsFormat Rgba8888

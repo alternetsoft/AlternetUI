@@ -3,10 +3,6 @@ using System.IO;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Serilog.Core;
-using Serilog.Events;
-using Serilog.Formatting;
-using Serilog.Formatting.Display;
 
 namespace Alternet.UI.Integration.VisualStudio.Services
 {

@@ -518,11 +518,20 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Occurs during a drag-and-drop operation and enables the drag source
+        /// to determine whether the drag-and-drop operation should be canceled.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when <see cref="KeyUp"/> event is raised.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnKeyUp(KeyEventArgs e)
         {

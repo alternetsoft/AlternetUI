@@ -51,21 +51,8 @@ namespace Alternet.UI
             if (string.IsNullOrEmpty(url))
                 return false;
 
-#if NET6_0_OR_GREATER
             var result = Uri.TryCreate(url, urlKind, out _);
             return result;
-#else
-            try
-            {
-                var uri = new Uri(url, urlKind);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-#endif
-
         }
     }
 }

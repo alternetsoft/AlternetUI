@@ -4,26 +4,16 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Xaml;
 using Alternet.UI.Integration.Remoting;
-using Alternet.UI.Integration.VisualStudio.Models;
-using Microsoft.VisualStudio.Shell;
-using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 using Task = System.Threading.Tasks.Task;
 
-namespace Alternet.UI.Integration.VisualStudio.Services
+namespace Alternet.UI.Integration
 {
     /// <summary>
     /// Manages running a XAML previewer process.
     /// </summary>
-    public class PreviewerProcess : IDisposable, ILogEventEnricher
+    public class PreviewerProcess : IDisposable
     {
-        private readonly ILogger _log;
         private string _assemblyPath;
         private string _executablePath;
         private string _hostAppPath;
@@ -39,12 +29,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// </summary>
         public PreviewerProcess()
         {
-            _log = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .Destructure.ToMaximumStringLength(32)
-                .Enrich.With(this)
-                .WriteTo.Logger(Log.Logger)
-                .CreateLogger();
         }
 
         public PreviewData PreviewData
@@ -107,26 +91,9 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// </summary>
         public event EventHandler ProcessExited;
 
-        public void LogError<T>(string messageTemplate, T propertyValue)
+        public void LogError(string title, Exception exception, int lineNumber, int linePos)
         {
-            _log.Error<T>(messageTemplate, propertyValue);
-        }
-
-        public void LogError(Exception exception, string messageTemplate)
-        {
-            _log.Error(exception, messageTemplate);
-        }
-
-        public void LogErrorVS(Exception exception, string messageTemplate)
-        {
-            _log.Error(exception, messageTemplate);
-
-            if(exception is XamlException xamplE)
-            {
-                var lineNumber = xamplE.LineNumber;
-                var linePos = xamplE.LinePosition;
-            }
-
+            Log.Error($"{title}: {exception}");
         }
 
         /// <summary>
@@ -141,7 +108,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             string executablePath,
             string hostAppPath)
         {
-            _log.Verbose("Started PreviewerProcess.StartAsync()");
+            Log.Verbose("Started PreviewerProcess.StartAsync()");
 
             if (_listener != null)
             {
@@ -162,12 +129,23 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     nameof(executablePath));
             }
 
-            if (string.IsNullOrWhiteSpace(hostAppPath))
+            /*hostAppPath = Alternet.UI.RegistryUtils.ReadUIXmlPreviewPath();
+
+            if (hostAppPath is null)*/
+                hostAppPath = @"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe";
+
+            if (!File.Exists(hostAppPath))
+            {
+                Log.Error($"File not found: {hostAppPath}");
+                return;
+            }
+
+            /*if (string.IsNullOrWhiteSpace(hostAppPath))
             {
                 throw new ArgumentException(
-                    "Executable path may not be null or an empty string.",
-                    nameof(executablePath));
-            }
+                    "HostAppPath path may not be null or an empty string.",
+                    nameof(hostAppPath));
+            }*/
 
             if (!File.Exists(assemblyPath))
             {
@@ -183,12 +161,12 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     "Please build your project to enable previewing and intellisense.");
             }
 
-            if (!File.Exists(hostAppPath))
+            /*if (!File.Exists(hostAppPath))
             {
                 throw new FileNotFoundException(
                     $"Could not find executable '{hostAppPath}'. " +
                     "Please build your project to enable previewing and intellisense.");
-            }
+            }*/
 
             _assemblyPath = assemblyPath;
             _executablePath = executablePath;
@@ -211,7 +189,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     }
                     catch (Exception ex)
                     {
-                        LogError(ex, "Error initializing connection");
+                        Log.Error($"Error initializing connection: {ex}");
                         tcs.TrySetException(ex);
                     }
                 });
@@ -227,6 +205,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             //EnsureExists(depsPath);
 
             bool isDotNetCore = hostAppPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase);
+
+            isDotNetCore = false;
 
             //var args = $@"exec --runtimeconfig ""{runtimeConfigPath}"" --depsfile ""{depsPath}"" ""{hostAppPath}"" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}""";
 
@@ -247,8 +227,9 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 UseShellExecute = false,
             };
 
-            _log.Information("Starting previewer process for '{ExecutablePath}'", _executablePath);
-            _log.Debug("> dotnet.exe {Args}", args);
+            Log.Information($"Starting previewer process for '{_executablePath}'");
+            Log.Debug($"App: {hostAppPath}");
+            Log.Debug($"Args: {args}");
 
             var process = _process = Process.Start(processInfo);
             process.EnableRaisingEvents = true;
@@ -261,13 +242,15 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             void Abort(object sender, EventArgs e)
             {
-                _log.Information("Process exited while waiting for connection to be initialized.");
-                tcs.TrySetException(new ApplicationException($"The previewer process exited unexpectedly with code {process.ExitCode}."));
+                Log.Information("Process exited while waiting for connection init.");
+                tcs.TrySetException(
+                    new ApplicationException($"The previewer exited unexpectedly with code {process.ExitCode}."));
             }
 
             try
             {
-                _log.Information("Started previewer process for '{ExecutablePath}'. Waiting for connection to be initialized.", _executablePath);
+                Log.Information(
+                    $"Started previewer process for '{_executablePath}'. Waiting for connection init.");
                 await tcs.Task;
             }
             finally
@@ -275,7 +258,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 process.Exited -= Abort;
             }
 
-            _log.Verbose("Finished PreviewerProcess.StartAsync()");
+            Log.Verbose("Finished PreviewerProcess.StartAsync()");
         }
 
         /// <summary>
@@ -283,8 +266,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// </summary>
         public void Stop()
         {
-            _log.Verbose("Started PreviewerProcess.Stop()");
-            _log.Information("Stopping previewer process");
+            Log.Verbose("Started PreviewerProcess.Stop()");
+            Log.Information("Stopping previewer process");
 
             _listener?.Dispose();
             _listener = null;
@@ -299,23 +282,24 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             if (_process != null && !_process.HasExited)
             {
-                _log.Debug("Killing previewer process");
+                Log.Debug("Killing previewer process");
 
                 try
                 {
-                    // Kill the process. Do not set _process to null here, wait for ProcessExited to be called.
+                    // Kill the process. Do not set _process to null here,
+                    // wait for ProcessExited to be called.
                     _process.Kill();
                 }
                 catch (InvalidOperationException ex)
                 {
-                    _log.Debug(ex, "Failed to kill previewer process");
+                    Log.Debug($"Failed to kill previewer process: {ex}");
                 }
             }
 
             _executablePath = null;
             _hostAppPath = null;
 
-            _log.Verbose("Finished PreviewerProcess.Stop()");
+            Log.Verbose("Finished PreviewerProcess.Stop()");
         }
 
         /// <summary>
@@ -368,7 +352,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             _process.Refresh();
             if (_process.PrivateMemorySize64 > MaxProcessMemoryBytes)
             {
-                _log.Information("StopIfMaxMemoryReached: restarting process.");
+                Log.Information("StopIfMaxMemoryReached: restarting process.");
 
                 await RestartAsync();
             }
@@ -390,7 +374,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 throw new InvalidOperationException("Process not finished initializing.");
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Sends an input message to the process.
         /// </summary>
         /// <param name="message">The message.</param>
@@ -408,29 +392,21 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
 
             await SendAsync(message);
-        }
+        }*/
 
         /// <summary>
         /// Stops the process and disposes of all resources.
         /// </summary>
         public void Dispose() => Stop();
 
-        void ILogEventEnricher.Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-        {
-            if (_process?.HasExited != true)
-            {
-                logEvent.AddOrUpdateProperty(propertyFactory.CreateProperty("Pid", _process?.Id ?? 0));
-            }
-        }
-
         private async Task ConnectionInitializedAsync(IAlternetUIRemoteTransportConnection connection)
         {
-            _log.Verbose("Started PreviewerProcess.ConnectionInitializedAsync()");
-            _log.Information("Connection initialized");
+            Log.Verbose("Started PreviewerProcess.ConnectionInitializedAsync()");
+            Log.Information("Connection initialized");
 
             if (!IsRunning)
             {
-                _log.Verbose("ConnectionInitializedAsync detected process has stopped: aborting");
+                Log.Verbose("ConnectionInitializedAsync detected process has stopped: aborting");
                 return;
             }
 
@@ -449,26 +425,24 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             await SetScalingAsync(_scaling);
 
-            _log.Verbose("Finished PreviewerProcess.ConnectionInitializedAsync()");
+            Log.Verbose("Finished PreviewerProcess.ConnectionInitializedAsync()");
         }
 
         private async Task SendAsync(object message)
         {
-            _log.Debug("=> Sending {@Message}", message);
+            Log.Debug($"=> Sending {message}");
             await _connection.Send(message);
         }
 
         private async Task OnMessageAsync(object message)
         {
-            _log.Verbose("Started PreviewerProcess.OnMessageAsync()");
-            _log.Debug("<= {@Message}", message);
+            Log.Verbose("Started PreviewerProcess.OnMessageAsync()");
+            Log.Debug($"<= {message}");
 
             switch (message)
             {
                 case PreviewDataMessage frame:
                     {
-                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
                         PreviewData = null;
                         PreviewData = new PreviewData(frame.ImageFileName);
 
@@ -491,22 +465,23 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                     if (exception != null)
                     {
-                        LogErrorVS(new XamlException(
-                            exception.Message + "\n" + exception.StackTrace,
-                            null,
+                        LogError(
+                            "UpdateXamlResult error",
+                            new Exception(exception.Message + "\n" + exception.StackTrace),
                             exception.UixmlLineNumber ?? 0,
-                            exception.UixmlLinePosition ?? 0),
-                            "UpdateXamlResult error");
+                            exception.UixmlLinePosition ?? 0);
                     }
 
                     break;
                 }
             }
 
-            _log.Verbose("Finished PreviewerProcess.OnMessageAsync()");
+            Log.Verbose("Finished PreviewerProcess.OnMessageAsync()");
         }
 
-        private void ConnectionMessageReceived(IAlternetUIRemoteTransportConnection connection, object message)
+        private void ConnectionMessageReceived(
+            IAlternetUIRemoteTransportConnection connection,
+            object message)
         {
             OnMessageAsync(message).FireAndForget();
         }
@@ -515,14 +490,14 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             IAlternetUIRemoteTransportConnection connection,
             Exception ex)
         {
-            LogError(ex, "Connection error");
+            Log.Error($"Connection error: {ex}");
         }
 
         private void OnProcessOutputReceived(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(e.Data))
             {
-                _log.Debug("<= {Data}", e.Data);
+                Log.Debug($"<= {e.Data}");
             }
         }
 
@@ -530,13 +505,13 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         {
             if (!string.IsNullOrWhiteSpace(e.Data))
             {
-                LogError("<= {Data}", e.Data);
+                Log.Error($"<= {e.Data}");
             }
         }
 
         private void OnProcessExited(object sender, EventArgs e)
         {
-            _log.Information("Process exited");
+            Log.Information("Process exited");
             Stop();
             ProcessExited?.Invoke(this, EventArgs.Empty);
         }

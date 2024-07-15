@@ -912,6 +912,14 @@ namespace Alternet.UI
                     addLogAction(item.Name, item.Action);
                 }
             }
+
+            addLogAction("Test RegistryUtils", () =>
+            {
+                var previewerPath = RegistryUtils.ReadUIXmlPreviewPath();
+                RegistryUtils.WriteUIXmlPreviewPath(@"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe");
+                previewerPath = RegistryUtils.ReadUIXmlPreviewPath();
+                App.LogNameValue("UIXmlPreviewPath", previewerPath);
+            });
         }
 
         /// <summary>

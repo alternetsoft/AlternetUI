@@ -7,8 +7,6 @@ using Alternet.UI.Integration.VisualStudio.Views;
 using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Settings;
-using Serilog;
-using Serilog.Events;
 
 namespace Alternet.UI.Integration.VisualStudio.Services
 {
@@ -19,8 +17,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         private readonly WritableSettingsStore _settings;
         private Orientation _designerSplitOrientation = Orientation.Vertical;
         private AlternetUIDesignerView _designerView = AlternetUIDesignerView.Split;
-        private LogEventLevel _minimumLogVerbosity = LogEventLevel.Warning;
-
+        
         [ImportingConstructor]
         public AlternetUIVisualStudioSettings(SVsServiceProvider vsServiceProvider)
         {
@@ -55,19 +52,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
         }
 
-        public LogEventLevel MinimumLogVerbosity
-        {
-            get => _minimumLogVerbosity;
-            set
-            {
-                if (_minimumLogVerbosity != value)
-                {
-                    _minimumLogVerbosity = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void Load()
@@ -82,14 +66,10 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     SettingsKey,
                     nameof(DesignerView),
                     (int)AlternetUIDesignerView.Split);
-                MinimumLogVerbosity = (LogEventLevel)_settings.GetInt32(
-                    SettingsKey,
-                    nameof(MinimumLogVerbosity),
-                    (int)LogEventLevel.Warning);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Failed to load settings");
+                Log.Error($"Failed to load settings: {ex}");
             }
         }
 
@@ -104,11 +84,10 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                 _settings.SetInt32(SettingsKey, nameof(DesignerSplitOrientation), (int)DesignerSplitOrientation);
                 _settings.SetInt32(SettingsKey, nameof(DesignerView), (int)DesignerView);
-                _settings.SetInt32(SettingsKey, nameof(MinimumLogVerbosity), (int)MinimumLogVerbosity);
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Failed to save settings");
+                Log.Error($"Failed to save settings: {ex}");
             }
         }
 

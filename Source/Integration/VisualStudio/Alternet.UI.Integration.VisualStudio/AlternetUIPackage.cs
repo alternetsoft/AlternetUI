@@ -4,8 +4,8 @@ using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Serilog;
-using Serilog.Core;
+using Microsoft.VisualStudio.Threading;
+
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -56,7 +56,16 @@ namespace Alternet.UI.Integration.VisualStudio
     [ProvideOptionPage(typeof(OptionsDialogPage), Name, "General", 113, 0, supportsAutomation: true)]
     internal sealed class AlternetUIPackage : AsyncPackage
     {
+        internal static IVsOutputWindow? OutputWindow;        
+        internal static IVsOutputWindowPane OutputPane;
+
+        private static Guid _guid;
         private static ErrorListProvider _errorListProvider;
+
+        static AlternetUIPackage()
+        {
+            Log.Write = Write;
+        }
 
         public static void InitializeMsg(IServiceProvider serviceProvider)
         {
@@ -99,11 +108,15 @@ namespace Alternet.UI.Integration.VisualStudio
 
         public static SolutionService SolutionService { get; private set; }
 
+        public static JoinableTaskFactory JTF { get; private set; }
+
         protected override async Task InitializeAsync(
             CancellationToken cancellationToken,
             IProgress<ServiceProgressData> progress)
         {
             await base.InitializeAsync(cancellationToken, progress);
+
+            JTF = JoinableTaskFactory;
 
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
@@ -113,10 +126,31 @@ namespace Alternet.UI.Integration.VisualStudio
             var dte = (DTE)await GetServiceAsync(typeof(DTE));
             SolutionService = new SolutionService(dte);
 
-            Log.Logger.Information("AlterNET UI Package initialized");
+            Log.Information("AlterNET UI Package initialized");
         }
 
         bool outputPaneLoggingEnabled = true;
+
+        private static void Write(string message)
+        {
+            AlternetUIPackage.JTF.Run(() =>
+            {
+                return WriteAsync(message);
+            });
+        }
+
+        private static async Task WriteAsync(string message)
+        {
+            var jtf = AlternetUIPackage.JTF;
+
+            if (jtf is null)
+                return;
+
+            await jtf.SwitchToMainThreadAsync();
+
+            AlternetUIPackage.OutputPane?.OutputStringThreadSafe(
+                DateTime.Now + ": " + message + Environment.NewLine);
+        }
 
         private void InitializeLogging()
         {
@@ -126,19 +160,69 @@ namespace Alternet.UI.Integration.VisualStudio
 
         private void InitializeOutputPaneLogging()
         {
-            const string format = "{Timestamp:HH:mm:ss.fff} [{Level}] {Pid} {Message}{NewLine}{Exception}";
-            var ouput = this.GetService<IVsOutputWindow, SVsOutputWindow>();
+            /*const string format = "{Timestamp:HH:mm:ss.fff} [{Level}] {Pid} {Message}{NewLine}{Exception}";*/
+
+            ThreadHelper.ThrowIfNotOnUIThread();
+            OutputWindow = this.GetService<IVsOutputWindow, SVsOutputWindow>();
+
+            InitializeMsg(this);
+
+            _guid = Guid.NewGuid();
+            OutputWindow?.CreatePane(ref _guid, "Alternet.UI", 1, 1);
+            OutputWindow?.GetPane(ref _guid, out OutputPane);
+
             var settings = this.GetMefService<IAlternetUIVisualStudioSettings>();
-            var levelSwitch = new LoggingLevelSwitch() { MinimumLevel = settings.MinimumLogVerbosity };
-
-            settings.PropertyChanged += (s, e) => levelSwitch.MinimumLevel = settings.MinimumLogVerbosity;
-
-            var sink = new OutputPaneEventSink(ouput, outputTemplate: format);
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.ControlledBy(levelSwitch)
-                .WriteTo.Sink(sink, levelSwitch: levelSwitch)
-                .WriteTo.Trace(outputTemplate: format)
-                .CreateLogger();
         }
+
+        /*/// <summary>
+         /// Removes all text from the Output Window pane.
+         /// </summary>
+         public static void Clear()
+         {
+             Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+             pane?.Clear();
+         }*/
+
+        /*/// <summary>
+        /// Deletes the Output Window pane.
+        /// </summary>
+        public static void DeletePane()
+        {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+            if (pane != null)
+            {
+                try
+                {
+                    var output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
+                    output.DeletePane(ref _guid);
+                    pane = null;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Write(ex);
+                }
+            }
+        }*/
+
+        /*private static bool EnsurePane()
+        {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (pane == null)
+            {
+                lock (_syncRoot)
+                {
+                    if (pane == null)
+                    {
+                        _guid = Guid.NewGuid();
+                        IVsOutputWindow output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
+                        output.CreatePane(ref _guid, _name, 1, 1);
+                        output.GetPane(ref _guid, out pane);
+                    }
+                }
+            }
+
+            return pane != null;
+        }*/
     }
 }

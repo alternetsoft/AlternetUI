@@ -49,6 +49,9 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Maximal scale factor value for all displays.
+        /// </summary>
         public static Coord MaxScaleFactor
         {
             get
@@ -57,6 +60,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Minimal scale factor value for all displays.
+        /// </summary>
         public static Coord MinScaleFactor
         {
             get
@@ -65,6 +71,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets <see cref="IDisplayFactoryHandler"/> object used to perform
+        /// display related operations.
+        /// </summary>
         public static IDisplayFactoryHandler Factory
         {
             get
@@ -113,6 +123,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets array of scale factors for all displays on the system.
+        /// </summary>
         public static Coord[] AllScaleFactors
         {
             get
@@ -128,6 +141,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets array of DPI values for all displays on the system.
+        /// </summary>
         public static int[] AllDPI
         {
             get
@@ -143,6 +159,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Minimal DPI value for all displays.
+        /// </summary>
         public static int MinDPI
         {
             get
@@ -151,6 +170,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Maximal DPI value for all displays.
+        /// </summary>
         public static int MaxDPI
         {
             get
@@ -159,6 +181,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether system has displays with different DPI values.
+        /// </summary>
         public static bool HasDifferentDPI => MaxDPI != MinDPI;
 
         /// <summary>
@@ -195,6 +220,9 @@ namespace Alternet.UI
         /// <remarks>Same as <see cref="DeviceName"/></remarks>
         public string Name => Handler.GetName();
 
+        /// <summary>
+        /// Gets whether this <see cref="Display"/> object is ok.
+        /// </summary>
         public bool IsOk => Handler.IsOk;
 
         /// <summary>

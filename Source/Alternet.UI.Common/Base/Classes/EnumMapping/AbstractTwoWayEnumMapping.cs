@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Abstract class which defines methods allowing to map values
+    /// Abstract class which extends <see cref="AbstractEnumMapping{TSource,TDest}"/>. It defines
+    /// methods allowing to map values
     /// of <typeparamref name="TSource"/> enum type
     /// to/from <typeparamref name="TDest"/> enum type.
     /// </summary>

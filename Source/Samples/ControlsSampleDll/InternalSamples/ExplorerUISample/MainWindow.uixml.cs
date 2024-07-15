@@ -13,6 +13,7 @@ namespace ExplorerUISample
         {
             RightVisible = false,
             TopVisible = false,
+            BottomVisible = false,
         };
         private readonly TreeView treeView = new()
         {
@@ -22,15 +23,6 @@ namespace ExplorerUISample
         {
             View = ListViewView.Details,
             HasBorder = false,
-        };
-        private readonly Button button = new("Show progress")
-        {
-            Padding = 10,
-            ClickAction = () =>
-            {
-                var progressWindow = new ProgressWindow();
-                progressWindow.Show();
-            },
         };
 
         public MainWindow()
@@ -42,9 +34,6 @@ namespace ExplorerUISample
             mainPanel.Parent = this;
             mainPanel.LeftPanel.Width = 200;
             mainPanel.BottomPanel.Height = 100;
-            button.Parent = mainPanel.BottomPanel;
-            button.HorizontalAlignment = HorizontalAlignment.Left;
-            button.VerticalAlignment = VerticalAlignment.Top;
             treeView.Parent = mainPanel.LeftPanel;
             listView.Parent = mainPanel.FillPanel;
             listView.Columns.Add(new ListViewColumn("Name"));
@@ -80,6 +69,34 @@ namespace ExplorerUISample
             listView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
             listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
             listView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
+
+            listView.ContextMenuStrip = new();
+
+            listView.ContextMenuStrip.Add("Show progress", () =>
+            {
+                Title = "AlterNET UI";
+
+                var progressWindow = new Window()
+                {
+                    Title = "Operation in Progress",
+                    Size = (500,200),
+                    MinimizeEnabled = false,
+                    MaximizeEnabled = false,
+                    HasSystemMenu = false,
+                    Layout = LayoutStyle.Vertical,
+                };
+
+                progressWindow.AddLabel("Processing files...").Margin = 10;
+
+                var progressBar = new ProgressBar()
+                {
+                    Margin = (10,0,10,10),
+                    Parent = progressWindow,
+                    Value = 70,
+                };
+
+                progressWindow.Show();
+            });
         }
 
         private static ImageList LoadImageList()

@@ -287,7 +287,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when the application finishes processing events and is
-        /// about to enter the idle state. This is the same as <see cref="Application.Idle"/>
+        /// about to enter the idle state. This is the same as <see cref="App.Idle"/>
         /// but on the control level.
         /// </summary>
         /// <remarks>
@@ -560,7 +560,7 @@ namespace Alternet.UI
         Coord Bottom { get; set; }
 
         /// <summary>
-        /// Gets control index in the <see cref="Children"/> of the container control.
+        /// Gets control index in the children collection of the container control.
         /// </summary>
         int? IndexInParent { get; }
 
@@ -662,7 +662,7 @@ namespace Alternet.UI
         long? LastDoubleClickTimestamp { get; set; }
 
         /// <summary>
-        /// Gets whether there are any items in the <see cref="Children"/> list.
+        /// Gets whether there are any childrent in the control.
         /// </summary>
         bool HasChildren { get; }
 
@@ -944,8 +944,7 @@ namespace Alternet.UI
         int[]? GroupIndexes { get; set; }
 
         /// <summary>
-        /// Gets or sets group indexes of this control. Group indexes are used
-        /// in <see cref="GetGroup(int, bool)"/> method.
+        /// Gets or sets group indexes of this control.
         /// </summary>
         /// <remarks>
         /// This property modifies <see cref="GroupIndexes"/>.
@@ -968,8 +967,7 @@ namespace Alternet.UI
         object NativeControl { get; }
 
         /// <summary>
-        /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
-        /// by the <see cref="Grid"/> control.
+        /// Gets or sets column index which is used by the <see cref="Grid"/> control.
         /// </summary>
         /// <remarks>
         /// Currently this property works only in <see cref="Grid"/> container.
@@ -977,8 +975,7 @@ namespace Alternet.UI
         int ColumnIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets row index which is used in <see cref="GetRowGroup"/> and
-        /// by the <see cref="Grid"/> control.
+        /// Gets or sets row index which is used by the <see cref="Grid"/> control.
         /// </summary>
         /// <remarks>
         /// Currently this property works only in <see cref="Grid"/> container.
@@ -1411,6 +1408,11 @@ namespace Alternet.UI
         /// </example>
         IAsyncResult BeginInvoke(Action action);
 
+        /// <summary>
+        /// Gets result of the <see cref="BeginInvoke(Action)"/> call.
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
         object? EndInvoke(IAsyncResult result);
 
         /// <summary>
@@ -1456,17 +1458,13 @@ namespace Alternet.UI
         void ReleaseMouseCapture();
 
         /// <summary>
-        /// Raises the <see cref="Click"/> event and calls
-        /// <see cref="OnClick(EventArgs)"/>.
+        /// Raises the <see cref="Click"/> event.
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
         void RaiseClick();
 
         /// <summary>
-        /// Raises the <see cref="Idle"/> event and calls
-        /// <see cref="OnIdle(EventArgs)"/>.
+        /// Raises the <see cref="Idle"/> event.
         /// See <see cref="Idle"/> event description for more details.
         /// </summary>
         void RaiseIdle();
@@ -1562,7 +1560,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Forces the control to invalidate itself and immediately redraw itself
-        /// and any child controls. Calls <see cref="Invalidate()"/> and <see cref="Update"/>.
+        /// and any child controls.
         /// </summary>
         void Refresh();
 

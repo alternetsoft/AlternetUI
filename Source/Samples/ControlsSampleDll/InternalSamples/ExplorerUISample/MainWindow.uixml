@@ -5,10 +5,4 @@
         Title="Alternet UI Explorer Sample"
         Width="800" Height="450" StartLocation="CenterScreen" Padding="10"
         HorizontalAlignment="Stretch">
-  <Window.StatusBar>
-    <StatusBar Name="statusBar">
-      <StatusBarPanel Text="Ready" />
-    </StatusBar>
-  </Window.StatusBar>
-
   </Window>

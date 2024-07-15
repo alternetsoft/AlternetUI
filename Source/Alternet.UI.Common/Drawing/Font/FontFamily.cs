@@ -198,17 +198,9 @@ namespace Alternet.Drawing
             }
         }
 
-        private static AdvDictionary<string, FontFamily> Items
-        {
-            get
-            {
-                if (items is null)
-                    FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
-
-                return items!;
-            }
-        }
-
+        /// <summary>
+        /// Gets whether this font family has fixed pitch fonts.
+        /// </summary>
         public virtual bool IsFixedPitch
         {
             get
@@ -217,6 +209,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="SKTypeface"/> for this object.
+        /// </summary>
         public virtual SKTypeface SkiaTypeface
         {
             get
@@ -253,6 +248,17 @@ namespace Alternet.Drawing
         /// Gets generic font family type.
         /// </summary>
         public virtual GenericFontFamily? GenericFamily { get; }
+
+        private static AdvDictionary<string, FontFamily> Items
+        {
+            get
+            {
+                if (items is null)
+                    FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
+
+                return items!;
+            }
+        }
 
         /// <summary>
         /// Resets all loaded font families.
@@ -292,6 +298,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Filters fonts and returns only compatible with SKiaSharp.
+        /// </summary>
+        /// <param name="fonts">Collection of the fonts.</param>
+        /// <returns></returns>
         public static IEnumerable<string> RemoveNonSkiaFonts(IEnumerable<string> fonts)
         {
             var result = fonts.Where(x => SkiaUtils.IsFamilySkia(x));
@@ -301,7 +312,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets name of the font family specified with <see cref="GenericFontFamily"/> enum.
         /// </summary>
-        /// <param name="family"></param>
+        /// <param name="family">Font family.</param>
         /// <returns></returns>
         public static string GetName(GenericFontFamily? family)
         {
@@ -319,11 +330,21 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Sets name of the font family specified with <see cref="GenericFontFamily"/> enum.
+        /// </summary>
+        /// <param name="genericFamily">Font family.</param>
+        /// <param name="name">New name.</param>
         public static void SetFontFamilyName(GenericFontFamily genericFamily, string? name)
         {
             GenericFamilyNames[(int)genericFamily] = name;
         }
 
+        /// <summary>
+        /// Gets whether specified font family has only fixed pitch fonts.
+        /// </summary>
+        /// <param name="name">Font family name</param>
+        /// <returns></returns>
         public static bool IsFixedPitchFontFamily(string name)
         {
             if (FontFactory.OnlySkiaFonts)

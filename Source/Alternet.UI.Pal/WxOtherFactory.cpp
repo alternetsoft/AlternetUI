@@ -418,14 +418,36 @@ namespace Alternet::UI
 	void* WxOtherFactory::CreateCursor3(const string& cursorName, int type,
 		int hotSpotX, int hotSpotY)
 	{
+		if (type == -1)
+			type = (int)wxCURSOR_DEFAULT_TYPE;
 		return new wxCursor(wxStr(cursorName), (wxBitmapType)type, hotSpotX, hotSpotY);
 	}
 
-	void* WxOtherFactory::CreateCursor4(Image* image)
+	void* WxOtherFactory::CreateCursor4(Image* image, int hotSpotX, int hotSpotY)
 	{
 		if (image == nullptr)
 			return new wxCursor();
-		return new wxCursor(image->GetBitmap().ConvertToImage());
+		auto img = image->GetBitmap().ConvertToImage();
+
+		if (hotSpotX != 0)
+			img.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_X, hotSpotX);
+		if (hotSpotY != 0)
+			img.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_Y, hotSpotY);
+		return new wxCursor(img);
+	}
+
+	void* WxOtherFactory::CreateCursor5(void* image, int hotSpotX, int hotSpotY)
+	{
+		if (image == nullptr)
+			return new wxCursor();
+
+		auto img = ((GenericImage*)image)->_image;
+
+		if (hotSpotX != 0)
+			img.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_X, hotSpotX);
+		if (hotSpotY != 0)
+			img.SetOption(wxIMAGE_OPTION_CUR_HOTSPOT_Y, hotSpotY);
+		return new wxCursor(img);
 	}
 
 	void WxOtherFactory::DeleteCursor(void* handle)

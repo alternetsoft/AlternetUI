@@ -198,7 +198,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="LinearGradientBrush.GradientStops"/>
+        /// <inheritdoc cref="GradientBrush.GradientStops"/>
         public GradientStop[] GradientStops
         {
             get

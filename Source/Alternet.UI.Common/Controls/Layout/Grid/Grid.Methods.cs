@@ -161,7 +161,6 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes <see cref="Grid"/> rows and columns for the specified controls.
         /// </summary>
-        /// <param name="grid">Grid instance.</param>
         /// <param name="controls">Grid controls.</param>
         /// <remarks>
         /// Dimensions for all rows and columns are set to <see cref="GridLength.Auto"/>.

@@ -11,12 +11,21 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Base class for the image containers.
+    /// </summary>
+    /// <typeparam name="T">Type of the handler.</typeparam>
     public abstract class ImageContainer<T> : HandledObject<T>, IImageContainer
         where T : class, IImageContainer
     {
         private int suspendImagesEvents;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageContainer{T}"/> class.
+        /// </summary>
+        /// <param name="immutable">Whether this object is immutable (properties are readonly).</param>
         protected ImageContainer(bool immutable)
+            : base(immutable)
         {
             Images.ItemInserted += OnImageInserted;
             Images.ItemRemoved += OnImageRemoved;
@@ -36,6 +45,9 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public virtual bool IsOk => Handler.IsOk && Images.Count > 0;
 
+        /// <summary>
+        /// Gets whether this object is dummy and doesn't do anything.
+        /// </summary>
         public virtual bool IsDummy => false;
 
         /// <summary>
@@ -44,12 +56,20 @@ namespace Alternet.Drawing
         /// <value>The collection of images.</value>
         public virtual Collection<Image> Images { get; } = new() { ThrowOnNullAdd = true };
 
+        /// <summary>
+        /// Raises <see cref="Changed"/> event and <see cref="OnChanged"/> method.
+        /// </summary>
         public void RaiseChanged()
         {
             OnChanged();
             Changed?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Removes image from the container.
+        /// </summary>
+        /// <param name="imageIndex">Index of image to remove.</param>
+        /// <returns></returns>
         public virtual bool Remove(int imageIndex)
         {
             if (imageIndex < 0 || imageIndex >= Images.Count)
@@ -102,10 +122,19 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Called when <see cref="Changed"/> event is raised.
+        /// </summary>
         protected virtual void OnChanged()
         {
         }
 
+        /// <summary>
+        /// Called when image is inserted in the container.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="index"></param>
+        /// <param name="item"></param>
         protected virtual void OnImageInserted(object? sender, int index, Image item)
         {
             if (suspendImagesEvents > 0)
@@ -115,6 +144,12 @@ namespace Alternet.Drawing
             RaiseChanged();
         }
 
+        /// <summary>
+        /// Called when image is removed from the container.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="index"></param>
+        /// <param name="item"></param>
         protected virtual void OnImageRemoved(object? sender, int index, Image item)
         {
             if (suspendImagesEvents > 0)

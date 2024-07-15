@@ -11,26 +11,59 @@ namespace Alternet.UI
     /// </summary>
     public enum WebBrowserEvent
     {
+        /// <summary>
+        /// Unknown event.
+        /// </summary>
         Unknown,
 
+        /// <summary>
+        /// 'Navigating' event.
+        /// </summary>
         Navigating,
 
+        /// <summary>
+        /// 'Navigated' event.
+        /// </summary>
         Navigated,
 
+        /// <summary>
+        /// 'Loaded' event.
+        /// </summary>
         Loaded,
 
+        /// <summary>
+        /// 'Error' event.
+        /// </summary>
         Error,
 
+        /// <summary>
+        /// 'NewWindow' event.
+        /// </summary>
         NewWindow,
 
+        /// <summary>
+        /// 'TitleChanged' event.
+        /// </summary>
         TitleChanged,
 
+        /// <summary>
+        /// 'FullScreenChanged' event.
+        /// </summary>
         FullScreenChanged,
 
+        /// <summary>
+        /// 'ScriptMessageReceived' event.
+        /// </summary>
         ScriptMessageReceived,
 
+        /// <summary>
+        /// 'ScriptResult' event.
+        /// </summary>
         ScriptResult,
 
+        /// <summary>
+        /// 'BeforeBrowserCreate' event.
+        /// </summary>
         BeforeBrowserCreate,
     }
 }
