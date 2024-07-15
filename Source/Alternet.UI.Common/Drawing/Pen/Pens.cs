@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -10,155 +14,13 @@ namespace Alternet.Drawing
     /// </remarks>
     public static class Pens
     {
-        private static Pen? transparent;
-        private static Pen? aliceBlue;
-        private static Pen? antiqueWhite;
-        private static Pen? aqua;
-        private static Pen? aquamarine;
-        private static Pen? azure;
-        private static Pen? beige;
-        private static Pen? bisque;
-        private static Pen? black;
-        private static Pen? blanchedAlmond;
-        private static Pen? blue;
-        private static Pen? blueViolet;
-        private static Pen? brown;
-        private static Pen? burlyWood;
-        private static Pen? cadetBlue;
-        private static Pen? chartreuse;
-        private static Pen? chocolate;
-        private static Pen? coral;
-        private static Pen? cornflowerBlue;
-        private static Pen? cornsilk;
-        private static Pen? crimson;
-        private static Pen? cyan;
-        private static Pen? darkBlue;
-        private static Pen? darkCyan;
-        private static Pen? darkGoldenrod;
-        private static Pen? darkGray;
-        private static Pen? darkGreen;
-        private static Pen? darkKhaki;
-        private static Pen? darkMagenta;
-        private static Pen? darkOliveGreen;
-        private static Pen? darkOrange;
-        private static Pen? darkOrchid;
-        private static Pen? darkRed;
-        private static Pen? darkSalmon;
-        private static Pen? darkSeaGreen;
-        private static Pen? darkSlateBlue;
-        private static Pen? darkSlateGray;
-        private static Pen? darkTurquoise;
-        private static Pen? darkViolet;
-        private static Pen? deepPink;
-        private static Pen? deepSkyBlue;
-        private static Pen? dimGray;
-        private static Pen? dodgerBlue;
-        private static Pen? firebrick;
-        private static Pen? floralWhite;
-        private static Pen? forestGreen;
-        private static Pen? fuchsia;
-        private static Pen? gainsboro;
-        private static Pen? ghostWhite;
-        private static Pen? gold;
-        private static Pen? goldenrod;
-        private static Pen? gray;
-        private static Pen? green;
-        private static Pen? greenYellow;
-        private static Pen? honeydew;
-        private static Pen? hotPink;
-        private static Pen? indianRed;
-        private static Pen? indigo;
-        private static Pen? ivory;
-        private static Pen? khaki;
-        private static Pen? lavender;
-        private static Pen? lavenderBlush;
-        private static Pen? lawnGreen;
-        private static Pen? lemonChiffon;
-        private static Pen? lightBlue;
-        private static Pen? lightCoral;
-        private static Pen? lightCyan;
-        private static Pen? lightGoldenrodYellow;
-        private static Pen? lightGreen;
-        private static Pen? lightGray;
-        private static Pen? lightPink;
-        private static Pen? lightSalmon;
-        private static Pen? lightSeaGreen;
-        private static Pen? lightSkyBlue;
-        private static Pen? lightSlateGray;
-        private static Pen? lightSteelBlue;
-        private static Pen? lightYellow;
-        private static Pen? lime;
-        private static Pen? limeGreen;
-        private static Pen? linen;
-        private static Pen? magenta;
-        private static Pen? maroon;
-        private static Pen? mediumAquamarine;
-        private static Pen? mediumBlue;
-        private static Pen? mediumOrchid;
-        private static Pen? mediumPurple;
-        private static Pen? mediumSeaGreen;
-        private static Pen? mediumSlateBlue;
-        private static Pen? mediumSpringGreen;
-        private static Pen? mediumTurquoise;
-        private static Pen? mediumVioletRed;
-        private static Pen? midnightBlue;
-        private static Pen? mintCream;
-        private static Pen? mistyRose;
-        private static Pen? moccasin;
-        private static Pen? navajoWhite;
-        private static Pen? navy;
-        private static Pen? oldLace;
-        private static Pen? olive;
-        private static Pen? oliveDrab;
-        private static Pen? orange;
-        private static Pen? orangeRed;
-        private static Pen? orchid;
-        private static Pen? paleGoldenrod;
-        private static Pen? paleGreen;
-        private static Pen? paleTurquoise;
-        private static Pen? paleVioletRed;
-        private static Pen? papayaWhip;
-        private static Pen? peachPuff;
-        private static Pen? peru;
-        private static Pen? pink;
-        private static Pen? plum;
-        private static Pen? powderBlue;
-        private static Pen? purple;
-        private static Pen? red;
-        private static Pen? rosyBrown;
-        private static Pen? royalBlue;
-        private static Pen? saddleBrown;
-        private static Pen? salmon;
-        private static Pen? sandyBrown;
-        private static Pen? seaGreen;
-        private static Pen? seaShell;
-        private static Pen? sienna;
-        private static Pen? silver;
-        private static Pen? skyBlue;
-        private static Pen? slateBlue;
-        private static Pen? slateGray;
-        private static Pen? snow;
-        private static Pen? springGreen;
-        private static Pen? steelBlue;
-        private static Pen? tan;
-        private static Pen? teal;
-        private static Pen? thistle;
-        private static Pen? tomato;
-        private static Pen? turquoise;
-        private static Pen? violet;
-        private static Pen? wheat;
-        private static Pen? white;
-        private static Pen? whiteSmoke;
-        private static Pen? yellow;
-        private static Pen? yellowGreen;
-
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
         /// </summary>
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Transparent => GetPen(ref transparent, Color.Transparent);
+        public static Pen Transparent => GetPen(Color.Transparent);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -166,7 +28,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen AliceBlue => GetPen(ref aliceBlue, Color.AliceBlue);
+        public static Pen AliceBlue => GetPen(Color.AliceBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -174,7 +36,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen AntiqueWhite => GetPen(ref antiqueWhite, Color.AntiqueWhite);
+        public static Pen AntiqueWhite => GetPen(Color.AntiqueWhite);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -182,7 +44,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Aqua => GetPen(ref aqua, Color.Aqua);
+        public static Pen Aqua => GetPen(Color.Aqua);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -190,7 +52,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Aquamarine => GetPen(ref aquamarine, Color.Aquamarine);
+        public static Pen Aquamarine => GetPen(Color.Aquamarine);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -198,7 +60,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Azure => GetPen(ref azure, Color.Azure);
+        public static Pen Azure => GetPen(Color.Azure);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -206,7 +68,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Beige => GetPen(ref beige, Color.Beige);
+        public static Pen Beige => GetPen(Color.Beige);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -214,7 +76,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Bisque => GetPen(ref bisque, Color.Bisque);
+        public static Pen Bisque => GetPen(Color.Bisque);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -222,7 +84,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Black => GetPen(ref black, Color.Black);
+        public static Pen Black => GetPen(Color.Black);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -230,7 +92,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen BlanchedAlmond => GetPen(ref blanchedAlmond, Color.BlanchedAlmond);
+        public static Pen BlanchedAlmond => GetPen(Color.BlanchedAlmond);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -238,7 +100,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Blue => GetPen(ref blue, Color.Blue);
+        public static Pen Blue => GetPen(Color.Blue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -246,7 +108,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen BlueViolet => GetPen(ref blueViolet, Color.BlueViolet);
+        public static Pen BlueViolet => GetPen(Color.BlueViolet);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -254,7 +116,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Brown => GetPen(ref brown, Color.Brown);
+        public static Pen Brown => GetPen(Color.Brown);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -262,7 +124,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen BurlyWood => GetPen(ref burlyWood, Color.BurlyWood);
+        public static Pen BurlyWood => GetPen(Color.BurlyWood);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -270,7 +132,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen CadetBlue => GetPen(ref cadetBlue, Color.CadetBlue);
+        public static Pen CadetBlue => GetPen(Color.CadetBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -278,7 +140,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Chartreuse => GetPen(ref chartreuse, Color.Chartreuse);
+        public static Pen Chartreuse => GetPen(Color.Chartreuse);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -286,7 +148,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Chocolate => GetPen(ref chocolate, Color.Chocolate);
+        public static Pen Chocolate => GetPen(Color.Chocolate);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -294,7 +156,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Coral => GetPen(ref coral, Color.Coral);
+        public static Pen Coral => GetPen(Color.Coral);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -302,7 +164,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen CornflowerBlue => GetPen(ref cornflowerBlue, Color.CornflowerBlue);
+        public static Pen CornflowerBlue => GetPen(Color.CornflowerBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -310,7 +172,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Cornsilk => GetPen(ref cornsilk, Color.Cornsilk);
+        public static Pen Cornsilk => GetPen(Color.Cornsilk);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -318,7 +180,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Crimson => GetPen(ref crimson, Color.Crimson);
+        public static Pen Crimson => GetPen(Color.Crimson);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -326,7 +188,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Cyan => GetPen(ref cyan, Color.Cyan);
+        public static Pen Cyan => GetPen(Color.Cyan);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -334,7 +196,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkBlue => GetPen(ref darkBlue, Color.DarkBlue);
+        public static Pen DarkBlue => GetPen(Color.DarkBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -342,7 +204,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkCyan => GetPen(ref darkCyan, Color.DarkCyan);
+        public static Pen DarkCyan => GetPen(Color.DarkCyan);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -350,7 +212,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkGoldenrod => GetPen(ref darkGoldenrod, Color.DarkGoldenrod);
+        public static Pen DarkGoldenrod => GetPen(Color.DarkGoldenrod);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -358,7 +220,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkGray => GetPen(ref darkGray, Color.DarkGray);
+        public static Pen DarkGray => GetPen(Color.DarkGray);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -366,7 +228,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkGreen => GetPen(ref darkGreen, Color.DarkGreen);
+        public static Pen DarkGreen => GetPen(Color.DarkGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -374,7 +236,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkKhaki => GetPen(ref darkKhaki, Color.DarkKhaki);
+        public static Pen DarkKhaki => GetPen(Color.DarkKhaki);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -382,7 +244,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkMagenta => GetPen(ref darkMagenta, Color.DarkMagenta);
+        public static Pen DarkMagenta => GetPen(Color.DarkMagenta);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -390,7 +252,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkOliveGreen => GetPen(ref darkOliveGreen, Color.DarkOliveGreen);
+        public static Pen DarkOliveGreen => GetPen(Color.DarkOliveGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -398,7 +260,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkOrange => GetPen(ref darkOrange, Color.DarkOrange);
+        public static Pen DarkOrange => GetPen(Color.DarkOrange);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -406,7 +268,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkOrchid => GetPen(ref darkOrchid, Color.DarkOrchid);
+        public static Pen DarkOrchid => GetPen(Color.DarkOrchid);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -414,7 +276,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkRed => GetPen(ref darkRed, Color.DarkRed);
+        public static Pen DarkRed => GetPen(Color.DarkRed);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -422,7 +284,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkSalmon => GetPen(ref darkSalmon, Color.DarkSalmon);
+        public static Pen DarkSalmon => GetPen(Color.DarkSalmon);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -430,7 +292,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkSeaGreen => GetPen(ref darkSeaGreen, Color.DarkSeaGreen);
+        public static Pen DarkSeaGreen => GetPen(Color.DarkSeaGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -438,7 +300,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkSlateBlue => GetPen(ref darkSlateBlue, Color.DarkSlateBlue);
+        public static Pen DarkSlateBlue => GetPen(Color.DarkSlateBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -446,7 +308,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkSlateGray => GetPen(ref darkSlateGray, Color.DarkSlateGray);
+        public static Pen DarkSlateGray => GetPen(Color.DarkSlateGray);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -454,7 +316,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkTurquoise => GetPen(ref darkTurquoise, Color.DarkTurquoise);
+        public static Pen DarkTurquoise => GetPen(Color.DarkTurquoise);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -462,7 +324,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DarkViolet => GetPen(ref darkViolet, Color.DarkViolet);
+        public static Pen DarkViolet => GetPen(Color.DarkViolet);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -470,7 +332,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DeepPink => GetPen(ref deepPink, Color.DeepPink);
+        public static Pen DeepPink => GetPen(Color.DeepPink);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -478,7 +340,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DeepSkyBlue => GetPen(ref deepSkyBlue, Color.DeepSkyBlue);
+        public static Pen DeepSkyBlue => GetPen(Color.DeepSkyBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -486,7 +348,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DimGray => GetPen(ref dimGray, Color.DimGray);
+        public static Pen DimGray => GetPen(Color.DimGray);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -494,7 +356,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen DodgerBlue => GetPen(ref dodgerBlue, Color.DodgerBlue);
+        public static Pen DodgerBlue => GetPen(Color.DodgerBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -502,7 +364,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Firebrick => GetPen(ref firebrick, Color.Firebrick);
+        public static Pen Firebrick => GetPen(Color.Firebrick);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -510,7 +372,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen FloralWhite => GetPen(ref floralWhite, Color.FloralWhite);
+        public static Pen FloralWhite => GetPen(Color.FloralWhite);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -518,7 +380,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen ForestGreen => GetPen(ref forestGreen, Color.ForestGreen);
+        public static Pen ForestGreen => GetPen(Color.ForestGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -526,7 +388,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Fuchsia => GetPen(ref fuchsia, Color.Fuchsia);
+        public static Pen Fuchsia => GetPen(Color.Fuchsia);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -534,7 +396,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Gainsboro => GetPen(ref gainsboro, Color.Gainsboro);
+        public static Pen Gainsboro => GetPen(Color.Gainsboro);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -542,7 +404,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen GhostWhite => GetPen(ref ghostWhite, Color.GhostWhite);
+        public static Pen GhostWhite => GetPen(Color.GhostWhite);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -550,7 +412,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Gold => GetPen(ref gold, Color.Gold);
+        public static Pen Gold => GetPen(Color.Gold);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -558,7 +420,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Goldenrod => GetPen(ref goldenrod, Color.Goldenrod);
+        public static Pen Goldenrod => GetPen(Color.Goldenrod);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -566,7 +428,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Gray => GetPen(ref gray, Color.Gray);
+        public static Pen Gray => GetPen(Color.Gray);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -574,7 +436,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Green => GetPen(ref green, Color.Green);
+        public static Pen Green => GetPen(Color.Green);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -582,7 +444,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen GreenYellow => GetPen(ref greenYellow, Color.GreenYellow);
+        public static Pen GreenYellow => GetPen(Color.GreenYellow);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -590,7 +452,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Honeydew => GetPen(ref honeydew, Color.Honeydew);
+        public static Pen Honeydew => GetPen(Color.Honeydew);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -598,7 +460,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen HotPink => GetPen(ref hotPink, Color.HotPink);
+        public static Pen HotPink => GetPen(Color.HotPink);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -606,7 +468,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen IndianRed => GetPen(ref indianRed, Color.IndianRed);
+        public static Pen IndianRed => GetPen(Color.IndianRed);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -614,7 +476,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Indigo => GetPen(ref indigo, Color.Indigo);
+        public static Pen Indigo => GetPen(Color.Indigo);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -622,7 +484,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Ivory => GetPen(ref ivory, Color.Ivory);
+        public static Pen Ivory => GetPen(Color.Ivory);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -630,7 +492,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Khaki => GetPen(ref khaki, Color.Khaki);
+        public static Pen Khaki => GetPen(Color.Khaki);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -638,7 +500,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Lavender => GetPen(ref lavender, Color.Lavender);
+        public static Pen Lavender => GetPen(Color.Lavender);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -646,7 +508,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LavenderBlush => GetPen(ref lavenderBlush, Color.LavenderBlush);
+        public static Pen LavenderBlush => GetPen(Color.LavenderBlush);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -654,7 +516,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LawnGreen => GetPen(ref lawnGreen, Color.LawnGreen);
+        public static Pen LawnGreen => GetPen(Color.LawnGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -662,7 +524,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LemonChiffon => GetPen(ref lemonChiffon, Color.LemonChiffon);
+        public static Pen LemonChiffon => GetPen(Color.LemonChiffon);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -670,7 +532,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightBlue => GetPen(ref lightBlue, Color.LightBlue);
+        public static Pen LightBlue => GetPen(Color.LightBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -678,7 +540,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightCoral => GetPen(ref lightCoral, Color.LightCoral);
+        public static Pen LightCoral => GetPen(Color.LightCoral);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -686,7 +548,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightCyan => GetPen(ref lightCyan, Color.LightCyan);
+        public static Pen LightCyan => GetPen(Color.LightCyan);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -694,7 +556,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightGoldenrodYellow => GetPen(ref lightGoldenrodYellow, Color.LightGoldenrodYellow);
+        public static Pen LightGoldenrodYellow => GetPen(Color.LightGoldenrodYellow);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -702,7 +564,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightGreen => GetPen(ref lightGreen, Color.LightGreen);
+        public static Pen LightGreen => GetPen(Color.LightGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -710,7 +572,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightGray => GetPen(ref lightGray, Color.LightGray);
+        public static Pen LightGray => GetPen(Color.LightGray);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -718,7 +580,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightPink => GetPen(ref lightPink, Color.LightPink);
+        public static Pen LightPink => GetPen(Color.LightPink);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -726,7 +588,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightSalmon => GetPen(ref lightSalmon, Color.LightSalmon);
+        public static Pen LightSalmon => GetPen(Color.LightSalmon);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -734,7 +596,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightSeaGreen => GetPen(ref lightSeaGreen, Color.LightSeaGreen);
+        public static Pen LightSeaGreen => GetPen(Color.LightSeaGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -742,7 +604,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightSkyBlue => GetPen(ref lightSkyBlue, Color.LightSkyBlue);
+        public static Pen LightSkyBlue => GetPen(Color.LightSkyBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -750,7 +612,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightSlateGray => GetPen(ref lightSlateGray, Color.LightSlateGray);
+        public static Pen LightSlateGray => GetPen(Color.LightSlateGray);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -758,7 +620,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightSteelBlue => GetPen(ref lightSteelBlue, Color.LightSteelBlue);
+        public static Pen LightSteelBlue => GetPen(Color.LightSteelBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -766,7 +628,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LightYellow => GetPen(ref lightYellow, Color.LightYellow);
+        public static Pen LightYellow => GetPen(Color.LightYellow);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -774,7 +636,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Lime => GetPen(ref lime, Color.Lime);
+        public static Pen Lime => GetPen(Color.Lime);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -782,7 +644,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen LimeGreen => GetPen(ref limeGreen, Color.LimeGreen);
+        public static Pen LimeGreen => GetPen(Color.LimeGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -790,7 +652,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Linen => GetPen(ref linen, Color.Linen);
+        public static Pen Linen => GetPen(Color.Linen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -798,7 +660,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Magenta => GetPen(ref magenta, Color.Magenta);
+        public static Pen Magenta => GetPen(Color.Magenta);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -806,7 +668,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Maroon => GetPen(ref maroon, Color.Maroon);
+        public static Pen Maroon => GetPen(Color.Maroon);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -814,7 +676,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumAquamarine => GetPen(ref mediumAquamarine, Color.MediumAquamarine);
+        public static Pen MediumAquamarine => GetPen(Color.MediumAquamarine);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -822,7 +684,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumBlue => GetPen(ref mediumBlue, Color.MediumBlue);
+        public static Pen MediumBlue => GetPen(Color.MediumBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -830,7 +692,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumOrchid => GetPen(ref mediumOrchid, Color.MediumOrchid);
+        public static Pen MediumOrchid => GetPen(Color.MediumOrchid);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -838,7 +700,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumPurple => GetPen(ref mediumPurple, Color.MediumPurple);
+        public static Pen MediumPurple => GetPen(Color.MediumPurple);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -846,7 +708,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumSeaGreen => GetPen(ref mediumSeaGreen, Color.MediumSeaGreen);
+        public static Pen MediumSeaGreen => GetPen(Color.MediumSeaGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -854,7 +716,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumSlateBlue => GetPen(ref mediumSlateBlue, Color.MediumSlateBlue);
+        public static Pen MediumSlateBlue => GetPen(Color.MediumSlateBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -862,7 +724,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumSpringGreen => GetPen(ref mediumSpringGreen, Color.MediumSpringGreen);
+        public static Pen MediumSpringGreen => GetPen(Color.MediumSpringGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -870,7 +732,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumTurquoise => GetPen(ref mediumTurquoise, Color.MediumTurquoise);
+        public static Pen MediumTurquoise => GetPen(Color.MediumTurquoise);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -878,7 +740,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MediumVioletRed => GetPen(ref mediumVioletRed, Color.MediumVioletRed);
+        public static Pen MediumVioletRed => GetPen(Color.MediumVioletRed);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -886,7 +748,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MidnightBlue => GetPen(ref midnightBlue, Color.MidnightBlue);
+        public static Pen MidnightBlue => GetPen(Color.MidnightBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -894,7 +756,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MintCream => GetPen(ref mintCream, Color.MintCream);
+        public static Pen MintCream => GetPen(Color.MintCream);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -902,7 +764,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen MistyRose => GetPen(ref mistyRose, Color.MistyRose);
+        public static Pen MistyRose => GetPen(Color.MistyRose);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -910,7 +772,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Moccasin => GetPen(ref moccasin, Color.Moccasin);
+        public static Pen Moccasin => GetPen(Color.Moccasin);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -918,7 +780,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen NavajoWhite => GetPen(ref navajoWhite, Color.NavajoWhite);
+        public static Pen NavajoWhite => GetPen(Color.NavajoWhite);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -926,7 +788,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Navy => GetPen(ref navy, Color.Navy);
+        public static Pen Navy => GetPen(Color.Navy);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -934,7 +796,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen OldLace => GetPen(ref oldLace, Color.OldLace);
+        public static Pen OldLace => GetPen(Color.OldLace);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -942,7 +804,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Olive => GetPen(ref olive, Color.Olive);
+        public static Pen Olive => GetPen(Color.Olive);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -950,7 +812,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen OliveDrab => GetPen(ref oliveDrab, Color.OliveDrab);
+        public static Pen OliveDrab => GetPen(Color.OliveDrab);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -958,7 +820,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Orange => GetPen(ref orange, Color.Orange);
+        public static Pen Orange => GetPen(Color.Orange);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -966,7 +828,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen OrangeRed => GetPen(ref orangeRed, Color.OrangeRed);
+        public static Pen OrangeRed => GetPen(Color.OrangeRed);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -974,7 +836,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Orchid => GetPen(ref orchid, Color.Orchid);
+        public static Pen Orchid => GetPen(Color.Orchid);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -982,7 +844,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen PaleGoldenrod => GetPen(ref paleGoldenrod, Color.PaleGoldenrod);
+        public static Pen PaleGoldenrod => GetPen(Color.PaleGoldenrod);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -990,7 +852,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen PaleGreen => GetPen(ref paleGreen, Color.PaleGreen);
+        public static Pen PaleGreen => GetPen(Color.PaleGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -998,7 +860,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen PaleTurquoise => GetPen(ref paleTurquoise, Color.PaleTurquoise);
+        public static Pen PaleTurquoise => GetPen(Color.PaleTurquoise);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1006,7 +868,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen PaleVioletRed => GetPen(ref paleVioletRed, Color.PaleVioletRed);
+        public static Pen PaleVioletRed => GetPen(Color.PaleVioletRed);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1014,7 +876,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen PapayaWhip => GetPen(ref papayaWhip, Color.PapayaWhip);
+        public static Pen PapayaWhip => GetPen(Color.PapayaWhip);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1022,7 +884,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen PeachPuff => GetPen(ref peachPuff, Color.PeachPuff);
+        public static Pen PeachPuff => GetPen(Color.PeachPuff);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1030,7 +892,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Peru => GetPen(ref peru, Color.Peru);
+        public static Pen Peru => GetPen(Color.Peru);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1038,7 +900,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Pink => GetPen(ref pink, Color.Pink);
+        public static Pen Pink => GetPen(Color.Pink);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1046,7 +908,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Plum => GetPen(ref plum, Color.Plum);
+        public static Pen Plum => GetPen(Color.Plum);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1054,7 +916,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen PowderBlue => GetPen(ref powderBlue, Color.PowderBlue);
+        public static Pen PowderBlue => GetPen(Color.PowderBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1062,7 +924,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Purple => GetPen(ref purple, Color.Purple);
+        public static Pen Purple => GetPen(Color.Purple);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1070,7 +932,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Red => GetPen(ref red, Color.Red);
+        public static Pen Red => GetPen(Color.Red);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1078,7 +940,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen RosyBrown => GetPen(ref rosyBrown, Color.RosyBrown);
+        public static Pen RosyBrown => GetPen(Color.RosyBrown);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1086,7 +948,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen RoyalBlue => GetPen(ref royalBlue, Color.RoyalBlue);
+        public static Pen RoyalBlue => GetPen(Color.RoyalBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1094,7 +956,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SaddleBrown => GetPen(ref saddleBrown, Color.SaddleBrown);
+        public static Pen SaddleBrown => GetPen(Color.SaddleBrown);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1102,7 +964,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Salmon => GetPen(ref salmon, Color.Salmon);
+        public static Pen Salmon => GetPen(Color.Salmon);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1110,7 +972,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SandyBrown => GetPen(ref sandyBrown, Color.SandyBrown);
+        public static Pen SandyBrown => GetPen(Color.SandyBrown);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1118,7 +980,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SeaGreen => GetPen(ref seaGreen, Color.SeaGreen);
+        public static Pen SeaGreen => GetPen(Color.SeaGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1126,7 +988,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SeaShell => GetPen(ref seaShell, Color.SeaShell);
+        public static Pen SeaShell => GetPen(Color.SeaShell);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1134,7 +996,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Sienna => GetPen(ref sienna, Color.Sienna);
+        public static Pen Sienna => GetPen(Color.Sienna);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1142,7 +1004,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Silver => GetPen(ref silver, Color.Silver);
+        public static Pen Silver => GetPen(Color.Silver);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1150,7 +1012,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SkyBlue => GetPen(ref skyBlue, Color.SkyBlue);
+        public static Pen SkyBlue => GetPen(Color.SkyBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1158,7 +1020,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SlateBlue => GetPen(ref slateBlue, Color.SlateBlue);
+        public static Pen SlateBlue => GetPen(Color.SlateBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1166,7 +1028,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SlateGray => GetPen(ref slateGray, Color.SlateGray);
+        public static Pen SlateGray => GetPen(Color.SlateGray);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1174,7 +1036,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Snow => GetPen(ref snow, Color.Snow);
+        public static Pen Snow => GetPen(Color.Snow);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1182,7 +1044,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SpringGreen => GetPen(ref springGreen, Color.SpringGreen);
+        public static Pen SpringGreen => GetPen(Color.SpringGreen);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1190,7 +1052,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen SteelBlue => GetPen(ref steelBlue, Color.SteelBlue);
+        public static Pen SteelBlue => GetPen(Color.SteelBlue);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1198,7 +1060,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Tan => GetPen(ref tan, Color.Tan);
+        public static Pen Tan => GetPen(Color.Tan);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1206,7 +1068,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Teal => GetPen(ref teal, Color.Teal);
+        public static Pen Teal => GetPen(Color.Teal);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1214,7 +1076,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Thistle => GetPen(ref thistle, Color.Thistle);
+        public static Pen Thistle => GetPen(Color.Thistle);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1222,7 +1084,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Tomato => GetPen(ref tomato, Color.Tomato);
+        public static Pen Tomato => GetPen(Color.Tomato);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1230,7 +1092,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Turquoise => GetPen(ref turquoise, Color.Turquoise);
+        public static Pen Turquoise => GetPen(Color.Turquoise);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1238,7 +1100,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Violet => GetPen(ref violet, Color.Violet);
+        public static Pen Violet => GetPen(Color.Violet);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1246,7 +1108,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Wheat => GetPen(ref wheat, Color.Wheat);
+        public static Pen Wheat => GetPen(Color.Wheat);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1254,7 +1116,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen White => GetPen(ref white, Color.White);
+        public static Pen White => GetPen(Color.White);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1262,7 +1124,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen WhiteSmoke => GetPen(ref whiteSmoke, Color.WhiteSmoke);
+        public static Pen WhiteSmoke => GetPen(Color.WhiteSmoke);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1270,7 +1132,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen Yellow => GetPen(ref yellow, Color.Yellow);
+        public static Pen Yellow => GetPen(Color.Yellow);
 
         /// <summary>
         /// Gets a system-defined <see cref="Pen"/> object with a width of 1.
@@ -1278,22 +1140,33 @@ namespace Alternet.Drawing
         /// <remarks>
         /// A <see cref="Pen"/> object set to a system-defined color.
         /// </remarks>
-        public static Pen YellowGreen => GetPen(ref yellowGreen, Color.YellowGreen);
+        public static Pen YellowGreen => GetPen(Color.YellowGreen);
 
-        private static Pen GetPen(ref Pen? pen, Color color)
+        /// <summary>
+        /// Gets a pen by its name.
+        /// </summary>
+        /// <exception cref="ArgumentException">The pen was not found.</exception>
+        public static Pen GetPen(string name)
         {
-            if (pen == null)
-            {
-                pen = new Pen(
-                    color,
-                    1,
-                    DashStyle.Solid,
-                    LineCap.Flat,
-                    LineJoin.Miter,
-                    immutable: true);
-            }
+            var b = TryGetPen(name) ?? throw new ArgumentException(
+                    "Cannot find a pen with the name: " + name,
+                    nameof(name));
+            return b;
+        }
 
-            return pen;
+        /// <summary>
+        /// Tries to get a pen by its name.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Pen? TryGetPen(string name)
+        {
+            return NamedColors.GetColorOrNull(name)?.AsPen;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Pen GetPen(Color color)
+        {
+            return color.AsPen;
         }
     }
 }

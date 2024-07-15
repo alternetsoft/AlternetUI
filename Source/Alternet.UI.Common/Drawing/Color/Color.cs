@@ -554,7 +554,13 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return asPen ??= new(this, 1);
+                return asPen ??= new(
+                    this,
+                    1,
+                    DashStyle.Solid,
+                    LineCap.Flat,
+                    LineJoin.Miter,
+                    immutable: true);
             }
         }
 
@@ -810,7 +816,7 @@ namespace Alternet.Drawing
             if (left is null || right is null)
                 return false;
 
-            return left.color == right.color
+            return left.AsStruct == right.AsStruct
                 && left.state == right.state
                 && left.knownColor == right.knownColor
                 && left.name == right.name;
@@ -1049,12 +1055,12 @@ namespace Alternet.Drawing
         /// </remarks>
         public static Color FromName(string name)
         {
-            // try to get a known color first
-            if (ColorTable.TryGetNamedColor(name, out Color color))
-                return color;
+            var color = NamedColors.GetColorOrDefault(name, () =>
+            {
+                return new Color(0, StateFlags.NameValid, name, 0);
+            });
 
-            // otherwise treat it as a named color
-            return new Color(0, StateFlags.NameValid, name, 0);
+            return color;
         }
 
         /// <summary>

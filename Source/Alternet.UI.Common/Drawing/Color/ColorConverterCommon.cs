@@ -12,21 +12,16 @@ namespace Alternet.Drawing
     {
         public static Color ConvertFromString(string strValue, CultureInfo culture)
         {
-            if (culture is null)
-                throw new ArgumentNullException(nameof(culture));
-
+            culture ??= CultureInfo.CurrentCulture;
             string text = strValue.Trim();
-
             if (text.Length == 0)
-            {
                 return Color.Empty;
-            }
+
+            var c = NamedColors.GetColorOrNull(text);
 
             // First, check to see if this is a standard name.
-            if (ColorTable.TryGetNamedColor(text, out Color c))
-            {
+            if (c is not null)
                 return c;
-            }
 
             char sep = culture.TextInfo.ListSeparator[0];
 
@@ -51,8 +46,8 @@ namespace Alternet.Drawing
                          (text.Length == 8 && (text.StartsWith("&h") || text.StartsWith("&H"))))
                 {
                     // Note: int.Parse will raise exception if value cannot be converted.
-                    return PossibleKnownColor(Color.FromArgb(
-                        unchecked((int)(0xFF000000 | (uint)IntFromString(text, culture)))));
+                    return Color.FromArgb(
+                        unchecked((int)(0xFF000000 | (uint)IntFromString(text, culture))));
                 }
             }
 
@@ -72,29 +67,11 @@ namespace Alternet.Drawing
             // 4 -- ARGB
             return values.Length switch
             {
-                1 => PossibleKnownColor(Color.FromArgb(values[0])),
-                3 => PossibleKnownColor(Color.FromArgb(values[0], values[1], values[2])),
-                4 => PossibleKnownColor(Color.FromArgb(values[0], values[1], values[2], values[3])),
+                1 => Color.FromArgb(values[0]),
+                3 => Color.FromArgb(values[0], values[1], values[2]),
+                4 => Color.FromArgb(values[0], values[1], values[2], values[3]),
                 _ => throw new ArgumentException("Invalid color: " + text),
             };
-        }
-
-        private static Color PossibleKnownColor(Color color)
-        {
-            // Now check to see if this color matches one of our known colors.
-            // If it does, then substitute it. We can only do this for "Colors"
-            // because system colors morph with user settings.
-            int targetARGB = color.ToArgb();
-
-            foreach (Color c in ColorTable.Colors.Values)
-            {
-                if (c.ToArgb() == targetARGB)
-                {
-                    return c;
-                }
-            }
-
-            return color;
         }
 
         private static int IntFromString(string text, CultureInfo culture)
