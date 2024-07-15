@@ -231,6 +231,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsActive => Handler.IsActive;
 
+        /// <summary>
+        /// Gets window handler.
+        /// </summary>
         [Browsable(false)]
         public new IWindowHandler Handler => (IWindowHandler)base.Handler;
 
@@ -945,16 +948,60 @@ namespace Alternet.UI
             Handler.Close();
         }
 
+        /// <summary>
+        /// Raises <see cref="StateChanged"/> event and <see cref="OnStateChanged"/> method.
+        /// </summary>
         public void RaiseStateChanged()
         {
             OnStateChanged(EventArgs.Empty);
             StateChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
+        /// <summary>
+        /// Raises <see cref="Closing"/> event and <see cref="OnClosing"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public void RaiseClosing(WindowClosingEventArgs e)
+        {
+            OnClosing(e);
+            Closing?.Invoke(this, e);
+        }
 
-        public void RaiseClosed(WindowClosedEventArgs e) => OnClosed(e);
+        /// <summary>
+        /// Raises <see cref="Closed"/> event and <see cref="OnClosed"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public void RaiseClosed(WindowClosedEventArgs e)
+        {
+            OnClosed(e);
+            Closed?.Invoke(this, e);
+        }
 
+        /// <summary>
+        /// Raised by the handler when it is going to be closed.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void OnHandlerClosing(CancelEventArgs e)
+        {
+            // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
+            var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
+            RaiseClosing(closingEventArgs);
+            if (closingEventArgs.Cancel)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            RaiseClosed(new WindowClosedEventArgs());
+
+            if (!Modal)
+                Dispose();
+        }
+
+        /// <summary>
+        /// Gets window kind (window, dialog, etc.).
+        /// </summary>
+        /// <returns></returns>
         public virtual WindowKind GetWindowKind() => WindowKind.Window;
 
         /// <summary>
@@ -999,6 +1046,12 @@ namespace Alternet.UI
         protected override IControlHandler CreateHandler()
             => ControlFactory.Handler.CreateWindowHandler(this);
 
+        /// <summary>
+        /// Applies <see cref="StartLocation"/> to the window position
+        /// if <see cref="Control.StateFlags"/> has no
+        /// <see cref="ControlFlags.StartLocationApplied"/> flag.
+        /// </summary>
+        /// <param name="owner"></param>
         protected void ApplyStartLocationOnce(Control? owner)
         {
             if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
@@ -1015,7 +1068,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="WindowClosingEventArgs"/> that contains the event
         /// data.</param>
-        protected virtual void OnClosing(WindowClosingEventArgs e) => Closing?.Invoke(this, e);
+        protected virtual void OnClosing(WindowClosingEventArgs e)
+        {
+        }
 
         /// <summary>
         /// Called when the value of the <see cref="CloseEnabled"/> property changes.
@@ -1064,7 +1119,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
+        protected virtual void OnClosed(EventArgs e)
+        {
+        }
 
         /// <summary>
         /// Called when the value of the <see cref="Owner"/> property changes.
@@ -1209,12 +1266,14 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
             SystemSettings.ResetColors();
         }
 
+        /// <inheritdoc/>
         protected override void OnDpiChanged(DpiChangedEventArgs e)
         {
             base.OnDpiChanged(e);
@@ -1277,26 +1336,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raised by the handler when it is going to be closed.
+        /// Default <see cref="IWindowHandler.InputBindingCommandExecuted"/> event implementation.
         /// </summary>
-        /// <param name="e">Event arguments.</param>
-        public virtual void OnHandlerClosing(CancelEventArgs e)
-        {
-            // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
-            var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
-            RaiseClosing(closingEventArgs);
-            if (closingEventArgs.Cancel)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            RaiseClosed(new WindowClosedEventArgs());
-
-            if (!Modal)
-                Dispose();
-        }
-
+        /// <param name="e"></param>
         protected virtual void OnHandlerInputBindingCommandExecuted(HandledEventArgs<string> e)
         {
             var binding = InputBindings.First(x => x.ManagedCommandId == e.Value);

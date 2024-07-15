@@ -1,28 +1,32 @@
 using System;
 using System.Collections;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The delegate to use for handlers that receive MouseEventArgs.
+    /// The delegate to use for handlers that receive <see cref="MouseEventArgs"/>.
     /// </summary>
     public delegate void MouseEventHandler(object sender, MouseEventArgs e);
 
     /// <summary>
-    ///     The MouseEventArgs class provides access to the logical
-    ///     Mouse device for all derived event args.
+    /// Provides data for the mouse events.
     /// </summary>
     public class MouseEventArgs : HandledEventArgs
     {
+        /// <summary>
+        /// Gets initialized <see cref="MouseEventArgs"/> object.
+        /// </summary>
         public static new readonly MouseEventArgs Empty = new();
 
-        private readonly object currentTarget;
-        private readonly object originalTarget;
+        private object currentTarget;
+        private object originalTarget;
         private PointD location;
 
         /// <summary>
-        ///     Initializes a new instance of the MouseEventArgs class.
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class
+        /// with the specified parameters.
         /// </summary>
         public MouseEventArgs(
             object currentTarget,
@@ -37,7 +41,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Initializes a new instance of the MouseEventArgs class.
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class
+        /// with the specified parameters.
         /// </summary>
         public MouseEventArgs(
             object currentTarget,
@@ -51,7 +56,10 @@ namespace Alternet.UI
             this.location = location;
         }
 
-        internal MouseEventArgs()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class.
+        /// </summary>
+        public MouseEventArgs()
         {
             currentTarget = AssemblyUtils.Default;
             originalTarget = AssemblyUtils.Default;
@@ -60,17 +68,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets current target control for the event.
         /// </summary>
-        public object CurrentTarget => currentTarget;
+        public object CurrentTarget
+        {
+            get => currentTarget;
+            set => currentTarget = value;
+        }
 
         /// <summary>
         /// Gets original target control for the event.
         /// </summary>
-        public object OriginalTarget => originalTarget;
+        public object OriginalTarget
+        {
+            get => originalTarget;
+            set => originalTarget = value;
+        }
 
         /// <summary>
         /// Gets timestamp of the event.
         /// </summary>
-        public long Timestamp { get; }
+        public long Timestamp { get; set; }
 
         /// <summary>
         ///     Read-only access to the button being described.
@@ -111,7 +127,7 @@ namespace Alternet.UI
         /// Gets the x-coordinate of the mouse during the generating mouse event.
         /// </summary>
         /// <returns>The x-coordinate of the mouse, in dips.</returns>
-        public double X
+        public Coord X
         {
             get
             {
@@ -125,7 +141,7 @@ namespace Alternet.UI
         /// <returns>
         /// The y-coordinate of the mouse, in pixels.
         /// </returns>
-        public double Y
+        public Coord Y
         {
             get
             {
@@ -176,7 +192,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the left button.
+        /// The state of the left button.
         /// </summary>
         public MouseButtonState LeftButton
         {
@@ -187,7 +203,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the right button.
+        /// The state of the right button.
         /// </summary>
         public MouseButtonState RightButton
         {
@@ -198,7 +214,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the middle button.
+        /// The state of the middle button.
         /// </summary>
         public MouseButtonState MiddleButton
         {
@@ -209,7 +225,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the first extended button.
+        /// The state of the first extended button.
         /// </summary>
         public MouseButtonState XButton1
         {
@@ -220,7 +236,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the second extended button.
+        /// The state of the second extended button.
         /// </summary>
         public MouseButtonState XButton2
         {
@@ -233,7 +249,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the location of the mouse during the generating mouse event.
         /// </summary>
-        /// <returns>A <see cref="PointD" /> that contains the x- and y- mouse
+        /// <returns>A <see cref="PointD" /> that contains mouse
         /// coordinates, in dips, relative to the upper-left corner of the control.</returns>
         public PointD Location => location;
 

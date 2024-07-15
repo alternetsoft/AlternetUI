@@ -16,25 +16,30 @@ namespace CustomControlsSample
             VerticalAlignment = VerticalAlignment.Center,
             UseTheme = SpeedButton.KnownTheme.StaticBorder,
         };
+
         private readonly ColorComboBox colorCombo = new()
         {
             Value = Color.Red,
             VerticalAlignment = VerticalAlignment.Center,
         };
+
         private readonly Label colorComboLabel = new("ComboBox:")
         {
             VerticalAlignment = VerticalAlignment.Center,
         };
+
         private readonly TicTacToeControl ticTacToe = new()
         {
             Margin = 10,
         };
+        
         private readonly FancySlider knobControl = new()
         {
             Minimum = 0,
             Maximum = 100,
             Margin = new Thickness(0, 0, 5, 0),
         };
+        
         private readonly FancyProgressBar gaugeControl = new()
         {
             Minimum = 0,
@@ -46,6 +51,7 @@ namespace CustomControlsSample
         private readonly ColorPicker nativeColorPicker = new()
         {
             Value = Color.Red,
+            VerticalAlignment = VerticalAlignment.Center,
         };
 
         public CustomControlsWindow()

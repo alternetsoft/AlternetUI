@@ -504,6 +504,9 @@ namespace Alternet.UI
             return new PropertyGrid();
         }
 
+        /// <summary>
+        /// Creates new <see cref="IPropertyGridVariant"/> instance.
+        /// </summary>
         public static IPropertyGridVariant CreateVariant()
         {
             return ControlFactory.Handler.CreateVariant();
@@ -3962,60 +3965,100 @@ namespace Alternet.UI
             CenterSplitter();
         }
 
+        /// <summary>
+        /// Raises <see cref="PropertySelected"/> event and <see cref="OnPropertySelected"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaisePropertySelected(EventArgs e)
         {
             OnPropertySelected(e);
             PropertySelected?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="PropertyChanged"/> event and <see cref="OnPropertyChanged"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaisePropertyChanged(EventArgs e)
         {
             OnPropertyChanged(e);
             PropertyChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="PropertyChanging"/> event and <see cref="OnPropertyChanging"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaisePropertyChanging(CancelEventArgs e)
         {
             OnPropertyChanging(e);
             PropertyChanging?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="PropertyHighlighted"/> event and <see cref="OnPropertyHighlighted"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaisePropertyHighlighted(EventArgs e)
         {
             OnPropertyHighlighted(e);
             PropertyHighlighted?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="PropertyRightClick"/> event and <see cref="OnPropertyRightClick"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaisePropertyRightClick(EventArgs e)
         {
             OnPropertyRightClick(e);
             PropertyRightClick?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="PropertyDoubleClick"/> event and <see cref="OnPropertyDoubleClick"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaisePropertyDoubleClick(EventArgs e)
         {
             OnPropertyDoubleClick(e);
             PropertyDoubleClick?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="ItemCollapsed"/> event and <see cref="OnItemCollapsed"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseItemCollapsed(EventArgs e)
         {
             OnItemCollapsed(e);
             ItemCollapsed?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="ItemExpanded"/> event and <see cref="OnItemExpanded"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseItemExpanded(EventArgs e)
         {
             OnItemExpanded(e);
             ItemExpanded?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="ColEndDrag"/> event and <see cref="OnColEndDrag"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseColEndDrag(EventArgs e)
         {
             OnColEndDrag(e);
             ColEndDrag?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="ButtonClick"/> event and <see cref="OnButtonClick"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseButtonClick(EventArgs e)
         {
             OnButtonClick(e);
@@ -4039,6 +4082,10 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Raises <see cref="ColDragging"/> event and <see cref="OnColDragging"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseColDragging(EventArgs e)
         {
             OnColDragging(e);
@@ -4097,7 +4144,12 @@ namespace Alternet.UI
             DoActionOnProperties<Color, bool>(items, SetPropertyBackgroundColor, color, false);
         }
 
-        public IPropertyGridItem? HandleToItem(PropertyGridItemHandle ptr)
+        /// <summary>
+        /// Gets <see cref="IPropertyGridItem"/> from the item handler.
+        /// </summary>
+        /// <param name="ptr">Item handle.</param>
+        /// <returns></returns>
+        public virtual IPropertyGridItem? HandleToItem(PropertyGridItemHandle ptr)
         {
             if (items.TryGetValue(ptr, out IPropertyGridItem? result))
                 return result;
@@ -4142,18 +4194,30 @@ namespace Alternet.UI
                 ReloadPropertyValue(item.Parent);
         }
 
+        /// <summary>
+        /// Raises <see cref="ColBeginDrag"/> event and <see cref="OnColBeginDrag"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseColBeginDrag(CancelEventArgs e)
         {
             OnColBeginDrag(e);
             ColBeginDrag?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="LabelEditEnding"/> event and <see cref="OnLabelEditEnding"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseLabelEditEnding(CancelEventArgs e)
         {
             OnLabelEditEnding(e);
             LabelEditEnding?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises <see cref="LabelEditBegin"/> event and <see cref="OnLabelEditBegin"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
         public void RaiseLabelEditBegin(CancelEventArgs e)
         {
             OnLabelEditBegin(e);

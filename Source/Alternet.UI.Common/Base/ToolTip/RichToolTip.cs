@@ -99,7 +99,14 @@ namespace Alternet.UI
         /// </summary>
         public static RichToolTip? Default { get; set; }
 
-        public IRichToolTipHandler Handler { get; private set; }
+        /// <summary>
+        /// Gets <see cref="IRichToolTipHandler"/> provider used to work with tooltip.
+        /// </summary>
+        public IRichToolTipHandler Handler
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Gets or sets whether to ignore image in tooltip, even if it is specified.

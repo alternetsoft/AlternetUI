@@ -10,21 +10,40 @@ namespace Alternet.UI
 {
     public partial class PropertyGrid : Control
     {
+        /// <summary>
+        /// Dictionary used to get type related information.
+        /// </summary>
         public static readonly AdvDictionaryCached<Type, IPropertyGridTypeRegistry>
             TypeRegistry = new();
 
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
         private static StaticStateFlags staticStateFlags;
 
+        /// <summary>
+        /// Occurs when collection editor is called in the property grid.
+        /// </summary>
         public static event EventHandler? EditWithListEdit;
 
+        /// <summary>
+        /// Defines static states for <see cref="PropertyGrid"/> class.
+        /// </summary>
         [Flags]
         public enum StaticStateFlags
         {
+            /// <summary>
+            /// Collection editors were registered.
+            /// </summary>
             CollectionEditorsRegistered = 1,
+
+            /// <summary>
+            /// Known colors were added.
+            /// </summary>
             KnownColorsAdded = 2,
         }
 
+        /// <summary>
+        /// Gets or sets static states for <see cref="PropertyGrid"/> class.
+        /// </summary>
         public static StaticStateFlags StaticFlags
         {
             get => staticStateFlags;
@@ -436,6 +455,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Creates default <see cref="IPropertyGridNewItemParams"/> provider.
+        /// </summary>
+        /// <param name="owner">Object owner.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <returns></returns>
         public static IPropertyGridNewItemParams CreateNewItemParams(
            IPropertyGridPropInfoRegistry? owner, PropertyInfo? propInfo = null)
         {

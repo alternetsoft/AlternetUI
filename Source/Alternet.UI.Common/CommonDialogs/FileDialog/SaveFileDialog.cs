@@ -48,6 +48,9 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool AllowNullFileName { get; set; } = false;
 
+        /// <summary>
+        /// Gets dialog handler.
+        /// </summary>
         [Browsable(false)]
         public new ISaveFileDialogHandler Handler => (ISaveFileDialogHandler)base.Handler;
 
@@ -67,6 +70,7 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
         {
             return DialogFactory.Handler.CreateSaveFileDialogHandler(this);

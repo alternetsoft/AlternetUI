@@ -26,6 +26,9 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets dialog handler.
+        /// </summary>
         [Browsable(false)]
         public new IPrintPreviewDialogHandler Handler => (IPrintPreviewDialogHandler)base.Handler;
 

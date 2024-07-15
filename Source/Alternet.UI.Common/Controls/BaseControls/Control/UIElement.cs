@@ -19,6 +19,9 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? LayoutUpdated;
 
+        /// <summary>
+        /// Raises <see cref="LayoutUpdated"/> event.
+        /// </summary>
         public void RaiseLayoutUpdated()
         {
             LayoutUpdated?.Invoke(this, EventArgs.Empty);

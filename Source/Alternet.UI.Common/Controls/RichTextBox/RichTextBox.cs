@@ -2403,8 +2403,16 @@ namespace Alternet.UI
             return Handler.WriteImage(filename, bitmapType, textAttr);
         }
 
+        /// <summary>
+        /// Gets name of the file loaded into the control.
+        /// </summary>
+        /// <returns></returns>
         public virtual string GetFileName() => Handler.GetFileName();
 
+        /// <summary>
+        /// Sets name of the file loaded into the control.
+        /// </summary>
+        /// <returns></returns>
         public virtual void SetFileName(string value) => Handler.SetFileName(value ?? string.Empty);
 
         /// <inheritdoc/>

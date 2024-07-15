@@ -10,6 +10,9 @@ namespace Alternet.UI
         private readonly object originalTarget;
         private object currentTarget;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyboardEventArgs"/> class.
+        /// </summary>
         public KeyboardEventArgs()
         {
             this.originalTarget = AssemblyUtils.Default;
@@ -17,7 +20,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Initializes a new instance of the KeyboardEventArgs class.
+        /// Initializes a new instance of the <see cref="KeyboardEventArgs"/> class
+        /// with the specified original target object.
         /// </summary>
         public KeyboardEventArgs(object originalTarget)
         {
@@ -28,7 +32,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets current target control for the event.
         /// </summary>
-        public object CurrentTarget
+        public virtual object CurrentTarget
         {
             get => currentTarget;
             set => currentTarget = value;
@@ -37,6 +41,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets original target control for the event.
         /// </summary>
-        public object OriginalTarget => originalTarget;
+        public virtual object OriginalTarget => originalTarget;
     }
 }

@@ -179,6 +179,11 @@ namespace Alternet.UI
                 return Title;
         }
 
+        /// <summary>
+        /// Sets owner control and column index. Do not call directly.
+        /// </summary>
+        /// <param name="control">Owner control.</param>
+        /// <param name="newIndex">New column index.</param>
         public void InternalSetListViewAndIndex(ListView? control, int? newIndex)
         {
             var changed = listView != control || index != newIndex;
