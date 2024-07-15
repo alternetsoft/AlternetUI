@@ -1,12 +1,1 @@
-In the Registry Editor, go to the following branch on the left:
- HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM.
-
-Now, right-click the DWM key in the left pane, and select New > Dword (32-bit) value from the menu.
-Create New Dword Value
-Name the new value UseWindowFrameStagingBuffer. It will be set to zero by default, so don't change it.
-
-UseWindowFrameStagingBuffer
-Restart Windows 11, and you are done.
-
-That's it. To undo the change later, remove the UseWindowFrameStagingBuffer you created earlier,
- and restart the OS to apply the modification.
+https://github.com/valinet/Win11DisableRoundedCorners/releases/tag/1.0.0.3
