@@ -76,7 +76,7 @@ namespace ExplorerUISample
             {
                 Title = "AlterNET UI";
 
-                var progressWindow = new DialogWindow()
+                var progressWindow = new Window()
                 {
                     Title = "Operation in Progress",
                     Size = (500,200),
@@ -95,7 +95,7 @@ namespace ExplorerUISample
                     Value = 70,
                 };
 
-                progressWindow.ShowModal();
+                progressWindow.Show();
             });
         }
 
