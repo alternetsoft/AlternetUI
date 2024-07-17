@@ -96,6 +96,9 @@ namespace Alternet.Drawing
             y = MathUtils.HighInt16(dw);
         }
 
+        /// <summary>
+        /// Gets or sets this point as <see cref="SKPoint"/>.
+        /// </summary>
         [Browsable(false)]
         public SKPointI SkiaPoint
         {

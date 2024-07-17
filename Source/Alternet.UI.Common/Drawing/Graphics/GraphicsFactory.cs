@@ -14,7 +14,8 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Provides access to the graphics factory.
+    /// Contains static methods and properties related to the graphics objects creation,
+    /// convertion and handling.
     /// </summary>
     public static class GraphicsFactory
     {

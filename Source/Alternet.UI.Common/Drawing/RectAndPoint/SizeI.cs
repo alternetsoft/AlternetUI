@@ -335,6 +335,12 @@ namespace Alternet.Drawing
             return StringUtils.ToString<int>(names, values);
         }
 
+        /// <summary>
+        /// Converts pixels to device-independent units using specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor. Optional. Default scale factor used if this
+        /// parameter is not specified.</param>
+        /// <returns></returns>
         public readonly SizeD PixelToDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelToDip(this, scaleFactor);

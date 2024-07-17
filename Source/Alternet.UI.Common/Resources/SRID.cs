@@ -6,6 +6,9 @@ using System.Resources;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains static properties which identify string resource names.
+    /// </summary>
     public static partial class SRID
     {
         /// <summary>en</summary>
