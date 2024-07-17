@@ -152,6 +152,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Returns value of the <see cref="CancelEventArgs.Cancel"/> property as <see cref="IntPtr"/>.
+        /// </summary>
+        /// <returns></returns>
         public IntPtr CancelAsIntPtr()
         {
             return Cancel ? (IntPtr)1 : IntPtr.Zero;

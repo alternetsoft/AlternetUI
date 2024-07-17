@@ -708,7 +708,7 @@ namespace Alternet.Drawing
             Coord sweepAngle);
 
         /// <summary>
-        /// Draws a Bézier spline defined by four <see cref="PointD"/> structures.
+        /// Draws a Bezier spline defined by four <see cref="PointD"/> structures.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
         /// of the curve.</param>
@@ -728,7 +728,7 @@ namespace Alternet.Drawing
             PointD endPoint);
 
         /// <summary>
-        /// Draws a series of Bézier splines from an array of <see cref="PointD"/> structures.
+        /// Draws a series of Bezier splines from an array of <see cref="PointD"/> structures.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
         /// of the curve.</param>

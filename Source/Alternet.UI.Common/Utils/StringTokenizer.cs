@@ -3,6 +3,9 @@ using System.Globalization;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Allows to split string into tokens.
+    /// </summary>
     public struct StringTokenizer : IDisposable
     {
         private const char DefaultSeparatorChar = ',';
@@ -16,13 +19,28 @@ namespace Alternet.UI
         private int mtokenIndex;
         private int mTokenLength;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringTokenizer"/> struct.
+        /// </summary>
+        /// <param name="s">String to parse.</param>
+        /// <param name="formatProvider">Formatting provider.</param>
+        /// <param name="exceptionMessage">Exception message used in case of parse errors.</param>
         public StringTokenizer(string s, IFormatProvider formatProvider, string? exceptionMessage = null)
             : this(s, GetSeparatorFromFormatProvider(formatProvider), exceptionMessage)
         {
             mFormatProvider = formatProvider;
         }
 
-        public StringTokenizer(string s, char separator = DefaultSeparatorChar, string? exceptionMessage = null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringTokenizer"/> struct.
+        /// </summary>
+        /// <param name="s">String to parse.</param>
+        /// <param name="separator">List separator character (',' or other character).</param>
+        /// <param name="exceptionMessage">Exception message used in case of parse errors.</param>
+        public StringTokenizer(
+            string s,
+            char separator = DefaultSeparatorChar,
+            string? exceptionMessage = null)
         {
             mStr = s ?? throw new ArgumentNullException(nameof(s));
             mLength = s?.Length ?? 0;
@@ -39,9 +57,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets current token value.
+        /// </summary>
         public readonly string? CurrentToken =>
             mtokenIndex < 0 ? null : mStr.Substring(mtokenIndex, mTokenLength);
 
+        /// <summary>
+        /// Releases resources.
+        /// </summary>
         public readonly void Dispose()
         {
             if (mIndex != mLength)
@@ -50,6 +74,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Reads next token and tries to convert it to the <see cref="int"/> number.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="result">Result number.</param>
+        /// <param name="separator">Separator character. Optional.</param>
+        /// <returns></returns>
         public bool TryReadInt32(out int result, char? separator = null)
         {
             if (TryReadString(out var stringResult, separator) &&
@@ -64,6 +95,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Reads next token and converts it to the <see cref="int"/> number.
+        /// Raises an exception if convertion is not successful.
+        /// </summary>
+        /// <param name="separator">Separator character.</param>
+        /// <returns></returns>
         public int ReadInt32(char? separator = null)
         {
             if (!TryReadInt32(out var result, separator))
@@ -74,6 +111,13 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Reads next token and tries to convert it to the <see cref="double"/> number.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="result">Result number.</param>
+        /// <param name="separator">Separator character. Optional.</param>
+        /// <returns></returns>
         public bool TryReadDouble(out double result, char? separator = null)
         {
             if (TryReadString(out var stringResult, separator) &&
@@ -88,6 +132,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Reads next token and converts it to the <see cref="double"/> number.
+        /// Raises an exception if convertion is not successful.
+        /// </summary>
+        /// <param name="separator">Separator character.</param>
+        /// <returns></returns>
         public double ReadDouble(char? separator = null)
         {
             if (!TryReadDouble(out var result, separator))
@@ -98,10 +148,17 @@ namespace Alternet.UI
             return result;
         }
 
-        public bool TryReadSingle(out double result, char? separator = null)
+        /// <summary>
+        /// Reads next token and tries to convert it to the <see cref="float"/> number.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="result">Result number.</param>
+        /// <param name="separator">Separator character. Optional.</param>
+        /// <returns></returns>
+        public bool TryReadSingle(out float result, char? separator = null)
         {
             if (TryReadString(out var stringResult, separator) &&
-                double.TryParse(stringResult, NumberStyles.Float, mFormatProvider, out result))
+                float.TryParse(stringResult, NumberStyles.Float, mFormatProvider, out result))
             {
                 return true;
             }
@@ -112,7 +169,13 @@ namespace Alternet.UI
             }
         }
 
-        public double ReadSingle(char? separator = null)
+        /// <summary>
+        /// Reads next token and converts it to the <see cref="float"/> number.
+        /// Raises an exception if convertion is not successful.
+        /// </summary>
+        /// <param name="separator">Separator character.</param>
+        /// <returns></returns>
+        public float ReadSingle(char? separator = null)
         {
             if (!TryReadSingle(out var result, separator))
             {
@@ -122,6 +185,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Tries to read next token.
+        /// </summary>
+        /// <param name="result">Token value.</param>
+        /// <param name="separator">Separator character. Optional.</param>
+        /// <returns></returns>
         public bool TryReadString(out string? result, char? separator = null)
         {
             var success = TryReadToken(separator ?? mSeparator);
@@ -129,6 +198,12 @@ namespace Alternet.UI
             return success;
         }
 
+        /// <summary>
+        /// Reads next token and returns it as a string.
+        /// </summary>
+        /// <param name="separator">Separator character. Optional.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Raised if operation is not successful.</exception>
         public string ReadString(char? separator = null)
         {
             if (!TryReadString(out var result, separator))
