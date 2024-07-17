@@ -337,7 +337,7 @@ namespace Alternet.Drawing
             result.Disposed += (s, e) =>
             {
                 if(lockMode.CanWrite())
-                    image.Assign(bitmap);
+                    image.Pixels = bitmap.Pixels;
             };
 
             return result;
