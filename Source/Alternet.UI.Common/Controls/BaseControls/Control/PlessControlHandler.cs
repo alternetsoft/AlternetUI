@@ -8,6 +8,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Platformless implementation of the <see cref="IControlHandler"/> interface.
+    /// </summary>
     public class PlessControlHandler : BaseControlHandler, IControlHandler
     {
         Action<DragEventArgs>? IControlHandler.DragDrop { get; set; }
@@ -18,7 +21,7 @@ namespace Alternet.UI
 
         Action? IControlHandler.Idle { get; set; }
 
-        public string Text { get; set; } = string.Empty;
+        string IControlHandler.Text { get; set; } = string.Empty;
 
         Action? IControlHandler.TextChanged { get; set; }
 
@@ -81,7 +84,7 @@ namespace Alternet.UI
 
         bool IControlHandler.IsScrollable { get; set; }
 
-        public RectD Bounds { get; set; }
+        RectD IControlHandler.Bounds { get; set; }
 
         RectD IControlHandler.EventBounds { get; }
 
@@ -109,10 +112,10 @@ namespace Alternet.UI
 
         bool IControlHandler.BindScrollEvents { get; set; }
 
-        public SizeD ClientSize
+        SizeD IControlHandler.ClientSize
         {
-            get => Bounds.Size;
-            set => Bounds = (Bounds.Location, value);
+            get => ((IControlHandler)this).Bounds.Size;
+            set => ((IControlHandler)this).Bounds = (((IControlHandler)this).Bounds.Location, value);
         }
 
         bool IControlHandler.ProcessUIUpdates { get; set; }
@@ -129,9 +132,9 @@ namespace Alternet.UI
 
         Action? IControlHandler.DpiChanged { get; set; }
 
-        public bool TabStop => true;
+        bool IControlHandler.TabStop => true;
 
-        public bool CanSelect => true;
+        bool IControlHandler.CanSelect => true;
 
         void IControlHandler.AlwaysShowScrollbars(bool hflag, bool vflag)
         {
@@ -242,7 +245,7 @@ namespace Alternet.UI
 
         RectI IControlHandler.GetUpdateClientRectI()
         {
-            return new RectI((0, 0), Control.PixelFromDip(ClientSize));
+            return new RectI((0, 0), Control.PixelFromDip(((IControlHandler)this).ClientSize));
         }
 
         void IControlHandler.HandleNeeded()

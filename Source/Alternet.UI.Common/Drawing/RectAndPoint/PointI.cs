@@ -292,6 +292,13 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Converts this point to device-independent units using the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor. Optional. If not specified, the default
+        /// value is used.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly PointD PixelToDip(Coord scaleFactor)
         {
             return GraphicsFactory.PixelToDip(this, scaleFactor);
