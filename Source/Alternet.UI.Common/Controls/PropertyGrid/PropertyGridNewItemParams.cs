@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class PropertyGridNewItemParams : IPropertyGridNewItemParams
+    internal class PropertyGridNewItemParams : IPropertyGridNewItemParams
     {
         public static readonly IPropertyGridNewItemParams Default =
             PropertyGrid.CreateNewItemParams(null!);
