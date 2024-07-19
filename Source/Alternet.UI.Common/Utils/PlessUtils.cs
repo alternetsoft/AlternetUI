@@ -13,6 +13,12 @@ namespace Alternet.UI
     /// </summary>
     public static class PlessUtils
     {
+        /// <summary>
+        /// Converts screen coordinates to client coordinates.
+        /// </summary>
+        /// <param name="position">Point in screen coordinates.</param>
+        /// <param name="control">Control.</param>
+        /// <returns></returns>
         public static PointD ScreenToClient(PointD position, Control control)
         {
             var topLeft = ClientToScreen(PointD.Empty, control);
@@ -20,6 +26,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Converts client coordinates to screen coordinates.
+        /// </summary>
+        /// <param name="position">Point in client coordinates.</param>
+        /// <param name="control">Control.</param>
+        /// <returns></returns>
         public static PointD ClientToScreen(PointD position, Control control)
         {
             PointD absolutePos = control.AbsolutePosition;
