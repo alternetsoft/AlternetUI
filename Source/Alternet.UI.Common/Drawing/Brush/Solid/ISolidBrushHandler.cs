@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Extends <see cref="IBrushHandler"/> with properties and methods specific
+    /// to solid brush.
+    /// </summary>
     public interface ISolidBrushHandler : IBrushHandler
     {
+        /// <summary>
+        /// Update native brush properties from the managed brush properties.
+        /// </summary>
+        /// <param name="brush">Managed brush.</param>
         void Update(SolidBrush brush);
     }
 }

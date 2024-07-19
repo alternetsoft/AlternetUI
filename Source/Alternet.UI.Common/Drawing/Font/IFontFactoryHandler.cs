@@ -8,6 +8,9 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Contains methods and properties which allow to create and manage fonts.
+    /// </summary>
     public interface IFontFactoryHandler : IDisposable
     {
         /// <summary>
@@ -16,6 +19,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         FontEncoding DefaultFontEncoding { get; set; }
 
+        /// <summary>
+        /// Gets whether or not to allow an empty font names.S
+        /// </summary>
         bool AllowNullFontName { get; }
 
         /// <summary>

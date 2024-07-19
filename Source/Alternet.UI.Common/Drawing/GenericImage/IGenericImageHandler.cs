@@ -11,6 +11,9 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with generic platform independent image.
+    /// </summary>
     public interface IGenericImageHandler : IDisposable, ILockImageBits
     {
         SKColor[] Pixels { get; set; }
