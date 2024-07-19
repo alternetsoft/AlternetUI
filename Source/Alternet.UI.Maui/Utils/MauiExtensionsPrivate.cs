@@ -15,7 +15,7 @@ using SkiaSharp.Views.Maui;
 
 namespace Alternet.UI.Extensions
 {
-    public static class MauiExtensionsPrivate
+    internal static class MauiExtensionsPrivate
     {
 #if WINDOWS
         public static bool Focus(this GraphicsView graphicsView, Alternet.UI.FocusState focusState)

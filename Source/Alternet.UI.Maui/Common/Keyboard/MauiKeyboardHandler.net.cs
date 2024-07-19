@@ -14,7 +14,7 @@ using Windows.UI.ViewManagement.Core;
 
 namespace Alternet.UI
 {
-    public class MauiKeyboardHandler : DisposableObject, IKeyboardHandler
+    internal class MauiKeyboardHandler : DisposableObject, IKeyboardHandler
     {
         static MauiKeyboardHandler()
         {

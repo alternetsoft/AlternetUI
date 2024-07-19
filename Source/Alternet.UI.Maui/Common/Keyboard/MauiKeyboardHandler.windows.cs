@@ -19,6 +19,9 @@ namespace Alternet.UI
     using VirtualKeyToAlternetMapping
         = AbstractTwoWayEnumMapping<Windows.System.VirtualKey, Alternet.UI.Key>;
 
+    /// <summary>
+    /// Implements <see cref="IKeyboardHandler"/> for MAUI under Windows.
+    /// </summary>
     public class MauiKeyboardHandler : DisposableObject, IKeyboardHandler
     {
         private static VirtualKeyToAlternetMapping? virtualKeyToAlternet;
@@ -27,6 +30,9 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets key mapping manager.
+        /// </summary>
         public static VirtualKeyToAlternetMapping VirtualKeyToAlternet
         {
             get
@@ -47,6 +53,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Converts event arguments from <see cref="CharacterReceivedRoutedEventArgs"/> to
+        /// <see cref="Alternet.UI.KeyPressEventArgs"/>.
+        /// </summary>
+        /// <param name="control">Target control.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <returns></returns>
         public static Alternet.UI.KeyPressEventArgs Convert(
             Control control,
             CharacterReceivedRoutedEventArgs e)
@@ -55,6 +68,13 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Converts event arguments from <see cref="KeyRoutedEventArgs"/> to
+        /// <see cref="Alternet.UI.KeyEventArgs"/>.
+        /// </summary>
+        /// <param name="control">Target control.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <returns></returns>
         public static Alternet.UI.KeyEventArgs Convert(Control control, KeyRoutedEventArgs e)
         {
             var alternetKey = Alternet.UI.MauiKeyboardHandler.Convert(e.Key);
@@ -64,21 +84,39 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Converts <see cref="Windows.System.VirtualKey"/> to <see cref="Alternet.UI.Key"/>.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <returns></returns>
         public static Alternet.UI.Key Convert(Windows.System.VirtualKey key)
         {
             return VirtualKeyToAlternet.Convert(key);
         }
 
+        /// <summary>
+        /// Converts <see cref="Alternet.UI.Key"/> to <see cref="Windows.System.VirtualKey"/>.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <returns></returns>
         public static Windows.System.VirtualKey Convert(Alternet.UI.Key key)
         {
             return VirtualKeyToAlternet.Convert(key);
         }
 
+        /// <summary>
+        /// Registers key mapping between <see cref="Windows.System.VirtualKey"/>
+        /// and <see cref="Alternet.UI.Key"/>.
+        /// </summary>
         public static void RegisterKeyMapping(Windows.System.VirtualKey windowsKey, Alternet.UI.Key key)
         {
             VirtualKeyToAlternet.Add(windowsKey, key);
         }
 
+        /// <summary>
+        /// Registers default key mappings between <see cref="Windows.System.VirtualKey"/>
+        /// and <see cref="Alternet.UI.Key"/>.
+        /// </summary>
         public static void RegisterKeyMappings()
         {
 #pragma warning disable
@@ -277,6 +315,11 @@ namespace Alternet.UI
 #pragma warning restore
         }
 
+        /// <summary>
+        /// Converts <see cref="CoreVirtualKeyStates"/> to <see cref="KeyStates"/>.
+        /// </summary>
+        /// <param name="keyStates">Key states.</param>
+        /// <returns></returns>
         public static KeyStates Convert(CoreVirtualKeyStates keyStates)
         {
             KeyStates result = default;
@@ -290,6 +333,7 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc/>
         public virtual KeyStates GetKeyStatesFromSystem(Key key)
         {
             return Fn(Convert(key));
@@ -301,21 +345,25 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool HideKeyboard(Control? control)
         {
             return HideKeyboard();
         }
 
+        /// <inheritdoc/>
         public virtual bool IsSoftKeyboardShowing(Control? control)
         {
             return IsSoftKeyboardShowing();
         }
 
+        /// <inheritdoc/>
         public virtual bool ShowKeyboard(Control? control)
         {
             return ShowKeyboard();
         }
 
+        /// <inheritdoc/>
         public virtual bool IsValidKey(Key key)
         {
             return (int)key >= (int)Key.None && (int)key <= (int)Key.MaxMaui;

@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public class MauiSystemSettingsHandler : PlessSystemSettingsHandler, ISystemSettingsHandler
+    internal class MauiSystemSettingsHandler : PlessSystemSettingsHandler, ISystemSettingsHandler
     {
         public override IDisplayFactoryHandler CreateDisplayFactoryHandler()
         {

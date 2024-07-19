@@ -69,6 +69,12 @@ namespace Alternet.UI
             get => false;
         }
 
+        /// <summary>
+        /// Converts screen coordinates to client coordinates.
+        /// </summary>
+        /// <param name="position">Point in screen coordinates.</param>
+        /// <param name="control">Control.</param>
+        /// <returns></returns>
         public static PointD ScreenToClient(PointD position, Control control)
         {
             var topLeft = ClientToScreen(PointD.Empty, control);
@@ -79,6 +85,12 @@ namespace Alternet.UI
             return (x, y);
         }
 
+        /// <summary>
+        /// Converts client coordinates to screen coordinates.
+        /// </summary>
+        /// <param name="position">Point in client coordinates.</param>
+        /// <param name="control">Control.</param>
+        /// <returns></returns>
         public static PointD ClientToScreen(PointD position, Control control)
         {
             PointD absolutePos;
@@ -105,11 +117,13 @@ namespace Alternet.UI
             Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
+        /// <inheritdoc/>
         IControlFactoryHandler IApplicationHandler.CreateControlFactoryHandler()
         {
             return new MauiControlFactoryHandler();
         }
 
+        /// <inheritdoc/>
         IPrintingHandler IApplicationHandler.CreatePrintingHandler()
         {
             throw new NotImplementedException();
@@ -120,109 +134,131 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
         Window? IApplicationHandler.GetActiveWindow()
         {
             return null;
         }
 
+        /// <inheritdoc/>
         Control? IApplicationHandler.GetFocusedControl()
         {
             return null;
         }
 
+        /// <inheritdoc/>
         ISystemSettingsHandler IApplicationHandler.CreateSystemSettingsHandler()
         {
             return new MauiSystemSettingsHandler();
         }
 
+        /// <inheritdoc/>
         ISoundFactoryHandler IApplicationHandler.CreateSoundFactoryHandler()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         ITimerHandler IApplicationHandler.CreateTimerHandler(Timer timer)
         {
             return new MauiTimerHandler();
         }
 
+        /// <inheritdoc/>
         void IApplicationHandler.Run(Window window)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         void IApplicationHandler.SetTopWindow(Window window)
         {
         }
 
+        /// <inheritdoc/>
         void IApplicationHandler.BeginInvoke(Action action)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         bool IApplicationHandler.HasPendingEvents()
         {
             return false;
         }
 
+        /// <inheritdoc/>
         void IApplicationHandler.Exit()
         {
             Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
+        /// <inheritdoc/>
         IMemoryHandler IApplicationHandler.CreateMemoryHandler()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         IControlPainterHandler IApplicationHandler.CreateControlPainterHandler()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         IClipboardHandler IApplicationHandler.CreateClipboardHandler()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         IDialogFactoryHandler IApplicationHandler.CreateDialogFactoryHandler()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         INotifyIconHandler IApplicationHandler.CreateNotifyIconHandler()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         object? IApplicationHandler.GetAttributeValue(string name)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         IToolTipFactoryHandler IApplicationHandler.CreateToolTipFactoryHandler()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         ICaretHandler IApplicationHandler.CreateCaretHandler(Control control, int width, int height)
         {
             return new PlessCaretHandler(control, width, height);
         }
 
+        /// <inheritdoc/>
         IGraphicsFactoryHandler IApplicationHandler.CreateGraphicsFactoryHandler()
         {
             return new MauiGraphicsFactoryHandler();
         }
 
+        /// <inheritdoc/>
         void IApplicationHandler.CrtSetDbgFlag(int value)
         {
         }
 
+        /// <inheritdoc/>
         public IMouseHandler CreateMouseHandler()
         {
             return new PlessMouseHandler();
         }
 
+        /// <inheritdoc/>
         public IKeyboardHandler CreateKeyboardHandler()
         {
 #if WINDOWS
