@@ -124,6 +124,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets command identifier.
+        /// </summary>
         public string ManagedCommandId { get; } = Guid.NewGuid().ToString("N");
 
         /// <summary>

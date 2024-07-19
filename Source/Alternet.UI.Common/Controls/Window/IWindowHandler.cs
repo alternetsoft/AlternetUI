@@ -9,6 +9,10 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Extends <see cref="IControlHandler"/> with properties and methods
+    /// specific to the window.
+    /// </summary>
     public interface IWindowHandler : IControlHandler
     {
         Action<HandledEventArgs<string>>? InputBindingCommandExecuted { get; set; }
