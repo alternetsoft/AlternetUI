@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class WxSystemSettingsHandler : ISystemSettingsHandler
+    internal class WxSystemSettingsHandler : DisposableObject, ISystemSettingsHandler
     {
         public UI.Native.Application? NativeApplication => WxApplicationHandler.NativeApplication;
 

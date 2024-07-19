@@ -50,6 +50,9 @@ namespace Alternet.Drawing
         /// </summary>
         public int Alpha;
 
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for the 'Rgba8888' images.
+        /// </summary>
         public static ImageBitsFormat Rgba8888
         {
             get
@@ -68,6 +71,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for the 'Rgb888' images.
+        /// </summary>
         public static ImageBitsFormat Rgb888
         {
             get
@@ -86,6 +92,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for the 'Bgra8888' images.
+        /// </summary>
         public static ImageBitsFormat Bgra8888
         {
             get
@@ -104,6 +113,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for the 'Argb8888Opaque' images.
+        /// </summary>
         public static ImageBitsFormat Argb8888Opaque
         {
             get
@@ -122,6 +134,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for the 'Argb8888' images.
+        /// </summary>
         public static ImageBitsFormat Argb8888
         {
             get
@@ -140,6 +155,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for the 'Bgr888' images.
+        /// </summary>
         public static ImageBitsFormat Bgr888
         {
             get
@@ -158,18 +176,39 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets whether or not this image format is 'Bgr888'.
+        /// </summary>
         public readonly bool IsBgr888 => Bgr888 == this;
 
+        /// <summary>
+        /// Gets whether or not this image format is 'Bgra8888'.
+        /// </summary>
         public readonly bool IsBgra8888 => Bgra8888 == this;
 
+        /// <summary>
+        /// Gets whether or not this image format is 'Rgba8888'.
+        /// </summary>
         public readonly bool IsRgba8888 => Rgba8888 == this;
 
+        /// <summary>
+        /// Gets whether or not this image format is 'Rgb888'.
+        /// </summary>
         public readonly bool IsRgb888 => Rgb888 == this;
 
+        /// <summary>
+        /// Gets whether or not this image format is 'Argb8888'.
+        /// </summary>
         public readonly bool IsArgb8888 => Argb8888 == this;
 
+        /// <summary>
+        /// Gets whether or not this image format is 'Argb8888Opaque'.
+        /// </summary>
         public readonly bool IsArgb8888Opaque => Argb8888Opaque == this;
 
+        /// <summary>
+        /// Gets <see cref="SKColorType"/>.
+        /// </summary>
         public readonly SKColorType ColorType
         {
             get
@@ -217,6 +256,10 @@ namespace Alternet.Drawing
             return !(left == right);
         }
 
+        /// <summary>
+        /// Logs this object properties.
+        /// </summary>
+        /// <param name="sectionName">Section name. Optional.</param>
         public readonly void Log(string? sectionName = null)
         {
             var self = this;
@@ -235,6 +278,11 @@ namespace Alternet.Drawing
                 sectionName);
         }
 
+        /// <summary>
+        /// Compares this object with another object.
+        /// </summary>
+        /// <param name="obj">Object to compare with.</param>
+        /// <returns></returns>
         public readonly override bool Equals(object? obj)
         {
             if (obj is not ImageBitsFormat value)
@@ -242,6 +290,10 @@ namespace Alternet.Drawing
             return this == value;
         }
 
+        /// <summary>
+        /// Gets hash code of this object.
+        /// </summary>
+        /// <returns></returns>
         public readonly override int GetHashCode()
         {
             return HashCode.Combine(

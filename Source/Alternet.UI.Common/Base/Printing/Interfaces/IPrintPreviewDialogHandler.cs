@@ -8,6 +8,10 @@ using Alternet.UI;
 
 namespace Alternet.Drawing.Printing
 {
+    /// <summary>
+    /// Extends <see cref="IBasePrintDialogHandler"/> with print preview dialog
+    /// window specific methods and properties.
+    /// </summary>
     public interface IPrintPreviewDialogHandler : IBasePrintDialogHandler
     {
     }
