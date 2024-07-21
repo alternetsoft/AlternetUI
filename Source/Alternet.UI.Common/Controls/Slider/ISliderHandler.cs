@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with slider control.
+    /// </summary>
     public interface ISliderHandler : IControlHandler
     {
+        /// <summary>
+        /// Clears sliderr ticks.
+        /// </summary>
         void ClearTicks();
     }
 }

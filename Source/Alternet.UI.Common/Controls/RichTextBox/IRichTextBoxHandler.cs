@@ -9,6 +9,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with rich text box control.
+    /// </summary>
     public interface IRichTextBoxHandler : IControlHandler, IRichTextBox
     {
     }

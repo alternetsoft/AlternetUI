@@ -11,14 +11,29 @@ namespace Alternet.UI
     /// </summary>
     public interface IScrollBarHandler : IControlHandler
     {
+        /// <summary>
+        /// Gets or sets action called when scrolling is done.
+        /// </summary>
         Action? Scroll { get; set; }
 
+        /// <summary>
+        /// Gets or sets thumb position.
+        /// </summary>
         int ThumbPosition { get; set; }
 
+        /// <summary>
+        /// Gets or sets scrolling range.
+        /// </summary>
         int Range { get; }
 
+        /// <summary>
+        /// Gets or sets thumb size.
+        /// </summary>
         int ThumbSize { get; }
 
+        /// <summary>
+        /// Gets or sets page size.
+        /// </summary>
         int PageSize { get; }
 
         /// <summary>
