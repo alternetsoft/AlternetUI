@@ -259,7 +259,7 @@ namespace Alternet.UI
             {
                 if ((value as IDisposableObject)?.IsDisposed ?? false)
                     throw new ObjectDisposedException(nameof(StatusBar));
-                if (asStatusBar.Window is not null && asStatusBar.Window != Control)
+                if (asStatusBar.AttachedTo is not null && asStatusBar.AttachedTo != Control)
                 {
                     throw new Exception("Object is already attached to the window");
                 }
@@ -283,7 +283,7 @@ namespace Alternet.UI
             void SetWindow(StatusBar sb, Window? window)
             {
                 if (sb.Handler is StatusBarHandler handler)
-                    handler.Window = window;
+                    handler.AttachedTo = window;
             }
         }
 

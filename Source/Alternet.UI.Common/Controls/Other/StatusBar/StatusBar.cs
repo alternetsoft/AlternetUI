@@ -59,11 +59,12 @@ namespace Alternet.UI
         public virtual bool IgnorePanels { get; set; }
 
         /// <summary>
-        /// Gets <see cref="Window"/> to which this control is attached.
+        /// Gets control to which this status bar is attached.
         /// </summary>
-        public virtual Window? Window
+        [Browsable(false)]
+        public virtual Control? AttachedTo
         {
-            get => Handler.Window;
+            get => Handler.AttachedTo;
         }
 
         /// <summary>

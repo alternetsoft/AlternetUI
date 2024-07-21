@@ -13,25 +13,25 @@ namespace Alternet.UI
         private readonly StatusBar control;
         private bool sizingGripVisible = true;
         private TextEllipsizeType textEllipsize = TextEllipsizeType.End;
-        private Window? window;
+        private Control? attachedTo;
 
         public StatusBarHandler(StatusBar control)
         {
             this.control = control;
         }
 
-        public Window? Window
+        public Control? AttachedTo
         {
             get
             {
-                return window;
+                return attachedTo;
             }
 
             set
             {
-                if (window == value)
+                if (attachedTo == value)
                     return;
-                window = value;
+                attachedTo = value;
                 RecreateWidget();
             }
         }
@@ -71,7 +71,7 @@ namespace Alternet.UI
         {
             get
             {
-                var window = control.Window;
+                var window = control.AttachedTo;
 
                 if (window is null || window.IsDisposed)
                 {
@@ -83,7 +83,7 @@ namespace Alternet.UI
 
             set
             {
-                var window = control.Window;
+                var window = control.AttachedTo;
 
                 if (window is null || window.IsDisposed)
                     return;
@@ -182,7 +182,7 @@ namespace Alternet.UI
             const int FULLREPAINTONRESIZE = 0x00010000;
 
             var handle = StatusBarHandle;
-            var window = control.Window;
+            var window = control.AttachedTo;
 
             if (window != null)
             {
