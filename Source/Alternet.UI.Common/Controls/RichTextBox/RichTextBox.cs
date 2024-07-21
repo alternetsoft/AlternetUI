@@ -1472,7 +1472,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves right.
         /// </summary>
-        public virtual bool MoveRight(int noPositions = 1, int flags = 0)
+        public virtual bool MoveRight(int noPositions = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveRight(noPositions, flags);
         }
@@ -1480,7 +1480,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves left.
         /// </summary>
-        public virtual bool MoveLeft(int noPositions = 1, int flags = 0)
+        public virtual bool MoveLeft(int noPositions = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveLeft(noPositions, flags);
         }
@@ -1488,7 +1488,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the paragraph.
         /// </summary>
-        public virtual bool MoveUp(int noLines = 1, int flags = 0)
+        public virtual bool MoveUp(int noLines = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveUp(noLines, flags);
         }
@@ -1496,7 +1496,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves the caret down.
         /// </summary>
-        public virtual bool MoveDown(int noLines = 1, int flags = 0)
+        public virtual bool MoveDown(int noLines = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveDown(noLines, flags);
         }
@@ -1504,7 +1504,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the end of the line.
         /// </summary>
-        public virtual bool MoveToLineEnd(int flags = 0)
+        public virtual bool MoveToLineEnd(RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveToLineEnd(flags);
         }
@@ -1512,7 +1512,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the line.
         /// </summary>
-        public virtual bool MoveToLineStart(int flags = 0)
+        public virtual bool MoveToLineStart(RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveToLineStart(flags);
         }
@@ -1520,7 +1520,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the end of the paragraph.
         /// </summary>
-        public virtual bool MoveToParagraphEnd(int flags = 0)
+        public virtual bool MoveToParagraphEnd(RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveToParagraphEnd(flags);
         }
@@ -1528,7 +1528,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the paragraph.
         /// </summary>
-        public virtual bool MoveToParagraphStart(int flags = 0)
+        public virtual bool MoveToParagraphStart(RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveToParagraphStart(flags);
         }
@@ -1536,7 +1536,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the start of the buffer.
         /// </summary>
-        public virtual bool MoveHome(int flags = 0)
+        public virtual bool MoveHome(RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveHome(flags);
         }
@@ -1544,7 +1544,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves to the end of the buffer.
         /// </summary>
-        public virtual bool MoveEnd(int flags = 0)
+        public virtual bool MoveEnd(RichTextMoveCaretFlags flags = 0)
         {
             return Handler.MoveEnd(flags);
         }
@@ -1552,7 +1552,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves one or more pages up.
         /// </summary>
-        public virtual bool PageUp(int noPages = 1, int flags = 0)
+        public virtual bool PageUp(int noPages = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.PageUp(noPages, flags);
         }
@@ -1560,7 +1560,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves one or more pages down.
         /// </summary>
-        public virtual bool PageDown(int noPages = 1, int flags = 0)
+        public virtual bool PageDown(int noPages = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.PageDown(noPages, flags);
         }
@@ -1568,7 +1568,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves a number of words to the left.
         /// </summary>
-        public virtual bool WordLeft(int noPages = 1, int flags = 0)
+        public virtual bool WordLeft(int noPages = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.WordLeft(noPages, flags);
         }
@@ -1576,7 +1576,7 @@ namespace Alternet.UI
         /// <summary>
         /// Move a number of words to the right.
         /// </summary>
-        public virtual bool WordRight(int noPages = 1, int flags = 0)
+        public virtual bool WordRight(int noPages = 1, RichTextMoveCaretFlags flags = 0)
         {
             return Handler.WordRight(noPages, flags);
         }
@@ -1689,7 +1689,7 @@ namespace Alternet.UI
         /// <summary>
         /// Writes text.
         /// </summary>
-        public virtual void DoWriteText(string value, int flags = 0)
+        public virtual void DoWriteText(string value, TextBoxSetValueFlags flags = 0)
         {
             Handler.DoWriteText(value, flags);
         }
@@ -1698,7 +1698,10 @@ namespace Alternet.UI
         /// Helper function for extending the selection, returning <c>true</c> if the selection
         /// was changed. Selections are in caret positions.
         /// </summary>
-        public virtual bool ExtendSelection(long oldPosition, long newPosition, int flags)
+        public virtual bool ExtendSelection(
+            long oldPosition,
+            long newPosition,
+            RichTextMoveCaretFlags flags)
         {
             return Handler.ExtendSelection(oldPosition, newPosition, flags);
         }

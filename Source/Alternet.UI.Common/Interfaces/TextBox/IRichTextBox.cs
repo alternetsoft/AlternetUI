@@ -286,7 +286,8 @@ namespace Alternet.UI
             int bulletNumber,
             int leftIndent,
             int leftSubIndent,
-            TextBoxTextAttrBulletStyle bulletStyle = TextBoxTextAttrBulletStyle.Arabic | TextBoxTextAttrBulletStyle.Period);
+            TextBoxTextAttrBulletStyle bulletStyle
+                = TextBoxTextAttrBulletStyle.Arabic | TextBoxTextAttrBulletStyle.Period);
 
         /// <inheritdoc cref="RichTextBox.EndNumberedBullet"/>
         bool EndNumberedBullet();
@@ -344,211 +345,211 @@ namespace Alternet.UI
         /// <inheritdoc cref="RichTextBox.IsSelectionUnderlined"/>
         bool IsSelectionUnderlined();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.DoesSelectionHaveTextEffectFlag"/>
         bool DoesSelectionHaveTextEffectFlag(TextBoxTextAttrEffects flag);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.IsSelectionAligned"/>
         bool IsSelectionAligned(TextBoxTextAttrAlignment alignment);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.ApplyBoldToSelection"/>
         bool ApplyBoldToSelection();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.ApplyItalicToSelection"/>
         bool ApplyItalicToSelection();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.ApplyUnderlineToSelection"/>
         bool ApplyUnderlineToSelection();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.ApplyTextEffectToSelection"/>
         bool ApplyTextEffectToSelection(TextBoxTextAttrEffects flags);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.ApplyAlignmentToSelection"/>
         bool ApplyAlignmentToSelection(TextBoxTextAttrAlignment alignment);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetDefaultStyleToCursorStyle"/>
         bool SetDefaultStyleToCursorStyle();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SelectNone"/>
         void SelectNone();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SelectWord"/>
         bool SelectWord(long position);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.LayoutContent"/>
         bool LayoutContent(bool onlyVisibleRect = false);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveRight(int noPositions = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveRight"/>
+        bool MoveRight(int noPositions = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveLeft(int noPositions = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveLeft"/>
+        bool MoveLeft(int noPositions = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveUp(int noLines = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveUp"/>
+        bool MoveUp(int noLines = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveDown(int noLines = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveDown"/>
+        bool MoveDown(int noLines = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveToLineEnd(int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveToLineEnd"/>
+        bool MoveToLineEnd(RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveToLineStart(int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveToLineStart"/>
+        bool MoveToLineStart(RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveToParagraphEnd(int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveToParagraphEnd"/>
+        bool MoveToParagraphEnd(RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveToParagraphStart(int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveToParagraphStart"/>
+        bool MoveToParagraphStart(RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveHome(int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveHome"/>
+        bool MoveHome(RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool MoveEnd(int flags = 0);
+        /// <inheritdoc cref="RichTextBox.MoveEnd"/>
+        bool MoveEnd(RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool PageUp(int noPages = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.PageUp"/>
+        bool PageUp(int noPages = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool PageDown(int noPages = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.PageDown"/>
+        bool PageDown(int noPages = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool WordLeft(int noPages = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.WordLeft"/>
+        bool WordLeft(int noPages = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool WordRight(int noPages = 1, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.WordRight"/>
+        bool WordRight(int noPages = 1, RichTextMoveCaretFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.BeginBatchUndo"/>
         bool BeginBatchUndo(string cmdName);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.EndBatchUndo"/>
         bool EndBatchUndo();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.BatchingUndo"/>
         bool BatchingUndo();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.BeginSuppressUndo"/>
         bool BeginSuppressUndo();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.EndSuppressUndo"/>
         bool EndSuppressUndo();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetDefaultStyleEx"/>
         ITextBoxRichAttr GetDefaultStyleEx();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SuppressingUndo"/>
         bool SuppressingUndo();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.EnableVerticalScrollbar"/>
         void EnableVerticalScrollbar(bool enable);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetVerticalScrollbarEnabled"/>
         bool GetVerticalScrollbarEnabled();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetFontScale"/>
         void SetFontScale(double fontScale, bool refresh = false);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetFontScale"/>
         double GetFontScale();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetVirtualAttributesEnabled"/>
         bool GetVirtualAttributesEnabled();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.EnableVirtualAttributes"/>
         void EnableVirtualAttributes(bool b);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        void DoWriteText(string value, int flags = 0);
+        /// <inheritdoc cref="RichTextBox.DoWriteText"/>
+        void DoWriteText(string value, TextBoxSetValueFlags flags = 0);
 
-        /// <inheritdoc cref="RichTextBox."/>
-        bool ExtendSelection(long oldPosition, long newPosition, int flags);
+        /// <inheritdoc cref="RichTextBox.ExtendSelection"/>
+        bool ExtendSelection(long oldPosition, long newPosition, RichTextMoveCaretFlags flags);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetCaretPosition"/>
         void SetCaretPosition(long position, bool showAtLineStart = false);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetCaretPosition"/>
         long GetCaretPosition();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetAdjustedCaretPosition"/>
         long GetAdjustedCaretPosition(long caretPos);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.MoveCaretForward"/>
         void MoveCaretForward(long oldPosition);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetPhysicalPoint"/>
         PointI GetPhysicalPoint(PointI ptLogical);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetLogicalPoint"/>
         PointI GetLogicalPoint(PointI ptPhysical);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.FindNextWordPosition"/>
         long FindNextWordPosition(int direction = 1);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.IsPositionVisible"/>
         bool IsPositionVisible(long pos);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetFirstVisiblePosition"/>
         long GetFirstVisiblePosition();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetCaretPositionForDefaultStyle"/>
         long GetCaretPositionForDefaultStyle();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetCaretPositionForDefaultStyle"/>
         void SetCaretPositionForDefaultStyle(long pos);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.MoveCaretBack"/>
         void MoveCaretBack(long oldPosition);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.BeginFont"/>
         bool BeginFont(Font? font);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.IsDefaultStyleShowing"/>
         bool IsDefaultStyleShowing();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetFirstVisiblePoint"/>
         PointI GetFirstVisiblePoint();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.EnableImages"/>
         void EnableImages(bool b);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetImagesEnabled"/>
         bool GetImagesEnabled();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.EnableDelayedImageLoading"/>
         void EnableDelayedImageLoading(bool b);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetDelayedImageLoading"/>
         bool GetDelayedImageLoading();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetDelayedImageProcessingRequired"/>
         bool GetDelayedImageProcessingRequired();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetDelayedImageProcessingRequired"/>
         void SetDelayedImageProcessingRequired(bool b);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetDelayedImageProcessingTime"/>
         long GetDelayedImageProcessingTime();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetDelayedImageProcessingTime"/>
         void SetDelayedImageProcessingTime(long t);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetLineHeight"/>
         void SetLineHeight(int height);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetLineHeight"/>
         int GetLineHeight();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.ProcessDelayedImageLoading"/>
         bool ProcessDelayedImageLoading(bool refresh);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.RequestDelayedImageProcessing"/>
         void RequestDelayedImageProcessing();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetLastPosition"/>
         long GetLastPosition();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetListStyle"/>
         bool SetListStyle(
             long startRange,
             long endRange,
@@ -557,20 +558,20 @@ namespace Alternet.UI
             int startFrom = 1,
             int specifiedLevel = -1);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.ClearListStyle"/>
         bool ClearListStyle(
             long startRange,
             long endRange,
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.WriteTable"/>
         object WriteTable(
             int rows,
             int cols,
             ITextBoxRichAttr? tableAttr = default,
             ITextBoxRichAttr? cellAttr = default);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.NumberList"/>
         bool NumberList(
             long startRange,
             long endRange,
@@ -579,23 +580,23 @@ namespace Alternet.UI
             int startFrom = 1,
             int specifiedLevel = -1);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.CreateUrlAttr"/>
         ITextBoxRichAttr CreateUrlAttr();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetStyleEx"/>
         bool SetStyleEx(
             long startRange,
             long endRange,
             ITextBoxRichAttr style,
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetStyle"/>
         ITextBoxTextAttr GetStyle(long position);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetRichStyle"/>
         ITextBoxRichAttr GetRichStyle(long position);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.PromoteList"/>
         bool PromoteList(
             int promoteBy,
             long startRange,
@@ -604,79 +605,79 @@ namespace Alternet.UI
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo,
             int specifiedLevel = -1);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetTextCursor"/>
         void SetTextCursor(Cursor? cursor);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetTextCursor"/>
         Cursor GetTextCursor();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetURLCursor"/>
         void SetURLCursor(Cursor? cursor);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetURLCursor"/>
         Cursor GetURLCursor();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetAndShowDefaultStyle"/>
         void SetAndShowDefaultStyle(ITextBoxRichAttr attr);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetBasicStyle"/>
         void SetBasicStyle(ITextBoxRichAttr style);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.HasParagraphAttributes"/>
         bool HasParagraphAttributes(
             long startRange,
             long endRange,
             ITextBoxRichAttr style);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.BeginTextColor"/>
         bool BeginTextColor(Color color);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.EndTextColor"/>
         bool EndTextColor();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetBasicStyle"/>
         ITextBoxRichAttr GetBasicStyle();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.WriteImage(Image,BitmapType,ITextBoxRichAttr)"/>
         bool WriteImage(
             Image? bitmap,
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.WriteImage(string,BitmapType,ITextBoxRichAttr)"/>
         bool WriteImage(
             string filename,
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.Delete"/>
         bool Delete(long startRange, long endRange);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.BeginStyle"/>
         bool BeginStyle(ITextBoxRichAttr style);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetStyle"/>
         bool SetStyle(long start, long end, ITextBoxTextAttr style);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetRichStyle"/>
         bool SetRichStyle(long start, long end, ITextBoxRichAttr style);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.SetSelectionRange"/>
         void SetSelectionRange(long startRange, long endRange);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.PositionToXY"/>
         PointI PositionToXY(long pos);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetStyleForRange"/>
         ITextBoxTextAttr GetStyleForRange(long startRange, long endRange);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.GetRichStyleForRange"/>
         ITextBoxRichAttr GetRichStyleForRange(long startRange, long endRange);
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.CreateTextAttr"/>
         ITextBoxTextAttr CreateTextAttr();
 
-        /// <inheritdoc cref="RichTextBox."/>
+        /// <inheritdoc cref="RichTextBox.DeleteSelectedContent"/>
         long DeleteSelectedContent();
     }
 }
