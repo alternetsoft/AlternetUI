@@ -1,3 +1,11 @@
+# 0.9.615 (2024 July 21)
+
+- Added xml documentation.
+- PlessGraphics: Removed exception.
+- SkiaUtils: default font related improvements.
+- RichTextBox: Use enums instead of int in some methods.
+- StatusBar: Window -> AttachedTo.
+
 # 0.9.614 (2024 July 15)
 
 - Label: MaxTextWidth, Wrap.

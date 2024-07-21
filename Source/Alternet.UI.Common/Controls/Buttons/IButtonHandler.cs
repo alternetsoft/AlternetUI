@@ -8,34 +8,63 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to control button control.
+    /// </summary>
     public interface IButtonHandler : IControlHandler
     {
+        /// <summary>
+        /// Sets image for the 'Normal' state.
+        /// </summary>
         Image? NormalImage { set; }
 
+        /// <summary>
+        /// Sets image for the 'Hovered' state.
+        /// </summary>
         Image? HoveredImage { set; }
 
+        /// <summary>
+        /// Sets image for the 'Pressed' state.
+        /// </summary>
         Image? PressedImage { set; }
 
+        /// <summary>
+        /// Sets image for the 'Disabled' state.
+        /// </summary>
         Image? DisabledImage { set; }
 
+        /// <summary>
+        /// Sets image for the 'Focused' state.
+        /// </summary>
         Image? FocusedImage { set; }
 
+        /// <summary>
+        /// Gets or sets action which is called when button is clicked.
+        /// </summary>
         Action? Click { get; set; }
 
+        /// <inheritdoc cref="Button.HasBorder"/>
         bool HasBorder { get; set; }
 
+        /// <inheritdoc cref="Button.IsDefault"/>
         bool IsDefault { get; set; }
 
+        /// <inheritdoc cref="Button.ExactFit"/>
         bool ExactFit { get; set; }
 
+        /// <inheritdoc cref="Button.IsCancel"/>
         bool IsCancel { get; set; }
 
+        /// <inheritdoc cref="Button.TextVisible"/>
         bool TextVisible { get; set; }
 
+        /// <inheritdoc cref="Button.TextAlign"/>
         GenericDirection TextAlign { get; set; }
 
+        /// <inheritdoc cref="Button.SetImagePosition"/>
         void SetImagePosition(GenericDirection dir);
 
+        /// <inheritdoc cref="Button.SetImageMargins"/>
         void SetImageMargins(double x, double y);
     }
 }

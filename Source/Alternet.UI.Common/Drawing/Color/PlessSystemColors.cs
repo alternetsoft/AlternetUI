@@ -9,6 +9,9 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Contains static methods and properties which allow to access platformless system colors.
+    /// </summary>
     public static class PlessSystemColors
     {
         private static readonly ColorStruct[] Colors;
@@ -337,18 +340,31 @@ namespace Alternet.Drawing
             set => SetColor(KnownSystemColor.ControlText, value);
         }
 
+        /// <summary>
+        /// Gets known system color.
+        /// </summary>
+        /// <param name="id">System color id.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ColorStruct GetColor(KnownSystemColor id)
         {
             return Colors[(int)id];
         }
 
+        /// <summary>
+        /// Sets known system color.
+        /// </summary>
+        /// <param name="id">System color id.</param>
+        /// <param name="value">Color value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetColor(KnownSystemColor id, ColorStruct value)
         {
             Colors[(int)id] = value;
         }
 
+        /// <summary>
+        /// Assigns internal system colors structures with RGB values from the operating system settings.
+        /// </summary>
         public static void Reset()
         {
             if(SystemSettings.Handler.GetColor(KnownSystemColor.Window) is null)
@@ -397,6 +413,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Assigns internal system colors structures with RGB values from const color declarations.
+        /// </summary>
         public static void ResetFromConsts()
         {
             SetColor(KnownSystemColor.ActiveBorder, (255, 180, 180, 180));

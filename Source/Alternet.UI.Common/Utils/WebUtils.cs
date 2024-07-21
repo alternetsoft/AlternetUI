@@ -32,6 +32,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Converts string to its equivalent string representation that is encoded with base-64 digits.
+        /// </summary>
+        /// <param name="plainText">Plain text string to convert.</param>
+        /// <returns>The string representation, in base 64, of the source string.</returns>
         public static string Base64Encode(string? plainText)
         {
             if (string.IsNullOrEmpty(plainText))
@@ -40,6 +45,11 @@ namespace Alternet.UI
             return System.Convert.ToBase64String(plainTextBytes);
         }
 
+        /// <summary>
+        /// Converts string with data that is encoded with base-64 digits to the plain text string.
+        /// </summary>
+        /// <param name="base64EncodedData">String with data, encoded with base-64 digits.</param>
+        /// <returns>Plain text string.</returns>
         public static string Base64Decode(string? base64EncodedData)
         {
             if (string.IsNullOrEmpty(base64EncodedData))

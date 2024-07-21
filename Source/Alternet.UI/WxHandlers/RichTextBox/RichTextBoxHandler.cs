@@ -457,74 +457,74 @@ namespace Alternet.UI
             return NativeControl.LayoutContent(onlyVisibleRect);
         }
 
-        bool IRichTextBox.MoveRight(int noPositions, int flags)
+        bool IRichTextBox.MoveRight(int noPositions, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveRight(noPositions, flags);
+            return NativeControl.MoveRight(noPositions, (int)flags);
         }
 
-        bool IRichTextBox.MoveLeft(int noPositions, int flags)
+        bool IRichTextBox.MoveLeft(int noPositions, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveLeft(noPositions, flags);
+            return NativeControl.MoveLeft(noPositions, (int)flags);
         }
 
-        bool IRichTextBox.MoveUp(int noLines, int flags)
+        bool IRichTextBox.MoveUp(int noLines, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveUp(noLines, flags);
+            return NativeControl.MoveUp(noLines, (int)flags);
         }
 
-        bool IRichTextBox.MoveDown(int noLines, int flags)
+        bool IRichTextBox.MoveDown(int noLines, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveDown(noLines, flags);
+            return NativeControl.MoveDown(noLines, (int)flags);
         }
 
-        bool IRichTextBox.MoveToLineEnd(int flags)
+        bool IRichTextBox.MoveToLineEnd(RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveToLineEnd(flags);
+            return NativeControl.MoveToLineEnd((int)flags);
         }
 
-        bool IRichTextBox.MoveToLineStart(int flags)
+        bool IRichTextBox.MoveToLineStart(RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveToLineStart(flags);
+            return NativeControl.MoveToLineStart((int)flags);
         }
 
-        bool IRichTextBox.MoveToParagraphEnd(int flags)
+        bool IRichTextBox.MoveToParagraphEnd(RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveToParagraphEnd(flags);
+            return NativeControl.MoveToParagraphEnd((int)flags);
         }
 
-        bool IRichTextBox.MoveToParagraphStart(int flags)
+        bool IRichTextBox.MoveToParagraphStart(RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveToParagraphStart(flags);
+            return NativeControl.MoveToParagraphStart((int)flags);
         }
 
-        bool IRichTextBox.MoveHome(int flags)
+        bool IRichTextBox.MoveHome(RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveHome(flags);
+            return NativeControl.MoveHome((int)flags);
         }
 
-        bool IRichTextBox.MoveEnd(int flags)
+        bool IRichTextBox.MoveEnd(RichTextMoveCaretFlags flags)
         {
-            return NativeControl.MoveEnd(flags);
+            return NativeControl.MoveEnd((int)flags);
         }
 
-        bool IRichTextBox.PageUp(int noPages, int flags)
+        bool IRichTextBox.PageUp(int noPages, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.PageUp(noPages, flags);
+            return NativeControl.PageUp(noPages, (int)flags);
         }
 
-        bool IRichTextBox.PageDown(int noPages, int flags)
+        bool IRichTextBox.PageDown(int noPages, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.PageDown(noPages, flags);
+            return NativeControl.PageDown(noPages, (int)flags);
         }
 
-        bool IRichTextBox.WordLeft(int noPages, int flags)
+        bool IRichTextBox.WordLeft(int noPages, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.WordLeft(noPages, flags);
+            return NativeControl.WordLeft(noPages, (int)flags);
         }
 
-        bool IRichTextBox.WordRight(int noPages, int flags)
+        bool IRichTextBox.WordRight(int noPages, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.WordRight(noPages, flags);
+            return NativeControl.WordRight(noPages, (int)flags);
         }
 
         bool IRichTextBox.BeginBatchUndo(string cmdName)
@@ -587,14 +587,14 @@ namespace Alternet.UI
             NativeControl.EnableVirtualAttributes(b);
         }
 
-        void IRichTextBox.DoWriteText(string value, int flags)
+        void IRichTextBox.DoWriteText(string value, TextBoxSetValueFlags flags)
         {
-            NativeControl.DoWriteText(value, flags);
+            NativeControl.DoWriteText(value, (int)flags);
         }
 
-        bool IRichTextBox.ExtendSelection(long oldPosition, long newPosition, int flags)
+        bool IRichTextBox.ExtendSelection(long oldPosition, long newPosition, RichTextMoveCaretFlags flags)
         {
-            return NativeControl.ExtendSelection(oldPosition, newPosition, flags);
+            return NativeControl.ExtendSelection(oldPosition, newPosition, (int)flags);
         }
 
         void IRichTextBox.SetCaretPosition(long position, bool showAtLineStart)

@@ -7,13 +7,23 @@ using System.Runtime.CompilerServices;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Allows to read strings from the resources.
+    /// </summary>
     public partial class SR
     {
         private static ResourceManager ResourceManager => SRID.ResourceManager;
 
-        public static string GetString(string name, params object[] args)
+        /// <summary>
+        /// Reads string from the resources and formats it using <paramref name="args"/>.
+        /// Long parameters (with length greater than 1024 characters) are trimmed.
+        /// </summary>
+        /// <param name="resourceKey">The name of the resource to retrieve.</param>
+        /// <param name="args">Arguments for use with string.Format.</param>
+        /// <returns></returns>
+        public static string GetString(string resourceKey, params object[] args)
         {
-            string @string = GetString(name/*, Culture*/);
+            string @string = GetString(resourceKey);
 
             if (args != null && args.Length != 0)
             {
@@ -33,14 +43,25 @@ namespace Alternet.UI
             return @string;
         }
 
-        public static string Get(string name)
+        /// <summary>
+        /// Reads string from the resources.
+        /// </summary>
+        /// <param name="resourceKey">The name of the resource to retrieve.</param>
+        /// <returns></returns>
+        public static string Get(string resourceKey)
         {
-            return GetResourceString(name, null);
+            return GetResourceString(resourceKey, null);
         }
 
-        public static string Get(string name, params object[] args)
+        /// <summary>
+        /// Reads string from the resources and formats it using <paramref name="args"/>.
+        /// </summary>
+        /// <param name="resourceKey">The name of the resource to retrieve.</param>
+        /// <param name="args">Arguments for use with string.Format.</param>
+        /// <returns></returns>
+        public static string Get(string resourceKey, params object[] args)
         {
-            return Format(GetResourceString(name, null), args);
+            return Format(GetResourceString(resourceKey, null), args);
         }
 
         internal static string GetResourceString(string resourceKey, string defaultString)

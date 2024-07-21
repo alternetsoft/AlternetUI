@@ -254,10 +254,13 @@ namespace Alternet.Drawing
             if (obj is not Region region)
                 return false;
 
-            return Handler.Equals(region);
+            return Handler.IsEqualTo(region);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calculates hash code for this object.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             return Handler.GetHashCode();

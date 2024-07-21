@@ -11,7 +11,7 @@ using SkiaSharp.Views.Maui;
 
 namespace Alternet.UI
 {
-    public static class MauiTouchUtils
+    internal static class MauiTouchUtils
     {
         public static TouchEventArgs Convert(SKTouchEventArgs e)
         {

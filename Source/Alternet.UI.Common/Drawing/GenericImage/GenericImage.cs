@@ -218,9 +218,19 @@ namespace Alternet.Drawing
             Handler = handle;
         }
 
+        /// <summary>
+        /// Enumerates known pixel strategies used in the generic images.
+        /// </summary>
         public enum PixelStrategy
         {
+            /// <summary>
+            /// Access to <see cref="GenericImage.Pixels"/> is faster.
+            /// </summary>
             Pixels,
+
+            /// <summary>
+            /// Access to <see cref="GenericImage.RgbData"/> is faster.
+            /// </summary>
             RgbData,
         }
 
@@ -296,18 +306,38 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual int PixelCount => Size.PixelCount;
 
+        /// <summary>
+        /// Gets or sets pixels using array of <see cref="SKColor"/>.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="PixelStrategy"/> to get the best strategy for accessing the pixel data.
+        /// </remarks>
         public virtual SKColor[] Pixels
         {
             get => Handler.Pixels;
             set => Handler.Pixels = value;
         }
 
+        /// <summary>
+        /// Gets or sets pixels using array of <see cref="RGBValue"/>.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="AlphaData"/> to get alpha component of the pixels.
+        /// Use <see cref="PixelStrategy"/> to get the best strategy for accessing the pixel data.
+        /// </remarks>
         public virtual RGBValue[] RgbData
         {
             get => Handler.RgbData;
             set => Handler.RgbData = value;
         }
 
+        /// <summary>
+        /// Gets or sets alpha component of the pixels using array of <see cref="byte"/>.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="RgbData"/> to get alpha component of the pixels.
+        /// Use <see cref="PixelStrategy"/> to get the best strategy for accessing the pixel data.
+        /// </remarks>
         public virtual byte[] AlphaData
         {
             get => Handler.AlphaData;
@@ -366,6 +396,11 @@ namespace Alternet.Drawing
             return CanRead(stream);
         }
 
+        /// <summary>
+        /// Fills array of <see cref="SKColor"/> with the specified color.
+        /// </summary>
+        /// <param name="pixels">Array of pixels.</param>
+        /// <param name="fill">Color to fill.</param>
         public static unsafe void FillPixels(SKColor[] pixels, SKColor fill)
         {
             var length = pixels.Length;
@@ -382,6 +417,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Fills array with alpha component data with the specified alpha value.
+        /// </summary>
+        /// <param name="alpha">Array of alpha components.</param>
+        /// <param name="fill">Value to fill.</param>
         public static unsafe void FillAlphaData(byte[] alpha, byte fill)
         {
             fixed (byte* alphaPtr = alpha)
@@ -390,6 +430,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Fills array with <see cref="RGBValue"/> with the specified color.
+        /// </summary>
+        /// <param name="rgb">Array of pixels.</param>
+        /// <param name="fill">Color to fill.</param>
         public static unsafe void FillRgbData(RGBValue[] rgb, RGBValue fill)
         {
             var length = rgb.Length;
@@ -406,6 +451,14 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Creates <see cref="GenericImage"/> with the specified size and
+        /// fills it with the color.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="color">Color to fill.</param>
+        /// <returns></returns>
         public static GenericImage Create(int width, int height, Color color)
         {
             var alphaData = CreateAlphaData(width, height, color.A);
@@ -414,6 +467,14 @@ namespace Alternet.Drawing
             return image;
         }
 
+        /// <summary>
+        /// Creates array of <see cref="SKColor"/> with the specified size and optionally
+        /// fills it with the color.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="fill">Color to fill.</param>
+        /// <returns></returns>
         public static SKColor[] CreatePixels(int width, int height, SKColor? fill = null)
         {
             var size = width * height;
@@ -424,6 +485,14 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Creates array of <see cref="RGBValue"/> with the specified size and optionally
+        /// fills it with the color.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="fill">Color to fill.</param>
+        /// <returns></returns>
         public static RGBValue[] CreateRgbData(int width, int height, RGBValue? fill = null)
         {
             var size = width * height;
@@ -434,32 +503,62 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Creates array of <see cref="RGBValue"/> with the specified size and copies
+        /// pixel data from the <paramref name="source"/> pointer.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="source">Pointer to the pixel data (array of <see cref="RGBValue"/>).</param>
+        /// <returns></returns>
         public static unsafe RGBValue[] CreateRgbDataFromPtr(int width, int height, IntPtr source)
         {
             var size = width * height;
             RGBValue[] result = new RGBValue[size];
 
-            fixed (RGBValue* resultPtr = result)
+            if(source != default)
             {
-                BaseMemory.Move((IntPtr)resultPtr, source, size * 3);
+                fixed (RGBValue* resultPtr = result)
+                {
+                    BaseMemory.Move((IntPtr)resultPtr, source, size * 3);
+                }
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Creates array of alpha components with the specified size and copies
+        /// alpha component data from the <paramref name="source"/> pointer.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="source">Pointer to the alpha component data (array of bytes).</param>
+        /// <returns></returns>
         public static unsafe byte[] CreateAlphaDataFromPtr(int width, int height, IntPtr source)
         {
             var size = width * height;
             byte[] result = new byte[size];
 
-            fixed (byte* resultPtr = result)
+            if (source != default)
             {
-                BaseMemory.Move((IntPtr)resultPtr, source, size);
+                fixed (byte* resultPtr = result)
+                {
+                    BaseMemory.Move((IntPtr)resultPtr, source, size);
+                }
             }
 
             return result;
         }
 
+        /// <summary>
+        /// Creates array of alpha components with the specified size and optionally fills
+        /// it with the given value.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="fill">Value to fill.</param>
+        /// <returns></returns>
         public static byte[] CreateAlphaData(int width, int height, byte? fill = null)
         {
             var size = width * height;
@@ -470,6 +569,11 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Converts array of <see cref="SKColor"/> to array of <see cref="RGBValue"/>.
+        /// </summary>
+        /// <param name="data">Array with pixel data.</param>
+        /// <returns></returns>
         public static unsafe RGBValue[] GetRGBValues(SKColor[] data)
         {
             var length = data.Length;
@@ -496,6 +600,11 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Copies pixel data from <paramref name="source"/> to <paramref name="data"/>.
+        /// </summary>
+        /// <param name="data">Destination array of <see cref="SKColor"/>.</param>
+        /// <param name="source">Pointer to pixel data.</param>
         public static unsafe void SetRgbValuesFromPtr(SKColor[] data, RGBValue* source)
         {
             var length = data.Length;
@@ -515,6 +624,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Fills alpha component of the colors with the specified value.
+        /// </summary>
+        /// <param name="data">Array of pixels.</param>
+        /// <param name="alpha">Value to fill.</param>
         public static unsafe void FillAlphaData(SKColor[] data, byte alpha)
         {
             var length = data.Length;
@@ -532,6 +646,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Copies alpha components from <paramref name="source"/> to <paramref name="data"/>.
+        /// </summary>
+        /// <param name="data">Destination array of <see cref="SKColor"/>.</param>
+        /// <param name="source">Pointer to alpha components.</param>
         public static unsafe void SetAlphaValuesFromPtr(SKColor[] data, byte* source)
         {
             var length = data.Length;
@@ -550,6 +669,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Creates array of alpha components from the array of <see cref="SKColor"/>.
+        /// </summary>
+        /// <param name="data">Array of pixel data.</param>
+        /// <returns></returns>
         public static unsafe byte[] GetAlphaValues(SKColor[] data)
         {
             var length = data.Length;
@@ -576,6 +700,13 @@ namespace Alternet.Drawing
             return alpha;
         }
 
+        /// <summary>
+        /// Converts array of <see cref="SKColor"/> into array of <see cref="RGBValue"/>
+        /// and array of alpha components.
+        /// </summary>
+        /// <param name="data">Source array with pixel data.</param>
+        /// <param name="rgb">Destination array of <see cref="RGBValue"/>.</param>
+        /// <param name="alpha">Destination array of <see cref="byte"/> with alpha components.</param>
         public static void SeparateAlphaData(
             SKColor[] data,
             out RGBValue[] rgb,
@@ -585,11 +716,25 @@ namespace Alternet.Drawing
             alpha = GetAlphaValues(data);
         }
 
+        /// <summary>
+        /// Converts <see cref="GenericImage"/> to <see cref="SKBitmap"/>. Optionally
+        /// copies pixel data.
+        /// </summary>
+        /// <param name="bitmap">Image.</param>
+        /// <param name="assignPixels">Whether to copy pixel data. Optional. Default is <c>true</c>.</param>
+        /// <returns></returns>
         public static SKBitmap ToSkia(GenericImage bitmap, bool assignPixels = true)
         {
             return ToSkia(bitmap.Handler, assignPixels);
         }
 
+        /// <summary>
+        /// Creates <see cref="SKBitmap"/> with the specifies size.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="hasAlpha">Whether image has alpha component.</param>
+        /// <returns></returns>
         public static SKBitmap CreateSkiaBitmapForImage(int width, int height, bool hasAlpha)
         {
             var count = width * height;
@@ -601,6 +746,13 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Converts image specified with <see cref="IGenericImageHandler"/> to
+        /// <see cref="SKBitmap"/>. Optionally copies pixel data.
+        /// </summary>
+        /// <param name="bitmap">Image.</param>
+        /// <param name="assignPixels">Whether to copy pixel data. Optional. Default is <c>true</c>.</param>
+        /// <returns></returns>
         public static SKBitmap ToSkia(IGenericImageHandler bitmap, bool assignPixels = true)
         {
             var result = CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
@@ -610,6 +762,11 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Converts <see cref="SKBitmap"/> to <see cref="GenericImage"/>.
+        /// </summary>
+        /// <param name="bitmap">Iamge to convert.</param>
+        /// <returns></returns>
         public static GenericImage FromSkia(SKBitmap bitmap)
         {
             var result = new GenericImage(bitmap.Width, bitmap.Height, bitmap.Pixels);
@@ -1336,6 +1493,10 @@ namespace Alternet.Drawing
             return image;
         }
 
+        /// <summary>
+        /// Changes lightness of the each pixel.
+        /// </summary>
+        /// <param name="ialpha">New lightness value (0..200).</param>
         public virtual void ChangeLightness(int ialpha)
         {
             ialpha = MathUtils.ApplyMinMax(ialpha, 0, 200);
@@ -1861,11 +2022,11 @@ namespace Alternet.Drawing
             });
         }
 
-        public virtual void Assign(SKBitmap bitmap)
-        {
-            Pixels = bitmap.Pixels;
-        }
-
+        /// <summary>
+        /// Locks pixels data and gets <see cref="ISkiaSurface"/> to access it.
+        /// </summary>
+        /// <param name="lockMode">Lock mode.</param>
+        /// <returns></returns>
         public virtual ISkiaSurface LockSurface(ImageLockMode lockMode = ImageLockMode.ReadWrite)
         {
             Debug.Assert(IsOk, "Image.IsOk == true is required.");

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Base interface for the brush handlers.
+    /// </summary>
     public interface IBrushHandler : IDisposable
     {
     }

@@ -82,8 +82,12 @@ namespace Alternet.UI
         /// <inheritdoc cref="App.HasPendingEvents"/>
         bool HasPendingEvents();
 
+        /// <summary>
+        /// Exits application's main loop.
+        /// </summary>
         void ExitMainLoop();
 
+        /// <inheritdoc cref="App.Exit"/>
         void Exit();
 
         /// <summary>

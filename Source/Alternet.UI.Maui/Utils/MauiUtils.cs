@@ -15,10 +15,16 @@ using SkiaSharp.Views.Maui;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains static methods and properties related to MAUI platform.
+    /// </summary>
     public static partial class MauiUtils
     {
         private static PlatformApplication? platformApplication;
 
+        /// <summary>
+        /// Gets <see cref="PlatformApplication"/>.
+        /// </summary>
         public static PlatformApplication PlatformApplication
         {
             get
@@ -37,6 +43,9 @@ namespace Alternet.UI
 #if WINDOWS
 #endif
 
+        /// <summary>
+        /// Debug related method. Do not use directly.
+        /// </summary>
         public static void AddAllViewsToParent(Layout parent)
         {
             var types = AssemblyUtils.GetTypeDescendants(typeof(View));
@@ -75,6 +84,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Debug related method. Do not use directly.
+        /// </summary>
         public static void EnumViewsToLog(Layout parent)
         {
             foreach (var item in parent.Children)

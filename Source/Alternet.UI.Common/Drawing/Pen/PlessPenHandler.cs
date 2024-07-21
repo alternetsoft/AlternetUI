@@ -8,6 +8,9 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Platformless pen handler.
+    /// </summary>
     public class PlessPenHandler : DisposableObject, IPenHandler
     {
         private Color color = Color.Black;
@@ -16,20 +19,30 @@ namespace Alternet.Drawing
         private LineJoin lineJoin;
         private double width;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlessPenHandler"/> class.
+        /// </summary>
+        /// <param name="pen">Owner.</param>
         public PlessPenHandler(Pen pen)
         {
         }
 
+        /// <inheritdoc cref="Pen.Color"/>
         public Color Color => color;
 
+        /// <inheritdoc cref="Pen.DashStyle"/>
         public DashStyle DashStyle => dashStyle;
 
+        /// <inheritdoc cref="Pen.LineCap"/>
         public LineCap LineCap => lineCap;
 
+        /// <inheritdoc cref="Pen.LineJoin"/>
         public LineJoin LineJoin => lineJoin;
 
-        public double Width => width;
+        /// <inheritdoc cref="Pen.Width"/>
+        public Coord Width => width;
 
+        /// <inheritdoc/>
         public virtual void Update(Pen pen)
         {
             color = pen.Color;

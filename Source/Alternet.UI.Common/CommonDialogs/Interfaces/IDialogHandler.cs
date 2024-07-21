@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with system dialog window.
+    /// </summary>
     public interface IDialogHandler : IDisposable
     {
         /// <summary>
@@ -13,8 +16,16 @@ namespace Alternet.UI
         /// </summary>
         string? Title { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether or not to show the dialog window help.
+        /// </summary>
         bool ShowHelp { get; set; }
 
+        /// <summary>
+        /// Shows modal dialog on screen.
+        /// </summary>
+        /// <param name="owner">Dialog owner.</param>
+        /// <returns></returns>
         ModalResult ShowModal(Window? owner);
     }
 }

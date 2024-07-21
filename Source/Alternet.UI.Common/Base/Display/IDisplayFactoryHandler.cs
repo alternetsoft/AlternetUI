@@ -8,18 +8,34 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with displays.
+    /// </summary>
     public interface IDisplayFactoryHandler : IDisposable
     {
+        /// <inheritdoc cref="Display.GetFromControl(Control)"/>
         int GetFromControl(Control control);
 
+        /// <summary>
+        /// Creates <see cref="IDisplayHandler"/> interface provider for the default display.
+        /// </summary>
+        /// <returns></returns>
         IDisplayHandler CreateDisplay();
 
+        /// <summary>
+        /// Creates <see cref="IDisplayHandler"/> interface provider for the display with the
+        /// specified index.
+        /// </summary>
+        /// <returns></returns>
         IDisplayHandler CreateDisplay(int index);
 
+        /// <inheritdoc cref="Display.Count"/>
         int GetCount();
 
+        /// <inheritdoc cref="Display.BaseDPI"/>
         SizeI GetDefaultDPI();
 
+        /// <inheritdoc cref="Display.GetFromPoint(PointI)"/>
         int GetFromPoint(PointI pt);
     }
 }

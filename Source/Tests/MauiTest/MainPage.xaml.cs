@@ -59,9 +59,7 @@ public partial class MainPage : ContentPage
     private void SkiaContainer_HandlerChanged(object? sender, EventArgs e)
     {
 #if WINDOWS
-        var platformView = skiaContainer.Handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
-
-        if (platformView is null)
+        if (skiaContainer.Handler?.PlatformView is not SkiaSharp.Views.Windows.SKXamlCanvas platformView)
             return;
 
         platformView.AllowFocusOnInteraction = true;

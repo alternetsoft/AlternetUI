@@ -112,12 +112,23 @@ namespace Alternet.Drawing
         public static bool operator ==(RGBValue left, RGBValue right) =>
             left.R == right.R && left.G == right.G && left.B == right.B;
 
+        /// <summary>
+        /// Converts <see cref="RGBValue"/> to <see cref="SKColor"/>.
+        /// </summary>
+        /// <param name="color">Value to convert.</param>
+        /// <param name="alpha">Alpha component.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SKColor ToSkia(RGBValue color, byte alpha)
         {
             return new(color.R, color.G, color.B, alpha);
         }
 
+        /// <summary>
+        /// Converts <see cref="RGBValue"/> to <see cref="SKColor"/>.
+        /// </summary>
+        /// <param name="color">Value to convert.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SKColor ToSkia(RGBValue color)
         {
@@ -151,6 +162,11 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public override readonly string ToString() => AsDebugString;
 
-        public SKColor WithAlpha(byte a) => new SKColor(R, G, B, a);
+        /// <summary>
+        /// Returns this object as <see cref="SKColor"/> with the specified alpha component.
+        /// </summary>
+        /// <param name="a">Alpha component of the color.</param>
+        /// <returns></returns>
+        public readonly SKColor WithAlpha(byte a) => new(R, G, B, a);
     }
 }

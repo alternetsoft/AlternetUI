@@ -19,9 +19,9 @@ namespace EmployeeFormSample
             employeeFoto.Image = Image.FromUrl(
                 "embres:ControlsSampleDll.Resources.EmployeePhoto.jpg");
 
-            prefixComboBox.AddEnumValues<EmployeePrefix>();
-            stateComboBox.AddEnumValues<State>();
-            departmentComboBox.AddEnumValues<Department>();
+            prefixComboBox.AddEnumValues<Employee.EmployeePrefix>();
+            stateComboBox.AddEnumValues<Employee.States>();
+            departmentComboBox.AddEnumValues<Employee.EmployeeDepartment>();
 
             var employee = new Employee
             {
@@ -29,18 +29,18 @@ namespace EmployeeFormSample
                 LastName = "Jameson",
                 BirthDate = new System.DateTime(1993, 10, 2),
                 Title = "Customer Success Manager",
-                Prefix = EmployeePrefix.Mrs,
+                Prefix = Employee.EmployeePrefix.Mrs,
                 Address = "143 Coolidge St.",
                 City = "Phoenix",
-                State = EmployeeFormSample.State.AZ,
+                State = Employee.States.AZ,
                 ZipCode = "85001",
                 HomePhone = "(341) 433-4377",
                 MobilePhone = "(341) 232-6535",
                 Email = "AliceJ@mycompany.com",
                 Skype = "AliceJ12",
-                Department = Department.Sales,
+                Department = Employee.EmployeeDepartment.Sales,
                 HireDate = new System.DateTime(2018, 3, 5),
-                Status = Status.Salaried
+                Status = Employee.EmployeeStatus.Salaried,
             };
 
             DataContext = employee;
@@ -67,13 +67,7 @@ namespace EmployeeFormSample
             // On Linux height of the ComboBox is greater than height of the TextBox.
             // We need to increase height of all window's TextBoxes.
             TextBoxUtils.AdjustTextBoxesHeight(this);
-            /*
-                        panelHeader.Add("Information", infoPanel);
-                        panelHeader.Add("Contacts", contactsPanel);
-                        panelHeader.Add("Evaluations", evalPanel);
-                        tabControlPanel.Children.Insert(0, panelHeader);
-                        panelHeader.SelectedTab = panelHeader.Tabs[0];
-            */
+
             this.MinimumSize = new(900, 700);
 
             firstNameTextBox.Text = employee.FirstName;
@@ -91,7 +85,8 @@ namespace EmployeeFormSample
             statusTextBox.Text = employee.Status.ToString();
             statusTextBox.TextChanged += (s, e) =>
             {
-                employee.Status = (Status)Enum.Parse(typeof(Status), statusTextBox.Text);
+                employee.Status
+                = (Employee.EmployeeStatus)Enum.Parse(typeof(Employee.EmployeeStatus), statusTextBox.Text);
             };
 
             emailTextBox.Text = employee.Email;
@@ -145,19 +140,19 @@ namespace EmployeeFormSample
             prefixComboBox.SelectedItem = employee.Prefix;
             prefixComboBox.SelectedItemChanged += (s, e) =>
             {
-                employee.Prefix = prefixComboBox.SelectedItemAs<EmployeePrefix>();
+                employee.Prefix = prefixComboBox.SelectedItemAs<Employee.EmployeePrefix>();
             };
 
             stateComboBox.SelectedItem = employee.State;
             stateComboBox.SelectedItemChanged += (s, e) =>
             {
-                employee.State = stateComboBox.SelectedItemAs<State>();
+                employee.State = stateComboBox.SelectedItemAs<Employee.States>();
             };
 
             departmentComboBox.SelectedItem = employee.Department;
             departmentComboBox.SelectedItemChanged += (s, e) =>
             {
-                employee.Department = departmentComboBox.SelectedItemAs<Department>();
+                employee.Department = departmentComboBox.SelectedItemAs<Employee.EmployeeDepartment>();
             };
 
             birthDatePicker.Value = employee.BirthDate;
@@ -173,6 +168,153 @@ namespace EmployeeFormSample
             };
 
             this.SetSizeToContent();
+        }
+
+        internal class Employee
+        {
+            private string? firstName;
+            private string? lastName;
+            private DateTime birthDate;
+            private string? title;
+            private EmployeePrefix prefix;
+            private string? address;
+            private string? city;
+            private States state;
+            private string? zipCode;
+            private string? homePhone;
+            private string? mobilePhone;
+            private string? email;
+            private string? skype;
+            private EmployeeDepartment department;
+            private DateTime hireDate;
+            private EmployeeStatus status;
+
+            public string? FirstName
+            {
+                get => firstName;
+                set => firstName = value;
+            }
+
+            public string? LastName
+            {
+                get => lastName;
+                set => lastName = value;
+            }
+
+            public DateTime BirthDate
+            {
+                get => birthDate;
+                set => birthDate = value;
+            }
+
+            public string? Title
+            {
+                get => title;
+                set => title = value;
+            }
+
+            public EmployeePrefix Prefix
+            {
+                get => prefix;
+                set => prefix = value;
+            }
+
+            public string? Address
+            {
+                get => address;
+                set => address = value;
+            }
+
+            public string? City
+            {
+                get => city;
+                set => city = value;
+            }
+
+            public States State
+            {
+                get => state;
+                set => state = value;
+            }
+
+            public string? ZipCode
+            {
+                get => zipCode;
+                set => zipCode = value;
+            }
+
+            public string? HomePhone
+            {
+                get => homePhone;
+                set => homePhone = value;
+            }
+
+            public string? MobilePhone
+            {
+                get => mobilePhone;
+                set => mobilePhone = value;
+            }
+
+            public string? Email
+            {
+                get => email;
+                set => email = value;
+            }
+
+            public string? Skype
+            {
+                get => skype;
+                set => skype = value;
+            }
+
+            public EmployeeDepartment Department
+            {
+                get => department;
+                set => department = value;
+            }
+
+            public DateTime HireDate
+            {
+                get => hireDate;
+                set => hireDate = value;
+            }
+
+            public EmployeeStatus Status
+            {
+                get => status;
+                set => status = value;
+            }
+
+            public enum EmployeeStatus
+            {
+                Salaried,
+                Terminated,
+                OnLeave
+            }
+
+            public enum EmployeeDepartment
+            {
+                Sales,
+                HR,
+                Engineering,
+                IT
+            }
+
+            public enum EmployeePrefix
+            {
+                Mr,
+                Ms,
+                Mrs,
+                Miss,
+                Dr,
+                Prof
+            }
+
+            public enum States
+            {
+                AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN,
+                MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY
+            }
         }
     }
 }

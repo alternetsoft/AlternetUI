@@ -307,6 +307,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="sbyte.TryParse(string, NumberStyles, IFormatProvider, out sbyte)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseSByte(
             string? s,
@@ -319,6 +335,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="byte.TryParse(string, NumberStyles, IFormatProvider, out byte)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseByte(
             string? s,
@@ -331,6 +363,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="short.TryParse(string, NumberStyles, IFormatProvider, out short)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseInt16(
             string? s,
@@ -343,6 +391,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="ushort.TryParse(string, NumberStyles, IFormatProvider, out ushort)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUInt16(
             string? s,
@@ -355,6 +419,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="int.TryParse(string, NumberStyles, IFormatProvider, out int)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseInt32(
             string? s,
@@ -367,6 +447,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="uint.TryParse(string, NumberStyles, IFormatProvider, out uint)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUInt32(
             string? s,
@@ -379,6 +475,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="long.TryParse(string, NumberStyles, IFormatProvider, out long)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseInt64(
             string? s,
@@ -391,6 +503,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="ulong.TryParse(string, NumberStyles, IFormatProvider, out ulong)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseUInt64(
             string? s,
@@ -403,6 +531,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="float.TryParse(string, NumberStyles, IFormatProvider, out float)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseSingle(
             string? s,
@@ -415,6 +559,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="double.TryParse(string, NumberStyles, IFormatProvider, out double)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseDouble(
             string? s,
@@ -427,6 +587,22 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="decimal.TryParse(string, NumberStyles, IFormatProvider, out decimal)"/>
+        /// </summary>
+        /// <param name="s">The string to parse.</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryParseDecimal(
             string? s,

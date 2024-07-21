@@ -9,42 +9,88 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Contains static methods and properties related to SkiaSharp.
+    /// </summary>
     public static class SkiaUtils
     {
         private static string[]? fontFamilies;
         private static FontSize defaultFontSize = 12;
-        private static string? defaultFontName;
         private static string? defaultMonoFontName;
         private static SKFont? defaultSkiaFont;
+        private static SKTypeface? defaultTypeFace;
 
+        /// <summary>
+        /// Gets or sets default font for use with SkiaSharp.
+        /// </summary>
         public static SKFont DefaultFont
         {
             get => defaultSkiaFont ??= CreateDefaultFont();
             set => defaultSkiaFont = value ?? CreateDefaultFont();
         }
 
+        /// <summary>
+        /// Gets or sets default font size for use with SkiaSharp.
+        /// </summary>
         public static double DefaultFontSize
         {
-            get => defaultFontSize;
+            get => defaultSkiaFont?.Size ?? defaultFontSize;
 
             set
             {
+                if (DefaultFontSize == value)
+                    return;
                 defaultFontSize = value;
+                defaultSkiaFont = null;
             }
         }
 
-        public static string DefaultFontName
+        /// <summary>
+        /// Gets or sets default <see cref="SKTypeface"/> using to create default SkiaSharp font.
+        /// </summary>
+        public static SKTypeface DefaultTypeFace
         {
-            get => defaultFontName ?? SKTypeface.Default.FamilyName;
-            set => defaultFontName = value;
+            get
+            {
+                return defaultSkiaFont?.Typeface ?? defaultTypeFace ?? SKTypeface.Default;
+            }
+
+            set
+            {
+                if (DefaultTypeFace == value)
+                    return;
+                defaultTypeFace = value;
+                defaultSkiaFont = null;
+            }
         }
 
+        /// <summary>
+        /// Gets or sets default font name for use with SkiaSharp.
+        /// </summary>
+        public static string DefaultFontName
+        {
+            get => DefaultTypeFace.FamilyName;
+
+            set
+            {
+                if (DefaultFontName == value)
+                    return;
+                DefaultTypeFace = SKTypeface.FromFamilyName(value) ?? SKTypeface.Default;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default fixed-pitch font name.
+        /// </summary>
         public static string DefaultMonoFontName
         {
-            get => defaultMonoFontName ?? SKTypeface.Default.FamilyName;
+            get => defaultMonoFontName ?? DefaultTypeFace.FamilyName;
             set => defaultMonoFontName = value;
         }
 
+        /// <summary>
+        /// Gets all installed font families as array of strings.
+        /// </summary>
         public static string[] FontFamilies
         {
             get
@@ -59,27 +105,48 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets all installed font families as enumerable.
+        /// </summary>
         public static IEnumerable<string> GetFontFamiliesNames()
         {
             return FontFamilies;
         }
 
+        /// <summary>
+        /// Gets whether or not specified font is supported in SkiaSharp.
+        /// </summary>
+        /// <param name="name">Font name.</param>
+        /// <returns></returns>
         public static bool IsFamilySkia(string name)
         {
             var index = Array.BinarySearch<string>(FontFamilies, name);
             return index >= 0;
         }
 
+        /// <summary>
+        /// Gets whether or not specified bitmap is ok.
+        /// </summary>
+        /// <param name="bitmap">Bitmap to check.</param>
+        /// <returns></returns>
         public static bool BitmapIsOk(SKBitmap? bitmap)
         {
             return bitmap is not null && bitmap.ReadyToDraw && bitmap.Height > 0 && bitmap.Width > 0;
         }
 
+        /// <summary>
+        /// Resets loaded font families.
+        /// </summary>
         public static void ResetFonts()
         {
             fontFamilies = null;
         }
 
+        /// <summary>
+        /// Gets font family name for the specified <see cref="GenericFontFamily"/> value.
+        /// </summary>
+        /// <param name="genericFamily">Generic font family.</param>
+        /// <returns></returns>
         public static string GetFontFamilyName(GenericFontFamily genericFamily)
         {
             if (genericFamily == GenericFontFamily.Default)
@@ -112,11 +179,20 @@ namespace Alternet.Drawing
             return nameAndSize.Name;
         }
 
+        /// <summary>
+        /// Creates default font.
+        /// </summary>
+        /// <returns></returns>
         public static SKFont CreateDefaultFont()
         {
-            return new SKFont(SKTypeface.Default, (float)DefaultFontSize);
+            return new SKFont(DefaultTypeFace, (float)DefaultFontSize);
         }
 
+        /// <summary>
+        /// Converts <see cref="FillMode"/> to <see cref="SKPathFillType"/>.
+        /// </summary>
+        /// <param name="fillMode">Value to convert.</param>
+        /// <returns></returns>
         public static SKPathFillType ToSkia(this FillMode fillMode)
         {
             switch (fillMode)
@@ -130,6 +206,13 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets text size.
+        /// </summary>
+        /// <param name="canvas">Drawing context.</param>
+        /// <param name="text">Text to measure.</param>
+        /// <param name="font">Font.</param>
+        /// <returns></returns>
         public static SizeD GetTextExtent(
             this SKCanvas canvas,
             string text,
@@ -148,6 +231,16 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Draws text with the specified parameters.
+        /// </summary>
+        /// <param name="canvas">Drawing context.</param>
+        /// <param name="s">Text string to draw.</param>
+        /// <param name="location">Location where text is drawn on the canvas.</param>
+        /// <param name="font">Font.</param>
+        /// <param name="foreColor">Foreground color.</param>
+        /// <param name="backColor">Background color.
+        /// Pass <see cref="Color.Empty"/> to have transparent background under the text.</param>
         public static void DrawText(
             this SKCanvas canvas,
             string s,
@@ -179,6 +272,20 @@ namespace Alternet.Drawing
             canvas.DrawText(s, x + offsetX, y + offsetY, font, foreColor.AsStrokeAndFillPaint);
         }
 
+        /// <summary>
+        /// Draws a Bezier spline defined by four <see cref="PointD"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
+        /// of the curve.</param>
+        /// <param name="startPoint"><see cref="PointD"/> structure that represents the starting
+        /// point of the curve.</param>
+        /// <param name="controlPoint1"><see cref="PointD"/> structure that represents the first
+        /// control point for the curve.</param>
+        /// <param name="controlPoint2"><see cref="PointD"/> structure that represents the second
+        /// control point for the curve.</param>
+        /// <param name="endPoint"><see cref="PointD"/> structure that represents the ending point
+        /// of the curve.</param>
+        /// <param name="canvas">Drawing context.</param>
         public static void DrawBezier(
             this SKCanvas canvas,
             Pen pen,
@@ -194,6 +301,17 @@ namespace Alternet.Drawing
             canvas.DrawPath(path, pen);
         }
 
+        /// <summary>
+        /// Draws a series of Bezier splines from an array of <see cref="PointD"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
+        /// of the curve.</param>
+        /// <param name="points">
+        /// Array of <see cref="PointD"/> structures that represent the points that
+        /// determine the curve.
+        /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
+        /// </param>
+        /// <param name="canvas">Drawing context.</param>
         public static void DrawBeziers(this SKCanvas canvas, Pen pen, PointD[] points)
         {
             var pointsCount = points.Length;
@@ -211,11 +329,23 @@ namespace Alternet.Drawing
             canvas.DrawPath(path, pen);
         }
 
+        /// <summary>
+        /// Creates dummy <see cref="SKSurface"/> object ignores any painting.
+        /// </summary>
+        /// <param name="width">Surface width.</param>
+        /// <param name="height">Surface height.</param>
+        /// <returns></returns>
         public static SKSurface CreateNullSurface(int width = 0, int height = 0)
         {
             return SKSurface.CreateNull(width, height);
         }
 
+        /// <summary>
+        /// Creates dummy <see cref="SKCanvas"/> object which performs not painting.
+        /// </summary>
+        /// <param name="width">Surface width.</param>
+        /// <param name="height">Surface height.</param>
+        /// <returns></returns>
         public static SKCanvas CreateNullCanvas(int width = 0, int height = 0)
         {
             var surface = CreateNullSurface(width, height);

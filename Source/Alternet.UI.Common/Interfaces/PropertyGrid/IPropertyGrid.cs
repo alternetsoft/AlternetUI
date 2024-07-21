@@ -80,6 +80,9 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.HasItems"/>
         bool HasItems { get; }
 
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
         IPropertyGridHandler Handler { get; }
 
         /// <inheritdoc cref="PropertyGrid.FirstItem"/>

@@ -250,9 +250,7 @@ namespace Alternet.UI
         public static bool TryParse(string s, out Thickness value)
         {
             value = new Thickness();
-
-            using var tokenizer =
-                new StringTokenizer(s, CultureInfo.InvariantCulture);
+            using var tokenizer = new StringTokenizer(s, App.InvariantEnglishUS);
             if (tokenizer.TryReadSingle(out var a))
             {
                 if (tokenizer.TryReadSingle(out var b))

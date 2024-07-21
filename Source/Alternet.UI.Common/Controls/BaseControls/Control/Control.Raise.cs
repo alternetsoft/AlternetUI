@@ -295,6 +295,10 @@ namespace Alternet.UI
             VisualStateChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="IsMouseOverChanged" /> event
+        /// and <see cref="OnIsMouseOverChanged"/> method.
+        /// </summary>
         public void RaiseIsMouseOverChanged()
         {
             OnIsMouseOverChanged(EventArgs.Empty);
@@ -302,6 +306,10 @@ namespace Alternet.UI
             RaiseVisualStateChanged();
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseLeave" /> event
+        /// and <see cref="OnMouseLeave"/> method.
+        /// </summary>
         public void RaiseMouseLeave()
         {
             IsMouseOver = false;
@@ -313,6 +321,10 @@ namespace Alternet.UI
             MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises the <see cref="ChildInserted" /> event
+        /// and <see cref="OnChildInserted"/> method.
+        /// </summary>
         public void RaiseChildInserted(int index, Control childControl)
         {
             OnChildInserted(index, childControl);
@@ -320,6 +332,10 @@ namespace Alternet.UI
             ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
         }
 
+        /// <summary>
+        /// Raises the <see cref="ChildRemoved" /> event
+        /// and <see cref="OnChildRemoved"/> method.
+        /// </summary>
         public void RaiseChildRemoved(Control childControl)
         {
             OnChildRemoved(childControl);
@@ -327,6 +343,10 @@ namespace Alternet.UI
             ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
         }
 
+        /// <summary>
+        /// Raises the <see cref="Paint" /> event
+        /// and <see cref="OnPaint"/> method.
+        /// </summary>
         public void RaisePaint(PaintEventArgs e)
         {
             OnPaint(e);
@@ -380,7 +400,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="DpiChanged"/> event.
+        /// Raises the <see cref="DpiChanged"/> event and <see cref="OnDpiChanged"/> method.
         /// </summary>
         /// <param name="e">The <see cref="DpiChangedEventArgs"/> that contains the
         /// event data.</param>
@@ -411,12 +431,20 @@ namespace Alternet.UI
             OnDragLeave(EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Raises bounds changed events
+        /// and <see cref="OnHandlerSizeChanged"/> method.
+        /// </summary>
         public void RaiseHandlerSizeChanged()
         {
             OnHandlerSizeChanged(EventArgs.Empty);
             ReportBoundsChanged();
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseLeftButtonDown" /> event
+        /// and <see cref="OnMouseLeftButtonDown"/> method.
+        /// </summary>
         public void RaiseMouseLeftButtonDown(MouseEventArgs e)
         {
             IsMouseLeftButtonDown = true;
@@ -426,6 +454,10 @@ namespace Alternet.UI
             OnMouseLeftButtonDown(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseRightButtonDown" /> event
+        /// and <see cref="OnMouseRightButtonDown"/> method.
+        /// </summary>
         public void RaiseMouseRightButtonDown(MouseEventArgs e)
         {
             MouseRightButtonDown?.Invoke(this, e);
@@ -433,18 +465,30 @@ namespace Alternet.UI
             OnMouseRightButtonDown(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="KeyUp" /> event
+        /// and <see cref="OnKeyUp"/> method.
+        /// </summary>
         public void RaiseKeyUp(KeyEventArgs e)
         {
             KeyUp?.Invoke(this, e);
             OnKeyUp(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="KeyPress" /> event
+        /// and <see cref="OnKeyPress"/> method.
+        /// </summary>
         public void RaiseKeyPress(KeyPressEventArgs e)
         {
             KeyPress?.Invoke(this, e);
             OnKeyPress(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseWheel" /> event
+        /// and <see cref="OnMouseWheel"/> method.
+        /// </summary>
         public void RaiseMouseWheel(MouseEventArgs e)
         {
             HoveredControl = this;
@@ -452,6 +496,10 @@ namespace Alternet.UI
             MouseWheel?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="MouseDoubleClick" /> event
+        /// and <see cref="OnMouseDoubleClick"/> method.
+        /// </summary>
         public void RaiseMouseDoubleClick(MouseEventArgs e)
         {
             LastDoubleClickTimestamp = e.Timestamp;
@@ -459,6 +507,10 @@ namespace Alternet.UI
             MouseDoubleClick?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="KeyDown" /> event
+        /// and <see cref="OnKeyDown"/> method.
+        /// </summary>
         public void RaiseKeyDown(KeyEventArgs e)
         {
             KeyDown?.Invoke(this, e);
@@ -504,12 +556,18 @@ namespace Alternet.UI
             Parent?.OnChildPropertyChanged(this, nameof(Title));
         }
 
+        /// <summary>
+        /// Calls <see cref="RaiseMouseEnter"/> for the control under the mouse pointer.
+        /// </summary>
         public void RaiseMouseEnterOnTarget()
         {
             var currentTarget = UI.Control.GetMouseTargetControl(this);
             currentTarget?.RaiseMouseEnter();
         }
 
+        /// <summary>
+        /// Calls <see cref="RaiseMouseLeave"/> for the control under the mouse pointer.
+        /// </summary>
         public void RaiseMouseLeaveOnTarget()
         {
             var currentTarget = UI.Control.GetMouseTargetControl(this);

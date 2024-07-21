@@ -6,14 +6,21 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with checkbox control.
+    /// </summary>
     public interface ICheckBoxHandler : IControlHandler
     {
+        /// <inheritdoc cref="CheckBox.CheckState"/>
         CheckState CheckState { get; set; }
 
+        /// <inheritdoc cref="CheckBox.AllowAllStatesForUser"/>
         bool AllowAllStatesForUser { get; set; }
 
+        /// <inheritdoc cref="CheckBox.AlignRight"/>
         bool AlignRight { get; set; }
 
+        /// <inheritdoc cref="CheckBox.ThreeState"/>
         bool ThreeState { get; set; }
     }
 }

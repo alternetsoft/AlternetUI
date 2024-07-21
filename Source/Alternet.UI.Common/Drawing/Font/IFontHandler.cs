@@ -8,6 +8,9 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with font.
+    /// </summary>
     public interface IFontHandler : IDisposable
     {
         /// <summary>
@@ -95,24 +98,53 @@ namespace Alternet.Drawing
         /// <returns></returns>
         bool Equals(Font font);
 
+        /// <summary>
+        /// Contains font properties.
+        /// </summary>
         public class FontParams
         {
+            /// <summary>
+            /// Gets or sets <see cref="GenericFontFamily"/> of the font.
+            /// </summary>
             public GenericFontFamily? GenericFamily;
 
+            /// <summary>
+            /// Gets or sets font family name.
+            /// </summary>
             public string? FamilyName;
 
+            /// <summary>
+            /// Gets or sets font size.
+            /// </summary>
             public FontSize Size;
 
+            /// <summary>
+            /// Gets or sets font style.
+            /// </summary>
             public FontStyle Style = FontStyle.Regular;
 
+            /// <summary>
+            /// Gets or sets <see cref="GraphicsUnit"/> of the font.
+            /// </summary>
             public GraphicsUnit Unit = GraphicsUnit.Point;
 
+            /// <summary>
+            /// Gets or sets char set of the font.
+            /// </summary>
             public byte GdiCharSet = 1;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="FontParams"/> class.
+            /// </summary>
             public FontParams()
             {
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="FontParams"/> class and assings
+            /// it's properties using the specified font.
+            /// </summary>
+            /// <param name="font">Font.</param>
             public FontParams(Font font)
             {
                 FamilyName = font.Name;

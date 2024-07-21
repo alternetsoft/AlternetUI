@@ -247,6 +247,10 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RectI((PointI, SizeI) d) => new(d.Item1, d.Item2);
 
+        /// <summary>
+        /// Implicit operator convertion from <see cref="RectI"/> to <see cref="SKRectI"/>.
+        /// </summary>
+        /// <param name="rect">Rectangle.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKRectI(RectI rect)
         {
@@ -255,6 +259,10 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Implicit operator convertion from <see cref="SKRectI"/> to <see cref="RectI"/>.
+        /// </summary>
+        /// <param name="rect">Rectangle.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RectI(SKRectI rect)
         {
@@ -578,6 +586,13 @@ namespace Alternet.Drawing
             return StringUtils.ToString<int>(names, values);
         }
 
+        /// <summary>
+        /// Converts this rectangle to rectangle with device-indepdenent units using
+        /// the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor. Optional. If not specified, the default
+        /// scale factor is used for the convertion.</param>
+        /// <returns></returns>
         public readonly RectD PixelToDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelToDip(this, scaleFactor);

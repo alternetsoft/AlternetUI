@@ -11,7 +11,7 @@ namespace Alternet.UI
 {
     internal class MauiTimerHandler : DisposableObject, ITimerHandler
     {
-        private IDispatcherTimer timer;
+        private readonly IDispatcherTimer timer;
 
         public MauiTimerHandler()
         {

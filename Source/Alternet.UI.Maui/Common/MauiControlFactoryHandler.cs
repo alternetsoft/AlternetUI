@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
+    internal class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
         IAnimationPlayerHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)
         {

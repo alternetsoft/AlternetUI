@@ -761,6 +761,11 @@ namespace Alternet.Drawing
             this.ScaleFactor = factor;
         }
 
+        /// <summary>
+        /// Creates new image using pixels of this image with changed lightness.
+        /// </summary>
+        /// <param name="ialpha">Lightgness (0..200).</param>
+        /// <returns></returns>
         public virtual Image ChangeLightness(int ialpha)
         {
             GenericImage image = (GenericImage)this;

@@ -10,6 +10,9 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Allows to split string into tokens.
+    /// </summary>
     public class TokenizerHelper
     {
         internal int currentTokenIndex;
@@ -54,6 +57,9 @@ namespace Alternet.UI
             Initialize(str, quoteChar, separator);
         }
 
+        /// <summary>
+        /// Gets whether or not the separator was found.
+        /// </summary>
         public bool FoundSeparator
         {
             get
@@ -62,9 +68,13 @@ namespace Alternet.UI
             }
         }
 
-        // Helper to get the numeric list separator for a given IFormatProvider.
-        // Separator is a comma [,] if the decimal separator is not a comma,
-        // or a semicolon [;] otherwise.
+        /// <summary>
+        /// Helper to get the numeric list separator for a given <see cref="IFormatProvider"/>.
+        /// Separator is a comma [,] if the decimal separator is not a comma,
+        /// or a semicolon [;] otherwise.
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
         public static char GetNumericListSeparator(IFormatProvider provider)
         {
             char numericSeparator = ',';
@@ -87,6 +97,10 @@ namespace Alternet.UI
             return numericSeparator;
         }
 
+        /// <summary>
+        /// Gets current token.
+        /// </summary>
+        /// <returns></returns>
         public string GetCurrentToken()
         {
             // if no current token, return null
@@ -111,7 +125,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Advances to the NextToken
+        /// Advances to the NextToken.
         /// </summary>
         /// <returns>true if next token was found, false if at end of string</returns>
         public bool NextToken()
@@ -120,7 +134,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Advances to the NextToken, throwing an exception if not present
+        /// Advances to the NextToken, throwing an exception if not present.
         /// </summary>
         /// <returns>The next token found</returns>
         public string NextTokenRequired()
@@ -135,7 +149,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Advances to the NextToken, throwing an exception if not present
+        /// Advances to the NextToken, throwing an exception if not present.
         /// </summary>
         /// <returns>The next token found</returns>
         public string NextTokenRequired(bool allowQuotedToken)

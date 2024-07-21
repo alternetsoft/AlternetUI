@@ -8,6 +8,10 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Extends <see cref="IGraphics"/> with additional functionality implemented
+    /// on WxWidgets platform.
+    /// </summary>
     public interface IWxGraphics : IGraphics
     {
         /// <summary>
@@ -45,6 +49,14 @@ namespace Alternet.Drawing
             double maximumWidth,
             TextFormat format);
 
+        /// <summary>
+        /// Draws text using the specified drawing parameters and text format.
+        /// </summary>
+        /// <param name="text">Text string,</param>
+        /// <param name="font">Text font.</param>
+        /// <param name="brush">Brush.</param>
+        /// <param name="bounds">Bounds in which text is drawn.</param>
+        /// <param name="format">Text format.</param>
         void DrawText(
             string text,
             Font font,

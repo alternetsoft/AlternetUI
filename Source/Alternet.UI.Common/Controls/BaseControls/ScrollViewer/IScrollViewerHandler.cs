@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with the scroll viewer control.
+    /// </summary>
     public interface IScrollViewerHandler : IControlHandler
     {
     }

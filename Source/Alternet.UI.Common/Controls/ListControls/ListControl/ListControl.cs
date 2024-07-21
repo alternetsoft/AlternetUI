@@ -482,6 +482,12 @@ namespace Alternet.UI
             AddEnumValues(typeof(T));
         }
 
+        /// <summary>
+        /// Casts selected item to <typeparamref name="T"/> type.
+        /// </summary>
+        /// <typeparam name="T">Type of the result.</typeparam>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T? SelectedItemAs<T>() => (T?)SelectedItem;
 
         /// <summary>

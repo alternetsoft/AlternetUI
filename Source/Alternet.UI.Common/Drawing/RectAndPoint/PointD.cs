@@ -438,6 +438,12 @@ namespace Alternet.Drawing
             return StringUtils.ToString<Coord>(names, values);
         }
 
+        /// <summary>
+        /// Converts this point to the pixel point using the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor. Optional. If not specified, the default
+        /// scale factor is used for the convertion.</param>
+        /// <returns></returns>
         public readonly PointI PixelFromDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelFromDip(this, scaleFactor);

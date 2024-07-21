@@ -8,6 +8,10 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Contains methods which can paint and measure control parts. For example,
+    /// <see cref="DrawCheckBox"/> method paints check box in different states.
+    /// </summary>
     public interface IControlPainterHandler : IDisposable
     {
         /// <summary>
