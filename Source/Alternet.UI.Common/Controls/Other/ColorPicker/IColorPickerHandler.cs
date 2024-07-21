@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains methods and properties which allow to work with color picker control.
+    /// </summary>
     public interface IColorPickerHandler : IControlHandler
     {
     }
