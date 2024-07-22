@@ -8,7 +8,7 @@ namespace Alternet.UI.Native
         private readonly bool disposeStream;
         private Stream stream;
 
-        public InputStream(Stream stream, bool disposeStream = true)
+        public InputStream(Stream stream, bool disposeStream = false)
         {
             this.stream = stream;
             this.disposeStream = disposeStream;
@@ -16,7 +16,7 @@ namespace Alternet.UI.Native
 
         public long Length => stream.Length;
 
-        public bool IsOK => true; // todo
+        public bool IsOK => true;
 
         public bool IsSeekable => stream.CanSeek;
 

@@ -113,6 +113,15 @@ namespace Alternet.UI
             return result.ToString();
         }
 
+        /// <summary>
+        /// Gets this object properties formatted for debug purposes.
+        /// </summary>
+        /// <returns></returns>
+        public string ToDebugString()
+        {
+            return ToDebugString(this);
+        }
+
         /// <inheritdoc/>
         public virtual object? GetData(string format)
         {
