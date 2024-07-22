@@ -10,8 +10,20 @@ namespace Alternet.UI
     /// <summary>
     ///     XamlGridLengthSerializer is used to persist a GridLength structure in Baml files
     /// </summary>
-    internal class XamlGridLengthSerializer : XamlSerializer
+    internal class XamlGridLengthSerializer
     {
+        // Used to emit Definitions namespace prefix
+        internal const string DefNamespacePrefix = "x";
+
+        // Used to emit Definitions namespace
+        internal const string DefNamespace = "http://schemas.microsoft.com/winfx/2006/xaml";
+
+        // Used to emit the x:Array tag
+        internal const string ArrayTag = "Array";
+
+        // Used to emit the x:Type attribute for Array
+        internal const string ArrayTagTypeAttribute = "Type";
+
         #region Construction
 
         /// <summary>
