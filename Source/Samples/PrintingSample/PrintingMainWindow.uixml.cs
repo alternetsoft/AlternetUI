@@ -5,12 +5,12 @@ using Alternet.UI;
 
 namespace PrintingSample
 {
-    public partial class MainWindow : Window
+    public partial class PrintingMainWindow : Window
     {
         private static readonly Font font = new(FontFamily.GenericSerif, 20);
         private static readonly Pen thickGrayPen = new(Color.Gray, 4);
 
-        public MainWindow()
+        public PrintingMainWindow()
         {
             Icon = App.DefaultIcon;
             InitializeComponent();

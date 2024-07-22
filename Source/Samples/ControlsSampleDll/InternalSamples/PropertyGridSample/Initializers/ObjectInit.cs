@@ -104,13 +104,13 @@ namespace PropertyGridSample
 
                 if (pageNumber == 1)
                 {
-                    PrintingSample.MainWindow.DrawFirstPage(
+                    PrintingSample.PrintingMainWindow.DrawFirstPage(
                         e.DrawingContext,
                         bounds);
                 }
                 else
                 {
-                    PrintingSample.MainWindow.DrawAdditionalPage(e.DrawingContext, pageNumber, bounds);
+                    PrintingSample.PrintingMainWindow.DrawAdditionalPage(e.DrawingContext, pageNumber, bounds);
                 }
 
                 var v = 3;

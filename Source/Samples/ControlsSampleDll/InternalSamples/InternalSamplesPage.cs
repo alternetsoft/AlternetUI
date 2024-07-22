@@ -71,7 +71,7 @@ namespace ControlsSample
             AddIfDebug("Test Page", () => new SkiaDrawingWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
             AddIfDebug("Preview Uixml and other files", () => new PreviewSampleWindow());
-            Add("Printing Sample", () => new PrintingSample.MainWindow());
+            Add("Printing Sample", () => new PrintingSample.PrintingMainWindow());
             Add("Menu Sample", () => new MenuSample.MainWindow());
             Add("Mouse Input", () => new InputSample.MouseInputWindow());
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());

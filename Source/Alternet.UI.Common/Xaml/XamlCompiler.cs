@@ -12,11 +12,6 @@ using XamlX.TypeSystem;
 
 namespace Alternet.UI
 {
-    using XamlCompileResult = (
-        Func<IServiceProvider?, object> create,
-        Action<IServiceProvider?, object> populate,
-        Assembly assembly);
-
     internal class XamlCompiler
     {
         private readonly IXamlTypeSystem _typeSystem;
@@ -28,7 +23,11 @@ namespace Alternet.UI
         {
         }
 
-        public XamlCompileResult Compile(string xaml, string? targetDllFileName = null)
+        public (
+                Func<IServiceProvider?, object> create,
+                Action<IServiceProvider?, object> populate,
+                Assembly assembly)
+            Compile(string xaml, string? targetDllFileName = null)
         {
 #if !NETCOREAPP && !NETSTANDARD
             var da = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString("N")),

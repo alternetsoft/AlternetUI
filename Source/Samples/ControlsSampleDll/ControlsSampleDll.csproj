@@ -412,4 +412,10 @@
     <UIXml Include="..\InputSample\KeyboardInputWindow.uixml"/>
     <UIXml Include="..\InputSample\MouseInputWindow.uixml"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs" />
+    <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"/>
+  </ItemGroup>
+
 </Project>
