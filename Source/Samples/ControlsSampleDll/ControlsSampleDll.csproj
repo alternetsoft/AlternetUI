@@ -402,6 +402,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\DragAndDropSample\DragAndDropWindow.uixml.cs" />
+    <UIXml Include="..\DragAndDropSample\DragAndDropWindow.uixml"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\InputSample\KeyboardInputWindow.uixml.cs" />
     <Compile Include="..\InputSample\MouseInputWindow.uixml.cs" />
     <UIXml Include="..\InputSample\KeyboardInputWindow.uixml"/>
