@@ -418,4 +418,8 @@
     <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\ThreadingSample\ThreadingMainWindow.uixml.cs" />
+    <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml"/>
+  </ItemGroup>
 </Project>

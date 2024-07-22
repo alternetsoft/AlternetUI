@@ -67,7 +67,7 @@ namespace ControlsSample
         private void AddDefaultItems()
         {
             Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
-            Add("Threading Sample", () => new ThreadingSample.MainWindow());
+            Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
             AddIfDebug("Test Page", () => new SkiaDrawingWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.MainWindow());
             AddIfDebug("Preview Uixml and other files", () => new PreviewSampleWindow());
