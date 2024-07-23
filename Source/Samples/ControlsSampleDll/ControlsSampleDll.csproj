@@ -404,4 +404,12 @@
     <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml"
            Link="Links\ThreadingSample\ThreadingMainWindow.uixml"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs"
+             Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs" />
+    <UIXml Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml"
+           Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml"/>
+  </ItemGroup>
+
 </Project>

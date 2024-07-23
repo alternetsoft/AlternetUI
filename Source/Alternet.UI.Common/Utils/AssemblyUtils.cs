@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -237,6 +238,19 @@ namespace Alternet.UI
 
         private static AdvDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
+
+        /// <summary>
+        /// Gets prefix string for the embedded resource.
+        /// </summary>
+        /// <param name="asm">Assembly.</param>
+        /// <returns></returns>
+        public static string GetAssemblyResPrefix(Assembly asm)
+        {
+            var path = asm.Location;
+            var name = Path.GetFileNameWithoutExtension(path);
+            var result = name + ".Resources.";
+            return result;
+        }
 
         /// <summary>
         /// Creates <see cref="Action"/> for the specified <see cref="MethodInfo"/>.

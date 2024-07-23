@@ -216,7 +216,7 @@ namespace ControlsSample
             NameValue<Func<Control>>[] pages =
             {
                 new("Internal", CreateInternalSamplesPage),
-                new("External", CreateAllSamplesPage),
+                /*new("External", CreateAllSamplesPage),*/
             };
 
             return CreateCustomPage(pages);

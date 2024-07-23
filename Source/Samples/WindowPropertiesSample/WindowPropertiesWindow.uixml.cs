@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -6,6 +8,8 @@ namespace WindowPropertiesSample
 {
     public partial class WindowPropertiesWindow : Window
     {
+        private readonly IconSet Icon1;
+        private readonly IconSet Icon2;
         private readonly SetBoundsProperties setBoundsProperties;
 
         private Window? testWindow;
@@ -38,6 +42,26 @@ namespace WindowPropertiesSample
 
             SystemColorsChanged += WindowPropertiesWindow_SystemColorsChanged;
             DpiChanged += WindowPropertiesWindow_DpiChanged;
+
+            Icon1 = new(GetIconUrl("TestIcon1.ico"));
+            Icon2 = new(GetIconUrl("TestIcon2.ico"));
+        }
+
+        internal string GetIconUrl(string name)
+        {
+            var asm = GetType().Assembly;
+            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
+            var result = $"embres:{resName}";
+            return result;
+        }
+
+        internal Stream LoadImage(string name)
+        {
+            var asm = GetType().Assembly;
+            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
+
+            return
+                asm.GetManifestResourceStream(resName) ?? throw new Exception();
         }
 
         private void WindowPropertiesWindow_DpiChanged(object? sender, DpiChangedEventArgs e)
@@ -424,12 +448,16 @@ namespace WindowPropertiesSample
             if (testWindow == null)
                 return;
 
-            var ownedWindow = new OwnedWindow
+            var ownedWindow = new Window
             {
-                Owner = testWindow
+                Owner = testWindow,
+                MinimumSize = (300, 300),
+                IsToolWindow = true,
+                Title = "OwnedWindow",
             };
 
-            ownedWindow.SetLabel("Owned Window #" + testWindow.OwnedWindows.Length);
+            var label = ownedWindow.AddLabel("Owned Window #" + testWindow.OwnedWindows.Length);
+            label.Margin = 10;
             ownedWindow.Show();
         }
 
@@ -442,13 +470,13 @@ namespace WindowPropertiesSample
         private void SetIcon1Button_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
-                testWindow.Icon = Icons.Icon1;
+                testWindow.Icon = Icon1;
         }
 
         private void SetIcon2Button_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
-                testWindow.Icon = Icons.Icon2;
+                testWindow.Icon = Icon2;
         }
 
         private void ClearIconButton_Click(object sender, EventArgs e)
