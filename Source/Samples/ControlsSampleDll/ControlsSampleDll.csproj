@@ -444,4 +444,13 @@
     </UIXml>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\MenuSample\Classes\**\*.cs">
+      <Link>Links\MenuSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\MenuSample\Classes\**\*.uixml">
+      <Link>Links\MenuSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
 </Project>

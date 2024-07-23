@@ -1,6 +1,6 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="MenuSample.MainWindow"
+        x:Class="MenuSample.MenuMainWindow"
         Width="900"
         Height="700"
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Layout="Vertical">

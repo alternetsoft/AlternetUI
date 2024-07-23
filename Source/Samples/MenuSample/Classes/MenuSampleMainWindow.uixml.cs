@@ -5,21 +5,21 @@ using System.Linq;
 
 namespace MenuSample
 {
-    public partial class MainWindow : Window
+    public partial class MenuMainWindow : Window
     {
-        private const string ResPrefix = "embres:ControlsSampleDll.Resources.ToolBarPng.Large.";
-
-        private readonly string Calendar16Url = $"{ResPrefix}Calendar32.png";
         private readonly int dynamicToolbarItemsSeparatorIndex;
         private readonly bool IsDebugBackground = false;
         private readonly ToolBar toolbar = new();
+
+        private string ResPrefix;
+        private string Calendar16Url;
 
         private int newItemIndex = 0;
 
         ObjectUniqueId checkableToolbarItem;
         ObjectUniqueId graphDropDownToolbarItem;
 
-        static MainWindow()
+        static MenuMainWindow()
         {
         }
 
@@ -33,8 +33,12 @@ namespace MenuSample
             SaveCommand?.Execute(null);
         }
 
-        public MainWindow()
+        public MenuMainWindow()
         {
+            ResPrefix = GetImageUrl("ToolBarPng.Large.");
+
+            Calendar16Url = $"{ResPrefix}Calendar32.png";
+
             Icon = App.DefaultIcon;
             Layout = LayoutStyle.Vertical;
 
@@ -94,6 +98,15 @@ namespace MenuSample
 
             eventsListBox.BindApplicationLog();
         }
+
+        internal string GetImageUrl(string name)
+        {
+            var asm = GetType().Assembly;
+            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
+            var result = $"embres:{resName}";
+            return result;
+        }
+
         private StatusBar? GetStatusBar() => StatusBar as StatusBar;
 
         private void StatusAddButton_Click(object? sender, System.EventArgs e)

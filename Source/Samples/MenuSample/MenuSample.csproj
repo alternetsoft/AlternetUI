@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\CommonProject.props" />
+
+  <PropertyGroup>
+    <CommonResourcesPath>..\ControlsSampleDll\Resources</CommonResourcesPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ToolBarPng\Large\*">
+      <Link>Resources\ToolBarPng\Large\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
+

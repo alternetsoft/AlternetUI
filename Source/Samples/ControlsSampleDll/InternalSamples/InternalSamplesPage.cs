@@ -72,7 +72,7 @@ namespace ControlsSample
             Add("Explorer UI Sample", () => new ExplorerUISample.ExplorerMainWindow());
             AddIfDebug("Preview Uixml and other files", () => new PreviewSampleWindow());
             Add("Printing Sample", () => new PrintingSample.PrintingMainWindow());
-            Add("Menu Sample", () => new MenuSample.MainWindow());
+            Add("Menu Sample", () => new MenuSample.MenuMainWindow());
             Add("Mouse Input", () => new InputSample.MouseInputWindow());
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
             Add("Drawing Sample", () => new DrawingSample.MainWindow());
