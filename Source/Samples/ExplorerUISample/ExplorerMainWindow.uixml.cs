@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace ExplorerUISample
 {
-    partial class MainWindow : Window
+    partial class ExplorerMainWindow : Window
     {
         private readonly SplittedPanel mainPanel = new()
         {
@@ -25,7 +25,7 @@ namespace ExplorerUISample
             HasBorder = false,
         };
 
-        public MainWindow()
+        public ExplorerMainWindow()
         {
             Icon = App.DefaultIcon;
 
@@ -99,22 +99,31 @@ namespace ExplorerUISample
             });
         }
 
-        private static ImageList LoadImageList()
+        private ImageList LoadImageList()
         {
             var smallImageList = new ImageList();
 
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = GetType().Assembly;
+            var prefix = AssemblyUtils.GetAssemblyResPrefix(assembly);
             var allResourceNames = assembly.GetManifestResourceNames();
             var allImageResourceNames =
-                allResourceNames.Where(x => x.StartsWith("ControlsSampleDll.Resources.ExplorerUISample.")).ToArray();
+                allResourceNames.Where(x => x.StartsWith($"{prefix}ExplorerUISample.")).ToArray();
 
-            Image LoadImage(string name) =>
-                new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            Image LoadImage(string name) => new Bitmap(assembly.GetManifestResourceStream(name));
 
             foreach (var name in allImageResourceNames)
                 smallImageList.Images.Add(LoadImage(name));
 
             return smallImageList;
         }
+
+        internal string GetImageUrl(string name)
+        {
+            var asm = GetType().Assembly;
+            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
+            var result = $"embres:{resName}";
+            return result;
+        }
+
     }
 }

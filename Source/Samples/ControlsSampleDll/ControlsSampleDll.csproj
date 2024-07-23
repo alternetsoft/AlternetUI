@@ -427,7 +427,12 @@
     <UIXml Include="..\CustomControlsSample\CustomControlsWindow.uixml"
            Link="Links\CustomControlsSample\CustomControlsWindow.uixml"/>
   </ItemGroup>
- 
-  
+
+  <ItemGroup>
+    <Compile Include="..\ExplorerUISample\ExplorerMainWindow.uixml.cs"
+             Link="Links\ExplorerUISample\ExplorerMainWindow.uixml.cs" />
+    <UIXml Include="..\ExplorerUISample\ExplorerMainWindow.uixml"
+           Link="Links\ExplorerUISample\ExplorerMainWindow.uixml"/>
+  </ItemGroup>
 
 </Project>

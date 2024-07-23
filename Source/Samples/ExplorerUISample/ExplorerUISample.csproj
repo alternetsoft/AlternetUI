@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\CommonProject.props" />
+
+  <PropertyGroup>
+    <CommonResourcesPath>..\ControlsSampleDll\Resources</CommonResourcesPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ExplorerUISample\Document_16x.png"
+	Link="Resources\ExplorerUISample\Document_16x.png"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ExplorerUISample\FolderClosed_16x.png"
+	Link="Resources\ExplorerUISample\FolderClosed_16x.png"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ExplorerUISample\Report_16x.png"
+	Link="Resources\ExplorerUISample\Report_16x.png"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ExplorerUISample\ReportImage_16x.png"
+	Link="Resources\ExplorerUISample\ReportImage_16x.png"/>
+  </ItemGroup>
+
+</Project>
