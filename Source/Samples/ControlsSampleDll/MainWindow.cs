@@ -258,7 +258,7 @@ namespace ControlsSample
             {
                 new("Splitter", () => new LayoutPanelPage()),
                 new("Grid", () => new GridPage()),
-                new("Other", () => new LayoutMainWindow()),                
+                new("Other", () => new LayoutSample.LayoutMainControl()),                
             };
 
             return CreateCustomPage(pages);

@@ -16,7 +16,7 @@ namespace LayoutSample
             InitializeComponent();
 
             imageControl.Zoom = 2;
-            imageControl.Image = Image.FromUrl("embres:ControlsSampleDll.Resources.logo128x128.png");
+            imageControl.Image = Image.FromUrl(GetImageUrl("logo128x128.png"));
             imageScrollViewer.Children.Add(imageControl);
 
             InitializeComboBoxes();
@@ -26,6 +26,14 @@ namespace LayoutSample
 
             SetSizeToContent();
             UpdateImageZoom();
+        }
+
+        internal string GetImageUrl(string name)
+        {
+            var asm = GetType().Assembly;
+            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
+            var result = $"embres:{resName}";
+            return result;
         }
 
         private void InitializeStackPanel()
@@ -165,7 +173,7 @@ namespace LayoutSample
 
         private void UpdateImageZoom()
         {
-            if(imageControl != null)
+            if(imageControl != null && zoomSlider!=null)
                 imageControl.Zoom = zoomSlider.Value;
         }
 

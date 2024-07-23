@@ -2,17 +2,13 @@ using System;
 using Alternet.UI;
 using LayoutSample;
 
-namespace ControlsSample
+namespace LayoutSample
 {
-    public partial class LayoutMainWindow : Control
+    public partial class LayoutMainControl : Control
     {
-        public LayoutMainWindow()
+        public LayoutMainControl()
         {
             InitializeComponent();
-
-            MinimumSize = (600, 600);
-
-            SetSizeToContent();
         }
 
         private void ShowGrid10x10Button_Click(object? sender, EventArgs e)

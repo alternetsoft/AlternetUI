@@ -1,6 +1,6 @@
 <Control xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="ControlsSample.LayoutMainWindow">
+        x:Class="LayoutSample.LayoutMainControl">
   <StackPanel Padding="10">
 	  <Button Text="Grid Layout Properties" Name="buttonGridLayoutProperties"
               Margin="0,0,0,10" Click="ShowGridLayoutPropertiesButton_Click" />

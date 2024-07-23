@@ -435,4 +435,13 @@
            Link="Links\ExplorerUISample\ExplorerMainWindow.uixml"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\LayoutSample\Classes\**\*.cs">
+      <Link>Links\LayoutSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\LayoutSample\Classes\**\*.uixml">
+      <Link>Links\LayoutSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
 </Project>
