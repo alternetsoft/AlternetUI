@@ -418,6 +418,16 @@
     <UIXml Include="..\EmployeeFormSample\EmployeeMainWindow.uixml"
            Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml"/>
   </ItemGroup>
-    
+
+  <ItemGroup>
+    <Compile Include="..\CustomControlsSample\Classes\*"
+         />
+    <Compile Include="..\CustomControlsSample\CustomControlsWindow.uixml.cs"
+             Link="Links\CustomControlsSample\CustomControlsWindow.uixml.cs" />
+    <UIXml Include="..\CustomControlsSample\CustomControlsWindow.uixml"
+           Link="Links\CustomControlsSample\CustomControlsWindow.uixml"/>
+  </ItemGroup>
+ 
   
+
 </Project>
