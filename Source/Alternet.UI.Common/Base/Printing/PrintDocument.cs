@@ -250,6 +250,18 @@ namespace Alternet.Drawing.Printing
             base.DisposeManaged();
         }
 
+        /// <inheritdoc/>
+        protected override IPrintDocumentHandler CreateHandler()
+        {
+            var result = PrintingFactory.Handler.CreatePrintDocumentHandler();
+
+            result.PrintPage += NativePrintDocument_PrintPage;
+            result.BeginPrint += NativePrintDocument_BeginPrint;
+            result.EndPrint += NativePrintDocument_EndPrint;
+
+            return result;
+        }
+
         private void NativePrintDocument_EndPrint(object? sender, CancelEventArgs e)
         {
             var ea = new PrintEventArgs();
@@ -279,18 +291,6 @@ namespace Alternet.Drawing.Printing
             var ea = new PrintPageEventArgs(this, currentDrawingContext);
             OnPrintPage(ea);
             e.Cancel = ea.Cancel;
-        }
-
-        /// <inheritdoc/>
-        protected override IPrintDocumentHandler CreateHandler()
-        {
-            var result = PrintingFactory.Handler.CreatePrintDocumentHandler();
-
-            result.PrintPage += NativePrintDocument_PrintPage;
-            result.BeginPrint += NativePrintDocument_BeginPrint;
-            result.EndPrint += NativePrintDocument_EndPrint;
-
-            return result;
         }
     }
 }

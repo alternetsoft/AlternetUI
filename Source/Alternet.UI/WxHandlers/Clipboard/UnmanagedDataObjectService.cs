@@ -38,9 +38,11 @@ namespace Alternet.UI
 
             if (format == DataFormats.Text || data is string)
                 dataObject.SetStringData(format, (string)ClipboardUtils.SetDataTransform(format, data));
-            else if (format == DataFormats.Files || data is FileInfo[])
+            else
+            if (format == DataFormats.Files || data is FileInfo[])
                 dataObject.SetFileNamesData(format, string.Join("|", GetFileNames(data)));
-            else if (format == DataFormats.Bitmap || data is Image)
+            else
+            if (format == DataFormats.Bitmap || data is Image)
             {
                 var image = (Image)data;
                 using var stream = new MemoryStream();

@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ThreadingSample
 {
-    public partial class MainWindow : Window
+    public partial class ThreadingMainWindow : Window
     {
         private static int globalCounter;
 
@@ -15,7 +15,7 @@ namespace ThreadingSample
         private Thread? thread1;
         private Thread? thread2;
 
-        public MainWindow()
+        public ThreadingMainWindow()
         {
             tokenSource = new CancellationTokenSource();
 

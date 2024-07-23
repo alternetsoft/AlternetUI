@@ -69,7 +69,7 @@ namespace Alternet.Drawing
                     return;
                 }
 
-                if (!IsFamilyValid(name))
+                if (!IsFamilyValid(name!))
                 {
                     App.LogError(
                         $"'{name}' font family is not installed on this computer, using default font.");

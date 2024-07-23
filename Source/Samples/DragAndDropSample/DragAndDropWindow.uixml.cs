@@ -72,53 +72,34 @@ namespace DragAndDropSample
         private void DropTarget_DragDrop(object sender, DragEventArgs e)
         {
             e.Effect = GetDropEffect(e.Effect);
-            LogEvent($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
-            LogEvent($"Dropped Data: {GetStringFromDropResultObject(e.Data)}");
+            App.Log($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
+            App.Log($"Dropped Data: {GetStringFromDropResultObject(e.Data)}");
         }
 
         private void DropTarget_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = GetDropEffect(e.Effect);
-            LogSmart($"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
+            App.LogReplace($"DragOver: {e.MouseClientLocation}, {e.Effect}", "DragOver");
         }
 
         private void DropTarget_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = GetDropEffect(e.Effect);
-            LogEvent($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
+            App.Log($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
         }
 
         private void DropTarget_DragLeave(object sender, EventArgs e)
         {
-            LogEvent("DragLeave");
-        }
-
-        void LogEvent(string message)
-        {
-            eventsListBox.Items.Add($"{message}");
-            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
-        }
-
-        void LogSmart(string message, string prefix)
-        {
-            var s = eventsListBox.LastItem?.ToString();
-            var b = s?.StartsWith(prefix) ?? false;
-
-            if (b)
-            {
-                eventsListBox.LastItem = message;
-            }
-            else
-                LogEvent(message);
+            App.Log("DragLeave");
         }
 
         private void PasteButton_Click(object sender, System.EventArgs e)
         {
             var value = Clipboard.GetDataObject();
             if (IsDataObjectSupported(value))
-                LogEvent($"Pasted Data: {GetStringFromDropResultObject((object?)value)}");
+                App.Log($"Pasted Data: {GetStringFromDropResultObject((object?)value)}");
             else
-                LogEvent("Clipboard doesn't contain data in a supported format.");
+                App.Log("Clipboard doesn't contain data in a supported format.");
         }
 
         private void CopyButton_Click(object sender, System.EventArgs e)
@@ -177,7 +158,7 @@ namespace DragAndDropSample
             {
                 var result = DoDragDrop(GetDataObject(), GetAllowedEffectsFlags());
                 var prefix = "DoDragDrop Result";
-                LogSmart($"{prefix}: {result}", prefix);
+                App.LogReplace($"{prefix}: {result}", prefix);
                 isDragging = false;
             }
         }

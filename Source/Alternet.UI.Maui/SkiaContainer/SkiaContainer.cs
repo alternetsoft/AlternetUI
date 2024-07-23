@@ -37,7 +37,7 @@ namespace Alternet.UI
 
         static SkiaContainer()
         {
-            App.Handler ??= new MauiApplicationHandler();
+            InitMauiHandler();
         }
 
         /// <summary>
@@ -119,6 +119,14 @@ namespace Alternet.UI
         public virtual void Log(object? s)
         {
             Alternet.UI.App.Log(s);
+        }
+
+        /// <summary>
+        /// Initializes application handler.
+        /// </summary>
+        protected static void InitMauiHandler()
+        {
+            App.Handler ??= new MauiApplicationHandler();
         }
 
         /// <inheritdoc/>

@@ -18,76 +18,16 @@ namespace Alternet.UI
 
         public TransformerConfiguration Configuration { get; }
 
-        private XamlCompiler(IXamlTypeSystem typeSystem)
-        {
-            _typeSystem = typeSystem;
-            Configuration = new TransformerConfiguration(
-                typeSystem,
-                typeSystem.FindAssembly("Alternet.UI"),
-                new XamlLanguageTypeMappings(typeSystem)
-                {
-                    XmlnsAttributes =
-                    {
-                        typeSystem.GetType("Alternet.UI.XmlnsDefinitionAttribute"),
-                    },
-                    ContentAttributes =
-                    {
-                        typeSystem.GetType("Alternet.UI.ContentAttribute"),
-                    },
-                    UsableDuringInitializationAttributes =
-                    {
-                        typeSystem.GetType("Alternet.UI.UsableDuringInitializationAttribute"),
-                    },
-                    DeferredContentPropertyAttributes =
-                    {
-                        typeSystem.GetType("Alternet.UI.DeferredContentAttribute"),
-                    },
-                    RootObjectProvider = typeSystem.GetType("Alternet.UI.ITestRootObjectProvider"),
-                    UriContextProvider = typeSystem.GetType("Alternet.UI.ITestUriContext"),
-                    ProvideValueTarget = typeSystem.GetType("Alternet.UI.ITestProvideValueTarget"),
-                    ParentStackProvider = typeSystem.GetType("XamlX.Runtime.IXamlParentStackProviderV1"),
-                    XmlNamespaceInfoProvider = typeSystem.GetType("XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1"),
-                });
-        }
-
-        protected object CompileAndRun(string xaml, IServiceProvider? prov = null) => Compile(xaml).create(prov);
-
-#pragma warning disable
-        protected object CompileAndPopulate(string xaml, IServiceProvider? prov = null, object? instance = null)
-#pragma warning restore
-            => Compile(xaml).create(prov);
-
-        private XamlDocument Compile(IXamlTypeBuilder<IXamlILEmitter> builder, IXamlType context, string xaml)
-        {
-            var parsed = XDocumentXamlParser.Parse(xaml);
-            var compiler = new XamlILCompiler(
-                Configuration,
-                new XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult>(),
-                true)
-            {
-                EnableIlVerification = true,
-            };
-            compiler.Transform(parsed);
-            compiler.Compile(
-                parsed,
-                builder,
-                context,
-                "Populate",
-                "Build",
-                "XamlNamespaceInfo",
-                "http://example.com/",
-                null);
-            return parsed;
-        }
-
-        /*static object s_asmLock = new object();*/
-
         public XamlCompiler()
             : this(new SreTypeSystem())
         {
         }
 
-        public (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly) Compile(string xaml, string? targetDllFileName = null)
+        public (
+                Func<IServiceProvider?, object> create,
+                Action<IServiceProvider?, object> populate,
+                Assembly assembly)
+            Compile(string xaml, string? targetDllFileName = null)
         {
 #if !NETCOREAPP && !NETSTANDARD
             var da = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString("N")),
@@ -116,6 +56,75 @@ namespace Alternet.UI
             dm.CreateGlobalFunctions();
 
             return GetCallbacks(created, da);
+        }
+
+        private XamlCompiler(IXamlTypeSystem typeSystem)
+        {
+            _typeSystem = typeSystem;
+            Configuration = new TransformerConfiguration(
+                typeSystem,
+                typeSystem.FindAssembly("Alternet.UI"),
+                new XamlLanguageTypeMappings(typeSystem)
+                {
+                    XmlnsAttributes =
+                    {
+                        typeSystem.FindType(typeof(Alternet.UI.XmlnsDefinitionAttribute)),
+                    },
+                    ContentAttributes =
+                    {
+                        typeSystem.FindType(typeof(Alternet.UI.ContentAttribute)),
+                    },
+                    UsableDuringInitializationAttributes =
+                    {
+                        typeSystem.FindType(typeof(Alternet.UI.UsableDuringInitializationAttribute)),
+                    },
+                    DeferredContentPropertyAttributes =
+                    {
+                        typeSystem.FindType(typeof(Alternet.UI.DeferredContentAttribute)),
+                    },
+                    RootObjectProvider = typeSystem.FindType(typeof(Alternet.UI.ITestRootObjectProvider)),
+                    UriContextProvider = typeSystem.FindType(typeof(Alternet.UI.ITestUriContext)),
+                    ProvideValueTarget = typeSystem.FindType(typeof(Alternet.UI.ITestProvideValueTarget)),
+                    ParentStackProvider = typeSystem.FindType(typeof(XamlX.Runtime.IXamlParentStackProviderV1)),
+                    XmlNamespaceInfoProvider = typeSystem.FindType(typeof(XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1)),
+                });
+        }
+
+        protected object CompileAndRun(string xaml, IServiceProvider? prov = null)
+            => Compile(xaml).create(prov);
+
+#pragma warning disable
+        protected object CompileAndPopulate(
+            string xaml,
+            IServiceProvider? prov = null,
+            object? instance = null)
+#pragma warning restore
+            => Compile(xaml).create(prov);
+
+        private XamlDocument Compile(
+            IXamlTypeBuilder<IXamlILEmitter> builder,
+            IXamlType context,
+            string xaml)
+        {
+            var parsed = XDocumentXamlParser.Parse(xaml);
+            var compiler = new XamlILCompiler(
+                Configuration,
+                new XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult>(),
+                true)
+            {
+                EnableIlVerification = true,
+            };
+            compiler.Transform(parsed);
+            compiler.Compile(
+                parsed,
+                builder,
+                context,
+                "Populate",
+                "Build",
+                "XamlNamespaceInfo",
+                "http://example.com/",
+                null);
+            return parsed;
         }
 
         private (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly)

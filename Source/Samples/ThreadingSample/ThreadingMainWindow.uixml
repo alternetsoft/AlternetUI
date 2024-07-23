@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="ThreadingSample.MainWindow"
-        Title="Threading Sample" StartLocation="CenterScreen" MinWidth="500" MinHeight="300">
+        x:Class="ThreadingSample.ThreadingMainWindow"
+        Title="Threading Sample" StartLocation="CenterScreen" MinWidth="600" MinHeight="600">
   <Control Padding="10" >
     <StackPanel Orientation="Vertical">
       <GroupBox Title="Counter incremented from a separate thread">
@@ -34,6 +34,8 @@
                        HorizontalAlignment="Stretch" Margin="0,0,0,10" />
         </Grid>
       </GroupBox>
+
+	<LogListBox SuggestedHeight="200" Name="logListBox" BoundToApplicationLog="true" VerticalAlignment="Fill"/>
     </StackPanel>
   </Control>
 </Window>
