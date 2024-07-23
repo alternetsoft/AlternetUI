@@ -75,7 +75,7 @@ namespace ControlsSample
             Add("Menu Sample", () => new MenuSample.MenuMainWindow());
             Add("Mouse Input", () => new InputSample.MouseInputWindow());
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
-            Add("Drawing Sample", () => new DrawingSample.MainWindow());
+            Add("Drawing Sample", () => new DrawingSample.DrawingMainWindow());
             Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
             Add("SkiaSharp MegaDemo", () => new SkiaSharpExamplesWindow());
             Add("Paint Sample", () => new PaintSample.PaintMainWindow());

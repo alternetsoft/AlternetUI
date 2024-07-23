@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace DrawingSample
 {
-    public partial class MainWindow : Window
+    public partial class DrawingMainWindow : Window
     {
         private readonly TabControl tabControl = new();
         private Control? selectedPage;
 
-        public MainWindow()
+        public DrawingMainWindow()
         {
             Padding = 5;
             tabControl.Parent = this;

@@ -453,4 +453,13 @@
     </UIXml>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\DrawingSample\Classes\**\*.cs">
+      <Link>Links\DrawingSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\DrawingSample\Classes\**\*.uixml">
+      <Link>Links\DrawingSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
 </Project>

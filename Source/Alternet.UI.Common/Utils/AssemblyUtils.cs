@@ -240,6 +240,21 @@ namespace Alternet.UI
         private static int resNameToAssemblySavedLength = 0;
 
         /// <summary>
+        /// Gets image url for loading image resource from the specified assembly using
+        /// "embres" protocol.
+        /// </summary>
+        /// <param name="asm">Assembly to load image from.</param>
+        /// <param name="name">Image name of relative path.
+        /// Slash characters must be changed to '.'. Example: "ToolBarPng.Large.Calendar32.png".</param>
+        /// <returns></returns>
+        public static string GetImageUrlInAssembly(Assembly asm, string name)
+        {
+            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
+            var result = $"embres:{resName}";
+            return result;
+        }
+
+        /// <summary>
         /// Gets prefix string for the embedded resource.
         /// </summary>
         /// <param name="asm">Assembly.</param>
