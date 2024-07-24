@@ -17,7 +17,6 @@ namespace PropertyGridSample
 
             var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
 
-            //Padding = new(10,0,0,0);
             SuggestedSize = new(300, 400);
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
@@ -52,7 +51,7 @@ namespace PropertyGridSample
             r.EndBold();
             r.NewLine();
 
-            var logoImage = Image.FromUrl("embres:ControlsSampleDll.Resources.logo128x128.png");
+            var logoImage = Image.FromUrl(ObjectInit.ResPrefixImage);
             r.WriteImage(logoImage);
 
             r.NewLine();

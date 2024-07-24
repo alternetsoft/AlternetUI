@@ -471,4 +471,13 @@
     </UIXml>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\PropertyGridSample\Classes\**\*.cs">
+      <Link>Links\PropertyGridSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\PropertyGridSample\Classes\**\*.uixml">
+      <Link>Links\PropertyGridSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
 </Project>

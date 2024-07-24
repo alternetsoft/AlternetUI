@@ -33,11 +33,13 @@ namespace PropertyGridSample
 
         public static readonly Dictionary<Type, Action<Object>> Actions = new();
 
-        internal static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
+        internal static string AsmResPrefix
+            = AssemblyUtils.GetAssemblyResPrefix(typeof(ObjectInit).Assembly);
+        internal static string UrlResPrefix
+            = AssemblyUtils.GetImageUrlInAssembly(typeof(ObjectInit).Assembly, string.Empty);
+        internal static string ResPrefixImage = $"{UrlResPrefix}logo128x128.png";
 
-        private const string ResPrefix =
-            "embres:ControlsSampleDll.Resources.";
-        private const string ResPrefixImage = $"{ResPrefix}logo128x128.png";
+        internal static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
 
         private static int newItemIndex = 0;
 
@@ -110,7 +112,10 @@ namespace PropertyGridSample
                 }
                 else
                 {
-                    PrintingSample.PrintingMainWindow.DrawAdditionalPage(e.DrawingContext, pageNumber, bounds);
+                    PrintingSample.PrintingMainWindow.DrawAdditionalPage(
+                        e.DrawingContext,
+                        pageNumber,
+                        bounds);
                 }
 
                 var v = 3;
@@ -198,9 +203,8 @@ namespace PropertyGridSample
                 border.SuggestedSize = defaultListSize;
                 SetBackgrounds(border);
 
-                border.Layout = LayoutStyle.None;
+                border.Layout = LayoutStyle.Vertical;
                 Button button = new();
-                button.Location = (10, 10);
                 button.Text = "Click me";
                 button.Parent = border;
                 button.Click += Button_Click;
@@ -291,7 +295,8 @@ namespace PropertyGridSample
         {
             static Image LoadImage(string stateName)
             {
-                return new Bitmap($"embres:ControlsSampleDll.Resources.ButtonImages.ButtonImage{stateName}.png");
+                var s = $"{UrlResPrefix}ButtonImages.ButtonImage{stateName}.png";
+                return new Bitmap(s);
             }
 
             var normal = LoadImage("Normal");
@@ -530,7 +535,7 @@ namespace PropertyGridSample
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
             var allImageResourceNames =
-                allResourceNames.Where(x => x.StartsWith("ControlsSampleDll.Resources.ImageListIcons."));
+                allResourceNames.Where(x => x.StartsWith(AsmResPrefix + "ImageListIcons."));
             var smallImageResourceNames =
                 allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
             var largeImageResourceNames =

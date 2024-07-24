@@ -11,10 +11,10 @@ namespace PropertyGridSample
     {
         public static void InitVListBox(object control)
         {
-            const string ResPrefix = "embres:ControlsSampleDll.Resources.ToolBarPng.Large.";
-            string CalendarUrl = $"{ResPrefix}Calendar32.png";
-            string PencilUrl = $"{ResPrefix}Pencil32.png";
-            string PhotoUrl = $"{ResPrefix}Photo32.png";
+            string ResPrefix2 = $"{UrlResPrefix}ToolBarPng.Large.";
+            string CalendarUrl = $"{ResPrefix2}Calendar32.png";
+            string PencilUrl = $"{ResPrefix2}Pencil32.png";
+            string PhotoUrl = $"{ResPrefix2}Photo32.png";
 
             if (control is not VListBox listBox)
                 return;

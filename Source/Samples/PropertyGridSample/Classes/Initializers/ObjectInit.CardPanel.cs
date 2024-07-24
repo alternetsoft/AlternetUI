@@ -33,26 +33,5 @@ namespace PropertyGridSample
             control.Add("card 2", CreatePanelWithButtons("Card 2"));
             control.SelectCard(0);
         }
-
-        /*public static void InitCardPanelHeader(object c)
-        {
-            if (c is not CardPanelHeader control)
-                return;
-            control.SuggestedSize = defaultListSize;
-            control.UseTabBackgroundColor = true;
-            control.Add("tab 1");
-            control.Add("tab 2");
-            control.SelectFirstTab();
-
-            control.TabClick += Control_TabClick;
-
-            static void Control_TabClick(object? sender, EventArgs e)
-            {
-                if (sender is not CardPanelHeader control)
-                    return;
-                var text = control.SelectedTab?.HeaderButton?.Text;
-                Application.Log($"TabClick: {text}");
-            }
-        }*/
     }
 }

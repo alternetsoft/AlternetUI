@@ -245,7 +245,7 @@ namespace PropertyGridSample
                 propValue = color.ToDebugString();
             propValue ??= "NULL";
             string propName = PropGrid.EventPropName;
-            string s = $"Event: {name}. PropName: <{propName}>. Value: <{propValue}>";
+            string s = $"Event: {name}. {propName} = {propValue}";
 
             if (logAlways)
                 App.Log(s);
