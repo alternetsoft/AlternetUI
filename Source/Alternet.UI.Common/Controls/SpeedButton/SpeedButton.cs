@@ -543,6 +543,13 @@ namespace Alternet.UI
             set => base.Layout = value;
         }
 
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
         /// <summary>
         /// Gets inner <see cref="PictureBox"/> control.
         /// </summary>

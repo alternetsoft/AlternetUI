@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// Gets or sets selected card.
         /// </summary>
         [Browsable(false)]
-        public CardPanelItem? SelectedCard
+        public virtual CardPanelItem? SelectedCard
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected card index.
         /// </summary>
-        public int? SelectedCardIndex
+        public virtual int? SelectedCardIndex
         {
             get
             {
@@ -94,6 +94,13 @@ namespace Alternet.UI
                     return;
                 SelectCard(value);
             }
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         [Browsable(false)]

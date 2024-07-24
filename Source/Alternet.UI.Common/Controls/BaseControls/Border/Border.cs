@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// You can specify different widths for the left, top, bottom and right
         /// edges of the border.
         /// </remarks>
-        public Thickness BorderWidth
+        public virtual Thickness BorderWidth
         {
             get => Normal.Width;
             set
@@ -77,7 +77,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.UniformCornerRadius"/>
-        public double? UniformCornerRadius
+        public virtual double? UniformCornerRadius
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.UniformRadiusIsPercent"/>
-        public bool? UniformRadiusIsPercent
+        public virtual bool? UniformRadiusIsPercent
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Alternet.UI
 #else
         [Browsable(false)]
 #endif
-        public double? UniformBorderWidth
+        public virtual double? UniformBorderWidth
         {
             get
             {
@@ -162,7 +162,7 @@ namespace Alternet.UI
         /// If this property is null, <see cref="BorderSettings.DefaultColor"/> is used
         /// for the border color.
         /// </remarks>
-        public Color? BorderColor
+        public virtual Color? BorderColor
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Alternet.UI
         /// Gets or sets individual border side settings.
         /// </summary>
         [Browsable(false)]
-        public BorderSettings Normal
+        public virtual BorderSettings Normal
         {
             get
             {
@@ -210,6 +210,13 @@ namespace Alternet.UI
         {
             get => base.Text;
             set => base.Text = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         /// <summary>

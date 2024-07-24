@@ -135,18 +135,19 @@ namespace Alternet.UI
             }
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Gets <see cref="Graphics"/> for the <see cref="Image"/> on which
         /// you can paint.
         /// </summary>
         [Browsable(false)]
-        public virtual Graphics? Canvas
+        public virtual Graphics Canvas
         {
             get
             {
-                return Image?.GetDrawingContext();
+                return Image?.GetDrawingContext()
+                    ?? GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
             }
-        }*/
+        }
 
         /// <summary>
         /// Gets or sets whether to center image vertically in the control rectangle.
@@ -234,7 +235,7 @@ namespace Alternet.UI
         /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
         /// </summary>
         [Browsable(false)]
-        public ImageSet? ImageSet
+        public virtual ImageSet? ImageSet
         {
             get
             {
@@ -257,7 +258,7 @@ namespace Alternet.UI
         /// Gets or sets the <see cref="ImageSet"/> that is displayed by <see cref="PictureBox"/>.
         /// </summary>
         [Browsable(false)]
-        public ImageSet? DisabledImageSet
+        public virtual ImageSet? DisabledImageSet
         {
             get
             {
@@ -287,6 +288,13 @@ namespace Alternet.UI
                 base.Padding = value;
                 Invalidate();
             }
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         internal ImagePrimitivePainter Primitive => primitive;

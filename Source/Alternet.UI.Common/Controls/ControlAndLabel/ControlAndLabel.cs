@@ -148,6 +148,13 @@ namespace Alternet.UI
 
         Control IControlAndLabel.MainControl => MainControl;
 
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
         /// <inheritdoc/>
         public override IEnumerable GetErrors(string? propertyName)
         {

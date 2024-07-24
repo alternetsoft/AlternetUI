@@ -1,4 +1,6 @@
-﻿using Alternet.Drawing;
+﻿using System.ComponentModel;
+
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -16,6 +18,20 @@ namespace Alternet.UI
     {
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.LayoutPanel;
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
 
         internal static void SetAnchor(Control control, AnchorStyles value)
         {

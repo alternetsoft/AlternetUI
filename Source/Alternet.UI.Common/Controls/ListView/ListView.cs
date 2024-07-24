@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// Gets or sets a boolean value which specifies whether the column header is visible in
         /// <see cref="ListViewView.Details"/> view.
         /// </summary>
-        public bool ColumnHeaderVisible
+        public virtual bool ColumnHeaderVisible
         {
             get => Handler.ColumnHeaderVisible;
             set => Handler.ColumnHeaderVisible = value;
@@ -124,7 +124,7 @@ namespace Alternet.UI
         /// <value><see langword="true"/> if the user can edit the labels of items at run time;
         /// otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.</value>
-        public bool AllowLabelEdit
+        public virtual bool AllowLabelEdit
         {
             get => Handler.AllowLabelEdit;
             set => Handler.AllowLabelEdit = value;
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the grid line display mode for this list view.
         /// </summary>
-        public ListViewGridLinesDisplayMode GridLinesDisplayMode
+        public virtual ListViewGridLinesDisplayMode GridLinesDisplayMode
         {
             get => Handler.GridLinesDisplayMode;
             set => Handler.GridLinesDisplayMode = value;
@@ -177,7 +177,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public IReadOnlyList<long> SelectedIndices
+        public virtual IReadOnlyList<long> SelectedIndices
         {
             get
             {
@@ -234,7 +234,7 @@ namespace Alternet.UI
         /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than
         /// 0 or greater than or equal to the item count.</exception>
         [Browsable(false)]
-        public long? SelectedIndex
+        public virtual long? SelectedIndex
         {
             get
             {
@@ -281,7 +281,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public ListViewItem? SelectedItem
+        public virtual ListViewItem? SelectedItem
         {
             get
             {
@@ -359,7 +359,7 @@ namespace Alternet.UI
         /// in the <see cref="ListView"/>
         /// a user can select at one time.
         /// </remarks>
-        public ListViewSelectionMode SelectionMode
+        public virtual ListViewSelectionMode SelectionMode
         {
             get
             {
@@ -405,7 +405,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>One of the <see cref="ListViewView"/> values. The default is
         /// <see cref="ListViewView.List"/>.</value>
-        public ListViewView View
+        public virtual ListViewView View
         {
             get
             {
@@ -466,7 +466,7 @@ namespace Alternet.UI
         /// use the <see cref="LargeImageList"/> property.
         /// </para>
         /// </remarks>
-        public ImageList? SmallImageList
+        public virtual ImageList? SmallImageList
         {
             get
             {
@@ -529,7 +529,7 @@ namespace Alternet.UI
         /// use the <see cref="SmallImageList"/> property.
         /// </para>
         /// </remarks>
-        public ImageList? LargeImageList
+        public virtual ImageList? LargeImageList
         {
             get
             {
@@ -590,6 +590,13 @@ namespace Alternet.UI
             {
                 Handler.HasBorder = value;
             }
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         [Browsable(false)]

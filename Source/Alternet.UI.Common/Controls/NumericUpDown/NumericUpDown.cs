@@ -62,7 +62,7 @@ namespace Alternet.UI
         /// <see cref="Maximum"/> property or the value specified is
         /// less than the value of the <see cref="Minimum"/> property.
         /// </exception>
-        public int Value
+        public virtual int Value
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Alternet.UI
         /// <see cref="Minimum"/> value, the <see cref="Value"/> property
         /// is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
-        public int Minimum
+        public virtual int Minimum
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Alternet.UI
         ///  <see cref="Maximum"/> value, the <see cref="Value"/> property
         ///  value is set equal to the <see cref="Maximum"/> value.
         /// </remarks>
-        public int Maximum
+        public virtual int Maximum
         {
             get
             {
@@ -158,6 +158,20 @@ namespace Alternet.UI
         {
             get => Handler.HasBorder;
             set => Handler.HasBorder = value;
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         [Browsable(false)]

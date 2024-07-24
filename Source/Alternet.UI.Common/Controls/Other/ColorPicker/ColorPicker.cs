@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the value assigned to the color picker as a selected color.
         /// </summary>
-        public Color Value
+        public virtual Color Value
         {
             get
             {
@@ -50,6 +50,20 @@ namespace Alternet.UI
                 color = value;
                 RaiseValueChanged(EventArgs.Empty);
             }
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
         }
 
         [Browsable(false)]
