@@ -420,12 +420,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\CustomControlsSample\Classes\*"
-         />
-    <Compile Include="..\CustomControlsSample\CustomControlsWindow.uixml.cs"
-             Link="Links\CustomControlsSample\CustomControlsWindow.uixml.cs" />
-    <UIXml Include="..\CustomControlsSample\CustomControlsWindow.uixml"
-           Link="Links\CustomControlsSample\CustomControlsWindow.uixml"/>
+  <Compile Include="..\CustomControlsSample\Classes\**\*.cs">
+    <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+  </Compile>
+  <UIXml Include="..\CustomControlsSample\Classes\**\*.uixml">
+    <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+  </UIXml>
   </ItemGroup>
 
   <ItemGroup>
