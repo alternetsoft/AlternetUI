@@ -173,8 +173,9 @@ namespace PaintSample
 
             foreach (var tool in tools.AllTools)
             {
-                var url = "embres:ControlsSampleDll.Resources.ToolIcons." +
-                    tool.GetType().Name.Replace("Tool", "") + ".svg";
+                var url = AssemblyUtils.GetImageUrlInAssembly(
+                    GetType().Assembly,
+                    "ToolIcons." + tool.GetType().Name.Replace("Tool", "") + ".svg");
                 var (normalImage, disabledImage) =
                     ToolBarUtils.GetNormalAndDisabledSvg(url, this);
                 var buttonId = toolbar.AddSpeedBtn(tool.Name, normalImage, disabledImage);
@@ -205,20 +206,6 @@ namespace PaintSample
                 if (tool == Tools.CurrentTool)
                     ClickMe();
             }
-        }
-
-        internal (ImageSet Normal, ImageSet Disabled) LoadToolImage(Tool tool)
-        {
-            using var stream = typeof(PaintMainWindow).Assembly.GetManifestResourceStream(
-                "ControlsSampleDll.Resources.ToolIcons."
-                + tool.GetType().Name.Replace("Tool", "") + ".svg");
-#pragma warning disable
-            if (stream == null)
-                throw new InvalidOperationException();
-#pragma warning restore
-
-            var image = SvgUtils.GetNormalAndDisabledSvg(stream, 32, this);
-            return image;
         }
 
         void UpdateTitle()
@@ -633,16 +620,9 @@ namespace PaintSample
             RectD r1 = (location.X, location.Y, measure.Width, measure.Height);
             RectD r2 = (location.X, location.Y, size.Width, size.Height);
 
-            /*dc.DrawRectangle(Color.DarkRed.AsPen, r1);*/
             DrawingUtils.FillRectangleBorder(dc, Color.DarkRed.AsBrush, r1, 1);
 
-            /*dc.DrawRectangle(Color.Red.AsPen, r2);*/
             DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
-
-            /*var descent = Math.Abs(font.SkiaMetrics.Descent);
-
-            var y = location.Y - descent + size.Height;
-            dc.DrawLine(Color.RosyBrown.AsPen, (location.X, y), (location.X + size.Width, y));*/
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 
@@ -654,20 +634,6 @@ namespace PaintSample
             dc.SetClippingRegion((location.X, location.Y, size.Width / 2, size.Height));
             dc.DrawText(s, location, font, Color.Green, Color.Empty);
             dc.DestroyClippingRegion();
-
-            /*var size1 = dc.MeasureText("x", Font.Default);
-
-            var size2 = dc.GetTextExtent(
-                "x",
-                Font.Default,
-                out _,
-                out _,
-                null);*/
-
-            // <param name="descent">Dimension from the baseline of the font to
-            // the bottom of the descender (the size of the tail below the baseline).</param>
-            // <param name="externalLeading">Any extra vertical space added to the
-            // font by the font designer (inter-line interval).</param>
         }
     }
 }

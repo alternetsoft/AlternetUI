@@ -462,4 +462,13 @@
     </UIXml>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\PaintSample\Classes\**\*.cs">
+      <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\PaintSample\Classes\**\*.uixml">
+      <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
 </Project>
