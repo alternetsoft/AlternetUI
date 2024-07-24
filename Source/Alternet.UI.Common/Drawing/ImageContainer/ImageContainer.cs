@@ -82,9 +82,9 @@ namespace Alternet.Drawing
         /// Adds image.
         /// </summary>
         /// <param name="image">Image to add.</param>
-        public virtual bool Add(Image image)
+        public virtual bool Add(Image? image)
         {
-            if (IsReadOnly)
+            if (IsReadOnly || image is null)
                 return false;
             Images.Add(image);
             return true;
@@ -94,9 +94,9 @@ namespace Alternet.Drawing
         /// Adds image from the stream.
         /// </summary>
         /// <param name="stream">Stream with image.</param>
-        public virtual bool Add(Stream stream)
+        public virtual bool Add(Stream? stream)
         {
-            if (IsReadOnly)
+            if (IsReadOnly || stream is null)
                 return false;
             var image = new Bitmap(stream);
             return Add(image);

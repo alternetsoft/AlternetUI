@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\CommonProject.props" />
+
+  <PropertyGroup>
+    <CommonResourcesPath>..\ControlsSampleDll\Resources</CommonResourcesPath>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ToolIcons\Airbrush.svg" Link="Resources\ToolIcons\Airbrush.svg"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ToolIcons\Eraser.svg" Link="Resources\ToolIcons\Eraser.svg"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ToolIcons\FloodFill.svg" Link="Resources\ToolIcons\FloodFill.svg"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ToolIcons\Pen.svg" Link="Resources\ToolIcons\Pen.svg"/>
+  </ItemGroup>
+
+</Project>

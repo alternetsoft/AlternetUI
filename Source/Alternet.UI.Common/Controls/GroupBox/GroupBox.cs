@@ -32,6 +32,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
         internal new IGroupBoxHandler Handler => (IGroupBoxHandler)base.Handler;
 
         /// <summary>

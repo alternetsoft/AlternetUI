@@ -30,6 +30,13 @@ namespace Alternet.UI
 
         const bool ShowGridLinesDefaultValue = false;
 
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
         /// <summary>
         /// <inheritdoc />
         /// </summary>

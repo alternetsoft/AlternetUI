@@ -182,7 +182,7 @@ namespace Alternet.UI
         /// item image and text.
         /// </summary>
         [Browsable(true)]
-        public ImageToText ImageToText
+        public virtual ImageToText ImageToText
         {
             get => imageToText;
             set
@@ -204,7 +204,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets toolbar item size.
         /// </summary>
-        public double ItemSize
+        public virtual Coord ItemSize
         {
             get
             {
@@ -324,7 +324,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to display text in the buttons.
         /// </summary>
-        public bool TextVisible
+        public virtual bool TextVisible
         {
             get
             {
@@ -353,7 +353,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to display images in the buttons.
         /// </summary>
-        public bool ImageVisible
+        public virtual bool ImageVisible
         {
             get
             {
@@ -374,6 +374,13 @@ namespace Alternet.UI
                     }
                 });
             }
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         [Browsable(false)]

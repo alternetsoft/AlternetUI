@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\CommonProject.props" />
+
+  <PropertyGroup>
+    <CommonResourcesPath>..\ControlsSampleDll\Resources</CommonResourcesPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(CommonResourcesPath)\Logo.png" Link="Resources\Logo.png"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\Leaves.jpg" Link="Resources\Leaves.jpg"/>
+  </ItemGroup>
+
+</Project>

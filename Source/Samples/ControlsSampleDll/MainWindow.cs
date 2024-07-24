@@ -216,7 +216,7 @@ namespace ControlsSample
             NameValue<Func<Control>>[] pages =
             {
                 new("Internal", CreateInternalSamplesPage),
-                new("External", CreateAllSamplesPage),
+                /*new("External", CreateAllSamplesPage),*/
             };
 
             return CreateCustomPage(pages);
@@ -258,7 +258,7 @@ namespace ControlsSample
             {
                 new("Splitter", () => new LayoutPanelPage()),
                 new("Grid", () => new GridPage()),
-                new("Other", () => new LayoutMainWindow()),                
+                new("Other", () => new LayoutSample.LayoutMainControl()),                
             };
 
             return CreateCustomPage(pages);

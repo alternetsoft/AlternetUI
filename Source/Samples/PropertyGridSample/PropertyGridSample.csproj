@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\CommonProject.props" />
+
+  <PropertyGroup>
+    <CommonResourcesPath>..\ControlsSampleDll\Resources</CommonResourcesPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs"
+             Link="Links\PrintingSample\PrintingMainWindow.uixml.cs"/>
+    <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"
+           Link="Links\PrintingSample\PrintingMainWindow.uixml"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(CommonResourcesPath)\logo128x128.png" Link="Resources\logo128x128.png"/>
+
+	<EmbeddedResource Include="$(CommonResourcesPath)\ButtonImages\**\*.*">
+		<Link>Resources\ButtonImages\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+	</EmbeddedResource>
+
+	<EmbeddedResource Include="$(CommonResourcesPath)\ImageListIcons\**\*.*">
+		<Link>Resources\ImageListIcons\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+	</EmbeddedResource>
+
+	<EmbeddedResource Include="$(CommonResourcesPath)\ToolBarPng\**\*.*">
+		<Link>Resources\ToolBarPng\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+	</EmbeddedResource>
+
+
+  </ItemGroup>
+
+</Project>

@@ -373,6 +373,7 @@ namespace Alternet.UI
         /// <see cref="ContentPadding"/> is not included in the result. This function
         /// returns client area of the control, except tab header buttons area.
         /// </remarks>
+        [Browsable(false)]
         public virtual RectD DisplayRectangle
         {
             get
@@ -437,6 +438,20 @@ namespace Alternet.UI
             set
             {
             }
+        }
+
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         [Browsable(false)]

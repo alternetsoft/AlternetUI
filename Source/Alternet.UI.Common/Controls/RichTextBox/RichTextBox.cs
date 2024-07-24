@@ -147,6 +147,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
         /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
         /// </summary>
+        [Browsable(false)]
         public virtual ModifierKeys? AutoUrlModifiers { get; set; }
 
         /// <summary>
@@ -254,6 +255,13 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.RichTextBox;
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
 
         [Browsable(false)]
         internal new IRichTextBoxHandler Handler

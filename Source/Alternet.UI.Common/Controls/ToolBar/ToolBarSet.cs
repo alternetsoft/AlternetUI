@@ -89,6 +89,13 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        [Browsable(false)]
         internal new bool IsBold
         {
             get => base.IsBold;

@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the URL associated with the hyperlink.
         /// </summary>
-        public string Url
+        public virtual string Url
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// over the control.
         /// </summary>
         [Browsable(false)]
-        public Color HoverColor
+        public virtual Color HoverColor
         {
             get => Handler.HoverColor;
             set => Handler.HoverColor = value;
@@ -101,7 +101,7 @@ namespace Alternet.UI
         /// not over the control.
         /// </summary>
         [Browsable(false)]
-        public Color NormalColor
+        public virtual Color NormalColor
         {
             get => Handler.NormalColor;
             set => Handler.NormalColor = value;
@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// before (i.e. the link has been visited).
         /// </summary>
         [Browsable(false)]
-        public Color VisitedColor
+        public virtual Color VisitedColor
         {
             get => Handler.VisitedColor;
             set => Handler.VisitedColor = value;
@@ -124,10 +124,17 @@ namespace Alternet.UI
         /// the user at least one time.
         /// </summary>
         [Browsable(false)]
-        public bool Visited
+        public virtual bool Visited
         {
             get => Handler.Visited;
             set => Handler.Visited = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         [Browsable(false)]

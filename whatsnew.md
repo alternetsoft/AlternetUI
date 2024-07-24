@@ -1,3 +1,9 @@
+# 0.9.616 (2024 July 24)
+
+- Returned sample projects.
+- Clipboard: Fixed exception when image is copied to clipboard.
+- XamlCompiler: Fixed references from str to typeof.
+
 # 0.9.615 (2024 July 21)
 
 - Added xml documentation.

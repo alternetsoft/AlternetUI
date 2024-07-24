@@ -15,6 +15,13 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Panel;
 
         [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        [Browsable(false)]
         internal new string Text
         {
             get => base.Text;

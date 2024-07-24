@@ -48,27 +48,36 @@ namespace Alternet.UI.PublicSourceGenerator.Generators
             }
         }
 
-        public void RemoveProjectReference(string projectName)
+        public void RemoveProjectReference(string projectName, bool debug = false)
         {
-            XElement? groupContainingFoundElement = null;
-            
-            foreach (var group in document.Descendants("ItemGroup"))
+            if(debug)
             {
-                var projectReference = group.Descendants("ProjectReference").Where(
-                    x => x.Attribute("Include")?.Value.EndsWith(projectName) ?? false).SingleOrDefault();
-                if (projectReference != null)
-                {
-                    groupContainingFoundElement = group;
-                    projectReference.Remove();
-                    break;
-                }
             }
 
-            if (groupContainingFoundElement == null)
-                return;
+            XNamespace ns = "http://schemas.microsoft.com/developer/msbuild/2003";
 
-            if (!groupContainingFoundElement.Elements().Any())
-                groupContainingFoundElement.Remove();
+            foreach (var group in document.Root!.Elements())
+            {
+                if (group.Name != "ItemGroup" && group.Name != (ns + "ItemGroup"))
+                    continue;
+
+                var references = group.Descendants("ProjectReference").ToArray();
+
+                if(references.Length == 0)
+                    references = group.Descendants(ns + "ProjectReference").ToArray();
+
+                foreach (var reference in references)
+                {
+                    var attr = reference.Attribute("Include");
+                    if (attr == null)
+                        continue;
+                    var attrValue = attr.Value;
+                    if (!attrValue.EndsWith(projectName))
+                        continue;
+                    reference.Remove();
+                    return;
+                }
+            }
         }
 
         public void SetPackageReferenceVersion(string name, string version)

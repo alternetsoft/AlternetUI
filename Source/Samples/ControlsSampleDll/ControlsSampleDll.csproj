@@ -139,58 +139,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Animation\Alternet.gif" />
-    <EmbeddedResource Include="Resources\Animation\HourGlass.gif" />
-    <EmbeddedResource Include="Resources\Animation\Plant.gif" />
-    <EmbeddedResource Include="Resources\Animation\Spinner.gif" />
-    <EmbeddedResource Include="Resources\Backgrounds\blue-textured-background1.jpg" />
-    <EmbeddedResource Include="Resources\Backgrounds\textured-background2.jpg" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.png" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageDisabled.svg" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageFocused.png" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageFocused.svg" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageHovered.png" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageHovered.svg" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageNormal.png" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImageNormal.svg" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.png" />
-    <EmbeddedResource Include="Resources\ButtonImages\ButtonImagePressed.svg" />
+    <EmbeddedResource Include="Resources\Animation\*" />
+    <EmbeddedResource Include="Resources\Backgrounds\*" />
+    <EmbeddedResource Include="Resources\ButtonImages\*" />
     <EmbeddedResource Include="Resources\ExplorerUISample\Document_16x.png" />
     <EmbeddedResource Include="Resources\EmployeePhoto.jpg" />
     <EmbeddedResource Include="Resources\ExplorerUISample\FolderClosed_16x.png" />
     <EmbeddedResource Include="Resources\icon-48x48.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Large\Calendar32.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Large\LineGraph32.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Large\Pencil32.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Large\Photo32.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Small\Calendar16.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Small\LineGraph16.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Small\Pencil16.png" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Small\Photo16.png" />
+    <EmbeddedResource Include="Resources\ImageListIcons\Large\*" />
+    <EmbeddedResource Include="Resources\ImageListIcons\Small\*" />
     <EmbeddedResource Include="Resources\Leaves.jpg" />
     <EmbeddedResource Include="Resources\logo128x128.png" />
     <EmbeddedResource Include="Resources\Logo.png" />
-    <EmbeddedResource Include="Resources\Logo16x16.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Logo16x16.png"/>
     <EmbeddedResource Include="Resources\ExplorerUISample\ReportImage_16x.png" />
     <EmbeddedResource Include="Resources\ExplorerUISample\Report_16x.png" />
     <EmbeddedResource Include="Resources\NinePatchImages\NinePatch1.png" />
     <EmbeddedResource Include="Resources\NinePatchImages\NinePatch2.png" />
     <EmbeddedResource Include="Resources\TestIcon1.ico" />
     <EmbeddedResource Include="Resources\TestIcon2.ico" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Large\Calendar32.png" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Large\LineGraph32.png" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Large\Pencil32.png" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Large\Photo32.png" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Small\Calendar16.png" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Small\LineGraph16.png" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Small\Pencil16.png" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Small\Photo16.png" />
-    <EmbeddedResource Include="Resources\ToolIcons\Airbrush.svg" />
-    <EmbeddedResource Include="Resources\ToolIcons\Eraser.svg" />
-    <EmbeddedResource Include="Resources\ToolIcons\FloodFill.svg" />
-    <EmbeddedResource Include="Resources\ToolIcons\Pen.svg" />
+    <EmbeddedResource Include="Resources\ToolBarPng\Large\*" />
+    <EmbeddedResource Include="Resources\ToolBarPng\Small\*" />
+    <EmbeddedResource Include="Resources\ToolIcons\*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -328,7 +298,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+    <None Include="..\..\.editorconfig" Link=".editorconfig" Condition="Exists('..\..\.editorconfig')"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -397,29 +367,117 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\CommonDialogsSample\CommonDialogsWindow.uixml.cs" />
-    <UIXml Include="..\CommonDialogsSample\CommonDialogsWindow.uixml"/>
+    <Compile Include="..\CommonDialogsSample\CommonDialogsWindow.uixml.cs"
+             Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml.cs"/>
+    <UIXml Include="..\CommonDialogsSample\CommonDialogsWindow.uixml"
+           Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\DragAndDropSample\DragAndDropWindow.uixml.cs" />
-    <UIXml Include="..\DragAndDropSample\DragAndDropWindow.uixml"/>
+    <Compile Include="..\DragAndDropSample\DragAndDropWindow.uixml.cs"
+             Link="Links\DragAndDropSample\DragAndDropWindow.uixml.cs"/>
+    <UIXml Include="..\DragAndDropSample\DragAndDropWindow.uixml"
+           Link="Links\DragAndDropSample\DragAndDropWindow.uixml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\InputSample\KeyboardInputWindow.uixml.cs" />
-    <Compile Include="..\InputSample\MouseInputWindow.uixml.cs" />
-    <UIXml Include="..\InputSample\KeyboardInputWindow.uixml"/>
-    <UIXml Include="..\InputSample\MouseInputWindow.uixml"/>
+    <Compile Include="..\InputSample\KeyboardInputWindow.uixml.cs"
+             Link="Links\InputSample\KeyboardInputWindow.uixml.cs"/>
+    <Compile Include="..\InputSample\MouseInputWindow.uixml.cs"
+             Link="Links\InputSample\MouseInputWindow.uixml.cs"/>
+    <UIXml Include="..\InputSample\KeyboardInputWindow.uixml"
+           Link="Links\InputSample\KeyboardInputWindow.uixml"/>
+    <UIXml Include="..\InputSample\MouseInputWindow.uixml"
+           Link="Links\InputSample\MouseInputWindow.uixml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs" />
-    <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"/>
+    <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs"
+             Link="Links\PrintingSample\PrintingMainWindow.uixml.cs"/>
+    <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"
+           Link="Links\PrintingSample\PrintingMainWindow.uixml"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\ThreadingSample\ThreadingMainWindow.uixml.cs" />
-    <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml"/>
+    <Compile Include="..\ThreadingSample\ThreadingMainWindow.uixml.cs"
+             Link="Links\ThreadingSample\ThreadingMainWindow.uixml.cs" />
+    <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml"
+           Link="Links\ThreadingSample\ThreadingMainWindow.uixml"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs"
+             Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs" />
+    <UIXml Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml"
+           Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\EmployeeFormSample\EmployeeMainWindow.uixml.cs"
+             Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml.cs" />
+    <UIXml Include="..\EmployeeFormSample\EmployeeMainWindow.uixml"
+           Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml"/>
+  </ItemGroup>
+
+  <ItemGroup>
+  <Compile Include="..\CustomControlsSample\Classes\**\*.cs">
+    <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+  </Compile>
+  <UIXml Include="..\CustomControlsSample\Classes\**\*.uixml">
+    <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+  </UIXml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\ExplorerUISample\ExplorerMainWindow.uixml.cs"
+             Link="Links\ExplorerUISample\ExplorerMainWindow.uixml.cs" />
+    <UIXml Include="..\ExplorerUISample\ExplorerMainWindow.uixml"
+           Link="Links\ExplorerUISample\ExplorerMainWindow.uixml"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\LayoutSample\Classes\**\*.cs">
+      <Link>Links\LayoutSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\LayoutSample\Classes\**\*.uixml">
+      <Link>Links\LayoutSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\MenuSample\Classes\**\*.cs">
+      <Link>Links\MenuSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\MenuSample\Classes\**\*.uixml">
+      <Link>Links\MenuSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\DrawingSample\Classes\**\*.cs">
+      <Link>Links\DrawingSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\DrawingSample\Classes\**\*.uixml">
+      <Link>Links\DrawingSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PaintSample\Classes\**\*.cs">
+      <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\PaintSample\Classes\**\*.uixml">
+      <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PropertyGridSample\Classes\**\*.cs">
+      <Link>Links\PropertyGridSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\PropertyGridSample\Classes\**\*.uixml">
+      <Link>Links\PropertyGridSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
 </Project>

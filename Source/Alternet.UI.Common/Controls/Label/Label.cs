@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// necessarily the total width of the control, since a padding for the
         /// border (depending on the controls border style) may be added.
         /// </remarks>
-        public double? MaxTextWidth
+        public virtual double? MaxTextWidth
         {
             get
             {
@@ -84,6 +84,13 @@ namespace Alternet.UI
                     Text = Text;
                 });
             }
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
         }
 
         [Browsable(false)]
