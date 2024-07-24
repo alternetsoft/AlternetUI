@@ -298,7 +298,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+    <None Include="..\..\.editorconfig" Link=".editorconfig" Condition="Exists('..\..\.editorconfig')"/>
   </ItemGroup>
 
   <ItemGroup>
