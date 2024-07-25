@@ -263,7 +263,7 @@ namespace Alternet.UI
         {
             var path = asm.Location;
             var name = Path.GetFileNameWithoutExtension(path);
-            var result = name + ".Resources.";
+            var result = name + ".";
             return result;
         }
 
@@ -915,6 +915,9 @@ namespace Alternet.UI
 
                 foreach (var assembly in assemblies)
                 {
+                    if (assembly.IsDynamic)
+                        continue;
+
                     var resources = assembly.GetManifestResourceNames();
 
                     if (resources.Length == 0)

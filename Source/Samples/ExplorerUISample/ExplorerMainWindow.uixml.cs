@@ -107,7 +107,7 @@ namespace ExplorerUISample
             var prefix = AssemblyUtils.GetAssemblyResPrefix(assembly);
             var allResourceNames = assembly.GetManifestResourceNames();
             var allImageResourceNames =
-                allResourceNames.Where(x => x.StartsWith($"{prefix}ExplorerUISample.")).ToArray();
+                allResourceNames.Where(x => x.StartsWith($"{prefix}Resources.ExplorerUISample.")).ToArray();
 
             Image LoadImage(string name) => new Bitmap(assembly.GetManifestResourceStream(name));
 
@@ -116,14 +116,5 @@ namespace ExplorerUISample
 
             return smallImageList;
         }
-
-        internal string GetImageUrl(string name)
-        {
-            var asm = GetType().Assembly;
-            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
-            var result = $"embres:{resName}";
-            return result;
-        }
-
     }
 }

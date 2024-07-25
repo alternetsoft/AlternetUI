@@ -50,18 +50,8 @@ namespace WindowPropertiesSample
         internal string GetIconUrl(string name)
         {
             var asm = GetType().Assembly;
-            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
-            var result = $"embres:{resName}";
+            var result = AssemblyUtils.GetImageUrlInAssembly(asm, "Resources." + name);
             return result;
-        }
-
-        internal Stream LoadImage(string name)
-        {
-            var asm = GetType().Assembly;
-            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
-
-            return
-                asm.GetManifestResourceStream(resName) ?? throw new Exception();
         }
 
         private void WindowPropertiesWindow_DpiChanged(object? sender, DpiChangedEventArgs e)

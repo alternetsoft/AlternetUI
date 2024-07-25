@@ -11,8 +11,8 @@ namespace MenuSample
         private readonly bool IsDebugBackground = false;
         private readonly ToolBar toolbar = new();
 
-        private string ResPrefix;
-        private string Calendar16Url;
+        private readonly string ResPrefix;
+        private readonly string Calendar16Url;
 
         private int newItemIndex = 0;
 
@@ -35,7 +35,9 @@ namespace MenuSample
 
         public MenuMainWindow()
         {
-            ResPrefix = GetImageUrl("ToolBarPng.Large.");
+            ResPrefix = AssemblyUtils.GetImageUrlInAssembly(
+                GetType().Assembly,
+                "Resources.ToolBarPng.Large.");
 
             Calendar16Url = $"{ResPrefix}Calendar32.png";
 
@@ -97,14 +99,6 @@ namespace MenuSample
             saveMenuItem.Image = KnownSvgImages.ImgFileSave.AsNormal(16, IsDarkBackground);
 
             eventsListBox.BindApplicationLog();
-        }
-
-        internal string GetImageUrl(string name)
-        {
-            var asm = GetType().Assembly;
-            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
-            var result = $"embres:{resName}";
-            return result;
         }
 
         private StatusBar? GetStatusBar() => StatusBar as StatusBar;

@@ -13,8 +13,8 @@ namespace DrawingSample
         static Resources()
         {
             var asm = typeof(Resources).Assembly;
-            LogoImage = new Bitmap(AssemblyUtils.GetImageUrlInAssembly(asm, "Logo.png"));
-            LeavesImage = new Bitmap(AssemblyUtils.GetImageUrlInAssembly(asm, "Leaves.jpg"));
+            LogoImage = new Bitmap(AssemblyUtils.GetImageUrlInAssembly(asm, "Resources.Logo.png"));
+            LeavesImage = new Bitmap(AssemblyUtils.GetImageUrlInAssembly(asm, "Resources.Leaves.jpg"));
         }
     }
 }

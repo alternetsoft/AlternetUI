@@ -175,7 +175,7 @@ namespace PaintSample
             {
                 var url = AssemblyUtils.GetImageUrlInAssembly(
                     GetType().Assembly,
-                    "ToolIcons." + tool.GetType().Name.Replace("Tool", "") + ".svg");
+                    "Resources.ToolIcons." + tool.GetType().Name.Replace("Tool", "") + ".svg");
                 var (normalImage, disabledImage) =
                     ToolBarUtils.GetNormalAndDisabledSvg(url, this);
                 var buttonId = toolbar.AddSpeedBtn(tool.Name, normalImage, disabledImage);

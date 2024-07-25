@@ -16,7 +16,7 @@ namespace EmployeeFormSample
 
             InitializeComponent();
 
-            employeeFoto.Image = Image.FromUrl(GetImageUrl("EmployeePhoto.jpg"));
+            employeeFoto.Image = Image.FromAssemblyUrl(GetType().Assembly, "Resources.EmployeePhoto.jpg");
 
             prefixComboBox.AddEnumValues<Employee.EmployeePrefix>();
             stateComboBox.AddEnumValues<Employee.States>();
@@ -169,15 +169,7 @@ namespace EmployeeFormSample
             this.SetSizeToContent();
         }
 
-        internal string GetImageUrl(string name)
-        {
-            var asm = GetType().Assembly;
-            var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
-            var result = $"embres:{resName}";
-            return result;
-        }
-
-        internal class Employee
+       internal class Employee
         {
             private string? firstName;
             private string? lastName;

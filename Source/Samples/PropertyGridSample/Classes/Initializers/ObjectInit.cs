@@ -34,9 +34,9 @@ namespace PropertyGridSample
         public static readonly Dictionary<Type, Action<Object>> Actions = new();
 
         internal static string AsmResPrefix
-            = AssemblyUtils.GetAssemblyResPrefix(typeof(ObjectInit).Assembly);
+            = AssemblyUtils.GetAssemblyResPrefix(typeof(ObjectInit).Assembly)+"Resources.";
         internal static string UrlResPrefix
-            = AssemblyUtils.GetImageUrlInAssembly(typeof(ObjectInit).Assembly, string.Empty);
+            = AssemblyUtils.GetImageUrlInAssembly(typeof(ObjectInit).Assembly, "Resources.");
         internal static string ResPrefixImage = $"{UrlResPrefix}logo128x128.png";
 
         internal static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
