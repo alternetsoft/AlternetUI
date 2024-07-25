@@ -9,11 +9,25 @@
     <Import Project="$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" />
 
   <ItemGroup Condition="false">
-    <PackageReference Include="Alternet.UI" Version="0.9.505-beta" />
+    <PackageReference Include="Alternet.UI" Version="0.9.516-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists($(AlternetUIPath))">
-    <ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI\Alternet.UI.csproj" />
+	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI\Alternet.UI.csproj" PrivateAssets="All">
+		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		<IncludeAssets>all</IncludeAssets>
+	</ProjectReference>
+
+
+	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI.Common\Alternet.UI.Common.csproj" PrivateAssets="All">
+		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		<IncludeAssets>all</IncludeAssets>
+	</ProjectReference>
+	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
+		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		<IncludeAssets>all</IncludeAssets>
+	</ProjectReference>
+
   </ItemGroup>
 
   <ItemGroup>

@@ -1,18 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <AlternetUIPath>$(MSBuildThisFileDirectory)\..\..\</AlternetUIPath>	
-  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\Source\Samples\CommonData\CommonProject.props" />
 
-  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props"/>
-
-<!--
-
-  <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.503-beta" />
-  </ItemGroup>
-
--->
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\Source\Samples\Directory.Build.props" />
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\Source\Samples\Directory.Build.targets" />
 
 </Project>

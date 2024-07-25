@@ -10,8 +10,6 @@ namespace DrawingContextTutorial
             UserPaint = true;
         }
 
-        private static Font font = new Font(FontFamily.GenericSerif, 15);
-
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.FillRectangle(Brushes.LightBlue, e.ClipRectangle);
