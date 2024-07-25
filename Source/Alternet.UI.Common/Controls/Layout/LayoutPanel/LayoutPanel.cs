@@ -26,13 +26,6 @@ namespace Alternet.UI
             set => base.Layout = value;
         }
 
-        [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
         internal static void SetAnchor(Control control, AnchorStyles value)
         {
             if (control == null)
