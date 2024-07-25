@@ -1,3 +1,11 @@
+# 0.9.617 (2024 July 25)
+
+- Added PreviewSample project.
+- Removed exception when resource is loaded from dynamic library.
+- Fixed AssemblyUtils.GetAssemblyResPrefix.
+- Returned Title property in containers.
+- Fixed documentation related projects.
+
 # 0.9.616 (2024 July 24)
 
 - Returned sample projects.
