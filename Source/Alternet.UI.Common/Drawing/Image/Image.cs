@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 using Alternet.UI;
@@ -440,6 +441,20 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified relative url and assembly.
+        /// </summary>
+        /// <param name="asm">Assembly from which image will be loaded.</param>
+        /// <param name="relativeName">Image name of relative path.
+        /// Slash characters must be changed to '.'. Example: "ToolBarPng.Large.Calendar32.png".</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Image FromAssemblyUrl(Assembly asm, string relativeName)
+        {
+            return Image.FromUrl(AssemblyUtils.GetImageUrlInAssembly(asm, relativeName));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
         /// from the specified url which points to svg file or resource.
         /// </summary>
         /// <param name="url">The file or embedded resource url with Svg data used
@@ -476,6 +491,7 @@ namespace Alternet.Drawing
         /// Creates images with screen pixels.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image? FromScreen()
         {
             var handler = GraphicsFactory.Handler.CreateImageHandlerFromScreen();
@@ -488,6 +504,7 @@ namespace Alternet.Drawing
         /// <param name="stream">
         /// A <see cref="Stream" /> that contains the data for this <see cref="Image" />.</param>
         /// <returns>The <see cref="Image" /> this method creates.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image FromStream(Stream stream)
         {
             return new Bitmap(stream);
@@ -564,6 +581,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="bitmap"><see cref="SKBitmap"/> with image data.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image FromSkia(SKBitmap bitmap)
         {
             var genericImage = GenericImage.FromSkia(bitmap);

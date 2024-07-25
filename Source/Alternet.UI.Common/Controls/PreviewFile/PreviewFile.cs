@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Gets list of registered preview controls. One of these
         /// controls will be used to preview the file.
         /// </summary>
-        public virtual IList<PreviewFileRegisterItem> Register => register;
+        public virtual IList<PreviewFileRegisterItem> RegisteredItems => register;
 
         /// <summary>
         /// Gets or sets path to the file which will be previewed in the control.

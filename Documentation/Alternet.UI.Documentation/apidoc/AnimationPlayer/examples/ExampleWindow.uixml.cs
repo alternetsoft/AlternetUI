@@ -5,7 +5,8 @@ namespace Alternet.UI.Documentation.Examples
 {
     public partial class MainWindow : Window
     {
-        private static readonly string ResPrefix = $"embres:Examples.AnimationPlayer.";
+        private static readonly string ResPrefix
+            = AssemblyUtils.GetImageUrlInAssembly(typeof(MainWindow).Assembly,"");
 
         internal static readonly string AnimationPlant = $"{ResPrefix}Plant.gif";
         internal static readonly string AnimationHourGlass = $"{ResPrefix}HourGlass.gif";

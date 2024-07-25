@@ -12,8 +12,6 @@ namespace Alternet.UI.Integration
     {
         public static Action<string> Write;
 
-        private static CancellationToken cancellationToken = new();
-
         public static void Information(string s)
         {
             Write($"Information: {s}");
