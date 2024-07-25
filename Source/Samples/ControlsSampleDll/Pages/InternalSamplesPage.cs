@@ -70,7 +70,6 @@ namespace ControlsSample
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
             AddIfDebug("Test Page", () => new SkiaDrawingWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.ExplorerMainWindow());
-            AddIfDebug("Preview Uixml and other files", () => new PreviewSampleWindow());
             Add("Printing Sample", () => new PrintingSample.PrintingMainWindow());
             Add("Menu Sample", () => new MenuSample.MenuMainWindow());
             Add("Mouse Input", () => new InputSample.MouseInputWindow());

@@ -7,8 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Alternet.UI;
+using Alternet.Drawing;
 
-namespace ControlsSample
+namespace PreviewSample
 {
     internal class PreviewSampleWindow : Window
     {
@@ -44,7 +45,7 @@ namespace ControlsSample
             State = WindowState.Normal;
             Margin = 10;
             Icon = App.DefaultIcon;
-            Title = "Alternet.UI Preview File Sample";
+            Title = "Alternet.UI Preview File";
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
             panel.LeftPanel.Width = 400;
@@ -62,65 +63,62 @@ namespace ControlsSample
 
             try
             {
-                var appFolder = PathUtils.GetAppFolder();
-                var samplesFolder = Path.Combine(appFolder, "Samples/Uixml");
-                if (!Directory.Exists(samplesFolder))
-                    Directory.CreateDirectory(samplesFolder);
+                var samplesFolder = PathUtils.GetAppSubFolder("Files", true);
                 fileListBox.SelectedFolder = samplesFolder;
-                CopyAssetsAsync(samplesFolder);
             }
             catch
             {
                 fileListBox.AddSpecialFolders();
             }
 
-            void CopyAssetsAsync(string destFolder)
+        }
+
+        internal void CopyAssetsAsync(string destFolder)
+        {
+            var thread1 = new Thread(ThreadAction1)
             {
-                var thread1 = new Thread(ThreadAction1)
-                {
-                    IsBackground = true,
-                };
+                IsBackground = true,
+            };
 
-                thread1.Start();
+            thread1.Start();
 
-                void ThreadAction1()
+            void ThreadAction1()
+            {
+                CopyAssets(destFolder);
+            }
+        }
+
+        internal void CopyAssets(string destFolder)
+        {
+            var assembly = this.GetType().Assembly;
+
+            var resources = assembly.GetManifestResourceNames();
+
+            var number = 0;
+
+            foreach (var item in resources)
+            {
+                var ext = PathUtils.GetExtensionLower(item);
+                if (ext != "uixml")
+                    continue;
+                var destPath = Path.Combine(destFolder, item);
+                if (File.Exists(destPath))
+                    continue;
+                using var stream = assembly.GetManifestResourceStream(item);
+                if (stream is not null)
                 {
-                    CopyAssets(destFolder);
+                    StreamUtils.CopyStream(stream, destPath);
+                    number++;
                 }
             }
 
-            void CopyAssets(string destFolder)
+            if (number > 0)
             {
-                var assembly = this.GetType().Assembly;
-
-                var resources = assembly.GetManifestResourceNames();
-
-                var number = 0;
-
-                foreach (var item in resources)
+                App.InvokeIdleLog($"Extracted {number} uixml resources");
+                App.InvokeIdle(() =>
                 {
-                    var ext = PathUtils.GetExtensionLower(item);
-                    if (ext != "uixml")
-                        continue;
-                    var destPath = Path.Combine(destFolder, item);
-                    if (File.Exists(destPath))
-                        continue;
-                    using var stream = assembly.GetManifestResourceStream(item);
-                    if(stream is not null)
-                    {
-                        StreamUtils.CopyStream(stream, destPath);
-                        number++;
-                    }
-                }
-
-                if (number > 0)
-                {
-                    App.InvokeIdleLog($"Extracted {number} uixml resources");
-                    App.InvokeIdle(() =>
-                    {
-                        fileListBox.Reload();
-                    });
-                }
+                    fileListBox.Reload();
+                });
             }
         }
 
@@ -159,6 +157,8 @@ namespace ControlsSample
             var r = richText;
 
             r.ReadOnly = true;
+            r.CanSelect = false;
+            r.TabStop = false;
 
             VerticalAlignment = VerticalAlignment.Stretch;
             HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -193,7 +193,7 @@ namespace ControlsSample
 
             r.NewLine();
 
-            var logoImage = Image.FromUrl("embres:ControlsSampleDll.Resources.logo128x128.png");
+            var logoImage = Image.FromAssemblyUrl(GetType().Assembly,"logo128x128.png");
             r.WriteImage(logoImage);
 
             r.NewLine();
