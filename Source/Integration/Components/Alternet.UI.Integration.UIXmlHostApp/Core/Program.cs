@@ -52,7 +52,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
             commonUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Common.dll"));
 
-            var alternetUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.dll"));
+            alternetUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.dll"));
 
 #if NETCOREAPP
             /*SetDotNetCoreNativeDllImportResolver(alternetUIAssembly);*/

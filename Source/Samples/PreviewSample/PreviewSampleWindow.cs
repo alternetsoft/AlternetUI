@@ -71,6 +71,8 @@ namespace PreviewSample
                 fileListBox.AddSpecialFolders();
             }
 
+            preview.RegisterPreview(new(PreviewForm.IsSupportedFile, PreviewForm.CreatePreviewControl));
+
         }
 
         internal void CopyAssetsAsync(string destFolder)
