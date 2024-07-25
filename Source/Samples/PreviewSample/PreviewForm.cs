@@ -14,6 +14,8 @@ namespace Alternet.UI
     /// </summary>
     public class PreviewForm : Control, IFilePreview
     {
+        private readonly PictureBox pictureBox = new();
+
         private string? fileName;
         private Alternet.UI.Integration.PreviewerProcess previewProcess;
 
@@ -30,6 +32,8 @@ namespace Alternet.UI
         /// </summary>
         public PreviewForm()
         {
+            pictureBox.Parent = this;
+
             previewProcess = new Alternet.UI.Integration.PreviewerProcess();
             previewProcess.ErrorChanged += ErrorChanged;
             previewProcess.PreviewDataReceived += PreviewDataReceived;
@@ -95,6 +99,17 @@ namespace Alternet.UI
         {
             base.DisposeManaged();
             Reset();
+            previewProcess.ErrorChanged -= ErrorChanged;
+            previewProcess.PreviewDataReceived -= PreviewDataReceived;
+            previewProcess.ProcessExited -= ProcessExited;
+            previewProcess.Dispose();
+            previewProcess = null!;
+
+            /*
+                await Process.StartAsync(assemblyPath, executablePath, hostAppPath);
+                await Process.UpdateXamlAsync(await ReadAllTextAsync(_xamlPath), GetOwnerWindowLocation());
+
+            */
         }
 
         /// <inheritdoc/>
@@ -169,7 +184,24 @@ namespace Alternet.UI
 
         private void UpdateFormPreview()
         {
-
+            try
+            {
+                var imageFileName = previewProcess.PreviewData.ImageFileName;
+                if (File.Exists(imageFileName))
+                {
+                    var image = Image.FromUrl(imageFileName);
+                    pictureBox.Image = image;
+                }
+                else
+                {
+                    pictureBox.Image = null;
+                }
+            }
+            catch (Exception e)
+            {
+                pictureBox.Image = null;
+                App.LogError(e);
+            }
         }
     }
 }

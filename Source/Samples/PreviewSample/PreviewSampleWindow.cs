@@ -71,6 +71,7 @@ namespace PreviewSample
                 fileListBox.AddSpecialFolders();
             }
 
+            preview.RegisterDefaultPreviewControls();
             preview.RegisterPreview(new(PreviewForm.IsSupportedFile, PreviewForm.CreatePreviewControl));
 
         }
