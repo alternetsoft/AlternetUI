@@ -36,7 +36,8 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Display(int index)
         {
-            Handler = Factory.CreateDisplay(index);
+            if (index >= 0 && index < Count)
+                Handler = Factory.CreateDisplay(index);
         }
 
         /// <summary>
