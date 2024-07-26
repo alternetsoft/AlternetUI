@@ -152,6 +152,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
 
+    <!--
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.pdb">
       <Link>UIXmlHostApp\$(TargetFramework46Version)\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -181,6 +182,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    -->
 
     <Content Include="AlternetUI.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

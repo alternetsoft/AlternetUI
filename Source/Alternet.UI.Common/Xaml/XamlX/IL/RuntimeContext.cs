@@ -446,8 +446,10 @@ namespace XamlX.IL
 
         }
 
-        private IXamlMethodBuilder<IXamlILEmitter> ImplementInterfacePropertyGetter(IXamlTypeBuilder<IXamlILEmitter> builder,
-            IXamlType type, string name)
+        private IXamlMethodBuilder<IXamlILEmitter> ImplementInterfacePropertyGetter(
+            IXamlTypeBuilder<IXamlILEmitter> builder,
+            IXamlType type,
+            string name)
         {
             var prefix = type.Namespace + "." + type.Name + ".";
             var originalGetter = type.FindMethod(m => m.Name == "get_" + name);
@@ -458,7 +460,9 @@ namespace XamlX.IL
             return gen;
         }
 
-        IXamlType EmitTypeDescriptorContextStub(IXamlTypeSystem typeSystem, IXamlTypeBuilder<IXamlILEmitter> builder,
+        IXamlType EmitTypeDescriptorContextStub(
+            IXamlTypeSystem typeSystem,
+            IXamlTypeBuilder<IXamlILEmitter> builder,
             XamlLanguageTypeMappings mappings)
         {
             if (mappings.TypeDescriptorContext == null)
@@ -467,7 +471,8 @@ namespace XamlX.IL
             var tdcPrefix = tdc.Namespace + "." + tdc.Name + ".";
 
             builder.AddInterfaceImplementation(mappings.TypeDescriptorContext);
-            void PropertyStub(string name) => ImplementInterfacePropertyGetter(builder, tdc, name).Generator.Ldnull().Ret();
+            void PropertyStub(string name)
+                => ImplementInterfacePropertyGetter(builder, tdc, name).Generator.Ldnull().Ret();
             PropertyStub("Container");
             PropertyStub("Instance");
             PropertyStub("PropertyDescriptor");
@@ -490,7 +495,9 @@ namespace XamlX.IL
             return mappings.TypeDescriptorContext;
         }
 
-        (IXamlType type, IXamlConstructor ctor, Action createCallback) EmitParentEnumerable(IXamlTypeSystem typeSystem, IXamlTypeBuilder<IXamlILEmitter> parentBuilder,
+        (IXamlType type, IXamlConstructor ctor, Action createCallback) EmitParentEnumerable(
+            IXamlTypeSystem typeSystem,
+            IXamlTypeBuilder<IXamlILEmitter> parentBuilder,
             XamlLanguageTypeMappings mappings)
         {
             var so = typeSystem.GetType("System.Object");
@@ -525,10 +532,8 @@ namespace XamlX.IL
             var enumeratorBuilder = enumerableBuilder.DefineSubType(so, "Enumerator", true);
             enumeratorBuilder.AddInterfaceImplementation(enumeratorObjectType);
 
-
-
-            var state = enumeratorBuilder.DefineField(typeSystem.GetType("System.Int32"), "_state", false, false);
-
+            var state
+                = enumeratorBuilder.DefineField(typeSystem.GetType("System.Int32"), "_state", false, false);
 
             var parentList =
                 enumeratorBuilder.DefineField(ParentListField.FieldType, "_parentList", false, false);
@@ -537,10 +542,13 @@ namespace XamlX.IL
             var listType = typeSystem.GetType("System.Collections.Generic.List`1")
                 .MakeGenericType(new[] { so });
             var list = enumeratorBuilder.DefineField(listType, "_list", false, false);
-            var listIndex = enumeratorBuilder.DefineField(typeSystem.GetType("System.Int32"), "_listIndex", false, false);
+            var listIndex
+                = enumeratorBuilder.DefineField(typeSystem.GetType("System.Int32"), "_listIndex", false, false);
             var current = enumeratorBuilder.DefineField(so, "_current", false, false);
-            var parentEnumerator = enumeratorBuilder.DefineField(enumeratorObjectType, "_parentEnumerator", false, false);
-            var enumeratorCtor = enumeratorBuilder.DefineConstructor(false, parentList.FieldType, parentProvider.FieldType);
+            var parentEnumerator
+                = enumeratorBuilder.DefineField(enumeratorObjectType, "_parentEnumerator", false, false);
+            var enumeratorCtor
+                = enumeratorBuilder.DefineConstructor(false, parentList.FieldType, parentProvider.FieldType);
             enumeratorCtor.Generator
             .Emit(OpCodes.Ldarg_0)
             .Emit(OpCodes.Call, so.Constructors.First())
@@ -669,8 +677,6 @@ namespace XamlX.IL
                 .Ldarg_0()
                 .EmitCall(createEnumerator)
                 .Emit(OpCodes.Ret);
-
-
 
             return (enumeratorBuilder, enumerableCtor, () =>
             {

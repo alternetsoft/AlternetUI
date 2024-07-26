@@ -216,7 +216,14 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             }
 
             compiler.IsDesignMode = isDesignMode;
-            compiler.ParseAndCompile(xaml, uri?.ToString(), null, _sreTypeSystem.CreateTypeBuilder(tb), overrideType);
+
+            var typeBuilder = _sreTypeSystem.CreateTypeBuilder(tb);
+            compiler.ParseAndCompile(
+                xaml,
+                uri?.ToString(),
+                null,
+                typeBuilder,
+                overrideType);
             var created = tb.CreateTypeInfo();
             clrPropertyBuilder.CreateTypeInfo();
 

@@ -140,12 +140,12 @@ namespace Alternet.UI.Integration
                 return;
             }
 
-            /*if (string.IsNullOrWhiteSpace(hostAppPath))
+            if (string.IsNullOrWhiteSpace(hostAppPath))
             {
                 throw new ArgumentException(
                     "HostAppPath path may not be null or an empty string.",
                     nameof(hostAppPath));
-            }*/
+            }
 
             if (!File.Exists(assemblyPath))
             {
@@ -161,12 +161,16 @@ namespace Alternet.UI.Integration
                     "Please build your project to enable previewing and intellisense.");
             }
 
-            /*if (!File.Exists(hostAppPath))
+            if (!File.Exists(hostAppPath))
             {
                 throw new FileNotFoundException(
                     $"Could not find executable '{hostAppPath}'. " +
                     "Please build your project to enable previewing and intellisense.");
-            }*/
+            }
+
+            Log.Debug($"AssemblyPath: {assemblyPath}");
+            Log.Debug($"ExecutablePath: {executablePath}");
+            Log.Debug($"HostAppPath: {hostAppPath}");
 
             _assemblyPath = assemblyPath;
             _executablePath = executablePath;
@@ -179,7 +183,7 @@ namespace Alternet.UI.Integration
             _listener = new BsonTcpTransport().Listen(
                 IPAddress.Loopback,
                 port,
-#pragma warning disable VSTHRD101
+#pragma warning disable
                 async t =>
                 {
                     try
@@ -193,13 +197,15 @@ namespace Alternet.UI.Integration
                         tcs.TrySetException(ex);
                     }
                 });
-#pragma warning restore VSTHRD101
+#pragma warning restore
 
+            /*
             var executableDir = Path.GetDirectoryName(_executablePath);
             var extensionDir = Path.GetDirectoryName(GetType().Assembly.Location);
             var targetName = Path.GetFileNameWithoutExtension(_executablePath);
             var runtimeConfigPath = Path.Combine(executableDir, targetName + ".runtimeconfig.json");
             var depsPath = Path.Combine(executableDir, targetName + ".deps.json");
+            */
 
             //EnsureExists(runtimeConfigPath);
             //EnsureExists(depsPath);
@@ -207,8 +213,6 @@ namespace Alternet.UI.Integration
             bool isDotNetCore = hostAppPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase);
 
             isDotNetCore = false;
-
-            //var args = $@"exec --runtimeconfig ""{runtimeConfigPath}"" --depsfile ""{depsPath}"" ""{hostAppPath}"" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}""";
 
             string args;
 
@@ -399,6 +403,14 @@ namespace Alternet.UI.Integration
         /// </summary>
         public void Dispose() => Stop();
 
+        internal static void EnsureExists(string path)
+        {
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException($"Could not find '{path}'.");
+            }
+        }
+
         private async Task ConnectionInitializedAsync(IAlternetUIRemoteTransportConnection connection)
         {
             Log.Verbose("Started PreviewerProcess.ConnectionInitializedAsync()");
@@ -514,14 +526,6 @@ namespace Alternet.UI.Integration
             Log.Information("Process exited");
             Stop();
             ProcessExited?.Invoke(this, EventArgs.Empty);
-        }
-
-        private static void EnsureExists(string path)
-        {
-            if (!File.Exists(path))
-            {
-                throw new FileNotFoundException($"Could not find '{path}'.");
-            }
         }
 
         private static int FreeTcpPort()

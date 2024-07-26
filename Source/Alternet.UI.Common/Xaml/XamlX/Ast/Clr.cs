@@ -129,6 +129,13 @@ namespace XamlX.Ast
         IReadOnlyList<IXamlType> Parameters { get; }
     }
 
+    class DummyXamlPropertySetter : IXamlPropertySetter
+    {
+        public IXamlType TargetType { get; }
+        public PropertySetterBinderParameters BinderParameters { get; }
+        public IReadOnlyList<IXamlType> Parameters { get; }
+    }
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -145,6 +152,7 @@ namespace XamlX.Ast
         {
             Property = property;
             PossibleSetters = setters.ToList();
+
             Values = values.ToList();
         }
 

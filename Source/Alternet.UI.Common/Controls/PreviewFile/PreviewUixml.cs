@@ -16,6 +16,16 @@ namespace Alternet.UI
     /// </summary>
     public class PreviewUixml : Control, IFilePreview
     {
+        /// <summary>
+        /// Gets or sets whether to show error dialog when uixml is loaded.
+        /// </summary>
+        public static bool ShowExceptionDialog = false;
+
+        /// <summary>
+        /// Gets or sets uixml loader flags.
+        /// </summary>
+        public static UixmlLoader.Flags LoaderFlags = 0;
+
         private static HiddenWindow? previewWindow;
 
         private readonly Border control = new()
@@ -133,19 +143,28 @@ namespace Alternet.UI
                 previewWindow.Disposed += PreviewWindow_Disposed;
 
                 var saved = UixmlLoader.ShowExceptionDialog;
+                var savedDisableComponentInitialization = UixmlLoader.DisableComponentInitialization;
+                var savedInUixmlPreviewerMode = App.Current.InUixmlPreviewerMode;
+                var savedIsDesignMode = UixmlLoader.IsDesignMode;
 
                 try
                 {
-                    UixmlLoader.ShowExceptionDialog = false;
+                    UixmlLoader.IsDesignMode = true;
+                    UixmlLoader.ShowExceptionDialog = ShowExceptionDialog;
+                    UixmlLoader.DisableComponentInitialization = true;
+                    App.Current.InUixmlPreviewerMode = true;
                     UixmlLoader.LoadExistingEx(
                         stream,
                         previewWindow,
-                        0,
+                        LoaderFlags,
                         fileName);
                 }
                 finally
                 {
+                    UixmlLoader.IsDesignMode = savedIsDesignMode;
                     UixmlLoader.ShowExceptionDialog = saved;
+                    UixmlLoader.DisableComponentInitialization = savedDisableComponentInitialization;
+                    App.Current.InUixmlPreviewerMode = savedInUixmlPreviewerMode;
                     previewWindow.Visible = false;
                 }
 

@@ -13,6 +13,11 @@ namespace Alternet.UI
     public class UixmlLoader
     {
         /// <summary>
+        /// Gets or sets whether uixml is loaded in design mode.
+        /// </summary>
+        public static bool IsDesignMode { get; set; } = false;
+
+        /// <summary>
         /// This flag supports internal infrastructure and is not supposed to be used from
         /// the user code.
         /// </summary>
@@ -99,16 +104,16 @@ namespace Alternet.UI
         /// Populates an existing root object with the object property values created
         /// from a source XAML.
         /// </summary>
-        public void LoadExisting(Stream xamlStream, object existingObject)
+        public object LoadExisting(Stream xamlStream, object existingObject)
         {
-            LoadExistingEx(xamlStream, existingObject, Flags.ReportError);
+            return LoadExistingEx(xamlStream, existingObject, Flags.ReportError);
         }
 
         /// <summary>
         /// Populates an existing root object with the object property values created
         /// from a source XAML.
         /// </summary>
-        public static void LoadExistingEx(
+        public static object LoadExistingEx(
             Stream xamlStream,
             object existingObject,
             Flags flags = 0,
@@ -118,7 +123,7 @@ namespace Alternet.UI
             {
                 var result = LoadFromStream(xamlStream, existingObject, resName, flags);
                 if (result)
-                    return;
+                    return existingObject;
             }
 
             try
@@ -126,13 +131,17 @@ namespace Alternet.UI
                 Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
                     xamlStream,
                     existingObject.GetType().Assembly,
-                    existingObject);
+                    existingObject,
+                    null,
+                    IsDesignMode);
+                return existingObject;
             }
             catch (Exception e)
             {
                 DefaultReportLoadException(e, resName, flags);
                 if(!flags.HasFlag(Flags.NoThrowException))
                     throw e;
+                return existingObject;
             }
         }
 

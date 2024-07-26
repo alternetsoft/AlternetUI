@@ -21,7 +21,8 @@ namespace Alternet.UI.Markup.Parsers
                     var argument = r.TakeWhile(c => c != delimiter && c != close && !char.IsWhiteSpace(c));
                     if (argument.IsEmpty)
                     {
-                        throw new ExpressionParseException(r.Position, "Expected indexer argument.");
+                        throw BaseObject.WrapException(
+                            new ExpressionParseException(r.Position, "Expected indexer argument."));
                     }
 
                     result.Add(argument.ToString());
@@ -30,7 +31,8 @@ namespace Alternet.UI.Markup.Parsers
 
                     if (r.End)
                     {
-                        throw new ExpressionParseException(r.Position, $"Expected '{delimiter}'.");
+                        throw BaseObject.WrapException(
+                            new ExpressionParseException(r.Position, $"Expected '{delimiter}'."));
                     }
                     else if (r.TakeIf(close))
                     {
@@ -40,17 +42,20 @@ namespace Alternet.UI.Markup.Parsers
                     {
                         if (r.Take() != delimiter)
                         {
-                            throw new ExpressionParseException(r.Position, $"Expected '{delimiter}'.");
+                            throw BaseObject.WrapException(
+                                new ExpressionParseException(r.Position, $"Expected '{delimiter}'."));
                         }
 
                         r.SkipWhitespace();
                     }
                 }
 
-                throw new ExpressionParseException(r.Position, $"Expected '{close}'.");
+                throw BaseObject.WrapException(
+                    new ExpressionParseException(r.Position, $"Expected '{close}'."));
             }
 
-            throw new ExpressionParseException(r.Position, $"Expected '{open}'.");
+            throw BaseObject.WrapException(
+                new ExpressionParseException(r.Position, $"Expected '{open}'."));
         }
     }
 }

@@ -245,10 +245,15 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="asm">Assembly to load image from.</param>
         /// <param name="name">Image name of relative path.
-        /// Slash characters must be changed to '.'. Example: "ToolBarPng.Large.Calendar32.png".</param>
+        /// Slash characters will be changed to '.'.
+        /// Example: "ToolBarPng/Large\Calendar32.png" -> "ToolBarPng.Large.Calendar32.png".
+        /// </param>
         /// <returns></returns>
-        public static string GetImageUrlInAssembly(Assembly asm, string name)
+        public static string GetImageUrlInAssembly(Assembly asm, string? name = null)
         {
+            name ??= string.Empty;
+            name = name.Replace('/', '.');
+            name = name.Replace('\\', '.');
             var resName = AssemblyUtils.GetAssemblyResPrefix(asm) + name;
             var result = $"embres:{resName}";
             return result;

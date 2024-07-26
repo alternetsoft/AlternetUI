@@ -41,24 +41,50 @@ namespace PreviewSample
 
         public PreviewSampleWindow()
         {
+            /*
+                PreviewUixml.ShowExceptionDialog = true;
+                PreviewUixml.LoaderFlags =
+                    UixmlLoader.Flags.ReportError | UixmlLoader.Flags.ShowErrorDialog;
+                App.SetUnhandledExceptionModes(UnhandledExceptionMode.ThrowException);
+            */
+
             Closing += PreviewSampleWindow_Closing;
-            State = WindowState.Normal;
+            State = WindowState.Maximized;
             Margin = 10;
             Icon = App.DefaultIcon;
             Title = "Alternet.UI Preview File";
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
+            
             panel.LeftPanel.Width = 400;
             panel.BottomPanel.Height = 200;
             panel.Parent = this;
+            
             fileListBox.Parent = panel.LeftPanel;
+            
             richText.Parent = panel.FillPanel;
+            
             preview.Visible = false;
             preview.Parent = panel.FillPanel;
+            
             logListBox.Parent = panel.BottomPanel;
-            logListBox.Log("This demo is under development.");
-            fileListBox.SelectionChanged += FileListBox_SelectionChanged;
             logListBox.BindApplicationLog();
+            logListBox.Log("This demo is under development.");
+
+            var uixmlFolder = Path.Combine(
+                PathUtils.GetAppFolder(),
+                @"../../../../../../",
+                @"Source\Samples\ControlsSampleDll\Pages\");
+            uixmlFolder = Path.GetFullPath(uixmlFolder);
+
+            if (Directory.Exists(uixmlFolder))
+            {
+                FileListBox.AdditionalSpecialFolders = new();
+                FileListBox.AdditionalSpecialFolders.Add(new(uixmlFolder, "UIXML Samples"));
+            }
+
+            fileListBox.SelectionChanged += FileListBox_SelectionChanged;
+
             LoadWelcomePage();
 
             try
@@ -72,7 +98,8 @@ namespace PreviewSample
             }
 
             preview.RegisterDefaultPreviewControls();
-            preview.RegisterPreview(new(PreviewForm.IsSupportedFile, PreviewForm.CreatePreviewControl));
+
+            /*preview.RegisterPreview(new(PreviewForm.IsSupportedFile, PreviewForm.CreatePreviewControl));*/
 
         }
 
@@ -196,7 +223,7 @@ namespace PreviewSample
 
             r.NewLine();
 
-            var logoImage = Image.FromAssemblyUrl(GetType().Assembly,"logo128x128.png");
+            var logoImage = Image.FromAssemblyUrl(GetType().Assembly,"Resources.logo128x128.png");
             r.WriteImage(logoImage);
 
             r.NewLine();

@@ -434,6 +434,12 @@ namespace XamlX.TypeSystem
             return f;
         }
 
+        public static IXamlType? GetTypeOrNull(this IXamlTypeSystem sys, string type)
+        {
+            var f = sys.FindType(type);
+            return f;
+        }
+
         public static IEnumerable<IXamlMethod> FindMethods(this IXamlType type, Func<IXamlMethod, bool> criteria)
         {
             foreach (var m in type.Methods)

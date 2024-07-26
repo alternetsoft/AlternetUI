@@ -2,7 +2,7 @@
 
 namespace Alternet.UI.Integration
 {
-    internal static class TaskExtensions
+    public static class TaskExtensions
     {
         public static void FireAndForget(this Task task)
         {
