@@ -16,22 +16,28 @@ namespace Alternet.UI
     public class FileListBox : VListBox
     {
         /// <summary>
-        /// Gets or sets list of special folder which are hidden.
-        /// </summary>
-        public static readonly List<Environment.SpecialFolder>? HiddenSpecialFolders;
-
-        /// <summary>
-        /// Gets or sets list of visible special folders. If specified, only these
-        /// folders will be visible on the root level.
-        /// </summary>
-        public static readonly List<Environment.SpecialFolder>? VisibleSpecialFolders;
-
-        /// <summary>
         /// Gets or sets global <see cref="FolderInfoItem"/> for the file or folder.
         /// <see cref="FolderInfoItem"/> allows to specify icon, custom title
         /// and some other information.
         /// </summary>
         public static readonly Dictionary<string, FolderInfoItem>? FolderInfo;
+
+        /// <summary>
+        /// Gets or sets list of special folder which are hidden.
+        /// </summary>
+        public static List<Environment.SpecialFolder>? HiddenSpecialFolders;
+
+        /// <summary>
+        /// Gets or sets list of visible special folders. If specified, only these
+        /// folders will be visible on the root level.
+        /// </summary>
+        public static List<Environment.SpecialFolder>? VisibleSpecialFolders;
+
+        /// <summary>
+        /// Gets or sets list of additional special folders. If specified, these
+        /// folders will be added to the list of root level folders.
+        /// </summary>
+        public static List<NewItemInfo>? AdditionalSpecialFolders;
 
         /// <summary>
         /// Gets or sets default svg image used for the "file" items.
@@ -344,6 +350,26 @@ namespace Alternet.UI
         /// <summary>
         /// Adds folder to the control.
         /// </summary>
+        /// <param name="item">Folder information.</param>
+        /// <returns></returns>
+        public virtual bool AddFolder(NewItemInfo item)
+        {
+            return AddFolder(item.Title, item.Path, item.Image);
+        }
+
+        /// <summary>
+        /// Adds file to the control.
+        /// </summary>
+        /// <param name="item">File information.</param>
+        /// <returns></returns>
+        public virtual bool AddFile(NewItemInfo item)
+        {
+            return AddFile(item.Title, item.Path, item.Image);
+        }
+
+        /// <summary>
+        /// Adds folder to the control.
+        /// </summary>
         /// <param name="title">Optional title of the folder.</param>
         /// <param name="path">Path to folder.</param>
         /// <param name="image">Folder image. If not specified, default image will be used.</param>
@@ -426,6 +452,7 @@ namespace Alternet.UI
             {
                 foreach(var item in VisibleSpecialFolders)
                     AddSpecialFolder(item);
+                return;
             }
 
             AddSpecialFolder(Environment.SpecialFolder.Desktop);
@@ -480,6 +507,12 @@ namespace Alternet.UI
                 AddSpecialFolder(Environment.SpecialFolder.SystemX86);
                 AddSpecialFolder(Environment.SpecialFolder.Windows);
             }
+
+            if (AdditionalSpecialFolders is not null)
+            {
+                foreach (var item in AdditionalSpecialFolders)
+                    AddFolder(item);
+            }
         }
 
         /// <inheritdoc/>
@@ -531,7 +564,7 @@ namespace Alternet.UI
         public class FolderInfoItem
         {
             /// <summary>
-            /// Gets or sets custom image for the file.
+            /// Gets or sets custom image.
             /// </summary>
             public SvgImage? Image;
 
@@ -539,6 +572,40 @@ namespace Alternet.UI
             /// Gets or sets custom title.
             /// </summary>
             public string? Title;
+        }
+
+        /// <summary>
+        /// Contains properties which allow to specify information useful when new item is added.
+        /// </summary>
+        public class NewItemInfo
+        {
+            /// <summary>
+            /// Gets or sets custom title.
+            /// </summary>
+            public string? Title;
+
+            /// <summary>
+            /// Gets or sets path to the file or folder.
+            /// </summary>
+            public string Path;
+
+            /// <summary>
+            /// Gets or sets custom image.
+            /// </summary>
+            public SvgImage? Image;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="NewItemInfo"/> class.
+            /// </summary>
+            /// <param name="path">Path to the file or folder.</param>
+            /// <param name="title">Custom title.</param>
+            /// <param name="image">Custom image.</param>
+            public NewItemInfo(string path, string? title = null, SvgImage? image = null)
+            {
+                Path = path;
+                Title = title;
+                Image = image;
+            }
         }
     }
 }
