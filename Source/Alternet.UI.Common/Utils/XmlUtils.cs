@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Alternet.UI
 {
@@ -72,6 +73,7 @@ namespace Alternet.UI
         /// <param name="node">Xml node.</param>
         /// <param name="name">Attribute name.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasAttr(XmlNode node, string name)
         {
             return node.Attributes?.GetNamedItem(name) is not null;
@@ -144,6 +146,102 @@ namespace Alternet.UI
             };
 
             Save(document, stream, xmlWriterSettings);
+        }
+
+        /// <summary>
+        /// Deserializes object from the specified stream.
+        /// </summary>
+        /// <typeparam name="T">Type of the deserialized object.</typeparam>
+        /// <param name="stream">Stream with xml data.</param>
+        /// <returns></returns>
+        public static T Deserialize<T>(Stream stream)
+        {
+            return (T)new XmlSerializer(typeof(T)).Deserialize(stream);
+        }
+
+        /// <summary>
+        /// Deserializes object from the specified file.
+        /// </summary>
+        /// <typeparam name="T">Type of the deserialized object.</typeparam>
+        /// <param name="filename">Path to file with xml data.</param>
+        /// <returns></returns>
+        public static T? DeserializeFromFile<T>(string filename)
+        {
+            if (!FileSystem.FileExists(filename))
+                return default;
+
+            using var stream = FileSystem.OpenRead(filename);
+            return Deserialize<T>(stream);
+        }
+
+        /// <summary>
+        /// Serializes object to the specified <see cref="TextWriter"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of the serialized object.</typeparam>
+        /// <param name="writer"><see cref="TextWriter"/> object.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns></returns>
+        public static void Serialize<T>(TextWriter writer, T obj)
+        {
+            new XmlSerializer(typeof(T)).Serialize(writer, obj);
+        }
+
+        /// <summary>
+        /// Serializes object to the specified file.
+        /// </summary>
+        /// <typeparam name="T">Type of the serialized object.</typeparam>
+        /// <param name="filename">Path to file.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns></returns>
+        public static void SerializeToFile<T>(string filename, T obj)
+        {
+            var writer = new StreamWriter(filename);
+            try
+            {
+                Serialize(writer, obj);
+            }
+            finally
+            {
+                writer.Close();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes object from the specified file without throwing exceptions.
+        /// </summary>
+        /// <typeparam name="T">Type of the deserialized object.</typeparam>
+        /// <param name="filename">Path to file with xml data.</param>
+        /// <returns></returns>
+        public static T? Deserialize<T>(string filename)
+        {
+            try
+            {
+                return DeserializeFromFile<T>(filename);
+            }
+            catch
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// Serializes object to the specified file without throwing exceptions.
+        /// </summary>
+        /// <typeparam name="T">Type of the serialized object.</typeparam>
+        /// <param name="filename">Path to file.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns></returns>
+        public static bool Serialize<T>(string filename, T obj)
+        {
+            try
+            {
+                SerializeToFile(filename, obj);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
