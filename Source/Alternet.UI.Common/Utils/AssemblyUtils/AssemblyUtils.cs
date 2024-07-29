@@ -15,229 +15,40 @@ namespace Alternet.UI
     /// Contains <see cref="Assembly"/>, <see cref="PropertyInfo"/> and <see cref="Type"/>
     /// related static methods.
     /// </summary>
-    public static class AssemblyUtils
+    public static partial class AssemblyUtils
     {
-        /// <summary>
-        /// Gets initialized instance of the <see cref="BaseObject"/> for the different purposes.
-        /// </summary>
-        public static readonly BaseObject Default = new();
-
-        /// <summary>
-        /// Gets <c>true</c> value as <see cref="object"/>.
-        /// </summary>
-        public static readonly object True = true;
-
-        /// <summary>
-        /// Gets <c>false</c> value as <see cref="object"/>.
-        /// </summary>
-        public static readonly object False = false;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="sbyte"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueSByte = sbyte.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="byte"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueByte = byte.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="short"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueInt16 = short.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="ushort"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueUInt16 = ushort.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="int"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueInt32 = int.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="uint"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueUInt32 = uint.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="long"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueInt64 = long.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="ulong"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueUInt64 = ulong.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="float"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueSingle = float.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="double"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueDouble = double.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="decimal"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueDecimal = decimal.MaxValue;
-
-        /// <summary>
-        /// Gets maximal possible variable value for the <see cref="DateTime"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MaxValueDateTime = DateTime.MaxValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="sbyte"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueSByte = sbyte.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="byte"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueByte = byte.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="short"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueInt16 = short.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="ushort"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueUInt16 = ushort.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="int"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueInt32 = int.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="uint"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueUInt32 = uint.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="long"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueInt64 = long.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="ulong"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueUInt64 = ulong.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="float"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueSingle = float.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="double"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueDouble = double.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="decimal"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueDecimal = decimal.MinValue;
-
-        /// <summary>
-        /// Gets minimal possible variable value for the <see cref="DateTime"/> type
-        /// as <see cref="object"/>.
-        /// </summary>
-        public static readonly object MinValueDateTime = DateTime.MinValue;
-
-        /// <summary>
-        /// Gets default value for the <see cref="sbyte"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultSByte = default(sbyte);
-
-        /// <summary>
-        /// Gets default value for the <see cref="byte"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultByte = default(byte);
-
-        /// <summary>
-        /// Gets default value for the <see cref="short"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultInt16 = default(short);
-
-        /// <summary>
-        /// Gets default value for the <see cref="ushort"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultUInt16 = default(ushort);
-
-        /// <summary>
-        /// Gets default value for the <see cref="int"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultInt32 = default(int);
-
-        /// <summary>
-        /// Gets default value for the <see cref="uint"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultUInt32 = default(uint);
-
-        /// <summary>
-        /// Gets default value for the <see cref="long"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultInt64 = default(long);
-
-        /// <summary>
-        /// Gets default value for the <see cref="ulong"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultUInt64 = default(ulong);
-
-        /// <summary>
-        /// Gets default value for the <see cref="float"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultSingle = default(float);
-
-        /// <summary>
-        /// Gets default value for the <see cref="double"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultDouble = default(double);
-
-        /// <summary>
-        /// Gets default value for the <see cref="decimal"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultDecimal = default(decimal);
-
-        /// <summary>
-        /// Gets default value for the <see cref="DateTime"/> type as <see cref="object"/>.
-        /// </summary>
-        public static readonly object DefaultDateTime = default(DateTime);
-
         private static AdvDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
+        private static SortedList<string, EventInfo>? allControlEvents;
+
+        /// <summary>
+        /// Gets or sets list of events for all <see cref="Control"/>
+        /// descendants.
+        /// </summary>
+        public static SortedList<string, EventInfo> AllControlEvents
+        {
+            get
+            {
+                allControlEvents ??= AssemblyUtils.GetAllDescendantsEvents(typeof(Control));
+                return allControlEvents;
+            }
+
+            set
+            {
+                allControlEvents = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether specified string is name of the event declared in
+        /// any descendant of the <see cref="Control"/>.
+        /// </summary>
+        /// <param name="name">Property or event name.</param>
+        /// <returns></returns>
+        public static bool IsControlDescendantEventName(string name)
+        {
+            return AllControlEvents.ContainsKey(name);
+        }
 
         /// <summary>
         /// Gets image url for loading image resource from the specified assembly using
@@ -349,8 +160,9 @@ namespace Alternet.UI
             }
 
             if (sort)
-                result.Sort(CompareByName);
-            return result;
+                return addedNames.Values;
+            else
+                return result;
         }
 
         /// <summary>
@@ -425,8 +237,9 @@ namespace Alternet.UI
             }
 
             if (sort)
-                result.Sort(CompareByName);
-            return result;
+                return addedNames.Values;
+            else
+                return result;
         }
 
         /// <summary>
@@ -687,7 +500,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public static ControlCategoryAttribute? GetControlCategory(Type type)
         {
-            var attr = type.GetCustomAttribute(typeof(ControlCategoryAttribute)) as ControlCategoryAttribute;
+            var attr = type.GetCustomAttribute(typeof(ControlCategoryAttribute))
+                as ControlCategoryAttribute;
             return attr;
         }
 
@@ -716,23 +530,7 @@ namespace Alternet.UI
         /// <param name="typeCode">Type code.</param>
         public static bool IsTypeCodeNumber(TypeCode typeCode)
         {
-            switch (typeCode)
-            {
-                default:
-                    return false;
-                case TypeCode.SByte:
-                case TypeCode.Byte:
-                case TypeCode.Int16:
-                case TypeCode.UInt16:
-                case TypeCode.Int32:
-                case TypeCode.UInt32:
-                case TypeCode.Int64:
-                case TypeCode.UInt64:
-                case TypeCode.Single:
-                case TypeCode.Double:
-                case TypeCode.Decimal:
-                    return true;
-            }
+            return typeCode >= TypeCode.SByte && typeCode <= TypeCode.Decimal;
         }
 
         /// <summary>
@@ -938,6 +736,35 @@ namespace Alternet.UI
             if (resNameToAssembly.TryGetValue(resName, out var result))
                 return result;
             return null;
+        }
+
+        /// <summary>
+        /// Enumerates events in all descendants of the specified type.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <param name="bindingFlags">Binding flags.</param>
+        /// <returns></returns>
+        public static SortedList<string, EventInfo> GetAllDescendantsEvents(
+            Type type,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
+        {
+            IEnumerable<Type> types = GetTypeDescendants(type);
+
+            var result = new SortedList<string, EventInfo>();
+
+            foreach(var item in types)
+            {
+                IEnumerable<EventInfo> events = EnumEvents(item, false, bindingFlags);
+                foreach(var ev in events)
+                {
+                    var name = ev.Name;
+                    if (result.ContainsKey(name))
+                        continue;
+                    result.Add(name, ev);
+                }
+            }
+
+            return result;
         }
     }
 }
