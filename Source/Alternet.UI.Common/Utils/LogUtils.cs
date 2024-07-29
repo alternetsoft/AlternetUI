@@ -324,6 +324,57 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Begins log to file section.
+        /// </summary>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        /// <param name="title">Section title. Optional.</param>
+        public static void LogToFileBeginSection(string? title = null, string? filename = null)
+        {
+            LogToFile(SectionSeparator, filename);
+
+            if (title is not null)
+            {
+                LogToFile(title, filename);
+                LogToFile(SectionSeparator, filename);
+            }
+        }
+
+        /// <summary>
+        /// Ends log to file section.
+        /// </summary>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        public static void LogToFileEndSection(string? filename = null)
+        {
+            LogToFile(LogUtils.SectionSeparator, filename);
+        }
+
+        /// <summary>
+        /// Logs section using <see cref="LogToFileBeginSection"/>, <see cref="LogToFileEndSection"/>
+        /// and logging <paramref name="obj"/> between these calls.
+        /// </summary>
+        /// <param name="obj">Object to log.</param>
+        /// <param name="title">Section title (optional).</param>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        public static void LogToFileSection(
+            object? obj,
+            string? title = null,
+            string? filename = null)
+        {
+            LogToFileBeginSection(title);
+            try
+            {
+                LogToFile(obj, filename);
+            }
+            finally
+            {
+                LogToFileEndSection();
+            }
+        }
+
+        /// <summary>
         /// Logs message to the specified file or to default application log file.
         /// </summary>
         /// <param name="obj">Log message or object.</param>
@@ -870,9 +921,9 @@ namespace Alternet.UI
             addLogAction("Log OS information", LogUtils.LogOSInformation);
             addLogAction("Log system colors", LogUtils.LogSystemColors);
 
-            addLogAction("Log Embedded Resources in Alternet.UI", () =>
+            addLogAction("Log Embedded Resources in Alternet.UI.Common", () =>
             {
-                const string s = "embres:Alternet.UI?assembly=Alternet.UI";
+                const string s = "embres:Alternet.UI?assembly=Alternet.UI.Common";
 
                 App.Log("Embedded Resource Names added to log file");
 
@@ -920,6 +971,26 @@ namespace Alternet.UI
                 previewerPath = RegistryUtils.ReadUIXmlPreviewPath();
                 App.LogNameValue("UIXmlPreviewPath", previewerPath);
             });
+
+            addLogAction("Log Control descendants events", LogControlDescendantsEvents);
+        }
+
+        /// <summary>
+        /// Logs events for all descendants of the control.
+        /// </summary>
+        public static void LogControlDescendantsEvents()
+        {
+            var events = AssemblyUtils.AllControlEvents;
+
+            App.Log("Control descendants event names added to log file");
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            foreach (var item in events.Keys)
+            {
+                LogUtils.LogToFile(item);
+            }
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
         }
 
         /// <summary>

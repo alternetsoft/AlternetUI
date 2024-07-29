@@ -243,5 +243,141 @@ namespace Alternet.UI
                 return false;
             }
         }
+
+        /// <summary>
+        /// Calls specified action for the each child node of the xml document.
+        /// Root node is ignored.
+        /// </summary>
+        /// <param name="document">Xml document.</param>
+        /// <param name="nodeAction">Action to call.</param>
+        /// <returns></returns>
+        public static bool ForEachChild(XmlDocument document, Func<XmlNode, bool>? nodeAction)
+        {
+            if (nodeAction is null)
+                return false;
+
+            return ProcessRootNode(document.DocumentElement);
+
+            bool ProcessRootNode(XmlNode node)
+            {
+                bool result = false;
+
+                foreach (XmlNode child in node)
+                {
+                    if (ProcessNode(child))
+                    {
+                        result = true;
+                    }
+                }
+
+                return result;
+            }
+
+            bool ProcessNode(XmlNode node)
+            {
+                bool result = nodeAction(node);
+
+                foreach (XmlNode child in node)
+                {
+                    if (ProcessNode(child))
+                    {
+                        result = true;
+                    }
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets node attributes as an array of <see cref="XmlAttribute"/>.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static XmlAttribute[] GetAttributes(XmlNode node)
+        {
+            var attr = node.Attributes;
+            if (attr is null)
+                return Array.Empty<XmlAttribute>();
+            var result = new XmlAttribute[attr.Count];
+            attr.CopyTo(result, 0);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts xml data using the specified parameters.
+        /// </summary>
+        /// <param name="fromStream">Stream with xml data.</param>
+        /// <param name="prm"></param>
+        /// <returns></returns>
+        public static Stream ConvertXml(Stream fromStream, XmlStreamConvertParams prm)
+        {
+            XmlDocument xDoc = new();
+            XmlUtils.Load(xDoc, fromStream);
+
+            bool convertPerformed = false;
+
+            if (prm.RootNodeAction is not null)
+            {
+                convertPerformed = prm.RootNodeAction(xDoc.DocumentElement);
+            }
+
+            if (ForEachChild(xDoc, prm.NodeAction))
+                convertPerformed = true;
+
+            prm.ConvertPerformed = convertPerformed;
+
+            if (convertPerformed || !fromStream.CanSeek)
+            {
+                var memoryStream = new MemoryStream();
+                XmlUtils.Save(xDoc, memoryStream, prm.WriterSettings);
+                memoryStream.Position = 0L;
+                return memoryStream;
+            }
+            else
+            {
+                fromStream.Position = 0L;
+                return fromStream;
+            }
+        }
+
+        /// <summary>
+        /// Specifies parameters for <see cref="ConvertXml"/> method.
+        /// </summary>
+        public class XmlStreamConvertParams
+        {
+            /// <summary>
+            /// Gets or sets function which is called for the root node.
+            /// </summary>
+            public Func<XmlNode, bool>? RootNodeAction;
+
+            /// <summary>
+            /// Gets or sets function which is called for the every node of the xml document.
+            /// </summary>
+            public Func<XmlNode, bool>? NodeAction;
+
+            /// <summary>
+            /// Gets or sets xml writer settings.
+            /// </summary>
+            public XmlWriterSettings? WriterSettings;
+
+            /// <summary>
+            /// Gets or sets <see cref="NodeAction"/> result.
+            /// </summary>
+            public bool ConvertPerformed;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="XmlStreamConvertParams"/> class.
+            /// </summary>
+            /// <param name="nodeAction">Function to call for the every node of the xml document.</param>
+            /// <param name="writerSettings">Xml writer settings.</param>
+            public XmlStreamConvertParams(
+                Func<XmlNode, bool> nodeAction,
+                XmlWriterSettings? writerSettings = null)
+            {
+                NodeAction = nodeAction;
+                WriterSettings = writerSettings;
+            }
+        }
     }
 }

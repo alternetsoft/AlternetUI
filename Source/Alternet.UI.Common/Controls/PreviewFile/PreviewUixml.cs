@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,11 @@ namespace Alternet.UI
     /// </summary>
     public class PreviewUixml : Control, IFilePreview
     {
+        /// <summary>
+        /// Gets or sets whether to log converted uixml.
+        /// </summary>
+        public static bool LogConvertedUixml = false;
+
         /// <summary>
         /// Gets or sets whether to show error dialog when uixml is loaded.
         /// </summary>
@@ -37,6 +43,11 @@ namespace Alternet.UI
         };
 
         private string? fileName;
+
+        static PreviewUixml()
+        {
+            InitDebug();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewUixml"/> class.
@@ -128,6 +139,12 @@ namespace Alternet.UI
             base.OnKeyDown(e);
         }
 
+        [Conditional("DEBUG")]
+        private static void InitDebug()
+        {
+            LogConvertedUixml = true;
+        }
+
         private void ReloadInternal()
         {
             Reset();
@@ -139,6 +156,8 @@ namespace Alternet.UI
             {
                 using var stream = GetFileSystem().OpenRead(fileName!);
 
+                var convertedStream = UixmlLoader.RemoveEventNamesInUixml(stream);
+
                 previewWindow = new();
                 previewWindow.Disposed += PreviewWindow_Disposed;
 
@@ -147,25 +166,35 @@ namespace Alternet.UI
                 var savedInUixmlPreviewerMode = App.Current.InUixmlPreviewerMode;
                 var savedIsDesignMode = UixmlLoader.IsDesignMode;
 
-                try
+                if(convertedStream is not null)
                 {
-                    UixmlLoader.IsDesignMode = true;
-                    UixmlLoader.ShowExceptionDialog = ShowExceptionDialog;
-                    UixmlLoader.DisableComponentInitialization = true;
-                    App.Current.InUixmlPreviewerMode = true;
-                    UixmlLoader.LoadExistingEx(
-                        stream,
-                        previewWindow,
-                        LoaderFlags,
-                        fileName);
-                }
-                finally
-                {
-                    UixmlLoader.IsDesignMode = savedIsDesignMode;
-                    UixmlLoader.ShowExceptionDialog = saved;
-                    UixmlLoader.DisableComponentInitialization = savedDisableComponentInitialization;
-                    App.Current.InUixmlPreviewerMode = savedInUixmlPreviewerMode;
-                    previewWindow.Visible = false;
+                    if (LogConvertedUixml)
+                    {
+                        var str = StreamUtils.StringFromStream(convertedStream);
+                        LogUtils.LogToFileSection(str, fileName);
+                        convertedStream.Position = 0L;
+                    }
+
+                    try
+                    {
+                        UixmlLoader.IsDesignMode = true;
+                        UixmlLoader.ShowExceptionDialog = ShowExceptionDialog;
+                        UixmlLoader.DisableComponentInitialization = true;
+                        App.Current.InUixmlPreviewerMode = true;
+                        UixmlLoader.LoadExistingEx(
+                            convertedStream,
+                            previewWindow,
+                            LoaderFlags,
+                            fileName);
+                    }
+                    finally
+                    {
+                        UixmlLoader.IsDesignMode = savedIsDesignMode;
+                        UixmlLoader.ShowExceptionDialog = saved;
+                        UixmlLoader.DisableComponentInitialization = savedDisableComponentInitialization;
+                        App.Current.InUixmlPreviewerMode = savedInUixmlPreviewerMode;
+                        previewWindow.Visible = false;
+                    }
                 }
 
                 control.Visible = false;

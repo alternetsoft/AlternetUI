@@ -133,8 +133,13 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                     x.Namespace == XamlNamespaces.Xaml2006
                     && x.Name == "Class");
 
-            var xamlType =
-                _configuration.TypeSystem.GetTypeOrNull(((XamlAstTextNode)classDirective.Values[0]).Text);
+            IXamlType xamlType = null;
+
+            if (classDirective is not null)
+            {
+                xamlType =
+                    _configuration.TypeSystem.GetTypeOrNull(((XamlAstTextNode)classDirective.Values[0]).Text);
+            }
 
             xamlType ??= _configuration.TypeSystem.FindType(typeof(Window));
 

@@ -41,6 +41,8 @@ namespace PreviewSample
 
         public PreviewSampleWindow()
         {
+            Padding = 10;
+
             /*
                 PreviewUixml.ShowExceptionDialog = true;
                 PreviewUixml.LoaderFlags =
@@ -77,10 +79,19 @@ namespace PreviewSample
                 @"Source\Samples\ControlsSampleDll\Pages\");
             uixmlFolder = Path.GetFullPath(uixmlFolder);
 
+            FileListBox.AdditionalSpecialFolders = new();
+
             if (Directory.Exists(uixmlFolder))
             {
-                FileListBox.AdditionalSpecialFolders = new();
                 FileListBox.AdditionalSpecialFolders.Add(new(uixmlFolder, "UIXML Samples"));
+            }
+
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+            foreach (DriveInfo d in allDrives)
+            {
+                if(Directory.Exists(d.Name))
+                    FileListBox.AdditionalSpecialFolders.Add(new(d.Name, $"Drive {d.Name}"));
             }
 
             fileListBox.SelectionChanged += FileListBox_SelectionChanged;
@@ -98,8 +109,6 @@ namespace PreviewSample
             }
 
             preview.RegisterDefaultPreviewControls();
-
-            /*preview.RegisterPreview(new(PreviewForm.IsSupportedFile, PreviewForm.CreatePreviewControl));*/
 
         }
 
