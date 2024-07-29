@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,7 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="T">Type of the enum.</typeparam>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T GetMaxValue<T>()
             where T : struct, Enum
         {
@@ -46,6 +48,7 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="T">Type of the enum.</typeparam>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetMaxValueAsInt<T>()
         {
             return Enum.GetValues(typeof(T)).Cast<int>().Last();
