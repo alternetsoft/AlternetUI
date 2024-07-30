@@ -20,11 +20,12 @@ namespace Alternet.UI
             @"</Window>";
 
         /// <summary>
-        /// Removes event assignments from the uixml.
+        /// Prepares uixml stream for the preview. This method demoves event assignments from the uixml
+        /// and makes other preview related changes.
         /// </summary>
         /// <param name="stream">Stream with uixml data.</param>
-        /// <returns></returns>
-        public static Stream? RemoveEventNamesInUixml(Stream stream)
+        /// <returns>Stream with changed uixml.</returns>
+        public static Stream? PrepareUixmlStreamForPreview(Stream stream)
         {
             bool unsupportedFormat = false;
 
@@ -50,7 +51,12 @@ namespace Alternet.UI
                     Set("Window");
                 else
                 {
-                    unsupportedFormat = true;
+                    var descendants = AssemblyUtils.AllControlDescendants;
+                    var fullName = "Alternet.UI." + name;
+                    if(descendants.ContainsKey(fullName))
+                        Set(fullName);
+                    else
+                        unsupportedFormat = true;
                 }
 
                 void Set(string xClass)

@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewUixmlSplitted"/> class.
         /// </summary>
         public PreviewUixmlSplitted()
-            : base(new PreviewUixml(), DefaultCreateTextPreview())
+            : base(new PreviewUixml(), DefaultCreateTextPreview(), false)
         {
         }
 

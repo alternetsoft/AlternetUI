@@ -156,7 +156,7 @@ namespace Alternet.UI
             {
                 using var stream = GetFileSystem().OpenRead(fileName!);
 
-                var convertedStream = UixmlLoader.RemoveEventNamesInUixml(stream);
+                var convertedStream = UixmlLoader.PrepareUixmlStreamForPreview(stream);
 
                 previewWindow = new();
                 previewWindow.Disposed += PreviewWindow_Disposed;

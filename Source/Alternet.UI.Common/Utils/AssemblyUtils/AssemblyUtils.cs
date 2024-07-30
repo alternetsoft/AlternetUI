@@ -20,6 +20,24 @@ namespace Alternet.UI
         private static AdvDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
         private static SortedList<string, EventInfo>? allControlEvents;
+        private static SortedList<string, Type>? allControlDescendants;
+
+        /// <summary>
+        /// Gets or sets list of all <see cref="Control"/> descendants.
+        /// </summary>
+        public static SortedList<string, Type> AllControlDescendants
+        {
+            get
+            {
+                allControlDescendants ??= GetSortedTypeDescendantsWithFullNames(typeof(Control));
+                return allControlDescendants;
+            }
+
+            set
+            {
+                allControlDescendants = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets list of events for all <see cref="Control"/>
@@ -672,12 +690,7 @@ namespace Alternet.UI
         /// Returns list of types which descend from specified type.
         /// </summary>
         /// <param name="type">Base type.</param>
-        /// <param name="ascending">Sort result ascending by type name.</param>
-        /// <param name="isPublic">Whether to return only public types.</param>
-        public static IEnumerable<Type> GetTypeDescendants(
-            Type type,
-            bool ascending = true,
-            bool isPublic = true)
+        public static IEnumerable<Type> GetTypeDescendants(Type type)
         {
             List<Type> result = new();
 
@@ -688,16 +701,29 @@ namespace Alternet.UI
             foreach (TypeInfo typeInfo in definedTypes)
             {
                 var resultType = typeInfo.AsType();
-                if (resultType.IsAbstract || (resultType.IsPublic != isPublic))
+                if (resultType.IsAbstract || !resultType.IsPublic)
                     continue;
                 if (TypeIsDescendant(resultType, type))
                     result.Add(resultType);
             }
 
-            if (!ascending)
-                return result;
+            return result;
+        }
 
-            result.Sort(StringUtils.ComparerObjectUsingToString);
+        /// <summary>
+        /// Returns list of types which descend from specified type.
+        /// Result is sorted by <see cref="Type.FullName"/> and uses it as keys.
+        /// </summary>
+        /// <param name="type">Base type.</param>
+        /// <returns></returns>
+        public static SortedList<string, Type> GetSortedTypeDescendantsWithFullNames(Type type)
+        {
+            SortedList<string, Type> result = new();
+            var types = GetTypeDescendants(type);
+            foreach(var item in types)
+            {
+                result.Add(item.FullName, item);
+            }
 
             return result;
         }
