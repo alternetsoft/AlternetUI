@@ -1,11 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\Samples\CommonData\TargetFrameworks.props" />
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.618-beta" />
+    <None Remove="Window1.uixml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Alternet.UI" Version="0.9.613-beta" />
   </ItemGroup>
 </Project>

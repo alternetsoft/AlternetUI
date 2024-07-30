@@ -28,7 +28,7 @@ namespace Alternet.UI
         {
             if (!condition)
             {
-                throw new TException();
+                throw BaseObject.WrapException(new TException());
             }
         }
     }

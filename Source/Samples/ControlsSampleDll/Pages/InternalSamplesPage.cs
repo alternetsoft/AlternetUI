@@ -69,6 +69,7 @@ namespace ControlsSample
             Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
             AddIfDebug("Test Page", () => new SkiaDrawingWindow());
+            Add("Preview File Sample", () => new PreviewSample.PreviewSampleWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.ExplorerMainWindow());
             Add("Printing Sample", () => new PrintingSample.PrintingMainWindow());
             Add("Menu Sample", () => new MenuSample.MenuMainWindow());

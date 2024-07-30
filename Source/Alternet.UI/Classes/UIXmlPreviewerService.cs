@@ -157,12 +157,19 @@ namespace Alternet.UI.Integration
         private Control LoadControlFromUixml(IDictionary<string, object> parameters)
         {
             // Load bytes to avoid locking the file.
-            var appAssembly = Assembly.Load(File.ReadAllBytes((string)parameters["AssemblyPath"]));
+            // var appAssembly = Assembly.Load(File.ReadAllBytes((string)parameters["AssemblyPath"]));
             Control control;
-            using (var stream = new MemoryStream(Encoding.Default.GetBytes((string)parameters["Uixml"])))
-            {
-                control = (Control)new UixmlLoader().Load(stream, appAssembly);
-            }
+
+            using var stream = new MemoryStream(Encoding.Default.GetBytes((string)parameters["Uixml"]));
+
+            var convertedStream = UixmlLoader.PrepareUixmlStreamForPreview(stream);
+
+            if (convertedStream is null)
+                return new Window();
+
+            control = (Control)new UixmlLoader().LoadExisting(convertedStream, new Window());
+
+            //control = (Control)new UixmlLoader().Load(stream, appAssembly);
 
             return control;
         }

@@ -16,22 +16,88 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         private static CommandLineArgs commandLineArgs;
         private static Engine engine;
 
-        private static Assembly interfacesUIAssembly;
+        /*private static Assembly interfacesUIAssembly;
         private static Assembly commonUIAssembly;
-        private static Assembly alternetUIAssembly;
+        private static Assembly alternetUIAssembly;*/
+
+        public static string[] FillSimpleParams(string netVersion, string dllExt = "dll")
+        {
+            var appFolder = CommonUtils.GetAppFolder();
+            var simpleAppFolder = Path.Combine(appFolder, @"../../../../../../Tests/SimpleApp/");
+            simpleAppFolder = Path.GetFullPath(simpleAppFolder);
+
+            if (Directory.Exists(simpleAppFolder))
+            {
+            }
+
+            string[] result = new string[7];
+
+            result[0] = "--transport";
+
+            // file:///e://source//AlternetUIApp3//MainWindow.uixml
+            result[1] = $"file:///{simpleAppFolder}MainWindow.uixml";
+            result[1] = result[1].Replace('\\', '/');
+
+            result[2] = "--html-url";
+
+            result[3] = @"http://127.0.0.1:8081";
+
+            result[4] = "--method";
+
+            result[5] = "html";
+
+            // E:\\source\\AlternetUIApp3\\bin\\Debug\\net6.0\\AlternetUIApp3.dll
+            result[6] = $"{simpleAppFolder}bin\\Debug\\{netVersion}\\AlternetUIApp3.{dllExt}";
+
+            return result;
+        }
+
+        public static void LogToFile(object obj = null)
+        {
+            if (!File.Exists(@"e:\logToFile.on"))
+                return;
+
+            var msg = obj?.ToString() ?? string.Empty;
+            var filename = @"e:\UIXMLHostApp.log";
+
+            string contents = $"{msg}{Environment.NewLine}";
+            File.AppendAllText(filename, contents);
+        }
 
         [STAThread]
         public static void Main(string[] cmdline)
         {
-            Logger.Instance.Information("========");
-            Logger.Instance.Information("Parameters:");
+            if(cmdline.Length > 0)
+            {
+                if (cmdline[0] == "net6simple")
+                {
+                    cmdline = FillSimpleParams("net6.0");
+                }
+                else
+                if(cmdline[0] == "net462simple")
+                {
+                    cmdline = FillSimpleParams("net462");
+                }
+            }
+
+            Alternet.UI.Integration.Log.Write = (s) =>
+            {
+                Console.WriteLine(s);
+                Debug.WriteLine(s);
+                LogToFile(s);
+            };
+
+            Log.Information("========");
+            Log.Information("Parameters:");
+
+            if (File.Exists(@"e:\logToFile.on"))
+                Log.VerboseLogged = true;
+
             foreach (var s in cmdline)
             {
-                Logger.Instance.Information(s);
+                Log.Information(s);
             }
-            Logger.Instance.Information("========");
-
-            //System.Windows.Forms.MessageBox.Show("Attach.");
+            Log.Information("========");
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
@@ -39,20 +105,20 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
             dllPath = Path.GetDirectoryName(commandLineArgs.AppPath);
 
-            WindowsNativeModulesLocator.SetNativeModulesDirectory();
+            /*WindowsNativeModulesLocator.SetNativeModulesDirectory();*/
 
             var transport = CreateTransport(commandLineArgs);
             if (transport is ITransportWithEnforcedMethod enforcedMethod)
                 commandLineArgs.Method = enforcedMethod.PreviewerMethod;
             transport.OnException += (t, e) => Die(e.ToString());
 
-            interfacesUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Interfaces.dll"));
+            /*interfacesUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Interfaces.dll"));*/
 
             /*AppDomain.CurrentDomain.AssemblyResolve += AppDomain_AssemblyResolve;*/
 
-            commonUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Common.dll"));
+            /*commonUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.Common.dll"));*/
 
-            alternetUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.dll"));
+            /*alternetUIAssembly = Assembly.LoadFile(GetUIAssemblyPath("Alternet.UI.dll"));*/
 
 #if NETCOREAPP
             /*SetDotNetCoreNativeDllImportResolver(alternetUIAssembly);*/
@@ -65,7 +131,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             propInfo?.SetValue(null, dllPath);*/
 
 
-            /*var alternetUIAssembly = typeof(Alternet.UI.Application).Assembly;*/
+            var alternetUIAssembly = typeof(Alternet.UI.Application).Assembly;
 
             engine = new Engine(transport, commandLineArgs.SessionId, alternetUIAssembly);
             engine.Run();
@@ -86,7 +152,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         
         static IntPtr palDll = default;
 
-        private static void SetDotNetCoreNativeDllImportResolver(Assembly alternetUIAssembly)
+        internal static void SetDotNetCoreNativeDllImportResolver(Assembly alternetUIAssembly)
         {
             NativeLibrary.SetDllImportResolver(alternetUIAssembly,
                 (libraryName, assembly, searchPath) =>
@@ -131,9 +197,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         {
             if (error != null)
             {
-                Logger.Instance.Fatal(error);
-                Console.WriteLine(error);
-                Debug.WriteLine(error);
+                Log.Error(error);
             }
 
             Environment.Exit(1);
@@ -141,22 +205,22 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
         private static void PrintUsage()
         {
-            Console.Error.WriteLine("Usage: --transport transport_spec --session-id sid --method method app");
-            Console.Error.WriteLine();
-            Console.Error.WriteLine("--transport: transport used for communication with the IDE");
-            Console.Error.WriteLine("    'tcp-bson' (e. g. 'tcp-bson://127.0.0.1:30243/') - TCP-based transport with BSON serialization of messages defined in AlternetUI.Remote.Protocol");
-            Console.Error.WriteLine("    'file' (e. g. 'file://C://my/file.xaml' - pseudo-transport that triggers XAML updates on file changes, useful as a standalone previewer tool, always uses http preview method");
-            Console.Error.WriteLine();
-            Console.Error.WriteLine("--session-id: session id to be sent to IDE process");
-            Console.Error.WriteLine();
-            Console.Error.WriteLine("--method: the way the XAML is displayed");
-            Console.Error.WriteLine("    'alternet-ui-remote' - binary image is sent via transport connection in FrameMessage");
-            Console.Error.WriteLine("    'win32' - XAML is displayed in win32 window (handle could be obtained from UpdateXamlResultMessage), IDE is responsible to use user32!SetParent");
-            Console.Error.WriteLine("    'html' - Previewer starts an HTML server and displays XAML previewer as a web page");
-            Console.Error.WriteLine();
-            Console.Error.WriteLine("--html-url - endpoint for HTML method to listen on, e. g. http://127.0.0.1:8081");
-            Console.Error.WriteLine();
-            Console.Error.WriteLine("Example: --transport tcp-bson://127.0.0.1:30243/ --session-id 123 --method alternet-ui-remote MyApp.exe");
+            Log.Information("Usage: --transport transport_spec --session-id sid --method method app");
+            Log.Information();
+            Log.Information("--transport: transport used for communication with the IDE");
+            Log.Information("    'tcp-bson' (e. g. 'tcp-bson://127.0.0.1:30243/') - TCP-based transport with BSON serialization of messages defined in AlternetUI.Remote.Protocol");
+            Log.Information("    'file' (e. g. 'file://C://my/file.xaml' - pseudo-transport that triggers XAML updates on file changes, useful as a standalone previewer tool, always uses http preview method");
+            Log.Information();
+            Log.Information("--session-id: session id to be sent to IDE process");
+            Log.Information();
+            Log.Information("--method: the way the XAML is displayed");
+            Log.Information("    'alternet-ui-remote' - binary image is sent via transport connection in FrameMessage");
+            Log.Information("    'win32' - XAML is displayed in win32 window (handle could be obtained from UpdateXamlResultMessage), IDE is responsible to use user32!SetParent");
+            Log.Information("    'html' - Previewer starts an HTML server and displays XAML previewer as a web page");
+            Log.Information();
+            Log.Information("--html-url - endpoint for HTML method to listen on, e. g. http://127.0.0.1:8081");
+            Log.Information();
+            Log.Information("Example: --transport tcp-bson://127.0.0.1:30243/ --session-id 123 --method alternet-ui-remote MyApp.exe");
             Console.Error.Flush();
             Die(null);
         }
@@ -205,7 +269,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             var transport = args.Transport;
             if (transport.Scheme == "tcp-bson")
             {
-                return new BsonTcpTransport().Connect(IPAddress.Parse(transport.Host), transport.Port).Result;
+                return new BsonTcpTransport()
+                    .Connect(IPAddress.Parse(transport.Host), transport.Port).Result;
             }
 
             if (transport.Scheme == "file")
@@ -218,9 +283,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Logger.Instance.Fatal(e.ExceptionObject.ToString());
-            Console.WriteLine(e.ExceptionObject.ToString());
-            Debug.WriteLine(e.ExceptionObject.ToString());
+            Log.Error(e.ExceptionObject.ToString());
         }
 
         internal static class Methods

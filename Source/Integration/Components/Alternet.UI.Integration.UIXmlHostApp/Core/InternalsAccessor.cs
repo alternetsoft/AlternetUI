@@ -15,12 +15,12 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         public static dynamic CreateObjectWithParams(Assembly assembly, string typeName, object?[]? parameters = null)
         {
-            Logger.Instance.Information("========");
-            Logger.Instance.Information("InternalsAccessor.CreateObject");
-            Logger.Instance.Information($"Assembly: {assembly.Location}");
-            Logger.Instance.Information($"typeName: {typeName}");
+            Log.Information("========");
+            Log.Information("InternalsAccessor.CreateObject");
+            Log.Information($"Assembly: {assembly.Location}");
+            Log.Information($"typeName: {typeName}");
 
-            Logger.Instance.Information("========");
+            Log.Information("========");
             var type = assembly.GetType(typeName);
 
             object? instance = null;

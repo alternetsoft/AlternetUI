@@ -1,3 +1,15 @@
+# 0.9.618 (2024 July 30)
+
+- Different fixes in uixml preview.
+- Display: Fixed exception in some cases.
+- FileListBox: HiddenSpecialFolders, VisibleSpecialFolders can be set now and are correctly handled.
+- FileListBox: Added AdditionalSpecialFolders, AddDrivesToRootFolder, DriveItemTemplate.
+- FileListBox: Hide some special folders from the root folder.
+- FileListBox: If SelectedFolder is assigned to null, root folder is loaded.
+- Added XmlUtils class.
+- AssemblyUtils: EnumEvents, EnumProps speed up. As a result - PropertyGrid loads items faster.
+- PreviewFileSplitted: 2nd panel can be docked to right or bottom.
+
 # 0.9.617 (2024 July 25)
 
 - Added PreviewSample project.

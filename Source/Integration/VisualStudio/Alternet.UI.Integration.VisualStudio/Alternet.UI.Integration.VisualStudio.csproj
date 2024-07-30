@@ -118,6 +118,7 @@
   </Target>
   <!-- ========================================== -->
   <PropertyGroup>
+	<HAP>..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0\</HAP>
     <VsTargetVersion>VS2022</VsTargetVersion>
     <OutputPath>bin\$(VsTargetVersion)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(VsTargetVersion)\$(Configuration)\</IntermediateOutputPath>
@@ -145,6 +146,7 @@
       <Version>0.7.124</Version>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
     <Content Include="..\..\..\Licenses\License.txt">
       <Link>License.txt</Link>
@@ -152,6 +154,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
 
+    <!--
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.pdb">
       <Link>UIXmlHostApp\$(TargetFramework46Version)\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -175,8 +178,10 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    -->
 
-    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net8.0-windows\**\*.pdb">
+    <Content Include="$(HAP)**\*.*"
+             Exclude="$(HAP)\**\*.so;$(HAP)\**\*.dylib;$(HAP)\**\*.pdb;$(HAP)\*.xml;$(HAP)\runtimes\win-x86\native\*.*;$(HAP)\runtimes\win-arm64\native\*.*;">
       <Link>UIXmlHostApp\net8.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

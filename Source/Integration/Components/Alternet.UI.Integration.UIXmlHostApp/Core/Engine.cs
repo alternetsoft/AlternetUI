@@ -8,14 +8,17 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 {
     public class Engine
     {
-        private IAlternetUIRemoteTransportConnection transport;
-        private string sessionId;
+        private readonly IAlternetUIRemoteTransportConnection transport;
+        private readonly string sessionId;
         private readonly Assembly alternetUIAssembly;
+        private readonly Queue<Action> actions = new();
+
         private dynamic previewerService;
 
-        private Queue<Action> actions = new Queue<Action>();
-
-        public Engine(IAlternetUIRemoteTransportConnection transport, string sessionId, Assembly alternetUIAssembly)
+        public Engine(
+            IAlternetUIRemoteTransportConnection transport,
+            string sessionId,
+            Assembly alternetUIAssembly)
         {
             this.transport = transport;
             this.sessionId = sessionId;
@@ -34,9 +37,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         public void OnUixmlUpdateFailure(IDictionary<string, object> parameters)
         {
             var e = (Exception)parameters["Exception"];
-            Logger.Instance.Error(e.ToString());
-            Console.WriteLine(e.ToString());
-            Debug.WriteLine(e.ToString());
+            Log.Error(e.ToString());
             transport.Send(new UpdateXamlResultMessage
             {
                 Error = (string)parameters["Message"],
@@ -67,7 +68,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             transport.OnMessage += OnTransportMessage;
             transport.Start();
-            Logger.Instance.Information("Sending StartDesignerSessionMessage");
+            Log.Information("Sending StartDesignerSessionMessage");
             transport.Send(new StartDesignerSessionMessage { SessionId = sessionId });
 
             previewerService.Run();
@@ -95,14 +96,14 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         {
             if (obj is UpdateXamlMessage uixml)
             {
-                Logger.Instance.Information("========");
-                Logger.Instance.Information("OnTransportMessage");
+                Log.Information("========");
+                Log.Information("OnTransportMessage");
 
-                Logger.Instance.Information($"Uixml: {uixml.Xaml}");
-                Logger.Instance.Information($"AssemblyPath: {uixml.AssemblyPath}");
-                Logger.Instance.Information($"OwnerWindowX: {uixml.OwnerWindowX}");
-                Logger.Instance.Information($"OwnerWindowY: {uixml.OwnerWindowY}");
-                Logger.Instance.Information("========");
+                Log.Information($"Uixml: {uixml.Xaml}");
+                Log.Information($"AssemblyPath: {uixml.AssemblyPath}");
+                Log.Information($"OwnerWindowX: {uixml.OwnerWindowX}");
+                Log.Information($"OwnerWindowY: {uixml.OwnerWindowY}");
+                Log.Information("========");
 
                 previewerService.ProcessUixmlUpdate(
                     new Dictionary<string, object>

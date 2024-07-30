@@ -17,6 +17,25 @@ namespace Alternet.UI
         private static ConcurrentStack<string>? pushedFolders;
 
         /// <summary>
+        /// Gets whether directory is empty (contains no files or sub-folders).
+        /// </summary>
+        /// <param name="path">Path to directory.</param>
+        /// <returns></returns>
+        public static bool DirectoryIsEmpty(string path) => !DirectoryHasEntries(path);
+
+        /// <summary>
+        /// Gets whether directory is not empty (contains files or sub-folders).
+        /// </summary>
+        /// <param name="path">Path to directory.</param>
+        /// <returns></returns>
+        public static bool DirectoryHasEntries(string path)
+        {
+            if (!Directory.Exists(path))
+                return false;
+            return Directory.EnumerateFileSystemEntries(path).Any();
+        }
+
+        /// <summary>
         /// Saves current directory path to memory and changes it to the specified path.
         /// Use <see cref="PopDirectory"/> to restore saved folder.
         /// This method does the same as console command "pushd".

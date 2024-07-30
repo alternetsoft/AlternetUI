@@ -114,7 +114,12 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             set { }
         }
 
-        public void ParseAndCompile(string xaml, string baseUri, IFileSource fileSource, IXamlTypeBuilder<IXamlILEmitter> tb, IXamlType overrideRootType)
+        public void ParseAndCompile(
+            string xaml,
+            string baseUri,
+            IFileSource fileSource,
+            IXamlTypeBuilder<IXamlILEmitter> tb,
+            IXamlType overrideRootType)
         {
             var parsed = XDocumentXamlParser.Parse(xaml, new Dictionary<string, string>
             {
@@ -128,11 +133,19 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                     x.Namespace == XamlNamespaces.Xaml2006
                     && x.Name == "Class");
 
+            IXamlType xamlType = null;
+
+            if (classDirective is not null)
+            {
+                xamlType =
+                    _configuration.TypeSystem.GetTypeOrNull(((XamlAstTextNode)classDirective.Values[0]).Text);
+            }
+
+            xamlType ??= _configuration.TypeSystem.FindType(typeof(Window));
+
             var rootType =
                 classDirective != null ?
-                    new XamlAstClrTypeReference(classDirective,
-                        _configuration.TypeSystem.GetType(((XamlAstTextNode)classDirective.Values[0]).Text),
-                        false) :
+                    new XamlAstClrTypeReference(classDirective, xamlType, false) :
                     TypeReferenceResolver.ResolveType(CreateTransformationContext(parsed, true),
                         (XamlAstXmlTypeReference)rootObject.Type, true);
             

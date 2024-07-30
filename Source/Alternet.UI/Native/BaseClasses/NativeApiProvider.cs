@@ -61,12 +61,9 @@ namespace Alternet.UI.Native
             if (!initialized)
             {
 #if NETCOREAPP
-                if (UIXmlPreviewLoader.SetDllResolver)
-                {
-                    NativeLibrary.SetDllImportResolver(
-                        typeof(NativeApiProvider).Assembly,
-                        ImportResolver);
-                }
+                NativeLibrary.SetDllImportResolver(
+                    typeof(NativeApiProvider).Assembly,
+                    ImportResolver);
 #else
                 WindowsNativeModulesLocator.SetNativeModulesDirectory();
 #endif

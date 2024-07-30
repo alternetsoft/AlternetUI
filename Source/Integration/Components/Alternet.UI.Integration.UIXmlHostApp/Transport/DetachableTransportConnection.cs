@@ -21,7 +21,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             _inner = null;
         }
 
-        public void FireOnMessage(IAlternetUIRemoteTransportConnection transport, object obj) => OnMessage?.Invoke(transport, obj);
+        public void FireOnMessage(IAlternetUIRemoteTransportConnection transport, object obj)
+            => OnMessage?.Invoke(transport, obj);
         
         public Task Send(object data)
         {

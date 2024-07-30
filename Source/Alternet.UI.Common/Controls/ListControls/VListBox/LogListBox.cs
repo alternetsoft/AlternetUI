@@ -181,13 +181,25 @@ namespace Alternet.UI
         /// Same as <see cref="App.Log"/> but
         /// uses only this control for the logging.
         /// </summary>
-        /// <param name="message">Message text.</param>
+        /// <param name="obj">Message text.</param>
         /// <param name="kind">Message kind.</param>
-        public virtual LogListBoxItem Log(string? message, LogItemKind kind = LogItemKind.Information)
+        public virtual LogListBoxItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
-            var result = LogInternal(message, kind);
+            var result = LogInternal(obj, kind);
             LogRefresh();
             return result;
+        }
+
+        /// <summary>
+        /// Calls <see cref="Log"/> if <paramref name="condition"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="obj">Message text.</param>
+        /// <param name="kind">Message kind.</param>
+        /// <param name="condition">Whether to log message.</param>
+        public void LogIf(object? obj, bool condition, LogItemKind kind = LogItemKind.Information)
+        {
+            if(condition)
+                Log(obj, kind);
         }
 
         /// <summary>
@@ -286,8 +298,10 @@ namespace Alternet.UI
             LogRefresh();
         }
 
-        private LogListBoxItem LogInternal(string? message, LogItemKind kind)
+        private LogListBoxItem LogInternal(object? obj, LogItemKind kind)
         {
+            var message = obj?.ToString() ?? string.Empty;
+
             if (IsDisposed)
                 return new();
 

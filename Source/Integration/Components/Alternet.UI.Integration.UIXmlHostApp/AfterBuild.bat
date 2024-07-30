@@ -2,7 +2,7 @@ SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
 
-set BIN=%SCRIPT_HOME%\bin\Debug\net8.0-windows
+set BIN=%SCRIPT_HOME%\bin\Debug\net8.0
 
 set DEST=C:\AlternetUI\UIXmlHostApp
 

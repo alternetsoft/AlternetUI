@@ -24,11 +24,12 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class.
         /// </summary>
         /// <param name="centerPanel">Preview control which is docked in the center.</param>
-        /// <param name="rightPanel">Preview control which is docked to the right.</param>
-        public PreviewFileSplitted(IFilePreview centerPanel, IFilePreview rightPanel)
+        /// <param name="secondPanel">Second preview control.</param>
+        /// <param name="isRight">Whether second panel is shown in the right side bar.</param>
+        public PreviewFileSplitted(IFilePreview centerPanel, IFilePreview secondPanel, bool isRight)
         {
             this.first = centerPanel;
-            this.second = rightPanel;
+            this.second = secondPanel;
             panel.Parent = this;
             panel.DoInsideLayout(() =>
             {
@@ -36,9 +37,13 @@ namespace Alternet.UI
                 panel.BottomVisible = false;
                 panel.LeftVisible = false;
                 panel.RightPanel.Width = 300;
+                panel.BottomPanel.Height = 300;
             });
             first.Control.Parent = panel.CenterPanel;
-            second.Control.Parent = panel.RightPanel;
+            if(isRight)
+                SecondPanelToRight();
+            else
+                SecondPanelToBottom();
         }
 
         /// <summary>
@@ -72,5 +77,25 @@ namespace Alternet.UI
         }
 
         Control IFilePreview.Control => this;
+
+        /// <summary>
+        /// Moves second preview panel to the right side bar.
+        /// </summary>
+        public virtual void SecondPanelToRight()
+        {
+            panel.BottomVisible = false;
+            second.Control.Parent = panel.RightPanel;
+            panel.RightVisible = true;
+        }
+
+        /// <summary>
+        /// Moves second preview panel to the bottom bar.
+        /// </summary>
+        public virtual void SecondPanelToBottom()
+        {
+            panel.RightVisible = false;
+            second.Control.Parent = panel.BottomPanel;
+            panel.BottomVisible = true;
+        }
     }
 }

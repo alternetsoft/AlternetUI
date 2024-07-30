@@ -1,25 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-<Import Project="..\..\..\Version\Version.props" />
-<Import Project="..\..\..\Version\TargetFrameworks.props" />
-<Import Project="..\..\..\Keys\Keys.props" />
 
   <PropertyGroup>
+      <ApplicationManifest>app.manifest</ApplicationManifest>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <UseWindowsForms>true</UseWindowsForms>
-    <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\..\</AlternetUIPath>
+    <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\..\</AlternetUIPath>	
   </PropertyGroup>
 
-  <!-- <Import Project="$(MSBuildProjectDirectory)\..\..\..\Build\Alternet.UI.Copy.props"/> -->
-
-
-      <PropertyGroup>
-        <TargetFrameworks>$(UIIntegrationUIXmlHostAppTargetFrameworks)</TargetFrameworks>
-      </PropertyGroup>
+  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props"/>
+    
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
-    <PackageReference Include="Serilog" Version="4.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="ExposedObject" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>

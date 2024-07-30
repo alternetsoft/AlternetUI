@@ -16,22 +16,39 @@ namespace Alternet.UI
     public class FileListBox : VListBox
     {
         /// <summary>
-        /// Gets or sets list of special folder which are hidden.
-        /// </summary>
-        public static readonly List<Environment.SpecialFolder>? HiddenSpecialFolders;
-
-        /// <summary>
-        /// Gets or sets list of visible special folders. If specified, only these
-        /// folders will be visible on the root level.
-        /// </summary>
-        public static readonly List<Environment.SpecialFolder>? VisibleSpecialFolders;
-
-        /// <summary>
         /// Gets or sets global <see cref="FolderInfoItem"/> for the file or folder.
         /// <see cref="FolderInfoItem"/> allows to specify icon, custom title
         /// and some other information.
         /// </summary>
         public static readonly Dictionary<string, FolderInfoItem>? FolderInfo;
+
+        /// <summary>
+        /// Gets or sets list of special folder which are hidden.
+        /// </summary>
+        public static List<Environment.SpecialFolder>? HiddenSpecialFolders;
+
+        /// <summary>
+        /// Gets or sets list of visible special folders. If specified, only these
+        /// folders will be visible on the root level.
+        /// </summary>
+        public static List<Environment.SpecialFolder>? VisibleSpecialFolders;
+
+        /// <summary>
+        /// Gets or sets list of additional special folders. If specified, these
+        /// folders will be added to the list of root level folders.
+        /// </summary>
+        public static List<NewItemInfo>? AdditionalSpecialFolders;
+
+        /// <summary>
+        /// Gets or sets whether to add all drives (c:\, d:\, etc.) to the list of the special folders.
+        /// </summary>
+        public static bool AddDrivesToRootFolder = true;
+
+        /// <summary>
+        /// Gets or sets template for the drive item when it is added to the list of the special folders.
+        /// Default is "Drive {0}".
+        /// </summary>
+        public static string DriveItemTemplate = "Drive {0}";
 
         /// <summary>
         /// Gets or sets default svg image used for the "file" items.
@@ -125,7 +142,7 @@ namespace Alternet.UI
 
             set
             {
-                if (selectedFolder == value)
+                if (selectedFolder == value && value is not null)
                     return;
                 App.LogIf($"FileListBox.SelectedFolder = {value}", false);
                 var oldSelectedFolder = selectedFolder;
@@ -344,6 +361,26 @@ namespace Alternet.UI
         /// <summary>
         /// Adds folder to the control.
         /// </summary>
+        /// <param name="item">Folder information.</param>
+        /// <returns></returns>
+        public virtual bool AddFolder(NewItemInfo item)
+        {
+            return AddFolder(item.Title, item.Path, item.Image);
+        }
+
+        /// <summary>
+        /// Adds file to the control.
+        /// </summary>
+        /// <param name="item">File information.</param>
+        /// <returns></returns>
+        public virtual bool AddFile(NewItemInfo item)
+        {
+            return AddFile(item.Title, item.Path, item.Image);
+        }
+
+        /// <summary>
+        /// Adds folder to the control.
+        /// </summary>
         /// <param name="title">Optional title of the folder.</param>
         /// <param name="path">Path to folder.</param>
         /// <param name="image">Folder image. If not specified, default image will be used.</param>
@@ -374,8 +411,11 @@ namespace Alternet.UI
         /// enumeration.
         /// </summary>
         /// <param name="folder">Special folder kind.</param>
+        /// <param name="defaultTitle">Default folder title.</param>
         /// <returns></returns>
-        public virtual bool AddSpecialFolder(Environment.SpecialFolder folder)
+        public virtual bool AddSpecialFolder(
+            Environment.SpecialFolder folder,
+            string? defaultTitle = null)
         {
             try
             {
@@ -387,7 +427,7 @@ namespace Alternet.UI
 
                 var path = Environment.GetFolderPath(folder);
 
-                string? title = null;
+                string? title = defaultTitle;
                 SvgImage? image = null;
 
                 if(FolderInfo is not null)
@@ -422,63 +462,41 @@ namespace Alternet.UI
                 return;
             }
 
+            if (AddDrivesToRootFolder)
+            {
+                DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+                foreach (DriveInfo d in allDrives)
+                {
+                    if (!Directory.Exists(d.Name))
+                        continue;
+                    var template = string.Format(DriveItemTemplate, d.Name);
+                    AddFolder(new(d.Name, template));
+                }
+            }
+
             if (VisibleSpecialFolders is not null)
             {
                 foreach(var item in VisibleSpecialFolders)
                     AddSpecialFolder(item);
+                return;
             }
 
             AddSpecialFolder(Environment.SpecialFolder.Desktop);
-            AddSpecialFolder(Environment.SpecialFolder.MyComputer);
-            AddSpecialFolder(Environment.SpecialFolder.MyDocuments);
-            AddSpecialFolder(Environment.SpecialFolder.MyMusic);
-            AddSpecialFolder(Environment.SpecialFolder.MyPictures);
-            AddSpecialFolder(Environment.SpecialFolder.MyVideos);
+            AddSpecialFolder(Environment.SpecialFolder.MyComputer, "My Computer");
+            AddSpecialFolder(Environment.SpecialFolder.MyDocuments, "Documents");
+            AddSpecialFolder(Environment.SpecialFolder.MyMusic, "Music");
+            AddSpecialFolder(Environment.SpecialFolder.MyPictures, "Pictures");
+            AddSpecialFolder(Environment.SpecialFolder.MyVideos, "Videos");
 
-            AddSpecialFolder(Environment.SpecialFolder.ApplicationData);
-            AddSpecialFolder(Environment.SpecialFolder.CommonApplicationData);
-            AddSpecialFolder(Environment.SpecialFolder.LocalApplicationData);
-            AddSpecialFolder(Environment.SpecialFolder.Cookies);
             AddSpecialFolder(Environment.SpecialFolder.Favorites);
-            AddSpecialFolder(Environment.SpecialFolder.History);
-            AddSpecialFolder(Environment.SpecialFolder.InternetCache);
             AddSpecialFolder(Environment.SpecialFolder.Programs);
             AddSpecialFolder(Environment.SpecialFolder.Recent);
-            AddSpecialFolder(Environment.SpecialFolder.SendTo);
-            AddSpecialFolder(Environment.SpecialFolder.StartMenu);
-            AddSpecialFolder(Environment.SpecialFolder.Startup);
-            AddSpecialFolder(Environment.SpecialFolder.System);
-            AddSpecialFolder(Environment.SpecialFolder.Templates);
-            AddSpecialFolder(Environment.SpecialFolder.DesktopDirectory);
-            AddSpecialFolder(Environment.SpecialFolder.Personal);
-            AddSpecialFolder(Environment.SpecialFolder.ProgramFiles);
-            AddSpecialFolder(Environment.SpecialFolder.CommonProgramFiles);
-            AddSpecialFolder(Environment.SpecialFolder.AdminTools);
-            AddSpecialFolder(Environment.SpecialFolder.CDBurning);
-            AddSpecialFolder(Environment.SpecialFolder.CommonAdminTools);
-            AddSpecialFolder(Environment.SpecialFolder.CommonDocuments);
-            AddSpecialFolder(Environment.SpecialFolder.CommonMusic);
-            AddSpecialFolder(Environment.SpecialFolder.CommonOemLinks);
-            AddSpecialFolder(Environment.SpecialFolder.CommonPictures);
-            AddSpecialFolder(Environment.SpecialFolder.CommonStartMenu);
-            AddSpecialFolder(Environment.SpecialFolder.CommonPrograms);
-            AddSpecialFolder(Environment.SpecialFolder.CommonStartup);
-            AddSpecialFolder(Environment.SpecialFolder.CommonDesktopDirectory);
-            AddSpecialFolder(Environment.SpecialFolder.CommonTemplates);
-            AddSpecialFolder(Environment.SpecialFolder.CommonVideos);
-            AddSpecialFolder(Environment.SpecialFolder.Fonts);
-            AddSpecialFolder(Environment.SpecialFolder.NetworkShortcuts);
-            AddSpecialFolder(Environment.SpecialFolder.PrinterShortcuts);
-            AddSpecialFolder(Environment.SpecialFolder.UserProfile);
-            AddSpecialFolder(Environment.SpecialFolder.Resources);
-            AddSpecialFolder(Environment.SpecialFolder.LocalizedResources);
 
-            if (App.IsWindowsOS)
+            if (AdditionalSpecialFolders is not null)
             {
-                AddSpecialFolder(Environment.SpecialFolder.CommonProgramFilesX86);
-                AddSpecialFolder(Environment.SpecialFolder.ProgramFilesX86);
-                AddSpecialFolder(Environment.SpecialFolder.SystemX86);
-                AddSpecialFolder(Environment.SpecialFolder.Windows);
+                foreach (var item in AdditionalSpecialFolders)
+                    AddFolder(item);
             }
         }
 
@@ -531,7 +549,7 @@ namespace Alternet.UI
         public class FolderInfoItem
         {
             /// <summary>
-            /// Gets or sets custom image for the file.
+            /// Gets or sets custom image.
             /// </summary>
             public SvgImage? Image;
 
@@ -539,6 +557,40 @@ namespace Alternet.UI
             /// Gets or sets custom title.
             /// </summary>
             public string? Title;
+        }
+
+        /// <summary>
+        /// Contains properties which allow to specify information useful when new item is added.
+        /// </summary>
+        public class NewItemInfo
+        {
+            /// <summary>
+            /// Gets or sets custom title.
+            /// </summary>
+            public string? Title;
+
+            /// <summary>
+            /// Gets or sets path to the file or folder.
+            /// </summary>
+            public string Path;
+
+            /// <summary>
+            /// Gets or sets custom image.
+            /// </summary>
+            public SvgImage? Image;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="NewItemInfo"/> class.
+            /// </summary>
+            /// <param name="path">Path to the file or folder.</param>
+            /// <param name="title">Custom title.</param>
+            /// <param name="image">Custom image.</param>
+            public NewItemInfo(string path, string? title = null, SvgImage? image = null)
+            {
+                Path = path;
+                Title = title;
+                Image = image;
+            }
         }
     }
 }

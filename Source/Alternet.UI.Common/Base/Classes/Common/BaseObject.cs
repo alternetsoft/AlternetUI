@@ -130,6 +130,16 @@ namespace Alternet.UI
 #endif
         }
 
+        /// <summary>
+        /// Wraps exception for the debug purposes.
+        /// </summary>
+        /// <param name="e">Exception.</param>
+        /// <returns></returns>
+        public static Exception WrapException(Exception e)
+        {
+            return e;
+        }
+
         /// <inheritdoc/>
         public virtual void Required()
         {

@@ -8,7 +8,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
     class FileWatcherTransport : IAlternetUIRemoteTransportConnection, ITransportWithEnforcedMethod
     {
         private readonly string _appPath;
-        private string _path;
+        private readonly string _path;
         private string _lastContents;
         private bool _disposed;
 
@@ -37,8 +37,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     Dump(v, pad + "    ");
                 }
             }
-        }
-            
+        }            
         
         public Task Send(object data)
         {

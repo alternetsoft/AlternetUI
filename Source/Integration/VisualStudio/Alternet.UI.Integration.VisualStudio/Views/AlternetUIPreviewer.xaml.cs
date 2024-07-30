@@ -17,6 +17,8 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.IO;
 
+using Alternet.UI.Integration;
+
 #pragma warning disable VSTHRD100, VSTHRD010, VSTHRD110
 
 namespace Alternet.UI.Integration.VisualStudio.Views

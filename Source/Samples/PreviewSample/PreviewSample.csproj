@@ -43,9 +43,4 @@
     <EmbeddedResource Include="$(CommonResourcesPath)\logo128x128.png" Link="Resources\logo128x128.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Integration\Components\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
-    <ProjectReference Include="..\..\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.csproj" />
-  </ItemGroup>
-
 </Project>

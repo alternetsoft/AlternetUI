@@ -142,22 +142,11 @@
     <EmbeddedResource Include="Resources\Animation\*" />
     <EmbeddedResource Include="Resources\Backgrounds\*" />
     <EmbeddedResource Include="Resources\ButtonImages\*" />
-    <EmbeddedResource Include="Resources\ExplorerUISample\Document_16x.png" />
-    <EmbeddedResource Include="Resources\EmployeePhoto.jpg" />
-    <EmbeddedResource Include="Resources\ExplorerUISample\FolderClosed_16x.png" />
-    <EmbeddedResource Include="Resources\icon-48x48.png" />
+    <EmbeddedResource Include="Resources\*" />
+    <EmbeddedResource Include="Resources\ExplorerUISample\*" />
     <EmbeddedResource Include="Resources\ImageListIcons\Large\*" />
     <EmbeddedResource Include="Resources\ImageListIcons\Small\*" />
-    <EmbeddedResource Include="Resources\Leaves.jpg" />
-    <EmbeddedResource Include="Resources\logo128x128.png" />
-    <EmbeddedResource Include="Resources\Logo.png" />
-    <EmbeddedResource Include="Resources\Logo16x16.png"/>
-    <EmbeddedResource Include="Resources\ExplorerUISample\ReportImage_16x.png" />
-    <EmbeddedResource Include="Resources\ExplorerUISample\Report_16x.png" />
-    <EmbeddedResource Include="Resources\NinePatchImages\NinePatch1.png" />
-    <EmbeddedResource Include="Resources\NinePatchImages\NinePatch2.png" />
-    <EmbeddedResource Include="Resources\TestIcon1.ico" />
-    <EmbeddedResource Include="Resources\TestIcon2.ico" />
+    <EmbeddedResource Include="Resources\NinePatchImages\*" />
     <EmbeddedResource Include="Resources\ToolBarPng\Large\*" />
     <EmbeddedResource Include="Resources\ToolBarPng\Small\*" />
     <EmbeddedResource Include="Resources\ToolIcons\*" />
@@ -468,6 +457,15 @@
     </Compile>
     <UIXml Include="..\PaintSample\Classes\**\*.uixml">
       <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PreviewSample\Classes\**\*.cs">
+      <Link>Links\PreviewSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\PreviewSample\Classes\**\*.uixml">
+      <Link>Links\PreviewSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </UIXml>
   </ItemGroup>
 

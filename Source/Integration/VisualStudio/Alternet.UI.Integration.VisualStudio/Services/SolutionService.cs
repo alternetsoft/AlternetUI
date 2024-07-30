@@ -48,7 +48,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             var result = new Dictionary<Project, ProjectInfo>();
             var uninitialized = new Dictionary<VSProject, ProjectInfo>();
-            var startupProjects = ((Array)_dte.Solution.SolutionBuild.StartupProjects)?.Cast<string>().ToList();
+            var startupProjects =
+                ((Array)_dte.Solution.SolutionBuild.StartupProjects)?.Cast<string>().ToList();
 
             foreach (var project in FlattenProjects(_dte.Solution))
             {
@@ -215,7 +216,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                     if (!string.IsNullOrWhiteSpace(targetPath))
                     {
-                        /*var hostAppDirectory = Path.Combine(Path.GetDirectoryName(typeof(SolutionService).Assembly.Location), @"UIXmlHostApp");*/
+                        var hostAppDirectory = Path.Combine(Path.GetDirectoryName(typeof(SolutionService).Assembly.Location), @"UIXmlHostApp");
                         /*var hostAppDotNetFx = Path.Combine(hostAppDirectory, "DotNetFx", "Alternet.UI.Integration.UIXmlHostApp.exe");*/
 
                         var frameworkMoniker = GetFrameworkInfo(loaded, msbuildProperties, "TargetFramework");
@@ -224,8 +225,10 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                             hostAppDotNetFx :
                             GetDotNetCoreHostAppPath(hostAppDirectory, frameworkMoniker);*/
 
+                        var hostApp = GetDotNetCoreHostAppPath(hostAppDirectory, frameworkMoniker);
+
                         alternatives[frameworkMoniker] =
-                            new ProjectOutputInfo(targetPath, frameworkMoniker, frameworkID, string.Empty);
+                            new ProjectOutputInfo(targetPath, frameworkMoniker, frameworkID, hostApp);
                     }
                 }
             }
@@ -244,7 +247,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                 var path = TryPath(hostAppDirectory, frameworkMoniker);
                 if (path == null)
-                    return TryPath(hostAppDirectory, "net6.0") ?? throw new Exception();
+                    return TryPath(hostAppDirectory, "net8.0") ?? throw new Exception();
 
                 return path;
             }

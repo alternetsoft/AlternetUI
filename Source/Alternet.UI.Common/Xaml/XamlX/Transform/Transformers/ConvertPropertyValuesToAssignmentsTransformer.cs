@@ -123,6 +123,9 @@ namespace XamlX.Transform.Transformers
 
                         if (matchedSetters.Count > 0)
                             return new XamlPropertyAssignmentNode(v, property, matchedSetters, arguments);
+                        else
+                        {
+                        }
 
                         throw new XamlLoadException(
                             $"Unable to find suitable setter or adder for property {property.Name} of type {property.DeclaringType.GetFqn()} for argument {v.Type.GetClrType().GetFqn()}"

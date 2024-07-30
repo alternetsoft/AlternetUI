@@ -466,7 +466,8 @@ namespace XamlX.IL
         public Type GetType(IXamlType t) => ((SreType)t).Type;
         public IXamlType GetType(Type t) => ResolveType(t);
 
-        public IXamlTypeBuilder<IXamlILEmitter> CreateTypeBuilder(TypeBuilder builder) => new SreTypeBuilder(this, builder);
+        public IXamlTypeBuilder<IXamlILEmitter> CreateTypeBuilder(TypeBuilder builder)
+            => new SreTypeBuilder(this, builder);
 
         class IlGen : IXamlILEmitter
         {
@@ -664,9 +665,17 @@ namespace XamlX.IL
                 return new SreMethodBuilder(_system, m, largs);
             }
 
-            public IXamlProperty DefineProperty(IXamlType propertyType, string name, IXamlMethod setter, IXamlMethod getter)
+            public IXamlProperty DefineProperty(
+                IXamlType propertyType,
+                string name,
+                IXamlMethod setter,
+                IXamlMethod getter)
             {
-                var p = _tb.DefineProperty(name, PropertyAttributes.None, ((SreType)propertyType).Type, new Type[0]);
+                var p = _tb.DefineProperty(
+                    name,
+                    PropertyAttributes.None,
+                    ((SreType)propertyType).Type,
+                    new Type[0]);
                 if (setter != null)
                     p.SetSetMethod(((SreMethodBuilder)setter).MethodBuilder);
                 if (getter != null)
