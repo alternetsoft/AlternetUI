@@ -973,6 +973,25 @@ namespace Alternet.UI
             });
 
             addLogAction("Log Control descendants events", LogControlDescendantsEvents);
+            addLogAction("Log Control descendants", LogControlDescendants);
+        }
+
+        /// <summary>
+        /// Logs all descendants of the control.
+        /// </summary>
+        public static void LogControlDescendants()
+        {
+            var events = AssemblyUtils.AllControlDescendants;
+
+            App.Log("Control descendants added to log file");
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            foreach (var item in events.Keys)
+            {
+                LogUtils.LogToFile(item);
+            }
+
+            LogUtils.LogToFile(LogUtils.SectionSeparator);
         }
 
         /// <summary>
