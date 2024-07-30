@@ -71,7 +71,7 @@ namespace PreviewSample
             
             logListBox.Parent = panel.BottomPanel;
             logListBox.BindApplicationLog();
-            logListBox.Log("This demo is under development.");
+            logListBox.LogIf("This demo is under development.", false);
 
             var uixmlFolder = Path.Combine(
                 PathUtils.GetAppFolder(),
@@ -86,14 +86,6 @@ namespace PreviewSample
                 FileListBox.AdditionalSpecialFolders.Add(new(uixmlFolder, "UIXML Samples"));
             }
 
-            DriveInfo[] allDrives = DriveInfo.GetDrives();
-
-            foreach (DriveInfo d in allDrives)
-            {
-                if(Directory.Exists(d.Name))
-                    FileListBox.AdditionalSpecialFolders.Add(new(d.Name, $"Drive {d.Name}"));
-            }
-
             fileListBox.SelectionChanged += FileListBox_SelectionChanged;
 
             LoadWelcomePage();
@@ -101,7 +93,10 @@ namespace PreviewSample
             try
             {
                 var samplesFolder = PathUtils.GetAppSubFolder("Files", true);
+                if (PathUtils.DirectoryIsEmpty(samplesFolder))
+                    samplesFolder = null;
                 fileListBox.SelectedFolder = samplesFolder;
+
             }
             catch
             {
