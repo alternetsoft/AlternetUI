@@ -110,6 +110,8 @@ namespace Alternet.UI.Integration
         {
             Log.Verbose("Started PreviewerProcess.StartAsync()");
 
+            hostAppPath = Path.ChangeExtension(hostAppPath, ".exe");
+
             if (_listener != null)
             {
                 throw new InvalidOperationException("Previewer process already started.");
@@ -213,8 +215,6 @@ namespace Alternet.UI.Integration
             //EnsureExists(depsPath);
 
             bool isDotNetCore = hostAppPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase);
-
-            hostAppPath = Path.ChangeExtension(hostAppPath, ".exe");
 
             isDotNetCore = false;
 
