@@ -16,9 +16,9 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         private static CommandLineArgs commandLineArgs;
         private static Engine engine;
 
-        private static Assembly interfacesUIAssembly;
+        /*private static Assembly interfacesUIAssembly;
         private static Assembly commonUIAssembly;
-        private static Assembly alternetUIAssembly;
+        private static Assembly alternetUIAssembly;*/
 
         public static string[] FillSimpleParams(string netVersion, string dllExt = "dll")
         {
@@ -52,6 +52,18 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             return result;
         }
 
+        public static void LogToFile(object obj = null)
+        {
+            if (!File.Exists(@"e:\logToFile.on"))
+                return;
+
+            var msg = obj?.ToString() ?? string.Empty;
+            var filename = @"e:\UIXMLHostApp.log";
+
+            string contents = $"{msg}{Environment.NewLine}";
+            File.AppendAllText(filename, contents);
+        }
+
         [STAThread]
         public static void Main(string[] cmdline)
         {
@@ -72,10 +84,15 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             {
                 Console.WriteLine(s);
                 Debug.WriteLine(s);
+                LogToFile(s);
             };
 
             Log.Information("========");
             Log.Information("Parameters:");
+
+            if (File.Exists(@"e:\logToFile.on"))
+                Log.VerboseLogged = true;
+
             foreach (var s in cmdline)
             {
                 Log.Information(s);

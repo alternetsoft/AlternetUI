@@ -162,7 +162,12 @@ namespace Alternet.UI.Integration
 
             using var stream = new MemoryStream(Encoding.Default.GetBytes((string)parameters["Uixml"]));
 
-            control = (Control)new UixmlLoader().LoadExisting(stream, new Window());
+            var convertedStream = UixmlLoader.PrepareUixmlStreamForPreview(stream);
+
+            if (convertedStream is null)
+                return new Window();
+
+            control = (Control)new UixmlLoader().LoadExisting(convertedStream, new Window());
 
             //control = (Control)new UixmlLoader().Load(stream, appAssembly);
 

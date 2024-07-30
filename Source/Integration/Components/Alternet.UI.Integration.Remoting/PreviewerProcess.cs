@@ -136,17 +136,17 @@ namespace Alternet.UI.Integration
                 hostAppPath = newHostAppPath;
             }
 
-            if (!File.Exists(hostAppPath))
-            {
-                Log.Error($"File not found: {hostAppPath}");
-                return;
-            }
-
             if (string.IsNullOrWhiteSpace(hostAppPath))
             {
                 throw new ArgumentException(
                     "HostAppPath path may not be null or an empty string.",
                     nameof(hostAppPath));
+            }
+
+            if (!File.Exists(hostAppPath))
+            {
+                Log.Error($"HostApp not found. Path: {hostAppPath}");
+                return;
             }
 
             if (!File.Exists(assemblyPath))

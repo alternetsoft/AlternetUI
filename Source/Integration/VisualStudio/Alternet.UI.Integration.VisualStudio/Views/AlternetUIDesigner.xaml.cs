@@ -369,7 +369,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                                HostApp = output.HostApp,
                            }).ToList();
 
-                SelectedTarget = Targets.FirstOrDefault(t => t.Name == oldSelectedTarget?.Name) ?? Targets.FirstOrDefault();
+                SelectedTarget = Targets.FirstOrDefault(t => t.Name == oldSelectedTarget?.Name)
+                    ?? Targets.FirstOrDefault();
             }
             finally
             {

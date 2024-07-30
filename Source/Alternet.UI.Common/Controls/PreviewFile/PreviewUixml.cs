@@ -142,7 +142,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         private static void InitDebug()
         {
-            LogConvertedUixml = true;
+            LogConvertedUixml = false;
         }
 
         private void ReloadInternal()
