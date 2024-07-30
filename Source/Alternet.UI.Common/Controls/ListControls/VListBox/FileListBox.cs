@@ -40,6 +40,17 @@ namespace Alternet.UI
         public static List<NewItemInfo>? AdditionalSpecialFolders;
 
         /// <summary>
+        /// Gets or sets whether to add all drives (c:\, d:\, etc.) to the list of the special folders.
+        /// </summary>
+        public static bool AddDrivesToRootFolder = true;
+
+        /// <summary>
+        /// Gets or sets template for the drive item when it is added to the list of the special folders.
+        /// Default is "Drive {0}".
+        /// </summary>
+        public static string DriveItemTemplate = "Drive {0}";
+
+        /// <summary>
         /// Gets or sets default svg image used for the "file" items.
         /// </summary>
         public static SvgImage? DefaultFileImage = new MonoSvgImage(KnownSvgUrls.UrlIconFile);
@@ -131,7 +142,7 @@ namespace Alternet.UI
 
             set
             {
-                if (selectedFolder == value)
+                if (selectedFolder == value && value is not null)
                     return;
                 App.LogIf($"FileListBox.SelectedFolder = {value}", false);
                 var oldSelectedFolder = selectedFolder;
@@ -400,8 +411,11 @@ namespace Alternet.UI
         /// enumeration.
         /// </summary>
         /// <param name="folder">Special folder kind.</param>
+        /// <param name="defaultTitle">Default folder title.</param>
         /// <returns></returns>
-        public virtual bool AddSpecialFolder(Environment.SpecialFolder folder)
+        public virtual bool AddSpecialFolder(
+            Environment.SpecialFolder folder,
+            string? defaultTitle = null)
         {
             try
             {
@@ -413,7 +427,7 @@ namespace Alternet.UI
 
                 var path = Environment.GetFolderPath(folder);
 
-                string? title = null;
+                string? title = defaultTitle;
                 SvgImage? image = null;
 
                 if(FolderInfo is not null)
@@ -448,6 +462,19 @@ namespace Alternet.UI
                 return;
             }
 
+            if (AddDrivesToRootFolder)
+            {
+                DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+                foreach (DriveInfo d in allDrives)
+                {
+                    if (!Directory.Exists(d.Name))
+                        continue;
+                    var template = string.Format(DriveItemTemplate, d.Name);
+                    AddFolder(new(d.Name, template));
+                }
+            }
+
             if (VisibleSpecialFolders is not null)
             {
                 foreach(var item in VisibleSpecialFolders)
@@ -456,57 +483,15 @@ namespace Alternet.UI
             }
 
             AddSpecialFolder(Environment.SpecialFolder.Desktop);
-            AddSpecialFolder(Environment.SpecialFolder.MyComputer);
-            AddSpecialFolder(Environment.SpecialFolder.MyDocuments);
-            AddSpecialFolder(Environment.SpecialFolder.MyMusic);
-            AddSpecialFolder(Environment.SpecialFolder.MyPictures);
-            AddSpecialFolder(Environment.SpecialFolder.MyVideos);
+            AddSpecialFolder(Environment.SpecialFolder.MyComputer, "My Computer");
+            AddSpecialFolder(Environment.SpecialFolder.MyDocuments, "Documents");
+            AddSpecialFolder(Environment.SpecialFolder.MyMusic, "Music");
+            AddSpecialFolder(Environment.SpecialFolder.MyPictures, "Pictures");
+            AddSpecialFolder(Environment.SpecialFolder.MyVideos, "Videos");
 
-            AddSpecialFolder(Environment.SpecialFolder.ApplicationData);
-            AddSpecialFolder(Environment.SpecialFolder.CommonApplicationData);
-            AddSpecialFolder(Environment.SpecialFolder.LocalApplicationData);
-            AddSpecialFolder(Environment.SpecialFolder.Cookies);
             AddSpecialFolder(Environment.SpecialFolder.Favorites);
-            AddSpecialFolder(Environment.SpecialFolder.History);
-            AddSpecialFolder(Environment.SpecialFolder.InternetCache);
             AddSpecialFolder(Environment.SpecialFolder.Programs);
             AddSpecialFolder(Environment.SpecialFolder.Recent);
-            AddSpecialFolder(Environment.SpecialFolder.SendTo);
-            AddSpecialFolder(Environment.SpecialFolder.StartMenu);
-            AddSpecialFolder(Environment.SpecialFolder.Startup);
-            AddSpecialFolder(Environment.SpecialFolder.System);
-            AddSpecialFolder(Environment.SpecialFolder.Templates);
-            AddSpecialFolder(Environment.SpecialFolder.DesktopDirectory);
-            AddSpecialFolder(Environment.SpecialFolder.Personal);
-            AddSpecialFolder(Environment.SpecialFolder.ProgramFiles);
-            AddSpecialFolder(Environment.SpecialFolder.CommonProgramFiles);
-            AddSpecialFolder(Environment.SpecialFolder.AdminTools);
-            AddSpecialFolder(Environment.SpecialFolder.CDBurning);
-            AddSpecialFolder(Environment.SpecialFolder.CommonAdminTools);
-            AddSpecialFolder(Environment.SpecialFolder.CommonDocuments);
-            AddSpecialFolder(Environment.SpecialFolder.CommonMusic);
-            AddSpecialFolder(Environment.SpecialFolder.CommonOemLinks);
-            AddSpecialFolder(Environment.SpecialFolder.CommonPictures);
-            AddSpecialFolder(Environment.SpecialFolder.CommonStartMenu);
-            AddSpecialFolder(Environment.SpecialFolder.CommonPrograms);
-            AddSpecialFolder(Environment.SpecialFolder.CommonStartup);
-            AddSpecialFolder(Environment.SpecialFolder.CommonDesktopDirectory);
-            AddSpecialFolder(Environment.SpecialFolder.CommonTemplates);
-            AddSpecialFolder(Environment.SpecialFolder.CommonVideos);
-            AddSpecialFolder(Environment.SpecialFolder.Fonts);
-            AddSpecialFolder(Environment.SpecialFolder.NetworkShortcuts);
-            AddSpecialFolder(Environment.SpecialFolder.PrinterShortcuts);
-            AddSpecialFolder(Environment.SpecialFolder.UserProfile);
-            AddSpecialFolder(Environment.SpecialFolder.Resources);
-            AddSpecialFolder(Environment.SpecialFolder.LocalizedResources);
-
-            if (App.IsWindowsOS)
-            {
-                AddSpecialFolder(Environment.SpecialFolder.CommonProgramFilesX86);
-                AddSpecialFolder(Environment.SpecialFolder.ProgramFilesX86);
-                AddSpecialFolder(Environment.SpecialFolder.SystemX86);
-                AddSpecialFolder(Environment.SpecialFolder.Windows);
-            }
 
             if (AdditionalSpecialFolders is not null)
             {
