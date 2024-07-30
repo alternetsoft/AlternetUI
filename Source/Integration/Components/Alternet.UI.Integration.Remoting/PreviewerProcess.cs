@@ -129,10 +129,12 @@ namespace Alternet.UI.Integration
                     nameof(executablePath));
             }
 
-            /*hostAppPath = Alternet.UI.RegistryUtils.ReadUIXmlPreviewPath();
+            var newHostAppPath = @"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe";
 
-            if (hostAppPath is null)*/
-                hostAppPath = @"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe";
+            if (File.Exists(newHostAppPath))
+            {
+                hostAppPath = newHostAppPath;
+            }
 
             if (!File.Exists(hostAppPath))
             {

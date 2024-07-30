@@ -334,8 +334,12 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
                     static bool ProjectReferencesAlternetUISourceProject(ProjectInfo project)
                     {
-                        // For the IntelliSense to show up in the sample projects when developing AlterNET UI and referencing the project instead of the NuGet package.
-                        return project.ProjectReferences.Any(x => Path.GetFileName(x.FullName).Equals("Alternet.UI.csproj", StringComparison.OrdinalIgnoreCase));
+                        // For the IntelliSense to show up in the sample projects
+                        // when developing AlterNET UI and referencing the project
+                        // instead of the NuGet package.
+                        return project.ProjectReferences.Any(
+                            x => Path.GetFileName(x.FullName)
+                            .Equals("Alternet.UI.csproj", StringComparison.OrdinalIgnoreCase));
                     }
                 }
 

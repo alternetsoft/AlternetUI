@@ -244,7 +244,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                 var path = TryPath(hostAppDirectory, frameworkMoniker);
                 if (path == null)
-                    return TryPath(hostAppDirectory, "net6.0") ?? throw new Exception();
+                    return TryPath(hostAppDirectory, "net8.0") ?? throw new Exception();
 
                 return path;
             }
