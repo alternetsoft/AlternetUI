@@ -170,9 +170,9 @@ namespace Alternet.UI.Integration
                     "Please build your project to enable previewing and intellisense.");
             }
 
-            Log.Debug($"AssemblyPath: {assemblyPath}");
-            Log.Debug($"ExecutablePath: {executablePath}");
-            Log.Debug($"HostAppPath: {hostAppPath}");
+            Log.Information($"AssemblyPath: {assemblyPath}");
+            Log.Information($"ExecutablePath: {executablePath}");
+            Log.Information($"HostAppPath: {hostAppPath}");
 
             _assemblyPath = assemblyPath;
             _executablePath = executablePath;
@@ -214,6 +214,8 @@ namespace Alternet.UI.Integration
 
             bool isDotNetCore = hostAppPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase);
 
+            hostAppPath = Path.ChangeExtension(hostAppPath, ".exe");
+
             isDotNetCore = false;
 
             string args;
@@ -234,8 +236,8 @@ namespace Alternet.UI.Integration
             };
 
             Log.Information($"Starting previewer process for '{_executablePath}'");
-            Log.Debug($"App: {hostAppPath}");
-            Log.Debug($"Args: {args}");
+            Log.Information($"App: {hostAppPath}");
+            Log.Information($"Args: {args}");
 
             var process = _process = Process.Start(processInfo);
             process.EnableRaisingEvents = true;
