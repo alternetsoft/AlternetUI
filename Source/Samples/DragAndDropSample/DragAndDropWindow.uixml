@@ -21,7 +21,7 @@
 
         <Border Margin="10" >
           <Control SuggestedWidth="120" VerticalAlignment="Stretch" Padding="2"
-                  AllowDrop="True" Name="dragSource"
+                  Name="dragSource"
                   MouseDown="DragSource_MouseDown"
                   MouseMove="DragSource_MouseMove"
                   MouseUp="DragSource_MouseUp">
@@ -37,7 +37,7 @@
                 DragOver="DropTarget_DragOver"
                 DragEnter="DropTarget_DragEnter"
                 DragLeave="DropTarget_DragLeave">
-            <Label Text="Drop Here" VerticalAlignment="Center"
+            <Label Text="Drop Here" VerticalAlignment="Center" 
                    HorizontalAlignment="Center" InputTransparent="true"/>
           </Control>
         </Border>

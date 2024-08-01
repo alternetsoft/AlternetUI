@@ -878,6 +878,7 @@ namespace Alternet.UI
             }
 
             Log(s);
+            Debug.WriteLine(s);
         }
 
         /// <summary>

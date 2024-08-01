@@ -827,6 +827,9 @@ namespace Alternet.UI
             Native.NativeEventArgs<Native.DragEventData> e,
             Action<DragEventArgs>? raiseAction)
         {
+            if (!Control.AllowDrop)
+                return;
+
             var data = e.Data;
             var ea = new DragEventArgs(
                 new UnmanagedDataObjectAdapter(

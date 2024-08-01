@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
