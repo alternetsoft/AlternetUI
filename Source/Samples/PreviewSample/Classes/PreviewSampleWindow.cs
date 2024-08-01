@@ -73,7 +73,7 @@ namespace PreviewSample
             logListBox.BindApplicationLog();
             logListBox.LogIf("This demo is under development.", false);
 
-            var uixmlFolder = Path.Combine(
+            /*var uixmlFolder = Path.Combine(
                 PathUtils.GetAppFolder(),
                 @"../../../../../../",
                 @"Source\Samples\ControlsSampleDll\Pages\");
@@ -84,7 +84,7 @@ namespace PreviewSample
             if (Directory.Exists(uixmlFolder))
             {
                 FileListBox.AdditionalSpecialFolders.Add(new(uixmlFolder, "UIXML Samples"));
-            }
+            }*/
 
             fileListBox.SelectionChanged += FileListBox_SelectionChanged;
 
@@ -92,10 +92,10 @@ namespace PreviewSample
 
             try
             {
-                var samplesFolder = PathUtils.GetAppSubFolder("Files", true);
+                /*var samplesFolder = PathUtils.GetAppSubFolder("Files", true);
                 if (PathUtils.DirectoryIsEmpty(samplesFolder))
-                    samplesFolder = null;
-                fileListBox.SelectedFolder = samplesFolder;
+                    samplesFolder = null;*/
+                fileListBox.SelectedFolder = null;
 
             }
             catch
