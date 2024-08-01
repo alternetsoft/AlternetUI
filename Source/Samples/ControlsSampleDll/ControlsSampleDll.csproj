@@ -17,11 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="CheckBoxesPage.uixml" />
-    <None Remove="CheckListBoxPage.uixml" />
-    <None Remove="ComboBoxPage.uixml" />
-    <None Remove="ExampleContextMenu.uixml" />
-    <None Remove="GridPage.uixml" />
     <None Remove="Html\SampleArchive\Html\default.js" />
     <None Remove="Html\SampleArchive\Html\page1.html" />
     <None Remove="Html\SampleArchive\Html\page2.html" />
@@ -29,9 +24,6 @@
     <None Remove="Html\SampleArchive\Images\panda2.jpg" />
     <None Remove="Html\SampleArchive\root.html" />
     <None Remove="Html\SampleArchive\Styles\default.css" />
-    <None Remove="InternalSamples\EmployeeSample\EmployeeMainWindow.uixml" />
-    <None Remove="Pages\Layout\Controls\AlignmentControl.uixml" />
-    <None Remove="Pages\Layout\Controls\GridLengthControl.uixml" />
     <None Remove="Resources\Animation\Alternet.gif" />
     <None Remove="Resources\Animation\animation.html" />
     <None Remove="Resources\Animation\HourGlass.gif" />
@@ -114,12 +106,6 @@
     <None Remove="SampleImages\smile.xbm" />
     <None Remove="SampleImages\smile.xpm" />
     <None Remove="SampleImages\toucan.png" />
-    <None Remove="WebBrowserPage.uixml" />
-    <None Remove="ListBoxPage.uixml" />
-    <None Remove="ListViewPage.uixml" />
-    <None Remove="NumericInputPage.uixml" />
-    <None Remove="ProgressBarPage.uixml" />
-    <None Remove="RadioButtonsPage.uixml" />
     <None Remove="Resources\ButtonImages\ButtonImageDisabled.png" />
     <None Remove="Resources\ButtonImages\ButtonImageHovered.png" />
     <None Remove="Resources\ButtonImages\ButtonImageNormal.png" />
@@ -133,9 +119,6 @@
     <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
     <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
     <None Remove="Resources\Logo16x16.png" />
-    <None Remove="SliderPage.uixml" />
-    <None Remove="TextInputPage.uixml" />
-    <None Remove="TreeViewPage.uixml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -287,62 +270,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" Condition="Exists('..\..\.editorconfig')"/>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" Condition="Exists('..\..\.editorconfig')" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Svg\arrow-left.svg" />
-    <Resource Include="Resources\Svg\arrow-right.svg" />
-    <Resource Include="Resources\Svg\arrow-rotate-right.svg" />
-    <Resource Include="Resources\Svg\caret-right.svg" />
-    <Resource Include="Resources\Svg\minus.svg" />
-    <Resource Include="Resources\Svg\plus.svg" />
-    <Resource Include="Resources\Svg\search.svg" />
-    <Resource Include="Resources\Svg\xmark.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UIXml Update="Pages\Buttons\ButtonPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\Buttons\CheckBoxesPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\Text\TextInputPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\Buttons\RadioButtonsPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\Other\NumericInputPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\SliderProgressBar\SliderPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\SliderProgressBar\ProgressBarPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\ListControls\ComboBoxPage.uixml">
-      <Generator>MSBuild:Compile</Generator>
-    </UIXml>
-    <UIXml Update="Pages\TreeAndListView\ListViewPage.uixml">
-      <Generator>MSBuild:Compile</Generator>
-    </UIXml>
-    <UIXml Update="Pages\Layout\GridPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\Other\WebBrowserPage.uixml">
-      <SubType>Designer</SubType>
-    </UIXml>
-    <UIXml Update="Pages\Other\NotifyIconPage.uixml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </UIXml>
-    <UIXml Update="Pages\TreeAndListView\TreeViewPage.uixml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </UIXml>
+    <Resource Include="Resources\Svg\*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -355,57 +287,65 @@
     <ProjectReference Include="..\SkiaSharpSampleDll\SkiaSharpSampleDll.csproj" />
   </ItemGroup>
 
+  <!-- ================================================ -->
+  
+  <ItemGroup>
+    <IncludeFolders Include="DragAndDropSample"/>
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Include="..\CommonDialogsSample\CommonDialogsWindow.uixml.cs"
-             Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml.cs"/>
+             Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml.cs" />
     <UIXml Include="..\CommonDialogsSample\CommonDialogsWindow.uixml"
-           Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml"/>
+           Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\DragAndDropSample\DragAndDropWindow.uixml.cs"
-             Link="Links\DragAndDropSample\DragAndDropWindow.uixml.cs"/>
+             Link="Links\DragAndDropSample\DragAndDropWindow.uixml.cs" />
+    <None Include="..\DragAndDropSample\DragAndDropWindow.uixml"
+           Link="Links\DragAndDropSample\DragAndDropWindow.uixml" />
     <UIXml Include="..\DragAndDropSample\DragAndDropWindow.uixml"
-           Link="Links\DragAndDropSample\DragAndDropWindow.uixml"/>
+           Link="Links\DragAndDropSample\DragAndDropWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\InputSample\KeyboardInputWindow.uixml.cs"
-             Link="Links\InputSample\KeyboardInputWindow.uixml.cs"/>
+             Link="Links\InputSample\KeyboardInputWindow.uixml.cs" />
     <Compile Include="..\InputSample\MouseInputWindow.uixml.cs"
-             Link="Links\InputSample\MouseInputWindow.uixml.cs"/>
+             Link="Links\InputSample\MouseInputWindow.uixml.cs" />
     <UIXml Include="..\InputSample\KeyboardInputWindow.uixml"
-           Link="Links\InputSample\KeyboardInputWindow.uixml"/>
+           Link="Links\InputSample\KeyboardInputWindow.uixml" />
     <UIXml Include="..\InputSample\MouseInputWindow.uixml"
-           Link="Links\InputSample\MouseInputWindow.uixml"/>
+           Link="Links\InputSample\MouseInputWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs"
-             Link="Links\PrintingSample\PrintingMainWindow.uixml.cs"/>
+             Link="Links\PrintingSample\PrintingMainWindow.uixml.cs" />
     <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"
-           Link="Links\PrintingSample\PrintingMainWindow.uixml"/>
+           Link="Links\PrintingSample\PrintingMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\ThreadingSample\ThreadingMainWindow.uixml.cs"
              Link="Links\ThreadingSample\ThreadingMainWindow.uixml.cs" />
     <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml"
-           Link="Links\ThreadingSample\ThreadingMainWindow.uixml"/>
+           Link="Links\ThreadingSample\ThreadingMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs"
              Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs" />
     <UIXml Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml"
-           Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml"/>
+           Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\EmployeeFormSample\EmployeeMainWindow.uixml.cs"
              Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml.cs" />
     <UIXml Include="..\EmployeeFormSample\EmployeeMainWindow.uixml"
-           Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml"/>
+           Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -421,7 +361,7 @@
     <Compile Include="..\ExplorerUISample\ExplorerMainWindow.uixml.cs"
              Link="Links\ExplorerUISample\ExplorerMainWindow.uixml.cs" />
     <UIXml Include="..\ExplorerUISample\ExplorerMainWindow.uixml"
-           Link="Links\ExplorerUISample\ExplorerMainWindow.uixml"/>
+           Link="Links\ExplorerUISample\ExplorerMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -455,6 +395,9 @@
     <Compile Include="..\PaintSample\Classes\**\*.cs">
       <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </Compile>
+    <None Include="..\PaintSample\Classes\**\*.uixml">
+      <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
     <UIXml Include="..\PaintSample\Classes\**\*.uixml">
       <Link>Links\PaintSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </UIXml>
