@@ -131,7 +131,7 @@ namespace Alternet.UI.Native
 
                     if (libraryFileName is null)
                     {
-                        libHandle = NativeLibrary.Load(libraryName);
+                        libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
                     }
                     else
                     {
@@ -145,7 +145,7 @@ namespace Alternet.UI.Native
 
                         if (!loaded)
                         {
-                            libHandle = NativeLibrary.Load(libraryName);
+                            libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
                         }
                     }
                 }
