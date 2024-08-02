@@ -17,6 +17,8 @@ namespace Alternet.UI.Native
     {
         public static bool DebugImportResolver = DebugUtils.IsDebugDefined;
 
+        public static bool UseDlOpenOnLinux = false;
+
         internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
 
 #if NETCOREAPP
@@ -166,7 +168,7 @@ namespace Alternet.UI.Native
             {
                 bool result;
 
-                if (App.IsLinuxOS)
+                if (App.IsLinuxOS && UseDlOpenOnLinux)
                 {
                     handle =
                         LinuxUtils.NativeMethods.dlopen(libraryPath, LinuxUtils.NativeMethods.RTLD_NOW);

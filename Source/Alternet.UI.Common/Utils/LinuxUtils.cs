@@ -234,12 +234,12 @@ namespace Alternet.UI
             /// Returns last error description.
             /// </summary>
             /// <returns></returns>
-            public static string GetLastError()
+            public static (string, IntPtr) GetLastError()
             {
                 var errPtr = dlerror();
                 if (errPtr != IntPtr.Zero)
-                    return Marshal.PtrToStringAnsi(errPtr);
-                return string.Empty;
+                    return (Marshal.PtrToStringAnsi(errPtr), errPtr);
+                return (string.Empty, default);
             }
         }
     }
