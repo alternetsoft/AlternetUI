@@ -164,7 +164,17 @@ namespace Alternet.UI.Native
 
             bool FnTryLoadLibrary(string libraryPath, out IntPtr handle)
             {
-                var result = NativeLibrary.TryLoad(libraryPath, out handle);
+                bool result;
+
+                if (App.IsLinuxOS)
+                {
+                    handle =
+                        LinuxUtils.NativeMethods.dlopen(libraryPath, LinuxUtils.NativeMethods.RTLD_NOW);
+                    result = handle != default;
+                }
+                else
+                    result = NativeLibrary.TryLoad(libraryPath, out handle);
+
                 if (App.IsLinuxOS && debugResolver)
                 {
                     if (!result)
