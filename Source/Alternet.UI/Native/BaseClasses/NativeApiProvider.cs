@@ -135,7 +135,7 @@ namespace Alternet.UI.Native
                     }
                     else
                     {
-                        var loaded = NativeLibrary.TryLoad(libraryFileName, out libHandle);
+                        var loaded = FnTryLoadLibrary(libraryFileName, out libHandle);
 
                         if (debugResolver)
                         {
@@ -161,6 +161,26 @@ namespace Alternet.UI.Native
             }
 
             return result;
+
+            bool FnTryLoadLibrary(string libraryPath, out IntPtr handle)
+            {
+                var result = NativeLibrary.TryLoad(libraryPath, out handle);
+                if (App.IsLinuxOS && debugResolver)
+                {
+                    if (!result)
+                    {
+                        try
+                        {
+                            var errorText = LinuxUtils.NativeMethods.GetLastError();
+                            LogUtils.LogNameValueToFile("Error", errorText);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                return result;
+            }
         }
 #endif
 

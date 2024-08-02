@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Alternet.UI.Common.Utils
+namespace Alternet.UI
 {
     /// <summary>
     /// Contains static methods and properties related to Linux.
