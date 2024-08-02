@@ -5,22 +5,26 @@ using System;
 namespace Alternet.UI.Port
 {
     /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+    /// This item supports the framework infrastructure and is not intended to be used directly
+    /// from your code.
     /// </summary>
     public interface IUixmlProvideValueTarget
     {
         /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// This item supports the framework infrastructure and is not intended to be
+        /// used directly from your code.
         /// </summary>
         object TargetObject { get; }
         /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// This item supports the framework infrastructure and is not intended to be
+        /// used directly from your code.
         /// </summary>
         object TargetProperty { get; }
     }
 
     /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+    /// This item supports the framework infrastructure and is not intended to be used
+    /// directly from your code.
     /// </summary>
     public interface IUixmlRootObjectProvider
     {
@@ -36,12 +40,14 @@ namespace Alternet.UI.Port
     }
 
     /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+    /// This item supports the framework infrastructure and is not intended to be used
+    /// directly from your code.
     /// </summary>
     public interface IUixmlUriContext
     {
         /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// This item supports the framework infrastructure and is not intended to
+        /// be used directly from your code.
         /// </summary>
         Uri BaseUri { get; set; }
     }

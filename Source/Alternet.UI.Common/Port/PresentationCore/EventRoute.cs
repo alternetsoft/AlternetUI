@@ -17,7 +17,7 @@ namespace Alternet.UI.Port
     /// </summary>
     /// <remarks>
     ///     EventRoute constitues <para/>
-    ///     a non-null <see cref="Alternet.UI.RoutedEvent"/>
+    ///     a non-null <see cref="Alternet.UI.Port.RoutedEvent"/>
     ///     and <para/>
     ///     an ordered list of (target object, handler list)
     ///     pairs <para/>
@@ -27,7 +27,7 @@ namespace Alternet.UI.Port
     ///     and also allows for the handlers in the list 
     ///     to be invoked
     /// </remarks>
-    public sealed class EventRoute
+    internal sealed class EventRoute
     {
         #region Construction
 
