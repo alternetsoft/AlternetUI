@@ -363,14 +363,14 @@ namespace Alternet.UI
             string? title = null,
             string? filename = null)
         {
-            LogToFileBeginSection(title);
+            LogToFileBeginSection(title, filename);
             try
             {
                 LogToFile(obj, filename);
             }
             finally
             {
-                LogToFileEndSection();
+                LogToFileEndSection(filename);
             }
         }
 
@@ -974,6 +974,38 @@ namespace Alternet.UI
 
             addLogAction("Log Control descendants events", LogControlDescendantsEvents);
             addLogAction("Log Control descendants", LogControlDescendants);
+
+            addLogAction("Log public objects from Alternet.UI.Port", () =>
+            {
+                var items = AssemblyUtils.EnumPublicObjectsForNamespace(
+                    typeof(Control).Assembly,
+                    "Alternet.UI.Port");
+                App.Log("Public objects from Alternet.UI.Port added to log file");
+                LogRangeToFile(items);
+            });
+        }
+
+        /// <summary>
+        /// Logs <see cref="IEnumerable"/> to file.
+        /// </summary>
+        /// <param name="items">Range of items.</param>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        /// <param name="title">Section title. Optional.</param>
+        public static void LogRangeToFile(IEnumerable items, string? title = null, string? filename = null)
+        {
+            LogToFileBeginSection(title, filename);
+            try
+            {
+                foreach (var item in items)
+                {
+                    LogUtils.LogToFile(item, filename);
+                }
+            }
+            finally
+            {
+                LogToFileEndSection(filename);
+            }
         }
 
         /// <summary>
@@ -984,14 +1016,7 @@ namespace Alternet.UI
             var events = AssemblyUtils.AllControlDescendants;
 
             App.Log("Control descendants added to log file");
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-            foreach (var item in events.Keys)
-            {
-                LogUtils.LogToFile(item);
-            }
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogRangeToFile(events.Keys);
         }
 
         /// <summary>
@@ -1000,16 +1025,8 @@ namespace Alternet.UI
         public static void LogControlDescendantsEvents()
         {
             var events = AssemblyUtils.AllControlEvents;
-
             App.Log("Control descendants event names added to log file");
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-            foreach (var item in events.Keys)
-            {
-                LogUtils.LogToFile(item);
-            }
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogRangeToFile(events.Keys);
         }
 
         /// <summary>

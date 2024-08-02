@@ -792,5 +792,22 @@ namespace Alternet.UI
 
             return result;
         }
+
+        /// <summary>
+        /// Enumerates public objects declared in the specified namespace.
+        /// </summary>
+        /// <param name="asm">Assembly.</param>
+        /// <param name="namesp">Namespace.</param>
+        /// <returns></returns>
+        public static IEnumerable<Type> EnumPublicObjectsForNamespace(Assembly asm, string namesp)
+        {
+            var types = asm.ExportedTypes;
+
+            foreach(var t in types)
+            {
+                if (t.Namespace == namesp)
+                    yield return t;
+            }
+        }
     }
 }
