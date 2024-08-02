@@ -34,7 +34,7 @@ steps demonstrate displaying the print dialog for a document:
 01. Add a <xref:Alternet.UI.PrintDialog> and a <xref:Alternet.Drawing.Printing.PrintDocument> component to your
     form.
 
-01. Set the <xref:Alternet.UI.PrintDialog.Document%2A> property of the <xref:Alternet.UI.PrintDialog>
+01. Set the <xref:Alternet.UI.BasePrintDialog.Document%2A> property of the <xref:Alternet.UI.PrintDialog>
     to the <xref:Alternet.Drawing.Printing.PrintDocument> added to the form.
 
     ```csharp

@@ -99,7 +99,7 @@ private void button1_MouseDown(object sender, Alternet.UI.MouseEventArgs e)
 1. Set the <xref:Alternet.UI.Control.AllowDrop%2A> property to true.  
   
 2. In the `DragEnter` event for the control where the drop will occur, ensure that the data being dragged is of an
-   acceptable type (in this case, <xref:Alternet.UI.Label.Text%2A>). The code then sets the effect that will
+   acceptable type (in this case, <xref:Alternet.UI.Control.Text%2A>). The code then sets the effect that will
    happen when the drop occurs to a value in the <xref:Alternet.UI.DragDropEffects> enumeration. For more
    information, see <xref:Alternet.UI.DragEventArgs.Effect%2A>.  
   
@@ -117,7 +117,7 @@ private void textBox1_DragEnter(object sender, Alternet.UI.DragEventArgs e)
    <xref:Alternet.UI.DataObject.GetData%2A> method to retrieve the data being dragged. 
   
      In the example below, a <xref:Alternet.UI.TextBox> control is the control being dragged to (where the drop
-     will occur). The code sets the <xref:Alternet.UI.TextBox.Text%2A> property of the
+     will occur). The code sets the <xref:Alternet.UI.Control.Text%2A> property of the
      <xref:Alternet.UI.TextBox> control equal to the data being dragged.  
   
 ```csharp  

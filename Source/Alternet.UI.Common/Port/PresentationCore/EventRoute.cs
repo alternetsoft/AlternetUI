@@ -33,10 +33,10 @@ namespace Alternet.UI.Port
 
         /// <summary>
         ///     Constructor for <see cref="EventRoute"/> given
-        ///     the associated <see cref="Alternet.UI.RoutedEvent"/>
+        ///     the associated <see cref="Alternet.UI.Port.RoutedEvent"/>
         /// </summary>
         /// <param name="routedEvent">
-        ///     Non-null <see cref="Alternet.UI.RoutedEvent"/> to be associated with 
+        ///     Non-null <see cref="Alternet.UI.Port.RoutedEvent"/> to be associated with 
         ///     this <see cref="EventRoute"/>
         /// </param>
         public EventRoute(RoutedEvent routedEvent)

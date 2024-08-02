@@ -25,7 +25,7 @@ namespace Alternet.UI
         public abstract void Remove(TDest value);
 
         /// <summary>
-        /// Converts <typeparamref name="TDest"/> enum value to <typeparamref name="TSource"/> enum value.
+        /// Converts enum value from the source type to the destination type.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <param name="defaultValue">Default value used if mapping not found.</param>
