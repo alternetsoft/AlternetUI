@@ -15,6 +15,8 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal abstract class NativeApiProvider
     {
+        public static bool DebugImportResolver = DebugUtils.IsDebugDefined;
+
         internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
 
 #if NETCOREAPP
@@ -37,17 +39,17 @@ namespace Alternet.UI.Native
             {
                 var result = NativeModuleNameNoExt;
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                if (App.IsWindowsOS)
                 {
                     result = $"{result}.dll";
                 }
                 else
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (App.IsLinuxOS)
                 {
                     result = $"{result}.so";
                 }
                 else
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                if (App.IsMacOS)
                 {
                     result = $"{result}.dylib";
                 }
@@ -101,12 +103,32 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
+            var debugResolver = DebugImportResolver && libHandle == default;
+
+            if (debugResolver)
+            {
+                LogUtils.LogBeginSectionToFile("ImportResolver");
+                LogUtils.LogNameValueToFile("libraryName", libraryName);
+                LogUtils.LogNameValueToFile("assembly", assembly);
+                LogUtils.LogNameValueToFile("searchPath", searchPath);
+                LogUtils.LogNameValueToFile("NativeModuleName", NativeModuleName);
+                LogUtils.LogNameValueToFile("NativeModuleNameWithExt", NativeModuleNameWithExt);                
+            }
+
+            IntPtr result = default;
+
             if (libraryName == NativeModuleName)
             {
                 if(libHandle == default)
                 {
                     var libraryFileName =
                         FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
+
+                    if (debugResolver)
+                    {
+                        LogUtils.LogNameValueToFile("FindFileRecursiveInAppFolder", libraryFileName);
+                    }
+
                     if (libraryFileName is null)
                         libHandle = NativeLibrary.Load(libraryName);
                     else
@@ -117,10 +139,17 @@ namespace Alternet.UI.Native
                     }
                 }
 
-                return libHandle;
+                result = libHandle;
             }
             else
-                return NativeLibrary.Load(libraryName);
+                result = NativeLibrary.Load(libraryName);
+
+            if (debugResolver)
+            {
+                LogUtils.LogEndSectionToFile();
+            }
+
+            return result;
         }
 #endif
 
