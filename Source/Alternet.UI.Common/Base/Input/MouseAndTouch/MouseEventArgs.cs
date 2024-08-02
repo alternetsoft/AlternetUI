@@ -66,7 +66,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets current target control for the event.
+        /// Gets current target control for the event. Same as <see cref="CurrentTarget"/>.
+        /// </summary>
+        public object Source
+        {
+            get => currentTarget;
+            set => currentTarget = value;
+        }
+
+        /// <summary>
+        /// Gets current target control for the event. Same as <see cref="Source"/>.
         /// </summary>
         public object CurrentTarget
         {
