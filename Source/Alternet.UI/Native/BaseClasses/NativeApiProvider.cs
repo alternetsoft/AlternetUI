@@ -130,12 +130,23 @@ namespace Alternet.UI.Native
                     }
 
                     if (libraryFileName is null)
+                    {
                         libHandle = NativeLibrary.Load(libraryName);
+                    }
                     else
                     {
                         var loaded = NativeLibrary.TryLoad(libraryFileName, out libHandle);
+
+                        if (debugResolver)
+                        {
+                            LogUtils.LogNameValueToFile("NativeLibrary.TryLoad libHandle", libHandle);
+                            LogUtils.LogNameValueToFile("NativeLibrary.TryLoad loaded", loaded);
+                        }
+
                         if (!loaded)
+                        {
                             libHandle = NativeLibrary.Load(libraryName);
+                        }
                     }
                 }
 
