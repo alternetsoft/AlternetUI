@@ -2,7 +2,7 @@ apiRules:
 - exclude:
     uidRegex: ^XamlX\.
 - exclude:
-    uidRegex: ^Port\.
+    uidRegex: ^Alternet\.UI\.Port
 - exclude:
     uidRegex: ^Alternet\.UI\.Markup
 - exclude:
