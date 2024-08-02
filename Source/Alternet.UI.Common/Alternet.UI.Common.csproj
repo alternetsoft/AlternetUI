@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\Version\Version.props" />
-  <Import Project="..\Version\TargetFrameworks.props" />
   <Import Project="..\Keys\Keys.props" />
 
   <PropertyGroup>
