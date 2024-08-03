@@ -11,6 +11,6 @@ The following operating systems are supported:
 
 See [this page](https://github.com/dotnet/core/blob/main/release-notes/6.0/supported-os.md) for detailed information.
 
-**Microsoft Visual Studio 2022** is supported by the **AlterNET UI Visual Studio Extension**:
+**Microsoft Visual Studio 2022** is supported by the **AlterNET UI Visual Studio Extension**.
 
 AlterNET UI also supports a development workflow with **Visual Studio Code** and `dotnet` command line tools.

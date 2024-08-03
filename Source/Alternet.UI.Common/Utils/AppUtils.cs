@@ -65,7 +65,7 @@ namespace Alternet.UI
         public static void OpenLogFile()
         {
             if (!File.Exists(App.LogFilePath))
-                LogUtils.LogToFileAppStarted();
+                LogUtils.LogAppStartedToFile();
 
             ShellExecute(App.LogFilePath);
         }

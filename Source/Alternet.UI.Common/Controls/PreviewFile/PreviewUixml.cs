@@ -171,7 +171,7 @@ namespace Alternet.UI
                     if (LogConvertedUixml)
                     {
                         var str = StreamUtils.StringFromStream(convertedStream);
-                        LogUtils.LogToFileSection(str, fileName);
+                        LogUtils.LogSectionToFile(str, fileName);
                         convertedStream.Position = 0L;
                     }
 

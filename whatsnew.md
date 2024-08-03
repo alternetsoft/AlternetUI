@@ -1,3 +1,17 @@
+# 0.9.619 (2024 August 3)
+
+- Return internal HashCode class instead of using from Microsoft.Bcl.HashCode as sometimes this nuget was not copied to bin folder.
+- Fixed exception in DragAndDrop sample.
+- MouseEventArgs.Source.
+- Updated documentation.
+- App: Calls Debug.WriteLine for native wxWidgets log messages.
+- Control: Do not call drop events if AllowDrop = false.
+- New methods in LogUtils, AssemblyUtils, LinuxUtils.
+- LogUtils: Renamed LotToFileXX -> LogXXToFile.
+- Add NativeApiProvider.DebugImportResolver flag and logging of ImportResolver method.
+- Add LogUtils.LogNameValueToFile, DebugUtils.IsDebugDefined.
+- Add LinuxUtils.NativeMethods class. 
+
 # 0.9.618 (2024 July 30)
 
 - Different fixes in uixml preview.

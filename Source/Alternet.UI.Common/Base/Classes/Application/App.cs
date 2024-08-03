@@ -338,7 +338,7 @@ namespace Alternet.UI
                 logFileIsEnabled = value;
 
                 if (logFileIsEnabled)
-                    LogUtils.LogToFileAppStarted();
+                    LogUtils.LogAppStartedToFile();
             }
         }
 
@@ -1536,7 +1536,7 @@ namespace Alternet.UI
             ~Destructor()
             {
                 if (LogFileIsEnabled)
-                    LogUtils.LogToFileAppFinished();
+                    LogUtils.LogAppFinishedToFile();
             }
         }
 

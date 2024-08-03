@@ -7,12 +7,15 @@
         },
       "src": [
         {
-          "src": "../../Source/Alternet.UI",
-          "files": [ "**/*.csproj" ],
+          "src": "../../Source",
+          "files": [
+		 "Alternet.UI/Alternet.UI.csproj",
+		 "Alternet.UI.Common/Alternet.UI.Common.csproj",
+		 "Alternet.UI.Interfaces/Alternet.UI.Interfaces.csproj" ],
           "exclude":
 		 [
-		 	"/Port/**",
-		 	"/Xaml/**",
+		 	"Alternet.UI.Common/Port/**",
+		 	"Alternet.UI.Common/Xaml/**",
 			"**/bin/**",
 		 	"**/obj/**"
 		 ]

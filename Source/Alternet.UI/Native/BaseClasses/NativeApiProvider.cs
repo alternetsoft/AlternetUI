@@ -15,6 +15,10 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal abstract class NativeApiProvider
     {
+        public static bool DebugImportResolver = DebugUtils.IsDebugDefined;
+
+        public static bool UseDlOpenOnLinux = false;
+
         internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
 
 #if NETCOREAPP
@@ -37,17 +41,17 @@ namespace Alternet.UI.Native
             {
                 var result = NativeModuleNameNoExt;
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                if (App.IsWindowsOS)
                 {
                     result = $"{result}.dll";
                 }
                 else
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (App.IsLinuxOS)
                 {
                     result = $"{result}.so";
                 }
                 else
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                if (App.IsMacOS)
                 {
                     result = $"{result}.dylib";
                 }
@@ -101,26 +105,94 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
+            var debugResolver = DebugImportResolver && libHandle == default;
+
+            if (debugResolver)
+            {
+                LogUtils.LogBeginSectionToFile("ImportResolver");
+                LogUtils.LogNameValueToFile("libraryName", libraryName);
+                LogUtils.LogNameValueToFile("assembly", assembly);
+                LogUtils.LogNameValueToFile("searchPath", searchPath);
+                LogUtils.LogNameValueToFile("NativeModuleName", NativeModuleName);
+                LogUtils.LogNameValueToFile("NativeModuleNameWithExt", NativeModuleNameWithExt);                
+            }
+
+            IntPtr result = default;
+
             if (libraryName == NativeModuleName)
             {
                 if(libHandle == default)
                 {
                     var libraryFileName =
                         FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
+
+                    if (debugResolver)
+                    {
+                        LogUtils.LogNameValueToFile("FindFileRecursiveInAppFolder", libraryFileName);
+                    }
+
                     if (libraryFileName is null)
-                        libHandle = NativeLibrary.Load(libraryName);
+                    {
+                        libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
+                    }
                     else
                     {
-                        var loaded = NativeLibrary.TryLoad(libraryFileName, out libHandle);
+                        var loaded = FnTryLoadLibrary(libraryFileName, out libHandle);
+
+                        if (debugResolver)
+                        {
+                            LogUtils.LogNameValueToFile("NativeLibrary.TryLoad libHandle", libHandle);
+                            LogUtils.LogNameValueToFile("NativeLibrary.TryLoad loaded", loaded);
+                        }
+
                         if (!loaded)
-                            libHandle = NativeLibrary.Load(libraryName);
+                        {
+                            libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
+                        }
                     }
                 }
 
-                return libHandle;
+                result = libHandle;
             }
             else
-                return NativeLibrary.Load(libraryName);
+                result = NativeLibrary.Load(libraryName);
+
+            if (debugResolver)
+            {
+                LogUtils.LogEndSectionToFile();
+            }
+
+            return result;
+
+            bool FnTryLoadLibrary(string libraryPath, out IntPtr handle)
+            {
+                bool result;
+
+                if (App.IsLinuxOS && UseDlOpenOnLinux)
+                {
+                    handle =
+                        LinuxUtils.NativeMethods.dlopen(libraryPath, LinuxUtils.NativeMethods.RTLD_NOW);
+                    result = handle != default;
+                }
+                else
+                    result = NativeLibrary.TryLoad(libraryPath, out handle);
+
+                if (App.IsLinuxOS && debugResolver)
+                {
+                    if (!result)
+                    {
+                        try
+                        {
+                            var errorText = LinuxUtils.NativeMethods.GetLastError();
+                            LogUtils.LogNameValueToFile("Error", errorText);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                return result;
+            }
         }
 #endif
 

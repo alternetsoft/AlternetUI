@@ -14,8 +14,22 @@ namespace Alternet.UI
     /// </summary>
     public static class DebugUtils
     {
+        /// <summary>
+        /// Gets a value that indicates whether DEBUG conditional is defined.
+        /// </summary>
+        public static readonly bool IsDebugDefined;
+
         private static bool insideUnhandledException;
         private static bool hookedExceptionEvents;
+
+        static DebugUtils()
+        {
+#if DEBUG
+            IsDebugDefined = true;
+#else
+            IsDebugDefined = false;
+#endif
+        }
 
         /// <summary>
         /// Waits until debugger is attached. Uses <paramref name="debugOptionFileName"/>

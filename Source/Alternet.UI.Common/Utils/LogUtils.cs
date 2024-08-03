@@ -324,12 +324,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs to file pair of name and value as "{name} = {value}".
+        /// </summary>
+        /// <param name="name">Name.</param>
+        /// <param name="value">Value.</param>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        public static void LogNameValueToFile(
+            object name,
+            object? value,
+            string? filename = null)
+        {
+            LogToFile($"{name} = {value}", filename);
+        }
+
+        /// <summary>
         /// Begins log to file section.
         /// </summary>
         /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
         /// <param name="title">Section title. Optional.</param>
-        public static void LogToFileBeginSection(string? title = null, string? filename = null)
+        public static void LogBeginSectionToFile(string? title = null, string? filename = null)
         {
             LogToFile(SectionSeparator, filename);
 
@@ -345,32 +360,32 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
-        public static void LogToFileEndSection(string? filename = null)
+        public static void LogEndSectionToFile(string? filename = null)
         {
             LogToFile(LogUtils.SectionSeparator, filename);
         }
 
         /// <summary>
-        /// Logs section using <see cref="LogToFileBeginSection"/>, <see cref="LogToFileEndSection"/>
+        /// Logs section using <see cref="LogBeginSectionToFile"/>, <see cref="LogEndSectionToFile"/>
         /// and logging <paramref name="obj"/> between these calls.
         /// </summary>
         /// <param name="obj">Object to log.</param>
         /// <param name="title">Section title (optional).</param>
         /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
-        public static void LogToFileSection(
+        public static void LogSectionToFile(
             object? obj,
             string? title = null,
             string? filename = null)
         {
-            LogToFileBeginSection(title);
+            LogBeginSectionToFile(title, filename);
             try
             {
                 LogToFile(obj, filename);
             }
             finally
             {
-                LogToFileEndSection();
+                LogEndSectionToFile(filename);
             }
         }
 
@@ -481,7 +496,7 @@ namespace Alternet.UI
         /// <summary>
         /// Writes to log file "Application started" header text.
         /// </summary>
-        public static void LogToFileAppStarted()
+        public static void LogAppStartedToFile()
         {
             if (Flags.HasFlag(LogFlags.AppStartLogged))
                 return;
@@ -823,7 +838,7 @@ namespace Alternet.UI
         /// <summary>
         /// Writes to log file "Application finished" header text.
         /// </summary>
-        public static void LogToFileAppFinished()
+        public static void LogAppFinishedToFile()
         {
             if (Flags.HasFlag(LogFlags.AppFinishLogged))
                 return;
@@ -974,6 +989,38 @@ namespace Alternet.UI
 
             addLogAction("Log Control descendants events", LogControlDescendantsEvents);
             addLogAction("Log Control descendants", LogControlDescendants);
+
+            addLogAction("Log public objects from Alternet.UI.Port", () =>
+            {
+                var items = AssemblyUtils.EnumPublicObjectsForNamespace(
+                    typeof(Control).Assembly,
+                    "Alternet.UI.Port");
+                App.Log("Public objects from Alternet.UI.Port added to log file");
+                LogRangeToFile(items);
+            });
+        }
+
+        /// <summary>
+        /// Logs <see cref="IEnumerable"/> to file.
+        /// </summary>
+        /// <param name="items">Range of items.</param>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        /// <param name="title">Section title. Optional.</param>
+        public static void LogRangeToFile(IEnumerable items, string? title = null, string? filename = null)
+        {
+            LogBeginSectionToFile(title, filename);
+            try
+            {
+                foreach (var item in items)
+                {
+                    LogUtils.LogToFile(item, filename);
+                }
+            }
+            finally
+            {
+                LogEndSectionToFile(filename);
+            }
         }
 
         /// <summary>
@@ -984,14 +1031,7 @@ namespace Alternet.UI
             var events = AssemblyUtils.AllControlDescendants;
 
             App.Log("Control descendants added to log file");
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-            foreach (var item in events.Keys)
-            {
-                LogUtils.LogToFile(item);
-            }
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogRangeToFile(events.Keys);
         }
 
         /// <summary>
@@ -1000,16 +1040,8 @@ namespace Alternet.UI
         public static void LogControlDescendantsEvents()
         {
             var events = AssemblyUtils.AllControlEvents;
-
             App.Log("Control descendants event names added to log file");
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
-            foreach (var item in events.Keys)
-            {
-                LogUtils.LogToFile(item);
-            }
-
-            LogUtils.LogToFile(LogUtils.SectionSeparator);
+            LogRangeToFile(events.Keys);
         }
 
         /// <summary>

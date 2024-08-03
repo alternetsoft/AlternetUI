@@ -1,5 +1,4 @@
 <StackPanel KeyDown="OnTextInputKeyDown">
-	<Button Click="OnTextInputButtonClick"
-			Content="Open" />
+	<Button Click="OnTextInputButtonClick" Text="Open" />
 	<TextBox />
 </StackPanel>

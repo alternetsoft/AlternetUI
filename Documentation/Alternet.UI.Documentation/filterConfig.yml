@@ -2,6 +2,8 @@ apiRules:
 - exclude:
     uidRegex: ^XamlX\.
 - exclude:
+    uidRegex: ^Alternet\.UI\.Port
+- exclude:
     uidRegex: ^Alternet\.UI\.Markup
 - exclude:
     uidRegex: ^Alternet\.UI\.Dependency
