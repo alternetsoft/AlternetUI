@@ -155,7 +155,7 @@ The following table summarizes the available layout controls.
 ## Custom Layout Behaviors
 
 For applications that require a layout that is not possible by using any of the
-predefined <xref:Alternet.UI.Control> controls, custom layout
+predefined controls, custom layout
 behaviors can be achieved using one of these approaches:
 
 - Set <xref:Alternet.UI.Control.Layout%2A> property.
