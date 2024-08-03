@@ -250,8 +250,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="document">Xml document.</param>
         /// <param name="nodeAction">Action to call.</param>
+        /// <param name="userData">User data passed to the node action.</param>
         /// <returns></returns>
-        public static bool ForEachChild(XmlDocument document, Func<XmlNode, bool>? nodeAction)
+        public static bool ForEachChild(
+            XmlDocument document,
+            Func<XmlNode, object?, bool>? nodeAction,
+            object? userData = null)
         {
             if (nodeAction is null)
                 return false;
@@ -275,7 +279,7 @@ namespace Alternet.UI
 
             bool ProcessNode(XmlNode node)
             {
-                bool result = nodeAction(node);
+                bool result = nodeAction(node, userData);
 
                 foreach (XmlNode child in node)
                 {
@@ -308,7 +312,7 @@ namespace Alternet.UI
         /// Converts xml data using the specified parameters.
         /// </summary>
         /// <param name="fromStream">Stream with xml data.</param>
-        /// <param name="prm"></param>
+        /// <param name="prm">Conversion parameters.</param>
         /// <returns></returns>
         public static Stream ConvertXml(Stream fromStream, XmlStreamConvertParams prm)
         {
@@ -319,10 +323,10 @@ namespace Alternet.UI
 
             if (prm.RootNodeAction is not null)
             {
-                convertPerformed = prm.RootNodeAction(xDoc.DocumentElement);
+                convertPerformed = prm.RootNodeAction(xDoc.DocumentElement, prm.UserData);
             }
 
-            if (ForEachChild(xDoc, prm.NodeAction))
+            if (ForEachChild(xDoc, prm.NodeAction, prm.UserData))
                 convertPerformed = true;
 
             prm.ConvertPerformed = convertPerformed;
@@ -349,12 +353,12 @@ namespace Alternet.UI
             /// <summary>
             /// Gets or sets function which is called for the root node.
             /// </summary>
-            public Func<XmlNode, bool>? RootNodeAction;
+            public Func<XmlNode, object?, bool>? RootNodeAction;
 
             /// <summary>
             /// Gets or sets function which is called for the every node of the xml document.
             /// </summary>
-            public Func<XmlNode, bool>? NodeAction;
+            public Func<XmlNode, object?, bool>? NodeAction;
 
             /// <summary>
             /// Gets or sets xml writer settings.
@@ -367,12 +371,17 @@ namespace Alternet.UI
             public bool ConvertPerformed;
 
             /// <summary>
+            /// Gets or sets user data. This field can be used for any purposes.
+            /// </summary>
+            public object? UserData;
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="XmlStreamConvertParams"/> class.
             /// </summary>
             /// <param name="nodeAction">Function to call for the every node of the xml document.</param>
             /// <param name="writerSettings">Xml writer settings.</param>
             public XmlStreamConvertParams(
-                Func<XmlNode, bool> nodeAction,
+                Func<XmlNode, object?, bool> nodeAction,
                 XmlWriterSettings? writerSettings = null)
             {
                 NodeAction = nodeAction;
