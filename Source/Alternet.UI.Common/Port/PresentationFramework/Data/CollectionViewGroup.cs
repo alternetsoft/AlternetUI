@@ -18,7 +18,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// A CollectionViewGroup, as created by a CollectionView according to a GroupDescription.
     /// </summary>
-    abstract public class CollectionViewGroup : INotifyPropertyChanged
+    internal abstract class CollectionViewGroup : INotifyPropertyChanged
     {
         #region Constructors
 

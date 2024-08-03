@@ -15,7 +15,7 @@ namespace Alternet.UI.Port
     ///  because it doesn't support custom cultures, and in xml we require the converter to
     ///  support en-us culture.
     /// </summary>
-    public class DateTimeValueSerializer : ValueSerializer
+    internal class DateTimeValueSerializer : ValueSerializer
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="System.ComponentModel.DateTimeConverter"></see> class.

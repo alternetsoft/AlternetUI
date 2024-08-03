@@ -22,7 +22,7 @@ namespace Alternet.UI.Port
     /// </summary>
     /// <remarks>Note: we purposely didn't make this class a dictionary since it is an internal
     ///  class and we won't be using even half of the dictionary functionalities.
-    ///  If this class becomes a public class which is strongly discouraged, this class
+    ///  If this class becomes public which is strongly discouraged, this class
     ///  needs to implement IDictionary.</remarks>
     [FriendAccessAllowed]
     internal static class PreloadedPackages 

@@ -24,7 +24,7 @@ namespace Alternet.UI.Port
     ///     used by ContentElement in the Framework 
     ///     to store Instance EventHandlers
     /// </remarks>
-    public struct RoutedEventHandlerInfo
+    internal struct RoutedEventHandlerInfo
     {
         #region Construction
         

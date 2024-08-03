@@ -12,7 +12,7 @@ namespace Alternet.UI.Port
     /// INameScope- Defines the basic Name Scoping interface for root classes
     /// </summary>
     /// 
-    public interface INameScope
+    internal interface INameScope
     {
         /// <summary>
         /// Registers the name - element combination

@@ -11,7 +11,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Unifies enumerable, collection, and dictionary support that are useful for exposing a dictionary of names in a UIXML namescope.
     /// </summary>
-    public interface INameScopeDictionary : INameScope, IDictionary<string, object>
+    internal interface INameScopeDictionary : INameScope, IDictionary<string, object>
     {
     }
 }

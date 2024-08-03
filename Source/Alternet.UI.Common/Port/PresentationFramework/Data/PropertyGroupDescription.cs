@@ -24,7 +24,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Description of grouping based on a property value.
     /// </summary>
-    public class PropertyGroupDescription : GroupDescription
+    internal class PropertyGroupDescription : GroupDescription
     {
         #region Constructors
 

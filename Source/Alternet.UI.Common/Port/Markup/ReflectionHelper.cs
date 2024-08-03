@@ -148,7 +148,7 @@ namespace Alternet.UI.Port
         }
 
         /// <summary>
-        /// Helper for determine if the type is a public class.
+        /// Helper for determine if the type is a public.
         /// </summary>
         /// <param name="type">Type to check</param>
         /// <returns>True if type is public</returns>

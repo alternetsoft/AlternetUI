@@ -23,7 +23,7 @@ namespace Alternet.UI.Port
     /// <p>The SourceUpdated event is raised whenever a value is transferred from the target to the source,
     /// (but only for bindings that have requested the event, by setting BindFlags.NotifyOnSourceUpdated).</p>
     /// </remarks>
-    public class DataTransferEventArgs : RoutedEventArgs
+    internal class DataTransferEventArgs : RoutedEventArgs
     {
         //------------------------------------------------------
         //

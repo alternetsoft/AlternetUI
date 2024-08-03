@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// <p>The event receiver should set Accepted to true if the item
     /// passes the filter, or false if it fails.</p>
     /// </remarks>
-    public class FilterEventArgs : EventArgs
+    internal class FilterEventArgs : EventArgs
     {
         //------------------------------------------------------
         //
@@ -71,7 +71,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     The delegate to use for handlers that receive FilterEventArgs.
     /// </summary>
-    public delegate void FilterEventHandler(object sender, FilterEventArgs e);
+    internal delegate void FilterEventHandler(object sender, FilterEventArgs e);
 }
 
 

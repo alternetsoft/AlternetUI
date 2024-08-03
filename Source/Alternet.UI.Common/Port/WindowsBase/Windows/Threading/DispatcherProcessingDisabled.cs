@@ -12,7 +12,7 @@ namespace Alternet.UI.Port
     ///     A structure that allows for dispatcher processing to be
     ///     enabled after a call to Dispatcher.DisableProcessing.
     /// </summary>
-    public struct DispatcherProcessingDisabled : IDisposable
+    internal struct DispatcherProcessingDisabled : IDisposable
     {
         /// <summary>
         ///     Reenable processing in the dispatcher.

@@ -1,7 +1,7 @@
 #pragma warning disable
 namespace Alternet.UI
 {
-    public enum Readability
+    internal enum Readability
     {
         /// <summary>
         /// Targeted value is not readable.

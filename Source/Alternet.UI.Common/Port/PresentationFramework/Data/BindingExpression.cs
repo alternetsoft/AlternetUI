@@ -32,13 +32,13 @@ namespace Alternet.UI.Port
     ///     Exception - returns the exception itself, we will fire the exception using Async exception model.
     ///     ValidationError - it will set itself as the BindingInError and add it to the elements Validation errors.
     /// </summary>
-    public delegate object UpdateSourceExceptionFilterCallback(object bindExpression, Exception exception);
+    internal delegate object UpdateSourceExceptionFilterCallback(object bindExpression, Exception exception);
 
     /// <summary>
     ///  Describes a single run-time instance of data binding, binding a target
     ///  (element, DependencyProperty) to a source (object, property, XML node)
     /// </summary>
-    public sealed class BindingExpression : BindingExpressionBase, IDataBindEngineClient, IWeakEventListener
+    internal sealed class BindingExpression : BindingExpressionBase, IDataBindEngineClient, IWeakEventListener
     {
         //------------------------------------------------------
         //

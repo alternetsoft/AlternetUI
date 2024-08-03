@@ -24,7 +24,7 @@ namespace Alternet.UI.Port
     ///     The cole purpose of this TypeConveret is to block the 
     ///     default TypeConverter/ ToString() behavior
     /// </remarks>
-    public class ExpressionConverter : TypeConverter
+    internal class ExpressionConverter : TypeConverter
     {
         /// <summary>
         ///     TypeConverter method override.

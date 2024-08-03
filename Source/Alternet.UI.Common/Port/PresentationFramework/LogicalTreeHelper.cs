@@ -17,16 +17,11 @@ using System;
 
 namespace Alternet.UI.Port
 {
-    /*
-        public delegate bool ParentTraversalCallback(FrameworkElement parentFE, FrameworkContentElement parentFCE, object data);
-        public delegate bool ChildTraversalCallback(FrameworkElement childFE, FrameworkContentElement childFCE, object child, object data);
-    */
-
     /// <summary>
     /// Static helper functions for dealing with the logical tree
     /// </summary>
-    public static class LogicalTreeHelper
-{
+    internal static class LogicalTreeHelper
+    {
         //    //------------------------------------------------------
         //    //
         //    //  Constructors

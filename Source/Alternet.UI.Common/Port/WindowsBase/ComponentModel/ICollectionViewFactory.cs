@@ -18,7 +18,7 @@ namespace Alternet.UI.Port
     /// Allows an implementing collection to create a view to its data.
     /// Normally, user code does not call methods on this interface.
     /// </summary>
-    public interface ICollectionViewFactory
+    internal interface ICollectionViewFactory
     {
         /// <summary>
         /// Create a new view on this collection [Do not call directly].

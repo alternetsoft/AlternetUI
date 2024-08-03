@@ -4,18 +4,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 // Description: Enum describing the different steps in the validation process.
-//
 
-using System.ComponentModel; // doc comments
+using System.ComponentModel;
 
 namespace Alternet.UI.Port
 {
     /// <summary>
     /// This enum describes the different steps in the validation process.
     /// </summary>
-    public enum ValidationStep
+    internal enum ValidationStep
     {
         /// <summary> Obtain the value from the target element </summary>
         RawProposedValue,

@@ -20,7 +20,7 @@ namespace Alternet.UI.Port
     /// be non-null.  Otherwise it is treated as a key that can't unlock anything.
     /// (When needed, this property is available via the static constant NoAccess.
     /// </remarks>
-    public sealed class DependencyPropertyKey
+    internal sealed class DependencyPropertyKey
     {
         /// <summary>
         ///     The DependencyProperty associated with this access key.  This key

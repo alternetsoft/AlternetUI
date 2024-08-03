@@ -25,7 +25,7 @@ namespace Alternet.UI.Port
     ///      instances on either a Binding or a MultiBinding.  Each of the ValidationRules'
     ///      Validate is checked for validity on update
     /// </summary>
-    public abstract class ValidationRule
+    internal abstract class ValidationRule
     {
         /// <summary>
         /// Initialize a new instance of ValidationRule.

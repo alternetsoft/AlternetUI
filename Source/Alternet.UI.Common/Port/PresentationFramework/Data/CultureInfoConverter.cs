@@ -30,7 +30,7 @@ namespace Alternet.UI.Port
     /// in Control Panel. This makes it possible to create documents the appearance of which do not depend on 
     /// local settings.
     /// </remarks>
-    public class CultureInfoIetfLanguageTagConverter : TypeConverter
+    internal class CultureInfoIetfLanguageTagConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //

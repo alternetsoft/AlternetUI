@@ -9,7 +9,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Provides data for the various property changed events.
     /// </summary>
-    public struct DependencyPropertyChangedEventArgs
+    internal struct DependencyPropertyChangedEventArgs
     {
         #region Constructors
 

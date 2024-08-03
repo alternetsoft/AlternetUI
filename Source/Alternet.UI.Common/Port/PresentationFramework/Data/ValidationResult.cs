@@ -18,7 +18,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// A ValidationResult is the result of call to ValidationRule.Validate
     /// </summary>
-    public class ValidationResult
+    internal class ValidationResult
     {
         /// <summary>
         /// Constructor

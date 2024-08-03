@@ -10,7 +10,7 @@ namespace Alternet.UI.Port
     ///     An enunmeration describing the status of a DispatcherOperation.
     /// </summary>
     ///
-    public enum DispatcherOperationStatus
+    internal enum DispatcherOperationStatus
     {
         /// <summary>
         ///     The operation is still pending.

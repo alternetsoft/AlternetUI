@@ -16,7 +16,7 @@ namespace Alternet.UI.Port
     ///     a TypeDescriptor query.
     /// </summary>
     [Flags]
-    public enum PropertyFilterOptions
+    internal enum PropertyFilterOptions
     {
         /// <summary>
         ///     Return no properties

@@ -34,7 +34,7 @@ namespace Alternet.UI.Port
     /// the thread at creation time to be the UI thread. Events will get marshalled from a worker thread
     /// to the app's UI thread.
     /// </remarks>
-    public abstract class DataSourceProvider : INotifyPropertyChanged, ISupportInitialize
+    internal abstract class DataSourceProvider : INotifyPropertyChanged, ISupportInitialize
     {
         /// <summary>
         /// constructor captures the Dispatcher associated with the current thread

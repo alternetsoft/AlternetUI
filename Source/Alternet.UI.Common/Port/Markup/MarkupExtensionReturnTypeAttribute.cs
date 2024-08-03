@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
-    public sealed class MarkupExtensionReturnTypeAttribute : Attribute
+    internal sealed class MarkupExtensionReturnTypeAttribute : Attribute
     {
 
         /// <summary>

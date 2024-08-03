@@ -22,7 +22,7 @@ namespace Alternet.UI.Port
     /// to a certain file format specification is malformed.
     /// </summary>
     [Serializable]
-    public class FileFormatException : FormatException
+    internal class FileFormatException : FormatException
     {
         private readonly Uri? sourceUri;
 

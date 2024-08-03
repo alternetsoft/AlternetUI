@@ -9,7 +9,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Representation of Dispatcher frame.
     /// </summary>
-    public class DispatcherFrame : DispatcherObject
+    internal class DispatcherFrame : DispatcherObject
     {
         static DispatcherFrame()
         {

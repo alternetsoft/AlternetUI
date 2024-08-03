@@ -25,7 +25,7 @@ namespace Alternet.UI.Port
     ///<summary>
     /// <see cref="ICollectionView"/> based on and associated to <see cref="IList"/>.
     ///</summary>
-    public class ListCollectionView : CollectionView, IComparer, IEditableCollectionViewAddNewItem, ICollectionViewLiveShaping, IItemProperties
+    internal class ListCollectionView : CollectionView, IComparer, IEditableCollectionViewAddNewItem, ICollectionViewLiveShaping, IItemProperties
     {
         //------------------------------------------------------
         //
@@ -3364,6 +3364,6 @@ namespace Alternet.UI.Port
     /// A delegate to select the group description as a function of the
     /// parent group and its level.
     /// </summary>
-    public delegate GroupDescription GroupDescriptionSelectorCallback(CollectionViewGroup group, int level);
+    internal delegate GroupDescription GroupDescriptionSelectorCallback(CollectionViewGroup group, int level);
 }
 

@@ -25,7 +25,7 @@ namespace Alternet.UI.Port
     /// Holds an existing collection structure
     /// (e.g. ObservableCollection or DataSet) for use under a CompositeCollection.
     /// </summary>
-    public class CollectionContainer : DependencyObject, INotifyCollectionChanged, IWeakEventListener
+    internal class CollectionContainer : DependencyObject, INotifyCollectionChanged, IWeakEventListener
     {
         //------------------------------------------------------
         //

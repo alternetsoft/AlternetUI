@@ -74,7 +74,7 @@ namespace Alternet.UI.Port
     ///     An Expression can be set per-instance per-property via SetValue.
     /// </remarks>
     [TypeConverter(typeof(ExpressionConverter))]
-    public class Expression
+    internal class Expression
     {
         /// <summary>
         ///     Expression construction

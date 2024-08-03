@@ -32,7 +32,7 @@ namespace Alternet.UI.Port
     /// <remarks>
     /// This WebRequest overload exists to handle Pack-specific URI's based on our custom schema
     /// </remarks>
-    public sealed class PackWebResponse: WebResponse
+    internal sealed class PackWebResponse: WebResponse
     {
         //------------------------------------------------------
         //

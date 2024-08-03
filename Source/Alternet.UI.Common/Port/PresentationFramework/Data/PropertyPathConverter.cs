@@ -28,7 +28,7 @@ namespace Alternet.UI.Port
     /// PropertyPathConverter - Converter class for converting instances of other types
     /// to and from PropertyPath instances.
     /// </summary>
-    public sealed class PropertyPathConverter: TypeConverter
+    internal sealed class PropertyPathConverter: TypeConverter
     {
         //-------------------------------------------------------------------
         //

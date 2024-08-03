@@ -24,7 +24,7 @@ namespace Alternet.UI.Port
     /// </summary>
 
     [Localizability(LocalizationCategory.Ignore)]
-    public class CompositeCollection : IList, INotifyCollectionChanged, ICollectionViewFactory, IWeakEventListener
+    internal class CompositeCollection : IList, INotifyCollectionChanged, ICollectionViewFactory, IWeakEventListener
     {
         //------------------------------------------------------
         //

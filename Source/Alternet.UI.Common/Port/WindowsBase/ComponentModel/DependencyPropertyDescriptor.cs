@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     ///     API degrades gracefully if the property descriptor passed does
     ///     not represent a dependency property.
     /// </summary>
-    public sealed class DependencyPropertyDescriptor : PropertyDescriptor {
+    internal sealed class DependencyPropertyDescriptor : PropertyDescriptor {
         //------------------------------------------------------
         //
         //  Constructors

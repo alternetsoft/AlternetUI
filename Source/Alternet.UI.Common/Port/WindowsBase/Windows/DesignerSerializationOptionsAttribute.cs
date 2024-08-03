@@ -20,7 +20,7 @@ namespace Alternet.UI.Port
     ///     Specifies the serialization flags per property
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class DesignerSerializationOptionsAttribute : Attribute
+    internal sealed class DesignerSerializationOptionsAttribute : Attribute
     {
         #region Construction
         

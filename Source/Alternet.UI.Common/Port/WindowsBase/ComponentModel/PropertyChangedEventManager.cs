@@ -23,7 +23,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Manager for the INotifyPropertyChanged.PropertyChanged event.
     /// </summary>
-    public class PropertyChangedEventManager : WeakEventManager
+    internal class PropertyChangedEventManager : WeakEventManager
     {
         #region Constructors
 

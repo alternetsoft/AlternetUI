@@ -14,7 +14,7 @@ namespace Alternet.UI.Port
     ///     parser, codegen for xaml, baml and caml cases.  The elements can then use this base uri
     ///     to navigate.
     ///</summary>
-    public interface IUriContext
+    internal interface IUriContext
     {
         /// <summary>
         ///     Provides the base uri of the current context.

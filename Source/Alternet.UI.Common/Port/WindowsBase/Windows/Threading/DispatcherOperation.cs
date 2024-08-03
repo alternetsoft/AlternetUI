@@ -17,7 +17,7 @@ namespace Alternet.UI.Port
     ///     DispatcherOperation represents a delegate that has been
     ///     posted to the Dispatcher queue.
     /// </summary>
-    public class DispatcherOperation
+    internal class DispatcherOperation
     {
         static DispatcherOperation()
         {
@@ -718,7 +718,7 @@ namespace Alternet.UI.Port
     ///     DispatcherOperation represents a delegate that has been
     ///     posted to the Dispatcher queue.
     /// </summary>
-    public class DispatcherOperation<TResult> : DispatcherOperation
+    internal class DispatcherOperation<TResult> : DispatcherOperation
     {
         internal DispatcherOperation(
             Dispatcher dispatcher,
@@ -782,5 +782,5 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     A convenient delegate to use for dispatcher operations.
     /// </summary>
-    public delegate object DispatcherOperationCallback(object arg);
+    internal delegate object DispatcherOperationCallback(object arg);
 }

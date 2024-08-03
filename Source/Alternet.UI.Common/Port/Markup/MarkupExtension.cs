@@ -12,7 +12,7 @@ namespace Alternet.UI
     ///  Base class for all Xaml markup extensions.  Only subclasses can
     ///  be instantiated.
     /// </summary>
-    public abstract class MarkupExtension 
+    internal abstract class MarkupExtension 
     {
         /// <summary>
         ///  Return an object that should be set on the targetObject's targetProperty

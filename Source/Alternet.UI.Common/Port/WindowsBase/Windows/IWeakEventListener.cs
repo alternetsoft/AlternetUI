@@ -24,7 +24,7 @@ namespace Alternet.UI.Port
     /// Whereas the normal event hookup causes the source to hold a reference
     /// to the receiver, thus keeping the receiver alive too long.
     /// </remarks>
-    public interface IWeakEventListener
+    internal interface IWeakEventListener
     {
         /// <summary>
         /// Handle events from the centralized event table.

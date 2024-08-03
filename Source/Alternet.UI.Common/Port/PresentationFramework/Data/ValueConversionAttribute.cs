@@ -37,7 +37,7 @@ namespace Alternet.UI.Port
     /// </code>
     /// </remarks>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class ValueConversionAttribute : Attribute
+    internal sealed class ValueConversionAttribute : Attribute
     {
         //------------------------------------------------------
         //

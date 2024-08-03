@@ -16,7 +16,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Modes used for inheritance property lookup as well as resource lookup
     /// </summary>
-    public enum InheritanceBehavior
+    internal enum InheritanceBehavior
     {
         /// <summary>
         /// 1. Inheritable property lookup will query the current element and further.

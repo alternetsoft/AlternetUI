@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Manager for the ICommand.CanExecuteChanged event.
     /// </summary>
-    public class CanExecuteChangedEventManager : WeakEventManager
+    internal class CanExecuteChangedEventManager : WeakEventManager
     {
         private static readonly object StaticSource = new NamedObject("StaticSource");
 #pragma warning disable

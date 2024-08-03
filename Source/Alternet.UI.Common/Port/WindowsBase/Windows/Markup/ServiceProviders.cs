@@ -24,7 +24,7 @@ namespace Alternet.UI.Port
     /// <internalonly>Restrict public access until M8.2</internalonly>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ComponentModel.Browsable(false)]
-    public class ServiceProviders : IServiceProvider
+    internal class ServiceProviders : IServiceProvider
     {
         #region Implement IServiceProvider interface
         /// <summary>

@@ -25,7 +25,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Invoked by .NET framework when our schema is recognized during a WebRequest
     /// </summary>
-    public sealed class PackWebRequestFactory : IWebRequestCreate
+    internal sealed class PackWebRequestFactory : IWebRequestCreate
     {
         static PackWebRequestFactory()
         {

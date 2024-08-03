@@ -22,9 +22,8 @@ namespace Alternet.UI.Port
     ///     An attached dependency-based property
     /// </summary>
     /// <exclude />
-    [TypeConverter("System.Windows.Markup.DependencyPropertyConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     [ValueSerializer(typeof(DependencyPropertyValueSerializer))]
-    public sealed class DependencyProperty : IPropertyInfo
+    internal sealed class DependencyProperty : IPropertyInfo
     {
         /// <summary>
         ///     Register a Dependency Property

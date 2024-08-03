@@ -19,7 +19,7 @@ namespace Alternet.UI.Port
     ///     is code rather than static metadata.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    public sealed class PropertyFilterAttribute : Attribute 
+    internal sealed class PropertyFilterAttribute : Attribute 
     {
         //------------------------------------------------------
         //

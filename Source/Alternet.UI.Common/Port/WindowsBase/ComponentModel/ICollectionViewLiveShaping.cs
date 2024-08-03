@@ -29,7 +29,7 @@ namespace Alternet.UI.Port
     /// properties to the known value;  otherwise it should set its IsLive...
     /// properties to null.
     ///</notes>
-    public interface ICollectionViewLiveShaping
+    internal interface ICollectionViewLiveShaping
     {
         ///<summary>
         /// Gets a value that indicates whether this view supports turning live sorting on or off.

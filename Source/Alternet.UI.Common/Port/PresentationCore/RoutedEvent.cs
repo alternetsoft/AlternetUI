@@ -26,7 +26,7 @@ namespace Alternet.UI.Port
     ///     NOTE: None of the members can be null
     /// </remarks>
     /// <ExternalAPI/>
-    public sealed class RoutedEvent
+    internal sealed class RoutedEvent
     {
         #region External API
         /// <summary>

@@ -14,7 +14,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public class ClrPropertyInfo : IPropertyInfo
+    internal class ClrPropertyInfo : IPropertyInfo
     {
         private readonly Func<object, object?>? _getter;
         private readonly Action<object, object?>? _setter;

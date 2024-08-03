@@ -18,7 +18,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Provides data for the <see cref="BindingOperations.CollectionRegistering"/> event.
     /// </summary>
-    public class CollectionRegisteringEventArgs : EventArgs
+    internal class CollectionRegisteringEventArgs : EventArgs
     {
         internal CollectionRegisteringEventArgs(IEnumerable collection, object parent=null)
         {

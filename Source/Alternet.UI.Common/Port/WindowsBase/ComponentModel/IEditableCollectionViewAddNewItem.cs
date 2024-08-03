@@ -17,19 +17,19 @@ namespace Alternet.UI.Port
     /// can implement to enable functionality for adding a user-supplied item to the
     /// underlying collection.
     /// </summary>
-    public interface IEditableCollectionViewAddNewItem : IEditableCollectionView
-{
-    /// <summary>
-    /// Return true if the view supports <see cref="AddNewItem"/>.
-    /// </summary>
-    bool    CanAddNewItem { get; }
+    internal interface IEditableCollectionViewAddNewItem : IEditableCollectionView
+    {
+        /// <summary>
+        /// Return true if the view supports <see cref="AddNewItem"/>.
+        /// </summary>
+        bool CanAddNewItem { get; }
 
-    /// <summary>
-    /// Add a new item to the underlying collection.  Returns the new item.
-    /// After calling AddNewItem and changing the new item as desired, either
-    /// <see cref="IEditableCollectionView.CommitNew"/> or <see cref="IEditableCollectionView.CancelNew"/> should be
-    /// called to complete the transaction.
-    /// </summary>
-    object  AddNewItem(object newItem);
-}
+        /// <summary>
+        /// Add a new item to the underlying collection.  Returns the new item.
+        /// After calling AddNewItem and changing the new item as desired, either
+        /// <see cref="IEditableCollectionView.CommitNew"/> or <see cref="IEditableCollectionView.CancelNew"/> should be
+        /// called to complete the transaction.
+        /// </summary>
+        object AddNewItem(object newItem);
+    }
 }

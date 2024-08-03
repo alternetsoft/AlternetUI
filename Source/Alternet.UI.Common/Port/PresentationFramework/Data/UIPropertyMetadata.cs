@@ -12,7 +12,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Metadata for supported UI features
     /// </summary>
-    public class UIPropertyMetadata : PropertyMetadata
+    internal class UIPropertyMetadata : PropertyMetadata
     {
         /// <summary>
         ///     UI metadata construction

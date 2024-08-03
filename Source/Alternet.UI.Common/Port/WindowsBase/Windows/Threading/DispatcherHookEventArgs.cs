@@ -12,7 +12,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Additional information provided about a dispatcher.
     /// </summary>
-    public sealed class DispatcherHookEventArgs : EventArgs
+    internal sealed class DispatcherHookEventArgs : EventArgs
     {
         /// <summary>
         ///     Constructs an instance of the DispatcherHookEventArgs class.
@@ -53,6 +53,6 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     The handler for the DispatcherHookEventArgs.
     /// </summary>
-    public delegate void DispatcherHookEventHandler(object sender, DispatcherHookEventArgs e);
+    internal delegate void DispatcherHookEventHandler(object sender, DispatcherHookEventArgs e);
 }
 

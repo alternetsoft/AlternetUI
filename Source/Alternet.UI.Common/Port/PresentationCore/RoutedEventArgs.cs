@@ -32,7 +32,7 @@ namespace Alternet.UI.Port
     ///     providing extra event state info, and invoking the
     ///     handler associated with the RoutedEvent
     /// </remarks>
-    public class RoutedEventArgs : BaseEventArgs
+    internal class RoutedEventArgs : BaseEventArgs
     {
         /// <summary>
         ///     Constructor for <see cref="RoutedEventArgs"/>
@@ -377,6 +377,6 @@ namespace Alternet.UI.Port
     ///     RoutedEventHandler Definition
     /// </summary>
     /// <ExternalAPI/>
-    public delegate void RoutedEventHandler(object sender, RoutedEventArgs e);
+    internal delegate void RoutedEventHandler(object sender, RoutedEventArgs e);
 }
 

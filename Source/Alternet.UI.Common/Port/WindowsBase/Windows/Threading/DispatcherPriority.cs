@@ -11,7 +11,7 @@ namespace Alternet.UI.Port
     ///     operations can be invoked via the Dispatcher.
     /// </summary>
     ///
-    public enum DispatcherPriority
+    internal enum DispatcherPriority
     {
         /// <summary>
         ///     This is an invalid priority.

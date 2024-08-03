@@ -19,7 +19,7 @@ namespace Alternet.UI.Port
     ///     Specifies the serialization flags per property
     /// </summary>
     [Flags]
-    public enum DesignerSerializationOptions : int
+    internal enum DesignerSerializationOptions : int
     {
         /// <summary>
         ///     Serialize the property as an attibute

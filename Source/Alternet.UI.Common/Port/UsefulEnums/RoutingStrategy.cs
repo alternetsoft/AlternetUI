@@ -11,7 +11,7 @@ namespace Alternet.UI.Port
     ///     Tunnel or Bubble
     /// </summary>
     /// <ExternalAPI/>
-    public enum RoutingStrategy
+    internal enum RoutingStrategy
     {
         /// <summary>
         ///     Tunnel 

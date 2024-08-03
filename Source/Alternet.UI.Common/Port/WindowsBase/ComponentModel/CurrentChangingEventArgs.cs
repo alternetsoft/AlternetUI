@@ -22,7 +22,7 @@ namespace Alternet.UI.Port
     /// caused by a move current operation and uncancelable when 
     /// caused by an irreversable collection change operation.
     /// </summary>
-    public class CurrentChangingEventArgs : EventArgs
+    internal class CurrentChangingEventArgs : EventArgs
     {
         //------------------------------------------------------
         //
@@ -102,7 +102,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     The delegate to use for handlers that receive the CurrentChanging event.
     /// </summary>
-    public delegate void CurrentChangingEventHandler(object sender, CurrentChangingEventArgs e);
+    internal delegate void CurrentChangingEventHandler(object sender, CurrentChangingEventArgs e);
 }
 
 
