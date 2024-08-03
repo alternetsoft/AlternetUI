@@ -10,6 +10,6 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Property change notification callback
     /// </summary>
-    public delegate void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e);
+    internal delegate void PropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e);
 }
 

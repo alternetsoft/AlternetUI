@@ -15,7 +15,7 @@ namespace Alternet.UI.Port
 {
     ///<summary>Exception class thrown when a value requested by a validation rule is not available</summary>
     [Serializable]
-    public class ValueUnavailableException : SystemException
+    internal class ValueUnavailableException : SystemException
     {
         #region Constructors
 

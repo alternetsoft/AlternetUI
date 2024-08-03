@@ -55,7 +55,7 @@ namespace Alternet.UI.Port
     /// that instantiates a business object for use as a source for data binding.
     /// </summary>
     [Localizability(LocalizationCategory.NeverLocalize)] // Not localizable
-    public class ObjectDataProvider : DataSourceProvider
+    internal class ObjectDataProvider : DataSourceProvider
     {
         //------------------------------------------------------
         //

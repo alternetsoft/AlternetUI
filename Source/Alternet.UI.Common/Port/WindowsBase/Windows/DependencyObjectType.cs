@@ -32,7 +32,7 @@ namespace Alternet.UI.Port
     ///         </item>
     ///     </list>
     /// </remarks>
-    public class DependencyObjectType
+    internal class DependencyObjectType
     {
         /// <summary>
         ///     Retrieve a DependencyObjectType that represents a given system (CLR) type

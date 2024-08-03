@@ -20,7 +20,7 @@ namespace Alternet.UI.Port
     /// An error in validation -- either created by an ValidationRule
     /// or explicitly through MarkInvalid on BindingExpression or MultiBindingExpression.
     /// </summary>
-    public class ValidationError
+    internal class ValidationError
     {
         /// <summary>
         /// ValidationError ctor

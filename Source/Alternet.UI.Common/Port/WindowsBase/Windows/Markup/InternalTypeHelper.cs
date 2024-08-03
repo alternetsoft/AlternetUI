@@ -28,7 +28,7 @@ namespace Alternet.UI.Port
     /// in the user's code context. 
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public abstract class InternalTypeHelper
+    internal abstract class InternalTypeHelper
     {
         /// <summary>
         /// Default InternalTypeHelper constructor

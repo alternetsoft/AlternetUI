@@ -34,7 +34,7 @@ namespace Alternet.UI.Port
     ///  as the one that is used to do open). It is up to an application to do proper action in modifying or closing
     ///  packages.
     /// </remarks>
-    public static class PackageStore
+    internal static class PackageStore
     {
         static PackageStore()
         {

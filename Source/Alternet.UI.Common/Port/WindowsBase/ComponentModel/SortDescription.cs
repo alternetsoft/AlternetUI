@@ -18,7 +18,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Defines a property and direction to sort a list by.
     /// </summary>
-    public struct SortDescription
+    internal struct SortDescription
     {
         //------------------------------------------------------
         //

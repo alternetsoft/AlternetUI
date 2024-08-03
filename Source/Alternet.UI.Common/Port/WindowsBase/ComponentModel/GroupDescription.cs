@@ -27,7 +27,7 @@ namespace Alternet.UI.Port
     /// A GroupDescription describes how to divide the items in a collection
     /// into groups.
     /// </summary>
-    public abstract class GroupDescription : INotifyPropertyChanged
+    internal abstract class GroupDescription : INotifyPropertyChanged
     {
         #region Constructors
 

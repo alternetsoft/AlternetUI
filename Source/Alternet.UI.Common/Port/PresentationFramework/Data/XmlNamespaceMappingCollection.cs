@@ -26,7 +26,7 @@ namespace Alternet.UI.Port
     /// Used to declare namespaces to be used in Xml data binding XPath queries
     /// </summary>
     [Localizability(LocalizationCategory.NeverLocalize)]
-    public class XmlNamespaceMappingCollection : XmlNamespaceManager, ICollection<XmlNamespaceMapping>, IAddChildInternal
+    internal class XmlNamespaceMappingCollection : XmlNamespaceManager, ICollection<XmlNamespaceMapping>, IAddChildInternal
     {
         /// <summary>
         /// Constructor

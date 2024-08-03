@@ -12,7 +12,7 @@ namespace Alternet.UI.Port
     /// Defines options for the <see cref="DependencyProperty"/>.
     /// </summary>
     [Flags]
-    public enum PropMetadataOption: int
+    internal enum PropMetadataOption : int
     {
         /// <summary>No flags</summary>
         None                            = 0x000,
@@ -67,7 +67,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Metadata for supported Framework features
     /// </summary>
-    public class FrameworkPropertyMetadata : UIPropertyMetadata
+    internal class FrameworkPropertyMetadata : UIPropertyMetadata
     {
         /// <summary>
         ///     Framework type metadata construction.  Marked as no inline to reduce code size.

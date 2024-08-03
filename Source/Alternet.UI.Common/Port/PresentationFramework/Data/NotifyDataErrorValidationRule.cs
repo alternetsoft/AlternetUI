@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     ///     or MultiBinding to indicate that data errors in the source object should
     ///     be considered ValidationErrors
     /// </summary>
-    public sealed class NotifyDataErrorValidationRule : ValidationRule
+    internal sealed class NotifyDataErrorValidationRule : ValidationRule
     {
         /// <summary>
         /// DataErrorValidationRule ctor.

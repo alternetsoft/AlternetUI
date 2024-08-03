@@ -15,7 +15,7 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal abstract class NativeApiProvider
     {
-        public static bool DebugImportResolver = DebugUtils.IsDebugDefined;
+        public static bool DebugImportResolver = DebugUtils.IsDebugDefined && false;
 
         public static bool UseDlOpenOnLinux = false;
 
@@ -117,7 +117,7 @@ namespace Alternet.UI.Native
                 LogUtils.LogNameValueToFile("NativeModuleNameWithExt", NativeModuleNameWithExt);                
             }
 
-            IntPtr result = default;
+            IntPtr result;
 
             if (libraryName == NativeModuleName)
             {

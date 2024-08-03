@@ -24,7 +24,7 @@ namespace Alternet.UI.Port
     /// <see cref="IBindingList"/>
     /// and <see cref="IBindingListView"/>, namely ADO DataViews.
     ///</summary>
-    public sealed class BindingListCollectionView : CollectionView, IComparer, IEditableCollectionView, ICollectionViewLiveShaping, IItemProperties
+    internal sealed class BindingListCollectionView : CollectionView, IComparer, IEditableCollectionView, ICollectionViewLiveShaping, IItemProperties
     {
         //------------------------------------------------------
         //

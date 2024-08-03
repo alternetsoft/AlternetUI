@@ -10,6 +10,6 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Validate property value
     /// </summary>
-    public delegate bool ValidateValueCallback(object value);
+    internal delegate bool ValidateValueCallback(object value);
 }
 

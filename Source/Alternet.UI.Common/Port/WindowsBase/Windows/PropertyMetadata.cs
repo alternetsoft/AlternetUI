@@ -17,7 +17,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Type-specific property metadata
     /// </summary>
-    public class PropertyMetadata
+    internal class PropertyMetadata
     {
         /// <summary>
         ///     Type metadata construction

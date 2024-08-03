@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// An enumeration class used by serialization to walk the a tree of objects. Markupobject's represent objects 
     /// and using XML based serialization  they would be written as elements.
     /// </summary>
-    public abstract class MarkupObject
+    internal abstract class MarkupObject
     {
         /// <summary>
         /// Prevent external specialization

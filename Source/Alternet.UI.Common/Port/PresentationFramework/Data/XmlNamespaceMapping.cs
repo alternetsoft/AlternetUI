@@ -20,7 +20,7 @@ namespace Alternet.UI.Port
     /// XmlNamespaceMapping Class
     /// used for declaring Xml Namespace Mappings
     /// </summary>
-    public class XmlNamespaceMapping : ISupportInitialize
+    internal class XmlNamespaceMapping : ISupportInitialize
     {
         /// <summary>
         /// Constructor for XmlNamespaceMapping

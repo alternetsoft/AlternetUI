@@ -23,7 +23,7 @@ namespace Alternet.UI.Port
     ///     or MultiBinding to indicate that Exceptions that occur during UpdateSource should
     ///     be considered ValidationErrors
     /// </summary>
-    public sealed class ExceptionValidationRule : ValidationRule
+    internal sealed class ExceptionValidationRule : ValidationRule
     {
         /// <summary>
         /// ExceptionValidationRule ctor.

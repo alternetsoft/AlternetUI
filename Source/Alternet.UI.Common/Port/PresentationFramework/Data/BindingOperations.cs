@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Operations to manipulate data bindings.
     /// </summary>
-    public static class BindingOperations
+    internal static class BindingOperations
     {
         //------------------------------------------------------
         //

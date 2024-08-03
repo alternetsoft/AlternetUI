@@ -1,7 +1,7 @@
 #pragma warning disable
 namespace Alternet.UI
 {
-    public enum Modifiability
+    internal enum Modifiability
     {
         /// <summary>
         /// Targeted value is not modifiable by localizers.

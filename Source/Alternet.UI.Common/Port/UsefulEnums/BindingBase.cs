@@ -23,7 +23,7 @@ namespace Alternet.UI.Port
 {
     /// <summary> This enum describes how the data flows through a given Binding
     /// </summary>
-    public enum BindingMode
+    internal enum BindingMode
     {
         /// <summary> Data flows from source to target and vice-versa </summary>
         TwoWay,
@@ -40,7 +40,7 @@ namespace Alternet.UI.Port
     /// <summary> This enum describes when updates (target-to-source data flow)
     /// happen in a given Binding.
     /// </summary>
-    public enum UpdateSourceTrigger
+    internal enum UpdateSourceTrigger
     {
         /// <summary> Obtain trigger from target property default </summary>
         Default,
@@ -57,7 +57,7 @@ namespace Alternet.UI.Port
     /// </summary>
     [MarkupExtensionReturnType(typeof(object))]
     [Localizability(LocalizationCategory.None, Modifiability = Modifiability.Unmodifiable, Readability = Readability.Unreadable)] // Not localizable by-default
-    public abstract class BindingBase: MarkupExtension
+    internal abstract class BindingBase: MarkupExtension
     {
         #region Constructors
 

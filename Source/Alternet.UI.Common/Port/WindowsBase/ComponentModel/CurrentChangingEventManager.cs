@@ -17,7 +17,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Manager for the ICollectionView.CurrentChanging event.
     /// </summary>
-    public class CurrentChangingEventManager : WeakEventManager
+    internal class CurrentChangingEventManager : WeakEventManager
     {
         #region Constructors
 

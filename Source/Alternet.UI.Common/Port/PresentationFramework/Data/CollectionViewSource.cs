@@ -12,12 +12,12 @@
 //
 
 using System;
-using System.Collections;           // IEnumerable
-using System.Collections.ObjectModel;   // ObservableCollection<T>
-using System.Collections.Specialized;   // NotifyCollectionChanged*
-using System.Globalization;         // CultureInfo
-using System.ComponentModel;        // ICollectionView
-        // XmlLanguage
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Globalization;
+using System.ComponentModel;
+
 using Alternet.UI.Internal;
 
 namespace Alternet.UI.Port
@@ -25,7 +25,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///  Describes a collection view.
     /// </summary>
-    public class CollectionViewSource : DependencyObject, ISupportInitialize, IWeakEventListener
+    internal class CollectionViewSource : DependencyObject, ISupportInitialize, IWeakEventListener
     {
         #region Constructors
 

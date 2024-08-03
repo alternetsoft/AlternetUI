@@ -18,7 +18,7 @@ namespace Alternet.UI.Port
     ///     Modifying local values (via SetValue or ClearValue) during enumeration
     ///     is unsupported
     /// </remarks>
-    public struct LocalValueEnumerator : IEnumerator
+    internal struct LocalValueEnumerator : IEnumerator
     {
         /// <summary>
         /// Overrides Object.GetHashCode
@@ -139,7 +139,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Represents a Property-Value pair for local value enumeration
     /// </summary>
-    public struct LocalValueEntry
+    internal struct LocalValueEntry
     {
         /// <summary>
         /// Overrides Object.GetHashCode

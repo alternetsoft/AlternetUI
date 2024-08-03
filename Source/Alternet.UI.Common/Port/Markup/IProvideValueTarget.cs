@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// this value will be set.  The TargetObject and TargetProperty
     /// values may be null.
     /// </summary>
-    public interface IProvideValueTarget
+    internal interface IProvideValueTarget
     {
         /// <summary>
         /// </summary>

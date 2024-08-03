@@ -14,7 +14,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public interface IPropertyInfo
+    internal interface IPropertyInfo
     {
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.

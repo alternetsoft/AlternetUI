@@ -3,7 +3,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Provides data for a cancelable routed event.
     /// </summary>
-    public class RoutedCancelEventArgs : RoutedEventArgs
+    internal class RoutedCancelEventArgs : RoutedEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RoutedCancelEventArgs"/> class.

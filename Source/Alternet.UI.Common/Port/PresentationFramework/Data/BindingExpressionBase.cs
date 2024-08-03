@@ -32,7 +32,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Base class for Binding Expressions.
     /// </summary>
-    public abstract class BindingExpressionBase : Expression, IWeakEventListener
+    internal abstract class BindingExpressionBase : Expression, IWeakEventListener
     {
         // Flags indicating run-time properties of a BindingExpression
         [Flags]

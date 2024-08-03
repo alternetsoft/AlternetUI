@@ -70,7 +70,7 @@ namespace Alternet.UI.Port
     /// Data structure for describing a property as a path below another
     /// </summary>
     [TypeConverter(typeof(PropertyPathConverter))]
-    public sealed class PropertyPath
+    internal sealed class PropertyPath
     {
         //------------------------------------------------------
         //

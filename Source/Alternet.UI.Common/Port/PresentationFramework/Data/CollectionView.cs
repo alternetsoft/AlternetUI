@@ -31,7 +31,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// ICollectionView with checks for affinity to the UI thread dispatcher
     /// </summary>
-    public class CollectionView : Port.DispatcherObject, ICollectionView, INotifyPropertyChanged
+    internal class CollectionView : Port.DispatcherObject, ICollectionView, INotifyPropertyChanged
     {
         //------------------------------------------------------
         //
@@ -149,12 +149,6 @@ namespace Alternet.UI.Port
         }
 
         #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Interfaces
-        //
-        //------------------------------------------------------
 
         #region Public Interfaces
 

@@ -6,7 +6,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Provides extension methods for UixmlPortObject and related classes.
     /// </summary>
-    public static class UixmlPortObjectExtensions
+    internal static class UixmlPortObjectExtensions
     {
         ///// <summary>
         ///// Converts an <see cref="IObservable{T}"/> to an <see cref="IBinding"/>.

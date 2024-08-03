@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
         AllowMultiple = false,
         Inherited = true)
     ]
-    public sealed class FriendAccessAllowedAttribute : Attribute
+    internal sealed class FriendAccessAllowedAttribute : Attribute
     {
     }
 }

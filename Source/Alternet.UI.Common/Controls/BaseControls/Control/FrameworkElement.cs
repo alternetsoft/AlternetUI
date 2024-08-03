@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// This will make the culture pertain to the scope of the element where it is applied.  The
         /// XmlLanguage names follow the RFC 3066 standard. For example, U.S. English is "en-US".
         /// </summary>
-        public static readonly DependencyProperty LanguageProperty =
+        internal static readonly DependencyProperty LanguageProperty =
                     DependencyProperty.RegisterAttached(
                                 "Language",
                                 typeof(object),
@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// <summary>
         ///     DataContext DependencyProperty
         /// </summary>
-        public static readonly DependencyProperty DataContextProperty =
+        internal static readonly DependencyProperty DataContextProperty =
                     DependencyProperty.Register(
                                 "DataContext",
                                 typeof(object),

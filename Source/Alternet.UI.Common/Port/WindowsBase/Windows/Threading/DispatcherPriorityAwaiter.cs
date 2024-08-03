@@ -16,7 +16,7 @@ namespace Alternet.UI.Port
     /// <remarks>
     ///     This is returned from DispatcherPriorityAwaitable.GetAwaiter()
     /// </remarks>
-    public struct DispatcherPriorityAwaiter : INotifyCompletion
+    internal struct DispatcherPriorityAwaiter : INotifyCompletion
     {
         /// <summary>
         ///     Creates an instance of DispatcherPriorityAwaiter that will

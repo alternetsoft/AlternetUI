@@ -11,7 +11,7 @@ namespace Alternet.UI.Port
     /// <summary>
     ///     Additional information provided about a dispatcher.
     /// </summary>
-    public sealed class DispatcherHooks
+    internal sealed class DispatcherHooks
     {
         /// <summary>
         ///     An event indicating the the dispatcher has no more operations to process.

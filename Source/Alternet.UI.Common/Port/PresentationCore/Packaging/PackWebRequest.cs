@@ -32,7 +32,7 @@ namespace Alternet.UI.Port
     /// should be sure to use the PackUriHelper static class to prepare their Uri's.  PackUriHelper use has the
     /// side effect of registering the "pack" scheme and associating the PackWebRequest class as its default handler.
     /// </remarks>
-    public sealed class PackWebRequest : WebRequest
+    internal sealed class PackWebRequest : WebRequest
     {
         //------------------------------------------------------
         //

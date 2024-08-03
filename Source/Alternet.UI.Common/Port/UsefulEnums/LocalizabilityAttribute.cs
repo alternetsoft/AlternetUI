@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
          AllowMultiple = false,
          Inherited = true)
     ]
-    public sealed class LocalizabilityAttribute : Attribute
+    internal sealed class LocalizabilityAttribute : Attribute
     {
         /// <summary>
         /// Construct a LocalizabilityAttribute to describe the localizability of a property.

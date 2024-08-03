@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Status of the Binding
     /// </summary>
-    public enum BindingStatus
+    internal enum BindingStatus
     {
         /// <summary> Binding has not yet been attached to its target </summary>
         Unattached = 0,
@@ -68,7 +68,7 @@ namespace Alternet.UI.Port
     ///  Describes an instance of a Binding, binding a target
     ///  (DependencyObject, DependencyProperty) to a source (object, property)
     /// </summary>
-    public class Binding : BindingBase
+    internal class Binding : BindingBase
     {
         //------------------------------------------------------
         //

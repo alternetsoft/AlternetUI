@@ -9,16 +9,17 @@
 //
 
 using Alternet.UI.Markup;
+
 using System;
 using System.ComponentModel;    // ISupportInitialize
 using System.Diagnostics;
-    // MarkupExtension
+// MarkupExtension
 
 namespace Alternet.UI.Port
 {
     /// <summary> This enum describes the type of RelativeSource
     /// </summary>
-    public enum RelativeSourceMode
+    internal enum RelativeSourceMode
     {
         /// <summary>use the DataContext from the previous scope
         /// </summary>
@@ -47,9 +48,9 @@ namespace Alternet.UI.Port
     /// Only FindAncestor mode allows AncestorType and AncestorLevel.
     /// </summary>
     [MarkupExtensionReturnType(typeof(RelativeSource))]
-    public class RelativeSource : MarkupExtension, ISupportInitialize
+    internal class RelativeSource : MarkupExtension, ISupportInitialize
     {
-#region constructors
+        #region constructors
 
         /// <summary>Constructor
         /// </summary>
@@ -75,9 +76,9 @@ namespace Alternet.UI.Port
             AncestorLevel = ancestorLevel;
         }
 
-#endregion constructors
+        #endregion constructors
 
-#region ISupportInitialize
+        #region ISupportInitialize
 
         /// <summary>Begin Initialization</summary>
         void ISupportInitialize.BeginInit()
@@ -93,9 +94,9 @@ namespace Alternet.UI.Port
                 throw new InvalidOperationException(SR.Get(SRID.RelativeSourceNeedsAncestorType));
         }
 
-#endregion ISupportInitialize
+        #endregion ISupportInitialize
 
-#region public properties
+        #region public properties
 
         /// <summary>static instance of RelativeSource for PreviousData mode.
         /// </summary>
@@ -240,9 +241,9 @@ namespace Alternet.UI.Port
             return (_mode == RelativeSourceMode.FindAncestor);
         }
 
-#endregion public properties
+        #endregion public properties
 
-#region public methods
+        #region public methods
 
         /// <summary>
         ///  Return an object that should be set on the targetObject's targetProperty
@@ -263,16 +264,16 @@ namespace Alternet.UI.Port
             return this;
         }
 
-#endregion public methods
+        #endregion public methods
 
-#region private properties
+        #region private properties
         private bool IsUninitialized
         {
             get { return (_ancestorLevel == -1); }
         }
-#endregion private properties
+        #endregion private properties
 
-#region private methods
+        #region private methods
         void InitializeMode(RelativeSourceMode mode)
         {
             Debug.Assert(IsUninitialized);
@@ -295,9 +296,9 @@ namespace Alternet.UI.Port
                 throw new ArgumentException(SR.Get(SRID.RelativeSourceModeInvalid), "mode");
             }
         }
-#endregion private methods
+        #endregion private methods
 
-#region private fields
+        #region private fields
 
         private RelativeSourceMode _mode;
         private Type _ancestorType;
@@ -306,6 +307,6 @@ namespace Alternet.UI.Port
         private static RelativeSource s_previousData;
         private static RelativeSource s_templatedParent;
         private static RelativeSource s_self;
-#endregion private fields
+        #endregion private fields
     }
 }

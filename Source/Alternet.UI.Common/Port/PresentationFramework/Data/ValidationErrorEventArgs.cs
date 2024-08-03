@@ -19,7 +19,7 @@ namespace Alternet.UI.Port
 {
     /// <summary> Describes if a validation error has been added or cleared
     /// </summary>
-    public enum ValidationErrorEventAction
+    internal enum ValidationErrorEventAction
     {
         /// <summary>A new ValidationError has been detected.</summary>
         Added,
@@ -31,7 +31,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// EventArgs for ValidationError event.
     /// </summary>
-    public class ValidationErrorEventArgs : RoutedEventArgs
+    internal class ValidationErrorEventArgs : RoutedEventArgs
     {
         /// <summary>
         /// Constructor

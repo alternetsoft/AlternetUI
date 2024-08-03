@@ -4,20 +4,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 // Description: Manager for the DataChanged event in the "weak event listener"
 //              pattern.  See WeakEventTable.cs for an overview.
-//
 
 using System;
-       // WeakEventManager
 
 namespace Alternet.UI.Port
 {
     /// <summary>
     /// Manager for the DataSourceProvider.DataChanged event.
     /// </summary>
-    public class DataChangedEventManager : WeakEventManager
+    internal class DataChangedEventManager : WeakEventManager
     {
         #region Constructors
 

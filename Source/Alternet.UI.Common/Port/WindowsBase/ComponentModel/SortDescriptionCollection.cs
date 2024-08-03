@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Implementation of a dynamic data collection of SortDescriptions.
     /// </summary>
-    public class SortDescriptionCollection : Collection<SortDescription>, INotifyCollectionChanged
+    internal class SortDescriptionCollection : Collection<SortDescription>, INotifyCollectionChanged
     {
         //------------------------------------------------------
         //

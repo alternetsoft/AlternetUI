@@ -81,7 +81,7 @@ namespace Alternet.UI.Port
     /// This base class provides common functionality for event managers,
     /// in support of the "weak event listener" pattern.
     /// </summary>
-    public abstract class WeakEventManager : DispatcherObject
+    internal abstract class WeakEventManager : DispatcherObject
     {
         #region Constructors
 

@@ -5,15 +5,10 @@
 // See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
-*
-*
-* This class provides a public interface to access TraceSources for
+* This class provides an interface to access TraceSources for
 * enabling/disabling/filtering of trace messages by area.
-*
 * The other portion of this partial class is generated using
 * genTraceSource.pl and AvTraceMessages.txt
-*
-*
 \***************************************************************************/
 
 using Alternet.UI;

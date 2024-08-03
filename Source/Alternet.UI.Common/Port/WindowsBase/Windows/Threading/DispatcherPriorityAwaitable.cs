@@ -12,7 +12,7 @@ namespace Alternet.UI.Port
     /// <remarks>
     ///     This is returned from Dispatcher.Yield()
     /// </remarks>
-    public struct DispatcherPriorityAwaitable
+    internal struct DispatcherPriorityAwaitable
     {
         /// <summary>
         ///     Creates an instance of DispatcherPriorityAwaitable with the

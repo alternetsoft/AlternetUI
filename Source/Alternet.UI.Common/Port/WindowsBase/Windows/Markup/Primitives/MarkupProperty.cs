@@ -23,7 +23,7 @@ namespace Alternet.UI.Port
     /// either representable as a string or a list of items. If the property can be respresented as a string 
     /// IsComposite is false, otherwise, if IsComposite is true, the property is a list of items.
     /// </summary>
-    public abstract class MarkupProperty
+    internal abstract class MarkupProperty
     {
         /// <summary>
         /// Prevent external specialization

@@ -39,7 +39,7 @@ namespace Alternet.UI.Port
     /// <ExternalAPI/>
     [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     [ContentProperty("XmlSerializer")]
-    public class XmlDataProvider : DataSourceProvider, IUriContext
+    internal class XmlDataProvider : DataSourceProvider, IUriContext
     {
         //------------------------------------------------------
         //

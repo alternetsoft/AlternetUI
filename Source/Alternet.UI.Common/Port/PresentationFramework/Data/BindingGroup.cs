@@ -27,7 +27,7 @@ namespace Alternet.UI.Port
     /// A BindingGroup manages a collection of bindings, and provides services for
     /// item-level and cross-binding validation.
     /// </summary>
-    public class BindingGroup : DependencyObject
+    internal class BindingGroup : DependencyObject
     {
         #region Constructors
 

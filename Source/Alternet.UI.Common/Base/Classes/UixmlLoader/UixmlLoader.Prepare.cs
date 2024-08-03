@@ -37,7 +37,7 @@ namespace Alternet.UI
                 return null;
             return result;
 
-            bool RootFn(XmlNode node)
+            bool RootFn(XmlNode node, object? prm)
             {
                 if (node is not XmlElement element)
                     return false;
@@ -85,7 +85,7 @@ namespace Alternet.UI
                 return result;
             }
 
-            bool ChildFn(XmlNode node)
+            bool ChildFn(XmlNode node, object? prm)
             {
                 if (node is not XmlElement element)
                     return false;

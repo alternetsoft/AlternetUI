@@ -38,7 +38,7 @@ namespace Alternet.UI.Port
     ///     4. Release the access to the collection, if appropriate.
     ///</notes>
 
-    public delegate void CollectionSynchronizationCallback(
+    internal delegate void CollectionSynchronizationCallback(
         IEnumerable collection,
         object      context,
         Action      accessMethod,

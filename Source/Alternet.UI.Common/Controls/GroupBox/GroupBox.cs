@@ -32,11 +32,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
+        /// <summary>
+        /// Gets or sets title. Same as <see cref="Control.Title"/> property.
+        /// </summary>
         [Browsable(false)]
-        internal new string Text
+        public new string Text
         {
-            get => base.Text;
-            set => base.Text = value;
+            get => Title;
+            set => Title = value;
         }
 
         internal new IGroupBoxHandler Handler => (IGroupBoxHandler)base.Handler;

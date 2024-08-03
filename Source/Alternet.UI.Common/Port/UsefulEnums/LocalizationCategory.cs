@@ -10,7 +10,7 @@
 
 namespace Alternet.UI
 {
-    public enum LocalizationCategory
+    internal enum LocalizationCategory
     {
         /// <summary>
         /// None. For items that don't need to have a category

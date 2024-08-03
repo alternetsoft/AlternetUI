@@ -13,7 +13,7 @@ namespace Alternet.UI.Port
     ///     Allows management of RoutedEvents
     /// </summary>
     /// <ExternalAPI/>
-    public static class EventManager
+    internal static class EventManager
     {
         #region External API
         

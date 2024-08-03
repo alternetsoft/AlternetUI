@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     /// When the result of the operation is specific to 2D or 3D the methods are typed
     /// to Visual or Visual3D (e.g., GetDescendantBounds()).
     /// </summary>
-    public static class VisualTreeHelper
+    internal static class VisualTreeHelper
     {
         //        private static void CheckVisualReferenceArgument(DependencyObject reference)
         //        {
