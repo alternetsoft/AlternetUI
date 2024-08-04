@@ -1,3 +1,10 @@
+# 0.9.620 (2024 August 4)
+
+- Build pal dll for linux on Ubuntu 23 for better compatibility with modern linux systems.
+- GroupBox: Text is now the same as Title.
+- Fixed error in MouseInput sample.
+- UI.Port.* classes and interfaces made internal.
+
 # 0.9.619 (2024 August 3)
 
 - Return internal HashCode class instead of using from Microsoft.Bcl.HashCode as sometimes this nuget was not copied to bin folder.
