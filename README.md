@@ -59,7 +59,7 @@ this [page](https://developer.apple.com/support/xcode/).
 
 <b>STEP 3.</b> Linux Machine Setup:
 
-- Install Ubuntu 20.04 or newer.
+- Install Ubuntu 23.10 or newer.
 - Install CMake and C compilers.
 - Install required packages, run Install.Scripts/Ubuntu.Install.Packages.sh.
 - Make folder with Windows Alternet.UI installation accessible for Linux Machine.
