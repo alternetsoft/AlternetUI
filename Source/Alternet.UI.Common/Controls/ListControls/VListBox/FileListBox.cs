@@ -46,9 +46,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets template for the drive item when it is added to the list of the special folders.
-        /// Default is "Drive {0}".
+        /// Default is "{0}".
         /// </summary>
-        public static string DriveItemTemplate = "Drive {0}";
+        public static string DriveItemTemplate = "{0}";
 
         /// <summary>
         /// Gets or sets default svg image used for the "file" items.
@@ -466,12 +466,26 @@ namespace Alternet.UI
             {
                 DriveInfo[] allDrives = DriveInfo.GetDrives();
 
+                List<NewItemInfo> drivesList = new();
+
                 foreach (DriveInfo d in allDrives)
                 {
                     if (!Directory.Exists(d.Name))
                         continue;
                     var template = string.Format(DriveItemTemplate, d.Name);
-                    AddFolder(new(d.Name, template));
+                    drivesList.Add(new(d.Name, template));
+                }
+
+                drivesList.Sort(Comparison);
+
+                int Comparison(NewItemInfo x, NewItemInfo y)
+                {
+                    return string.Compare(x.Title, y.Title, false);
+                }
+
+                foreach (var item in drivesList)
+                {
+                    AddFolder(item);
                 }
             }
 
