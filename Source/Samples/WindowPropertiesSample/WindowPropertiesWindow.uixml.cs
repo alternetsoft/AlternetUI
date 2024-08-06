@@ -81,7 +81,11 @@ namespace WindowPropertiesSample
 
         private void PopupSetBounds_AfterHide(object? sender, EventArgs e)
         {
-            var rect = (setBoundsProperties.X, setBoundsProperties.Y, setBoundsProperties.Width, setBoundsProperties.Height);
+            var rect = (
+                setBoundsProperties.X,
+                setBoundsProperties.Y,
+                setBoundsProperties.Width,
+                setBoundsProperties.Height);
             if(testWindow is not null)
                 testWindow.Bounds = rect;
         }
@@ -201,13 +205,13 @@ namespace WindowPropertiesSample
             buttons.OkButton.Click += OkButton_Click;
             buttons.CancelButton.Click += CancelButton_Click;
 
-            LogListBox listBox = new()
+            ListBox listBox = new()
             {
                 Parent = testWindow,
                 VerticalAlignment = VerticalAlignment.Fill,
             };
 
-            listBox.BindApplicationLog();
+            listBox.Add("Hello from test window");
         }
 
         private void TestWindow_DpiChanged(object? sender, DpiChangedEventArgs e)
