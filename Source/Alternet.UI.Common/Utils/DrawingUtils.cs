@@ -170,68 +170,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws sliced image with the specified
-        /// <see cref="NinePatchImagePaintParams"/> parameters. This method can be used,
-        /// for example, for drawing complex button bakgrounds using predefined templates.
-        /// </summary>
-        /// <param name="canvas"><see cref="Graphics"/> where to draw.</param>
-        /// <param name="e">Draw parameters.</param>
-        /// <remarks>
-        /// Source image is sliced into 9 pieces. All parts of the image except corners
-        /// (top-left, top-right, bottom-right, bottom-left parts) are used
-        /// by <see cref="TextureBrush"/> to fill larger destination rectangle.
-        /// </remarks>
-        /// <remarks>
-        /// Issue with details is here:
-        /// <see href="https://github.com/alternetsoft/AlternetUI/issues/115"/>.
-        /// </remarks>
-        public static void DrawImageSliced(this Graphics canvas, NinePatchImagePaintParams e)
-        {
-            var src = e.SourceRect;
-            var dst = e.DestRect;
-            var patchSrc = e.PatchRect;
-
-            var offsetX = patchSrc.X - src.X;
-            var offsetY = patchSrc.Y - src.Y;
-
-            RectI patchDst = patchSrc;
-
-            NineRects srcNine = new(src, patchSrc);
-
-            patchDst.X = dst.X + offsetX;
-            patchDst.Y = dst.Y + offsetY;
-            patchDst.Width = dst.Width - (src.Width - patchSrc.Width);
-            patchDst.Height = dst.Height - (src.Height - patchSrc.Height);
-
-            NineRects dstNine = new(dst, patchDst);
-
-            CopyRect(srcNine.Center, dstNine.Center);
-            CopyRect(srcNine.TopCenter, dstNine.TopCenter);
-            CopyRect(srcNine.BottomCenter, dstNine.BottomCenter);
-            CopyRect(srcNine.CenterLeft, dstNine.CenterLeft);
-            CopyRect(srcNine.CenterRight, dstNine.CenterRight);
-
-            canvas.DrawImage(e.Image, dstNine.TopLeft, srcNine.TopLeft, GraphicsUnit.Pixel);
-            canvas.DrawImage(e.Image, dstNine.TopRight, srcNine.TopRight, GraphicsUnit.Pixel);
-            canvas.DrawImage(e.Image, dstNine.BottomLeft, srcNine.BottomLeft, GraphicsUnit.Pixel);
-            canvas.DrawImage(e.Image, dstNine.BottomRight, srcNine.BottomRight, GraphicsUnit.Pixel);
-
-            void CopyRect(RectI srcRect, RectI dstRect)
-            {
-                if (e.Tile)
-                {
-                    var subImage = e.Image.GetSubBitmap(srcRect);
-                    var brush = subImage.AsBrush;
-                    canvas.FillRectangle(brush, dstRect, GraphicsUnit.Pixel);
-                }
-                else
-                {
-                    canvas.DrawImage(e.Image, dstRect, srcRect, GraphicsUnit.Pixel);
-                }
-            }
-        }
-
-        /// <summary>
         /// Calculates distance between two points.
         /// </summary>
         /// <param name="p1">First point.</param>
@@ -579,6 +517,68 @@ namespace Alternet.UI
                 wrappedLines.Add(actualLine.ToString());
 
             return wrappedLines;
+        }
+
+        /// <summary>
+        /// Draws sliced image with the specified
+        /// <see cref="NinePatchImagePaintParams"/> parameters. This method can be used,
+        /// for example, for drawing complex button bakgrounds using predefined templates.
+        /// </summary>
+        /// <param name="canvas"><see cref="Graphics"/> where to draw.</param>
+        /// <param name="e">Draw parameters.</param>
+        /// <remarks>
+        /// Source image is sliced into 9 pieces. All parts of the image except corners
+        /// (top-left, top-right, bottom-right, bottom-left parts) are used
+        /// by <see cref="TextureBrush"/> to fill larger destination rectangle.
+        /// </remarks>
+        /// <remarks>
+        /// Issue with details is here:
+        /// <see href="https://github.com/alternetsoft/AlternetUI/issues/115"/>.
+        /// </remarks>
+        internal static void DrawImageSliced(this Graphics canvas, NinePatchImagePaintParams e)
+        {
+            var src = e.SourceRect;
+            var dst = e.DestRect;
+            var patchSrc = e.PatchRect;
+
+            var offsetX = patchSrc.X - src.X;
+            var offsetY = patchSrc.Y - src.Y;
+
+            RectI patchDst = patchSrc;
+
+            NineRects srcNine = new(src, patchSrc);
+
+            patchDst.X = dst.X + offsetX;
+            patchDst.Y = dst.Y + offsetY;
+            patchDst.Width = dst.Width - (src.Width - patchSrc.Width);
+            patchDst.Height = dst.Height - (src.Height - patchSrc.Height);
+
+            NineRects dstNine = new(dst, patchDst);
+
+            CopyRect(srcNine.Center, dstNine.Center);
+            CopyRect(srcNine.TopCenter, dstNine.TopCenter);
+            CopyRect(srcNine.BottomCenter, dstNine.BottomCenter);
+            CopyRect(srcNine.CenterLeft, dstNine.CenterLeft);
+            CopyRect(srcNine.CenterRight, dstNine.CenterRight);
+
+            canvas.DrawImage(e.Image, dstNine.TopLeft, srcNine.TopLeft, GraphicsUnit.Pixel);
+            canvas.DrawImage(e.Image, dstNine.TopRight, srcNine.TopRight, GraphicsUnit.Pixel);
+            canvas.DrawImage(e.Image, dstNine.BottomLeft, srcNine.BottomLeft, GraphicsUnit.Pixel);
+            canvas.DrawImage(e.Image, dstNine.BottomRight, srcNine.BottomRight, GraphicsUnit.Pixel);
+
+            void CopyRect(RectI srcRect, RectI dstRect)
+            {
+                if (e.Tile)
+                {
+                    var subImage = e.Image.GetSubBitmap(srcRect);
+                    var brush = subImage.AsBrush;
+                    canvas.FillRectangle(brush, dstRect, GraphicsUnit.Pixel);
+                }
+                else
+                {
+                    canvas.DrawImage(e.Image, dstRect, srcRect, GraphicsUnit.Pixel);
+                }
+            }
         }
     }
 }
