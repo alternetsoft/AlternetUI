@@ -323,6 +323,8 @@
   <ItemGroup>
     <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs"
              Link="Links\PrintingSample\PrintingMainWindow.uixml.cs" />
+    <None Include="..\PrintingSample\PrintingMainWindow.uixml"
+           Link="Links\PrintingSample\PrintingMainWindow.uixml" />
     <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"
            Link="Links\PrintingSample\PrintingMainWindow.uixml" />
   </ItemGroup>

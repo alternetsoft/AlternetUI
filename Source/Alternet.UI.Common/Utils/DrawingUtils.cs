@@ -505,17 +505,17 @@ namespace Alternet.UI
         /// Performs word wrapping of the text.
         /// </summary>
         /// <param name="text">Text to wrap.</param>
-        /// <param name="pixels">Width of the text in device-independent units.</param>
+        /// <param name="maxWidth">Width of the text in device-independent units.</param>
         /// <param name="font">Text font.</param>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns></returns>
         public static string WrapTextToMultipleLines(
             string text,
-            Coord pixels,
+            Coord maxWidth,
             Font font,
             double? scaleFactor = null)
         {
-            var list = WrapTextToList(text, pixels, font, scaleFactor);
+            var list = WrapTextToList(text, maxWidth, font, scaleFactor);
             if (list.Count == 0)
                 return string.Empty;
             if (list.Count == 1)
