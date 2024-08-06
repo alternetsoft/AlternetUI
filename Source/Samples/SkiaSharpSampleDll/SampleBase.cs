@@ -151,7 +151,7 @@ namespace SkiaSharpSample
 
 	public abstract class AnimatedSampleBase : SampleBase
 	{
-		private CancellationTokenSource cts;
+		private CancellationTokenSource? cts;
 
 		[Preserve]
 		public AnimatedSampleBase()
@@ -186,7 +186,7 @@ namespace SkiaSharpSample
 		{
 			base.OnDestroy();
 
-			cts.Cancel();
+			cts?.Cancel();
 		}
 
 		protected abstract Task OnUpdate(CancellationToken token);

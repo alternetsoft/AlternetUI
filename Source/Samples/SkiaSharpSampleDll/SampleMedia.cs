@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Reflection;
 
+using Alternet.UI;
+
 using SkiaSharp;
 
 namespace SkiaSharpSample
@@ -18,20 +20,20 @@ namespace SkiaSharpSample
 
 		public static class Images
 		{
-			public static Stream AdobeDng => Embedded.Load("adobe-dng.dng");
-			public static Stream Baboon => Embedded.Load("baboon.png");
-			public static Stream ColorWheel => Embedded.Load("color-wheel.png");
-			public static Stream NinePatch => Embedded.Load("nine-patch.png");
-			public static Stream BabyTux => Embedded.Load("baby_tux.webp");
-			public static Stream LogosSvg => Embedded.Load("logos.svg");
-			public static Stream AnimatedHeartGif => Embedded.Load("animated-heart.gif");
-			public static Stream OpacitySvg => Embedded.Load("opacity.svg");
-			public static Stream LottieLogo => Embedded.Load("LottieLogo1.json");
+			public static Stream AdobeDng => Embedded.Load("adobe-dng.dng") ?? StreamUtils.Empty;
+			public static Stream Baboon => Embedded.Load("baboon.png") ?? StreamUtils.Empty;
+			public static Stream ColorWheel => Embedded.Load("color-wheel.png") ?? StreamUtils.Empty;
+			public static Stream NinePatch => Embedded.Load("nine-patch.png") ?? StreamUtils.Empty;
+			public static Stream BabyTux => Embedded.Load("baby_tux.webp") ?? StreamUtils.Empty;
+			public static Stream LogosSvg => Embedded.Load("logos.svg") ?? StreamUtils.Empty;
+			public static Stream AnimatedHeartGif => Embedded.Load("animated-heart.gif") ?? StreamUtils.Empty;
+			public static Stream OpacitySvg => Embedded.Load("opacity.svg") ?? StreamUtils.Empty;
+			public static Stream LottieLogo => Embedded.Load("LottieLogo1.json") ?? StreamUtils.Empty;
 		}
 
 		public static class Fonts
 		{
-			public static Stream EmbeddedFont => Embedded.Load("embedded-font.ttf");
+			public static Stream EmbeddedFont => Embedded.Load("embedded-font.ttf") ?? StreamUtils.Empty;
 
 			public static string ContentFontPath = string.Empty;
 		}
@@ -47,12 +49,12 @@ namespace SkiaSharpSample
 				resources = assembly.GetManifestResourceNames();
 			}
 
-			public static Stream Load(string name)
+			public static Stream? Load(string name)
 			{
 				name = $".Media.{name}";
 				name = resources.FirstOrDefault(n => n.EndsWith(name));
 
-				Stream stream = null;
+				Stream? stream = null;
 				if (name != null)
 				{
 					stream = assembly.GetManifestResourceStream(name);

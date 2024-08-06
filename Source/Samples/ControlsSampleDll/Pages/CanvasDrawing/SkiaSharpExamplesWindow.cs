@@ -49,7 +49,7 @@ namespace ControlsSample
 
             rightPanel.Parent = mainPanel.RightPanel;
 
-            rightPanel.Add("Actions", actionsListBox);
+            rightPanel.Add("Pages", actionsListBox);
 
             pictureBox.Parent = mainPanel.CenterPanel;
 

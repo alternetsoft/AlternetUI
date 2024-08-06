@@ -9,9 +9,9 @@ namespace SkiaSharpSample.Samples
 	[Obsolete]
 	public class BitmapScalerSample : SampleBase
 	{
-		private List<SKBitmapResizeMethod> methods;
+		private List<SKBitmapResizeMethod>? methods;
 		private SKBitmapResizeMethod method;
-		private SKBitmap bitmap;
+		private SKBitmap? bitmap;
 
 		[Preserve]
 		public BitmapScalerSample()
@@ -44,7 +44,7 @@ namespace SkiaSharpSample.Samples
 
 		protected override void OnDestroy()
 		{
-			bitmap.Dispose();
+			bitmap?.Dispose();
 			bitmap = null;
 
 			base.OnDestroy();
@@ -58,29 +58,31 @@ namespace SkiaSharpSample.Samples
 			{
 				var bmpRect = SKRectI.Create(width, height).AspectFit(bitmap.Info.Size);
 
-				using (var resized = new SKBitmap(bmpRect.Width, bmpRect.Height))
-				using (var paint = new SKPaint())
-				{
-					bitmap.Resize(resized, method);
+				using var resized = new SKBitmap(bmpRect.Width, bmpRect.Height);
+				using var paint = new SKPaint();
 
-					canvas.DrawBitmap(resized, bmpRect);
+				bitmap.Resize(resized, method);
 
-					paint.TextAlign = SKTextAlign.Center;
-					paint.TextSize = 36;
-					paint.IsAntialias = true;
+				canvas.DrawBitmap(resized, bmpRect);
 
-					paint.Color = new SKColor(0, 0, 0, 127);
-					canvas.DrawRect(new SKRect(0, 0, width, (paint.TextSize * 2) + 30), paint);
+				paint.TextAlign = SKTextAlign.Center;
+				paint.TextSize = 36;
+				paint.IsAntialias = true;
 
-					paint.Color = SKColors.White;
-					canvas.DrawText(method.ToString(), width / 2, paint.TextSize + 10, paint);
-					canvas.DrawText("(tap to change)", width / 2, (paint.TextSize * 2) + 10, paint);
-				}
+				paint.Color = new SKColor(0, 0, 0, 127);
+				canvas.DrawRect(new SKRect(0, 0, width, (paint.TextSize * 2) + 30), paint);
+
+				paint.Color = SKColors.White;
+				canvas.DrawText(method.ToString(), width / 2, paint.TextSize + 10, paint);
+				canvas.DrawText("(tap to change)", width / 2, (paint.TextSize * 2) + 10, paint);
 			}
 		}
 
 		protected override void OnTapped()
 		{
+			if (methods is null)
+				return;
+
 			var idx = methods.IndexOf(method) + 1;
 			if (idx >= methods.Count)
 			{
