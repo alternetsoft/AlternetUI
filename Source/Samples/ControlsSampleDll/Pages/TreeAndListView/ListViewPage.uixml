@@ -11,7 +11,7 @@
     <HorizontalStackPanel>
 
       <!-- ========================= -->
-      <ListView SuggestedWidth="320" Name="listView"
+      <ListView SuggestedWidth="300" Name="listView"
                   BeforeLabelEdit="ListView_BeforeLabelEdit"
                   AfterLabelEdit="ListView_AfterLabelEdit"
                   MouseLeftButtonDown="ListView_MouseLeftButtonDown"
