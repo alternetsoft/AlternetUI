@@ -46,6 +46,13 @@ namespace Alternet.UI
             LogToFile("======");
         }
 
+        public static void LogExceptionToConsole(Exception e)
+        {
+            Console.WriteLine("====== EXCEPTION:");
+            Console.WriteLine(e.ToString());
+            Console.WriteLine("======");
+        }
+
         public static void DeleteLog()
         {
             if (File.Exists(MyLogFilePath))

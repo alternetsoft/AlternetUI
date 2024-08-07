@@ -1,4 +1,11 @@
 ﻿using Alternet.UI;
+
+using SharpCompress;
+using SharpCompress.Archives;
+using SharpCompress.Archives.SevenZip;
+using SharpCompress.Common;
+using SharpCompress.Readers;
+
 using System.Diagnostics;
 using System.IO;
 
@@ -48,6 +55,8 @@ if (IsCommand("downloadAndUnzip"))
     string extractToPath = CommandLineArgs.Default.AsString("ExtractTo");
     filePath = Path.GetFullPath(filePath);
     await DownloadUtils.DownloadFileWithConsoleProgress(docUrl, filePath);
+    Console.WriteLine();
+    ZipUtils.Unzip(filePath, extractToPath);
     return;
 }
 
@@ -172,3 +181,4 @@ if (IsCommand("filterLog"))
     File.WriteAllText(resultPath, contents);
     return;
 }
+

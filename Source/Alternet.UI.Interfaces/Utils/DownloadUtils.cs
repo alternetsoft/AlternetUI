@@ -73,7 +73,7 @@ namespace Alternet.UI
                 if (writeProgress is not null)
                     writeProgress(s);
                 else
-                    Console.Write(s);
+                    Console.Write($"\r{s}");
             }
 
             reportedDownloadProgress = -1;
@@ -117,7 +117,7 @@ namespace Alternet.UI
                     if (p == reportedDownloadProgress)
                         return;
                     reportedDownloadProgress = p;
-                    WriteProgress(string.Format("\rDownloading {0}%   ", p.ToString()));
+                    WriteProgress(string.Format("Downloading {0}%   ", p.ToString()));
                 }
             }
             catch (Exception)

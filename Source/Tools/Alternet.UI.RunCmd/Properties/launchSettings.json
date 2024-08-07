@@ -10,7 +10,7 @@
     },
     "downloadAndUnzip": {
       "commandName": "Project",
-      "commandLineArgs": "-r=downloadAndUnzip Url=\"http://localhost/wxWidgets-bin-noobjpch-3.2.5.zip\" Path=\"e:/file.zip\" ExtractTo=\"e:/ExtractedZip\""
+      "commandLineArgs": "-r=downloadAndUnzip Url=\"http://localhost/wxWidgets-bin-noobjpch-3.2.5.7z\" Path=\"e:/file.7z\" ExtractTo=\"e:/ExtractedZip\""
     }
   }
 }
