@@ -4,9 +4,7 @@
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
     <PropertyGroup>
-	    <DotNetRunSuffix>net6.0</DotNetRunSuffix>
-	    <DotNetRunSuffix Condition="$(BoolNet7)">net7.0</DotNetRunSuffix>
-	    <DotNetRunSuffix Condition="$(BoolNet8)">net8.0</DotNetRunSuffix>
+	    <DotNetRunSuffix>net8.0</DotNetRunSuffix>
     </PropertyGroup>
  
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
