@@ -9,7 +9,7 @@ namespace SkiaSharpSample.Samples
 	[Preserve(AllMembers = true)]
 	public class CreateXpsSample : SampleBase
 	{
-		private string path;
+		private string? path;
 		private bool isSupported = true;
 
 		[Preserve]
@@ -47,7 +47,8 @@ namespace SkiaSharpSample.Samples
 				TextAlign = SKTextAlign.Center
 			};
 
-			canvas.DrawText(isSupported ? "tap to open XPS" : "Oops! No XPS support!", width / 2f, height / 3, paint);
+			canvas.DrawText(isSupported
+				? "tap to open XPS" : "Oops! No XPS support!", width / 2f, height / 3, paint);
 		}
 
 		private void GenerateDocument()
@@ -99,6 +100,9 @@ namespace SkiaSharpSample.Samples
 		protected override void OnTapped()
 		{
 			base.OnTapped();
+
+			if (path is null)
+				return;
 
 			// display to the user
 			SamplesManager.OnOpenFile(path);

@@ -9,10 +9,10 @@ namespace SkiaSharpSample.Samples
 	public class DecodeGifFramesSample : AnimatedSampleBase
 	{
 		private int currentFrame = 0;
-		private SKCodec codec = null;
+		private SKCodec? codec = null;
 		private SKImageInfo info = SKImageInfo.Empty;
-		private SKBitmap bitmap = null;
-		private SKCodecFrameInfo[] frames;
+		private SKBitmap? bitmap = null;
+		private SKCodecFrameInfo[]? frames;
 
 		[Preserve]
 		public DecodeGifFramesSample()
@@ -30,7 +30,11 @@ namespace SkiaSharpSample.Samples
 			frames = codec.FrameInfo;
 
 			info = codec.Info;
-			info = new SKImageInfo(info.Width, info.Height, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
+			info = new SKImageInfo(
+				info.Width,
+				info.Height,
+				SKImageInfo.PlatformColorType,
+				SKAlphaType.Premul);
 
 			bitmap = new SKBitmap(info);
 
@@ -39,7 +43,7 @@ namespace SkiaSharpSample.Samples
 
 		protected override async Task OnUpdate(CancellationToken token)
 		{
-			var duration = frames[currentFrame].Duration;
+			var duration = frames?[currentFrame].Duration ?? 100;
 			if (duration <= 0)
 				duration = 100;
 
@@ -47,7 +51,7 @@ namespace SkiaSharpSample.Samples
 
 			// next frame
 			currentFrame++;
-			if (currentFrame >= frames.Length)
+			if (currentFrame >= frames?.Length)
 				currentFrame = 0;
 		}
 
@@ -63,10 +67,13 @@ namespace SkiaSharpSample.Samples
 		{
 			canvas.Clear(SKColors.Black);
 
+			if (bitmap is null)
+				return;
+
 			var opts = new SKCodecOptions(currentFrame);
-			if (codec?.GetPixels(info, bitmap.GetPixels(), opts) == SKCodecResult.Success)
+			if (codec?.GetPixels(info, bitmap?.GetPixels() ?? default, opts) == SKCodecResult.Success)
 			{
-				bitmap.NotifyPixelsChanged();
+				bitmap?.NotifyPixelsChanged();
 				canvas.DrawBitmap(bitmap, 0, 0);
 			}
 		}

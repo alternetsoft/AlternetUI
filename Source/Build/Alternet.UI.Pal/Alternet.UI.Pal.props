@@ -4,9 +4,7 @@
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
     <PropertyGroup>
-	    <DotNetRunSuffix>net6.0</DotNetRunSuffix>
-	    <DotNetRunSuffix Condition="$(BoolNet7)">net7.0</DotNetRunSuffix>
-	    <DotNetRunSuffix Condition="$(BoolNet8)">net8.0</DotNetRunSuffix>
+	    <DotNetRunSuffix>net8.0</DotNetRunSuffix>
     </PropertyGroup>
  
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
@@ -78,13 +76,18 @@
     <WxWidgetsDownloadUrlLocalHost>http://localhost/wxWidgets-3.2.5.zip</WxWidgetsDownloadUrlLocalHost>
     <WxWidgetsDownloadUrl>$(WxWidgetsDownloadUrlLocalHost)</WxWidgetsDownloadUrl>
     <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
-    <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
+    <WxWidgetsDownloadFileName>WxWidgets.7z</WxWidgetsDownloadFileName>
+    <WxWidgetsDownloadFileName7zip>WxWidgets.7z</WxWidgetsDownloadFileName7zip>
     <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
     <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
     <!-- ========================================== -->
     <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.5.zip</WxWidgetsBinDownloadUrlWindowsZip>
-    <WxWidgetsBinDownloadUrlWindowsLocalHost>http://localhost/wxWidgets-bin-noobjpch-3.2.5.zip</WxWidgetsBinDownloadUrlWindowsLocalHost>
-    <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZip)</WxWidgetsBinDownloadUrlWindows>
+    <WxWidgetsBinDownloadUrlWindowsLocalHostZip>http://localhost/wxWidgets-bin-noobjpch-3.2.5.zip</WxWidgetsBinDownloadUrlWindowsLocalHostZip>
+
+    <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.5.7z</WxWidgetsBinDownloadUrlWindows7z>
+    <WxWidgetsBinDownloadUrlWindowsLocalHost7z>http://localhost/wxWidgets-bin-noobjpch-3.2.5.7z</WxWidgetsBinDownloadUrlWindowsLocalHost7z>
+
+    <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindows7z)</WxWidgetsBinDownloadUrlWindows>
     <!-- ========================================== -->
     <WxWidgetsBinDownloadUrlMacOSZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-macos-3.2.3.zip</WxWidgetsBinDownloadUrlMacOSZip>
     <WxWidgetsBinDownloadUrlMacOSLocalHost></WxWidgetsBinDownloadUrlMacOSLocalHost>

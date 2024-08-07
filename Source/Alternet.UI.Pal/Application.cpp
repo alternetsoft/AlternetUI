@@ -173,6 +173,7 @@ namespace Alternet::UI
     Application::Application()
     {
         Exception::_logMessageProc = LogExceptionInfo;
+        wxSizerFlags::DisableConsistencyChecks();
 
         GenericImage::EnsureImageHandlersInitialized();
 

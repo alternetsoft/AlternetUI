@@ -64,7 +64,10 @@ namespace Alternet.UI
 
         private void Control_TickStyleChanged(object? sender, EventArgs e)
         {
-            NativeControl.TickStyle = Control.TickStyle;
+            var v = Control.TickStyle;
+            NativeControl.TickStyle = v;
+            if (v == SliderTickStyle.None)
+                Control.ClearTicks();
         }
 
         private void Control_OrientationChanged(object? sender, EventArgs e)

@@ -13,6 +13,11 @@ namespace Alternet.UI
     public static class StreamUtils
     {
         /// <summary>
+        /// Gets an empty stream.
+        /// </summary>
+        public static readonly Stream Empty = new MemoryStream();
+
+        /// <summary>
         /// Reads <see cref="string"/> from <see cref="Stream"/> using <see cref="Encoding.UTF8"/>
         /// encoding.
         /// </summary>

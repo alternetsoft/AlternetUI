@@ -38,7 +38,7 @@ namespace Alternet.UI
         private int largeChange = 5;
         private int tickFrequency = 1;
         private SliderOrientation orientation;
-        private SliderTickStyle tickStyle;
+        private SliderTickStyle? tickStyle;
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property of a slider changes,
@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// </value>
         public virtual SliderTickStyle TickStyle
         {
-            get => tickStyle;
+            get => tickStyle ?? SliderTickStyle.None;
             set
             {
                 if (tickStyle == value)

@@ -46,6 +46,13 @@ namespace Alternet.UI
             LogToFile("======");
         }
 
+        public static void LogExceptionToConsole(Exception e)
+        {
+            Console.WriteLine("====== EXCEPTION:");
+            Console.WriteLine(e.ToString());
+            Console.WriteLine("======");
+        }
+
         public static void DeleteLog()
         {
             if (File.Exists(MyLogFilePath))
@@ -80,40 +87,13 @@ namespace Alternet.UI
 
                 void Fn(string strFlag, out bool boolFlag)
                 {
-                    boolFlag = text.ToLower() == strFlag;
+                    boolFlag = text.Equals(strFlag, StringComparison.CurrentCultureIgnoreCase);
                 }
             }
 
             if (!CmdLineTest)
             {
                 cmdLineTest = File.Exists(GetFileWithExt("test"));
-            }
-        }
-
-        public static string PathAddBackslash(string? path)
-        {
-            if (path == null)
-                throw new ArgumentNullException("path");
-            path = path.TrimEnd();
-            if (PathEndsWithDirectorySeparator())
-                return path;
-            return path + GetDirectorySeparatorUsedInPath();
-
-            char GetDirectorySeparatorUsedInPath()
-            {
-                if (path.Contains(Path.AltDirectorySeparatorChar))
-                    return Path.AltDirectorySeparatorChar;
-                return Path.DirectorySeparatorChar;
-            }
-
-            bool PathEndsWithDirectorySeparator()
-            {
-                if (path.Length == 0)
-                    return false;
-                char c = path[path.Length - 1];
-                if (c != Path.DirectorySeparatorChar)
-                    return c == Path.AltDirectorySeparatorChar;
-                return true;
             }
         }
 
@@ -155,7 +135,7 @@ namespace Alternet.UI
 
         public static void LogToFile(string s)
         {
-            if (!CommonProcs.CmdLineTest && !CommonProcs.CmdLineLog)
+            if (!CmdLineTest && !CmdLineLog)
                 return;
 
             string dt = System.DateTime.Now.ToString(StringFormatJs);
@@ -221,12 +201,12 @@ namespace Alternet.UI
 #pragma warning disable CS8765
             public override void Write(string message)
             {
-                CommonProcs.Nop();
+                Nop();
             }
 
             public override void WriteLine(string message)
             {
-                CommonProcs.Nop();
+                Nop();
             }
 #pragma warning restore CS8765
 #pragma warning restore IDE0079

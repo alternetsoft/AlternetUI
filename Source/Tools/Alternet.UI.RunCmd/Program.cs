@@ -1,5 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Alternet.UI;
+﻿using Alternet.UI;
+
+using SharpCompress;
+using SharpCompress.Archives;
+using SharpCompress.Archives.SevenZip;
+using SharpCompress.Common;
+using SharpCompress.Readers;
+
 using System.Diagnostics;
 using System.IO;
 
@@ -7,13 +13,9 @@ Console.WriteLine("Alternet.UI.RunCmd");
 Console.WriteLine("Copyright (c) 2023-2024 AlterNET Software");
 
 CommonProcs.ParseCmdLine(args);
-CommandLineArgs.Default.ParseArgs(args);
-//CommandLineArgs.Default.ParseDefaults();
-
-//Console.WriteLine($"{CommandLineArgs.Default}");
+CommandLineArgs.Default.Parse(args);
 
 Console.WriteLine();
-
 
 if(CommonProcs.CmdLineExecCommands is null)
 {
@@ -25,7 +27,6 @@ Console.WriteLine($"Arguments: {CommonProcs.ToString(args)}");
 Console.WriteLine($"Commands: {CommonProcs.CmdLineExecCommands}");
 Console.WriteLine();
 
-
 bool IsCommand(string s)
 {
     if (s is null || CommonProcs.CmdLineExecCommands is null)
@@ -36,11 +37,26 @@ bool IsCommand(string s)
 // download command
 if (IsCommand("download"))
 {
-    // -r=download Url="https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip" Path="e:/file.zip"
-    string docUrl = CommandLineArgs.Default.ArgAsString("Url");
-    string filePath = CommandLineArgs.Default.ArgAsString("Path");
+    // -r=download Url="http://localhost/wxWidgets-bin-noobjpch-3.2.5.7z" Path="e:/file.7z"
+    string docUrl = CommandLineArgs.Default.AsString("Url");
+    string filePath = CommandLineArgs.Default.AsString("Path");
     filePath = Path.GetFullPath(filePath);
-    await CommonProcs.DownloadFileWithConsoleProgress(docUrl, filePath);
+    await DownloadUtils.DownloadFileWithConsoleProgress(docUrl, filePath);
+    return;
+}
+
+// downloadAndUnzip command
+if (IsCommand("downloadAndUnzip"))
+{
+    // -r=downloadAndUnzip Url="http://localhost/wxWidgets-bin-noobjpch-3.2.5.zip" Path="e:/file.zip" ExtractTo="e:/ExtractedZip"
+    // -r=downloadAndUnzip Url="http://localhost/wxWidgets-bin-noobjpch-3.2.5.7z" Path="e:/file.7z" ExtractTo="e:/Extracted7z"
+    string docUrl = CommandLineArgs.Default.AsString("Url");
+    string filePath = CommandLineArgs.Default.AsString("Path");
+    string extractToPath = CommandLineArgs.Default.AsString("ExtractTo");
+    filePath = Path.GetFullPath(filePath);
+    await DownloadUtils.DownloadFileWithConsoleProgress(docUrl, filePath);
+    Console.WriteLine();
+    ZipUtils.Unzip(filePath, extractToPath);
     return;
 }
 
@@ -73,7 +89,6 @@ if (IsCommand("waitEnter"))
     return;
 }
 
-
 void DeleteBinObjFiles(string path)
 {
     path = Path.GetFullPath(path);
@@ -96,13 +111,19 @@ void DeleteBinObjFiles(string path)
 
         if (Directory.Exists(projPathBin))
         {
-            var projPathBinFiles = Directory.EnumerateFiles(projPathBin, "*.*", SearchOption.AllDirectories);
+            var projPathBinFiles = Directory.EnumerateFiles(
+                projPathBin,
+                "*.*",
+                SearchOption.AllDirectories);
             filesToDelete.AddRange(projPathBinFiles);
         }
         
         if (Directory.Exists(projPathObj))
         {
-            var projPathObjFiles = Directory.EnumerateFiles(projPathObj, "*.*", SearchOption.AllDirectories);
+            var projPathObjFiles = Directory.EnumerateFiles(
+                projPathObj,
+                "*.*",
+                SearchOption.AllDirectories);
             filesToDelete.AddRange(projPathObjFiles);
         }
         
@@ -134,9 +155,9 @@ if (IsCommand("deleteBinFolders"))
 // filterLog command
 if (IsCommand("filterLog"))
 {
-    string logFilter = CommandLineArgs.Default.ArgAsString("Filter").ToLower();
-    string logPath = CommandLineArgs.Default.ArgAsString("Log");
-    string resultPath = CommandLineArgs.Default.ArgAsString("Result");
+    string logFilter = CommandLineArgs.Default.AsString("Filter").ToLower();
+    string logPath = CommandLineArgs.Default.AsString("Log");
+    string resultPath = CommandLineArgs.Default.AsString("Result");
     logPath = Path.GetFullPath(logPath);
     resultPath = Path.GetFullPath(resultPath);
 
@@ -151,7 +172,7 @@ if (IsCommand("filterLog"))
 
     foreach (string s in lines)
     {
-        if(s.ToLower().Contains(logFilter))
+        if(s.Contains(logFilter, StringComparison.CurrentCultureIgnoreCase))
         {
             Console.WriteLine(s);
             contents += $"{s}{Environment.NewLine}";
@@ -160,3 +181,4 @@ if (IsCommand("filterLog"))
     File.WriteAllText(resultPath, contents);
     return;
 }
+

@@ -8,7 +8,7 @@ namespace SkiaSharpSample.Samples
 	[Preserve(AllMembers = true)]
 	public class ThreeDSamplePerspective : AnimatedSampleBase
 	{
-		private SK3dView rotationView;
+		private SK3dView? rotationView;
 		
 		[Preserve]
 		public ThreeDSamplePerspective()
@@ -31,13 +31,13 @@ namespace SkiaSharpSample.Samples
 			await Task.Delay(25, token);
 
 			// step the rotation matrix
-			rotationView.RotateYDegrees(5);
+			rotationView?.RotateYDegrees(5);
 		}
 
 		protected override void OnDrawSample(SKCanvas canvas, int width, int height)
 		{
 			// get the 2D equivalent of the 3D matrix
-			var rotationMatrix = rotationView.Matrix;
+			var rotationMatrix = rotationView?.Matrix ?? SKMatrix.Identity;
 
 			// get the properties of the rectangle
 			var length = Math.Min(width / 6, height / 6);

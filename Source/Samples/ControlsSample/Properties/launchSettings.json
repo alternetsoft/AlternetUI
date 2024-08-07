@@ -1,9 +1,11 @@
 {
   "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
     "ControlsSample": {
-      "commandName": "Project",
-      "commandLineArgs": "-nomfcdebug",
-      "nativeDebugging": true
+      "commandName": "Project"
     }
   }
 }

@@ -8,12 +8,13 @@ namespace PrintingSample
     public partial class PrintingMainWindow : Window
     {
         private static readonly Font font = new(FontFamily.GenericSerif, 20);
-        private static readonly Pen thickGrayPen = new(Color.Gray, 4);
+        private static readonly Pen thickGrayPen = Color.Gray.GetAsPen(4);
 
         public PrintingMainWindow()
         {
             Icon = App.DefaultIcon;
             InitializeComponent();
+
             DrawingArea.UserPaint = true;
 
             // This is important if OS style is BlackOnWhite.
@@ -35,8 +36,10 @@ namespace PrintingSample
             DrawFirstPage(dc, bounds);
         }
 
-        public static void DrawFirstPage(Graphics dc, RectD bounds)
+        public static void DrawFirstPage(Graphics dc, RectD bounds, bool forScreen = true)
         {
+            const string TextToDraw = "The brown fox jumps over the lazy dog.";
+
             dc.DrawRectangle(Pens.Blue, bounds);
 
             var cornerRectSize = new SizeD(50, 50);
@@ -49,8 +52,14 @@ namespace PrintingSample
 
             var drawTextBounds = bounds.InflatedBy(-50, -50);
 
+            var wrappedText = DrawingUtils.WrapTextToMultipleLines(
+                TextToDraw,
+                drawTextBounds.Width,
+                font,
+                dc.ScaleFactor);
+
             dc.DrawText(
-                "The brown fox jumps over the lazy dog.",
+                wrappedText,
                 font,
                 Brushes.Black,
                 drawTextBounds.Location);
@@ -62,6 +71,18 @@ namespace PrintingSample
             dc.DrawEllipse(Pens.Goldenrod, cornerRectRight.InflatedBy(-5, -5));
 
             dc.DrawLine(thickGrayPen, cornerRectLeft.Center, cornerRectRight.Center);
+
+            var A4Size = GraphicsUnitConverter.ConvertSize(
+                GraphicsUnit.Inch,
+                GraphicsUnit.Dip,
+                dc.GetDPI(),
+                PaperSizes.SizeInches.A4);
+
+            if (forScreen)
+            {
+                dc.DrawVertLine(Brushes.Red, (A4Size.Width, 0), A4Size.Height, 1);
+                dc.DrawHorzLine(Brushes.Red, (0, A4Size.Height), A4Size.Width, 1);
+            }
         }
 
         private void PrintImmediatelyMenuItem_Click(object sender, System.EventArgs e)
@@ -160,9 +181,7 @@ namespace PrintingSample
 
             if (pageNumber == 1)
             {
-                DrawFirstPage(
-                    e.DrawingContext,
-                    bounds);
+                DrawFirstPage(e.DrawingContext, bounds, false);
             }
             else
             {

@@ -7,6 +7,10 @@
     "FilterLog": {
       "commandName": "Project",
       "commandLineArgs": "-r=filterLog Filter=\"CS1591\" Log=\"..\\..\\..\\..\\..\\Alternet.UI\\Build.Result.Log\" Result=\"..\\..\\..\\..\\..\\Alternet.UI\\Find.Not.Documented.log\""
+    },
+    "downloadAndUnzip": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=downloadAndUnzip Url=\"http://localhost/wxWidgets-bin-noobjpch-3.2.5.7z\" Path=\"e:/file.7z\" ExtractTo=\"e:/ExtractedZip\""
     }
   }
 }

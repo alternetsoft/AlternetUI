@@ -4,15 +4,21 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
 
   <StackPanel Orientation="Vertical" Margin="5">
-    <Label Text="Shape Count:" />
-    <Slider Name="shapeCountSlider" Minimum="1" Maximum="100" Margin="0,0,0,10"  TickStyle="None"/>
+	<HorizontalStackPanel Margin="0,0,0,5">
+    		<Label Text="Shapes:" Margin="0,0,5,0"/>
+	    	<Slider Name="shapeCountSlider" Minimum="1" Maximum="100" Margin="0,0,0,0"  TickStyle="None" MinWidth="150"/>
+	</HorizontalStackPanel>
 
-    <CheckBox Name="rectanglesIncludedCheckBox" Text="Rectangles" Margin="0,0,0,5"/>
-    <CheckBox Name="ellipsesIncludedCheckBox" Text="Ellipses" Margin="0,0,0,5"/>
+	<HorizontalStackPanel>
+    		<CheckBox Name="rectanglesIncludedCheckBox" Text="Rectangles" Margin="0,0,0,5"/>
+		<CheckBox Name="ellipsesIncludedCheckBox" Text="Ellipses" Margin="0,0,0,5"/>
+	</HorizontalStackPanel>
 
-    <Label Text="Brush:" Margin="0,5,0,5"/>
-    <ComboBox Name="brushComboBox" IsEditable="false"
-              SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
+	<HorizontalStackPanel  Margin="0,5,0,5">
+    		<Label Text="Brush:"  Margin="0,0,5,0"/>
+		    <ComboBox Name="brushComboBox" IsEditable="false" MinWidth="150"
+			SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
+	</HorizontalStackPanel>
 
     <StackPanel Name="hatchStylePanel" Visible="false">
       <Label Text="Brush Hatch Style:" Margin="0,5,0,5" />

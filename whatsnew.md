@@ -1,3 +1,15 @@
+# 0.9.621 (2024 August 7)
+
+- 7z supported in the installation, so now it downloads required files much faster.
+- Fixed Slider.TickStyle = None on Linux.
+- Add classes: PaperSizes, CommandLineArgs, DownloadUtils, HttpClientExtensions, StreamExtensions.
+- FileListBox: Drives added to the root folder are sorted.
+- FileListBox: DriveItemTemplate = "{0}" by default.
+- Improved samples.
+- Removed warnings.
+- Graphics.DrawImageSliced made internal. This is done because it raises exception on macOs and doesn't work properly on Linux.
+- net6 -> net8 for installation and utilities as net6 is not supported on modern linux systems. 
+
 # 0.9.620 (2024 August 4)
 
 - Build pal dll for linux on Ubuntu 23 for better compatibility with modern linux systems.

@@ -11,14 +11,14 @@
     <HorizontalStackPanel>
 
       <!-- ========================= -->
-      <ListView SuggestedWidth="320" Name="listView"
+      <ListView SuggestedWidth="300" Name="listView"
                   BeforeLabelEdit="ListView_BeforeLabelEdit"
                   AfterLabelEdit="ListView_AfterLabelEdit"
                   MouseLeftButtonDown="ListView_MouseLeftButtonDown"
                   ColumnClick="ListView_ColumnClick"
                           />
       <!-- ========================= -->
-      <TabControl Margin="10,0,0,0" Padding="5" Name="tabControlPanel"
+      <TabControl Margin="10,0,10,0" Padding="5" Name="tabControlPanel"
                   VerticalAlignment="Stretch" HorizontalAlignment="Fill">
 
         <!-- ========================= -->
