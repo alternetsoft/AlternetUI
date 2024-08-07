@@ -34,7 +34,7 @@ if (IsCommand("download"))
     string docUrl = CommandLineArgs.Default.AsString("Url");
     string filePath = CommandLineArgs.Default.AsString("Path");
     filePath = Path.GetFullPath(filePath);
-    await CommonProcs.DownloadFileWithConsoleProgress(docUrl, filePath);
+    await DownloadUtils.DownloadFileWithConsoleProgress(docUrl, filePath);
     return;
 }
 
@@ -47,7 +47,7 @@ if (IsCommand("downloadAndUnzip"))
     string filePath = CommandLineArgs.Default.AsString("Path");
     string extractToPath = CommandLineArgs.Default.AsString("ExtractTo");
     filePath = Path.GetFullPath(filePath);
-    await CommonProcs.DownloadFileWithConsoleProgress(docUrl, filePath);
+    await DownloadUtils.DownloadFileWithConsoleProgress(docUrl, filePath);
     return;
 }
 
@@ -102,13 +102,19 @@ void DeleteBinObjFiles(string path)
 
         if (Directory.Exists(projPathBin))
         {
-            var projPathBinFiles = Directory.EnumerateFiles(projPathBin, "*.*", SearchOption.AllDirectories);
+            var projPathBinFiles = Directory.EnumerateFiles(
+                projPathBin,
+                "*.*",
+                SearchOption.AllDirectories);
             filesToDelete.AddRange(projPathBinFiles);
         }
         
         if (Directory.Exists(projPathObj))
         {
-            var projPathObjFiles = Directory.EnumerateFiles(projPathObj, "*.*", SearchOption.AllDirectories);
+            var projPathObjFiles = Directory.EnumerateFiles(
+                projPathObj,
+                "*.*",
+                SearchOption.AllDirectories);
             filesToDelete.AddRange(projPathObjFiles);
         }
         

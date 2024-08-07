@@ -128,7 +128,7 @@ namespace Alternet.UI
 
         public static void LogToFile(string s)
         {
-            if (!CommonProcs.CmdLineTest && !CommonProcs.CmdLineLog)
+            if (!CmdLineTest && !CmdLineLog)
                 return;
 
             string dt = System.DateTime.Now.ToString(StringFormatJs);
@@ -194,12 +194,12 @@ namespace Alternet.UI
 #pragma warning disable CS8765
             public override void Write(string message)
             {
-                CommonProcs.Nop();
+                Nop();
             }
 
             public override void WriteLine(string message)
             {
-                CommonProcs.Nop();
+                Nop();
             }
 #pragma warning restore CS8765
 #pragma warning restore IDE0079
