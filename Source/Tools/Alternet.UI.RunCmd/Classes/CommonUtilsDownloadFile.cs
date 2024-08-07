@@ -11,6 +11,8 @@ namespace Alternet.UI
 {
     public static partial class CommonProcs
     {
+        private static int reportedProgress = -1;
+
         public static async Task DownloadFileWithConsoleProgress(
             string docUrl,
             string filePath)
@@ -23,7 +25,7 @@ namespace Alternet.UI
             Console.WriteLine($"Url: {docUrl}");
             Console.WriteLine($"Path: {filePath.Replace("\\","/").Replace("//","/")}");
 
-            string tempFilePath = PathAddBackslash(Path.GetDirectoryName(filePath))+
+            string tempFilePath = PathUtils.AddDirectorySeparatorChar(Path.GetDirectoryName(filePath))+
                 TempFileName;
             if(File.Exists(tempFilePath))
                 File.Delete(tempFilePath);
@@ -55,7 +57,10 @@ namespace Alternet.UI
             }
         }
 
-        public static async Task DownloadFile(string docUrl, string filePath, EventHandler<float> progressChanged)
+        public static async Task DownloadFile(
+            string docUrl,
+            string filePath,
+            EventHandler<float> progressChanged)
         {
             var client = new HttpClient();
 
@@ -70,7 +75,6 @@ namespace Alternet.UI
             await client.DownloadDataAsync(docUrl, file, progress);
         }
 
-        private static int reportedProgress = -1;
         public static void DownloadFileProgressChangedToConsole(object? sender, float progress)
         {
             int p = (int)progress;

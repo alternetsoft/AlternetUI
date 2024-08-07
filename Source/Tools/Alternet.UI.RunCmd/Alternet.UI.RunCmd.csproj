@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SharpCompress" Version="0.37.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
   </ItemGroup>
 

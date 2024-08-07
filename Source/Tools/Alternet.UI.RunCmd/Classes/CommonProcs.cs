@@ -80,40 +80,13 @@ namespace Alternet.UI
 
                 void Fn(string strFlag, out bool boolFlag)
                 {
-                    boolFlag = text.ToLower() == strFlag;
+                    boolFlag = text.Equals(strFlag, StringComparison.CurrentCultureIgnoreCase);
                 }
             }
 
             if (!CmdLineTest)
             {
                 cmdLineTest = File.Exists(GetFileWithExt("test"));
-            }
-        }
-
-        public static string PathAddBackslash(string? path)
-        {
-            if (path == null)
-                throw new ArgumentNullException("path");
-            path = path.TrimEnd();
-            if (PathEndsWithDirectorySeparator())
-                return path;
-            return path + GetDirectorySeparatorUsedInPath();
-
-            char GetDirectorySeparatorUsedInPath()
-            {
-                if (path.Contains(Path.AltDirectorySeparatorChar))
-                    return Path.AltDirectorySeparatorChar;
-                return Path.DirectorySeparatorChar;
-            }
-
-            bool PathEndsWithDirectorySeparator()
-            {
-                if (path.Length == 0)
-                    return false;
-                char c = path[path.Length - 1];
-                if (c != Path.DirectorySeparatorChar)
-                    return c == Path.AltDirectorySeparatorChar;
-                return true;
             }
         }
 
