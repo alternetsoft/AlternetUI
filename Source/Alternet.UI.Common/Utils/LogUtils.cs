@@ -761,6 +761,12 @@ namespace Alternet.UI
             App.LogNameValue("App.Is64BitOS", App.Is64BitOS);
 
             App.LogNameValue("AppUtils.FrameworkIdentifier", AppUtils.FrameworkIdentifier);
+
+            if (App.IsLinuxOS)
+            {
+                App.LogNameValue("uname -s", LinuxUtils.UnameResult);
+                App.LogNameValue("IsUbuntu", LinuxUtils.IsUbuntu);
+            }
         }
 
         /// <summary>
