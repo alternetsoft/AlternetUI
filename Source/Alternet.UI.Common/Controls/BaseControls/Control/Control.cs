@@ -614,6 +614,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the DPI of the display used by this control. Returns width property of
+        /// the result of <see cref="GetDPI"/> call.
+        /// </summary>
+        [Browsable(false)]
+        public Coord DPI
+        {
+            get
+            {
+                return GetDPI().Width;
+            }
+        }
+
         IntPtr IWin32Window.Handle => default;
 
         /// <summary>
