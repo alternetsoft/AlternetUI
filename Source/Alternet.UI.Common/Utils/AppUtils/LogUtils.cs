@@ -1004,6 +1004,21 @@ namespace Alternet.UI
                 App.Log("Public objects from Alternet.UI.Port added to log file");
                 LogRangeToFile(items);
             });
+
+            addLogAction("Test console window", () =>
+            {
+                if (App.IsWindowsOS)
+                {
+                    var console = CustomWindowsConsole.Default;
+                    console.BeginPaint();
+                    console.Clear();
+                    console.Print(0, 0, "This is sample text string.");
+
+                    console.Print(5, 6, "Hello from custom console.");
+
+                    console.EndPaint();
+                }
+            });
         }
 
         /// <summary>

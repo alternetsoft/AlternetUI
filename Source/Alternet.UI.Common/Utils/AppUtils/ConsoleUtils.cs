@@ -13,14 +13,26 @@ namespace Alternet.UI
     /// </summary>
     public static class ConsoleUtils
     {
+        /// <summary>
+        /// Gets or sets default string prefix for console messages.
+        /// </summary>
+        public static string DefaultOutputPrefix = "Output> ";
+
+        /// <summary>
+        /// Gets or sets default string prefix for console error messages.
+        /// </summary>
+        public static string DefaultErrorPrefix = "Error> ";
+
         private static ConsoleWriter? consoleOut;
         private static ConsoleWriter? consoleError;
 
         /// <summary>
         /// Binds system console output to <see cref="App.Log"/>.
         /// </summary>
-        public static void BindConsoleOutput(string prefix = "Output> ")
+        public static void BindConsoleOutput(string? prefix = null)
         {
+            prefix ??= DefaultOutputPrefix;
+
             if (consoleOut is null)
             {
                 consoleOut = CreateWriter(prefix);
@@ -31,8 +43,10 @@ namespace Alternet.UI
         /// <summary>
         /// Binds console error to <see cref="App.Log"/>.
         /// </summary>
-        public static void BindConsoleError(string prefix = "Error> ")
+        public static void BindConsoleError(string? prefix = null)
         {
+            prefix ??= DefaultErrorPrefix;
+
             if (consoleError is null)
             {
                 consoleError = CreateWriter(prefix);
