@@ -206,7 +206,7 @@ namespace ControlsSample
                 button.ForegroundColor = color;
                 color = GetColor(comboBoxBackColor);
                 button.BackgroundColor = color;
-                button.StateImages = ControlStateImages.Empty;
+                button.StateImages.Assign(null);
                 if (imageCheckBox.IsChecked)
                 {
                     buttonImages ??= DemoResourceLoader.LoadButtonImages(button);
