@@ -194,6 +194,8 @@ namespace ControlsSample
 
             DoInside(() =>
             {
+                if(App.IsLinuxOS)
+                    button.RecreateWindow();
                 button.TextVisible = showTextCheckBox.IsChecked;
                 button.ExactFit = exactFitCheckBox.IsChecked;
                 button.HasBorder = hasBorderCheckBox.IsChecked;
@@ -217,7 +219,6 @@ namespace ControlsSample
                 button.Enabled = !disabledCheckBox.IsChecked;
                 button.SetImageMargins(imageMargins);
             });
-            button.Refresh();
         }
 
         private void Button_Click(object? sender, System.EventArgs e)
