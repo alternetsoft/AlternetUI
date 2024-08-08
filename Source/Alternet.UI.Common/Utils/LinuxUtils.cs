@@ -115,7 +115,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether specific package is installed.
+        /// Gets whether specific package is installed using dpkg utility.
         /// </summary>
         /// <param name="packageName">Package name.</param>
         /// <returns></returns>
