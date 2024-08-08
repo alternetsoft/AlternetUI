@@ -12,7 +12,7 @@ namespace MenuSample
         private readonly ToolBar toolbar = new();
 
         private readonly string ResPrefix;
-        private readonly string Calendar16Url;
+        private readonly string CalendarUrl;
 
         private int newItemIndex = 0;
 
@@ -35,11 +35,12 @@ namespace MenuSample
 
         public MenuMainWindow()
         {
-            ResPrefix = AssemblyUtils.GetImageUrlInAssembly(
-                GetType().Assembly,
-                "Resources.ToolBarPng.Large.");
+            var resFolder =
+                ImageSize == 16 ? "Resources.ToolBarPng.Small." : "Resources.ToolBarPng.Large.";
 
-            Calendar16Url = $"{ResPrefix}Calendar32.png";
+            ResPrefix = AssemblyUtils.GetImageUrlInAssembly(GetType().Assembly, resFolder);
+
+            CalendarUrl = $"{ResPrefix}Calendar{ImageSize}.png";
 
             Icon = App.DefaultIcon;
             Layout = LayoutStyle.Vertical;
@@ -149,6 +150,16 @@ namespace MenuSample
         {
         }
 
+        private int ImageSize
+        {
+            get
+            {
+                if (DPI <= 96)
+                    return 16;
+                return 32;
+            }
+        }
+
         private void InitToolbar()
         {
             ObjectUniqueId calendarToolbarItem;
@@ -157,14 +168,14 @@ namespace MenuSample
 
             calendarToolbarItem = toolbar.AddSpeedBtn(
                 "Calendar",
-                ImageSet.FromUrl(Calendar16Url),
+                ImageSet.FromUrl(CalendarUrl),
                 null,
                 "Calendar Toolbar Item",
                 ToolbarItem_Click);
 
             photoToolbarItem = toolbar.AddSpeedBtn(
                 "Photo",
-                ImageSet.FromUrl($"{ResPrefix}Photo32.png"),
+                ImageSet.FromUrl($"{ResPrefix}Photo{ImageSize}.png"),
                 null,
                 "Photo Toolbar Item",
                 ToolbarItem_Click);
@@ -173,7 +184,7 @@ namespace MenuSample
 
             checkableToolbarItem = toolbar.AddStickyBtn(
                 "Pencil",
-                ImageSet.FromUrl($"{ResPrefix}Pencil32.png"),
+                ImageSet.FromUrl($"{ResPrefix}Pencil{ImageSize}.png"),
                 null,
                 "Pencil Toolbar Item",
                 ToggleToolbarItem_Click);
@@ -183,7 +194,7 @@ namespace MenuSample
 
             graphDropDownToolbarItem = toolbar.AddSpeedBtn(
                 "Graph",
-                ImageSet.FromUrl($"{ResPrefix}LineGraph32.png"),
+                ImageSet.FromUrl($"{ResPrefix}LineGraph{ImageSize}.png"),
                 null,
                 "Graph Toolbar Item",
                 ToolbarItem_Click);

@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="$(CommonResourcesPath)\ToolBarPng\Large\*">
-      <Link>Resources\ToolBarPng\Large\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    <EmbeddedResource Include="$(CommonResourcesPath)\ToolBarPng\**">
+      <Link>Resources\ToolBarPng\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </EmbeddedResource>
   </ItemGroup>
 
