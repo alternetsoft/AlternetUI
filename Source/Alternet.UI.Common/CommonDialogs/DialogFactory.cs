@@ -36,30 +36,66 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows "Run terminal command" dialog.
+        /// </summary>
+        /// <param name="defaultValue"></param>
+        public static void ShowRunTerminalCommandDlg(string? defaultValue = default)
+        {
+            var command = GetTextFromUser(
+                        null,
+                        "Run terminal command",
+                        defaultValue);
+
+            if (command is null)
+                return;
+            AppUtils.OpenTerminalAndRunCommand(command);
+        }
+
+        /// <summary>
         /// Shows critical message on the screen using any possible way.
         /// </summary>
         /// <param name="s">Message to show.</param>
+        /// <param name="e">Exception information.</param>
         /// <returns><c>true</c> on succes, <c>false</c> on failure.</returns>
-        public static void ShowCriticalMessage(string s)
+        public static void ShowCriticalMessage(string s, Exception? e = null)
         {
-            Console.WriteLine(s);
-
-            if (App.IsWindowsOS)
+            try
             {
-                var console = CustomWindowsConsole.Default;
+                LogUtils.DeleteLog();
+                LogUtils.LogToFile(s);
+                if (e is not null)
+                    LogUtils.LogExceptionToFile(e);
+                AppUtils.OpenLogFile();
 
-                console.BackColor = ConsoleColor.Black;
-                console.TextColor = ConsoleColor.White;
-                console.Clear();
-                console.WriteLine(s);
-                Console.ReadLine();
+                if (App.IsWindowsOS)
+                {
+                    try
+                    {
+                        var console = CustomWindowsConsole.Default;
+
+                        console.BackColor = ConsoleColor.Black;
+                        console.TextColor = ConsoleColor.White;
+                        console.Clear();
+                        console.WriteLine(s);
+                        Console.ReadLine();
+                    }
+                    catch
+                    {
+                        AppUtils.OpenTerminalAndRunEcho(s);
+                    }
+                }
+                else
+                if (App.IsLinuxOS)
+                {
+                    AppUtils.OpenTerminalAndRunEcho(s);
+                }
+                else
+                if (App.IsMacOS)
+                {
+                    AppUtils.OpenTerminalAndRunEcho(s);
+                }
             }
-            else
-            if (App.IsLinuxOS)
-            {
-            }
-            else
-            if(App.IsMacOS)
+            catch
             {
             }
         }

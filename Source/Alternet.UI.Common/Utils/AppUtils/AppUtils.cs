@@ -139,7 +139,49 @@ namespace Alternet.UI
             if (App.IsWindowsOS)
                 return ExecuteApp("cmd.exe", "/c " + command, folder, waitResult, logStdOut);
             else
-                return ExecuteApp("/bin/bash", "-c \"" + command + "\"", folder, waitResult, logStdOut);
+                return ExecuteApp("/bin/bash", "-c " + command, folder, waitResult, logStdOut);
+        }
+
+        /// <summary>
+        /// Opens terminal and runs 'echo' command with the specified text string there.
+        /// </summary>
+        /// <param name="s">String to output.</param>
+        public static bool OpenTerminalAndRunEcho(string s)
+        {
+            var command = $"echo \"{s}\"";
+
+            if (App.IsWindowsOS)
+            {
+                return OpenTerminalAndRunCommand(command);
+            }
+            else
+            {
+                return OpenTerminalAndRunCommand(command);
+            }
+        }
+
+        /// <summary>
+        /// Opens terminal and runs command there.
+        /// </summary>
+        /// <param name="command">Command to run.</param>
+        /// <param name="folder">Value of <see cref="ProcessStartInfo.WorkingDirectory"/>.</param>
+        /// <returns></returns>
+        public static bool OpenTerminalAndRunCommand(string? command = default, string? folder = default)
+        {
+            folder ??= PathUtils.GetAppFolder();
+
+            if (App.IsWindowsOS)
+            {
+                if(command is not null)
+                    command = "/k" + command;
+                return ShellExecute("cmd.exe", command, folder);
+            }
+            else
+            {
+                if (command is not null)
+                    command = "-c \"" + command + "\"";
+                return ShellExecute("/bin/bash", command, folder);
+            }
         }
 
         /// <summary>

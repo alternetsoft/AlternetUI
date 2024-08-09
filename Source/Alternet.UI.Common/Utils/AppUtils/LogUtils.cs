@@ -19,7 +19,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains static methods for log handling.
     /// </summary>
-    public static class LogUtils
+    public static partial class LogUtils
     {
         /// <summary>
         /// Gets or sets whether to show debug welcome message
@@ -339,8 +339,14 @@ namespace Alternet.UI
         /// </summary>
         public static void DeleteLog()
         {
-            if (File.Exists(App.LogFilePath))
-                File.Delete(App.LogFilePath);
+            try
+            {
+                if (File.Exists(App.LogFilePath))
+                    File.Delete(App.LogFilePath);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -787,6 +793,8 @@ namespace Alternet.UI
                 App.LogNameValue("uname -s", LinuxUtils.UnameResult);
                 App.LogNameValue("IsUbuntu", LinuxUtils.IsUbuntu);
             }
+
+            App.LogNameValue("CommonUtils.GetAppExePath()", CommonUtils.GetAppExePath());
         }
 
         /// <summary>
@@ -1075,6 +1083,16 @@ namespace Alternet.UI
                 ControlPainter.LogPartSize(AppUtils.FirstWindowChildOrEmpty);
             });
 
+            Fn("Test ShowCriticalMessage", () =>
+            {
+                DialogFactory.ShowCriticalMessage("This is a critical message.");
+            });
+
+            Fn("Run terminal command", () =>
+            {
+                DialogFactory.ShowRunTerminalCommandDlg();
+            });
+
             if (App.IsWindowsOS)
             {
                 Fn("Test custom console: Clear", () =>
@@ -1082,9 +1100,9 @@ namespace Alternet.UI
                     CustomWindowsConsole.Default.Clear();
                 });
 
-                Fn("Test ShowCriticalMessage", () =>
+                Fn("Test ExecuteTerminalEchoCmd", () =>
                 {
-                    DialogFactory.ShowCriticalMessage("This is a critical message.");
+                    AppUtils.OpenTerminalAndRunEcho("This is echo message");
                 });
 
                 Fn("Test custom console: WriteLine", () =>
