@@ -6,6 +6,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
+using Alternet.Drawing;
+
 using Microsoft.Win32.SafeHandles;
 
 namespace Alternet.UI
@@ -13,17 +15,27 @@ namespace Alternet.UI
     /// <summary>
     /// Implements custom console for Windows.
     /// </summary>
-    internal class CustomWindowsConsole : IDisposable
+    public class CustomWindowsConsole : DisposableObject
     {
+        /// <summary>
+        /// Gets or sets background color of the new text.
+        /// </summary>
+        public ConsoleColor BackColor = ConsoleColor.Black;
+
+        /// <summary>
+        /// Gets or sets foreground color of the new text.
+        /// </summary>
+        public ConsoleColor TextColor = ConsoleColor.White;
+
         private static CustomWindowsConsole? defaultConsole;
 
-        private readonly TwoDimensionalBuffer<CharInfo> screenbuf;
-        private readonly Coord screencoord;
-        private readonly Coord topleft = new() { X = 0, Y = 0 };
+        private readonly TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo> screenBuf;
+        private readonly WindowsUtils.NativeMethods.SmallPoint screenCoord;
+        private readonly WindowsUtils.NativeMethods.SmallPoint topLeft = new() { X = 0, Y = 0 };
 
-        private SafeFileHandle? consolehandle;
-        private SmallRect screenrect;
-        private bool disposed = false;
+        private SafeFileHandle? consoleHandle;
+        private WindowsUtils.NativeMethods.SmallRect screenRect;
+        private int paintCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomWindowsConsole"/> class.
@@ -35,112 +47,48 @@ namespace Alternet.UI
             Width = (short)Console.WindowWidth;
             Height = (short)Console.WindowHeight;
 
-            screenbuf = new TwoDimensionalBuffer<CharInfo>(Width, Height);
-            screenrect = new SmallRect() { Left = 0, Top = 0, Right = Width, Bottom = Height };
-            screencoord = new Coord() { X = Width, Y = Height };
+            screenBuf = new TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo>(Width, Height);
+
+            screenRect = new WindowsUtils.NativeMethods.SmallRect()
+            {
+                Left = 0,
+                Top = 0,
+                Right = Width,
+                Bottom = Height,
+            };
+
+            screenCoord = new WindowsUtils.NativeMethods.SmallPoint()
+            {
+                X = Width,
+                Y = Height,
+            };
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="CustomWindowsConsole"/> class.
+        /// Gets or sets default <see cref="CustomWindowsConsole"/> object.
         /// </summary>
-        ~CustomWindowsConsole()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(false);
-        }
-
-        internal enum ConsolePixels
-        {
-            None = '\0',
-
-            Solid = (char)0xDB,
-
-            ThreeQuarters = (char)0XB2,
-
-            Half = (char)0XB1,
-
-            Quarter = (char)0xB0,
-        }
-
-        internal enum ConsoleColor : short
-        {
-            ForegroundBlack = 0x0000,
-
-            ForegroundDarkBlue = 0x0001,
-
-            ForegroundDarkGreen = 0x0002,
-
-            ForegroundDarkCyan = 0x0003,
-
-            ForegroundDarkRed = 0x0004,
-
-            ForegroundDarkMagenta = 0x0005,
-
-            ForegroundDarkYellow = 0x0006,
-
-            ForegroundGrey = 0x0007,
-
-            ForegroundDarkGrey = 0x0008,
-
-            ForegroundBlue = 0x0009,
-
-            ForegroundGreen = 0x000A,
-
-            ForegroundCyan = 0x000B,
-
-            ForegroundRed = 0x000C,
-
-            ForegroundMagenta = 0x000D,
-
-            ForegroundYellow = 0x000E,
-
-            ForegroundWhite = 0x000F,
-
-            BackgroundBlack = 0x0000,
-
-            BackgroundDarkBlue = 0x0010,
-
-            BackgroundDarkGreen = 0x0020,
-
-            BackgroundDarkCyan = 0x0030,
-
-            BackgroundDarkRed = 0x0040,
-
-            BackgroundDarkMagenta = 0x0050,
-
-            BackgroundDarkYellow = 0x0060,
-
-            BackgroundGrey = 0x0070,
-
-            BackgroundDarkGrey = 0x0080,
-
-            BackgroundBlue = 0x0090,
-
-            BackgroundGreen = 0x00A0,
-
-            BackgroundCyan = 0x00B0,
-
-            BackgroundRed = 0x00C0,
-
-            BackgroundMagenta = 0x00D0,
-
-            BackgroundYellow = 0x00E0,
-
-            BackgroundWhite = 0x00F0,
-        }
-
         public static CustomWindowsConsole Default
         {
             get
             {
                 return defaultConsole ??= new();
             }
+
+            set
+            {
+                defaultConsole = value;
+            }
         }
+
+        /// <summary>
+        /// Gets screen buffer.
+        /// </summary>
+        public TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo> ScreenBuf => screenBuf;
 
         /// <summary>
         /// Gets console width.
         /// </summary>
-        public short Width
+        public virtual short Width
         {
             get;
             private set;
@@ -149,156 +97,225 @@ namespace Alternet.UI
         /// <summary>
         /// Gets console height.
         /// </summary>
-        public short Height
+        public virtual short Height
         {
             get;
             private set;
         }
 
-        public virtual void BeginPaint()
+        /// <summary>
+        /// Begins console updates.
+        /// </summary>
+        public virtual void BeginUpdate()
         {
-            WindowsUtils.ShowConsole();
+            if (paintCounter == 0)
+            {
+                WindowsUtils.ShowConsole();
+            }
+
+            paintCounter++;
         }
 
-        public virtual void EndPaint()
+        /// <summary>
+        /// Ends console updates.
+        /// </summary>
+        public virtual void EndUpdate()
         {
-            consolehandle ??= CreateFile(
-                "CONOUT$",
-                0x40000000,
-                0x02,
-                IntPtr.Zero,
-                FileMode.Open,
-                0,
-                IntPtr.Zero);
+            paintCounter--;
 
-            WriteConsoleOutput(consolehandle, screenbuf.Data, screencoord, topleft, ref screenrect);
+            if (paintCounter == 0)
+            {
+                consoleHandle ??= WindowsUtils.NativeMethods.CreateFile(
+                    "CONOUT$",
+                    0x40000000,
+                    0x02,
+                    IntPtr.Zero,
+                    FileMode.Open,
+                    0,
+                    IntPtr.Zero);
+
+                WindowsUtils.NativeMethods.WriteConsoleOutput(
+                    consoleHandle,
+                    screenBuf.Data,
+                    screenCoord,
+                    topLeft,
+                    ref screenRect);
+            }
         }
 
         /// <summary>
         /// Clears console.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
-            Fill(0, 0, Width, Height, (char)ConsolePixels.None, (short)ConsoleColor.BackgroundBlack);
-        }
-
-        public void Fill(
-            int x,
-            int y,
-            int width,
-            int height,
-            char c = (char)ConsolePixels.None,
-            short attributes = (short)ConsoleColor.BackgroundBlack)
-        {
-            for (int xp = x; xp < width; xp++)
+            BeginUpdate();
+            try
             {
-                for (int yp = y; yp < height; yp++)
-                    SetChar(xp, yp, c, 0);
+                Fill((0, 0, Width, Height), '\0');
+                Console.SetCursorPosition(0, 0);
+            }
+            finally
+            {
+                EndUpdate();
             }
         }
 
-        public void Print(int x, int y, string text, short attributes = (int)ConsoleColor.ForegroundWhite)
+        /// <summary>
+        /// Fills rectangle region with the character.
+        /// </summary>
+        /// <param name="rect">Rectangle to fill.</param>
+        /// <param name="c">Fill character.</param>
+        public virtual void Fill(RectI rect, char c = '\0')
         {
-            for (int i = 0; i < text.Length; ++i)
+            BeginUpdate();
+            try
             {
-                SetChar(x + i, y, text[i], attributes);
+                for (int xp = rect.X; xp < rect.Width; xp++)
+                {
+                    for (int yp = rect.Y; yp < rect.Height; yp++)
+                        SetChar(xp, yp, c);
+                }
+            }
+            finally
+            {
+                EndUpdate();
             }
         }
 
-        public void SetChar(int x, int y, char c, short attributes = (short)ConsoleColor.ForegroundWhite)
+        /// <summary>
+        /// Writes an empty line to console. Caret position is changed to the beginning of the next line.
+        /// </summary>
+        public virtual void WriteLine()
         {
-            var offset = screenbuf.GetOffset(x, y);
-            screenbuf.Data[offset].Attributes = attributes;
-            screenbuf.Data[offset].Char.UnicodeChar = c;
+            BeginUpdate();
+            try
+            {
+                PointI cursor = (Console.CursorLeft, Console.CursorTop);
+                cursor.X = 0;
+                cursor.Y++;
+                Console.SetCursorPosition(cursor.X, cursor.Y);
+            }
+            finally
+            {
+                EndUpdate();
+            }
         }
 
-        public char GetChar(int x, int y)
+        /// <summary>
+        /// Writes text to console at the current caret position.
+        /// After write operation is performed, caret is moved
+        /// to the beginning of the next line.
+        /// </summary>
+        /// <param name="text">Text to write.</param>
+        public virtual void WriteLine(string text)
         {
-            return screenbuf.GetData(x, y).Char.UnicodeChar;
+            Write($"{text}\n");
+        }
+
+        /// <summary>
+        /// Writes text to console at the current caret position.
+        /// After write operation is performed, caret is moved to the position after the text.
+        /// </summary>
+        /// <param name="text">Text to write.</param>
+        public virtual void Write(string text)
+        {
+            BeginUpdate();
+            try
+            {
+                Fn();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+
+            void Fn()
+            {
+                PointI cursor = (Console.CursorLeft, Console.CursorTop);
+
+                for (int i = 0; i < text.Length; i++)
+                {
+                    if (text[i] == '\n')
+                    {
+                        cursor.X = 0;
+                        cursor.Y++;
+                    }
+                    else
+                    {
+                        SetChar(cursor.X, cursor.Y, text[i]);
+                        cursor.X++;
+                    }
+
+                    if (cursor.X >= Width)
+                    {
+                        cursor.X = 0;
+                        cursor.Y++;
+                    }
+
+                    if (cursor.Y >= Height)
+                    {
+                        cursor.Y = 0;
+                    }
+                }
+
+                Console.SetCursorPosition(cursor.X, cursor.Y);
+            }
+        }
+
+        /// <summary>
+        /// Writes text at the specified position. Caret position is not changed.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="text">Text to write.</param>
+        public virtual void Print(int x, int y, string text)
+        {
+            BeginUpdate();
+            try
+            {
+                for (int i = 0; i < text.Length; ++i)
+                {
+                    SetChar(x + i, y, text[i]);
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Writes character at the specified position. Caret position is not changed.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="c">Character to write.</param>
+        public virtual void SetChar(int x, int y, char c)
+        {
+            var attributes
+                = (int)TextColor | ((int)BackColor << 4);
+
+            var offset = screenBuf.GetOffset(x, y);
+            screenBuf.Data[offset].Attributes = (short)attributes;
+            screenBuf.Data[offset].Char.UnicodeChar = c;
+        }
+
+        /// <summary>
+        /// Gets character at the specified position.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <returns></returns>
+        public virtual char GetChar(int x, int y)
+        {
+            return screenBuf.GetData(x, y).Char.UnicodeChar;
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        protected override void DisposeManaged()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    // Dispose managed state (managed objects) here.
-                }
-
-                consolehandle?.Dispose();
-
-                disposed = true;
-            }
-        }
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern short GetAsyncKeyState(int vKey);
-
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        private static extern SafeFileHandle CreateFile(
-            string fileName,
-            [MarshalAs(UnmanagedType.U4)] uint fileAccess,
-            [MarshalAs(UnmanagedType.U4)] uint fileShare,
-            IntPtr securityAttributes,
-            [MarshalAs(UnmanagedType.U4)] FileMode creationDisposition,
-            [MarshalAs(UnmanagedType.U4)] int flags,
-            IntPtr template);
-
-        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto, EntryPoint = "WriteConsoleOutputW")]
-        private static extern bool WriteConsoleOutput(
-            SafeFileHandle hConsoleOutput,
-            CharInfo[] lpBuffer,
-            Coord dwBufferSize,
-            Coord dwBufferCoord,
-            ref SmallRect lpWriteRegion);
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Coord
-        {
-            public short X;
-            public short Y;
-
-            public Coord(short x, short y)
-            {
-                X = x;
-                Y = y;
-            }
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        private struct CharUnion
-        {
-            [FieldOffset(0)]
-            public char UnicodeChar;
-            [FieldOffset(0)]
-            public byte AsciiChar;
-        }
-
-        [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
-        private struct CharInfo
-        {
-            [FieldOffset(0)]
-            public CharUnion Char;
-            [FieldOffset(2)]
-            public short Attributes;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct SmallRect
-        {
-            public short Left;
-            public short Top;
-            public short Right;
-            public short Bottom;
+            consoleHandle?.Dispose();
+            consoleHandle = null;
         }
     }
 }

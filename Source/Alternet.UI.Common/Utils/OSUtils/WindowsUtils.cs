@@ -15,30 +15,6 @@ namespace Alternet.UI
     {
         private static bool consoleAllocated = false;
 
-        private static SafeFileHandle? consoleHandle;
-
-        private static short ConsoleWidth => (short)Console.WindowWidth;
-
-        private static short ConsoleHeight => (short)Console.WindowHeight;
-
-        private static NativeMethods.Coord ConsoleCursor =>
-            new NativeMethods.Coord((short)Console.CursorLeft, (short)Console.CursorTop);
-
-        private static NativeMethods.SmallRect ConsoleWriteRegion =>
-            new NativeMethods.SmallRect()
-            {
-                Left = 0,
-                Top = 0,
-                Right = ConsoleWidth,
-                Bottom = ConsoleHeight,
-            };
-
-        private static NativeMethods.Coord ConsoleBufferSize =>
-            new NativeMethods.Coord(ConsoleWidth, ConsoleHeight);
-
-        private static NativeMethods.Coord ConsoleBufferCoord =>
-            new NativeMethods.Coord(0, 0);
-
         /// <summary>
         /// Shows console window on the screen.
         /// </summary>
@@ -52,99 +28,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Writes text to console.
-        /// </summary>
-        /// <param name="s">Text to write.</param>
-        /// <param name="fg">Foreground color.</param>
-        /// <param name="bg">Background color.</param>
-        internal static void WriteToConsole(
-            string s,
-            ConsoleColor fg = ConsoleColor.White,
-            ConsoleColor bg = ConsoleColor.Black)
-        {
-            ShowConsole();
-
-            var consoleBuffer = new NativeMethods.CharInfo[ConsoleWidth * ConsoleHeight];
-
-            consoleHandle ??= NativeMethods.CreateFile(
-                   "CONOUT$",
-                   0x40000000,
-                   2,
-                   IntPtr.Zero,
-                   FileMode.Open,
-                   0,
-                   IntPtr.Zero);
-
-            char[] text = s.ToCharArray();
-
-            NativeMethods.Coord cursor = ConsoleCursor;
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (text[i] == '\n')
-                {
-                    cursor.X = 0;
-                    cursor.Y++;
-                }
-                else
-                {
-                    int index = (cursor.Y * ConsoleWidth) + cursor.X;
-
-                    // Set color
-                    // (Crazy heckin bitwise crap, don't touch.)
-                    consoleBuffer[index].Attributes = (short)((int)fg | ((int)bg));
-
-                    // Set character
-                    consoleBuffer[index].Char.AsciiChar = (byte)text[i];
-
-                    // Increment cursor
-                    cursor.X++;
-                }
-
-                // Make sure that cursor does not exceed bounds of window
-                if (cursor.X >= ConsoleWidth)
-                {
-                    cursor.X = 0;
-                    cursor.Y++;
-                }
-
-                if (cursor.Y >= ConsoleHeight)
-                {
-                    cursor.Y = 0;
-                }
-            }
-
-            var writeRegion = ConsoleWriteRegion;
-            NativeMethods.WriteConsoleOutput(
-                consoleHandle,
-                consoleBuffer,
-                ConsoleBufferSize,
-                ConsoleBufferCoord,
-                ref writeRegion);
-
-            Console.SetCursorPosition(cursor.X, cursor.Y);
-        }
-
-        /// <summary>
         /// Contains native methods.
         /// </summary>
         public static class NativeMethods
         {
             /// <summary>
-            /// Allocates console.
+            /// Gets key state.
             /// </summary>
+            /// <param name="vKey"></param>
             /// <returns></returns>
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern int AllocConsole();
+            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            public static extern short GetAsyncKeyState(int vKey);
 
-            [DllImport("kernel32.dll", SetLastError = true)]
-            internal static extern int FreeConsole();
-
-            [DllImport("kernel32.dll")]
-            internal static extern IntPtr GetConsoleWindow();
-
+            /// <summary>
+            /// Creates file.
+            /// </summary>
+            /// <param name="fileName"></param>
+            /// <param name="fileAccess"></param>
+            /// <param name="fileShare"></param>
+            /// <param name="securityAttributes"></param>
+            /// <param name="creationDisposition"></param>
+            /// <param name="flags"></param>
+            /// <param name="template"></param>
+            /// <returns></returns>
             [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern SafeFileHandle CreateFile(
+            public static extern SafeFileHandle CreateFile(
                 string fileName,
                 [MarshalAs(UnmanagedType.U4)] uint fileAccess,
                 [MarshalAs(UnmanagedType.U4)] uint fileShare,
@@ -153,53 +61,134 @@ namespace Alternet.UI
                 [MarshalAs(UnmanagedType.U4)] int flags,
                 IntPtr template);
 
-            [DllImport("Kernel32.dll", SetLastError = true)]
-            internal static extern bool WriteConsoleOutput(
+            /// <summary>
+            /// Writes text to console.
+            /// </summary>
+            /// <param name="hConsoleOutput"></param>
+            /// <param name="lpBuffer"></param>
+            /// <param name="dwBufferSize"></param>
+            /// <param name="dwBufferCoord"></param>
+            /// <param name="lpWriteRegion"></param>
+            /// <returns></returns>
+            [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto, EntryPoint = "WriteConsoleOutputW")]
+            public static extern bool WriteConsoleOutput(
                 SafeFileHandle hConsoleOutput,
-                CharInfo[] lpBuffer,
-                Coord dwBufferSize,
-                Coord dwBufferCoord,
+                ConsoleCharInfo[] lpBuffer,
+                SmallPoint dwBufferSize,
+                SmallPoint dwBufferCoord,
                 ref SmallRect lpWriteRegion);
 
+            /// <summary>
+            /// Allocates console.
+            /// </summary>
+            /// <returns></returns>
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern int AllocConsole();
+
+            /// <summary>
+            /// Frees console.
+            /// </summary>
+            /// <returns></returns>
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern int FreeConsole();
+
+            /// <summary>
+            /// Gets console window.
+            /// </summary>
+            /// <returns></returns>
+            [DllImport("kernel32.dll")]
+            public static extern IntPtr GetConsoleWindow();
+
+            /// <summary>
+            /// Represents X and Y coordinates.
+            /// </summary>
             [StructLayout(LayoutKind.Sequential)]
-            internal struct Coord
+            public struct SmallPoint
             {
+                /// <summary>
+                /// Get or sets X coordinate.
+                /// </summary>
                 public short X;
+
+                /// <summary>
+                /// Get or sets Y coordinate.
+                /// </summary>
                 public short Y;
 
-                public Coord(short x, short y)
+                /// <summary>
+                /// Initializes a new instance of the <see cref="SmallPoint"/> struct.
+                /// </summary>
+                /// <param name="x"></param>
+                /// <param name="y"></param>
+                public SmallPoint(short x, short y)
                 {
                     X = x;
                     Y = y;
                 }
             }
 
+            /// <summary>
+            /// Represents unicode or ascii character value.
+            /// </summary>
             [StructLayout(LayoutKind.Explicit)]
-            internal struct CharUnion
+            public struct ConsoleCharUnion
             {
+                /// <summary>
+                /// Gets or sets unicode character value.
+                /// </summary>
                 [FieldOffset(0)]
                 public char UnicodeChar;
 
+                /// <summary>
+                /// Gets or sets ascii character value.
+                /// </summary>
                 [FieldOffset(0)]
                 public byte AsciiChar;
             }
 
-            [StructLayout(LayoutKind.Explicit)]
-            internal struct CharInfo
+            /// <summary>
+            /// Represents console character information.
+            /// </summary>
+            [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
+            public struct ConsoleCharInfo
             {
+                /// <summary>
+                /// Character value.
+                /// </summary>
                 [FieldOffset(0)]
-                public CharUnion Char;
+                public ConsoleCharUnion Char;
 
+                /// <summary>
+                /// Character foreground and background colors.
+                /// </summary>
                 [FieldOffset(2)]
                 public short Attributes;
             }
 
+            /// <summary>
+            /// Represents small rectangle.
+            /// </summary>
             [StructLayout(LayoutKind.Sequential)]
-            internal struct SmallRect
+            public struct SmallRect
             {
+                /// <summary>
+                /// Left bound of the rectangle.
+                /// </summary>
                 public short Left;
+
+                /// <summary>
+                /// Top bound of the rectangle.
+                /// </summary>
                 public short Top;
+
+                /// <summary>
+                /// Right bound of the rectangle.
+                /// </summary>
                 public short Right;
+
+                /// <summary>
+                /// Bottom bound of the rectangle.
+                /// </summary>
                 public short Bottom;
             }
         }
