@@ -163,15 +163,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Opens terminal and runs command there.
+        /// </summary>
+        /// <param name="command">Command to run.</param>
+        /// <param name="folder">Value of <see cref="ProcessStartInfo.WorkingDirectory"/>.</param>
+        /// <returns></returns>
+        public static bool OpenTerminalAndRunCommand(string? command = default, string? folder = default)
+        {
+            folder ??= PathUtils.GetAppFolder();
+
+            if (App.IsWindowsOS)
+            {
+                if(command is not null)
+                    command = "/k" + command;
+                return ShellExecute("cmd.exe", command, folder);
+            }
+            else
+            {
+                if (command is not null)
+                    command = "-c \"" + command + "\"";
+                return ShellExecute("/bin/bash", command, folder);
+            }
+        }
+
+        /// <summary>
         /// Generates linux echo command for the specified string.
         /// </summary>
         /// <param name="s">Text string.</param>
         /// <returns></returns>
         public static string GenLinuxEchoCommand(string s)
         {
-            var command = $"echo \"{s}\"";
-            command += ";read -p \"Press Enter to continue...\"";
-            command = "-c '" + command + "'";
+            var command = $"echo '{s}'";
+            command += ";read -p 'Press Enter to continue...'";
             return command;
         }
 

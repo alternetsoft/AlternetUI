@@ -1087,6 +1087,11 @@ namespace Alternet.UI
                 App.Log(AppUtils.GenLinuxEchoCommand("This is a sample message."));
             });
 
+            Fn("Run terminal command", () =>
+            {
+                DialogFactory.ShowRunTerminalCommandDlg();
+            });
+
             if (App.IsWindowsOS)
             {
                 Fn("Test custom console: Clear", () =>

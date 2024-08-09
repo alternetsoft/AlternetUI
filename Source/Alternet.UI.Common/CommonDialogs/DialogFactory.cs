@@ -36,6 +36,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows "Run terminal command" dialog.
+        /// </summary>
+        /// <param name="defaultValue"></param>
+        public static void ShowRunTerminalCommandDlg(string? defaultValue = default)
+        {
+            var command = GetTextFromUser(
+                        null,
+                        "Run terminal command",
+                        defaultValue);
+
+            if (command is null)
+                return;
+            AppUtils.OpenTerminalAndRunCommand(command);
+        }
+
+        /// <summary>
         /// Shows critical message on the screen using any possible way.
         /// </summary>
         /// <param name="s">Message to show.</param>
