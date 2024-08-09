@@ -1082,6 +1082,11 @@ namespace Alternet.UI
                 DialogFactory.ShowCriticalMessage("This is a critical message.");
             });
 
+            Fn("Test GenLinuxEchoCommand", () =>
+            {
+                App.Log(AppUtils.GenLinuxEchoCommand("This is a sample message."));
+            });
+
             if (App.IsWindowsOS)
             {
                 Fn("Test custom console: Clear", () =>

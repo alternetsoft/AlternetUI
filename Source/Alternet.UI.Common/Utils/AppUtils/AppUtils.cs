@@ -148,17 +148,31 @@ namespace Alternet.UI
         /// <param name="s">String to output.</param>
         public static bool ExecuteTerminalEchoCmd(string s)
         {
-            var command = $"echo \"{s}\"";
             var folder = PathUtils.GetAppFolder();
 
             if (App.IsWindowsOS)
-                return ShellExecute("cmd.exe", "/k " + command, folder);
+            {
+                var command = $"echo \"{s}\"";
+                command = "/k " + command;
+                return ShellExecute("cmd.exe", command, folder);
+            }
             else
             {
-                command += " && read -p \"Press Enter to continue...\"";
-                command = "-c '" + command + "'";
-                return ShellExecute("/bin/bash", command, folder);
+                return ShellExecute("/bin/bash", GenLinuxEchoCommand(s), folder);
             }
+        }
+
+        /// <summary>
+        /// Generates linux echo command for the specified string.
+        /// </summary>
+        /// <param name="s">Text string.</param>
+        /// <returns></returns>
+        public static string GenLinuxEchoCommand(string s)
+        {
+            var command = $"echo \"{s}\"";
+            command += " && read -p \"Press Enter to continue...\"";
+            command = "-c '" + command + "'";
+            return command;
         }
 
         /// <summary>
