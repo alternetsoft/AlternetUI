@@ -15,7 +15,7 @@ namespace Alternet.UI
     public class SplittedControlsPanel : SplittedPanel
     {
         private TreeView? leftTreeView;
-        private VListBox? leftListBox;
+        private VirtualListBox? leftListBox;
         private PropertyGrid? propertyGrid;
         private LogListBox? logControl;
         private ListBox? actionsControl;
@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// Gets <see cref="TreeView"/> control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public VListBox LeftListBox
+        public VirtualListBox LeftListBox
         {
             get
             {

@@ -11,7 +11,7 @@ namespace ControlsSample
 {
     public partial class InternalSamplesPage : Control
     {
-        private readonly VListBox view = new()
+        private readonly VirtualListBox view = new()
         {
             SuggestedWidth = 350,
             SuggestedHeight = 400,

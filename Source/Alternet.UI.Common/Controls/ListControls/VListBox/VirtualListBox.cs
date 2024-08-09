@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="ListBox"/> descendant with advanced formatting for the items.
     /// Please use <see cref="ListControlItem"/> with this control.
     /// </summary>
-    public class VListBox : ListBox
+    public class VirtualListBox : ListBox
     {
         /// <summary>
         /// Gets or sets default minimal item height.
@@ -71,16 +71,16 @@ namespace Alternet.UI
         private GenericAlignment itemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
-        static VListBox()
+        static VirtualListBox()
         {
             DefaultCurrentItemBorder = new();
             DefaultCurrentItemBorder.Color = Color.Black;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VListBox"/> class.
+        /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
         /// </summary>
-        public VListBox()
+        public VirtualListBox()
         {
             UserPaint = true;
             SuggestedSize = 200;

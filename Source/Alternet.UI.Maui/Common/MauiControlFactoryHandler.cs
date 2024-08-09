@@ -168,7 +168,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IVListBoxHandler IControlFactoryHandler.CreateVListBoxHandler(VListBox control)
+        IVListBoxHandler IControlFactoryHandler.CreateVListBoxHandler(VirtualListBox control)
         {
             throw new NotImplementedException();
         }

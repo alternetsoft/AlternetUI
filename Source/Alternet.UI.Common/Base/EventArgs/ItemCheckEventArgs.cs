@@ -8,14 +8,14 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents the method that will handle the <see langword="ItemCheck" /> event
-    /// of a <see cref="VListBox" /> control.</summary>
+    /// of a <see cref="VirtualListBox" /> control.</summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">An <see cref="ItemCheckEventArgs" /> that contains the event data.</param>
     internal delegate void ItemCheckEventHandler(object? sender, ItemCheckEventArgs e);
 
     /// <summary>
     /// Provides data for the <see langword="ItemCheck" /> event
-    /// of the <see cref="VListBox" /> control.
+    /// of the <see cref="VirtualListBox" /> control.
     /// </summary>
     internal class ItemCheckEventArgs : EventArgs
     {

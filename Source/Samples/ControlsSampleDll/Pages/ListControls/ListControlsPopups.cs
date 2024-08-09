@@ -50,7 +50,7 @@ namespace ControlsSample
         private readonly PopupListBox popupListBox = new();
         private readonly PopupCheckListBox popupCheckListBox = new();
         private readonly PopupColorListBox popupColorListBox = new();
-        private readonly PopupListBox<VListBox> popupVListBox = new();
+        private readonly PopupListBox<VirtualListBox> popupVListBox = new();
 
         static ListControlsPopups()
         {

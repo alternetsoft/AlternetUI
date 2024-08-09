@@ -212,7 +212,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IVListBoxHandler CreateVListBoxHandler(VListBox control);
+        IVListBoxHandler CreateVListBoxHandler(VirtualListBox control);
 
         /// <summary>
         /// Creates <see cref="ILinkLabelHandler"/> interface provider.

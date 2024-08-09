@@ -46,7 +46,7 @@ namespace ControlsSample
             textVisibleCheckBox.Parent = panel;
             setColorButton.Parent = panel;
             setColorButton.Click += SetColorButton_Click;
-            textVisibleCheckBox.BindBoolProp(listBox, nameof(VListBox.TextVisible));
+            textVisibleCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.TextVisible));
             comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged;
         }
 

@@ -193,7 +193,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IVListBoxHandler CreateVListBoxHandler(VListBox control)
+        public IVListBoxHandler CreateVListBoxHandler(VirtualListBox control)
         {
             return new VListBoxHandler();
         }

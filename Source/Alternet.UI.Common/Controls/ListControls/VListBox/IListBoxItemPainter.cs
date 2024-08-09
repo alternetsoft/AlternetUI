@@ -9,20 +9,20 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Contains methods which allow to implement custom painted items for the
-    /// <see cref="VListBox"/> control.
+    /// <see cref="VirtualListBox"/> control.
     /// </summary>
     public interface IListBoxItemPainter
     {
         /// <summary>
-        /// Called by owner drawn <see cref="VListBox"/> control for the item
+        /// Called by owner drawn <see cref="VirtualListBox"/> control for the item
         /// painting.
         /// </summary>
-        /// <param name="sender"><see cref="VListBox"/> control.</param>
+        /// <param name="sender"><see cref="VirtualListBox"/> control.</param>
         /// <param name="e">Paint arguments</param>
-        void Paint(VListBox sender, ListBoxItemPaintEventArgs e);
+        void Paint(VirtualListBox sender, ListBoxItemPaintEventArgs e);
 
         /// <summary>
-        /// Called by owner drawn <see cref="VListBox"/> control for the background
+        /// Called by owner drawn <see cref="VirtualListBox"/> control for the background
         /// painting.
         /// </summary>
         /// <remarks>
@@ -30,17 +30,17 @@ namespace Alternet.UI
         /// painting is not needed. The simplest implemetation is to return <c>false</c>.
         /// In this case default background will be painted.
         /// </remarks>
-        /// <param name="sender"><see cref="VListBox"/> control.</param>
+        /// <param name="sender"><see cref="VirtualListBox"/> control.</param>
         /// <param name="e">Paint arguments</param>
-        bool PaintBackground(VListBox sender, ListBoxItemPaintEventArgs e);
+        bool PaintBackground(VirtualListBox sender, ListBoxItemPaintEventArgs e);
 
         /// <summary>
-        /// Called by owner drawn <see cref="VListBox"/> control in order
+        /// Called by owner drawn <see cref="VirtualListBox"/> control in order
         /// to get size of the item. Return (-1, -1) to use default behavior.
         /// </summary>
-        /// <param name="sender"><see cref="VListBox"/> control.</param>
+        /// <param name="sender"><see cref="VirtualListBox"/> control.</param>
         /// <param name="index">Index of the item.</param>
         /// <returns></returns>
-        SizeD GetSize(VListBox sender, int index);
+        SizeD GetSize(VirtualListBox sender, int index);
     }
 }

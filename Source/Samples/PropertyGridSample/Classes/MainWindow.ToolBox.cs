@@ -90,7 +90,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(SideBarPanel));
                 LimitedTypes.Add(typeof(ColorComboBox));
                 LimitedTypes.Add(typeof(ColorListBox));
-                LimitedTypes.Add(typeof(VListBox));
+                LimitedTypes.Add(typeof(VirtualListBox));
                 LimitedTypes.Add(typeof(UserControl));
 
                 LimitedTypes.AddRange(LimitedTypesStatic);
