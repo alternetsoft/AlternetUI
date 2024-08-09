@@ -693,6 +693,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first child of the control if it exists or <c>null</c> otherwise.
+        /// </summary>
+        [Browsable(false)]
+        public Control? FirstChild => GetChildOrNull();
+
+        /// <summary>
         /// Gets control index in the <see cref="Children"/> of the container control.
         /// </summary>
         [Browsable(false)]

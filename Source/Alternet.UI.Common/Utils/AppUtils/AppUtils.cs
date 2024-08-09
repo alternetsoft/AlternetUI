@@ -18,6 +18,12 @@ namespace Alternet.UI
         private static NetFrameworkIdentifier? frameworkIdentifier;
 
         /// <summary>
+        /// Gets first child of the first window or an empty control.
+        /// </summary>
+        public static Control FirstWindowChildOrEmpty =>
+            App.FirstWindow()?.FirstChild ?? ControlUtils.Empty;
+
+        /// <summary>
         /// Gets identifier for the net framework used in the application.
         /// </summary>
         public static NetFrameworkIdentifier FrameworkIdentifier
@@ -56,6 +62,20 @@ namespace Alternet.UI
                 frameworkIdentifier = NetFrameworkIdentifier.Other;
                 return NetFrameworkIdentifier.Other;
             }
+        }
+
+        /// <summary>
+        /// Creates clone of the first window and optinally shows it on the screen.
+        /// </summary>
+        /// <param name="show">Whether to show created window. Optional. Default is <c>true</c>.</param>
+        /// <returns></returns>
+        public static Window CreateFirstWindowClone(bool show = true)
+        {
+            var type = App.FirstWindow()?.GetType() ?? typeof(Window);
+            var instance = (Window)Activator.CreateInstance(type);
+            if(show)
+                instance.Show();
+            return instance;
         }
 
         /// <summary>
