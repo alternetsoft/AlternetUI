@@ -8,7 +8,7 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a control to display a list of items. Please consider using <see cref="VListBox"/>
+    /// Represents a control to display a list of items. Please consider using <see cref="VirtualListBox"/>
     /// instead of this simple control.
     /// </summary>
     /// <remarks>

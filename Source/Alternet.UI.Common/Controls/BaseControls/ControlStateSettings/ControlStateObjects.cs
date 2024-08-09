@@ -77,7 +77,10 @@ namespace Alternet.UI
         public virtual T? Normal
         {
             get => normal;
-            set => SetProperty(ref normal, value, nameof(Normal), RaiseNormalChanged);
+            set
+            {
+                SetProperty(ref normal, value, nameof(Normal), RaiseNormalChanged);
+            }
         }
 
         /// <summary>

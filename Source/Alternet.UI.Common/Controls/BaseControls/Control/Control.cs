@@ -614,6 +614,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the DPI of the display used by this control. Returns width property of
+        /// the result of <see cref="GetDPI"/> call.
+        /// </summary>
+        [Browsable(false)]
+        public Coord DPI
+        {
+            get
+            {
+                return GetDPI().Width;
+            }
+        }
+
         IntPtr IWin32Window.Handle => default;
 
         /// <summary>
@@ -678,6 +691,12 @@ namespace Alternet.UI
             get => Bounds.Bottom;
             set => Top = value - Height;
         }
+
+        /// <summary>
+        /// Gets the first child of the control if it exists or <c>null</c> otherwise.
+        /// </summary>
+        [Browsable(false)]
+        public Control? FirstChild => GetChildOrNull();
 
         /// <summary>
         /// Gets control index in the <see cref="Children"/> of the container control.

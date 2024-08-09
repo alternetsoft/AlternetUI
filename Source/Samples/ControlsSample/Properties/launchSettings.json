@@ -5,7 +5,8 @@
       "distributionName": ""
     },
     "ControlsSample": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "nativeDebugging": true
     }
   }
 }

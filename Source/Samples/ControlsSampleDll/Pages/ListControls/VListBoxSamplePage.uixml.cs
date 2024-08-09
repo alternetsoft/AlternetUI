@@ -8,7 +8,7 @@ namespace ControlsSample
 {
     internal partial class VListBoxSamplePage: Control
     {
-        private readonly VListBox listBox = new()
+        private readonly VirtualListBox listBox = new()
         {
             SuggestedWidth = 200,
             Margin = (0,0,0,5),
@@ -31,9 +31,9 @@ namespace ControlsSample
             listBox.HandleCreated += ListBox_HandleCreated;
             roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged;
             showCheckBoxesCheckBox.CheckedChanged += ShowCheckBoxesCheckBox_CheckedChanged;
-            threeStateCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckBoxThreeState));
-            allowAllStatesCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckBoxAllowAllStatesForUser));
-            allowClickCheckCheckBox.BindBoolProp(listBox, nameof(VListBox.CheckOnClick));
+            threeStateCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckBoxThreeState));
+            allowAllStatesCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckBoxAllowAllStatesForUser));
+            allowClickCheckCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckOnClick));
 
             SetSizeToContent();
             listBox.CheckedChanged += ListBox_CheckedChanged;

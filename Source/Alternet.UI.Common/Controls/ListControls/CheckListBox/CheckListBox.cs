@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a control to display a list of items with checkboxes.
-    /// Please consider using <see cref="VCheckListBox"/> instead of this simple control.
+    /// Please consider using <see cref="VirtualCheckListBox"/> instead of this simple control.
     /// </summary>
     /// <remarks>
     /// The <see cref="CheckListBox"/> control enables you to display a list of

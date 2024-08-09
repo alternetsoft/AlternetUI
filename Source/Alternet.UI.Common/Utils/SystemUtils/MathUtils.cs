@@ -379,5 +379,29 @@ namespace Alternet.UI
                 value = max.Value;
             return value;
         }
+
+        /// <summary>
+        /// Returns <see cref="int"/> value clamped to the inclusive range of min and max.
+        /// </summary>
+        /// <param name="v">The value to be clamped.</param>
+        /// <param name="min">The lower bound of the result.</param>
+        /// <param name="max">The upper bound of the result.</param>
+        /// <returns></returns>
+        public static int Clamp(int v, int min, int max)
+        {
+            return Math.Min(Math.Max(v, min), max);
+        }
+
+        /// <summary>
+        /// Returns <see cref="double"/> value clamped to the inclusive range of min and max.
+        /// </summary>
+        /// <param name="v">The value to be clamped.</param>
+        /// <param name="min">The lower bound of the result.</param>
+        /// <param name="max">The upper bound of the result.</param>
+        /// <returns></returns>
+        public static double ClampD(double v, double min, double max)
+        {
+            return Math.Min(Math.Max(v, min), max);
+        }
     }
 }

@@ -194,6 +194,8 @@ namespace ControlsSample
 
             DoInside(() =>
             {
+                if(App.IsLinuxOS)
+                    button.RecreateWindow();
                 button.TextVisible = showTextCheckBox.IsChecked;
                 button.ExactFit = exactFitCheckBox.IsChecked;
                 button.HasBorder = hasBorderCheckBox.IsChecked;
@@ -206,7 +208,7 @@ namespace ControlsSample
                 button.ForegroundColor = color;
                 color = GetColor(comboBoxBackColor);
                 button.BackgroundColor = color;
-                button.StateImages = ControlStateImages.Empty;
+                button.StateImages.Assign(null);
                 if (imageCheckBox.IsChecked)
                 {
                     buttonImages ??= DemoResourceLoader.LoadButtonImages(button);
@@ -217,7 +219,6 @@ namespace ControlsSample
                 button.Enabled = !disabledCheckBox.IsChecked;
                 button.SetImageMargins(imageMargins);
             });
-            button.Refresh();
         }
 
         private void Button_Click(object? sender, System.EventArgs e)

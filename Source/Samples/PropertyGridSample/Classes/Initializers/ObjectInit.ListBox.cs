@@ -16,7 +16,7 @@ namespace PropertyGridSample
             string PencilUrl = $"{ResPrefix2}Pencil32.png";
             string PhotoUrl = $"{ResPrefix2}Photo32.png";
 
-            if (control is not VListBox listBox)
+            if (control is not VirtualListBox listBox)
                 return;
 
             listBox.HScrollBarVisible = true;
@@ -87,7 +87,7 @@ namespace PropertyGridSample
 
             static void ListBox_CustomItemText(object? sender, GetItemTextEventArgs e)
             {
-                if (sender is not VListBox listBox)
+                if (sender is not VirtualListBox listBox)
                     return;
                 if (e.ItemIndex >= listBox.Items.Count)
                 {

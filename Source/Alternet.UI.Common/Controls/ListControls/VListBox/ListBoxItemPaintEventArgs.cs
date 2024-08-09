@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <param name="bounds">Bounds of the item.</param>
         /// <param name="itemIndex">Index of the tem.</param>
         public ListBoxItemPaintEventArgs(
-            VListBox control,
+            VirtualListBox control,
             Graphics graphics,
             RectD bounds,
             int itemIndex)
@@ -108,6 +108,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control which item is painted.
         /// </summary>
-        public VListBox ListBox { get; }
+        public VirtualListBox ListBox { get; }
     }
 }

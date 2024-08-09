@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements list box control with list of actions. When item is double clicked,
     /// associated action is executed.
     /// </summary>
-    public class ActionsListBox : VListBox
+    public class ActionsListBox : VirtualListBox
     {
         /// <summary>
         /// Adds an empty space to the <see cref="ActionsListBox"/>.

@@ -181,7 +181,7 @@ namespace ThreadingSample
                         else
                         {
                             longOperationProgressBar.Value = i;
-                            Log($"Performing operation {i} of {Maximum}");
+                            logListBox.Log($"Performing operation {i} of {Maximum}");
                         }
                     });
                 }

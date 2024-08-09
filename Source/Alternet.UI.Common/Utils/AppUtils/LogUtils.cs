@@ -255,6 +255,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="Exception"/> information to file.
+        /// </summary>
+        /// <param name="e">Exception to log.</param>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        public static void LogExceptionToFile(Exception e, string? filename = null)
+        {
+            try
+            {
+                LogToFile(SectionSeparator, filename);
+                LogToFile($"Exception:", filename);
+                LogToFile(e.ToString(), filename);
+                LogToFile(SectionSeparator, filename);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Logs <see cref="Exception"/> information if DEBUG is defined.
         /// </summary>
         /// <param name="e">Exception to log.</param>
@@ -761,6 +781,12 @@ namespace Alternet.UI
             App.LogNameValue("App.Is64BitOS", App.Is64BitOS);
 
             App.LogNameValue("AppUtils.FrameworkIdentifier", AppUtils.FrameworkIdentifier);
+
+            if (App.IsLinuxOS)
+            {
+                App.LogNameValue("uname -s", LinuxUtils.UnameResult);
+                App.LogNameValue("IsUbuntu", LinuxUtils.IsUbuntu);
+            }
         }
 
         /// <summary>
@@ -927,16 +953,23 @@ namespace Alternet.UI
         /// </summary>
         public static void EnumLogActions(Action<string, Action> addLogAction)
         {
-            addLogAction("Log system settings", LogUtils.LogSystemSettings);
-            addLogAction("Log font families", LogUtils.LogFontFamilies);
-            addLogAction("Log system fonts", SystemSettings.LogSystemFonts);
-            addLogAction("Log fixed width fonts", SystemSettings.LogFixedWidthFonts);
-            addLogAction("Log display info", Display.Log);
-            addLogAction("Log useful defines", LogUtils.LogUsefulDefines);
-            addLogAction("Log OS information", LogUtils.LogOSInformation);
-            addLogAction("Log system colors", LogUtils.LogSystemColors);
+            List<(string Text, Action Action)> items = new();
 
-            addLogAction("Log Embedded Resources in Alternet.UI.Common", () =>
+            void Fn(string title, Action a)
+            {
+                items.Add(new(title, a));
+            }
+
+            Fn("Log system settings", LogUtils.LogSystemSettings);
+            Fn("Log font families", LogUtils.LogFontFamilies);
+            Fn("Log fonts system", SystemSettings.LogSystemFonts);
+            Fn("Log fonts fixed width", SystemSettings.LogFixedWidthFonts);
+            Fn("Log display info", Display.Log);
+            Fn("Log useful defines", LogUtils.LogUsefulDefines);
+            Fn("Log system information", LogUtils.LogOSInformation);
+            Fn("Log system colors", LogUtils.LogSystemColors);
+
+            Fn("Log Embedded Resources in Alternet.UI.Common", () =>
             {
                 const string s = "embres:Alternet.UI?assembly=Alternet.UI.Common";
 
@@ -952,34 +985,34 @@ namespace Alternet.UI
                 LogUtils.LogToFile(LogUtils.SectionSeparator);
             });
 
-            addLogAction("Log Embedded Resources", () =>
+            Fn("Log Embedded Resources", () =>
             {
                 LogUtils.LogResourceNames();
                 App.Log("Resource Names added to log file");
             });
 
-            addLogAction("Log test error and warning items", () =>
+            Fn("Log test error and warning items", () =>
             {
                 App.Log("Sample error", LogItemKind.Error);
                 App.Log("Sample warning", LogItemKind.Warning);
                 App.Log("Sample info", LogItemKind.Information);
             });
 
-            addLogAction("Log SKFontManager", LogUtils.LogSkiaFontManager);
-            addLogAction("Log SKFont", LogUtils.LogSkiaFont);
-            addLogAction("Log SKBitmap", LogUtils.LogSkiaBitmap);
-            addLogAction("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
-            addLogAction("Log image bits formats", LogImageBitsFormats);
+            Fn("Log SKFontManager", LogUtils.LogSkiaFontManager);
+            Fn("Log SKFont", LogUtils.LogSkiaFont);
+            Fn("Log SKBitmap", LogUtils.LogSkiaBitmap);
+            Fn("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
+            Fn("Log image bits formats", LogImageBitsFormats);
 
             if (registeredLogActions is not null)
             {
                 foreach (var item in registeredLogActions)
                 {
-                    addLogAction(item.Name, item.Action);
+                    Fn(item.Name, item.Action);
                 }
             }
 
-            addLogAction("Test RegistryUtils", () =>
+            Fn("Test RegistryUtils", () =>
             {
                 var previewerPath = RegistryUtils.ReadUIXmlPreviewPath();
                 RegistryUtils.WriteUIXmlPreviewPath(@"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe");
@@ -987,10 +1020,10 @@ namespace Alternet.UI
                 App.LogNameValue("UIXmlPreviewPath", previewerPath);
             });
 
-            addLogAction("Log Control descendants events", LogControlDescendantsEvents);
-            addLogAction("Log Control descendants", LogControlDescendants);
+            Fn("Log Control descendants events", LogControlDescendantsEvents);
+            Fn("Log Control descendants", LogControlDescendants);
 
-            addLogAction("Log public objects from Alternet.UI.Port", () =>
+            Fn("Log public objects from Alternet.UI.Port", () =>
             {
                 var items = AssemblyUtils.EnumPublicObjectsForNamespace(
                     typeof(Control).Assembly,
@@ -998,6 +1031,89 @@ namespace Alternet.UI
                 App.Log("Public objects from Alternet.UI.Port added to log file");
                 LogRangeToFile(items);
             });
+
+            Fn("Test Exception: Throw C++", () =>
+            {
+                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                WebBrowser.DoCommandGlobal("CppThrow");
+            });
+
+            Fn("Test Exception: Throw C#", () =>
+            {
+                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                throw new FileNotFoundException("Test message", "MyFileName.dat");
+            });
+
+            Fn("Test Exception: Show ThreadExceptionWindow", () =>
+            {
+                try
+                {
+                    throw new ApplicationException("This is exception message");
+                }
+                catch (Exception e)
+                {
+                    App.ShowExceptionWindow(e, "This is an additional info", true);
+                }
+            });
+
+            Fn("Test Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
+
+            Fn("Show Second MainForm", () =>
+            {
+                AppUtils.CreateFirstWindowClone();
+            });
+
+            Fn("Log control info", () =>
+            {
+                LogUtils.LogControlInfo(AppUtils.FirstWindowChildOrEmpty);
+            });
+
+            Fn("Log NativeControlPainter metrics", () =>
+            {
+                ControlPainter.LogPartSize(AppUtils.FirstWindowChildOrEmpty);
+            });
+
+            if (App.IsWindowsOS)
+            {
+                Fn("Test custom console: Clear", () =>
+                {
+                    CustomWindowsConsole.Default.Clear();
+                });
+
+                Fn("Test ShowCriticalMessage", () =>
+                {
+                    DialogFactory.ShowCriticalMessage("This is a critical message.");
+                });
+
+                Fn("Test custom console: WriteLine", () =>
+                {
+                    var console = CustomWindowsConsole.Default;
+
+                    console.WriteLine("This is sample text string.");
+                    console.WriteLine();
+
+                    console.BackColor = ConsoleColor.White;
+                    console.TextColor = ConsoleColor.Black;
+                    console.WriteLine("Hello from custom console.");
+
+                    console.BackColor = ConsoleColor.Black;
+                    console.TextColor = ConsoleColor.White;
+                });
+            }
+
+            int Compare((string Text, Action Action) x, (string Text, Action Action) y)
+            {
+                return string.Compare(x.Text, y.Text);
+            }
+
+            items.Sort(Compare);
+
+            foreach(var item in items)
+            {
+                addLogAction(item.Text, item.Action);
+            }
         }
 
         /// <summary>

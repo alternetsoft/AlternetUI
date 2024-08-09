@@ -11,9 +11,9 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="VListBox"/> descendant which allows to browse folder contents.
+    /// <see cref="VirtualListBox"/> descendant which allows to browse folder contents.
     /// </summary>
-    public class FileListBox : VListBox
+    public class FileListBox : VirtualListBox
     {
         /// <summary>
         /// Gets or sets global <see cref="FolderInfoItem"/> for the file or folder.

@@ -39,24 +39,7 @@ namespace Alternet.UI.Native
         {
             get
             {
-                var result = NativeModuleNameNoExt;
-
-                if (App.IsWindowsOS)
-                {
-                    result = $"{result}.dll";
-                }
-                else
-                if (App.IsLinuxOS)
-                {
-                    result = $"{result}.so";
-                }
-                else
-                if (App.IsMacOS)
-                {
-                    result = $"{result}.dylib";
-                }
-
-                return result;
+                return OSUtils.GetNativeModuleName(NativeModuleNameNoExt);
             }
         }
 
@@ -107,62 +90,93 @@ namespace Alternet.UI.Native
         {
             var debugResolver = DebugImportResolver && libHandle == default;
 
-            if (debugResolver)
+            try
             {
-                LogUtils.LogBeginSectionToFile("ImportResolver");
-                LogUtils.LogNameValueToFile("libraryName", libraryName);
-                LogUtils.LogNameValueToFile("assembly", assembly);
-                LogUtils.LogNameValueToFile("searchPath", searchPath);
-                LogUtils.LogNameValueToFile("NativeModuleName", NativeModuleName);
-                LogUtils.LogNameValueToFile("NativeModuleNameWithExt", NativeModuleNameWithExt);                
+                return Fn();
+            }
+            catch (Exception e)
+            {
+                LogException(e);
+                throw;
             }
 
-            IntPtr result;
-
-            if (libraryName == NativeModuleName)
+            void LogException(Exception? e)
             {
-                if(libHandle == default)
+                if(e is not null)
+                    LogUtils.LogExceptionToFile(e);
+
+                var s = $"\nError loading '{NativeModuleNameWithExt}' library.\n";
+                s += $"Exception info logged to '{App.LogFilePath}'.\n";
+                if (App.IsLinuxOS)
                 {
-                    var libraryFileName =
-                        FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
+                    s += $"Please run 'ldd {NativeModuleNameWithExt}' command " +
+                        "in the terminal in order to get the library references.\n";
+                    s += "If there are any 'not found' references, you need to install " +
+                        "appropriate packages before running this application.\n";
+                }
 
-                    if (debugResolver)
-                    {
-                        LogUtils.LogNameValueToFile("FindFileRecursiveInAppFolder", libraryFileName);
-                    }
+                DialogFactory.ShowCriticalMessage(s);
+            }
 
-                    if (libraryFileName is null)
+            IntPtr Fn()
+            {
+                if (debugResolver)
+                {
+                    LogUtils.LogBeginSectionToFile("ImportResolver");
+                    LogUtils.LogNameValueToFile("libraryName", libraryName);
+                    LogUtils.LogNameValueToFile("assembly", assembly);
+                    LogUtils.LogNameValueToFile("searchPath", searchPath);
+                    LogUtils.LogNameValueToFile("NativeModuleName", NativeModuleName);
+                    LogUtils.LogNameValueToFile("NativeModuleNameWithExt", NativeModuleNameWithExt);
+                }
+
+                IntPtr result;
+
+                if (libraryName == NativeModuleName)
+                {
+                    if (libHandle == default)
                     {
-                        libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
-                    }
-                    else
-                    {
-                        var loaded = FnTryLoadLibrary(libraryFileName, out libHandle);
+                        var libraryFileName =
+                            FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
 
                         if (debugResolver)
                         {
-                            LogUtils.LogNameValueToFile("NativeLibrary.TryLoad libHandle", libHandle);
-                            LogUtils.LogNameValueToFile("NativeLibrary.TryLoad loaded", loaded);
+                            LogUtils.LogNameValueToFile("FindFileRecursiveInAppFolder", libraryFileName);
                         }
 
-                        if (!loaded)
+                        if (libraryFileName is null)
                         {
                             libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
                         }
+                        else
+                        {
+                            var loaded = FnTryLoadLibrary(libraryFileName, out libHandle);
+
+                            if (debugResolver)
+                            {
+                                LogUtils.LogNameValueToFile("NativeLibrary.TryLoad libHandle", libHandle);
+                                LogUtils.LogNameValueToFile("NativeLibrary.TryLoad loaded", loaded);
+                            }
+
+                            if (!loaded)
+                            {
+                                libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
+                            }
+                        }
                     }
+
+                    result = libHandle;
+                }
+                else
+                    result = NativeLibrary.Load(libraryName);
+
+                if (debugResolver)
+                {
+                    LogUtils.LogEndSectionToFile();
                 }
 
-                result = libHandle;
+                return result;
             }
-            else
-                result = NativeLibrary.Load(libraryName);
-
-            if (debugResolver)
-            {
-                LogUtils.LogEndSectionToFile();
-            }
-
-            return result;
 
             bool FnTryLoadLibrary(string libraryPath, out IntPtr handle)
             {

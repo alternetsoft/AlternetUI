@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <see cref="ListBox"/> descendant with log and debug related functionality.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class LogListBox : VListBox
+    public partial class LogListBox : VirtualListBox
     {
         /// <summary>
         /// Gets or sets image used for error messages.

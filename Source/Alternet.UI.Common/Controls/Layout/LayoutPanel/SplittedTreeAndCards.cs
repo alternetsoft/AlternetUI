@@ -6,7 +6,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements splitter panel with <see cref="TreeView"/> or <see cref="VListBox"/>
+    /// Implements splitter panel with <see cref="TreeView"/> or <see cref="VirtualListBox"/>
     /// on the left and <see cref="CardPanel"/> on the right.
     /// </summary>
     public partial class SplittedTreeAndCards : LayoutPanel
@@ -79,9 +79,9 @@ namespace Alternet.UI
         public TreeView? TreeView => leftControl as TreeView;
 
         /// <summary>
-        /// Gets left control as <see cref="VListBox"/>.
+        /// Gets left control as <see cref="VirtualListBox"/>.
         /// </summary>
-        public VListBox? ListBox => leftControl as VListBox;
+        public VirtualListBox? ListBox => leftControl as VirtualListBox;
 
         /// <summary>
         /// Gets or sets index of the selected item in the <see cref="TreeView"/>.
@@ -187,12 +187,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates used <see cref="VListBox"/> control.
+        /// Creates used <see cref="VirtualListBox"/> control.
         /// </summary>
         /// <returns></returns>
         protected virtual Control CreateListBox()
         {
-            VListBox listBox = new()
+            VirtualListBox listBox = new()
             {
                 HasBorder = false,
             };

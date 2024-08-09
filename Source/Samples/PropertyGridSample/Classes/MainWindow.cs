@@ -176,7 +176,7 @@ namespace PropertyGridSample
             }
         }
 
-        public VListBox ToolBox => panel.LeftListBox;
+        public VirtualListBox ToolBox => panel.LeftListBox;
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {

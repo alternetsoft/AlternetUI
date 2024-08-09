@@ -18,10 +18,10 @@ namespace Alternet.UI
         /// </summary>
         int ItemsCount { get; set; }
 
-        /// <inheritdoc cref="VListBox.HScrollBarVisible"/>
+        /// <inheritdoc cref="VirtualListBox.HScrollBarVisible"/>
         bool HScrollBarVisible { get; set; }
 
-        /// <inheritdoc cref="VListBox.VScrollBarVisible"/>
+        /// <inheritdoc cref="VirtualListBox.VScrollBarVisible"/>
         public bool VScrollBarVisible { get; set; }
 
         /// <summary>
@@ -29,31 +29,31 @@ namespace Alternet.UI
         /// </summary>
         public ListBoxSelectionMode SelectionMode { get; set; }
 
-        /// <inheritdoc cref="VListBox.GetItemRect"/>
+        /// <inheritdoc cref="VirtualListBox.GetItemRect"/>
         public RectD? GetItemRect(int index);
 
-        /// <inheritdoc cref="VListBox.ScrollRows(int)"/>
+        /// <inheritdoc cref="VirtualListBox.ScrollRows(int)"/>
         bool ScrollRows(int rows);
 
-        /// <inheritdoc cref="VListBox.ScrollRowPages(int)"/>
+        /// <inheritdoc cref="VirtualListBox.ScrollRowPages(int)"/>
         bool ScrollRowPages(int pages);
 
-        /// <inheritdoc cref="VListBox.RefreshRow(int)"/>
+        /// <inheritdoc cref="VirtualListBox.RefreshRow(int)"/>
         void RefreshRow(int row);
 
-        /// <inheritdoc cref="VListBox.RefreshRows(int, int)"/>
+        /// <inheritdoc cref="VirtualListBox.RefreshRows(int, int)"/>
         void RefreshRows(int from, int to);
 
-        /// <inheritdoc cref="VListBox.GetVisibleEnd"/>
+        /// <inheritdoc cref="VirtualListBox.GetVisibleEnd"/>
         int GetVisibleEnd();
 
-        /// <inheritdoc cref="VListBox.GetVisibleBegin"/>
+        /// <inheritdoc cref="VirtualListBox.GetVisibleBegin"/>
         int GetVisibleBegin();
 
-        /// <inheritdoc cref="VListBox.IsSelected(int)"/>
+        /// <inheritdoc cref="VirtualListBox.IsSelected(int)"/>
         bool IsSelected(int line);
 
-        /// <inheritdoc cref="VListBox.IsVisible(int)"/>
+        /// <inheritdoc cref="VirtualListBox.IsVisible(int)"/>
         bool IsVisible(int line);
 
         /// <summary>

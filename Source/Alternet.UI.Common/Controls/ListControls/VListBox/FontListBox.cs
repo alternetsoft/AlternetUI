@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="ListBox"/> descendant for selecting font names.
     /// </summary>
-    public class FontListBox : VListBox
+    public class FontListBox : VirtualListBox
     {
         /// <summary>
         /// Gets or sets method that initializes items in <see cref="FontListBox"/>.

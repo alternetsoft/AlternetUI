@@ -22,6 +22,8 @@ namespace ControlsSample
             string? url = null,
             SizeI? size = null)
         {
+            url ??= "embres:ControlsSampleDll.Resources.ButtonImages.ButtonImage{0}.svg";
+
             Image LoadImage(string stateName, bool disabled = false)
             {
                 Color? color = disabled ? SystemColors.GrayText : null;
@@ -36,13 +38,11 @@ namespace ControlsSample
                         color = SvgColors.GetSvgColor(KnownSvgColor.Normal, isDark);
                 }
 
-                url ??= "embres:ControlsSampleDll.Resources.ButtonImages.ButtonImage{0}.svg";
-
-                url = string.Format(url, stateName);
+                var formattedUrl = string.Format(url, stateName);
 
                 size ??= 16;
 
-                return Image.FromSvgUrl(url, size.Value.Width, size.Value.Height, color);
+                return Image.FromSvgUrl(formattedUrl, size.Value.Width, size.Value.Height, color);
             }
 
             var normalImage = LoadImage("Normal");

@@ -22,10 +22,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="VListBox"/> this handler provides the
+        /// Gets a <see cref="VirtualListBox"/> this handler provides the
         /// implementation for.
         /// </summary>
-        public new VListBox Control => (VListBox)base.Control;
+        public new VirtualListBox Control => (VirtualListBox)base.Control;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.

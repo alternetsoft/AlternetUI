@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="VListBox"/> descendant which has visible checkboxes next to the items.
+    /// <see cref="VirtualListBox"/> descendant which has visible checkboxes next to the items.
     /// Please use <see cref="ListControlItem"/> with this control.
     /// </summary>
-    public class VCheckListBox : VListBox
+    public class VirtualCheckListBox : VirtualListBox
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="VCheckListBox"/> class.
+        /// Initializes a new instance of the <see cref="VirtualCheckListBox"/> class.
         /// </summary>
-        public VCheckListBox()
+        public VirtualCheckListBox()
         {
             CheckBoxVisible = true;
         }

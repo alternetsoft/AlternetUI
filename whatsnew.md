@@ -1,3 +1,13 @@
+# 0.9.622 (2024 August 9)
+
+- Improved native library load error logging. Shows message if Alternet.UI.Pal.dll is not loaded properly.
+- Add classes: TwoDimensionalBuffer, CustomWindowsConsole.
+- Control: DPI, FirstChildproperty properties.
+- Different fixes in sample projects.
+- Developer Tools: Actions are sorted.
+- DialogFactory.ShowCriticalMessage allows to show message on critical error before app exit.
+- renamed VListBox -> VirtualListBox, VCheckListBox -> VirtualCheckListBox.
+
 # 0.9.621 (2024 August 7)
 
 - 7z supported in the installation, so now it downloads required files much faster.

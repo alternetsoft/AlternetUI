@@ -1,27 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI, Version=0.9.601.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI, Version=0.9.621.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+    <Type Name="Alternet.Drawing.WxControlPainterHandler">
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.Drawing.SystemSettingsColor" />
-    <Type Name="Alternet.Drawing.WxGraphics">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.Drawing.NativeControlPainter">
-      <Event Name="Disposed" />
-    </Type>
     <Type Name="Alternet.UI.Application">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.NotifyIcon">
-      <Event Name="Click" />
-      <Event Name="DoubleClick" />
-    </Type>
-    <Type Name="Alternet.UI.SimpleSoundPlayer">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.ToolTip">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.InputManager">
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.UIActionSimulator">
@@ -33,13 +17,15 @@
     <Type Name="Alternet.UI.ValueValidatorText">
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.Drawing.NativeControlPainter+DrawFlags" />
-    <Type Name="Alternet.Drawing.NativeControlPainter+TitleBarButtonFlags" />
-    <Type Name="Alternet.Drawing.NativeControlPainter+HeaderSortIconType" />
-    <Type Name="Alternet.Drawing.NativeControlPainter+ControlPartKind" />
-    <Type Name="Alternet.Drawing.NativeControlPainter+HeaderButtonParams" />
-    <Type Name="Alternet.Drawing.NativeControlPainter+DrawItemParams" />
-    <Type Name="Alternet.UI.SimpleSoundPlayer+SoundPlayFlags" />
+    <Type Name="Alternet.UI.WxApplicationHandler">
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.Drawing.WxControlPainterHandler+DrawFlags" />
+    <Type Name="Alternet.Drawing.WxControlPainterHandler+TitleBarButtonFlags" />
+    <Type Name="Alternet.Drawing.WxControlPainterHandler+HeaderSortIconType" />
+    <Type Name="Alternet.Drawing.WxControlPainterHandler+ControlPartKind" />
+    <Type Name="Alternet.Drawing.WxControlPainterHandler+HeaderButtonParams" />
+    <Type Name="Alternet.Drawing.WxControlPainterHandler+DrawItemParams" />
     <Type Name="Alternet.UI.UIActionSimulator+KeyModifier" />
     <Type Name="Alternet.UI.UIActionSimulator+MouseButton" />
   </Assembly>

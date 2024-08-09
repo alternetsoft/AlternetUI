@@ -155,7 +155,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
             Actions.Add(typeof(TabControl), InitGenericTabControl);
-            Actions.Add(typeof(VListBox), InitVListBox);
+            Actions.Add(typeof(VirtualListBox), InitVListBox);
             Actions.Add(typeof(ListBox), InitListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);
             Actions.Add(typeof(ColorComboBox), InitColorComboBox);

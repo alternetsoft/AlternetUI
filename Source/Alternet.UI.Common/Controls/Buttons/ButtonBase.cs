@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements the basic functionality common to button controls.
     /// </summary>
-    public abstract class ButtonBase : Control, ITextProperty
+    public abstract class ButtonBase : Control
     {
         private Action? clickAction;
 
@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// this control is clicked by the user.
         /// </summary>
         [Browsable(false)]
-        public Action? ClickAction
+        public virtual Action? ClickAction
         {
             get => clickAction;
             set
@@ -63,7 +63,7 @@ namespace Alternet.UI
             }
         }
 
-        private void OnClickAction(object? sender, EventArgs? e)
+        private void OnClickAction(object? sender, EventArgs e)
         {
             clickAction?.Invoke();
         }
