@@ -139,7 +139,7 @@ namespace Alternet.UI
             if (App.IsWindowsOS)
                 return ExecuteApp("cmd.exe", "/c " + command, folder, waitResult, logStdOut);
             else
-                return ExecuteApp("/bin/bash", "-c \"" + command + "\"", folder, waitResult, logStdOut);
+                return ExecuteApp("/bin/bash", "-c " + command, folder, waitResult, logStdOut);
         }
 
         /// <summary>
@@ -148,14 +148,15 @@ namespace Alternet.UI
         /// <param name="s">String to output.</param>
         public static bool OpenTerminalAndRunEcho(string s)
         {
+            var command = $"echo \"{s}\"";
+
             if (App.IsWindowsOS)
             {
-                var command = $"echo \"{s}\"";
                 return OpenTerminalAndRunCommand(command);
             }
             else
             {
-                return OpenTerminalAndRunCommand(GenLinuxEchoCommand(s));
+                return OpenTerminalAndRunCommand(command);
             }
         }
 
@@ -181,18 +182,6 @@ namespace Alternet.UI
                     command = "-c \"" + command + "\"";
                 return ShellExecute("/bin/bash", command, folder);
             }
-        }
-
-        /// <summary>
-        /// Generates linux echo command for the specified string.
-        /// </summary>
-        /// <param name="s">Text string.</param>
-        /// <returns></returns>
-        public static string GenLinuxEchoCommand(string s)
-        {
-            var command = $"echo '{s}'";
-            command += ";read -p 'Press Enter to continue...'";
-            return command;
         }
 
         /// <summary>

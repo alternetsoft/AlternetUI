@@ -104,9 +104,6 @@ namespace Alternet.UI.Native
             {
                 try
                 {
-                    if (e is not null)
-                        LogUtils.LogExceptionToFile(e);
-
                     var s = $"Critical error in the [{CommonUtils.GetAppExePath()}] application\n";
 
                     s += $"\nError loading [{NativeModuleNameWithExt}] library.\n";
@@ -120,6 +117,9 @@ namespace Alternet.UI.Native
                     }
 
                     DialogFactory.ShowCriticalMessage(s);
+
+                    if (e is not null)
+                        LogUtils.LogExceptionToFile(e);
                 }
                 catch
                 {

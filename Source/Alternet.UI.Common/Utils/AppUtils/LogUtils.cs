@@ -339,8 +339,14 @@ namespace Alternet.UI
         /// </summary>
         public static void DeleteLog()
         {
-            if (File.Exists(App.LogFilePath))
-                File.Delete(App.LogFilePath);
+            try
+            {
+                if (File.Exists(App.LogFilePath))
+                    File.Delete(App.LogFilePath);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -1080,11 +1086,6 @@ namespace Alternet.UI
             Fn("Test ShowCriticalMessage", () =>
             {
                 DialogFactory.ShowCriticalMessage("This is a critical message.");
-            });
-
-            Fn("Test GenLinuxEchoCommand", () =>
-            {
-                App.Log(AppUtils.GenLinuxEchoCommand("This is a sample message."));
             });
 
             Fn("Run terminal command", () =>

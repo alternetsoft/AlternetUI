@@ -60,8 +60,6 @@ namespace Alternet.UI
         {
             try
             {
-                Console.WriteLine(s);
-
                 if (App.IsWindowsOS)
                 {
                     try
@@ -89,6 +87,10 @@ namespace Alternet.UI
                 {
                     AppUtils.OpenTerminalAndRunEcho(s);
                 }
+
+                LogUtils.DeleteLog();
+                LogUtils.LogToFile(s);
+                AppUtils.OpenLogFile();
             }
             catch
             {

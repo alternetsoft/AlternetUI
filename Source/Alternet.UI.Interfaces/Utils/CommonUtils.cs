@@ -89,6 +89,10 @@ namespace Alternet.UI
             return url;
         }
 
+        /// <summary>
+        /// Gets path to the exe file of the application.
+        /// </summary>
+        /// <returns></returns>
         public static string GetAppExePath()
         {
             return System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
