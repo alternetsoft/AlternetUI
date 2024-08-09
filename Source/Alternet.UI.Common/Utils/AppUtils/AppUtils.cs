@@ -170,7 +170,7 @@ namespace Alternet.UI
         public static string GenLinuxEchoCommand(string s)
         {
             var command = $"echo \"{s}\"";
-            command += " ;read -p \"Press Enter to continue...\"";
+            command += ";read -p \"Press Enter to continue...\"";
             command = "-c '" + command + "'";
             return command;
         }
