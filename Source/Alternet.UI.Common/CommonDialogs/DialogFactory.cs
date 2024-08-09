@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -32,6 +33,35 @@ namespace Alternet.UI
         public static void ShowDeveloperTools()
         {
             DeveloperToolsPanel.ShowDeveloperTools();
+        }
+
+        /// <summary>
+        /// Shows critical message on the screen using any possible way.
+        /// </summary>
+        /// <param name="s">Message to show.</param>
+        /// <returns><c>true</c> on succes, <c>false</c> on failure.</returns>
+        public static void ShowCriticalMessage(string s)
+        {
+            Console.WriteLine(s);
+
+            if (App.IsWindowsOS)
+            {
+                var console = CustomWindowsConsole.Default;
+
+                console.BackColor = ConsoleColor.Black;
+                console.TextColor = ConsoleColor.White;
+                console.Clear();
+                console.WriteLine(s);
+                Console.ReadLine();
+            }
+            else
+            if (App.IsLinuxOS)
+            {
+            }
+            else
+            if(App.IsMacOS)
+            {
+            }
         }
 
         /// <summary>
