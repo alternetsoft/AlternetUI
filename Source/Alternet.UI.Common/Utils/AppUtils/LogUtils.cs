@@ -1101,7 +1101,7 @@ namespace Alternet.UI
 
                 Fn("Test ExecuteTerminalEchoCmd", () =>
                 {
-                    AppUtils.ExecuteTerminalEchoCmd("This is echo message");
+                    AppUtils.OpenTerminalAndRunEcho("This is echo message");
                 });
 
                 Fn("Test custom console: WriteLine", () =>

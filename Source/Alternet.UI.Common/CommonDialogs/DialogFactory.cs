@@ -76,18 +76,18 @@ namespace Alternet.UI
                     }
                     catch
                     {
-                        AppUtils.ExecuteTerminalEchoCmd(s);
+                        AppUtils.OpenTerminalAndRunEcho(s);
                     }
                 }
                 else
                 if (App.IsLinuxOS)
                 {
-                    AppUtils.ExecuteTerminalEchoCmd(s);
+                    AppUtils.OpenTerminalAndRunEcho(s);
                 }
                 else
                 if (App.IsMacOS)
                 {
-                    AppUtils.ExecuteTerminalEchoCmd(s);
+                    AppUtils.OpenTerminalAndRunEcho(s);
                 }
             }
             catch

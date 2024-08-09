@@ -146,19 +146,16 @@ namespace Alternet.UI
         /// Opens terminal and runs 'echo' command with the specified text string there.
         /// </summary>
         /// <param name="s">String to output.</param>
-        public static bool ExecuteTerminalEchoCmd(string s)
+        public static bool OpenTerminalAndRunEcho(string s)
         {
-            var folder = PathUtils.GetAppFolder();
-
             if (App.IsWindowsOS)
             {
                 var command = $"echo \"{s}\"";
-                command = "/k " + command;
-                return ShellExecute("cmd.exe", command, folder);
+                return OpenTerminalAndRunCommand(command);
             }
             else
             {
-                return ShellExecute("/bin/bash", GenLinuxEchoCommand(s), folder);
+                return OpenTerminalAndRunCommand(GenLinuxEchoCommand(s));
             }
         }
 
