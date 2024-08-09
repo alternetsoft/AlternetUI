@@ -116,10 +116,7 @@ namespace Alternet.UI.Native
                             "appropriate packages before running this application.\n";
                     }
 
-                    DialogFactory.ShowCriticalMessage(s);
-
-                    if (e is not null)
-                        LogUtils.LogExceptionToFile(e);
+                    DialogFactory.ShowCriticalMessage(s , e);
                 }
                 catch
                 {

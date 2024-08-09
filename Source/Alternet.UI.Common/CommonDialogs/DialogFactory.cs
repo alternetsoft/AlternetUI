@@ -55,11 +55,18 @@ namespace Alternet.UI
         /// Shows critical message on the screen using any possible way.
         /// </summary>
         /// <param name="s">Message to show.</param>
+        /// <param name="e">Exception information.</param>
         /// <returns><c>true</c> on succes, <c>false</c> on failure.</returns>
-        public static void ShowCriticalMessage(string s)
+        public static void ShowCriticalMessage(string s, Exception? e = null)
         {
             try
             {
+                LogUtils.DeleteLog();
+                LogUtils.LogToFile(s);
+                if (e is not null)
+                    LogUtils.LogExceptionToFile(e);
+                AppUtils.OpenLogFile();
+
                 if (App.IsWindowsOS)
                 {
                     try
@@ -87,10 +94,6 @@ namespace Alternet.UI
                 {
                     AppUtils.OpenTerminalAndRunEcho(s);
                 }
-
-                LogUtils.DeleteLog();
-                LogUtils.LogToFile(s);
-                AppUtils.OpenLogFile();
             }
             catch
             {
