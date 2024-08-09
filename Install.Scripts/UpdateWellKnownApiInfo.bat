@@ -1,4 +1,5 @@
-ECHO You should call Install.bat before this script
+ECHO This script updates xml with control declarations.
+ECHO You need to call Install.bat before this script.
 
 SETLOCAL EnableDelayedExpansion
 

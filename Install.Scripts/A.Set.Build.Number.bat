@@ -6,3 +6,5 @@ dotnet run --project "%SCRIPT_HOME%\..\Source\Tools\Versioning\Alternet.UI.Versi
 
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
+
+call UpdateWellKnownApiInfo.bat
