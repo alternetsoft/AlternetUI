@@ -13,13 +13,28 @@ namespace Alternet.UI
     /// </summary>
     internal class DeveloperToolsWindow : Window
     {
+        private static bool logGotFocus;
+        private static bool logFocusedControl;
+
         private readonly DeveloperToolsPanel panel = new()
         {
             SuggestedSize = new(900, 700),
         };
 
-        private bool logGotFocus;
-        private bool logFocusedControl;
+        static DeveloperToolsWindow()
+        {
+            LogUtils.RegisterLogAction("Toggle GotFocus event logging", () =>
+            {
+                logGotFocus = !logGotFocus;
+                App.LogNameValue("GotFocus event logging", logGotFocus);
+            });
+
+            LogUtils.RegisterLogAction("Toggle Focused Info", () =>
+            {
+                logFocusedControl = !logFocusedControl;
+                App.LogNameValue("Focused control info", logFocusedControl);
+            });
+        }
 
         public DeveloperToolsWindow()
         {
@@ -35,29 +50,12 @@ namespace Alternet.UI
             ComponentDesigner.SafeDefault.ControlDisposed += Designer_ControlDisposed;
             ComponentDesigner.SafeDefault.ControlParentChanged += Designer_ControlParentChanged;
 
-            panel.AddAction("Toggle GotFocus logging", () =>
-            {
-                logGotFocus = !logGotFocus;
-                if(logGotFocus)
-                    App.Log("GotFocus event logging enabled");
-                else
-                    App.Log("GotFocus event logging disabled");
-            });
-
-            panel.AddAction("Toggle Focused Info", () =>
-            {
-                logFocusedControl = !logFocusedControl;
-
-                if (logGotFocus)
-                    App.Log("Focused control info enabled");
-                else
-                    App.Log("Focused control info disabled");
-            });
-
             panel.CenterNotebook.SelectedIndex = 0;
             panel.RightNotebook.SelectedIndex = 0;
             panel.PropGrid.SuggestedInitDefaults();
         }
+
+        public DeveloperToolsPanel DevPanel => panel;
 
         protected override void DisposeManaged()
         {

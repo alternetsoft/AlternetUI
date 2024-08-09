@@ -66,7 +66,14 @@ namespace Alternet.UI
                 App.LogSeparator();
             }
 
-            LogUtils.RegisterLogAction("Use Pless Caret", () => { UsePlessCaret = true; });
+            if (DebugUtils.IsDebugDefined)
+            {
+                LogUtils.RegisterLogAction("Toggle UsePlessCaret", () =>
+                {
+                    UsePlessCaret = !UsePlessCaret;
+                    App.LogNameValue("UsePlessCaret", UsePlessCaret);
+                });
+            }
         }
 
         /// <summary>

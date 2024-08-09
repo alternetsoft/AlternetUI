@@ -52,6 +52,12 @@ namespace Alternet.UI
         private ListBox? controlsListBox;
         private bool insideSetProps;
 
+        static DeveloperToolsPanel()
+        {
+            LogUtils.RegisterLogAction("Show Props FirstWindow", ControlsActionMainForm);
+            LogUtils.RegisterLogAction("Show Props FocusedControl", ControlsActionFocusedControl);
+        }
+
         public DeveloperToolsPanel()
         {
             centerNotebook.Parent = panel.FillPanel;
@@ -76,6 +82,8 @@ namespace Alternet.UI
 
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
         }
+
+        public static DeveloperToolsPanel? DevPanel => devToolsWindow?.DevPanel;
 
         public SideBarPanel CenterNotebook => centerNotebook;
 
@@ -241,6 +249,21 @@ namespace Alternet.UI
             }
         }
 
+        private static void ControlsActionMainForm()
+        {
+            if (DevPanel is null)
+                return;
+            DevPanel.rightNotebook.SelectedControl = DevPanel.propGrid;
+            DevPanel.PropGridSetProps(App.FirstWindow());
+        }
+
+        private static void ControlsActionFocusedControl()
+        {
+            if (DevPanel is null)
+                return;
+            DevPanel.PropGridSetProps(DevPanel.LastFocusedControl);
+        }
+
         private static void Event_PropertyChanged(object? sender, EventArgs e)
         {
             if (sender is not IPropertyGridItem item)
@@ -261,17 +284,6 @@ namespace Alternet.UI
         {
             App.LogFileIsEnabled = true;
             LogUtils.LogException(e.InnerException);
-        }
-
-        private void ControlsActionMainForm()
-        {
-            rightNotebook.SelectedControl = propGrid;
-            PropGridSetProps(App.FirstWindow());
-        }
-
-        private void ControlsActionFocusedControl()
-        {
-            PropGridSetProps(LastFocusedControl);
         }
 
         private void TypesListBox_SelectionChanged(object? sender, EventArgs e)
@@ -305,51 +317,6 @@ namespace Alternet.UI
         private void InitActions()
         {
             LogUtils.EnumLogActions(AddLogAction);
-
-            AddAction("Show Props FirstWindow", ControlsActionMainForm);
-            AddAction("Show Props FocusedControl", ControlsActionFocusedControl);
-
-            AddAction("Show Second MainForm", () =>
-            {
-                var type = App.FirstWindow()?.GetType();
-                var instance = Activator.CreateInstance(type ?? typeof(Window)) as Window;
-                instance?.Show();
-            });
-
-            AddAction("Exception: Throw C++", () =>
-            {
-                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
-                WebBrowser.DoCommandGlobal("CppThrow");
-            });
-
-            AddAction("Exception: Throw C#", () =>
-            {
-                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
-                throw new FileNotFoundException("Test message", "MyFileName.dat");
-            });
-
-            AddAction("Exception: Show ThreadExceptionWindow", () =>
-            {
-                try
-                {
-                    throw new ApplicationException("This is exception message");
-                }
-                catch (Exception e)
-                {
-                    App.ShowExceptionWindow(e, "This is an additional info", true);
-                }
-            });
-
-            AddAction("Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
-
-            AddLogAction("Log control info", () => { LogUtils.LogControlInfo(this); });
-
-            AddLogAction("Log NativeControlPainter metrics", () =>
-            {
-                ControlPainter.LogPartSize(this);
-            });
         }
     }
 }
