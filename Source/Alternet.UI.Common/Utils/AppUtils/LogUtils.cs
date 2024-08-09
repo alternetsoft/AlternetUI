@@ -1077,16 +1077,16 @@ namespace Alternet.UI
                 ControlPainter.LogPartSize(AppUtils.FirstWindowChildOrEmpty);
             });
 
+            Fn("Test ShowCriticalMessage", () =>
+            {
+                DialogFactory.ShowCriticalMessage("This is a critical message.");
+            });
+
             if (App.IsWindowsOS)
             {
                 Fn("Test custom console: Clear", () =>
                 {
                     CustomWindowsConsole.Default.Clear();
-                });
-
-                Fn("Test ShowCriticalMessage", () =>
-                {
-                    DialogFactory.ShowCriticalMessage("This is a critical message.");
                 });
 
                 Fn("Test ExecuteTerminalEchoCmd", () =>
