@@ -94,23 +94,28 @@ namespace Alternet.UI.Native
             {
                 return Fn();
             }
-            catch
+            catch (Exception e)
             {
+                LogException(e);
+                throw;
+            }
+
+            void LogException(Exception? e)
+            {
+                if(e is not null)
+                    LogUtils.LogExceptionToFile(e);
+
+                var s = $"\nError loading '{NativeModuleNameWithExt}' library.\n";
+                s += $"Exception info logged to '{App.LogFilePath}'.\n";
                 if (App.IsLinuxOS)
                 {
-                    var s1 = $"Error loading '{NativeModuleNameWithExt}' library.";
-                    var s2 = $"Please run 'ldd {NativeModuleNameWithExt}' command " +
-                        "in the terminal in order to get the library references.";
-                    var s3 = "If there are any 'not found' references, you need to install " +
-                        "appropriate packages before running this application.";
-                    Console.WriteLine();
-                    Console.WriteLine(s1);
-                    Console.WriteLine(s2);
-                    Console.WriteLine(s3);
-                    Console.WriteLine();
+                    s += $"Please run 'ldd {NativeModuleNameWithExt}' command " +
+                        "in the terminal in order to get the library references.\n";
+                    s += "If there are any 'not found' references, you need to install " +
+                        "appropriate packages before running this application.\n";
                 }
 
-                throw;
+                DialogFactory.ShowCriticalMessage(s);
             }
 
             IntPtr Fn()
