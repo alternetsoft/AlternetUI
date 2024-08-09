@@ -255,6 +255,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="Exception"/> information to file.
+        /// </summary>
+        /// <param name="e">Exception to log.</param>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        public static void LogExceptionToFile(Exception e, string? filename = null)
+        {
+            try
+            {
+                LogToFile(SectionSeparator, filename);
+                LogToFile($"Exception:", filename);
+                LogToFile(e.ToString(), filename);
+                LogToFile(SectionSeparator, filename);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Logs <see cref="Exception"/> information if DEBUG is defined.
         /// </summary>
         /// <param name="e">Exception to log.</param>
@@ -1055,20 +1075,33 @@ namespace Alternet.UI
                 ControlPainter.LogPartSize(AppUtils.FirstWindowChildOrEmpty);
             });
 
-            Fn("Test custom console window", () =>
+            if (App.IsWindowsOS)
             {
-                if (App.IsWindowsOS)
+                Fn("Test custom console: Clear", () =>
+                {
+                    CustomWindowsConsole.Default.Clear();
+                });
+
+                Fn("Test ShowCriticalMessage", () =>
+                {
+                    DialogFactory.ShowCriticalMessage("This is a critical message.");
+                });
+
+                Fn("Test custom console: WriteLine", () =>
                 {
                     var console = CustomWindowsConsole.Default;
-                    console.BeginPaint();
-                    console.Clear();
-                    console.Print(0, 0, "This is sample text string.");
 
-                    console.Print(5, 6, "Hello from custom console.");
+                    console.WriteLine("This is sample text string.");
+                    console.WriteLine();
 
-                    console.EndPaint();
-                }
-            });
+                    console.BackColor = ConsoleColor.White;
+                    console.TextColor = ConsoleColor.Black;
+                    console.WriteLine("Hello from custom console.");
+
+                    console.BackColor = ConsoleColor.Black;
+                    console.TextColor = ConsoleColor.White;
+                });
+            }
 
             int Compare((string Text, Action Action) x, (string Text, Action Action) y)
             {
