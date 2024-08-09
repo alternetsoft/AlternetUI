@@ -143,6 +143,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Opens terminal and runs 'echo' command with the specified text string there.
+        /// </summary>
+        /// <param name="s">String to output.</param>
+        public static bool ExecuteTerminalEchoCmd(string s)
+        {
+            var command = $"echo \"{s}\"";
+            var folder = PathUtils.GetAppFolder();
+
+            if (App.IsWindowsOS)
+                return ShellExecute("cmd.exe", "/k " + command, folder);
+            else
+            {
+                command += " && read -p \"Press Enter to continue...\"";
+                command = "-c '" + command + "'";
+                return ShellExecute("/bin/bash", command, folder);
+            }
+        }
+
+        /// <summary>
         /// Executes application with the specified parameters.
         /// </summary>
         public static (string? Output, string? Error, int ExitCode) ExecuteApp(

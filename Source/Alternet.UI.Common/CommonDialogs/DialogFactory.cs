@@ -42,24 +42,39 @@ namespace Alternet.UI
         /// <returns><c>true</c> on succes, <c>false</c> on failure.</returns>
         public static void ShowCriticalMessage(string s)
         {
-            Console.WriteLine(s);
-
-            if (App.IsWindowsOS)
+            try
             {
-                var console = CustomWindowsConsole.Default;
+                Console.WriteLine(s);
 
-                console.BackColor = ConsoleColor.Black;
-                console.TextColor = ConsoleColor.White;
-                console.Clear();
-                console.WriteLine(s);
-                Console.ReadLine();
+                if (App.IsWindowsOS)
+                {
+                    try
+                    {
+                        var console = CustomWindowsConsole.Default;
+
+                        console.BackColor = ConsoleColor.Black;
+                        console.TextColor = ConsoleColor.White;
+                        console.Clear();
+                        console.WriteLine(s);
+                        Console.ReadLine();
+                    }
+                    catch
+                    {
+                        AppUtils.ExecuteTerminalEchoCmd(s);
+                    }
+                }
+                else
+                if (App.IsLinuxOS)
+                {
+                    AppUtils.ExecuteTerminalEchoCmd(s);
+                }
+                else
+                if (App.IsMacOS)
+                {
+                    AppUtils.ExecuteTerminalEchoCmd(s);
+                }
             }
-            else
-            if (App.IsLinuxOS)
-            {
-            }
-            else
-            if(App.IsMacOS)
+            catch
             {
             }
         }

@@ -19,7 +19,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains static methods for log handling.
     /// </summary>
-    public static class LogUtils
+    public static partial class LogUtils
     {
         /// <summary>
         /// Gets or sets whether to show debug welcome message
@@ -787,6 +787,8 @@ namespace Alternet.UI
                 App.LogNameValue("uname -s", LinuxUtils.UnameResult);
                 App.LogNameValue("IsUbuntu", LinuxUtils.IsUbuntu);
             }
+
+            App.LogNameValue("CommonUtils.GetAppExePath()", CommonUtils.GetAppExePath());
         }
 
         /// <summary>
@@ -1085,6 +1087,11 @@ namespace Alternet.UI
                 Fn("Test ShowCriticalMessage", () =>
                 {
                     DialogFactory.ShowCriticalMessage("This is a critical message.");
+                });
+
+                Fn("Test ExecuteTerminalEchoCmd", () =>
+                {
+                    AppUtils.ExecuteTerminalEchoCmd("This is echo message");
                 });
 
                 Fn("Test custom console: WriteLine", () =>
