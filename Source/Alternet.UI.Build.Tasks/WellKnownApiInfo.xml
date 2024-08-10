@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI, Version=0.9.621.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI, Version=0.9.622.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="Alternet.Drawing.WxControlPainterHandler">
       <Event Name="Disposed" />
     </Type>

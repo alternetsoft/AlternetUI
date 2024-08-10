@@ -15,18 +15,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements custom console for Windows.
     /// </summary>
-    public class CustomWindowsConsole : DisposableObject
+    internal class CustomWindowsConsole : DisposableObject, ICustomConsole
     {
-        /// <summary>
-        /// Gets or sets background color of the new text.
-        /// </summary>
-        public ConsoleColor BackColor = ConsoleColor.Black;
-
-        /// <summary>
-        /// Gets or sets foreground color of the new text.
-        /// </summary>
-        public ConsoleColor TextColor = ConsoleColor.White;
-
         private static CustomWindowsConsole? defaultConsole;
 
         private readonly TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo> screenBuf;
@@ -53,14 +43,14 @@ namespace Alternet.UI
             {
                 Left = 0,
                 Top = 0,
-                Right = Width,
-                Bottom = Height,
+                Right = (short)Width,
+                Bottom = (short)Height,
             };
 
             screenCoord = new WindowsUtils.NativeMethods.SmallPoint()
             {
-                X = Width,
-                Y = Height,
+                X = (short)Width,
+                Y = (short)Height,
             };
         }
 
@@ -81,6 +71,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets background color of the new text.
+        /// </summary>
+        public ConsoleColor BackColor { get; set; } = ConsoleColor.Black;
+
+        /// <summary>
+        /// Gets or sets foreground color of the new text.
+        /// </summary>
+        public ConsoleColor TextColor { get; set; } = ConsoleColor.White;
+
+        /// <summary>
         /// Gets screen buffer.
         /// </summary>
         public TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo> ScreenBuf => screenBuf;
@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets console width.
         /// </summary>
-        public virtual short Width
+        public virtual int Width
         {
             get;
             private set;
@@ -97,7 +97,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets console height.
         /// </summary>
-        public virtual short Height
+        public virtual int Height
         {
             get;
             private set;

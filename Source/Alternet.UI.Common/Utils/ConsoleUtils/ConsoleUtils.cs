@@ -25,6 +25,43 @@ namespace Alternet.UI
 
         private static ConsoleWriter? consoleOut;
         private static ConsoleWriter? consoleError;
+        private static ICustomConsole? customConsole;
+        private static ICustomConsole? dummyConsole;
+
+        /// <summary>
+        /// Gets dummy <see cref="ICustomConsole"/> interface provider which does nothing.
+        /// </summary>
+        public static ICustomConsole DummyConsole
+        {
+            get
+            {
+                return dummyConsole ??= new DummyConsole();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default <see cref="ICustomConsole"/> interface provider.
+        /// </summary>
+        public static ICustomConsole CustomConsole
+        {
+            get
+            {
+                if(customConsole is null)
+                {
+                    if (App.IsWindowsOS)
+                        customConsole = CustomWindowsConsole.Default;
+                    else
+                        customConsole = DummyConsole;
+                }
+
+                return customConsole;
+            }
+
+            set
+            {
+                customConsole = value;
+            }
+        }
 
         /// <summary>
         /// Binds system console output to <see cref="App.Log"/>.

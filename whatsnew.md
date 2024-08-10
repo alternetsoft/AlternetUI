@@ -1,3 +1,8 @@
+# 0.9.623 (2024 August 10)
+
+- Improved native library load error logging.
+- DialogFactory.ShowRunTerminalCommandDlg, AppUtils.OpenTerminalAndRunCommand, ConsoleUtils: CustomConsole, DummyConsole.
+
 # 0.9.622 (2024 August 9)
 
 - Improved native library load error logging. Shows message if Alternet.UI.Pal.dll is not loaded properly.
