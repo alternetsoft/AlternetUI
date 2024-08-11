@@ -1,3 +1,3 @@
 @echo off
 dotnet build
-start bin\Debug\net6.0\SRAdder.exe
+start bin\Debug\net8.0\SRAdder.exe
