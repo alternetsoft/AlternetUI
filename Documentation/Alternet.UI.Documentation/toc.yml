@@ -1,3 +1,5 @@
+pdf: false
+items:
 - name: Overview
   href: https://www.alternet-ui.com/
 - name: How it works

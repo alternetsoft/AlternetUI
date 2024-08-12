@@ -1,4 +1,4 @@
-pdf: false
+pdf: true
 items:
 - name: Introduction
   href: ../introduction/toc.yml
@@ -6,5 +6,3 @@ items:
   href: ../tutorials/toc.yml
 - name: How-To Guides
   href: ../how-to-guides/toc.yml
-- name: Reference
-  href: ../api/toc.yml
