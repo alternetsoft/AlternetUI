@@ -9,9 +9,10 @@
         {
           "src": "../../Source",
           "files": [
-		 "Alternet.UI/Alternet.UI.csproj",
+		 "Alternet.UI.Interfaces/Alternet.UI.Interfaces.csproj",
 		 "Alternet.UI.Common/Alternet.UI.Common.csproj",
-		 "Alternet.UI.Interfaces/Alternet.UI.Interfaces.csproj" ],
+		 "Alternet.UI/Alternet.UI.csproj"
+		 ],
           "exclude":
 		 [
 		 	"Alternet.UI.Common/Port/**",
