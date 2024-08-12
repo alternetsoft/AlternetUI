@@ -261,6 +261,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public IActionSimulatorHandler CreateActionSimulatorHandler()
+        {
+            return new WxActionSimulatorHandler();
+        }
+
+        /// <inheritdoc/>
         public IPrintingHandler CreatePrintingHandler()
         {
             return new WxPrintingHandler();

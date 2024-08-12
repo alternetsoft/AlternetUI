@@ -176,6 +176,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public IActionSimulatorHandler CreateActionSimulatorHandler()
+        {
+            return new DummyActionSimulatorHandler();
+        }
+
+        /// <inheritdoc/>
         void IApplicationHandler.BeginInvoke(Action action)
         {
             throw new NotImplementedException();

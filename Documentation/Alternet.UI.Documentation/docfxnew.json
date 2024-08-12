@@ -9,9 +9,10 @@
         {
           "src": "../../Source",
           "files": [
-		 "Alternet.UI/Alternet.UI.csproj",
+		 "Alternet.UI.Interfaces/Alternet.UI.Interfaces.csproj",
 		 "Alternet.UI.Common/Alternet.UI.Common.csproj",
-		 "Alternet.UI.Interfaces/Alternet.UI.Interfaces.csproj" ],
+		 "Alternet.UI/Alternet.UI.csproj"
+		 ],
           "exclude":
 		 [
 		 	"Alternet.UI.Common/Port/**",
@@ -87,9 +88,6 @@
  	"default",
       	"modern",
 	"templates/newoverride"
-      //"templates/alternet_new",
-      //"templates/memberpage",
-      //"templates/memberpage-postprocess"
     ],
     "xrefservice": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
     "postProcessors": [ "ExtractSearchIndex" ],
@@ -99,13 +97,14 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-	"_appLogoUrl":"https://www.alternet-ui.com/",
+      "pdf": false,
+      "_appLogoUrl":"https://www.alternet-ui.com/",
       "_appLogoPath": "images/logo/logo.svg",
       "_appFaviconPath": "images/logo/favicon.ico",
       "_disableContribution": true,
       "_enableNewTab": false,
 	//"_appName": "AlterNET UI",
-	"_appTitle": "AlterNET UI Documentation",
+      "_appTitle": "AlterNET UI Documentation",
       "_appFooter": "Copyright (c) 2021-2024 AlterNET Software",
       "_enableSearch": true
     },

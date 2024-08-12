@@ -78,7 +78,7 @@
 
     <Target Name="SplitSitemap" AfterTargets="$(BuildDocumentationTN)">
         <Exec Command="dotnet build --property WarningLevel=0 &quot;$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\SitemapSplitter.csproj&quot;" />
-        <Exec Command="&quot;$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\bin\Debug\net6.0\SitemapSplitter.exe&quot; split --SourceSiteMapPath=&quot;$(ProjectDir)\site\sitemap.xml&quot; --OutputDirectoryPath=&quot;$(ProjectDir)\site\&quot; --ConfigFilePath=&quot;$(ProjectDir)\SitemapSplitter.config.xml&quot;" />
+        <Exec Command="&quot;$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\bin\Debug\net8.0\SitemapSplitter.exe&quot; split --SourceSiteMapPath=&quot;$(ProjectDir)\site\sitemap.xml&quot; --OutputDirectoryPath=&quot;$(ProjectDir)\site\&quot; --ConfigFilePath=&quot;$(ProjectDir)\SitemapSplitter.config.xml&quot;" />
         <Exec Command="del &quot;$(ProjectDir)\site\sitemap.xml&quot;" />
     </Target>
 </Project>

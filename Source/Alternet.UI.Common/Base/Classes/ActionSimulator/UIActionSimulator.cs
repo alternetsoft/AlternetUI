@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -15,92 +17,24 @@ namespace Alternet.UI
     /// functionality for users, or to drive unit tests by simulating user sessions.
     /// This class currently doesn't work when using Wayland with Linux.
     /// </summary>
-    public class UIActionSimulator : DisposableObject<IntPtr>
+    /// <remarks>
+    /// Only left, right or middle mouse buttons are supported in this class.
+    /// </remarks>
+    public class UIActionSimulator : HandledObject<IActionSimulatorHandler>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UIActionSimulator"/> class.
         /// </summary>
         public UIActionSimulator()
-            : base(Native.WxOtherFactory.UIActionSimulatorCreate(), true)
         {
         }
 
         /// <summary>
-        /// Key modifiers supported in the <see cref="UIActionSimulator"/>.
+        /// Initializes a new instance of the <see cref="UIActionSimulator"/> class.
         /// </summary>
-        [Flags]
-        public enum KeyModifier
+        public UIActionSimulator(IActionSimulatorHandler handler)
         {
-            /// <summary>
-            /// None of the key modifiers is pressed.
-            /// </summary>
-            None = 0x0000,
-
-            /// <summary>
-            /// Alt key is pressed.
-            /// </summary>
-            Alt = 0x0001,
-
-            /// <summary>
-            /// Control key or Apple/Command key under OS X is pressed.
-            /// </summary>
-            Control = 0x0002,
-
-            /// <summary>
-            /// AltGr key is pressed.
-            /// </summary>
-            AltGr = Alt | Control,
-
-            /// <summary>
-            /// Shift key is pressed.
-            /// </summary>
-            Shift = 0x0004,
-
-            /// <summary>
-            /// Meta/Windows/Apple key is pressed.
-            /// </summary>
-            Meta = 0x0008,
-
-            /// <summary>
-            /// Meta/Windows/Apple key is pressed.
-            /// </summary>
-            Windows = Meta,
-
-            /// <summary>
-            /// Raw Control key is pressed under OS X.
-            /// </summary>
-            RawControlOnMac = 0x0010,
-
-            /// <summary>
-            /// Raw Control key is pressed.
-            /// </summary>
-            RawControl = Control,
-
-            /// <summary>
-            /// Key used for command accelerators is pressed.
-            /// </summary>
-            ModCmd = Control,
-        }
-
-        /// <summary>
-        /// Mouse buttons supported in the <see cref="UIActionSimulator"/>.
-        /// </summary>
-        public enum MouseButton
-        {
-            /// <summary>
-            /// Left mouse button.
-            /// </summary>
-            Left = 1,
-
-            /// <summary>
-            /// Middle mouse button.
-            /// </summary>
-            Middle = 2,
-
-            /// <summary>
-            /// Right mouse button.
-            /// </summary>
-            Right = 3,
+            Handler = handler;
         }
 
         /// <summary>
@@ -112,10 +46,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendChar(
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorChar(Handle, (int)keyCode, (int)modifiers);
-            ExecuteCommand();
+            var result = Handler.SendChar(keyCode, modifiers);
             return result;
         }
 
@@ -133,10 +66,9 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SendKeyDown(
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorKeyDown(Handle, (int)keyCode, (int)modifiers);
-            ExecuteCommand();
+            var result = Handler.SendKeyDown(keyCode, modifiers);
             return result;
         }
 
@@ -147,7 +79,7 @@ namespace Alternet.UI
         /// <param name="modifiers"></param>
         public virtual bool SendKey(
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
             var result1 = SendKeyDown(keyCode, modifiers);
             var result2 = SendKeyUp(keyCode, modifiers);
@@ -164,10 +96,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendKeyUp(
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorKeyUp(Handle, (int)keyCode, (int)modifiers);
-            ExecuteCommand();
+            var result = Handler.SendKeyUp(keyCode, modifiers);
             return result;
         }
 
@@ -178,8 +109,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseClick(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseClick(Handle, (int)button);
-            ExecuteCommand();
+            var result = Handler.SendMouseClick(button);
             return result;
         }
 
@@ -190,8 +120,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseDblClick(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseDblClick(Handle, (int)button);
-            ExecuteCommand();
+            var result = Handler.SendMouseDblClick(button);
             return result;
         }
 
@@ -202,8 +131,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseDown(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseDown(Handle, (int)button);
-            ExecuteCommand();
+            var result = Handler.SendMouseDown(button);
             return result;
         }
 
@@ -217,20 +145,18 @@ namespace Alternet.UI
         /// <param name="button">Mouse button to press</param>
         /// <returns></returns>
         public virtual bool SendMouseDragDrop(
-            long x1,
-            long y1,
-            long x2,
-            long y2,
+            int x1,
+            int y1,
+            int x2,
+            int y2,
             MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseDragDrop(
-                Handle,
+            var result = Handler.SendMouseDragDrop(
                 x1,
                 y1,
                 x2,
                 y2,
-                (int)button);
-            ExecuteCommand();
+                button);
             return result;
         }
 
@@ -248,7 +174,6 @@ namespace Alternet.UI
                 screenLocationDip.Offset(offset.Value.X, offset.Value.Y);
             var screenLocationPixel = control.PixelFromDip(screenLocationDip);
             var result = SendMouseMove(screenLocationPixel);
-            ExecuteCommand();
             return result;
         }
 
@@ -259,8 +184,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseMove(PointI point)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseMove(Handle, point);
-            ExecuteCommand();
+            var result = Handler.SendMouseMove(point);
             return result;
         }
 
@@ -271,8 +195,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseUp(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseUp(Handle, (int)button);
-            ExecuteCommand();
+            var result = Handler.SendMouseUp(button);
             return result;
         }
 
@@ -291,8 +214,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SendSelect(string text)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorSelect(Handle, text);
-            ExecuteCommand();
+            var result = Handler.SendSelect(text);
             return result;
         }
 
@@ -308,8 +230,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SendText(string text)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorText(Handle, text);
-            ExecuteCommand();
+            var result = Handler.SendText(text);
             return result;
         }
 
@@ -321,7 +242,7 @@ namespace Alternet.UI
         public bool SendCharIf(
             ref bool condition,
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
             if (!condition)
                 return false;
@@ -336,7 +257,7 @@ namespace Alternet.UI
         public bool SendKeyDownIf(
             ref bool condition,
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
             if (!condition)
                 return false;
@@ -351,7 +272,7 @@ namespace Alternet.UI
         public bool SendKeyIf(
             ref bool condition,
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
             if (!condition)
                 return false;
@@ -366,7 +287,7 @@ namespace Alternet.UI
         public bool SendKeyUpIf(
             ref bool condition,
             WxWidgetsKeyCode keyCode,
-            KeyModifier modifiers = KeyModifier.None)
+            RawModifierKeys modifiers = RawModifierKeys.None)
         {
             if (!condition)
                 return false;
@@ -422,10 +343,10 @@ namespace Alternet.UI
         /// </summary>
         public bool SendMouseDragDropIf(
             ref bool condition,
-            long x1,
-            long y1,
-            long x2,
-            long y2,
+            int x1,
+            int y1,
+            int x2,
+            int y2,
             MouseButton button = MouseButton.Left)
         {
             if (!condition)
@@ -482,9 +403,7 @@ namespace Alternet.UI
         /// before sending action. This method sets <paramref name="condition"/> to
         /// the result of the send action operation.
         /// </summary>
-        public bool SendSelectIf(
-            ref bool condition,
-            string text)
+        public bool SendSelectIf(ref bool condition, string text)
         {
             if (!condition)
                 return false;
@@ -496,27 +415,17 @@ namespace Alternet.UI
         /// before sending action. This method sets <paramref name="condition"/> to
         /// the result of the send action operation.
         /// </summary>
-        public bool SendTextIf(
-            ref bool condition,
-            string text)
+        public bool SendTextIf(ref bool condition, string text)
         {
             if (!condition)
                 return false;
             return SendText(text);
         }
 
-        /// <summary>
-        /// Executes 'Send*' command.
-        /// </summary>
-        internal void ExecuteCommand()
-        {
-            Native.WxOtherFactory.UIActionSimulatorYield();
-        }
-
         /// <inheritdoc/>
-        protected override void DisposeUnmanaged()
+        protected override IActionSimulatorHandler CreateHandler()
         {
-            Native.WxOtherFactory.UIActionSimulatorDelete(Handle);
+            return App.Handler.CreateActionSimulatorHandler();
         }
     }
 }
