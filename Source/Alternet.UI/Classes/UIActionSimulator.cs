@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -15,6 +17,9 @@ namespace Alternet.UI
     /// functionality for users, or to drive unit tests by simulating user sessions.
     /// This class currently doesn't work when using Wayland with Linux.
     /// </summary>
+    /// <remarks>
+    /// Only left, right or middle mouse buttons are supported in this class.
+    /// </remarks>
     public class UIActionSimulator : DisposableObject<IntPtr>
     {
         /// <summary>
@@ -80,27 +85,6 @@ namespace Alternet.UI
             /// Key used for command accelerators is pressed.
             /// </summary>
             ModCmd = Control,
-        }
-
-        /// <summary>
-        /// Mouse buttons supported in the <see cref="UIActionSimulator"/>.
-        /// </summary>
-        public enum MouseButton
-        {
-            /// <summary>
-            /// Left mouse button.
-            /// </summary>
-            Left = 1,
-
-            /// <summary>
-            /// Middle mouse button.
-            /// </summary>
-            Middle = 2,
-
-            /// <summary>
-            /// Right mouse button.
-            /// </summary>
-            Right = 3,
         }
 
         /// <summary>
@@ -178,7 +162,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseClick(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseClick(Handle, (int)button);
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseClick(
+                Handle,
+                MouseButtonToIndex(button));
             ExecuteCommand();
             return result;
         }
@@ -190,7 +176,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseDblClick(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseDblClick(Handle, (int)button);
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseDblClick(
+                Handle,
+                MouseButtonToIndex(button));
             ExecuteCommand();
             return result;
         }
@@ -202,7 +190,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseDown(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseDown(Handle, (int)button);
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseDown(
+                Handle,
+                MouseButtonToIndex(button));
             ExecuteCommand();
             return result;
         }
@@ -229,7 +219,7 @@ namespace Alternet.UI
                 y1,
                 x2,
                 y2,
-                (int)button);
+                MouseButtonToIndex(button));
             ExecuteCommand();
             return result;
         }
@@ -248,7 +238,6 @@ namespace Alternet.UI
                 screenLocationDip.Offset(offset.Value.X, offset.Value.Y);
             var screenLocationPixel = control.PixelFromDip(screenLocationDip);
             var result = SendMouseMove(screenLocationPixel);
-            ExecuteCommand();
             return result;
         }
 
@@ -271,7 +260,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool SendMouseUp(MouseButton button = MouseButton.Left)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorMouseUp(Handle, (int)button);
+            var result = Native.WxOtherFactory.UIActionSimulatorMouseUp(
+                Handle,
+                MouseButtonToIndex(button));
             ExecuteCommand();
             return result;
         }
@@ -517,6 +508,21 @@ namespace Alternet.UI
         protected override void DisposeUnmanaged()
         {
             Native.WxOtherFactory.UIActionSimulatorDelete(Handle);
+        }
+
+        private static int MouseButtonToIndex(MouseButton button)
+        {
+            switch (button)
+            {
+                case MouseButton.Left:
+                    return 1;
+                case MouseButton.Middle:
+                    return 2;
+                case MouseButton.Right:
+                    return 3;
+                default:
+                    throw new Exception("Only left, right or middle mouse buttons are supported.");
+            }
         }
     }
 }
