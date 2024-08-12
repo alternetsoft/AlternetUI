@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements extension methods for <see cref="Key"/> and <see cref="Keys"/>.
+    /// Contains static methods and properties related to the keyboard input handling,
+    /// implements extension methods for input related enums and classes.
     /// </summary>
     public static class KeysExtensions
     {
@@ -269,6 +271,75 @@ namespace Alternet.UI
                 result |= ModifierKeys.Shift;
             if ((keys & Keys.Alt) == Keys.Alt)
                 result |= ModifierKeys.Alt;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets whether the specified <see cref="ModifierKeys"/> value
+        /// has <see cref="ModifierKeys.Alt"/> flag.
+        /// </summary>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasAlt(this ModifierKeys modifiers)
+        {
+            return modifiers.HasFlag(ModifierKeys.Alt);
+        }
+
+        /// <summary>
+        /// Gets whether the specified <see cref="ModifierKeys"/> value
+        /// has <see cref="ModifierKeys.Control"/> flag.
+        /// </summary>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasControl(this ModifierKeys modifiers)
+        {
+            return modifiers.HasFlag(ModifierKeys.Control);
+        }
+
+        /// <summary>
+        /// Gets whether the specified <see cref="ModifierKeys"/> value
+        /// has <see cref="ModifierKeys.Shift"/> flag.
+        /// </summary>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasShift(this ModifierKeys modifiers)
+        {
+            return modifiers.HasFlag(ModifierKeys.Shift);
+        }
+
+        /// <summary>
+        /// Gets whether the specified <see cref="ModifierKeys"/> value
+        /// has <see cref="ModifierKeys.Windows"/> flag.
+        /// </summary>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasWindows(this ModifierKeys modifiers)
+        {
+            return modifiers.HasFlag(ModifierKeys.Windows);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="ModifierKeys"/> value
+        /// to <see cref="RawModifierKeys"/> value.
+        /// </summary>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns></returns>
+        public static RawModifierKeys ToRawModifierKeys(this ModifierKeys modifiers)
+        {
+            RawModifierKeys result = RawModifierKeys.None;
+
+            if (modifiers.HasAlt())
+                result |= RawModifierKeys.Alt;
+            if (modifiers.HasControl())
+                result |= RawModifierKeys.Control;
+            if (modifiers.HasShift())
+                result |= RawModifierKeys.Shift;
+            if (modifiers.HasWindows())
+                result |= RawModifierKeys.Windows;
             return result;
         }
 
