@@ -45,10 +45,10 @@ namespace Alternet.UI
         /// pressed with the given keycode.</param>
         /// <returns></returns>
         public virtual bool SendChar(
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
-            var result = Handler.SendChar(keyCode, modifiers);
+            var result = Handler.SendChar(keyCode, modifiers.ToRawModifierKeys());
             return result;
         }
 
@@ -65,10 +65,10 @@ namespace Alternet.UI
         /// not be released (Windows and macOS).
         /// </remarks>
         public virtual bool SendKeyDown(
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
-            var result = Handler.SendKeyDown(keyCode, modifiers);
+            var result = Handler.SendKeyDown(keyCode, modifiers.ToRawModifierKeys());
             return result;
         }
 
@@ -78,8 +78,8 @@ namespace Alternet.UI
         /// <param name="keyCode"></param>
         /// <param name="modifiers"></param>
         public virtual bool SendKey(
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
             var result1 = SendKeyDown(keyCode, modifiers);
             var result2 = SendKeyUp(keyCode, modifiers);
@@ -95,10 +95,10 @@ namespace Alternet.UI
         /// <returns></returns>
         /// <returns></returns>
         public virtual bool SendKeyUp(
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
-            var result = Handler.SendKeyUp(keyCode, modifiers);
+            var result = Handler.SendKeyUp(keyCode, modifiers.ToRawModifierKeys());
             return result;
         }
 
@@ -241,8 +241,8 @@ namespace Alternet.UI
         /// </summary>
         public bool SendCharIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)
                 return false;
@@ -256,8 +256,8 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyDownIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)
                 return false;
@@ -271,8 +271,8 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)
                 return false;
@@ -286,8 +286,8 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyUpIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
-            RawModifierKeys modifiers = RawModifierKeys.None)
+            Key keyCode,
+            ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)
                 return false;

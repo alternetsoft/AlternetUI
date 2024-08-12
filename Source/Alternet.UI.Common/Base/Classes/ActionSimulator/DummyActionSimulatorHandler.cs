@@ -12,19 +12,19 @@ namespace Alternet.UI
     public class DummyActionSimulatorHandler : DisposableObject, IActionSimulatorHandler
     {
         /// <inheritdoc/>
-        public bool SendChar(WxWidgetsKeyCode keyCode, RawModifierKeys modifiers = RawModifierKeys.None)
+        public bool SendChar(Key keyCode, RawModifierKeys modifiers = RawModifierKeys.None)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public bool SendKeyDown(WxWidgetsKeyCode keyCode, RawModifierKeys modifiers = RawModifierKeys.None)
+        public bool SendKeyDown(Key keyCode, RawModifierKeys modifiers = RawModifierKeys.None)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public bool SendKeyUp(WxWidgetsKeyCode keyCode, RawModifierKeys modifiers = RawModifierKeys.None)
+        public bool SendKeyUp(Key keyCode, RawModifierKeys modifiers = RawModifierKeys.None)
         {
             return false;
         }

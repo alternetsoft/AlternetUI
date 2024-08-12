@@ -11,6 +11,8 @@ namespace ControlsSample
     {
         public static bool LogFocusedControl = false;
 
+        public static bool BindConsole = false;
+
         private SplittedTreeAndCards? pageContainer;
         private readonly LogListBox eventsControl;
         private readonly LayoutPanel splitterPanel;
@@ -61,8 +63,13 @@ namespace ControlsSample
             };
 
             eventsControl.BindApplicationLog();
-            ConsoleUtils.BindConsoleOutput();
-            ConsoleUtils.BindConsoleError();
+
+            if (BindConsole)
+            {
+                ConsoleUtils.BindConsoleOutput();
+                ConsoleUtils.BindConsoleError();
+            }
+
             DoInsideLayout(Initialize);
         }
 

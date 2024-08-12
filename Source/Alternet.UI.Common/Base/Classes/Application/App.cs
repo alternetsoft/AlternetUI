@@ -969,6 +969,9 @@ namespace Alternet.UI
             object? prefix = null,
             LogItemKind kind = LogItemKind.Information)
         {
+            if (Terminating)
+                return;
+
             var msg = obj?.ToString();
             if (msg is null || msg.Length == 0)
                 return;
@@ -1115,6 +1118,20 @@ namespace Alternet.UI
         {
             if (Terminating)
                 return;
+
+#if DEBUG
+            if(kind == LogItemKind.Error)
+            {
+            }
+
+            if (kind == LogItemKind.Information)
+            {
+            }
+
+            if (kind == LogItemKind.Warning)
+            {
+            }
+#endif
 
             var msg = obj?.ToString();
 

@@ -30,6 +30,13 @@
     }
   ],
   "build": {
+    "fileMetadata": {
+      "pdf": {
+        "pdf/**/toc.yml": true,
+        "navigation/**/toc.yml": false,
+        "api/**/toc.yml": false
+      },
+    },
     "content": [
       {
         "files": "navigation/**"
@@ -42,6 +49,7 @@
       },
       {
         "files": [
+          "pdf/**/toc.yml",
           "articles/**.md",
           "articles/**/toc.yml",
           "introduction/**.md",
@@ -97,7 +105,8 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-      "pdf": false,
+      "pdf": true,
+      "pdfTocPage": true,
       "_appLogoUrl":"https://www.alternet-ui.com/",
       "_appLogoPath": "images/logo/logo.svg",
       "_appFaviconPath": "images/logo/favicon.ico",
