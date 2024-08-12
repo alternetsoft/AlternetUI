@@ -80,7 +80,7 @@ namespace ControlsSample
                         editor2.Text = string.Empty;
                         simulator.SendKeyIf(
                             ref condition,
-                            WxWidgetsKeyCode.V,
+                            Key.V,
                             Alternet.UI.ModifierKeys.Control);
                         return condition;
                     }

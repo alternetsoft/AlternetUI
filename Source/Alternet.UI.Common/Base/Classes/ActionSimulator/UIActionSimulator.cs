@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// pressed with the given keycode.</param>
         /// <returns></returns>
         public virtual bool SendChar(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             var result = Handler.SendChar(keyCode, modifiers.ToRawModifierKeys());
@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// not be released (Windows and macOS).
         /// </remarks>
         public virtual bool SendKeyDown(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             var result = Handler.SendKeyDown(keyCode, modifiers.ToRawModifierKeys());
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// <param name="keyCode"></param>
         /// <param name="modifiers"></param>
         public virtual bool SendKey(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             var result1 = SendKeyDown(keyCode, modifiers);
@@ -95,7 +95,7 @@ namespace Alternet.UI
         /// <returns></returns>
         /// <returns></returns>
         public virtual bool SendKeyUp(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             var result = Handler.SendKeyUp(keyCode, modifiers.ToRawModifierKeys());
@@ -241,7 +241,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendCharIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)
@@ -256,7 +256,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyDownIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)
@@ -271,7 +271,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)
@@ -286,7 +286,7 @@ namespace Alternet.UI
         /// </summary>
         public bool SendKeyUpIf(
             ref bool condition,
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             ModifierKeys modifiers = ModifierKeys.None)
         {
             if (!condition)

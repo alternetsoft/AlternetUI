@@ -28,7 +28,7 @@ namespace Alternet.UI
         /// pressed with the given keycode.</param>
         /// <returns></returns>
         public virtual bool SendChar(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             RawModifierKeys modifiers = RawModifierKeys.None)
         {
             var result = Native.WxOtherFactory.UIActionSimulatorChar(
@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// not be released (Windows and macOS).
         /// </remarks>
         public virtual bool SendKeyDown(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             RawModifierKeys modifiers = RawModifierKeys.None)
         {
             var result = Native.WxOtherFactory.UIActionSimulatorKeyDown(
@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// <returns></returns>
         /// <returns></returns>
         public virtual bool SendKeyUp(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             RawModifierKeys modifiers = RawModifierKeys.None)
         {
             var result = Native.WxOtherFactory.UIActionSimulatorKeyUp(
@@ -234,9 +234,11 @@ namespace Alternet.UI
             return (int)modifiers;
         }
 
-        private static int KeyCodeToIndex(WxWidgetsKeyCode keyCode)
+        private static int KeyCodeToIndex(Key keyCode)
         {
-            return (int)keyCode;
+            var wxKey = WxKeyboardHandler.KeyAndWxMapping.Convert(keyCode);
+
+            return (int)wxKey;
         }
 
         private static int MouseButtonToIndex(MouseButton button)

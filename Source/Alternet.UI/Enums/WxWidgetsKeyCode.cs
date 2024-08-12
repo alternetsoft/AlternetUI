@@ -321,6 +321,6 @@ namespace Alternet.UI
         LaunchApp1 = LaunchA,
         LaunchApp2 = LaunchB,
 
-        MaxValue = LaunchF,
+        Max = LaunchF,
     };
 }

@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// pressed with the given keycode.</param>
         /// <returns></returns>
         bool SendChar(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             RawModifierKeys modifiers = RawModifierKeys.None);
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// not be released (Windows and macOS).
         /// </remarks>
         bool SendKeyDown(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             RawModifierKeys modifiers = RawModifierKeys.None);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// <returns></returns>
         /// <returns></returns>
         bool SendKeyUp(
-            WxWidgetsKeyCode keyCode,
+            Key keyCode,
             RawModifierKeys modifiers = RawModifierKeys.None);
 
         /// <summary>
