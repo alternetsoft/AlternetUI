@@ -9,6 +9,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>
