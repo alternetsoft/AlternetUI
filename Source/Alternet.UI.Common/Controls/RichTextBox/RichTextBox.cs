@@ -165,12 +165,15 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.GetValue();
+                return base.Text;
             }
 
             set
             {
                 value ??= string.Empty;
+                if (value == Text)
+                    return;
+                base.Text = value;
                 Handler.SetValue(value);
             }
         }

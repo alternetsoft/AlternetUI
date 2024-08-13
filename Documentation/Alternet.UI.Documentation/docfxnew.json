@@ -106,6 +106,7 @@
     "disableGitFeatures": false,
     "globalMetadata": {
       "pdf": true,
+      "pdfCoverPage": "pdf/pdfCoverPage.html",
       "pdfTocPage": true,
       "_appLogoUrl":"https://www.alternet-ui.com/",
       "_appLogoPath": "images/logo/logo.svg",

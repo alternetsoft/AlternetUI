@@ -20,6 +20,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>    
   </PropertyGroup>
 
   <ItemGroup>
