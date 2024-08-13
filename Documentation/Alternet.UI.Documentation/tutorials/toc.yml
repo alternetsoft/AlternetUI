@@ -1,3 +1,5 @@
+pdf: false
+items:
 - name: Hello, World
   href: hello-world/visual-studio/hello-world-visual-studio.md
 - name: Hello, World (Command Line)

@@ -50,6 +50,7 @@
       {
         "files": [
           "pdf/**/toc.yml",
+          "pdf/**/cover.md",
           "articles/**.md",
           "articles/**/toc.yml",
           "introduction/**.md",
@@ -106,6 +107,7 @@
     "disableGitFeatures": false,
     "globalMetadata": {
       "pdf": true,
+      "pdfCoverPage": "pdf/pdfCoverPage.html",
       "pdfTocPage": true,
       "_appLogoUrl":"https://www.alternet-ui.com/",
       "_appLogoPath": "images/logo/logo.svg",

@@ -1,3 +1,5 @@
+pdf: false
+items:
 - name: Debugging with AlterNET UI Sources
   href: debugging-with-alternet-ui-sources/debugging-with-alternet-ui-sources.md
 - name: Using AlterNET UI NuGet Packages
