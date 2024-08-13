@@ -1,3 +1,12 @@
+# 0.9.624 (2024 August 13)
+
+- RichTextBox exception fixed.
+- Generated documentation pdf.
+- UIActionSimulator: use global MouseButton enum.
+- UIActionSimulator: moved to common library and separated from WxWidgets.
+- UIActionSimulator: Use ModifierKeys instead of local KeyModifier enum.
+- UIActionSimulator: Use Key instead of WxWidgetsKeyCode.
+
 # 0.9.623 (2024 August 10)
 
 - Improved native library load error logging.
