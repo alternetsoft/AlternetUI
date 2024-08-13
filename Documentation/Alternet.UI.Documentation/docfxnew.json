@@ -50,7 +50,6 @@
       {
         "files": [
           "pdf/**/toc.yml",
-          "pdf/**/cover.md",
           "articles/**.md",
           "articles/**/toc.yml",
           "introduction/**.md",
