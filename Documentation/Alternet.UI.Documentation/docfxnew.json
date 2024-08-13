@@ -106,7 +106,6 @@
     "disableGitFeatures": false,
     "globalMetadata": {
       "pdf": true,
-      "pdfCoverPage": "pdf/pdfCoverPage.html",
       "pdfTocPage": true,
       "_appLogoUrl":"https://www.alternet-ui.com/",
       "_appLogoPath": "images/logo/logo.svg",
@@ -115,7 +114,7 @@
       "_enableNewTab": false,
 	//"_appName": "AlterNET UI",
       "_appTitle": "AlterNET UI Documentation",
-      "_appFooter": "Copyright (c) 2021-2024 AlterNET Software",
+      "_appFooter": "<span>Download <a href='https://docs.alternet-ui.com/pdf/alternet-ui-manual.pdf'>PDF</a>. Copyright (c) 2021-2024 AlterNET Software</span>",
       "_enableSearch": true
     },
     "sitemap": {

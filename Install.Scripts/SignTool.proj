@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<PropertyGroup>
+
+    <WindowsKitsRoot Condition="'$(WindowsKitsRoot)' == ''">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots', 'KitsRoot10', null, RegistryView.Registry32, RegistryView.Default))</WindowsKitsRoot>
+
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.26100.0\')">$(WindowsKitsRoot)bin\10.0.26100.0\$(Platform)\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.22621.0\')">$(WindowsKitsRoot)bin\10.0.22621.0\$(Platform)\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.19041.0\')">$(WindowsKitsRoot)bin\10.0.19041.0\$(Platform)\</SignToolPath>
+
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.18362.0\')">$(WindowsKitsRoot)bin\10.0.18362.0\$(Platform)\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.17763.0\')">$(WindowsKitsRoot)bin\10.0.17763.0\$(Platform)\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.17134.0\')">$(WindowsKitsRoot)bin\10.0.17134.0\$(Platform)\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.16299.0\')">$(WindowsKitsRoot)bin\10.0.16299.0\$(Platform)\</SignToolPath>
+
+  <SignToolExe>$(SignToolPath)\x64\signtool.exe</SignToolExe>
+</PropertyGroup>
+
+<Import Project="..\Source\Keys\Private.props" Condition="Exists('..\Source\Keys\Private.props')"/>
+
+    <PropertyGroup>
+		<ALTERNET_PFX>$(MSBuildProjectDirectory)\..\Source\Keys\Alternet.pfx</ALTERNET_PFX>
+    </PropertyGroup>
+
+	<Target Name="DotNetNugetSignInfo1"  Condition="'$(VsixSignPassword)'==''">
+		<Message Text="WARNING: NuGet was not signed (no Source\Keys\Private.props with VsixSignPassword)" 
+			Importance="high"/>
+	</Target>
+
+	<Target Name="DotNetNugetSignInfo2" Condition="!Exists('$(ALTERNET_PFX)')">
+		<Message Text="WARNING: NuGet was not signed (no Source\Keys\Alternet.pfx)" Importance="high" />
+	</Target>
+
+	<Target Name="DotNetNugetSignInfo3">
+		<Message Text="SignToolExe: $(SignToolExe)" Importance="high" />
+		<Message Text="WindowsKitsRoot: $(WindowsKitsRoot)" Importance="high" />
+	</Target>
+	
+	<Target Name="DotNetSign">
+			<CallTarget Targets="DotNetNugetSignInfo1;DotNetNugetSignInfo2;DotNetNugetSignInfo3;ExecDotNetNugetSign" />	
+	</Target>
+	
+	<Target Name="ExecDotNetNugetSign" Condition="'$(VsixSignPassword)'!='' and Exists('$(ALTERNET_PFX)')">
+        	<Exec Command="&quot;$(SignToolExe)&quot;" />
+	</Target>
+   
+</Project>
+

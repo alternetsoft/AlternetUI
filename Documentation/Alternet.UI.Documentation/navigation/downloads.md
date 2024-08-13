@@ -4,5 +4,5 @@
 - [Issues](https://github.com/alternetsoft/AlternetUI/issues)
 - [Source Code](https://github.com/alternetsoft/AlternetUI)
 - [Discussions](https://github.com/alternetsoft/AlternetUI/discussions)
-- [Download PDF Manual](~/pdf/alternet-ui-manual.pdf)
+- [Download PDF Manual](https://docs.alternet-ui.com/pdf/alternet-ui-manual.pdf)
 
