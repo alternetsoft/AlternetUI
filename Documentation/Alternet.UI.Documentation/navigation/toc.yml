@@ -8,5 +8,5 @@ items:
   href: ../how-to-guides/toc.yml
 - name: Reference
   href: ../api/toc.yml
-- name: Downloads
+- name: Downloads and Links
   href: downloads.md
