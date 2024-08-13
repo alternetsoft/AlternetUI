@@ -23,27 +23,25 @@
 		<ALTERNET_PFX>$(MSBuildProjectDirectory)\..\Source\Keys\Alternet.pfx</ALTERNET_PFX>
     </PropertyGroup>
 
-	<Target Name="DotNetNugetSignInfo1"  Condition="'$(VsixSignPassword)'==''">
-		<Message Text="WARNING: NuGet was not signed (no Source\Keys\Private.props with VsixSignPassword)" 
-			Importance="high"/>
-	</Target>
-
-	<Target Name="DotNetNugetSignInfo2" Condition="!Exists('$(ALTERNET_PFX)')">
-		<Message Text="WARNING: NuGet was not signed (no Source\Keys\Alternet.pfx)" Importance="high" />
-	</Target>
-
-	<Target Name="DotNetNugetSignInfo3">
+	<Target Name="WriteInfo">
+		<Message Text="DLL: $(DLL_PATH)" Importance="high" />
 		<Message Text="SignToolExe: $(SignToolExe)" Importance="high" />
 		<Message Text="WindowsKitsRoot: $(WindowsKitsRoot)" Importance="high" />
 	</Target>
-	
+
 	<Target Name="DotNetSign">
-			<CallTarget Targets="DotNetNugetSignInfo1;DotNetNugetSignInfo2;DotNetNugetSignInfo3;ExecDotNetNugetSign" />	
+		<CallTarget Targets="WriteInfo" />	
+        	<Exec Command="&quot;$(SignToolExe)&quot; sign /f &quot;$(ALTERNET_PFX)&quot; /p $(VsixSignPassword) /fd sha256 /tr http://timestamp.digicert.com /td SHA256 /v &quot;$(DLL_PATH)&quot;"/>
+	</Target>
+
+	<Target Name="SignVerify">
+		<CallTarget Targets="WriteInfo" />	
+        	<Exec Command="&quot;$(SignToolExe)&quot; verify /v /pa &quot;$(DLL_PATH)&quot;"/>
 	</Target>
 	
-	<Target Name="ExecDotNetNugetSign" Condition="'$(VsixSignPassword)'!='' and Exists('$(ALTERNET_PFX)')">
-        	<Exec Command="&quot;$(SignToolExe)&quot;" />
-	</Target>
-   
 </Project>
 
+
+<!--
+signtool.exe sign /f MyCert.pfx /p <PFX password> /fd sha256 /tr http://timestamp.comodoca.com/?td=sha256 /td sha256 /v yourapp.exe
+-->
