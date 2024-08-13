@@ -8,7 +8,7 @@ set PDF_MANUAL=%SCRIPT_HOME%\site\pdf\toc.pdf
 
 del "%PUBLISH_HOME%\alternet-ui-*.pdf"
 
-copy "%PDF_MANUAL%" "%PUBLISH_HOME%\alternet-ui-0.9.623-Manual-Rev.1.pdf"
+copy "%PDF_MANUAL%" "%PUBLISH_HOME%\alternet-ui-manual.pdf"
 
 
 
