@@ -60,6 +60,17 @@ if (IsCommand("downloadAndUnzip"))
     return;
 }
 
+// Unzip command
+if (IsCommand("unzip"))
+{
+    // -r=unzip Path="e:/file.zip" ExtractTo="e:/ExtractedZip"
+    string filePath = CommandLineArgs.Default.AsString("Path");
+    string extractToPath = CommandLineArgs.Default.AsString("ExtractTo");
+    filePath = Path.GetFullPath(filePath);
+    ZipUtils.Unzip(filePath, extractToPath);
+    return;
+}
+
 // runControlsSample command
 if (IsCommand("runControlsSample"))
 {

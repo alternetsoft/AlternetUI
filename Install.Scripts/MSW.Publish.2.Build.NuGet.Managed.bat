@@ -37,9 +37,6 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 copy "%SOURCE_DIR%\Build\Alternet.UI.Pal\bin\NuGet\*.nupkg" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-copy "%SOURCE_DIR%\Build\Alternet.UI.Pal\bin\NuGet\Alternet.UI.Pal.*.nupkg" "%PackagesPublishDirectory%\Internal.Alternet.UI.Pal.Nuget.zip"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
 :: Build managed packages.
 
 echo ====================================1
@@ -50,9 +47,6 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 :: Publish managed packages.
 
 copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDirectory%"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
-copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDirectory%\Internal.Alternet.UI.Nuget.zip"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.snupkg" "%PackagesPublishDirectory%"
@@ -95,6 +89,14 @@ echo ====================================5
 
 call "MSW.Publish.SubTool.4.Gen.Public.Samples.bat"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+
+echo ====================================5
+
+pushd "%PackagesPublishDirectory%"
+call "%SCRIPT_HOME%\Unzip.All.Nupkg.ps1"
+popd
+
+echo ====================================5
 
 
 exit /b
