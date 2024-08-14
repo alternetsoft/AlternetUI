@@ -16,10 +16,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         private static CommandLineArgs commandLineArgs;
         private static Engine engine;
 
-        /*private static Assembly interfacesUIAssembly;
-        private static Assembly commonUIAssembly;
-        private static Assembly alternetUIAssembly;*/
-
         public static string[] FillSimpleParams(string netVersion, string dllExt = "dll")
         {
             var appFolder = CommonUtils.GetAppFolder();
@@ -46,15 +42,16 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
             result[5] = "html";
 
-            // E:\\source\\AlternetUIApp3\\bin\\Debug\\net6.0\\AlternetUIApp3.dll
             result[6] = $"{simpleAppFolder}bin\\Debug\\{netVersion}\\AlternetUIApp3.{dllExt}";
 
             return result;
         }
 
+        static bool LogToFileEnabled { get; } = File.Exists(@"e:\logToFile.on");
+
         public static void LogToFile(object obj = null)
         {
-            if (!File.Exists(@"e:\logToFile.on"))
+            if (!LogToFileEnabled)
                 return;
 
             var msg = obj?.ToString() ?? string.Empty;
@@ -184,7 +181,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         }
 #endif
 
-        private static string GetUIAssemblyPath(string asmName)
+        internal static string GetUIAssemblyPath(string asmName)
         {
             var uiAssemblyPath =
                 Path.Combine(Path.GetDirectoryName(commandLineArgs.AppPath), asmName);
