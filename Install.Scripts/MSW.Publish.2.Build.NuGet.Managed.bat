@@ -37,6 +37,9 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 copy "%SOURCE_DIR%\Build\Alternet.UI.Pal\bin\NuGet\*.nupkg" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
+copy "%SOURCE_DIR%\Build\Alternet.UI.Pal\bin\NuGet\Alternet.UI.Pal.*.nupkg" "%PackagesPublishDirectory%\Internal.Alternet.UI.Pal.Nuget.zip"
+if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+
 :: Build managed packages.
 
 echo ====================================1
@@ -47,6 +50,9 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 :: Publish managed packages.
 
 copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+
+copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDirectory%\Internal.Alternet.UI.Nuget.zip"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.snupkg" "%PackagesPublishDirectory%"
