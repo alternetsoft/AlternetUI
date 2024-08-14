@@ -35,35 +35,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void Add(TSource from, TDest to)
-        {
-            sourceToDest.Add(from, to);
-            destToSource.Add(to, from);
-        }
+        public override AbstractEnumMapping<TSource, TDest> SourceToDest => sourceToDest;
 
         /// <inheritdoc/>
-        public override void Remove(TSource from)
-        {
-            sourceToDest.Remove(from);
-        }
-
-        /// <inheritdoc/>
-        public override void Remove(TDest to)
-        {
-            destToSource.Remove(to);
-        }
-
-        /// <inheritdoc/>
-        public override TDest Convert(TSource value, TDest defaultValue = default)
-        {
-            return sourceToDest.Convert(value, defaultValue);
-        }
-
-        /// <inheritdoc/>
-        public override TSource Convert(TDest value, TSource defaultValue = default)
-        {
-            return destToSource.Convert(value, defaultValue);
-        }
+        public override AbstractEnumMapping<TDest, TSource> DestToSource => destToSource;
 
         /// <summary>
         /// Creates enum mapping object.

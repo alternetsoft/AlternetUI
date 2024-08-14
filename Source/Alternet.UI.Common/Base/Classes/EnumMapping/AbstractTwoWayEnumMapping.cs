@@ -8,28 +8,44 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Abstract class which extends <see cref="AbstractEnumMapping{TSource,TDest}"/>. It defines
-    /// methods allowing to map values
+    /// methods and properties allowing to map values
     /// of <typeparamref name="TSource"/> enum type
     /// to/from <typeparamref name="TDest"/> enum type.
     /// </summary>
     /// <typeparam name="TSource">Type of source enum.</typeparam>
     /// <typeparam name="TDest">Type of destination enum.</typeparam>
-    public abstract class AbstractTwoWayEnumMapping<TSource, TDest> : AbstractEnumMapping<TSource, TDest>
+    public abstract class AbstractTwoWayEnumMapping<TSource, TDest> : BaseObject
         where TSource : struct, Enum
         where TDest : struct, Enum
     {
         /// <summary>
-        /// Removes dest to source enum mapping.
+        /// Source to destination mapping.
         /// </summary>
-        /// <param name="value"></param>
-        public abstract void Remove(TDest value);
+        public abstract AbstractEnumMapping<TSource, TDest> SourceToDest { get; }
 
         /// <summary>
-        /// Converts enum value from the source type to the destination type.
+        /// Destination to source mapping.
         /// </summary>
-        /// <param name="value">Value to convert.</param>
-        /// <param name="defaultValue">Default value used if mapping not found.</param>
-        /// <returns></returns>
-        public abstract TSource Convert(TDest value, TSource defaultValue = default);
+        public abstract AbstractEnumMapping<TDest, TSource> DestToSource { get; }
+
+        /// <summary>
+        /// Registers two-way mapping.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        public virtual void Add(TSource from, TDest to)
+        {
+            SourceToDest.Add(from, to);
+            DestToSource.Add(to, from);
+        }
+
+        /// <summary>
+        /// Logs enum mappings to file.
+        /// </summary>
+        public virtual void Log()
+        {
+            SourceToDest.Log();
+            DestToSource.Log();
+        }
     }
 }
