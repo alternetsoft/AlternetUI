@@ -1,3 +1,4 @@
+CLS
 ECHO OFF
 
 SETLOCAL EnableDelayedExpansion

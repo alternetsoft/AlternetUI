@@ -18,4 +18,6 @@
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 
+  <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')"/>
+
 </Project>

@@ -31,34 +31,70 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 :: VS 2022
 
 "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -version [17.0,18.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
-set /p FOUND_MSBUILD_PATH_VS_2022= < tmpFile 
+set /p MSBUILD_2022= < tmpFile 
 del tmpFile 
 
 :: Command Line Templates  =========================
 
-echo ==================================== BI4
-echo  Integration\Templates\Alternet.UI.Templates
-dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release /p:WarningLevel=0 "%SOURCE_DIR%\Integration\Templates\Alternet.UI.Templates.csproj"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
-echo ==================================== BI5
-
-dotnet msbuild /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" "%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj"
-
-echo ==================================== BI1
 echo ====================================
+echo Build Alternet.UI.Templates
 echo ====================================
-echo  Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
-"%FOUND_MSBUILD_PATH_VS_2022%" /restore /p:WarningLevel=0  "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+
+set UITemplates=%SOURCE_DIR%\Integration\Templates\Alternet.UI.Templates.csproj
+
+dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release /p:WarningLevel=0 "%UITemplates%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ==================================== BI2
-echo  Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp
-"%FOUND_MSBUILD_PATH_VS_2022%" /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%SOURCE_DIR%\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.csproj"
+::::::::::::::::::::::::::::::::::::::
+
+echo ====================================
+echo Sign Alternet.UI.Templates
+echo ====================================
+
+set NugetSignProj=%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj
+
+dotnet msbuild /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" "%NugetSignProj%"
+
+::::::::::::::::::::::::::::::::::::::
+
+:: echo ====================================
+:: echo Restore Alternet.UI.Integration.VisualStudio
+:: echo ====================================
+
+set IntVSPath=%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio
+set IntVS=%IntVSPath%\Alternet.UI.Integration.VisualStudio.csproj
+
+:: "%MSBUILD_2022%" /restore /p:WarningLevel=0 "%IntVS%"
+:: if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+
+::::::::::::::::::::::::::::::::::::::
+
+echo ====================================
+echo Build Alternet.UI.Integration.UIXmlHostApp
+echo ====================================
+
+set UIXmlHostApp=%SOURCE_DIR%\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.csproj
+
+:: "%MSBUILD_2022%" /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%UIXmlHostApp%"
+
+dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%UIXmlHostApp%"
+
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ==================================== BI3
-echo  Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
-"%FOUND_MSBUILD_PATH_VS_2022%" /restore /t:Clean,Build /p:Configuration=Release;DeployExtension=False /p:WarningLevel=0 "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+::::::::::::::::::::::::::::::::::::::
+
+:: echo ====================================
+:: echo Sign Dlls
+:: echo ====================================
+
+:: call "%SCRIPT_HOME%\SignTools\Sign.Pal.InFolder.bat" %IntVSPath%
+
+::::::::::::::::::::::::::::::::::::::
+
+echo ====================================
+echo Build Alternet.UI.Integration.VisualStudio
+echo ====================================
+
+"%MSBUILD_2022%" /restore /t:Clean,Build /p:Configuration=Release;DeployExtension=False /p:WarningLevel=0 "%IntVS%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
