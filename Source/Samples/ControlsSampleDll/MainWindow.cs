@@ -122,9 +122,9 @@ namespace ControlsSample
             AddPage("DateTime", CreateDateTimePage);
             AddPage("WebBrowser", CreateWebBrowserPage);
             AddPage("Number", CreateNumericInputPage);
-            AddPage("Slider and Progress", CreateSliderAndProgressPage);
+            AddPage("Slider, Progress", CreateSliderAndProgressPage);
             AddPage("Layout", CreateLayoutPage);
-            AddPage("Notify and ToolTip", CreateNotifyIconPage);
+            AddPage("Notify, ToolTip", CreateNotifyIconPage);
             AddPage("TabControl", CreateTabControlPage);
             AddPage("Multimedia", CreateMultimediaPage);
             AddPage("Samples", CreateOtherPage);
