@@ -270,4 +270,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Interfaces\SignDll.proj" />
+
 </Project>

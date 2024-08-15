@@ -55,4 +55,7 @@
       <FileWrites Include="$(ApiInfoXmlFilePath)" />
     </ItemGroup>
   </Target>
+
+  <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\SignDll.proj" />
+
 </Project>

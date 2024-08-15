@@ -25,7 +25,7 @@
     <DllPathForSignTool>$([System.IO.Path]::GetFullPath('$(DllPathForSignTool)'))</DllPathForSignTool>
 
     <SignCommand>&quot;$(SignToolExe)&quot; sign /f &quot;$(ALTERNET_PFX)&quot; /p $(VsixSignPassword) /fd sha256 /tr http://timestamp.digicert.com /td SHA256 /v &quot;$(DllPathForSignTool)&quot;</SignCommand>
-    <SignVerifyCommand>&quot;$(SignToolExe)&quot; verify /v /pa &quot;$(DllPathForSignTool)&quot;</SignVerifyCommand>
+    <SignVerifyCommand>&quot;$(SignToolExe)&quot; verify /q /pa &quot;$(DllPathForSignTool)&quot;</SignVerifyCommand>
 
 </PropertyGroup>
 

@@ -66,6 +66,11 @@
         <Copy SourceFiles="@(NugetPayload_Native_Linux)"
 		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native" />
 
+        <!-- Sign dll, so, dylib  ============================ -->
+
+	<Message Text="Sign Pal libraries" Importance="high" />
+
+	<Exec Command="&quot;$(MSBuildProjectDirectory)\..\..\..\Install.Scripts\SignTools\Sign.Pal.InFolder.bat&quot; &quot;$(NuGetSourceRuntimesDirectoryPath)\&quot;"/>
     </Target>
 <!-- ========================================== -->
     <Target Name="NuGet_Sign"  Condition="Exists($(SignKeyPath)) and '$(VsixSignPassword)' != ''">

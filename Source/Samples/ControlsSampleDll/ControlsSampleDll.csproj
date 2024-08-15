@@ -423,4 +423,10 @@
     </UIXml>
   </ItemGroup>
 
+  <PropertyGroup>
+    <SignToolPath>$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Interfaces\SignDll.proj</SignToolPath>
+  </PropertyGroup>
+
+  <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')"/>
+
 </Project>

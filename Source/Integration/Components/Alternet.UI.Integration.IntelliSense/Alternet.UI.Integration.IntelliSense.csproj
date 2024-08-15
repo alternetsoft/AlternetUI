@@ -14,4 +14,7 @@
     <PackageReference Include="NuGet.Versioning" Version="6.10.1" />
     <PackageReference Include="System.CodeDom" Version="8.0.0" />
   </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Interfaces\SignDll.proj" />
+
 </Project>

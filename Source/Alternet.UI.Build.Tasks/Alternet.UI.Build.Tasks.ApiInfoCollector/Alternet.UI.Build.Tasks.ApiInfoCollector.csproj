@@ -3,13 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <LangVersion>latest</LangVersion>
+    <TargetFrameworks>net8.0</TargetFrameworks>
   </PropertyGroup>
 
-	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net8.0</TargetFrameworks>
-	</PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Interfaces\SignDll.proj" />
 
-	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net8.0</TargetFrameworks>
-	</PropertyGroup>
 </Project>

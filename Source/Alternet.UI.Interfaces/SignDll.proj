@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <DebugMessages>$([System.Convert]::ToBoolean(false))</DebugMessages>
   </PropertyGroup>
 
   <!-- ================================================= -->
-  <Target Name="OutputVars" AfterTargets="AfterBuild" Condition="false">
+  <Target Name="OutputVars" AfterTargets="AfterBuild" Condition="$(DebugMessages)">
     <Message Text="OutDir: $(OutDir)" Importance="high" Condition="true" />
     <Message Text="OutputPath: $(OutputPath)" Importance="high" Condition="true" />
     <Message Text="AssemblyName: $(AssemblyName)" Importance="high" Condition="true" />
@@ -15,19 +16,24 @@
   </Target>
     <!-- ================================================= -->
   <Target Name="SignDll" AfterTargets="AfterBuild"
-          Condition="'$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('..\Keys\Private.props')">
+          Condition="'$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('$(MSBuildThisFileDirectory)\..\Keys\Private.props')">
    
     <PropertyGroup>
       <ThisDllPath>$(MSBuildProjectDirectory)\$(OutDir)\$(AssemblyName).dll</ThisDllPath>
       <ThisDllFullPath>$([System.IO.Path]::GetFullPath('$(ThisDllPath)'))</ThisDllFullPath>
-      <ExistsThisDllPath>Exists($(ThisDllFullPath))</ExistsThisDllPath>
+      <ThisExePath>$(MSBuildProjectDirectory)\$(OutDir)\$(AssemblyName).exe</ThisExePath>
+      <ThisExeFullPath>$([System.IO.Path]::GetFullPath('$(ThisExePath)'))</ThisExeFullPath>
+      <ExistsThisDllPath Condition="Exists($(ThisDllFullPath))">true</ExistsThisDllPath>
+      <ExistsThisExePath Condition="Exists($(ThisExeFullPath))">true</ExistsThisExePath>
+      <SignToolBat>$(MSBuildThisFileDirectory)/../../Install.Scripts/SignTool.bat</SignToolBat>
     </PropertyGroup>
 
-    <Message Text="ThisDllPath: $(ThisDllPath)" Importance="high" Condition="false" />
-    <Message Text="ThisDllFullPath: $(ThisDllFullPath)" Importance="high" Condition="false" />
-    <Message Text="Exists ThisDllFullPath: $(ExistsThisDllPath)" Importance="high" Condition="false" />
+    <Message Text="ThisDllPath: $(ThisDllPath)" Importance="high" Condition="$(DebugMessages)" />
+    <Message Text="ThisDllFullPath: $(ThisDllFullPath)" Importance="high" Condition="$(DebugMessages)" />
+    <Message Text="Exists ThisDllFullPath: $(ExistsThisDllPath)" Importance="high" Condition="$(DebugMessages)" />
+    <Message Text="Exists ThisExeFullPath: $(ExistsThisExePath)" Importance="high" Condition="$(DebugMessages)" />
 
-    <Exec Command="call &quot;$(MSBuildThisFileDirectory)/../../Install.Scripts/SignTool.bat&quot; &quot;$(ThisDllFullPath)&quot;"/>
+    <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisDllFullPath)&quot;" Condition="Exists($(ThisDllFullPath))"/>
   </Target>
   <!-- ================================================= -->
 
