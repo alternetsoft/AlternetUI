@@ -11,7 +11,6 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,35 +25,17 @@
   </ItemGroup>
 
   <!-- ================================================= -->
-  <!-- add exists for private key -->
-  <Target Name="SignDll" AfterTargets="AfterBuild"
-          Condition="'$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('..\Keys\Private.props')">
-   
-    <Message Text="OutDir: $(OutDir)" Importance="high" Condition="false" />
-    <Message Text="OutputPath: $(OutputPath)" Importance="high" Condition="false" />
-    <Message Text="AssemblyName: $(AssemblyName)" Importance="high" Condition="false" />
-    <Message Text="BaseOutputPath: $(BaseOutputPath)" Importance="high" Condition="false" />
-    <Message Text="ModuleAssemblyName: $(ModuleAssemblyName)" Importance="high" Condition="false" />
-    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" Condition="false" />
-    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" Importance="high" Condition="false" />
-
-    <PropertyGroup>
-      <ThisDllPath>$(MSBuildProjectDirectory)\$(OutDir)\$(AssemblyName).dll</ThisDllPath>
-      <ThisDllFullPath>$([System.IO.Path]::GetFullPath('$(ThisDllPath)'))</ThisDllFullPath>
-      <ExistsThisDllPath>false</ExistsThisDllPath>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="Exists($(ThisDllFullPath))">
-      <ExistsThisDllPath>true</ExistsThisDllPath>
-    </PropertyGroup>
-
-    <Message Text="ThisDllPath: $(ThisDllPath)" Importance="high" Condition="false" />
-    <Message Text="ThisDllFullPath: $(ThisDllFullPath)" Importance="high" Condition="false" />
-    <Message Text="Exists ThisDllFullPath: $(ExistsThisDllPath)" Importance="high" Condition="false" />
-
-    <Exec Command="call $(MSBuildThisFileDirectory)/../../Install.Scripts/SignTools/Sign.Alternet.UI.Interfaces.bat"/>
+  <Target Name="OutputVars" AfterTargets="AfterBuild" Condition="false">
+    <Message Text="OutDir: $(OutDir)" Importance="high" Condition="true" />
+    <Message Text="OutputPath: $(OutputPath)" Importance="high" Condition="true" />
+    <Message Text="AssemblyName: $(AssemblyName)" Importance="high" Condition="true" />
+    <Message Text="BaseOutputPath: $(BaseOutputPath)" Importance="high" Condition="true" />
+    <Message Text="ModuleAssemblyName: $(ModuleAssemblyName)" Importance="high" Condition="true" />
+    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" Condition="true" />
+    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" Importance="high" Condition="true" />
   </Target>
-
   <!-- ================================================= -->
+
+  <Import Project="$(MSBuildThisFileDirectory)\SignDll.proj" />
 
 </Project>

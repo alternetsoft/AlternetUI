@@ -1,7 +1,5 @@
 ECHO OFF
 
-ECHO ========================================================
-
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
@@ -13,10 +11,12 @@ set SIGNTOOL=%SCRIPT_HOME%\SignToolVerify.bat
 
 pushd "%PackagesRoot%"
 
-for /R %%f in (*.dll) do call "%SIGNTOOL%" "%%f"
+ECHO ========================================================
+for /R %%f in (Alternet.UI*.dll) do call "%SIGNTOOL%" "%%f"
+ECHO ========================================================
 
 popd
 
-ECHO ========================================================
+
 
 

@@ -94,6 +94,7 @@ echo ====================================5
 
 pushd "%PackagesPublishDirectory%"
 call "%SCRIPT_HOME%\Unzip.All.Nupkg.ps1"
+call "%SCRIPT_HOME%\Unzip.All.Vsix.ps1"
 popd
 
 echo ====================================5

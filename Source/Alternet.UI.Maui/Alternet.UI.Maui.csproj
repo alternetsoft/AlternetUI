@@ -61,4 +61,6 @@
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
   </ItemGroup>
 
+  <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\SignDll.proj" />
+
 </Project>
