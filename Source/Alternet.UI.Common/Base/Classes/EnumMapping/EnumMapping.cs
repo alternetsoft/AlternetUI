@@ -15,7 +15,7 @@ namespace Alternet.UI
         where TSource : struct, Enum
         where TDest : struct, Enum
     {
-        private readonly TDest[] values;
+        private readonly TDest?[] values;
         private readonly int maxValue;
 
         /// <summary>
@@ -30,7 +30,40 @@ namespace Alternet.UI
             else
                 this.maxValue = System.Convert.ToInt32(maxValue.Value);
 
-            values = new TDest[this.maxValue + 1];
+            values = new TDest?[this.maxValue + 1];
+        }
+
+        /// <inheritdoc/>
+        public override void Log(string? logFileName = default)
+        {
+            var stype = typeof(TSource);
+            var dtype = typeof(TDest);
+
+            var prefix = $"Enum mapping from '{stype}' to '{dtype}'";
+
+            App.Log($"{prefix} logged to file");
+
+            LogUtils.LogActionToFile(
+                () =>
+                {
+                    var enumValues = Enum.GetValues(stype).Cast<int>();
+                    foreach (var source in enumValues)
+                    {
+                        var dest = values[source]?.ToString();
+                        var sourceEnum = Enum.GetName(stype, source);
+
+                        if(dest is not null)
+                        {
+                            dest = $"{dtype.Name}.{dest}";
+                        }
+
+                        LogUtils.LogToFile(
+                            $"{stype.Name}.{sourceEnum} => {dest}",
+                            logFileName);
+                    }
+                },
+                prefix,
+                logFileName);
         }
 
         /// <summary>
@@ -51,7 +84,28 @@ namespace Alternet.UI
         public override void Remove(TSource from)
         {
             var intValue = System.Convert.ToInt32(from);
-            values[intValue] = default;
+            values[intValue] = null;
+        }
+
+        /// <inheritdoc/>
+        public override bool HasMapping(TSource value)
+        {
+            if (ConvertOrNull(value) is null)
+                return false;
+            else
+                return true;
+        }
+
+        /// <inheritdoc/>
+        public override TDest? ConvertOrNull(TSource value)
+        {
+            var intValue = System.Convert.ToInt32(value);
+
+            if (intValue < 0 || intValue > maxValue)
+                return null;
+
+            var result = values[intValue];
+            return result;
         }
 
         /// <summary>
@@ -63,17 +117,12 @@ namespace Alternet.UI
         /// <returns></returns>
         public override TDest Convert(TSource value, TDest defaultValue = default)
         {
-            var intValue = System.Convert.ToInt32(value);
+            var result = ConvertOrNull(value);
 
-            if (intValue < 0 || intValue > maxValue)
-                return defaultValue;
-
-            var result = values[intValue];
-
-            if (result.Equals(default))
+            if (result is null)
                 return defaultValue;
             else
-                return result;
+                return result.Value;
         }
     }
 }

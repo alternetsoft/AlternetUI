@@ -31,11 +31,31 @@ namespace Alternet.UI
         public abstract void Remove(TSource from);
 
         /// <summary>
-        /// Converts source enum value to destination enum value.
+        /// Converts source enum value to the destination enum value.
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <param name="defaultValue">Default value used if mapping not found.</param>
         /// <returns></returns>
         public abstract TDest Convert(TSource value, TDest defaultValue = default);
+
+        /// <summary>
+        /// Logs enum mappings to file.
+        /// </summary>
+        public abstract void Log(string? logFileName = default);
+
+        /// <summary>
+        /// Converts source enum value to the destination enum value if mapping exists.
+        /// Returns <c>null</c> if no mapping is specified.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
+        public abstract TDest? ConvertOrNull(TSource value);
+
+        /// <summary>
+        /// Gets whether source to destination mapping is registered.
+        /// </summary>
+        /// <param name="value">Value to check.</param>
+        /// <returns></returns>
+        public abstract bool HasMapping(TSource value);
     }
 }

@@ -90,5 +90,14 @@ echo ====================================5
 call "MSW.Publish.SubTool.4.Gen.Public.Samples.bat"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
+echo ====================================5
+
+pushd "%PackagesPublishDirectory%"
+call "%SCRIPT_HOME%\Unzip.All.Nupkg.ps1"
+call "%SCRIPT_HOME%\Unzip.All.Vsix.ps1"
+popd
+
+echo ====================================5
+
 
 exit /b

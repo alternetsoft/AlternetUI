@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <!-- ================================================= -->
+  <Target Name="OutputVars" AfterTargets="AfterBuild" Condition="false">
+    <Message Text="OutDir: $(OutDir)" Importance="high" Condition="true" />
+    <Message Text="OutputPath: $(OutputPath)" Importance="high" Condition="true" />
+    <Message Text="AssemblyName: $(AssemblyName)" Importance="high" Condition="true" />
+    <Message Text="BaseOutputPath: $(BaseOutputPath)" Importance="high" Condition="true" />
+    <Message Text="ModuleAssemblyName: $(ModuleAssemblyName)" Importance="high" Condition="true" />
+    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" Condition="true" />
+    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" Importance="high" Condition="true" />
+  </Target>
+    <!-- ================================================= -->
+  <Target Name="SignDll" AfterTargets="AfterBuild"
+          Condition="'$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('..\Keys\Private.props')">
+   
+    <PropertyGroup>
+      <ThisDllPath>$(MSBuildProjectDirectory)\$(OutDir)\$(AssemblyName).dll</ThisDllPath>
+      <ThisDllFullPath>$([System.IO.Path]::GetFullPath('$(ThisDllPath)'))</ThisDllFullPath>
+      <ExistsThisDllPath>Exists($(ThisDllFullPath))</ExistsThisDllPath>
+    </PropertyGroup>
+
+    <Message Text="ThisDllPath: $(ThisDllPath)" Importance="high" Condition="false" />
+    <Message Text="ThisDllFullPath: $(ThisDllFullPath)" Importance="high" Condition="false" />
+    <Message Text="Exists ThisDllFullPath: $(ExistsThisDllPath)" Importance="high" Condition="false" />
+
+    <Exec Command="call &quot;$(MSBuildThisFileDirectory)/../../Install.Scripts/SignTool.bat&quot; &quot;$(ThisDllFullPath)&quot;"/>
+  </Target>
+  <!-- ================================================= -->
+
+</Project>

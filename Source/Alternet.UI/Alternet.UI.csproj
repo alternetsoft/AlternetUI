@@ -79,19 +79,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props"
+          Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets"
+          Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml"
+          Visible="false" Pack="True" PackagePath="build" />
 
     <None Include="build\Alternet.UI.props" Visible="false" Pack="True" PackagePath="build" />
     <None Include="build\Alternet.UI.targets" Visible="false" Pack="True" PackagePath="build" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll"
+          Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
 
-    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Pack="True" PackagePath="lib\netstandard2.0" />
-    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Pack="True" PackagePath="lib\netstandard2.0" />
+    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll"
+          Pack="True" PackagePath="lib\netstandard2.0" />
+    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll"
+          Pack="True" PackagePath="lib\netstandard2.0" />
 
   </ItemGroup>
 
@@ -102,7 +108,8 @@
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
-	<ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
+	<ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj"
+                      PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
@@ -118,7 +125,8 @@
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
     <ItemGroup>
       <!-- Filter out unnecessary files -->
-      <_ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
+      <_ReferenceCopyLocalPaths
+        Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
     </ItemGroup>
 
     <!-- Print batches for debug purposes -->
@@ -126,8 +134,11 @@
 
     <ItemGroup>
       <!-- Add file to package with consideration of sub folder. If empty, the root folder is chosen. -->
-      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)" TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)" />
+      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)"
+                            TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)" />
     </ItemGroup>
   </Target>
+
+  <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\SignDll.proj" />
 
 </Project>

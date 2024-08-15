@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Validates text controls and values, providing a variety of filtering behaviours.
     /// </summary>
-    public class ValueValidatorText : ValueValidator, IValueValidatorText
+    internal class ValueValidatorText : ValueValidator, IValueValidatorText
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueValidatorText"/> class.

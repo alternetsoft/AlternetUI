@@ -91,7 +91,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Alternet.UI.Key Convert(Windows.System.VirtualKey key)
         {
-            return VirtualKeyToAlternet.Convert(key);
+            return VirtualKeyToAlternet.SourceToDest.Convert(key);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Windows.System.VirtualKey Convert(Alternet.UI.Key key)
         {
-            return VirtualKeyToAlternet.Convert(key);
+            return VirtualKeyToAlternet.DestToSource.Convert(key);
         }
 
         /// <summary>

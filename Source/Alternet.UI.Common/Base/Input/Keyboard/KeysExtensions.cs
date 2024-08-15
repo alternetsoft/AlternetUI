@@ -232,7 +232,7 @@ namespace Alternet.UI
             if (ikey < 0 || ikey > Keys.OemClear)
                 return Key.None;
 
-            return KeyAndKeysMapping.Convert(ikey);
+            return KeyAndKeysMapping.SourceToDest.Convert(ikey);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Alternet.UI
         /// </summary>
         public static Keys ToKeys(this Key key, ModifierKeys modifiers)
         {
-            var result = KeyAndKeysMapping.Convert(key);
+            var result = KeyAndKeysMapping.DestToSource.Convert(key);
             return result | modifiers.ToKeys();
         }
 

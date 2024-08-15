@@ -1,0 +1,1 @@
+gci -Recurse -Filter *.nupkg |ForEach-Object {Expand-Archive -Path $_.Fullname -DestinationPath $_.BaseName -Force}

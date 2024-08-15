@@ -120,6 +120,7 @@ namespace Alternet.UI
         private static int logUpdateCount;
         private static bool logFileIsEnabled;
         private static App? current;
+        private static string? logFilePath;
 
         private readonly List<Window> windows = new();
         private Window? window;
@@ -315,8 +316,29 @@ namespace Alternet.UI
         /// <remarks>
         /// Default value is exe file path and "Alternet.UI.log" file name.
         /// </remarks>
-        public static string LogFilePath { get; set; } =
-            Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
+        public static string LogFilePath
+        {
+            get
+            {
+                if(logFilePath is null)
+                {
+                    string location;
+
+                    if(App.IsWindowsOS && File.Exists(@"e:\logToFile.on"))
+                        location = @"e:\alternet-ui";
+                    else
+                        location = Assembly.GetExecutingAssembly().Location;
+                    logFilePath = Path.ChangeExtension(location, ".log");
+                }
+
+                return logFilePath;
+            }
+
+            set
+            {
+                logFilePath = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to write all log messages to file.

@@ -73,6 +73,10 @@ namespace Alternet.UI
                     UsePlessCaret = !UsePlessCaret;
                     App.LogNameValue("UsePlessCaret", UsePlessCaret);
                 });
+
+                LogUtils.RegisterLogAction(
+                    "Log mapping: Key <-> WxWidgetsKeyCode",
+                    WxKeyboardHandler.KeyAndWxMapping.Log);
             }
         }
 

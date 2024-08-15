@@ -236,7 +236,7 @@ namespace Alternet.UI
 
         private static int KeyCodeToIndex(Key keyCode)
         {
-            var wxKey = WxKeyboardHandler.KeyAndWxMapping.Convert(keyCode);
+            var wxKey = WxKeyboardHandler.KeyAndWxMapping.DestToSource.Convert(keyCode);
 
             return (int)wxKey;
         }

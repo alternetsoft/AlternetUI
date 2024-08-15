@@ -1,4 +1,5 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <Import Project="..\Version\Version.props" />
   <Import Project="..\Keys\Keys.props" />
 
@@ -22,6 +23,19 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
   </ItemGroup>
-  
+
+  <!-- ================================================= -->
+  <Target Name="OutputVars" AfterTargets="AfterBuild" Condition="false">
+    <Message Text="OutDir: $(OutDir)" Importance="high" Condition="true" />
+    <Message Text="OutputPath: $(OutputPath)" Importance="high" Condition="true" />
+    <Message Text="AssemblyName: $(AssemblyName)" Importance="high" Condition="true" />
+    <Message Text="BaseOutputPath: $(BaseOutputPath)" Importance="high" Condition="true" />
+    <Message Text="ModuleAssemblyName: $(ModuleAssemblyName)" Importance="high" Condition="true" />
+    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" Condition="true" />
+    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" Importance="high" Condition="true" />
+  </Target>
+  <!-- ================================================= -->
+
+  <Import Project="$(MSBuildThisFileDirectory)\SignDll.proj" />
 
 </Project>
