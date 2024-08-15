@@ -29,7 +29,7 @@
 
 </PropertyGroup>
 
-	<Target Name="WriteInfo" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+	<Target Name="WriteInfo" Condition="$([MSBuild]::IsOsPlatform('Windows')) and false">
 		<Message Text="=======================" Importance="high" />
 		<Message Text="SIGNTOOL" Importance="high" />
 		<Message Text="DllPathForSignTool: $(DllPathForSignTool)" Importance="high" />
@@ -41,14 +41,14 @@
 
 	<Target Name="DotNetSign" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<CallTarget Targets="WriteInfo" />	
-		<Message Text="CALL DotNetSign" Importance="high" />
+		<Message Text="Action: Sign" Importance="high" />
 		<Message Text="=======================" Importance="high" />
         	<Exec Command="$(SignCommand)"/>
 	</Target>
 
 	<Target Name="SignVerify" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<CallTarget Targets="WriteInfo" />	
-		<Message Text="CALL SignVerify" Importance="high" />
+		<Message Text="Action: Verify" Importance="high" />
 		<Message Text="=======================" Importance="high" />
                 <Exec Command="$(SignVerifyCommand)"/>
 	</Target>
