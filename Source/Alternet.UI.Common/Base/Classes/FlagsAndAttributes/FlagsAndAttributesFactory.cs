@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Create flags and attributes with integer identifiers.
         /// </summary>
-        public static Func<IFlagsAndAttributes<int, object>> CreateIntFlagsAndAttributes
+        public static Func<IIntFlagsAndAttributes> CreateIntFlagsAndAttributes
         { get; set; } = CreateDefaultIntFlagsAndAttributes;
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace Alternet.UI
         /// Default method to create flags and attributes with integer identifiers.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IFlagsAndAttributes<int, object> CreateDefaultIntFlagsAndAttributes()
+        public static IIntFlagsAndAttributes CreateDefaultIntFlagsAndAttributes()
         {
-            return new FlagsAndAttributes<int, object>();
+            return new IntFlagsAndAttributes();
         }
     }
 }

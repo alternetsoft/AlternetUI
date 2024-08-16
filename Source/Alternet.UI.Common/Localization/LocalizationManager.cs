@@ -14,6 +14,28 @@ namespace Alternet.UI.Localization
     public class LocalizationManager
     {
         /// <summary>
+        /// Gets identifier for the 'ShouldLocalizeToolTip' flag.
+        /// </summary>
+        public static int ShouldLocalizeToolTipIdentifier
+            = shouldLocalizeToolTipIdentifier ??= FlagsFactory.AllocIntIdentifier("ShouldLocalizeToolTip");
+
+        /// <summary>
+        /// Gets identifier for the 'ShouldLocalizeText' flag.
+        /// </summary>
+        public static int ShouldLocalizeTextIdentifier
+            = shouldLocalizeTextIdentifier ??= FlagsFactory.AllocIntIdentifier("ShouldLocalizeText");
+
+        /// <summary>
+        /// Gets identifier for the 'ShouldLocalizeTitle' flag.
+        /// </summary>
+        public static int ShouldLocalizeTitleIdentifier
+            = shouldLocalizeTitleIdentifier ??= FlagsFactory.AllocIntIdentifier("ShouldLocalizeTitle");
+
+        private static int? shouldLocalizeTextIdentifier;
+        private static int? shouldLocalizeTitleIdentifier;
+        private static int? shouldLocalizeToolTipIdentifier;
+
+        /// <summary>
         /// Current localizations for all application strings.
         /// </summary>
         public static LocalizationManager Default { get; set; } = new();

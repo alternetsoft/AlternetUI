@@ -6,6 +6,7 @@ using System.Linq;
 
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -50,6 +51,7 @@ namespace Alternet.UI
         private bool isMouseLeftButtonDown;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
+        private IIntFlagsAndAttributes? intFlagsAndAttributes;
         private MouseEventArgs? dragEventArgs;
         private PointD dragEventMousePos;
         private IComponentDesigner? designer;
@@ -439,7 +441,119 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets custom flags and attributes provider associated with the control.
+        /// Gets custom attributes provider associated with the control.
+        /// You can store any custom data here.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="CustomFlags"/> or <see cref="FlagsAndAttributes"/>
+        /// to get custom flags provider.
+        /// </remarks>
+        [Browsable(false)]
+        public ICustomAttributes<string, object> CustomAttr
+        {
+            get
+            {
+                return FlagsAndAttributes.Attr;
+            }
+        }
+
+        /// <summary>
+        /// Gets attributes provider which allows to
+        /// access items using integer identifiers.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomAttributes<int, object> IntAttr
+        {
+            get
+            {
+                return IntFlagsAndAttributes.Attr;
+            }
+        }        
+
+        /// <summary>
+        /// Gets or sets whether <see cref="Text"/> property should be localizable.
+        /// </summary>
+        public virtual bool IsTextLocalized
+        {
+            get
+            {
+                return IntFlags[LocalizationManager.ShouldLocalizeTextIdentifier];
+            }
+
+            set
+            {
+                IntFlags[LocalizationManager.ShouldLocalizeTextIdentifier] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="ToolTip"/> property should be localizable.
+        /// </summary>
+        public virtual bool IsToolTipLocalized
+        {
+            get
+            {
+                return IntFlags[LocalizationManager.ShouldLocalizeToolTipIdentifier];
+            }
+
+            set
+            {
+                IntFlags[LocalizationManager.ShouldLocalizeToolTipIdentifier] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="Title"/> property should be localizable.
+        /// </summary>
+        public virtual bool IsTitleLocalized
+        {
+            get
+            {
+                return IntFlags[LocalizationManager.ShouldLocalizeTitleIdentifier];
+            }
+
+            set
+            {
+                IntFlags[LocalizationManager.ShouldLocalizeTitleIdentifier] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets flags provider which allows to
+        /// access items using integer identifiers.
+        /// You can store any custom flags here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomIntFlags IntFlags
+        {
+            get
+            {
+                return IntFlagsAndAttributes;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets flags and attributes provider which allows to
+        /// access items using integer identifiers.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IIntFlagsAndAttributes IntFlagsAndAttributes
+        {
+            get
+            {
+                return intFlagsAndAttributes ??= FlagsAndAttributesFactory.CreateIntFlagsAndAttributes();
+            }
+
+            set
+            {
+                intFlagsAndAttributes = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets custom flags and attributes provider associated with the control.
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
@@ -458,10 +572,20 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets custom flags provider associated with the control.
-        /// You can store any custom data here.
+        /// You can store any custom flags here.
         /// </summary>
+        /// <remarks>
+        /// Use <see cref="CustomAttr"/> or <see cref="FlagsAndAttributes"/>
+        /// to get custom attributes provider.
+        /// </remarks>
         [Browsable(false)]
-        public ICustomFlags<string> CustomFlags => FlagsAndAttributes.Flags;
+        public ICustomFlags<string> CustomFlags
+        {
+            get
+            {
+                return FlagsAndAttributes.Flags;
+            }
+        }
 
         /// <summary>
         /// Gets or sets cached data for the layout engine.
@@ -482,13 +606,6 @@ namespace Alternet.UI
             get;
             set;
         }
-
-        /// <summary>
-        /// Gets custom attributes provider associated with the control.
-        /// You can store any custom data here.
-        /// </summary>
-        [Browsable(false)]
-        public ICustomAttributes<string, object> CustomAttr => FlagsAndAttributes.Attr;
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in

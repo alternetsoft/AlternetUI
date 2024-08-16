@@ -12,7 +12,7 @@ namespace Alternet.UI
     {
         private static readonly AdvDictionary<string, int> IntIdentifiers = new();
 
-        private static int intIdentifierCounter = 0;
+        private static int intIdentifierCounter = 10000;
 
         /// <summary>
         /// Creates <see cref="ICustomFlags"/> implementation.
