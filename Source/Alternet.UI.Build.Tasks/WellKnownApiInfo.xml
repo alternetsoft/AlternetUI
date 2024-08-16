@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI, Version=0.9.623.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI, Version=0.9.624.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="Alternet.Drawing.WxControlPainterHandler">
       <Event Name="Disposed" />
     </Type>
@@ -8,16 +8,11 @@
     <Type Name="Alternet.UI.Application">
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.UIActionSimulator">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.ValueValidator">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.ValueValidatorText">
-      <Event Name="Disposed" />
-    </Type>
+    <Type Name="Alternet.UI.WxWidgetsKeyCode" />
     <Type Name="Alternet.UI.WxApplicationHandler">
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.WxKeyboardHandler">
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.Drawing.WxControlPainterHandler+DrawFlags" />
@@ -26,7 +21,5 @@
     <Type Name="Alternet.Drawing.WxControlPainterHandler+ControlPartKind" />
     <Type Name="Alternet.Drawing.WxControlPainterHandler+HeaderButtonParams" />
     <Type Name="Alternet.Drawing.WxControlPainterHandler+DrawItemParams" />
-    <Type Name="Alternet.UI.UIActionSimulator+KeyModifier" />
-    <Type Name="Alternet.UI.UIActionSimulator+MouseButton" />
   </Assembly>
 </ApiInfo>
