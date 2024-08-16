@@ -1183,7 +1183,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <returns></returns>
-        public virtual ICustomAttributes? GetToolCustomAttr(ObjectUniqueId id)
+        public virtual ICustomAttributes<string, object>? GetToolCustomAttr(ObjectUniqueId id)
         {
             var item = GetToolControl(id);
             if (item is null)
@@ -1196,7 +1196,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <returns></returns>
-        public virtual ICustomFlags? GetToolCustomFlags(ObjectUniqueId id)
+        public virtual ICustomFlags<string>? GetToolCustomFlags(ObjectUniqueId id)
         {
             var item = GetToolControl(id);
             if (item is null)

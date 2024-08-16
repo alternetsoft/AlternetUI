@@ -49,7 +49,7 @@ namespace Alternet.UI
         {
             get
             {
-                return flagsAndAttributes ??= Factory.CreateFlagsAndAttributes();
+                return flagsAndAttributes ??= FlagsAndAttributesFactory.Create();
             }
 
             set
@@ -63,13 +63,13 @@ namespace Alternet.UI
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
-        public ICustomFlags CustomFlags => FlagsAndAttributes.Flags;
+        public ICustomFlags<string> CustomFlags => FlagsAndAttributes.Flags;
 
         /// <summary>
         /// Gets custom attributes provider associated with the item.
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
-        public ICustomAttributes CustomAttr => FlagsAndAttributes.Attr;
+        public ICustomAttributes<string, object> CustomAttr => FlagsAndAttributes.Attr;
     }
 }

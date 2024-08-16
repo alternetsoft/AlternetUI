@@ -50,7 +50,7 @@ namespace Alternet.UI
         public BaseXmlException(string message, Exception innerException, int lineNumber, int linePosition)
             : base(message, innerException, lineNumber, linePosition)
         {
-            var attr = Factory.CreateAttributes();
+            var attr = AttributesFactory.Create();
             attr["LineNumber"] = lineNumber;
             attr["LinePosition"] = linePosition;
             BaseException.RaiseExceptionCreated(this, message, innerException, attr);

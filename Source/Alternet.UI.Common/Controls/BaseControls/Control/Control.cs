@@ -447,7 +447,7 @@ namespace Alternet.UI
         {
             get
             {
-                return flagsAndAttributes ??= Factory.CreateFlagsAndAttributes();
+                return flagsAndAttributes ??= FlagsAndAttributesFactory.Create();
             }
 
             set
@@ -461,7 +461,7 @@ namespace Alternet.UI
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
-        public ICustomFlags CustomFlags => FlagsAndAttributes.Flags;
+        public ICustomFlags<string> CustomFlags => FlagsAndAttributes.Flags;
 
         /// <summary>
         /// Gets or sets cached data for the layout engine.
@@ -488,7 +488,7 @@ namespace Alternet.UI
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
-        public ICustomAttributes CustomAttr => FlagsAndAttributes.Attr;
+        public ICustomAttributes<string, object> CustomAttr => FlagsAndAttributes.Attr;
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in

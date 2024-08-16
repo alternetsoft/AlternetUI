@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
     /// <summary>
     /// Contains methods and properties which allow to get readonly access to flags.
     /// </summary>
-    public interface IReadOnlyCustomFlags
+    /// <typeparam name="TKey">Type of the flag identifier.</typeparam>
+    public interface IReadOnlyFlags<TKey>
     {
         /// <summary>
         /// Calls <see cref="HasFlag"/>.
         /// </summary>
-        /// <param name="name">Flag name.</param>
+        /// <param name="id">Flag identifier.</param>
         /// <returns></returns>
-        bool this[string name] { get; }
+        bool this[TKey id] { get; }
 
         /// <summary>
-        /// Flag with <paramref name="name"/> was added.
+        /// Flag with <paramref name="id"/> was added.
         /// </summary>
-        /// <param name="name">Flag name.</param>
+        /// <param name="id">Flag identifier.</param>
         /// <returns><c>true</c> if flag was added; <c>false</c> otherwise.</returns>
-        bool HasFlag(string name);
+        bool HasFlag(TKey id);
     }
 }
