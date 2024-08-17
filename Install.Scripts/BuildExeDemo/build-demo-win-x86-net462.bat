@@ -1,1 +1,1 @@
-:: This script will build exe demo
+call build-demo-win-xxx.bat net462 x86 alternet-ui-demo-win-x86-net462

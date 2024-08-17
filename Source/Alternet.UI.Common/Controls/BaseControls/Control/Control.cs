@@ -469,7 +469,7 @@ namespace Alternet.UI
             {
                 return IntFlagsAndAttributes.Attr;
             }
-        }        
+        }
 
         /// <summary>
         /// Gets or sets whether <see cref="Text"/> property should be localizable.
