@@ -43,6 +43,7 @@ are required.
 
 <b>STEP 1.</b> Windows Machine Setup:
 
+- Windows 7 or newer is supported.
 - Install Visual Studio 2022 Version 17.8.0 or later, with C# Desktop development, C++ Desktop development workloads, 
 VS Extenstion Development installed. Net 8.0, 6.0, 7.0, 4.62, 4.81 targeting packs are required.
 - Clone the AlterNET UI repo.
