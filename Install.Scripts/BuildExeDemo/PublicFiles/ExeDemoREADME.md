@@ -5,12 +5,12 @@ for your cross-platform desktop application. Be native on the desktop, whether i
 
 Executable demo platforms:
 
-- <b>alternet-ui-demo-win-x64-net8</b>. Demo for Windows 64 bit using Net 8.0 platform.
-- <b>alternet-ui-demo-win-x64-net462</b>. Demo for Windows 64 bit using Net 4.62 platform.
-- <b>alternet-ui-demo-win-x86-net8</b>. Demo for Windows 32 bit using Net 8.0 platform.
-- <b>alternet-ui-demo-win-x86-net462</b>. Demo for Windows 32 bit using Net 4.62 platform.
-- <b>alternet-ui-demo-macos-x64</b>. Demo for MacOs 10.15 or newer.
-- <b>alternet-ui-demo-ubuntu-x64</b>. Demo for Ubuntu 23.10 or newer.
+- <b>alternet-ui-demo-win-x64-net8</b>. Demo for Windows 10 Build 1607 (64 bit) or newer using Net 8.0 platform.
+- <b>alternet-ui-demo-win-x86-net8</b>. Demo for Windows 10 Build 1607 (32 bit) or newer using Net 8.0 platform.
+- <b>alternet-ui-demo-win-x64-net462</b>. Demo for Windows 7 (64 bit) or newer using Net 4.62 platform.
+- <b>alternet-ui-demo-win-x86-net462</b>. Demo for Windows 7 (32 bit) or newer using Net 4.62 platform.
+- <b>alternet-ui-demo-macos-x64</b>. Demo for MacOs 10.15 (64 bit) or newer.
+- <b>alternet-ui-demo-ubuntu-x64</b>. Demo for Ubuntu 23.10 (64 bit) or newer.
 
 Before running demo on Ubuntu, you need to run 'Ubuntu.Install.Packages.sh' script. It installs required packages.
 
@@ -22,3 +22,10 @@ Links:
 - [Source Code](https://github.com/alternetsoft/AlternetUI)
 - [Discussions](https://github.com/alternetsoft/AlternetUI/discussions)
 - [Download PDF Manual](https://docs.alternet-ui.com/pdf/alternet-ui-manual.pdf)
+
+Net Framework Download Links:
+
+- [net 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [net 4.81](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
+- [net 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+- [net 4.62](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
