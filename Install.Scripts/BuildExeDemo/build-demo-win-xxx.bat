@@ -28,6 +28,7 @@ set CLEAN_PROJECT=%SCRIPT_HOME%\..\Tools\CleanProject.bat
 set PUBLISH_FOLDER_PARENT=%ALTERNET_HOME%\Publish\Packages
 set PUBLISH_FOLDER=%PUBLISH_FOLDER_PARENT%\%DEMO_NAME%
 set PUBLISH_ZIP=%PUBLISH_FOLDER%.zip
+set VersionToolProject=%SOURCE_HOME%\Tools\Versioning\Alternet.UI.VersionTool.Cli\Alternet.UI.VersionTool.Cli.csproj
 
 call "%CLEAN_PROJECT%" "%DEMO_HOME%"
 
@@ -59,6 +60,31 @@ rmdir /s /q arm
 rmdir /s /q arm64
 rmdir /s /q musl-x64
 
+if "%PLATFORM%"=="x86" goto LABEL_PLATFORM_X86
+if "%PLATFORM%"=="x64" goto LABEL_PLATFORM_X64
+goto CONTINUE1
+
+:::::::::::::::::::::::::::
+
+:LABEL_PLATFORM_X86
+
+rmdir /s /q x64
+rmdir /s /q runtimes\win-x64
+goto CONTINUE1
+
+:::::::::::::::::::::::::::
+
+:LABEL_PLATFORM_X64
+
+rmdir /s /q x86
+rmdir /s /q runtimes\win-x86
+
+:::::::::::::::::::::::::::
+
+:CONTINUE1
+
+:::::::::::::::::::::::::::
+
 del *.pdb
 popd
 
@@ -68,6 +94,9 @@ pushd %PUBLISH_FOLDER_PARENT%
 del %DEMO_NAME%.zip
 
 "C:\Program Files\7-Zip\7z" a -tzip -r %DEMO_NAME% "%DEMO_NAME%\*"
+
+dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%DEMO_NAME%.zip"
+
 popd
 
 if not !ERRORLEVEL! EQU 0 (
