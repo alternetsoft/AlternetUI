@@ -46,6 +46,8 @@ call %SIGN_EXE_IN_FOLDER% %DEMO_HOME_BIN%
 
 xcopy "%DEMO_HOME_BIN_RELEASE%\%FRAMEWORK%" "%PUBLISH_FOLDER%" /s /e
 
+copy %SCRIPT_HOME%\PublicFiles\ExeDemoREADME.md %PUBLISH_FOLDER%\README.md
+
 pushd "%PUBLISH_FOLDER%"
 del Alternet.UI.xml
 del Alternet.UI.Common.xml
