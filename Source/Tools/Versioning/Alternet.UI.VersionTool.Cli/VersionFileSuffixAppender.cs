@@ -21,16 +21,33 @@ namespace VersionTool.Cli
 
         public static void AppendVersionSuffix(Repository repository, Options options)
         {
-            var filePath = options.FilePath;
-            if (!File.Exists(filePath))
+            var filePath = options.FilePath.TrimEnd('\\', '/');
+            var isFile = File.Exists(filePath);
+            var isFolder = Directory.Exists(filePath);
+
+            if (!isFile && !isFolder)
                 throw new FileNotFoundException(filePath);
 
             var version = VersionService.GetVersion(repository);
             var suffix = "-" + version.GetPackageVersion(VersionService.GetBuildNumber(repository));
+
             var newName = Path.Combine(
                 Path.GetDirectoryName(filePath) ?? throw new Exception(),
                 Path.GetFileNameWithoutExtension(filePath) + suffix + Path.GetExtension(filePath));
-            File.Move(filePath, newName);
+
+            if (isFile)
+            {
+                if(File.Exists(newName))
+                    File.Delete(newName);
+                File.Move(filePath, newName);
+            }
+            else
+            if (isFolder)
+            {
+                if (Directory.Exists(newName))
+                    Directory.Delete(newName, true);
+                Directory.Move(filePath, newName);
+            }
         }
     }
 }

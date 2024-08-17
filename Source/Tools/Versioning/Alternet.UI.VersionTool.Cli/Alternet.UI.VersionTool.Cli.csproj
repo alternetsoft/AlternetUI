@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
     <ProjectReference Include="..\Alternet.UI.Versioning\Alternet.UI.Versioning.csproj" />
   </ItemGroup>
 
