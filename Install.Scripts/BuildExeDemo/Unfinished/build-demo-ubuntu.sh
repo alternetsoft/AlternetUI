@@ -1,0 +1,1 @@
+# This script will build exe demo

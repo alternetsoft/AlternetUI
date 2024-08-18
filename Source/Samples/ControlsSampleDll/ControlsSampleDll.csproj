@@ -2,12 +2,13 @@
   <Import Project="..\CommonData\TargetFrameworks.props" />
 
   <PropertyGroup>
-    <Platforms>AnyCPU;x64</Platforms>
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <UseStyleCop>false</UseStyleCop>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <IncludeSymbols>true</IncludeSymbols>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>
@@ -119,6 +120,17 @@
     <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
     <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
     <None Remove="Resources\Logo16x16.png" />
+    <None Remove="SkiaSharpMedia\adobe-dng.dng" />
+    <None Remove="SkiaSharpMedia\animated-heart.gif" />
+    <None Remove="SkiaSharpMedia\baboon.png" />
+    <None Remove="SkiaSharpMedia\baby_tux.webp" />
+    <None Remove="SkiaSharpMedia\color-wheel.png" />
+    <None Remove="SkiaSharpMedia\content-font.ttf" />
+    <None Remove="SkiaSharpMedia\embedded-font.ttf" />
+    <None Remove="SkiaSharpMedia\logos.svg" />
+    <None Remove="SkiaSharpMedia\LottieLogo1.json" />
+    <None Remove="SkiaSharpMedia\nine-patch.png" />
+    <None Remove="SkiaSharpMedia\opacity.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -284,70 +296,51 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
     <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
-    <ProjectReference Include="..\SkiaSharpSampleDll\SkiaSharpSampleDll.csproj" />
   </ItemGroup>
 
   <!-- ================================================ -->
   
   <ItemGroup>
-    <IncludeFolders Include="DragAndDropSample"/>
+    <IncludeFolders Include="DragAndDropSample" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\CommonDialogsSample\CommonDialogsWindow.uixml.cs"
-             Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml.cs" />
-    <UIXml Include="..\CommonDialogsSample\CommonDialogsWindow.uixml"
-           Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml" />
+    <Compile Include="..\CommonDialogsSample\CommonDialogsWindow.uixml.cs" Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml.cs" />
+    <UIXml Include="..\CommonDialogsSample\CommonDialogsWindow.uixml" Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\DragAndDropSample\DragAndDropWindow.uixml.cs"
-             Link="Links\DragAndDropSample\DragAndDropWindow.uixml.cs" />
-    <None Include="..\DragAndDropSample\DragAndDropWindow.uixml"
-           Link="Links\DragAndDropSample\DragAndDropWindow.uixml" />
-    <UIXml Include="..\DragAndDropSample\DragAndDropWindow.uixml"
-           Link="Links\DragAndDropSample\DragAndDropWindow.uixml" />
+    <Compile Include="..\DragAndDropSample\DragAndDropWindow.uixml.cs" Link="Links\DragAndDropSample\DragAndDropWindow.uixml.cs" />
+    <None Include="..\DragAndDropSample\DragAndDropWindow.uixml" Link="Links\DragAndDropSample\DragAndDropWindow.uixml" />
+    <UIXml Include="..\DragAndDropSample\DragAndDropWindow.uixml" Link="Links\DragAndDropSample\DragAndDropWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\InputSample\KeyboardInputWindow.uixml.cs"
-             Link="Links\InputSample\KeyboardInputWindow.uixml.cs" />
-    <Compile Include="..\InputSample\MouseInputWindow.uixml.cs"
-             Link="Links\InputSample\MouseInputWindow.uixml.cs" />
-    <UIXml Include="..\InputSample\KeyboardInputWindow.uixml"
-           Link="Links\InputSample\KeyboardInputWindow.uixml" />
-    <UIXml Include="..\InputSample\MouseInputWindow.uixml"
-           Link="Links\InputSample\MouseInputWindow.uixml" />
+    <Compile Include="..\InputSample\KeyboardInputWindow.uixml.cs" Link="Links\InputSample\KeyboardInputWindow.uixml.cs" />
+    <Compile Include="..\InputSample\MouseInputWindow.uixml.cs" Link="Links\InputSample\MouseInputWindow.uixml.cs" />
+    <UIXml Include="..\InputSample\KeyboardInputWindow.uixml" Link="Links\InputSample\KeyboardInputWindow.uixml" />
+    <UIXml Include="..\InputSample\MouseInputWindow.uixml" Link="Links\InputSample\MouseInputWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs"
-             Link="Links\PrintingSample\PrintingMainWindow.uixml.cs" />
-    <None Include="..\PrintingSample\PrintingMainWindow.uixml"
-           Link="Links\PrintingSample\PrintingMainWindow.uixml" />
-    <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"
-           Link="Links\PrintingSample\PrintingMainWindow.uixml" />
+    <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs" Link="Links\PrintingSample\PrintingMainWindow.uixml.cs" />
+    <None Include="..\PrintingSample\PrintingMainWindow.uixml" Link="Links\PrintingSample\PrintingMainWindow.uixml" />
+    <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml" Link="Links\PrintingSample\PrintingMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\ThreadingSample\ThreadingMainWindow.uixml.cs"
-             Link="Links\ThreadingSample\ThreadingMainWindow.uixml.cs" />
-    <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml"
-           Link="Links\ThreadingSample\ThreadingMainWindow.uixml" />
+    <Compile Include="..\ThreadingSample\ThreadingMainWindow.uixml.cs" Link="Links\ThreadingSample\ThreadingMainWindow.uixml.cs" />
+    <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml" Link="Links\ThreadingSample\ThreadingMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs"
-             Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs" />
-    <UIXml Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml"
-           Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml" />
+    <Compile Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs" Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml.cs" />
+    <UIXml Include="..\WindowPropertiesSample\WindowPropertiesWindow.uixml" Link="Links\WindowPropertiesSample\WindowPropertiesWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\EmployeeFormSample\EmployeeMainWindow.uixml.cs"
-             Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml.cs" />
-    <UIXml Include="..\EmployeeFormSample\EmployeeMainWindow.uixml"
-           Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml" />
+    <Compile Include="..\EmployeeFormSample\EmployeeMainWindow.uixml.cs" Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml.cs" />
+    <UIXml Include="..\EmployeeFormSample\EmployeeMainWindow.uixml" Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -360,10 +353,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\ExplorerUISample\ExplorerMainWindow.uixml.cs"
-             Link="Links\ExplorerUISample\ExplorerMainWindow.uixml.cs" />
-    <UIXml Include="..\ExplorerUISample\ExplorerMainWindow.uixml"
-           Link="Links\ExplorerUISample\ExplorerMainWindow.uixml" />
+    <Compile Include="..\ExplorerUISample\ExplorerMainWindow.uixml.cs" Link="Links\ExplorerUISample\ExplorerMainWindow.uixml.cs" />
+    <UIXml Include="..\ExplorerUISample\ExplorerMainWindow.uixml" Link="Links\ExplorerUISample\ExplorerMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -423,10 +414,24 @@
     </UIXml>
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="SkiaSharpMedia\adobe-dng.dng" />
+    <EmbeddedResource Include="SkiaSharpMedia\animated-heart.gif" />
+    <EmbeddedResource Include="SkiaSharpMedia\baboon.png" />
+    <EmbeddedResource Include="SkiaSharpMedia\baby_tux.webp" />
+    <EmbeddedResource Include="SkiaSharpMedia\color-wheel.png" />
+    <EmbeddedResource Include="SkiaSharpMedia\content-font.ttf" />
+    <EmbeddedResource Include="SkiaSharpMedia\embedded-font.ttf" />
+    <EmbeddedResource Include="SkiaSharpMedia\logos.svg" />
+    <EmbeddedResource Include="SkiaSharpMedia\LottieLogo1.json" />
+    <EmbeddedResource Include="SkiaSharpMedia\nine-patch.png" />
+    <EmbeddedResource Include="SkiaSharpMedia\opacity.svg" />
+  </ItemGroup>
+
   <PropertyGroup>
     <SignToolPath>$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Interfaces\SignDll.proj</SignToolPath>
   </PropertyGroup>
 
-  <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')"/>
+  <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')" />
 
 </Project>

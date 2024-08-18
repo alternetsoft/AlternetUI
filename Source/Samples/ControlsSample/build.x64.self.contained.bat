@@ -1,1 +1,0 @@
-dotnet build --self-contained --runtime win-x64 --configuration Release

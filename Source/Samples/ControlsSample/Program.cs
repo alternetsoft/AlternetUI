@@ -10,9 +10,6 @@ namespace ControlsSample
     {
         public static void InitSamples()
         {
-            if(!App.IsLinuxOS)
-                InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
-
             PropertyGridSample.MainWindow.LimitedTypesStatic.Add(
                 typeof(PropertyGridSample.ControlPainterPreview));
 

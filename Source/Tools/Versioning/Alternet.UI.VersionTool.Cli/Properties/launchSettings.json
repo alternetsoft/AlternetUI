@@ -6,7 +6,7 @@
     },
     "append-version-suffix": {
       "commandName": "Project",
-      "commandLineArgs": "append-version-suffix C:\\Temp\\myfile.txt"
+      "commandLineArgs": "append-version-suffix E:\\DIMA\\AlternetUI\\Install.Scripts\\BuildExeDemo\\\\..\\..\\\\Publish\\Packages\\alternet-ui-demo-win-x64-net8"
     },
     "generate-public-commit-message": {
       "commandName": "Project",

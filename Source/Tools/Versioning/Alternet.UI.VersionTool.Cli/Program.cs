@@ -3,6 +3,8 @@ using CommandLine;
 using System;
 using System.IO;
 
+using Alternet.UI;
+
 namespace VersionTool.Cli
 {
     internal class Program
@@ -18,16 +20,20 @@ namespace VersionTool.Cli
                     PublicCommitMessageGenerator.Options,
                     VersionStdoutWriter.Options>(args)
                   .MapResult(
-                    (BuildNumberSetter.Options o) => { BuildNumberSetter.SetBuildNumber(repository, o); return 0; },
-                    (VersionFileSuffixAppender.Options o) => { VersionFileSuffixAppender.AppendVersionSuffix(repository, o); return 0; },
-                    (PublicCommitMessageGenerator.Options o) => { PublicCommitMessageGenerator.Generate(repository, o); return 0; },
-                    (VersionStdoutWriter.Options o) => { VersionStdoutWriter.Write(repository); return 0; },
+                    (BuildNumberSetter.Options o)
+                        => { BuildNumberSetter.SetBuildNumber(repository, o); return 0; },
+                    (VersionFileSuffixAppender.Options o)
+                        => { VersionFileSuffixAppender.AppendVersionSuffix(repository, o); return 0; },
+                    (PublicCommitMessageGenerator.Options o)
+                        => { PublicCommitMessageGenerator.Generate(repository, o); return 0; },
+                    (VersionStdoutWriter.Options o)
+                        => { VersionStdoutWriter.Write(repository); return 0; },
                     errors => 0);
             }
             catch (Exception e)
             {
                 Console.Write(e.ToString());
-                //throw; // !! Uncomment this in order to debug
+                // throw; // !! Uncomment this in order to debug
                 return 1;
             }
 
@@ -36,11 +42,19 @@ namespace VersionTool.Cli
 
         private static Repository LocateRepository()
         {
+            var uiFolder = Path.Combine(CommonUtils.GetUIFolder("Tools") ?? string.Empty, "..\\..");
+            uiFolder = Path.GetFullPath(uiFolder);
+            return new Repository(uiFolder);
+
+            /*
+            var asmLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
             var repoRoot = Path.Combine(
-                Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? throw new Exception(),
+                Path.GetDirectoryName(asmLocation) ?? throw new Exception(),
                 "../../../../../../../");
 
-            return new Repository(repoRoot);
+            repoRoot = Path.GetFullPath(repoRoot);
+            */
         }
     }
 }

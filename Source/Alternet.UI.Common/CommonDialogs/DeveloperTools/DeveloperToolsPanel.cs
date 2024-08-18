@@ -81,6 +81,8 @@ namespace Alternet.UI
             InitActions();
 
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
+
+            LogUtils.LogVersion();
         }
 
         public static DeveloperToolsPanel? DevPanel => devToolsWindow?.DevPanel;
@@ -268,8 +270,8 @@ namespace Alternet.UI
         {
             if (sender is not IPropertyGridItem item)
                 return;
-            var type = item.FlagsAndAttributes.Attr.GetAttribute<Type?>("InstanceType");
-            var eventInfo = item.FlagsAndAttributes.Attr.GetAttribute<EventInfo?>("EventInfo");
+            var type = item.FlagsAndAttributes.Attr.GetAttribute<Type>("InstanceType");
+            var eventInfo = item.FlagsAndAttributes.Attr.GetAttribute<EventInfo>("EventInfo");
             var value = item.Owner.GetPropertyValueAsBool(item);
             LogUtils.SetEventLogged(type, eventInfo, value);
         }

@@ -70,6 +70,10 @@ namespace ControlsSample
                 Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
             */
 
+
+            if (!App.IsLinuxOS)
+                InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
+
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
             AddIfDebug("Test Page", () => new SkiaDrawingWindow());
             Add("Preview File Sample", () => new PreviewSample.PreviewSampleWindow());

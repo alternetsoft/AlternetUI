@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Alternet.UI.Build.Tasks.ApiInfoCollector": {
+      "commandName": "Project",
+      "commandLineArgs": "Alternet.UI.Common.dll e:\\output.xml"
+    }
+  }
+}

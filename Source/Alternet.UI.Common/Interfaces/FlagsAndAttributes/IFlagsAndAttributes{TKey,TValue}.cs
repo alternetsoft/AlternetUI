@@ -7,22 +7,25 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains methods which allo to work with readonly flags and attributes.
+    /// Contains methods which allow to work with flags and attributes.
     /// </summary>
     /// <remarks>
     /// Both flags and attributes share the same dictionary, so you can't have
     /// flag and attribute with the same name.
     /// </remarks>
-    public interface IReadOnlyFlagsAndAttributes : IReadOnlyCustomFlags, IReadOnlyCustomAttributes
+    /// <typeparam name="TKey">Type of the attribute identifier.</typeparam>
+    /// <typeparam name="TValue">Type of the attribute value.</typeparam>
+    public interface IFlagsAndAttributes<TKey, TValue>
+        : ICustomFlags<TKey>, ICustomAttributes<TKey, TValue>
     {
         /// <summary>
         /// Gets custom flags provider.
         /// </summary>
-        IReadOnlyCustomFlags Flags { get; }
+        ICustomFlags<TKey> Flags { get; }
 
         /// <summary>
         /// Gets custom attributes provider.
         /// </summary>
-        IReadOnlyCustomAttributes Attr { get; }
+        ICustomAttributes<TKey, TValue> Attr { get; }
     }
 }

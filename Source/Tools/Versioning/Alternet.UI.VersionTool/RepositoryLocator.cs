@@ -9,9 +9,13 @@ namespace Alternet.UI.VersionTool
     {
         public static Repository GetRepository()
         {
+            var asmLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
             var repoRoot = Path.Combine(
-                Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? throw new Exception(),
+                Path.GetDirectoryName(asmLocation) ?? throw new Exception(),
                 "../../../../../../../");
+
+            repoRoot = Path.GetFullPath(repoRoot);
             return new Repository(repoRoot);
         }
     }

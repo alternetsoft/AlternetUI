@@ -52,7 +52,9 @@ namespace Alternet.UI.Build.Tasks
 
         public IReadOnlyList<NamedObject> NamedObjects => namedObjects ??= GetNamedObjects().ToArray();
 
-        public IReadOnlyList<EventBinding> EventBindings => eventBindings ??= GetEventBindings(apiInfoProvider, document).Select(x => x.Binding).ToArray();
+        public IReadOnlyList<EventBinding> EventBindings
+            => eventBindings ??= GetEventBindings(apiInfoProvider, document)
+            .Select(x => x.Binding).ToArray();
 
         private static bool IsValidIdentifier(string text)
         {
@@ -70,9 +72,15 @@ namespace Alternet.UI.Build.Tasks
         public record IndexAccessorInfo(int Index, string CollectionName) : AccessorInfo;
         public record MemberAccessorInfo(string Name) : AccessorInfo;
 
-        private static IEnumerable<(EventBinding Binding, XAttribute Attribute)> GetEventBindings(ApiInfoProvider apiInfoProvider, XDocument document)
+        private static IEnumerable<(EventBinding Binding, XAttribute Attribute)> GetEventBindings(
+            ApiInfoProvider apiInfoProvider,
+            XDocument document)
         {
-            EventBinding? TryGetEventBinding(XElement element, string? objectName, Stack<AccessorInfo> accessors, XAttribute attribute)
+            EventBinding? TryGetEventBinding(
+                XElement element,
+                string? objectName,
+                Stack<AccessorInfo> accessors,
+                XAttribute attribute)
             {
                 var assemblyName = GetTypeAssemblyName(element.Name);
                 var typeFullName = GetTypeFullName(element.Name);
@@ -85,7 +93,11 @@ namespace Alternet.UI.Build.Tasks
                 if (objectName != null)
                     return new NamedObjectEventBinding(eventName, handlerName, typeFullName, objectName);
 
-                return new IndexedObjectEventBinding(eventName, handlerName, typeFullName, accessors.Reverse().ToArray());
+                return new IndexedObjectEventBinding(
+                    eventName,
+                    handlerName,
+                    typeFullName,
+                    accessors.Reverse().ToArray());
             }
 
             var accessors = new Stack<AccessorInfo>();
@@ -103,7 +115,8 @@ namespace Alternet.UI.Build.Tasks
                     
                     if (propertyAccess)
                     {
-                        accessors.Push(new MemberAccessorInfo(element.Name.LocalName.Substring(indexOfDot + 1)));
+                        accessors.Push(
+                            new MemberAccessorInfo(element.Name.LocalName.Substring(indexOfDot + 1)));
                     }
                     else
                     {
@@ -166,7 +179,7 @@ namespace Alternet.UI.Build.Tasks
         {
             var ns = name.NamespaceName;
             if (ns == UINamespace)
-                return "Alternet.UI";
+                return "Alternet.UI.Common";
             if (ns == EditorNamespace)
                 return "Alternet.Editor.X.v9";
 
@@ -199,13 +212,15 @@ namespace Alternet.UI.Build.Tasks
         {
             void RemoveClassAttribute()
             {
-                var attribute = document.Root.Attribute(classAttributeName) ?? throw new Exception(ClassAttributeNotFound);
+                var attribute = document.Root.Attribute(classAttributeName)
+                    ?? throw new Exception(ClassAttributeNotFound);
                 attribute.Remove();
             }
 
             void RemoveEventAttributes()
             {
-                var attributes = GetEventBindings(apiInfoProvider, document).Select(x => x.Attribute).ToArray();
+                var attributes
+                    = GetEventBindings(apiInfoProvider, document).Select(x => x.Attribute).ToArray();
                 foreach (var attribute in attributes)
                     attribute.Remove();
             }
@@ -218,7 +233,8 @@ namespace Alternet.UI.Build.Tasks
 
         private IEnumerable<NamedObject> GetNamedObjects()
         {
-            var namedElements = document.Root.DescendantsAndSelf().Where(e => e.Attributes().Any(a => a.Name == NameAttributeName));
+            var namedElements = document.Root.DescendantsAndSelf()
+                .Where(e => e.Attributes().Any(a => a.Name == NameAttributeName));
             return namedElements.Select(
                 x => new NamedObject(GetTypeFullName(x.Name), x.Attribute(NameAttributeName).Value));
         }
@@ -235,7 +251,8 @@ namespace Alternet.UI.Build.Tasks
 
         private string GetClassFullName()
         {
-            var attribute = document.Root.Attribute(classAttributeName) ?? throw new Exception(ClassAttributeNotFound);
+            var attribute = document.Root.Attribute(classAttributeName)
+                ?? throw new Exception(ClassAttributeNotFound);
             return attribute.Value;
         }
 

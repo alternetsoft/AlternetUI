@@ -471,7 +471,7 @@ namespace Alternet.UI
         /// Gets custom flags provider associated with the control.
         /// You can store any custom data here.
         /// </summary>
-        ICustomFlags CustomFlags { get; }
+        ICustomFlags<string> CustomFlags { get; }
 
         /// <summary>
         /// Gets or sets cached data for the layout engine.
@@ -487,7 +487,7 @@ namespace Alternet.UI
         /// Gets custom attributes provider associated with the control.
         /// You can store any custom data here.
         /// </summary>
-        ICustomAttributes CustomAttr { get; }
+        ICustomAttributes<string, object> CustomAttr { get; }
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in

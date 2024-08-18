@@ -12,7 +12,7 @@
   	<BoolNet8>true</BoolNet8>
   	<BoolNet7>false</BoolNet7>
   	<BoolNet6>false</BoolNet6>
-  	<BoolNet48>false</BoolNet48>
+  	<BoolNet48>true</BoolNet48>
   	<BoolNet46>true</BoolNet46>
   </PropertyGroup>
 

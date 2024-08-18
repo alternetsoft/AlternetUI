@@ -18,7 +18,8 @@ namespace Alternet.UI.Build.Tasks
 
         public bool IsEvent(string assemblyName, string classFullName, string memberName)
         {
-            return apiInfo.TryGetAssembly(assemblyName)?.TryGetType(classFullName)?.HasEvent(memberName) ?? false;
+            return apiInfo.TryGetAssembly(assemblyName)?.TryGetType(classFullName)?.HasEvent(memberName)
+                ?? false;
         }
 
         private static class Loader

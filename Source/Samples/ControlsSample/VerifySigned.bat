@@ -19,6 +19,11 @@ for /R %%f in (*.exe) do call "%SIGNTOOL%" "%%f"
 
 popd
 
+pushd "%SCRIPT_HOME%\bin\x64\Release\"
+for /R %%f in (Alternet*.dll) do call "%SIGNTOOL%" "%%f"
+for /R %%f in (*.exe) do call "%SIGNTOOL%" "%%f"
+popd
+
 ECHO ===============================
 ECHO ===============================
 ECHO ===============================

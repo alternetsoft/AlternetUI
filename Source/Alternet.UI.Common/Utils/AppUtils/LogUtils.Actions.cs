@@ -19,10 +19,18 @@ namespace Alternet.UI
         /// Logs environment versions.
         /// </summary>
         /// <remarks>
-        /// Works only if DEBUG conditional is defined.
+        /// Same as <see cref="LogVersion"/>, but works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
         public static void DebugLogVersion(bool showAnyway = false)
+        {
+            LogVersion(showAnyway);
+        }
+
+        /// <summary>
+        /// Logs environment versions.
+        /// </summary>
+        public static void LogVersion(bool showAnyway = false)
         {
             if (!showAnyway)
             {

@@ -14,7 +14,7 @@
       <StackPanel Orientation="Horizontal">
         <GroupBox Title="Clipboard" VerticalAlignment="Top">
           <StackPanel Orientation="Vertical" Margin="10">
-            <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
+            <Button Text="Copy" Name="copyButton1" Click="CopyButton_Click" />
             <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" Margin="0,5,0,5" />
           </StackPanel>
         </GroupBox>

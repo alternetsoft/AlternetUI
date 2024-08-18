@@ -11,7 +11,8 @@ namespace Alternet.UI.Build.Tasks
 
         private static Stream GetProviderStreamOld()
         {
-            Stream result = typeof(WellKnownApiInfo).Assembly.GetManifestResourceStream("WellKnownApiInfo.xml");
+            Stream result = typeof(WellKnownApiInfo).Assembly
+                .GetManifestResourceStream("WellKnownApiInfo.xml");
             return result ?? throw new Exception("WellKnownApiInfo.xml not loaded");
         }
 
