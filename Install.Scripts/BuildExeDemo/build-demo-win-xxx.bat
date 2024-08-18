@@ -79,7 +79,9 @@ popd
 pushd %PUBLISH_FOLDER_PARENT%
 del %DEMO_NAME%.zip
 
-"C:\Program Files\7-Zip\7z" a -tzip -r %DEMO_NAME% -mx7 "%DEMO_NAME%\*"
+:: -mx7
+
+"C:\Program Files\7-Zip\7z" a -tzip -r %DEMO_NAME% "%DEMO_NAME%\*"
 
 dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%DEMO_NAME%.zip"
 

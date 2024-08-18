@@ -29,12 +29,12 @@ namespace ControlsSample
 
             button1 = AddButton("Button 1", () =>
             {
-                Application.Log("Button 1 clicked");
+                App.Log("Button 1 clicked");
             });
 
             button2 = AddButton("Button 2", () =>
             {
-                Application.Log("Button 2 clicked");
+                App.Log("Button 2 clicked");
             });
 
             editor = new TextBox();
@@ -57,12 +57,12 @@ namespace ControlsSample
             base.OnKeyDown(e);
             if(e.Key == Key.F5)
             {
-                Application.AddIdleTask(() =>
+                App.AddIdleTask(() =>
                 {
                     if (Fn())
-                        Application.Log("Simulation is ok.");
+                        App.Log("Simulation is ok.");
                     else
-                        Application.Log("Simulation not working.");
+                        App.Log("Simulation not working.");
 
                     bool Fn()
                     {
