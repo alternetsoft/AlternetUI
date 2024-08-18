@@ -36,14 +36,6 @@
     <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisDllFullPath)&quot;" Condition="Exists($(ThisDllFullPath))"/>
     <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisExeFullPath)&quot;" Condition="Exists($(ThisExeFullPath))"/>
 
-  <ItemGroup>
-    <PalDlls Include="$(MSBuildProjectDirectory)\$(OutDir)\**\Alternet.UI.Pal.dll" />
-  </ItemGroup>
-
-    <Exec Command="call &quot;$(SignToolBat)&quot; &quot;@(PalDlls)&quot;" Condition="'@(PalDlls)' != ''"/>
-	
-    <Message Text="PalDlls: @(PalDlls)" Importance="high" Condition="'@(PalDlls)' != ''"/>
-
   </Target>
   <!-- ================================================= -->
 

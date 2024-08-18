@@ -37,11 +37,19 @@ mkdir %DEMO_NAME%
 popd
 
 pushd %DEMO_HOME%
+dotnet clean
 dotnet build -c Release --framework %FRAMEWORK% %ADD_PARAMS%
 popd
 
+ECHO ====================================
+ECHO SIGN PAL IN FOLDER: %DEMO_HOME_BIN%
 call %SIGN_PAL_IN_FOLDER% %DEMO_HOME_BIN%
+
+ECHO ====================================
+
+ECHO SIGN EXE IN FOLDER: %DEMO_HOME_BIN%
 call %SIGN_EXE_IN_FOLDER% %DEMO_HOME_BIN%
+ECHO ====================================
 
 xcopy "%DEMO_HOME_BIN_RELEASE%\%FRAMEWORK%" "%PUBLISH_FOLDER%" /s /e
 
@@ -71,7 +79,7 @@ popd
 pushd %PUBLISH_FOLDER_PARENT%
 del %DEMO_NAME%.zip
 
-"C:\Program Files\7-Zip\7z" a -tzip -r %DEMO_NAME% "%DEMO_NAME%\*"
+"C:\Program Files\7-Zip\7z" a -tzip -r %DEMO_NAME% -mx7 "%DEMO_NAME%\*"
 
 dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%DEMO_NAME%.zip"
 
