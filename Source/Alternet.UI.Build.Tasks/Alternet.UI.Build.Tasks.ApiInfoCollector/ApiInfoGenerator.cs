@@ -27,9 +27,12 @@ namespace Alternet.UI.Build.Tasks.ApiInfoCollector
 
         private static void GenerateType(Type type, XElement parentElement)
         {
+            var events = type.GetEvents(
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+
             var typeElement = new XElement("Type");
             typeElement.Add(new XAttribute("Name", type.FullName!));
-            foreach (var @event in type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
+            foreach (var @event in events)
                 GenerateEvent(@event, typeElement);
 
             parentElement.Add(typeElement);

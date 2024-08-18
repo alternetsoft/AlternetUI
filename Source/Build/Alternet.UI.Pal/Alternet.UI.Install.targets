@@ -11,7 +11,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<AIC_UIDLLS Include="$(AIC_SOURCEDIR)\Alternet.UI\bin\**\$(DotNetRunSuffix)\Alternet.UI.dll"/>
+		<AIC_UIDLLS Include="$(AIC_SOURCEDIR)\Alternet.UI.Common\bin\Debug\**\Alternet.UI.Common.dll"/>
+		<AIC_UIDLLS Include="$(AIC_SOURCEDIR)\Alternet.UI.Common\bin\Release\**\Alternet.UI.Common.dll"/>
 	</ItemGroup>
 	<PropertyGroup>
 		<AIC_UIDLL>%(AIC_UIDLLS.Identity)</AIC_UIDLL>
@@ -25,6 +26,8 @@
 	<Exec
 		WorkingDirectory="$(AIC_TOOLPATH)"
 		Command="dotnet run -f $(DotNetRunSuffix) -- &quot;$(AIC_UIDLL)&quot; &quot;$(AIC_XML)&quot;" />
+	<Message Text="Exec RunAppInfoCollector Done" Importance="high" />
+	<Message Text="--------------------------------------------------------" Importance="high" />
 </Target> 
 <!-- ========================================== -->
 <Target Name="UpdateWellKnownApiInfo">

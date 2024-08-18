@@ -16,9 +16,22 @@ namespace Alternet.UI.Build.Tasks.ApiInfoCollector
 
             try
             {
-                var xmlDocument = ApiInfoGenerator.Generate(Assembly.LoadFrom(args[0]));
+                var asmPath = Path.GetFullPath(args[0]);
+                var outPath = Path.GetFullPath(args[1]);
+                var asmFileName = Path.GetFileName(asmPath);
+
+                Assembly asm;
+
+                if (string.Compare(asmFileName, "Alternet.UI.Common.dll") == 0)
+                {
+                    asmPath = Path.Combine(PathUtils.GetAppFolder(), asmFileName);
+                    asm = typeof(Alternet.UI.Control).Assembly;
+                }
+                else
+                    asm = Assembly.LoadFrom(asmPath);
+
+                var xmlDocument = ApiInfoGenerator.Generate(asm);
                 
-                var outPath = args[1];
                 var outPathDirectory = Path.GetDirectoryName(outPath);
                 if (!Directory.Exists(outPathDirectory))
                     Directory.CreateDirectory(outPathDirectory!);
