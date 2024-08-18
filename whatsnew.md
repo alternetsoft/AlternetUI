@@ -1,3 +1,14 @@
+# 0.9.625 (2024 August 18)
+
+- Control: IntAttr, IntFlags, IntFlagsAndAttributes, IsTextLocalized, IsTitleLocalized, IsToolTipLocalized.
+- Added 'Download PDF' link to the bottom of the documentation page.
+- Updated build scripts so all dlls in the nugets are signed by signtool.
+- TwoWayEnumMapping: SourceToDest, DestToSource.
+- Added attributes and flags interfaces with id and value type params.
+- Factory class splitted into FlagsFactory, AttributesFactory, FlagsAndAttributesFactory. 
+Added methods which allow to create flags and attributes with int identifiers.
+- FlagsAndAttributes class made public.
+
 # 0.9.624 (2024 August 13)
 
 - RichTextBox exception fixed.
