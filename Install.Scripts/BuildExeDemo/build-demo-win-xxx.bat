@@ -7,11 +7,10 @@ ECHO ===========================================
 SETLOCAL EnableDelayedExpansion
 
 set FRAMEWORK=%1
-set PLATFORM=%2
-set DEMO_NAME=%3
-set ADD_PARAMS=%4
+set DEMO_NAME=%2
+set ADD_PARAMS=%3
 
-ECHO BuildExeDemo %DEMO_NAME% %FRAMEWORK% %PLATFORM% 
+ECHO BuildExeDemo %DEMO_NAME% %FRAMEWORK%
 ECHO ===========================================
 ECHO ON
 
@@ -21,7 +20,7 @@ set ALTERNET_HOME=%SCRIPT_HOME%\..\..\
 set SAMPLES_HOME=%SOURCE_HOME%\Samples
 set DEMO_HOME=%SAMPLES_HOME%\ControlsSample
 set DEMO_HOME_BIN=%DEMO_HOME%\bin
-set DEMO_HOME_BIN_RELEASE=%DEMO_HOME%\bin\%PLATFORM%\Release
+set DEMO_HOME_BIN_RELEASE=%DEMO_HOME%\bin\Release
 set SIGN_PAL_IN_FOLDER=%SCRIPT_HOME%\..\SignTools\Sign.Pal.InFolder.bat
 set SIGN_EXE_IN_FOLDER=%SCRIPT_HOME%\..\SignTools\Sign.Exe.InFolder.bat
 set CLEAN_PROJECT=%SCRIPT_HOME%\..\Tools\CleanProject.bat
@@ -38,7 +37,7 @@ mkdir %DEMO_NAME%
 popd
 
 pushd %DEMO_HOME%
-dotnet build -c Release --framework %FRAMEWORK% /p:Platform=%PLATFORM% %ADD_PARAMS%
+dotnet build -c Release --framework %FRAMEWORK% %ADD_PARAMS%
 popd
 
 call %SIGN_PAL_IN_FOLDER% %DEMO_HOME_BIN%
@@ -61,29 +60,6 @@ rmdir /s /q runtimes\win-arm64
 rmdir /s /q arm
 rmdir /s /q arm64
 rmdir /s /q musl-x64
-
-if "%PLATFORM%"=="x86" goto LABEL_PLATFORM_X86
-if "%PLATFORM%"=="x64" goto LABEL_PLATFORM_X64
-goto CONTINUE1
-
-:::::::::::::::::::::::::::
-
-:LABEL_PLATFORM_X86
-
-rmdir /s /q x64
-rmdir /s /q runtimes\win-x64
-goto CONTINUE1
-
-:::::::::::::::::::::::::::
-
-:LABEL_PLATFORM_X64
-
-rmdir /s /q x86
-rmdir /s /q runtimes\win-x86
-
-:::::::::::::::::::::::::::
-
-:CONTINUE1
 
 :::::::::::::::::::::::::::
 

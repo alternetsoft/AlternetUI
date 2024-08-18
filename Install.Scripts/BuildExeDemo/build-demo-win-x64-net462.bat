@@ -1,1 +1,0 @@
-call build-demo-win-xxx.bat net462 x64 alternet-ui-demo-win-x64-net462

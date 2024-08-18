@@ -5,12 +5,10 @@ for your cross-platform desktop application. Be native on the desktop, whether i
 
 Executable demo platforms:
 
-- <b>alternet-ui-demo-win-x64-net8</b>. Demo for Windows 10 Build 1607 (64 bit) or newer using Net 8.0 platform.
-- <b>alternet-ui-demo-win-x86-net8</b>. Demo for Windows 10 Build 1607 (32 bit) or newer using Net 8.0 platform.
-- <b>alternet-ui-demo-win-x64-net462</b>. Demo for Windows 7 (64 bit) or newer using Net 4.62 platform.
-- <b>alternet-ui-demo-win-x86-net462</b>. Demo for Windows 7 (32 bit) or newer using Net 4.62 platform.
-- <b>alternet-ui-demo-macos-x64</b>. Demo for MacOs 10.15 (64 bit) or newer.
-- <b>alternet-ui-demo-ubuntu-x64</b>. Demo for Ubuntu 23.10 (64 bit) or newer.
+- <b>alternet-ui-demo-win-net8</b>. Demo for Windows 10 Build 1607 or newer using Net 8.0 platform.
+- <b>alternet-ui-demo-win-net462</b>. Demo for Windows 7 or newer using Net 4.62 platform.
+- <b>alternet-ui-demo-macos</b>. Demo for MacOs 10.15 or newer.
+- <b>alternet-ui-demo-ubuntu</b>. Demo for Ubuntu 23.10 or newer.
 
 Before running demo on Ubuntu, you need to run 'Ubuntu.Install.Packages.sh' script. It installs required packages.
 

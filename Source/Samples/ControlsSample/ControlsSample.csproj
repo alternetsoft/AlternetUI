@@ -3,7 +3,7 @@
   <Import Project="..\CommonData\TargetFrameworks.props" />
 
     <PropertyGroup>
-      <Platforms>AnyCPU;x64;x86</Platforms>
+      <Platforms>AnyCPU</Platforms>
       <LangVersion>12.0</LangVersion>
       <Nullable>enable</Nullable>
       <UseStyleCop>false</UseStyleCop>
