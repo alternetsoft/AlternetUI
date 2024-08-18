@@ -8,6 +8,7 @@
 - Factory class splitted into FlagsFactory, AttributesFactory, FlagsAndAttributesFactory. 
 Added methods which allow to create flags and attributes with int identifiers.
 - FlagsAndAttributes class made public.
+- Fixed api info generation.
 
 # 0.9.624 (2024 August 13)
 
