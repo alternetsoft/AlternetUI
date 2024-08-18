@@ -51,7 +51,7 @@ namespace SkiaSharpSample
 
 			public static Stream? Load(string name)
 			{
-				name = $".Media.{name}";
+				name = $".SkiaSharpMedia.{name}";
 				name = resources.FirstOrDefault(n => n.EndsWith(name));
 
 				Stream? stream = null;

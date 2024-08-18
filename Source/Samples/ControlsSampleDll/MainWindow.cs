@@ -36,7 +36,7 @@ namespace ControlsSample
                     App.LogReplace($"FocusedControl: {FocusedControl?.GetType()}", "FocusedControl:");
             };
 
-            LogUtils.RegisterLogAction("Toggle LogFocusedControl", () =>
+            LogUtils.RegisterLogAction("Toggle Logging of FocusedControl", () =>
             {
                 LogFocusedControl = !LogFocusedControl;
             });
