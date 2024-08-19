@@ -73,11 +73,18 @@ namespace ControlsSample
 
         Control CreateOtherPage()
         {
-            NameValue<Func<Control>>[] pages =
+            NameValue<Func<Control>>[] pagesDebug =
             {
                 new("Internal", CreateInternalSamplesPage),
-                /*new("External", CreateAllSamplesPage),*/
+                new("External", CreateAllSamplesPage),
             };
+
+            NameValue<Func<Control>>[] pagesRelease =
+            {
+                new("Internal", CreateInternalSamplesPage),
+            };
+
+            var pages = DebugUtils.IsDebugDefined ? pagesDebug : pagesRelease;
 
             return CreateCustomPage(pages);
         }
