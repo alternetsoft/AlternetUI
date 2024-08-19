@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Security;
 
 using Alternet.Drawing;
@@ -6,13 +7,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The Mouse class represents the mouse device to the
-    ///     members of a context.
+    /// Represents the mouse device.
     /// </summary>
-    /// <remarks>
-    ///     The static members of this class simply delegate to the primary
-    ///     mouse device of the calling thread's input manager.
-    /// </remarks>
     public static class Mouse
     {
         /// <summary>
@@ -111,6 +107,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="mouseButton">Mouse button.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MouseButtonState GetButtonState(MouseButton mouseButton)
         {
             return Handler.GetButtonState(mouseButton);
@@ -121,18 +118,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="scaleFactor">Scale factor to use when converting pixels to dips.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointD GetPosition(Coord scaleFactor)
         {
             return Handler.GetPosition(scaleFactor);
-        }
-
-        /// <summary>
-        /// Gets mouse button position.
-        /// </summary>
-        /// <returns></returns>
-        public static PointD GetPosition()
-        {
-            return Handler.GetPosition(null);
         }
 
         /// <summary>

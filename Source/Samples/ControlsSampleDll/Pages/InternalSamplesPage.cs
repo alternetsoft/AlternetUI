@@ -9,62 +9,9 @@ using System.Diagnostics;
 
 namespace ControlsSample
 {
-    public partial class InternalSamplesPage : Control
+    public partial class InternalSamplesPage : CustomInternalSamplesPage
     {
-        private readonly VirtualListBox view = new()
-        {
-            SuggestedWidth = 350,
-            SuggestedHeight = 400,
-        };
-
-        private readonly VerticalStackPanel buttonPanel = new()
-        {
-            Margin = (10, 0, 0, 0),
-            Padding = 5,
-        };
-
-        private readonly Button runButton = new()
-        {
-            Text = "Run Sample",
-            Margin = (0,0,0,5),
-            HorizontalAlignment = HorizontalAlignment.Left,
-        };
-
-        public InternalSamplesPage()
-        {
-            view.Parent = this;
-            buttonPanel.Parent = this;
-            runButton.Parent = buttonPanel;
-            runButton.Click += RunButton_Click;
-            Layout = LayoutStyle.Horizontal;
-            Padding = 10;
-            AddDefaultItems();
-            view.SelectFirstItem();
-            view.EnsureVisible(0);
-        }
-
-        public static Stack<ListControlItem> SampleItems = new();
-
-        [Conditional("DEBUG")]
-        public static void AddIfDebug(string text, Func<Window> createForm)
-        {
-            Add(text, createForm);
-        }
-
-        public static void Add(string text, Func<Window> createForm)
-        {
-            ListControlItem item = new(text);
-            item.CustomAttr.SetAttribute<Action>("Fn", Fn);
-            SampleItems.Push(item);
-
-            void Fn()
-            {
-                var form = createForm();
-                form.Show();
-            }
-        }
-
-        private void AddDefaultItems()
+        protected override void AddDefaultItems()
         {
             /*
                 Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
@@ -91,35 +38,6 @@ namespace ControlsSample
             Add("Common Dialogs", () => new CommonDialogsWindow());
             Add("Employee Form", () => new EmployeeFormSample.EmployeeWindow());
             Add("Property Grid", () => new PropertyGridSample.MainWindow());
-
-            while(SampleItems.Count > 0)
-            {
-                view.Items.Add(SampleItems.Pop());
-            }
-        }
-
-        private void RunButton_Click(object? sender, EventArgs e)
-        {
-            if (view.SelectedItem is not ListControlItem item)
-                return;
-            var fn = item.CustomAttr.GetAttribute<Action>("Fn");
-            if (fn is not null)
-            {
-                App.DoInsideBusyCursor(() =>
-                {
-                    runButton.Enabled = false;
-                    runButton.Refresh();
-                    try
-                    {
-                        fn();
-                    }
-                    finally
-                    {
-                        runButton.Enabled = true;
-                        runButton.Refresh();
-                    }
-                });
-            }
         }
     }
 }

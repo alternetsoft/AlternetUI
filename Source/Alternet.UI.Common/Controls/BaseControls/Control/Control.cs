@@ -100,21 +100,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the position of the mouse cursor in screen coordinates.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="PointD" /> that contains the coordinates of the mouse cursor
-        /// relative to the upper-left corner of the screen.
-        /// </returns>
-        public static PointD MousePosition
-        {
-            get
-            {
-                return Mouse.GetPosition();
-            }
-        }
-
-        /// <summary>
         /// Gets the default foreground color of the control.
         /// </summary>
         /// <returns>
