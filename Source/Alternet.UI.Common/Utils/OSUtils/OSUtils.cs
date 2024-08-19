@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,6 +14,77 @@ namespace Alternet.UI
     /// </summary>
     public static class OSUtils
     {
+        /// <summary>
+        /// Tries to find native library in the subfolder of the application.
+        /// </summary>
+        /// <param name="nativeModuleNameWithExt">Name and extension of the library.</param>
+        /// <returns></returns>
+        public static string? FindNativeDll(string nativeModuleNameWithExt)
+        {
+            /*
+            runtimes\win-x64\native
+            runtimes\win-x86\native
+            linux-x64\
+            osx-x64
+            x64
+            x86
+            In the same folder
+            */
+
+            string GetRuntimesSubFolderPrefix()
+            {
+                if (App.IsWindowsOS)
+                    return "win";
+                if (App.IsMacOS)
+                    return "osx";
+                if (App.IsLinuxOS)
+                    return "linux";
+                return "unknown";
+            }
+
+            string GetRuntimesFolderSuffix()
+            {
+                var ptrSuffix = IntPtr.Size == 8 ? "x64" : "x86";
+                return ptrSuffix;
+            }
+
+            string GetRuntimesFolder()
+            {
+                var result = Path.Combine(
+                    "runtimes",
+                    $"{GetRuntimesSubFolderPrefix()}-{GetRuntimesFolderSuffix()}",
+                    "native");
+                return result;
+            }
+
+            string GetDllPath(string? subFolder)
+            {
+                var assemblyDirectory
+                    = Path.GetDirectoryName(typeof(OSUtils).Assembly.Location)
+                    ?? PathUtils.GetAppFolder();
+                var moduleName = nativeModuleNameWithExt;
+                string result;
+                if (subFolder is null)
+                    result = Path.Combine(assemblyDirectory, moduleName);
+                else
+                    result = Path.Combine(assemblyDirectory, subFolder, moduleName);
+                return result;
+            }
+
+            var testPath1 = GetDllPath(GetRuntimesFolder());
+            var testPath2 = GetDllPath(GetRuntimesFolderSuffix());
+            var testPath3 = GetDllPath(null);
+
+            if (File.Exists(testPath1))
+                return testPath1;
+            if (File.Exists(testPath2))
+                return testPath2;
+            if (File.Exists(testPath3))
+                return testPath3;
+
+            return FileUtils.FindFileRecursiveInAppFolder(nativeModuleNameWithExt);
+        }
+
         /// <summary>
         /// Adds an extension to the specified native module name. The extension depends on the
         /// operating system.

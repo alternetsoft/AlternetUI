@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\CommonData\TargetFrameworks.props" />
 
   <PropertyGroup>
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <UseStyleCop>false</UseStyleCop>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <IncludeSymbols>true</IncludeSymbols>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
@@ -299,7 +298,7 @@
   </ItemGroup>
 
   <!-- ================================================ -->
-  
+
   <ItemGroup>
     <IncludeFolders Include="DragAndDropSample" />
   </ItemGroup>
@@ -344,12 +343,12 @@
   </ItemGroup>
 
   <ItemGroup>
-  <Compile Include="..\CustomControlsSample\Classes\**\*.cs">
-    <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
-  </Compile>
-  <UIXml Include="..\CustomControlsSample\Classes\**\*.uixml">
-    <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
-  </UIXml>
+    <Compile Include="..\CustomControlsSample\Classes\**\*.cs">
+      <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\CustomControlsSample\Classes\**\*.uixml">
+      <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
   </ItemGroup>
 
   <ItemGroup>
@@ -433,5 +432,6 @@
   </PropertyGroup>
 
   <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')" />
+
 
 </Project>

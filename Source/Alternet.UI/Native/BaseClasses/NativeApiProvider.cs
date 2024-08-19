@@ -15,10 +15,6 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal abstract class NativeApiProvider
     {
-        public static bool DebugImportResolver = DebugUtils.IsDebugDefined && false;
-
-        public static bool UseDlOpenOnLinux = false;
-
         internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
 
 #if NETCOREAPP
@@ -82,13 +78,37 @@ namespace Alternet.UI.Native
             }
         }
 
+        public static void LogCriticalException(Exception? e)
+        {
+            try
+            {
+                var s = $"Critical error\n\n";
+                s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
+
+                s += $"Error loading [{NativeModuleNameWithExt}] library.\n";
+                s += $"Exception info logged to [{App.LogFilePath}].\n";
+                if (App.IsLinuxOS)
+                {
+                    s += $"Please run [ldd {NativeModuleNameWithExt}] command " +
+                        "in the terminal in order to get the library references.\n";
+                    s += "If there are any 'not found' references, you need to install " +
+                        "appropriate packages before running this application.\n";
+                }
+
+                DialogFactory.ShowCriticalMessage(s, e);
+            }
+            catch
+            {
+            }
+        }
+
 #if NETCOREAPP
         private static IntPtr ImportResolver(
             string libraryName,
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
-            var debugResolver = DebugImportResolver && libHandle == default;
+            var debugResolver = DebugUtils.DebugLoading && libHandle == default;
 
             try
             {
@@ -96,31 +116,8 @@ namespace Alternet.UI.Native
             }
             catch (Exception e)
             {
-                LogException(e);
+                LogCriticalException(e);
                 throw;
-            }
-
-            void LogException(Exception? e)
-            {
-                try
-                {
-                    var s = $"Critical error in the [{CommonUtils.GetAppExePath()}] application\n";
-
-                    s += $"\nError loading [{NativeModuleNameWithExt}] library.\n";
-                    s += $"Exception info logged to [{App.LogFilePath}].\n";
-                    if (App.IsLinuxOS)
-                    {
-                        s += $"Please run [ldd {NativeModuleNameWithExt}] command " +
-                            "in the terminal in order to get the library references.\n";
-                        s += "If there are any 'not found' references, you need to install " +
-                            "appropriate packages before running this application.\n";
-                    }
-
-                    DialogFactory.ShowCriticalMessage(s , e);
-                }
-                catch
-                {
-                }
             }
 
             IntPtr Fn()
@@ -141,12 +138,11 @@ namespace Alternet.UI.Native
                 {
                     if (libHandle == default)
                     {
-                        var libraryFileName =
-                            FileUtils.FindFileRecursiveInAppFolder(NativeModuleNameWithExt);
+                        var libraryFileName = OSUtils.FindNativeDll(NativeModuleNameWithExt);                            
 
                         if (debugResolver)
                         {
-                            LogUtils.LogNameValueToFile("FindFileRecursiveInAppFolder", libraryFileName);
+                            LogUtils.LogNameValueToFile("FindNativeDll", libraryFileName);
                         }
 
                         if (libraryFileName is null)
@@ -187,7 +183,7 @@ namespace Alternet.UI.Native
             {
                 bool result;
 
-                if (App.IsLinuxOS && UseDlOpenOnLinux)
+                if (App.IsLinuxOS && DebugUtils.UseDlOpenOnLinux)
                 {
                     handle =
                         LinuxUtils.NativeMethods.dlopen(libraryPath, LinuxUtils.NativeMethods.RTLD_NOW);
@@ -226,23 +222,47 @@ namespace Alternet.UI.Native
         {
             public static void SetNativeModulesDirectory()
             {
-                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    return;
-                /*
-                var assemblyDirectory = Path.GetDirectoryName(
-                    new Uri(
-                        typeof(NativeApiProvider).Assembly.EscapedCodeBase).LocalPath)!;
-                */
-                var assemblyDirectory = Path.GetDirectoryName(
-                        typeof(NativeApiProvider).Assembly.Location)!;
-                var nativeModulesDirectory =
-                    Path.Combine(assemblyDirectory, IntPtr.Size == 8 ? "x64" : "x86");
-                if (!Directory.Exists(nativeModulesDirectory))
+                if (!App.IsWindowsOS)
                     return;
 
-                var ok = SetDllDirectory(nativeModulesDirectory);
-                if (!ok)
-                    throw new Win32Exception(Marshal.GetLastWin32Error());
+                var b = DebugUtils.DebugLoading;
+
+                try
+                {
+                    if (b)
+                        LogUtils.LogBeginSectionToFile("SetNativeModulesDirectory");
+
+                    var libraryFileName = OSUtils.FindNativeDll(NativeModuleNameWithExt);
+
+                    if (b)
+                        LogUtils.LogNameValueToFile("libraryFileName", libraryFileName);
+
+                    var nativeModulesDirectory = Path.GetDirectoryName(libraryFileName);
+                    if (!Directory.Exists(nativeModulesDirectory))
+                        return;
+
+                    if (b)
+                        LogUtils.LogNameValueToFile("nativeModulesDirectory", nativeModulesDirectory);
+
+                    var ok = SetDllDirectory(nativeModulesDirectory);
+
+                    if (b)
+                        LogUtils.LogNameValueToFile("SetDllDirectory", ok);
+
+                    if (!ok)
+                        throw new Win32Exception(Marshal.GetLastWin32Error());
+
+                }
+                catch (Exception e)
+                {
+                    LogCriticalException(e);
+                    throw;
+                }
+
+                if (DebugUtils.DebugLoading)
+                {
+
+                }
             }
 
             [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]

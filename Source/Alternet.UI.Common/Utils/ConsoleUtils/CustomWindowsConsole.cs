@@ -151,7 +151,7 @@ namespace Alternet.UI
             BeginUpdate();
             try
             {
-                Fill((0, 0, Width, Height), '\0');
+                Fill((0, 0, Width, Height), ' ');
                 Console.SetCursorPosition(0, 0);
             }
             finally
@@ -165,7 +165,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Rectangle to fill.</param>
         /// <param name="c">Fill character.</param>
-        public virtual void Fill(RectI rect, char c = '\0')
+        public virtual void Fill(RectI rect, char c = ' ')
         {
             BeginUpdate();
             try

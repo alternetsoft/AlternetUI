@@ -19,6 +19,16 @@ namespace Alternet.UI
         /// </summary>
         public static readonly bool IsDebugDefined;
 
+        /// <summary>
+        /// Gets or sets whether to log application loading process.
+        /// </summary>
+        public static bool DebugLoading;
+
+        /// <summary>
+        /// Gets or sets whether to use 'dlOpen' on Linux in order to load native dll.
+        /// </summary>
+        public static bool UseDlOpenOnLinux = false;
+
         private static bool insideUnhandledException;
         private static bool hookedExceptionEvents;
 
@@ -29,6 +39,8 @@ namespace Alternet.UI
 #else
             IsDebugDefined = false;
 #endif
+
+            DebugLoading = DebugUtils.IsDebugDefined && false;
         }
 
         /// <summary>

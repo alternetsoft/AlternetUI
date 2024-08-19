@@ -1,5 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
+using System.Reflection;
+
 using Alternet.Drawing;
 
 using Alternet.UI;
@@ -20,25 +23,71 @@ namespace ControlsSample
             });
         }
 
+        public static void LogToFileSimple(object? obj = null)
+        {
+            string[] stringSplitToArrayChars =
+            {
+                Environment.NewLine,
+                "\r\n",
+                "\n\r",
+                "\n",
+            };
+
+            var location = Assembly.GetExecutingAssembly().Location;
+            var logFilePath = Path.ChangeExtension(location, ".log");
+
+            var msg = obj?.ToString() ?? string.Empty;
+
+            string dt = System.DateTime.Now.ToString("HH:mm:ss");
+            string[] result = msg.Split(stringSplitToArrayChars, StringSplitOptions.None);
+
+            string contents = string.Empty;
+
+            foreach (string s2 in result)
+                contents += $"{dt} :: {s2}{Environment.NewLine}";
+            File.AppendAllText(logFilePath, contents);
+        }
+
+        public static void LogSimple(string s)
+        {
+            if (!DebugUtils.DebugLoading)
+                return;
+            LogToFileSimple(s);
+        }
+
         [STAThread]
         public static void Main()
         {
+            if(DebugUtils.IsDebugDefined)
+                DebugUtils.DebugLoading = false;
+
+            LogSimple("===============================================");
+            LogSimple("Alternet.UI ControlsSample application started.");
+
             LogUtils.ShowDebugWelcomeMessage = true;
 
             var testBadFont = false;
 
             var application = new Application();
 
+            LogSimple("Application created.");
+
             application.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
 
             InitSamples();
+
+            LogSimple("InitSamples Done.");
 
             if (testBadFont)
                 Control.DefaultFont = new Font("abrakadabra", 12);
 
             var window = new MainWindow();
 
+            LogSimple("Main window created.");
+
             application.Run(window);
+
+            LogSimple("After Application.Run.");
 
             window.Dispose();
             application.Dispose();

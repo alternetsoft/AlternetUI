@@ -18,8 +18,33 @@ namespace Alternet.UI
     /// </summary>
     public partial class Application : App, IDisposable
     {
+        /// <summary>
+        /// Gets whether 'NETCOREAPP' is defined.
+        /// </summary>
+        public static readonly bool IsNetCoreApp;
+
         static Application()
         {
+#if NETCOREAPP
+            IsNetCoreApp = true;
+#else
+            IsNetCoreApp = false;
+#endif
+
+            if (!App.Is64BitOS && App.IsWindowsOS)
+            {
+                if (!IsNetCoreApp)
+                {
+                    var s = $"Critical error\n\n";
+                    s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
+                    s += $"Your software configuration is not supported:\n";
+                    s += $"Windows 32 bit and Net Framework {Environment.Version}\n\n";
+                    s += $"Use Windows 64 bit or newer Net Framework version.\n";
+
+                    DialogFactory.ShowCriticalMessage(s);
+                }
+            }
+
             Handler = new WxApplicationHandler();
         }
 

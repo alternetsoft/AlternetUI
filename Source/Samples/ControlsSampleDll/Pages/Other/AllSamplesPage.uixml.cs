@@ -9,14 +9,22 @@ using System.Diagnostics;
 
 namespace ControlsSample
 {
-    internal partial class AllSamplesPage : Control
+    public partial class AllSamplesPage : Control
     {
         public AllSamplesPage()
         {
             InitializeComponent();
-            AddDefaultItems();
-            view.SelectFirstItem();
 
+            try
+            {
+                AddDefaultItems(null, EnumerateSamples());
+                AddDefaultItems("Editor", EnumerateEditorSamples());
+            }
+            catch
+            {
+            }
+
+            view.SelectFirstItem();
             Group(runButton, buildButton, buildUIButton, buildPalButton).SuggestedWidthToMax();
             deleteBinCheckBox.BindBoolProp(this, nameof(DeleteBin));
         }
@@ -32,20 +40,49 @@ namespace ControlsSample
             return result;
         }
 
+        protected virtual string? GetSamplesFolder()
+        {
+            return CommonUtils.GetSamplesFolder();
+        }
+
+        private IEnumerable<string> EnumerateEditorSamples()
+        {
+            var editorSamplesFolder = Path.Combine(
+                CommonUtils.GetSamplesFolder() ?? string.Empty,
+                "../../../AlternetStudio/Demo/Editor.AlternetUI");
+
+            editorSamplesFolder = Path.GetFullPath(editorSamplesFolder);
+
+            if (Directory.Exists(editorSamplesFolder))
+            {
+                var f2 = EnumerateSamples(editorSamplesFolder, false, SearchOption.AllDirectories);
+                return f2;
+            }
+
+            return Array.Empty<string>();
+        }
+
         private IEnumerable<string> EnumerateSamples()
         {
-            var samplesFolder = CommonUtils.GetSamplesFolder();
+            return EnumerateSamples(GetSamplesFolder());
+        }
+
+        private IEnumerable<string> EnumerateSamples(
+            string? samplesFolder,
+            bool removeMisc = true,
+            SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
             if (samplesFolder is null)
                 return Array.Empty<string>();
 
             List<string> csproj = new();
 
-            static IEnumerable<string> EnumProjectsFast(string path)
+            IEnumerable<string> EnumProjectsFast(string path)
             {
                 var dirs = Directory.EnumerateDirectories(
                     path,
                     "*",
-                    SearchOption.TopDirectoryOnly);
+                    searchOption);
 
                 List<string> result = new();
 
@@ -53,7 +90,9 @@ namespace ControlsSample
                 {
                     var name = Path.GetFileName(dir);
                     var csproj = PathUtils.AddDirectorySeparatorChar(dir) + name + ".csproj";
-                    result.Add(csproj);
+
+                    if(File.Exists(csproj))
+                        result.Add(csproj);
                 }
 
                 return result;
@@ -63,31 +102,32 @@ namespace ControlsSample
 
             csproj.AddRange(files1);
 
-            for (int i = csproj.Count - 1; i >= 0; i--)
+            if(removeMisc)
             {
-                if (csproj[i].EndsWith("/ControlsSample.csproj") ||
-                    csproj[i].EndsWith(@"\ControlsSample.csproj"))
+                for (int i = csproj.Count - 1; i >= 0; i--)
                 {
+                    if (csproj[i].EndsWith("/ControlsSample.csproj") ||
+                        csproj[i].EndsWith(@"\ControlsSample.csproj"))
+                    {
+                        csproj.RemoveAt(i);
+                        continue;
+                    }
+                    if (csproj[i].EndsWith("Sample.csproj") || csproj[i].EndsWith("Test.csproj"))
+                        continue;
                     csproj.RemoveAt(i);
-                    continue;
                 }
-                if (csproj[i].EndsWith("Sample.csproj") || csproj[i].EndsWith("Test.csproj"))
-                    continue;
-                csproj.RemoveAt(i);
             }
 
             var csproj2 = csproj.Distinct();
             return csproj2;
         }
 
-        private void AddDefaultItems()
+        private void AddDefaultItems(string? section, IEnumerable<string> samples)
         {
-            var samples = EnumerateSamples();
-
             int index = 1;
             foreach (string s in samples)
             {
-                CsProjItem item = new(s, 0, index);
+                CsProjItem item = new(section, s, 0, index);
                 index++;
                 view.Items.Add(item);
             }
@@ -95,10 +135,14 @@ namespace ControlsSample
 
         private class CsProjItem : ListControlItem
         {
-            public CsProjItem(string path, int imageIndex, int index)
+            public CsProjItem(string? section, string path, int imageIndex, int index)
             {
                 CsProjPath = path;
-                Text = index + ". " + Path.GetFileNameWithoutExtension(path);
+
+                if (section is not null)
+                    section += ".";
+
+                Text = section + Path.GetFileNameWithoutExtension(path);
             }
 
             public string CsProjPath { get; set; }
@@ -112,13 +156,9 @@ namespace ControlsSample
         private void RunDotNetOnCsProjInFolder(string folder, string dotnetCmd = "run")
         {
             var targetFramework = AppUtils.GetMyTargetFrameworkName();
-            var arch = App.Is64BitOS ? "x64" : "x86";
-            var cmdRunWindows =
-              $"dotnet {dotnetCmd} /p:Platform={arch} --arch {arch} --property WarningLevel=0 --framework {targetFramework}";
-            var cmdRunOther =
+            var cmdRun =
                 $"dotnet {dotnetCmd} --property WarningLevel=0 --framework {targetFramework}";
-            var cmd = App.IsWindowsOS ? cmdRunWindows : cmdRunOther;
-            AppUtils.ExecuteTerminalCommand(cmd, folder);
+            AppUtils.ExecuteTerminalCommand(cmdRun, folder);
         }
 
         private void BuildCsProjInFolder(string folder)

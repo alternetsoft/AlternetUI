@@ -59,6 +59,12 @@ pushd "%PUBLISH_FOLDER%"
 del Alternet.UI.xml
 del Alternet.UI.Common.xml
 del Alternet.UI.Interfaces.xml
+del *.so
+del *.dylib
+del x64\*.so
+del x86\*.so
+del x64\*.dylib
+del x86\*.dylib
 rmdir /s /q runtimes\linux-arm
 rmdir /s /q runtimes\linux-arm64
 rmdir /s /q runtimes\linux-musl-x64
