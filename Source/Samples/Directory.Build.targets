@@ -9,7 +9,7 @@
     <CP>$(Configuration)|$(Platform)</CP>
     <CPW>$(Configuration)|$(Platform)|$([MSBuild]::IsOsPlatform('Windows'))</CPW>
     <IsSampleProject>false</IsSampleProject>
-    <IsSampleProject Condition="!($(MSBuildProjectName.EndsWith('.Test')) OR $(MSBuildProjectName.Contains('.Test.')) OR $(MSBuildProjectName.EndsWith('.Testing')) OR $(MSBuildProjectName.Contains('.Testing.')) OR $(MSBuildProjectName.Contains('.Harness.')))">true</IsSampleProject>
+    <IsSampleProject Condition="!($(MSBuildProjectName.EndsWith('Dll')) OR $(MSBuildProjectName.EndsWith('.Test')) OR $(MSBuildProjectName.Contains('.Test.')) OR $(MSBuildProjectName.EndsWith('.Testing')) OR $(MSBuildProjectName.Contains('.Testing.')) OR $(MSBuildProjectName.Contains('.Harness.')))">true</IsSampleProject>
     <PalBinFolder>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin</PalBinFolder>
     <PALx86DebugPDB>$(PalBinFolder)\x86\Debug\Alternet.UI.Pal.pdb</PALx86DebugPDB>
     <PALx86Debug>$(PalBinFolder)\x86\Debug\Alternet.UI.Pal.dll</PALx86Debug>

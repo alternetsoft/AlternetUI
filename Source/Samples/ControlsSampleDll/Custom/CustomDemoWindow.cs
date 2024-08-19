@@ -7,13 +7,14 @@ namespace Alternet.UI
 {
     public class CustomDemoWindow : Window
     {
+        public static bool UseLogListBox = true;
         public static bool AddBuildNumber = true;
         public static bool LogFocusedControl = false;
 
         public static bool BindConsole = false;
 
         private SplittedTreeAndCards? pageContainer;
-        private readonly LogListBox eventsControl;
+        private readonly LogListBox? eventsControl;
         private readonly LayoutPanel splitterPanel;
         private readonly Control panel;
         private readonly Splitter splitter = new();
@@ -43,14 +44,22 @@ namespace Alternet.UI
 
         public CustomDemoWindow()
         {
+            if (DebugUtils.DebugLoading)
+            {
+                LogUtils.LogToFile("CustomDemoWindow constructor");
+            }
+
             SupressEsc = true;
 
-            eventsControl = new()
+            if (UseLogListBox)
             {
-                Dock = DockStyle.Bottom,
-                HasBorder = false,
-                Margin = (0, 10, 0, 0),
-            };
+                eventsControl = new()
+                {
+                    Dock = DockStyle.Bottom,
+                    HasBorder = false,
+                    Margin = (0, 10, 0, 0),
+                };
+            }
 
             splitterPanel = new()
             {
@@ -61,7 +70,7 @@ namespace Alternet.UI
                 Padding = 5,
             };
 
-            eventsControl.BindApplicationLog();
+            eventsControl?.BindApplicationLog();
 
             if (BindConsole)
             {
@@ -70,6 +79,11 @@ namespace Alternet.UI
             }
 
             DoInsideLayout(Initialize);
+
+            if (DebugUtils.DebugLoading)
+            {
+                LogUtils.LogToFile("CustomDemoWindow constructor done");
+            }
         }
 
         public static bool FormLoadFromResName(string resName, object obj, UixmlLoader.Flags flags)
@@ -99,6 +113,11 @@ namespace Alternet.UI
 
         public void AddPage(string title, Func<Control> action)
         {
+            if (DebugUtils.DebugLoading)
+            {
+                LogUtils.LogToFile($"AddPage {title}");
+            }
+
             pageContainer?.Add(title, action);
         }
 
@@ -116,7 +135,7 @@ namespace Alternet.UI
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
-            Icon = new("embres:ControlsSampleDll.Sample.ico");
+            Icon = IconSet.FromUrlOrDefault("embres:ControlsSampleDll.Sample.ico", App.DefaultIcon);
 
             AddPages();
 
@@ -127,8 +146,12 @@ namespace Alternet.UI
             splitter.Dock = DockStyle.Bottom;
             pageContainer.Parent = splitterPanel;
             splitter.Parent = splitterPanel;
-            eventsControl.Height = 150;
-            eventsControl.Parent = splitterPanel;
+
+            if(eventsControl is not null)
+            {
+                eventsControl.Height = 150;
+                eventsControl.Parent = splitterPanel;
+            }
 
             pageContainer.SelectedIndex = 0;
             pageContainer.ListBox!.HScrollBarVisible = true;
@@ -171,16 +194,16 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        public string? LastEventMessage => eventsControl.LastLogMessage;
+        public string? LastEventMessage => eventsControl?.LastLogMessage;
 
         public void LogEventSmart(string? message, string? prefix)
         {
-            eventsControl.LogReplace(message, prefix);
+            eventsControl?.LogReplace(message, prefix);
         }
 
         public void LogEvent(string? message)
         {
-            eventsControl.Log(message);
+            eventsControl?.Log(message);
         }
 
         private static void ResourceLoader_CustomStreamFromUrl(object? sender, StreamFromUrlEventArgs e)

@@ -11,21 +11,28 @@ namespace ControlsSample
     {
         protected override void AddPages()
         {
-            AddPage("Welcome", CreateWelcomePage);
-            AddPage("Text", CreateTextInputPage);
-            AddPage("ListBoxes", CreateListControlsPage);
-            AddPage("Buttons", CreateButtonsPage);
-            AddPage("TreeView", CreateTreeViewPage);
-            AddPage("ListView", CreateListViewPage);
-            AddPage("DateTime", CreateDateTimePage);
-            AddPage("WebBrowser", CreateWebBrowserPage);
-            AddPage("Number", CreateNumericInputPage);
-            AddPage("Slider, Progress", CreateSliderAndProgressPage);
-            AddPage("Layout", CreateLayoutPage);
-            AddPage("Notify, ToolTip", CreateNotifyIconPage);
-            AddPage("TabControl", CreateTabControlPage);
-            AddPage("Multimedia", CreateMultimediaPage);
-            AddPage("Samples", CreateOtherPage);
+            try
+            {
+                AddPage("Welcome", CreateWelcomePage);
+                AddPage("Text", CreateTextInputPage);
+                AddPage("ListBoxes", CreateListControlsPage);
+                AddPage("Buttons", CreateButtonsPage);
+                AddPage("TreeView", CreateTreeViewPage);
+                AddPage("ListView", CreateListViewPage);
+                AddPage("DateTime", CreateDateTimePage);
+                AddPage("WebBrowser", CreateWebBrowserPage);
+                AddPage("Number", CreateNumericInputPage);
+                AddPage("Slider, Progress", CreateSliderAndProgressPage);
+                AddPage("Layout", CreateLayoutPage);
+                AddPage("Notify, ToolTip", CreateNotifyIconPage);
+                AddPage("TabControl", CreateTabControlPage);
+                AddPage("Multimedia", CreateMultimediaPage);
+                AddPage("Samples", CreateOtherPage);
+            }
+            catch (Exception e)
+            {
+                LogUtils.LogExceptionToFile(e);
+            }
         }
 
         Control CreateListControlsPage()
