@@ -48,7 +48,7 @@ namespace ControlsSample
         private IEnumerable<string> EnumerateEditorSamples()
         {
             var editorSamplesFolder = Path.Combine(
-                CommonUtils.GetSamplesFolder(),
+                CommonUtils.GetSamplesFolder() ?? string.Empty,
                 "../../../AlternetStudio/Demo/Editor.AlternetUI");
 
             editorSamplesFolder = Path.GetFullPath(editorSamplesFolder);

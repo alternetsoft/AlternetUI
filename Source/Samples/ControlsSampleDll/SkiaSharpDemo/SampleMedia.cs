@@ -49,10 +49,13 @@ namespace SkiaSharpSample
 				resources = assembly.GetManifestResourceNames();
 			}
 
-			public static Stream? Load(string name)
+			public static Stream? Load(string? name)
 			{
 				name = $".SkiaSharpMedia.{name}";
-				name = resources.FirstOrDefault(n => n.EndsWith(name));
+				name = resources.FirstOrDefault(n =>
+                {
+                    return n.EndsWith(name);
+                });
 
 				Stream? stream = null;
 				if (name != null)
