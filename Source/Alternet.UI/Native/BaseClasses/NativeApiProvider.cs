@@ -82,9 +82,10 @@ namespace Alternet.UI.Native
         {
             try
             {
-                var s = $"Critical error in the [{CommonUtils.GetAppExePath()}] application\n";
+                var s = $"Critical error\n\n";
+                s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
 
-                s += $"\nError loading [{NativeModuleNameWithExt}] library.\n";
+                s += $"Error loading [{NativeModuleNameWithExt}] library.\n";
                 s += $"Exception info logged to [{App.LogFilePath}].\n";
                 if (App.IsLinuxOS)
                 {
