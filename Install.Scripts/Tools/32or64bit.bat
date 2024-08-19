@@ -1,0 +1,1 @@
+"C:\Program Files\7-Zip\7z" l %1 | findstr CPU
