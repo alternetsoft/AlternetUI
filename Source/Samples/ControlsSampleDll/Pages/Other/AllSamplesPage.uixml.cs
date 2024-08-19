@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace ControlsSample
 {
-    internal partial class AllSamplesPage : Control
+    public partial class AllSamplesPage : Control
     {
         public AllSamplesPage()
         {
