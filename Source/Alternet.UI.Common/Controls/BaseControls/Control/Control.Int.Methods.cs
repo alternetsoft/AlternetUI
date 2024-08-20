@@ -204,7 +204,7 @@ namespace Alternet.UI
         {
             if (caretInfo is null || !caretInfo.Visible)
                 return;
-            RefreshRects(caretInfo.Region);
+            RefreshRectsUnion(caretInfo.Region);
         }
 
         /// <summary>
