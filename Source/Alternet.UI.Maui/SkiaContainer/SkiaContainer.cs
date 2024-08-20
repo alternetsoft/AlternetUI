@@ -75,6 +75,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether 'DrawImage' methods draw unscaled image.
+        /// </summary>
+        public bool UseUnscaledDrawImage { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets attached <see cref="Alternet.UI.Control"/>.
         /// </summary>
         public Alternet.UI.Control? Control
@@ -181,15 +186,22 @@ namespace Alternet.UI
             if (control is null)
                 return;
 
+            var scaleFactor = (float)control.ScaleFactor;
+
             dc.Save();
-            dc.Scale((float)control.ScaleFactor);
+            dc.Scale(scaleFactor);
 
             if (graphics is null)
+            {
                 graphics = new(dc);
+                graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
+            }
             else
             {
                 graphics.Canvas = dc;
             }
+
+            graphics.OriginalScaleFactor = scaleFactor;
 
             var dirtyRect = dc.LocalClipBounds;
 
