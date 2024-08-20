@@ -10,7 +10,7 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Contains static methods and properties related to SkiaSharp.
+    /// Contains static methods and properties related to SkiaSharp drawing.
     /// </summary>
     public static class SkiaUtils
     {
@@ -350,6 +350,31 @@ namespace Alternet.Drawing
         {
             var surface = CreateNullSurface(width, height);
             return surface.Canvas;
+        }
+
+        /// <summary>
+        /// Gets bounds of all the rectangles in the collection.
+        /// </summary>
+        /// <param name="rects">Collection of the rectangles</param>
+        /// <returns></returns>
+        public static RectI? GetBounds(IEnumerable<RectI> rects)
+        {
+            SKRegion region = new();
+            var hasRects = false;
+
+            foreach(var rect in rects)
+            {
+                region.Op(rect, SKRegionOperation.Union);
+                hasRects = true;
+            }
+
+            if (hasRects)
+            {
+                var result = region.Bounds;
+                return result;
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -401,6 +401,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates bounds of the specified rectangles collection and
+        /// repaints combined rectangle. Coordinates are in pixels.
+        /// </summary>
+        /// <param name="rects">Array of rectangles with coordinates specified in pixels.</param>
+        /// <param name="eraseBackground">Specifies whether to erase background.</param>
+        public virtual void RefreshRectsUnion(IEnumerable<RectI> rects, bool eraseBackground = true)
+        {
+            var bounds = SkiaUtils.GetBounds(rects);
+
+            if (bounds is null)
+                return;
+
+            RefreshRect(PixelToDip(bounds.Value), eraseBackground);
+        }
+
+        /// <summary>
         /// Creates native control if its not already created.
         /// </summary>
         public virtual void HandleNeeded()
