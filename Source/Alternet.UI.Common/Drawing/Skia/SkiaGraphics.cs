@@ -40,6 +40,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets whether 'DrawImage' methods draw unscaled image.
+        /// </summary>
+        public bool UseUnscaledDrawImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets original scale factor applied to the canvas before the first
+        /// drawing is performed.
+        /// </summary>
+        public float OriginalScaleFactor { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="SKBitmap"/> where drawing will be performed.
         /// </summary>
         public SKBitmap? Bitmap
@@ -234,8 +245,9 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawImage(Image image, PointD origin)
         {
-            DebugImageAssert(image);
+            BeforeDrawImage(ref image, ref origin);
             canvas.DrawBitmap((SKBitmap)image, origin);
+            AfterDrawImage();
         }
 
         /// <inheritdoc/>
@@ -546,6 +558,36 @@ namespace Alternet.Drawing
         public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Called before any draw image operation.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="origin"><see cref="PointD"/> structure that represents the
+        /// upper-left corner of the drawn image.</param>
+        protected virtual void BeforeDrawImage(ref Image image, ref PointD origin)
+        {
+            DebugImageAssert(image);
+
+            if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
+            {
+                origin.X *= OriginalScaleFactor;
+                origin.Y *= OriginalScaleFactor;
+                canvas.Save();
+                canvas.Scale(1 / OriginalScaleFactor);
+            }
+        }
+
+        /// <summary>
+        /// Called after any draw image operation.
+        /// </summary>
+        protected virtual void AfterDrawImage()
+        {
+            if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
+            {
+                canvas.Restore();
+            }
         }
     }
 }
