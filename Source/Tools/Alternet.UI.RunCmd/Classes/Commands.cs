@@ -28,7 +28,6 @@ namespace Alternet.UI
 
         public static void CmdDownload(CommandLineArgs args)
         {
-            // -r=download Url="http://localhost/file.7z" Path="e:/file.7z"
             string docUrl = args.AsString("Url");
             string filePath = args.AsString("Path");
             filePath = Path.GetFullPath(filePath);
@@ -37,11 +36,9 @@ namespace Alternet.UI
 
         public static void CmdDownloadAndUnzip(CommandLineArgs args)
         {
-            // -r=downloadAndUnzip Url="http://localhost/file.zip" Path="e:/file.zip" ExtractTo="e:/ExtractedZip"
-            // -r=downloadAndUnzip Url="http://localhost/file.7z" Path="e:/file.7z" ExtractTo="e:/Extracted7z"
-            string docUrl = CommandLineArgs.Default.AsString("Url");
-            string filePath = CommandLineArgs.Default.AsString("Path");
-            string extractToPath = CommandLineArgs.Default.AsString("ExtractTo");
+            string docUrl = args.AsString("Url");
+            string filePath = args.AsString("Path");
+            string extractToPath = args.AsString("ExtractTo");
             filePath = Path.GetFullPath(filePath);
             DownloadUtils.DownloadFileWithConsoleProgress(docUrl, filePath).Wait();
             Console.WriteLine();
@@ -73,11 +70,40 @@ namespace Alternet.UI
 
         public static void CmdUnzip(CommandLineArgs args)
         {
-            // -r=unzip Path="e:/file.zip" ExtractTo="e:/ExtractedZip"
-            string filePath = CommandLineArgs.Default.AsString("Path");
-            string extractToPath = CommandLineArgs.Default.AsString("ExtractTo");
+            string filePath = args.AsString("Path");
+            string extractToPath = args.AsString("ExtractTo");
             filePath = Path.GetFullPath(filePath);
             SharpCompressUtils.Unzip(filePath, extractToPath);
+        }
+
+        public static void CmdDeleteBinObjSubFolders(CommandLineArgs args)
+        {
+            string filePath = args.AsString("Path");
+            CommonProcs.DeleteBinObjFiles(filePath);
+        }
+
+        public static void CmdRemoveFolder(CommandLineArgs args)
+        {
+            string path = args.AsString("Path");
+
+            Console.WriteLine($"RemoveFolder: [{path}]");
+            try
+            {
+                CommonProcs.DeleteFilesByMasks(path);
+                if(Directory.Exists(path))
+                    Directory.Delete(path, true);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Error removing folder: [{path}]");
+            }
+        }
+
+        public static void CmdDeleteFilesByMasks(CommandLineArgs args)
+        {
+            string path = args.AsString("Path");
+            string masks = args.AsString("Masks");
+            CommonProcs.DeleteFilesByMasks(path, masks);
         }
 
         public static void CmdDeleteBinFolders(CommandLineArgs args)
@@ -89,8 +115,9 @@ namespace Alternet.UI
 
         public static void CmdZipFolder(CommandLineArgs args)
         {
-            string pathToFolder = Path.GetFullPath(CommandLineArgs.Default.AsString("Folder"));
-            string pathToArch = Path.GetFullPath(CommandLineArgs.Default.AsString("Result"));
+            string pathToFolder = args.AsString("Folder");
+            string pathToArch = args.AsString("Result");
+
             var compressionType = CompressionType.Deflate;
 
             Console.WriteLine($"Command: zipFolder");
@@ -98,9 +125,12 @@ namespace Alternet.UI
             Console.WriteLine($"Result: {pathToArch}");
             Console.WriteLine($"CompressionType: {compressionType}");
 
+            pathToFolder = Path.GetFullPath(pathToFolder);
+            pathToArch = Path.GetFullPath(pathToArch);
+
             if (!Directory.Exists(pathToFolder))
             {
-                Console.WriteLine("Folder doesn't exist");
+                Console.WriteLine($"Folder doesn't exist: [{pathToFolder}]");
                 return;
             }
 
@@ -117,9 +147,9 @@ namespace Alternet.UI
 
         public static void CmdFilterLog(CommandLineArgs args)
         {
-            string logFilter = CommandLineArgs.Default.AsString("Filter").ToLower();
-            string logPath = CommandLineArgs.Default.AsString("Log");
-            string resultPath = CommandLineArgs.Default.AsString("Result");
+            string logFilter = args.AsString("Filter").ToLower();
+            string logPath = args.AsString("Log");
+            string resultPath = args.AsString("Result");
             logPath = Path.GetFullPath(logPath);
             resultPath = Path.GetFullPath(resultPath);
 
@@ -172,7 +202,10 @@ namespace Alternet.UI
             return false;
         }
 
-        public static void RegisterCommand(string name, Action<CommandLineArgs> action)
+        public static void RegisterCommand(
+            string name,
+            Action<CommandLineArgs> action,
+            string? example = null)
         {
             originalCommandNames.Add(name);
             commands.Add(name.ToLower(), action);
@@ -180,15 +213,67 @@ namespace Alternet.UI
 
         public static void RegisterCommands()
         {
-            RegisterCommand("zipFolder", CmdZipFolder);
-            RegisterCommand("unzip", CmdUnzip);
-            RegisterCommand("runControlsSample", CmdRunControlsSample);
-            RegisterCommand("waitAnyKey", CmdWaitAnyKey);
-            RegisterCommand("waitEnter", CmdWaitEnter);
-            RegisterCommand("deleteBinFolders", CmdDeleteBinFolders);
-            RegisterCommand("filterLog", CmdFilterLog);
-            RegisterCommand("download", CmdDownload);
-            RegisterCommand("downloadAndUnzip", CmdDownloadAndUnzip);
+            RegisterCommand(
+                "del",
+                CmdDeleteFilesByMasks,
+                "");
+
+            RegisterCommand(
+                "rmdir",
+                CmdRemoveFolder,
+                "");
+
+            RegisterCommand(
+                "zipFolder",
+                CmdZipFolder,
+                "");
+
+            RegisterCommand(
+                "unzip",
+                CmdUnzip,
+                "-r=unzip Path=\"e:/file.zip\" ExtractTo=\"e:/ExtractedZip\"");
+
+            RegisterCommand(
+                "runControlsSample",
+                CmdRunControlsSample,
+                "");
+
+            RegisterCommand(
+                "waitAnyKey",
+                CmdWaitAnyKey,
+                "");
+
+            RegisterCommand(
+                "waitEnter",
+                CmdWaitEnter,
+                "");
+
+            RegisterCommand(
+                "deleteBinFolders",
+                CmdDeleteBinFolders,
+                "");
+
+            RegisterCommand(
+                "deleteBinObjSubFolders",
+                CmdDeleteBinObjSubFolders,
+                "-r=deleteBinObjSubFolders Path=\"E:\\SomeFolder\"");
+
+            RegisterCommand(
+                "filterLog",
+                CmdFilterLog,
+                "");
+
+            RegisterCommand(
+                "download",
+                CmdDownload,
+                "-r=download Url=\"http://localhost/file.7z\" Path=\"e:/file.7z\"");
+
+            RegisterCommand(
+                "downloadAndUnzip",
+                CmdDownloadAndUnzip,
+                "-r=downloadAndUnzip Url=\"http://localhost/file.7z\" Path=\"e:/file.7z\" ExtractTo=\"e:/Extracted7z\"");
+
+            originalCommandNames.Sort();
         }
     }
 }

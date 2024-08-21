@@ -3,8 +3,14 @@
 using System.Diagnostics;
 using System.IO;
 
-Console.WriteLine("Alternet.UI.RunCmd");
-Console.WriteLine("Copyright (c) 2023-2024 AlterNET Software");
+Console.WriteLine();
+
+if (CommandLineArgs.Default.HasArgument("-hr"))
+{
+    Console.WriteLine("==================================================");
+}
+
+Console.WriteLine("Alternet.UI.RunCmd (c) 2023-2024 AlterNET Software");
 
 CommandLineArgs.Default.Parse(args);
 
@@ -37,16 +43,19 @@ if(string.IsNullOrWhiteSpace(commandNames))
     return;
 }
 
-Console.WriteLine($"Commands: {commandNames}");
-Console.WriteLine();
-Console.WriteLine("Arguments:");
-
-foreach(var a in args)
+if (CommandLineArgs.Default.HasArgument("-details"))
 {
-    Console.WriteLine($"[{a}]");
-}
+    Console.WriteLine($"Commands: {commandNames}");
+    Console.WriteLine();
+    Console.WriteLine("Arguments:");
 
-Console.WriteLine();
+    foreach (var a in args)
+    {
+        Console.WriteLine($"[{a}]");
+    }
+
+    Console.WriteLine();
+}
 
 Commands.RunCommand(commandNames, CommandLineArgs.Default);
 

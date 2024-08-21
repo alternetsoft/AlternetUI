@@ -41,6 +41,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether argument with the specified name exists in the command line.
+        /// </summary>
+        /// <param name="argName">Argument name.</param>
+        /// <returns></returns>
+        public virtual bool HasArgument(string argName)
+        {
+            if (args.TryGetValue(argName, out _))
+                return true;
+            return false;
+        }
+
+        /// <summary>
         /// Gets command line argument as string.
         /// </summary>
         /// <param name="argName">Argument name.</param>

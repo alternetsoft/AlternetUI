@@ -18,6 +18,10 @@
     },
     "Help": {
       "commandName": "Project"
+    },
+    "DeleteBinObjSubFolders": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=deleteBinObjSubFolders Path=\"E:\\DIMA\\AlternetUI\\Source\\Samples\\ControlsSample\""
     }
   }
 }
