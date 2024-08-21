@@ -244,6 +244,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         ICaretHandler IApplicationHandler.CreateCaretHandler(Control control, int width, int height)
         {
+            if(WindowsCaretHandler.UseIfPossible)
+                return new WindowsCaretHandler(control, width, height);
             return new PlessCaretHandler(control, width, height);
         }
 
