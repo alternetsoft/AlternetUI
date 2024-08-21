@@ -110,5 +110,30 @@ namespace Alternet.UI
                 }
             }
         }
+
+        /// <summary>
+        /// <see cref="TraceListener"/> descendant for the debug purposes.
+        /// </summary>
+        public class DebugTraceListener : TraceListener
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DebugTraceListener"/> class.
+            /// </summary>
+            public DebugTraceListener()
+            {
+            }
+
+            /// <inheritdoc/>
+            public override void Write(string message)
+            {
+                CommonUtils.Nop();
+            }
+
+            /// <inheritdoc/>
+            public override void WriteLine(string message)
+            {
+                CommonUtils.Nop();
+            }
+        }
     }
 }

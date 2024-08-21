@@ -207,6 +207,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates file with the path and name of the executing assembly
+        /// and with the specified extension.
+        /// </summary>
+        /// <param name="ext">Extension of the created file.</param>
+        /// <param name="data">Created file data.</param>
+        public static void CreateExecutingAssemblyWithNewExt(string ext, string data = "")
+        {
+            var s = GetExecutingAssemblyWithNewExt(ext);
+            var streamWriter = File.CreateText(s);
+            streamWriter.WriteLine(data);
+            streamWriter.Close();
+        }
+
+        /// <summary>
+        /// Gets file path and name of the executing assembly with the specified extension.
+        /// </summary>
+        /// <param name="ext">Extension to use.</param>
+        /// <returns></returns>
+        public static string GetExecutingAssemblyWithNewExt(string ext)
+        {
+            string sPath1 = Assembly.GetExecutingAssembly().Location;
+            string sPath2 = Path.ChangeExtension(sPath1, ext);
+            return sPath2;
+        }
+
+        /// <summary>
+        /// Removes file with path and name of the executing assembly with the specified extension.
+        /// </summary>
+        /// <param name="ext">Extension to use.</param>
+        public static void RemoveExecutingAssemblyWithExt(string ext)
+        {
+            var s = GetExecutingAssemblyWithNewExt(ext);
+            if (File.Exists(s))
+                File.Delete(s);
+        }
+
+        /// <summary>
         /// Adds directory separator char to the path if it's needed. If path
         /// already has directory separator char at the end, no changes are
         /// performed.

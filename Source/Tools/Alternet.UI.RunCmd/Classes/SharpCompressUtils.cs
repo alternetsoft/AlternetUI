@@ -8,14 +8,27 @@ using System.Threading.Tasks;
 using SharpCompress;
 using SharpCompress.Archives;
 using SharpCompress.Archives.SevenZip;
+using SharpCompress.Archives.Zip;
 using SharpCompress.Common;
 using SharpCompress.Readers;
 
 namespace Alternet.UI
 {
-    public static class ZipUtils
+    public static class SharpCompressUtils
     {
         static int reportedUnzipProgress = -1;
+
+        public static void ZipFolder(
+            string pathToFolder,
+            string pathToArch,
+            CompressionType compressionType = CompressionType.Deflate)
+        {
+            using (var archive = ZipArchive.Create())
+            {
+                archive.AddAllFromDirectory(pathToFolder);
+                archive.SaveTo(pathToArch, compressionType);
+            }
+        }
 
         public static void Unzip(
             string filePath,
@@ -168,8 +181,8 @@ namespace Alternet.UI
             }
             catch (Exception e)
             {
-                CommonProcs.LogExceptionToConsole(e);
-                CommonProcs.LogException(e);
+                LogUtils.LogExceptionToConsole(e);
+                LogUtils.LogException(e);
                 throw;
             }
         }

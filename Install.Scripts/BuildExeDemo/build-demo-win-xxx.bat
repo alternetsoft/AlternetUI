@@ -16,6 +16,7 @@ ECHO ON
 
 set SCRIPT_HOME=%~dp0
 set SOURCE_HOME=%SCRIPT_HOME%\..\..\Source
+set RUNCMD_HOME=%SOURCE_HOME%\Tools\Alternet.UI.RunCmd\
 set ALTERNET_HOME=%SCRIPT_HOME%\..\..\
 set SAMPLES_HOME=%SOURCE_HOME%\Samples
 set DEMO_HOME=%SAMPLES_HOME%\ControlsSample
@@ -28,6 +29,7 @@ set PUBLISH_FOLDER_PARENT=%ALTERNET_HOME%\Publish\Packages
 set PUBLISH_FOLDER=%PUBLISH_FOLDER_PARENT%\%DEMO_NAME%
 set PUBLISH_ZIP=%PUBLISH_FOLDER%.zip
 set VersionToolProject=%SOURCE_HOME%\Tools\Versioning\Alternet.UI.VersionTool.Cli\Alternet.UI.VersionTool.Cli.csproj
+set RunCmdProject=%RUNCMD_HOME%\Alternet.UI.RunCmd.csproj
 
 call "%CLEAN_PROJECT%" "%DEMO_HOME%"
 
@@ -87,7 +89,9 @@ del %DEMO_NAME%.zip
 
 :: -mx7
 
-"C:\Program Files\7-Zip\7z" a -tzip -r %DEMO_NAME% "%DEMO_NAME%\*"
+:: "C:\Program Files\7-Zip\7z" a -tzip -r %DEMO_NAME% "%DEMO_NAME%\*"
+
+dotnet run --project "%RunCmdProject%" -- -r=zipFolder Folder="%PUBLISH_FOLDER_PARENT%\%DEMO_NAME%" Result="%PUBLISH_FOLDER_PARENT%\%DEMO_NAME%.zip"
 
 dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%DEMO_NAME%.zip"
 
