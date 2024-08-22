@@ -200,6 +200,7 @@
 		<Message Text="Removing temp folder..." Importance="high" />
 		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir Path=&quot;$(PUBLISH_FOLDER_SFX)&quot;" />
 
+		<Message Text="Exe demo created ok." Importance="high" />
 		<Message Text="===========================================" Importance="high" />
 	</Target>
 
