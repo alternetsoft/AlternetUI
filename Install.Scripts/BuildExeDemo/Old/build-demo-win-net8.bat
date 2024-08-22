@@ -1,1 +1,0 @@
-call build-demo-win-xxx.bat net8.0 alternet-ui-demo-win-net8
