@@ -14,7 +14,7 @@
     },
     "ZipFolder": {
       "commandName": "Project",
-      "commandLineArgs": "-r=zipFolder Folder=\"d:\\testFolder\" Result=\"d:\\result.zip\""
+      "commandLineArgs": "-r=zipFolder Folder=\"d:\\testFolder\" Result=\"d:\\result.zip\" RootSubFolder=\"SubF1\""
     },
     "Help": {
       "commandName": "Project"
