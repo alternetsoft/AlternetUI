@@ -8,7 +8,8 @@ namespace VersionTool.Cli
     {
         public static void Write(Repository repository)
         {
-            var version = VersionService.GetVersion(repository).GetPackageVersion(VersionService.GetBuildNumber(repository));
+            var version = VersionService.GetVersion(repository).GetPackageVersion(
+                VersionService.GetBuildNumber(repository));
             Console.Write(version);
         }
 

@@ -8,7 +8,10 @@ namespace Alternet.UI.Versioning
 {
     public static class VersionService
     {
-        public static void SetVersion(Repository repository, ProductVersion productVersion, int buildNumber)
+        public static void SetVersion(
+            Repository repository,
+            ProductVersion productVersion,
+            int buildNumber)
         {
             var locator = new FileLocator(repository);
 
@@ -19,12 +22,19 @@ namespace Alternet.UI.Versioning
             PatchDocumentationExamplesProjectFiles(productVersion, locator);
         }
 
-        internal static void PatchTemplateProjectFiles(ProductVersion productVersion, int buildNumber, FileLocator locator)
+        internal static void PatchTemplateProjectFiles(
+            ProductVersion productVersion,
+            int buildNumber,
+            FileLocator locator)
         {
-            PatchVersionInProjectFiles(locator.GetTemplateProjectFiles(), productVersion.GetPackageVersion(buildNumber));
+            PatchVersionInProjectFiles(
+                locator.GetTemplateProjectFiles(),
+                productVersion.GetPackageVersion(buildNumber));
         }
 
-        internal static void PatchDocumentationExamplesProjectFiles(ProductVersion productVersion, FileLocator locator)
+        internal static void PatchDocumentationExamplesProjectFiles(
+            ProductVersion productVersion,
+            FileLocator locator)
         {
             PatchVersionInProjectFiles(locator.GetDocumentationExamplesProjectFiles(), productVersion.GetPackageFloatingReferenceVersion());
         }
@@ -54,7 +64,9 @@ namespace Alternet.UI.Versioning
             }
         }
 
-        public static ProductVersion GetVersion(Repository repository) => MasterVersionFileService.GetVersion(new FileLocator(repository).GetMasterVersionFile());
-        public static int GetBuildNumber(Repository repository) => MasterVersionFileService.GetBuildNumber(new FileLocator(repository).GetMasterVersionFile());
+        public static ProductVersion GetVersion(Repository repository)
+            => MasterVersionFileService.GetVersion(new FileLocator(repository).GetMasterVersionFile());
+        public static int GetBuildNumber(Repository repository)
+            => MasterVersionFileService.GetBuildNumber(new FileLocator(repository).GetMasterVersionFile());
     }
 }
