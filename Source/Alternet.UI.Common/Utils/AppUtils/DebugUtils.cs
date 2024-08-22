@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to log application loading process.
         /// </summary>
-        public static bool DebugLoading;
+        public static bool DebugLoading = false;
 
         /// <summary>
         /// Gets or sets whether to use 'dlOpen' on Linux in order to load native dll.
