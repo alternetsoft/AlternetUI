@@ -111,7 +111,7 @@
 
 		<Message Text="Building exe demo..." Importance="high" />
 		<Exec WorkingDirectory="$(DEMO_HOME)"
-			Command="dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DEMO_ADD_PARAMS)" />
+			Command="dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) /p:Platform=$(DEMO_PLATFORM) $(DEMO_ADD_PARAMS)" />
 
 		<Message Text="===========================================" Importance="high" />
 

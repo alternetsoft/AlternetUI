@@ -9,7 +9,9 @@ Please install Microsoft.NET and other required packages before running this dem
               
 ## Linux
 
-- Before running demo on Ubuntu, you need to install required packages using 'Ubuntu.Install.Packages.sh' script.
+- Allow to run sh files: ``` find -type f -iname "*.sh" -exec chmod +x {} \; ```
+- Allow to run ControlsSample: ``` find -type f -iname "ControlsSample" -exec chmod +x {} \; ```
+- On Ubuntu: Install required packages using 'Ubuntu.Install.Packages.sh' script.
 - NET Runtime 8 must be installed.
 
 ## MacOs
