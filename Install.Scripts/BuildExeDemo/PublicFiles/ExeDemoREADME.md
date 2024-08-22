@@ -28,6 +28,7 @@ Read included USAGE.md for the installation details.
 ## NET Framework Download Links
 
 - [NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [NET 4.81](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
 - [NET 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
 - [NET 4.62](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
