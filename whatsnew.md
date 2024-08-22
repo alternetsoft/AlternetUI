@@ -1,3 +1,16 @@
+# 0.9.626 (2024 August 22)
+
+- Speed up of the control painting and caret movement on Maui platform.
+- Fixed Alternet.Editor related double-scale of the images on Maui.
+- Removed old style Control.MousePosition, Mouse.GetPosition() which were without parameters. Now you can use 
+Mouse.GetPosition with parameters (control or scale factor). This change is done in order to implement better support for
+multiple monitors with different dpi.
+- Intergated SkiaSharpSample into ControlsSampleDll.
+- Fixed CustomWindowsConsole behavior on Win 7.
+- Control.RefreshRectsUnion, SkiaUtils.GetBounds, SkiaGraphics.OriginalScaleFactor.
+- SkiaGraphics and SkiaContainer: UseUnscaledDrawImage.
+- Alternet.UI.RunCmd project improved (new commands, etc.).
+
 # 0.9.625 (2024 August 18)
 
 - Control: IntAttr, IntFlags, IntFlagsAndAttributes, IsTextLocalized, IsTitleLocalized, IsToolTipLocalized.

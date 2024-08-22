@@ -31,7 +31,7 @@ namespace Alternet.UI
             IsNetCoreApp = false;
 #endif
 
-            if (!App.Is64BitOS && App.IsWindowsOS)
+            if (!App.Is64BitProcess && App.IsWindowsOS)
             {
                 if (!IsNetCoreApp)
                 {

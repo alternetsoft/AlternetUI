@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to log application loading process.
         /// </summary>
-        public static bool DebugLoading;
+        public static bool DebugLoading = false;
 
         /// <summary>
         /// Gets or sets whether to use 'dlOpen' on Linux in order to load native dll.
@@ -108,6 +108,31 @@ namespace Alternet.UI
                 {
                     insideUnhandledException = false;
                 }
+            }
+        }
+
+        /// <summary>
+        /// <see cref="TraceListener"/> descendant for the debug purposes.
+        /// </summary>
+        public class DebugTraceListener : TraceListener
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DebugTraceListener"/> class.
+            /// </summary>
+            public DebugTraceListener()
+            {
+            }
+
+            /// <inheritdoc/>
+            public override void Write(string message)
+            {
+                CommonUtils.Nop();
+            }
+
+            /// <inheritdoc/>
+            public override void WriteLine(string message)
+            {
+                CommonUtils.Nop();
             }
         }
     }

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<SCRIPT_HOME>$(MSBuildProjectDirectory)</SCRIPT_HOME>
+		<SOURCE_HOME>$(SCRIPT_HOME)\..\..\Source</SOURCE_HOME>
+		<ALTERNET_HOME>$(SCRIPT_HOME)\..\..\</ALTERNET_HOME>
+		<SAMPLES_HOME>$(SOURCE_HOME)\Samples</SAMPLES_HOME>
+		<DEMO_HOME>$(SAMPLES_HOME)\ControlsSample</DEMO_HOME>
+		<DEMO_HOME_BIN>$(DEMO_HOME)\bin</DEMO_HOME_BIN>
+		<DEMO_HOME_OBJ>$(DEMO_HOME)\obj</DEMO_HOME_OBJ>
+		<DEMO_HOME_BIN_RELEASE>$(DEMO_HOME)\bin\Release</DEMO_HOME_BIN_RELEASE>
+		<SIGN_PAL_IN_FOLDER>$(SCRIPT_HOME)\..\SignTools\Sign.Pal.InFolder.bat</SIGN_PAL_IN_FOLDER>
+		<SIGN_EXE_IN_FOLDER>$(SCRIPT_HOME)\..\SignTools\Sign.Exe.InFolder.bat</SIGN_EXE_IN_FOLDER>
+		<CLEAN_PROJECT>$(SCRIPT_HOME)\..\Tools\CleanProject.bat</CLEAN_PROJECT>
+		<PUBLISH_FOLDER_PARENT>$(ALTERNET_HOME)\Publish\Packages</PUBLISH_FOLDER_PARENT>
+		<PUBLISH_FOLDER>$(PUBLISH_FOLDER_PARENT)\$(DEMO_NAME)</PUBLISH_FOLDER>
+		<VERSIONTOOL_HOME>$(SOURCE_HOME)\Tools\Versioning\Alternet.UI.VersionTool.Cli</VERSIONTOOL_HOME>
+		<VERSIONTOOL_PROJECT>$(VERSIONTOOL_HOME)\Alternet.UI.VersionTool.Cli.csproj</VERSIONTOOL_PROJECT>
+		<RUNCMD_HOME>$(SOURCE_HOME)\Tools\Alternet.UI.RunCmd\</RUNCMD_HOME>
+		<RUNCMD_PROJECT>$(RUNCMD_HOME)\Alternet.UI.RunCmd.csproj</RUNCMD_PROJECT>
+
+		
+		<SCRIPT_HOME>$([System.IO.Path]::GetFullPath('$(SCRIPT_HOME)'))</SCRIPT_HOME>
+		<SOURCE_HOME>$([System.IO.Path]::GetFullPath('$(SOURCE_HOME)'))</SOURCE_HOME>
+		<ALTERNET_HOME>$([System.IO.Path]::GetFullPath('$(ALTERNET_HOME)'))</ALTERNET_HOME>
+		<SAMPLES_HOME>$([System.IO.Path]::GetFullPath('$(SAMPLES_HOME)'))</SAMPLES_HOME>
+		<DEMO_HOME>$([System.IO.Path]::GetFullPath('$(DEMO_HOME)'))</DEMO_HOME>
+		<DEMO_HOME_BIN>$([System.IO.Path]::GetFullPath('$(DEMO_HOME_BIN)'))</DEMO_HOME_BIN>
+		<DEMO_HOME_OBJ>$([System.IO.Path]::GetFullPath('$(DEMO_HOME_OBJ)'))</DEMO_HOME_OBJ>
+		<DEMO_HOME_BIN_RELEASE>$([System.IO.Path]::GetFullPath('$(DEMO_HOME_BIN_RELEASE)'))</DEMO_HOME_BIN_RELEASE>
+		<SIGN_PAL_IN_FOLDER>$([System.IO.Path]::GetFullPath('$(SIGN_PAL_IN_FOLDER)'))</SIGN_PAL_IN_FOLDER>
+		<SIGN_EXE_IN_FOLDER>$([System.IO.Path]::GetFullPath('$(SIGN_EXE_IN_FOLDER)'))</SIGN_EXE_IN_FOLDER>
+		<CLEAN_PROJECT>$([System.IO.Path]::GetFullPath('$(CLEAN_PROJECT)'))</CLEAN_PROJECT>
+		<PUBLISH_FOLDER_PARENT>$([System.IO.Path]::GetFullPath('$(PUBLISH_FOLDER_PARENT)'))</PUBLISH_FOLDER_PARENT>
+		<PUBLISH_FOLDER>$([System.IO.Path]::GetFullPath('$(PUBLISH_FOLDER)'))</PUBLISH_FOLDER>
+		<VERSIONTOOL_HOME>$([System.IO.Path]::GetFullPath('$(VERSIONTOOL_HOME)'))</VERSIONTOOL_HOME>
+		<VERSIONTOOL_PROJECT>$([System.IO.Path]::GetFullPath('$(VERSIONTOOL_PROJECT)'))</VERSIONTOOL_PROJECT>
+		<RUNCMD_HOME>$([System.IO.Path]::GetFullPath('$(RUNCMD_HOME)'))</RUNCMD_HOME>
+		<RUNCMD_PROJECT>$([System.IO.Path]::GetFullPath('$(RUNCMD_PROJECT)'))</RUNCMD_PROJECT>
+
+		<RUNCMD_PREFIX>dotnet run --no-restore --no-build --project &quot;$(RUNCMD_PROJECT)&quot; --</RUNCMD_PREFIX>
+		<VERSIONTOOL_PREFIX>dotnet run --project &quot;$(VERSIONTOOL_PROJECT)&quot; --</VERSIONTOOL_PREFIX>
+
+	</PropertyGroup>
+
+
+	<Target Name="ShowProps">
+		<Message Text="SCRIPT_HOME: $(SCRIPT_HOME)" Importance="high" />
+		<Message Text="SOURCE_HOME: $(SOURCE_HOME)" Importance="high" />
+		<Message Text="ALTERNET_HOME: $(ALTERNET_HOME)" Importance="high" />
+		<Message Text="SAMPLES_HOME: $(SAMPLES_HOME)" Importance="high" />
+		<Message Text="DEMO_HOME: $(DEMO_HOME)" Importance="high" />
+		<Message Text="DEMO_HOME_BIN: $(DEMO_HOME_BIN)" Importance="high" />
+		<Message Text="DEMO_HOME_OBJ: $(DEMO_HOME_OBJ)" Importance="high" />
+		<Message Text="DEMO_HOME_BIN_RELEASE: $(DEMO_HOME_BIN_RELEASE)" Importance="high" />
+		<Message Text="SIGN_PAL_IN_FOLDER: $(SIGN_PAL_IN_FOLDER)" Importance="high" />
+		<Message Text="SIGN_EXE_IN_FOLDER: $(SIGN_EXE_IN_FOLDER)" Importance="high" />
+		<Message Text="CLEAN_PROJECT: $(CLEAN_PROJECT)" Importance="high" />
+		<Message Text="PUBLISH_FOLDER_PARENT: $(PUBLISH_FOLDER_PARENT)" Importance="high" />
+		<Message Text="PUBLISH_FOLDER: $(PUBLISH_FOLDER)" Importance="high" />
+		<Message Text="VERSIONTOOL_HOME: $(VERSIONTOOL_HOME)" Importance="high" />
+		<Message Text="VERSIONTOOL_PROJECT: $(VERSIONTOOL_PROJECT)" Importance="high" />
+		<Message Text="RUNCMD_HOME: $(RUNCMD_HOME)" Importance="high" />
+		<Message Text="RUNCMD_PROJECT: $(RUNCMD_PROJECT)" Importance="high" />
+		<Message Text="===========================================" Importance="high" />
+	</Target>
+
+	<Target Name="BuildExeDemo">
+		<Message Text="===========================================" Importance="high" />
+		<Message Text="BuildExeDemo [$(DEMO_NAME)] [$(DEMO_FRAMEWORK)] [$(DEMO_PLATFORM)] [$(DEMO_ADD_PARAMS)]" Importance="high" />
+		<Message Text="===========================================" Importance="high" />
+		<CallTarget Targets="ShowProps" Condition="true"/>
+
+		<Message Text="Building Alternet.UI.RunCmd.csproj..." Importance="high" />
+
+		<Exec WorkingDirectory="$(SCRIPT_HOME)"
+			Command="dotnet build &quot;$(RUNCMD_PROJECT)&quot;" />
+
+		<Message Text="Building Alternet.UI.RunCmd.csproj done." Importance="high" />
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=deleteBinObjSubFolders Path=&quot;$(DEMO_HOME)&quot;" />
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Exec Command="$(VERSIONTOOL_PREFIX) get-version" ConsoleToMSBuild="true">
+  			<Output TaskParameter="ConsoleOutput" PropertyName="VERSION_SUFFIX" />
+		</Exec>
+
+		<PropertyGroup>
+			<PUBLISH_FOLDER_SFX>$(PUBLISH_FOLDER)-$(VERSION_SUFFIX)</PUBLISH_FOLDER_SFX>
+			<RESULT_ZIP>$(PUBLISH_FOLDER_PARENT)\$(DEMO_NAME)-$(VERSION_SUFFIX).zip</RESULT_ZIP>
+		</PropertyGroup>
+
+		<Message Text="VERSION_SUFFIX: $(VERSION_SUFFIX)" Importance="high" />
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir Path=&quot;$(PUBLISH_FOLDER_SFX)&quot;" />
+
+		<MakeDir Directories="$(PUBLISH_FOLDER_SFX)"/>
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Message Text="Run: dotnet clean" Importance="high" />
+		<Exec WorkingDirectory="$(DEMO_HOME)" Command="dotnet clean" />
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Message Text="Building exe demo..." Importance="high" />
+		<Exec WorkingDirectory="$(DEMO_HOME)"
+			Command="dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DEMO_ADD_PARAMS)" />
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Message Text="Signing exe demo..." Importance="high" />
+
+		<Exec WorkingDirectory="$(PUBLISH_FOLDER_SFX)"
+			Command="call $(SIGN_PAL_IN_FOLDER) $(PUBLISH_FOLDER_SFX)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+
+		<Exec WorkingDirectory="$(PUBLISH_FOLDER_SFX)"
+			Command="call $(SIGN_EXE_IN_FOLDER) $(PUBLISH_FOLDER_SFX)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+		
+		<Message Text="===========================================" Importance="high" />
+
+		<Copy
+            		SourceFiles="$(SCRIPT_HOME)\PublicFiles\ExeDemoREADME.md"
+            		DestinationFiles="$(PUBLISH_FOLDER_SFX)\README.md"
+	        />
+
+		<Copy
+            		SourceFiles="$(ALTERNET_HOME)\Install.Scripts\Ubuntu.Install.Packages.sh"
+            		DestinationFiles="$(PUBLISH_FOLDER_SFX)\Ubuntu.Install.Packages.sh"
+			Condition="$([MSBuild]::IsOsPlatform('Linux'))"
+	        />
+
+		<Message Text="===========================================" Importance="high" />
+
+	<ItemGroup>
+            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Alternet.UI.xml"/>
+            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Alternet.UI.Common.xml"/>
+            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Alternet.UI.Interfaces.xml"/>
+            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\*.pdb"/>
+            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.pdb"/>
+
+            <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\**\*.so"/>
+            <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\*.so"/>
+            <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\**\*.dylib"/>
+            <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\*.dylib"/>
+
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm"/>
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm64"/>
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-musl-x64"/>
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-arm64"/>
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\arm"/>
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\arm64"/>
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\musl-x64"/>
+
+            <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-x64"/>
+            <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\osx"/>
+
+            <DeleteFolders32bit Include="$(PUBLISH_FOLDER_SFX)\x64"/>
+
+            <DeleteFolders64bit Include="$(PUBLISH_FOLDER_SFX)\x86"/>
+	</ItemGroup>
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Delete Files="$(RESULT_ZIP)"/>
+		<Delete Files="@(DeleteFilesAnyPlatform)"/>
+		<Delete Files="@(DeleteFilesWindows)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersAnyPlatform.Identity)&quot;"/>
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersWindows.Identity)&quot;"
+			 Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFolders64bit.Identity)&quot;"
+			 Condition="'$(DEMO_PLATFORM)'=='x64'"/>
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFolders32bit.Identity)&quot;"
+			 Condition="'$(DEMO_PLATFORM)'=='x86'"/>
+
+		<Message Text="===========================================" Importance="high" />
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=zipFolder Folder=&quot;$(PUBLISH_FOLDER_SFX)&quot; Result=&quot;$(RESULT_ZIP)&quot;"/>
+
+		<Message Text="===========================================" Importance="high" />
+	</Target>
+
+
+</Project>
+
+
+<!--
+
+-->

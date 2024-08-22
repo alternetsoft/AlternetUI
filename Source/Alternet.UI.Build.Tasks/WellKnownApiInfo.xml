@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.625.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.626.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -9832,6 +9832,7 @@
     <Type Name="Alternet.UI.ScrollBar+MetricsInfo" />
     <Type Name="Alternet.UI.SpeedButton+KnownTheme" />
     <Type Name="Alternet.UI.FindReplaceControl+IFindReplaceConnect" />
+    <Type Name="Alternet.UI.DebugUtils+DebugTraceListener" />
     <Type Name="Alternet.UI.LogUtils+LogFlags" />
     <Type Name="Alternet.UI.LinuxUtils+NativeMethods" />
     <Type Name="Alternet.UI.MacOsUtils+NativeMethods" />

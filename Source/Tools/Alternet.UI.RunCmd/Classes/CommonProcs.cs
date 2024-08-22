@@ -11,157 +11,6 @@ namespace Alternet.UI
 {
     public static partial class CommonProcs
     {
-        public static readonly string ResNamePrefix = "ControlsTest.";
-
-        private static readonly string MyLogFilePath =
-            Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
-
-        private static readonly string[] StringSplitToArrayChars = new string[]
-        {
-            Environment.NewLine,
-        };
-
-        public static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
-        private static bool cmdLineTest = false;
-        private static bool cmdLineLog = false;
-        private static bool cmdLineNoMfcDedug = false;
-        public static string? cmdLineExecCommands = null;
-
-        public static bool CmdLineTest => cmdLineTest;
-
-        public static bool CmdLineLog => cmdLineLog;
-
-        public static bool CmdLineNoMfcDedug => cmdLineNoMfcDedug;
-
-        public static string? CmdLineExecCommands => cmdLineExecCommands;
-
-        public static void Nop()
-        {
-        }
-
-        public static void LogException(Exception e)
-        {
-            LogToFile("====== EXCEPTION:");
-            LogToFile(e.ToString());
-            LogToFile("======");
-        }
-
-        public static void LogExceptionToConsole(Exception e)
-        {
-            Console.WriteLine("====== EXCEPTION:");
-            Console.WriteLine(e.ToString());
-            Console.WriteLine("======");
-        }
-
-        public static void DeleteLog()
-        {
-            if (File.Exists(MyLogFilePath))
-                File.Delete(MyLogFilePath);
-        }
-
-        public static string ToString(string[] args)
-        {
-            string result = string.Empty;
-            for (int i = 0; i < args.Length; i++)
-            {
-                string text = args[i];
-                result += "["+text+"] ";
-            }
-            return result;
-        }
-
-        public static void ParseCmdLine(string[] args)
-        {
-            for (int i = 0; i < args.Length; i++)
-            {
-                string text = args[i];
-
-                Fn("-log", out cmdLineLog);
-                Fn("-nomfcdebug", out cmdLineNoMfcDedug);
-                Fn("-test", out cmdLineTest);
-
-                if (text.StartsWith(
-                        "-r=",
-                        StringComparison.CurrentCultureIgnoreCase))
-                    cmdLineExecCommands = text.Substring("-r=".Length).Trim();
-
-                void Fn(string strFlag, out bool boolFlag)
-                {
-                    boolFlag = text.Equals(strFlag, StringComparison.CurrentCultureIgnoreCase);
-                }
-            }
-
-            if (!CmdLineTest)
-            {
-                cmdLineTest = File.Exists(GetFileWithExt("test"));
-            }
-        }
-
-        public static string StringFromStream(Stream stream)
-        {
-            return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
-        }
-
-        public static string StringFromFile(string filename)
-        {
-            using FileStream stream = File.OpenRead(filename);
-            return StringFromStream(stream);
-        }
-
-        public static Stream GetMyResourceStream(string resName)
-        {
-            Stream stream = ProcessResPrefix("rsrc://")!;
-            if (stream != null)
-                return stream;
-            if (resName.StartsWith("file://"))
-                resName = resName.Remove(0, "file://".Length);
-
-            resName = Path.Combine(CommonUtils.GetAppFolder(), resName);
-            return File.OpenRead(resName);
-
-            Stream? ProcessResPrefix(string resPrefix)
-            {
-                if (resName.StartsWith(resPrefix))
-                {
-                    resName = resName.Remove(0, resPrefix.Length);
-                    resName = resName.Replace('/', '.');
-                    string name = ResNamePrefix + resName;
-                    return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
-                }
-
-                return null;
-            }
-        }
-
-        public static void LogToFile(string s)
-        {
-            if (!CmdLineTest && !CmdLineLog)
-                return;
-
-            string dt = System.DateTime.Now.ToString(StringFormatJs);
-            string[] result = s.Split(StringSplitToArrayChars, StringSplitOptions.None);
-
-            string contents = string.Empty;
-
-            foreach (string s2 in result)
-                contents += $"{dt} :: {s2}{Environment.NewLine}";
-            File.AppendAllText(MyLogFilePath, contents);
-        }
-
-        public static string GetFileWithExt(string ext)
-        {
-            string sPath1 = Assembly.GetExecutingAssembly().Location;
-            string sPath2 = Path.ChangeExtension(sPath1, ext);
-            return sPath2;
-        }
-
-        public static void RemoveFileWithExt(string ext)
-        {
-            var s = GetFileWithExt(ext);
-            if (File.Exists(s))
-                File.Delete(s);
-        }
-
         public static bool ProcessStart(string filePath, string args, string? folder)
         {
             Process process = new ();
@@ -183,33 +32,100 @@ namespace Alternet.UI
             }
         }
 
-        public static void CreateFileWithExt(string ext, string data = "")
+        public static void DeleteFilesByMasks(
+            string path,
+            string masks = "*",
+            Action<string>? writeLine = null)
         {
-            var s = GetFileWithExt(ext);
-            var streamWriter = File.CreateText(s);
-            streamWriter.WriteLine(data);
-            streamWriter.Close();
+            writeLine ??= Console.WriteLine;
+
+            /* writeLine($"DeleteFilesByMasks [{masks}] in folder [{path}]"); */
+
+            masks = masks.Trim();
+            var splittedMasks = masks.Split(';');
+            foreach(var mask in splittedMasks)
+            {
+                DeleteFilesByMask(path, mask, writeLine);
+            }
+
+            /* writeLine($"DeleteFilesByMasks done."); */
         }
 
-        public class DebugTraceListener : TraceListener
+        public static void DeleteFilesByMask(
+            string path,
+            string mask = "*",
+            Action<string>? writeLine = null)
         {
-            public DebugTraceListener()
+            writeLine ??= Console.WriteLine;
+            
+            /* writeLine($"DeleteFilesByMask [{mask}] in folder [{path}]"); */
+
+            var filesToDelete = new List<string>();
+
+            if (Directory.Exists(path))
             {
+                var files = Directory.EnumerateFiles(
+                    path,
+                    mask,
+                    SearchOption.AllDirectories);
+                filesToDelete.AddRange(files);
+            }
+            else
+            {
+                writeLine($"Folder doesn't exist: [{path}].");
+                return;
             }
 
-#pragma warning disable IDE0079
-#pragma warning disable CS8765
-            public override void Write(string message)
+            foreach (var s in filesToDelete)
             {
-                Nop();
+                writeLine("Deleting file: " + s);
+                try
+                {
+                    File.Delete(s);
+                }
+                catch (Exception)
+                {
+                    writeLine("ERROR deleting file: " + s);
+                }
             }
 
-            public override void WriteLine(string message)
+            /* writeLine($"DeleteFilesByMask done."); */
+        }
+
+        public static void DeleteBinObjFiles(string pathToFolder)
+        {
+            if(string.IsNullOrWhiteSpace(pathToFolder))
             {
-                Nop();
+                Console.WriteLine($"Path parameter is not specified.");
+                return;
             }
-#pragma warning restore CS8765
-#pragma warning restore IDE0079
+
+            var path = Path.GetFullPath(pathToFolder);
+
+            if (!Directory.Exists(path))
+            {
+                Console.WriteLine($"Folder doesn't exist: [{path}].");
+                return;
+            }
+
+            var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
+                        .Where(s => s.EndsWith(".csproj") || s.EndsWith(".vcxproj"));
+
+            foreach (string projFile in files)
+            {
+                var projPath = Path.GetDirectoryName(projFile);
+
+                if (Path.GetFileName(projFile) == "Alternet.UI.RunCmd.csproj")
+                {
+                    continue;
+                }
+
+                var projPathBin = Path.Combine(projPath!, "bin");
+                var projPathObj = Path.Combine(projPath!, "obj");
+
+                DeleteFilesByMask(projPathBin);
+                DeleteFilesByMask(projPathObj);
+            }
         }
     }
 }

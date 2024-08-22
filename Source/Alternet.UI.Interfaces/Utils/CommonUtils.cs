@@ -17,6 +17,13 @@ namespace Alternet.UI
     public static class CommonUtils
     {
         /// <summary>
+        /// Does nothing.
+        /// </summary>
+        public static void Nop()
+        {
+        }
+
+        /// <summary>
         /// Removes a <see cref="Path.DirectorySeparatorChar"/> and
         /// <see cref="Path.AltDirectorySeparatorChar"/> characters from the end
         /// of the specified string.

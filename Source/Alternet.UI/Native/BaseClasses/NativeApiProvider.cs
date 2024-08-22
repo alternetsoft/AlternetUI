@@ -225,7 +225,7 @@ namespace Alternet.UI.Native
                 if (!App.IsWindowsOS)
                     return;
 
-                var b = DebugUtils.DebugLoading;
+                var b = DebugUtils.DebugLoading && DebugUtils.IsDebugDefined;
 
                 try
                 {

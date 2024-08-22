@@ -542,6 +542,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs exception to console.
+        /// </summary>
+        /// <param name="e">Exception.</param>
+        public static void LogExceptionToConsole(Exception e)
+        {
+            Console.WriteLine("====== EXCEPTION:");
+            Console.WriteLine(e.ToString());
+            Console.WriteLine("======");
+        }
+
+        /// <summary>
         /// Logs <see cref="IEnumerable"/> to file.
         /// </summary>
         /// <param name="items">Range of items.</param>

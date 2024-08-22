@@ -42,7 +42,7 @@ namespace VersionTool.Cli
 
         private static Repository LocateRepository()
         {
-            var uiFolder = Path.Combine(CommonUtils.GetUIFolder("Tools") ?? string.Empty, "..\\..");
+            var uiFolder = Path.Combine(CommonUtils.GetUIFolder("Tools") ?? string.Empty, "..", "..");
             uiFolder = Path.GetFullPath(uiFolder);
             return new Repository(uiFolder);
 
