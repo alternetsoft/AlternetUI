@@ -104,8 +104,8 @@
 
 		<Message Text="===========================================" Importance="high" />
 
-		<Message Text="Run: dotnet clean" Importance="high" />
-		<Exec WorkingDirectory="$(DEMO_HOME)" Command="dotnet clean" />
+		<Message Text="Run: dotnet clean" Importance="high" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+		<Exec WorkingDirectory="$(DEMO_HOME)" Command="dotnet clean" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
 
 		<Message Text="===========================================" Importance="high" />
 
