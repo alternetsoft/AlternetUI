@@ -128,6 +128,12 @@
             		DestinationFiles="$(PUBLISH_FOLDER_SFX)\README.md"
 	        />
 
+		<Copy
+            		SourceFiles="$(ALTERNET_HOME)\Install.Scripts\Ubuntu.Install.Packages.sh"
+            		DestinationFiles="$(PUBLISH_FOLDER_SFX)\Ubuntu.Install.Packages.sh"
+			Condition="$([MSBuild]::IsOsPlatform('Linux'))"
+	        />
+
 		<Message Text="===========================================" Importance="high" />
 
 	<ItemGroup>
