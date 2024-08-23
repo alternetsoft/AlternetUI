@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -386,7 +387,7 @@ namespace Alternet.UI
             RectD rect,
             Thickness borderWidth)
         {
-            if(borderWidth.Top > 0)
+            if (borderWidth.Top > 0)
                 dc.FillRectangle(brush, GetTopLineRect(rect, borderWidth.Top));
             if (borderWidth.Bottom > 0)
                 dc.FillRectangle(brush, GetBottomLineRect(rect, borderWidth.Bottom));
@@ -460,9 +461,9 @@ namespace Alternet.UI
                 return list[0];
             StringBuilder result = new();
             bool firstLine = true;
-            foreach(var s in list)
+            foreach (var s in list)
             {
-                if(!firstLine)
+                if (!firstLine)
                     result.AppendLine();
                 result.Append(s);
                 firstLine = false;

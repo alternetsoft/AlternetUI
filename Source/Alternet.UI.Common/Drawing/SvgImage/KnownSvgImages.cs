@@ -57,6 +57,46 @@ namespace Alternet.UI
         private static SvgImage? imgEmpty;
         private static SvgImage? imgReplace;
         private static SvgImage? imgReplaceAll;
+        private static SvgImage? imgTriangleArrowDown;
+        private static SvgImage? imgTriangleArrowUp;
+        private static SvgImage? imgTriangleArrowLeft;
+        private static SvgImage? imgTriangleArrowRight;
+
+        /// <summary>
+        /// Gets or sets 'Triangle Arrow Down' image.
+        /// </summary>
+        public static SvgImage ImgTriangleArrowDown
+        {
+            get => imgTriangleArrowDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowDown);
+            set => imgTriangleArrowDown = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Triangle Arrow Up' image.
+        /// </summary>
+        public static SvgImage ImgTriangleArrowUp
+        {
+            get => imgTriangleArrowUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowUp);
+            set => imgTriangleArrowUp = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Triangle Arrow Left' image.
+        /// </summary>
+        public static SvgImage ImgTriangleArrowLeft
+        {
+            get => imgTriangleArrowLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowLeft);
+            set => imgTriangleArrowLeft = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Triangle Arrow Right' image.
+        /// </summary>
+        public static SvgImage ImgTriangleArrowRight
+        {
+            get => imgTriangleArrowRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowRight);
+            set => imgTriangleArrowRight = value;
+        }
 
         /// <summary>
         /// Gets or sets image that can be used in "Ok" buttons.
@@ -486,5 +526,27 @@ namespace Alternet.UI
         /// <param name="up">Up or Down image.</param>
         /// <returns></returns>
         public static SvgImage GetImgAngleUpDown(bool up) => up ? ImgAngleUp : ImgAngleDown;
+
+        /// <summary>
+        /// Gets triangle arrow image with the specified direction.
+        /// </summary>
+        /// <param name="direction">Arrow direction.</param>
+        /// <returns></returns>
+        public static SvgImage GetImgTriangleArrow(ArrowDirection direction)
+        {
+            switch (direction)
+            {
+                case ArrowDirection.Up:
+                    return ImgTriangleArrowUp;
+                case ArrowDirection.Down:
+                    return ImgTriangleArrowDown;
+                case ArrowDirection.Left:
+                    return ImgTriangleArrowLeft;
+                case ArrowDirection.Right:
+                    return ImgTriangleArrowRight;
+                default:
+                    return ImgEmpty;
+            }
+        }
      }
 }

@@ -65,6 +65,21 @@ namespace ControlsTest
 
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
+                var downSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Down);
+                var upSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Up);
+                var leftSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Left);
+                var rightSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Right);
+
+                DrawImage((50, 50), upSvgImage);
+                DrawImage((50, 90), downSvgImage);
+                DrawImage((20, 70), leftSvgImage);
+                DrawImage((90, 70), rightSvgImage);
+
+                void DrawImage(PointD coord, SvgImage svg)
+                {
+                    var img = svg.AsImage(32);
+                    canvas.DrawImage(img, coord);
+                }
             });
         }
 
