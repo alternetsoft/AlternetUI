@@ -78,7 +78,7 @@ namespace Alternet.UI
                     return default;
                 }
 
-                return ((WindowHandler)window.Handler).NativeControl.WxStatusBar;
+                return UI.Native.NativeObject.GetNativeWindow(window as Window)?.WxStatusBar ?? default;
             }
 
             set
@@ -88,7 +88,10 @@ namespace Alternet.UI
                 if (window is null || window.IsDisposed)
                     return;
 
-                ((WindowHandler)window.Handler).NativeControl.WxStatusBar = value;
+                var nativeWindow = UI.Native.NativeObject.GetNativeWindow(window as Window);
+
+                if(nativeWindow is not null)
+                    nativeWindow.WxStatusBar = value;
             }
         }
 

@@ -65,7 +65,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IWindowHandler CreateWindowHandler(Window window) => new WindowHandler();
+        public IWindowHandler CreateWindowHandler(Window window)
+        {
+            if (window.GetWindowKind() == WindowKind.Control)
+                return new WindowAsControlHandler();
+            return new WindowHandler();
+        }
 
         /// <inheritdoc/>
         public IListViewHandler CreateListViewHandler(ListView control)

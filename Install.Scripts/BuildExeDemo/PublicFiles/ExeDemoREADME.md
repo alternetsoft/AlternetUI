@@ -1,20 +1,22 @@
+# AlterNET UI Demo readme
+
 This folder contains portable executable demo of Alternet.UI library.
 
 AlterNET UI - cross-platform .NET UI Framework. Use established .NET standards and productivity tools 
 for your cross-platform desktop application. Be native on the desktop, whether it is Windows, macOS, or Linux.
 
-Executable demo platforms:
+## Executable demo platforms
 
-- <b>alternet-ui-demo-win-x64-net8</b>. Demo for Windows 10 (64 bit) Build 1607 or newer using Net 8.0 platform.
-- <b>alternet-ui-demo-win-x86-net8</b>. Demo for Windows 10 (32 bit) Build 1607 or newer using Net 8.0 platform.
-- <b>alternet-ui-demo-win-x64-net462</b>. Demo for Windows 7 (64 bit) or newer using Net 4.62 platform.
-- <b>alternet-ui-demo-win-x86-net462</b>. Demo for Windows 7 (32 bit) or newer using Net 4.62 platform.
-- <b>alternet-ui-demo-macos</b>. Demo for MacOs 10.15 or newer.
-- <b>alternet-ui-demo-ubuntu</b>. Demo for Ubuntu 23.10 or newer.
+- <b>alternet-ui-demo-win10-x64-net8</b>. Demo for Windows 10 (64 bit) Build 1607 or newer using NET 8.0 platform.
+- <b>alternet-ui-demo-win10-x86-net8</b>. Demo for Windows 10 (32 bit) Build 1607 or newer using NET 8.0 platform.
+- <b>alternet-ui-demo-win7-x64-net462</b>. Demo for Windows 7 (64 bit) or newer using NET 4.62 platform.
+- <b>alternet-ui-demo-win7-x86-net462</b>. Demo for Windows 7 (32 bit) or newer using NET 4.62 platform.
+- <b>alternet-ui-demo-macos-x64-net8</b>. Demo for MacOs 10.15 (64 bit) or newer using NET 8.0 platform.
+- <b>alternet-ui-demo-ubuntu-x64-net8</b>. Demo for Ubuntu 23.10 (64 bit) or newer using NET 8.0 platform.
 
-Before running demo on Ubuntu, you need to run 'Ubuntu.Install.Packages.sh' script. It installs required packages.
+Read included USAGE.md for the installation details.
 
-Links:
+## Links
 
 - [Home page](https://www.alternet-ui.com/)
 - [Releases](https://github.com/alternetsoft/AlternetUI/releases)
@@ -23,9 +25,10 @@ Links:
 - [Discussions](https://github.com/alternetsoft/AlternetUI/discussions)
 - [Download PDF Manual](https://docs.alternet-ui.com/pdf/alternet-ui-manual.pdf)
 
-Net Framework Download Links:
+## NET Framework Download Links
 
-- [net 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [net 4.81](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
-- [net 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
-- [net 4.62](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
+- [NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- [NET 4.81](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
+- [NET 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+- [NET 4.62](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)

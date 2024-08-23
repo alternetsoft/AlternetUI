@@ -18,6 +18,49 @@ namespace Alternet.UI
     {
         static int reportedUnzipProgress = -1;
 
+        public static void ZipFolderWithRootSubFolder(
+            string pathToFolder,
+            string pathToArch,
+            string? rootSubFolder = null,
+            CompressionType compressionType = CompressionType.Deflate)
+        {
+            if(rootSubFolder is null)
+            {
+                ZipFolder(pathToFolder, pathToArch, compressionType);
+                return;
+            }
+
+            pathToFolder = PathUtils.AddDirectorySeparatorChar(Path.GetFullPath(pathToFolder));
+
+            var files = Directory.EnumerateFiles(
+                pathToFolder,
+                "*",
+                SearchOption.AllDirectories);
+
+            using (var archive = ZipArchive.Create())
+            {
+                foreach(var file in files)
+                {
+                    var fileInArchive = file;
+
+                    if(fileInArchive.IndexOf(pathToFolder) == 0)
+                    {
+                        fileInArchive = fileInArchive.Remove(0, pathToFolder.Length);
+                    }
+                    else
+                    {
+                        fileInArchive = Path.GetFileName(fileInArchive);
+                    }
+
+                    fileInArchive = Path.Combine(rootSubFolder, fileInArchive);
+
+                    archive.AddEntry(fileInArchive, file);
+                }
+
+                archive.SaveTo(pathToArch, compressionType);
+            }
+        }
+
         public static void ZipFolder(
             string pathToFolder,
             string pathToArch,

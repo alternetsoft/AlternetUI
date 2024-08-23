@@ -51,8 +51,7 @@ namespace Alternet.UI
 
         public DialogResult ShowMessageBox(MessageBoxInfo info)
         {
-            var nativeOwner = info.Owner == null ? null :
-                ((WindowHandler)info.Owner.Handler).NativeControl;
+            var nativeOwner = UI.Native.NativeObject.GetNativeWindow(info.Owner);
             return (DialogResult)Native.MessageBox.Show(
                 nativeOwner,
                 info.Text?.ToString() ?? string.Empty,

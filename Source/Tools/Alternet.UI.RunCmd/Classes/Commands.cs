@@ -89,13 +89,14 @@ namespace Alternet.UI
             Console.WriteLine($"RemoveFolder: [{path}]");
             try
             {
-                CommonProcs.DeleteFilesByMasks(path);
+                CommonProcs.DeleteFilesByMasks(path, "*", Console.WriteLine);
                 if(Directory.Exists(path))
                     Directory.Delete(path, true);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Console.WriteLine($"Error removing folder: [{path}]");
+                LogUtils.LogExceptionToFile(e);
             }
         }
 
@@ -103,7 +104,7 @@ namespace Alternet.UI
         {
             string path = args.AsString("Path");
             string masks = args.AsString("Masks");
-            CommonProcs.DeleteFilesByMasks(path, masks);
+            CommonProcs.DeleteFilesByMasks(path, masks, Console.WriteLine);
         }
 
         public static void CmdDeleteBinFolders(CommandLineArgs args)
@@ -117,12 +118,14 @@ namespace Alternet.UI
         {
             string pathToFolder = args.AsString("Folder");
             string pathToArch = args.AsString("Result");
+            string rootSubFolder = args.AsString("RootSubFolder");
 
             var compressionType = CompressionType.Deflate;
 
             Console.WriteLine($"Command: zipFolder");
             Console.WriteLine($"Folder: {pathToFolder}");
             Console.WriteLine($"Result: {pathToArch}");
+            Console.WriteLine($"RootSubFolder: {rootSubFolder}");
             Console.WriteLine($"CompressionType: {compressionType}");
 
             pathToFolder = Path.GetFullPath(pathToFolder);
@@ -137,9 +140,10 @@ namespace Alternet.UI
             if (File.Exists(pathToArch))
                 File.Delete(pathToArch);
 
-            SharpCompressUtils.ZipFolder(
+            SharpCompressUtils.ZipFolderWithRootSubFolder(
                 pathToFolder,
                 pathToArch,
+                rootSubFolder,
                 compressionType);
 
             Console.WriteLine("Completed");

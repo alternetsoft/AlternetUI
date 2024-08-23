@@ -19,9 +19,7 @@ namespace Alternet.UI.Native
 
         public Alternet.UI.ModalResult ShowModal(Alternet.UI.Window? owner)
         {
-            var nativeOwner = owner == null
-                ? null : ((WindowHandler)owner.Handler).NativeControl;
-            ShowModal(nativeOwner);
+            ShowModal(GetNativeWindow(owner));
             return Alternet.UI.ModalResult.Accepted;
         }
     }

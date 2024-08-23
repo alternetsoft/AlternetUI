@@ -80,11 +80,11 @@
 		<Message Text="Building Alternet.UI.RunCmd.csproj done." Importance="high" />
 
 		<Message Text="===========================================" Importance="high" />
-
+		<Message Text="Deleting bin and obj files..." Importance="high" />
 		<Exec Command="$(RUNCMD_PREFIX) -r=deleteBinObjSubFolders Path=&quot;$(DEMO_HOME)&quot;" />
 
 		<Message Text="===========================================" Importance="high" />
-
+		<Message Text="Getting demo version..." Importance="high" />
 		<Exec Command="$(VERSIONTOOL_PREFIX) get-version" ConsoleToMSBuild="true">
   			<Output TaskParameter="ConsoleOutput" PropertyName="VERSION_SUFFIX" />
 		</Exec>
@@ -96,20 +96,22 @@
 
 		<Message Text="VERSION_SUFFIX: $(VERSION_SUFFIX)" Importance="high" />
 
-		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir Path=&quot;$(PUBLISH_FOLDER_SFX)&quot;" />
+		<Message Text="===========================================" Importance="high" />
 
+		<Message Text="Recreating temp folder..." Importance="high" />
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir Path=&quot;$(PUBLISH_FOLDER_SFX)&quot;" />
 		<MakeDir Directories="$(PUBLISH_FOLDER_SFX)"/>
 
 		<Message Text="===========================================" Importance="high" />
 
-		<Message Text="Run: dotnet clean" Importance="high" />
-		<Exec WorkingDirectory="$(DEMO_HOME)" Command="dotnet clean" />
+		<Message Text="Run: dotnet clean" Importance="high" Condition="false"/>
+		<Exec WorkingDirectory="$(DEMO_HOME)" Command="dotnet clean" Condition="false"/>
 
 		<Message Text="===========================================" Importance="high" />
 
 		<Message Text="Building exe demo..." Importance="high" />
 		<Exec WorkingDirectory="$(DEMO_HOME)"
-			Command="dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DEMO_ADD_PARAMS)" />
+			Command="dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) /p:Platform=$(DEMO_PLATFORM) $(DEMO_ADD_PARAMS)" />
 
 		<Message Text="===========================================" Importance="high" />
 
@@ -123,9 +125,16 @@
 		
 		<Message Text="===========================================" Importance="high" />
 
+		<Message Text="Copying additional files..." Importance="high" />
+
 		<Copy
             		SourceFiles="$(SCRIPT_HOME)\PublicFiles\ExeDemoREADME.md"
             		DestinationFiles="$(PUBLISH_FOLDER_SFX)\README.md"
+	        />
+
+		<Copy
+            		SourceFiles="$(SCRIPT_HOME)\PublicFiles\ExeDemoUSAGE.md"
+            		DestinationFiles="$(PUBLISH_FOLDER_SFX)\USAGE.md"
 	        />
 
 		<Copy
@@ -165,6 +174,7 @@
 	</ItemGroup>
 
 		<Message Text="===========================================" Importance="high" />
+		<Message Text="Removing extra files..." Importance="high" />
 
 		<Delete Files="$(RESULT_ZIP)"/>
 		<Delete Files="@(DeleteFilesAnyPlatform)"/>
@@ -172,12 +182,8 @@
 
 		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersAnyPlatform.Identity)&quot;"/>
 
-		<Message Text="===========================================" Importance="high" />
-
 		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersWindows.Identity)&quot;"
 			 Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
-
-		<Message Text="===========================================" Importance="high" />
 
 		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFolders64bit.Identity)&quot;"
 			 Condition="'$(DEMO_PLATFORM)'=='x64'"/>
@@ -186,8 +192,15 @@
 
 		<Message Text="===========================================" Importance="high" />
 
-		<Exec Command="$(RUNCMD_PREFIX) -r=zipFolder Folder=&quot;$(PUBLISH_FOLDER_SFX)&quot; Result=&quot;$(RESULT_ZIP)&quot;"/>
+		<Message Text="Creating zip file..." Importance="high" />
+		<Exec Command="$(RUNCMD_PREFIX) -r=zipFolder Folder=&quot;$(PUBLISH_FOLDER_SFX)&quot; Result=&quot;$(RESULT_ZIP)&quot; RootSubFolder=&quot;$(DEMO_NAME)-$(VERSION_SUFFIX)&quot;"/>
 
+		<Message Text="===========================================" Importance="high" />
+
+		<Message Text="Removing temp folder..." Importance="high" />
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir Path=&quot;$(PUBLISH_FOLDER_SFX)&quot;" />
+
+		<Message Text="Exe demo created ok." Importance="high" />
 		<Message Text="===========================================" Importance="high" />
 	</Target>
 

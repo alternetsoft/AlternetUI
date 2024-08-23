@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- ================================================= -->
+  <Target Name="OutputVars" AfterTargets="AfterBuild" Condition="false">
+    <Message Text="=================================" Importance="high" Condition="true" />
+    <Message Text="AssemblyName: $(AssemblyName)" Importance="high" Condition="true" />
+    <Message Text="TargetFramework: $(TargetFramework)" Importance="high" Condition="true" />
+    <Message Text="RuntimeIdentifier: $(RuntimeIdentifier)" Importance="high" Condition="true" />
+    <Message Text="PlatformTarget: $(PlatformTarget)" Importance="high" Condition="true" />
+    <Message Text="Platform: $(Platform)" Importance="high" Condition="true" />
+    <Message Text="OutDir: $(OutDir)" Importance="high" Condition="true" />
+    <Message Text="OutputPath: $(OutputPath)" Importance="high" Condition="true" />
+    <Message Text="BaseOutputPath: $(BaseOutputPath)" Importance="high" Condition="true" />
+    <Message Text="ModuleAssemblyName: $(ModuleAssemblyName)" Importance="high" Condition="true" />
+    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" Condition="true" />
+    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" Importance="high" Condition="true" />
+    <Message Text="=================================" Importance="high" Condition="true" />
+  </Target>
+  <!-- ================================================= -->
+
+  <!-- ================================================= -->
+
+</Project>

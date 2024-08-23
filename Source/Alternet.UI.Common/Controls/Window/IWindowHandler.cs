@@ -93,6 +93,11 @@ namespace Alternet.UI
         object? StatusBar { get; set; }
 
         /// <summary>
+        /// Gets a <see cref="Window"/> this handler provides the implementation for.
+        /// </summary>
+        new Window Control { get; }
+
+        /// <summary>
         /// Sets window owner.
         /// </summary>
         /// <param name="owner">Window owner.</param>

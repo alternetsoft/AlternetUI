@@ -25,5 +25,10 @@ namespace Alternet.UI
         /// Mini frame.
         /// </summary>
         MiniFrame = 2,
+
+        /// <summary>
+        /// Control.
+        /// </summary>
+        Control = 3,
     }
 }

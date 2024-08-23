@@ -37,18 +37,12 @@ namespace Alternet.UI
             string masks = "*",
             Action<string>? writeLine = null)
         {
-            writeLine ??= Console.WriteLine;
-
-            /* writeLine($"DeleteFilesByMasks [{masks}] in folder [{path}]"); */
-
             masks = masks.Trim();
             var splittedMasks = masks.Split(';');
             foreach(var mask in splittedMasks)
             {
                 DeleteFilesByMask(path, mask, writeLine);
             }
-
-            /* writeLine($"DeleteFilesByMasks done."); */
         }
 
         public static void DeleteFilesByMask(
@@ -56,10 +50,6 @@ namespace Alternet.UI
             string mask = "*",
             Action<string>? writeLine = null)
         {
-            writeLine ??= Console.WriteLine;
-            
-            /* writeLine($"DeleteFilesByMask [{mask}] in folder [{path}]"); */
-
             var filesToDelete = new List<string>();
 
             if (Directory.Exists(path))
@@ -72,24 +62,23 @@ namespace Alternet.UI
             }
             else
             {
-                writeLine($"Folder doesn't exist: [{path}].");
+                writeLine?.Invoke($"Folder doesn't exist: [{path}]");
                 return;
             }
 
             foreach (var s in filesToDelete)
             {
-                writeLine("Deleting file: " + s);
+                writeLine?.Invoke($"Deleting file: [{s}]");
                 try
                 {
                     File.Delete(s);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    writeLine("ERROR deleting file: " + s);
+                    writeLine?.Invoke($"ERROR deleting file: [{s}]");
+                    LogUtils.LogExceptionToFile(e);
                 }
             }
-
-            /* writeLine($"DeleteFilesByMask done."); */
         }
 
         public static void DeleteBinObjFiles(string pathToFolder)
@@ -123,8 +112,8 @@ namespace Alternet.UI
                 var projPathBin = Path.Combine(projPath!, "bin");
                 var projPathObj = Path.Combine(projPath!, "obj");
 
-                DeleteFilesByMask(projPathBin);
-                DeleteFilesByMask(projPathObj);
+                DeleteFilesByMask(projPathBin, "*", Console.WriteLine);
+                DeleteFilesByMask(projPathObj, "*", Console.WriteLine);
             }
         }
     }

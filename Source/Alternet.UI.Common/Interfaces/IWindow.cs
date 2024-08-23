@@ -293,5 +293,11 @@ namespace Alternet.UI
         /// most fitting size is selected automatically.
         /// </remarks>
         IconSet? Icon { get; set; }
+
+        /// <summary>
+        /// Gets window kind (window, dialog, etc.).
+        /// </summary>
+        /// <returns></returns>
+        WindowKind GetWindowKind();
     }
 }

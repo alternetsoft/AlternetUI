@@ -123,7 +123,7 @@ namespace Alternet.UI
             get
             {
                 var result = NativeControl.OwnedWindows.Select(
-                    x => ((WindowHandler)(WxControlHandler.NativeControlToHandler(x) ??
+                    x => ((IWindowHandler)(WxControlHandler.NativeControlToHandler(x) ??
                     throw new Exception())).Control).ToArray();
                 return result;
             }
@@ -210,6 +210,12 @@ namespace Alternet.UI
 
         public ModalResult ShowModal(IWindow? owner)
         {
+            if(owner is not null)
+            {
+                if (owner.GetWindowKind() == WindowKind.Control)
+                    owner = null;
+            }
+
             NativeControl.ShowModal(WxApplicationHandler.WxWidget(owner));
             return ModalResult;
         }

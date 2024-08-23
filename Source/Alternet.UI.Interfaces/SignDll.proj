@@ -4,16 +4,6 @@
     <DebugMessages>$([System.Convert]::ToBoolean(false))</DebugMessages>
   </PropertyGroup>
 
-  <!-- ================================================= -->
-  <Target Name="OutputVars" AfterTargets="AfterBuild" Condition="$(DebugMessages)">
-    <Message Text="OutDir: $(OutDir)" Importance="high" Condition="true" />
-    <Message Text="OutputPath: $(OutputPath)" Importance="high" Condition="true" />
-    <Message Text="AssemblyName: $(AssemblyName)" Importance="high" Condition="true" />
-    <Message Text="BaseOutputPath: $(BaseOutputPath)" Importance="high" Condition="true" />
-    <Message Text="ModuleAssemblyName: $(ModuleAssemblyName)" Importance="high" Condition="true" />
-    <Message Text="MSBuildThisFileDirectory: $(MSBuildThisFileDirectory)" Importance="high" Condition="true" />
-    <Message Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)" Importance="high" Condition="true" />
-  </Target>
     <!-- ================================================= -->
   <Target Name="SignDll" AfterTargets="AfterBuild"
           Condition="'$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('$(MSBuildThisFileDirectory)\..\Keys\Private.props')">

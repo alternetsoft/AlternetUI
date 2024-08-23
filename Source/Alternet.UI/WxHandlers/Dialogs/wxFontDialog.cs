@@ -36,8 +36,8 @@ namespace Alternet.UI.Native
         public Alternet.UI.ModalResult ShowModal(Alternet.UI.Window? owner)
         {
             CheckDisposed();
-            var nativeOwner = owner == null ?
-                null : ((WindowHandler)owner.Handler).NativeControl;
+            
+            var nativeOwner = GetNativeWindow(owner);
 
             var fontName = fontInfo.Name;
             var style = fontInfo.Style;
