@@ -495,143 +495,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets size of the scrollbar from the system metrics.
+        /// Gets size of the scrollbar from the <see cref="Metrics"/>.
         /// </summary>
         /// <returns></returns>
         protected virtual SizeD SizeFromMetrics()
         {
-            Coord width;
-            Coord height;
-
-            if (IsVertical)
-            {
-                width = PixelToDip(Metrics.VScrollX);
-                height = Coord.NaN;
-            }
-            else
-            {
-                width = Coord.NaN;
-                height = PixelToDip(Metrics.HScrollY);
-            }
-
-            return new(width, height);
+            var result = Metrics.GetPreferredSize(IsVertical, ScaleFactor);
+            return result;
         }
 
         /// <summary>
-        /// Gets size of the arrow bitmap from the system metrics.
+        /// Gets size of the arrow bitmap from the <see cref="Metrics"/>.
         /// </summary>
         /// <returns></returns>
         protected virtual SizeD ArrowBitmapSizeFromMetrics()
         {
-            Coord width;
-            Coord height;
-
-            if (IsVertical)
-            {
-                width = PixelToDip(Metrics.VScrollArrowX);
-                height = PixelToDip(Metrics.VScrollArrowY);
-            }
-            else
-            {
-                width = PixelToDip(Metrics.HScrollArrowX);
-                height = PixelToDip(Metrics.HScrollArrowY);
-            }
-
-            return new(width, height);
+            var result = Metrics.GetArrowBitmapSize(IsVertical, ScaleFactor);
+            return result;
         }
 
         /// <summary>
-        /// Gets size of the scroll thumb from the system metrics.
+        /// Gets size of the scroll thumb from the <see cref="Metrics"/>.
         /// </summary>
         /// <returns></returns>
         protected virtual SizeD ThumbSizeFromMetrics()
         {
-            Coord width;
-            Coord height;
-
-            var clientSize = ClientSize;
-
-            if (IsVertical)
-            {
-                width = clientSize.Width;
-                height = PixelToDip(Metrics.VThumbY);
-            }
-            else
-            {
-                width = PixelToDip(Metrics.HThumbX);
-                height = clientSize.Height;
-            }
-
-            return new(width, height);
-        }
-
-        /// <summary>
-        /// Contains properties which specify different scrollbar metrics.
-        /// </summary>
-        public struct MetricsInfo
-        {
-            /// <summary>
-            /// Height of horizontal scrollbar in pixels.
-            /// </summary>
-            public int HScrollY;
-
-            /// <summary>
-            /// Width of vertical scrollbar in pixels.
-            /// </summary>
-            public int VScrollX;
-
-            /// <summary>
-            /// Width of arrow bitmap on a vertical scrollbar.
-            /// </summary>
-            public int VScrollArrowX;
-
-            /// <summary>
-            /// Height of arrow bitmap on a vertical scrollbar.
-            /// </summary>
-            public int VScrollArrowY;
-
-            /// <summary>
-            /// Height of vertical scrollbar thumb.
-            /// </summary>
-            public int VThumbY;
-
-            /// <summary>
-            /// Width of arrow bitmap on horizontal scrollbar.
-            /// </summary>
-            public int HScrollArrowX;
-
-            /// <summary>
-            /// Height of arrow bitmap on horizontal scrollbar.
-            /// </summary>
-            public int HScrollArrowY;
-
-            /// <summary>
-            /// Width of horizontal scrollbar thumb.
-            /// </summary>
-            public int HThumbX;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MetricsInfo"/> struct.
-            /// </summary>
-            public MetricsInfo()
-            {
-                Reset();
-            }
-
-            /// <summary>
-            /// Resets all properties, reloading them from the system settings.
-            /// </summary>
-            public void Reset()
-            {
-                HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY);
-                VScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX);
-                VScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowX);
-                VScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowY);
-                VThumbY = SystemSettings.GetMetric(SystemSettingsMetric.VThumbY);
-                HScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowX);
-                HScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowY);
-                HThumbX = SystemSettings.GetMetric(SystemSettingsMetric.HThumbX);
-            }
+            var result = Metrics.GetThumbSize(IsVertical, ClientSize, ScaleFactor);
+            return result;
         }
     }
 }

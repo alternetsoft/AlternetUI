@@ -116,10 +116,10 @@ namespace Alternet.UI
                 App.Log("Sample info", LogItemKind.Information);
             });
 
-            Fn("Log SKFontManager", LogUtils.LogSkiaFontManager);
-            Fn("Log SKFont", LogUtils.LogSkiaFont);
-            Fn("Log SKBitmap", LogUtils.LogSkiaBitmap);
-            Fn("Log Skia mono fonts", LogUtils.LogSkiaMonoFonts);
+            Fn("Log SkiaSharp: SKFontManager", LogUtils.LogSkiaFontManager);
+            Fn("Log SkiaSharp: SKFont", LogUtils.LogSkiaFont);
+            Fn("Log SkiaSharp: SKBitmap", LogUtils.LogSkiaBitmap);
+            Fn("Log SkiaSharp: Mono fonts", LogUtils.LogSkiaMonoFonts);
             Fn("Log image bits formats", LogImageBitsFormats);
             Fn("Log Control descendants events", LogControlDescendantsEvents);
             Fn("Log Control descendants", LogControlDescendants);
@@ -129,6 +129,7 @@ namespace Alternet.UI
             Fn("Run terminal command", () => DialogFactory.ShowRunTerminalCommandDlg());
             Fn("Show Second MainForm", () => AppUtils.CreateFirstWindowClone());
             Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.Log);
+            Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics.Log);
 
             if (registeredLogActions is not null)
             {
@@ -181,7 +182,7 @@ namespace Alternet.UI
                 }
             });
 
-            Fn("Log NativeControlPainter metrics", () =>
+            Fn("Log metrics: NativeControlPainter", () =>
             {
                 ControlPainter.LogPartSize(AppUtils.FirstWindowChildOrEmpty);
             });
