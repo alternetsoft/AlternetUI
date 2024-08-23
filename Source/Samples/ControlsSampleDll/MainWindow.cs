@@ -85,7 +85,7 @@ namespace ControlsSample
 
         Control CreateDialogsPage()
         {
-            return new CommonDialogsWindow(WindowKind.Control);
+            return Window.CreateAs<CommonDialogsWindow>(WindowKind.Control);
         }
 
         Control CreateOtherPage()
