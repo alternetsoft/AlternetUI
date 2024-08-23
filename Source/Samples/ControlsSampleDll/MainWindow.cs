@@ -28,6 +28,11 @@ namespace ControlsSample
                 AddPage("TabControl", CreateTabControlPage);
                 AddPage("Multimedia", CreateMultimediaPage);
                 AddPage("Samples", CreateOtherPage);
+
+                if (DebugUtils.IsDebugDefined)
+                {
+                    AddPage("Dialogs", CreateDialogsPage);
+                }
             }
             catch (Exception e)
             {
@@ -76,6 +81,11 @@ namespace ControlsSample
             };
 
             return CreateCustomPage(pages);
+        }
+
+        Control CreateDialogsPage()
+        {
+            return new CommonDialogsWindow(WindowKind.Control);
         }
 
         Control CreateOtherPage()

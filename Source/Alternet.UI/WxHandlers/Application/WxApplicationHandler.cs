@@ -173,8 +173,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public void Run(Window window)
         {
-            nativeApplication.Run(
-                ((WindowHandler)window.Handler).NativeControl);
+            var nativeWindow = UI.Native.NativeObject.GetNativeWindow(window)
+                ?? throw new Exception("Not a window");
+            nativeApplication.Run(nativeWindow);
         }
 
         /// <inheritdoc/>
@@ -261,7 +262,7 @@ namespace Alternet.UI
 
             var handler = WxControlHandler.NativeControlToHandler(activeWindow) ??
                 throw new InvalidOperationException();
-            return ((WindowHandler)handler).Control;
+            return handler.Control as Window;
         }
 
         /// <inheritdoc/>

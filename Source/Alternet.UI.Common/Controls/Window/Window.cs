@@ -22,7 +22,8 @@ namespace Alternet.UI
         private static int incFontSize = 0;
 
         private readonly WindowInfo info = new();
-        /*private object? toolbar = null;*/
+        private readonly WindowKind? windowKindOverride;
+
         private IconSet? icon = null;
         private object? menu = null;
         private Window? owner;
@@ -35,13 +36,21 @@ namespace Alternet.UI
         /// </summary>
         public Window()
         {
-            SetVisibleValue(false);
-            ProcessIdle = true;
-            App.Current.RegisterWindow(this);
-            Bounds = GetDefaultBounds();
+            Initialize();
+        }
 
-            if (Control.DefaultFont != Font.Default)
-                Font = Control.DefaultFont;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
+        /// <param name="windowKind">Window kind to use instead of default value.</param>
+        /// <remarks>
+        /// Fo example, this constructor allows to use window as control
+        /// (specify <see cref="WindowKind.Control"/>) as a parameter.
+        /// </remarks>
+        public Window(WindowKind windowKind)
+        {
+            windowKindOverride = windowKind;
+            Initialize();
         }
 
         /// <summary>
@@ -1002,7 +1011,7 @@ namespace Alternet.UI
         /// Gets window kind (window, dialog, etc.).
         /// </summary>
         /// <returns></returns>
-        public virtual WindowKind GetWindowKind() => WindowKind.Window;
+        public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
 
         /// <summary>
         /// Recreates all native controls in all windows.
@@ -1365,6 +1374,12 @@ namespace Alternet.UI
             Handler.InputBindingCommandExecuted = OnHandlerInputBindingCommandExecuted;
         }
 
+        /// <summary>
+        /// Gets window kind used instead of the default value.
+        /// </summary>
+        /// <returns></returns>
+        protected WindowKind? GetWindowKindOverride() => windowKindOverride;
+
         /// <inheritdoc/>
         protected override void UnbindHandlerEvents()
         {
@@ -1401,6 +1416,20 @@ namespace Alternet.UI
             DisplayChanged?.Invoke(this, EventArgs.Empty);
 
             oldDisplay = newDisplay;
+        }
+
+        private void Initialize()
+        {
+            SetVisibleValue(false);
+            ProcessIdle = true;
+
+            if(GetWindowKind() != WindowKind.Control)
+                App.Current.RegisterWindow(this);
+
+            Bounds = GetDefaultBounds();
+
+            if (Control.DefaultFont != Font.Default)
+                Font = Control.DefaultFont;
         }
     }
 }

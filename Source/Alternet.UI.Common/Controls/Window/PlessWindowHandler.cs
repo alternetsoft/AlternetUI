@@ -80,6 +80,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual object? StatusBar { get; set; }
 
+        Window IWindowHandler.Control => (Window)Control;
+
         /// <inheritdoc/>
         public virtual void Activate()
         {

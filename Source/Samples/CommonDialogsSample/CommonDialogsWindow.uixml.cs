@@ -10,7 +10,18 @@ namespace ControlsSample
         private const string CustomTitle = @"Custom Title";
         private FontInfo fontInfo = Control.DefaultFont;
 
+        public CommonDialogsWindow(WindowKind kind)
+            : base(kind)
+        {
+            Initialize();
+        }
+
         public CommonDialogsWindow()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
         {
             this.SuspendLayout();
             Icon = IconSet.FromUrlOrDefault("embres:CommonDialogsSample.Sample.ico", App.DefaultIcon);
@@ -22,7 +33,7 @@ namespace ControlsSample
             messageBoxButtonsComboBox.Add(MessageBoxButtons.YesNo);
             messageBoxButtonsComboBox.SelectedItem = MessageBoxButtons.OKCancel;
 
-            messageBoxIconComboBox.AddEnumValues(typeof(MessageBoxIcon), MessageBoxIcon.None);            
+            messageBoxIconComboBox.AddEnumValues(typeof(MessageBoxIcon), MessageBoxIcon.None);
             exceptionTypeComboBox.AddEnumValues(
                 typeof(TestExceptionType),
                 TestExceptionType.FileNotFoundException);

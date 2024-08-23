@@ -16,6 +16,26 @@ namespace Alternet.UI
     public partial class DialogWindow : Form
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="DialogWindow"/> class.
+        /// </summary>
+        public DialogWindow()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DialogWindow"/> class.
+        /// </summary>
+        /// <param name="windowKind">Window kind to use instead of default value.</param>
+        /// <remarks>
+        /// Fo example, this constructor allows to use window as control
+        /// (specify <see cref="WindowKind.Control"/>) as a parameter.
+        /// </remarks>
+        public DialogWindow(WindowKind windowKind)
+            : base(windowKind)
+        {
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this window is displayed modally.
         /// </summary>
         [Browsable(false)]
@@ -103,7 +123,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override WindowKind GetWindowKind() => WindowKind.Dialog;
+        public override WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Dialog;
 
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
