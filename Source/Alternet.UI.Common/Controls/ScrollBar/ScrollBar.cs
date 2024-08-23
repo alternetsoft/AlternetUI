@@ -15,20 +15,20 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// A scrollbar has the following main attributes: range, thumb size,
-    /// page size, and position.The range is the total number of units
-    /// associated with the view represented by the scrollbar.For a table
+    /// page size, and position. The range is the total number of units
+    /// associated with the view represented by the scrollbar. For a table
     /// with 15 columns, the range would be 15. The thumb size is the number of units
-    /// that are currently visible.For the table example, the window might be sized
+    /// that are currently visible. For the table example, the window might be sized
     /// so that only 5 columns are currently visible, in which case the application
     /// would set the thumb size to 5. When the thumb size becomes the same as or
     /// greater than the range, the scrollbar will be automatically hidden on
-    /// most platforms.The page size is the number of units that the scrollbar
-    /// should scroll by, when 'paging' through the data.This value is normally the
+    /// most platforms. The page size is the number of units that the scrollbar
+    /// should scroll by, when 'paging' through the data. This value is normally the
     /// same as the thumb size length, because it is natural to assume that the visible
-    /// window size defines a page.The scrollbar position is the current thumb position.
+    /// window size defines a page. The scrollbar position is the current thumb position.
     /// Most applications will find it convenient to provide a function called
     /// AdjustScrollbars() which can be called initially, from an OnSize event
-    /// handler, and whenever the application data changes in size.It will adjust
+    /// handler, and whenever the application data changes in size. It will adjust
     /// the view, object and page size according to the size of the window and the size of the data.
     /// </remarks>
     [ControlCategory("Common")]
@@ -53,6 +53,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the <see cref="IsVertical" /> property is changed.
         /// </summary>
+        [Category("Action")]
         public event EventHandler? IsVerticalChanged;
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace Alternet.UI
         /// Gets or sets metrics used to paint this scrollbar when it's style is non-system.
         /// </summary>
         [Browsable(false)]
-        public MetricsInfo Metrics
+        public virtual MetricsInfo Metrics
         {
             get
             {
@@ -194,7 +195,6 @@ namespace Alternet.UI
         /// </exception>
         [Category("Behavior")]
         [DefaultValue(1)]
-        [SRDescription("ScrollBarSmallChangeDescr")]
         public virtual int SmallChange
         {
             get
@@ -321,7 +321,10 @@ namespace Alternet.UI
             }
         }
 
-        internal new IScrollBarHandler Handler => (IScrollBarHandler)base.Handler;
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        public new IScrollBarHandler Handler => (IScrollBarHandler)base.Handler;
 
         [Browsable(false)]
         internal new string Text
@@ -442,7 +445,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Let's say you wish to display 50 lines of text, using the same font.
         /// The window is sized so that you can only see 16 lines at a time. You would use:
-        /// scrollbar->SetScrollbar(0, 16, 50, 15);
+        /// scrollbar.SetScrollbar(0, 16, 50, 15);
         /// The page size is 1 less than the thumb size so that the last line of the previous
         /// page will be visible on the next page, to help orient the user. Note that with the
         /// window at this size, the thumb position can never go above 50 minus 16, or 34.
