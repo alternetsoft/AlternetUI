@@ -24,68 +24,16 @@ namespace Alternet.Drawing
         public ImageSet? ImageSet;
 
         /// <summary>
-        /// Gets or sets destination point where to draw the image.
-        /// </summary>
-        public PointD DestPoint;
-
-        /// <summary>
-        /// Gets or sets destination image size.
-        /// </summary>
-        public SizeD? Size;
-
-        /// <summary>
         /// Gets or sets source rectangle which specifies part of the image to draw.
         /// </summary>
         public RectI? SourceRect = null;
 
         /// <summary>
-        /// Gets whether or not to stretch this object. Default is <c>true</c>.
+        /// Performs default drawing of the image primitive.
         /// </summary>
-        public bool Stretch = true;
-
-        /// <summary>
-        /// Gets whether or not to center this object vertically. Default is <c>true</c>.
-        /// </summary>
-        public bool CenterVert = true;
-
-        /// <summary>
-        /// Gets whether or not to center this object horizontally. Default is <c>true</c>.
-        /// </summary>
-        public bool CenterHorz = true;
-
-        /// <summary>
-        /// Gets or sets destination rectangle where to draw the image.
-        /// </summary>
-        public virtual RectD DestRect
-        {
-            get
-            {
-                if(Size is null)
-                {
-                    return new RectD(DestPoint, Drawing.SizeD.Empty);
-                }
-                else
-                    return new RectD(DestPoint, Size.Value);
-            }
-
-            set
-            {
-                DestPoint = value.TopLeft;
-                Size = value.Size;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether or not center this object horizontally or vertically.
-        /// </summary>
-        public virtual bool CenterHorzOrVert => CenterHorz || CenterVert;
-
-        /// <summary>
-        /// Draws image specified in the primitive properties.
-        /// </summary>
-        /// <param name="control">Control in which image is painted.</param>
+        /// <param name="control">Control in which primitive is painted.</param>
         /// <param name="dc">Drawing context.</param>
-        public virtual void Draw(Control control, Graphics dc)
+        public virtual void DefaultDrawImage(Control control, Graphics dc)
         {
             var image = Image;
             image ??= ImageSet?.AsImage(ImageSet.DefaultSize);
@@ -93,7 +41,7 @@ namespace Alternet.Drawing
             if (Image.IsNullOrEmpty(image) || !Visible)
                 return;
 
-            if(Size is null)
+            if (Size is null)
             {
                 dc.DrawImage(image, DestPoint);
                 return;
@@ -121,6 +69,12 @@ namespace Alternet.Drawing
                 else
                     dc.DrawImage(image, DestPoint);
             }
+        }
+
+        /// <inheritdoc/>
+        public override void Draw(Control control, Graphics dc)
+        {
+            DefaultDrawImage(control, dc);
         }
     }
 }

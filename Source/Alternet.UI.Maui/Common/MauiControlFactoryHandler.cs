@@ -45,7 +45,7 @@ namespace Alternet.UI
 
         IComboBoxHandler IControlFactoryHandler.CreateComboBoxHandler(ComboBox control)
         {
-            throw new NotImplementedException();
+            return new MauiComboBoxHandler();
         }
 
         IContextMenuHandler IControlFactoryHandler.CreateContextMenuHandler(ContextMenu control)

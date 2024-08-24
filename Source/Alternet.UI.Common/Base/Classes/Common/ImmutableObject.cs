@@ -39,6 +39,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        public virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            OnPropertyChanged(propertyName);
+            PropertyChanged?.Invoke(this, EventArgsUtils.GetPropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
         /// Sets field value and calls <see cref="OnPropertyChanged"/> method.
         /// </summary>
         /// <param name="storage">Field where property is stored.</param>
@@ -67,12 +77,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="PropertyChanged"/> event.
+        /// Called when object property is changed.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

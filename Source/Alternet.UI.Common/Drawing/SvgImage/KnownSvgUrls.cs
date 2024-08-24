@@ -17,6 +17,30 @@ namespace Alternet.UI
             "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
+        /// Gets or sets url used to load "Triangle Arrow Down" svg image.
+        /// </summary>
+        public static string UrlImageTriangleArrowDown { get; set; }
+            = GetImageUrl("TriangleArrow.alternet-triangle-arrow-down");
+
+        /// <summary>
+        /// Gets or sets url used to load "Triangle Arrow Left" svg image.
+        /// </summary>
+        public static string UrlImageTriangleArrowLeft { get; set; }
+            = GetImageUrl("TriangleArrow.alternet-triangle-arrow-left");
+
+        /// <summary>
+        /// Gets or sets url used to load "Triangle Arrow Right" svg image.
+        /// </summary>
+        public static string UrlImageTriangleArrowRight { get; set; }
+            = GetImageUrl("TriangleArrow.alternet-triangle-arrow-right");
+
+        /// <summary>
+        /// Gets or sets url used to load "Triangle Arrow Up" svg image.
+        /// </summary>
+        public static string UrlImageTriangleArrowUp { get; set; }
+            = GetImageUrl("TriangleArrow.alternet-triangle-arrow-up");
+
+        /// <summary>
         /// Gets or sets url used to load an empty svg image.
         /// </summary>
         public static string UrlImageEmpty { get; set; } = GetImageUrl("alternet-empty");

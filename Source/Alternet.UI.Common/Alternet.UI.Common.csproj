@@ -28,6 +28,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Svg\TriangleArrow\alternet-triangle-arrow-down.svg" />
+    <None Remove="Resources\Svg\TriangleArrow\alternet-triangle-arrow-left.svg" />
+    <None Remove="Resources\Svg\TriangleArrow\alternet-triangle-arrow-right.svg" />
+    <None Remove="Resources\Svg\TriangleArrow\alternet-triangle-arrow-up.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Svg\TriangleArrow\alternet-triangle-arrow-down.svg" />
+    <EmbeddedResource Include="Resources\Svg\TriangleArrow\alternet-triangle-arrow-left.svg" />
+    <EmbeddedResource Include="Resources\Svg\TriangleArrow\alternet-triangle-arrow-right.svg" />
+    <EmbeddedResource Include="Resources\Svg\TriangleArrow\alternet-triangle-arrow-up.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="2.88.8" />
     <PackageReference Include="SkiaSharp.Extended" Version="2.0.0" />
     <PackageReference Include="SkiaSharp.Extended.Iconify" Version="1.60.0" />

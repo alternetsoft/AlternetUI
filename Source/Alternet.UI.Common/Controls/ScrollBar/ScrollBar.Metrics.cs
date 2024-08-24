@@ -1,0 +1,187 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using Alternet.Drawing;
+
+namespace Alternet.UI
+{
+    public partial class ScrollBar
+    {
+        /// <summary>
+        /// Contains properties which specify different scrollbar metrics.
+        /// </summary>
+        public struct MetricsInfo
+        {
+            /// <summary>
+            /// Height of horizontal scrollbar in pixels.
+            /// </summary>
+            public int HScrollY;
+
+            /// <summary>
+            /// Width of vertical scrollbar in pixels.
+            /// </summary>
+            public int VScrollX;
+
+            /// <summary>
+            /// Width of arrow bitmap on a vertical scrollbar.
+            /// </summary>
+            public int VScrollArrowX;
+
+            /// <summary>
+            /// Height of arrow bitmap on a vertical scrollbar.
+            /// </summary>
+            public int VScrollArrowY;
+
+            /// <summary>
+            /// Height of vertical scrollbar thumb.
+            /// </summary>
+            public int VThumbY;
+
+            /// <summary>
+            /// Width of arrow bitmap on horizontal scrollbar.
+            /// </summary>
+            public int HScrollArrowX;
+
+            /// <summary>
+            /// Height of arrow bitmap on horizontal scrollbar.
+            /// </summary>
+            public int HScrollArrowY;
+
+            /// <summary>
+            /// Width of horizontal scrollbar thumb.
+            /// </summary>
+            public int HThumbX;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MetricsInfo"/> struct.
+            /// </summary>
+            public MetricsInfo()
+            {
+                Reset();
+            }
+
+            /// <summary>
+            /// Logs scroll bar metrics.
+            /// </summary>
+            public readonly void Log()
+            {
+                var info = this;
+
+                App.LogSection(
+                    () =>
+                    {
+                        App.LogNameValue("HScrollY", info.HScrollY, null, "Height of horizontal scrollbar in pixels");
+                        App.LogNameValue("VScrollX", info.VScrollX, null, "Width of vertical scrollbar in pixels");
+                        App.LogNameValue("VScrollArrowX", info.VScrollArrowX, null, "Width of arrow bitmap on a vertical scrollbar");
+                        App.LogNameValue("VScrollArrowY", info.VScrollArrowY, null, "Height of arrow bitmap on a vertical scrollbar");
+                        App.LogNameValue("VThumbY", info.VThumbY, null, "Height of vertical scrollbar thumb");
+                        App.LogNameValue("HScrollArrowX", info.HScrollArrowX, null, "Width of arrow bitmap on horizontal scrollbar");
+                        App.LogNameValue("HScrollArrowY", info.HScrollArrowY, null, "Height of arrow bitmap on horizontal scrollbar");
+                        App.LogNameValue("HThumbX", info.HThumbX, null, "Width of horizontal scrollbar thumb");
+
+                        App.LogNameValue("info.GetPreferredSize(vert)", info.GetPreferredSize(true));
+                        App.LogNameValue("info.GetPreferredSize(horz)", info.GetPreferredSize(false));
+                        App.LogNameValue("info.GetArrowBitmapSize(vert)", info.GetArrowBitmapSize(true));
+                        App.LogNameValue("info.GetArrowBitmapSize(horz)", info.GetArrowBitmapSize(false));
+                        App.LogNameValue("info.GetThumbSize(vert,(50,50))", info.GetThumbSize(true, (50, 50)));
+                        App.LogNameValue("info.GetThumbSize(horz,(50,50))", "info.GetThumbSize(false,(50,50))");
+                    },
+                    "ScrollBar metrics");
+            }
+
+            /// <summary>
+            /// Resets all properties, reloading them from the system settings.
+            /// </summary>
+            public void Reset()
+            {
+                HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY);
+                VScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX);
+                VScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowX);
+                VScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowY);
+                VThumbY = SystemSettings.GetMetric(SystemSettingsMetric.VThumbY);
+                HScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowX);
+                HScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowY);
+                HThumbX = SystemSettings.GetMetric(SystemSettingsMetric.HThumbX);
+            }
+
+            /// <summary>
+            /// Gets preferred size of the scrollbar.
+            /// Height for the vertical scroll bar is returned as NaN.
+            /// Width for the horizontal scrollbar is returned as Nan.
+            /// </summary>
+            /// <returns></returns>
+            public readonly SizeD GetPreferredSize(bool isVertical, Coord? scaleFactor = null)
+            {
+                Coord width;
+                Coord height;
+
+                if (isVertical)
+                {
+                    width = GraphicsFactory.PixelToDip(VScrollX, scaleFactor);
+                    height = Coord.NaN;
+                }
+                else
+                {
+                    width = Coord.NaN;
+                    height = GraphicsFactory.PixelToDip(HScrollY, scaleFactor);
+                }
+
+                return new(width, height);
+            }
+
+            /// <summary>
+            /// Gets size of the arrow bitmap.
+            /// </summary>
+            /// <returns></returns>
+            public readonly SizeD GetArrowBitmapSize(bool isVertical, Coord? scaleFactor = null)
+            {
+                Coord width;
+                Coord height;
+
+                if (isVertical)
+                {
+                    width = GraphicsFactory.PixelToDip(VScrollArrowX, scaleFactor);
+                    height = GraphicsFactory.PixelToDip(VScrollArrowY, scaleFactor);
+                }
+                else
+                {
+                    width = GraphicsFactory.PixelToDip(HScrollArrowX, scaleFactor);
+                    height = GraphicsFactory.PixelToDip(HScrollArrowY, scaleFactor);
+                }
+
+                return new(width, height);
+            }
+
+            /// <summary>
+            /// Gets size of the scroll thumb from the system metrics.
+            /// </summary>
+            /// <returns></returns>
+            /// <param name="isVertical">Whether scroll bar is vertical or horizontal.</param>
+            /// <param name="size">Size of the scroll bar.</param>
+            /// <param name="scaleFactor">Scaling factor. Optional.</param>
+            /// <returns></returns>
+            public readonly SizeD GetThumbSize(
+                bool isVertical,
+                SizeD size,
+                Coord? scaleFactor = null)
+            {
+                Coord width;
+                Coord height;
+
+                if (isVertical)
+                {
+                    width = size.Width;
+                    height = GraphicsFactory.PixelToDip(VThumbY, scaleFactor);
+                }
+                else
+                {
+                    width = GraphicsFactory.PixelToDip(HThumbX, scaleFactor);
+                    height = size.Height;
+                }
+
+                return new(width, height);
+            }
+        }
+    }
+}

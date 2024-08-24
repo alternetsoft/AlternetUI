@@ -21,7 +21,7 @@ namespace Alternet.UI
             var settings = CreateBorderSettings(BorderSettings.Default);
             Borders.SetAll(settings);
             UpdatePadding();
-            Borders.Normal!.PropertyChanged += Settings_PropertyChanged;
+            Borders.Normal!.PropertyChanged += OnSettingsPropertyChanged;
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Alternet.UI
             Padding = result;
         }
 
-        private void Settings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             Refresh();
         }

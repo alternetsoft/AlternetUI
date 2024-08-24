@@ -17,6 +17,7 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class Window : ContainerControl, IWindow
     {
+        private static WindowKind? globalWindowKindOverride;
         private static RectD defaultBounds = new(100, 100, 400, 400);
         private static int incFontSizeHighDpi = 2;
         private static int incFontSize = 0;
@@ -873,6 +874,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates window with specified type and window kind.
+        /// </summary>
+        /// <typeparam name="T">Type of the window to create.</typeparam>
+        /// <param name="windowKind">Window kind to use when window is created.</param>
+        /// <returns></returns>
+        public static T CreateAs<T>(WindowKind windowKind)
+            where T : Window
+        {
+            globalWindowKindOverride = windowKind;
+            try
+            {
+                var result = Activator.CreateInstance<T>();
+                return result;
+            }
+            finally
+            {
+                globalWindowKindOverride = null;
+            }
+        }
+
+        /// <summary>
         /// Updates default control font after changes in <see cref="IncFontSizeHighDpi"/>
         /// or <see cref="IncFontSize"/>. You should not call this method directly.
         /// </summary>
@@ -1378,7 +1400,7 @@ namespace Alternet.UI
         /// Gets window kind used instead of the default value.
         /// </summary>
         /// <returns></returns>
-        protected WindowKind? GetWindowKindOverride() => windowKindOverride;
+        protected WindowKind? GetWindowKindOverride() => globalWindowKindOverride ?? windowKindOverride;
 
         /// <inheritdoc/>
         protected override void UnbindHandlerEvents()
