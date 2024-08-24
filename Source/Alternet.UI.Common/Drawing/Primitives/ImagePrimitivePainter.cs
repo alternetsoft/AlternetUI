@@ -28,8 +28,12 @@ namespace Alternet.Drawing
         /// </summary>
         public RectI? SourceRect = null;
 
-        /// <inheritdoc/>
-        public override void Draw(Control control, Graphics dc)
+        /// <summary>
+        /// Performs default drawing of the image primitive.
+        /// </summary>
+        /// <param name="control">Control in which primitive is painted.</param>
+        /// <param name="dc">Drawing context.</param>
+        public virtual void DefaultDrawImage(Control control, Graphics dc)
         {
             var image = Image;
             image ??= ImageSet?.AsImage(ImageSet.DefaultSize);
@@ -37,7 +41,7 @@ namespace Alternet.Drawing
             if (Image.IsNullOrEmpty(image) || !Visible)
                 return;
 
-            if(Size is null)
+            if (Size is null)
             {
                 dc.DrawImage(image, DestPoint);
                 return;
@@ -65,6 +69,12 @@ namespace Alternet.Drawing
                 else
                     dc.DrawImage(image, DestPoint);
             }
+        }
+
+        /// <inheritdoc/>
+        public override void Draw(Control control, Graphics dc)
+        {
+            DefaultDrawImage(control, dc);
         }
     }
 }
