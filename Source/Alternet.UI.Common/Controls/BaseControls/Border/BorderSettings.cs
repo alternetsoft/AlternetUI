@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies <see cref="Border"/> drawing settings.
     /// </summary>
-    public class BorderSettings : BaseObject, INotifyPropertyChanged
+    public class BorderSettings : ImmutableObject
     {
         /// <summary>
         /// Default border settings.
@@ -52,10 +52,10 @@ namespace Alternet.UI
         /// </summary>
         public BorderSettings()
         {
-            left.PropertyChanged += Left_PropertyChanged;
-            right.PropertyChanged += Right_PropertyChanged;
-            top.PropertyChanged += Top_PropertyChanged;
-            bottom.PropertyChanged += Bottom_PropertyChanged;
+            left.PropertyChanged += OnLeftPropertyChanged;
+            right.PropertyChanged += OnRightPropertyChanged;
+            top.PropertyChanged += OnTopPropertyChanged;
+            bottom.PropertyChanged += OnBottomPropertyChanged;
         }
 
         /// <summary>
@@ -75,18 +75,13 @@ namespace Alternet.UI
         public event EventHandler<PaintEventArgs>? Paint;
 
         /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        /// <summary>
         /// Gets or sets the uniform corner radius for the <see cref="Border"/> control.
         /// </summary>
         /// <remarks>
         /// This value is applied to all the corners. If returned value is not null, all border corners
         /// have the same settings.
         /// </remarks>
-        public double? UniformCornerRadius
+        public virtual double? UniformCornerRadius
         {
             get
             {
@@ -95,10 +90,10 @@ namespace Alternet.UI
 
             set
             {
-                if (uniformCornerRadius == value)
+                if (uniformCornerRadius == value || Immutable)
                     return;
                 uniformCornerRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(UniformCornerRadius)));
+                RaisePropertyChanged(nameof(UniformCornerRadius));
             }
         }
 
@@ -110,7 +105,7 @@ namespace Alternet.UI
         /// This value is applied to all the corners. If returned value is not null, all border corners
         /// have the same settings.
         /// </remarks>
-        public bool? UniformRadiusIsPercent
+        public virtual bool? UniformRadiusIsPercent
         {
             get
             {
@@ -119,10 +114,10 @@ namespace Alternet.UI
 
             set
             {
-                if (uniformRadiusIsPercent == value)
+                if (uniformRadiusIsPercent == value || Immutable)
                     return;
                 uniformRadiusIsPercent = value;
-                PropertyChanged?.Invoke(this, new(nameof(UniformCornerRadius)));
+                RaisePropertyChanged(nameof(UniformCornerRadius));
             }
         }
 
@@ -134,7 +129,7 @@ namespace Alternet.UI
         /// using <see cref="Paint"/> event handler.
         /// </remarks>
         [Browsable(false)]
-        public bool DrawDefaultBorder { get; set; } = true;
+        public virtual bool DrawDefaultBorder { get; set; } = true;
 
         /// <summary>
         /// Gets whether all sides have same color and width.
@@ -166,7 +161,7 @@ namespace Alternet.UI
         /// Gets or sets uniform color of the border lines.
         /// </summary>
         [Browsable(false)]
-        public Color? Color
+        public virtual Color? Color
         {
             get
             {
@@ -177,6 +172,8 @@ namespace Alternet.UI
 
             set
             {
+                if (Color == value || Immutable)
+                    return;
                 SetColors(value, value, value, value);
             }
         }
@@ -188,7 +185,7 @@ namespace Alternet.UI
         /// You can specify different widths for the left, top, bottom and right
         /// edges of the border.
         /// </remarks>
-        public Thickness Width
+        public virtual Thickness Width
         {
             get
             {
@@ -197,6 +194,8 @@ namespace Alternet.UI
 
             set
             {
+                if (Width == value || Immutable)
+                    return;
                 value.ApplyMin(0);
                 left.Width = value.Left;
                 right.Width = value.Right;
@@ -210,7 +209,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsUniformVerticalColor => left.Color == right.Color;
 
-        internal BorderCornerRadius? TopLeftRadius
+        internal virtual BorderCornerRadius? TopLeftRadius
         {
             get
             {
@@ -219,14 +218,14 @@ namespace Alternet.UI
 
             set
             {
-                if (topLeftRadius == value)
+                if (topLeftRadius == value || Immutable)
                     return;
                 topLeftRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(TopLeftRadius)));
+                RaisePropertyChanged(nameof(TopLeftRadius));
             }
         }
 
-        internal BorderCornerRadius? TopRightRadius
+        internal virtual BorderCornerRadius? TopRightRadius
         {
             get
             {
@@ -235,14 +234,14 @@ namespace Alternet.UI
 
             set
             {
-                if (topRightRadius == value)
+                if (topRightRadius == value || Immutable)
                     return;
                 topRightRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(TopRightRadius)));
+                RaisePropertyChanged(nameof(TopRightRadius));
             }
         }
 
-        internal BorderCornerRadius? BottomRightRadius
+        internal virtual BorderCornerRadius? BottomRightRadius
         {
             get
             {
@@ -251,14 +250,14 @@ namespace Alternet.UI
 
             set
             {
-                if (bottomRightRadius == value)
+                if (bottomRightRadius == value || Immutable)
                     return;
                 bottomRightRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(BottomRightRadius)));
+                RaisePropertyChanged(nameof(BottomRightRadius));
             }
         }
 
-        internal BorderCornerRadius? BottomLeftRadius
+        internal virtual BorderCornerRadius? BottomLeftRadius
         {
             get
             {
@@ -267,10 +266,10 @@ namespace Alternet.UI
 
             set
             {
-                if (bottomLeftRadius == value)
+                if (bottomLeftRadius == value || Immutable)
                     return;
                 bottomLeftRadius = value;
-                PropertyChanged?.Invoke(this, new(nameof(BottomLeftRadius)));
+                RaisePropertyChanged(nameof(BottomLeftRadius));
             }
         }
 
@@ -357,7 +356,7 @@ namespace Alternet.UI
         /// Gets rectangle of the top border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public RectD GetTopRectangle(RectD rect)
+        public virtual RectD GetTopRectangle(RectD rect)
         {
             return DrawingUtils.GetTopLineRect(rect, Top.Width);
         }
@@ -366,7 +365,7 @@ namespace Alternet.UI
         /// Gets rectangle of the bottom border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public RectD GetBottomRectangle(RectD rect)
+        public virtual RectD GetBottomRectangle(RectD rect)
         {
             return DrawingUtils.GetBottomLineRect(rect, Bottom.Width);
         }
@@ -375,7 +374,7 @@ namespace Alternet.UI
         /// Gets rectangle of the left border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public RectD GetLeftRectangle(RectD rect)
+        public virtual RectD GetLeftRectangle(RectD rect)
         {
             return DrawingUtils.GetLeftLineRect(rect, Left.Width);
         }
@@ -384,7 +383,7 @@ namespace Alternet.UI
         /// Gets rectangle of the right border edge.
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
-        public RectD GetRightRectangle(RectD rect)
+        public virtual RectD GetRightRectangle(RectD rect)
         {
             return DrawingUtils.GetRightLineRect(rect, Right.Width);
         }
@@ -395,7 +394,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Ractangle for percentage calculation.</param>
         /// <returns></returns>
-        public double? GetUniformCornerRadius(RectD rect)
+        public virtual double? GetUniformCornerRadius(RectD rect)
         {
             var radius = UniformCornerRadius;
             if (radius is null)
@@ -438,8 +437,15 @@ namespace Alternet.UI
         /// <param name="topColor">Color of the top edge.</param>
         /// <param name="rightColor">Color of the right edge.</param>
         /// <param name="bottomColor">Color of the bottom edge.</param>
-        public bool SetColors(Color? leftColor, Color? topColor, Color? rightColor, Color? bottomColor)
+        public virtual bool SetColors(
+            Color? leftColor,
+            Color? topColor,
+            Color? rightColor,
+            Color? bottomColor)
         {
+            if (Immutable)
+                return false;
+
             var result = false;
 
             if (left.Color != leftColor)
@@ -512,8 +518,11 @@ namespace Alternet.UI
         /// Assign properties from another object.
         /// </summary>
         /// <param name="value">Source of the properties to assign.</param>
-        public void Assign(BorderSettings value)
+        public virtual void Assign(BorderSettings value)
         {
+            if (Immutable)
+                return;
+
             left.Assign(value.left);
             right.Assign(value.right);
             top.Assign(value.top);
@@ -527,24 +536,24 @@ namespace Alternet.UI
             bottomLeftRadius = value.bottomLeftRadius;
         }
 
-        private void Left_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnLeftPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new(nameof(Left)));
+            RaisePropertyChanged(nameof(Left));
         }
 
-        private void Right_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnRightPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new(nameof(Right)));
+            RaisePropertyChanged(nameof(Right));
         }
 
-        private void Top_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnTopPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new(nameof(Top)));
+            RaisePropertyChanged(nameof(Top));
         }
 
-        private void Bottom_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnBottomPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new(nameof(Bottom)));
+            RaisePropertyChanged(nameof(Bottom));
         }
     }
 }

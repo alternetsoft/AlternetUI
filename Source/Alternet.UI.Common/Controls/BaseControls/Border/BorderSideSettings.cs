@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies <see cref="Border"/> drawing settings for the individual side.
     /// </summary>
-    public class BorderSideSettings : BaseObject, INotifyPropertyChanged
+    public class BorderSideSettings : ImmutableObject
     {
         private Pen? pen;
         private Brush? brush;
@@ -21,14 +21,9 @@ namespace Alternet.UI
         private bool decLength;
 
         /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        /// <summary>
         /// Gets or sets whether to draw border from the start point.
         /// </summary>
-        public bool IncStartPoint
+        public virtual bool IncStartPoint
         {
             get
             {
@@ -37,7 +32,7 @@ namespace Alternet.UI
 
             internal set
             {
-                if (incStartPoint == value)
+                if (incStartPoint == value || Immutable)
                     return;
                 incStartPoint = value;
                 RaisePropertyChanged(nameof(IncStartPoint));
@@ -47,7 +42,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to draw border with full length.
         /// </summary>
-        public bool DecLength
+        public virtual bool DecLength
         {
             get
             {
@@ -56,7 +51,7 @@ namespace Alternet.UI
 
             internal set
             {
-                if (decLength == value)
+                if (decLength == value || Immutable)
                     return;
                 decLength = value;
                 RaisePropertyChanged(nameof(DecLength));
@@ -66,7 +61,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets border color.
         /// </summary>
-        public Color? Color
+        public virtual Color? Color
         {
             get
             {
@@ -75,7 +70,7 @@ namespace Alternet.UI
 
             set
             {
-                if (color == value)
+                if (color == value || Immutable)
                     return;
                 color = value;
                 pen = null;
@@ -87,7 +82,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets border width.
         /// </summary>
-        public double Width
+        public virtual Coord Width
         {
             get
             {
@@ -96,7 +91,7 @@ namespace Alternet.UI
 
             set
             {
-                if (width == value)
+                if (width == value || Immutable)
                     return;
                 pen = null;
                 width = value;
@@ -107,7 +102,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="Brush"/> which can be used to draw the border.
         /// </summary>
-        public Brush GetBrush(Color defaultColor)
+        public virtual Brush GetBrush(Color defaultColor)
         {
             var c = color ?? defaultColor;
 
@@ -118,7 +113,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="Pen"/> which can be used to draw the border.
         /// </summary>
-        public Pen GetPen(Color defaultColor)
+        public virtual Pen GetPen(Color defaultColor)
         {
             var c = color ?? defaultColor;
 
@@ -130,15 +125,12 @@ namespace Alternet.UI
         /// Assign properties from another object.
         /// </summary>
         /// <param name="value">Source of the properties to assign.</param>
-        public void Assign(BorderSideSettings value)
+        public virtual void Assign(BorderSideSettings value)
         {
+            if (Immutable)
+                return;
             Width = value.width;
             Color = value.color;
-        }
-
-        private void RaisePropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new(propName));
         }
     }
 }
