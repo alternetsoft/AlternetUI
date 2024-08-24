@@ -21,8 +21,10 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="FontAndColor"/> class.
         /// </summary>
-        /// <param name="foregroundColor">Default value of the <see cref="ForegroundColor"/> property.</param>
-        /// <param name="backgroundColor">Default value of the <see cref="BackgroundColor"/> property.</param>
+        /// <param name="foregroundColor">Default value of the
+        /// <see cref="ForegroundColor"/> property.</param>
+        /// <param name="backgroundColor">Default value of the
+        /// <see cref="BackgroundColor"/> property.</param>
         /// <param name="font">Default value of the <see cref="Font"/> property.</param>
         public FontAndColor(Color? foregroundColor, Color? backgroundColor = null, Font? font = null)
         {
