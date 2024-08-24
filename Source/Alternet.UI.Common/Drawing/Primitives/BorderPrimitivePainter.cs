@@ -7,7 +7,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Border primitive painter.
+    /// Border primitive painter. Additionally to border painting, it can paint background and image.
     /// </summary>
     public class BorderPrimitivePainter : ImagePrimitivePainter
     {
@@ -22,12 +22,12 @@ namespace Alternet.Drawing
         public BorderSettings? Border;
 
         /// <summary>
-        /// Gets or sets whether border is painted.
+        /// Gets or sets whether border is painted. Default is <c>true</c>.
         /// </summary>
         public bool HasBorder = true;
 
         /// <summary>
-        /// Gets or sets whether border is painted.
+        /// Gets or sets whether image is painted. Default is <c>false</c>.
         /// </summary>
         public bool HasImage = false;
 
