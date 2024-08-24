@@ -52,13 +52,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        ILinearGradientBrushHandler IGraphicsFactoryHandler.CreateLinearGradientBrushHandler(LinearGradientBrush brush)
+        ILinearGradientBrushHandler IGraphicsFactoryHandler.CreateLinearGradientBrushHandler(
+            LinearGradientBrush brush)
         {
             return new PlessLinearGradientBrushHandler(brush);
         }
 
         /// <inheritdoc/>
-        IRadialGradientBrushHandler IGraphicsFactoryHandler.CreateRadialGradientBrushHandler(RadialGradientBrush brush)
+        IRadialGradientBrushHandler IGraphicsFactoryHandler.CreateRadialGradientBrushHandler(
+            RadialGradientBrush brush)
         {
             return new PlessRadialGradientBrushHandler(brush);
         }
@@ -197,7 +199,8 @@ namespace Alternet.UI
 
         IImageHandler IGraphicsFactoryHandler.CreateImageHandlerFromScreen()
         {
-            throw new NotImplementedException();
+            // This is a dummy implementation
+            return new SkiaImageHandler();
         }
 
         IImageHandler IGraphicsFactoryHandler.CreateImageHandlerFromSvg(
@@ -206,7 +209,8 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            throw new NotImplementedException();
+            // This is a dummy implementation
+            return new SkiaImageHandler((width, height));
         }
 
         IImageHandler IGraphicsFactoryHandler.CreateImageHandlerFromSvg(
@@ -215,7 +219,8 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            throw new NotImplementedException();
+            // This is a dummy implementation
+            return new SkiaImageHandler((width, height));
         }
 
         IImageListHandler? IGraphicsFactoryHandler.CreateImageListHandler()
@@ -234,7 +239,10 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            throw new NotImplementedException();
+            // This is a dummy implementation
+            var result = new DummyImageSetHandler();
+            result.Add(new Bitmap((width, height)));
+            return result;
         }
 
         IImageSetHandler IGraphicsFactoryHandler.CreateImageSetHandlerFromSvg(
@@ -243,7 +251,10 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            throw new NotImplementedException();
+            // This is a dummy implementation
+            var result = new DummyImageSetHandler();
+            result.Add(new Bitmap((width, height)));
+            return result;
         }
 
         IRegionHandler IGraphicsFactoryHandler.CreateRegionHandler()
