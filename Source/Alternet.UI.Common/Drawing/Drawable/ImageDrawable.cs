@@ -14,6 +14,11 @@ namespace Alternet.Drawing
     public class ImageDrawable : BaseDrawable
     {
         /// <summary>
+        /// Gets or sets svg image to draw.
+        /// </summary>
+        public SvgImageInfo? SvgImage;
+
+        /// <summary>
         /// Gets or sets image to draw.
         /// </summary>
         public Image? Image;
@@ -49,16 +54,28 @@ namespace Alternet.Drawing
         public bool CenterHorzOrVert => CenterHorz || CenterVert;
 
         /// <summary>
+        /// Gets image to draw.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Image? GetImage()
+        {
+            var image = SvgImage?.AsImage;
+            image ??= Image ?? ImageSet?.AsImage(ImageSet.DefaultSize);
+            return image;
+        }
+
+        /// <summary>
         /// Performs default drawing of the image.
         /// </summary>
         /// <param name="control">Control in which this object is painted.</param>
         /// <param name="dc">Drawing context.</param>
         public virtual void DefaultDrawImage(Control control, Graphics dc)
         {
-            var image = Image;
-            image ??= ImageSet?.AsImage(ImageSet.DefaultSize);
+            if (!Visible)
+                return;
 
-            if (Image.IsNullOrEmpty(image) || !Visible)
+            var image = GetImage();
+            if (Image.IsNullOrEmpty(image))
                 return;
 
             if (Size.AnyIsEmptyOrNegative)
