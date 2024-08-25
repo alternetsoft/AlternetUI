@@ -909,17 +909,37 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the size of the image in device-independent units using the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
+        /// If not specified, default value is used.</param>
+        /// <returns></returns>
+        public virtual SizeD SizeDip(Coord scaleFactor)
+        {
+            return GraphicsFactory.PixelToDip(PixelSize, scaleFactor);
+        }
+
+        /// <summary>
         /// Gets the size of the image in device-independent units.
         /// </summary>
         public virtual SizeD SizeDip(Control control)
             => control.PixelToDip(PixelSize);
 
         /// <summary>
-        /// Gets image rect as (0, 0, SizeDip().Width, SizeDip().Height).
+        /// Gets image rect as (0, 0, SizeDip(control).Width, SizeDip(control).Height).
         /// </summary>
         public virtual RectD BoundsDip(Control control)
         {
             var size = SizeDip(control);
+            return (0, 0, size.Width, size.Height);
+        }
+
+        /// <summary>
+        /// Gets image rect as (0, 0, SizeDip(scaleFactor).Width, SizeDip(scaleFactor).Height).
+        /// </summary>
+        public virtual RectD BoundsDip(Coord scaleFactor)
+        {
+            var size = SizeDip(scaleFactor);
             return (0, 0, size.Width, size.Height);
         }
 
