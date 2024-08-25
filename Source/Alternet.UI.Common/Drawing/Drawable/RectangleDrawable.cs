@@ -7,9 +7,10 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Border primitive painter. Additionally to border painting, it can paint background and image.
+    /// Implements background and border painting.
+    /// Additionally it can paint image inside the rectangle.
     /// </summary>
-    public class BorderPrimitivePainter : ImagePrimitivePainter
+    public class RectangleDrawable : ImageDrawable
     {
         /// <summary>
         /// Gets or sets brush to fill the rectangle.
@@ -32,16 +33,16 @@ namespace Alternet.Drawing
         public bool HasImage = false;
 
         /// <summary>
-        /// Performs default drawing of the border primitive.
+        /// Performs default background and border painting.
         /// </summary>
-        /// <param name="control">Control in which primitive is painted.</param>
+        /// <param name="control">Control in which this object is painted.</param>
         /// <param name="dc">Drawing context.</param>
-        public virtual void DefaultDrawBorder(Control control, Graphics dc)
+        public virtual void DefaultDrawBackAndBorder(Control control, Graphics dc)
         {
             if (!Visible)
                 return;
             dc.FillBorderRectangle(
-                DestRect,
+                Bounds,
                 Brush,
                 Border,
                 HasBorder,
@@ -53,7 +54,7 @@ namespace Alternet.Drawing
         {
             if (!Visible)
                 return;
-            DefaultDrawBorder(control, dc);
+            DefaultDrawBackAndBorder(control, dc);
             if(HasImage)
                 DefaultDrawImage(control, dc);
         }

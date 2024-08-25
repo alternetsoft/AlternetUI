@@ -100,7 +100,11 @@ namespace Alternet.UI
             get => Handler.IsOk;
         }
 
-        internal new IAnimationPlayerHandler Handler => (IAnimationPlayerHandler)base.Handler;
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new IAnimationPlayerHandler Handler => (IAnimationPlayerHandler)base.Handler;
 
         /// <summary>
         /// Starts playing the animation.

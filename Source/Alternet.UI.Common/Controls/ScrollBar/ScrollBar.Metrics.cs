@@ -11,48 +11,56 @@ namespace Alternet.UI
         /// <summary>
         /// Contains properties which specify different scrollbar metrics.
         /// </summary>
-        public struct MetricsInfo
+        /// <typeparam name="T">Type of the metrics value.</typeparam>
+        public class MetricsInfo<T>
+            where T : struct
         {
             /// <summary>
             /// Height of horizontal scrollbar in pixels.
             /// </summary>
-            public int HScrollY;
+            public T HScrollY;
 
             /// <summary>
             /// Width of vertical scrollbar in pixels.
             /// </summary>
-            public int VScrollX;
+            public T VScrollX;
 
             /// <summary>
             /// Width of arrow bitmap on a vertical scrollbar.
             /// </summary>
-            public int VScrollArrowX;
+            public T VScrollArrowX;
 
             /// <summary>
             /// Height of arrow bitmap on a vertical scrollbar.
             /// </summary>
-            public int VScrollArrowY;
+            public T VScrollArrowY;
 
             /// <summary>
             /// Height of vertical scrollbar thumb.
             /// </summary>
-            public int VThumbY;
+            public T VThumbY;
 
             /// <summary>
             /// Width of arrow bitmap on horizontal scrollbar.
             /// </summary>
-            public int HScrollArrowX;
+            public T HScrollArrowX;
 
             /// <summary>
             /// Height of arrow bitmap on horizontal scrollbar.
             /// </summary>
-            public int HScrollArrowY;
+            public T HScrollArrowY;
 
             /// <summary>
             /// Width of horizontal scrollbar thumb.
             /// </summary>
-            public int HThumbX;
+            public T HThumbX;
+        }
 
+        /// <summary>
+        /// Contains properties which specify different scrollbar metrics.
+        /// </summary>
+        public class MetricsInfo : MetricsInfo<int>
+        {
             /// <summary>
             /// Initializes a new instance of the <see cref="MetricsInfo"/> struct.
             /// </summary>
@@ -64,7 +72,7 @@ namespace Alternet.UI
             /// <summary>
             /// Logs scroll bar metrics.
             /// </summary>
-            public readonly void Log()
+            public void Log()
             {
                 var info = this;
 
@@ -93,7 +101,7 @@ namespace Alternet.UI
             /// <summary>
             /// Resets all properties, reloading them from the system settings.
             /// </summary>
-            public void Reset()
+            public virtual void Reset()
             {
                 HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY);
                 VScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX);
@@ -111,7 +119,7 @@ namespace Alternet.UI
             /// Width for the horizontal scrollbar is returned as Nan.
             /// </summary>
             /// <returns></returns>
-            public readonly SizeD GetPreferredSize(bool isVertical, Coord? scaleFactor = null)
+            public SizeD GetPreferredSize(bool isVertical, Coord? scaleFactor = null)
             {
                 Coord width;
                 Coord height;
@@ -134,7 +142,7 @@ namespace Alternet.UI
             /// Gets size of the arrow bitmap.
             /// </summary>
             /// <returns></returns>
-            public readonly SizeD GetArrowBitmapSize(bool isVertical, Coord? scaleFactor = null)
+            public SizeD GetArrowBitmapSize(bool isVertical, Coord? scaleFactor = null)
             {
                 Coord width;
                 Coord height;
@@ -161,7 +169,7 @@ namespace Alternet.UI
             /// <param name="size">Size of the scroll bar.</param>
             /// <param name="scaleFactor">Scaling factor. Optional.</param>
             /// <returns></returns>
-            public readonly SizeD GetThumbSize(
+            public SizeD GetThumbSize(
                 bool isVertical,
                 SizeD size,
                 Coord? scaleFactor = null)

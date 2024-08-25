@@ -46,7 +46,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to <see cref="Coord.PositiveInfinity"/>.
         /// </summary>
-        public static readonly SizeD PositiveInfinity = new(Coord.PositiveInfinity, Coord.PositiveInfinity);
+        public static readonly SizeD PositiveInfinity
+            = new(Coord.PositiveInfinity, Coord.PositiveInfinity);
 
         /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to
@@ -126,6 +127,12 @@ namespace Alternet.Drawing
         /// </summary>
         [Browsable(false)]
         public readonly bool AnyIsEmpty => width == 0 || height == 0;
+
+        /// <summary>
+        /// Tests whether this <see cref='SizeD'/> has zero (or negative) width or height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool AnyIsEmptyOrNegative => width <= 0 || height <= 0;
 
         /// <summary>
         /// Represents the horizontal component of this <see cref='Drawing.SizeD'/>.

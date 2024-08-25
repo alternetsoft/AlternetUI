@@ -16,7 +16,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class PictureBox : GraphicControl, IValidatorReporter
     {
-        private readonly ImagePrimitivePainter primitive = new();
+        private readonly ImageDrawable primitive = new();
         private bool textVisible = false;
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Alternet.UI
             set => base.Title = value;
         }
 
-        internal ImagePrimitivePainter Primitive => primitive;
+        internal ImageDrawable Primitive => primitive;
 
         void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
         {
@@ -379,7 +379,7 @@ namespace Alternet.UI
             image ??= Image;
             primitive.Image = image;
             primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
-            primitive.DestRect =
+            primitive.Bounds =
                 (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             primitive.Draw(this, dc);
         }

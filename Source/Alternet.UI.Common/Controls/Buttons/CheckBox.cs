@@ -197,7 +197,7 @@ namespace Alternet.UI
         /// Gets a <see cref="ICheckBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new ICheckBoxHandler Handler => (ICheckBoxHandler)base.Handler;
+        public new ICheckBoxHandler Handler => (ICheckBoxHandler)base.Handler;
 
         /// <summary>
         /// Binds property specified with <paramref name="instance"/> and

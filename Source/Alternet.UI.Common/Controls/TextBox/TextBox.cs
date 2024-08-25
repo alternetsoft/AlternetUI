@@ -699,7 +699,11 @@ namespace Alternet.UI
             }
         }
 
-        internal new ITextBoxHandler Handler => (ITextBoxHandler)base.Handler;
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new ITextBoxHandler Handler => (ITextBoxHandler)base.Handler;
 
         /// <inheritdoc cref="ValueValidatorFactory.CreateValidator(ValueValidatorKind)"/>
         public static IValueValidatorText CreateValidator(ValueValidatorKind kind)

@@ -842,7 +842,7 @@ namespace Alternet.UI
         /// Gets handler for the control.
         /// </summary>
         [Browsable(false)]
-        internal new IWebBrowserHandler Handler => (IWebBrowserHandler)base.Handler;
+        public new IWebBrowserHandler Handler => (IWebBrowserHandler)base.Handler;
 
         /// <summary>
         /// Returns type of the OS for which the WebBrowser was compiled.
