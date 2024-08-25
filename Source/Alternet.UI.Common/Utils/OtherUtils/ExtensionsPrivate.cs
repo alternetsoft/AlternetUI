@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -16,6 +17,16 @@ namespace Alternet.UI.Extensions
     /// </summary>
     public static class ExtensionsPrivate
     {
+        /// <summary>
+        /// Gets whether property name is specified in the <see cref="PropertyChangedEventArgs"/>.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        /// <returns></returns>
+        public static bool HasPropertyName(this PropertyChangedEventArgs e)
+        {
+            return !string.IsNullOrEmpty(e.PropertyName);
+        }
+
         /// <summary>
         /// Copies the contents of this string into the destination span.
         /// </summary>

@@ -12,12 +12,12 @@ namespace Alternet.Drawing
     public class ScrollBarsDrawable : BaseDrawable
     {
         /// <summary>
-        /// Gets or sets vertical scroll bar element.
+        /// Gets or sets vertical scrollbar element.
         /// </summary>
         public ScrollBarDrawable? VertScrollBar;
 
         /// <summary>
-        /// Gets or sets horizontal scroll bar element.
+        /// Gets or sets horizontal scrollbar element.
         /// </summary>
         public ScrollBarDrawable? HorzScrollBar;
 
@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         private ScrollBar.MetricsInfo? metrics;
 
         /// <summary>
-        /// Gets or sets default drawable used to paint scroll bars when dark color theme is selected.
+        /// Gets or sets default drawable used to paint scrollbars when dark color theme is selected.
         /// </summary>
         public static ScrollBarsDrawable DefaultDark
         {
@@ -54,7 +54,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets default drawable used to paint scroll bars when light color theme is selected.
+        /// Gets or sets default drawable used to paint scrollbars when light color theme is selected.
         /// </summary>
         public static ScrollBarsDrawable DefaultLight
         {
@@ -92,7 +92,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets scroll bar metrics.
+        /// Gets or sets scrollbar metrics.
         /// </summary>
         public virtual ScrollBar.MetricsInfo? Metrics
         {

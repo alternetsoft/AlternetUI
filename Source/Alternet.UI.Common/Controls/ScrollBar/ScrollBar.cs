@@ -5,7 +5,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -36,12 +38,17 @@ namespace Alternet.UI
     {
         private static MetricsInfo? defaultMetrics;
 
-        private int minimum;
-        private int maximum = 100;
-        private int smallChange = 1;
-        private int largeChange = 10;
-        private int val;
+        private readonly AltPositionInfo pos = new();
+
         private MetricsInfo? metrics;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollBar"/> class.
+        /// </summary>
+        public ScrollBar()
+        {
+            pos.PropertyChanged += OnPositionPropertyChanged;
+        }
 
         /// <summary>
         /// Occurs when the <see cref="Value" /> property is changed, either
@@ -95,9 +102,6 @@ namespace Alternet.UI
         /// <see cref="Value" /> property when the scroll box is moved a large distance.
         /// </summary>
         /// <returns>A numeric value. The default value is 10.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The assigned value is less than 0.
-        /// </exception>
         [Category("Behavior")]
         [DefaultValue(10)]
         [RefreshProperties(RefreshProperties.Repaint)]
@@ -105,22 +109,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Math.Min(largeChange, maximum - minimum + 1);
+                return pos.LargeChange;
             }
 
             set
             {
-                if (largeChange != value)
-                {
-                    if (value < 0)
-                    {
-                        LogUtils.LogInvalidBoundArgumentUInt(nameof(LargeChange), value);
-                        return;
-                    }
-
-                    largeChange = value;
-                    UpdateScrollInfo();
-                }
+                pos.LargeChange = value;
             }
         }
 
@@ -137,20 +131,12 @@ namespace Alternet.UI
         {
             get
             {
-                return maximum;
+                return pos.Maximum;
             }
 
             set
             {
-                if (maximum != value)
-                {
-                    if (minimum > value)
-                        minimum = value;
-                    if (value < this.val)
-                        Value = value;
-                    maximum = value;
-                    UpdateScrollInfo();
-                }
+                pos.Maximum = value;
             }
         }
 
@@ -167,20 +153,12 @@ namespace Alternet.UI
         {
             get
             {
-                return minimum;
+                return pos.Minimum;
             }
 
             set
             {
-                if (minimum != value)
-                {
-                    if (maximum < value)
-                        maximum = value;
-                    if (value > this.val)
-                        Value = value;
-                    minimum = value;
-                    UpdateScrollInfo();
-                }
+                pos.Minimum = value;
             }
         }
 
@@ -190,31 +168,18 @@ namespace Alternet.UI
         /// a small distance.
         /// </summary>
         /// <returns>A numeric value. The default value is 1.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The assigned value is less than 0.
-        /// </exception>
         [Category("Behavior")]
         [DefaultValue(1)]
         public virtual int SmallChange
         {
             get
             {
-                return Math.Min(smallChange, LargeChange);
+                return pos.SmallChange;
             }
 
             set
             {
-                if (smallChange != value)
-                {
-                    if (value < 0)
-                    {
-                        LogUtils.LogInvalidBoundArgumentUInt(nameof(SmallChange), value);
-                        return;
-                    }
-
-                    smallChange = value;
-                    UpdateScrollInfo();
-                }
+                pos.SmallChange = value;
             }
         }
 
@@ -264,10 +229,6 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A numeric value that is within the <see cref="Minimum" /> and
         /// <see cref="Maximum" /> range. The default value is 0.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The assigned value is less than the <see cref="Minimum" /> property value
-        /// or is greater than the <see cref="Maximum" /> property value.
-        /// </exception>
         [Category("Behavior")]
         [DefaultValue(0)]
         [Bindable(true)]
@@ -275,29 +236,12 @@ namespace Alternet.UI
         {
             get
             {
-                return val;
+                return pos.Value;
             }
 
             set
             {
-                if (this.val != value)
-                {
-                    if (value < minimum || value > maximum)
-                    {
-                        LogUtils.LogInvalidBoundArgument(
-                            nameof(Value),
-                            value,
-                            Minimum,
-                            Maximum);
-                        return;
-                    }
-
-                    this.val = value;
-
-                    UpdateScrollInfo();
-
-                    OnValueChanged(EventArgs.Empty);
-                }
+                pos.Value = value;
             }
         }
 
@@ -322,8 +266,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets scrollbar position as <see cref="AltPositionInfo"/>.
+        /// </summary>
+        [Browsable(false)]
+        public AltPositionInfo AltPosInfo => pos;
+
+        /// <summary>
+        /// Gets scrollbar position as <see cref="PositionInfo"/>.
+        /// </summary>
+        [Browsable(false)]
+        public PositionInfo PosInfo => pos.AsPositionInfo();
+
+        /// <summary>
         /// Gets control handler.
         /// </summary>
+        [Browsable(false)]
         public new IScrollBarHandler Handler => (IScrollBarHandler)base.Handler;
 
         [Browsable(false)]
@@ -382,7 +339,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs scrollbar info
+        /// Logs scrollbar info.
         /// </summary>
         public virtual void LogInfo()
         {
@@ -399,12 +356,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void UpdateScrollInfo()
         {
-            var range = (Maximum - Minimum) * SmallChange;
-            var pageSize = LargeChange * SmallChange;
-            var position = (Value - Minimum) * SmallChange;
-            var thumbSize = pageSize;
-
-            SetScrollbar(position, thumbSize, range, pageSize);
+            var posInfo = pos.AsPositionInfo();
+            SetScrollbar(posInfo.Position, posInfo.ThumbSize, posInfo.Range, posInfo.PageSize);
         }
 
         /// <summary>
@@ -412,16 +365,16 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseScroll()
         {
-            var pos = (Handler.EventNewPos / SmallChange) + Minimum;
+            var newPos = (Handler.EventNewPos / SmallChange) + Minimum;
             var oldPos = Value;
-            pos = MathUtils.ApplyMinMax(pos, minimum, maximum);
-            if (pos == oldPos)
+            newPos = MathUtils.ApplyMinMax(newPos, Minimum, Maximum);
+            if (newPos == oldPos)
                 return;
-            val = pos;
+            pos.Value = newPos;
             var eventType = Handler.EventTypeID;
             var orientation = Handler.IsVertical ? ScrollBarOrientation.Vertical
                 : ScrollBarOrientation.Horizontal;
-            RaiseScroll(new ScrollEventArgs(eventType, oldPos, pos, orientation));
+            RaiseScroll(new ScrollEventArgs(eventType, oldPos, newPos, orientation));
             OnValueChanged(EventArgs.Empty);
         }
 
@@ -532,6 +485,13 @@ namespace Alternet.UI
         {
             var result = GetRealMetrics().GetThumbSize(IsVertical, ClientSize, ScaleFactor);
             return result;
+        }
+
+        private void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateScrollInfo();
+            if (!e.HasPropertyName())
+                OnValueChanged(EventArgs.Empty);
         }
     }
 }

@@ -7,7 +7,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Implements scroll bar drawing.
+    /// Implements scrollbar drawing.
     /// </summary>
     public class ScrollBarDrawable : BaseDrawable
     {
@@ -62,11 +62,16 @@ namespace Alternet.Drawing
         public ControlStateObjects<RectangleDrawable>? RightArrowPainter;
 
         /// <summary>
-        /// Gets of sets whether scroll bar is vertical.
+        /// Gets of sets whether scrollbar is vertical.
         /// </summary>
         public bool IsVertical = true;
 
         private ScrollBar.MetricsInfo? metrics;
+
+        /// <summary>
+        /// Gets or sets scrollbar position information.
+        /// </summary>
+        public ScrollBar.AltPositionInfo? AltPosInfo { get; set; }
 
         /// <inheritdoc/>
         public override RectD Bounds
@@ -85,7 +90,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets scroll bar metrics.
+        /// Gets or sets scrollbar metrics.
         /// </summary>
         public virtual ScrollBar.MetricsInfo? Metrics
         {
@@ -101,7 +106,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets real scroll bar metrics. If <see cref="Metrics"/> is not specified, returns
+        /// Gets real scrollbar metrics. If <see cref="Metrics"/> is not specified, returns
         /// <see cref="ScrollBar.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
