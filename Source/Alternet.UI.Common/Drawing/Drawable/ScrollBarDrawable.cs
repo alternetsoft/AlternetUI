@@ -7,59 +7,59 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Scroll bar primitive painter.
+    /// Implements scroll bar drawing.
     /// </summary>
-    public class ScrollBarPrimitivePainter : PrimitivePainter
+    public class ScrollBarDrawable : BaseDrawable
     {
         /// <summary>
-        /// Gets or sets primitive painter for the background.
+        /// Gets or sets background element.
         /// </summary>
-        public BorderPrimitivePainter? BackgroundPainter;
+        public RectangleDrawable? Background;
 
         /// <summary>
-        /// Gets or sets primitive painter for the scroll thumb.
+        /// Gets or sets scroll thumb element.
         /// </summary>
-        public BorderPrimitivePainter? ThumbPainter;
+        public RectangleDrawable? Thumb;
 
         /// <summary>
-        /// Gets or sets primitive painter for the scroll up button.
+        /// Gets or sets up button element.
         /// </summary>
-        public BorderPrimitivePainter? UpButtonPainter;
+        public RectangleDrawable? UpButton;
 
         /// <summary>
-        /// Gets or sets primitive painter for the scroll down button.
+        /// Gets or sets down button element.
         /// </summary>
-        public BorderPrimitivePainter? DownButtonPainter;
+        public RectangleDrawable? DownButton;
 
         /// <summary>
-        /// Gets or sets primitive painter for the scroll left button.
+        /// Gets or sets left button element.
         /// </summary>
-        public BorderPrimitivePainter? LeftButtonPainter;
+        public RectangleDrawable? LeftButton;
 
         /// <summary>
-        /// Gets or sets primitive painter for the scroll right button.
+        /// Gets or sets right button element.
         /// </summary>
-        public BorderPrimitivePainter? RightButtonPainter;
+        public RectangleDrawable? RightButton;
 
         /// <summary>
-        /// Gets or sets primitive painter for the up arrow.
+        /// Gets or sets up arrow element.
         /// </summary>
-        public BorderPrimitivePainter? UpArrowPainter;
+        public RectangleDrawable? UpArrow;
 
         /// <summary>
-        /// Gets or sets primitive painter for the down arrow.
+        /// Gets or sets down arrow element.
         /// </summary>
-        public BorderPrimitivePainter? DownArrowPainter;
+        public RectangleDrawable? DownArrowPainter;
 
         /// <summary>
         /// Gets or sets primitive painter for the left arrow.
         /// </summary>
-        public BorderPrimitivePainter? LeftArrowPainter;
+        public RectangleDrawable? LeftArrowPainter;
 
         /// <summary>
         /// Gets or sets primitive painter for the right arrow.
         /// </summary>
-        public BorderPrimitivePainter? RightArrowPainter;
+        public RectangleDrawable? RightArrowPainter;
 
         /// <summary>
         /// Gets of sets whether scroll bar is vertical.
@@ -72,7 +72,7 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            BackgroundPainter?.Draw(control, dc);
+            Background?.Draw(control, dc);
 
             var startButton = GetStartButton();
             var endButton = GetEndButton();
@@ -85,32 +85,32 @@ namespace Alternet.Drawing
             endArrow?.Draw(control, dc);
         }
 
-        private BorderPrimitivePainter? GetEndArrow()
+        private RectangleDrawable? GetEndArrow()
         {
             if (IsVertical)
                 return DownArrowPainter;
             return RightArrowPainter;
         }
 
-        private BorderPrimitivePainter? GetStartArrow()
+        private RectangleDrawable? GetStartArrow()
         {
             if (IsVertical)
-                return UpArrowPainter;
+                return UpArrow;
             return LeftArrowPainter;
         }
 
-        private BorderPrimitivePainter? GetStartButton()
+        private RectangleDrawable? GetStartButton()
         {
             if (IsVertical)
-                return UpButtonPainter;
-            return LeftButtonPainter;
+                return UpButton;
+            return LeftButton;
         }
 
-        private BorderPrimitivePainter? GetEndButton()
+        private RectangleDrawable? GetEndButton()
         {
             if (IsVertical)
-                return DownButtonPainter;
-            return RightButtonPainter;
+                return DownButton;
+            return RightButton;
         }
     }
 }

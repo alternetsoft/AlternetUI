@@ -9,9 +9,9 @@ using Alternet.UI.Extensions;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Image primitive painter.
+    /// Implements image drawing.
     /// </summary>
-    public class ImagePrimitivePainter : PrimitivePainter
+    public class ImageDrawable : BaseDrawable
     {
         /// <summary>
         /// Gets or sets image to draw.
@@ -29,9 +29,29 @@ namespace Alternet.Drawing
         public RectI? SourceRect = null;
 
         /// <summary>
-        /// Performs default drawing of the image primitive.
+        /// Gets whether or not to stretch this object. Default is <c>true</c>.
         /// </summary>
-        /// <param name="control">Control in which primitive is painted.</param>
+        public bool Stretch = true;
+
+        /// <summary>
+        /// Gets whether or not to center this object vertically. Default is <c>true</c>.
+        /// </summary>
+        public bool CenterVert = true;
+
+        /// <summary>
+        /// Gets whether or not to center this object horizontally. Default is <c>true</c>.
+        /// </summary>
+        public bool CenterHorz = true;
+
+        /// <summary>
+        /// Gets whether or not center this object horizontally or vertically.
+        /// </summary>
+        public bool CenterHorzOrVert => CenterHorz || CenterVert;
+
+        /// <summary>
+        /// Performs default drawing of the image.
+        /// </summary>
+        /// <param name="control">Control in which this object is painted.</param>
         /// <param name="dc">Drawing context.</param>
         public virtual void DefaultDrawImage(Control control, Graphics dc)
         {
@@ -41,25 +61,25 @@ namespace Alternet.Drawing
             if (Image.IsNullOrEmpty(image) || !Visible)
                 return;
 
-            if (Size is null)
+            if (Size.AnyIsEmptyOrNegative)
             {
-                dc.DrawImage(image, DestPoint);
+                dc.DrawImage(image, Location);
                 return;
             }
 
             if (Stretch)
             {
                 if (SourceRect is null)
-                    dc.DrawImage(image, DestRect);
+                    dc.DrawImage(image, Bounds);
                 else
-                    dc.DrawImage(image, DestRect, SourceRect.Value);
+                    dc.DrawImage(image, Bounds, SourceRect.Value);
             }
             else
             {
                 if (CenterHorzOrVert)
                 {
                     var imageRect = SourceRect ?? image.BoundsDip(control);
-                    var destRect = DestRect;
+                    var destRect = Bounds;
                     var centeredRect = imageRect.CenterIn(destRect, CenterHorz, CenterVert);
                     if (SourceRect is null)
                         dc.DrawImage(image, centeredRect);
@@ -67,7 +87,7 @@ namespace Alternet.Drawing
                         dc.DrawImage(image, centeredRect, SourceRect.Value);
                 }
                 else
-                    dc.DrawImage(image, DestPoint);
+                    dc.DrawImage(image, Location);
             }
         }
 
