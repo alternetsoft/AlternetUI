@@ -40,7 +40,7 @@ namespace Alternet.UI
         private int maximum = 100;
         private int smallChange = 1;
         private int largeChange = 10;
-        private int value;
+        private int val;
         private MetricsInfo? metrics;
 
         /// <summary>
@@ -76,11 +76,11 @@ namespace Alternet.UI
         /// Gets or sets metrics used to paint this scrollbar when it's style is non-system.
         /// </summary>
         [Browsable(false)]
-        public virtual MetricsInfo Metrics
+        public virtual MetricsInfo? Metrics
         {
             get
             {
-                return metrics ?? DefaultMetrics;
+                return metrics;
             }
 
             set
@@ -146,7 +146,7 @@ namespace Alternet.UI
                 {
                     if (minimum > value)
                         minimum = value;
-                    if (value < this.value)
+                    if (value < this.val)
                         Value = value;
                     maximum = value;
                     UpdateScrollInfo();
@@ -176,7 +176,7 @@ namespace Alternet.UI
                 {
                     if (maximum < value)
                         maximum = value;
-                    if (value > this.value)
+                    if (value > this.val)
                         Value = value;
                     minimum = value;
                     UpdateScrollInfo();
@@ -275,12 +275,12 @@ namespace Alternet.UI
         {
             get
             {
-                return value;
+                return val;
             }
 
             set
             {
-                if (this.value != value)
+                if (this.val != value)
                 {
                     if (value < minimum || value > maximum)
                     {
@@ -292,7 +292,7 @@ namespace Alternet.UI
                         return;
                     }
 
-                    this.value = value;
+                    this.val = value;
 
                     UpdateScrollInfo();
 
@@ -417,7 +417,7 @@ namespace Alternet.UI
             pos = MathUtils.ApplyMinMax(pos, minimum, maximum);
             if (pos == oldPos)
                 return;
-            value = pos;
+            val = pos;
             var eventType = Handler.EventTypeID;
             var orientation = Handler.IsVertical ? ScrollBarOrientation.Vertical
                 : ScrollBarOrientation.Horizontal;
@@ -500,7 +500,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SizeD SizeFromMetrics()
         {
-            var result = Metrics.GetPreferredSize(IsVertical, ScaleFactor);
+            var result = GetRealMetrics().GetPreferredSize(IsVertical, ScaleFactor);
             return result;
         }
 
@@ -510,8 +510,18 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SizeD ArrowBitmapSizeFromMetrics()
         {
-            var result = Metrics.GetArrowBitmapSize(IsVertical, ScaleFactor);
+            var result = GetRealMetrics().GetArrowBitmapSize(IsVertical, ScaleFactor);
             return result;
+        }
+
+        /// <summary>
+        /// Gets real scroll bar metrics. If <see cref="Metrics"/> is not specified, returns
+        /// <see cref="ScrollBar.DefaultMetrics"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ScrollBar.MetricsInfo GetRealMetrics()
+        {
+            return metrics ?? ScrollBar.DefaultMetrics;
         }
 
         /// <summary>
@@ -520,7 +530,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SizeD ThumbSizeFromMetrics()
         {
-            var result = Metrics.GetThumbSize(IsVertical, ClientSize, ScaleFactor);
+            var result = GetRealMetrics().GetThumbSize(IsVertical, ClientSize, ScaleFactor);
             return result;
         }
     }

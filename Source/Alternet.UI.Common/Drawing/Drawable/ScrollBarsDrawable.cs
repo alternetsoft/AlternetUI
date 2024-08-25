@@ -26,6 +26,28 @@ namespace Alternet.Drawing
         /// </summary>
         public RectangleDrawable? Corner;
 
+        private ScrollBar.MetricsInfo? metrics;
+
+        /// <summary>
+        /// Gets or sets scroll bar metrics.
+        /// </summary>
+        public virtual ScrollBar.MetricsInfo? Metrics
+        {
+            get
+            {
+                return metrics;
+            }
+
+            set
+            {
+                metrics = value;
+                if (VertScrollBar is not null)
+                    VertScrollBar.Metrics = value;
+                if(HorzScrollBar is not null)
+                    HorzScrollBar.Metrics = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override void Draw(Control control, Graphics dc)
         {

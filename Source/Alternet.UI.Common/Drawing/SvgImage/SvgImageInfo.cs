@@ -36,7 +36,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets this svg image as <see cref="Image"/>.
         /// </summary>
-        public Image? AsImage
+        public readonly Image? AsImage
         {
             get
             {

@@ -66,6 +66,34 @@ namespace Alternet.Drawing
         /// </summary>
         public bool IsVertical = true;
 
+        private ScrollBar.MetricsInfo? metrics;
+
+        /// <summary>
+        /// Gets or sets scroll bar metrics.
+        /// </summary>
+        public virtual ScrollBar.MetricsInfo? Metrics
+        {
+            get
+            {
+                return metrics;
+            }
+
+            set
+            {
+                metrics = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets real scroll bar metrics. If <see cref="Metrics"/> is not specified, returns
+        /// <see cref="ScrollBar.DefaultMetrics"/>.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ScrollBar.MetricsInfo GetRealMetrics()
+        {
+            return metrics ?? ScrollBar.DefaultMetrics;
+        }
+
         /// <inheritdoc/>
         public override void Draw(Control control, Graphics dc)
         {

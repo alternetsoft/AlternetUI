@@ -11,7 +11,7 @@ namespace Alternet.UI
         /// <summary>
         /// Contains properties which specify different scrollbar metrics.
         /// </summary>
-        public struct MetricsInfo
+        public class MetricsInfo
         {
             /// <summary>
             /// Height of horizontal scrollbar in pixels.
@@ -64,7 +64,7 @@ namespace Alternet.UI
             /// <summary>
             /// Logs scroll bar metrics.
             /// </summary>
-            public readonly void Log()
+            public void Log()
             {
                 var info = this;
 
@@ -93,7 +93,7 @@ namespace Alternet.UI
             /// <summary>
             /// Resets all properties, reloading them from the system settings.
             /// </summary>
-            public void Reset()
+            public virtual void Reset()
             {
                 HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY);
                 VScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX);
@@ -111,7 +111,7 @@ namespace Alternet.UI
             /// Width for the horizontal scrollbar is returned as Nan.
             /// </summary>
             /// <returns></returns>
-            public readonly SizeD GetPreferredSize(bool isVertical, Coord? scaleFactor = null)
+            public SizeD GetPreferredSize(bool isVertical, Coord? scaleFactor = null)
             {
                 Coord width;
                 Coord height;
@@ -134,7 +134,7 @@ namespace Alternet.UI
             /// Gets size of the arrow bitmap.
             /// </summary>
             /// <returns></returns>
-            public readonly SizeD GetArrowBitmapSize(bool isVertical, Coord? scaleFactor = null)
+            public SizeD GetArrowBitmapSize(bool isVertical, Coord? scaleFactor = null)
             {
                 Coord width;
                 Coord height;
@@ -161,7 +161,7 @@ namespace Alternet.UI
             /// <param name="size">Size of the scroll bar.</param>
             /// <param name="scaleFactor">Scaling factor. Optional.</param>
             /// <returns></returns>
-            public readonly SizeD GetThumbSize(
+            public SizeD GetThumbSize(
                 bool isVertical,
                 SizeD size,
                 Coord? scaleFactor = null)
