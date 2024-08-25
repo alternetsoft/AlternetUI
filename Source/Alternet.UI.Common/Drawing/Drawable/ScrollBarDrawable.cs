@@ -14,52 +14,52 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets background element.
         /// </summary>
-        public RectangleDrawable? Background;
+        public ControlStateObjects<RectangleDrawable>? Background;
 
         /// <summary>
         /// Gets or sets scroll thumb element.
         /// </summary>
-        public RectangleDrawable? Thumb;
+        public ControlStateObjects<RectangleDrawable>? Thumb;
 
         /// <summary>
         /// Gets or sets up button element.
         /// </summary>
-        public RectangleDrawable? UpButton;
+        public ControlStateObjects<RectangleDrawable>? UpButton;
 
         /// <summary>
         /// Gets or sets down button element.
         /// </summary>
-        public RectangleDrawable? DownButton;
+        public ControlStateObjects<RectangleDrawable>? DownButton;
 
         /// <summary>
         /// Gets or sets left button element.
         /// </summary>
-        public RectangleDrawable? LeftButton;
+        public ControlStateObjects<RectangleDrawable>? LeftButton;
 
         /// <summary>
         /// Gets or sets right button element.
         /// </summary>
-        public RectangleDrawable? RightButton;
+        public ControlStateObjects<RectangleDrawable>? RightButton;
 
         /// <summary>
         /// Gets or sets up arrow element.
         /// </summary>
-        public RectangleDrawable? UpArrow;
+        public ControlStateObjects<RectangleDrawable>? UpArrow;
 
         /// <summary>
         /// Gets or sets down arrow element.
         /// </summary>
-        public RectangleDrawable? DownArrowPainter;
+        public ControlStateObjects<RectangleDrawable>? DownArrowPainter;
 
         /// <summary>
         /// Gets or sets primitive painter for the left arrow.
         /// </summary>
-        public RectangleDrawable? LeftArrowPainter;
+        public ControlStateObjects<RectangleDrawable>? LeftArrowPainter;
 
         /// <summary>
         /// Gets or sets primitive painter for the right arrow.
         /// </summary>
-        public RectangleDrawable? RightArrowPainter;
+        public ControlStateObjects<RectangleDrawable>? RightArrowPainter;
 
         /// <summary>
         /// Gets of sets whether scroll bar is vertical.
@@ -67,6 +67,22 @@ namespace Alternet.Drawing
         public bool IsVertical = true;
 
         private ScrollBar.MetricsInfo? metrics;
+
+        /// <inheritdoc/>
+        public override RectD Bounds
+        {
+            get
+            {
+                return Bounds;
+            }
+
+            set
+            {
+                if (Bounds == value)
+                    return;
+                Bounds = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets scroll bar metrics.
@@ -100,7 +116,7 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            Background?.Draw(control, dc);
+            Background?.GetObjectOrNormal(VisualState)?.Draw(control, dc);
 
             var startButton = GetStartButton();
             var endButton = GetEndButton();
@@ -116,29 +132,29 @@ namespace Alternet.Drawing
         private RectangleDrawable? GetEndArrow()
         {
             if (IsVertical)
-                return DownArrowPainter;
-            return RightArrowPainter;
+                return DownArrowPainter?.GetObjectOrNormal(VisualState);
+            return RightArrowPainter?.GetObjectOrNormal(VisualState);
         }
 
         private RectangleDrawable? GetStartArrow()
         {
             if (IsVertical)
-                return UpArrow;
-            return LeftArrowPainter;
+                return UpArrow?.GetObjectOrNormal(VisualState);
+            return LeftArrowPainter?.GetObjectOrNormal(VisualState);
         }
 
         private RectangleDrawable? GetStartButton()
         {
             if (IsVertical)
-                return UpButton;
-            return LeftButton;
+                return UpButton?.GetObjectOrNormal(VisualState);
+            return LeftButton?.GetObjectOrNormal(VisualState);
         }
 
         private RectangleDrawable? GetEndButton()
         {
             if (IsVertical)
-                return DownButton;
-            return RightButton;
+                return DownButton?.GetObjectOrNormal(VisualState);
+            return RightButton?.GetObjectOrNormal(VisualState);
         }
     }
 }

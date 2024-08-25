@@ -26,7 +26,70 @@ namespace Alternet.Drawing
         /// </summary>
         public RectangleDrawable? Corner;
 
+        private static ScrollBarsDrawable? defaultDark;
+        private static ScrollBarsDrawable? defaultLight;
+
         private ScrollBar.MetricsInfo? metrics;
+
+        /// <summary>
+        /// Gets or sets default drawable used to paint scroll bars when dark color theme is selected.
+        /// </summary>
+        public static ScrollBarsDrawable DefaultDark
+        {
+            get
+            {
+                if(defaultDark is null)
+                {
+                    defaultDark = new();
+                    defaultDark.InitDarkTheme();
+                }
+
+                return defaultDark;
+            }
+
+            set
+            {
+                defaultDark = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default drawable used to paint scroll bars when light color theme is selected.
+        /// </summary>
+        public static ScrollBarsDrawable DefaultLight
+        {
+            get
+            {
+                if (defaultLight is null)
+                {
+                    defaultLight = new();
+                    defaultLight.InitLightTheme();
+                }
+
+                return defaultLight;
+            }
+
+            set
+            {
+                defaultLight = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override RectD Bounds
+        {
+            get
+            {
+                return Bounds;
+            }
+
+            set
+            {
+                if (Bounds == value)
+                    return;
+                Bounds = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets scroll bar metrics.
@@ -56,12 +119,39 @@ namespace Alternet.Drawing
 
             var vertVisible = VertScrollBar?.Visible ?? false;
             var horzVisible = HorzScrollBar?.Visible ?? false;
+            var bothVisible = vertVisible && horzVisible;
 
-            VertScrollBar?.Draw(control, dc);
-            HorzScrollBar?.Draw(control, dc);
+            if (vertVisible)
+            {
+                VertScrollBar!.Draw(control, dc);
+            }
 
-            if(vertVisible && horzVisible)
-                Corner?.Draw(control, dc);
+            if (horzVisible)
+            {
+                HorzScrollBar!.Draw(control, dc);
+            }
+
+            if (bothVisible && Corner is not null)
+            {
+                SizeD size = (VertScrollBar!.Size.Width, HorzScrollBar!.Size.Height);
+                PointD location = (Bounds.Right - size.Width, Bounds.Bottom - size.Height);
+                Corner.Bounds = (location, size);
+                Corner.Draw(control, dc);
+            }
+        }
+
+        /// <summary>
+        /// Initialized this drawable with default settings for the dark color theme.
+        /// </summary>
+        public virtual void InitDarkTheme()
+        {
+        }
+
+        /// <summary>
+        /// Initialized this drawable with default settings for the light color theme.
+        /// </summary>
+        public virtual void InitLightTheme()
+        {
         }
     }
 }

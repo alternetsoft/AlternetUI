@@ -44,7 +44,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public bool Visible { get; set; } = true;
+        public virtual bool Visible { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets visual state.
+        /// </summary>
+        public virtual VisualControlState VisualState { get; set; } = VisualControlState.Normal;
 
         /// <inheritdoc/>
         public virtual RectD Bounds
