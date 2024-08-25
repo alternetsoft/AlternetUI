@@ -181,7 +181,11 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
-        internal new INumericUpDownHandler Handler =>
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new INumericUpDownHandler Handler =>
             (INumericUpDownHandler)base.Handler;
 
         /// <summary>

@@ -109,7 +109,11 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
-        internal new IDateTimePickerHandler Handler =>
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new IDateTimePickerHandler Handler =>
             (IDateTimePickerHandler)base.Handler;
 
         /// <summary>

@@ -143,7 +143,11 @@ namespace Alternet.UI
             get => base.Layout;
         }
 
-        internal new ILinkLabelHandler Handler =>
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new ILinkLabelHandler Handler =>
             (ILinkLabelHandler)base.Handler;
 
         /// <summary>

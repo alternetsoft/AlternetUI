@@ -370,7 +370,11 @@ namespace Alternet.UI
             set => base.Layout = value;
         }
 
-        internal new ISliderHandler Handler => (ISliderHandler)base.Handler;
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new ISliderHandler Handler => (ISliderHandler)base.Handler;
 
         /// <summary>
         /// Clears the ticks.

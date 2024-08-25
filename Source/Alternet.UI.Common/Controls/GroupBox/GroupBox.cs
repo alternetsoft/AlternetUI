@@ -42,7 +42,11 @@ namespace Alternet.UI
             set => Title = value;
         }
 
-        internal new IGroupBoxHandler Handler => (IGroupBoxHandler)base.Handler;
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new IGroupBoxHandler Handler => (IGroupBoxHandler)base.Handler;
 
         /// <summary>
         /// Gets the top border (it is the margin at the top where the title is).

@@ -289,7 +289,7 @@ namespace Alternet.UI
         /// Gets a <see cref="IButtonHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new IButtonHandler Handler => (IButtonHandler)base.Handler;
+        public new IButtonHandler Handler => (IButtonHandler)base.Handler;
 
         /// <summary>
         /// Sets the position at which the image is displayed.

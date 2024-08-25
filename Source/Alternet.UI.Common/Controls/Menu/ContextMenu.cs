@@ -67,7 +67,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ContextMenu;
 
-        internal new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
+        /// <summary>
+        /// Gets handler.
+        /// </summary>
+        [Browsable(false)]
+        public new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
 
         /// <summary>
         /// Raises the <see cref="Closing" /> event and <see cref="OnClosing"/> method.</summary>
