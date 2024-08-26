@@ -301,12 +301,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public virtual Image AsImage(SizeI size) => new Bitmap(this, size);
+        public virtual Image AsImage(SizeI size) => Handler.AsImage(size);
 
         /// <summary>
         /// Gets first image with size equal to <see cref="DefaultSize"/>.
         /// </summary>
-        public virtual Image AsImage() => new Bitmap(this, DefaultSize);
+        public virtual Image AsImage() => Handler.AsImage(DefaultSize);
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
@@ -358,7 +358,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IImageSetHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateImageSetHandler() ?? DummyImageSetHandler.Default;
+            return GraphicsFactory.Handler.CreateImageSetHandler() ?? PlessImageSetHandler.Default;
         }
    }
 }

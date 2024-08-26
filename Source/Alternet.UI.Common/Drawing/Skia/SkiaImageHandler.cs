@@ -259,6 +259,48 @@ namespace Alternet.UI
             get => ImageBitsFormatKind.Unknown;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class
+        /// from the specified <see cref="Stream"/> which contains svg data.
+        /// </summary>
+        /// <param name="stream">Stream with svg data.</param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns>Image instance with dimensions specified in <paramref name="width"/>
+        /// and <paramref name="height"/> and data loaded from <paramref name="stream"/>. </returns>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static SkiaImageHandler CreateFromSvg(
+            Stream stream,
+            int width,
+            int height,
+            Color? color)
+        {
+            // This is a dummy implementation
+            return new SkiaImageHandler((width, height));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified string which contains svg data.
+        /// </summary>
+        /// <param name="s">String with svg data.</param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns>Image instance with dimensions specified in <paramref name="width"/>
+        /// and <paramref name="height"/> and data loaded from <paramref name="s"/>. </returns>
+        /// <param name="color">Svg fill color. Optional.
+        /// If provided, svg fill color is changed to the specified value.</param>
+        public static SkiaImageHandler CreateFromSvg(
+            string s,
+            int width,
+            int height,
+            Color? color)
+        {
+            // This is a dummy implementation
+            return new SkiaImageHandler((width, height));
+        }
+
         /// <inheritdoc/>
         public bool Rescale(SizeI sizeNeeded)
         {

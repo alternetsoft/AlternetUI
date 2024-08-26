@@ -41,6 +41,11 @@ namespace Alternet.UI
 
             dc.FillRectangle(Color.LightGoldenrodYellow.AsBrush, e.ClipRectangle);
 
+            var svgImage = KnownSvgImages.ImgAngleDown;
+            var image = svgImage.ImageWithColor(64, null);
+                
+            image ??= Bitmap.Empty;
+
             var font = Font ?? Control.DefaultFont;
 
             dc.DrawText(
@@ -71,6 +76,8 @@ namespace Alternet.UI
             dc.SetPixel(50, 150, Color.Red);
 
             dc.DrawRectangle(Color.Red.AsPen, e.ClipRectangle);
+
+            dc.DrawImage(image, (50, 150));
         }
     }
 }
