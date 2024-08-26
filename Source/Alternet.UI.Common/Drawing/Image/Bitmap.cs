@@ -15,6 +15,8 @@ namespace Alternet.Drawing
     /// </summary>
     public class Bitmap : Image
     {
+        private static Bitmap? empty;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class from a stream.
         /// </summary>
@@ -242,6 +244,17 @@ namespace Alternet.Drawing
         public Bitmap(IImageHandler nativeImage)
             : base(nativeImage)
         {
+        }
+
+        /// <summary>
+        /// Gets an empty bitmap.
+        /// </summary>
+        public static Bitmap Empty
+        {
+            get
+            {
+                return empty ??= new Bitmap();
+            }
         }
 
         /// <summary>
