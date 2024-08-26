@@ -42,7 +42,7 @@ namespace Alternet.UI
             dc.FillRectangle(Color.LightGoldenrodYellow.AsBrush, e.ClipRectangle);
 
             var svgImage = KnownSvgImages.ImgAngleDown;
-            var image = svgImage.ImageWithColor(64, null);
+            var image = svgImage.ImageWithColor(64, Color.Red);
                 
             image ??= Bitmap.Empty;
 

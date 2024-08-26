@@ -286,7 +286,18 @@ namespace Alternet.UI
             var skiaBitmap = result.bitmap;
 
             using var canvas = new SKCanvas(skiaBitmap);
-            canvas.DrawPicture(picture, ref matrix);
+
+            if(color is not null)
+            {
+                using SKPaint paint = new();
+                paint.ColorFilter = SKColorFilter.CreateBlendMode(color, SKBlendMode.SrcIn);
+                canvas.DrawPicture(picture, ref matrix, paint);
+            }
+            else
+            {
+                canvas.DrawPicture(picture, ref matrix);
+            }
+
             canvas.Flush();
 
             return result;
