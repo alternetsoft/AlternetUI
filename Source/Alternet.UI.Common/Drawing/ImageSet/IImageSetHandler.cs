@@ -39,5 +39,12 @@ namespace Alternet.Drawing
         /// <param name="stream">Stream with the image data.</param>
         /// <returns></returns>
         bool LoadFromStream(Stream stream);
+
+        /// <summary>
+        /// Gets as image with the specified size.
+        /// </summary>
+        /// <param name="size">Image size.</param>
+        /// <returns></returns>
+        Image AsImage(SizeI size);
     }
 }

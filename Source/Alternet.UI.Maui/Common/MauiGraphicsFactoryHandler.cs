@@ -209,8 +209,7 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            // This is a dummy implementation
-            return new SkiaImageHandler((width, height));
+            return SkiaImageHandler.CreateFromSvg(stream, width, height, color);
         }
 
         IImageHandler IGraphicsFactoryHandler.CreateImageHandlerFromSvg(
@@ -219,8 +218,7 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            // This is a dummy implementation
-            return new SkiaImageHandler((width, height));
+            return SkiaImageHandler.CreateFromSvg(s, width, height, color);
         }
 
         IImageListHandler? IGraphicsFactoryHandler.CreateImageListHandler()
@@ -239,9 +237,10 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            // This is a dummy implementation
-            var result = new DummyImageSetHandler();
-            result.Add(new Bitmap((width, height)));
+            var result = new PlessImageSetHandler();
+            result.DefaultSize = (width, height);
+            var handler = SkiaImageHandler.CreateFromSvg(stream, width, height, color);
+            result.Add(new Bitmap(handler));
             return result;
         }
 
@@ -251,9 +250,10 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            // This is a dummy implementation
-            var result = new DummyImageSetHandler();
-            result.Add(new Bitmap((width, height)));
+            var result = new PlessImageSetHandler();
+            result.DefaultSize = (width, height);
+            var handler = SkiaImageHandler.CreateFromSvg(s, width, height, color);
+            result.Add(new Bitmap(handler));
             return result;
         }
 

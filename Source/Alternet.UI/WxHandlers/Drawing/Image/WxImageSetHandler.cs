@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI.Native
 {
     internal partial class ImageSet : Alternet.Drawing.IImageSetHandler
@@ -38,6 +40,12 @@ namespace Alternet.UI.Native
             using var inputStream = new UI.Native.InputStream(stream);
             LoadFromStream(inputStream);
             return true;
+        }
+
+        public Alternet.Drawing.Image AsImage(SizeI size)
+        {
+            var handler = WxGraphicsFactoryHandler.CreateImageHandler(this, size);
+            return new Alternet.Drawing.Bitmap(handler);
         }
     }
 }
