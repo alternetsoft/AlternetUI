@@ -148,21 +148,21 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public SKAlphaType AlphaType => bitmap.AlphaType;
+        public virtual SKAlphaType AlphaType => bitmap.AlphaType;
 
         /// <inheritdoc/>
-        public int Width => bitmap.Width;
+        public virtual int Width => bitmap.Width;
 
         /// <inheritdoc/>
-        public int Height => bitmap.Height;
+        public virtual int Height => bitmap.Height;
 
         /// <summary>
         /// Gets internal <see cref="SKBitmap"/>.
         /// </summary>
-        public SKBitmap Bitmap => bitmap;
+        public virtual SKBitmap Bitmap => bitmap;
 
         /// <inheritdoc/>
-        public Coord ScaleFactor
+        public virtual Coord ScaleFactor
         {
             get => 1;
 
@@ -173,31 +173,31 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public SizeI DipSize
+        public virtual SizeI DipSize
         {
             get => PixelSize;
         }
 
         /// <inheritdoc/>
-        public Coord ScaledHeight
+        public virtual Coord ScaledHeight
         {
             get => PixelSize.Height;
         }
 
         /// <inheritdoc/>
-        public SizeI ScaledSize
+        public virtual SizeI ScaledSize
         {
             get => new((int)ScaledHeight, (int)ScaledWidth);
         }
 
         /// <inheritdoc/>
-        public Coord ScaledWidth
+        public virtual Coord ScaledWidth
         {
             get => PixelSize.Width;
         }
 
         /// <inheritdoc/>
-        public SizeI PixelSize
+        public virtual SizeI PixelSize
         {
             get
             {
@@ -206,13 +206,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool IsOk
+        public virtual bool IsOk
         {
             get => SkiaUtils.BitmapIsOk(bitmap);
         }
 
         /// <inheritdoc/>
-        public bool HasAlpha
+        public virtual bool HasAlpha
         {
             get => !bitmap.Info.IsOpaque;
 
@@ -236,7 +236,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool HasMask
+        public virtual bool HasMask
         {
             get
             {
@@ -245,7 +245,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public int Depth
+        public virtual int Depth
         {
             get
             {
@@ -254,9 +254,42 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ImageBitsFormatKind BitsFormat
+        public virtual ImageBitsFormatKind BitsFormat
         {
             get => ImageBitsFormatKind.Unknown;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SkiaImageHandler"/> from <see cref="SKPicture"/>
+        /// using the specified width and height.
+        /// </summary>
+        /// <param name="picture">Picture to use as a source of pixel data.</param>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <returns>Image instance with dimensions specified in <paramref name="width"/>
+        /// and <paramref name="height"/>.</returns>
+        /// <param name="color">Overrides default fill color.</param>
+        /// <returns></returns>
+        public static SkiaImageHandler CreateFromPicture(
+            SKPicture? picture,
+            int width,
+            int height,
+            Color? color)
+        {
+            var result = new SkiaImageHandler((width, height));
+            if (picture is null)
+                return result;
+            var cullRect = picture.CullRect;
+            var scaleX = width / cullRect.Width;
+            var scaleY = height / cullRect.Height;
+            var matrix = SKMatrix.CreateScale((float)scaleX, (float)scaleY);
+            var skiaBitmap = result.bitmap;
+
+            using var canvas = new SKCanvas(skiaBitmap);
+            canvas.DrawPicture(picture, ref matrix);
+            canvas.Flush();
+
+            return result;
         }
 
         /// <summary>
@@ -276,8 +309,12 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            // This is a dummy implementation
-            return new SkiaImageHandler((width, height));
+            var svg = new SkiaSharp.Extended.Svg.SKSvg();
+            svg.Load(stream);
+            var picture = svg.Picture;
+
+            var result = CreateFromPicture(picture, width, height, color);
+            return result;
         }
 
         /// <summary>
@@ -297,12 +334,14 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            // This is a dummy implementation
-            return new SkiaImageHandler((width, height));
+            byte[] bytes = Encoding.UTF8.GetBytes(s);
+            MemoryStream stream = new MemoryStream(bytes);
+            var result = CreateFromSvg(stream, width, height, color);
+            return result;
         }
 
         /// <inheritdoc/>
-        public bool Rescale(SizeI sizeNeeded)
+        public virtual bool Rescale(SizeI sizeNeeded)
         {
             SKBitmap? newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);
             var result = bitmap.ScalePixels(newBitmap, GraphicsFactory.DefaultScaleQuality);
@@ -317,13 +356,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public GenericImage ToGenericImage()
+        public virtual GenericImage ToGenericImage()
         {
             return (GenericImage)bitmap;
         }
 
         /// <inheritdoc/>
-        public IImageHandler GetSubBitmap(RectI rect)
+        public virtual IImageHandler GetSubBitmap(RectI rect)
         {
             var resultBitmap = new SKBitmap(rect.Width, rect.Height);
             if (!bitmap.ExtractSubset(resultBitmap, rect))
@@ -332,7 +371,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool ResetAlpha()
+        public virtual bool ResetAlpha()
         {
             HasAlpha = false;
             return HasAlpha == false;
@@ -368,30 +407,30 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public nint LockBits()
+        public virtual nint LockBits()
         {
             return default;
         }
 
         /// <inheritdoc/>
-        public void UnlockBits()
+        public virtual void UnlockBits()
         {
         }
 
         /// <inheritdoc/>
-        public int GetStride()
+        public virtual int GetStride()
         {
             return 0;
         }
 
         /// <inheritdoc/>
-        public void Assign(GenericImage image)
+        public virtual void Assign(GenericImage image)
         {
             bitmap.Pixels = image.Pixels;
         }
 
         /// <inheritdoc/>
-        public void Assign(SKBitmap image)
+        public virtual void Assign(SKBitmap image)
         {
             if (!image.CopyTo(bitmap))
                 bitmap = image.Copy();
