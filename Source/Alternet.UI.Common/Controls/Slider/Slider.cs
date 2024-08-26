@@ -33,7 +33,7 @@ namespace Alternet.UI
     {
         private int maximum = 10;
         private int minimum = 0;
-        private int value = 0;
+        private int val = 0;
         private int smallChange = 1;
         private int largeChange = 5;
         private int tickFrequency = 1;
@@ -142,15 +142,15 @@ namespace Alternet.UI
         {
             get
             {
-                return value;
+                return val;
             }
 
             set
             {
                 value = CoerceValue(value);
-                if (this.value == value)
+                if (this.val == value)
                     return;
-                this.value = value;
+                this.val = value;
                 RaiseValueChanged();
             }
         }
@@ -267,6 +267,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new ISliderHandler Handler => (ISliderHandler)base.Handler;
+
+        /// <summary>
         /// Gets or sets a value that specifies the delta between ticks drawn on the control.
         /// </summary>
         /// <value>The numeric value representing the delta between ticks. The default is 1.</value>
@@ -369,12 +375,6 @@ namespace Alternet.UI
             get => base.Layout;
             set => base.Layout = value;
         }
-
-        /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new ISliderHandler Handler => (ISliderHandler)base.Handler;
 
         /// <summary>
         /// Clears the ticks.

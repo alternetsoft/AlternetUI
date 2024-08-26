@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// </returns>
         [DefaultValue(CheckState.Unchecked)]
         [RefreshProperties(RefreshProperties.All)]
-        public CheckState CheckState
+        public virtual CheckState CheckState
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// is <see langword="false"/>.
         /// </returns>
         [DefaultValue(false)]
-        public bool ThreeState
+        public virtual bool ThreeState
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// Gets or sets whether to align check box on the right side of the text.
         /// </summary>
         [DefaultValue(false)]
-        public bool AlignRight
+        public virtual bool AlignRight
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Alternet.UI
         /// the third state by clicking.
         /// </remarks>
         [DefaultValue(false)]
-        public bool AllowAllStatesForUser
+        public virtual bool AllowAllStatesForUser
         {
             get
             {
@@ -151,6 +151,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="ICheckBoxHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        public new ICheckBoxHandler Handler => (ICheckBoxHandler)base.Handler;
+
+        /// <summary>
         /// Gets or set a value indicating whether the <see cref="CheckBox"/> is
         /// in the checked state.
         /// </summary>
@@ -160,7 +166,7 @@ namespace Alternet.UI
         /// <remarks>When the value is <c>true</c>, the <see cref="CheckBox"/>
         /// portion of the control displays a check mark.</remarks>
         [DefaultValue(false)]
-        public bool IsChecked
+        public virtual bool IsChecked
         {
             get
             {
@@ -194,12 +200,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="ICheckBoxHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new ICheckBoxHandler Handler => (ICheckBoxHandler)base.Handler;
-
-        /// <summary>
         /// Binds property specified with <paramref name="instance"/> and
         /// <paramref name="propName"/> to the <see cref="CheckBox"/>.
         /// After binding <see cref="CheckBox"/> will edit the specified property.
@@ -208,7 +208,7 @@ namespace Alternet.UI
         /// <param name="propName">Property name.</param>
         /// <remarks>Property must have the <see cref="bool"/> type. Value of the binded
         /// property will be changed automatically after <see cref="IsChecked"/> is changed.</remarks>
-        public CheckBox BindBoolProp(object instance, string propName)
+        public virtual CheckBox BindBoolProp(object instance, string propName)
         {
             var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
             if (propInfo is null)
