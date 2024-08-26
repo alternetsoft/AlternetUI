@@ -94,6 +94,12 @@ namespace Alternet.Drawing
         public readonly bool IsEmpty => width == 0 && height == 0;
 
         /// <summary>
+        /// Gets <see cref="SizeI"/> with absolute values of (Width, Height).
+        /// </summary>
+        [Browsable(false)]
+        public readonly SizeI Abs => new(Math.Abs(width), Math.Abs(height));
+
+        /// <summary>
         /// Represents the horizontal component of this
         /// <see cref='SizeI'/>.
         /// </summary>
