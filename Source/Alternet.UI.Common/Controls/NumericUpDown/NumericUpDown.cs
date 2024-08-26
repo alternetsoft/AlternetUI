@@ -19,7 +19,7 @@ namespace Alternet.UI
     {
         private int minimum = 0;
         private int maximum = 100;
-        private int value = 0;
+        private int val = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
@@ -66,15 +66,15 @@ namespace Alternet.UI
         {
             get
             {
-                return value;
+                return val;
             }
 
             set
             {
                 value = CoerceValue(value);
-                if (this.value == value)
+                if (this.val == value)
                     return;
-                this.value = value;
+                this.val = value;
                 RaiseValueChanged(EventArgs.Empty);
             }
         }
@@ -117,6 +117,13 @@ namespace Alternet.UI
                 RaiseMinimumChanged(EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new INumericUpDownHandler Handler =>
+            (INumericUpDownHandler)base.Handler;
 
         /// <summary>
         /// Gets or sets the maximum allowed value for the numeric up-down control.
@@ -182,13 +189,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new INumericUpDownHandler Handler =>
-            (INumericUpDownHandler)base.Handler;
-
-        /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
@@ -206,7 +206,7 @@ namespace Alternet.UI
         /// Increments or decrements value.
         /// </summary>
         /// <param name="incValue">Delta to add to the value.</param>
-        public void IncrementValue(int incValue = 1)
+        public virtual void IncrementValue(int incValue = 1)
         {
             var newValue = Value + incValue;
 

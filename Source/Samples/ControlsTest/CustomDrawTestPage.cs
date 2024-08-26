@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -12,7 +13,7 @@ namespace ControlsTest
 {
     internal partial class CustomDrawTestPage : Control
     {
-        private static WxControlPainterHandler painter = new();
+        private static readonly WxControlPainterHandler Painter = new();
 
         private readonly CustomDrawControl customDrawControl = new()
         {
@@ -27,13 +28,35 @@ namespace ControlsTest
             BottomVisible = false,
         };
 
+        private readonly VerticalStackPanel mainPanel = new()
+        {
+            Margin = (5, 5, 5, 5),
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+        };
+
+        private readonly Label headerLabel = new()
+        {
+            Margin = (5, 5, 5, 5),
+            Text = "Custom Draw Test",
+        };
+
+        private readonly ScrollBar horzScrollBar = new()
+        {
+        };
+
+        private readonly ScrollBarsDrawable scrollBarsDrawable = new()
+        {
+        };
+
         static CustomDrawTestPage()
         {
         }
 
         public CustomDrawTestPage()
         {
-            InitializeComponent();
+            mainPanel.Parent = this;
+            headerLabel.Parent = mainPanel;
+            horzScrollBar.Parent = mainPanel;
 
             panel.ActionsControl.Required();
             panel.VerticalAlignment = VerticalAlignment.Fill;
@@ -45,13 +68,15 @@ namespace ControlsTest
             panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
             panel.AddAction("Draw ScrollBar", DrawScrollBar);
+
+            horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
         }
 
         public void DrawNativeComboBox()
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
-                painter.DrawComboBox(
+                Painter.DrawComboBox(
                     control,
                     canvas,
                     (50, 50, 150, 100),
@@ -61,10 +86,16 @@ namespace ControlsTest
 
         public void DrawScrollBar()
         {
-            var metrics = ScrollBar.DefaultMetrics;
-
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
+                var metrics = ScrollBar.DefaultMetrics;
+
+                scrollBarsDrawable.Bounds = rect;
+                scrollBarsDrawable.Metrics = metrics;
+                scrollBarsDrawable.VertScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
+                scrollBarsDrawable.HorzScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
+                scrollBarsDrawable.Draw(control, canvas);
+
                 var downSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Down);
                 var upSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Up);
                 var leftSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Left);
@@ -78,6 +109,8 @@ namespace ControlsTest
                 void DrawImage(PointD coord, SvgImage svg)
                 {
                     var img = svg.AsImage(32);
+                    if (img is null)
+                        return;
                     canvas.DrawImage(img, coord);
                 }
             });
@@ -135,6 +168,11 @@ namespace ControlsTest
                     canvas.DrawText(title, location);
                 }
             });
+        }
+
+        private void HorzScrollBar_ValueChanged(object? sender, EventArgs e)
+        {
+            DrawScrollBar();
         }
     }
 }

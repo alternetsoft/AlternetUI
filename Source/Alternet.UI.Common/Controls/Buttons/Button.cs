@@ -255,6 +255,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="IButtonHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        public new IButtonHandler Handler => (IButtonHandler)base.Handler;
+
+        /// <summary>
         /// Sets the position at which the text is displayed.
         /// </summary>
         /// <remarks>
@@ -284,12 +290,6 @@ namespace Alternet.UI
         {
             get => base.Padding;
         }
-
-        /// <summary>
-        /// Gets a <see cref="IButtonHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new IButtonHandler Handler => (IButtonHandler)base.Handler;
 
         /// <summary>
         /// Sets the position at which the image is displayed.

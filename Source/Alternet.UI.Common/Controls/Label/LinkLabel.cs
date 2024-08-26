@@ -47,6 +47,13 @@ namespace Alternet.UI
         /// </remarks>
         public static bool UseShellExecute { get; set; } = true;
 
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new ILinkLabelHandler Handler =>
+            (ILinkLabelHandler)base.Handler;
+
         /// <inheritdoc/>
         public override string Text
         {
@@ -142,13 +149,6 @@ namespace Alternet.UI
         {
             get => base.Layout;
         }
-
-        /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new ILinkLabelHandler Handler =>
-            (ILinkLabelHandler)base.Handler;
 
         /// <summary>
         /// Raises <see cref="LinkClicked"/> event.

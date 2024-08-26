@@ -16,13 +16,15 @@ namespace ControlsTest
 
         public MainTestWindow()
         {
+            Title = "Alternet UI Controls Test";
+            Size = (900, 700);
+            StartLocation = WindowStartLocation.CenterScreen;
+
             mainPanel = new();
             mainPanel.LeftTreeViewAsListBox = true;
             mainPanel.RightPanel.MinWidth = 150;
 
             Icon = new("embres:ControlsTest.Sample.ico");
-
-            InitializeComponent();
 
             this.StatusBar = statusbar;
             mainPanel.Parent = this;

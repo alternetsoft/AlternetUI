@@ -18,7 +18,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class DateTimePicker : CustomDateEdit
     {
-        private DateTime value = DateTime.Now;
+        private DateTime val = DateTime.Now;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
@@ -48,14 +48,14 @@ namespace Alternet.UI
         {
             get
             {
-                return value;
+                return val;
             }
 
             set
             {
-                if (value == this.value)
+                if (value == this.val)
                     return;
-                this.value = value;
+                this.val = value;
                 RaiseValueChanged(EventArgs.Empty);
             }
         }
@@ -76,6 +76,13 @@ namespace Alternet.UI
                 Handler.Kind = value;
             }
         }
+
+        /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new IDateTimePickerHandler Handler =>
+            (IDateTimePickerHandler)base.Handler;
 
         /// <summary>
         /// Gets or sets whether to show calendar popup or edit date with spin control.
@@ -108,13 +115,6 @@ namespace Alternet.UI
             get => base.Text;
             set => base.Text = value;
         }
-
-        /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new IDateTimePickerHandler Handler =>
-            (IDateTimePickerHandler)base.Handler;
 
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
