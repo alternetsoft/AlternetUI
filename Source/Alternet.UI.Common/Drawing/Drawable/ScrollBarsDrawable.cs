@@ -80,14 +80,14 @@ namespace Alternet.Drawing
         {
             get
             {
-                return Bounds;
+                return base.Bounds;
             }
 
             set
             {
-                if (Bounds == value)
+                if (base.Bounds == value)
                     return;
-                Bounds = value;
+                base.Bounds = value;
             }
         }
 

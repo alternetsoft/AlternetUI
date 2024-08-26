@@ -69,6 +69,8 @@ namespace Alternet.UI
         /// </summary>
         public class AltPositionInfo : ImmutableObject
         {
+            private static AltPositionInfo? def;
+
             private int minimum;
             private int maximum = 100;
             private int smallChange = 1;
@@ -80,6 +82,27 @@ namespace Alternet.UI
             /// </summary>
             public AltPositionInfo()
             {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="AltPositionInfo"/> class.
+            /// </summary>
+            /// <param name="immutable">Whether this object is immutable.</param>
+            public AltPositionInfo(bool immutable)
+            {
+                Immutable = immutable;
+            }
+
+            /// <summary>
+            /// Gets default <see cref="AltPositionInfo"/> object.
+            /// Returned value is immutable and it's properties are read only.
+            /// </summary>
+            public static AltPositionInfo Default
+            {
+                get
+                {
+                    return def ??= new(true);
+                }
             }
 
             /// <summary>
@@ -97,15 +120,15 @@ namespace Alternet.UI
 
                 set
                 {
-                    if (minimum != value)
-                    {
-                        if (maximum < value)
-                            maximum = value;
-                        if (value > this.val)
-                            Value = value;
-                        minimum = value;
-                        RaisePropertyChanged(nameof(Minimum));
-                    }
+                    if (minimum == value || Immutable)
+                        return;
+
+                    if (maximum < value)
+                        maximum = value;
+                    if (value > this.val)
+                        Value = value;
+                    minimum = value;
+                    RaisePropertyChanged(nameof(Minimum));
                 }
             }
 
@@ -124,15 +147,15 @@ namespace Alternet.UI
 
                 set
                 {
-                    if (maximum != value)
-                    {
-                        if (minimum > value)
-                            minimum = value;
-                        if (value < this.val)
-                            Value = value;
-                        maximum = value;
-                        RaisePropertyChanged(nameof(Maximum));
-                    }
+                    if (maximum == value || Immutable)
+                        return;
+
+                    if (minimum > value)
+                        minimum = value;
+                    if (value < this.val)
+                        Value = value;
+                    maximum = value;
+                    RaisePropertyChanged(nameof(Maximum));
                 }
             }
 
@@ -151,17 +174,17 @@ namespace Alternet.UI
 
                 set
                 {
-                    if (smallChange != value)
-                    {
-                        if (value < 0)
-                        {
-                            LogUtils.LogInvalidBoundArgumentUInt(nameof(SmallChange), value);
-                            return;
-                        }
+                    if (smallChange == value || Immutable)
+                        return;
 
-                        smallChange = value;
-                        RaisePropertyChanged(nameof(SmallChange));
+                    if (value < 0)
+                    {
+                        LogUtils.LogInvalidBoundArgumentUInt(nameof(SmallChange), value);
+                        return;
                     }
+
+                    smallChange = value;
+                    RaisePropertyChanged(nameof(SmallChange));
                 }
             }
 
@@ -180,22 +203,22 @@ namespace Alternet.UI
 
                 set
                 {
-                    if (this.val != value)
+                    if (val == value || Immutable)
+                        return;
+
+                    if (value < minimum || value > maximum)
                     {
-                        if (value < minimum || value > maximum)
-                        {
-                            LogUtils.LogInvalidBoundArgument(
-                                nameof(Value),
-                                value,
-                                Minimum,
-                                Maximum);
-                            return;
-                        }
-
-                        this.val = value;
-
-                        RaisePropertyChanged(null);
+                        LogUtils.LogInvalidBoundArgument(
+                            nameof(Value),
+                            value,
+                            Minimum,
+                            Maximum);
+                        return;
                     }
+
+                    this.val = value;
+
+                    RaisePropertyChanged(null);
                 }
             }
 
@@ -213,17 +236,17 @@ namespace Alternet.UI
 
                 set
                 {
-                    if (largeChange != value)
-                    {
-                        if (value < 0)
-                        {
-                            LogUtils.LogInvalidBoundArgumentUInt(nameof(LargeChange), value);
-                            return;
-                        }
+                    if (largeChange == value || Immutable)
+                        return;
 
-                        largeChange = value;
-                        UpdateScrollInfo();
+                    if (value < 0)
+                    {
+                        LogUtils.LogInvalidBoundArgumentUInt(nameof(LargeChange), value);
+                        return;
                     }
+
+                    largeChange = value;
+                    RaisePropertyChanged(nameof(LargeChange));
                 }
             }
 
@@ -231,7 +254,7 @@ namespace Alternet.UI
             /// Converts this object to <see cref="PositionInfo"/>.
             /// </summary>
             /// <returns></returns>
-            public PositionInfo AsPositionInfo()
+            public virtual PositionInfo AsPositionInfo()
             {
                 var range = (Maximum - Minimum) * SmallChange;
                 var pageSize = LargeChange * SmallChange;
@@ -240,10 +263,6 @@ namespace Alternet.UI
 
                 var result = new PositionInfo(position, thumbSize, range, pageSize);
                 return result;
-            }
-
-            private void UpdateScrollInfo()
-            {
             }
         }
     }

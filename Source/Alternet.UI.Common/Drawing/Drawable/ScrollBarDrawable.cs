@@ -78,14 +78,14 @@ namespace Alternet.Drawing
         {
             get
             {
-                return Bounds;
+                return base.Bounds;
             }
 
             set
             {
-                if (Bounds == value)
+                if (base.Bounds == value)
                     return;
-                Bounds = value;
+                base.Bounds = value;
             }
         }
 
@@ -103,6 +103,15 @@ namespace Alternet.Drawing
             {
                 metrics = value;
             }
+        }
+
+        /// <summary>
+        /// Sets value of the <see cref="AltPosInfo"/>. Implemented for the convenience.
+        /// </summary>
+        /// <param name="altPosInfo">New value.</param>
+        public void SetAltPosInfo(ScrollBar.AltPositionInfo? altPosInfo)
+        {
+            AltPosInfo = altPosInfo;
         }
 
         /// <summary>
