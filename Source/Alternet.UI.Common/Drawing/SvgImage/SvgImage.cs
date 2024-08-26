@@ -202,6 +202,7 @@ namespace Alternet.Drawing
 
             Resize(size);
 
+            data[size] ??= new();
             data[size]!.ColoredImages ??= new();
 
             var images = data[size]!.ColoredImages!;
@@ -226,7 +227,8 @@ namespace Alternet.Drawing
         {
             if (color is null)
                 return AsImage(size);
-            return ImageSetWithColor(size, color)?.AsImage();
+            var imageSet = ImageSetWithColor(size, color);
+            return imageSet?.AsImage();
         }
 
         /// <summary>
