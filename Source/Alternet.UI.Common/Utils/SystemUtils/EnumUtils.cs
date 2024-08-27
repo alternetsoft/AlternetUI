@@ -40,7 +40,30 @@ namespace Alternet.UI
         public static T GetMaxValue<T>()
             where T : struct, Enum
         {
-            return Enum.GetValues(typeof(T)).Cast<T>().Last();
+            var enumValues = Enum.GetValues(typeof(T));
+            var result = (T)enumValues.GetValue(enumValues.Length - 1);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns <paramref name="maxValue"/> if it's specified; otherwise uses
+        /// <see cref="GetMaxValueAsInt{T}()"/> in order to obtain the result.
+        /// </summary>
+        /// <typeparam name="T">Type of the enum.</typeparam>
+        /// <param name="maxValue">Max value in the enum.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetMaxValueOrDefault<T>(T? maxValue)
+            where T : struct, Enum
+        {
+            int result;
+
+            if (maxValue is null)
+                result = EnumUtils.GetMaxValueAsInt<T>();
+            else
+                result = System.Convert.ToInt32(maxValue.Value);
+
+            return result;
         }
 
         /// <summary>
@@ -50,8 +73,10 @@ namespace Alternet.UI
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetMaxValueAsInt<T>()
+            where T : struct, Enum
         {
-            return Enum.GetValues(typeof(T)).Cast<int>().Last();
+            var result = GetMaxValue<T>();
+            return System.Convert.ToInt32(result);
         }
     }
 }

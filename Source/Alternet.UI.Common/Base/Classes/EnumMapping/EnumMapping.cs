@@ -23,13 +23,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="maxValue">Maximal value of the source enum. Optional. If not specified,
         /// <see cref="EnumUtils.GetMaxValueAsInt{T}()"/> is used.</param>
-        public EnumMapping(TSource? maxValue = null)
+        public EnumMapping(TSource maxValue)
         {
-            if (maxValue is null)
-                this.maxValue = EnumUtils.GetMaxValueAsInt<TSource>();
-            else
-                this.maxValue = System.Convert.ToInt32(maxValue.Value);
-
+            this.maxValue = EnumUtils.GetMaxValueOrDefault<TSource>(maxValue);
             values = new TDest?[this.maxValue + 1];
         }
 

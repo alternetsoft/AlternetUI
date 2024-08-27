@@ -346,7 +346,7 @@ namespace Alternet.UI
             Color? color)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(s);
-            MemoryStream stream = new MemoryStream(bytes);
+            MemoryStream stream = new(bytes);
             var result = CreateFromSvg(stream, width, height, color);
             return result;
         }
