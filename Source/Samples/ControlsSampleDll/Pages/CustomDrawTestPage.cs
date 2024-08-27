@@ -54,6 +54,10 @@ namespace ControlsSample
 
         public CustomDrawTestPage()
         {
+            var metrics = ScrollBar.DefaultMetrics;
+            scrollBarsDrawable.Metrics = metrics;
+            scrollBarsDrawable.InitLightTheme();
+
             Size = (900, 700);
             State = WindowState.Maximized;
 
@@ -93,10 +97,12 @@ namespace ControlsSample
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
-                var metrics = ScrollBar.DefaultMetrics;
+                rect.Inflate(-20);
+                canvas.FillRectangleBorder(Color.Black.AsBrush, rect);
+
+                rect.Inflate(-1);
 
                 scrollBarsDrawable.Bounds = rect;
-                scrollBarsDrawable.Metrics = metrics;
                 scrollBarsDrawable.VertScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
                 scrollBarsDrawable.HorzScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
                 scrollBarsDrawable.Draw(control, canvas);

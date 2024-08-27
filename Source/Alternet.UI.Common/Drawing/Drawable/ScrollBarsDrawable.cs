@@ -121,13 +121,30 @@ namespace Alternet.Drawing
             var horzVisible = HorzScrollBar?.Visible ?? false;
             var bothVisible = vertVisible && horzVisible;
 
+            var metrics = GetRealMetrics();
+            var scaleFactor = control.ScaleFactor;
+
+            var vertWidth = metrics.GetPreferredSize(true, scaleFactor).Width;
+            var vertHeight = Bounds.Height;
+            var vertLeft = Bounds.Right - vertWidth;
+            var vertTop = Bounds.Top;
+            var vertBounds = new RectD(vertLeft, vertTop, vertWidth, vertHeight);
+
+            var horzHeight = metrics.GetPreferredSize(false, scaleFactor).Height;
+            var horzWidth = Bounds.Width;
+            var horzLeft = 0;
+            var horzTop = Bounds.Bottom - horzHeight;
+            var horzBounds = new RectD(horzLeft, horzTop, horzWidth, horzHeight);
+
             if (vertVisible)
             {
+                VertScrollBar!.Bounds = vertBounds;
                 VertScrollBar!.Draw(control, dc);
             }
 
             if (horzVisible)
             {
+                HorzScrollBar!.Bounds = horzBounds;
                 HorzScrollBar!.Draw(control, dc);
             }
 
@@ -141,10 +158,38 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets real scroll bar metrics. If <see cref="Metrics"/> is not specified, returns
+        /// <see cref="ScrollBar.DefaultMetrics"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ScrollBar.MetricsInfo GetRealMetrics()
+        {
+            return metrics ?? ScrollBar.DefaultMetrics;
+        }
+
+        /// <summary>
+        /// Initializes this drawable with the specified color settings.
+        /// </summary>
+        public virtual void SetColors(ScrollBar.ThemeColors colors)
+        {
+            VertScrollBar ??= new();
+            VertScrollBar.IsVertical = true;
+            VertScrollBar.SetColors(colors);
+
+            HorzScrollBar ??= new();
+            HorzScrollBar.IsVertical = false;
+            HorzScrollBar.SetColors(colors);
+
+            Corner ??= new();
+            Corner.Brush = colors.Background.AsBrush;
+        }
+
+        /// <summary>
         /// Initialized this drawable with default settings for the dark color theme.
         /// </summary>
         public virtual void InitDarkTheme()
         {
+            SetColors(ScrollBar.VisualStudioDarkThemeColors.GetColors());
         }
 
         /// <summary>
@@ -152,6 +197,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual void InitLightTheme()
         {
+            SetColors(ScrollBar.VisualStudioLightThemeColors.GetColors());
         }
     }
 }
