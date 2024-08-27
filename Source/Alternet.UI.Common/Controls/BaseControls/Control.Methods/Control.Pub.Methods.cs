@@ -12,6 +12,27 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Adds <see cref="IControlNotification"/> object to the global list of notifications.
+        /// </summary>
+        /// <param name="n">Notification object to add.</param>
+        public static void AddGlobalNotification(IControlNotification n)
+        {
+            globalNotifications ??= new();
+            globalNotifications.Add(n);
+        }
+
+        /// <summary>
+        /// Removes <see cref="IControlNotification"/> object from the global list of notifications.
+        /// </summary>
+        /// <param name="n">Notification object to remove.</param>
+        public static void RemoveGlobalNotification(IControlNotification n)
+        {
+            if (globalNotifications is null)
+                return;
+            globalNotifications.Remove(n);
+        }
+
+        /// <summary>
         /// Finds control which accepts mouse events (checks whether <see cref="InputTransparent"/>
         /// property is <c>true</c>). Returns control specified as a parameter or one
         /// of it's parent controls.
@@ -1945,6 +1966,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets child control at the specified index in the collection of child controls.
+        /// </summary>
+        /// <param name="index">Index of the child control.</param>
+        /// <returns></returns>
+        public IControl GetControl(int index) => Children[index];
+
+        /// <summary>
         /// Sets a value that indicates which row and column control should appear in.
         /// </summary>
         /// <param name="row">The 0-based row index to set.</param>
@@ -1962,6 +1990,27 @@ namespace Alternet.UI
                 columnIndex = col;
                 RaiseCellChanged();
             }
+        }
+
+        /// <summary>
+        /// Adds <see cref="IControlNotification"/> object to the list of notifications.
+        /// </summary>
+        /// <param name="n">Notification object to add.</param>
+        public virtual void AddNotification(IControlNotification n)
+        {
+            notifications ??= new();
+            notifications.Add(n);
+        }
+
+        /// <summary>
+        /// Removes <see cref="IControlNotification"/> object from the list of notifications.
+        /// </summary>
+        /// <param name="n">Notification object to remove.</param>
+        public virtual void RemoveNotification(IControlNotification n)
+        {
+            if (notifications is null)
+                return;
+            notifications.Remove(n);
         }
     }
 }
