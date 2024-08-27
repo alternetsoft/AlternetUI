@@ -32,12 +32,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets maximum value of the enum.
+        /// Gets maximum value of the enum using max enum element.
         /// </summary>
         /// <typeparam name="T">Type of the enum.</typeparam>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T GetMaxValue<T>()
+        public static T GetMaxValueUseMax<T>()
+            where T : struct, Enum
+        {
+            var result = Enum.GetValues(typeof(T)).Cast<T>().Max();
+            return result;
+        }
+
+        /// <summary>
+        /// Gets maximum value of the enum using last enum element.
+        /// </summary>
+        /// <typeparam name="T">Type of the enum.</typeparam>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetMaxValueUseLast<T>()
             where T : struct, Enum
         {
             var enumValues = Enum.GetValues(typeof(T));
@@ -47,19 +60,19 @@ namespace Alternet.UI
 
         /// <summary>
         /// Returns <paramref name="maxValue"/> if it's specified; otherwise uses
-        /// <see cref="GetMaxValueAsInt{T}()"/> in order to obtain the result.
+        /// <see cref="GetMaxValueUseLastAsInt{T}()"/> in order to obtain the result.
         /// </summary>
         /// <typeparam name="T">Type of the enum.</typeparam>
         /// <param name="maxValue">Max value in the enum.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetMaxValueOrDefault<T>(T? maxValue)
+        public static int GetMaxValueUseLastOrDefault<T>(T? maxValue)
             where T : struct, Enum
         {
             int result;
 
             if (maxValue is null)
-                result = EnumUtils.GetMaxValueAsInt<T>();
+                result = EnumUtils.GetMaxValueUseLastAsInt<T>();
             else
                 result = System.Convert.ToInt32(maxValue.Value);
 
@@ -67,16 +80,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets maximum value of the enum as integer.
+        /// Gets maximum value of the enum as integer using last enum element.
         /// </summary>
         /// <typeparam name="T">Type of the enum.</typeparam>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetMaxValueAsInt<T>()
+        public static int GetMaxValueUseLastAsInt<T>()
             where T : struct, Enum
         {
-            var result = GetMaxValue<T>();
+            var result = GetMaxValueUseLast<T>();
             return System.Convert.ToInt32(result);
+        }
+
+        /// <summary>
+        /// Gets maximum value of the enum as integer using max enum element.
+        /// </summary>
+        /// <typeparam name="T">Type of the enum.</typeparam>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetMaxValueUseMaxAsInt<T>()
+            where T : struct, Enum
+        {
+            var result = Enum.GetValues(typeof(T)).Cast<int>().Max();
+            return result;
         }
     }
 }

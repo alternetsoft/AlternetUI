@@ -22,11 +22,10 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArray{TKey, TValue}"/> struct.
         /// </summary>
-        /// <param name="maxKeyValue">Maximal value in the enum. Optional. If not specified,
-        /// <see cref="EnumUtils.GetMaxValueAsInt{T}()"/> is used.</param>
+        /// <param name="maxKeyValue">Maximal value in the enum.</param>
         public EnumArray(TKey maxKeyValue)
         {
-            var m = EnumUtils.GetMaxValueOrDefault<TKey>(maxKeyValue);
+            var m = System.Convert.ToInt32(maxKeyValue);
             Data = new TValue[m + 1];
         }
 

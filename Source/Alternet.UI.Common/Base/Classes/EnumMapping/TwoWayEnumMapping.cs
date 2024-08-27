@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// <typeparam name="T1">Type of source enum.</typeparam>
         /// <typeparam name="T2">Type of destination enum.</typeparam>
         /// <param name="maxValue">Maximal value of the source enum. Optional.
-        /// If not specified, <see cref="EnumUtils.GetMaxValueAsInt{T}()"/> is used.</param>
+        /// If not specified, <see cref="EnumUtils.GetMaxValueUseLastAsInt{T}()"/> is used.</param>
         /// <returns></returns>
         protected virtual AbstractEnumMapping<T1, T2> CreateEnumMapping<T1, T2>(T1 maxValue)
             where T1 : struct, Enum
