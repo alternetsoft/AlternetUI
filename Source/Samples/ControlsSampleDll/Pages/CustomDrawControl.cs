@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI;
 
-namespace ControlsTest
+namespace ControlsSample
 {
     public class CustomDrawControl : UserControl
     {

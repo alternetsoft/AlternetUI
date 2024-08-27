@@ -52,7 +52,6 @@ namespace ControlsTest
                 return result;
             }
 
-            mainPanel.Add("Custom Draw Test", new CustomDrawTestPage());
             CreateWebBrowserPages();
 
             mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;

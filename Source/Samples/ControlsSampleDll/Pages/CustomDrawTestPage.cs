@@ -9,11 +9,11 @@ using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI;
 
-namespace ControlsTest
+namespace ControlsSample
 {
-    internal partial class CustomDrawTestPage : Control
+    public partial class CustomDrawTestPage : Window
     {
-        private static readonly WxControlPainterHandler Painter = new();
+        /* private static readonly WxControlPainterHandler Painter = new(); */
 
         private readonly CustomDrawControl customDrawControl = new()
         {
@@ -54,6 +54,9 @@ namespace ControlsTest
 
         public CustomDrawTestPage()
         {
+            Size = (900, 700);
+            State = WindowState.Maximized;
+
             mainPanel.Parent = this;
             headerLabel.Parent = mainPanel;
             horzScrollBar.Parent = mainPanel;
@@ -64,7 +67,7 @@ namespace ControlsTest
 
             customDrawControl.Parent = panel.FillPanel;
 
-            panel.AddAction("Draw Native ComboBox", DrawNativeComboBox);
+            /* panel.AddAction("Draw Native ComboBox", DrawNativeComboBox); */
             panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
             panel.AddAction("Draw ScrollBar", DrawScrollBar);
@@ -76,11 +79,13 @@ namespace ControlsTest
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
+                /*
                 Painter.DrawComboBox(
                     control,
                     canvas,
                     (50, 50, 150, 100),
                     WxControlPainterHandler.DrawFlags.None);
+                */
             });
         }
 
