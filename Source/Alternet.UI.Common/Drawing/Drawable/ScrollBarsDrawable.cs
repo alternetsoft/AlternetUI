@@ -75,6 +75,31 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets whether vertical scrollbar is visible.
+        /// </summary>
+        public bool VertVisible => VertScrollBar?.Visible ?? false;
+
+        /// <summary>
+        /// Gets whether horizontal scrollbar is visible.
+        /// </summary>
+        public bool HorzVisible => HorzScrollBar?.Visible ?? false;
+
+        /// <summary>
+        /// Gets whether vertical and horizontal scrollbars are visible.
+        /// </summary>
+        public bool BothVisible => VertVisible && HorzVisible;
+
+        /// <summary>
+        /// Gets whether corner is visible.
+        /// </summary>
+        public bool CornerVisible => Corner?.Visible ?? false;
+
+        /// <summary>
+        /// Gets whether corner and both scrollbars are visible.
+        /// </summary>
+        public bool HasCorner => BothVisible && CornerVisible;
+
         /// <inheritdoc/>
         public override RectD Bounds
         {
@@ -111,18 +136,18 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <inheritdoc/>
-        public override void Draw(Control control, Graphics dc)
+        /// <summary>
+        /// Performs layout of the drawable childs.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        public virtual void PerformLayout(Coord scaleFactor)
         {
-            if (!Visible)
-                return;
-
-            var vertVisible = VertScrollBar?.Visible ?? false;
-            var horzVisible = HorzScrollBar?.Visible ?? false;
+            var vertVisible = VertVisible;
+            var horzVisible = HorzVisible;
             var bothVisible = vertVisible && horzVisible;
+            var cornerVisible = CornerVisible;
 
             var metrics = GetRealMetrics();
-            var scaleFactor = control.ScaleFactor;
 
             var vertWidth = metrics.GetPreferredSize(true, scaleFactor).Width;
             var vertHeight = Bounds.Height;
@@ -132,28 +157,55 @@ namespace Alternet.Drawing
 
             var horzHeight = metrics.GetPreferredSize(false, scaleFactor).Height;
             var horzWidth = Bounds.Width;
-            var horzLeft = 0;
+            var horzLeft = Bounds.Left;
             var horzTop = Bounds.Bottom - horzHeight;
             var horzBounds = new RectD(horzLeft, horzTop, horzWidth, horzHeight);
+
+            SizeD cornerSize = (vertWidth, horzHeight);
+            PointD cornerLocation = (Bounds.Right - cornerSize.Width, Bounds.Bottom - cornerSize.Height);
+            RectD cornerBounds = (cornerLocation, cornerSize);
+
+            if (bothVisible)
+            {
+                vertBounds.Height -= cornerSize.Height;
+                horzBounds.Width -= cornerSize.Width;
+
+                if(cornerVisible)
+                    Corner!.Bounds = cornerBounds;
+            }
 
             if (vertVisible)
             {
                 VertScrollBar!.Bounds = vertBounds;
-                VertScrollBar!.Draw(control, dc);
             }
 
             if (horzVisible)
             {
                 HorzScrollBar!.Bounds = horzBounds;
-                HorzScrollBar!.Draw(control, dc);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void Draw(Control control, Graphics dc)
+        {
+            if (!Visible)
+                return;
+
+            PerformLayout(control.ScaleFactor);
+
+            if (HasCorner)
+            {
+                Corner!.Draw(control, dc);
             }
 
-            if (bothVisible && Corner is not null)
+            if (VertVisible)
             {
-                SizeD size = (VertScrollBar!.Size.Width, HorzScrollBar!.Size.Height);
-                PointD location = (Bounds.Right - size.Width, Bounds.Bottom - size.Height);
-                Corner.Bounds = (location, size);
-                Corner.Draw(control, dc);
+                VertScrollBar!.Draw(control, dc);
+            }
+
+            if (HorzVisible)
+            {
+                HorzScrollBar!.Draw(control, dc);
             }
         }
 
@@ -162,7 +214,7 @@ namespace Alternet.Drawing
         /// <see cref="ScrollBar.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
-        protected virtual ScrollBar.MetricsInfo GetRealMetrics()
+        public virtual ScrollBar.MetricsInfo GetRealMetrics()
         {
             return metrics ?? ScrollBar.DefaultMetrics;
         }
@@ -181,7 +233,7 @@ namespace Alternet.Drawing
             HorzScrollBar.SetColors(colors);
 
             Corner ??= new();
-            Corner.Brush = colors.Background.AsBrush;
+            Corner.Brush = colors.CornerBackground?.AsBrush ?? colors.Background?.AsBrush;
         }
 
         /// <summary>

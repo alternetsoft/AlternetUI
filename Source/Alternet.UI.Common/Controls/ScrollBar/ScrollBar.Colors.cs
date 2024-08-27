@@ -66,6 +66,11 @@ namespace Alternet.UI
             public static Color ThumbBorder = (104, 104, 104);
 
             /// <summary>
+            /// Gets or sets corner background color used in Visual Studio Dark theme.
+            /// </summary>
+            public static Color CornerBackground = (62, 62, 66);
+
+            /// <summary>
             /// Gets Visual Studio light hheme colors as <see cref="ThemeColors"/>.
             /// </summary>
             /// <returns></returns>
@@ -74,6 +79,7 @@ namespace Alternet.UI
                 ThemeColors result = new()
                 {
                     Background = VisualStudioDarkThemeColors.Background,
+                    CornerBackground = VisualStudioDarkThemeColors.CornerBackground,
                     Arrow = VisualStudioDarkThemeColors.Arrow,
                     ArrowHovered = VisualStudioDarkThemeColors.ArrowHovered,
                     ThumbBackground = VisualStudioDarkThemeColors.ThumbBackground,
@@ -115,6 +121,11 @@ namespace Alternet.UI
             public static Color ThumbBorder = (0, 0, 0);
 
             /// <summary>
+            /// Gets or sets corner background color used in Visual Studio Light theme.
+            /// </summary>
+            public static Color CornerBackground = (245, 245, 245);
+
+            /// <summary>
             /// Gets Visual Studio light hheme colors as <see cref="ThemeColors"/>.
             /// </summary>
             /// <returns></returns>
@@ -127,6 +138,7 @@ namespace Alternet.UI
                     ArrowHovered = VisualStudioLightThemeColors.ArrowHovered,
                     ThumbBackground = VisualStudioLightThemeColors.ThumbBackground,
                     ThumbBorder = VisualStudioLightThemeColors.ThumbBorder,
+                    CornerBackground = VisualStudioLightThemeColors.CornerBackground,
                 };
 
                 return result;
@@ -138,6 +150,11 @@ namespace Alternet.UI
         /// </summary>
         public class ThemeColors
         {
+            /// <summary>
+            /// Gets or sets corner background color.
+            /// </summary>
+            public Color? CornerBackground = Color.Empty;
+
             /// <summary>
             /// Gets or sets scrollbar background color.
             /// </summary>
