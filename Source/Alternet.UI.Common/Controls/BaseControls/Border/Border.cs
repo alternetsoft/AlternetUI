@@ -166,16 +166,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Normal.Color ?? BorderSettings.DefaultColor?.Get(IsDarkBackground) ??
-                        ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
+                return Normal.Color ?? ColorUtils.GetDefaultBorderColor(IsDarkBackground);
             }
 
             set
             {
                 if (value == null)
                 {
-                    Normal.Color = BorderSettings.DefaultColor?.Get(IsDarkBackground) ??
-                        ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
+                    Normal.Color = ColorUtils.GetDefaultBorderColor(IsDarkBackground);
                 }
                 else
                     Normal.Color = (Color)value;

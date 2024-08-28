@@ -30,6 +30,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets default border color.
+        /// </summary>
+        /// <param name="isDarkBackground">Whether control has dark background.</param>
+        /// <returns></returns>
+        public static Color GetDefaultBorderColor(bool isDarkBackground)
+        {
+            return BorderSettings.DefaultColor?.Get(isDarkBackground)
+                ?? ColorUtils.GetTabControlInteriorBorderColor(isDarkBackground);
+        }
+
+        /// <summary>
         /// Converts <see cref="Color"/> to known color if its possible.
         /// </summary>
         /// <param name="color">Color.</param>

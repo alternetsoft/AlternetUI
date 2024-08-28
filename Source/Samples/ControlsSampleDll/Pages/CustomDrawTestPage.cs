@@ -59,6 +59,10 @@ namespace ControlsSample
             var metrics = ScrollBar.DefaultMetrics;
             scrollBarsDrawable.Metrics = metrics;
 
+            scrollBarsDrawable.Border = new();
+            scrollBarsDrawable.Border.Border = new();
+            scrollBarsDrawable.Border.Border.Color = ColorUtils.GetDefaultBorderColor(IsDarkBackground);
+
             Size = (900, 700);
             State = WindowState.Maximized;
 
@@ -113,11 +117,9 @@ namespace ControlsSample
             {
                 currentTheme = theme;
 
-
                 rect.Inflate(-20);
-                canvas.FillRectangleBorder(Color.Black.AsBrush, rect);
-
-                rect.Inflate(-1);
+                /*canvas.FillRectangleBorder(Color.Black.AsBrush, rect);
+                rect.Inflate(-1);*/
 
                 scrollBarsDrawable.SetScrollBarColors(theme);
                 scrollBarsDrawable.Background ??= new();

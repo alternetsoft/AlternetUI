@@ -64,6 +64,11 @@ namespace Alternet.Drawing
         /// </summary>
         public bool HasCorner => BothVisible && CornerVisible;
 
+        /// <summary>
+        /// Gets whether interior has border.
+        /// </summary>
+        public bool HasBorder => Border?.Visible ?? false;
+
         /// <inheritdoc/>
         public override RectD Bounds
         {
@@ -133,6 +138,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets border widths.
+        /// </summary>
+        public virtual Thickness BorderWidth
+        {
+            get
+            {
+                return Border?.Border?.Width ?? Thickness.Empty;
+            }
+        }
+
+        /// <summary>
         /// Performs layout of the drawable childs.
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
@@ -140,7 +156,18 @@ namespace Alternet.Drawing
         /// occupied by the scrollbars.</param>
         public virtual void PerformLayout(Coord scaleFactor, out RectD clientRect)
         {
-            clientRect = Bounds;
+            if (HasBorder)
+                Border!.Bounds = Bounds;
+
+            var boundsInsideBorder = Bounds;
+            var borderWidth = BorderWidth;
+
+            boundsInsideBorder.Left += borderWidth.Left;
+            boundsInsideBorder.Top += borderWidth.Top;
+            boundsInsideBorder.Width -= borderWidth.Horizontal;
+            boundsInsideBorder.Height -= borderWidth.Vertical;
+
+            clientRect = boundsInsideBorder;
 
             var vertVisible = VertVisible;
             var horzVisible = HorzVisible;
@@ -150,19 +177,21 @@ namespace Alternet.Drawing
             var metrics = GetRealMetrics();
 
             var vertWidth = metrics.GetPreferredSize(true, scaleFactor).Width;
-            var vertHeight = Bounds.Height;
-            var vertLeft = Bounds.Right - vertWidth;
-            var vertTop = Bounds.Top;
+            var vertHeight = boundsInsideBorder.Height;
+            var vertLeft = boundsInsideBorder.Right - vertWidth;
+            var vertTop = boundsInsideBorder.Top;
             var vertBounds = new RectD(vertLeft, vertTop, vertWidth, vertHeight);
 
             var horzHeight = metrics.GetPreferredSize(false, scaleFactor).Height;
-            var horzWidth = Bounds.Width;
-            var horzLeft = Bounds.Left;
-            var horzTop = Bounds.Bottom - horzHeight;
+            var horzWidth = boundsInsideBorder.Width;
+            var horzLeft = boundsInsideBorder.Left;
+            var horzTop = boundsInsideBorder.Bottom - horzHeight;
             var horzBounds = new RectD(horzLeft, horzTop, horzWidth, horzHeight);
 
             SizeD cornerSize = (vertWidth, horzHeight);
-            PointD cornerLocation = (Bounds.Right - cornerSize.Width, Bounds.Bottom - cornerSize.Height);
+            PointD cornerLocation = (
+                boundsInsideBorder.Right - cornerSize.Width,
+                boundsInsideBorder.Bottom - cornerSize.Height);
             RectD cornerBounds = (cornerLocation, cornerSize);
 
             if (bothVisible)
@@ -199,6 +228,11 @@ namespace Alternet.Drawing
                 return;
 
             PerformLayout(control.ScaleFactor, out _);
+
+            if(Border is not null && Border.Visible)
+            {
+                Border.Draw(control, dc);
+            }
 
             if (Background is not null && Background.Visible)
             {
