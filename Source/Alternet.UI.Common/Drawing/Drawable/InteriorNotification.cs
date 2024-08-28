@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements mouse handling for the scrollbar control.
+    /// Implements mouse handling for the <see cref="InteriorDrawable"/>.
     /// </summary>
-    public class ScrollBarNotification : ControlNotification
+    public class InteriorNotification : ControlNotification
     {
         /// <inheritdoc/>
         public override void AfterDpiChanged(Control sender, DpiChangedEventArgs e)

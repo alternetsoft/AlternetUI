@@ -14,6 +14,8 @@ namespace SpinPaint;
 public partial class MainPage : ContentPage
 {
     private readonly Alternet.UI.SkiaSampleControl skiaSample;
+    private readonly ControlsSample.CustomDrawControl customDrawControl;
+    private readonly Alternet.Drawing.InteriorDrawable interiorDrawable;
 
     static MainPage()
     {
@@ -24,10 +26,25 @@ public partial class MainPage : ContentPage
         InitializeComponent();
 
         skiaSample = new();
+        customDrawControl = new();
+
+        interiorDrawable = ControlsSample.CustomDrawTestPage.CreateInteriorDrawable(true);
+
+        customDrawControl.SetPaintAction((control, canvas, rect) =>
+        {
+            ControlsSample.CustomDrawTestPage.PaintInteriorDrawable(
+                        interiorDrawable,
+                        Alternet.UI.ScrollBar.KnownTheme.WindowsDark,
+                        control,
+                        canvas,
+                        rect,
+                        Alternet.UI.ScrollBar.AltPositionInfo.Default);
+        });
+
 
         skiaContainer.BackgroundColor = Colors.Cornsilk;
 
-        skiaContainer.Control = skiaSample;
+        skiaContainer.Control = customDrawControl;
 
         panel.BackgroundColor = Colors.CornflowerBlue;
         panel.Padding = new(10);

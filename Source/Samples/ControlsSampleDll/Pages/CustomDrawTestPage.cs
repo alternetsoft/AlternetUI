@@ -46,9 +46,7 @@ namespace ControlsSample
         {
         };
 
-        private readonly ControlInteriorDrawable scrollBarsDrawable = new()
-        {
-        };
+        private readonly InteriorDrawable interiorDrawable;
 
         static CustomDrawTestPage()
         {
@@ -56,12 +54,7 @@ namespace ControlsSample
 
         public CustomDrawTestPage()
         {
-            var metrics = ScrollBar.DefaultMetrics;
-            scrollBarsDrawable.Metrics = metrics;
-
-            scrollBarsDrawable.Border = new();
-            scrollBarsDrawable.Border.Border = new();
-            scrollBarsDrawable.Border.Border.Color = ColorUtils.GetDefaultBorderColor(IsDarkBackground);
+            interiorDrawable = CreateInteriorDrawable(false);
 
             Size = (900, 700);
             State = WindowState.Maximized;
@@ -97,6 +90,41 @@ namespace ControlsSample
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
         }
 
+        public static InteriorDrawable CreateInteriorDrawable(bool isDarkBackground)
+        {
+            InteriorDrawable result = new();
+
+            var metrics = ScrollBar.DefaultMetrics;
+            result.Metrics = metrics;
+
+            result.Border = new();
+            result.Border.Border = new();
+            result.Border.Border.Color = ColorUtils.GetDefaultBorderColor(isDarkBackground);
+
+            return result;
+        }
+
+        public static void PaintInteriorDrawable(
+            InteriorDrawable drawable,
+            ScrollBar.KnownTheme theme,
+            Control control,
+            Graphics canvas,
+            RectD rect,
+            ScrollBar.AltPositionInfo position)
+        {
+            rect.Inflate(-20);
+
+            drawable.SetScrollBarColors(theme);
+            drawable.Background ??= new();
+            drawable.Background.Brush = Color.GreenYellow.AsBrush;
+
+            drawable.Bounds = rect;
+            drawable.VertPosition = position;
+            drawable.HorzPosition = position;
+            drawable.Draw(control, canvas);
+
+        }
+
         public void DrawNativeComboBox()
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
@@ -117,18 +145,13 @@ namespace ControlsSample
             {
                 currentTheme = theme;
 
-                rect.Inflate(-20);
-                /*canvas.FillRectangleBorder(Color.Black.AsBrush, rect);
-                rect.Inflate(-1);*/
-
-                scrollBarsDrawable.SetScrollBarColors(theme);
-                scrollBarsDrawable.Background ??= new();
-                scrollBarsDrawable.Background.Brush = Color.GreenYellow.AsBrush;
-
-                scrollBarsDrawable.Bounds = rect;
-                scrollBarsDrawable.VertPosition = horzScrollBar.AltPosInfo;
-                scrollBarsDrawable.HorzPosition = horzScrollBar.AltPosInfo;
-                scrollBarsDrawable.Draw(control, canvas);
+                PaintInteriorDrawable(
+                            interiorDrawable,
+                            theme,
+                            control,
+                            canvas,
+                            rect,
+                            horzScrollBar.AltPosInfo);
             });
         }
 
