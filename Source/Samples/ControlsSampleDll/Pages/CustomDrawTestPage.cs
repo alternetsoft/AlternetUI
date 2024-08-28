@@ -56,7 +56,7 @@ namespace ControlsSample
         {
             var metrics = ScrollBar.DefaultMetrics;
             scrollBarsDrawable.Metrics = metrics;
-            scrollBarsDrawable.InitLightTheme();
+            scrollBarsDrawable.SetColors(ScrollBar.KnownTheme.WindowsLight);
 
             Size = (900, 700);
             State = WindowState.Maximized;
@@ -103,27 +103,9 @@ namespace ControlsSample
                 rect.Inflate(-1);
 
                 scrollBarsDrawable.Bounds = rect;
-                scrollBarsDrawable.VertScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
-                scrollBarsDrawable.HorzScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
+                scrollBarsDrawable.VertPosition = horzScrollBar.AltPosInfo;
+                scrollBarsDrawable.HorzPosition = horzScrollBar.AltPosInfo;
                 scrollBarsDrawable.Draw(control, canvas);
-
-                var downSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Down);
-                var upSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Up);
-                var leftSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Left);
-                var rightSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Right);
-
-                DrawImage((50, 50), upSvgImage);
-                DrawImage((50, 90), downSvgImage);
-                DrawImage((20, 70), leftSvgImage);
-                DrawImage((90, 70), rightSvgImage);
-
-                void DrawImage(PointD coord, SvgImage svg)
-                {
-                    var img = svg.AsImage(32);
-                    if (img is null)
-                        return;
-                    canvas.DrawImage(img, coord);
-                }
             });
         }
 

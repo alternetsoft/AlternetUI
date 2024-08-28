@@ -26,54 +26,7 @@ namespace Alternet.Drawing
         /// </summary>
         public RectangleDrawable? Corner;
 
-        private static ScrollBarsDrawable? defaultDark;
-        private static ScrollBarsDrawable? defaultLight;
-
         private ScrollBar.MetricsInfo? metrics;
-
-        /// <summary>
-        /// Gets or sets default drawable used to paint scrollbars when dark color theme is selected.
-        /// </summary>
-        public static ScrollBarsDrawable DefaultDark
-        {
-            get
-            {
-                if(defaultDark is null)
-                {
-                    defaultDark = new();
-                    defaultDark.InitDarkTheme();
-                }
-
-                return defaultDark;
-            }
-
-            set
-            {
-                defaultDark = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets default drawable used to paint scrollbars when light color theme is selected.
-        /// </summary>
-        public static ScrollBarsDrawable DefaultLight
-        {
-            get
-            {
-                if (defaultLight is null)
-                {
-                    defaultLight = new();
-                    defaultLight.InitLightTheme();
-                }
-
-                return defaultLight;
-            }
-
-            set
-            {
-                defaultLight = value;
-            }
-        }
 
         /// <summary>
         /// Gets whether vertical scrollbar is visible.
@@ -133,6 +86,38 @@ namespace Alternet.Drawing
                     VertScrollBar.Metrics = value;
                 if(HorzScrollBar is not null)
                     HorzScrollBar.Metrics = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets position of the vertical scrollbar if it is created.
+        /// </summary>
+        public virtual ScrollBar.AltPositionInfo VertPosition
+        {
+            get
+            {
+                return VertScrollBar?.AltPosInfo ?? ScrollBar.AltPositionInfo.Default;
+            }
+
+            set
+            {
+                VertScrollBar?.SetAltPosInfo(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets position of the horizontal scrollbar if it is created.
+        /// </summary>
+        public virtual ScrollBar.AltPositionInfo HorzPosition
+        {
+            get
+            {
+                return HorzScrollBar?.AltPosInfo ?? ScrollBar.AltPositionInfo.Default;
+            }
+
+            set
+            {
+                HorzScrollBar?.SetAltPosInfo(value);
             }
         }
 
@@ -222,7 +207,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes this drawable with the specified color settings.
         /// </summary>
-        public virtual void SetColors(ScrollBar.ThemeColors colors)
+        public virtual void SetColors(ScrollBar.ThemeMetrics colors)
         {
             VertScrollBar ??= new();
             VertScrollBar.IsVertical = true;
@@ -233,23 +218,16 @@ namespace Alternet.Drawing
             HorzScrollBar.SetColors(colors);
 
             Corner ??= new();
-            Corner.Brush = colors.CornerBackground?.AsBrush ?? colors.Background?.AsBrush;
+            Corner.Brush = colors.CornerBackground[VisualControlState.Normal].AsBrush
+                ?? colors.Background[VisualControlState.Normal].AsBrush;
         }
 
         /// <summary>
-        /// Initialized this drawable with default settings for the dark color theme.
+        /// Initialized this drawable with default settings for the specified color theme.
         /// </summary>
-        public virtual void InitDarkTheme()
+        public virtual void SetColors(ScrollBar.KnownTheme theme, bool isDark = false)
         {
-            SetColors(ScrollBar.VisualStudioDarkThemeColors.GetColors());
-        }
-
-        /// <summary>
-        /// Initialized this drawable with default settings for the light color theme.
-        /// </summary>
-        public virtual void InitLightTheme()
-        {
-            SetColors(ScrollBar.VisualStudioLightThemeColors.GetColors());
+            SetColors(ScrollBar.ThemeMetrics.GetColors(theme, isDark));
         }
     }
 }

@@ -127,41 +127,83 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes this drawable with the specified color settings.
         /// </summary>
-        public virtual void SetColors(ScrollBar.ThemeColors colors)
+        public virtual void SetColors(ScrollBar.ThemeMetrics colors)
         {
-            Background ??= new();
-            Background.Normal ??= new();
-            Background.Normal.Brush = colors.Background.AsBrush;
+            Background = new();
+            Background.Normal = CreateBackgroundState(VisualControlState.Normal);
+            Background.Hovered = CreateBackgroundState(VisualControlState.Hovered);
+            Background.Disabled = CreateBackgroundState(VisualControlState.Disabled);
 
-            Thumb ??= new();
-            Thumb.Normal ??= new();
-            Thumb.Normal.Brush = colors.ThumbBackground.AsBrush;
-            Thumb.Normal.Border ??= new();
-            Thumb.Normal.Border.Color = colors.ThumbBorder;
-            Thumb.Normal.Border.Width = 1;
+            Thumb = new();
+            Thumb.Normal = CreateThumbState(VisualControlState.Normal);
+            Thumb.Hovered = CreateThumbState(VisualControlState.Hovered);
+            Thumb.Disabled = CreateThumbState(VisualControlState.Disabled);
 
             InitArrowStates(ref UpArrow, KnownSvgImages.ImgTriangleArrowUp);
             InitArrowStates(ref DownArrow, KnownSvgImages.ImgTriangleArrowDown);
             InitArrowStates(ref LeftArrow, KnownSvgImages.ImgTriangleArrowLeft);
             InitArrowStates(ref RightArrow, KnownSvgImages.ImgTriangleArrowRight);
 
+            RectangleDrawable? CreateBackgroundState(VisualControlState state)
+            {
+                var background = colors.Background[state];
+
+                if (background is null)
+                    return null;
+
+                RectangleDrawable result = new();
+
+                result.Brush = background.AsBrush;
+
+                return result;
+            }
+
+            RectangleDrawable? CreateThumbState(VisualControlState state)
+            {
+                var background = colors.ThumbBackground[state];
+                var border = colors.ThumbBorder[state];
+
+                if (background is null && border is null)
+                    return null;
+
+                RectangleDrawable result = new();
+
+                result.Brush = background?.AsBrush;
+
+                if(border is not null)
+                {
+                    result.Border = new();
+                    result.Border.Color = border.AsColor;
+                    result.Border.Width = 1;
+                }
+
+                return result;
+            }
+
             void InitArrowStates(ref ControlStateObjects<RectangleDrawable>? arrow, SvgImage svgImage)
             {
                 arrow ??= new();
-                arrow.Normal ??= new();
-                arrow.Hovered ??= new();
-                arrow.Normal.SvgImage = new(svgImage, colors.Arrow);
-                SetStateProps(arrow.Normal);
 
-                arrow.Hovered.SvgImage = new(svgImage, colors.ArrowHovered);
-                SetStateProps(arrow.Hovered);
+                arrow.Normal = CreateStateProps(VisualControlState.Normal);
+                arrow.Hovered = CreateStateProps(VisualControlState.Hovered);
+                arrow.Disabled = CreateStateProps(VisualControlState.Disabled);
 
-                void SetStateProps(RectangleDrawable d)
+                RectangleDrawable? CreateStateProps(VisualControlState state)
                 {
-                    d.HasImage = true;
-                    d.Stretch = false;
-                    d.CenterHorz = true;
-                    d.CenterVert = true;
+                    var arrow = colors.Arrow[state];
+
+                    if (arrow is null)
+                        return null;
+
+                    RectangleDrawable result = new();
+
+                    result.SvgImage = new(svgImage, arrow.AsColor);
+                    result.HasImage = true;
+                    result.Stretch = false;
+                    result.CenterHorz = true;
+                    result.CenterVert = true;
+
+                    return result;
                 }
             }
         }
