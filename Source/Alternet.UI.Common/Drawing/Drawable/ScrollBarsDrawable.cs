@@ -211,11 +211,11 @@ namespace Alternet.Drawing
         {
             VertScrollBar ??= new();
             VertScrollBar.IsVertical = true;
-            VertScrollBar.SetColors(colors);
+            VertScrollBar.SetThemeMetrics(colors);
 
             HorzScrollBar ??= new();
             HorzScrollBar.IsVertical = false;
-            HorzScrollBar.SetColors(colors);
+            HorzScrollBar.SetThemeMetrics(colors);
 
             Corner ??= new();
             Corner.Brush = colors.CornerBackground[VisualControlState.Normal].AsBrush

@@ -12,6 +12,22 @@ namespace Alternet.Drawing
     public class ScrollBarDrawable : BaseDrawable
     {
         /// <summary>
+        /// Gets or sets distance (in dips) between arrow button and arrow.
+        /// </summary>
+        public Coord ArrowMargin = 1;
+
+        /// <summary>
+        /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
+        /// and arrow height as the thumb height for the horizontal scrollbar.
+        /// </summary>
+        public bool UseArrowSizeForThumb = true;
+
+        /// <summary>
+        /// Gets or sets distance (in dips) between thumb and scrollbar bounds.
+        /// </summary>
+        public Coord ThumbMargin = 1;
+
+        /// <summary>
         /// Gets or sets background element.
         /// </summary>
         public ControlStateObjects<RectangleDrawable>? Background;
@@ -125,10 +141,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes this drawable with the specified color settings.
+        /// Initializes this drawable with the specified theme colors and metrics.
         /// </summary>
-        public virtual void SetColors(ScrollBar.ThemeMetrics colors)
+        public virtual void SetThemeMetrics(ScrollBar.ThemeMetrics themeMetrics)
         {
+            ArrowMargin = themeMetrics.ArrowMargin;
+            UseArrowSizeForThumb = themeMetrics.UseArrowSizeForThumb;
+            ThumbMargin = themeMetrics.ThumbMargin;
+
             Background = new();
             Background.Normal = CreateBackgroundState(VisualControlState.Normal);
             Background.Hovered = CreateBackgroundState(VisualControlState.Hovered);
@@ -146,7 +166,7 @@ namespace Alternet.Drawing
 
             RectangleDrawable? CreateBackgroundState(VisualControlState state)
             {
-                var background = colors.Background[state];
+                var background = themeMetrics.Background[state];
 
                 if (background is null)
                     return null;
@@ -160,8 +180,8 @@ namespace Alternet.Drawing
 
             RectangleDrawable? CreateThumbState(VisualControlState state)
             {
-                var background = colors.ThumbBackground[state];
-                var border = colors.ThumbBorder[state];
+                var background = themeMetrics.ThumbBackground[state];
+                var border = themeMetrics.ThumbBorder[state];
 
                 if (background is null && border is null)
                     return null;
@@ -190,7 +210,7 @@ namespace Alternet.Drawing
 
                 RectangleDrawable? CreateStateProps(VisualControlState state)
                 {
-                    var arrow = colors.Arrow[state];
+                    var arrow = themeMetrics.Arrow[state];
 
                     if (arrow is null)
                         return null;
@@ -231,8 +251,16 @@ namespace Alternet.Drawing
 
             Coord buttonSize = IsVertical ? Bounds.Width : Bounds.Height;
             var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor);
+
+            var arrowMargin = ArrowMargin * 2;
+
             var realArrowSize =
-                MathUtils.Min(arrowSize.Width, arrowSize.Height, Bounds.Width - 2, Bounds.Height - 2);
+                MathUtils.Min(
+                    arrowSize.Width,
+                    arrowSize.Height,
+                    Bounds.Width - arrowMargin,
+                    Bounds.Height - arrowMargin);
+
             var realArrowSizeI = GraphicsFactory.PixelFromDip(realArrowSize, scaleFactor);
 
             var startButtonBounds = (Bounds.Left, Bounds.Top, buttonSize, buttonSize);

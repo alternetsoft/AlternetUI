@@ -13,6 +13,8 @@ namespace ControlsSample
 {
     public partial class CustomDrawTestPage : Window
     {
+        private ScrollBar.KnownTheme currentTheme = ScrollBar.KnownTheme.WindowsDark;
+
         /* private static readonly WxControlPainterHandler Painter = new(); */
 
         private readonly CustomDrawControl customDrawControl = new()
@@ -56,7 +58,6 @@ namespace ControlsSample
         {
             var metrics = ScrollBar.DefaultMetrics;
             scrollBarsDrawable.Metrics = metrics;
-            scrollBarsDrawable.SetColors(ScrollBar.KnownTheme.WindowsLight);
 
             Size = (900, 700);
             State = WindowState.Maximized;
@@ -74,7 +75,20 @@ namespace ControlsSample
             /* panel.AddAction("Draw Native ComboBox", DrawNativeComboBox); */
             panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
-            panel.AddAction("Draw ScrollBar", DrawScrollBar);
+
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsDark);
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsLight);
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.VisualStudioDark);
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.VisualStudioLight);
+
+            void AddDrawScrollBarAction(ScrollBar.KnownTheme theme)
+            {
+                panel.AddAction($"Draw ScrollBar ({theme})",
+                    () => {
+                        DrawScrollBar(theme);
+                    });
+            }
+
 
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
         }
@@ -93,14 +107,18 @@ namespace ControlsSample
             });
         }
 
-        public void DrawScrollBar()
+        public void DrawScrollBar(ScrollBar.KnownTheme theme)
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
+                currentTheme = theme;
+
                 rect.Inflate(-20);
                 canvas.FillRectangleBorder(Color.Black.AsBrush, rect);
 
                 rect.Inflate(-1);
+
+                scrollBarsDrawable.SetColors(theme);
 
                 scrollBarsDrawable.Bounds = rect;
                 scrollBarsDrawable.VertPosition = horzScrollBar.AltPosInfo;
@@ -165,7 +183,7 @@ namespace ControlsSample
 
         private void HorzScrollBar_ValueChanged(object? sender, EventArgs e)
         {
-            DrawScrollBar();
+            DrawScrollBar(currentTheme);
         }
     }
 }

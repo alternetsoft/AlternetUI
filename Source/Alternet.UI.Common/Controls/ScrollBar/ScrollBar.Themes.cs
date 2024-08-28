@@ -77,6 +77,22 @@ namespace Alternet.UI
         public class ThemeMetrics
         {
             /// <summary>
+            /// Gets or sets distance (in dips) between arrow button and arrow.
+            /// </summary>
+            public Coord ArrowMargin = 1;
+
+            /// <summary>
+            /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
+            /// and arrow height as the thumb height for the horizontal scrollbar.
+            /// </summary>
+            public bool UseArrowSizeForThumb = true;
+
+            /// <summary>
+            /// Gets or sets distance (in dips) between thumb and scrollbar bounds.
+            /// </summary>
+            public Coord ThumbMargin = 1;
+
+            /// <summary>
             /// Gets or sets corner background brushes in the different visual states.
             /// </summary>
             public EnumArray<VisualControlState, BrushOrColor> CornerBackground = new();
@@ -122,6 +138,9 @@ namespace Alternet.UI
                         windowsDark.Arrow[VisualControlState.Hovered] = (153, 153, 153);
                         windowsDark.ThumbBackground[VisualControlState.Normal] = (77, 77, 77);
                         windowsDark.ThumbBorder[VisualControlState.Normal] = (77, 77, 77);
+                        windowsDark.ArrowMargin = 1;
+                        windowsDark.UseArrowSizeForThumb = true;
+                        windowsDark.ThumbMargin = 1;
                     }
 
                     return windowsDark;
@@ -151,6 +170,9 @@ namespace Alternet.UI
                         windowsLight.ThumbBorder[VisualControlState.Normal] = (194, 195, 201);
                         windowsLight.ThumbBackground[VisualControlState.Hovered] = (104, 104, 104);
                         windowsLight.ThumbBorder[VisualControlState.Hovered] = (104, 104, 104);
+                        windowsLight.ArrowMargin = 1;
+                        windowsLight.UseArrowSizeForThumb = true;
+                        windowsLight.ThumbMargin = 1;
                     }
 
                     return windowsLight;
@@ -178,6 +200,9 @@ namespace Alternet.UI
                         visualStudioDark.Arrow[VisualControlState.Hovered] = (28, 151, 234);
                         visualStudioDark.ThumbBackground[VisualControlState.Normal] = (0, 0, 0);
                         visualStudioDark.ThumbBorder[VisualControlState.Normal] = (104, 104, 104);
+                        visualStudioDark.ArrowMargin = 1;
+                        visualStudioDark.UseArrowSizeForThumb = false;
+                        visualStudioDark.ThumbMargin = 0;
                     }
 
                     return visualStudioDark;
@@ -205,6 +230,9 @@ namespace Alternet.UI
                         visualStudioLight.ThumbBackground[VisualControlState.Normal] = (255, 255, 255);
                         visualStudioLight.ThumbBorder[VisualControlState.Normal] = (0, 0, 0);
                         visualStudioLight.CornerBackground[VisualControlState.Normal] = (245, 245, 245);
+                        visualStudioLight.ArrowMargin = 1;
+                        visualStudioLight.UseArrowSizeForThumb = false;
+                        visualStudioLight.ThumbMargin = 0;
                     }
 
                     return visualStudioLight;
