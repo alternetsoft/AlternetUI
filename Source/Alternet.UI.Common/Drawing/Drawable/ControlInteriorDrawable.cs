@@ -7,9 +7,10 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Implements vertical and horizontal scrollbars drawing.
+    /// Implements control interior drawing.
+    /// This includes border, background, vertical and horizontal scrollbars drawing.
     /// </summary>
-    public class ScrollBarsDrawable : BaseDrawable
+    public class ControlInteriorDrawable : BaseDrawable
     {
         /// <summary>
         /// Gets or sets vertical scrollbar element.
@@ -25,6 +26,16 @@ namespace Alternet.Drawing
         /// Gets or sets corner element.
         /// </summary>
         public RectangleDrawable? Corner;
+
+        /// <summary>
+        /// Gets or sets background element.
+        /// </summary>
+        public RectangleDrawable? Background;
+
+        /// <summary>
+        /// Gets or sets border element.
+        /// </summary>
+        public RectangleDrawable? Border;
 
         private ScrollBar.MetricsInfo? metrics;
 
@@ -125,8 +136,12 @@ namespace Alternet.Drawing
         /// Performs layout of the drawable childs.
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
-        public virtual void PerformLayout(Coord scaleFactor)
+        /// <param name="clientRect">Client rectangle which equals bounds of the object without the space
+        /// occupied by the scrollbars.</param>
+        public virtual void PerformLayout(Coord scaleFactor, out RectD clientRect)
         {
+            clientRect = Bounds;
+
             var vertVisible = VertVisible;
             var horzVisible = HorzVisible;
             var bothVisible = vertVisible && horzVisible;
@@ -162,11 +177,18 @@ namespace Alternet.Drawing
             if (vertVisible)
             {
                 VertScrollBar!.Bounds = vertBounds;
+                clientRect.Width -= vertWidth;
             }
 
             if (horzVisible)
             {
+                clientRect.Height -= horzHeight;
                 HorzScrollBar!.Bounds = horzBounds;
+            }
+
+            if(Background is not null)
+            {
+                Background.Bounds = clientRect;
             }
         }
 
@@ -176,7 +198,12 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            PerformLayout(control.ScaleFactor);
+            PerformLayout(control.ScaleFactor, out _);
+
+            if (Background is not null && Background.Visible)
+            {
+                Background.Draw(control, dc);
+            }
 
             if (HasCorner)
             {
@@ -207,7 +234,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes this drawable with the specified color settings.
         /// </summary>
-        public virtual void SetColors(ScrollBar.ThemeMetrics colors)
+        public virtual void SetScrollBarColors(ScrollBar.ThemeMetrics colors)
         {
             VertScrollBar ??= new();
             VertScrollBar.IsVertical = true;
@@ -225,9 +252,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initialized this drawable with default settings for the specified color theme.
         /// </summary>
-        public virtual void SetColors(ScrollBar.KnownTheme theme, bool isDark = false)
+        public virtual void SetScrollBarColors(ScrollBar.KnownTheme theme, bool isDark = false)
         {
-            SetColors(ScrollBar.ThemeMetrics.GetColors(theme, isDark));
+            SetScrollBarColors(ScrollBar.ThemeMetrics.GetColors(theme, isDark));
         }
     }
 }

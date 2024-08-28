@@ -77,22 +77,6 @@ namespace Alternet.UI
         public class ThemeMetrics
         {
             /// <summary>
-            /// Gets or sets distance (in dips) between arrow button and arrow.
-            /// </summary>
-            public Coord ArrowMargin = 1;
-
-            /// <summary>
-            /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
-            /// and arrow height as the thumb height for the horizontal scrollbar.
-            /// </summary>
-            public bool UseArrowSizeForThumb = true;
-
-            /// <summary>
-            /// Gets or sets distance (in dips) between thumb and scrollbar bounds.
-            /// </summary>
-            public Coord ThumbMargin = 1;
-
-            /// <summary>
             /// Gets or sets corner background brushes in the different visual states.
             /// </summary>
             public EnumArray<VisualControlState, BrushOrColor> CornerBackground = new();
@@ -113,6 +97,39 @@ namespace Alternet.UI
             public EnumArray<VisualControlState, BrushOrColor> ThumbBackground = new();
 
             /// <summary>
+            /// Gets or sets distance (in dips) between arrow button and arrow in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, Coord> ArrowMargin = new();
+
+            /// <summary>
+            /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
+            /// and arrow height as the thumb height for the horizontal scrollbar.
+            /// Each visual state has it's own setting.
+            /// </summary>
+            public EnumArray<VisualControlState, bool> UseArrowSizeForThumb = new();
+
+            /// <summary>
+            /// Gets or sets distance (in dips) between thumb and scrollbar bounds
+            /// in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, Coord> ThumbMargin = new();
+
+            /// <summary>
+            /// Gets or sets whether arrows are visible in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, bool> ArrowsVisible = new();
+
+            /// <summary>
+            /// Gets or sets whether thumb is visible in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, bool> ThumbVisible = new();
+
+            /// <summary>
+            /// Gets or sets whether buttons are visible in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, bool> ButtonsVisible = new();
+
+            /// <summary>
             /// Gets or sets scrollbar thumb border colors in the different visual states.
             /// </summary>
             public EnumArray<VisualControlState, BrushOrColor> ThumbBorder = new();
@@ -121,6 +138,19 @@ namespace Alternet.UI
             private static ThemeMetrics? visualStudioDark;
             private static ThemeMetrics? windowsLight;
             private static ThemeMetrics? windowsDark;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ThemeMetrics"/> class.
+            /// </summary>
+            public ThemeMetrics()
+            {
+                SetArrowMargin(1);
+                SetUseArrowSizeForThumb(true);
+                SetThumbMargin(1);
+                SetArrowsVisible(true);
+                SetThumbVisible(true);
+                SetButtonsVisible(true);
+            }
 
             /// <summary>
             /// Gets or sets 'Windows Dark' theme colors as <see cref="ThemeMetrics"/>.
@@ -138,9 +168,9 @@ namespace Alternet.UI
                         windowsDark.Arrow[VisualControlState.Hovered] = (153, 153, 153);
                         windowsDark.ThumbBackground[VisualControlState.Normal] = (77, 77, 77);
                         windowsDark.ThumbBorder[VisualControlState.Normal] = (77, 77, 77);
-                        windowsDark.ArrowMargin = 1;
-                        windowsDark.UseArrowSizeForThumb = true;
-                        windowsDark.ThumbMargin = 1;
+                        windowsDark.SetArrowMargin(1);
+                        windowsDark.SetUseArrowSizeForThumb(true);
+                        windowsDark.SetThumbMargin(1);
                     }
 
                     return windowsDark;
@@ -170,9 +200,9 @@ namespace Alternet.UI
                         windowsLight.ThumbBorder[VisualControlState.Normal] = (194, 195, 201);
                         windowsLight.ThumbBackground[VisualControlState.Hovered] = (104, 104, 104);
                         windowsLight.ThumbBorder[VisualControlState.Hovered] = (104, 104, 104);
-                        windowsLight.ArrowMargin = 1;
-                        windowsLight.UseArrowSizeForThumb = true;
-                        windowsLight.ThumbMargin = 1;
+                        windowsLight.SetArrowMargin(1);
+                        windowsLight.SetUseArrowSizeForThumb(true);
+                        windowsLight.SetThumbMargin(1);
                     }
 
                     return windowsLight;
@@ -200,9 +230,9 @@ namespace Alternet.UI
                         visualStudioDark.Arrow[VisualControlState.Hovered] = (28, 151, 234);
                         visualStudioDark.ThumbBackground[VisualControlState.Normal] = (0, 0, 0);
                         visualStudioDark.ThumbBorder[VisualControlState.Normal] = (104, 104, 104);
-                        visualStudioDark.ArrowMargin = 1;
-                        visualStudioDark.UseArrowSizeForThumb = false;
-                        visualStudioDark.ThumbMargin = 0;
+                        visualStudioDark.SetArrowMargin(1);
+                        visualStudioDark.SetUseArrowSizeForThumb(false);
+                        visualStudioDark.SetThumbMargin(0);
                     }
 
                     return visualStudioDark;
@@ -230,9 +260,9 @@ namespace Alternet.UI
                         visualStudioLight.ThumbBackground[VisualControlState.Normal] = (255, 255, 255);
                         visualStudioLight.ThumbBorder[VisualControlState.Normal] = (0, 0, 0);
                         visualStudioLight.CornerBackground[VisualControlState.Normal] = (245, 245, 245);
-                        visualStudioLight.ArrowMargin = 1;
-                        visualStudioLight.UseArrowSizeForThumb = false;
-                        visualStudioLight.ThumbMargin = 0;
+                        visualStudioLight.SetArrowMargin(1);
+                        visualStudioLight.SetUseArrowSizeForThumb(false);
+                        visualStudioLight.SetThumbMargin(0);
                     }
 
                     return visualStudioLight;
@@ -279,6 +309,76 @@ namespace Alternet.UI
                     case KnownTheme.WindowsLight:
                         return WindowsLightTheme;
                 }
+            }
+
+            /// <summary>
+            /// Sets whether arrows are visible. Applies value to all states.
+            /// </summary>
+            public virtual void SetArrowsVisible(bool value)
+            {
+                ArrowsVisible[VisualControlState.Normal] = value;
+                ArrowsVisible[VisualControlState.Hovered] = value;
+                ArrowsVisible[VisualControlState.Disabled] = value;
+                ArrowsVisible[VisualControlState.Pressed] = value;
+            }
+
+            /// <summary>
+            /// Sets whether thumb is visible. Applies value to all states.
+            /// </summary>
+            public virtual void SetThumbVisible(bool value)
+            {
+                ThumbVisible[VisualControlState.Normal] = value;
+                ThumbVisible[VisualControlState.Hovered] = value;
+                ThumbVisible[VisualControlState.Disabled] = value;
+                ThumbVisible[VisualControlState.Pressed] = value;
+            }
+
+            /// <summary>
+            /// Sets whether buttons are visible. Applies value to all states.
+            /// </summary>
+            public virtual void SetButtonsVisible(bool value)
+            {
+                ButtonsVisible[VisualControlState.Normal] = value;
+                ButtonsVisible[VisualControlState.Hovered] = value;
+                ButtonsVisible[VisualControlState.Disabled] = value;
+                ButtonsVisible[VisualControlState.Pressed] = value;
+            }
+
+            /// <summary>
+            /// Sets distance (in dips) between arrow button and arrow.
+            /// Applies value to all states.
+            /// </summary>
+            public virtual void SetArrowMargin(Coord value)
+            {
+                ArrowMargin[VisualControlState.Normal] = value;
+                ArrowMargin[VisualControlState.Hovered] = value;
+                ArrowMargin[VisualControlState.Disabled] = value;
+                ArrowMargin[VisualControlState.Pressed] = value;
+            }
+
+            /// <summary>
+            /// Sets whether to use arrow width as the thumb width for the vertical scrollbar
+            /// and arrow height as the thumb height for the horizontal scrollbar.
+            /// Applies value to all states.
+            /// </summary>
+            public virtual void SetUseArrowSizeForThumb(bool value)
+            {
+                UseArrowSizeForThumb[VisualControlState.Normal] = value;
+                UseArrowSizeForThumb[VisualControlState.Hovered] = value;
+                UseArrowSizeForThumb[VisualControlState.Disabled] = value;
+                UseArrowSizeForThumb[VisualControlState.Pressed] = value;
+            }
+
+            /// <summary>
+            /// Sets distance (in dips) between thumb and scrollbar bounds.
+            /// Applies value to all states.
+            /// </summary>
+            public virtual void SetThumbMargin(Coord value)
+            {
+                ThumbMargin[VisualControlState.Normal] = value;
+                ThumbMargin[VisualControlState.Hovered] = value;
+                ThumbMargin[VisualControlState.Disabled] = value;
+                ThumbMargin[VisualControlState.Pressed] = value;
             }
         }
     }

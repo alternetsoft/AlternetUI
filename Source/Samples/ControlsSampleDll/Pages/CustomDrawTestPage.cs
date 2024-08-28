@@ -46,7 +46,7 @@ namespace ControlsSample
         {
         };
 
-        private readonly ScrollBarsDrawable scrollBarsDrawable = new()
+        private readonly ControlInteriorDrawable scrollBarsDrawable = new()
         {
         };
 
@@ -113,12 +113,15 @@ namespace ControlsSample
             {
                 currentTheme = theme;
 
+
                 rect.Inflate(-20);
                 canvas.FillRectangleBorder(Color.Black.AsBrush, rect);
 
                 rect.Inflate(-1);
 
-                scrollBarsDrawable.SetColors(theme);
+                scrollBarsDrawable.SetScrollBarColors(theme);
+                scrollBarsDrawable.Background ??= new();
+                scrollBarsDrawable.Background.Brush = Color.GreenYellow.AsBrush;
 
                 scrollBarsDrawable.Bounds = rect;
                 scrollBarsDrawable.VertPosition = horzScrollBar.AltPosInfo;

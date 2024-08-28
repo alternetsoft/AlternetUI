@@ -14,18 +14,18 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets distance (in dips) between arrow button and arrow.
         /// </summary>
-        public Coord ArrowMargin = 1;
+        public EnumArray<VisualControlState, Coord>? ArrowMargin;
 
         /// <summary>
         /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
         /// and arrow height as the thumb height for the horizontal scrollbar.
         /// </summary>
-        public bool UseArrowSizeForThumb = true;
+        public EnumArray<VisualControlState, bool>? UseArrowSizeForThumb;
 
         /// <summary>
         /// Gets or sets distance (in dips) between thumb and scrollbar bounds.
         /// </summary>
-        public Coord ThumbMargin = 1;
+        public EnumArray<VisualControlState, Coord>? ThumbMargin;
 
         /// <summary>
         /// Gets or sets background element.
@@ -252,7 +252,8 @@ namespace Alternet.Drawing
             Coord buttonSize = IsVertical ? Bounds.Width : Bounds.Height;
             var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor);
 
-            var arrowMargin = ArrowMargin * 2;
+            var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
+            arrowMargin *= 2;
 
             var realArrowSize =
                 MathUtils.Min(
