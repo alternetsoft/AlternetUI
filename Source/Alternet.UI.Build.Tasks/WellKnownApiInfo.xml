@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.627.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.628.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -19,6 +19,7 @@
     <Type Name="Alternet.Drawing.PlessBrushHandler">
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.Drawing.BrushOrColor" />
     <Type Name="Alternet.Drawing.GradientBrush">
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
@@ -82,11 +83,12 @@
     <Type Name="Alternet.Drawing.RGBValue" />
     <Type Name="Alternet.Drawing.SystemColors" />
     <Type Name="Alternet.Drawing.BaseDrawable" />
+    <Type Name="Alternet.Drawing.BorderDrawable" />
     <Type Name="Alternet.Drawing.IBaseDrawable" />
     <Type Name="Alternet.Drawing.ImageDrawable" />
+    <Type Name="Alternet.Drawing.InteriorDrawable" />
     <Type Name="Alternet.Drawing.RectangleDrawable" />
     <Type Name="Alternet.Drawing.ScrollBarDrawable" />
-    <Type Name="Alternet.Drawing.ScrollBarsDrawable" />
     <Type Name="Alternet.Drawing.Font">
       <Event Name="Disposed" />
     </Type>
@@ -139,6 +141,11 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.Drawing.IImageContainer" />
+    <Type Name="Alternet.Drawing.ImageContainer">
+      <Event Name="Changed" />
+      <Event Name="PropertyChanged" />
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.Drawing.ImageContainer`1">
       <Event Name="Changed" />
       <Event Name="PropertyChanged" />
@@ -153,11 +160,13 @@
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.Drawing.DummyImageSetHandler">
-      <Event Name="Disposed" />
-    </Type>
     <Type Name="Alternet.Drawing.IImageSetHandler" />
     <Type Name="Alternet.Drawing.ImageSetConverter" />
+    <Type Name="Alternet.Drawing.PlessImageSetHandler">
+      <Event Name="Changed" />
+      <Event Name="PropertyChanged" />
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.Drawing.Bitmap">
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
@@ -198,6 +207,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.Drawing.ISkiaSurface" />
+    <Type Name="Alternet.Drawing.SkiaColorFilter" />
     <Type Name="Alternet.Drawing.SkiaFontFactoryHandler">
       <Event Name="Disposed" />
     </Type>
@@ -300,6 +310,7 @@
     <Type Name="Alternet.UI.DisposableObject`1">
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.EnumArray`2" />
     <Type Name="Alternet.UI.HandledObject`1">
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
@@ -1239,6 +1250,8 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.ControlNotification" />
+    <Type Name="Alternet.UI.IControlNotification" />
     <Type Name="Alternet.UI.ControlFactory" />
     <Type Name="Alternet.UI.ControlSet" />
     <Type Name="Alternet.UI.AllStateColors" />
@@ -9491,6 +9504,7 @@
     </Type>
     <Type Name="Alternet.UI.WindowInfo" />
     <Type Name="Alternet.UI.SvgColors" />
+    <Type Name="Alternet.UI.InteriorNotification" />
     <Type Name="Alternet.UI.SystemFonts" />
     <Type Name="Alternet.UI.ImageSet">
       <Event Name="Changed" />
@@ -9844,6 +9858,8 @@
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.ScrollBar+KnownTheme" />
+    <Type Name="Alternet.UI.ScrollBar+ThemeMetrics" />
     <Type Name="Alternet.UI.SpeedButton+KnownTheme" />
     <Type Name="Alternet.UI.FindReplaceControl+IFindReplaceConnect" />
     <Type Name="Alternet.UI.DebugUtils+DebugTraceListener" />

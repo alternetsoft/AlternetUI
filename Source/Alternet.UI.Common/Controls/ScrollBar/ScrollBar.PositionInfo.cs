@@ -17,6 +17,11 @@ namespace Alternet.UI
             public int Position;
 
             /// <summary>
+            /// Gets or sets whether scrollbar is visible.
+            /// </summary>
+            public bool Visible = true;
+
+            /// <summary>
             /// Gets or sets the size of the thumb, or visible portion of the
             /// scrollbar, in scroll units.
             /// </summary>

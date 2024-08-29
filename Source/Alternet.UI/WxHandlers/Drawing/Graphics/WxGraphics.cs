@@ -584,12 +584,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override Color GetPixel(PointD point)
-        {
-            return dc.GetPixel(point);
-        }
-
-        /// <inheritdoc/>
         public override void DrawImage(
             Image image,
             RectD destinationRect,

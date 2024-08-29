@@ -8,19 +8,19 @@
       <VerticalStackPanel>
         <Button
           Text="Modify Selected Page Title"
-          Margin="5"
+          Margin="5" IsTextLocalized="true"
           Name="modifyPageTitleButton"
           Click="ModifyPageTitleButton_Click" />
 
         <Button
           Text="Insert Before Last Page"
-          Margin="5"
+          Margin="5" IsTextLocalized="true"
           Name="InsertLastPageSiblingButton"
           Click="InsertLastPageSiblingButton_Click" />
 
         <Button
           Text="Remove Selected Page"
-          Margin="5"
+          Margin="5" IsTextLocalized="true"
           Name="removeSelectedPageButton"
           Click="RemoveSelectedPageButton_Click" />
       </VerticalStackPanel>
@@ -28,20 +28,20 @@
       <VerticalStackPanel>
         <Button
           Text="Add Page"
-          Margin="5"
+          Margin="5" IsTextLocalized="true"
           Name="appendPageButton"
           Click="AppendPageButton_Click" />
 
         <Button
           Text="Clear Pages"
-          Margin="5"
+          Margin="5" IsTextLocalized="true"
           Name="clearPagesButton"
           Click="ClearPagesButton_Click" />
       </VerticalStackPanel>
 
       <VerticalStackPanel Visible="true">
         <StackPanel Orientation="Horizontal" Margin="5">
-          <Label Text="Tabs:" VerticalAlignment="Center"/>
+          <Label Text="Tabs:" VerticalAlignment="Center"  IsTextLocalized="true"/>
           <ComboBox IsEditable="false" Name="tabAlignmentComboBox" Margin="5,0,0,0"/>
         </StackPanel>
       </VerticalStackPanel>

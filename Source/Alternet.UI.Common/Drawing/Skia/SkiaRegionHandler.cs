@@ -64,9 +64,7 @@ namespace Alternet.Drawing
             SKPath path = new();
             path.FillType = fillMode.ToSkia();
             path.AddPoly(points.PixelFromDipD(ScaleFactor));
-
             region = new(path);
-            throw new NotImplementedException();
         }
 
         /// <summary>

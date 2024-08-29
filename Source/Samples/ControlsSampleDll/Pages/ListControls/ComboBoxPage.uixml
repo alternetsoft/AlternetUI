@@ -10,49 +10,49 @@
                             VerticalAlignment="Top"
                             SelectedItemChanged="ComboBox_SelectedItemChanged"
                             TextChanged="ComboBox_TextChanged" />
-              <CheckBox Text="Allow Text Edit"
+              <CheckBox Text="Allow Text Edit" IsTextLocalized="true"
                         Name="allowTextEditingCheckBox" Margin="0,10,0,0"
                         CheckedChanged=
                                 "AllowTextEditingCheckBox_CheckedChanged"/>
-              <CheckBox Text="Owner Draw"
+              <CheckBox Text="Owner Draw" IsTextLocalized="true"
                         Name="ownerDrawCheckBox" Margin="0,5,0,10"
                         CheckedChanged=
                                 "OwnerDrawCheckBox_CheckedChanged"/>
-              <Button Text="Text = Empty"
+              <Button Text="Text = Empty" IsTextLocalized="true"
                       Name="setTextToEmptyStringButton" Margin="0,0,0,0"
                       Click="SetTextToEmptyStringButton_Click"/>
-              <Button Text="Text = 'One'" Name="setTextToOneButton"
+              <Button Text="Text = 'One'" Name="setTextToOneButton" IsTextLocalized="true"
                       Margin="0,3,0,0" Click="SetTextToOneButton_Click"/>
-              <Button Text="Text = 'abc'" Name="setTextToAbcButton"
+              <Button Text="Text = 'abc'" Name="setTextToAbcButton" IsTextLocalized="true"
                       Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
             </VerticalStackPanel>
 
             <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5">
-                    <Button Text="Add Item" Name="addItemButton" 
+                    <Button Text="Add Item" Name="addItemButton" IsTextLocalized="true" 
                             Click="AddItemButton_Click"/>
-                    <Button Text="Remove Item" Name="removeItemButton" 
+                    <Button Text="Remove Item" Name="removeItemButton" IsTextLocalized="true" 
                             Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
-                    <Button Text="Add 500 Items" Name="addManyItemsButton" 
+                    <Button Text="Add 500 Items" Name="addManyItemsButton" IsTextLocalized="true" 
                             Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
-                    <Button Text="SelectedIndex = 2" 
+                    <Button Text="SelectedIndex = 2" IsTextLocalized="true" 
                             Name="setSelectedIndexTo2Button" Margin="0,3,0,0" 
                             Click="SetSelectedIndexTo2_Click"/>
-                    <Button Text="SelectedItem = null" 
+                    <Button Text="SelectedItem = null" IsTextLocalized="true" 
                             Name="setSelectedItemToNullButton" Margin="0,3,0,0" 
                             Click="SetSelectedItemToNullButton_Click"/>
-                    <Button Text="Select Text [2..5]" 
+                    <Button Text="Select Text [2..5]" IsTextLocalized="true" 
                             Name="selectTextRangeButton" Margin="0,3,0,0" 
                             Click="SelectTextRangeButton_Click"/>
-                    <Button Text="Get Text Selection" Name="getTextSelectionButton" 
+                    <Button Text="Get Text Selection" Name="getTextSelectionButton" IsTextLocalized="true" 
                             Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
-                    <Button Text="Items[2] = 'hello'" Name="buttonItemsEqHello"
+                    <Button Text="Items[2] = 'hello'" Name="buttonItemsEqHello" IsTextLocalized="true"
                             Margin="0,3,0,0" Click="SetItem_Click"/>
-                    <Button Text="Edit Items..." Name="buttonEditItems"
+                    <Button Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
                           Margin="0,3,0,0" Click="Editor_Click"/>
                 </VerticalStackPanel>
 
                 <VerticalStackPanel Margin="0,0,0,5" Padding="0,0,5,5">
-                  <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
+                  <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
                           Click="HasBorderButton_Click" Visible="true"/>
                 </VerticalStackPanel>
         </HorizontalStackPanel>

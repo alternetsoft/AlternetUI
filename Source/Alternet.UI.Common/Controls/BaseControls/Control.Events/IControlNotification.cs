@@ -5,10 +5,23 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains methods and properties which are called when control events are raised.
+    /// Contains methods and properties which are called when control events are raised
+    /// or control methods are called. Implement this interface or use <see cref="ControlNotification"/>
+    /// descendant in order to extend control behavior.
     /// </summary>
     public interface IControlNotification
     {
+        /// <summary>
+        /// Called after the <see cref="Control.SetScrollBarPosition(bool, ScrollBar.PositionInfo)" />
+        /// method is called.
+        /// </summary>
+        void AfterSetScrollBarPosition(Control sender, bool isVertical, ScrollBar.PositionInfo value);
+
+        /// <summary>
+        /// Called after the <see cref="Control.Scroll" /> event is raised.
+        /// </summary>
+        void AfterScroll(Control sender, ScrollEventArgs e);
+
         /// <summary>
         /// Called after the <see cref="Control.CellChanged" /> event is raised.
         /// </summary>

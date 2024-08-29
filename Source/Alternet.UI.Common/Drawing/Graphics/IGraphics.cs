@@ -217,9 +217,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.SetPixel(Coord, Coord, Color)"/>
         void SetPixel(Coord x, Coord y, Color color);
 
-        /// <inheritdoc cref="Graphics.GetPixel"/>
-        Color GetPixel(PointD point);
-
         /// <inheritdoc cref="Graphics.DrawImage(Image,RectD,RectD,GraphicsUnit)"/>
         void DrawImage(
             Image image,

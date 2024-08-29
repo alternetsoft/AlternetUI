@@ -9,7 +9,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox Title="Horizontal Progresss" Margin="0">
+            <GroupBox Title="Horizontal Progresss" Margin="0" IsTitleLocalized="true">
                 <StackPanel Orientation="Vertical" Margin="5" Name="horizontalProgressBarsPanel">
                     <Label Text="0 [0-100]" Margin="0,0,0,5" />
                     <ProgressBar Value="0" Margin="0,0,0,5" />
@@ -30,7 +30,7 @@
             </GroupBox>
             
           <GroupBox Title="Vertical Progress Bars" Grid.Column="1" Margin="10,0,10,0"
-                    Name="VerticalProgressBarsGroupBox">
+                    Name="VerticalProgressBarsGroupBox" IsTitleLocalized="true">
                 <Grid Name="verticalProgressBarsGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -88,10 +88,9 @@
 
       <HorizontalStackPanel>
         <Button Text="Increase All" Margin="0,5,5,5" Name="increaseAllButton"
-                Click="IncreaseAllButton_Click" />
+                Click="IncreaseAllButton_Click"  IsTextLocalized="true"/>
         <CheckBox Text="Indeterminate" Margin="20,5,5,5" Name="indeterminateCheckBox"
-                  CheckedChanged="IndeterminateCheckBox_CheckedChanged" />
-
+                  IsTextLocalized="true" CheckedChanged="IndeterminateCheckBox_CheckedChanged" />
       </HorizontalStackPanel>
     </StackPanel>
 </Control>

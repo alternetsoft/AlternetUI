@@ -31,14 +31,14 @@
 
       <StackPanel Orientation="Vertical" Margin="10,5,5,5">
         <Button Text="Increase All" Margin="0,0,0,5" Name="increaseAllButton"
-                Click="IncreaseAllButton_Click" />
+                Click="IncreaseAllButton_Click" IsTextLocalized="true" />
         <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
-                Click="HasBorderButton_Click" Visible="false"/>
+                Click="HasBorderButton_Click" Visible="false" IsTextLocalized="true"/>
       </StackPanel>
     </HorizontalStackPanel>
 
 
-    <GroupBox Title="Linked Progress Bar" Padding="5" Margin="0,10,0,10">
+    <GroupBox Title="Linked Progress Bar" Padding="5" Margin="0,10,0,10" IsTitleLocalized="true">
       <VerticalStackPanel Margin="5">
         <NumericUpDown Margin="0,0,0,10"  Maximum="10"
                        Name="progressBarControlNumericUpDown"

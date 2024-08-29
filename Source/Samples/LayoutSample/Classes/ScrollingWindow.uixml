@@ -38,32 +38,32 @@
           </Grid.ColumnDefinitions>
 
           <Label Text="Orientation:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 Grid.Column="0" Grid.Row="0" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="0" />
           <ComboBox Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5"
                     IsEditable="false"
                     SelectedItemChanged="OrientationComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="0" />
 
           <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 Grid.Column="0" Grid.Row="1" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
           <ComboBox Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center"
                     Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
           <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 Grid.Column="0" Grid.Row="2" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="2" />
           <ComboBox Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center"
                     Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="2" />
 
           <Button Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
-                  Click="AddControlToStackPanelButton_Click"
+                  IsTextLocalized="true" Click="AddControlToStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
 
           <Button Text="Remove Control" Name="removeControlFromStackPanelButton"
-                  Click="RemoveControlFromStackPanelButton_Click"
+                  IsTextLocalized="true" Click="RemoveControlFromStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
         </Grid>
       </StackPanel>
@@ -95,39 +95,40 @@
           </Grid.ColumnDefinitions>
 
           <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 Grid.Column="0" Grid.Row="0" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="0" />
           <ComboBox Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center"
                     Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="0" />
 
           <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 Grid.Column="0" Grid.Row="1" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
           <ComboBox Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center"
                     Margin="0,0,0,5" IsEditable="false"
                     SelectedItemChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
           <Button Text="Add Column" Name="addColumnToGridButton" Margin="0,0,0,5"
-                  Click="AddColumnToGridButton_Click"
+                  IsTextLocalized="true" Click="AddColumnToGridButton_Click"
                   Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
 
           <Button Text="Remove Column" Name="removeColumnFromGridButton" Margin="0,0,0,5"
-                  Click="RemoveColumnFromGridButton_Click"
+                  IsTextLocalized="true" Click="RemoveColumnFromGridButton_Click"
                   Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
 
           <Button Text="Add Row" Name="addRowToGridButton" Margin="0,0,0,5"
-                  Click="AddRowToGridButton_Click"
+                  IsTextLocalized="true" Click="AddRowToGridButton_Click"
                   Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
 
           <Button Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
-                  Click="RemoveRowFromGridButton_Click"
+                  IsTextLocalized="true" Click="RemoveRowFromGridButton_Click"
                   Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
         </Grid>
       </StackPanel>
     </GroupBox>
 
-    <GroupBox Title="Drawing" Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
+    <GroupBox Title="Drawing" IsTitleLocalized="true"
+              Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
       <StackPanel Orientation="Vertical">
         <Border VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="false" Padding="5">
           <ScrollViewer SuggestedWidth="200" SuggestedHeight="200" Name="imageScrollViewer">
@@ -138,7 +139,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
-          <Label Text="Zoom:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+          <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1"
                   Value="2" Maximum="10" Grid.Column="1"/>
         </Grid>

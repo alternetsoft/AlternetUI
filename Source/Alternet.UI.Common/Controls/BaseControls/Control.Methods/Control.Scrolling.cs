@@ -27,6 +27,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets horizontal scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// </summary>
+        [Browsable(false)]
+        public ScrollBar.PositionInfo HorzScrollBarPosition
+        {
+            get
+            {
+                return GetScrollBarPosition(false);
+            }
+
+            set
+            {
+                SetScrollBarPosition(false, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// </summary>
+        [Browsable(false)]
+        public ScrollBar.PositionInfo VertScrollBarPosition
+        {
+            get
+            {
+                return GetScrollBarPosition(true);
+            }
+
+            set
+            {
+                SetScrollBarPosition(true, value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether scroll events are binded and recveived in the control.
         /// </summary>
         protected virtual bool BindScrollEvents
@@ -121,8 +155,68 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseScroll(ScrollEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnScroll(e);
             Scroll?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterScroll(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterScroll(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Gets vertical or horizontal scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// </summary>
+        /// <param name="isVertical">Whether to get position for the vertical or horizontal scrollbar.</param>
+        /// <returns></returns>
+        public virtual ScrollBar.PositionInfo GetScrollBarPosition(bool isVertical)
+        {
+            ScrollBar.PositionInfo result = new()
+            {
+                Position = GetScrollBarValue(isVertical),
+                Visible = IsScrollBarVisible(isVertical),
+                Range = GetScrollBarMaximum(isVertical),
+                PageSize = GetScrollBarLargeChange(isVertical),
+            };
+
+            result.ThumbSize = result.PageSize;
+            return result;
+        }
+
+        /// <summary>
+        /// Sets vertical or horizontal scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// </summary>
+        /// <param name="isVertical">Whether to set position for the vertical or horizontal scrollbar.</param>
+        /// <param name="value">Scrollbar position.</param>
+        public virtual void SetScrollBarPosition(bool isVertical, ScrollBar.PositionInfo value)
+        {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
+            SetScrollBar(
+                isVertical,
+                value.Visible,
+                value.Position,
+                value.PageSize,
+                value.Range);
+
+            foreach (var n in nn)
+            {
+                n.AfterSetScrollBarPosition(this, isVertical, value);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterSetScrollBarPosition(this, isVertical, value);
+            }
         }
 
         /// <summary>

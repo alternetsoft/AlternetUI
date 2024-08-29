@@ -64,7 +64,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets clippring region.
+        /// Gets or sets clipping region.
         /// </summary>
         public abstract Region? Clip { get; set; }
 
@@ -1003,16 +1003,6 @@ namespace Alternet.Drawing
         /// <param name="x">The x-coordinate of the pixel to set.</param>
         /// <param name="y">The y-coordinate of the pixel to set.</param>
         public abstract void SetPixel(Coord x, Coord y, Color color);
-
-        /// <summary>
-        /// Gets the color of the specified pixel in this <see cref="Graphics" />.</summary>
-        /// <param name="point">The coordinates of the pixel to retrieve.</param>
-        /// <returns>A <see cref="Color" /> structure that represents the color
-        /// of the specified pixel.</returns>
-        /// <remarks>
-        /// Not all drawing contexts support this operation.
-        /// </remarks>
-        public abstract Color GetPixel(PointD point);
 
         /// <summary>
         /// Draws the specified portion of the image into the region defined by the specified

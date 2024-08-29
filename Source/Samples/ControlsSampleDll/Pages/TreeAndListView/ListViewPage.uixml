@@ -22,63 +22,63 @@
                   VerticalAlignment="Stretch" HorizontalAlignment="Fill">
 
         <!-- ========================= -->
-        <StackPanel Orientation="Vertical" Padding="10" Title="Actions"
+        <StackPanel Orientation="Vertical" Padding="10" Title="Actions" IsTitleLocalized="true"
                       VerticalAlignment="Stretch" Name="stackPanel1">
 
           <HorizontalStackPanel>
-            <Button Text="Add" Name="addItemButton"
+            <Button Text="Add" Name="addItemButton" IsTextLocalized="true"
                     Margin="0,3,0,0" Click="AddItemButton_Click"/>
-            <Button Text="Remove" Name="removeItemButton"
+            <Button Text="Remove" Name="removeItemButton" IsTextLocalized="true"
                     Margin="3,3,0,0" Click="RemoveItemButton_Click"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
             <Button Text="Add 1000" Name="addManyItemsButton"
-                    Margin="0,3,0,0"
+                    Margin="0,3,0,0" IsTextLocalized="true"
                     Click="AddManyItemsButton_Click"/>
             <Button Text="Clear" Name="ClearButton" Margin="3,3,0,0"
-                    Click="ClearButton_Click"/>
+                    Click="ClearButton_Click" IsTextLocalized="true"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
             <Button Name="editItemsButton" Text="Edit Items..." Margin="0,3,0,0"
-                    Click="EditItemsButton_Click"/>
+                    Click="EditItemsButton_Click" IsTextLocalized="true"/>
             <Button Name="editColumnsButton" Text="Edit Columns..." Margin="3,3,0,0"
-                    Click="EditColumnsButton_Click"/>
+                    Click="EditColumnsButton_Click" IsTextLocalized="true"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
             <Button Text="Add Column" Name="AddColumnButton" Margin="0,3,0,0"
-                    Click="AddColumnButton_Click" Visible="false"/>
-            <Button Text="Modify Column" Name="ModifyColumnTitleButton"
+                    Click="AddColumnButton_Click" Visible="false" IsTextLocalized="true"/>
+            <Button Text="Modify Column" Name="ModifyColumnTitleButton" IsTextLocalized="true"
                 Margin="3,3,0,0" Click="ModifyColumnTitleButton_Click" Visible="false"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Text="Edit Selected"
+            <Button Text="Edit Selected" IsTextLocalized="true"
                     Name="beginSelectedLabelEditingButton"
                     Margin="0,3,0,0"
                     Click="BeginSelectedLabelEditingButton_Click"
                     Enabled="true" />
-            <Button Text="Has Border" Margin="3,3,0,0"
+            <Button Text="Has Border" Margin="3,3,0,0" IsTextLocalized="true"
                     Name="hasBorderButton" Click="HasBorderButton_Click"/>
           </HorizontalStackPanel>
 
           <Control  Padding="5" Margin="0,10,0,0" Layout="Vertical">
-            <Label Text="Last Item:" Margin="0,0,0,10"/>
+            <Label Text="Last Item:" Margin="0,0,0,10" IsTextLocalized="true"/>
             <HorizontalStackPanel  Margin="5,0,0,0">
-              <Button Text="Show" Margin="0,0,0,0"
+              <Button Text="Show" Margin="0,0,0,0" IsTextLocalized="true"
                       Name="ensureLastItemVisibleButton"
                       Click="EnsureLastItemVisibleButton_Click" />
               <Button Text="Modify" Name="modifyLastItemButton"
-                      Margin="3,0,0,0"
+                      Margin="3,0,0,0" IsTextLocalized="true"
                   Click="ModifyLastItemButton_Click" />
             </HorizontalStackPanel>
             <HorizontalStackPanel Margin="5,0,0,0">
-              <Button Text="Focus" Name="focusLastItemButton"
+              <Button Text="Focus" Name="focusLastItemButton" IsTextLocalized="true"
                       Margin="0,3,0,0"
                   Click="FocusLastItemButton_Click" />
-              <Button Text="Add Sibling" Name="addLastItemSiblingButton"
+              <Button Text="Add Sibling" Name="addLastItemSiblingButton" IsTextLocalized="true"
                       Margin="3,3,0,0" Enabled="true"
                       Click="AddLastItemSiblingButton_Click" />
             </HorizontalStackPanel>
@@ -88,32 +88,32 @@
         <!-- ========================= -->
 
         <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2" Title="Settings"
-                            Visible="false" Padding="10">
-          <CheckBox Text="Multiple Selection"
+                            Visible="false" Padding="10" IsTitleLocalized="true">
+          <CheckBox Text="Multiple Selection" IsTextLocalized="true"
                     Name="allowMultipleSelectionCheckBox"
                     IsChecked="True" Margin="0,5,0,0"
                     CheckedChanged= "AllowMultipleSelectionCheckBox_CheckedChanged"/>
           <CheckBox Text="Allow Label Edit" Name="allowLabelEditingCheckBox"
-                    Margin="0,5,0,0"
+                    Margin="0,5,0,0" IsTextLocalized="true"
                     CheckedChanged= "AllowLabelEditingCheckBox_CheckedChanged"
                     IsChecked="True" />
-          <CheckBox Text="Column Header"
+          <CheckBox Text="Column Header" IsTextLocalized="true"
               Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0"
               IsChecked="True"
               CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
 
-          <Label Text="View:" VerticalAlignment="Center" Margin="0,5,0,0"/>
+          <Label Text="View:" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"/>
           <ComboBox IsEditable="false" Name="viewComboBox" Margin="0,3,0,0"
                     SelectedItemChanged="ViewComboBox_SelectedItemChanged"/>
 
-          <Label Text="Lines:" VerticalAlignment="Center" Margin="0,5,0,0"/>
+          <Label Text="Lines:" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"/>
           <ComboBox IsEditable="false" Name="gridLinesComboBox"
                     Margin="0,3,0,0"
                     SelectedItemChanged=
                             "GridLinesComboBox_SelectedItemChanged"/>
 
           <Label Text="Column width:" VerticalAlignment="Center"
-                 Margin="0,5,0,0"/>
+                 Margin="0,5,0,0" IsTextLocalized="true"/>
           <ComboBox IsEditable="false" Name="columnWidthModeComboBox"
                     Margin="0,3,0,10"
                     SelectedItemChanged=
@@ -121,23 +121,23 @@
         </VerticalStackPanel>
         <!-- ========================= -->
         <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel3" Visible="false"
-                             Title="Events" Padding="10">
+                             Title="Events" Padding="10" IsTitleLocalized="true">
 
-          <GroupBox Title="Cancel Events" Margin="0,5,0,5" Padding="5" >
+          <GroupBox Title="Cancel Events" Margin="0,5,0,5" Padding="5"  IsTitleLocalized="true">
             <VerticalStackPanel>
-              <CheckBox Text="BeforeLabelEdit"
+              <CheckBox Text="Before Label Edit" IsTextLocalized="true"
                         Name="cancelBeforeLabelEditEventsCheckBox"
                         Margin="0,0,0,0" IsChecked="False" />
-              <CheckBox Text="AfterLabelEdit"
+              <CheckBox Text="After Label Edit" IsTextLocalized="true"
                         Name="cancelAfterLabelEditEventsCheckBox"
                         Margin="0,5,0,0" IsChecked="False" />
             </VerticalStackPanel>
           </GroupBox>
 
-          <Button Text="Log Selected" Margin="0,5,0,0"
+          <Button Text="Log Selected" Margin="0,5,0,0" IsTextLocalized="true"
                   Name="viewSelectedButton" Click="Button_SelectionChanged"/>
 
-          <CheckBox Text="Log Bounds on Click"
+          <CheckBox Text="Log Bounds on Click" IsTextLocalized="true"
                     Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0"
               IsChecked="False" />
 

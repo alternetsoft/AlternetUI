@@ -35,7 +35,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets border element.
         /// </summary>
-        public RectangleDrawable? Border;
+        public BorderDrawable? Border;
 
         private ScrollBar.MetricsInfo? metrics;
 
@@ -217,7 +217,7 @@ namespace Alternet.Drawing
 
             if(Background is not null)
             {
-                Background.Bounds = clientRect;
+                Background.Bounds = Bounds;
             }
         }
 
@@ -228,11 +228,6 @@ namespace Alternet.Drawing
                 return;
 
             PerformLayout(control.ScaleFactor, out _);
-
-            if(Border is not null && Border.Visible)
-            {
-                Border.Draw(control, dc);
-            }
 
             if (Background is not null && Background.Visible)
             {
@@ -252,6 +247,11 @@ namespace Alternet.Drawing
             if (HorzVisible)
             {
                 HorzScrollBar!.Draw(control, dc);
+            }
+
+            if (Border is not null && Border.Visible)
+            {
+                Border.Draw(control, dc);
             }
         }
 

@@ -18,7 +18,8 @@
                 >
         <StackPanel Orientation="Vertical"
                     Padding="5" InputTransparent="true">
-          <Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
+          <Button Name="helloButton" Text="Say Hello" IsTextLocalized="true"
+                  Margin="10" Click="HelloButton_Click"
                   MouseMove="HelloButton_MouseMove"
                   MouseDown="HelloButton_MouseDown"
                   MouseUp="HelloButton_MouseUp"
@@ -33,14 +34,14 @@
             <Label Margin="10" Name="mouseCaptureLabel" VerticalAlignment="Center"
                    />
           </Border>
-          <TextBox Text="Sample Text Box" Margin="5"/>
+          <TextBox Text="Sample Text Box" IsTextLocalized="true" Margin="5"/>
 
           <HorizontalStackPanel InputTransparent="true">
-            <Label Text="Mouse Buttons:" Margin="5"/>
+            <Label Text="Mouse Buttons:" Margin="5" IsTextLocalized="true"/>
             <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
           </HorizontalStackPanel>
 
-          <CheckBox Text="Log Mouse Move" Name="logMoveCheckBox"/>
+          <CheckBox Text="Log Mouse Move" Name="logMoveCheckBox" IsTextLocalized="true"/>
 
           <LogListBox Name="lb" Margin="5"  SuggestedHeight="200"/>
 

@@ -3,19 +3,19 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
-        <Label Text="Translation X:" />
+        <Label Text="Translation X:" IsTextLocalized="true"/>
         <Slider Name="translationXSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
-        <Label Text="Translation Y:" />
+        <Label Text="Translation Y:" IsTextLocalized="true"/>
         <Slider Name="translationYSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
-        <Label Text="Scale X:" />
+        <Label Text="Scale X:" IsTextLocalized="true"/>
         <Slider Name="scaleFactorXSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
-        <Label Text="Scale Y:" />
+        <Label Text="Scale Y:" IsTextLocalized="true"/>
         <Slider Name="scaleFactorYSlider" Minimum="0" Maximum="100" Margin="0,0,0,10"/>
 
-        <Label Text="Rotation:" />
+        <Label Text="Rotation:" IsTextLocalized="true"/>
         <Slider Name="rotationSlider" Minimum="0" Maximum="90" Margin="0,0,0,20"/>
     </StackPanel>
 </Control>

@@ -1,3 +1,24 @@
+# 0.9.628 (2024 August 29)
+
+- Control: Added subscription to notifications. You can use AddGlobalNotification, RemoveGlobalNotification, 
+AddNotification, RemoveNotification methods for this.
+- Control: Notifies subscribers (in GlobalNotifications and Notifications) about it's events.
+- Control: Added new scrollbars related methods and properties: HorzScrollBarPosition, VertScrollBarPosition, 
+GetScrollBarPosition, SetScrollBarPosition. Control now sends scrollbar related notifications to subscribers.
+- Fixed Control.RaiseMouseMove behavior (not always called OnMouseMove).
+- Maui platform: Added svg images support.
+- Fixed overflow exception in ImageSet to Image conversion on Maui platform.
+- Fixed exception in SvgImage.ImageSetWithColor.
+- SkiaGraphics: Implemented many different drawing methods which previosly throwed NotImplementedException.
+- Added BrushOrColor, BorderDrawable, InteriorDrawable, IControlNotification, ControlNotification, EnumArray, 
+SkiaColorFilter classes and interfaces.
+- Continued implementation of the generic scrollbar control painting.
+- Improved immutable support for Image and ImageSet. SvgImage now returns immutable images.
+- SkiaGraphics: InterpolationMode property is now implemented and used in DrawImage methods.
+- Graphics: GetPixel removed as not supported in SkiaSharp, use pixel access implemented in the Image and GenericImage.
+- SkiaRegionHandler: Fixed exception in one of the constructors.
+- Added Bitmap.Empty, SizeD.Abs, SizeI.Abs, RectD.Scale, ImmutableObject.SetImmutable, Rect.GetCircleBoundingBox.
+
 # 0.9.627 (2024 August 26)
 
 - Created portable exe demos for Windows, Linux and MacOs. 
