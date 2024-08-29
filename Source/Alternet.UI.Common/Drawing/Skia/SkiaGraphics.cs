@@ -317,6 +317,8 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Rectangle(Pen pen, Brush brush, RectD rectangle)
         {
+            DebugPenAssert(pen);
+            DebugBrushAssert(brush);
             throw new NotImplementedException();
         }
 
@@ -375,7 +377,8 @@ namespace Alternet.Drawing
             Coord sweepAngle)
         {
             DebugPenAssert(pen);
-            throw new NotImplementedException();
+            var rect = RectD.GetCircleBoundingBox(center, radius);
+            canvas.DrawArc(rect, (float)startAngle, (float)sweepAngle, true, pen);
         }
 
         /// <inheritdoc/>
@@ -413,14 +416,14 @@ namespace Alternet.Drawing
         public override void DrawCircle(Pen pen, PointD center, Coord radius)
         {
             DebugPenAssert(pen);
-            throw new NotImplementedException();
+            canvas.DrawCircle(center, (float)radius, pen);
         }
 
         /// <inheritdoc/>
         public override void FillCircle(Brush brush, PointD center, Coord radius)
         {
             DebugBrushAssert(brush);
-            throw new NotImplementedException();
+            canvas.DrawCircle(center, (float)radius, brush);
         }
 
         /// <inheritdoc/>
