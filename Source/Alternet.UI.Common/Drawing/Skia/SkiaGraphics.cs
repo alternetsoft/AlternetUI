@@ -243,14 +243,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawImage(Image image, PointD origin)
-        {
-            BeforeDrawImage(ref image, ref origin);
-            canvas.DrawBitmap((SKBitmap)image, origin);
-            AfterDrawImage();
-        }
-
-        /// <inheritdoc/>
         public override void DrawBezier(
             Pen pen,
             PointD startPoint,
@@ -466,15 +458,42 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawImage(Image image, PointD origin)
+        {
+            RectD rect = (origin, SizeD.Empty);
+
+            BeforeDrawImage(ref image, ref rect);
+            canvas.DrawBitmap((SKBitmap)image, origin);
+            AfterDrawImage();
+        }
+
+        /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect)
         {
-            throw new NotImplementedException();
+            BeforeDrawImage(ref image, ref destinationRect);
+            canvas.DrawBitmap((SKBitmap)image, destinationRect);
+            AfterDrawImage();
         }
 
         /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
-            throw new NotImplementedException();
+            if (BeforeDrawImage(ref image, ref destinationRect))
+                sourceRect.Scale(OriginalScaleFactor);
+            canvas.DrawBitmap((SKBitmap)image, sourceRect, destinationRect);
+            AfterDrawImage();
+        }
+
+        /// <inheritdoc/>
+        public override void DrawImage(
+            Image image,
+            RectD destinationRect,
+            RectD sourceRect,
+            GraphicsUnit unit)
+        {
+            ToDip(ref destinationRect, unit);
+            ToDip(ref sourceRect, unit);
+            DrawImage(image, destinationRect, sourceRect);
         }
 
         /// <inheritdoc/>
@@ -491,16 +510,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override Color GetPixel(PointD point)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(
-            Image image,
-            RectD destinationRect,
-            RectD sourceRect,
-            GraphicsUnit unit)
         {
             throw new NotImplementedException();
         }
@@ -564,19 +573,21 @@ namespace Alternet.Drawing
         /// Called before any draw image operation.
         /// </summary>
         /// <param name="image"><see cref="Image"/> to draw.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that represents the
-        /// upper-left corner of the drawn image.</param>
-        protected virtual void BeforeDrawImage(ref Image image, ref PointD origin)
+        /// <param name="rect"><see cref="RectD"/> structure that represents the
+        /// upper-left corner and size of the drawn image on the destination drawing context.</param>
+        protected virtual bool BeforeDrawImage(ref Image image, ref RectD rect)
         {
             DebugImageAssert(image);
 
             if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
             {
-                origin.X *= OriginalScaleFactor;
-                origin.Y *= OriginalScaleFactor;
+                rect.Scale(OriginalScaleFactor);
                 canvas.Save();
                 canvas.Scale(1 / OriginalScaleFactor);
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>

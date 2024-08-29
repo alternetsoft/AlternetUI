@@ -768,24 +768,16 @@ namespace Alternet.Drawing
         /// Implicit operator convertion from tuple with three <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define RGB of the color.
         /// </summary>
-        /// <param name="d">New color value.</param>
-        /// <remarks>
-        /// This operator uses
-        /// <see cref="Color.FromRgb(byte, byte, byte)"/> internally.
-        /// </remarks>
+        /// <param name="d">New color value specified as tuple with three <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color((byte, byte, byte) d) =>
             new(d.Item1, d.Item2, d.Item3);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// Implicit operator convertion from tuple with four <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define ARGB of the color.
         /// </summary>
-        /// <param name="d">New color value.</param>
-        /// <remarks>
-        /// This operator uses
-        /// <see cref="Color.FromArgb(byte, byte, byte, byte)"/> internally.
-        /// </remarks>
+        /// <param name="d">New color value specified as tuple with four <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color((byte, byte, byte, byte) d) =>
             new(d.Item1, d.Item2, d.Item3, d.Item4);

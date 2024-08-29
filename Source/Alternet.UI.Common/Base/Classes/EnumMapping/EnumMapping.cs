@@ -21,15 +21,10 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumMapping{TSource, TDest}"/> class.
         /// </summary>
-        /// <param name="maxValue">Maximal value of the source enum. Optional. If not specified,
-        /// <see cref="EnumUtils.GetMaxValueAsInt{T}()"/> is used.</param>
-        public EnumMapping(TSource? maxValue = null)
+        /// <param name="maxValue">Maximal value of the source enum.</param>
+        public EnumMapping(TSource maxValue)
         {
-            if (maxValue is null)
-                this.maxValue = EnumUtils.GetMaxValueAsInt<TSource>();
-            else
-                this.maxValue = System.Convert.ToInt32(maxValue.Value);
-
+            this.maxValue = System.Convert.ToInt32(maxValue);
             values = new TDest?[this.maxValue + 1];
         }
 

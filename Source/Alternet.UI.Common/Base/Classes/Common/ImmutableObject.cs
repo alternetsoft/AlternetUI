@@ -39,6 +39,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Marks the object as immutable.
+        /// </summary>
+        /// <remarks>
+        /// Marks this object as immutable, meaning that the contents of its properties will not change
+        /// for the lifetime of the object. This state can be set, but it cannot be cleared once
+        /// it is set.
+        /// </remarks>
+        public virtual void SetImmutable()
+        {
+            immutable = true;
+        }
+
+        /// <summary>
         /// Calls <see cref="PropertyChanged"/> event.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>

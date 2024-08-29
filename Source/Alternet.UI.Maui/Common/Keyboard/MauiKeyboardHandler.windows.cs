@@ -24,6 +24,12 @@ namespace Alternet.UI
     /// </summary>
     public class MauiKeyboardHandler : DisposableObject, IKeyboardHandler
     {
+        /// <summary>
+        /// Gets max value in <see cref="Windows.System.VirtualKey"/> enum.
+        /// </summary>
+        public const Windows.System.VirtualKey VirtualKeyMaxValue
+            = Windows.System.VirtualKey.GamepadRightThumbstickLeft;
+
         private static VirtualKeyToAlternetMapping? virtualKeyToAlternet;
 
         static MauiKeyboardHandler()
@@ -40,7 +46,8 @@ namespace Alternet.UI
                 if (virtualKeyToAlternet is null)
                 {
                     virtualKeyToAlternet =
-                        new TwoWayEnumMapping<Windows.System.VirtualKey, Alternet.UI.Key>();
+                        new TwoWayEnumMapping<Windows.System.VirtualKey, Alternet.UI.Key>(
+                            VirtualKeyMaxValue, Alternet.UI.Key.Max);
                     RegisterKeyMappings();
                 }
 

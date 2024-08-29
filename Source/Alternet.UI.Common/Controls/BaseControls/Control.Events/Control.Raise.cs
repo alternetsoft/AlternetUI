@@ -13,8 +13,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseCellChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             CellChanged?.Invoke(this, EventArgs.Empty);
             OnCellChanged(EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterCellChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterCellChanged(this);
+            }
         }
 
         /// <summary>
@@ -24,8 +37,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseIdle()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnIdle(EventArgs.Empty);
             Idle?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterIdle(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterIdle(this);
+            }
         }
 
         /// <summary>
@@ -33,16 +59,31 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseMove(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             HoveredControl = this;
             MouseMove?.Invoke(this, e);
-            if (dragEventArgs is null)
-                return;
-            var mousePos = Mouse.GetPosition(this);
-            var args = new DragStartEventArgs(dragEventMousePos, mousePos, dragEventArgs, e);
-            RaiseDragStart(args);
-            if (args.DragStarted || args.Cancel)
-                dragEventArgs = null;
             OnMouseMove(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseMove(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseMove(this, e);
+            }
+
+            if (dragEventArgs is not null)
+            {
+                var mousePos = Mouse.GetPosition(this);
+                var args = new DragStartEventArgs(dragEventMousePos, mousePos, dragEventArgs, e);
+                RaiseDragStart(args);
+                if (args.DragStarted || args.Cancel)
+                    dragEventArgs = null;
+            }
         }
 
         /// <summary>
@@ -50,8 +91,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseHelpRequested(HelpEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnHelpRequested(e);
             HelpRequested?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterHelpRequested(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterHelpRequested(this, e);
+            }
         }
 
         /// <summary>
@@ -59,9 +113,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseParentChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             Designer?.RaiseParentChanged(this);
             ParentChanged?.Invoke(this, EventArgs.Empty);
             OnParentChanged(EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterParentChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterParentChanged(this);
+            }
         }
 
         /// <summary>
@@ -69,12 +136,25 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseUp(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             HoveredControl = this;
 
             MouseUp?.Invoke(this, e);
             dragEventArgs = null;
 
             OnMouseUp(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseUp(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseUp(this, e);
+            }
 
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -91,10 +171,23 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseLeftButtonUp(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             IsMouseLeftButtonDown = false;
             RaiseVisualStateChanged();
             MouseLeftButtonUp?.Invoke(this, e);
             OnMouseLeftButtonUp(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseLeftButtonUp(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseLeftButtonUp(this, e);
+            }
         }
 
         /// <summary>
@@ -103,8 +196,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseRightButtonUp(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             MouseRightButtonUp?.Invoke(this, e);
             OnMouseRightButtonUp(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseRightButtonUp(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseRightButtonUp(this, e);
+            }
         }
 
         /// <summary>
@@ -112,6 +218,9 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseDown(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             HoveredControl = this;
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -123,6 +232,16 @@ namespace Alternet.UI
             MouseDown?.Invoke(this, e);
 
             OnMouseDown(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseDown(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseDown(this, e);
+            }
 
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -139,6 +258,9 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseGotFocus()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             FocusedControl = this;
             OnGotFocus(EventArgs.Empty);
             GotFocus?.Invoke(this, EventArgs.Empty);
@@ -150,6 +272,16 @@ namespace Alternet.UI
                 CaretInfo.ControlFocused = true;
                 InvalidateCaret();
             }
+
+            foreach (var n in nn)
+            {
+                n.AfterGotFocus(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterGotFocus(this);
+            }
         }
 
         /// <summary>
@@ -157,6 +289,9 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseLostFocus()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             if (FocusedControl == this)
                 FocusedControl = null;
             OnLostFocus(EventArgs.Empty);
@@ -168,6 +303,16 @@ namespace Alternet.UI
                 CaretInfo.ControlFocused = false;
                 Invalidate();
             }
+
+            foreach (var n in nn)
+            {
+                n.AfterLostFocus(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterLostFocus(this);
+            }
         }
 
         /// <summary>
@@ -175,8 +320,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseActivated()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnActivated(EventArgs.Empty);
             Activated?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterActivated(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterActivated(this);
+            }
         }
 
         /// <summary>
@@ -185,8 +343,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseHandlerLocationChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnHandlerLocationChanged(EventArgs.Empty);
             ReportBoundsChanged();
+
+            foreach (var n in nn)
+            {
+                n.AfterHandlerLocationChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterHandlerLocationChanged(this);
+            }
         }
 
         /// <summary>
@@ -194,8 +365,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseDeactivated()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnDeactivated(EventArgs.Empty);
             Deactivated?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterDeactivated(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterDeactivated(this);
+            }
         }
 
         /// <summary>
@@ -204,8 +388,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseSystemColorsChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
             OnSystemColorsChanged(EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterSystemColorsChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterSystemColorsChanged(this);
+            }
         }
 
         /// <summary>
@@ -214,8 +411,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseQueryContinueDrag(QueryContinueDragEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             QueryContinueDrag?.Invoke(this, e);
             OnQueryContinueDrag(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterQueryContinueDrag(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterQueryContinueDrag(this, e);
+            }
         }
 
         /// <summary>
@@ -223,12 +433,25 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseHandleCreated()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             if (BackgroundColor is not null)
                 Handler.BackgroundColor = BackgroundColor;
             if (ForegroundColor is not null)
                 Handler.ForegroundColor = ForegroundColor;
             OnHandleCreated(EventArgs.Empty);
             HandleCreated?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterHandleCreated(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterHandleCreated(this);
+            }
         }
 
         /// <summary>
@@ -236,9 +459,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseHandleDestroyed()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             ResetScaleFactor();
             OnHandleDestroyed(EventArgs.Empty);
             HandleDestroyed?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterHandleDestroyed(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterHandleDestroyed(this);
+            }
         }
 
         /// <summary>
@@ -246,19 +482,45 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseCaptureLost()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             if (HoveredControl == this)
                 HoveredControl = null;
             IsMouseLeftButtonDown = false;
             OnMouseCaptureLost(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseCaptureLost(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseCaptureLost(this);
+            }
         }
 
         /// <summary>
         /// Raises the <see cref="TextChanged" /> event.</summary>
         public void RaiseTextChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             TextChanged?.Invoke(this, EventArgs.Empty);
             OnTextChanged(EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterTextChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterTextChanged(this);
+            }
         }
 
         /// <summary>
@@ -267,10 +529,23 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseSizeChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnSizeChanged(EventArgs.Empty);
             SizeChanged?.Invoke(this, EventArgs.Empty);
             Resize?.Invoke(this, EventArgs.Empty);
             OnResize(EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterSizeChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterSizeChanged(this);
+            }
         }
 
         /// <summary>
@@ -278,11 +553,24 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseEnter()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             IsMouseOver = true;
             HoveredControl = this;
             RaiseIsMouseOverChanged();
             OnMouseEnter(EventArgs.Empty);
             MouseEnter?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseEnter(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseEnter(this);
+            }
         }
 
         /// <summary>
@@ -291,8 +579,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseVisualStateChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnVisualStateChanged(EventArgs.Empty);
             VisualStateChanged?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterVisualStateChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterVisualStateChanged(this);
+            }
         }
 
         /// <summary>
@@ -301,9 +602,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseIsMouseOverChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnIsMouseOverChanged(EventArgs.Empty);
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
+
+            foreach (var n in nn)
+            {
+                n.AfterIsMouseOverChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterIsMouseOverChanged(this);
+            }
         }
 
         /// <summary>
@@ -312,6 +626,9 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseLeave()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             IsMouseOver = false;
             if (HoveredControl == this)
                 HoveredControl = null;
@@ -319,6 +636,16 @@ namespace Alternet.UI
             IsMouseLeftButtonDown = false;
             OnMouseLeave(EventArgs.Empty);
             MouseLeave?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseLeave(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseLeave(this);
+            }
         }
 
         /// <summary>
@@ -327,9 +654,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseChildInserted(int index, Control childControl)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnChildInserted(index, childControl);
             Handler.OnChildInserted(childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
+
+            foreach (var n in nn)
+            {
+                n.AfterChildInserted(this, index, childControl);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterChildInserted(this, index, childControl);
+            }
         }
 
         /// <summary>
@@ -338,9 +678,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseChildRemoved(Control childControl)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnChildRemoved(childControl);
             Handler.OnChildRemoved(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
+
+            foreach (var n in nn)
+            {
+                n.AfterChildRemoved(this, childControl);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterChildRemoved(this, childControl);
+            }
         }
 
         /// <summary>
@@ -349,12 +702,23 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePaint(PaintEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnPaint(e);
             Paint?.Invoke(this, e);
-
             PaintCaret(e);
-
             PlessMouse.DrawTestMouseRect(this, e.Graphics);
+
+            foreach (var n in nn)
+            {
+                n.AfterPaint(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterPaint(this, e);
+            }
         }
 
         /// <summary>
@@ -362,8 +726,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseLocationChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnLocationChanged(EventArgs.Empty);
             LocationChanged?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterLocationChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterLocationChanged(this);
+            }
         }
 
         /// <summary>
@@ -373,8 +750,21 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDragStart(DragStartEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnDragStart(e);
             DragStart?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterDragStart(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterDragStart(this, e);
+            }
         }
 
         /// <summary>
@@ -384,8 +774,21 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDragDrop(DragEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnDragDrop(e);
             DragDrop?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterDragDrop(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterDragDrop(this, e);
+            }
         }
 
         /// <summary>
@@ -395,8 +798,21 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDragOver(DragEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnDragOver(e);
             DragOver?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterDragOver(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterDragOver(this, e);
+            }
         }
 
         /// <summary>
@@ -406,9 +822,22 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDpiChanged(DpiChangedEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             ResetScaleFactor();
             OnDpiChanged(e);
             DpiChanged?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterDpiChanged(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterDpiChanged(this, e);
+            }
         }
 
         /// <summary>
@@ -418,8 +847,21 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseDragEnter(DragEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnDragEnter(e);
             DragEnter?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterDragEnter(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterDragEnter(this, e);
+            }
         }
 
         /// <summary>
@@ -427,8 +869,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseDragLeave()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             DragLeave?.Invoke(this, EventArgs.Empty);
             OnDragLeave(EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterDragLeave(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterDragLeave(this);
+            }
         }
 
         /// <summary>
@@ -437,8 +892,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseHandlerSizeChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnHandlerSizeChanged(EventArgs.Empty);
             ReportBoundsChanged();
+
+            foreach (var n in nn)
+            {
+                n.AfterHandlerSizeChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterHandlerSizeChanged(this);
+            }
         }
 
         /// <summary>
@@ -447,11 +915,24 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseLeftButtonDown(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             IsMouseLeftButtonDown = true;
             RaiseVisualStateChanged();
             Designer?.RaiseMouseLeftButtonDown(this, e);
             MouseLeftButtonDown?.Invoke(this, e);
             OnMouseLeftButtonDown(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseLeftButtonDown(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseLeftButtonDown(this, e);
+            }
         }
 
         /// <summary>
@@ -460,9 +941,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseRightButtonDown(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             MouseRightButtonDown?.Invoke(this, e);
             ShowPopupMenu(ContextMenuStrip);
             OnMouseRightButtonDown(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseRightButtonDown(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseRightButtonDown(this, e);
+            }
         }
 
         /// <summary>
@@ -471,8 +965,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyUp(KeyEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             KeyUp?.Invoke(this, e);
             OnKeyUp(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterKeyUp(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterKeyUp(this, e);
+            }
         }
 
         /// <summary>
@@ -481,8 +988,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyPress(KeyPressEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             KeyPress?.Invoke(this, e);
             OnKeyPress(e);
+
+            foreach (var n in nn)
+            {
+                n.AfterKeyPress(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterKeyPress(this, e);
+            }
         }
 
         /// <summary>
@@ -491,9 +1011,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseWheel(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             HoveredControl = this;
             OnMouseWheel(e);
             MouseWheel?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseWheel(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseWheel(this, e);
+            }
         }
 
         /// <summary>
@@ -502,9 +1035,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseDoubleClick(MouseEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             LastDoubleClickTimestamp = e.Timestamp;
             OnMouseDoubleClick(e);
             MouseDoubleClick?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterMouseDoubleClick(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterMouseDoubleClick(this, e);
+            }
         }
 
         /// <summary>
@@ -513,12 +1059,25 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyDown(KeyEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             KeyDown?.Invoke(this, e);
             OnKeyDown(e);
 #if DEBUG
             if (!e.Handled)
                 KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
 #endif
+
+            foreach (var n in nn)
+            {
+                n.AfterKeyDown(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterKeyDown(this, e);
+            }
         }
 
         /// <summary>
@@ -528,8 +1087,21 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseClick()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnClick(EventArgs.Empty);
             Click?.Invoke(this, EventArgs.Empty);
+
+            foreach (var n in nn)
+            {
+                n.AfterClick(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterClick(this);
+            }
         }
 
         /// <summary>
@@ -540,9 +1112,22 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseTouch(TouchEventArgs e)
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             TouchToMouseEvents(e);
             OnTouch(e);
             Touch?.Invoke(this, e);
+
+            foreach (var n in nn)
+            {
+                n.AfterTouch(this, e);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterTouch(this, e);
+            }
         }
 
         /// <summary>
@@ -551,9 +1136,22 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseTitleChanged()
         {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
             OnTitleChanged(EventArgs.Empty);
             TitleChanged?.Invoke(this, EventArgs.Empty);
             Parent?.OnChildPropertyChanged(this, nameof(Title));
+
+            foreach (var n in nn)
+            {
+                n.AfterTitleChanged(this);
+            }
+
+            foreach (var n in nn2)
+            {
+                n.AfterTitleChanged(this);
+            }
         }
 
         /// <summary>

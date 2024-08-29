@@ -74,19 +74,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Returns whether all values on every side are equal.
+        /// Returns whether all values on every side are equal.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsUniform =>
             (left == right) && (top == bottom) && (left == top);
 
         /// <summary>
-        ///     Returns whether all values on every side are positive
-        ///     (greater than 0).
+        /// Returns whether all values on every side are positive
+        /// (greater than 0).
         /// </summary>
         [Browsable(false)]
         public readonly bool IsPositive =>
             (left > 0) && (right > 0) && (top > 0) && (bottom > 0);
+
+        /// <summary>
+        /// Returns whether any value on the side is positive
+        /// (greater than 0).
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsAnyPositive =>
+            (left > 0) || (right > 0) || (top > 0) || (bottom > 0);
 
         /// <summary>
         /// Gets the combined padding information in the form of a
@@ -132,36 +140,63 @@ namespace Alternet.UI
         public readonly Coord Vertical => top + bottom;
 
         /// <summary>
-        /// This property is the Length on the thickness' left side
+        /// This property is the Length on the thickness' left side.
         /// </summary>
         public Coord Left
         {
-            readonly get { return left; }
-            set { left = value; }
+            readonly get
+            {
+                return left;
+            }
+
+            set
+            {
+                left = value;
+            }
         }
 
-        /// <summary>This property is the Length on the thickness' top side</summary>
+        /// <summary>This property is the Length on the thickness' top side.</summary>
         public Coord Top
         {
-            readonly get { return top; }
-            set { top = value; }
+            readonly get
+            {
+                return top;
+            }
+
+            set
+            {
+                top = value;
+            }
         }
 
         /// <summary>
-        /// This property is the Length on the thickness' right side
+        /// This property is the Length on the thickness' right side.
         /// </summary>
         public Coord Right
         {
-            readonly get { return right; }
-            set { right = value; }
+            readonly get
+            {
+                return right;
+            }
+
+            set
+            {
+                right = value;
+            }
         }
 
-        /// <summary>This property is the Length on the thickness' bottom
-        /// side</summary>
+        /// <summary>This property is the Length on the thickness' bottom side.</summary>
         public Coord Bottom
         {
-            readonly get { return bottom; }
-            set { bottom = value; }
+            readonly get
+            {
+                return bottom;
+            }
+
+            set
+            {
+                bottom = value;
+            }
         }
 
         /// <summary>

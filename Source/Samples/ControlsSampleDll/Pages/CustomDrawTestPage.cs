@@ -9,11 +9,13 @@ using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI;
 
-namespace ControlsTest
+namespace ControlsSample
 {
-    internal partial class CustomDrawTestPage : Control
+    public partial class CustomDrawTestPage : Window
     {
-        private static readonly WxControlPainterHandler Painter = new();
+        private ScrollBar.KnownTheme currentTheme = ScrollBar.KnownTheme.WindowsDark;
+
+        /* private static readonly WxControlPainterHandler Painter = new(); */
 
         private readonly CustomDrawControl customDrawControl = new()
         {
@@ -44,9 +46,7 @@ namespace ControlsTest
         {
         };
 
-        private readonly ScrollBarsDrawable scrollBarsDrawable = new()
-        {
-        };
+        private readonly InteriorDrawable interiorDrawable;
 
         static CustomDrawTestPage()
         {
@@ -54,6 +54,11 @@ namespace ControlsTest
 
         public CustomDrawTestPage()
         {
+            interiorDrawable = CreateInteriorDrawable(false);
+
+            Size = (900, 700);
+            State = WindowState.Maximized;
+
             mainPanel.Parent = this;
             headerLabel.Parent = mainPanel;
             horzScrollBar.Parent = mainPanel;
@@ -64,55 +69,89 @@ namespace ControlsTest
 
             customDrawControl.Parent = panel.FillPanel;
 
-            panel.AddAction("Draw Native ComboBox", DrawNativeComboBox);
+            /* panel.AddAction("Draw Native ComboBox", DrawNativeComboBox); */
             panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
-            panel.AddAction("Draw ScrollBar", DrawScrollBar);
+
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsDark);
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsLight);
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.VisualStudioDark);
+            AddDrawScrollBarAction(ScrollBar.KnownTheme.VisualStudioLight);
+
+            void AddDrawScrollBarAction(ScrollBar.KnownTheme theme)
+            {
+                panel.AddAction($"Draw ScrollBar ({theme})",
+                    () => {
+                        DrawScrollBar(theme);
+                    });
+            }
+
 
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
+        }
+
+        public static InteriorDrawable CreateInteriorDrawable(bool isDarkBackground)
+        {
+            InteriorDrawable result = new();
+
+            var metrics = ScrollBar.DefaultMetrics;
+            result.Metrics = metrics;
+
+            result.Border = new();
+            result.Border.Border = new();
+            result.Border.Border.Color = ColorUtils.GetDefaultBorderColor(isDarkBackground);
+
+            return result;
+        }
+
+        public static void PaintInteriorDrawable(
+            InteriorDrawable drawable,
+            ScrollBar.KnownTheme theme,
+            Control control,
+            Graphics canvas,
+            RectD rect,
+            ScrollBar.AltPositionInfo position)
+        {
+            rect.Inflate(-20);
+
+            drawable.SetScrollBarColors(theme);
+            drawable.Background ??= new();
+            drawable.Background.Brush = Color.GreenYellow.AsBrush;
+
+            drawable.Bounds = rect;
+            drawable.VertPosition = position;
+            drawable.HorzPosition = position;
+            drawable.Draw(control, canvas);
+
         }
 
         public void DrawNativeComboBox()
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
+                /*
                 Painter.DrawComboBox(
                     control,
                     canvas,
                     (50, 50, 150, 100),
                     WxControlPainterHandler.DrawFlags.None);
+                */
             });
         }
 
-        public void DrawScrollBar()
+        public void DrawScrollBar(ScrollBar.KnownTheme theme)
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
-                var metrics = ScrollBar.DefaultMetrics;
+                currentTheme = theme;
 
-                scrollBarsDrawable.Bounds = rect;
-                scrollBarsDrawable.Metrics = metrics;
-                scrollBarsDrawable.VertScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
-                scrollBarsDrawable.HorzScrollBar?.SetAltPosInfo(horzScrollBar.AltPosInfo);
-                scrollBarsDrawable.Draw(control, canvas);
-
-                var downSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Down);
-                var upSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Up);
-                var leftSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Left);
-                var rightSvgImage = KnownSvgImages.GetImgTriangleArrow(ArrowDirection.Right);
-
-                DrawImage((50, 50), upSvgImage);
-                DrawImage((50, 90), downSvgImage);
-                DrawImage((20, 70), leftSvgImage);
-                DrawImage((90, 70), rightSvgImage);
-
-                void DrawImage(PointD coord, SvgImage svg)
-                {
-                    var img = svg.AsImage(32);
-                    if (img is null)
-                        return;
-                    canvas.DrawImage(img, coord);
-                }
+                PaintInteriorDrawable(
+                            interiorDrawable,
+                            theme,
+                            control,
+                            canvas,
+                            rect,
+                            horzScrollBar.AltPosInfo);
             });
         }
 
@@ -172,7 +211,7 @@ namespace ControlsTest
 
         private void HorzScrollBar_ValueChanged(object? sender, EventArgs e)
         {
-            DrawScrollBar();
+            DrawScrollBar(currentTheme);
         }
     }
 }

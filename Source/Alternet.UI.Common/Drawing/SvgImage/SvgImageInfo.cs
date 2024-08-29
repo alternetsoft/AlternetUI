@@ -17,7 +17,7 @@ namespace Alternet.Drawing
         public SvgImage? SvgImage;
 
         /// <summary>
-        /// Gets or sets svg color for the single color svgs.
+        /// Gets or sets svg color override for the single color svgs.
         /// </summary>
         public Color? SvgColor;
 
@@ -34,6 +34,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SvgImageInfo"/> struct.
+        /// </summary>
+        /// <param name="image">Svg image to draw.</param>
+        /// <param name="color">Svg color override for the single color svgs.</param>
+        public SvgImageInfo(SvgImage image, Color? color = null)
+        {
+            SvgImage = image;
+            SvgColor = color;
+        }
+
+        /// <summary>
         /// Gets this svg image as <see cref="Image"/>.
         /// </summary>
         public readonly Image? AsImage
@@ -42,6 +53,15 @@ namespace Alternet.Drawing
             {
                 return SvgImage?.ImageWithColor(SvgSize, SvgColor);
             }
+        }
+
+        /// <summary>
+        /// Sets <see cref="SvgSize"/> property value/. Implemented for the convenience.
+        /// </summary>
+        /// <param name="size">New svg image width and height.</param>
+        public void SetSvgSize(int size)
+        {
+            SvgSize = size;
         }
     }
 }

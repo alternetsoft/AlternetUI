@@ -85,5 +85,15 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="image">Image.</param>
         void Assign(SKBitmap image);
+
+        /// <summary>
+        /// Marks the image as immutable.
+        /// </summary>
+        /// <remarks>
+        /// Marks this image as immutable, meaning that the contents of its pixels will not change
+        /// for the lifetime of the image. This state can be set, but it cannot be cleared once it is set.
+        /// This state propagates to all other images that share the same pixels.
+        /// </remarks>
+        void SetImmutable();
     }
 }

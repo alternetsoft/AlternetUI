@@ -346,7 +346,7 @@ namespace Alternet.UI
             Color? color)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(s);
-            MemoryStream stream = new MemoryStream(bytes);
+            MemoryStream stream = new(bytes);
             var result = CreateFromSvg(stream, width, height, color);
             return result;
         }
@@ -379,6 +379,12 @@ namespace Alternet.UI
             if (!bitmap.ExtractSubset(resultBitmap, rect))
                 App.LogError($"SkiaImageHandler.GetSubBitmap({rect})");
             return new SkiaImageHandler(resultBitmap);
+        }
+
+        /// <inheritdoc/>
+        public void SetImmutable()
+        {
+            bitmap.SetImmutable();
         }
 
         /// <inheritdoc/>

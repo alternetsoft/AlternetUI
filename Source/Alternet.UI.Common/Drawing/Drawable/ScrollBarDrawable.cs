@@ -12,6 +12,22 @@ namespace Alternet.Drawing
     public class ScrollBarDrawable : BaseDrawable
     {
         /// <summary>
+        /// Gets or sets distance (in dips) between arrow button and arrow.
+        /// </summary>
+        public EnumArray<VisualControlState, Coord>? ArrowMargin;
+
+        /// <summary>
+        /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
+        /// and arrow height as the thumb height for the horizontal scrollbar.
+        /// </summary>
+        public EnumArray<VisualControlState, bool>? UseArrowSizeForThumb;
+
+        /// <summary>
+        /// Gets or sets distance (in dips) between thumb and scrollbar bounds.
+        /// </summary>
+        public EnumArray<VisualControlState, Coord>? ThumbMargin;
+
+        /// <summary>
         /// Gets or sets background element.
         /// </summary>
         public ControlStateObjects<RectangleDrawable>? Background;
@@ -49,17 +65,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets down arrow element.
         /// </summary>
-        public ControlStateObjects<RectangleDrawable>? DownArrowPainter;
+        public ControlStateObjects<RectangleDrawable>? DownArrow;
 
         /// <summary>
         /// Gets or sets primitive painter for the left arrow.
         /// </summary>
-        public ControlStateObjects<RectangleDrawable>? LeftArrowPainter;
+        public ControlStateObjects<RectangleDrawable>? LeftArrow;
 
         /// <summary>
         /// Gets or sets primitive painter for the right arrow.
         /// </summary>
-        public ControlStateObjects<RectangleDrawable>? RightArrowPainter;
+        public ControlStateObjects<RectangleDrawable>? RightArrow;
 
         /// <summary>
         /// Gets of sets whether scrollbar is vertical.
@@ -124,37 +140,173 @@ namespace Alternet.Drawing
             return metrics ?? ScrollBar.DefaultMetrics;
         }
 
+        /// <summary>
+        /// Initializes this drawable with the specified theme colors and metrics.
+        /// </summary>
+        public virtual void SetThemeMetrics(ScrollBar.ThemeMetrics themeMetrics)
+        {
+            ArrowMargin = themeMetrics.ArrowMargin;
+            UseArrowSizeForThumb = themeMetrics.UseArrowSizeForThumb;
+            ThumbMargin = themeMetrics.ThumbMargin;
+
+            Background = new();
+            Background.Normal = CreateBackgroundState(VisualControlState.Normal);
+            Background.Hovered = CreateBackgroundState(VisualControlState.Hovered);
+            Background.Disabled = CreateBackgroundState(VisualControlState.Disabled);
+
+            Thumb = new();
+            Thumb.Normal = CreateThumbState(VisualControlState.Normal);
+            Thumb.Hovered = CreateThumbState(VisualControlState.Hovered);
+            Thumb.Disabled = CreateThumbState(VisualControlState.Disabled);
+
+            InitArrowStates(ref UpArrow, KnownSvgImages.ImgTriangleArrowUp);
+            InitArrowStates(ref DownArrow, KnownSvgImages.ImgTriangleArrowDown);
+            InitArrowStates(ref LeftArrow, KnownSvgImages.ImgTriangleArrowLeft);
+            InitArrowStates(ref RightArrow, KnownSvgImages.ImgTriangleArrowRight);
+
+            RectangleDrawable? CreateBackgroundState(VisualControlState state)
+            {
+                var background = themeMetrics.Background[state];
+
+                if (background is null)
+                    return null;
+
+                RectangleDrawable result = new();
+
+                result.Brush = background.AsBrush;
+
+                return result;
+            }
+
+            RectangleDrawable? CreateThumbState(VisualControlState state)
+            {
+                var background = themeMetrics.ThumbBackground[state];
+                var border = themeMetrics.ThumbBorder[state];
+
+                if (background is null && border is null)
+                    return null;
+
+                RectangleDrawable result = new();
+
+                result.Brush = background?.AsBrush;
+
+                if(border is not null)
+                {
+                    result.Border = new();
+                    result.Border.Color = border.AsColor;
+                    result.Border.Width = 1;
+                }
+
+                return result;
+            }
+
+            void InitArrowStates(ref ControlStateObjects<RectangleDrawable>? arrow, SvgImage svgImage)
+            {
+                arrow ??= new();
+
+                arrow.Normal = CreateStateProps(VisualControlState.Normal);
+                arrow.Hovered = CreateStateProps(VisualControlState.Hovered);
+                arrow.Disabled = CreateStateProps(VisualControlState.Disabled);
+
+                RectangleDrawable? CreateStateProps(VisualControlState state)
+                {
+                    var arrow = themeMetrics.Arrow[state];
+
+                    if (arrow is null)
+                        return null;
+
+                    RectangleDrawable result = new();
+
+                    result.SvgImage = new(svgImage, arrow.AsColor);
+                    result.HasImage = true;
+                    result.Stretch = false;
+                    result.CenterHorz = true;
+                    result.CenterVert = true;
+
+                    return result;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override void Draw(Control control, Graphics dc)
         {
             if (!Visible)
                 return;
 
-            Background?.GetObjectOrNormal(VisualState)?.Draw(control, dc);
+            var backgroundDrawable = Background?.GetObjectOrNormal(VisualState);
+
+            if (backgroundDrawable is not null)
+            {
+                backgroundDrawable.Bounds = Bounds;
+                backgroundDrawable.Draw(control, dc);
+            }
 
             var startButton = GetStartButton();
             var endButton = GetEndButton();
             var startArrow = GetStartArrow();
             var endArrow = GetEndArrow();
+            var metrics = GetRealMetrics();
+            var scaleFactor = control.ScaleFactor;
 
-            startButton?.Draw(control, dc);
-            startArrow?.Draw(control, dc);
-            endButton?.Draw(control, dc);
-            endArrow?.Draw(control, dc);
+            Coord buttonSize = IsVertical ? Bounds.Width : Bounds.Height;
+            var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor);
+
+            var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
+            arrowMargin *= 2;
+
+            var realArrowSize =
+                MathUtils.Min(
+                    arrowSize.Width,
+                    arrowSize.Height,
+                    Bounds.Width - arrowMargin,
+                    Bounds.Height - arrowMargin);
+
+            var realArrowSizeI = GraphicsFactory.PixelFromDip(realArrowSize, scaleFactor);
+
+            var startButtonBounds = (Bounds.Left, Bounds.Top, buttonSize, buttonSize);
+            var endButtonBounds
+                = (Bounds.Right - buttonSize, Bounds.Bottom - buttonSize, buttonSize, buttonSize);
+
+            if (startButton is not null)
+            {
+                startButton.Bounds = startButtonBounds;
+                startButton.Draw(control, dc);
+            }
+
+            if (startArrow is not null)
+            {
+                startArrow.Bounds = startButtonBounds;
+                startArrow.SvgImage?.SetSvgSize(realArrowSizeI);
+                startArrow.Draw(control, dc);
+            }
+
+            if (endButton is not null)
+            {
+                endButton.Bounds = endButtonBounds;
+                endButton.Draw(control, dc);
+            }
+
+            if (endArrow is not null)
+            {
+                endArrow.Bounds = endButtonBounds;
+                endArrow.SvgImage?.SetSvgSize(realArrowSizeI);
+                endArrow.Draw(control, dc);
+            }
         }
 
         private RectangleDrawable? GetEndArrow()
         {
             if (IsVertical)
-                return DownArrowPainter?.GetObjectOrNormal(VisualState);
-            return RightArrowPainter?.GetObjectOrNormal(VisualState);
+                return DownArrow?.GetObjectOrNormal(VisualState);
+            return RightArrow?.GetObjectOrNormal(VisualState);
         }
 
         private RectangleDrawable? GetStartArrow()
         {
             if (IsVertical)
                 return UpArrow?.GetObjectOrNormal(VisualState);
-            return LeftArrowPainter?.GetObjectOrNormal(VisualState);
+            return LeftArrow?.GetObjectOrNormal(VisualState);
         }
 
         private RectangleDrawable? GetStartButton()

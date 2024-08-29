@@ -24,7 +24,7 @@ namespace Alternet.UI
             {
                 if (keyAndKeysMapping is null)
                 {
-                    keyAndKeysMapping = new TwoWayEnumMapping<Keys, Key>(Keys.OemClear);
+                    keyAndKeysMapping = new TwoWayEnumMapping<Keys, Key>(Keys.OemClear, Key.Max);
                     RegisterKeyMappings();
                 }
 

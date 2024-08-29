@@ -36,11 +36,13 @@ namespace Alternet.UI
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
         private static Control? hoveredControl;
+        private static List<IControlNotification>? globalNotifications;
 
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private CaretInfo? caretInfo;
         private bool enabled = true;
         private int handlerTextChanging;
         private int rowIndex;
@@ -88,6 +90,7 @@ namespace Alternet.UI
         private RectD reportedBounds = RectD.MinusOne;
         private Coord? scaleFactor;
         private SizeD? dpi;
+        private List<IControlNotification>? notifications;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -159,6 +162,20 @@ namespace Alternet.UI
                     return;
                 hoveredControl = value;
                 HoveredControlChanged?.Invoke(hoveredControl, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets global collection of the attached <see cref="IControlNotification"/> objects.
+        /// These notifications are called for the each created control.
+        /// </summary>
+        public static IEnumerable<IControlNotification> GlobalNotifications
+        {
+            get
+            {
+                if (globalNotifications is null)
+                    return Array.Empty<IControlNotification>();
+                return globalNotifications;
             }
         }
 
@@ -2463,63 +2480,17 @@ namespace Alternet.UI
 
         IWindow? IControl.ParentWindow => ParentWindow;
 
-        /// <inheritdoc />
-        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection
-            => HasChildren ? Children : Array.Empty<FrameworkElement>();
-
-        /// <inheritdoc/>
-        [Browsable(false)]
-        internal override IReadOnlyList<FrameworkElement> ContentElements
+        /// <summary>
+        /// Gets collection of the attached <see cref="IControlNotification"/> objects.
+        /// </summary>
+        public IEnumerable<IControlNotification> Notifications
         {
             get
             {
-                if (children == null)
-                    return Array.Empty<FrameworkElement>();
-                return children;
+                if (notifications is null)
+                    return Array.Empty<IControlNotification>();
+                return notifications;
             }
         }
-
-        /// <summary>
-        /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
-        /// a pressed state.</summary>
-        /// <returns>
-        /// A bitwise combination of the <see cref="Keys" /> values.
-        /// The default is <see cref="Keys.None" />.</returns>
-        protected static Keys ModifierKeys
-        {
-            get
-            {
-                var modifiers = Keyboard.Modifiers;
-                return modifiers.ToKeys();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets border style of the control.
-        /// </summary>
-        protected virtual ControlBorderStyle BorderStyle
-        {
-            get
-            {
-                return Handler.BorderStyle;
-            }
-
-            set
-            {
-                Handler.BorderStyle = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether this control is dummy control.
-        /// </summary>
-        protected virtual bool IsDummy => false;
-
-        /// <summary>
-        /// Gets child control at the specified index in the collection of child controls.
-        /// </summary>
-        /// <param name="index">Index of the child control.</param>
-        /// <returns></returns>
-        public IControl GetControl(int index) => Children[index];
     }
 }
