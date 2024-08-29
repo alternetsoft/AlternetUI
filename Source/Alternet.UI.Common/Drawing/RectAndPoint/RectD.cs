@@ -393,6 +393,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates bounding rectangle for the circle specified using radius and it's center location.
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="center">Circle center location.</param>
+        /// <param name="radius">Circle radius.</param>
+        public static RectD GetCircleBoundingBox(PointD center, Coord radius)
+        {
+            var diameter = radius * 2;
+            RectD rect = (center.X - radius, center.Y - radius, diameter, diameter);
+            return rect;
+        }
+
+        /// <summary>
         /// Creates new rectangle with the specified width and height.
         /// </summary>
         /// <param name="width">Rectangle width.</param>
