@@ -194,6 +194,8 @@ namespace Alternet.Drawing
 
             set
             {
+                if (Immutable)
+                    return;
                 Handler.HasAlpha = value;
             }
         }
@@ -261,6 +263,8 @@ namespace Alternet.Drawing
 
             set
             {
+                if (Immutable)
+                    return;
                 Handler.ScaleFactor = value;
             }
         }
@@ -600,13 +604,21 @@ namespace Alternet.Drawing
             if (bitmap.Handler is SkiaImageHandler skiaHandler)
                 return skiaHandler.Bitmap;
 
+            SKBitmap result;
+
             if (assignPixels)
             {
                 var genericImage = (GenericImage)bitmap;
-                return GenericImage.ToSkia(genericImage, assignPixels);
+                result = GenericImage.ToSkia(genericImage, assignPixels);
             }
             else
-                return GenericImage.CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
+            {
+                result = GenericImage.CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
+            }
+
+            if (bitmap.Immutable)
+                result.SetImmutable();
+            return result;
         }
 
         /// <summary>
@@ -674,6 +686,9 @@ namespace Alternet.Drawing
         /// for the load operation.</remarks>
         public virtual bool Load(string url, BitmapType type = BitmapType.Any)
         {
+            if (Immutable)
+                return false;
+
             return InsideTryCatch(() =>
             {
                 using var stream = ResourceLoader.StreamFromUrl(url);
@@ -754,6 +769,9 @@ namespace Alternet.Drawing
         /// for the load operation.</remarks>
         public virtual bool Load(Stream stream, BitmapType type)
         {
+            if (Immutable)
+                return false;
+
             return Handler.LoadFromStream(stream, type);
         }
 
@@ -766,7 +784,8 @@ namespace Alternet.Drawing
         public virtual Image GetSubBitmap(RectI rect)
         {
             var converted = Handler.GetSubBitmap(rect);
-            return new Image(converted);
+            var result = new Image(converted);
+            return result;
         }
 
         /// <summary>
@@ -775,6 +794,8 @@ namespace Alternet.Drawing
         /// <param name="dpi"></param>
         public virtual void SetDPI(SizeD dpi)
         {
+            if (Immutable)
+                return;
             var factor = dpi.Width / 96;
             this.ScaleFactor = factor;
         }
@@ -818,6 +839,8 @@ namespace Alternet.Drawing
         /// <param name="sizeNeeded"></param>
         public virtual bool Rescale(SizeI sizeNeeded)
         {
+            if (Immutable)
+                return false;
             return Handler.Rescale(sizeNeeded);
         }
 
@@ -826,6 +849,8 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual bool ResetAlpha()
         {
+            if (Immutable)
+                return false;
             return Handler.ResetAlpha();
         }
 
@@ -950,6 +975,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual ISkiaSurface LockSurface(ImageLockMode lockMode = ImageLockMode.ReadWrite)
         {
+            if (Immutable && lockMode != ImageLockMode.ReadOnly)
+                throw new Exception($"LockSurface({lockMode}) is not possible on the immutable image.");
+
             return GraphicsFactory.CreateSkiaSurface(this, lockMode);
         }
 
@@ -959,6 +987,8 @@ namespace Alternet.Drawing
         /// <param name="bitmap">Bitmap to assign.</param>
         public virtual void Assign(SKBitmap bitmap)
         {
+            if (Immutable)
+                throw new Exception($"Assign(SKBitmap) is not possible on the immutable image.");
             Handler.Assign(bitmap);
         }
 
@@ -968,6 +998,8 @@ namespace Alternet.Drawing
         /// <param name="genericImage">Image to assign.</param>
         public virtual void Assign(GenericImage genericImage)
         {
+            if (Immutable)
+                throw new Exception($"Assign(GenericImage) is not possible on the immutable image.");
             Handler.Assign(genericImage);
         }
 
@@ -977,6 +1009,8 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Graphics GetDrawingContext()
         {
+            if (Immutable)
+                throw new Exception($"GetDrawingContext() is not possible on the immutable image.");
             var dc = Graphics.FromImage(this);
             return dc;
         }

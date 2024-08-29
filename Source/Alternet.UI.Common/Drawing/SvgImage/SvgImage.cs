@@ -76,13 +76,19 @@ namespace Alternet.Drawing
         /// Gets svg image as <see cref="ImageSet"/> with default toolbar image size.
         /// </summary>
         public virtual ImageSet? AsImageSet()
-            => AsImageSet(ToolBarUtils.GetDefaultImageSize().Width);
+        {
+            var result = AsImageSet(ToolBarUtils.GetDefaultImageSize().Width);
+            return result;
+        }
 
         /// <summary>
         /// Gets svg image as <see cref="Image"/> with default toolbar image size.
         /// </summary>
         public virtual Image? AsImage()
-            => AsImage(ToolBarUtils.GetDefaultImageSize().Width);
+        {
+            var result = AsImage(ToolBarUtils.GetDefaultImageSize().Width);
+            return result;
+        }
 
         /// <summary>
         /// Gets svg image as <see cref="Image"/>.
@@ -90,7 +96,10 @@ namespace Alternet.Drawing
         /// <param name="size">Image size</param>
         /// <returns></returns>
         public virtual Image? AsImage(int size)
-            => AsImageSet(size)?.AsImage();
+        {
+            var result = AsImageSet(size)?.AsImage();
+            return result;
+        }
 
         /// <summary>
         /// Gets svg image as <see cref="ImageSet"/>.
@@ -319,14 +328,9 @@ namespace Alternet.Drawing
         /// <param name="size">Svg image size in pixels.</param>
         /// <param name="color">Color of the mono svg image. Optional.</param>
         /// <returns></returns>
-        public virtual ImageSet? LoadImage(int size, Color? color = null)
+        public ImageSet? LoadImage(int size, Color? color = null)
         {
-            LoadImage();
-
-            if (svg is null)
-                return ImageSet.Empty;
-            else
-                return ImageSet.FromSvgString(svg, size, size, color);
+            return LoadImage((size, size), color);
         }
 
         /// <summary>
@@ -343,7 +347,11 @@ namespace Alternet.Drawing
             if (svg is null)
                 return ImageSet.Empty;
             else
-                return ImageSet.FromSvgString(svg, size.Width, size.Height, color);
+            {
+                var result = ImageSet.FromSvgString(svg, size.Width, size.Height, color);
+                result.SetImmutable();
+                return result;
+            }
         }
 
         /// <summary>

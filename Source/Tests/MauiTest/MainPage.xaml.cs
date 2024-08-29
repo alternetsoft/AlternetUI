@@ -13,8 +13,9 @@ namespace SpinPaint;
 
 public partial class MainPage : ContentPage
 {
-    private readonly Alternet.UI.SkiaSampleControl skiaSample;
-    private readonly ControlsSample.CustomDrawControl customDrawControl;
+    internal readonly Alternet.UI.SkiaSampleControl skiaSample;
+    internal readonly ControlsSample.CustomDrawControl customDrawControl;
+    
     private readonly Alternet.Drawing.InteriorDrawable interiorDrawable;
 
     static MainPage()

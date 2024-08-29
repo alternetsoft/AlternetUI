@@ -85,6 +85,10 @@ namespace Alternet.UI.Native
             return LoadFromStream(inputStream);
         }
 
+        public void SetImmutable()
+        {
+        }
+
         public bool Load(string name, BitmapType type)
         {
             return LoadFile(name, (int)type);

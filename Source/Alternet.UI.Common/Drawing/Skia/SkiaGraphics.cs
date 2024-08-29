@@ -485,6 +485,18 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawImage(
+            Image image,
+            RectD destinationRect,
+            RectD sourceRect,
+            GraphicsUnit unit)
+        {
+            ToDip(ref destinationRect, unit);
+            ToDip(ref sourceRect, unit);
+            DrawImage(image, destinationRect, sourceRect);
+        }
+
+        /// <inheritdoc/>
         public override void SetPixel(PointD point, Pen pen)
         {
             canvas.DrawPoint((float)point.X, (float)point.Y, pen.Color.AsFillPaint);
@@ -498,16 +510,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override Color GetPixel(PointD point)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(
-            Image image,
-            RectD destinationRect,
-            RectD sourceRect,
-            GraphicsUnit unit)
         {
             throw new NotImplementedException();
         }

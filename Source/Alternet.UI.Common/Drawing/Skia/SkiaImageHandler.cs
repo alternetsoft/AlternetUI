@@ -382,6 +382,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public void SetImmutable()
+        {
+            bitmap.SetImmutable();
+        }
+
+        /// <inheritdoc/>
         public virtual bool ResetAlpha()
         {
             HasAlpha = false;

@@ -301,12 +301,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first image.
         /// </summary>
-        public virtual Image AsImage(SizeI size) => Handler.AsImage(size);
+        public virtual Image AsImage(SizeI size)
+        {
+            var result = Handler.AsImage(size);
+            if (Immutable)
+                result.SetImmutable();
+            return result;
+        }
 
         /// <summary>
         /// Gets first image with size equal to <see cref="DefaultSize"/>.
         /// </summary>
-        public virtual Image AsImage() => Handler.AsImage(DefaultSize);
+        public virtual Image AsImage()
+        {
+            return AsImage(DefaultSize);
+        }
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
@@ -333,7 +342,13 @@ namespace Alternet.UI
         /// be used at the DPI scaling of the provided control.
         /// </remarks>
         /// <param name="control">Control to get DPI scaling factor from.</param>
-        public virtual Image AsImageFor(Control control) => new Bitmap(this, control);
+        public virtual Image AsImageFor(Control control)
+        {
+            var result = new Bitmap(this, control);
+            if (Immutable)
+                result.SetImmutable();
+            return result;
+        }
 
         /// <summary>
         /// Get the size that would be best to use for this <see cref="ImageSet"/> at
