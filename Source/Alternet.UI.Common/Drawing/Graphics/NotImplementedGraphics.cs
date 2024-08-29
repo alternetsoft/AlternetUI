@@ -324,12 +324,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override Color GetPixel(PointD point)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font, IControl? control)
         {
             throw new NotImplementedException();

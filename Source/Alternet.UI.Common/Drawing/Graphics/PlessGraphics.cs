@@ -265,12 +265,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override Color GetPixel(PointD point)
-        {
-            return Color.Black;
-        }
-
-        /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font, IControl? control)
         {
             return default;
