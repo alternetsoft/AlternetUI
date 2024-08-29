@@ -13,30 +13,30 @@
           Margin="0,0,0,5"/>
 
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-          <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
-          <Button Text="Remove Checked" Name="removeCheckedButton" Margin="0,3,0,0"
+          <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" IsTextLocalized="true"/>
+          <Button Text="Remove Checked" Name="removeCheckedButton" Margin="0,3,0,0" IsTextLocalized="true"
                   Click="RemoveCheckedButton_Click"/>
-          <Button Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0"
+          <Button Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0" IsTextLocalized="true"
                   Click="RemoveItemButton_Click"/>
-          <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
+          <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" IsTextLocalized="true"
                   Click="AddManyItemsButton_Click" />
-          <Button Text="Make Last Visible" Name="ensureLastItemVisibleButton"
+          <Button Text="Make Last Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-          <Button Text="Check Item: 2" Name="checkItemAtIndex2Button"
+          <Button Text="Check Item: 2" Name="checkItemAtIndex2Button" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="CheckItemAtIndex2Button_Click" />
-          <Button Text="Check Items: 2, 4" Name="checkItemAtIndices2And4Button"
+          <Button Text="Check Items: 2, 4" Name="checkItemAtIndices2And4Button" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="CheckItemAtIndices2And4Button_Click" />
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-          <Button Text="Uncheck All" Name="uncheckAllButton"
+          <Button Text="Uncheck All" Name="uncheckAllButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="UncheckAllButton_Click" />
-          <Button Text="Has Border" Name="hasBorderButton"
+          <Button Text="Has Border" Name="hasBorderButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="HasBorderButton_Click" />
-          <Button Text="Edit Items..." Name="buttonEditItems"
+          <Button Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
                   Margin="0,3,0,3" Click="EditorButton_Click" />
           <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
-                    Margin="0,3,0,0" IsChecked="true"
+                    Margin="0,3,0,0" IsChecked="true" IsTextLocalized="true"
                     CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
         </StackPanel>
 

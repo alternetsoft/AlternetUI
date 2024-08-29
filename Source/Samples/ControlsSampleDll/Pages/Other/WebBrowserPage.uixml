@@ -16,7 +16,8 @@
 
       <!-- ==================================== -->
       <Label  Grid.Row="0" Grid.Column="0" 
-        Text="Web Browser Control" Margin="0,0,5,0" VerticalAlignment="Center" Name="HeaderLabel"/>
+        Text="Web Browser Control" Margin="0,0,5,0" IsTextLocalized="true"
+              VerticalAlignment="Center" Name="HeaderLabel"/>
 
       <!-- ==================================== -->
       <StackPanel  Grid.Row="1" Grid.Column="0"  Orientation="Horizontal">

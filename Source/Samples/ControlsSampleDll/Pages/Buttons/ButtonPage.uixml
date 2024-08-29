@@ -14,17 +14,19 @@
         <!-- ===================================== -->
 
         <Grid Margin="0,0,0,0" RowCount="4" ColumnCount="2" Name="propsContainer1">
-          <Label Text="Text " Margin="0,0,0,0" Grid.Column="0" Grid.Row="0"
+          <Label Text="Text " Margin="0,0,0,0" Grid.Column="0" Grid.Row="0" IsTextLocalized="true"
                  VerticalAlignment="Center"/>
-          <TextBox Text="Test Button" Name="textTextBox" Margin="5,0,0,0"
+          <TextBox Text="Test Button" Name="textTextBox" Margin="5,0,0,0" IsTextLocalized="true"
                    TextChanged="Button_Changed" Grid.Column="1" Grid.Row="0"/>
 
-          <Label Text="Text Font" Name="labelFont" Margin="0,5,0,0" VerticalAlignment="Center"
+          <Label Text="Text Font" Name="labelFont" Margin="0,5,0,0" IsTextLocalized="true"
+                 VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="1"/>
           <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="5,5,0,0"
                      Grid.Column="1" Grid.Row="1"/>
 
-          <Label Text="Text Size" Name="labelSize" Margin="0,5,0,0" VerticalAlignment="Center"
+          <Label Text="Text Size" Name="labelSize" IsTextLocalized="true"
+                 Margin="0,5,0,0" VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="2"/>
           <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
                     Margin="5,5,0,0"  Grid.Column="1" Grid.Row="2"/>
@@ -33,47 +35,53 @@
         <!-- ===================================== -->
 
         <Grid Margin="10,0,0,0" RowCount="4" ColumnCount="2" Name="propsContainer2">
-          <Label Text="Align" VerticalAlignment="Center" Margin="0,0,0,0"
+          <Label Text="Align" VerticalAlignment="Center" Margin="0,0,0,0" IsTextLocalized="true"
                  Grid.Column="0" Grid.Row="0" />
           <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="5,0,0,0"
                     Grid.Column="1" Grid.Row="0" />
 
-          <Label Text="Image" VerticalAlignment="Center" Margin="0,5,0,0"
+          <Label Text="Image" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"
                  Grid.Column="0" Grid.Row="1" />
           <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="5,5,0,0"
                     Grid.Column="1" Grid.Row="1"/>
 
-          <Button Text="Image Margins..." Name="imageMarginsButton" RowIndex="3" ColumnIndex="0"
+          <Button Text="Image Margins..." Name="imageMarginsButton"
+                  RowIndex="3" ColumnIndex="0" IsTextLocalized="true"
                   ColumnSpan="2"/>
         </Grid>
       </HorizontalStackPanel>
 
       <HorizontalStackPanel>
         <VerticalStackPanel Margin="0,0,0,0">
-          <CheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" />
-          <CheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0" IsChecked="True" />
+          <CheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" IsTextLocalized="true" />
+          <CheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0"
+                    IsChecked="True" IsTextLocalized="true" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <CheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0" />
-          <CheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0" />
+          <CheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
+          <CheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <CheckBox Text="Border" Name="hasBorderCheckBox" IsChecked="True" Margin="0,10,0,0" />
-          <CheckBox Text="TabStop" Name="tabStopCheckBox" IsChecked="True" Margin="0,10,0,0" />
+          <CheckBox Text="Border" Name="hasBorderCheckBox" IsTextLocalized="true"
+                    IsChecked="True" Margin="0,10,0,0" />
+          <CheckBox Text="TabStop" Name="tabStopCheckBox" IsTextLocalized="true"
+                    IsChecked="True" Margin="0,10,0,0" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <CheckBox Text="Show Text" Name="showTextCheckBox" IsChecked="True" Margin="0,10,0,0" />
-          <CheckBox Text="Exact Fit" IsChecked="False" Name="exactFitCheckBox" Margin="0,10,0,0" />
+          <CheckBox Text="Show Text" Name="showTextCheckBox" IsTextLocalized="true"
+                    IsChecked="True" Margin="0,10,0,0" />
+          <CheckBox Text="Exact Fit" IsChecked="False" IsTextLocalized="true"
+                    Name="exactFitCheckBox" Margin="0,10,0,0" />
         </VerticalStackPanel>
       </HorizontalStackPanel>
 
     </VerticalStackPanel>
 
     <Control Grid.Row="1" Margin="10">
-      <Button Name="button" VerticalAlignment="Center"
+      <Button Name="button" VerticalAlignment="Center"  IsTextLocalized="true"
               HorizontalAlignment="Center" Click="Button_Click"/>
     </Control>
   </Grid>

@@ -4,31 +4,37 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
       <StackPanel Orientation="Horizontal" Name="tab1" Padding="5">
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-          <Button Text="Last Item Visible" Name="ensureLastItemVisibleButton"
+          <Button Text="Last Item Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
               Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-          <Button Text="Select Item: 2" Name="selectItemAtIndex2Button"
+          <Button Text="Select Item: 2" Name="selectItemAtIndex2Button" IsTextLocalized="true"
               Margin="0,3,0,0" Click="SelectItemAtIndex2Button_Click" />
-          <Button Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button"
+          <Button Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button" IsTextLocalized="true"
               Margin="0,3,0,0" Click="SelectItemAtIndices2And4Button_Click"
                   Enabled="false"/>
-          <Button Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0"
+          <Button Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0" IsTextLocalized="true"
               Click="DeselectAllButton_Click" />
-          <Button Text="Has Border" Name="hasBorderButton" Margin="0,3,0,0"
+          <Button Text="Has Border" Name="hasBorderButton" Margin="0,3,0,0" IsTextLocalized="true"
               Click="HasBorderButton_Click" />
-          <CheckBox Margin="0,3,0,0" Text="CheckBox Visible" Name="showCheckBoxesCheckBox"/>
-          <CheckBox Margin="0,3,0,0" Text="CheckBox ThreeState" Name="threeStateCheckBox"/>
-          <CheckBox Margin="0,3,0,0" Text="CheckBox UserAllStates" Name="allowAllStatesCheckBox"
+          <CheckBox Margin="0,3,0,0" Text="CheckBox Visible"
+                    Name="showCheckBoxesCheckBox"  IsTextLocalized="true"/>
+          <CheckBox Margin="0,3,0,0" Text="CheckBox ThreeState" Name="threeStateCheckBox"
+                    IsTextLocalized="true"/>
+          <CheckBox Margin="0,3,0,0" Text="CheckBox UserAllStates" IsTextLocalized="true"
+                    Name="allowAllStatesCheckBox"  IsToolTipLocalized="true"
                     ToolTip="Allow the user to set the checkboxes to the third state by clicking."/>
-          <CheckBox Margin="0,3,0,0" Text="CheckBox AllowClick" Name="allowClickCheckCheckBox"/>
-          <CheckBox Margin="0,3,0,5" Text="Round Selection" Name="roundSelectionCheckBox"/>
+          <CheckBox Margin="0,3,0,0" Text="CheckBox AllowClick" IsTextLocalized="true"
+                    Name="allowClickCheckCheckBox"/>
+          <CheckBox Margin="0,3,0,5" Text="Round Selection" IsTextLocalized="true"
+                    Name="roundSelectionCheckBox"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-          <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
+          <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" IsTextLocalized="true"
               Margin="0,0,0,5" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-          <CheckBox Text="Find Exact" Name="findExactCheckBox" Margin="0,0,0,5"/>
-          <CheckBox Text="Find Ignore Case" Name="findIgnoreCaseCheckBox" Margin="0,0,0,5"/>
-          <Label Text="Find Text" Margin="0,0,0,5"/>
-          <TextBox Name="findText" Margin="0,0,0,5"/>
+          <CheckBox Text="Find Exact" Name="findExactCheckBox" Margin="0,0,0,5" IsTextLocalized="true"/>
+          <CheckBox Text="Find Ignore Case" Name="findIgnoreCaseCheckBox"
+                    Margin="0,0,0,5" IsTextLocalized="true"/>
+          <Label Text="Find Text" Margin="0,0,0,5" IsTextLocalized="true"/>
+          <TextBox Name="findText" Margin="0,0,0,5" IsTextLocalized="true"/>
         </StackPanel>
       </StackPanel>
 </Control>

@@ -25,7 +25,8 @@
                     <Label Name="textBox1IsFocusedValueLabel" />
                 </StackPanel>
 
-                <Button Text="Set Focus to TextBox1" Name="setFocusToTextBox1Button"
+                <Button Text="Set Focus to TextBox1" IsTextLocalized="true"
+                        Name="setFocusToTextBox1Button"
                         Click="SetFocusToTextBox1Button_Click" Margin="0,0,0,5" />
                 <Label Text="Press 'N' key to focus next control." Margin="0,0,0,5"/>
             </StackPanel>

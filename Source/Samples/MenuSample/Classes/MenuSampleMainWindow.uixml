@@ -6,45 +6,46 @@
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Layout="Vertical">
   <Window.Menu>
     <MainMenu>
-      <MenuItem Text="_File">
-        <MenuItem Text="_Open..." Name="openMenuItem"
+      <MenuItem Text="_File" IsTextLocalized="true">
+        <MenuItem Text="_Open..." Name="openMenuItem" IsTextLocalized="true"
                   Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
         <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveCommand_Click"
-                  Shortcut="Ctrl+S"/>
-        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem"
+                  Shortcut="Ctrl+S" IsTextLocalized="true"/>
+        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" IsTextLocalized="true"
                   Click="SaveEnabledMenuItem_Click" Checked="True" />
         <MenuItem Text="-" Name="separatorMenuItem" />
-        <MenuItem Text="_Export">
-          <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem"
+        <MenuItem Text="_Export" IsTextLocalized="true">
+          <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" IsTextLocalized="true"
                     Click="ExportToPdfMenuItem_Click" />
-          <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem"
+          <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" IsTextLocalized="true"
                     Click="ExportToPngCommand_Click" Shortcut="Ctrl+Shift+G"/>
         </MenuItem>
-        <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
+        <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" IsTextLocalized="true"/>
       </MenuItem>
-      <MenuItem Text="_View">
-        <MenuItem Text="_Scrolling">
+      <MenuItem Text="_View" IsTextLocalized="true">
+        <MenuItem Text="_Scrolling" IsTextLocalized="true">
           <MenuItem Text="Continous" Name="continousScrollingMenuItem" Checked="True"
-                    Click="ContinousScrollingMenuItem_Click" />
+                    Click="ContinousScrollingMenuItem_Click" IsTextLocalized="true"/>
           <MenuItem Text="Page" Name="pageScrollingMenuItem"
-                    Click="PageScrollingMenuItem_Click" />
+                    Click="PageScrollingMenuItem_Click" IsTextLocalized="true"/>
         </MenuItem>
-        <MenuItem Text="_Grid" Checked="True" Click="GridMenuItem_Click" Name="menuItemGrid"/>
+        <MenuItem Text="_Grid" Checked="True" Click="GridMenuItem_Click"
+                  Name="menuItemGrid" IsTextLocalized="true"/>
       </MenuItem>
-      <MenuItem Text="_Tools">
-        <MenuItem Text="_Options..." Name="optionsMenuItem"
+      <MenuItem Text="_Tools" IsTextLocalized="true">
+        <MenuItem Text="_Options..." IsTextLocalized="true" Name="optionsMenuItem"
                   Click="OptionsMenuItem_Click" />
       </MenuItem>
-      <MenuItem Text="_Help">
-        <MenuItem Text="Index" Enabled="false" />
-        <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
+      <MenuItem Text="_Help" IsTextLocalized="true">
+        <MenuItem Text="Index" IsTextLocalized="true" Enabled="false" />
+        <MenuItem Text="_About" IsTextLocalized="true" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
       </MenuItem>
     </MainMenu>
   </Window.Menu>
 
   <Window.StatusBar>
     <StatusBar>
-      <StatusBarPanel Text="Ready" />
+      <StatusBarPanel Text="Ready"/>
     </StatusBar>
   </Window.StatusBar>
 
@@ -54,14 +55,14 @@
 
     <!-- ========================= -->
     
-      <HorizontalStackPanel Margin="10" Name="menuPanel" Title="Menu">
+      <HorizontalStackPanel Margin="10" Name="menuPanel" Title="Menu" IsTitleLocalized="true">
         <VerticalStackPanel>
-          <Button Text="Add Menu Item"
+          <Button Text="Add Menu Item" IsTextLocalized="true"
                     Name="addDynamicMenuItemMenuItem"
                     Click="AddDynamicMenuItemMenuItem_Click"
                     Margin="0,0,0,10" />
 
-          <Button Text="Remove Menu Item"
+          <Button Text="Remove Menu Item" IsTextLocalized="true"
                   Name="removeLastDynamicMenuItemMenuItem"
                   Click="RemoveLastDynamicMenuItemMenuItem_Click"
                   Margin="0,0,0,10" />
@@ -74,14 +75,14 @@
         </VerticalStackPanel>
 
         <VerticalStackPanel Name="roleControlsPanel" Margin="10,0,0,0">
-          <Button Text="Set About Item Role to None"
+          <Button Text="Set About Item Role to None" IsTextLocalized="true"
                   Name="setAboutMenuItemRoleToNone"
                   Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
           <Button Text="Set Options Item Role to None" Name="buttonSetOptionsItemRoletoNone"
-                  Click="SetOptionsMenuItemRoleToNone_Click"
+                  Click="SetOptionsMenuItemRoleToNone_Click" IsTextLocalized="true"
                   Margin="0,0,0,10" />
           <Button Text="Set Options Item Role to Preferences" Name="buttonSetOptionsItemRoletoPreferences"
-                  Click="SetOptionsMenuItemRoleToPreferences_Click"
+                  Click="SetOptionsMenuItemRoleToPreferences_Click" IsTextLocalized="true"
                   Margin="0,0,0,10" />
         </VerticalStackPanel>
 
@@ -90,55 +91,55 @@
                     MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp"
                     Margin="10">
             <Label Margin="5" Text="Right-click shows context menu" InputTransparent="true"
-                   Name="contextMenuLabel"/>
+                   IsTextLocalized="true" Name="contextMenuLabel"/>
           </Border>
         </VerticalStackPanel>
       </HorizontalStackPanel>
       
     <!-- ========================= -->
 
-      <HorizontalStackPanel Margin="10" Name="toolbarPanel" Title="ToolBar">
+      <HorizontalStackPanel Margin="10" Name="toolbarPanel" Title="ToolBar" IsTitleLocalized="true">
         <StackPanel>
-          <Button Text="Toggle item check"
+          <Button Text="Toggle item check" IsTextLocalized="true"
                   Name="toggleToolbarItemCheckButton"
                   Click="ToggleToolbarItemCheckButton_Click"
                   Margin="5,5,0,5" />
-          <Button Text="Toggle item enabled"
+          <Button Text="Toggle item enabled" IsTextLocalized="true"
                   Name="toggleFirstToolbarEnabledButton"
                   Click="ToggleFirstToolbarEnabledButton_Click"
               Margin="5,5,0,5" />
-          <Button Text="Add item"
+          <Button Text="Add item" IsTextLocalized="true"
                   Name="addDynamicToolbarItemButton"
                   Click="AddDynamicToolbarItemButton_Click"
                   Margin="5,5,0,5" />
-          <Button Text="Remove item"
+          <Button Text="Remove item" IsTextLocalized="true"
                   Name="removeLastDynamicToolbarItemButton"
                   Click="RemoveLastDynamicToolbarItemButton_Click"
                   Margin="5,5,0,5" />
         </StackPanel>
 
         <StackPanel Margin="10,0,0,0">
-          <CheckBox Text="No divider" Name="noDividerCheckBox"
+          <CheckBox Text="No divider" Name="noDividerCheckBox" IsTextLocalized="true"
               CheckedChanged="NoDividerCheckBox_Changed" IsChecked="True"
               Margin="5,5,0,5"/>
-          <CheckBox Text="Vertical" Name="verticalCheckBox"
+          <CheckBox Text="Vertical" Name="verticalCheckBox" IsTextLocalized="true"
               CheckedChanged="VerticalCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <CheckBox Text="Is Right" Name="isRightCheckBox"
+          <CheckBox Text="Is Right" Name="isRightCheckBox" IsTextLocalized="true"
               CheckedChanged="IsRightCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <CheckBox Text="Is Bottom" Name="isBottomCheckBox"
+          <CheckBox Text="Is Bottom" Name="isBottomCheckBox" IsTextLocalized="true"
               CheckedChanged="IsBottomCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <CheckBox Text="Show text" Name="showToolbarTextCheckBox"
+          <CheckBox Text="Show text" Name="showToolbarTextCheckBox" IsTextLocalized="true"
               CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
                     Margin="5,5,0,5" IsChecked="True" />
-          <CheckBox Text="Show images" Name="showToolbarImagesCheckBox"
+          <CheckBox Text="Show images" Name="showToolbarImagesCheckBox" IsTextLocalized="true"
               CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
               Margin="5,5,0,5" IsChecked="True"/>
         </StackPanel>
         <StackPanel Margin="10,0,0,0">
-          <Label Text="Image to Text:" Margin="5,5,0,3"/>
+          <Label Text="Image to Text:" Margin="5,5,0,3" IsTextLocalized="true"/>
           <ComboBox IsEditable="false"
               Name="imageToTextDisplayModeComboBox"
               SelectedItemChanged=
@@ -151,23 +152,23 @@
 
       <HorizontalStackPanel Margin="10" Name="statusPanel" Title="StatusBar">
         <VerticalStackPanel>
-          <Button Text="Add item" Name="statusAddButton" Margin="0,0,0,10" />
-          <Button Text="Remove item" Name="statusRemoveButton" Margin="0,0,0,10" />
+          <Button Text="Add item" IsTextLocalized="true" Name="statusAddButton" Margin="0,0,0,10" />
+          <Button Text="Remove item" IsTextLocalized="true" Name="statusRemoveButton" Margin="0,0,0,10" />
           <Button
-            Text="Toggle Grip"
+            Text="Toggle Grip" IsTextLocalized="true"
             Name="showSizingGripButton"
             Click="ShowSizingGripButton_Click"
             Margin="0,0,0,10"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <Button Text="Clear" Margin="0,0,0,10" Name="statusClearButton"/>
-          <Button Text="Null" Margin="0,0,0,10" Name="statusNullButton"/>
-          <Button Text="Recreate" Margin="0,0,0,10" Name="statusRecreateButton"/>
+          <Button Text="Clear" Margin="0,0,0,10" IsTextLocalized="true" Name="statusClearButton"/>
+          <Button Text="Null" Margin="0,0,0,10" IsTextLocalized="true" Name="statusNullButton"/>
+          <Button Text="Recreate" Margin="0,0,0,10" IsTextLocalized="true" Name="statusRecreateButton"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <Button Text="Edit..." Margin="0,0,0,10" Name="statusEditButton"/>
+          <Button Text="Edit..." Margin="0,0,0,10" Name="statusEditButton" IsTextLocalized="true"/>
         </VerticalStackPanel>
       </HorizontalStackPanel> 
 

@@ -8,12 +8,13 @@
   <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Padding="10"
               HorizontalAlignment="Stretch">
         
-		<GroupBox Title="Color Picker" Margin="0,0,0,10">
+		<GroupBox Title="Color Picker" Margin="0,0,0,10" IsTitleLocalized="true" >
           <HorizontalStackPanel MinChildMargin="5" Name="colorGroupBox" Padding="10">
           </HorizontalStackPanel>
         </GroupBox>
 
-			<GroupBox Title="Native Sliders and Progress Bars" Margin="0,0,0,10" Padding="10">
+			<GroupBox Title="Native Sliders and Progress Bars" IsTitleLocalized="true"
+                      Margin="0,0,0,10" Padding="10">
 				<StackPanel Orientation="Horizontal">
 					<Slider Minimum="0" Maximum="100" Value="25"
                             TickFrequency="25" Name="slider1" ValueChanged="Slider_ValueChanged"
@@ -21,16 +22,16 @@
 					<ProgressBar Name="progressBar1"
                       Minimum="0" Maximum="100"
 						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
-					<Label VerticalAlignment="Center" Name="intValueLabel"/>
+					<Label VerticalAlignment="Center" Name="intValueLabel" IsTextLocalized="true" />
 				</StackPanel>
 			</GroupBox>
 			
-			<GroupBox Title="Custom Sliders and Progress Bars" Padding="5">
+			<GroupBox Title="Custom Sliders and Progress Bars" Padding="5" IsTitleLocalized="true" >
 				<StackPanel Orientation="Horizontal" Name="slidersStackPanel">
 				</StackPanel>
 			</GroupBox>
 
-        <GroupBox Title="Tic Tac Toe" VerticalAlignment="Top">
+        <GroupBox Title="Tic Tac Toe" VerticalAlignment="Top" IsTitleLocalized="true" >
             <StackPanel Orientation="Horizontal" Margin="5" Name="ticTacToeStackPanel">
             </StackPanel>
         </GroupBox>

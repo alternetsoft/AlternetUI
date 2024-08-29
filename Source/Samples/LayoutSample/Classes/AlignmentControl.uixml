@@ -3,12 +3,12 @@
         x:Class="LayoutSample.AlignmentControl">
 
 	<VerticalStackPanel Padding="5" >
-			<Label Text="Align Horizontal:" VerticalAlignment="Center" />
+			<Label Text="Align Horizontal:" IsTextLocalized="true" VerticalAlignment="Center" />
 			<ComboBox 
                       SelectedItemChanged="HorizontalAlignmentComboBox_SelectedItemChanged"
 					  Name="horizontalAlignmentComboBox" IsEditable="false" Margin="0,5,0,0" />
 
-			<Label Text="Align Vertical:"
+			<Label Text="Align Vertical:" IsTextLocalized="true"
                    VerticalAlignment="Center" Margin="0,5,0,0" />
 			<ComboBox 
                       SelectedItemChanged="VerticalAlignmentComboBox_SelectedItemChanged"

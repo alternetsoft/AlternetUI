@@ -17,23 +17,23 @@
       <TabControl Grid.Column="0" Margin="0,0,10,0" Name="pageControl">
 
         <VerticalStackPanel Name="gridStackPanel" Padding="10" Title="Grid">
-          <Button Text="Add Column" Click="AddGridColumnButton_Click"
+          <Button Text="Add Column" Click="AddGridColumnButton_Click" IsTextLocalized="true"
                   Margin="0,0,0,5" Name="buttonAddGridColumn"/>
-          <Button Text="Add Row" Click="AddGridRowButton_Click"
+          <Button Text="Add Row" Click="AddGridRowButton_Click" IsTextLocalized="true"
                   Margin="0,0,0,5" Name="buttonAddGridRow"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Name="containerStackPanel" Padding="10" Title="Container">
-          <Button Text="Increase Margin" Name="buttonIncreaseMargin"
+          <Button Text="Increase Margin" Name="buttonIncreaseMargin" IsTextLocalized="true"
                   Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
-          <Button Text="Increase Padding" Name="buttonIncreasePadding"
+          <Button Text="Increase Padding" Name="buttonIncreasePadding" IsTextLocalized="true"
                   Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Name="buttonStackPanel" Padding="10" Title="Button">
-          <Button Text="Increase Margin" Name="buttonStackInreaseMargin"
+          <Button Text="Increase Margin" Name="buttonStackInreaseMargin" IsTextLocalized="true"
                   Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
-          <Button Text="Increase Padding" Name="buttonStackInreasePadding"
+          <Button Text="Increase Padding" Name="buttonStackInreasePadding" IsTextLocalized="true"
                   Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
         </VerticalStackPanel>
       </TabControl>
@@ -55,12 +55,16 @@
           </Grid.RowDefinitions>
 
           <Label Grid.Column="1" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
-          <Label Grid.Column="2" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Name="subjectColumnWidthLabel" />
+          <Label Grid.Column="2" Text="Auto" HorizontalAlignment="Center" 
+                 VerticalAlignment="Center" Name="subjectColumnWidthLabel" />
           <Label Grid.Column="3" Text="*" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-          <Label Grid.Row="1" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0" />
-          <Label Grid.Row="2" Text="Auto" Name="subjectRowHeightLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0"/>
-          <Label Grid.Row="3" Text="*" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0"/>
+          <Label Grid.Row="1" Text="Auto" HorizontalAlignment="Center"
+                 VerticalAlignment="Center" Margin="0,0,3,0" />
+          <Label Grid.Row="2" Text="Auto" Name="subjectRowHeightLabel"
+                 HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0"/>
+          <Label Grid.Row="3" Text="*" HorizontalAlignment="Center"
+                 VerticalAlignment="Center" Margin="0,0,3,0"/>
 
           <Border Grid.Column="1" Grid.Row="1">
             <Label Text="(1, 1)" />

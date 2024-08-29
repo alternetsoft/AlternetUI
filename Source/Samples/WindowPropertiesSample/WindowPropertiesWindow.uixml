@@ -11,120 +11,125 @@
   <TabControl Name="pageControl" VerticalAlignment="Fill">
 
       <!-- ========================= -->
-      <HorizontalStackPanel Name="actionsPanel" Title="Actions"
+      <HorizontalStackPanel Name="actionsPanel" Title="Actions" IsTitleLocalized="true"
                             HorizontalAlignment="Stretch">
 
-        <GroupBox Title="Create" Margin="5">
+        <GroupBox Title="Create" Margin="5" IsTextLocalized="true" >
           <StackPanel Padding="10" >
             <Button Text="Create Window" Name="createAndShowWindowButton"
-                Click="CreateAndShowWindowButton_Click"
+                Click="CreateAndShowWindowButton_Click" IsTextLocalized="true"
                 Margin="0,0,0,5" />
             <Button Text="Create Mini Frame" Name="createAndShowMiniFrameButton"
-                Click="CreateAndShowMiniFrameButton_Click"
+                Click="CreateAndShowMiniFrameButton_Click" IsTextLocalized="true"
                 Margin="0,0,0,5" />
-            <Button Text="Create Dialog" Name="createAndShowModalWindowButton"
+            <Button Text="Create Dialog" Name="createAndShowModalWindowButton" IsTextLocalized="true"
                 Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
-            <Button Name="addOwnedWindow" Click="AddOwnedWindow_Click"
+            <Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" IsTextLocalized="true"
                 Text="Create Owned" Margin="0,0,0,5"/>
-            <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"/>
-            <CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
+            <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5" IsTextLocalized="true" />
+            <CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox"
+                      Margin="0,0,0,5" IsTextLocalized="true" />
 
             <HorizontalStackPanel>
-              <Label Text="Start Location:" Margin="0,0,5,5"/>
+              <Label Text="Start Location:" Margin="0,0,5,5" IsTextLocalized="true" />
               <ComboBox IsEditable="false" Name="startLocationComboBox" Margin="0,0,0,5"/>
             </HorizontalStackPanel>
           </StackPanel>
         </GroupBox>
         <VerticalStackPanel>
-          <GroupBox Title="Activation" HorizontalAlignment="Stretch"
+          <GroupBox Title="Activation" HorizontalAlignment="Stretch" IsTitleLocalized="true"
               Grid.ColumnSpan="2"  Margin="5">
             <StackPanel Padding="10" HorizontalAlignment="Stretch" SuggestedWidth="400">
-              <Label Text="Active window title:" Margin="0,0,0,3"/>
+              <Label Text="Active window title:" Margin="0,0,0,3" IsTextLocalized="true" />
               <Label Name="activeWindowTitleLabel" Margin="0,0,0,3"/>
               <Label Name="isWindowActiveLabel" Margin="0,0,0,3"/>
-              <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
+              <Button Name="activateButton" Click="ActivateButton_Click"
+                      Text="Activate" IsTextLocalized="true" />
             </StackPanel>            
           </GroupBox>
 
-          <Button Text="All Properties..."
+          <Button Text="All Properties..." IsTextLocalized="true"
                   Name="propertiesButton" Click="PropertiesButton_Click"/>
         </VerticalStackPanel>
       </HorizontalStackPanel>
       <!-- ========================= -->
       <HorizontalStackPanel Name="settingsPanel" Visible="false" Title="Settings">
         <StackPanel Padding="10" >
-          <CheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox"
+          <CheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox" IsTextLocalized="true"
                     CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged"
               IsChecked="True" Margin="0,0,0,5"/>
-          <CheckBox Text="Can Minimize" Name="minimizeEnabledCheckBox"
+          <CheckBox Text="Can Minimize" Name="minimizeEnabledCheckBox" IsTextLocalized="true"
                     CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged"
               IsChecked="True" Margin="0,0,0,5"/>
-          <CheckBox Text="Can Maximize" Name="maximizeEnabledCheckBox"
+          <CheckBox Text="Can Maximize" Name="maximizeEnabledCheckBox" IsTextLocalized="true"
                     CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged"
               IsChecked="True" Margin="0,0,0,5"/>
-          <CheckBox Text="Can Close" Name="closeEnabledCheckBox"
+          <CheckBox Text="Can Close" Name="closeEnabledCheckBox" IsTextLocalized="true"
                     CheckedChanged="CloseEnabledCheckBox_CheckedChanged"
               IsChecked="True" Margin="0,0,0,5"/>
 
-          <CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" Margin="0,0,0,5"
+          <CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
             CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False" />
         </StackPanel>
 
         <StackPanel Padding="10" >
-          <CheckBox Text="Tool Window" Name="isToolWindowCheckBox" Margin="0,0,0,5"
+          <CheckBox Text="Tool Window" Name="isToolWindowCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
                     CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
-          <CheckBox Text="Resizable" Name="resizableCheckBox" Margin="0,0,0,5"
+          <CheckBox Text="Resizable" Name="resizableCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
                     CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
-          <CheckBox Text="Has Border" Name="hasBorderCheckBox" Margin="0,0,0,5"
+          <CheckBox Text="Has Border" Name="hasBorderCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
                     CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
-          <CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" Margin="0,0,0,5"
+          <CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
                     CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
         </StackPanel>
 
         <StackPanel Padding="10" >
-          <Label Text="Window State:" Margin="0,0,0,3"/>
+          <Label Text="Window State:" Margin="0,0,0,3" IsTextLocalized="true" />
           <ComboBox IsEditable="false" Name="stateComboBox"
               SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
-          <CheckBox Text="Hide Window" Name="hideWindowCheckBox" Margin="0,10,0,0"
+          <CheckBox Text="Hide Window" Name="hideWindowCheckBox" Margin="0,10,0,0" IsTextLocalized="true"
               CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
         </StackPanel>
 
           <VerticalStackPanel Padding="5">
             <HorizontalStackPanel  Margin="0,0,0,5">
-              <Button Text="Icon 1" Name="setIcon1Button" Click="SetIcon1Button_Click"/>
-              <Button Text="Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
+              <Button Text="Icon 1" Name="setIcon1Button"
+                      Click="SetIcon1Button_Click" IsTextLocalized="true" />
+              <Button Text="Icon 2" Name="setIcon2Button"
+                      Click="SetIcon2Button_Click" IsTextLocalized="true" />
             </HorizontalStackPanel>
-            <Button Text="Clear Icon" Name="clearIconButton" Click="ClearIconButton_Click" Margin="0,0,0,5"/>
+            <Button Text="Clear Icon" Name="clearIconButton" IsTextLocalized="true"
+                    Click="ClearIconButton_Click" Margin="0,0,0,5"/>
           </VerticalStackPanel>
       </HorizontalStackPanel>
 
       <!-- ========================= -->
-      <HorizontalStackPanel Name="boundsPanel" Visible="false" Title="Bounds">
+      <HorizontalStackPanel Name="boundsPanel" Visible="false" Title="Bounds" IsTitleLocalized="true" >
 
-        <GroupBox Title="Bounds" Margin="5">
+        <GroupBox Title="Bounds" Margin="5" IsTitleLocalized="true" >
           <StackPanel Padding="10" >
             <Button Name="setSizeButton" Click="SetSizeButton_Click"
-                Text="Size = (300, 300)" Margin="0,0,0,5"/>
+                Text="Size = (300, 300)" Margin="0,0,0,5" IsTextLocalized="true" />
             <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click"
-                Text="Client Size = (300, 300)"
+                Text="Client Size = (300, 300)" IsTextLocalized="true"
                 Margin="0,0,0,5"/>
             <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click"
-                Text="Location += (10, 10)" Margin="0,0,0,5"/>
+                Text="Location += (10, 10)" Margin="0,0,0,5" IsTextLocalized="true" />
             <Button Name="setBoundsButton" Click="SetBoundsButton_Click"
-                Text="Bounds = (0, 0, 400, 400)"
+                Text="Bounds = (0, 0, 400, 400)" IsTextLocalized="true"
                 Margin="0,0,0,5"/>
             <Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click"
-                Text="Set MinMax Size" Margin="0,0,0,5"/>
+                Text="Set MinMax Size" Margin="0,0,0,5" IsTextLocalized="true" />
             <Label Name="currentBoundsLabel" Margin="0,0,0,10" Visible="false"/>
           </StackPanel>
         </GroupBox>
 
-        <GroupBox Title="Size to Content"  Margin="5">
+        <GroupBox Title="Size to Content"  Margin="5" IsTitleLocalized="true" >
           <VerticalStackPanel Padding="10">
             <HorizontalStackPanel Margin="0,0,0,10">
               <ComboBox IsEditable="false" Name="sizeToContentModeComboBox" VerticalAlignment="Center"/>
               <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
-                  Text="Size to Content" VerticalAlignment="Center"/>
+                  Text="Size to Content" VerticalAlignment="Center" IsTextLocalized="true" />
             </HorizontalStackPanel>
           </VerticalStackPanel>
         </GroupBox>

@@ -12,10 +12,11 @@
       </Grid.RowDefinitions>
 
       <StackPanel Orientation="Horizontal">
-        <GroupBox Title="Clipboard" VerticalAlignment="Top">
+        <GroupBox Title="Clipboard" VerticalAlignment="Top" IsTitleLocalized="true" >
           <StackPanel Orientation="Vertical" Margin="10">
-            <Button Text="Copy" Name="copyButton1" Click="CopyButton_Click" />
-            <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" Margin="0,5,0,5" />
+            <Button Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" />
+            <Button Text="Paste" Name="pasteButton"
+                    Click="PasteButton_Click" Margin="0,5,0,5" IsTextLocalized="true" />
           </StackPanel>
         </GroupBox>
 
@@ -25,7 +26,7 @@
                   MouseDown="DragSource_MouseDown"
                   MouseMove="DragSource_MouseMove"
                   MouseUp="DragSource_MouseUp">
-            <Label Text="Drag Me" VerticalAlignment="Center"
+            <Label Text="Drag Me" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
           </Control>
         </Border>
@@ -37,23 +38,31 @@
                 DragOver="DropTarget_DragOver"
                 DragEnter="DropTarget_DragEnter"
                 DragLeave="DropTarget_DragLeave">
-            <Label Text="Drop Here" VerticalAlignment="Center" 
+            <Label Text="Drop Here" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
           </Control>
         </Border>
 
-        <GroupBox Title="Drop Effects" VerticalAlignment="Top" Margin="0,0,0,0" MinWidth="100">
+        <GroupBox Title="Drop Effects" VerticalAlignment="Top" IsTitleLocalized="true"
+                  Margin="0,0,0,0" MinWidth="100">
           <StackPanel Orientation="Vertical" Margin="10,10,10,10">
-            <CheckBox Text="Move" Name="moveDropEffectCheckBox" IsChecked="true" Margin="0,0,0,5"/>
-            <CheckBox Text="Copy" Name="copyDropEffectCheckBox" IsChecked="true" Margin="0,0,0,5"/>
-            <CheckBox Text="Link" Name="linkDropEffectCheckBox" IsChecked="true" Margin="0,0,0,5"/>
+            <CheckBox Text="Move" Name="moveDropEffectCheckBox" IsTextLocalized="true"
+                      IsChecked="true" Margin="0,0,0,5"/>
+            <CheckBox Text="Copy" Name="copyDropEffectCheckBox" IsTextLocalized="true"
+                      IsChecked="true" Margin="0,0,0,5"/>
+            <CheckBox Text="Link" Name="linkDropEffectCheckBox" IsTextLocalized="true"
+                      IsChecked="true" Margin="0,0,0,5"/>
           </StackPanel>
         </GroupBox>
-        <GroupBox Title="Include Formats" VerticalAlignment="Top" Margin="10,0,0,0" MinWidth="200">
+        <GroupBox Title="Include Formats" VerticalAlignment="Top" IsTitleLocalized="true"
+                  Margin="10,0,0,0" MinWidth="200">
           <StackPanel Orientation="Vertical" Margin="10,10,10,10">
-            <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" Margin="0,0,0,5"/>
-            <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" Margin="0,0,0,5"/>
-            <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsChecked="true" Margin="0,0,0,5"/>
+            <CheckBox Text="Text" Name="textFormatCheckBox" IsTextLocalized="true" 
+                      IsChecked="true" Margin="0,0,0,5"/>
+            <CheckBox Text="Files" Name="filesFormatCheckBox" IsTextLocalized="true"
+                      IsChecked="true" Margin="0,0,0,5"/>
+            <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsTextLocalized="true"
+                      IsChecked="true" Margin="0,0,0,5"/>
           </StackPanel>
         </GroupBox>
       </StackPanel>

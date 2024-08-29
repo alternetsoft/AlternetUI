@@ -12,18 +12,18 @@
 
         <VerticalStackPanel Margin="10,0,0,0" Padding="5"
                     Grid.Column="1" Grid.Row="0" >
-            <Button Text="Run Sample" Name="runButton" Margin="0,0,0,5"
+            <Button Text="Run Sample" Name="runButton" Margin="0,0,0,5"  IsTextLocalized="true"
                     Click="RunButton_Click" HorizontalAlignment="Left" />
-          <Button Text="Build Sample" Name="buildButton" Margin="0,0,0,5"
+          <Button Text="Build Sample" Name="buildButton" Margin="0,0,0,5" IsTextLocalized="true"
                   Enabled="true" Visible="true"
                   Click="BuildButton_Click" HorizontalAlignment="Left" />
-          <Button Text="Build UI" Name="buildUIButton" Margin="0,0,0,5"
+          <Button Text="Build UI" Name="buildUIButton" Margin="0,0,0,5" IsTextLocalized="true"
                   Enabled="true" Visible="true"
                   Click="BuildUIButton_Click" HorizontalAlignment="Left"/>
           <Button Text="Build Pal" Name="buildPalButton" Margin="0,0,0,5" Enabled="false"
-                  Visible="false"
+                  IsTextLocalized="true" Visible="false"
                   Click="BuildPalButton_Click" HorizontalAlignment="Left"/>
-          <CheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5"
+          <CheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5" IsTextLocalized="true"
                   Enabled="true" Visible="true"/>
         </VerticalStackPanel>
     </HorizontalStackPanel>
