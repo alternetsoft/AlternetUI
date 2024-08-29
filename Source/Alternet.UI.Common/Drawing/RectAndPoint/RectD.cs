@@ -899,6 +899,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Scales rectangle (multiplies all fields) using the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor.</param>
+        public void Scale(Coord scaleFactor)
+        {
+            x *= scaleFactor;
+            y *= scaleFactor;
+            width *= scaleFactor;
+            height *= scaleFactor;
+        }
+
+        /// <summary>
         /// Creates a string representation of this object based on the format string
         /// and <see cref="IFormatProvider"/> passed in.
         /// If the provider is null, the
