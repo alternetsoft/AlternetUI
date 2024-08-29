@@ -12,6 +12,19 @@ namespace Alternet.UI
     public class InteriorNotification : ControlNotification
     {
         /// <inheritdoc/>
+        public override void AfterSetScrollBarPosition(
+            Control sender,
+            bool isVertical,
+            ScrollBar.PositionInfo value)
+        {
+        }
+
+        /// <inheritdoc/>
+        public override void AfterScroll(Control sender, ScrollEventArgs e)
+        {
+        }
+
+        /// <inheritdoc/>
         public override void AfterDpiChanged(Control sender, DpiChangedEventArgs e)
         {
         }
