@@ -19,6 +19,7 @@ namespace Alternet.Drawing
     {
         private SKCanvas canvas;
         private SKBitmap? bitmap;
+        private InterpolationMode interpolationMode = InterpolationMode.HighQuality;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaGraphics"/> class.
@@ -130,12 +131,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                throw new NotImplementedException();
+                return interpolationMode;
             }
 
             set
             {
-                throw new NotImplementedException();
+                interpolationMode = value;
             }
         }
 
@@ -144,6 +145,8 @@ namespace Alternet.Drawing
         {
             get => canvas;
         }
+
+        internal SKPaint InterpolationModePaint => SkiaUtils.InterpolationModePaints[InterpolationMode];
 
         /// <inheritdoc/>
         public override SizeD GetTextExtent(
@@ -463,7 +466,7 @@ namespace Alternet.Drawing
             RectD rect = (origin, SizeD.Empty);
 
             BeforeDrawImage(ref image, ref rect);
-            canvas.DrawBitmap((SKBitmap)image, origin);
+            canvas.DrawBitmap((SKBitmap)image, origin, InterpolationModePaint);
             AfterDrawImage();
         }
 
@@ -471,7 +474,7 @@ namespace Alternet.Drawing
         public override void DrawImage(Image image, RectD destinationRect)
         {
             BeforeDrawImage(ref image, ref destinationRect);
-            canvas.DrawBitmap((SKBitmap)image, destinationRect);
+            canvas.DrawBitmap((SKBitmap)image, destinationRect, InterpolationModePaint);
             AfterDrawImage();
         }
 
@@ -480,7 +483,7 @@ namespace Alternet.Drawing
         {
             if (BeforeDrawImage(ref image, ref destinationRect))
                 sourceRect.Scale(OriginalScaleFactor);
-            canvas.DrawBitmap((SKBitmap)image, sourceRect, destinationRect);
+            canvas.DrawBitmap((SKBitmap)image, sourceRect, destinationRect, InterpolationModePaint);
             AfterDrawImage();
         }
 

@@ -14,11 +14,31 @@ namespace Alternet.Drawing
     /// </summary>
     public static class SkiaUtils
     {
+        internal static readonly EnumArray<InterpolationMode, SKPaint> InterpolationModePaints = new();
+
         private static string[]? fontFamilies;
         private static FontSize defaultFontSize = 12;
         private static string? defaultMonoFontName;
         private static SKFont? defaultSkiaFont;
         private static SKTypeface? defaultTypeFace;
+
+        static SkiaUtils()
+        {
+            InterpolationModePaints[InterpolationMode.None] = CreatePaints(SKFilterQuality.None);
+            InterpolationModePaints[InterpolationMode.LowQuality] = CreatePaints(SKFilterQuality.Low);
+            InterpolationModePaints[InterpolationMode.HighQuality] = CreatePaints(SKFilterQuality.High);
+            InterpolationModePaints[InterpolationMode.MediumQuality] = CreatePaints(SKFilterQuality.Medium);
+
+            SKPaint CreatePaints(SKFilterQuality quality)
+            {
+                SKPaint result = new()
+                {
+                    FilterQuality = quality,
+                };
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets or sets default font for use with SkiaSharp.
@@ -186,6 +206,28 @@ namespace Alternet.Drawing
         public static SKFont CreateDefaultFont()
         {
             return new SKFont(DefaultTypeFace, (float)DefaultFontSize);
+        }
+
+        /// <summary>
+        /// Converts <see cref="InterpolationMode"/> to <see cref="SKFilterQuality"/>.
+        /// </summary>
+        /// <param name="interpolationMode">Value to convert.</param>
+        /// <returns></returns>
+        public static SKFilterQuality ToSkia(this InterpolationMode interpolationMode)
+        {
+            switch (interpolationMode)
+            {
+                case InterpolationMode.None:
+                    return SKFilterQuality.None;
+                case InterpolationMode.LowQuality:
+                    return SKFilterQuality.Low;
+                case InterpolationMode.MediumQuality:
+                    return SKFilterQuality.Medium;
+                case InterpolationMode.HighQuality:
+                    return SKFilterQuality.High;
+                default:
+                    return SKFilterQuality.None;
+            }
         }
 
         /// <summary>
