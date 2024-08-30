@@ -51,6 +51,22 @@ namespace Alternet.UI
             /// 'Windows Light' theme is used.
             /// </summary>
             WindowsLight,
+
+            /// <summary>
+            /// 'Maui Dark' theme is used if control has dark background
+            /// and 'Maui Light' theme is used if control has light background.
+            /// </summary>
+            MauiAuto,
+
+            /// <summary>
+            /// 'Maui Light' theme is used.
+            /// </summary>
+            MauiLight,
+
+            /// <summary>
+            /// 'Maui Dark' theme is used.
+            /// </summary>
+            MauiDark,
         }
 
         /// <summary>
@@ -72,10 +88,72 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Provides data for the scrollbar theme initialization events.
+        /// </summary>
+        public class ThemeInitializeArgs : BaseEventArgs
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ThemeInitializeArgs"/> class.
+            /// </summary>
+            /// <param name="metrics">Scrollbar theme settings.</param>
+            public ThemeInitializeArgs(ThemeMetrics metrics)
+            {
+                Metrics = metrics;
+            }
+
+            /// <summary>
+            /// Gets or sets scrollbar drawable which will be initialized.
+            /// </summary>
+            public ScrollBarDrawable? ScrollBar { get; set; }
+
+            /// <summary>
+            /// Gets or sets interior drawable which will be initialized.
+            /// </summary>
+            public InteriorDrawable? Interior { get; set; }
+
+            /// <summary>
+            /// Gets or sets scrollbar theme settings which are used for the initialization.
+            /// </summary>
+            public ThemeMetrics Metrics { get; set; }
+        }
+
+        /// <summary>
         /// Contains different themes colors for the scrollbar parts.
         /// </summary>
         public class ThemeMetrics
         {
+            /// <summary>
+            /// Gets default array of the visual states which are initialized
+            /// in the constructor with the default values.
+            /// </summary>
+            public static VisualControlState[] AllStatesDefault =
+            {
+                VisualControlState.Normal,
+                VisualControlState.Hovered,
+                VisualControlState.Disabled,
+                VisualControlState.Pressed,
+            };
+
+            /// <summary>
+            /// Gets or sets up arrow images in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, SvgImage> UpArrowImage = new();
+
+            /// <summary>
+            /// Gets or sets down arrow images in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, SvgImage> DownArrowImage = new();
+
+            /// <summary>
+            /// Gets or sets left images in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, SvgImage> LeftArrowImage = new();
+
+            /// <summary>
+            /// Gets or sets right arrow images in the different visual states.
+            /// </summary>
+            public EnumArray<VisualControlState, SvgImage> RightArrowImage = new();
+
             /// <summary>
             /// Gets or sets corner background brushes in the different visual states.
             /// </summary>
@@ -138,18 +216,74 @@ namespace Alternet.UI
             private static ThemeMetrics? visualStudioDark;
             private static ThemeMetrics? windowsLight;
             private static ThemeMetrics? windowsDark;
+            private static ThemeMetrics? mauiLight;
+            private static ThemeMetrics? mauiDark;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ThemeMetrics"/> class.
             /// </summary>
             public ThemeMetrics()
             {
-                SetArrowMargin(1);
-                SetUseArrowSizeForThumb(true);
-                SetThumbMargin(1);
-                SetArrowsVisible(true);
-                SetThumbVisible(true);
-                SetButtonsVisible(true);
+                var states = AllStates;
+
+                UpArrowImage[states] = KnownSvgImages.ImgTriangleArrowUp;
+                DownArrowImage[states] = KnownSvgImages.ImgTriangleArrowDown;
+                LeftArrowImage[states] = KnownSvgImages.ImgTriangleArrowLeft;
+                RightArrowImage[states] = KnownSvgImages.ImgTriangleArrowRight;
+
+                ArrowMargin[states] = 1;
+                UseArrowSizeForThumb[states] = true;
+                ThumbMargin[states] = 1;
+                ArrowsVisible[states] = true;
+                ThumbVisible[states] = true;
+                ButtonsVisible[states] = true;
+            }
+
+            /// <summary>
+            /// Occurs when this theme is assigned to the drawables.
+            /// </summary>
+            public event EventHandler<ThemeInitializeArgs>? ThemeInitialize;
+
+            /// <summary>
+            /// Gets or sets 'Maui Dark' theme colors as <see cref="ThemeMetrics"/>.
+            /// </summary>
+            public static ThemeMetrics MauiDarkTheme
+            {
+                get
+                {
+                    if (mauiDark is null)
+                    {
+                        mauiDark = WindowsDarkTheme.Clone();
+                    }
+
+                    return mauiDark;
+                }
+
+                set
+                {
+                    mauiDark = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets 'Maui Light' theme colors as <see cref="ThemeMetrics"/>.
+            /// </summary>
+            public static ThemeMetrics MauiLightTheme
+            {
+                get
+                {
+                    if (mauiLight is null)
+                    {
+                        mauiLight = WindowsLightTheme.Clone();
+                    }
+
+                    return mauiLight;
+                }
+
+                set
+                {
+                    mauiLight = value;
+                }
             }
 
             /// <summary>
@@ -159,18 +293,19 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if(windowsDark is null)
+                    if (windowsDark is null)
                     {
                         windowsDark = new();
+                        var states = windowsDark.AllStates;
                         windowsDark.Background[VisualControlState.Normal] = (46, 46, 46);
                         windowsDark.CornerBackground[VisualControlState.Normal] = (102, 102, 102);
                         windowsDark.Arrow[VisualControlState.Normal] = (153, 153, 153);
                         windowsDark.Arrow[VisualControlState.Hovered] = (153, 153, 153);
                         windowsDark.ThumbBackground[VisualControlState.Normal] = (77, 77, 77);
                         windowsDark.ThumbBorder[VisualControlState.Normal] = (77, 77, 77);
-                        windowsDark.SetArrowMargin(1);
-                        windowsDark.SetUseArrowSizeForThumb(true);
-                        windowsDark.SetThumbMargin(1);
+                        windowsDark.ArrowMargin[states] = 1;
+                        windowsDark.UseArrowSizeForThumb[states] = true;
+                        windowsDark.ThumbMargin[states] = 1;
                     }
 
                     return windowsDark;
@@ -189,9 +324,10 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if(windowsLight is null)
+                    if (windowsLight is null)
                     {
                         windowsLight = new();
+                        var states = windowsLight.AllStates;
                         windowsLight.Background[VisualControlState.Normal] = (226, 226, 226);
                         windowsLight.CornerBackground[VisualControlState.Normal] = (238, 238, 242);
                         windowsLight.Arrow[VisualControlState.Normal] = (194, 195, 201);
@@ -200,9 +336,9 @@ namespace Alternet.UI
                         windowsLight.ThumbBorder[VisualControlState.Normal] = (194, 195, 201);
                         windowsLight.ThumbBackground[VisualControlState.Hovered] = (104, 104, 104);
                         windowsLight.ThumbBorder[VisualControlState.Hovered] = (104, 104, 104);
-                        windowsLight.SetArrowMargin(1);
-                        windowsLight.SetUseArrowSizeForThumb(true);
-                        windowsLight.SetThumbMargin(1);
+                        windowsLight.ArrowMargin[states] = 1;
+                        windowsLight.UseArrowSizeForThumb[states] = true;
+                        windowsLight.ThumbMargin[states] = 1;
                     }
 
                     return windowsLight;
@@ -221,18 +357,19 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if(visualStudioDark is null)
+                    if (visualStudioDark is null)
                     {
                         visualStudioDark = new();
+                        var states = visualStudioDark.AllStates;
                         visualStudioDark.Background[VisualControlState.Normal] = (62, 62, 66);
                         visualStudioDark.CornerBackground[VisualControlState.Normal] = (62, 62, 66);
                         visualStudioDark.Arrow[VisualControlState.Normal] = (153, 153, 153);
                         visualStudioDark.Arrow[VisualControlState.Hovered] = (28, 151, 234);
                         visualStudioDark.ThumbBackground[VisualControlState.Normal] = (0, 0, 0);
                         visualStudioDark.ThumbBorder[VisualControlState.Normal] = (104, 104, 104);
-                        visualStudioDark.SetArrowMargin(1);
-                        visualStudioDark.SetUseArrowSizeForThumb(false);
-                        visualStudioDark.SetThumbMargin(0);
+                        visualStudioDark.ArrowMargin[states] = 1;
+                        visualStudioDark.UseArrowSizeForThumb[states] = false;
+                        visualStudioDark.ThumbMargin[states] = 0;
                     }
 
                     return visualStudioDark;
@@ -251,18 +388,21 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if(visualStudioLight is null)
+                    if (visualStudioLight is null)
                     {
                         visualStudioLight = new();
+
+                        var states = visualStudioLight.AllStates;
+
                         visualStudioLight.Background[VisualControlState.Normal] = (245, 245, 245);
                         visualStudioLight.Arrow[VisualControlState.Normal] = (134, 137, 153);
                         visualStudioLight.Arrow[VisualControlState.Hovered] = (28, 151, 234);
                         visualStudioLight.ThumbBackground[VisualControlState.Normal] = (255, 255, 255);
                         visualStudioLight.ThumbBorder[VisualControlState.Normal] = (0, 0, 0);
                         visualStudioLight.CornerBackground[VisualControlState.Normal] = (245, 245, 245);
-                        visualStudioLight.SetArrowMargin(1);
-                        visualStudioLight.SetUseArrowSizeForThumb(false);
-                        visualStudioLight.SetThumbMargin(0);
+                        visualStudioLight.ArrowMargin[states] = 1;
+                        visualStudioLight.UseArrowSizeForThumb[states] = false;
+                        visualStudioLight.ThumbMargin[states] = 0;
                     }
 
                     return visualStudioLight;
@@ -273,6 +413,12 @@ namespace Alternet.UI
                     visualStudioLight = value;
                 }
             }
+
+            /// <summary>
+            /// Gets array of the visual states which are initialized
+            /// in the constructor with the default values.
+            /// </summary>
+            public virtual VisualControlState[] AllStates => AllStatesDefault;
 
             /// <summary>
             /// Returns theme colors for the specified <paramref name="theme"/> and
@@ -308,77 +454,58 @@ namespace Alternet.UI
                         return WindowsDarkTheme;
                     case KnownTheme.WindowsLight:
                         return WindowsLightTheme;
+                    case KnownTheme.MauiDark:
+                        return MauiDarkTheme;
+                    case KnownTheme.MauiLight:
+                        return MauiLightTheme;
+                    case KnownTheme.MauiAuto:
+                        if (isDark)
+                            return MauiDarkTheme;
+                        return MauiLightTheme;
                 }
             }
 
             /// <summary>
-            /// Sets whether arrows are visible. Applies value to all states.
+            /// Assigns properties of this object with the properties of another object.
             /// </summary>
-            public virtual void SetArrowsVisible(bool value)
+            /// <param name="assignFrom">Object which properties will be assigned to this object.</param>
+            public void Assign(ThemeMetrics assignFrom)
             {
-                ArrowsVisible[VisualControlState.Normal] = value;
-                ArrowsVisible[VisualControlState.Hovered] = value;
-                ArrowsVisible[VisualControlState.Disabled] = value;
-                ArrowsVisible[VisualControlState.Pressed] = value;
+                UpArrowImage = assignFrom.UpArrowImage.Clone();
+                DownArrowImage = assignFrom.DownArrowImage.Clone();
+                LeftArrowImage = assignFrom.LeftArrowImage.Clone();
+                RightArrowImage = assignFrom.RightArrowImage.Clone();
+                CornerBackground = assignFrom.CornerBackground.Clone();
+                Background = assignFrom.Background.Clone();
+                Arrow = assignFrom.Arrow.Clone();
+                ThumbBackground = assignFrom.ThumbBackground.Clone();
+                ArrowMargin = assignFrom.ArrowMargin.Clone();
+                UseArrowSizeForThumb = assignFrom.UseArrowSizeForThumb.Clone();
+                ThumbMargin = assignFrom.ThumbMargin.Clone();
+                ArrowsVisible = assignFrom.ArrowsVisible.Clone();
+                ThumbVisible = assignFrom.ThumbVisible.Clone();
+                ButtonsVisible = assignFrom.ButtonsVisible.Clone();
+                ThumbBorder = assignFrom.ThumbBorder.Clone();
             }
 
             /// <summary>
-            /// Sets whether thumb is visible. Applies value to all states.
+            /// Creates clone of this object.
             /// </summary>
-            public virtual void SetThumbVisible(bool value)
+            /// <returns></returns>
+            public ThemeMetrics Clone()
             {
-                ThumbVisible[VisualControlState.Normal] = value;
-                ThumbVisible[VisualControlState.Hovered] = value;
-                ThumbVisible[VisualControlState.Disabled] = value;
-                ThumbVisible[VisualControlState.Pressed] = value;
+                ThemeMetrics result = new();
+                result.Assign(this);
+                return result;
             }
 
             /// <summary>
-            /// Sets whether buttons are visible. Applies value to all states.
+            /// Raises <see cref="ThemeInitialize"/> event.
             /// </summary>
-            public virtual void SetButtonsVisible(bool value)
+            /// <param name="e">Event arguments.</param>
+            public virtual void RaiseThemeInitialize(ThemeInitializeArgs e)
             {
-                ButtonsVisible[VisualControlState.Normal] = value;
-                ButtonsVisible[VisualControlState.Hovered] = value;
-                ButtonsVisible[VisualControlState.Disabled] = value;
-                ButtonsVisible[VisualControlState.Pressed] = value;
-            }
-
-            /// <summary>
-            /// Sets distance (in dips) between arrow button and arrow.
-            /// Applies value to all states.
-            /// </summary>
-            public virtual void SetArrowMargin(Coord value)
-            {
-                ArrowMargin[VisualControlState.Normal] = value;
-                ArrowMargin[VisualControlState.Hovered] = value;
-                ArrowMargin[VisualControlState.Disabled] = value;
-                ArrowMargin[VisualControlState.Pressed] = value;
-            }
-
-            /// <summary>
-            /// Sets whether to use arrow width as the thumb width for the vertical scrollbar
-            /// and arrow height as the thumb height for the horizontal scrollbar.
-            /// Applies value to all states.
-            /// </summary>
-            public virtual void SetUseArrowSizeForThumb(bool value)
-            {
-                UseArrowSizeForThumb[VisualControlState.Normal] = value;
-                UseArrowSizeForThumb[VisualControlState.Hovered] = value;
-                UseArrowSizeForThumb[VisualControlState.Disabled] = value;
-                UseArrowSizeForThumb[VisualControlState.Pressed] = value;
-            }
-
-            /// <summary>
-            /// Sets distance (in dips) between thumb and scrollbar bounds.
-            /// Applies value to all states.
-            /// </summary>
-            public virtual void SetThumbMargin(Coord value)
-            {
-                ThumbMargin[VisualControlState.Normal] = value;
-                ThumbMargin[VisualControlState.Hovered] = value;
-                ThumbMargin[VisualControlState.Disabled] = value;
-                ThumbMargin[VisualControlState.Pressed] = value;
+                ThemeInitialize?.Invoke(this, e);
             }
         }
     }

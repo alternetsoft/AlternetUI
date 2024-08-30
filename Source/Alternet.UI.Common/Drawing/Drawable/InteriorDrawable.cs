@@ -268,27 +268,31 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes this drawable with the specified color settings.
         /// </summary>
-        public virtual void SetScrollBarColors(ScrollBar.ThemeMetrics colors)
+        public virtual void SetThemeMetrics(ScrollBar.ThemeMetrics metrics)
         {
             VertScrollBar ??= new();
             VertScrollBar.IsVertical = true;
-            VertScrollBar.SetThemeMetrics(colors);
+            VertScrollBar.SetThemeMetrics(metrics);
 
             HorzScrollBar ??= new();
             HorzScrollBar.IsVertical = false;
-            HorzScrollBar.SetThemeMetrics(colors);
+            HorzScrollBar.SetThemeMetrics(metrics);
 
             Corner ??= new();
-            Corner.Brush = colors.CornerBackground[VisualControlState.Normal].AsBrush
-                ?? colors.Background[VisualControlState.Normal].AsBrush;
+            Corner.Brush = metrics.CornerBackground[VisualControlState.Normal].AsBrush
+                ?? metrics.Background[VisualControlState.Normal].AsBrush;
+
+            ScrollBar.ThemeInitializeArgs e = new(metrics);
+            e.Interior = this;
+            metrics.RaiseThemeInitialize(e);
         }
 
         /// <summary>
         /// Initialized this drawable with default settings for the specified color theme.
         /// </summary>
-        public virtual void SetScrollBarColors(ScrollBar.KnownTheme theme, bool isDark = false)
+        public virtual void SetThemeMetrics(ScrollBar.KnownTheme theme, bool isDark = false)
         {
-            SetScrollBarColors(ScrollBar.ThemeMetrics.GetColors(theme, isDark));
+            SetThemeMetrics(ScrollBar.ThemeMetrics.GetColors(theme, isDark));
         }
     }
 }

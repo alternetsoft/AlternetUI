@@ -159,10 +159,14 @@ namespace Alternet.Drawing
             Thumb.Hovered = CreateThumbState(VisualControlState.Hovered);
             Thumb.Disabled = CreateThumbState(VisualControlState.Disabled);
 
-            InitArrowStates(ref UpArrow, KnownSvgImages.ImgTriangleArrowUp);
-            InitArrowStates(ref DownArrow, KnownSvgImages.ImgTriangleArrowDown);
-            InitArrowStates(ref LeftArrow, KnownSvgImages.ImgTriangleArrowLeft);
-            InitArrowStates(ref RightArrow, KnownSvgImages.ImgTriangleArrowRight);
+            InitArrowStates(ref UpArrow, themeMetrics.UpArrowImage);
+            InitArrowStates(ref DownArrow, themeMetrics.DownArrowImage);
+            InitArrowStates(ref LeftArrow, themeMetrics.LeftArrowImage);
+            InitArrowStates(ref RightArrow, themeMetrics.RightArrowImage);
+
+            ScrollBar.ThemeInitializeArgs e = new(themeMetrics);
+            e.ScrollBar = this;
+            themeMetrics.RaiseThemeInitialize(e);
 
             RectangleDrawable? CreateBackgroundState(VisualControlState state)
             {
@@ -200,7 +204,9 @@ namespace Alternet.Drawing
                 return result;
             }
 
-            void InitArrowStates(ref ControlStateObjects<RectangleDrawable>? arrow, SvgImage svgImage)
+            void InitArrowStates(
+                ref ControlStateObjects<RectangleDrawable>? arrow,
+                EnumArray<VisualControlState, SvgImage> svgImage)
             {
                 arrow ??= new();
 
@@ -217,7 +223,7 @@ namespace Alternet.Drawing
 
                     RectangleDrawable result = new();
 
-                    result.SvgImage = new(svgImage, arrow.AsColor);
+                    result.SvgImage = new(svgImage[state], arrow.AsColor);
                     result.HasImage = true;
                     result.Stretch = false;
                     result.CenterHorz = true;
