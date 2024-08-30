@@ -204,7 +204,6 @@ namespace Alternet.UI
             if (graphics is null)
             {
                 graphics = new(dc);
-                graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
             }
             else
             {
@@ -232,7 +231,11 @@ namespace Alternet.UI
             dc.Save();
             //dc.Skew((float)clientRect.Left, (float)clientRect.Top);
 
+            graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
+
             control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
+
+            graphics.UseUnscaledDrawImage = false;
 
             dc.Restore();
 
