@@ -149,6 +149,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Sets default border.
+        /// </summary>
+        /// <param name="isDarkBackground">Whether to use default border for the dark background
+        /// or for the light background.</param>
+        public virtual void SetDefaultBorder(bool isDarkBackground)
+        {
+            Border = new();
+            Border.Border = new();
+            Border.Border.Color = ColorUtils.GetDefaultBorderColor(isDarkBackground);
+        }
+
+        /// <summary>
         /// Performs layout of the drawable childs.
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>

@@ -34,6 +34,7 @@ namespace Alternet.UI
 
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
+        private readonly InteriorDrawable interior = new();
 
         static SkiaContainer()
         {
@@ -45,6 +46,10 @@ namespace Alternet.UI
         /// </summary>
         public SkiaContainer()
         {
+            interior.Metrics = ScrollBar.DefaultMetrics;
+            interior.SetDefaultBorder(true);
+            interior.SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
+
             /*Orientation = Microsoft.Maui.ScrollOrientation.Both;*/
 
             /*VerticalScrollBarVisibility = ScrollBarVisibility.Always;
@@ -75,14 +80,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets control interior element (border and scrollbars).
+        /// </summary>
+        public InteriorDrawable Interior => interior;
+
+        /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image.
         /// </summary>
-        public bool UseUnscaledDrawImage { get; set; } = true;
+        public virtual bool UseUnscaledDrawImage { get; set; } = true;
 
         /// <summary>
         /// Gets or sets attached <see cref="Alternet.UI.Control"/>.
         /// </summary>
-        public Alternet.UI.Control? Control
+        public virtual Alternet.UI.Control? Control
         {
             get => control;
 
@@ -204,18 +214,31 @@ namespace Alternet.UI
             graphics.OriginalScaleFactor = scaleFactor;
 
             var dirtyRect = dc.LocalClipBounds;
-
             var bounds = Bounds;
 
-            control.Bounds = (
+            RectD newBounds = (
                 0,
                 0,
                 Math.Min(bounds.Width, dirtyRect.Width),
                 Math.Min(bounds.Height, dirtyRect.Height));
 
+            interior.Bounds = newBounds;
+            interior.PerformLayout(scaleFactor, out var clientRect);
+
+            control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
+
             dc.Clear(control.BackColor);
 
+            dc.Save();
+            //dc.Skew((float)clientRect.Left, (float)clientRect.Top);
+
             control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
+
+            dc.Restore();
+
+            interior.VertPosition = ScrollBar.AltPositionInfo.Default;
+            interior.HorzPosition = ScrollBar.AltPositionInfo.Default;
+            interior.Draw(control, graphics);
 
             dc.Flush();
             dc.Restore();
