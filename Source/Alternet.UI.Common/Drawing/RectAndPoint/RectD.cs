@@ -924,6 +924,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Scales X and Y (multiplies them) using the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor.</param>
+        public void ScaleLocation(Coord scaleFactor)
+        {
+            x *= scaleFactor;
+            y *= scaleFactor;
+        }
+
+        /// <summary>
         /// Creates a string representation of this object based on the format string
         /// and <see cref="IFormatProvider"/> passed in.
         /// If the provider is null, the

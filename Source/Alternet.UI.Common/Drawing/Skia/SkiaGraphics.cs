@@ -364,9 +364,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawImage(Image image, PointD origin)
         {
-            RectD rect = (origin, SizeD.Empty);
-
-            BeforeDrawImage(ref image, ref rect);
+            BeforeDrawImage(ref image, ref origin);
             canvas.DrawBitmap((SKBitmap)image, origin, InterpolationModePaint);
             AfterDrawImage();
         }
@@ -374,7 +372,9 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect)
         {
-            BeforeDrawImage(ref image, ref destinationRect);
+            var origin = destinationRect.Location;
+            if (BeforeDrawImage(ref image, ref origin))
+                destinationRect.Location = origin;
             canvas.DrawBitmap((SKBitmap)image, destinationRect, InterpolationModePaint);
             AfterDrawImage();
         }
@@ -382,8 +382,13 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
-            if (BeforeDrawImage(ref image, ref destinationRect))
-                sourceRect.Scale(OriginalScaleFactor);
+            var origin = destinationRect.Location;
+            if (BeforeDrawImage(ref image, ref origin))
+            {
+                destinationRect.Location = origin;
+                sourceRect.ScaleLocation(OriginalScaleFactor);
+            }
+
             canvas.DrawBitmap((SKBitmap)image, sourceRect, destinationRect, InterpolationModePaint);
             AfterDrawImage();
         }
@@ -442,15 +447,16 @@ namespace Alternet.Drawing
         /// Called before any draw image operation.
         /// </summary>
         /// <param name="image"><see cref="Image"/> to draw.</param>
-        /// <param name="rect"><see cref="RectD"/> structure that represents the
-        /// upper-left corner and size of the drawn image on the destination drawing context.</param>
-        protected virtual bool BeforeDrawImage(ref Image image, ref RectD rect)
+        /// <param name="location"><see cref="PointD"/> structure that represents the
+        /// upper-left corner of the drawn image on the destination drawing context.</param>
+        protected virtual bool BeforeDrawImage(ref Image image, ref PointD location)
         {
             DebugImageAssert(image);
 
             if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
             {
-                rect.Scale(OriginalScaleFactor);
+                location.X *= OriginalScaleFactor;
+                location.Y *= OriginalScaleFactor;
                 canvas.Save();
                 canvas.Scale(1 / OriginalScaleFactor);
                 return true;
