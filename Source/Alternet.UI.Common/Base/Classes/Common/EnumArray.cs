@@ -85,5 +85,49 @@ namespace Alternet.UI
                 Data[index] = value;
             }
         }
+
+        /// <summary>
+        /// Sets the same value to all the items with the specified keys.
+        /// </summary>
+        /// <param name="keys">Array of keys.</param>
+        public TValue this[TKey[] keys]
+        {
+            set
+            {
+                SetValues(value, keys);
+            }
+        }
+
+        /// <summary>
+        /// Sets the same value to all the items with the specified keys.
+        /// </summary>
+        /// <param name="keys">Array of keys.</param>
+        /// <param name="value">Value to set.</param>
+        public void SetValues(TValue value, TKey[] keys)
+        {
+            foreach (var key in keys)
+                this[key] = value;
+        }
+
+        /// <summary>
+        /// Assigns properties of this object with the properties of another object.
+        /// </summary>
+        /// <param name="assignFrom">Object which properties will be assigned to this object.</param>
+        public void Assign(EnumArray<TKey, TValue> assignFrom)
+        {
+            var length = Math.Min(Data.Length, assignFrom.Data.Length);
+            Array.Copy(assignFrom.Data, 0, Data, 0, length);
+        }
+
+        /// <summary>
+        /// Creates clone of this object.
+        /// </summary>
+        /// <returns></returns>
+        public EnumArray<TKey, TValue> Clone()
+        {
+            EnumArray<TKey, TValue> result = new();
+            result.Assign(this);
+            return result;
+        }
     }
 }
