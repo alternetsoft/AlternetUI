@@ -149,6 +149,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Sets default border.
+        /// </summary>
+        /// <param name="isDarkBackground">Whether to use default border for the dark background
+        /// or for the light background.</param>
+        public virtual void SetDefaultBorder(bool isDarkBackground)
+        {
+            Border = new();
+            Border.Border = new();
+            Border.Border.Color = ColorUtils.GetDefaultBorderColor(isDarkBackground);
+        }
+
+        /// <summary>
         /// Performs layout of the drawable childs.
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
@@ -266,29 +278,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes this drawable with the specified color settings.
-        /// </summary>
-        public virtual void SetScrollBarColors(ScrollBar.ThemeMetrics colors)
-        {
-            VertScrollBar ??= new();
-            VertScrollBar.IsVertical = true;
-            VertScrollBar.SetThemeMetrics(colors);
-
-            HorzScrollBar ??= new();
-            HorzScrollBar.IsVertical = false;
-            HorzScrollBar.SetThemeMetrics(colors);
-
-            Corner ??= new();
-            Corner.Brush = colors.CornerBackground[VisualControlState.Normal].AsBrush
-                ?? colors.Background[VisualControlState.Normal].AsBrush;
-        }
-
-        /// <summary>
         /// Initialized this drawable with default settings for the specified color theme.
         /// </summary>
-        public virtual void SetScrollBarColors(ScrollBar.KnownTheme theme, bool isDark = false)
+        public void SetThemeMetrics(ScrollBar.KnownTheme theme, bool isDark = false)
         {
-            SetScrollBarColors(ScrollBar.ThemeMetrics.GetColors(theme, isDark));
+            var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
+            themeObj.AssignTo(this);
         }
     }
 }

@@ -114,7 +114,7 @@ namespace ControlsSample
         {
             rect.Inflate(-20);
 
-            drawable.SetScrollBarColors(theme);
+            drawable.SetThemeMetrics(theme);
             drawable.Background ??= new();
             drawable.Background.Brush = Color.GreenYellow.AsBrush;
 
