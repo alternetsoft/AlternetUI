@@ -118,9 +118,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Contains different themes colors for the scrollbar parts.
+        /// Custom scrollbar theme without any properties.
         /// </summary>
-        public class ThemeMetrics
+        public class CustomThemeMetrics
+        {
+            /// <summary>
+            /// Initializes interior drawable with this theme colors and metrics.
+            /// </summary>
+            public virtual void AssignTo(InteriorDrawable interior)
+            {
+            }
+
+            /// <summary>
+            /// Initializes scrollbar drawable with this theme colors and metrics.
+            /// </summary>
+            public virtual void AssignTo(ScrollBarDrawable scrollBar)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Contains themes colors and metrics for the scrollbar parts.
+        /// </summary>
+        public class ThemeMetrics : CustomThemeMetrics
         {
             /// <summary>
             /// Gets default array of the visual states which are initialized
@@ -428,7 +448,7 @@ namespace Alternet.UI
             /// themes is specified in the <paramref name="theme"/> parameter.</param>
             /// <param name="theme"><see cref="KnownTheme"/> value.</param>
             /// <returns></returns>
-            public static ThemeMetrics GetColors(KnownTheme theme, bool isDark = false)
+            public static ThemeMetrics GetTheme(KnownTheme theme, bool isDark = false)
             {
                 switch (theme)
                 {
@@ -437,7 +457,7 @@ namespace Alternet.UI
                         theme = SystemTheme;
                         if (theme == KnownTheme.System)
                             theme = KnownTheme.WindowsAuto;
-                        return GetColors(theme, isDark);
+                        return GetTheme(theme, isDark);
                     case KnownTheme.VisualStudioAuto:
                         if (isDark)
                             return VisualStudioDarkTheme;
@@ -469,7 +489,7 @@ namespace Alternet.UI
             /// Assigns properties of this object with the properties of another object.
             /// </summary>
             /// <param name="assignFrom">Object which properties will be assigned to this object.</param>
-            public void Assign(ThemeMetrics assignFrom)
+            public virtual void Assign(ThemeMetrics assignFrom)
             {
                 UpArrowImage = assignFrom.UpArrowImage.Clone();
                 DownArrowImage = assignFrom.DownArrowImage.Clone();
@@ -492,20 +512,123 @@ namespace Alternet.UI
             /// Creates clone of this object.
             /// </summary>
             /// <returns></returns>
-            public ThemeMetrics Clone()
+            public virtual ThemeMetrics Clone()
             {
                 ThemeMetrics result = new();
                 result.Assign(this);
                 return result;
             }
 
-            /// <summary>
-            /// Raises <see cref="ThemeInitialize"/> event.
-            /// </summary>
-            /// <param name="e">Event arguments.</param>
-            public virtual void RaiseThemeInitialize(ThemeInitializeArgs e)
+            /// <inheritdoc/>
+            public override void AssignTo(InteriorDrawable interior)
             {
+                interior.VertScrollBar ??= new();
+                interior.VertScrollBar.IsVertical = true;
+                this.AssignTo(interior.VertScrollBar);
+
+                interior.HorzScrollBar ??= new();
+                interior.HorzScrollBar.IsVertical = false;
+                this.AssignTo(interior.HorzScrollBar);
+
+                interior.Corner ??= new();
+                interior.Corner.Brush = this.CornerBackground[VisualControlState.Normal].AsBrush
+                    ?? this.Background[VisualControlState.Normal].AsBrush;
+
+                ScrollBar.ThemeInitializeArgs e = new(this);
+                e.Interior = interior;
                 ThemeInitialize?.Invoke(this, e);
+            }
+
+            /// <inheritdoc/>
+            public override void AssignTo(ScrollBarDrawable scrollBar)
+            {
+                scrollBar.ArrowMargin = this.ArrowMargin;
+                scrollBar.UseArrowSizeForThumb = this.UseArrowSizeForThumb;
+                scrollBar.ThumbMargin = this.ThumbMargin;
+
+                scrollBar.Background = new();
+                scrollBar.Background.Normal = CreateBackgroundState(VisualControlState.Normal);
+                scrollBar.Background.Hovered = CreateBackgroundState(VisualControlState.Hovered);
+                scrollBar.Background.Disabled = CreateBackgroundState(VisualControlState.Disabled);
+
+                scrollBar.Thumb = new();
+                scrollBar.Thumb.Normal = CreateThumbState(VisualControlState.Normal);
+                scrollBar.Thumb.Hovered = CreateThumbState(VisualControlState.Hovered);
+                scrollBar.Thumb.Disabled = CreateThumbState(VisualControlState.Disabled);
+
+                InitArrowStates(ref scrollBar.UpArrow, this.UpArrowImage);
+                InitArrowStates(ref scrollBar.DownArrow, this.DownArrowImage);
+                InitArrowStates(ref scrollBar.LeftArrow, this.LeftArrowImage);
+                InitArrowStates(ref scrollBar.RightArrow, this.RightArrowImage);
+
+                ScrollBar.ThemeInitializeArgs e = new(this);
+                e.ScrollBar = scrollBar;
+                ThemeInitialize?.Invoke(this, e);
+
+                RectangleDrawable? CreateBackgroundState(VisualControlState state)
+                {
+                    var background = this.Background[state];
+
+                    if (background is null)
+                        return null;
+
+                    RectangleDrawable result = new();
+
+                    result.Brush = background.AsBrush;
+
+                    return result;
+                }
+
+                RectangleDrawable? CreateThumbState(VisualControlState state)
+                {
+                    var background = this.ThumbBackground[state];
+                    var border = this.ThumbBorder[state];
+
+                    if (background is null && border is null)
+                        return null;
+
+                    RectangleDrawable result = new();
+
+                    result.Brush = background?.AsBrush;
+
+                    if (border is not null)
+                    {
+                        result.Border = new();
+                        result.Border.Color = border.AsColor;
+                        result.Border.Width = 1;
+                    }
+
+                    return result;
+                }
+
+                void InitArrowStates(
+                    ref ControlStateObjects<RectangleDrawable>? arrow,
+                    EnumArray<VisualControlState, SvgImage> svgImage)
+                {
+                    arrow ??= new();
+
+                    arrow.Normal = CreateStateProps(VisualControlState.Normal);
+                    arrow.Hovered = CreateStateProps(VisualControlState.Hovered);
+                    arrow.Disabled = CreateStateProps(VisualControlState.Disabled);
+
+                    RectangleDrawable? CreateStateProps(VisualControlState state)
+                    {
+                        var arrow = this.Arrow[state];
+
+                        if (arrow is null)
+                            return null;
+
+                        RectangleDrawable result = new();
+
+                        result.SvgImage = new(svgImage[state], arrow.AsColor);
+                        result.HasImage = true;
+                        result.Stretch = false;
+                        result.CenterHorz = true;
+                        result.CenterVert = true;
+
+                        return result;
+                    }
+                }
             }
         }
     }
