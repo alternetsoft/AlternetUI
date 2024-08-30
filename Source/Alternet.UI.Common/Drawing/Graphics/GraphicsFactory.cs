@@ -39,6 +39,14 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets function which is used when
+        /// <see cref="BrushAndPen"/> is converted to <see cref="SKPaint"/>
+        /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
+        /// </summary>
+        public static Func<BrushAndPen, SKPaint> BrushAndPenToStrokeAndFillPaint
+            = (brushAndPen) => GraphicsFactory.CreateStrokeAndFillPaint(brushAndPen);
+
+        /// <summary>
+        /// Gets or sets function which is used when
         /// <see cref="Font"/> is converted to <see cref="SKPaint"/>
         /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
         /// </summary>
@@ -441,6 +449,17 @@ namespace Alternet.Drawing
             result.Style = SKPaintStyle.StrokeAndFill;
             SetPaintDefaults(result);
             return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.StrokeAndFill"/> style
+        /// for the specified <see cref="BrushAndPen"/> value.
+        /// </summary>
+        /// <param name="brushAndPen">Brush and pen for which <see cref="SKPaint"/> is created.</param>
+        /// <returns></returns>
+        public static SKPaint CreateStrokeAndFillPaint(BrushAndPen brushAndPen)
+        {
+            return brushAndPen.AsPaint;
         }
 
         /// <summary>

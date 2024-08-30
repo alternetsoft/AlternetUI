@@ -135,6 +135,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Checks whether <see cref="Pen"/> and <see cref="Brush"/> parameters are ok.
+        /// </summary>
+        /// <param name="pen">Pen parameter value.</param>
+        /// <param name="brush">Brush parameter value.</param>
+        /// <exception cref="Exception">Raised if parameters are not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugAssert(Pen pen, Brush brush)
+        {
+            DebugPenAssert(pen);
+            DebugBrushAssert(brush);
+        }
+
+        /// <summary>
         /// Checks whether array of <see cref="PointD"/> parameter is ok.
         /// </summary>
         /// <param name="points">Parameter value.</param>
