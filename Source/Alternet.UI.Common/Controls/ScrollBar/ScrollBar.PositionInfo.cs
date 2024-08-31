@@ -7,69 +7,6 @@ namespace Alternet.UI
     public partial class ScrollBar
     {
         /// <summary>
-        /// Contains information about the scrollbar position and range.
-        /// </summary>
-        public struct PositionInfo
-        {
-            /// <summary>
-            /// Gets or sets the position of the scrollbar in scroll units.
-            /// </summary>
-            public int Position;
-
-            /// <summary>
-            /// Gets or sets whether scrollbar is visible.
-            /// </summary>
-            public bool Visible = true;
-
-            /// <summary>
-            /// Gets or sets the size of the thumb, or visible portion of the
-            /// scrollbar, in scroll units.
-            /// </summary>
-            public int ThumbSize;
-
-            /// <summary>
-            /// Gets or sets the maximum position of the scrollbar.
-            /// </summary>
-            public int Range;
-
-            /// <summary>
-            /// Gets or sets the size of the page size in scroll units. This is the
-            /// number of units the scrollbar will scroll when it is paged up or down.
-            /// Often it is the same as the thumb size.
-            /// </summary>
-            public int PageSize;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PositionInfo"/> struct.
-            /// </summary>
-            public PositionInfo()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PositionInfo"/> struct.
-            /// </summary>
-            /// <param name="position">The position of the scrollbar in scroll units.</param>
-            /// <param name="thumbSize">The size of the thumb, or visible portion of the
-            /// scrollbar, in scroll units.</param>
-            /// <param name="range">The maximum position of the scrollbar.</param>
-            /// <param name="pageSize">The size of the page size in scroll units. This is the
-            /// number of units the scrollbar will scroll when it is paged up or down.
-            /// Often it is the same as the thumb size.</param>
-            public PositionInfo(
-                int position,
-                int thumbSize,
-                int range,
-                int pageSize)
-            {
-                Position = position;
-                ThumbSize = thumbSize;
-                Range = range;
-                PageSize = pageSize;
-            }
-        }
-
-        /// <summary>
         /// Contains information about the scrollbar position and range in the alternative format.
         /// </summary>
         public class AltPositionInfo : ImmutableObject
@@ -256,17 +193,17 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Converts this object to <see cref="PositionInfo"/>.
+            /// Converts this object to <see cref="ScrollBarInfo"/>.
             /// </summary>
             /// <returns></returns>
-            public virtual PositionInfo AsPositionInfo()
+            public virtual ScrollBarInfo AsPositionInfo()
             {
                 var range = (Maximum - Minimum) * SmallChange;
                 var pageSize = LargeChange * SmallChange;
                 var position = (Value - Minimum) * SmallChange;
                 var thumbSize = pageSize;
 
-                var result = new PositionInfo(position, thumbSize, range, pageSize);
+                var result = new ScrollBarInfo(position, thumbSize, range, pageSize);
                 return result;
             }
         }

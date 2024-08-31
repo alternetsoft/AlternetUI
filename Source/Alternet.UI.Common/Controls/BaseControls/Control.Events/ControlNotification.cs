@@ -10,10 +10,10 @@ namespace Alternet.UI
     public class ControlNotification : IControlNotification
     {
         /// <inheritdoc/>
-        public virtual void AfterSetScrollBarPosition(
+        public virtual void AfterSetScrollBarInfo(
             Control sender,
             bool isVertical,
-            ScrollBar.PositionInfo value)
+            ScrollBarInfo value)
         {
         }
 

@@ -81,6 +81,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controls\BaseControls\Interfaces\" />
+  </ItemGroup>
+
   <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\SignDll.proj" />
 
 </Project>

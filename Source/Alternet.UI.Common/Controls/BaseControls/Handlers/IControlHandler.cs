@@ -94,16 +94,6 @@ namespace Alternet.UI
         Action? DragLeave { get; set; }
 
         /// <summary>
-        /// Gets or sets an action which is called when 'VerticalScrollBarValueChanged' event is raised.
-        /// </summary>
-        Action? VerticalScrollBarValueChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'HorizontalScrollBarValueChanged' event is raised.
-        /// </summary>
-        Action? HorizontalScrollBarValueChanged { get; set; }
-
-        /// <summary>
         /// Gets or sets an action which is called when 'SizeChanged' event is raised.
         /// </summary>
         Action? SizeChanged { get; set; }
@@ -140,27 +130,6 @@ namespace Alternet.UI
         bool WantChars { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to show horizontal scrollbar.
-        /// </summary>
-        bool ShowHorzScrollBar { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to show vertical scrollbar.
-        /// </summary>
-        bool ShowVertScrollBar { get; set; }
-
-        /// <inheritdoc cref="Control.TabStop"/>
-        bool TabStop { get; }
-
-        /// <inheritdoc cref="Control.CanSelect"/>
-        bool CanSelect { get; }
-
-        /// <summary>
-        /// Gets or sets whether or not scrollbars are always visible.
-        /// </summary>
-        bool ScrollBarAlwaysVisible { get; set; }
-
-        /// <summary>
         /// Gets native control bounds. Valid only in the event handler.
         /// </summary>
         RectD EventBounds { get; }
@@ -192,9 +161,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Control.IntrinsicPreferredSizePadding"/>
         Thickness IntrinsicPreferredSizePadding { get; }
-
-        /// <inheritdoc cref="Control.IsScrollable"/>
-        bool IsScrollable { get; set; }
 
         /// <inheritdoc cref="Control.Bounds"/>
         RectD Bounds { get; set; }
@@ -231,9 +197,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Control.ProcessIdle"/>
         bool ProcessIdle { get; set; }
-
-        /// <inheritdoc cref="Control.BindScrollEvents"/>
-        bool BindScrollEvents { get; set; }
 
         /// <inheritdoc cref="Control.ClientSize"/>
         SizeD ClientSize { get; set; }
@@ -324,26 +287,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.GetUpdateClientRectI"/>
         RectI GetUpdateClientRectI();
 
-        /// <inheritdoc cref="Control.SetScrollBar"/>
-        void SetScrollBar(
-            bool isVertical,
-            bool visible,
-            int value,
-            int largeChange,
-            int maximum);
-
-        /// <inheritdoc cref="Control.IsScrollBarVisible"/>
-        bool IsScrollBarVisible(bool isVertical);
-
-        /// <inheritdoc cref="Control.GetScrollBarValue"/>
-        int GetScrollBarValue(bool isVertical);
-
-        /// <inheritdoc cref="Control.GetScrollBarLargeChange"/>
-        int GetScrollBarLargeChange(bool isVertical);
-
-        /// <inheritdoc cref="Control.GetScrollBarMaximum"/>
-        int GetScrollBarMaximum(bool isVertical);
-
         /// <summary>
         /// Resets background color.
         /// </summary>
@@ -366,9 +309,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.GetDefaultAttributesFont"/>
         Font? GetDefaultAttributesFont();
 
-        /// <inheritdoc cref="Control.AlwaysShowScrollbars"/>
-        void AlwaysShowScrollbars(bool hflag = true, bool vflag = true);
-
         /// <inheritdoc cref="Control.Update"/>
         void Update();
 
@@ -380,18 +320,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Control.GetPreferredSize(SizeD)"/>
         SizeD GetPreferredSize(SizeD availableSize);
-
-        /// <summary>
-        /// Gets scrollbar position. Available only in the event handler.
-        /// </summary>
-        /// <returns></returns>
-        int GetScrollBarEvtPosition();
-
-        /// <summary>
-        /// Gets scrollbar event type. Available only in the event handler.
-        /// </summary>
-        /// <returns></returns>
-        ScrollEventType GetScrollBarEvtKind();
 
         /// <summary>
         /// Opens drawing context. Available only in the event handler.

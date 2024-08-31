@@ -272,10 +272,10 @@ namespace Alternet.UI
         public AltPositionInfo AltPosInfo => pos;
 
         /// <summary>
-        /// Gets scrollbar position as <see cref="PositionInfo"/>.
+        /// Gets scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public PositionInfo PosInfo => pos.AsPositionInfo();
+        public ScrollBarInfo PosInfo => pos.AsPositionInfo();
 
         /// <summary>
         /// Gets control handler.
@@ -410,10 +410,10 @@ namespace Alternet.UI
         /// be called initially and also from a size event handler function.
         /// </remarks>
         protected virtual void SetScrollbar(
-            int position,
-            int thumbSize,
-            int range,
-            int pageSize,
+            int? position,
+            int? thumbSize,
+            int? range,
+            int? pageSize,
             bool refresh = true)
         {
             Handler.SetScrollbar(

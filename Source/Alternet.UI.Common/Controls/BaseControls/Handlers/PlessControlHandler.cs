@@ -13,6 +13,12 @@ namespace Alternet.UI
     /// </summary>
     public class PlessControlHandler : BaseControlHandler, IControlHandler
     {
+        /// <inheritdoc cref="Control.VertScrollBarInfo"/>
+        ScrollBarInfo IControlHandler.VertScrollBarInfo { get; set; }
+
+        /// <inheritdoc cref="Control.HorzScrollBarInfo"/>
+        ScrollBarInfo IControlHandler.HorzScrollBarInfo { get; set; }
+
         Action<DragEventArgs>? IControlHandler.DragDrop { get; set; }
 
         Action<DragEventArgs>? IControlHandler.DragOver { get; set; }
@@ -60,12 +66,6 @@ namespace Alternet.UI
         Action? IControlHandler.HandleDestroyed { get; set; }
 
         bool IControlHandler.WantChars { get; set; }
-
-        bool IControlHandler.ShowHorzScrollBar { get; set; }
-
-        bool IControlHandler.ShowVertScrollBar { get; set; }
-
-        bool IControlHandler.ScrollBarAlwaysVisible { get; set; }
 
         LangDirection IControlHandler.LangDirection { get; set; }
 
@@ -135,10 +135,6 @@ namespace Alternet.UI
         bool IControlHandler.TabStop => true;
 
         bool IControlHandler.CanSelect => true;
-
-        void IControlHandler.AlwaysShowScrollbars(bool hflag, bool vflag)
-        {
-        }
 
         void IControlHandler.BeginInit()
         {
@@ -228,21 +224,6 @@ namespace Alternet.UI
             return default;
         }
 
-        int IControlHandler.GetScrollBarLargeChange(bool isVertical)
-        {
-            return default;
-        }
-
-        int IControlHandler.GetScrollBarMaximum(bool isVertical)
-        {
-            return default;
-        }
-
-        int IControlHandler.GetScrollBarValue(bool isVertical)
-        {
-            return default;
-        }
-
         RectI IControlHandler.GetUpdateClientRectI()
         {
             return new RectI((0, 0), Control.PixelFromDip(((IControlHandler)this).ClientSize));
@@ -254,11 +235,6 @@ namespace Alternet.UI
 
         void IControlHandler.Invalidate()
         {
-        }
-
-        bool IControlHandler.IsScrollBarVisible(bool isVertical)
-        {
-            return default;
         }
 
         bool IControlHandler.IsTransparentBackgroundSupported()
@@ -330,15 +306,6 @@ namespace Alternet.UI
         }
 
         void IControlHandler.SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
-        {
-        }
-
-        void IControlHandler.SetScrollBar(
-            bool isVertical,
-            bool visible,
-            int value,
-            int largeChange,
-            int maximum)
         {
         }
 

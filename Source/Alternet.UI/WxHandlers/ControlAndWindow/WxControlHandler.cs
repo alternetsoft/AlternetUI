@@ -422,6 +422,32 @@ namespace Alternet.UI
 
         internal bool NativeControlCreated => nativeControl != null;
 
+        public ScrollBarInfo VertScrollBarInfo
+        {
+            get
+            {
+                return GetScrollBarInfo(true);
+            }
+
+            set
+            {
+                SetScrollBarInfo(true, value);
+            }
+        }
+
+        public ScrollBarInfo HorzScrollBarInfo
+        {
+            get
+            {
+                return GetScrollBarInfo(false);
+            }
+
+            set
+            {
+                SetScrollBarInfo(false, value);
+            }
+        }
+
         public object GetNativeControl() => NativeControl;
 
         public override void OnLayoutChanged()
@@ -883,6 +909,36 @@ namespace Alternet.UI
         public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
         {
             NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
+        }
+
+        public ScrollBarInfo GetScrollBarInfo(bool isVertical)
+        {
+            ScrollBarInfo result = new();
+
+            result.Range = GetScrollBarMaximum(isVertical);
+            result.PageSize = GetScrollBarLargeChange(isVertical);
+            result.ThumbSize = result.PageSize;
+            result.Position = GetScrollBarValue(isVertical);
+
+            if (ScrollBarAlwaysVisible)
+                result.Visibility = HiddenOrVisible.Visible;
+            else
+            {
+                result.Visibility = IsScrollBarVisible(isVertical)
+                    ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
+            }
+
+            return result;
+        }
+
+        public void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+            SetScrollBar(
+                       isVertical,
+                       value.IsVisible,
+                       value.Position,
+                       value.PageSize,
+                       value.Range);
         }
     }
 }

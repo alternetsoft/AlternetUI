@@ -12,7 +12,7 @@ using SkiaSharp;
 
 namespace Alternet.UI
 {
-    internal class MauiControlHandler : BaseControlHandler, IControlHandler
+    internal partial class MauiControlHandler : BaseControlHandler, IControlHandler
     {
         public static Color DefaultBackgroundColor = SystemColors.Window;
 
@@ -53,20 +53,6 @@ namespace Alternet.UI
             }
         }
 
-        public virtual bool IsFocused
-        {
-            get => Control.FocusedControl == container?.Control;
-
-            set
-            {
-                if (IsFocused == value)
-                    return;
-                Control.FocusedControl?.RaiseLostFocus();
-                Control.FocusedControl = container?.Control;
-                Control.FocusedControl?.RaiseGotFocus();
-            }
-        }
-
         public SkiaContainer? Container
         {
             get => container;
@@ -98,15 +84,7 @@ namespace Alternet.UI
 
         public Action? MouseCaptureLost { get; set; }
 
-        public Action? GotFocus { get; set; }
-
-        public Action? LostFocus { get; set; }
-
         public Action? DragLeave { get; set; }
-
-        public Action? VerticalScrollBarValueChanged { get; set; }
-
-        public Action? HorizontalScrollBarValueChanged { get; set; }
 
         public Action? SizeChanged { get; set; }
 
@@ -122,12 +100,6 @@ namespace Alternet.UI
 
         public virtual bool WantChars { get; set; }
 
-        public virtual bool ShowHorzScrollBar { get; set; }
-
-        public virtual bool ShowVertScrollBar { get; set; }
-
-        public virtual bool ScrollBarAlwaysVisible { get; set; }
-
         public virtual LangDirection LangDirection { get; set; }
 
         public virtual ControlBorderStyle BorderStyle { get; set; }
@@ -135,8 +107,6 @@ namespace Alternet.UI
         public virtual Thickness IntrinsicLayoutPadding { get; set; }
 
         public virtual Thickness IntrinsicPreferredSizePadding { get; set; }
-
-        public virtual bool IsScrollable { get; set; }
 
         public virtual RectD Bounds { get; set; }
 
@@ -164,22 +134,11 @@ namespace Alternet.UI
 
         public virtual bool IsBold { get; set; }
 
-        public virtual bool TabStop
-        {
-            get => true;
-
-            set
-            {
-            }
-        }
-
         public virtual bool AllowDrop { get; set; }
 
         public virtual ControlBackgroundStyle BackgroundStyle { get; set; }
 
         public virtual bool ProcessIdle { get; set; }
-
-        public virtual bool BindScrollEvents { get; set; }
 
         public virtual SizeD ClientSize
         {
@@ -198,15 +157,6 @@ namespace Alternet.UI
         public SizeI EventNewDpi { get; }
 
         public Action? DpiChanged { get; set; }
-
-        public bool CanSelect
-        {
-            get => true;
-        }
-
-        public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
-        {
-        }
 
         public virtual void BeginInit()
         {
@@ -244,10 +194,6 @@ namespace Alternet.UI
         }
 
         public virtual void EndUpdate()
-        {
-        }
-
-        public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
         }
 
@@ -291,31 +237,6 @@ namespace Alternet.UI
             return availableSize;
         }
 
-        public virtual ScrollEventType GetScrollBarEvtKind()
-        {
-            return default;
-        }
-
-        public virtual int GetScrollBarEvtPosition()
-        {
-            return default;
-        }
-
-        public virtual int GetScrollBarLargeChange(bool isVertical)
-        {
-            return default;
-        }
-
-        public virtual int GetScrollBarMaximum(bool isVertical)
-        {
-            return default;
-        }
-
-        public virtual int GetScrollBarValue(bool isVertical)
-        {
-            return default;
-        }
-
         public virtual RectI GetUpdateClientRectI()
         {
             return new RectI((0, 0), Control.PixelFromDip(ClientSize));
@@ -323,11 +244,6 @@ namespace Alternet.UI
 
         public virtual void HandleNeeded()
         {
-        }
-
-        public virtual bool IsScrollBarVisible(bool isVertical)
-        {
-            return default;
         }
 
         public virtual bool IsTransparentBackgroundSupported()
@@ -403,15 +319,6 @@ namespace Alternet.UI
             return true;
         }
 
-        public virtual void SetScrollBar(
-            bool isVertical,
-            bool visible,
-            int value,
-            int largeChange,
-            int maximum)
-        {
-        }
-
         public virtual void SetToolTip(string? value)
         {
         }
@@ -440,10 +347,6 @@ namespace Alternet.UI
             SKBitmap bitmap = new();
             SKCanvas canvas = new(bitmap);
             return new SkiaGraphics(canvas);
-        }
-
-        public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
-        {
         }
     }
 }

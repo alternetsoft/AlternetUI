@@ -18,6 +18,12 @@ namespace Alternet.UI
         /// </summary>
         Action? LostFocus { get; set; }
 
+        /// <inheritdoc cref="Control.TabStop"/>
+        bool TabStop { get; }
+
+        /// <inheritdoc cref="Control.CanSelect"/>
+        bool CanSelect { get; }
+
         /// <inheritdoc cref="Control.Focused"/>
         bool IsFocused { get; }
 

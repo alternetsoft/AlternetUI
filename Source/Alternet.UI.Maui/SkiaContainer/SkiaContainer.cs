@@ -32,9 +32,10 @@ namespace Alternet.UI
             0.0f,
             propertyChanged: OnSamplePropChanged);
 
+        private readonly InteriorDrawable interior = new();
+
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
-        private readonly InteriorDrawable interior = new();
 
         static SkiaContainer()
         {
@@ -229,7 +230,8 @@ namespace Alternet.UI
             dc.Clear(control.BackColor);
 
             dc.Save();
-            //dc.Skew((float)clientRect.Left, (float)clientRect.Top);
+
+            /*dc.Skew((float)clientRect.Left, (float)clientRect.Top);*/
 
             graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 

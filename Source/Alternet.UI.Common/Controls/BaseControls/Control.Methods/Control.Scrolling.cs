@@ -27,36 +27,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets horizontal scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// Gets or sets horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public ScrollBar.PositionInfo HorzScrollBarPosition
+        public ScrollBarInfo HorzScrollBarInfo
         {
             get
             {
-                return GetScrollBarPosition(false);
+                return Handler.HorzScrollBarInfo;
             }
 
             set
             {
-                SetScrollBarPosition(false, value);
+                SetScrollBarInfo(false, value);
             }
         }
 
         /// <summary>
-        /// Gets or sets vertical scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// Gets or sets vertical scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public ScrollBar.PositionInfo VertScrollBarPosition
+        public ScrollBarInfo VertScrollBarInfo
         {
             get
             {
-                return GetScrollBarPosition(true);
+                return Handler.VertScrollBarInfo;
             }
 
             set
             {
-                SetScrollBarPosition(true, value);
+                SetScrollBarInfo(true, value);
             }
         }
 
@@ -74,78 +74,6 @@ namespace Alternet.UI
             {
                 Handler.BindScrollEvents = value;
             }
-        }
-
-        /// <summary>
-        /// Call this function to force one or both scrollbars to be always shown, even if
-        /// the control is big enough to show its entire contents without scrolling.
-        /// </summary>
-        /// <param name="hflag">Whether the horizontal scroll bar should always be visible.</param>
-        /// <param name="vflag">Whether the vertical scroll bar should always be visible.</param>
-        /// <remarks>
-        /// This function is currently only implemented under Mac/Carbon.
-        /// </remarks>
-        public virtual void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
-        {
-            Handler.AlwaysShowScrollbars(hflag, vflag);
-        }
-
-        /// <summary>
-        /// Sets system scrollbar properties.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <param name="visible">Is scrollbar visible or not.</param>
-        /// <param name="value">Thumb position.</param>
-        /// <param name="largeChange">Large change value (when scrolls page up or down).</param>
-        /// <param name="maximum">Scrollbar Range.</param>
-        public virtual void SetScrollBar(
-            bool isVertical,
-            bool visible,
-            int value,
-            int largeChange,
-            int maximum)
-        {
-            Handler.SetScrollBar(isVertical, visible, value, largeChange, maximum);
-        }
-
-        /// <summary>
-        /// Gets whether system scrollbar is visible.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual bool IsScrollBarVisible(bool isVertical)
-        {
-            return Handler.IsScrollBarVisible(isVertical);
-        }
-
-        /// <summary>
-        /// Gets system scrollbar thumb position.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual int GetScrollBarValue(bool isVertical)
-        {
-            return Handler.GetScrollBarValue(isVertical);
-        }
-
-        /// <summary>
-        /// Gets system scrollbar large change value.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual int GetScrollBarLargeChange(bool isVertical)
-        {
-            return Handler.GetScrollBarLargeChange(isVertical);
-        }
-
-        /// <summary>
-        /// Gets system scrollbar max range.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        public virtual int GetScrollBarMaximum(bool isVertical)
-        {
-            return Handler.GetScrollBarMaximum(isVertical);
         }
 
         /// <summary>
@@ -173,50 +101,105 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets vertical or horizontal scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// Gets vertical or horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         /// <param name="isVertical">Whether to get position for the vertical or horizontal scrollbar.</param>
         /// <returns></returns>
-        public virtual ScrollBar.PositionInfo GetScrollBarPosition(bool isVertical)
+        public ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
-            ScrollBar.PositionInfo result = new()
-            {
-                Position = GetScrollBarValue(isVertical),
-                Visible = IsScrollBarVisible(isVertical),
-                Range = GetScrollBarMaximum(isVertical),
-                PageSize = GetScrollBarLargeChange(isVertical),
-            };
-
-            result.ThumbSize = result.PageSize;
-            return result;
+            if(isVertical)
+                return Handler.VertScrollBarInfo;
+            return Handler.HorzScrollBarInfo;
         }
 
         /// <summary>
-        /// Sets vertical or horizontal scrollbar position as <see cref="ScrollBar.PositionInfo"/>.
+        /// Sets vertical or horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         /// <param name="isVertical">Whether to set position for the vertical or horizontal scrollbar.</param>
         /// <param name="value">Scrollbar position.</param>
-        public virtual void SetScrollBarPosition(bool isVertical, ScrollBar.PositionInfo value)
+        public void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
-            SetScrollBar(
-                isVertical,
-                value.Visible,
-                value.Position,
-                value.PageSize,
-                value.Range);
+            if (isVertical)
+                Handler.VertScrollBarInfo = value;
+            else
+                Handler.HorzScrollBarInfo = value;
 
             foreach (var n in nn)
             {
-                n.AfterSetScrollBarPosition(this, isVertical, value);
+                n.AfterSetScrollBarInfo(this, isVertical, value);
             }
 
             foreach (var n in nn2)
             {
-                n.AfterSetScrollBarPosition(this, isVertical, value);
+                n.AfterSetScrollBarInfo(this, isVertical, value);
             }
+        }
+
+        /// <summary>
+        /// Sets system scrollbar properties.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <param name="visible">Is scrollbar visible or not.</param>
+        /// <param name="value">Thumb position.</param>
+        /// <param name="largeChange">Large change value (when scrolls page up or down).</param>
+        /// <param name="maximum">Scrollbar Range.</param>
+        public void SetScrollBar(
+            bool isVertical,
+            bool visible,
+            int value,
+            int largeChange,
+            int maximum)
+        {
+            ScrollBarInfo info = new(value, largeChange, maximum, largeChange);
+            info.Visibility = visible ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
+
+            if (isVertical)
+                VertScrollBarInfo = info;
+            else
+                HorzScrollBarInfo = info;
+        }
+
+        /// <summary>
+        /// Gets whether system scrollbar is visible.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public bool IsScrollBarVisible(bool isVertical)
+        {
+            return GetScrollBarInfo(isVertical).IsVisible;
+        }
+
+        /// <summary>
+        /// Gets system scrollbar thumb position.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public int GetScrollBarValue(bool isVertical)
+        {
+            return GetScrollBarInfo(isVertical).Position;
+        }
+
+        /// <summary>
+        /// Gets system scrollbar large change value.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public int GetScrollBarLargeChange(bool isVertical)
+        {
+            return GetScrollBarInfo(isVertical).PageSize;
+        }
+
+        /// <summary>
+        /// Gets system scrollbar max range.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
+        /// <returns></returns>
+        public int GetScrollBarMaximum(bool isVertical)
+        {
+            return GetScrollBarInfo(isVertical).Range;
         }
 
         /// <summary>

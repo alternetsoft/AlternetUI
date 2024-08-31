@@ -40,16 +40,20 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public void SetScrollbar(
-            int position,
-            int thumbSize,
-            int range,
-            int pageSize,
+            int? position,
+            int? thumbSize,
+            int? range,
+            int? pageSize,
             bool refresh = true)
         {
-            ThumbPosition = position;
-            Range = range;
-            ThumbSize = thumbSize;
-            PageSize = pageSize;
+            if(position is not null)
+                ThumbPosition = position.Value;
+            if(range is not null)
+                Range = range.Value;
+            if(thumbSize is not null)
+                ThumbSize = thumbSize.Value;
+            if(pageSize is not null)
+                PageSize = pageSize.Value;
         }
     }
 }
