@@ -56,12 +56,10 @@ namespace ControlsSample
 
         private void TreeView_MouseLeftButtonUp(object? sender, MouseEventArgs e)
         {
-            /*site?.LogEvent($"TreeView: MouseLeftButtonUp");*/
         }
 
         private void TreeView_MouseUp(object? sender, MouseEventArgs e)
         {
-            /*site?.LogEvent($"TreeView: MouseUp");*/
         }
 
         internal void SetCustomColors()

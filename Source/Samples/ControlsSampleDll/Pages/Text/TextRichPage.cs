@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using Alternet.Drawing;
+
 using Alternet.UI;
+using Alternet.UI.Extensions;
 
 namespace ControlsSample
 {
@@ -524,7 +526,7 @@ namespace ControlsSample
         private void RichPanel_FileNewClick(object? sender, EventArgs e)
         {
             var result = MessageBox.Show(
-                "Clear all text?",
+                "Clear all text".AddQuestion(),
                 "Prompt",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.None);
