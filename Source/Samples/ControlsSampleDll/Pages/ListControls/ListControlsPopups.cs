@@ -17,30 +17,35 @@ namespace ControlsSample
             Padding = 10,
         };
 
+        [IsTextLocalized(true)]
         private readonly Button showPopupListBoxButton = new()
         {
             Text = "Show Popup ListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        [IsTextLocalized(true)]
         private readonly Button showPopupColorListBoxButton = new()
         {
             Text = "Show Popup ColorListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        [IsTextLocalized(true)]
         private readonly Button showPopupVListBoxButton = new()
         {
             Text = "Show Popup Virtual ListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        [IsTextLocalized(true)]
         private readonly Button showPopupCheckListBoxButton = new()
         {
             Text = "Show Popup CheckListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        [IsTextLocalized(true)]
         private readonly CheckBox modalPopupsCheckBox = new()
         {
             Text = "Modal Popups",
@@ -57,7 +62,6 @@ namespace ControlsSample
         }
 
         public ListControlsPopups()
-            : base()
         {
             Padding = 5;
             panel.Parent = this;

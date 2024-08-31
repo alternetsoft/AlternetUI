@@ -9,12 +9,25 @@ namespace ControlsSample
 {
     internal partial class WebBrowserPage : Control
     {
+        [IsTextLocalized(true)]
         private const string SItemPanda = "Panda Web Site";
+
+        [IsTextLocalized(true)]
         private const string SItemGoogle = "Google Search";
+
+        [IsTextLocalized(true)]
         private const string SItemPDF = "PDF Document";
+
+        [IsTextLocalized(true)]
         private const string SItemImage = "View Image";
+
+        [IsTextLocalized(true)]
         private const string SItemMP3 = "Audio MP3";
+
+        [IsTextLocalized(true)]
         private const string SItemWAV = "Audio WAV";
+
+        [IsTextLocalized(true)]
         private const string SItemGIF = "Animated GIF";
 
         private static string? headerText;

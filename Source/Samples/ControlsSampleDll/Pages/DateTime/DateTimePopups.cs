@@ -15,8 +15,13 @@ namespace ControlsSample
             Padding = 10,
         };
 
+        [IsTextLocalized(true)]
         private readonly Button showPopupButton = new("Show Calendar Popup");
+
+        [IsTextLocalized(true)]
         private readonly CheckBox modalPopupsCheckBox = new("Modal Popups");
+
+        [IsTextLocalized(true)]
         private readonly CheckBox UseGenericCheckBox = new("Use Generic");
 
         private readonly PopupCalendar popupCalendar = new();

@@ -9,6 +9,7 @@ namespace ControlsSample
 {
     internal partial class ButtonPage : Control
     {
+        [IsTextLocalized(true)]
         private readonly Label labelBackColor = new("Back Color")
         {
             Margin = (0, 5, 0, 0),
@@ -25,6 +26,7 @@ namespace ControlsSample
             RowIndex = 3,
         };
 
+        [IsTextLocalized(true)]
         private readonly Label labelTextColor = new("Color")
         {
             Margin = (0, 5, 0, 0),

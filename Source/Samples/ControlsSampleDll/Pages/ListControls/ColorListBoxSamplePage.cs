@@ -15,6 +15,7 @@ namespace ControlsSample
             SuggestedWidth = 200,
         };
 
+        [IsTextLocalized(true)]
         private readonly CheckBox textVisibleCheckBox = new("Text Visible")
         {
             IsChecked = true,
@@ -25,6 +26,7 @@ namespace ControlsSample
             MinChildMargin = 5,
         };
 
+        [IsTextLocalized(true)]
         private readonly Button setColorButton = new("Set Color")
         {
             HorizontalAlignment = HorizontalAlignment.Left,
