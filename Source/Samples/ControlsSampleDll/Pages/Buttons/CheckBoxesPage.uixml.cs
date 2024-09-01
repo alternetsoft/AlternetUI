@@ -4,6 +4,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
+    [IsCsLocalized(true)]
     internal partial class CheckBoxesPage : Control
     {
         public CheckBoxesPage()
@@ -35,7 +36,7 @@ namespace ControlsSample
         private void TextEmptyButton_Click(object? sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(checkBox.Text))
-                checkBox.Text = "Some Text";
+                checkBox.Text = GenericStrings.SomeText;
             else
                 checkBox.Text = string.Empty;
         }
@@ -65,7 +66,7 @@ namespace ControlsSample
             if (checkBox.ThreeState)
                 checkBox.CheckState = CheckState.Indeterminate;
             else
-                App.Log("CheckBox.ThreeState is false, indeterminate state is not set.");
+                App.Log($"CheckBox.ThreeState = {GenericStrings.BoolFalse}. {GenericStrings.IndeterminateStateIsNotSet}.");
         }
 
         private void CheckBox_CheckedChanged(object? sender, EventArgs e)

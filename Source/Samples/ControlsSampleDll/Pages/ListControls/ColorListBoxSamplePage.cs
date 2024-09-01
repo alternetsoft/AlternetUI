@@ -8,6 +8,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
+    [IsLocalized(true)]
     internal class ColorListBoxSamplePage : Control
     {
         private readonly ColorListBox listBox = new()
@@ -15,8 +16,7 @@ namespace ControlsSample
             SuggestedWidth = 200,
         };
 
-        [IsTextLocalized(true)]
-        private readonly CheckBox textVisibleCheckBox = new("Text Visible")
+        private readonly CheckBox textVisibleCheckBox = new(GenericStrings.TextVisible)
         {
             IsChecked = true,
         };
@@ -26,8 +26,7 @@ namespace ControlsSample
             MinChildMargin = 5,
         };
 
-        [IsTextLocalized(true)]
-        private readonly Button setColorButton = new("Set Color")
+        private readonly Button setColorButton = new(GenericStrings.SetColor)
         {
             HorizontalAlignment = HorizontalAlignment.Left,
         };

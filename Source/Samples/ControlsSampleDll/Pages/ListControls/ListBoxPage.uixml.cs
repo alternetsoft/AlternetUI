@@ -39,16 +39,7 @@ namespace ControlsSample
 
         private void AddDefaultItems(ListBox control)
         {
-            control.Add("One");
-            control.Add("Two");
-            control.Add("Three");
-            control.Add("Four");
-            control.Add("Five");
-            control.Add("Six");
-            control.Add("Seven");
-            control.Add("Eight");
-            control.Add("Nine");
-            control.Add("Ten");
+            GenericStrings.AddTenRows(ActionUtils.ToAction<string>(control.Add));
         }
 
         private void EditorButton_Click(object? sender, System.EventArgs e)

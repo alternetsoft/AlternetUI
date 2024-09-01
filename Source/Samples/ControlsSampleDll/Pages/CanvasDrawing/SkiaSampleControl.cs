@@ -8,6 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    [IsCsLocalized(true)]
     public class SkiaSampleControl : UserControl
     {
         private static Font? sampleFont;

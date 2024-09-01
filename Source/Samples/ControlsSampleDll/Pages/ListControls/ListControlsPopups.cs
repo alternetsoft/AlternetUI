@@ -8,6 +8,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
+    [IsTextLocalized(true)]
     internal class ListControlsPopups : Control
     {
         internal bool logMouseEvents = false;
@@ -17,38 +18,33 @@ namespace ControlsSample
             Padding = 10,
         };
 
-        [IsTextLocalized(true)]
         private readonly Button showPopupListBoxButton = new()
         {
-            Text = "Show Popup ListBox",
+            Text = $"{GenericStrings.ShowPopupWith} ListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        [IsTextLocalized(true)]
         private readonly Button showPopupColorListBoxButton = new()
         {
-            Text = "Show Popup ColorListBox",
+            Text = $"{GenericStrings.ShowPopupWith} ColorListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        [IsTextLocalized(true)]
         private readonly Button showPopupVListBoxButton = new()
         {
-            Text = "Show Popup Virtual ListBox",
+            Text = $"{GenericStrings.ShowPopupWith} VirtualListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        [IsTextLocalized(true)]
         private readonly Button showPopupCheckListBoxButton = new()
         {
-            Text = "Show Popup CheckListBox",
+            Text = $"{GenericStrings.ShowPopupWith} CheckListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        [IsTextLocalized(true)]
         private readonly CheckBox modalPopupsCheckBox = new()
         {
-            Text = "Modal Popups",
+            Text = GenericStrings.ModalPopups,
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
@@ -116,26 +112,26 @@ namespace ControlsSample
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)
         {
-            var resultItem = popupListBox.ResultItem ?? "<null>";
-            App.Log($"AfterHide PopupResult: {popupListBox.PopupResult}, Item: {resultItem}");
+            var resultItem = popupListBox.ResultItem ?? GenericStrings.NoneInsideLessGreater;
+            App.Log($"AfterHide PopupResult: {popupListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 
         private void PopupVListBox_AfterHide(object? sender, EventArgs e)
         {
-            var resultItem = popupVListBox.ResultItem ?? "<null>";
-            App.Log($"AfterHide PopupResult: {popupVListBox.PopupResult}, Item: {resultItem}");
+            var resultItem = popupVListBox.ResultItem ?? GenericStrings.NoneInsideLessGreater;
+            App.Log($"AfterHide PopupResult: {popupVListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 
         private void PopupColorListBox_AfterHide(object? sender, EventArgs e)
         {
-            var resultItem = popupColorListBox.ResultValue?.ToString() ?? "<null>";
-            App.Log($"AfterHide PopupResult: {popupColorListBox.PopupResult}, Item: {resultItem}");
+            var resultItem = popupColorListBox.ResultValue?.ToString() ?? GenericStrings.NoneInsideLessGreater;
+            App.Log($"AfterHide PopupResult: {popupColorListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 
         internal void LogPopupListBoxEvent(string eventName)
         {
-            var selectedItem = popupListBox.MainControl.SelectedItem ?? "<null>";
-            App.Log($"Popup: {eventName}. Selected Item: {selectedItem}");
+            var selectedItem = popupListBox.MainControl.SelectedItem ?? GenericStrings.NoneInsideLessGreater;
+            App.Log($"Popup: {eventName}. {GenericStrings.SelectedItem}: {selectedItem}");
         }
 
         internal void LogPopupListBoxMouseEvent(string eventName, MouseEventArgs e)
@@ -143,7 +139,7 @@ namespace ControlsSample
             var itemIndex = popupListBox.MainControl.HitTest(
                 Mouse.GetPosition(popupListBox.MainControl));
             var selectedItem = popupListBox.MainControl[itemIndex];
-            App.Log($"Popup: {eventName}. Item: {selectedItem}");
+            App.Log($"Popup: {eventName}. {GenericStrings.Item}: {selectedItem}");
         }
 
         private void PopupListBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -176,17 +172,8 @@ namespace ControlsSample
 
         private void AddDefaultItems(ListControl control)
         {
-            control.Add("One");
-            control.Add("Two");
-            control.Add("Three");
-            control.Add("Four");
-            control.Add("Five");
-            control.Add("Six");
-            control.Add("Seven");
-            control.Add("Eight");
-            control.Add("Nine");
-            control.Add("Ten");
-            control.Add("This is long item which occupies more space than other items");
+            GenericStrings.AddTenRows(ActionUtils.ToAction<string>(control.Add));
+            control.Add(GenericStrings.ThisIsLongItemWhichOccupiesMoreSpaceThanOtherItems);
         }
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)

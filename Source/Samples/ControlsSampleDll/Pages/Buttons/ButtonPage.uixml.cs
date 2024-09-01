@@ -7,10 +7,10 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
+    [IsCsLocalized(true)]
     internal partial class ButtonPage : Control
     {
-        [IsTextLocalized(true)]
-        private readonly Label labelBackColor = new("Back Color")
+        private readonly Label labelBackColor = new(GenericStrings.BackColor)
         {
             Margin = (0, 5, 0, 0),
             VerticalAlignment = VerticalAlignment.Center,
@@ -26,8 +26,7 @@ namespace ControlsSample
             RowIndex = 3,
         };
 
-        [IsTextLocalized(true)]
-        private readonly Label labelTextColor = new("Color")
+        private readonly Label labelTextColor = new(GenericStrings.Color)
         {
             Margin = (0, 5, 0, 0),
             VerticalAlignment = VerticalAlignment.Center,
@@ -47,11 +46,11 @@ namespace ControlsSample
 
         private static readonly object[] ValidAlign =
         {
-                    new ListControlItem("Default", GenericDirection.Default),
-                    new ListControlItem("Left", GenericDirection.Left),
-                    new ListControlItem("Top", GenericDirection.Top),
-                    new ListControlItem("Right", GenericDirection.Right),
-                    new ListControlItem("Bottom", GenericDirection.Bottom),
+                    new ListControlItem(GenericStrings.Default, GenericDirection.Default),
+                    new ListControlItem(GenericStrings.GenericDirectionLeft, GenericDirection.Left),
+                    new ListControlItem(GenericStrings.GenericDirectionTop, GenericDirection.Top),
+                    new ListControlItem(GenericStrings.GenericDirectionRight, GenericDirection.Right),
+                    new ListControlItem(GenericStrings.GenericDirectionBottom, GenericDirection.Bottom),
         };
 
         private ControlStateImages? buttonImages;
@@ -81,9 +80,9 @@ namespace ControlsSample
                 button.Padding = 5;
 
                 textAlignComboBox.Items.AddRange(ValidAlign);
-                textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact("Default");
+                textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact(GenericStrings.Default);
                 imageAlignComboBox.Items.AddRange(ValidAlign);
-                imageAlignComboBox.SelectedIndex = imageAlignComboBox.FindStringExact("Default");
+                imageAlignComboBox.SelectedIndex = imageAlignComboBox.FindStringExact(GenericStrings.Default);
 
                 if (!Button.ImagesEnabled)
                 {
@@ -95,10 +94,10 @@ namespace ControlsSample
                 ListControlUtils.AddFontSizes(comboBoxFontSize, true);
                 ListControlUtils.AddFontNames(comboBoxFontName, true);
 
-                comboBoxTextColor.Add("Default");
-                comboBoxBackColor.Add("Default");
-                comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact("Default");
-                comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact("Default");
+                comboBoxTextColor.Add(GenericStrings.Default);
+                comboBoxBackColor.Add(GenericStrings.Default);
+                comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact(GenericStrings.Default);
+                comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact(GenericStrings.Default);
 
                 ControlSet editors = new(
                     textTextBox,
@@ -132,7 +131,7 @@ namespace ControlsSample
 
         private void ImageMarginsButton_Click(object? sender, EventArgs e)
         {
-            var value = DialogFactory.GetNumberFromUser("Image Margin", null, null, imageMargins);
+            var value = DialogFactory.GetNumberFromUser(GenericStrings.ImageMargin, null, null, imageMargins);
             if (value is null)
                 return;
             imageMargins = (int)value;
@@ -232,7 +231,8 @@ namespace ControlsSample
         {
             var text = control?.SelectedItem?.ToString();
 
-            if (string.IsNullOrWhiteSpace(text) || text == "Default" || StringUtils.IsHexNumber(text))
+            if (string.IsNullOrWhiteSpace(text) || text == GenericStrings.Default
+                || StringUtils.IsHexNumber(text))
                 return null;
             else
             {
