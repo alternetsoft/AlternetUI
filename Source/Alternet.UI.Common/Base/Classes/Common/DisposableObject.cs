@@ -126,7 +126,7 @@ namespace Alternet.UI
         /// other objects. Only unmanaged resources can be disposed.
         /// </remarks>
         /// <param name="disposing">Disposing scenario.</param>
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (IsDisposed)
                 return;

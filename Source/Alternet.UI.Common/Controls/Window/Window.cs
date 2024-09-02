@@ -1031,7 +1031,7 @@ namespace Alternet.UI
         public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
 
         /// <inheritdoc/>
-        public override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (IsDisposed)
                 return;
