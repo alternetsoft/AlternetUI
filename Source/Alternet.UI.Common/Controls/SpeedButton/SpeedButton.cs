@@ -82,6 +82,8 @@ namespace Alternet.UI
         private bool imageVisible = true;
         private KnownTheme useTheme = DefaultUseTheme;
         private ControlColorAndStyle? customTheme;
+        private bool isClickRepeated;
+        private bool subscribedClickRepeated;
 
         static SpeedButton()
         {
@@ -146,6 +148,25 @@ namespace Alternet.UI
         /// Default value is "({0})".
         /// </remarks>
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
+
+        /// <summary>
+        /// Gets or sets whether mouse clicks are repeated continiously while left mouse
+        /// button is pressed.
+        /// </summary>
+        public virtual bool IsClickRepeated
+        {
+            get
+            {
+                return isClickRepeated;
+            }
+
+            set
+            {
+                if (isClickRepeated == value)
+                    return;
+                isClickRepeated = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets default color and style settings
@@ -227,7 +248,7 @@ namespace Alternet.UI
         /// Gets or sets whether <see cref="Control.ToolTip"/> will be hidden
         /// when control is clicked. Default is <c>true</c>.
         /// </summary>
-        public bool HideToolTipOnClick { get; set; } = true;
+        public virtual bool HideToolTipOnClick { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating the associated shortcut key.
@@ -654,22 +675,6 @@ namespace Alternet.UI
             return s;
         }
 
-        /*/// <summary>
-        /// Initializes solid border in the normal state.
-        /// Also border width in hovered and pressed states
-        /// is made larger than in the normal state.
-        /// </summary>
-        public virtual void InitSolidBorder()
-        {
-            Borders ??= new();
-            Borders.Normal = new(Borders.Hovered ?? BorderSettings.Default);
-            Borders.Disabled = Borders.Normal;
-            BorderSettings doubleBorder = new(Borders.Hovered ?? BorderSettings.Default);
-            doubleBorder.SetWidth(doubleBorder.Top.Width + 1);
-            Borders.Pressed = doubleBorder;
-            Borders.Hovered = doubleBorder;
-        }*/
-
         /// <summary>
         /// Loads normal and disabled image from the specified file or resource url.
         /// Loaded images assigned to <see cref="ImageSet"/> and
@@ -758,16 +763,62 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnVisualStateChanged(EventArgs e)
+        {
+            base.OnVisualStateChanged(e);
+            if (VisualState == VisualControlState.Pressed)
+                SubscribeClickRepeated();
+            else
+                UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
+        protected override void ParentDisposed()
+        {
+            UnsubscribeClickRepeated();
+            base.ParentDisposed();
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            UnsubscribeClickRepeated();
+            base.DisposeManaged();
+        }
+
+        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        {
+            if (VisualState != VisualControlState.Pressed)
+                return;
+
+            var distance = DateUtils.GetAbsDistanceWithNow(LastClickedTimestamp ?? DateTime.Now.Ticks);
+            if (distance < TimerUtils.ClickRepeatInterval)
+                return;
+            RaiseClick();
+        }
+
+        private void UnsubscribeClickRepeated()
+        {
+            if (subscribedClickRepeated)
+            {
+                TimerUtils.ClickRepeated -= OnClickRepeatTimerEvent;
+                subscribedClickRepeated = false;
+            }
+        }
+
+        private void SubscribeClickRepeated()
+        {
+            if (!subscribedClickRepeated && IsClickRepeated)
+            {
+                TimerUtils.ClickRepeated += OnClickRepeatTimerEvent;
+                subscribedClickRepeated = true;
+            }
+        }
+
         private void OnClickAction(object? sender, EventArgs? e)
         {
             clickAction?.Invoke();
-        }
-
-        private void UpdateToolTip()
-        {
-            var s = ToolTip;
-            ToolTip = null;
-            ToolTip = s;
         }
     }
 }
