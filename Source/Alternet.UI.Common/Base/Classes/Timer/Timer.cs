@@ -7,9 +7,9 @@ namespace Alternet.UI
     /// <summary>
     /// Implements a timer that raises an event at user-defined intervals.
     /// This timer is optimized for use in AlterNET UI applications and must be used
-    /// in a GUI environment.
+    /// in a GUI environment instead of any other timers.
     /// </summary>
-    public class Timer : DisposableObject, IComponent, IDisposable
+    public class Timer : BaseComponent
     {
         private ITimerHandler? handler;
         private bool autoReset = true;
@@ -84,6 +84,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the specified timer interval has elapsed.
         /// </summary>
+        [Category("Behavior")]
         public event EventHandler? Tick;
 
         /// <summary>
@@ -102,18 +103,12 @@ namespace Alternet.UI
                 if(handler is null)
                 {
                     handler = App.Handler.CreateTimerHandler(this);
-                    handler.Tick = NativeTimer_Tick;
+                    handler.Tick = NativeTimerTick;
                 }
 
                 return handler;
             }
         }
-
-        /// <summary>
-        /// Gets or sets the <see cref="ISite"/> associated with the object; or null,
-        /// if the object does not have a site.
-        /// </summary>
-        public ISite? Site { get; set; }
 
         /// <summary>
         /// Gets or sets the time duration, before the <see cref="Tick"/> event is raised
@@ -185,12 +180,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets an arbitrary <see cref="object"/> representing some type of user state.
-        /// </summary>
-        /// <value>An arbitrary <see cref="object"/> representing some type of user state.</value>
-        public object? Tag { get; set; }
-
-        /// <summary>
         /// Gets or sets whether the timer is running.
         /// </summary>
         /// <value><see langword="true"/> if the timer is currently enabled; otherwise,
@@ -211,6 +200,8 @@ namespace Alternet.UI
 
             set
             {
+                if (Enabled == value)
+                    return;
                 CheckDisposed();
                 Handler.Enabled = value;
             }
@@ -284,7 +275,7 @@ namespace Alternet.UI
             handler = null;
         }
 
-        private void NativeTimer_Tick()
+        private void NativeTimerTick()
         {
             if (!autoReset)
                 Stop();
