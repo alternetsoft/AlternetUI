@@ -566,12 +566,6 @@ namespace Alternet.UI
             }
         }
 
-        IWindow? IWindow.Owner
-        {
-            get => Owner;
-            set => Owner = value as Window;
-        }
-
         /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>
@@ -609,7 +603,7 @@ namespace Alternet.UI
         /// with the owner window.
         /// </remarks>
         [Browsable(false)]
-        public virtual IWindow[] OwnedWindows
+        public virtual Window[] OwnedWindows
         {
             get
             {
@@ -1036,6 +1030,24 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
 
+        /// <inheritdoc/>
+        public override void Dispose(bool disposing)
+        {
+            if (IsDisposed)
+                return;
+
+            Visible = false;
+
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                App.Current.UnregisterWindow(this);
+                if (!App.Current.VisibleWindows.Any())
+                    App.Handler.ExitMainLoop();
+            }
+        }
+
         /// <summary>
         /// Recreates all native controls in all windows.
         /// </summary>
@@ -1084,7 +1096,7 @@ namespace Alternet.UI
         /// <see cref="ControlFlags.StartLocationApplied"/> flag.
         /// </summary>
         /// <param name="owner"></param>
-        protected void ApplyStartLocationOnce(Control? owner)
+        protected virtual void ApplyStartLocationOnce(Control? owner)
         {
             if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
             {
@@ -1161,24 +1173,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnOwnerChanged(EventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
-        {
-            if (IsDisposed)
-                return;
-
-            Visible = false;
-
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                App.Current.UnregisterWindow(this);
-                if (!App.Current.VisibleWindows.Any())
-                    App.Handler.ExitMainLoop();
-            }
         }
 
         /// <summary>
