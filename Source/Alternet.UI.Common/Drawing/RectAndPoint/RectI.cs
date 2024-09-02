@@ -623,5 +623,49 @@ namespace Alternet.Drawing
                 Width,
                 Height);
         }
+
+        /// <summary>
+        /// Returns new rectangle with location and width of this rectangle and the specified height.
+        /// </summary>
+        /// <param name="aheight">New height.</param>
+        /// <returns>Rectangle object with the new height.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithHeight(int aheight)
+        {
+            return new(x, y, width, aheight);
+        }
+
+        /// <summary>
+        /// Returns new rectangle with location and height of this rectangle and the specified width.
+        /// </summary>
+        /// <param name="awidth">New width.</param>
+        /// <returns>Rectangle object with the new width.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithWidth(int awidth)
+        {
+            return new(x, y, awidth, height);
+        }
+
+        /// <summary>
+        /// Returns new rectangle with size and y-coordinate of this rectangle and the specified x-coordinate.
+        /// </summary>
+        /// <param name="ax">New X position.</param>
+        /// <returns>Rectangle object with the new x-coordinate.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithX(int ax)
+        {
+            return new(ax, y, width, height);
+        }
+
+        /// <summary>
+        /// Returns new rectangle with size and x-coordinate of this rectangle and the specified y-coordinate.
+        /// </summary>
+        /// <param name="ay">New Y position.</param>
+        /// <returns>Rectangle object with the new y-coordinate.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithY(int ay)
+        {
+            return new(x, ay, width, height);
+        }
     }
 }
