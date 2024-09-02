@@ -11,6 +11,27 @@ namespace Alternet.UI
     /// </summary>
     public class InteriorNotification : ControlNotification
     {
+        private InteriorDrawable interior;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InteriorNotification"/> class.
+        /// </summary>
+        /// <param name="interior">Interior drawable.</param>
+        public InteriorNotification(InteriorDrawable interior)
+        {
+            this.interior = interior;
+        }
+
+        /// <inheritdoc/>
+        public override void AfterMouseMove(Control sender, MouseEventArgs e)
+        {
+            var hitTest = interior.HitTest(sender.ScaleFactor, e.Location);
+            if (hitTest != InteriorDrawable.HitTestResult.None)
+            {
+                App.Log(hitTest);
+            }
+        }
+
         /// <inheritdoc/>
         public override void AfterSetScrollBarInfo(
             Control sender,
@@ -96,11 +117,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override void AfterMouseLeftButtonUp(Control sender, MouseEventArgs e)
-        {
-        }
-
-        /// <inheritdoc/>
-        public override void AfterMouseMove(Control sender, MouseEventArgs e)
         {
         }
 

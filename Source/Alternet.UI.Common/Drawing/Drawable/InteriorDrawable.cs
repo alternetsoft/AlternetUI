@@ -224,10 +224,14 @@ namespace Alternet.Drawing
 
             var rectangles = PerformLayout(scaleFactor);
 
-            if (rectangles[HitTestResult.Corner].NotEmptyAndContains(point))
+            var cornerRect = rectangles[HitTestResult.Corner];
+
+            if (cornerRect.NotEmptyAndContains(point))
                 return HitTestResult.Corner;
 
-            if (rectangles[HitTestResult.VertScrollBar].NotEmptyAndContains(point))
+            var vertScrollBarRect = rectangles[HitTestResult.VertScrollBar];
+
+            if (vertScrollBarRect.NotEmptyAndContains(point))
                 return HitTestResult.VertScrollBar;
 
             if (rectangles[HitTestResult.HorzScrollBar].NotEmptyAndContains(point))

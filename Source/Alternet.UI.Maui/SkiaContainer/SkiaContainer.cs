@@ -34,6 +34,8 @@ namespace Alternet.UI
 
         private readonly InteriorDrawable interior = new();
 
+        private InteriorNotification interiorNotification;
+
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
 
@@ -50,16 +52,7 @@ namespace Alternet.UI
             interior.Metrics = ScrollBar.DefaultMetrics;
             interior.SetDefaultBorder(true);
             interior.SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
-
-            /*Orientation = Microsoft.Maui.ScrollOrientation.Both;*/
-
-            /*VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-            HorizontalScrollBarVisibility = ScrollBarVisibility.Always;*/
-
-            /*SetScrolledPosition(350, 500);
-
-            ScrollToRequested += SkiaContainer_ScrollToRequested;
-            Scrolled += SkiaContainer_Scrolled;*/
+            interiorNotification = new(interior);
 
             EnableTouchEvents = true;
             Touch += Canvas_Touch;
@@ -104,14 +97,17 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
+                    control.RemoveNotification(interiorNotification);
+
                     if (control.Handler is MauiControlHandler handler)
                         handler.Container = null;
                 }
 
                 control = value;
 
-                if(control is not null)
+                if (control is not null)
                 {
+                    control.AddNotification(interiorNotification);
                     if (control.Handler is MauiControlHandler handler)
                         handler.Container = this;
                 }
@@ -223,15 +219,15 @@ namespace Alternet.UI
                 Math.Min(bounds.Height, dirtyRect.Height));
 
             interior.Bounds = newBounds;
-            interior.PerformLayout(scaleFactor, out var clientRect);
+
+            var rectangles = interior.PerformLayout(scaleFactor);
+            var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
             control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
 
             dc.Clear(control.BackColor);
 
             dc.Save();
-
-            /*dc.Skew((float)clientRect.Left, (float)clientRect.Top);*/
 
             graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
