@@ -21,204 +21,6 @@ ALTERNET_UI_API GenericImage* GenericImage_Create_()
     #endif
 }
 
-ALTERNET_UI_API void* GenericImage_FindHandlerByName_(const char16_t* name)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return GenericImage::FindHandlerByName(name);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* GenericImage_FindHandlerByExt_(const char16_t* extension, int bitmapType)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return GenericImage::FindHandlerByExt(extension, bitmapType);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* GenericImage_FindHandlerByBitmapType_(int bitmapType)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return GenericImage::FindHandlerByBitmapType(bitmapType);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* GenericImage_FindHandlerByMime_(const char16_t* mimetype)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return GenericImage::FindHandlerByMime(mimetype);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void GenericImage_InsertHandler_(void* handler)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        GenericImage::InsertHandler(handler);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool GenericImage_RemoveHandler_(const char16_t* name)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return GenericImage::RemoveHandler(name);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int GenericImage_GetImageCountInFile_(const char16_t* filename, int bitmapType)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return GenericImage::GetImageCountInFile(filename, bitmapType);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int GenericImage_GetImageCountInStream_(void* stream, int bitmapType)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return GenericImage::GetImageCountInStream(stream, bitmapType);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* GenericImage_GetAlphaData_(void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return GenericImage::GetAlphaData(handle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* GenericImage_GetData_(void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return GenericImage::GetData(handle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool GenericImage_CreateData_(void* handle, int width, int height, void* data, c_bool static_data)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return GenericImage::CreateData(handle, width, height, data, static_data);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool GenericImage_CreateAlphaData_(void* handle, int width, int height, void* data, void* alpha, c_bool static_data)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return GenericImage::CreateAlphaData(handle, width, height, data, alpha, static_data);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void GenericImage_SetAlphaData_(void* handle, void* alpha, c_bool static_data)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        GenericImage::SetAlphaData(handle, alpha, static_data);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void GenericImage_SetData_(void* handle, void* data, c_bool static_data)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        GenericImage::SetData(handle, data, static_data);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void GenericImage_SetDataWithSize_(void* handle, void* data, int new_width, int new_height, c_bool static_data)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        GenericImage::SetDataWithSize(handle, data, new_width, new_height, static_data);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* GenericImage_LockBits_(void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return GenericImage::LockBits(handle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int GenericImage_GetStride_(void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return GenericImage::GetStride(handle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void GenericImage_UnlockBits_(void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        GenericImage::UnlockBits(handle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API Color_C GenericImage_FindFirstUnusedColor_(void* handle, uint8_t startR, uint8_t startG, uint8_t startB)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -1149,6 +951,204 @@ ALTERNET_UI_API void GenericImage_CleanUpHandlers_()
     MarshalExceptions<void>([&](){
     #endif
         GenericImage::CleanUpHandlers();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* GenericImage_FindHandlerByName_(const char16_t* name)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::FindHandlerByName(name);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* GenericImage_FindHandlerByExt_(const char16_t* extension, int bitmapType)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::FindHandlerByExt(extension, bitmapType);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* GenericImage_FindHandlerByBitmapType_(int bitmapType)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::FindHandlerByBitmapType(bitmapType);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* GenericImage_FindHandlerByMime_(const char16_t* mimetype)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::FindHandlerByMime(mimetype);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void GenericImage_InsertHandler_(void* handler)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        GenericImage::InsertHandler(handler);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool GenericImage_RemoveHandler_(const char16_t* name)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GenericImage::RemoveHandler(name);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int GenericImage_GetImageCountInFile_(const char16_t* filename, int bitmapType)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GenericImage::GetImageCountInFile(filename, bitmapType);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int GenericImage_GetImageCountInStream_(void* stream, int bitmapType)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GenericImage::GetImageCountInStream(stream, bitmapType);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* GenericImage_GetAlphaData_(void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::GetAlphaData(handle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* GenericImage_GetData_(void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::GetData(handle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool GenericImage_CreateData_(void* handle, int width, int height, void* data, c_bool static_data)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GenericImage::CreateData(handle, width, height, data, static_data);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool GenericImage_CreateAlphaData_(void* handle, int width, int height, void* data, void* alpha, c_bool static_data)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return GenericImage::CreateAlphaData(handle, width, height, data, alpha, static_data);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void GenericImage_SetAlphaData_(void* handle, void* alpha, c_bool static_data)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        GenericImage::SetAlphaData(handle, alpha, static_data);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void GenericImage_SetData_(void* handle, void* data, c_bool static_data)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        GenericImage::SetData(handle, data, static_data);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void GenericImage_SetDataWithSize_(void* handle, void* data, int new_width, int new_height, c_bool static_data)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        GenericImage::SetDataWithSize(handle, data, new_width, new_height, static_data);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* GenericImage_LockBits_(void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return GenericImage::LockBits(handle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int GenericImage_GetStride_(void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return GenericImage::GetStride(handle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void GenericImage_UnlockBits_(void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        GenericImage::UnlockBits(handle);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

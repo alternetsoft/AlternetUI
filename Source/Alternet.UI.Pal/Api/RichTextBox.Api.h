@@ -3,10 +3,10 @@
 #pragma once
 
 #include "RichTextBox.h"
-#include "Image.h"
-#include "Font.h"
 #include "InputStream.h"
 #include "OutputStream.h"
+#include "Font.h"
+#include "Image.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -56,969 +56,859 @@ ALTERNET_UI_API char16_t* RichTextBox_GetReportedUrl_(RichTextBox* obj)
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanInsertContent_(RichTextBox* obj, void* container, int64_t pos)
+ALTERNET_UI_API c_bool RichTextBox_LoadFromStream_(RichTextBox* obj, void* stream, int type)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->CanInsertContent(container, pos);
+        return obj->LoadFromStream(stream, type);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetBuffer();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int64_t>([&](){
-    #endif
-        return obj->DeleteSelectedContent();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_ExtendSelection_(RichTextBox* obj, int64_t oldPosition, int64_t newPosition, int flags)
+ALTERNET_UI_API c_bool RichTextBox_SaveToStream_(RichTextBox* obj, void* stream, int type)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->ExtendSelection(oldPosition, newPosition, flags);
+        return obj->SaveToStream(stream, type);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_ExtendCellSelection_(RichTextBox* obj, void* table, int noRowSteps, int noColSteps)
+ALTERNET_UI_API c_bool RichTextBox_ApplyStyleToSelection_(RichTextBox* obj, void* style, int flags)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->ExtendCellSelection(table, noRowSteps, noColSteps);
+        return obj->ApplyStyleToSelection(style, flags);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_StartCellSelection_(RichTextBox* obj, void* table, void* newCell)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->StartCellSelection(table, newCell);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_ScrollIntoView_(RichTextBox* obj, int64_t position, int keyCode)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->ScrollIntoView(position, keyCode);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetCaretPosition_(RichTextBox* obj, int64_t position, c_bool showAtLineStart)
+ALTERNET_UI_API void RichTextBox_InitFileHandlers_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetCaretPosition(position, showAtLineStart);
+        RichTextBox::InitFileHandlers();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API int64_t RichTextBox_GetCaretPosition_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int64_t>([&](){
-    #endif
-        return obj->GetCaretPosition();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetAdjustedCaretPosition_(RichTextBox* obj, int64_t caretPos)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int64_t>([&](){
-    #endif
-        return obj->GetAdjustedCaretPosition(caretPos);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_MoveCaretForward_(RichTextBox* obj, int64_t oldPosition)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->MoveCaretForward(oldPosition);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API PointI_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, PointI ptLogical)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<PointI_C>([&](){
-    #endif
-        return obj->GetPhysicalPoint(ptLogical);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API PointI_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, PointI ptPhysical)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<PointI_C>([&](){
-    #endif
-        return obj->GetLogicalPoint(ptPhysical);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_FindNextWordPosition_(RichTextBox* obj, int direction)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int64_t>([&](){
-    #endif
-        return obj->FindNextWordPosition(direction);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_IsPositionVisible_(RichTextBox* obj, int64_t pos)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsPositionVisible(pos);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetFirstVisiblePosition_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int64_t>([&](){
-    #endif
-        return obj->GetFirstVisiblePosition();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetCaretPositionForDefaultStyle_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int64_t>([&](){
-    #endif
-        return obj->GetCaretPositionForDefaultStyle();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetCaretPositionForDefaultStyle_(RichTextBox* obj, int64_t pos)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetCaretPositionForDefaultStyle(pos);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_MoveCaretBack_(RichTextBox* obj, int64_t oldPosition)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->MoveCaretBack(oldPosition);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_GetCaretPositionForIndex_(RichTextBox* obj, int64_t position, RectI rect, void* container)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetCaretPositionForIndex(position, rect, container);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetVisibleLineForCaretPosition_(RichTextBox* obj, int64_t caretPosition)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetVisibleLineForCaretPosition(caretPosition);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetCommandProcessor_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetCommandProcessor();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_IsDefaultStyleShowing_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsDefaultStyleShowing();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API PointI_C RichTextBox_GetFirstVisiblePoint_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<PointI_C>([&](){
-    #endif
-        return obj->GetFirstVisiblePoint();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_EnableImages_(RichTextBox* obj, c_bool b)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->EnableImages(b);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_GetImagesEnabled_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetImagesEnabled();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_EnableDelayedImageLoading_(RichTextBox* obj, c_bool b)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->EnableDelayedImageLoading(b);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_GetDelayedImageLoading_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetDelayedImageLoading();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_GetDelayedImageProcessingRequired_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetDelayedImageProcessingRequired();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetDelayedImageProcessingRequired_(RichTextBox* obj, c_bool b)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetDelayedImageProcessingRequired(b);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetDelayedImageProcessingTime_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int64_t>([&](){
-    #endif
-        return obj->GetDelayedImageProcessingTime();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetDelayedImageProcessingTime_(RichTextBox* obj, int64_t t)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetDelayedImageProcessingTime(t);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API char16_t* RichTextBox_GetValue_(RichTextBox* obj)
+ALTERNET_UI_API char16_t* RichTextBox_GetRange_(RichTextBox* obj, int64_t from, int64_t to)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<char16_t*>([&](){
     #endif
-        return AllocPInvokeReturnString(obj->GetValue());
+        return AllocPInvokeReturnString(obj->GetRange(from, to));
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetValue_(RichTextBox* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetValue(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetLineHeight_(RichTextBox* obj, int height)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetLineHeight(height);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int RichTextBox_GetLineHeight_(RichTextBox* obj)
+ALTERNET_UI_API int RichTextBox_GetLineLength_(RichTextBox* obj, int64_t lineNo)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
     #endif
-        return obj->GetLineHeight();
+        return obj->GetLineLength(lineNo);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_SetCaretPositionAfterClick_(RichTextBox* obj, void* container, int64_t position, int hitTestFlags, c_bool extendSelection)
+ALTERNET_UI_API char16_t* RichTextBox_GetLineText_(RichTextBox* obj, int64_t lineNo)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetLineText(lineNo));
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int RichTextBox_GetNumberOfLines_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetNumberOfLines();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_IsModified_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->SetCaretPositionAfterClick(container, position, hitTestFlags, extendSelection);
+        return obj->IsModified();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_ClearAvailableFontNames_()
+ALTERNET_UI_API c_bool RichTextBox_IsEditable_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsEditable();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_IsSingleLine_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsSingleLine();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_IsMultiLine_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsMultiLine();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API char16_t* RichTextBox_GetStringSelection_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetStringSelection());
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API char16_t* RichTextBox_GetFilename_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetFilename());
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetFilename_(RichTextBox* obj, const char16_t* filename)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        RichTextBox::ClearAvailableFontNames();
+        obj->SetFilename(filename);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_ProcessDelayedImageLoading_(RichTextBox* obj, c_bool refresh)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->ProcessDelayedImageLoading(refresh);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_RequestDelayedImageProcessing_(RichTextBox* obj)
+ALTERNET_UI_API void RichTextBox_SetDelayedLayoutThreshold_(RichTextBox* obj, int64_t threshold)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->RequestDelayedImageProcessing();
+        obj->SetDelayedLayoutThreshold(threshold);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_GetUncombinedStyle_(RichTextBox* obj, int64_t position, void* style)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetUncombinedStyle(position, style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_GetUncombinedStyle2_(RichTextBox* obj, int64_t position, void* style, void* container)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetUncombinedStyle2(position, style, container);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_SetDefaultStyle_(RichTextBox* obj, void* style)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetDefaultStyle(style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_SetDefaultRichStyle_(RichTextBox* obj, void* style)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetDefaultRichStyle(style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetDefaultStyleEx_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetDefaultStyleEx();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetLastPosition_(RichTextBox* obj)
+ALTERNET_UI_API int64_t RichTextBox_GetDelayedLayoutThreshold_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetLastPosition();
+        return obj->GetDelayedLayoutThreshold();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetStyle_(RichTextBox* obj, int64_t position)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetStyle(position);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetRichStyle_(RichTextBox* obj, int64_t position)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetRichStyle(position);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetStyleInContainer_(RichTextBox* obj, int64_t position, void* container)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetStyleInContainer(position, container);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_SetStyle_(RichTextBox* obj, int64_t start, int64_t end, void* style)
+ALTERNET_UI_API c_bool RichTextBox_GetFullLayoutRequired_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->SetStyle(start, end, style);
+        return obj->GetFullLayoutRequired();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_SetRichStyle_(RichTextBox* obj, int64_t start, int64_t end, void* style)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetRichStyle(start, end, style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetStyle2_(RichTextBox* obj, void* richObj, void* textAttr, int flags)
+ALTERNET_UI_API void RichTextBox_SetFullLayoutRequired_(RichTextBox* obj, c_bool b)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetStyle2(richObj, textAttr, flags);
+        obj->SetFullLayoutRequired(b);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetStyleForRange_(RichTextBox* obj, int64_t startRange, int64_t endRange)
+ALTERNET_UI_API int64_t RichTextBox_GetFullLayoutTime_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
+    return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetStyleForRange(startRange, endRange);
+        return obj->GetFullLayoutTime();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetStyleForRange2_(RichTextBox* obj, int64_t startRange, int64_t endRange)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetStyleForRange2(startRange, endRange);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetStyleForRange3_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* container)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetStyleForRange3(startRange, endRange, container);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_SetStyleEx_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* style, int flags)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetStyleEx(startRange, endRange, style, flags);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_SetListStyle_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* def, int flags, int startFrom, int specifiedLevel)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetListStyle(startRange, endRange, def, flags, startFrom, specifiedLevel);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_SetListStyle2_(RichTextBox* obj, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int startFrom, int specifiedLevel)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetListStyle2(startRange, endRange, defName, flags, startFrom, specifiedLevel);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_ClearListStyle_(RichTextBox* obj, int64_t startRange, int64_t endRange, int flags)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->ClearListStyle(startRange, endRange, flags);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_NumberList_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* def, int flags, int startFrom, int specifiedLevel)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->NumberList(startRange, endRange, def, flags, startFrom, specifiedLevel);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_NumberList2_(RichTextBox* obj, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int startFrom, int specifiedLevel)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->NumberList2(startRange, endRange, defName, flags, startFrom, specifiedLevel);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_PromoteList_(RichTextBox* obj, int promoteBy, int64_t startRange, int64_t endRange, void* def, int flags, int specifiedLevel)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->PromoteList(promoteBy, startRange, endRange, def, flags, specifiedLevel);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_PromoteList2_(RichTextBox* obj, int promoteBy, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int specifiedLevel)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->PromoteList2(promoteBy, startRange, endRange, defName, flags, specifiedLevel);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_Delete_(RichTextBox* obj, int64_t startRange, int64_t endRange)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->Delete(startRange, endRange);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_WriteTable_(RichTextBox* obj, int rows, int cols, void* tableAttr, void* cellAttr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->WriteTable(rows, cols, tableAttr, cellAttr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetBasicStyle_(RichTextBox* obj, void* style)
+ALTERNET_UI_API void RichTextBox_SetFullLayoutTime_(RichTextBox* obj, int64_t t)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetBasicStyle(style);
+        obj->SetFullLayoutTime(t);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetBasicStyle_(RichTextBox* obj)
+ALTERNET_UI_API int64_t RichTextBox_GetFullLayoutSavedPosition_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
+    return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetBasicStyle();
+        return obj->GetFullLayoutSavedPosition();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginStyle_(RichTextBox* obj, void* style)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->BeginStyle(style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_HasCharacterAttributes_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* style)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->HasCharacterAttributes(startRange, endRange, style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetStyleSheet_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetStyleSheet();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetAndShowDefaultStyle_(RichTextBox* obj, void* attr)
+ALTERNET_UI_API void RichTextBox_SetFullLayoutSavedPosition_(RichTextBox* obj, int64_t p)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetAndShowDefaultStyle(attr);
+        obj->SetFullLayoutSavedPosition(p);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetSelectionRange_(RichTextBox* obj, int64_t startRange, int64_t endRange)
+ALTERNET_UI_API void RichTextBox_ForceDelayedLayout_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetSelectionRange(startRange, endRange);
+        obj->ForceDelayedLayout();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API PointI_C RichTextBox_PositionToXY_(RichTextBox* obj, int64_t pos)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<PointI_C>([&](){
-    #endif
-        return obj->PositionToXY(pos);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_WriteTextBox_(RichTextBox* obj, void* textAttr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->WriteTextBox(textAttr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_HasParagraphAttributes_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* style)
+ALTERNET_UI_API c_bool RichTextBox_GetCaretAtLineStart_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->HasParagraphAttributes(startRange, endRange, style);
+        return obj->GetCaretAtLineStart();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_SetProperties_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* properties, int flags)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetProperties(startRange, endRange, properties, flags);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetTextCursor_(RichTextBox* obj, void* cursor)
+ALTERNET_UI_API void RichTextBox_SetCaretAtLineStart_(RichTextBox* obj, c_bool atStart)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetTextCursor(cursor);
+        obj->SetCaretAtLineStart(atStart);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetTextCursor_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_GetDragging_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
+    return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->GetTextCursor();
+        return obj->GetDragging();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetURLCursor_(RichTextBox* obj, void* cursor)
+ALTERNET_UI_API void RichTextBox_SetDragging_(RichTextBox* obj, c_bool dragging)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetURLCursor(cursor);
+        obj->SetDragging(dragging);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetURLCursor_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_GetContextMenu_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return obj->GetURLCursor();
+        return obj->GetContextMenu();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetSelection_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetSelection();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetContextMenuPropertiesInfo_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetContextMenuPropertiesInfo();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetSelection2_(RichTextBox* obj, void* sel)
+ALTERNET_UI_API void RichTextBox_SetContextMenu_(RichTextBox* obj, void* menu)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetSelection2(sel);
+        obj->SetContextMenu(menu);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_WriteImage_(RichTextBox* obj, Image* bitmap, int bitmapType, void* textAttr)
+ALTERNET_UI_API int64_t RichTextBox_GetSelectionAnchor_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
+    return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->WriteImage(bitmap, bitmapType, textAttr);
+        return obj->GetSelectionAnchor();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_WriteImage2_(RichTextBox* obj, const char16_t* filename, int bitmapType, void* textAttr)
+ALTERNET_UI_API void RichTextBox_SetSelectionAnchor_(RichTextBox* obj, int64_t anchor)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
+    MarshalExceptions<void>([&](){
     #endif
-        return obj->WriteImage2(filename, bitmapType, textAttr);
+        obj->SetSelectionAnchor(anchor);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_WriteImage3_(RichTextBox* obj, void* imageBlock, void* textAttr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->WriteImage3(imageBlock, textAttr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, const char16_t* fieldType, void* properties, void* textAttr)
+ALTERNET_UI_API void* RichTextBox_GetSelectionAnchorObject_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return obj->WriteField(fieldType, properties, textAttr);
+        return obj->GetSelectionAnchorObject();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanDeleteRange_(RichTextBox* obj, void* container, int64_t startRange, int64_t endRange)
+ALTERNET_UI_API void RichTextBox_SetSelectionAnchorObject_(RichTextBox* obj, void* anchor)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSelectionAnchorObject(anchor);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetFocusObject_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetFocusObject();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_StoreFocusObject_(RichTextBox* obj, void* richObj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->StoreFocusObject(richObj);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_SetFocusObject_(RichTextBox* obj, void* richObj, c_bool setCaretPosition)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->CanDeleteRange(container, startRange, endRange);
+        return obj->SetFocusObject(richObj, setCaretPosition);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Invalidate_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Invalidate();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Clear_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Clear();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Replace_(RichTextBox* obj, int64_t from, int64_t to, const char16_t* value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Replace(from, to, value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Remove_(RichTextBox* obj, int64_t from, int64_t to)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Remove(from, to);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_LoadFile_(RichTextBox* obj, const char16_t* file, int type)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->LoadFile(file, type);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_SaveFile_(RichTextBox* obj, const char16_t* file, int type)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SaveFile(file, type);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetHandlerFlags_(RichTextBox* obj, int flags)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetHandlerFlags(flags);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int RichTextBox_GetHandlerFlags_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetHandlerFlags();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_MarkDirty_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->MarkDirty();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_DiscardEdits_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DiscardEdits();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetMaxLength_(RichTextBox* obj, uint64_t len)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMaxLength(len);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_WriteText_(RichTextBox* obj, const char16_t* text)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->WriteText(text);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_AppendText_(RichTextBox* obj, const char16_t* text)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AppendText(text);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int64_t RichTextBox_XYToPosition_(RichTextBox* obj, int64_t x, int64_t y)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->XYToPosition(x, y);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_ShowPosition_(RichTextBox* obj, int64_t pos)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ShowPosition(pos);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Copy_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Copy();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Cut_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Cut();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Paste_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Paste();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_DeleteSelection_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DeleteSelection();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanCopy_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanCopy();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanCut_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanCut();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanPaste_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanPaste();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanDeleteSelection_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanDeleteSelection();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Undo_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Undo();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_Redo_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Redo();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanUndo_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanUndo();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanRedo_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanRedo();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetInsertionPoint_(RichTextBox* obj, int64_t pos)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetInsertionPoint(pos);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetInsertionPointEnd_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetInsertionPointEnd();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int64_t RichTextBox_GetInsertionPoint_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetInsertionPoint();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetSelection_(RichTextBox* obj, int64_t from, int64_t to)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSelection(from, to);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetEditable_(RichTextBox* obj, c_bool editable)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetEditable(editable);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_HasSelection_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->HasSelection();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_HasUnfocusedSelection_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->HasUnfocusedSelection();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_Newline_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Newline();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_LineBreak_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->LineBreak();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndStyle_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->EndStyle();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndAllStyles_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->EndAllStyles();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginBold_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->BeginBold();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_EndBold_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->EndBold();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->BeginItalic();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -1959,859 +1849,969 @@ ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, const char16_t* 
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_LoadFromStream_(RichTextBox* obj, void* stream, int type)
+ALTERNET_UI_API c_bool RichTextBox_ExtendSelection_(RichTextBox* obj, int64_t oldPosition, int64_t newPosition, int flags)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->LoadFromStream(stream, type);
+        return obj->ExtendSelection(oldPosition, newPosition, flags);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_SaveToStream_(RichTextBox* obj, void* stream, int type)
+ALTERNET_UI_API c_bool RichTextBox_ExtendCellSelection_(RichTextBox* obj, void* table, int noRowSteps, int noColSteps)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->SaveToStream(stream, type);
+        return obj->ExtendCellSelection(table, noRowSteps, noColSteps);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_ApplyStyleToSelection_(RichTextBox* obj, void* style, int flags)
+ALTERNET_UI_API c_bool RichTextBox_StartCellSelection_(RichTextBox* obj, void* table, void* newCell)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->ApplyStyleToSelection(style, flags);
+        return obj->StartCellSelection(table, newCell);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_InitFileHandlers_()
+ALTERNET_UI_API c_bool RichTextBox_ScrollIntoView_(RichTextBox* obj, int64_t position, int keyCode)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->ScrollIntoView(position, keyCode);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetCaretPosition_(RichTextBox* obj, int64_t position, c_bool showAtLineStart)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        RichTextBox::InitFileHandlers();
+        obj->SetCaretPosition(position, showAtLineStart);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetRange_(RichTextBox* obj, int64_t from, int64_t to)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetRange(from, to));
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int RichTextBox_GetLineLength_(RichTextBox* obj, int64_t lineNo)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetLineLength(lineNo);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API char16_t* RichTextBox_GetLineText_(RichTextBox* obj, int64_t lineNo)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetLineText(lineNo));
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int RichTextBox_GetNumberOfLines_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetNumberOfLines();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_IsModified_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsModified();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_IsEditable_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsEditable();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_IsSingleLine_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsSingleLine();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_IsMultiLine_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsMultiLine();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API char16_t* RichTextBox_GetStringSelection_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetStringSelection());
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API char16_t* RichTextBox_GetFilename_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetFilename());
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetFilename_(RichTextBox* obj, const char16_t* filename)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetFilename(filename);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetDelayedLayoutThreshold_(RichTextBox* obj, int64_t threshold)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetDelayedLayoutThreshold(threshold);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetDelayedLayoutThreshold_(RichTextBox* obj)
+ALTERNET_UI_API int64_t RichTextBox_GetCaretPosition_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetDelayedLayoutThreshold();
+        return obj->GetCaretPosition();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_GetFullLayoutRequired_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetFullLayoutRequired();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetFullLayoutRequired_(RichTextBox* obj, c_bool b)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetFullLayoutRequired(b);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int64_t RichTextBox_GetFullLayoutTime_(RichTextBox* obj)
+ALTERNET_UI_API int64_t RichTextBox_GetAdjustedCaretPosition_(RichTextBox* obj, int64_t caretPos)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetFullLayoutTime();
+        return obj->GetAdjustedCaretPosition(caretPos);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetFullLayoutTime_(RichTextBox* obj, int64_t t)
+ALTERNET_UI_API void RichTextBox_MoveCaretForward_(RichTextBox* obj, int64_t oldPosition)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetFullLayoutTime(t);
+        obj->MoveCaretForward(oldPosition);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API int64_t RichTextBox_GetFullLayoutSavedPosition_(RichTextBox* obj)
+ALTERNET_UI_API PointI_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, PointI ptLogical)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return obj->GetPhysicalPoint(ptLogical);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API PointI_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, PointI ptPhysical)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return obj->GetLogicalPoint(ptPhysical);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int64_t RichTextBox_FindNextWordPosition_(RichTextBox* obj, int direction)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetFullLayoutSavedPosition();
+        return obj->FindNextWordPosition(direction);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetFullLayoutSavedPosition_(RichTextBox* obj, int64_t p)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetFullLayoutSavedPosition(p);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_ForceDelayedLayout_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->ForceDelayedLayout();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_GetCaretAtLineStart_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_IsPositionVisible_(RichTextBox* obj, int64_t pos)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->GetCaretAtLineStart();
+        return obj->IsPositionVisible(pos);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetCaretAtLineStart_(RichTextBox* obj, c_bool atStart)
+ALTERNET_UI_API int64_t RichTextBox_GetFirstVisiblePosition_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetFirstVisiblePosition();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int64_t RichTextBox_GetCaretPositionForDefaultStyle_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int64_t>([&](){
+    #endif
+        return obj->GetCaretPositionForDefaultStyle();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetCaretPositionForDefaultStyle_(RichTextBox* obj, int64_t pos)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetCaretAtLineStart(atStart);
+        obj->SetCaretPositionForDefaultStyle(pos);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_GetDragging_(RichTextBox* obj)
+ALTERNET_UI_API void RichTextBox_MoveCaretBack_(RichTextBox* obj, int64_t oldPosition)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->MoveCaretBack(oldPosition);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_GetCaretPositionForIndex_(RichTextBox* obj, int64_t position, RectI rect, void* container)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->GetDragging();
+        return obj->GetCaretPositionForIndex(position, rect, container);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetDragging_(RichTextBox* obj, c_bool dragging)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetDragging(dragging);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetContextMenu_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_GetVisibleLineForCaretPosition_(RichTextBox* obj, int64_t caretPosition)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return obj->GetContextMenu();
+        return obj->GetVisibleLineForCaretPosition(caretPosition);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetContextMenu_(RichTextBox* obj, void* menu)
+ALTERNET_UI_API void* RichTextBox_GetCommandProcessor_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetCommandProcessor();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_IsDefaultStyleShowing_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsDefaultStyleShowing();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API PointI_C RichTextBox_GetFirstVisiblePoint_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return obj->GetFirstVisiblePoint();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_EnableImages_(RichTextBox* obj, c_bool b)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetContextMenu(menu);
+        obj->EnableImages(b);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API int64_t RichTextBox_GetSelectionAnchor_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_GetImagesEnabled_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetImagesEnabled();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_EnableDelayedImageLoading_(RichTextBox* obj, c_bool b)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EnableDelayedImageLoading(b);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_GetDelayedImageLoading_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetDelayedImageLoading();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_GetDelayedImageProcessingRequired_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetDelayedImageProcessingRequired();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetDelayedImageProcessingRequired_(RichTextBox* obj, c_bool b)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetDelayedImageProcessingRequired(b);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int64_t RichTextBox_GetDelayedImageProcessingTime_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetSelectionAnchor();
+        return obj->GetDelayedImageProcessingTime();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetSelectionAnchor_(RichTextBox* obj, int64_t anchor)
+ALTERNET_UI_API void RichTextBox_SetDelayedImageProcessingTime_(RichTextBox* obj, int64_t t)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetSelectionAnchor(anchor);
+        obj->SetDelayedImageProcessingTime(t);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* RichTextBox_GetSelectionAnchorObject_(RichTextBox* obj)
+ALTERNET_UI_API char16_t* RichTextBox_GetValue_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
+    return MarshalExceptions<char16_t*>([&](){
     #endif
-        return obj->GetSelectionAnchorObject();
+        return AllocPInvokeReturnString(obj->GetValue());
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetSelectionAnchorObject_(RichTextBox* obj, void* anchor)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetSelectionAnchorObject(anchor);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* RichTextBox_GetFocusObject_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->GetFocusObject();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_StoreFocusObject_(RichTextBox* obj, void* richObj)
+ALTERNET_UI_API void RichTextBox_SetValue_(RichTextBox* obj, const char16_t* value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->StoreFocusObject(richObj);
+        obj->SetValue(value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_SetFocusObject_(RichTextBox* obj, void* richObj, c_bool setCaretPosition)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetFocusObject(richObj, setCaretPosition);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_Invalidate_(RichTextBox* obj)
+ALTERNET_UI_API void RichTextBox_SetLineHeight_(RichTextBox* obj, int height)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->Invalidate();
+        obj->SetLineHeight(height);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_Clear_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Clear();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_Replace_(RichTextBox* obj, int64_t from, int64_t to, const char16_t* value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Replace(from, to, value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_Remove_(RichTextBox* obj, int64_t from, int64_t to)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Remove(from, to);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_LoadFile_(RichTextBox* obj, const char16_t* file, int type)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->LoadFile(file, type);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_SaveFile_(RichTextBox* obj, const char16_t* file, int type)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SaveFile(file, type);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetHandlerFlags_(RichTextBox* obj, int flags)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetHandlerFlags(flags);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int RichTextBox_GetHandlerFlags_(RichTextBox* obj)
+ALTERNET_UI_API int RichTextBox_GetLineHeight_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
     #endif
-        return obj->GetHandlerFlags();
+        return obj->GetLineHeight();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_MarkDirty_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_SetCaretPositionAfterClick_(RichTextBox* obj, void* container, int64_t position, int hitTestFlags, c_bool extendSelection)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetCaretPositionAfterClick(container, position, hitTestFlags, extendSelection);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_ClearAvailableFontNames_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->MarkDirty();
+        RichTextBox::ClearAvailableFontNames();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_DiscardEdits_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_ProcessDelayedImageLoading_(RichTextBox* obj, c_bool refresh)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->ProcessDelayedImageLoading(refresh);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_RequestDelayedImageProcessing_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->DiscardEdits();
+        obj->RequestDelayedImageProcessing();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetMaxLength_(RichTextBox* obj, uint64_t len)
+ALTERNET_UI_API c_bool RichTextBox_GetUncombinedStyle_(RichTextBox* obj, int64_t position, void* style)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<c_bool>([&](){
     #endif
-        obj->SetMaxLength(len);
+        return obj->GetUncombinedStyle(position, style);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_WriteText_(RichTextBox* obj, const char16_t* text)
+ALTERNET_UI_API c_bool RichTextBox_GetUncombinedStyle2_(RichTextBox* obj, int64_t position, void* style, void* container)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<c_bool>([&](){
     #endif
-        obj->WriteText(text);
+        return obj->GetUncombinedStyle2(position, style, container);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_AppendText_(RichTextBox* obj, const char16_t* text)
+ALTERNET_UI_API c_bool RichTextBox_SetDefaultStyle_(RichTextBox* obj, void* style)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<c_bool>([&](){
     #endif
-        obj->AppendText(text);
+        return obj->SetDefaultStyle(style);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API int64_t RichTextBox_XYToPosition_(RichTextBox* obj, int64_t x, int64_t y)
+ALTERNET_UI_API c_bool RichTextBox_SetDefaultRichStyle_(RichTextBox* obj, void* style)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetDefaultRichStyle(style);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetDefaultStyleEx_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetDefaultStyleEx();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int64_t RichTextBox_GetLastPosition_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->XYToPosition(x, y);
+        return obj->GetLastPosition();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_ShowPosition_(RichTextBox* obj, int64_t pos)
+ALTERNET_UI_API void* RichTextBox_GetStyle_(RichTextBox* obj, int64_t position)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<void*>([&](){
     #endif
-        obj->ShowPosition(pos);
+        return obj->GetStyle(position);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_Copy_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_GetRichStyle_(RichTextBox* obj, int64_t position)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<void*>([&](){
     #endif
-        obj->Copy();
+        return obj->GetRichStyle(position);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_Cut_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_GetStyleInContainer_(RichTextBox* obj, int64_t position, void* container)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<void*>([&](){
     #endif
-        obj->Cut();
+        return obj->GetStyleInContainer(position, container);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_Paste_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Paste();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_DeleteSelection_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DeleteSelection();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_CanCopy_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_SetStyle_(RichTextBox* obj, int64_t start, int64_t end, void* style)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->CanCopy();
+        return obj->SetStyle(start, end, style);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanCut_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_SetRichStyle_(RichTextBox* obj, int64_t start, int64_t end, void* style)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->CanCut();
+        return obj->SetRichStyle(start, end, style);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanPaste_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->CanPaste();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_CanDeleteSelection_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->CanDeleteSelection();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_Undo_(RichTextBox* obj)
+ALTERNET_UI_API void RichTextBox_SetStyle2_(RichTextBox* obj, void* richObj, void* textAttr, int flags)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->Undo();
+        obj->SetStyle2(richObj, textAttr, flags);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_Redo_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_GetStyleForRange_(RichTextBox* obj, int64_t startRange, int64_t endRange)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
+    return MarshalExceptions<void*>([&](){
     #endif
-        obj->Redo();
+        return obj->GetStyleForRange(startRange, endRange);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanUndo_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_GetStyleForRange2_(RichTextBox* obj, int64_t startRange, int64_t endRange)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetStyleForRange2(startRange, endRange);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetStyleForRange3_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* container)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetStyleForRange3(startRange, endRange, container);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_SetStyleEx_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* style, int flags)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->CanUndo();
+        return obj->SetStyleEx(startRange, endRange, style, flags);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool RichTextBox_CanRedo_(RichTextBox* obj)
+ALTERNET_UI_API c_bool RichTextBox_SetListStyle_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* def, int flags, int startFrom, int specifiedLevel)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->CanRedo();
+        return obj->SetListStyle(startRange, endRange, def, flags, startFrom, specifiedLevel);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetInsertionPoint_(RichTextBox* obj, int64_t pos)
+ALTERNET_UI_API c_bool RichTextBox_SetListStyle2_(RichTextBox* obj, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int startFrom, int specifiedLevel)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetListStyle2(startRange, endRange, defName, flags, startFrom, specifiedLevel);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_ClearListStyle_(RichTextBox* obj, int64_t startRange, int64_t endRange, int flags)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->ClearListStyle(startRange, endRange, flags);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_NumberList_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* def, int flags, int startFrom, int specifiedLevel)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->NumberList(startRange, endRange, def, flags, startFrom, specifiedLevel);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_NumberList2_(RichTextBox* obj, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int startFrom, int specifiedLevel)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->NumberList2(startRange, endRange, defName, flags, startFrom, specifiedLevel);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_PromoteList_(RichTextBox* obj, int promoteBy, int64_t startRange, int64_t endRange, void* def, int flags, int specifiedLevel)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->PromoteList(promoteBy, startRange, endRange, def, flags, specifiedLevel);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_PromoteList2_(RichTextBox* obj, int promoteBy, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int specifiedLevel)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->PromoteList2(promoteBy, startRange, endRange, defName, flags, specifiedLevel);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_Delete_(RichTextBox* obj, int64_t startRange, int64_t endRange)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Delete(startRange, endRange);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_WriteTable_(RichTextBox* obj, int rows, int cols, void* tableAttr, void* cellAttr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->WriteTable(rows, cols, tableAttr, cellAttr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetBasicStyle_(RichTextBox* obj, void* style)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetInsertionPoint(pos);
+        obj->SetBasicStyle(style);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetInsertionPointEnd_(RichTextBox* obj)
+ALTERNET_UI_API void* RichTextBox_GetBasicStyle_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetBasicStyle();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_BeginStyle_(RichTextBox* obj, void* style)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->BeginStyle(style);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_HasCharacterAttributes_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* style)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->HasCharacterAttributes(startRange, endRange, style);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetStyleSheet_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetStyleSheet();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetAndShowDefaultStyle_(RichTextBox* obj, void* attr)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetInsertionPointEnd();
+        obj->SetAndShowDefaultStyle(attr);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API int64_t RichTextBox_GetInsertionPoint_(RichTextBox* obj)
+ALTERNET_UI_API void RichTextBox_SetSelectionRange_(RichTextBox* obj, int64_t startRange, int64_t endRange)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSelectionRange(startRange, endRange);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API PointI_C RichTextBox_PositionToXY_(RichTextBox* obj, int64_t pos)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<PointI_C>([&](){
+    #endif
+        return obj->PositionToXY(pos);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_WriteTextBox_(RichTextBox* obj, void* textAttr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->WriteTextBox(textAttr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_HasParagraphAttributes_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* style)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->HasParagraphAttributes(startRange, endRange, style);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_SetProperties_(RichTextBox* obj, int64_t startRange, int64_t endRange, void* properties, int flags)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetProperties(startRange, endRange, properties, flags);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetTextCursor_(RichTextBox* obj, void* cursor)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetTextCursor(cursor);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetTextCursor_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetTextCursor();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetURLCursor_(RichTextBox* obj, void* cursor)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetURLCursor(cursor);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetURLCursor_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetURLCursor();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetSelection_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetSelection();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetContextMenuPropertiesInfo_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetContextMenuPropertiesInfo();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void RichTextBox_SetSelection2_(RichTextBox* obj, void* sel)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetSelection2(sel);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_WriteImage_(RichTextBox* obj, Image* bitmap, int bitmapType, void* textAttr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->WriteImage(bitmap, bitmapType, textAttr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_WriteImage2_(RichTextBox* obj, const char16_t* filename, int bitmapType, void* textAttr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->WriteImage2(filename, bitmapType, textAttr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_WriteImage3_(RichTextBox* obj, void* imageBlock, void* textAttr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->WriteImage3(imageBlock, textAttr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, const char16_t* fieldType, void* properties, void* textAttr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->WriteField(fieldType, properties, textAttr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanDeleteRange_(RichTextBox* obj, void* container, int64_t startRange, int64_t endRange)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanDeleteRange(container, startRange, endRange);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool RichTextBox_CanInsertContent_(RichTextBox* obj, void* container, int64_t pos)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->CanInsertContent(container, pos);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* RichTextBox_GetBuffer_(RichTextBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetBuffer();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int64_t RichTextBox_DeleteSelectedContent_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
     #endif
-        return obj->GetInsertionPoint();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetSelection_(RichTextBox* obj, int64_t from, int64_t to)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetSelection(from, to);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void RichTextBox_SetEditable_(RichTextBox* obj, c_bool editable)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetEditable(editable);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_HasSelection_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->HasSelection();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_HasUnfocusedSelection_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->HasUnfocusedSelection();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_Newline_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->Newline();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_LineBreak_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->LineBreak();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndStyle_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->EndStyle();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndAllStyles_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->EndAllStyles();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginBold_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->BeginBold();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_EndBold_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->EndBold();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool RichTextBox_BeginItalic_(RichTextBox* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->BeginItalic();
+        return obj->DeleteSelectedContent();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

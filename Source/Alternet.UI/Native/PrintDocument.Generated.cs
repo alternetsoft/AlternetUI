@@ -191,25 +191,37 @@ namespace Alternet.UI.Native
                 case NativeApi.PrintDocumentEvent.PrintPage:
                 {
                     {
+                        if(PrintPage is not null)
+                        {
                         var cea = new CancelEventArgs();
-                        PrintPage?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                        PrintPage.Invoke(this, cea);
+                        return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
+                        }
+                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.PrintDocumentEvent.BeginPrint:
                 {
                     {
+                        if(BeginPrint is not null)
+                        {
                         var cea = new CancelEventArgs();
-                        BeginPrint?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                        BeginPrint.Invoke(this, cea);
+                        return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
+                        }
+                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.PrintDocumentEvent.EndPrint:
                 {
                     {
+                        if(EndPrint is not null)
+                        {
                         var cea = new CancelEventArgs();
-                        EndPrint?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                        EndPrint.Invoke(this, cea);
+                        return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
+                        }
+                        else return IntPtr.Zero;
                     }
                 }
                 default: throw new Exception("Unexpected PrintDocumentEvent value: " + e);

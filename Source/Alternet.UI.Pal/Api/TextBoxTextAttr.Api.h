@@ -19,116 +19,6 @@ ALTERNET_UI_API TextBoxTextAttr* TextBoxTextAttr_Create_()
     #endif
 }
 
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletText_(void* attr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasBulletText(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletName_(void* attr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasBulletName(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasURL_(void* attr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasURL(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasPageBreak_(void* attr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasPageBreak(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffects_(void* attr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasTextEffects(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffect_(void* attr, int effect)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasTextEffect(attr, effect);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasOutlineLevel_(void* attr)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasOutlineLevel(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool TextBoxTextAttr_HasFlag_(void* attr, int64_t flag)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return TextBoxTextAttr::HasFlag(attr, flag);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void TextBoxTextAttr_RemoveFlag_(void* attr, int64_t flag)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        TextBoxTextAttr::RemoveFlag(attr, flag);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void TextBoxTextAttr_AddFlag_(void* attr, int64_t flag)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        TextBoxTextAttr::AddFlag(attr, flag);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void TextBoxTextAttr_Delete_(void* attr)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -1059,6 +949,116 @@ ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletNumber_(void* attr)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return TextBoxTextAttr::HasBulletNumber(attr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletText_(void* attr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasBulletText(attr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletName_(void* attr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasBulletName(attr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasURL_(void* attr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasURL(attr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasPageBreak_(void* attr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasPageBreak(attr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffects_(void* attr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasTextEffects(attr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffect_(void* attr, int effect)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasTextEffect(attr, effect);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasOutlineLevel_(void* attr)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasOutlineLevel(attr);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFlag_(void* attr, int64_t flag)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return TextBoxTextAttr::HasFlag(attr, flag);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TextBoxTextAttr_RemoveFlag_(void* attr, int64_t flag)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        TextBoxTextAttr::RemoveFlag(attr, flag);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TextBoxTextAttr_AddFlag_(void* attr, int64_t flag)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        TextBoxTextAttr::AddFlag(attr, flag);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

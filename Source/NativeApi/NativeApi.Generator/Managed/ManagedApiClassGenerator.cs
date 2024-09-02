@@ -14,6 +14,13 @@ namespace ApiGenerator.Managed
 {
     internal class ManagedApiClassGenerator
     {
+        public static bool IsControl(ApiType managedApiType)
+        {
+            var type = managedApiType.Type;
+            var typeName = type.Name;
+            return typeName == "Control";
+        }
+
         public string Generate(ApiType managedApiType, ApiType pInvokeApiType)
         {
             var type = managedApiType.Type;
@@ -56,7 +63,7 @@ using System.Security;");
             w.WriteLine("{");
             w.Indent++;
 
-            if(typeName == "Control")
+            if(IsControl(managedApiType))
                 w.WriteLine("internal object? handler;");
 
             var events = MemberProvider.GetEvents(type).ToArray();
@@ -74,7 +81,7 @@ using System.Security;");
             foreach (var method in managedApiType.Methods)
                 WriteMethod(w, method, types, pinvokeTypes);
 
-            WriteEvents(w, types, events);
+            WriteEvents(managedApiType, pInvokeApiType, w, types, events);
 
             w.WriteLine();
             new PInvokeClassGenerator().Generate(pInvokeApiType, w);
@@ -430,7 +437,12 @@ using System.Security;");
             }
         }
 
-        private static void WriteEvents(IndentedTextWriter w, Types types, EventInfo[] events)
+        private static void WriteEvents(
+            ApiType managedApiType,
+            ApiType pInvokeApiType,
+            IndentedTextWriter w,
+            Types types,
+            EventInfo[] events)
         {
             if (events.Length == 0)
                 return;
@@ -478,7 +490,14 @@ using System.Security;");
 
             using (new BlockIndent(w))
             {
-                if(events.Length == 1)
+                if (IsControl(managedApiType))
+                {
+                    w.WriteLine("if(handler is null)");
+                    w.WriteLine("return default;");
+                    w.WriteLine();
+                }
+
+                if (events.Length == 1)
                 {
                     FnSingle(events[0]);
                 }
@@ -500,10 +519,16 @@ using System.Security;");
                         {
                             using (new BlockIndent(w))
                             {
+                                w.WriteLine($"if({e.Name} is not null)");
+                                w.WriteLine("{");
+
                                 w.WriteLine($"var cea = new CancelEventArgs();");
-                                w.WriteLine($"{e.Name}?.Invoke(this, cea);");
+                                w.WriteLine($"{e.Name}.Invoke(this, cea);");
                                 w.WriteLine(
-                                    $"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
+                                    $"return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;");
+
+                                w.WriteLine("}");
+                                w.WriteLine("else return IntPtr.Zero;");
                             }
                         }
                         else

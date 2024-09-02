@@ -23,96 +23,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static System.IntPtr FindHandlerByName(string name)
-        {
-            return NativeApi.GenericImage_FindHandlerByName_(name);
-        }
-        
-        public static System.IntPtr FindHandlerByExt(string extension, int bitmapType)
-        {
-            return NativeApi.GenericImage_FindHandlerByExt_(extension, bitmapType);
-        }
-        
-        public static System.IntPtr FindHandlerByBitmapType(int bitmapType)
-        {
-            return NativeApi.GenericImage_FindHandlerByBitmapType_(bitmapType);
-        }
-        
-        public static System.IntPtr FindHandlerByMime(string mimetype)
-        {
-            return NativeApi.GenericImage_FindHandlerByMime_(mimetype);
-        }
-        
-        public static void InsertHandler(System.IntPtr handler)
-        {
-            NativeApi.GenericImage_InsertHandler_(handler);
-        }
-        
-        public static bool RemoveHandler(string name)
-        {
-            return NativeApi.GenericImage_RemoveHandler_(name);
-        }
-        
-        public static int GetImageCountInFile(string filename, int bitmapType)
-        {
-            return NativeApi.GenericImage_GetImageCountInFile_(filename, bitmapType);
-        }
-        
-        public static int GetImageCountInStream(InputStream stream, int bitmapType)
-        {
-            return NativeApi.GenericImage_GetImageCountInStream_(stream.NativePointer, bitmapType);
-        }
-        
-        public static System.IntPtr GetAlphaData(System.IntPtr handle)
-        {
-            return NativeApi.GenericImage_GetAlphaData_(handle);
-        }
-        
-        public static System.IntPtr GetData(System.IntPtr handle)
-        {
-            return NativeApi.GenericImage_GetData_(handle);
-        }
-        
-        public static bool CreateData(System.IntPtr handle, int width, int height, System.IntPtr data, bool static_data)
-        {
-            return NativeApi.GenericImage_CreateData_(handle, width, height, data, static_data);
-        }
-        
-        public static bool CreateAlphaData(System.IntPtr handle, int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data)
-        {
-            return NativeApi.GenericImage_CreateAlphaData_(handle, width, height, data, alpha, static_data);
-        }
-        
-        public static void SetAlphaData(System.IntPtr handle, System.IntPtr alpha, bool static_data)
-        {
-            NativeApi.GenericImage_SetAlphaData_(handle, alpha, static_data);
-        }
-        
-        public static void SetData(System.IntPtr handle, System.IntPtr data, bool static_data)
-        {
-            NativeApi.GenericImage_SetData_(handle, data, static_data);
-        }
-        
-        public static void SetDataWithSize(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data)
-        {
-            NativeApi.GenericImage_SetDataWithSize_(handle, data, new_width, new_height, static_data);
-        }
-        
-        public static System.IntPtr LockBits(System.IntPtr handle)
-        {
-            return NativeApi.GenericImage_LockBits_(handle);
-        }
-        
-        public static int GetStride(System.IntPtr handle)
-        {
-            return NativeApi.GenericImage_GetStride_(handle);
-        }
-        
-        public static void UnlockBits(System.IntPtr handle)
-        {
-            NativeApi.GenericImage_UnlockBits_(handle);
-        }
-        
         public static Alternet.Drawing.Color FindFirstUnusedColor(System.IntPtr handle, byte startR, byte startG, byte startB)
         {
             return NativeApi.GenericImage_FindFirstUnusedColor_(handle, startR, startG, startB);
@@ -538,6 +448,96 @@ namespace Alternet.UI.Native
             NativeApi.GenericImage_CleanUpHandlers_();
         }
         
+        public static System.IntPtr FindHandlerByName(string name)
+        {
+            return NativeApi.GenericImage_FindHandlerByName_(name);
+        }
+        
+        public static System.IntPtr FindHandlerByExt(string extension, int bitmapType)
+        {
+            return NativeApi.GenericImage_FindHandlerByExt_(extension, bitmapType);
+        }
+        
+        public static System.IntPtr FindHandlerByBitmapType(int bitmapType)
+        {
+            return NativeApi.GenericImage_FindHandlerByBitmapType_(bitmapType);
+        }
+        
+        public static System.IntPtr FindHandlerByMime(string mimetype)
+        {
+            return NativeApi.GenericImage_FindHandlerByMime_(mimetype);
+        }
+        
+        public static void InsertHandler(System.IntPtr handler)
+        {
+            NativeApi.GenericImage_InsertHandler_(handler);
+        }
+        
+        public static bool RemoveHandler(string name)
+        {
+            return NativeApi.GenericImage_RemoveHandler_(name);
+        }
+        
+        public static int GetImageCountInFile(string filename, int bitmapType)
+        {
+            return NativeApi.GenericImage_GetImageCountInFile_(filename, bitmapType);
+        }
+        
+        public static int GetImageCountInStream(InputStream stream, int bitmapType)
+        {
+            return NativeApi.GenericImage_GetImageCountInStream_(stream.NativePointer, bitmapType);
+        }
+        
+        public static System.IntPtr GetAlphaData(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetAlphaData_(handle);
+        }
+        
+        public static System.IntPtr GetData(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetData_(handle);
+        }
+        
+        public static bool CreateData(System.IntPtr handle, int width, int height, System.IntPtr data, bool static_data)
+        {
+            return NativeApi.GenericImage_CreateData_(handle, width, height, data, static_data);
+        }
+        
+        public static bool CreateAlphaData(System.IntPtr handle, int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data)
+        {
+            return NativeApi.GenericImage_CreateAlphaData_(handle, width, height, data, alpha, static_data);
+        }
+        
+        public static void SetAlphaData(System.IntPtr handle, System.IntPtr alpha, bool static_data)
+        {
+            NativeApi.GenericImage_SetAlphaData_(handle, alpha, static_data);
+        }
+        
+        public static void SetData(System.IntPtr handle, System.IntPtr data, bool static_data)
+        {
+            NativeApi.GenericImage_SetData_(handle, data, static_data);
+        }
+        
+        public static void SetDataWithSize(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data)
+        {
+            NativeApi.GenericImage_SetDataWithSize_(handle, data, new_width, new_height, static_data);
+        }
+        
+        public static System.IntPtr LockBits(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_LockBits_(handle);
+        }
+        
+        public static int GetStride(System.IntPtr handle)
+        {
+            return NativeApi.GenericImage_GetStride_(handle);
+        }
+        
+        public static void UnlockBits(System.IntPtr handle)
+        {
+            NativeApi.GenericImage_UnlockBits_(handle);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -546,60 +546,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr GenericImage_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByName_(string name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByExt_(string extension, int bitmapType);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByBitmapType_(int bitmapType);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByMime_(string mimetype);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_InsertHandler_(System.IntPtr handler);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_RemoveHandler_(string name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int GenericImage_GetImageCountInFile_(string filename, int bitmapType);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int GenericImage_GetImageCountInStream_(IntPtr stream, int bitmapType);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_GetAlphaData_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_GetData_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_CreateData_(System.IntPtr handle, int width, int height, System.IntPtr data, bool static_data);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_CreateAlphaData_(System.IntPtr handle, int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_SetAlphaData_(System.IntPtr handle, System.IntPtr alpha, bool static_data);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_SetData_(System.IntPtr handle, System.IntPtr data, bool static_data);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_SetDataWithSize_(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_LockBits_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int GenericImage_GetStride_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_UnlockBits_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color GenericImage_FindFirstUnusedColor_(System.IntPtr handle, byte startR, byte startG, byte startB);
@@ -855,6 +801,60 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_CleanUpHandlers_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandlerByName_(string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandlerByExt_(string extension, int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandlerByBitmapType_(int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_FindHandlerByMime_(string mimetype);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_InsertHandler_(System.IntPtr handler);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_RemoveHandler_(string name);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetImageCountInFile_(string filename, int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetImageCountInStream_(IntPtr stream, int bitmapType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_GetAlphaData_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_GetData_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_CreateData_(System.IntPtr handle, int width, int height, System.IntPtr data, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool GenericImage_CreateAlphaData_(System.IntPtr handle, int width, int height, System.IntPtr data, System.IntPtr alpha, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetAlphaData_(System.IntPtr handle, System.IntPtr alpha, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetData_(System.IntPtr handle, System.IntPtr data, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_SetDataWithSize_(System.IntPtr handle, System.IntPtr data, int new_width, int new_height, bool static_data);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GenericImage_LockBits_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int GenericImage_GetStride_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GenericImage_UnlockBits_(System.IntPtr handle);
             
         }
     }
