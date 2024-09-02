@@ -40,6 +40,57 @@ namespace Alternet.Drawing
         private ScrollBar.MetricsInfo? metrics;
 
         /// <summary>
+        /// Enumerates possible hit test return values.
+        /// </summary>
+        public enum HitTestResult
+        {
+            /// <summary>
+            /// Hit is outside of anything.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Hit is on the corner.
+            /// </summary>
+            Corner,
+
+            /// <summary>
+            /// Hit is on the top border.
+            /// </summary>
+            TopBorder,
+
+            /// <summary>
+            /// Hit is on the bottom border.
+            /// </summary>
+            BottomBorder,
+
+            /// <summary>
+            /// Hit is on the left border.
+            /// </summary>
+            LeftBorder,
+
+            /// <summary>
+            /// Hit is on the right border.
+            /// </summary>
+            RightBorder,
+
+            /// <summary>
+            /// Hit is on the vertical scrollbar.
+            /// </summary>
+            VertScrollBar,
+
+            /// <summary>
+            /// Hit is on the horizontal scrollbar.
+            /// </summary>
+            HorzScrollBar,
+
+            /// <summary>
+            /// Hit is inside the client rectangle.
+            /// </summary>
+            ClientRect,
+        }
+
+        /// <summary>
         /// Gets whether vertical scrollbar is visible.
         /// </summary>
         public bool VertVisible => VertScrollBar?.Visible ?? false;
@@ -161,15 +212,70 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs layout of the drawable childs.
+        /// Returns one of <see cref="HitTestResult"/> constants.
+        /// </summary>
+        /// <param name="point">Point to check.</param>
+        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        /// <returns></returns>
+        public virtual HitTestResult HitTest(Coord scaleFactor, PointD point)
+        {
+            if (!Bounds.NotEmptyAndContains(point))
+                return HitTestResult.None;
+
+            var rectangles = PerformLayout(scaleFactor);
+
+            if (rectangles[HitTestResult.Corner].NotEmptyAndContains(point))
+                return HitTestResult.Corner;
+
+            if (rectangles[HitTestResult.VertScrollBar].NotEmptyAndContains(point))
+                return HitTestResult.VertScrollBar;
+
+            if (rectangles[HitTestResult.HorzScrollBar].NotEmptyAndContains(point))
+                return HitTestResult.HorzScrollBar;
+
+            if (rectangles[HitTestResult.ClientRect].NotEmptyAndContains(point))
+                return HitTestResult.ClientRect;
+
+            if (rectangles[HitTestResult.TopBorder].NotEmptyAndContains(point))
+                return HitTestResult.TopBorder;
+
+            if (rectangles[HitTestResult.BottomBorder].NotEmptyAndContains(point))
+                return HitTestResult.BottomBorder;
+
+            if (rectangles[HitTestResult.LeftBorder].NotEmptyAndContains(point))
+                return HitTestResult.LeftBorder;
+
+            if (rectangles[HitTestResult.RightBorder].NotEmptyAndContains(point))
+                return HitTestResult.RightBorder;
+
+            return HitTestResult.None;
+        }
+
+        /// <summary>
+        /// Performs layout of the drawable childs and returns calculated bound of the different
+        /// parts of the drawable.
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
-        /// <param name="clientRect">Client rectangle which equals bounds of the object without the space
-        /// occupied by the scrollbars.</param>
-        public virtual void PerformLayout(Coord scaleFactor, out RectD clientRect)
+        /// <returns>Calculated bounds of the different parts of the drawable.</returns>
+        public virtual EnumArray<HitTestResult, RectD> PerformLayout(Coord scaleFactor)
         {
+            var result = new EnumArray<HitTestResult, RectD>();
+
             if (HasBorder)
+            {
                 Border!.Bounds = Bounds;
+                var borderSettings = Border!.Border;
+                if(borderSettings is not null)
+                {
+                    result[HitTestResult.TopBorder] = borderSettings.GetTopRectangle(Bounds);
+                    result[HitTestResult.BottomBorder] = borderSettings.GetBottomRectangle(Bounds);
+                    result[HitTestResult.LeftBorder] = borderSettings.GetLeftRectangle(Bounds);
+                    result[HitTestResult.RightBorder] = borderSettings.GetRightRectangle(Bounds);
+                }
+            }
+            else
+            {
+            }
 
             var boundsInsideBorder = Bounds;
             var borderWidth = BorderWidth;
@@ -179,7 +285,7 @@ namespace Alternet.Drawing
             boundsInsideBorder.Width -= borderWidth.Horizontal;
             boundsInsideBorder.Height -= borderWidth.Vertical;
 
-            clientRect = boundsInsideBorder;
+            var clientRect = boundsInsideBorder;
 
             var vertVisible = VertVisible;
             var horzVisible = HorzVisible;
@@ -211,26 +317,43 @@ namespace Alternet.Drawing
                 vertBounds.Height -= cornerSize.Height;
                 horzBounds.Width -= cornerSize.Width;
 
-                if(cornerVisible)
+                if (cornerVisible)
+                {
                     Corner!.Bounds = cornerBounds;
+                    result[HitTestResult.Corner] = cornerBounds;
+                }
+                else
+                {
+                }
             }
 
             if (vertVisible)
             {
                 VertScrollBar!.Bounds = vertBounds;
                 clientRect.Width -= vertWidth;
+                result[HitTestResult.VertScrollBar] = vertBounds;
+            }
+            else
+            {
             }
 
             if (horzVisible)
             {
                 clientRect.Height -= horzHeight;
                 HorzScrollBar!.Bounds = horzBounds;
+                result[HitTestResult.HorzScrollBar] = horzBounds;
+            }
+            else
+            {
             }
 
-            if(Background is not null)
+            if (Background is not null)
             {
                 Background.Bounds = Bounds;
             }
+
+            result[HitTestResult.ClientRect] = clientRect;
+            return result;
         }
 
         /// <inheritdoc/>
@@ -239,7 +362,7 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            PerformLayout(control.ScaleFactor, out _);
+            PerformLayout(control.ScaleFactor);
 
             if (Background is not null && Background.Visible)
             {

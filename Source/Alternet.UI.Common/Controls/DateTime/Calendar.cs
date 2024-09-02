@@ -83,37 +83,37 @@ namespace Alternet.UI
         public enum HitTestResult
         {
             /// <summary>
-            /// Hit outside of anything.
+            /// Hit is outside of anything.
             /// </summary>
             None,
 
             /// <summary>
-            /// Hit on the header (weekdays).
+            /// Hit is on the header (weekdays).
             /// </summary>
             Header,
 
             /// <summary>
-            /// Hit on a day in the calendar.
+            /// Hit is on a day in the calendar.
             /// </summary>
             Day,
 
             /// <summary>
-            /// Hit on next month arrow (in alternate month selector mode).
+            /// Hit is on the next month arrow (in alternate month selector mode).
             /// </summary>
             IncMonth,
 
             /// <summary>
-            /// Hit on previous month arrow (in alternate month selector mode).
+            /// Hit is on the previous month arrow (in alternate month selector mode).
             /// </summary>
             DecMonth,
 
             /// <summary>
-            /// Hit on surrounding week of previous/next month (if shown).
+            /// Hit is on the surrounding week of previous/next month (if shown).
             /// </summary>
             SurroundingWeek,
 
             /// <summary>
-            /// Hit on week of the year number (if shown).
+            /// Hit is on the week of the year number (if shown).
             /// </summary>
             Week,
         }

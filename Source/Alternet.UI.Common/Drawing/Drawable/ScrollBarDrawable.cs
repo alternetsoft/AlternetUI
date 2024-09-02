@@ -85,6 +85,52 @@ namespace Alternet.Drawing
         private ScrollBar.MetricsInfo? metrics;
 
         /// <summary>
+        /// Enumerates possible hit test return values.
+        /// </summary>
+        public enum HitTestResult
+        {
+            /// <summary>
+            /// Hit is outside of anything.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Hit is on the thumb.
+            /// </summary>
+            Thumb,
+
+            /// <summary>
+            /// Hit is on the start button.
+            /// </summary>
+            StartButton,
+
+            /// <summary>
+            /// Hit is on the start arrow.
+            /// </summary>
+            StartArrow,
+
+            /// <summary>
+            /// Hit is on the end button.
+            /// </summary>
+            EndButton,
+
+            /// <summary>
+            /// Hit is on the end arrow.
+            /// </summary>
+            EndArrow,
+
+            /// <summary>
+            /// Hit is before the thumb.
+            /// </summary>
+            BeforeThumb,
+
+            /// <summary>
+            /// Hit is after the thumb.
+            /// </summary>
+            AfterThumb,
+        }
+
+        /// <summary>
         /// Gets or sets scrollbar position information.
         /// </summary>
         public ScrollBar.AltPositionInfo? AltPosInfo { get; set; }

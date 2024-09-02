@@ -175,9 +175,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="p1">First point.</param>
         /// <param name="p2">Second point.</param>
-        /// <returns><see cref="double"/> value with distance between point <paramref name="p1"/>
+        /// <returns>Distance between point <paramref name="p1"/>
         /// and point <paramref name="p2"/>.</returns>
-        public static double GetDistance(PointD p1, PointD p2)
+        public static Coord GetDistance(PointD p1, PointD p2)
         {
             return MathUtils.GetDistance(p1.X, p1.Y, p2.X, p2.Y);
         }
@@ -190,7 +190,7 @@ namespace Alternet.UI
         /// <param name="value">Value to compare distance with.</param>
         /// <returns><c>true</c> if distance between two points is less
         /// than <paramref name="value"/>; <c>false</c> otherwise.</returns>
-        public static bool DistanceIsLess(PointD p1, PointD p2, double value)
+        public static bool DistanceIsLess(PointD p1, PointD p2, Coord value)
         {
             return (Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2)) < Math.Pow(value, 2);
         }
@@ -198,21 +198,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets squared distance between two points.
         /// </summary>
-        /// <param name="p1"></param>
-        /// <param name="p2"></param>
+        /// <param name="p1">First point.</param>
+        /// <param name="p2">Second point.</param>
         /// <returns></returns>
-        public static double GetDistanceSquared(PointD p1, PointD p2) =>
+        public static Coord GetDistanceSquared(PointD p1, PointD p2) =>
             ((double)(p1.X - p2.X) * (double)(p1.X - p2.X))
             + ((double)(p1.Y - p2.Y) * (double)(p1.Y - p2.Y));
 
         /// <summary>
-        /// Gets whether point is in circle.
+        /// Gets whether point is inside the circle.
         /// </summary>
-        /// <param name="p"></param>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
+        /// <param name="p">Point to test.</param>
+        /// <param name="center">Circle center.</param>
+        /// <param name="radius">Circle radius.</param>
         /// <returns></returns>
-        public static bool IsPointInCircle(PointD p, PointD center, double radius)
+        public static bool IsPointInCircle(PointD p, PointD center, Coord radius)
         {
             return GetDistanceSquared(p, center) <= radius * radius;
         }
@@ -224,7 +224,7 @@ namespace Alternet.UI
         /// <param name="radius">Circle radius.</param>
         /// <param name="angle">Angle.</param>
         /// <returns></returns>
-        public static PointD GetPointOnCircle(PointD center, double radius, double angle)
+        public static PointD GetPointOnCircle(PointD center, Coord radius, Coord angle)
         {
             return new(
                 center.X + (radius * Math.Cos(angle * MathUtils.DegToRad)),
@@ -236,7 +236,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetTopLineRect(this RectD rect, double width)
+        public static RectD GetTopLineRect(this RectD rect, Coord width)
         {
             var point = rect.TopLeft;
             var size = new SizeD(rect.Width, width);
@@ -272,7 +272,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetBottomLineRect(this RectD rect, double width)
+        public static RectD GetBottomLineRect(this RectD rect, Coord width)
         {
             var point = new PointD(rect.Left, rect.Bottom - width);
             var size = new SizeD(rect.Width, width);
@@ -291,8 +291,8 @@ namespace Alternet.UI
             this Graphics dc,
             Brush brush,
             PointD point,
-            double length,
-            double width)
+            Coord length,
+            Coord width)
         {
             var rect = new RectD(point, new SizeD(length, width));
             dc.FillRectangle(brush, rect);
@@ -310,8 +310,8 @@ namespace Alternet.UI
             this Graphics dc,
             Brush brush,
             PointD point,
-            double length,
-            double width)
+            Coord length,
+            Coord width)
         {
             var rect = new RectD(point, new SizeD(width, length));
             dc.FillRectangle(brush, rect);
@@ -366,7 +366,7 @@ namespace Alternet.UI
             this Graphics dc,
             Brush brush,
             RectD rect,
-            double borderWidth = 1)
+            Coord borderWidth = 1)
         {
             dc.FillRectangle(brush, GetTopLineRect(rect, borderWidth));
             dc.FillRectangle(brush, GetBottomLineRect(rect, borderWidth));
@@ -421,7 +421,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetLeftLineRect(this RectD rect, double width)
+        public static RectD GetLeftLineRect(this RectD rect, Coord width)
         {
             var point = rect.TopLeft;
             var size = new SizeD(width, rect.Height);
@@ -433,7 +433,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="width">Border side width.</param>
-        public static RectD GetRightLineRect(this RectD rect, double width)
+        public static RectD GetRightLineRect(this RectD rect, Coord width)
         {
             var point = new PointD(rect.Right - width, rect.Top);
             var size = new SizeD(width, rect.Height);
@@ -452,7 +452,7 @@ namespace Alternet.UI
             string text,
             Coord maxWidth,
             Font font,
-            double? scaleFactor = null)
+            Coord? scaleFactor = null)
         {
             var list = WrapTextToList(text, maxWidth, font, scaleFactor);
             if (list.Count == 0)
@@ -484,7 +484,7 @@ namespace Alternet.UI
             string text,
             Coord pixels,
             Font font,
-            double? scaleFactor = null)
+            Coord? scaleFactor = null)
         {
             List<string> wrappedLines = new();
 
