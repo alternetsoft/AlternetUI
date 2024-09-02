@@ -33,8 +33,7 @@ namespace Alternet.UI
             propertyChanged: OnSamplePropChanged);
 
         private readonly InteriorDrawable interior = new();
-
-        private InteriorNotification interiorNotification;
+        private readonly InteriorNotification interiorNotification;
 
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
@@ -220,7 +219,7 @@ namespace Alternet.UI
 
             interior.Bounds = newBounds;
 
-            var rectangles = interior.PerformLayout(scaleFactor);
+            var rectangles = interior.GetLayoutRectangles(scaleFactor);
             var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
             control.Bounds = (0, 0, clientRect.Width, clientRect.Height);

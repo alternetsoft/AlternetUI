@@ -105,19 +105,9 @@ namespace Alternet.Drawing
             StartButton,
 
             /// <summary>
-            /// Hit is on the start arrow.
-            /// </summary>
-            StartArrow,
-
-            /// <summary>
             /// Hit is on the end button.
             /// </summary>
             EndButton,
-
-            /// <summary>
-            /// Hit is on the end arrow.
-            /// </summary>
-            EndArrow,
 
             /// <summary>
             /// Hit is before the thumb.
@@ -186,11 +176,58 @@ namespace Alternet.Drawing
             return metrics ?? ScrollBar.DefaultMetrics;
         }
 
+        /// <summary>
+        /// Returns one of <see cref="HitTestResult"/> constants.
+        /// </summary>
+        /// <param name="point">Point to check.</param>
+        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        /// <returns></returns>
+        public virtual HitTestResult HitTest(Coord scaleFactor, PointD point)
+        {
+            if (!Bounds.NotEmptyAndContains(point))
+                return HitTestResult.None;
+
+            var rectangles = GetLayoutRectangles(scaleFactor);
+
+            if (rectangles[HitTestResult.StartButton].NotEmptyAndContains(point))
+                return HitTestResult.StartButton;
+
+            if (rectangles[HitTestResult.EndButton].NotEmptyAndContains(point))
+                return HitTestResult.EndButton;
+
+            return HitTestResult.None;
+        }
+
+        /// <summary>
+        /// Performs layout of the drawable childs and returns calculated bound of the different
+        /// parts of the drawable.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        /// <returns>Calculated bounds of the different parts of the drawable.</returns>
+        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(Coord scaleFactor)
+        {
+            EnumArray<HitTestResult, RectD> result = new();
+
+            Coord buttonSize = IsVertical ? Bounds.Width : Bounds.Height;
+
+            RectD startButtonBounds = (Bounds.Left, Bounds.Top, buttonSize, buttonSize);
+            RectD endButtonBounds
+                = (Bounds.Right - buttonSize, Bounds.Bottom - buttonSize, buttonSize, buttonSize);
+
+            result[HitTestResult.StartButton] = startButtonBounds;
+            result[HitTestResult.EndButton] = endButtonBounds;
+
+            return result;
+        }
+
         /// <inheritdoc/>
         public override void Draw(Control control, Graphics dc)
         {
             if (!Visible)
                 return;
+
+            var scaleFactor = control.ScaleFactor;
+            var rectangles = GetLayoutRectangles(scaleFactor);
 
             var backgroundDrawable = Background?.GetObjectOrNormal(VisualState);
 
@@ -200,14 +237,12 @@ namespace Alternet.Drawing
                 backgroundDrawable.Draw(control, dc);
             }
 
+            var metrics = GetRealMetrics();
             var startButton = GetStartButton();
             var endButton = GetEndButton();
             var startArrow = GetStartArrow();
             var endArrow = GetEndArrow();
-            var metrics = GetRealMetrics();
-            var scaleFactor = control.ScaleFactor;
 
-            Coord buttonSize = IsVertical ? Bounds.Width : Bounds.Height;
             var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor);
 
             var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
@@ -219,35 +254,30 @@ namespace Alternet.Drawing
                     arrowSize.Height,
                     Bounds.Width - arrowMargin,
                     Bounds.Height - arrowMargin);
-
             var realArrowSizeI = GraphicsFactory.PixelFromDip(realArrowSize, scaleFactor);
-
-            var startButtonBounds = (Bounds.Left, Bounds.Top, buttonSize, buttonSize);
-            var endButtonBounds
-                = (Bounds.Right - buttonSize, Bounds.Bottom - buttonSize, buttonSize, buttonSize);
 
             if (startButton is not null)
             {
-                startButton.Bounds = startButtonBounds;
+                startButton.Bounds = rectangles[HitTestResult.StartButton];
                 startButton.Draw(control, dc);
             }
 
             if (startArrow is not null)
             {
-                startArrow.Bounds = startButtonBounds;
+                startArrow.Bounds = rectangles[HitTestResult.StartButton];
                 startArrow.SvgImage?.SetSvgSize(realArrowSizeI);
                 startArrow.Draw(control, dc);
             }
 
             if (endButton is not null)
             {
-                endButton.Bounds = endButtonBounds;
+                endButton.Bounds = rectangles[HitTestResult.EndButton];
                 endButton.Draw(control, dc);
             }
 
             if (endArrow is not null)
             {
-                endArrow.Bounds = endButtonBounds;
+                endArrow.Bounds = rectangles[HitTestResult.EndButton];
                 endArrow.SvgImage?.SetSvgSize(realArrowSizeI);
                 endArrow.Draw(control, dc);
             }

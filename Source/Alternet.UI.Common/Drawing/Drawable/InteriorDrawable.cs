@@ -212,6 +212,29 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns <see cref="HitTestsResult"/> which contains
+        /// interior hit test and scrollbar hit test.
+        /// </summary>
+        /// <param name="point">Point to check.</param>
+        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        /// <returns></returns>
+        public HitTestsResult HitTests(Coord scaleFactor, PointD point)
+        {
+            HitTestsResult result = new();
+
+            var hitTest = HitTest(scaleFactor, point);
+            result.Interior = hitTest;
+
+            if (hitTest == InteriorDrawable.HitTestResult.HorzScrollBar && HorzScrollBar is not null)
+                result.ScrollBar = HorzScrollBar.HitTest(scaleFactor, point);
+            else
+            if (hitTest == InteriorDrawable.HitTestResult.VertScrollBar && VertScrollBar is not null)
+                result.ScrollBar = VertScrollBar.HitTest(scaleFactor, point);
+
+            return result;
+        }
+
+        /// <summary>
         /// Returns one of <see cref="HitTestResult"/> constants.
         /// </summary>
         /// <param name="point">Point to check.</param>
@@ -222,7 +245,7 @@ namespace Alternet.Drawing
             if (!Bounds.NotEmptyAndContains(point))
                 return HitTestResult.None;
 
-            var rectangles = PerformLayout(scaleFactor);
+            var rectangles = GetLayoutRectangles(scaleFactor);
 
             var cornerRect = rectangles[HitTestResult.Corner];
 
@@ -261,13 +284,12 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
         /// <returns>Calculated bounds of the different parts of the drawable.</returns>
-        public virtual EnumArray<HitTestResult, RectD> PerformLayout(Coord scaleFactor)
+        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(Coord scaleFactor)
         {
             var result = new EnumArray<HitTestResult, RectD>();
 
             if (HasBorder)
             {
-                Border!.Bounds = Bounds;
                 var borderSettings = Border!.Border;
                 if(borderSettings is not null)
                 {
@@ -277,18 +299,8 @@ namespace Alternet.Drawing
                     result[HitTestResult.RightBorder] = borderSettings.GetRightRectangle(Bounds);
                 }
             }
-            else
-            {
-            }
 
-            var boundsInsideBorder = Bounds;
-            var borderWidth = BorderWidth;
-
-            boundsInsideBorder.Left += borderWidth.Left;
-            boundsInsideBorder.Top += borderWidth.Top;
-            boundsInsideBorder.Width -= borderWidth.Horizontal;
-            boundsInsideBorder.Height -= borderWidth.Vertical;
-
+            var boundsInsideBorder = Bounds.DeflatedWithPadding(BorderWidth);
             var clientRect = boundsInsideBorder;
 
             var vertVisible = VertVisible;
@@ -323,37 +335,20 @@ namespace Alternet.Drawing
 
                 if (cornerVisible)
                 {
-                    Corner!.Bounds = cornerBounds;
                     result[HitTestResult.Corner] = cornerBounds;
-                }
-                else
-                {
                 }
             }
 
             if (vertVisible)
             {
-                VertScrollBar!.Bounds = vertBounds;
                 clientRect.Width -= vertWidth;
                 result[HitTestResult.VertScrollBar] = vertBounds;
-            }
-            else
-            {
             }
 
             if (horzVisible)
             {
                 clientRect.Height -= horzHeight;
-                HorzScrollBar!.Bounds = horzBounds;
                 result[HitTestResult.HorzScrollBar] = horzBounds;
-            }
-            else
-            {
-            }
-
-            if (Background is not null)
-            {
-                Background.Bounds = Bounds;
             }
 
             result[HitTestResult.ClientRect] = clientRect;
@@ -366,30 +361,35 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            PerformLayout(control.ScaleFactor);
+            var rectangles = GetLayoutRectangles(control.ScaleFactor);
 
             if (Background is not null && Background.Visible)
             {
+                Background.Bounds = Bounds;
                 Background.Draw(control, dc);
             }
 
             if (HasCorner)
             {
+                Corner!.Bounds = rectangles[HitTestResult.Corner];
                 Corner!.Draw(control, dc);
             }
 
             if (VertVisible)
             {
+                VertScrollBar!.Bounds = rectangles[HitTestResult.VertScrollBar];
                 VertScrollBar!.Draw(control, dc);
             }
 
             if (HorzVisible)
             {
+                HorzScrollBar!.Bounds = rectangles[HitTestResult.HorzScrollBar];
                 HorzScrollBar!.Draw(control, dc);
             }
 
             if (Border is not null && Border.Visible)
             {
+                Border!.Bounds = Bounds;
                 Border.Draw(control, dc);
             }
         }
@@ -411,6 +411,35 @@ namespace Alternet.Drawing
         {
             var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
             themeObj.AssignTo(this);
+        }
+
+        /// <summary>
+        /// Contains full hit test result, including interior part and scrollbar part.
+        /// </summary>
+        public struct HitTestsResult
+        {
+            /// <summary>
+            /// Gets or sets interior hit test result.
+            /// </summary>
+            public InteriorDrawable.HitTestResult Interior;
+
+            /// <summary>
+            /// Gets or sets interior scrollbar test result.
+            /// Valid if <see cref="Interior"/> hit test contains scrollbars.
+            /// </summary>
+            public ScrollBarDrawable.HitTestResult ScrollBar;
+
+            /// <summary>
+            /// Returns a string that represents the current object.
+            /// </summary>
+            /// <returns>A string that represents the current object.</returns>
+            public override readonly string ToString()
+            {
+                string[] names = { nameof(Interior), nameof(ScrollBar) };
+                object[] values = { Interior, ScrollBar };
+
+                return StringUtils.ToString(names, values);
+            }
         }
     }
 }

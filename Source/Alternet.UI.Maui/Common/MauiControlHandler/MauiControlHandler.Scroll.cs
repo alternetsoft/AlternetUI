@@ -10,14 +10,16 @@ namespace Alternet.UI
     {
         private ScrollBarInfo vertPositionInfo = new();
         private ScrollBarInfo horzPositionInfo = new();
-        private ScrollEventType scrollBarEvtKind;
-        private int scrollBarEvtPosition;
 
         public ScrollBarInfo VertScrollBarInfo
         {
             get => vertPositionInfo;
             set => vertPositionInfo = value;
         }
+
+        public ScrollEventType ScrollBarEvtKind { get; set; }
+
+        public int ScrollBarEvtPosition { get; set; }
 
         public ScrollBarInfo HorzScrollBarInfo
         {
@@ -46,12 +48,12 @@ namespace Alternet.UI
 
         public virtual ScrollEventType GetScrollBarEvtKind()
         {
-            return scrollBarEvtKind;
+            return ScrollBarEvtKind;
         }
 
         public virtual int GetScrollBarEvtPosition()
         {
-            return scrollBarEvtPosition;
+            return ScrollBarEvtPosition;
         }
     }
 }

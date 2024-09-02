@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public class InteriorNotification : ControlNotification
     {
-        private InteriorDrawable interior;
+        private readonly InteriorDrawable interior;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InteriorNotification"/> class.
@@ -25,11 +25,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseMove(Control sender, MouseEventArgs e)
         {
-            var hitTest = interior.HitTest(sender.ScaleFactor, e.Location);
-            if (hitTest != InteriorDrawable.HitTestResult.None)
-            {
-                App.Log(hitTest);
-            }
+            var hitTests = interior.HitTests(sender.ScaleFactor, e.Location);
+            App.Log(hitTests.ToString());
         }
 
         /// <inheritdoc/>
