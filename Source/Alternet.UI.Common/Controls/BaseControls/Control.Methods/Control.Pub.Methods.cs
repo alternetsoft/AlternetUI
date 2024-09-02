@@ -306,6 +306,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates <see cref="ToolTip"/> so it will be repainted in the screen if it is currently shown.
+        /// </summary>
+        public virtual void UpdateToolTip()
+        {
+            var s = ToolTip;
+            ToolTip = null;
+            ToolTip = s;
+        }
+
+        /// <summary>
         /// Hides tooltip if it is visible. This method doesn't change <see cref="ToolTip"/>
         /// property.
         /// </summary>

@@ -32,6 +32,8 @@ namespace Alternet.UI
         public static bool UseDebugBackgroundColor = false;
 
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
+
+        private static long? mouseWheelTimestamp;
         private static int groupIndexCounter;
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
@@ -225,6 +227,16 @@ namespace Alternet.UI
                 var measureCanvas = GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
                 return measureCanvas;
             }
+        }
+
+        /// <summary>
+        /// Gets time when this control was last clicked.
+        /// </summary>
+        [Browsable(false)]
+        public long? LastClickedTimestamp
+        {
+            get;
+            protected set;
         }
 
         /// <summary>
@@ -476,6 +488,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="Text"/> property should be localizable.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsTextLocalized
         {
             get
@@ -492,6 +505,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="ToolTip"/> property should be localizable.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsToolTipLocalized
         {
             get
@@ -508,6 +522,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="Title"/> property should be localizable.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsTitleLocalized
         {
             get
@@ -2483,6 +2498,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets collection of the attached <see cref="IControlNotification"/> objects.
         /// </summary>
+        [Browsable(false)]
         public IEnumerable<IControlNotification> Notifications
         {
             get

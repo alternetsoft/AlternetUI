@@ -263,17 +263,43 @@ namespace Alternet.UI
                 HoveredControl = null;
 
             Designer?.RaiseDisposed(this);
-            /*var children = Handler.AllChildren.ToArray();*/
+
+            var children = AllChildren.ToArray();
 
             SuspendLayout();
             if (HasChildren)
                 Children.Clear();
             ResumeLayout(performLayout: false);
 
-            // TODO
-            /* foreach (var child in children) child.Dispose();*/
-
             DetachHandler();
+
+            try
+            {
+                foreach (var child in children)
+                {
+                    child.ParentDisposed();
+                }
+            }
+            catch (Exception e)
+            {
+                if (DebugUtils.IsDebugDefined)
+                {
+                    LogUtils.LogExceptionToFile(e);
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when parent is disposed.
+        /// </summary>
+        protected virtual void ParentDisposed()
+        {
+            var children = AllChildren.ToArray();
+            foreach (var child in children)
+            {
+                child.ParentDisposed();
+            }
         }
 
         /// <summary>
