@@ -104,13 +104,14 @@ namespace Alternet.UI
         /// <remarks>
         /// Does nothing if DEBUG is not defined.
         /// </remarks>
+        [Conditional("DEBUG")]
         public void CheckDisposed()
         {
-#if DEBUG
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
-#endif
         }
+
+        void IDisposableObject.CheckDisposed() => this.CheckDisposed();
 
         /// <summary>
         /// Disposes object's resources.
@@ -124,8 +125,8 @@ namespace Alternet.UI
         /// runtime from inside the finalizer and you should not reference
         /// other objects. Only unmanaged resources can be disposed.
         /// </remarks>
-        /// <param name="disposing">Disposing scenario</param>
-        protected virtual void Dispose(bool disposing)
+        /// <param name="disposing">Disposing scenario.</param>
+        public virtual void Dispose(bool disposing)
         {
             if (IsDisposed)
                 return;

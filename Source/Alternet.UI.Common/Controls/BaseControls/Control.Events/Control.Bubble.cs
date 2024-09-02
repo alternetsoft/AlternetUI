@@ -11,8 +11,6 @@ namespace Alternet.UI
 {
     public partial class Control
     {
-        private static long? mouseWheelTimestamp;
-
         /// <summary>
         /// Bubbles mouse move event with the specified parameters.
         /// </summary>
