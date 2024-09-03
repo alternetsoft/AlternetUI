@@ -222,6 +222,25 @@ namespace Alternet.UI
             immutable = true;
         }
 
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public readonly override string ToString()
+        {
+            string[] names =
+            {
+                nameof(Position),
+                nameof(Range),
+                nameof(PageSize),
+                nameof(Visibility),
+            };
+
+            object[] values = { Position, Range, PageSize, Visibility };
+
+            return StringUtils.ToString(names, values);
+        }
+
         internal static ScrollBarInfo CreateImmutable(HiddenOrVisible value)
         {
             ScrollBarInfo result = new();

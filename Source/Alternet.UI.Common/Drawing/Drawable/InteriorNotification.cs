@@ -26,7 +26,7 @@ namespace Alternet.UI
         public override void AfterMouseMove(Control sender, MouseEventArgs e)
         {
             var hitTests = interior.HitTests(sender.ScaleFactor, e.Location);
-            App.Log(hitTests.ToString());
+            App.LogIf(hitTests.ToString(), false);
         }
 
         /// <inheritdoc/>
@@ -35,6 +35,12 @@ namespace Alternet.UI
             bool isVertical,
             ScrollBarInfo value)
         {
+            if (isVertical)
+                return;
+            var prefix = isVertical ? "V: " : "H: ";
+            var s = $"{prefix}{value}";
+            App.Log(s);
+            LogUtils.LogToFile(s);
         }
 
         /// <inheritdoc/>
