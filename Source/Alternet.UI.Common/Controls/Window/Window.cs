@@ -1030,24 +1030,6 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
 
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
-        {
-            if (IsDisposed)
-                return;
-
-            Visible = false;
-
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                App.Current.UnregisterWindow(this);
-                if (!App.Current.VisibleWindows.Any())
-                    App.Handler.ExitMainLoop();
-            }
-        }
-
         /// <summary>
         /// Recreates all native controls in all windows.
         /// </summary>
@@ -1084,6 +1066,24 @@ namespace Alternet.UI
                 return null;
 
             return GetParentWindow(c.Parent);
+        }
+
+        /// <inheritdoc/>
+        protected override void Dispose(bool disposing)
+        {
+            if (IsDisposed)
+                return;
+
+            Visible = false;
+
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                App.Current.UnregisterWindow(this);
+                if (!App.Current.VisibleWindows.Any())
+                    App.Handler.ExitMainLoop();
+            }
         }
 
         /// <inheritdoc/>
