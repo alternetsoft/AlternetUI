@@ -19,9 +19,17 @@ namespace Alternet.UI
         public virtual ISite? Site { get; set; }
 
         /// <summary>
-        /// Gets or sets an arbitrary <see cref="object"/> representing some type of user state.
+        /// Gets or sets an object that contains some data about the component.
         /// </summary>
-        /// <value>An arbitrary <see cref="object"/> representing some type of user state.</value>
+        /// <returns>
+        /// An <see cref="object" /> that contains data about the component.
+        /// The default is <see langword="null" />.
+        /// </returns>
+        [SRCategory("Data")]
+        [Localizable(false)]
+        [Bindable(true)]
+        [DefaultValue(null)]
+        [TypeConverter(typeof(StringConverter))]
         public virtual object? Tag { get; set; }
     }
 }
