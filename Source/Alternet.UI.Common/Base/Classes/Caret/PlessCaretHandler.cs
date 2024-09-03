@@ -145,7 +145,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called to update the caret on screen when it's position, size or visibility were changed.
+        /// Called to update the caret on screen when its position, size or visibility were changed.
         /// </summary>
         protected virtual void Changed()
         {

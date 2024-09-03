@@ -691,7 +691,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method updates Svg default fill colors using
         /// <see cref="Control.GetSvgColor"/>.
-        /// If you need to load Svg without updating it's colors, use
+        /// If you need to load Svg without updating its colors, use
         /// <see cref="ImageSet.FromSvgUrl(string, int, int, Color?)"/> without
         /// defining the last parameter.
         /// </remarks>

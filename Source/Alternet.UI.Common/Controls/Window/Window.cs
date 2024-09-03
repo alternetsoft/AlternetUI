@@ -1250,7 +1250,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Iterates through all child control's shortcuts and
-        /// calls shortcut action if it's key is pressed.
+        /// calls shortcut action if its key is pressed.
         /// </summary>
         /// <param name="e"></param>
         protected virtual void ProcessShortcuts(KeyEventArgs e)

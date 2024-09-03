@@ -225,7 +225,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds list of shortcuts associated with the control and it's
+        /// Adds list of shortcuts associated with the control and its
         /// child controls. Only visible and enabled child controls are queried.
         /// </summary>
         /// <returns></returns>

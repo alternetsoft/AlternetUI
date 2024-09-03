@@ -11,7 +11,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements base class that pass calls to it's handler.
+    /// Implements base class that pass calls to its handler.
     /// and other graphics objects.
     /// </summary>
     public abstract class HandledObject<T> : ImmutableObject

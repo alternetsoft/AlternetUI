@@ -428,7 +428,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates bounding rectangle for the circle specified using radius and it's center location.
+        /// Creates bounding rectangle for the circle specified using radius and its center location.
         /// </summary>
         /// <returns></returns>
         /// <param name="center">Circle center location.</param>

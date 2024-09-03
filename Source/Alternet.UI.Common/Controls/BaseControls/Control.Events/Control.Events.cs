@@ -473,7 +473,7 @@ namespace Alternet.UI
         public event EventHandler? SystemColorsChanged;
 
         /// <summary>
-        /// Occurs when the validation errors have changed for this control or it's child controls.
+        /// Occurs when the validation errors have changed for this control or its child controls.
         /// </summary>
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
     }

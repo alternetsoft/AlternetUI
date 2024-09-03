@@ -797,7 +797,7 @@ namespace Alternet.UI
         /// property.
         /// </summary>
         /// <remarks>
-        /// When <see cref="VisualStateOverride"/> is specified, it's value
+        /// When <see cref="VisualStateOverride"/> is specified, its value
         /// used instead of dynamic state calculation when <see cref="VisualState"/>
         /// returns its value.
         /// </remarks>

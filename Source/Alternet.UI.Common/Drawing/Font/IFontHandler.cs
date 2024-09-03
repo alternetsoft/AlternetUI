@@ -142,7 +142,7 @@ namespace Alternet.Drawing
 
             /// <summary>
             /// Initializes a new instance of the <see cref="FontParams"/> class and assings
-            /// it's properties using the specified font.
+            /// its properties using the specified font.
             /// </summary>
             /// <param name="font">Font.</param>
             public FontParams(Font font)

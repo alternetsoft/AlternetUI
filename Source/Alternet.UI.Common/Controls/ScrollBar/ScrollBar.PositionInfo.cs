@@ -37,7 +37,7 @@ namespace Alternet.UI
 
             /// <summary>
             /// Gets default <see cref="AltPositionInfo"/> object.
-            /// Returned value is immutable and it's properties are read only.
+            /// Returned value is immutable and its properties are read only.
             /// </summary>
             public static AltPositionInfo Default
             {

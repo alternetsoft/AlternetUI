@@ -80,7 +80,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets metrics used to paint this scrollbar when it's style is non-system.
+        /// Gets or sets metrics used to paint this scrollbar when its style is non-system.
         /// </summary>
         [Browsable(false)]
         public virtual MetricsInfo? Metrics

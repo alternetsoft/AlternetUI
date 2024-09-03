@@ -112,13 +112,13 @@ namespace Alternet.UI
         void AddRange(IEnumerable<object> items);
 
         /// <summary>
-        /// Searches for the specified item by it's title and returns value (id) of the item.
+        /// Searches for the specified item by its title and returns value (id) of the item.
         /// </summary>
         /// <param name="text">Item title.</param>
         int? GetValueFromLabel(string text);
 
         /// <summary>
-        /// Searches for the specified item by it's value and returns title of the item.
+        /// Searches for the specified item by its value and returns title of the item.
         /// </summary>
         /// <param name="value">Item value (id).</param>
         string? GetLabelFromValue(int value);

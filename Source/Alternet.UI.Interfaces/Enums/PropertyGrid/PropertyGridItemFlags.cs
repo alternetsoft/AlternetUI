@@ -46,7 +46,7 @@ namespace Alternet.UI
         NoEditor = 0x0010,
 
         /// <summary>
-        /// Property is collapsed, ie. it's children are hidden.
+        /// Property is collapsed, ie. its children are hidden.
         /// </summary>
         Collapsed = 0x0020,
 

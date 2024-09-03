@@ -33,7 +33,7 @@ namespace Alternet.Drawing
         public bool HasImage = false;
 
         /// <summary>
-        /// Returns this object if it's visible; otherwise returns <c>null</c>.
+        /// Returns this object if it is visible; otherwise returns <c>null</c>.
         /// </summary>
         public RectangleDrawable? OnlyVisible
         {
