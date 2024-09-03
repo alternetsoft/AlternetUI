@@ -84,9 +84,9 @@ namespace ControlsSample
 
             fontListBox.SelectionChanged += FontListBox_SelectionChanged;
 
-            rightPanel.Add("Actions", actionsListBox);
-            rightPanel.Add("Fonts", fontListBox);
-            rightPanel.Add("Properties", propGrid);
+            rightPanel.Add(GenericStrings.TabTitleActions, actionsListBox);
+            rightPanel.Add(GenericStrings.TabTitleFonts, fontListBox);
+            rightPanel.Add(GenericStrings.TabTitleProperties, propGrid);
 
             pictureBox.Parent = mainPanel.FillPanel;
             propGrid.SetProps(prm, true);
@@ -95,14 +95,14 @@ namespace ControlsSample
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
             propGrid.Features = PropertyGridFeature.QuestionCharInNullable;
 
-            Title = "SkiaSharp drawing demo";
+            Title = "SkiaSharp Drawing Demo";
 
             control.Parent = mainPanel.LeftPanel;
 
             Size = (900, 700);
             IsMaximized = true;
 
-            actionsListBox.AddAction("GenericImage to SKBitmap", GenericToSkia);
+            actionsListBox.AddAction("GenericImage -> SKBitmap", GenericToSkia);
             actionsListBox.AddAction("Paint on SKCanvas", PaintOnCanvas);
             actionsListBox.AddAction("Draw text on SKSurface (alpha Bitmap)", DrawTextOnSkiaA);
             actionsListBox.AddAction("Draw text on SKSurface (opaque Bitmap)", DrawTextOnSkia);

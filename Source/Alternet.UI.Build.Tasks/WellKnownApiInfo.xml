@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.628.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.629.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -19,6 +19,7 @@
     <Type Name="Alternet.Drawing.PlessBrushHandler">
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.Drawing.BrushAndPen" />
     <Type Name="Alternet.Drawing.BrushOrColor" />
     <Type Name="Alternet.Drawing.GradientBrush">
       <Event Name="PropertyChanged" />
@@ -269,8 +270,16 @@
     </Type>
     <Type Name="Alternet.Base.Collections.CollectionChangeEventArgs`1" />
     <Type Name="Alternet.Base.Collections.RangeAdditionFinishedEventArgs`1" />
+    <Type Name="Alternet.UI.BaseAttribute" />
+    <Type Name="Alternet.UI.BaseBoolAttribute" />
+    <Type Name="Alternet.UI.BaseValueAttribute`1" />
     <Type Name="Alternet.UI.ControlCategoryAttribute" />
     <Type Name="Alternet.UI.DisableDpiAwarenessAttribute" />
+    <Type Name="Alternet.UI.IsCsLocalizedAttribute" />
+    <Type Name="Alternet.UI.IsLocalizedAttribute" />
+    <Type Name="Alternet.UI.IsTextLocalizedAttribute" />
+    <Type Name="Alternet.UI.IsTitleLocalizedAttribute" />
+    <Type Name="Alternet.UI.IsToolTipLocalizedAttribute" />
     <Type Name="Alternet.UI.SRDescriptionAttribute" />
     <Type Name="Alternet.UI.ToolboxBitmapAttribute" />
     <Type Name="Alternet.UI.DummyActionSimulatorHandler">
@@ -282,6 +291,10 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.App">
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.ApplicationContext">
+      <Event Name="ThreadExit" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IApplicationHandler" />
@@ -298,7 +311,9 @@
     </Type>
     <Type Name="Alternet.UI.AutoPinner" />
     <Type Name="Alternet.UI.BaseChildObject`1" />
-    <Type Name="Alternet.UI.BaseComponent" />
+    <Type Name="Alternet.UI.BaseComponent">
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.UI.BaseControlItem" />
     <Type Name="Alternet.UI.ActionRef`1" />
     <Type Name="Alternet.UI.ActionRef`2" />
@@ -1253,6 +1268,7 @@
     <Type Name="Alternet.UI.ControlNotification" />
     <Type Name="Alternet.UI.IControlNotification" />
     <Type Name="Alternet.UI.ControlFactory" />
+    <Type Name="Alternet.UI.IControlFactoryHandler" />
     <Type Name="Alternet.UI.ControlSet" />
     <Type Name="Alternet.UI.AllStateColors" />
     <Type Name="Alternet.UI.ControlColorAndStyle" />
@@ -1333,11 +1349,10 @@
     <Type Name="Alternet.UI.BaseControlHandler">
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.IControlHandler" />
     <Type Name="Alternet.UI.PlessControlHandler">
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.IControlFactoryHandler" />
-    <Type Name="Alternet.UI.IControlHandler" />
     <Type Name="Alternet.UI.IScrollViewerHandler" />
     <Type Name="Alternet.UI.ScrollViewer">
       <Event Name="CellChanged" />
@@ -7694,6 +7709,8 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.ScrollBarInfo" />
+    <Type Name="Alternet.UI.ScrollBarUtils" />
     <Type Name="Alternet.UI.VScrollBar">
       <Event Name="ValueChanged" />
       <Event Name="IsVerticalChanged" />
@@ -9709,15 +9726,18 @@
     <Type Name="Alternet.UI.TryParseNumberDelegate" />
     <Type Name="Alternet.UI.StringUtils" />
     <Type Name="Alternet.UI.TokenizerHelper" />
+    <Type Name="Alternet.UI.ActionUtils" />
     <Type Name="Alternet.UI.ArrayUtils" />
     <Type Name="Alternet.UI.DateUtils" />
     <Type Name="Alternet.UI.DoubleUtils" />
     <Type Name="Alternet.UI.EnumerableUtils" />
     <Type Name="Alternet.UI.EnumUtils" />
     <Type Name="Alternet.UI.EventArgsUtils" />
+    <Type Name="Alternet.UI.IntPtrUtils" />
     <Type Name="Alternet.UI.ListUtils" />
     <Type Name="Alternet.UI.MathUtils" />
     <Type Name="Alternet.UI.StreamUtils" />
+    <Type Name="Alternet.UI.TimerUtils" />
     <Type Name="Alternet.UI.SynchronousCompletionAsyncResult`1" />
     <Type Name="Alternet.UI.UnsetValueType" />
     <Type Name="Alternet.UI.ITestRootObjectProvider" />
@@ -9755,6 +9775,9 @@
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsDark" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsLight" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsLightOrDark" />
+    <Type Name="Alternet.Drawing.InteriorDrawable+HitTestResult" />
+    <Type Name="Alternet.Drawing.InteriorDrawable+HitTestsResult" />
+    <Type Name="Alternet.Drawing.ScrollBarDrawable+HitTestResult" />
     <Type Name="Alternet.Drawing.IFontHandler+FontParams" />
     <Type Name="Alternet.Drawing.GenericImage+PixelStrategy" />
     <Type Name="Alternet.Drawing.GraphicsUnitConverter+GraphicsType" />
@@ -9853,13 +9876,16 @@
     <Type Name="Alternet.UI.PropertyGrid+StaticStateFlags" />
     <Type Name="Alternet.UI.ScrollBar+MetricsInfo`1" />
     <Type Name="Alternet.UI.ScrollBar+MetricsInfo" />
-    <Type Name="Alternet.UI.ScrollBar+PositionInfo" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo">
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ScrollBar+KnownTheme" />
-    <Type Name="Alternet.UI.ScrollBar+ThemeMetrics" />
+    <Type Name="Alternet.UI.ScrollBar+ThemeInitializeArgs" />
+    <Type Name="Alternet.UI.ScrollBar+CustomThemeMetrics" />
+    <Type Name="Alternet.UI.ScrollBar+ThemeMetrics">
+      <Event Name="ThemeInitialize" />
+    </Type>
     <Type Name="Alternet.UI.SpeedButton+KnownTheme" />
     <Type Name="Alternet.UI.FindReplaceControl+IFindReplaceConnect" />
     <Type Name="Alternet.UI.DebugUtils+DebugTraceListener" />

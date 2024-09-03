@@ -5,6 +5,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
+    [IsCsLocalized(true)]
     internal partial class CalendarPage : Control
     {
         private readonly Calendar calendar = new();
@@ -32,42 +33,43 @@ namespace ControlsSample
 
                 var checkboxPanel = new VerticalStackPanel();
                 checkboxPanel.Margin = 5;
-                checkboxPanel.Title = "Options";
+                checkboxPanel.Title = GenericStrings.Options;
                 tabControl.Add(checkboxPanel);
 
-                var showHolidaysCheckBox = checkboxPanel.AddCheckBox("Show Holidays")
+                var showHolidaysCheckBox = checkboxPanel.AddCheckBox(GenericStrings.ShowHolidays)
                     .BindBoolProp(calendar, nameof(Calendar.ShowHolidays));
 
-                var noMonthChangeCheckBox = checkboxPanel.AddCheckBox("No Month Change")
+                var noMonthChangeCheckBox = checkboxPanel.AddCheckBox(GenericStrings.NoMonthChange)
                     .BindBoolProp(calendar, nameof(Calendar.NoMonthChange));
 
-                var useGenericCheckBox = checkboxPanel.AddCheckBox("Use Generic")
+                var useGenericCheckBox = checkboxPanel.AddCheckBox(GenericStrings.UseGeneric)
                     .BindBoolProp(calendar, nameof(Calendar.UseGeneric));
 
-                var sequentalMonthSelectCheckBox = checkboxPanel.AddCheckBox("Sequental Month Select")
+                var sequentalMonthSelectCheckBox = checkboxPanel.AddCheckBox(GenericStrings.SequentalMonthSelect)
                     .BindBoolProp(calendar, nameof(Calendar.SequentalMonthSelect));
                 sequentalMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
-                var showSurroundWeeksCheckBox = checkboxPanel.AddCheckBox("Show Surround Weeks")
+                var showSurroundWeeksCheckBox = checkboxPanel.AddCheckBox(GenericStrings.ShowSurroundWeeks)
                     .BindBoolProp(calendar, nameof(Calendar.ShowSurroundWeeks));
                 showSurroundWeeksCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
-                var weekNumbersCheckBox = checkboxPanel.AddCheckBox("Week Numbers")
+                var weekNumbersCheckBox = checkboxPanel.AddCheckBox(GenericStrings.WeekNumbers)
                     .BindBoolProp(calendar, nameof(Calendar.ShowWeekNumbers));
                 checkboxPanel.ChildrenSet.Margin(3);
 
                 // Buttons panel
 
                 var buttonPanel = new VerticalStackPanel();
-                buttonPanel.Title = "Mark";
+                buttonPanel.Title = GenericStrings.Mark;
                 buttonPanel.Margin = 5;
                 tabControl.Add(buttonPanel);
-                var setDayColorsButton = buttonPanel.AddButton("Days (5, 7) style", SetDayColors);
+                var setDayColorsButton
+                    = buttonPanel.AddButton($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
                 setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
 
                 buttonPanel.AddButtons(
-                    ("Mark days (2, 3)", MarkDays),
-                    ("Today", calendar.SelectToday)).Margin(5);
+                    ($"{GenericStrings.MarkDays} (2, 3)", MarkDays),
+                    (GenericStrings.Today, calendar.SelectToday)).Margin(5);
 
                 // Allow date range panel
 
@@ -76,10 +78,10 @@ namespace ControlsSample
                 rangePanel.Title = "Range";
                 tabControl.Add(rangePanel);
                 rangePanel.AddButtons(
-                    ("Allow Any Date", RangeAnyDate_Click),
-                    ("Allow <= Tomorrow", RangeTomorrow_Click),
-                    ("Allow >= Yesterday", RangeYesterday_Click),
-                    ("Allow Yesterday..Tomorrow", RangeYesterdayTomorrow_Click)).Margin(5);
+                    ($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate_Click),
+                    ($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow_Click),
+                    ($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday_Click),
+                    ($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow_Click)).Margin(5);
 
                 // Other initializations
 
@@ -189,7 +191,7 @@ namespace ControlsSample
 
         private void LogEvent(string evName)
         {
-            App.Log($"Calendar event: {evName}");
+            App.Log($"Calendar: {evName}");
         }
     }
 }

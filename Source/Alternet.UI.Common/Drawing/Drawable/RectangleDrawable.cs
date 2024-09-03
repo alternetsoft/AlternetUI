@@ -33,6 +33,19 @@ namespace Alternet.Drawing
         public bool HasImage = false;
 
         /// <summary>
+        /// Returns this object if it is visible; otherwise returns <c>null</c>.
+        /// </summary>
+        public RectangleDrawable? OnlyVisible
+        {
+            get
+            {
+                if (Visible)
+                    return this;
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Performs default background and border painting.
         /// </summary>
         /// <param name="control">Control in which this object is painted.</param>
@@ -52,7 +65,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Draw(Control control, Graphics dc)
         {
-            if (!Visible)
+            if (!Visible || Bounds.SizeIsEmpty)
                 return;
             DefaultDrawBackAndBorder(control, dc);
             if(HasImage)

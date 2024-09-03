@@ -786,7 +786,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Triggers a refresh for just the given row's area of the control if it's visible.
+        /// Triggers a refresh for just the given row's area of the control if it is visible.
         /// </summary>
         /// <param name="row">Item index.</param>
         public virtual void RefreshRow(int row)

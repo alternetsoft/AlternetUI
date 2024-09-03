@@ -500,6 +500,12 @@ namespace Alternet.UI
         /// </summary>
         ControlFlags StateFlags { get; }
 
+        /// <inheritdoc cref="Control.VertScrollBarInfo"/>
+        ScrollBarInfo VertScrollBarInfo { get; set; }
+
+        /// <inheritdoc cref="Control.HorzScrollBarInfo"/>
+        ScrollBarInfo HorzScrollBarInfo { get; set; }
+
         /// <summary>
         /// Gets whether layout is suspended.
         /// </summary>
@@ -791,7 +797,7 @@ namespace Alternet.UI
         /// property.
         /// </summary>
         /// <remarks>
-        /// When <see cref="VisualStateOverride"/> is specified, it's value
+        /// When <see cref="VisualStateOverride"/> is specified, its value
         /// used instead of dynamic state calculation when <see cref="VisualState"/>
         /// returns its value.
         /// </remarks>
@@ -1890,17 +1896,6 @@ namespace Alternet.UI
         SizeD GetPreferredSize();
 
         /// <summary>
-        /// Call this function to force one or both scrollbars to be always shown, even if
-        /// the control is big enough to show its entire contents without scrolling.
-        /// </summary>
-        /// <param name="hflag">Whether the horizontal scroll bar should always be visible.</param>
-        /// <param name="vflag">Whether the vertical scroll bar should always be visible.</param>
-        /// <remarks>
-        /// This function is currently only implemented under Mac/Carbon.
-        /// </remarks>
-        void AlwaysShowScrollbars(bool hflag = true, bool vflag = true);
-
-        /// <summary>
         /// Performs some action for the each child of the control.
         /// </summary>
         /// <typeparam name="T">Specifies type of the child control.</typeparam>
@@ -1989,44 +1984,6 @@ namespace Alternet.UI
         /// <see langword="true" /> to invalidate the control's child controls;
         /// otherwise, <see langword="false"/>.</param>
         void Invalidate(Region? region, bool invalidateChildren = false);
-
-        /// <summary>
-        /// Sets system scrollbar properties.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <param name="visible">Is scrollbar visible or not.</param>
-        /// <param name="value">Thumb position.</param>
-        /// <param name="largeChange">Large change value (when scrolls page up or down).</param>
-        /// <param name="maximum">Scrollbar Range.</param>
-        void SetScrollBar(bool isVertical, bool visible, int value, int largeChange, int maximum);
-
-        /// <summary>
-        /// Gets whether system scrollbar is visible.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        bool IsScrollBarVisible(bool isVertical);
-
-        /// <summary>
-        /// Gets system scrollbar thumb position.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        int GetScrollBarValue(bool isVertical);
-
-        /// <summary>
-        /// Gets system scrollbar large change value.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        int GetScrollBarLargeChange(bool isVertical);
-
-        /// <summary>
-        /// Gets system scrollbar max range.
-        /// </summary>
-        /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <returns></returns>
-        int GetScrollBarMaximum(bool isVertical);
 
         /// <summary>
         /// Gets background color from the default attributes.

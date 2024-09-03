@@ -11,8 +11,12 @@ namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
+        [IsTextLocalized(true)]
         private readonly ValueEditorUInt32 minLengthEdit;
+
+        [IsTextLocalized(true)]
         private readonly ValueEditorUInt32 maxLengthEdit;
+
         private PopupPropertyGrid? popup;
 
         static TextInputPage()

@@ -32,9 +32,11 @@ namespace Alternet.UI
             0.0f,
             propertyChanged: OnSamplePropChanged);
 
+        private readonly InteriorDrawable interior = new();
+        private readonly InteriorNotification interiorNotification;
+
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
-        private readonly InteriorDrawable interior = new();
 
         static SkiaContainer()
         {
@@ -49,16 +51,7 @@ namespace Alternet.UI
             interior.Metrics = ScrollBar.DefaultMetrics;
             interior.SetDefaultBorder(true);
             interior.SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
-
-            /*Orientation = Microsoft.Maui.ScrollOrientation.Both;*/
-
-            /*VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-            HorizontalScrollBarVisibility = ScrollBarVisibility.Always;*/
-
-            /*SetScrolledPosition(350, 500);
-
-            ScrollToRequested += SkiaContainer_ScrollToRequested;
-            Scrolled += SkiaContainer_Scrolled;*/
+            interiorNotification = new(interior);
 
             EnableTouchEvents = true;
             Touch += Canvas_Touch;
@@ -103,14 +96,17 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
+                    control.RemoveNotification(interiorNotification);
+
                     if (control.Handler is MauiControlHandler handler)
                         handler.Container = null;
                 }
 
                 control = value;
 
-                if(control is not null)
+                if (control is not null)
                 {
+                    control.AddNotification(interiorNotification);
                     if (control.Handler is MauiControlHandler handler)
                         handler.Container = this;
                 }
@@ -222,14 +218,15 @@ namespace Alternet.UI
                 Math.Min(bounds.Height, dirtyRect.Height));
 
             interior.Bounds = newBounds;
-            interior.PerformLayout(scaleFactor, out var clientRect);
+
+            var rectangles = interior.GetLayoutRectangles(scaleFactor);
+            var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
             control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
 
             dc.Clear(control.BackColor);
 
             dc.Save();
-            //dc.Skew((float)clientRect.Left, (float)clientRect.Top);
 
             graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
@@ -239,8 +236,8 @@ namespace Alternet.UI
 
             dc.Restore();
 
-            interior.VertPosition = ScrollBar.AltPositionInfo.Default;
-            interior.HorzPosition = ScrollBar.AltPositionInfo.Default;
+            interior.VertPosition = control.VertScrollBarInfo;
+            interior.HorzPosition = control.HorzScrollBarInfo;
             interior.Draw(control, graphics);
 
             dc.Flush();

@@ -1087,6 +1087,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseClick()
         {
+            LastClickedTimestamp = DateTime.Now.Ticks;
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 

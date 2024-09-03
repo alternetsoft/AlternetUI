@@ -58,31 +58,10 @@ namespace Alternet.UI
                 if (scrollBars == value)
                     return;
                 scrollBars = value;
-                switch (value)
-                {
-                    default:
-                    case RichTextBoxScrollBars.None:
-                        SetScrollbars(horz: false, vert: false, always: false);
-                        break;
-                    case RichTextBoxScrollBars.Horizontal:
-                        SetScrollbars(horz: true, vert: false, always: false);
-                        break;
-                    case RichTextBoxScrollBars.Vertical:
-                        SetScrollbars(horz: false, vert: true, always: false);
-                        break;
-                    case RichTextBoxScrollBars.Both:
-                        SetScrollbars(horz: true, vert: true, always: false);
-                        break;
-                    case RichTextBoxScrollBars.ForcedHorizontal:
-                        SetScrollbars(horz: true, vert: false, always: true);
-                        break;
-                    case RichTextBoxScrollBars.ForcedVertical:
-                        SetScrollbars(horz: false, vert: true, always: true);
-                        break;
-                    case RichTextBoxScrollBars.ForcedBoth:
-                        SetScrollbars(horz: true, vert: true, always: true);
-                        break;
-                }
+
+                var converted = ScrollBarUtils.AsHiddenOrVisible(value);
+                VertScrollBarInfo = converted.Vertical;
+                HorzScrollBarInfo = converted.Horizontal;
             }
         }
 
@@ -280,19 +259,6 @@ namespace Alternet.UI
             if (RefreshOnBorder() || RefreshOnImage() || RefreshOnBackground()
                 || RefreshOnColor())
                 Refresh();
-        }
-
-        /// <summary>
-        /// Sets scrollbar settings.
-        /// </summary>
-        /// <param name="horz">Whether to show horizontal scrollbar.</param>
-        /// <param name="vert">Whether to show vertical scrollbar.</param>
-        /// <param name="always">Whether scrollbars are always visible.</param>
-        protected virtual void SetScrollbars(bool horz, bool vert, bool always)
-        {
-            Handler.ShowHorzScrollBar = horz;
-            Handler.ShowVertScrollBar = vert;
-            Handler.ScrollBarAlwaysVisible = always;
         }
 
         /// <inheritdoc/>

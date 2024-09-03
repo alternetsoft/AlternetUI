@@ -14,6 +14,7 @@ namespace ControlsSample
         internal static readonly string audioTap = $"{ResPrefix}tap-notification-180637.wav";
         internal static readonly string audioDogGrowl = $"{ResPrefix}doggrowl.wav";
         internal static readonly string audioTinkALink = $"{ResPrefix}tinkalink2.wav";       
+        
         internal static readonly string audioCustom = "Open audio file (*.wav)...";
 
         private SimpleSoundPlayer? player;

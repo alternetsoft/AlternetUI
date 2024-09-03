@@ -14,12 +14,25 @@ namespace ControlsSample
         private const string MinValueTextDouble = "-1.7976931348623157E+308";
         private const string MaxValueTextDouble = "1.7976931348623157E+308";
 
+        [IsTextLocalized(true)]
         private readonly ValueEditorInt16 shortEdit = new("Int16", -25);
+
+        [IsTextLocalized(true)]
         private readonly ValueEditorByte byteEdit = new("Byte", 230);
+
+        [IsTextLocalized(true)]
         private readonly ValueEditorDouble doubleEdit = new("Double", -15.3);
+
+        [IsTextLocalized(true)]
         private readonly ValueEditorUDouble udoubleEdit = new("UDouble", 1002);
+
+        [IsTextLocalized(true)]
         private readonly HexEditorUInt32 uint32HexEdit = new("UInt32 Hex", 0x25E6);
+
+        [IsTextLocalized(true)]
         private readonly CheckBox bellOnErrorCheckBox = new("Bell On Error");
+
+        [IsTextLocalized(true)]
         private readonly Label label = new("Try to enter invalid numbers");
 
         private readonly ValueEditorByte twoDigitsEdit = new("Two digits", 15);

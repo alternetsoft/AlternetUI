@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements preview control which splits it's view into two docked panels
+    /// Implements preview control which splits its view into two docked panels
     /// and uses <see cref="First"/> and <see cref="Second"/> preview sub-controls there.
     /// When <see cref="FileName"/> is changed, preview sub-controls are also updated.
     /// </summary>

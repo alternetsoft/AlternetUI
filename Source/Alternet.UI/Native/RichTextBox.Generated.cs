@@ -49,531 +49,471 @@ namespace Alternet.UI.Native
             
         }
         
-        public bool CanInsertContent(System.IntPtr container, long pos)
+        public bool LoadFromStream(InputStream stream, int type)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanInsertContent_(NativePointer, container, pos);
+            return NativeApi.RichTextBox_LoadFromStream_(NativePointer, stream.NativePointer, type);
         }
         
-        public System.IntPtr GetBuffer()
+        public bool SaveToStream(OutputStream stream, int type)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetBuffer_(NativePointer);
+            return NativeApi.RichTextBox_SaveToStream_(NativePointer, stream.NativePointer, type);
         }
         
-        public long DeleteSelectedContent()
+        public bool ApplyStyleToSelection(System.IntPtr style, int flags)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_DeleteSelectedContent_(NativePointer);
+            return NativeApi.RichTextBox_ApplyStyleToSelection_(NativePointer, style, flags);
         }
         
-        public bool ExtendSelection(long oldPosition, long newPosition, int flags)
+        public static void InitFileHandlers()
         {
-            CheckDisposed();
-            return NativeApi.RichTextBox_ExtendSelection_(NativePointer, oldPosition, newPosition, flags);
-        }
-        
-        public bool ExtendCellSelection(System.IntPtr table, int noRowSteps, int noColSteps)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_ExtendCellSelection_(NativePointer, table, noRowSteps, noColSteps);
-        }
-        
-        public bool StartCellSelection(System.IntPtr table, System.IntPtr newCell)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_StartCellSelection_(NativePointer, table, newCell);
-        }
-        
-        public bool ScrollIntoView(long position, int keyCode)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_ScrollIntoView_(NativePointer, position, keyCode);
-        }
-        
-        public void SetCaretPosition(long position, bool showAtLineStart)
-        {
-            CheckDisposed();
-            NativeApi.RichTextBox_SetCaretPosition_(NativePointer, position, showAtLineStart);
-        }
-        
-        public long GetCaretPosition()
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_GetCaretPosition_(NativePointer);
-        }
-        
-        public long GetAdjustedCaretPosition(long caretPos)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_GetAdjustedCaretPosition_(NativePointer, caretPos);
-        }
-        
-        public void MoveCaretForward(long oldPosition)
-        {
-            CheckDisposed();
-            NativeApi.RichTextBox_MoveCaretForward_(NativePointer, oldPosition);
-        }
-        
-        public Alternet.Drawing.PointI GetPhysicalPoint(Alternet.Drawing.PointI ptLogical)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_GetPhysicalPoint_(NativePointer, ptLogical);
-        }
-        
-        public Alternet.Drawing.PointI GetLogicalPoint(Alternet.Drawing.PointI ptPhysical)
-        {
-            CheckDisposed();
-            return NativeApi.RichTextBox_GetLogicalPoint_(NativePointer, ptPhysical);
+            NativeApi.RichTextBox_InitFileHandlers_();
         }
         
-        public long FindNextWordPosition(int direction)
+        public string GetRange(long from, long to)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_FindNextWordPosition_(NativePointer, direction);
+            return NativeApi.RichTextBox_GetRange_(NativePointer, from, to);
         }
         
-        public bool IsPositionVisible(long pos)
+        public int GetLineLength(long lineNo)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_IsPositionVisible_(NativePointer, pos);
+            return NativeApi.RichTextBox_GetLineLength_(NativePointer, lineNo);
         }
         
-        public long GetFirstVisiblePosition()
+        public string GetLineText(long lineNo)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetFirstVisiblePosition_(NativePointer);
+            return NativeApi.RichTextBox_GetLineText_(NativePointer, lineNo);
         }
         
-        public long GetCaretPositionForDefaultStyle()
+        public int GetNumberOfLines()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetCaretPositionForDefaultStyle_(NativePointer);
+            return NativeApi.RichTextBox_GetNumberOfLines_(NativePointer);
         }
         
-        public void SetCaretPositionForDefaultStyle(long pos)
+        public bool IsModified()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetCaretPositionForDefaultStyle_(NativePointer, pos);
+            return NativeApi.RichTextBox_IsModified_(NativePointer);
         }
         
-        public void MoveCaretBack(long oldPosition)
+        public bool IsEditable()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_MoveCaretBack_(NativePointer, oldPosition);
+            return NativeApi.RichTextBox_IsEditable_(NativePointer);
         }
         
-        public bool GetCaretPositionForIndex(long position, Alternet.Drawing.RectI rect, System.IntPtr container)
+        public bool IsSingleLine()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, rect, container);
+            return NativeApi.RichTextBox_IsSingleLine_(NativePointer);
         }
         
-        public System.IntPtr GetVisibleLineForCaretPosition(long caretPosition)
+        public bool IsMultiLine()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetVisibleLineForCaretPosition_(NativePointer, caretPosition);
+            return NativeApi.RichTextBox_IsMultiLine_(NativePointer);
         }
         
-        public System.IntPtr GetCommandProcessor()
+        public string GetStringSelection()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetCommandProcessor_(NativePointer);
+            return NativeApi.RichTextBox_GetStringSelection_(NativePointer);
         }
         
-        public bool IsDefaultStyleShowing()
+        public string GetFilename()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_IsDefaultStyleShowing_(NativePointer);
+            return NativeApi.RichTextBox_GetFilename_(NativePointer);
         }
         
-        public Alternet.Drawing.PointI GetFirstVisiblePoint()
+        public void SetFilename(string filename)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetFirstVisiblePoint_(NativePointer);
+            NativeApi.RichTextBox_SetFilename_(NativePointer, filename);
         }
         
-        public void EnableImages(bool b)
+        public void SetDelayedLayoutThreshold(long threshold)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_EnableImages_(NativePointer, b);
+            NativeApi.RichTextBox_SetDelayedLayoutThreshold_(NativePointer, threshold);
         }
         
-        public bool GetImagesEnabled()
+        public long GetDelayedLayoutThreshold()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetImagesEnabled_(NativePointer);
+            return NativeApi.RichTextBox_GetDelayedLayoutThreshold_(NativePointer);
         }
         
-        public void EnableDelayedImageLoading(bool b)
+        public bool GetFullLayoutRequired()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_EnableDelayedImageLoading_(NativePointer, b);
+            return NativeApi.RichTextBox_GetFullLayoutRequired_(NativePointer);
         }
         
-        public bool GetDelayedImageLoading()
+        public void SetFullLayoutRequired(bool b)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetDelayedImageLoading_(NativePointer);
+            NativeApi.RichTextBox_SetFullLayoutRequired_(NativePointer, b);
         }
         
-        public bool GetDelayedImageProcessingRequired()
+        public long GetFullLayoutTime()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetDelayedImageProcessingRequired_(NativePointer);
+            return NativeApi.RichTextBox_GetFullLayoutTime_(NativePointer);
         }
         
-        public void SetDelayedImageProcessingRequired(bool b)
+        public void SetFullLayoutTime(long t)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetDelayedImageProcessingRequired_(NativePointer, b);
+            NativeApi.RichTextBox_SetFullLayoutTime_(NativePointer, t);
         }
         
-        public long GetDelayedImageProcessingTime()
+        public long GetFullLayoutSavedPosition()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetDelayedImageProcessingTime_(NativePointer);
+            return NativeApi.RichTextBox_GetFullLayoutSavedPosition_(NativePointer);
         }
         
-        public void SetDelayedImageProcessingTime(long t)
+        public void SetFullLayoutSavedPosition(long p)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetDelayedImageProcessingTime_(NativePointer, t);
+            NativeApi.RichTextBox_SetFullLayoutSavedPosition_(NativePointer, p);
         }
         
-        public string GetValue()
+        public void ForceDelayedLayout()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetValue_(NativePointer);
+            NativeApi.RichTextBox_ForceDelayedLayout_(NativePointer);
         }
         
-        public void SetValue(string value)
+        public bool GetCaretAtLineStart()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetValue_(NativePointer, value);
+            return NativeApi.RichTextBox_GetCaretAtLineStart_(NativePointer);
         }
         
-        public void SetLineHeight(int height)
+        public void SetCaretAtLineStart(bool atStart)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetLineHeight_(NativePointer, height);
+            NativeApi.RichTextBox_SetCaretAtLineStart_(NativePointer, atStart);
         }
         
-        public int GetLineHeight()
+        public bool GetDragging()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetLineHeight_(NativePointer);
+            return NativeApi.RichTextBox_GetDragging_(NativePointer);
         }
         
-        public bool SetCaretPositionAfterClick(System.IntPtr container, long position, int hitTestFlags, bool extendSelection)
+        public void SetDragging(bool dragging)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetCaretPositionAfterClick_(NativePointer, container, position, hitTestFlags, extendSelection);
-        }
-        
-        public static void ClearAvailableFontNames()
-        {
-            NativeApi.RichTextBox_ClearAvailableFontNames_();
+            NativeApi.RichTextBox_SetDragging_(NativePointer, dragging);
         }
         
-        public bool ProcessDelayedImageLoading(bool refresh)
+        public System.IntPtr GetContextMenu()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_ProcessDelayedImageLoading_(NativePointer, refresh);
+            return NativeApi.RichTextBox_GetContextMenu_(NativePointer);
         }
         
-        public void RequestDelayedImageProcessing()
+        public void SetContextMenu(System.IntPtr menu)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_RequestDelayedImageProcessing_(NativePointer);
+            NativeApi.RichTextBox_SetContextMenu_(NativePointer, menu);
         }
         
-        public bool GetUncombinedStyle(long position, System.IntPtr style)
+        public long GetSelectionAnchor()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetUncombinedStyle_(NativePointer, position, style);
+            return NativeApi.RichTextBox_GetSelectionAnchor_(NativePointer);
         }
         
-        public bool GetUncombinedStyle2(long position, System.IntPtr style, System.IntPtr container)
+        public void SetSelectionAnchor(long anchor)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetUncombinedStyle2_(NativePointer, position, style, container);
+            NativeApi.RichTextBox_SetSelectionAnchor_(NativePointer, anchor);
         }
         
-        public bool SetDefaultStyle(System.IntPtr style)
+        public System.IntPtr GetSelectionAnchorObject()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetDefaultStyle_(NativePointer, style);
+            return NativeApi.RichTextBox_GetSelectionAnchorObject_(NativePointer);
         }
         
-        public bool SetDefaultRichStyle(System.IntPtr style)
+        public void SetSelectionAnchorObject(System.IntPtr anchor)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetDefaultRichStyle_(NativePointer, style);
+            NativeApi.RichTextBox_SetSelectionAnchorObject_(NativePointer, anchor);
         }
         
-        public System.IntPtr GetDefaultStyleEx()
+        public System.IntPtr GetFocusObject()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetDefaultStyleEx_(NativePointer);
+            return NativeApi.RichTextBox_GetFocusObject_(NativePointer);
         }
         
-        public long GetLastPosition()
+        public void StoreFocusObject(System.IntPtr richObj)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetLastPosition_(NativePointer);
+            NativeApi.RichTextBox_StoreFocusObject_(NativePointer, richObj);
         }
         
-        public System.IntPtr GetStyle(long position)
+        public bool SetFocusObject(System.IntPtr richObj, bool setCaretPosition)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetStyle_(NativePointer, position);
+            return NativeApi.RichTextBox_SetFocusObject_(NativePointer, richObj, setCaretPosition);
         }
         
-        public System.IntPtr GetRichStyle(long position)
+        public void Invalidate()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetRichStyle_(NativePointer, position);
+            NativeApi.RichTextBox_Invalidate_(NativePointer);
         }
         
-        public System.IntPtr GetStyleInContainer(long position, System.IntPtr container)
+        public void Clear()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetStyleInContainer_(NativePointer, position, container);
+            NativeApi.RichTextBox_Clear_(NativePointer);
         }
         
-        public bool SetStyle(long start, long end, System.IntPtr style)
+        public void Replace(long from, long to, string value)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetStyle_(NativePointer, start, end, style);
+            NativeApi.RichTextBox_Replace_(NativePointer, from, to, value);
         }
         
-        public bool SetRichStyle(long start, long end, System.IntPtr style)
+        public void Remove(long from, long to)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetRichStyle_(NativePointer, start, end, style);
+            NativeApi.RichTextBox_Remove_(NativePointer, from, to);
         }
         
-        public void SetStyle2(System.IntPtr richObj, System.IntPtr textAttr, int flags)
+        public bool LoadFile(string file, int type)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetStyle2_(NativePointer, richObj, textAttr, flags);
+            return NativeApi.RichTextBox_LoadFile_(NativePointer, file, type);
         }
         
-        public System.IntPtr GetStyleForRange(long startRange, long endRange)
+        public bool SaveFile(string file, int type)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetStyleForRange_(NativePointer, startRange, endRange);
+            return NativeApi.RichTextBox_SaveFile_(NativePointer, file, type);
         }
         
-        public System.IntPtr GetStyleForRange2(long startRange, long endRange)
+        public void SetHandlerFlags(int flags)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetStyleForRange2_(NativePointer, startRange, endRange);
+            NativeApi.RichTextBox_SetHandlerFlags_(NativePointer, flags);
         }
         
-        public System.IntPtr GetStyleForRange3(long startRange, long endRange, System.IntPtr container)
+        public int GetHandlerFlags()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetStyleForRange3_(NativePointer, startRange, endRange, container);
+            return NativeApi.RichTextBox_GetHandlerFlags_(NativePointer);
         }
         
-        public bool SetStyleEx(long startRange, long endRange, System.IntPtr style, int flags)
+        public void MarkDirty()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetStyleEx_(NativePointer, startRange, endRange, style, flags);
+            NativeApi.RichTextBox_MarkDirty_(NativePointer);
         }
         
-        public bool SetListStyle(long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel)
+        public void DiscardEdits()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetListStyle_(NativePointer, startRange, endRange, def, flags, startFrom, specifiedLevel);
+            NativeApi.RichTextBox_DiscardEdits_(NativePointer);
         }
         
-        public bool SetListStyle2(long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel)
+        public void SetMaxLength(ulong len)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetListStyle2_(NativePointer, startRange, endRange, defName, flags, startFrom, specifiedLevel);
+            NativeApi.RichTextBox_SetMaxLength_(NativePointer, len);
         }
         
-        public bool ClearListStyle(long startRange, long endRange, int flags)
+        public void WriteText(string text)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_ClearListStyle_(NativePointer, startRange, endRange, flags);
+            NativeApi.RichTextBox_WriteText_(NativePointer, text);
         }
         
-        public bool NumberList(long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel)
+        public void AppendText(string text)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_NumberList_(NativePointer, startRange, endRange, def, flags, startFrom, specifiedLevel);
+            NativeApi.RichTextBox_AppendText_(NativePointer, text);
         }
         
-        public bool NumberList2(long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel)
+        public long XYToPosition(long x, long y)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_NumberList2_(NativePointer, startRange, endRange, defName, flags, startFrom, specifiedLevel);
+            return NativeApi.RichTextBox_XYToPosition_(NativePointer, x, y);
         }
         
-        public bool PromoteList(int promoteBy, long startRange, long endRange, System.IntPtr def, int flags, int specifiedLevel)
+        public void ShowPosition(long pos)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_PromoteList_(NativePointer, promoteBy, startRange, endRange, def, flags, specifiedLevel);
+            NativeApi.RichTextBox_ShowPosition_(NativePointer, pos);
         }
         
-        public bool PromoteList2(int promoteBy, long startRange, long endRange, string defName, int flags, int specifiedLevel)
+        public void Copy()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_PromoteList2_(NativePointer, promoteBy, startRange, endRange, defName, flags, specifiedLevel);
+            NativeApi.RichTextBox_Copy_(NativePointer);
         }
         
-        public bool Delete(long startRange, long endRange)
+        public void Cut()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_Delete_(NativePointer, startRange, endRange);
+            NativeApi.RichTextBox_Cut_(NativePointer);
         }
         
-        public System.IntPtr WriteTable(int rows, int cols, System.IntPtr tableAttr, System.IntPtr cellAttr)
+        public void Paste()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteTable_(NativePointer, rows, cols, tableAttr, cellAttr);
+            NativeApi.RichTextBox_Paste_(NativePointer);
         }
         
-        public void SetBasicStyle(System.IntPtr style)
+        public void DeleteSelection()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetBasicStyle_(NativePointer, style);
+            NativeApi.RichTextBox_DeleteSelection_(NativePointer);
         }
         
-        public System.IntPtr GetBasicStyle()
+        public bool CanCopy()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetBasicStyle_(NativePointer);
+            return NativeApi.RichTextBox_CanCopy_(NativePointer);
         }
         
-        public bool BeginStyle(System.IntPtr style)
+        public bool CanCut()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginStyle_(NativePointer, style);
+            return NativeApi.RichTextBox_CanCut_(NativePointer);
         }
         
-        public bool HasCharacterAttributes(long startRange, long endRange, System.IntPtr style)
+        public bool CanPaste()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_HasCharacterAttributes_(NativePointer, startRange, endRange, style);
+            return NativeApi.RichTextBox_CanPaste_(NativePointer);
         }
         
-        public System.IntPtr GetStyleSheet()
+        public bool CanDeleteSelection()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetStyleSheet_(NativePointer);
+            return NativeApi.RichTextBox_CanDeleteSelection_(NativePointer);
         }
         
-        public void SetAndShowDefaultStyle(System.IntPtr attr)
+        public void Undo()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetAndShowDefaultStyle_(NativePointer, attr);
+            NativeApi.RichTextBox_Undo_(NativePointer);
         }
         
-        public void SetSelectionRange(long startRange, long endRange)
+        public void Redo()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetSelectionRange_(NativePointer, startRange, endRange);
+            NativeApi.RichTextBox_Redo_(NativePointer);
         }
         
-        public Alternet.Drawing.PointI PositionToXY(long pos)
+        public bool CanUndo()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_PositionToXY_(NativePointer, pos);
+            return NativeApi.RichTextBox_CanUndo_(NativePointer);
         }
         
-        public System.IntPtr WriteTextBox(System.IntPtr textAttr)
+        public bool CanRedo()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteTextBox_(NativePointer, textAttr);
+            return NativeApi.RichTextBox_CanRedo_(NativePointer);
         }
         
-        public bool HasParagraphAttributes(long startRange, long endRange, System.IntPtr style)
+        public void SetInsertionPoint(long pos)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_HasParagraphAttributes_(NativePointer, startRange, endRange, style);
+            NativeApi.RichTextBox_SetInsertionPoint_(NativePointer, pos);
         }
         
-        public bool SetProperties(long startRange, long endRange, System.IntPtr properties, int flags)
+        public void SetInsertionPointEnd()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetProperties_(NativePointer, startRange, endRange, properties, flags);
+            NativeApi.RichTextBox_SetInsertionPointEnd_(NativePointer);
         }
         
-        public void SetTextCursor(System.IntPtr cursor)
+        public long GetInsertionPoint()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetTextCursor_(NativePointer, cursor);
+            return NativeApi.RichTextBox_GetInsertionPoint_(NativePointer);
         }
         
-        public System.IntPtr GetTextCursor()
+        public void SetSelection(long from, long to)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetTextCursor_(NativePointer);
+            NativeApi.RichTextBox_SetSelection_(NativePointer, from, to);
         }
         
-        public void SetURLCursor(System.IntPtr cursor)
+        public void SetEditable(bool editable)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetURLCursor_(NativePointer, cursor);
+            NativeApi.RichTextBox_SetEditable_(NativePointer, editable);
         }
         
-        public System.IntPtr GetURLCursor()
+        public bool HasSelection()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetURLCursor_(NativePointer);
+            return NativeApi.RichTextBox_HasSelection_(NativePointer);
         }
         
-        public System.IntPtr GetSelection()
+        public bool HasUnfocusedSelection()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetSelection_(NativePointer);
+            return NativeApi.RichTextBox_HasUnfocusedSelection_(NativePointer);
         }
         
-        public System.IntPtr GetContextMenuPropertiesInfo()
+        public bool Newline()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetContextMenuPropertiesInfo_(NativePointer);
+            return NativeApi.RichTextBox_Newline_(NativePointer);
         }
         
-        public void SetSelection2(System.IntPtr sel)
+        public bool LineBreak()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetSelection2_(NativePointer, sel);
+            return NativeApi.RichTextBox_LineBreak_(NativePointer);
         }
         
-        public bool WriteImage(Image bitmap, int bitmapType, System.IntPtr textAttr)
+        public bool EndStyle()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteImage_(NativePointer, bitmap.NativePointer, bitmapType, textAttr);
+            return NativeApi.RichTextBox_EndStyle_(NativePointer);
         }
         
-        public bool WriteImage2(string filename, int bitmapType, System.IntPtr textAttr)
+        public bool EndAllStyles()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteImage2_(NativePointer, filename, bitmapType, textAttr);
+            return NativeApi.RichTextBox_EndAllStyles_(NativePointer);
         }
         
-        public bool WriteImage3(System.IntPtr imageBlock, System.IntPtr textAttr)
+        public bool BeginBold()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteImage3_(NativePointer, imageBlock, textAttr);
+            return NativeApi.RichTextBox_BeginBold_(NativePointer);
         }
         
-        public System.IntPtr WriteField(string fieldType, System.IntPtr properties, System.IntPtr textAttr)
+        public bool EndBold()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteField_(NativePointer, fieldType, properties, textAttr);
+            return NativeApi.RichTextBox_EndBold_(NativePointer);
         }
         
-        public bool CanDeleteRange(System.IntPtr container, long startRange, long endRange)
+        public bool BeginItalic()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanDeleteRange_(NativePointer, container, startRange, endRange);
+            return NativeApi.RichTextBox_BeginItalic_(NativePointer);
         }
         
         public bool EndItalic()
@@ -1086,471 +1026,531 @@ namespace Alternet.UI.Native
             NativeApi.RichTextBox_DoWriteText_(NativePointer, value, flags);
         }
         
-        public bool LoadFromStream(InputStream stream, int type)
+        public bool ExtendSelection(long oldPosition, long newPosition, int flags)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_LoadFromStream_(NativePointer, stream.NativePointer, type);
+            return NativeApi.RichTextBox_ExtendSelection_(NativePointer, oldPosition, newPosition, flags);
         }
         
-        public bool SaveToStream(OutputStream stream, int type)
+        public bool ExtendCellSelection(System.IntPtr table, int noRowSteps, int noColSteps)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SaveToStream_(NativePointer, stream.NativePointer, type);
+            return NativeApi.RichTextBox_ExtendCellSelection_(NativePointer, table, noRowSteps, noColSteps);
         }
         
-        public bool ApplyStyleToSelection(System.IntPtr style, int flags)
+        public bool StartCellSelection(System.IntPtr table, System.IntPtr newCell)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_ApplyStyleToSelection_(NativePointer, style, flags);
+            return NativeApi.RichTextBox_StartCellSelection_(NativePointer, table, newCell);
         }
         
-        public static void InitFileHandlers()
+        public bool ScrollIntoView(long position, int keyCode)
         {
-            NativeApi.RichTextBox_InitFileHandlers_();
+            CheckDisposed();
+            return NativeApi.RichTextBox_ScrollIntoView_(NativePointer, position, keyCode);
+        }
+        
+        public void SetCaretPosition(long position, bool showAtLineStart)
+        {
+            CheckDisposed();
+            NativeApi.RichTextBox_SetCaretPosition_(NativePointer, position, showAtLineStart);
+        }
+        
+        public long GetCaretPosition()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetCaretPosition_(NativePointer);
+        }
+        
+        public long GetAdjustedCaretPosition(long caretPos)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetAdjustedCaretPosition_(NativePointer, caretPos);
+        }
+        
+        public void MoveCaretForward(long oldPosition)
+        {
+            CheckDisposed();
+            NativeApi.RichTextBox_MoveCaretForward_(NativePointer, oldPosition);
+        }
+        
+        public Alternet.Drawing.PointI GetPhysicalPoint(Alternet.Drawing.PointI ptLogical)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetPhysicalPoint_(NativePointer, ptLogical);
+        }
+        
+        public Alternet.Drawing.PointI GetLogicalPoint(Alternet.Drawing.PointI ptPhysical)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetLogicalPoint_(NativePointer, ptPhysical);
+        }
+        
+        public long FindNextWordPosition(int direction)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_FindNextWordPosition_(NativePointer, direction);
+        }
+        
+        public bool IsPositionVisible(long pos)
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_IsPositionVisible_(NativePointer, pos);
+        }
+        
+        public long GetFirstVisiblePosition()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetFirstVisiblePosition_(NativePointer);
         }
         
-        public string GetRange(long from, long to)
+        public long GetCaretPositionForDefaultStyle()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetRange_(NativePointer, from, to);
+            return NativeApi.RichTextBox_GetCaretPositionForDefaultStyle_(NativePointer);
         }
         
-        public int GetLineLength(long lineNo)
+        public void SetCaretPositionForDefaultStyle(long pos)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetLineLength_(NativePointer, lineNo);
+            NativeApi.RichTextBox_SetCaretPositionForDefaultStyle_(NativePointer, pos);
         }
         
-        public string GetLineText(long lineNo)
+        public void MoveCaretBack(long oldPosition)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetLineText_(NativePointer, lineNo);
+            NativeApi.RichTextBox_MoveCaretBack_(NativePointer, oldPosition);
         }
         
-        public int GetNumberOfLines()
+        public bool GetCaretPositionForIndex(long position, Alternet.Drawing.RectI rect, System.IntPtr container)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetNumberOfLines_(NativePointer);
+            return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, rect, container);
         }
         
-        public bool IsModified()
+        public System.IntPtr GetVisibleLineForCaretPosition(long caretPosition)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_IsModified_(NativePointer);
+            return NativeApi.RichTextBox_GetVisibleLineForCaretPosition_(NativePointer, caretPosition);
         }
         
-        public bool IsEditable()
+        public System.IntPtr GetCommandProcessor()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_IsEditable_(NativePointer);
+            return NativeApi.RichTextBox_GetCommandProcessor_(NativePointer);
         }
         
-        public bool IsSingleLine()
+        public bool IsDefaultStyleShowing()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_IsSingleLine_(NativePointer);
+            return NativeApi.RichTextBox_IsDefaultStyleShowing_(NativePointer);
         }
         
-        public bool IsMultiLine()
+        public Alternet.Drawing.PointI GetFirstVisiblePoint()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_IsMultiLine_(NativePointer);
+            return NativeApi.RichTextBox_GetFirstVisiblePoint_(NativePointer);
         }
         
-        public string GetStringSelection()
+        public void EnableImages(bool b)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetStringSelection_(NativePointer);
+            NativeApi.RichTextBox_EnableImages_(NativePointer, b);
         }
         
-        public string GetFilename()
+        public bool GetImagesEnabled()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetFilename_(NativePointer);
+            return NativeApi.RichTextBox_GetImagesEnabled_(NativePointer);
         }
         
-        public void SetFilename(string filename)
+        public void EnableDelayedImageLoading(bool b)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetFilename_(NativePointer, filename);
+            NativeApi.RichTextBox_EnableDelayedImageLoading_(NativePointer, b);
         }
         
-        public void SetDelayedLayoutThreshold(long threshold)
+        public bool GetDelayedImageLoading()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetDelayedLayoutThreshold_(NativePointer, threshold);
+            return NativeApi.RichTextBox_GetDelayedImageLoading_(NativePointer);
         }
         
-        public long GetDelayedLayoutThreshold()
+        public bool GetDelayedImageProcessingRequired()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetDelayedLayoutThreshold_(NativePointer);
+            return NativeApi.RichTextBox_GetDelayedImageProcessingRequired_(NativePointer);
         }
         
-        public bool GetFullLayoutRequired()
+        public void SetDelayedImageProcessingRequired(bool b)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetFullLayoutRequired_(NativePointer);
+            NativeApi.RichTextBox_SetDelayedImageProcessingRequired_(NativePointer, b);
         }
         
-        public void SetFullLayoutRequired(bool b)
+        public long GetDelayedImageProcessingTime()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetFullLayoutRequired_(NativePointer, b);
+            return NativeApi.RichTextBox_GetDelayedImageProcessingTime_(NativePointer);
         }
         
-        public long GetFullLayoutTime()
+        public void SetDelayedImageProcessingTime(long t)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetFullLayoutTime_(NativePointer);
+            NativeApi.RichTextBox_SetDelayedImageProcessingTime_(NativePointer, t);
         }
         
-        public void SetFullLayoutTime(long t)
+        public string GetValue()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetFullLayoutTime_(NativePointer, t);
+            return NativeApi.RichTextBox_GetValue_(NativePointer);
         }
         
-        public long GetFullLayoutSavedPosition()
+        public void SetValue(string value)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetFullLayoutSavedPosition_(NativePointer);
+            NativeApi.RichTextBox_SetValue_(NativePointer, value);
         }
         
-        public void SetFullLayoutSavedPosition(long p)
+        public void SetLineHeight(int height)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetFullLayoutSavedPosition_(NativePointer, p);
+            NativeApi.RichTextBox_SetLineHeight_(NativePointer, height);
         }
         
-        public void ForceDelayedLayout()
+        public int GetLineHeight()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_ForceDelayedLayout_(NativePointer);
+            return NativeApi.RichTextBox_GetLineHeight_(NativePointer);
         }
         
-        public bool GetCaretAtLineStart()
+        public bool SetCaretPositionAfterClick(System.IntPtr container, long position, int hitTestFlags, bool extendSelection)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetCaretAtLineStart_(NativePointer);
+            return NativeApi.RichTextBox_SetCaretPositionAfterClick_(NativePointer, container, position, hitTestFlags, extendSelection);
+        }
+        
+        public static void ClearAvailableFontNames()
+        {
+            NativeApi.RichTextBox_ClearAvailableFontNames_();
         }
         
-        public void SetCaretAtLineStart(bool atStart)
+        public bool ProcessDelayedImageLoading(bool refresh)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetCaretAtLineStart_(NativePointer, atStart);
+            return NativeApi.RichTextBox_ProcessDelayedImageLoading_(NativePointer, refresh);
         }
         
-        public bool GetDragging()
+        public void RequestDelayedImageProcessing()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetDragging_(NativePointer);
+            NativeApi.RichTextBox_RequestDelayedImageProcessing_(NativePointer);
         }
         
-        public void SetDragging(bool dragging)
+        public bool GetUncombinedStyle(long position, System.IntPtr style)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetDragging_(NativePointer, dragging);
+            return NativeApi.RichTextBox_GetUncombinedStyle_(NativePointer, position, style);
         }
         
-        public System.IntPtr GetContextMenu()
+        public bool GetUncombinedStyle2(long position, System.IntPtr style, System.IntPtr container)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetContextMenu_(NativePointer);
+            return NativeApi.RichTextBox_GetUncombinedStyle2_(NativePointer, position, style, container);
         }
         
-        public void SetContextMenu(System.IntPtr menu)
+        public bool SetDefaultStyle(System.IntPtr style)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetContextMenu_(NativePointer, menu);
+            return NativeApi.RichTextBox_SetDefaultStyle_(NativePointer, style);
         }
         
-        public long GetSelectionAnchor()
+        public bool SetDefaultRichStyle(System.IntPtr style)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetSelectionAnchor_(NativePointer);
+            return NativeApi.RichTextBox_SetDefaultRichStyle_(NativePointer, style);
         }
         
-        public void SetSelectionAnchor(long anchor)
+        public System.IntPtr GetDefaultStyleEx()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetSelectionAnchor_(NativePointer, anchor);
+            return NativeApi.RichTextBox_GetDefaultStyleEx_(NativePointer);
         }
         
-        public System.IntPtr GetSelectionAnchorObject()
+        public long GetLastPosition()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetSelectionAnchorObject_(NativePointer);
+            return NativeApi.RichTextBox_GetLastPosition_(NativePointer);
         }
         
-        public void SetSelectionAnchorObject(System.IntPtr anchor)
+        public System.IntPtr GetStyle(long position)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetSelectionAnchorObject_(NativePointer, anchor);
+            return NativeApi.RichTextBox_GetStyle_(NativePointer, position);
         }
         
-        public System.IntPtr GetFocusObject()
+        public System.IntPtr GetRichStyle(long position)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetFocusObject_(NativePointer);
+            return NativeApi.RichTextBox_GetRichStyle_(NativePointer, position);
         }
         
-        public void StoreFocusObject(System.IntPtr richObj)
+        public System.IntPtr GetStyleInContainer(long position, System.IntPtr container)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_StoreFocusObject_(NativePointer, richObj);
+            return NativeApi.RichTextBox_GetStyleInContainer_(NativePointer, position, container);
         }
         
-        public bool SetFocusObject(System.IntPtr richObj, bool setCaretPosition)
+        public bool SetStyle(long start, long end, System.IntPtr style)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetFocusObject_(NativePointer, richObj, setCaretPosition);
+            return NativeApi.RichTextBox_SetStyle_(NativePointer, start, end, style);
         }
         
-        public void Invalidate()
+        public bool SetRichStyle(long start, long end, System.IntPtr style)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Invalidate_(NativePointer);
+            return NativeApi.RichTextBox_SetRichStyle_(NativePointer, start, end, style);
         }
         
-        public void Clear()
+        public void SetStyle2(System.IntPtr richObj, System.IntPtr textAttr, int flags)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Clear_(NativePointer);
+            NativeApi.RichTextBox_SetStyle2_(NativePointer, richObj, textAttr, flags);
         }
         
-        public void Replace(long from, long to, string value)
+        public System.IntPtr GetStyleForRange(long startRange, long endRange)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Replace_(NativePointer, from, to, value);
+            return NativeApi.RichTextBox_GetStyleForRange_(NativePointer, startRange, endRange);
         }
         
-        public void Remove(long from, long to)
+        public System.IntPtr GetStyleForRange2(long startRange, long endRange)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Remove_(NativePointer, from, to);
+            return NativeApi.RichTextBox_GetStyleForRange2_(NativePointer, startRange, endRange);
         }
         
-        public bool LoadFile(string file, int type)
+        public System.IntPtr GetStyleForRange3(long startRange, long endRange, System.IntPtr container)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_LoadFile_(NativePointer, file, type);
+            return NativeApi.RichTextBox_GetStyleForRange3_(NativePointer, startRange, endRange, container);
         }
         
-        public bool SaveFile(string file, int type)
+        public bool SetStyleEx(long startRange, long endRange, System.IntPtr style, int flags)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SaveFile_(NativePointer, file, type);
+            return NativeApi.RichTextBox_SetStyleEx_(NativePointer, startRange, endRange, style, flags);
         }
         
-        public void SetHandlerFlags(int flags)
+        public bool SetListStyle(long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetHandlerFlags_(NativePointer, flags);
+            return NativeApi.RichTextBox_SetListStyle_(NativePointer, startRange, endRange, def, flags, startFrom, specifiedLevel);
         }
         
-        public int GetHandlerFlags()
+        public bool SetListStyle2(long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetHandlerFlags_(NativePointer);
+            return NativeApi.RichTextBox_SetListStyle2_(NativePointer, startRange, endRange, defName, flags, startFrom, specifiedLevel);
         }
         
-        public void MarkDirty()
+        public bool ClearListStyle(long startRange, long endRange, int flags)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_MarkDirty_(NativePointer);
+            return NativeApi.RichTextBox_ClearListStyle_(NativePointer, startRange, endRange, flags);
         }
         
-        public void DiscardEdits()
+        public bool NumberList(long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_DiscardEdits_(NativePointer);
+            return NativeApi.RichTextBox_NumberList_(NativePointer, startRange, endRange, def, flags, startFrom, specifiedLevel);
         }
         
-        public void SetMaxLength(ulong len)
+        public bool NumberList2(long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetMaxLength_(NativePointer, len);
+            return NativeApi.RichTextBox_NumberList2_(NativePointer, startRange, endRange, defName, flags, startFrom, specifiedLevel);
         }
         
-        public void WriteText(string text)
+        public bool PromoteList(int promoteBy, long startRange, long endRange, System.IntPtr def, int flags, int specifiedLevel)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_WriteText_(NativePointer, text);
+            return NativeApi.RichTextBox_PromoteList_(NativePointer, promoteBy, startRange, endRange, def, flags, specifiedLevel);
         }
         
-        public void AppendText(string text)
+        public bool PromoteList2(int promoteBy, long startRange, long endRange, string defName, int flags, int specifiedLevel)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_AppendText_(NativePointer, text);
+            return NativeApi.RichTextBox_PromoteList2_(NativePointer, promoteBy, startRange, endRange, defName, flags, specifiedLevel);
         }
         
-        public long XYToPosition(long x, long y)
+        public bool Delete(long startRange, long endRange)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_XYToPosition_(NativePointer, x, y);
+            return NativeApi.RichTextBox_Delete_(NativePointer, startRange, endRange);
         }
         
-        public void ShowPosition(long pos)
+        public System.IntPtr WriteTable(int rows, int cols, System.IntPtr tableAttr, System.IntPtr cellAttr)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_ShowPosition_(NativePointer, pos);
+            return NativeApi.RichTextBox_WriteTable_(NativePointer, rows, cols, tableAttr, cellAttr);
         }
         
-        public void Copy()
+        public void SetBasicStyle(System.IntPtr style)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Copy_(NativePointer);
+            NativeApi.RichTextBox_SetBasicStyle_(NativePointer, style);
         }
         
-        public void Cut()
+        public System.IntPtr GetBasicStyle()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Cut_(NativePointer);
+            return NativeApi.RichTextBox_GetBasicStyle_(NativePointer);
         }
         
-        public void Paste()
+        public bool BeginStyle(System.IntPtr style)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Paste_(NativePointer);
+            return NativeApi.RichTextBox_BeginStyle_(NativePointer, style);
         }
         
-        public void DeleteSelection()
+        public bool HasCharacterAttributes(long startRange, long endRange, System.IntPtr style)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_DeleteSelection_(NativePointer);
+            return NativeApi.RichTextBox_HasCharacterAttributes_(NativePointer, startRange, endRange, style);
         }
         
-        public bool CanCopy()
+        public System.IntPtr GetStyleSheet()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanCopy_(NativePointer);
+            return NativeApi.RichTextBox_GetStyleSheet_(NativePointer);
         }
         
-        public bool CanCut()
+        public void SetAndShowDefaultStyle(System.IntPtr attr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanCut_(NativePointer);
+            NativeApi.RichTextBox_SetAndShowDefaultStyle_(NativePointer, attr);
         }
         
-        public bool CanPaste()
+        public void SetSelectionRange(long startRange, long endRange)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanPaste_(NativePointer);
+            NativeApi.RichTextBox_SetSelectionRange_(NativePointer, startRange, endRange);
         }
         
-        public bool CanDeleteSelection()
+        public Alternet.Drawing.PointI PositionToXY(long pos)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanDeleteSelection_(NativePointer);
+            return NativeApi.RichTextBox_PositionToXY_(NativePointer, pos);
         }
         
-        public void Undo()
+        public System.IntPtr WriteTextBox(System.IntPtr textAttr)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Undo_(NativePointer);
+            return NativeApi.RichTextBox_WriteTextBox_(NativePointer, textAttr);
         }
         
-        public void Redo()
+        public bool HasParagraphAttributes(long startRange, long endRange, System.IntPtr style)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Redo_(NativePointer);
+            return NativeApi.RichTextBox_HasParagraphAttributes_(NativePointer, startRange, endRange, style);
         }
         
-        public bool CanUndo()
+        public bool SetProperties(long startRange, long endRange, System.IntPtr properties, int flags)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanUndo_(NativePointer);
+            return NativeApi.RichTextBox_SetProperties_(NativePointer, startRange, endRange, properties, flags);
         }
         
-        public bool CanRedo()
+        public void SetTextCursor(System.IntPtr cursor)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_CanRedo_(NativePointer);
+            NativeApi.RichTextBox_SetTextCursor_(NativePointer, cursor);
         }
         
-        public void SetInsertionPoint(long pos)
+        public System.IntPtr GetTextCursor()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetInsertionPoint_(NativePointer, pos);
+            return NativeApi.RichTextBox_GetTextCursor_(NativePointer);
         }
         
-        public void SetInsertionPointEnd()
+        public void SetURLCursor(System.IntPtr cursor)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetInsertionPointEnd_(NativePointer);
+            NativeApi.RichTextBox_SetURLCursor_(NativePointer, cursor);
         }
         
-        public long GetInsertionPoint()
+        public System.IntPtr GetURLCursor()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetInsertionPoint_(NativePointer);
+            return NativeApi.RichTextBox_GetURLCursor_(NativePointer);
         }
         
-        public void SetSelection(long from, long to)
+        public System.IntPtr GetSelection()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetSelection_(NativePointer, from, to);
+            return NativeApi.RichTextBox_GetSelection_(NativePointer);
         }
         
-        public void SetEditable(bool editable)
+        public System.IntPtr GetContextMenuPropertiesInfo()
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetEditable_(NativePointer, editable);
+            return NativeApi.RichTextBox_GetContextMenuPropertiesInfo_(NativePointer);
         }
         
-        public bool HasSelection()
+        public void SetSelection2(System.IntPtr sel)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_HasSelection_(NativePointer);
+            NativeApi.RichTextBox_SetSelection2_(NativePointer, sel);
         }
         
-        public bool HasUnfocusedSelection()
+        public bool WriteImage(Image bitmap, int bitmapType, System.IntPtr textAttr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_HasUnfocusedSelection_(NativePointer);
+            return NativeApi.RichTextBox_WriteImage_(NativePointer, bitmap.NativePointer, bitmapType, textAttr);
         }
         
-        public bool Newline()
+        public bool WriteImage2(string filename, int bitmapType, System.IntPtr textAttr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_Newline_(NativePointer);
+            return NativeApi.RichTextBox_WriteImage2_(NativePointer, filename, bitmapType, textAttr);
         }
         
-        public bool LineBreak()
+        public bool WriteImage3(System.IntPtr imageBlock, System.IntPtr textAttr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_LineBreak_(NativePointer);
+            return NativeApi.RichTextBox_WriteImage3_(NativePointer, imageBlock, textAttr);
         }
         
-        public bool EndStyle()
+        public System.IntPtr WriteField(string fieldType, System.IntPtr properties, System.IntPtr textAttr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_EndStyle_(NativePointer);
+            return NativeApi.RichTextBox_WriteField_(NativePointer, fieldType, properties, textAttr);
         }
         
-        public bool EndAllStyles()
+        public bool CanDeleteRange(System.IntPtr container, long startRange, long endRange)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_EndAllStyles_(NativePointer);
+            return NativeApi.RichTextBox_CanDeleteRange_(NativePointer, container, startRange, endRange);
         }
         
-        public bool BeginBold()
+        public bool CanInsertContent(System.IntPtr container, long pos)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginBold_(NativePointer);
+            return NativeApi.RichTextBox_CanInsertContent_(NativePointer, container, pos);
         }
         
-        public bool EndBold()
+        public System.IntPtr GetBuffer()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_EndBold_(NativePointer);
+            return NativeApi.RichTextBox_GetBuffer_(NativePointer);
         }
         
-        public bool BeginItalic()
+        public long DeleteSelectedContent()
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginItalic_(NativePointer);
+            return NativeApi.RichTextBox_DeleteSelectedContent_(NativePointer);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -1622,268 +1622,238 @@ namespace Alternet.UI.Native
             public static extern string RichTextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanInsertContent_(IntPtr obj, System.IntPtr container, long pos);
+            public static extern bool RichTextBox_LoadFromStream_(IntPtr obj, IntPtr stream, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetBuffer_(IntPtr obj);
+            public static extern bool RichTextBox_SaveToStream_(IntPtr obj, IntPtr stream, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_DeleteSelectedContent_(IntPtr obj);
+            public static extern bool RichTextBox_ApplyStyleToSelection_(IntPtr obj, System.IntPtr style, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ExtendSelection_(IntPtr obj, long oldPosition, long newPosition, int flags);
+            public static extern void RichTextBox_InitFileHandlers_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ExtendCellSelection_(IntPtr obj, System.IntPtr table, int noRowSteps, int noColSteps);
+            public static extern string RichTextBox_GetRange_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_StartCellSelection_(IntPtr obj, System.IntPtr table, System.IntPtr newCell);
+            public static extern int RichTextBox_GetLineLength_(IntPtr obj, long lineNo);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ScrollIntoView_(IntPtr obj, long position, int keyCode);
+            public static extern string RichTextBox_GetLineText_(IntPtr obj, long lineNo);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetCaretPosition_(IntPtr obj, long position, bool showAtLineStart);
+            public static extern int RichTextBox_GetNumberOfLines_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetCaretPosition_(IntPtr obj);
+            public static extern bool RichTextBox_IsModified_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetAdjustedCaretPosition_(IntPtr obj, long caretPos);
+            public static extern bool RichTextBox_IsEditable_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_MoveCaretForward_(IntPtr obj, long oldPosition);
+            public static extern bool RichTextBox_IsSingleLine_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI RichTextBox_GetPhysicalPoint_(IntPtr obj, Alternet.Drawing.PointI ptLogical);
+            public static extern bool RichTextBox_IsMultiLine_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI RichTextBox_GetLogicalPoint_(IntPtr obj, Alternet.Drawing.PointI ptPhysical);
+            public static extern string RichTextBox_GetStringSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_FindNextWordPosition_(IntPtr obj, int direction);
+            public static extern string RichTextBox_GetFilename_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_IsPositionVisible_(IntPtr obj, long pos);
+            public static extern void RichTextBox_SetFilename_(IntPtr obj, string filename);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetFirstVisiblePosition_(IntPtr obj);
+            public static extern void RichTextBox_SetDelayedLayoutThreshold_(IntPtr obj, long threshold);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetCaretPositionForDefaultStyle_(IntPtr obj);
+            public static extern long RichTextBox_GetDelayedLayoutThreshold_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetCaretPositionForDefaultStyle_(IntPtr obj, long pos);
+            public static extern bool RichTextBox_GetFullLayoutRequired_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_MoveCaretBack_(IntPtr obj, long oldPosition);
+            public static extern void RichTextBox_SetFullLayoutRequired_(IntPtr obj, bool b);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetCaretPositionForIndex_(IntPtr obj, long position, Alternet.Drawing.RectI rect, System.IntPtr container);
+            public static extern long RichTextBox_GetFullLayoutTime_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetVisibleLineForCaretPosition_(IntPtr obj, long caretPosition);
+            public static extern void RichTextBox_SetFullLayoutTime_(IntPtr obj, long t);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetCommandProcessor_(IntPtr obj);
+            public static extern long RichTextBox_GetFullLayoutSavedPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_IsDefaultStyleShowing_(IntPtr obj);
+            public static extern void RichTextBox_SetFullLayoutSavedPosition_(IntPtr obj, long p);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI RichTextBox_GetFirstVisiblePoint_(IntPtr obj);
+            public static extern void RichTextBox_ForceDelayedLayout_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_EnableImages_(IntPtr obj, bool b);
+            public static extern bool RichTextBox_GetCaretAtLineStart_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetImagesEnabled_(IntPtr obj);
+            public static extern void RichTextBox_SetCaretAtLineStart_(IntPtr obj, bool atStart);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_EnableDelayedImageLoading_(IntPtr obj, bool b);
+            public static extern bool RichTextBox_GetDragging_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetDelayedImageLoading_(IntPtr obj);
+            public static extern void RichTextBox_SetDragging_(IntPtr obj, bool dragging);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetDelayedImageProcessingRequired_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetContextMenu_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetDelayedImageProcessingRequired_(IntPtr obj, bool b);
+            public static extern void RichTextBox_SetContextMenu_(IntPtr obj, System.IntPtr menu);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetDelayedImageProcessingTime_(IntPtr obj);
+            public static extern long RichTextBox_GetSelectionAnchor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetDelayedImageProcessingTime_(IntPtr obj, long t);
+            public static extern void RichTextBox_SetSelectionAnchor_(IntPtr obj, long anchor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetValue_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetSelectionAnchorObject_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetValue_(IntPtr obj, string value);
+            public static extern void RichTextBox_SetSelectionAnchorObject_(IntPtr obj, System.IntPtr anchor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetLineHeight_(IntPtr obj, int height);
+            public static extern System.IntPtr RichTextBox_GetFocusObject_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int RichTextBox_GetLineHeight_(IntPtr obj);
+            public static extern void RichTextBox_StoreFocusObject_(IntPtr obj, System.IntPtr richObj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetCaretPositionAfterClick_(IntPtr obj, System.IntPtr container, long position, int hitTestFlags, bool extendSelection);
+            public static extern bool RichTextBox_SetFocusObject_(IntPtr obj, System.IntPtr richObj, bool setCaretPosition);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_ClearAvailableFontNames_();
+            public static extern void RichTextBox_Invalidate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ProcessDelayedImageLoading_(IntPtr obj, bool refresh);
+            public static extern void RichTextBox_Clear_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_RequestDelayedImageProcessing_(IntPtr obj);
+            public static extern void RichTextBox_Replace_(IntPtr obj, long from, long to, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetUncombinedStyle_(IntPtr obj, long position, System.IntPtr style);
+            public static extern void RichTextBox_Remove_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetUncombinedStyle2_(IntPtr obj, long position, System.IntPtr style, System.IntPtr container);
+            public static extern bool RichTextBox_LoadFile_(IntPtr obj, string file, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetDefaultStyle_(IntPtr obj, System.IntPtr style);
+            public static extern bool RichTextBox_SaveFile_(IntPtr obj, string file, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetDefaultRichStyle_(IntPtr obj, System.IntPtr style);
+            public static extern void RichTextBox_SetHandlerFlags_(IntPtr obj, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetDefaultStyleEx_(IntPtr obj);
+            public static extern int RichTextBox_GetHandlerFlags_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetLastPosition_(IntPtr obj);
+            public static extern void RichTextBox_MarkDirty_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetStyle_(IntPtr obj, long position);
+            public static extern void RichTextBox_DiscardEdits_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetRichStyle_(IntPtr obj, long position);
+            public static extern void RichTextBox_SetMaxLength_(IntPtr obj, ulong len);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetStyleInContainer_(IntPtr obj, long position, System.IntPtr container);
+            public static extern void RichTextBox_WriteText_(IntPtr obj, string text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetStyle_(IntPtr obj, long start, long end, System.IntPtr style);
+            public static extern void RichTextBox_AppendText_(IntPtr obj, string text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetRichStyle_(IntPtr obj, long start, long end, System.IntPtr style);
+            public static extern long RichTextBox_XYToPosition_(IntPtr obj, long x, long y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetStyle2_(IntPtr obj, System.IntPtr richObj, System.IntPtr textAttr, int flags);
+            public static extern void RichTextBox_ShowPosition_(IntPtr obj, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetStyleForRange_(IntPtr obj, long startRange, long endRange);
+            public static extern void RichTextBox_Copy_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetStyleForRange2_(IntPtr obj, long startRange, long endRange);
+            public static extern void RichTextBox_Cut_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetStyleForRange3_(IntPtr obj, long startRange, long endRange, System.IntPtr container);
+            public static extern void RichTextBox_Paste_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetStyleEx_(IntPtr obj, long startRange, long endRange, System.IntPtr style, int flags);
+            public static extern void RichTextBox_DeleteSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetListStyle_(IntPtr obj, long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel);
+            public static extern bool RichTextBox_CanCopy_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetListStyle2_(IntPtr obj, long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel);
+            public static extern bool RichTextBox_CanCut_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ClearListStyle_(IntPtr obj, long startRange, long endRange, int flags);
+            public static extern bool RichTextBox_CanPaste_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_NumberList_(IntPtr obj, long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel);
+            public static extern bool RichTextBox_CanDeleteSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_NumberList2_(IntPtr obj, long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel);
+            public static extern void RichTextBox_Undo_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_PromoteList_(IntPtr obj, int promoteBy, long startRange, long endRange, System.IntPtr def, int flags, int specifiedLevel);
+            public static extern void RichTextBox_Redo_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_PromoteList2_(IntPtr obj, int promoteBy, long startRange, long endRange, string defName, int flags, int specifiedLevel);
+            public static extern bool RichTextBox_CanUndo_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_Delete_(IntPtr obj, long startRange, long endRange);
+            public static extern bool RichTextBox_CanRedo_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_WriteTable_(IntPtr obj, int rows, int cols, System.IntPtr tableAttr, System.IntPtr cellAttr);
+            public static extern void RichTextBox_SetInsertionPoint_(IntPtr obj, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetBasicStyle_(IntPtr obj, System.IntPtr style);
+            public static extern void RichTextBox_SetInsertionPointEnd_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetBasicStyle_(IntPtr obj);
+            public static extern long RichTextBox_GetInsertionPoint_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginStyle_(IntPtr obj, System.IntPtr style);
+            public static extern void RichTextBox_SetSelection_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_HasCharacterAttributes_(IntPtr obj, long startRange, long endRange, System.IntPtr style);
+            public static extern void RichTextBox_SetEditable_(IntPtr obj, bool editable);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetStyleSheet_(IntPtr obj);
+            public static extern bool RichTextBox_HasSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetAndShowDefaultStyle_(IntPtr obj, System.IntPtr attr);
+            public static extern bool RichTextBox_HasUnfocusedSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetSelectionRange_(IntPtr obj, long startRange, long endRange);
+            public static extern bool RichTextBox_Newline_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI RichTextBox_PositionToXY_(IntPtr obj, long pos);
+            public static extern bool RichTextBox_LineBreak_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_WriteTextBox_(IntPtr obj, System.IntPtr textAttr);
+            public static extern bool RichTextBox_EndStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_HasParagraphAttributes_(IntPtr obj, long startRange, long endRange, System.IntPtr style);
+            public static extern bool RichTextBox_EndAllStyles_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetProperties_(IntPtr obj, long startRange, long endRange, System.IntPtr properties, int flags);
+            public static extern bool RichTextBox_BeginBold_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetTextCursor_(IntPtr obj, System.IntPtr cursor);
+            public static extern bool RichTextBox_EndBold_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetTextCursor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetURLCursor_(IntPtr obj, System.IntPtr cursor);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetURLCursor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetContextMenuPropertiesInfo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetSelection2_(IntPtr obj, System.IntPtr sel);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_WriteImage_(IntPtr obj, IntPtr bitmap, int bitmapType, System.IntPtr textAttr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_WriteImage2_(IntPtr obj, string filename, int bitmapType, System.IntPtr textAttr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_WriteImage3_(IntPtr obj, System.IntPtr imageBlock, System.IntPtr textAttr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_WriteField_(IntPtr obj, string fieldType, System.IntPtr properties, System.IntPtr textAttr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanDeleteRange_(IntPtr obj, System.IntPtr container, long startRange, long endRange);
+            public static extern bool RichTextBox_BeginItalic_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndItalic_(IntPtr obj);
@@ -2141,238 +2111,268 @@ namespace Alternet.UI.Native
             public static extern void RichTextBox_DoWriteText_(IntPtr obj, string value, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_LoadFromStream_(IntPtr obj, IntPtr stream, int type);
+            public static extern bool RichTextBox_ExtendSelection_(IntPtr obj, long oldPosition, long newPosition, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SaveToStream_(IntPtr obj, IntPtr stream, int type);
+            public static extern bool RichTextBox_ExtendCellSelection_(IntPtr obj, System.IntPtr table, int noRowSteps, int noColSteps);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ApplyStyleToSelection_(IntPtr obj, System.IntPtr style, int flags);
+            public static extern bool RichTextBox_StartCellSelection_(IntPtr obj, System.IntPtr table, System.IntPtr newCell);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_InitFileHandlers_();
+            public static extern bool RichTextBox_ScrollIntoView_(IntPtr obj, long position, int keyCode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetRange_(IntPtr obj, long from, long to);
+            public static extern void RichTextBox_SetCaretPosition_(IntPtr obj, long position, bool showAtLineStart);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int RichTextBox_GetLineLength_(IntPtr obj, long lineNo);
+            public static extern long RichTextBox_GetCaretPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetLineText_(IntPtr obj, long lineNo);
+            public static extern long RichTextBox_GetAdjustedCaretPosition_(IntPtr obj, long caretPos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int RichTextBox_GetNumberOfLines_(IntPtr obj);
+            public static extern void RichTextBox_MoveCaretForward_(IntPtr obj, long oldPosition);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_IsModified_(IntPtr obj);
+            public static extern Alternet.Drawing.PointI RichTextBox_GetPhysicalPoint_(IntPtr obj, Alternet.Drawing.PointI ptLogical);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_IsEditable_(IntPtr obj);
+            public static extern Alternet.Drawing.PointI RichTextBox_GetLogicalPoint_(IntPtr obj, Alternet.Drawing.PointI ptPhysical);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_IsSingleLine_(IntPtr obj);
+            public static extern long RichTextBox_FindNextWordPosition_(IntPtr obj, int direction);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_IsMultiLine_(IntPtr obj);
+            public static extern bool RichTextBox_IsPositionVisible_(IntPtr obj, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetStringSelection_(IntPtr obj);
+            public static extern long RichTextBox_GetFirstVisiblePosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetFilename_(IntPtr obj);
+            public static extern long RichTextBox_GetCaretPositionForDefaultStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetFilename_(IntPtr obj, string filename);
+            public static extern void RichTextBox_SetCaretPositionForDefaultStyle_(IntPtr obj, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetDelayedLayoutThreshold_(IntPtr obj, long threshold);
+            public static extern void RichTextBox_MoveCaretBack_(IntPtr obj, long oldPosition);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetDelayedLayoutThreshold_(IntPtr obj);
+            public static extern bool RichTextBox_GetCaretPositionForIndex_(IntPtr obj, long position, Alternet.Drawing.RectI rect, System.IntPtr container);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetFullLayoutRequired_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetVisibleLineForCaretPosition_(IntPtr obj, long caretPosition);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetFullLayoutRequired_(IntPtr obj, bool b);
+            public static extern System.IntPtr RichTextBox_GetCommandProcessor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetFullLayoutTime_(IntPtr obj);
+            public static extern bool RichTextBox_IsDefaultStyleShowing_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetFullLayoutTime_(IntPtr obj, long t);
+            public static extern Alternet.Drawing.PointI RichTextBox_GetFirstVisiblePoint_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetFullLayoutSavedPosition_(IntPtr obj);
+            public static extern void RichTextBox_EnableImages_(IntPtr obj, bool b);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetFullLayoutSavedPosition_(IntPtr obj, long p);
+            public static extern bool RichTextBox_GetImagesEnabled_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_ForceDelayedLayout_(IntPtr obj);
+            public static extern void RichTextBox_EnableDelayedImageLoading_(IntPtr obj, bool b);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetCaretAtLineStart_(IntPtr obj);
+            public static extern bool RichTextBox_GetDelayedImageLoading_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetCaretAtLineStart_(IntPtr obj, bool atStart);
+            public static extern bool RichTextBox_GetDelayedImageProcessingRequired_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetDragging_(IntPtr obj);
+            public static extern void RichTextBox_SetDelayedImageProcessingRequired_(IntPtr obj, bool b);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetDragging_(IntPtr obj, bool dragging);
+            public static extern long RichTextBox_GetDelayedImageProcessingTime_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetContextMenu_(IntPtr obj);
+            public static extern void RichTextBox_SetDelayedImageProcessingTime_(IntPtr obj, long t);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetContextMenu_(IntPtr obj, System.IntPtr menu);
+            public static extern string RichTextBox_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetSelectionAnchor_(IntPtr obj);
+            public static extern void RichTextBox_SetValue_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetSelectionAnchor_(IntPtr obj, long anchor);
+            public static extern void RichTextBox_SetLineHeight_(IntPtr obj, int height);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetSelectionAnchorObject_(IntPtr obj);
+            public static extern int RichTextBox_GetLineHeight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetSelectionAnchorObject_(IntPtr obj, System.IntPtr anchor);
+            public static extern bool RichTextBox_SetCaretPositionAfterClick_(IntPtr obj, System.IntPtr container, long position, int hitTestFlags, bool extendSelection);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_GetFocusObject_(IntPtr obj);
+            public static extern void RichTextBox_ClearAvailableFontNames_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_StoreFocusObject_(IntPtr obj, System.IntPtr richObj);
+            public static extern bool RichTextBox_ProcessDelayedImageLoading_(IntPtr obj, bool refresh);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetFocusObject_(IntPtr obj, System.IntPtr richObj, bool setCaretPosition);
+            public static extern void RichTextBox_RequestDelayedImageProcessing_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Invalidate_(IntPtr obj);
+            public static extern bool RichTextBox_GetUncombinedStyle_(IntPtr obj, long position, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Clear_(IntPtr obj);
+            public static extern bool RichTextBox_GetUncombinedStyle2_(IntPtr obj, long position, System.IntPtr style, System.IntPtr container);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Replace_(IntPtr obj, long from, long to, string value);
+            public static extern bool RichTextBox_SetDefaultStyle_(IntPtr obj, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Remove_(IntPtr obj, long from, long to);
+            public static extern bool RichTextBox_SetDefaultRichStyle_(IntPtr obj, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_LoadFile_(IntPtr obj, string file, int type);
+            public static extern System.IntPtr RichTextBox_GetDefaultStyleEx_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SaveFile_(IntPtr obj, string file, int type);
+            public static extern long RichTextBox_GetLastPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetHandlerFlags_(IntPtr obj, int flags);
+            public static extern System.IntPtr RichTextBox_GetStyle_(IntPtr obj, long position);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int RichTextBox_GetHandlerFlags_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetRichStyle_(IntPtr obj, long position);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_MarkDirty_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetStyleInContainer_(IntPtr obj, long position, System.IntPtr container);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_DiscardEdits_(IntPtr obj);
+            public static extern bool RichTextBox_SetStyle_(IntPtr obj, long start, long end, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetMaxLength_(IntPtr obj, ulong len);
+            public static extern bool RichTextBox_SetRichStyle_(IntPtr obj, long start, long end, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_WriteText_(IntPtr obj, string text);
+            public static extern void RichTextBox_SetStyle2_(IntPtr obj, System.IntPtr richObj, System.IntPtr textAttr, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_AppendText_(IntPtr obj, string text);
+            public static extern System.IntPtr RichTextBox_GetStyleForRange_(IntPtr obj, long startRange, long endRange);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_XYToPosition_(IntPtr obj, long x, long y);
+            public static extern System.IntPtr RichTextBox_GetStyleForRange2_(IntPtr obj, long startRange, long endRange);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_ShowPosition_(IntPtr obj, long pos);
+            public static extern System.IntPtr RichTextBox_GetStyleForRange3_(IntPtr obj, long startRange, long endRange, System.IntPtr container);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Copy_(IntPtr obj);
+            public static extern bool RichTextBox_SetStyleEx_(IntPtr obj, long startRange, long endRange, System.IntPtr style, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Cut_(IntPtr obj);
+            public static extern bool RichTextBox_SetListStyle_(IntPtr obj, long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Paste_(IntPtr obj);
+            public static extern bool RichTextBox_SetListStyle2_(IntPtr obj, long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_DeleteSelection_(IntPtr obj);
+            public static extern bool RichTextBox_ClearListStyle_(IntPtr obj, long startRange, long endRange, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanCopy_(IntPtr obj);
+            public static extern bool RichTextBox_NumberList_(IntPtr obj, long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanCut_(IntPtr obj);
+            public static extern bool RichTextBox_NumberList2_(IntPtr obj, long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanPaste_(IntPtr obj);
+            public static extern bool RichTextBox_PromoteList_(IntPtr obj, int promoteBy, long startRange, long endRange, System.IntPtr def, int flags, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanDeleteSelection_(IntPtr obj);
+            public static extern bool RichTextBox_PromoteList2_(IntPtr obj, int promoteBy, long startRange, long endRange, string defName, int flags, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Undo_(IntPtr obj);
+            public static extern bool RichTextBox_Delete_(IntPtr obj, long startRange, long endRange);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Redo_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_WriteTable_(IntPtr obj, int rows, int cols, System.IntPtr tableAttr, System.IntPtr cellAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanUndo_(IntPtr obj);
+            public static extern void RichTextBox_SetBasicStyle_(IntPtr obj, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_CanRedo_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetBasicStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetInsertionPoint_(IntPtr obj, long pos);
+            public static extern bool RichTextBox_BeginStyle_(IntPtr obj, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetInsertionPointEnd_(IntPtr obj);
+            public static extern bool RichTextBox_HasCharacterAttributes_(IntPtr obj, long startRange, long endRange, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long RichTextBox_GetInsertionPoint_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetStyleSheet_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetSelection_(IntPtr obj, long from, long to);
+            public static extern void RichTextBox_SetAndShowDefaultStyle_(IntPtr obj, System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetEditable_(IntPtr obj, bool editable);
+            public static extern void RichTextBox_SetSelectionRange_(IntPtr obj, long startRange, long endRange);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_HasSelection_(IntPtr obj);
+            public static extern Alternet.Drawing.PointI RichTextBox_PositionToXY_(IntPtr obj, long pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_HasUnfocusedSelection_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_WriteTextBox_(IntPtr obj, System.IntPtr textAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_Newline_(IntPtr obj);
+            public static extern bool RichTextBox_HasParagraphAttributes_(IntPtr obj, long startRange, long endRange, System.IntPtr style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_LineBreak_(IntPtr obj);
+            public static extern bool RichTextBox_SetProperties_(IntPtr obj, long startRange, long endRange, System.IntPtr properties, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndStyle_(IntPtr obj);
+            public static extern void RichTextBox_SetTextCursor_(IntPtr obj, System.IntPtr cursor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndAllStyles_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetTextCursor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginBold_(IntPtr obj);
+            public static extern void RichTextBox_SetURLCursor_(IntPtr obj, System.IntPtr cursor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_EndBold_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetURLCursor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginItalic_(IntPtr obj);
+            public static extern System.IntPtr RichTextBox_GetSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr RichTextBox_GetContextMenuPropertiesInfo_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void RichTextBox_SetSelection2_(IntPtr obj, System.IntPtr sel);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_WriteImage_(IntPtr obj, IntPtr bitmap, int bitmapType, System.IntPtr textAttr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_WriteImage2_(IntPtr obj, string filename, int bitmapType, System.IntPtr textAttr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_WriteImage3_(IntPtr obj, System.IntPtr imageBlock, System.IntPtr textAttr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr RichTextBox_WriteField_(IntPtr obj, string fieldType, System.IntPtr properties, System.IntPtr textAttr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_CanDeleteRange_(IntPtr obj, System.IntPtr container, long startRange, long endRange);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool RichTextBox_CanInsertContent_(IntPtr obj, System.IntPtr container, long pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr RichTextBox_GetBuffer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long RichTextBox_DeleteSelectedContent_(IntPtr obj);
             
         }
     }

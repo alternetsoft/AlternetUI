@@ -55,10 +55,13 @@ namespace Alternet.UI
         protected override void OnScroll(ScrollEventArgs e)
         {
             base.OnScroll(e);
+
+            var offset = GetScrollBarInfo(e.IsVertical).Position;
+
             if (e.IsVertical)
-                LayoutOffset = new PointD(layoutOffset.X, -GetScrollBarValue(isVertical: true));
+                LayoutOffset = new PointD(layoutOffset.X, -offset);
             else
-                LayoutOffset = new PointD(-GetScrollBarValue(isVertical: false), layoutOffset.Y);
+                LayoutOffset = new PointD(-offset, layoutOffset.Y);
         }
 
         /// <summary>
@@ -114,31 +117,39 @@ namespace Alternet.UI
         protected virtual void SetScrollInfo()
         {
             var preferredSize = GetChildrenMaxPreferredSizePadded(
-                new SizeD(double.PositiveInfinity, double.PositiveInfinity));
+                new SizeD(Coord.PositiveInfinity, Coord.PositiveInfinity));
             var size = ClientRectangle.Size;
 
             if (preferredSize.Width <= size.Width)
-                SetScrollBar(isVertical: false, false, 0, 0, 0);
+                HorzScrollBarInfo = HiddenOrVisible.Hidden;
             else
             {
-                SetScrollBar(
-                    isVertical: false,
-                    visible: true,
-                    GetScrollBarValue(false),
-                    (int)size.Width,
-                    (int)preferredSize.Width);
+                ScrollBarInfo horz = new()
+                {
+                    Visibility = HiddenOrVisible.Auto,
+                    Range = (int)preferredSize.Width,
+                    ThumbSize = (int)size.Width,
+                    PageSize = (int)size.Width,
+                    Position = GetScrollBarValue(false),
+                };
+
+                HorzScrollBarInfo = horz;
             }
 
             if (preferredSize.Height <= size.Height)
-                SetScrollBar(isVertical: true, false, 0, 0, 0);
+                VertScrollBarInfo = HiddenOrVisible.Hidden;
             else
             {
-                SetScrollBar(
-                    isVertical: true,
-                    visible: true,
-                    value: GetScrollBarValue(true),
-                    largeChange: (int)size.Height,
-                    maximum: (int)preferredSize.Height);
+                ScrollBarInfo vert = new()
+                {
+                    Visibility = HiddenOrVisible.Auto,
+                    Range = (int)preferredSize.Height,
+                    ThumbSize = (int)size.Height,
+                    PageSize = (int)size.Height,
+                    Position = GetScrollBarValue(true),
+                };
+
+                VertScrollBarInfo = vert;
             }
         }
     }

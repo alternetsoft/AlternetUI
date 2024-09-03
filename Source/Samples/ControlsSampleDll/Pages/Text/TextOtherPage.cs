@@ -9,11 +9,14 @@ namespace ControlsSample
 {
     internal class TextOtherPage : VerticalStackPanel
     {
+        [IsTextLocalized(true)]
         private readonly ValueEditorEMail emailEdit = new("E-mail")
         {
             Margin = new(0, 0, 0, 5),
             InnerSuggestedWidth = 200,
         };
+
+        [IsTextLocalized(true)]
         private readonly ValueEditorUrl urlEdit = new("Url")
         {
             Margin = new(0, 0, 0, 5),

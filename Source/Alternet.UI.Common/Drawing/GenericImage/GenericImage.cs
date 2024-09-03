@@ -1504,7 +1504,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Changes each pixel of this image, making it's color disabled.
+        /// Changes each pixel of this image, making its color disabled.
         /// </summary>
         public virtual void ChangeToDisabled(byte brightness = 255)
         {

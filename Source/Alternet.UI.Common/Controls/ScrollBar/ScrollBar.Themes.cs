@@ -202,7 +202,7 @@ namespace Alternet.UI
             /// <summary>
             /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
             /// and arrow height as the thumb height for the horizontal scrollbar.
-            /// Each visual state has it's own setting.
+            /// Each visual state has its own setting.
             /// </summary>
             public EnumArray<VisualControlState, bool> UseArrowSizeForThumb = new();
 

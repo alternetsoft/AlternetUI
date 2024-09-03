@@ -90,7 +90,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public PointD Location
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => new(x, y);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 x = value.X;
@@ -104,7 +107,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public SizeD Size
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => new(width, height);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 width = value.Width;
@@ -130,7 +136,10 @@ namespace Alternet.Drawing
         /// </summary>
         public Coord Y
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => y;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => y = value;
         }
 
@@ -140,7 +149,10 @@ namespace Alternet.Drawing
         /// </summary>
         public Coord Width
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => width;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => width = value;
         }
 
@@ -150,7 +162,10 @@ namespace Alternet.Drawing
         /// </summary>
         public Coord Height
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => height;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => height = value;
         }
 
@@ -161,7 +176,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public Coord Left
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => x;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => x = value;
         }
 
@@ -172,7 +190,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public Coord Top
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => y;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => y = value;
         }
 
@@ -183,7 +204,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public Coord Right
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => x + width;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => x = value - width;
         }
 
@@ -194,7 +218,10 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public Coord Bottom
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => y + height;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => y = value - height;
         }
 
@@ -203,7 +230,11 @@ namespace Alternet.Drawing
         /// or a <see cref='Height'/> less than or equal to 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool SizeIsEmpty => (width <= 0) || (height <= 0);
+        public readonly bool SizeIsEmpty
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (width <= 0) || (height <= 0);
+        }
 
         /// <summary>
         /// Tests whether this <see cref='RectD'/> has all properties equal to 0.
@@ -223,6 +254,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly PointD TopLeft
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return new PointD(x, y);
@@ -235,6 +267,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly PointD TopRight
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return new PointD(Right, y);
@@ -247,6 +280,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly PointD BottomLeft
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return new PointD(x, Bottom);
@@ -259,6 +293,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly PointD BottomRight
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return new PointD(Right, Bottom);
@@ -393,7 +428,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates bounding rectangle for the circle specified using radius and it's center location.
+        /// Creates bounding rectangle for the circle specified using radius and its center location.
         /// </summary>
         /// <returns></returns>
         /// <param name="center">Circle center location.</param>
@@ -548,13 +583,32 @@ namespace Alternet.Drawing
         /// <see cref='RectD'/> .
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool Contains(Coord x, Coord y) =>
-            X <= x && x < X + Width && Y <= y && y < Y + Height;
+        public readonly bool Contains(Coord ax, Coord ay) =>
+            (ax >= X) && (ax < X + Width) && (ay >= Y) && (ay < Y + Height);
+
+        /// <summary>
+        /// Gets whether rectangle is not empty and contains the specified point.
+        /// </summary>
+        /// <param name="x">X coordinate of the point to test.</param>
+        /// <param name="y">Y coordinate of the point to test.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool NotEmptyAndContains(Coord x, Coord y)
+        {
+            return !SizeIsEmpty && Contains(x, y);
+        }
+
+        /// <summary>
+        /// Gets whether rectangle is not empty and contains the specified point.
+        /// </summary>
+        /// <param name="pt">Point to test.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool NotEmptyAndContains(PointD pt) => NotEmptyAndContains(pt.X, pt.Y);
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined
-        /// by this
-        /// <see cref='RectD'/> .
+        /// by this <see cref='RectD'/> .
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Contains(PointD pt) => Contains(pt.X, pt.Y);
@@ -906,6 +960,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly RectI PixelFromDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelFromDip(this, scaleFactor);
@@ -927,10 +982,85 @@ namespace Alternet.Drawing
         /// Scales X and Y (multiplies them) using the specified scale factor.
         /// </summary>
         /// <param name="scaleFactor">Scale factor.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ScaleLocation(Coord scaleFactor)
         {
             x *= scaleFactor;
             y *= scaleFactor;
+        }
+
+        /// <summary>
+        /// Returns new rectangle with location and width of this rectangle and the specified height.
+        /// </summary>
+        /// <param name="aheight">New height.</param>
+        /// <returns>Rectangle object with the new height.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithHeight(Coord aheight)
+        {
+            return new(x, y, width, aheight);
+        }
+
+        /// <summary>
+        /// Returns new rectangle with location and height of this rectangle and the specified width.
+        /// </summary>
+        /// <param name="awidth">New width.</param>
+        /// <returns>Rectangle object with the new width.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithWidth(Coord awidth)
+        {
+            return new(x, y, awidth, height);
+        }
+
+        /// <summary>
+        /// Returns this rectangle deflated by the specified padding.
+        /// </summary>
+        /// <param name="padding">Specifies padding settings.</param>
+        /// <returns>Rectangle object with changed size and location.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD DeflatedWithPadding(Thickness padding)
+        {
+            return new(
+                x + padding.Left,
+                y + padding.Top,
+                width - padding.Horizontal,
+                height - padding.Vertical);
+        }
+
+        /// <summary>
+        /// Returns this rectangle inflated by the specified padding.
+        /// </summary>
+        /// <param name="padding">Specifies padding settings.</param>
+        /// <returns>Rectangle object with changed size and location.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD InflatedWithPadding(Thickness padding)
+        {
+            return new(
+                x - padding.Left,
+                y - padding.Top,
+                width + padding.Horizontal,
+                height + padding.Vertical);
+        }
+
+        /// <summary>
+        /// Returns new rectangle with size and y-coordinate of this rectangle and the specified x-coordinate.
+        /// </summary>
+        /// <param name="ax">New X position.</param>
+        /// <returns>Rectangle object with the new x-coordinate.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithX(Coord ax)
+        {
+            return new(ax, y, width, height);
+        }
+
+        /// <summary>
+        /// Returns new rectangle with size and x-coordinate of this rectangle and the specified y-coordinate.
+        /// </summary>
+        /// <param name="ay">New Y position.</param>
+        /// <returns>Rectangle object with the new y-coordinate.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithY(Coord ay)
+        {
+            return new(x, ay, width, height);
         }
 
         /// <summary>

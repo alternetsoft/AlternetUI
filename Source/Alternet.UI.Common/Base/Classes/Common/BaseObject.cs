@@ -59,7 +59,8 @@ namespace Alternet.UI
     public partial class BaseObject : IBaseObject
     {
         /// <summary>
-        /// Safely disposes specified object.
+        /// Safely disposes specified object which supports
+        /// <see cref="IDisposable"/> interface.
         /// </summary>
         /// <typeparam name="T">Type of the object.</typeparam>
         /// <param name="disposable">Object to dispose.</param>
@@ -67,9 +68,29 @@ namespace Alternet.UI
         public static void SafeDispose<T>(ref T? disposable)
             where T : IDisposable
         {
+            if (disposable is null)
+                return;
             var t = disposable;
-            disposable = default!;
-            t?.Dispose();
+            disposable = default;
+            t.Dispose();
+        }
+
+        /// <summary>
+        /// Safely disposes specified object which supports
+        /// <see cref="IDisposableObject"/> interface.
+        /// </summary>
+        /// <typeparam name="T">Type of the object.</typeparam>
+        /// <param name="disposable">Object to dispose.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SafeDisposeObject<T>(ref T? disposable)
+            where T : IDisposableObject
+        {
+            if (disposable is null)
+                return;
+            var t = disposable;
+            disposable = default;
+            if(!t.IsDisposed)
+                t.Dispose();
         }
 
         /// <summary>

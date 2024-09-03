@@ -421,9 +421,13 @@ namespace Alternet.UI.Native
                 case NativeApi.WindowEvent.Closing:
                 {
                     {
+                        if(Closing is not null)
+                        {
                         var cea = new CancelEventArgs();
-                        Closing?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                        Closing.Invoke(this, cea);
+                        return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
+                        }
+                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.WindowEvent.StateChanged:

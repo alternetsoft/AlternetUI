@@ -23,56 +23,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static bool HasBulletText(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasBulletText_(attr);
-        }
-        
-        public static bool HasBulletName(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasBulletName_(attr);
-        }
-        
-        public static bool HasURL(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasURL_(attr);
-        }
-        
-        public static bool HasPageBreak(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasPageBreak_(attr);
-        }
-        
-        public static bool HasTextEffects(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasTextEffects_(attr);
-        }
-        
-        public static bool HasTextEffect(System.IntPtr attr, int effect)
-        {
-            return NativeApi.TextBoxTextAttr_HasTextEffect_(attr, effect);
-        }
-        
-        public static bool HasOutlineLevel(System.IntPtr attr)
-        {
-            return NativeApi.TextBoxTextAttr_HasOutlineLevel_(attr);
-        }
-        
-        public static bool HasFlag(System.IntPtr attr, long flag)
-        {
-            return NativeApi.TextBoxTextAttr_HasFlag_(attr, flag);
-        }
-        
-        public static void RemoveFlag(System.IntPtr attr, long flag)
-        {
-            NativeApi.TextBoxTextAttr_RemoveFlag_(attr, flag);
-        }
-        
-        public static void AddFlag(System.IntPtr attr, long flag)
-        {
-            NativeApi.TextBoxTextAttr_AddFlag_(attr, flag);
-        }
-        
         public static void Delete(System.IntPtr attr)
         {
             NativeApi.TextBoxTextAttr_Delete_(attr);
@@ -498,6 +448,56 @@ namespace Alternet.UI.Native
             return NativeApi.TextBoxTextAttr_HasBulletNumber_(attr);
         }
         
+        public static bool HasBulletText(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasBulletText_(attr);
+        }
+        
+        public static bool HasBulletName(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasBulletName_(attr);
+        }
+        
+        public static bool HasURL(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasURL_(attr);
+        }
+        
+        public static bool HasPageBreak(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasPageBreak_(attr);
+        }
+        
+        public static bool HasTextEffects(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasTextEffects_(attr);
+        }
+        
+        public static bool HasTextEffect(System.IntPtr attr, int effect)
+        {
+            return NativeApi.TextBoxTextAttr_HasTextEffect_(attr, effect);
+        }
+        
+        public static bool HasOutlineLevel(System.IntPtr attr)
+        {
+            return NativeApi.TextBoxTextAttr_HasOutlineLevel_(attr);
+        }
+        
+        public static bool HasFlag(System.IntPtr attr, long flag)
+        {
+            return NativeApi.TextBoxTextAttr_HasFlag_(attr, flag);
+        }
+        
+        public static void RemoveFlag(System.IntPtr attr, long flag)
+        {
+            NativeApi.TextBoxTextAttr_RemoveFlag_(attr, flag);
+        }
+        
+        public static void AddFlag(System.IntPtr attr, long flag)
+        {
+            NativeApi.TextBoxTextAttr_AddFlag_(attr, flag);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -506,36 +506,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TextBoxTextAttr_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletText_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasURL_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasPageBreak_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasTextEffects_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasTextEffect_(System.IntPtr attr, int effect);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasOutlineLevel_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFlag_(System.IntPtr attr, long flag);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_RemoveFlag_(System.IntPtr attr, long flag);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_AddFlag_(System.IntPtr attr, long flag);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_Delete_(System.IntPtr attr);
@@ -791,6 +761,36 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBoxTextAttr_HasBulletNumber_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletText_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletName_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasURL_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasPageBreak_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasTextEffects_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasTextEffect_(System.IntPtr attr, int effect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasOutlineLevel_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFlag_(System.IntPtr attr, long flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBoxTextAttr_RemoveFlag_(System.IntPtr attr, long flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBoxTextAttr_AddFlag_(System.IntPtr attr, long flag);
             
         }
     }

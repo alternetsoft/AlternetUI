@@ -4,8 +4,8 @@
 
 #include "Control.h"
 #include "Font.h"
-#include "UnmanagedDataObject.h"
 #include "DrawingContext.h"
+#include "UnmanagedDataObject.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -836,6 +836,523 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     #endif
 }
 
+ALTERNET_UI_API c_bool Control_BeginRepositioningChildren_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->BeginRepositioningChildren();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_EndRepositioningChildren_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EndRepositioningChildren();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API RectI_C Control_GetUpdateClientRect_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return obj->GetUpdateClientRect();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContextForWindow_(void* window)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return Control::OpenClientDrawingContextForWindow(window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContextForWindow_(void* window)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return Control::OpenPaintDrawingContextForWindow(window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenDrawingContextForDC_(void* dc, c_bool deleteDc)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return Control::OpenDrawingContextForDC(dc, deleteDc);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->CenterOnParent(orientation);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RefreshRect(rect, eraseBackground);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_Raise_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Raise();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_Lower_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Lower();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_DisableRecreate_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DisableRecreate();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_EnableRecreate_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EnableRecreate();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_UnsetToolTip_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->UnsetToolTip();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Control_IsTransparentBackgroundSupported_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsTransparentBackgroundSupported();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Control_SetBackgroundStyle_(Control* obj, int style)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->SetBackgroundStyle(style);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int Control_GetBackgroundStyle_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetBackgroundStyle();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_AlwaysShowScrollbars_(Control* obj, c_bool hflag, c_bool vflag)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AlwaysShowScrollbars(hflag, vflag);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Color_C Control_GetDefaultAttributesBgColor_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetDefaultAttributesBgColor();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Color_C Control_GetDefaultAttributesFgColor_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return obj->GetDefaultAttributesFgColor();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Font* Control_GetDefaultAttributesFont_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Font*>([&](){
+    #endif
+        return obj->GetDefaultAttributesFont();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesBgColor_(int controlType, int windowVariant)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return Control::GetClassDefaultAttributesBgColor(controlType, windowVariant);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesFgColor_(int controlType, int windowVariant)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return Control::GetClassDefaultAttributesFgColor(controlType, windowVariant);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Font* Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Font*>([&](){
+    #endif
+        return Control::GetClassDefaultAttributesFont(controlType, windowVariant);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int Control_DrawingFromDip_(double value, void* window)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return Control::DrawingFromDip(value, window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API double Control_DrawingDPIScaleFactor_(void* window)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return Control::DrawingDPIScaleFactor(window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API double Control_DrawingToDip_(int value, void* window)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return Control::DrawingToDip(value, window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API double Control_DrawingFromDipF_(double value, void* window)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return Control::DrawingFromDipF(value, window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetCursor(handle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Control* Control_HitTest_(PointD screenPoint)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return Control::HitTest(screenPoint);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Control* Control_GetFocusedControl_()
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return Control::GetFocusedControl();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_NotifyCaptureLost_()
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        Control::NotifyCaptureLost();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_Freeze_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Freeze();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_Thaw_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Thaw();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, double x, double y)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ShowPopupMenu(menu, x, y);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->BeginIgnoreRecreate();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->EndIgnoreRecreate();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API SizeD_C Control_GetDPI_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetDPI();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMouseCapture(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_AddChild_(Control* obj, Control* control)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->AddChild(control);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->RemoveChild(control);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_Invalidate_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Invalidate();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_Update_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Update();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD availableSize)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<SizeD_C>([&](){
+    #endif
+        return obj->GetPreferredSize(availableSize);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetFocusFlags_(Control* obj, c_bool canSelect, c_bool tabStop, c_bool acceptsFocusRecursively)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataObject* data, DragDropEffects allowedEffects)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<DragDropEffects>([&](){
+    #endif
+        return obj->DoDragDrop(data, allowedEffects);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return obj->OpenPaintDrawingContext();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<DrawingContext*>([&](){
+    #endif
+        return obj->OpenClientDrawingContext();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -1161,523 +1678,6 @@ ALTERNET_UI_API int Control_GetScrollBarEvtPosition_(Control* obj)
     return MarshalExceptions<int>([&](){
     #endif
         return obj->GetScrollBarEvtPosition();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Control* Control_HitTest_(PointD screenPoint)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Control*>([&](){
-    #endif
-        return Control::HitTest(screenPoint);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Control* Control_GetFocusedControl_()
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Control*>([&](){
-    #endif
-        return Control::GetFocusedControl();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_NotifyCaptureLost_()
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        Control::NotifyCaptureLost();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_Freeze_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Freeze();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_Thaw_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Thaw();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, double x, double y)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->ShowPopupMenu(menu, x, y);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->BeginIgnoreRecreate();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->EndIgnoreRecreate();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API SizeD_C Control_GetDPI_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<SizeD_C>([&](){
-    #endif
-        return obj->GetDPI();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetMouseCapture(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_AddChild_(Control* obj, Control* control)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->AddChild(control);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->RemoveChild(control);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_Invalidate_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Invalidate();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_Update_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Update();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD availableSize)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<SizeD_C>([&](){
-    #endif
-        return obj->GetPreferredSize(availableSize);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetFocusFlags_(Control* obj, c_bool canSelect, c_bool tabStop, c_bool acceptsFocusRecursively)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataObject* data, DragDropEffects allowedEffects)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<DragDropEffects>([&](){
-    #endif
-        return obj->DoDragDrop(data, allowedEffects);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<DrawingContext*>([&](){
-    #endif
-        return obj->OpenPaintDrawingContext();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<DrawingContext*>([&](){
-    #endif
-        return obj->OpenClientDrawingContext();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_BeginRepositioningChildren_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->BeginRepositioningChildren();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_EndRepositioningChildren_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->EndRepositioningChildren();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API RectI_C Control_GetUpdateClientRect_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<RectI_C>([&](){
-    #endif
-        return obj->GetUpdateClientRect();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContextForWindow_(void* window)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<DrawingContext*>([&](){
-    #endif
-        return Control::OpenClientDrawingContextForWindow(window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContextForWindow_(void* window)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<DrawingContext*>([&](){
-    #endif
-        return Control::OpenPaintDrawingContextForWindow(window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenDrawingContextForDC_(void* dc, c_bool deleteDc)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<DrawingContext*>([&](){
-    #endif
-        return Control::OpenDrawingContextForDC(dc, deleteDc);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->CenterOnParent(orientation);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->RefreshRect(rect, eraseBackground);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_Raise_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Raise();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_Lower_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Lower();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_DisableRecreate_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DisableRecreate();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_EnableRecreate_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->EnableRecreate();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_UnsetToolTip_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->UnsetToolTip();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_IsTransparentBackgroundSupported_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsTransparentBackgroundSupported();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_SetBackgroundStyle_(Control* obj, int style)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->SetBackgroundStyle(style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int Control_GetBackgroundStyle_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetBackgroundStyle();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_AlwaysShowScrollbars_(Control* obj, c_bool hflag, c_bool vflag)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->AlwaysShowScrollbars(hflag, vflag);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Color_C Control_GetDefaultAttributesBgColor_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Color_C>([&](){
-    #endif
-        return obj->GetDefaultAttributesBgColor();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Color_C Control_GetDefaultAttributesFgColor_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Color_C>([&](){
-    #endif
-        return obj->GetDefaultAttributesFgColor();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Font* Control_GetDefaultAttributesFont_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Font*>([&](){
-    #endif
-        return obj->GetDefaultAttributesFont();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesBgColor_(int controlType, int windowVariant)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Color_C>([&](){
-    #endif
-        return Control::GetClassDefaultAttributesBgColor(controlType, windowVariant);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesFgColor_(int controlType, int windowVariant)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Color_C>([&](){
-    #endif
-        return Control::GetClassDefaultAttributesFgColor(controlType, windowVariant);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Font* Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Font*>([&](){
-    #endif
-        return Control::GetClassDefaultAttributesFont(controlType, windowVariant);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int Control_DrawingFromDip_(double value, void* window)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return Control::DrawingFromDip(value, window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API double Control_DrawingDPIScaleFactor_(void* window)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
-    #endif
-        return Control::DrawingDPIScaleFactor(window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API double Control_DrawingToDip_(int value, void* window)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
-    #endif
-        return Control::DrawingToDip(value, window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API double Control_DrawingFromDipF_(double value, void* window)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
-    #endif
-        return Control::DrawingFromDipF(value, window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetCursor(handle);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

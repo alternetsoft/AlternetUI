@@ -19,6 +19,18 @@ namespace Alternet.UI
         public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
 
         /// <summary>
+        /// Subtracts <see cref="DateTime.Now"/>
+        /// with the specified timestamp and gets absolute value of the result.
+        /// </summary>
+        /// <param name="timestamp">Value to subtract from the <see cref="DateTime.Now"/>.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long GetAbsDistanceWithNow(long timestamp)
+        {
+            return Math.Abs(DateTime.Now.Ticks - timestamp);
+        }
+
+        /// <summary>
         /// Gets current time in milliseconds.
         /// </summary>
         /// <returns></returns>

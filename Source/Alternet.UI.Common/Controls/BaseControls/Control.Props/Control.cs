@@ -32,6 +32,8 @@ namespace Alternet.UI
         public static bool UseDebugBackgroundColor = false;
 
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
+
+        private static long? mouseWheelTimestamp;
         private static int groupIndexCounter;
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
@@ -225,6 +227,16 @@ namespace Alternet.UI
                 var measureCanvas = GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
                 return measureCanvas;
             }
+        }
+
+        /// <summary>
+        /// Gets time when this control was last clicked.
+        /// </summary>
+        [Browsable(false)]
+        public long? LastClickedTimestamp
+        {
+            get;
+            protected set;
         }
 
         /// <summary>
@@ -476,6 +488,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="Text"/> property should be localizable.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsTextLocalized
         {
             get
@@ -492,6 +505,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="ToolTip"/> property should be localizable.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsToolTipLocalized
         {
             get
@@ -508,6 +522,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether <see cref="Title"/> property should be localizable.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsTitleLocalized
         {
             get
@@ -1389,7 +1404,7 @@ namespace Alternet.UI
         /// property.
         /// </summary>
         /// <remarks>
-        /// When <see cref="VisualStateOverride"/> is specified, it's value
+        /// When <see cref="VisualStateOverride"/> is specified, its value
         /// used instead of dynamic state calculation when <see cref="VisualState"/>
         /// returns its value.
         /// </remarks>
@@ -2133,6 +2148,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control is currently re-creating its handle.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the control is currently re-creating its handle;
+        /// otherwise, <see langword="false" />.</returns>
+        [Category("Behavior")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual bool RecreatingHandle
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Returns true if control's background color is darker than foreground color.
         /// </summary>
         [Browsable(false)]
@@ -2170,6 +2203,19 @@ namespace Alternet.UI
                 verticalAlignment = value;
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
                 PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Returns this control if it is visible; otherwise returns <c>null</c>.
+        /// </summary>
+        public Control? OnlyVisible
+        {
+            get
+            {
+                if (Visible)
+                    return this;
+                return null;
             }
         }
 
@@ -2433,7 +2479,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value that indicates whether this control or it's child controls have validation errors.
+        /// Gets a value that indicates whether this control or its child controls
+        /// have validation errors.
         /// </summary>
         /// <returns><c>true</c> if the control currently has validation errors;
         /// otherwise, <c>false</c>.</returns>
@@ -2483,6 +2530,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets collection of the attached <see cref="IControlNotification"/> objects.
         /// </summary>
+        [Browsable(false)]
         public IEnumerable<IControlNotification> Notifications
         {
             get

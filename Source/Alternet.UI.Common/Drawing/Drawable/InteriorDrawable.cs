@@ -40,6 +40,57 @@ namespace Alternet.Drawing
         private ScrollBar.MetricsInfo? metrics;
 
         /// <summary>
+        /// Enumerates possible hit test return values.
+        /// </summary>
+        public enum HitTestResult
+        {
+            /// <summary>
+            /// Hit is outside of anything.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Hit is on the corner.
+            /// </summary>
+            Corner,
+
+            /// <summary>
+            /// Hit is on the top border.
+            /// </summary>
+            TopBorder,
+
+            /// <summary>
+            /// Hit is on the bottom border.
+            /// </summary>
+            BottomBorder,
+
+            /// <summary>
+            /// Hit is on the left border.
+            /// </summary>
+            LeftBorder,
+
+            /// <summary>
+            /// Hit is on the right border.
+            /// </summary>
+            RightBorder,
+
+            /// <summary>
+            /// Hit is on the vertical scrollbar.
+            /// </summary>
+            VertScrollBar,
+
+            /// <summary>
+            /// Hit is on the horizontal scrollbar.
+            /// </summary>
+            HorzScrollBar,
+
+            /// <summary>
+            /// Hit is inside the client rectangle.
+            /// </summary>
+            ClientRect,
+        }
+
+        /// <summary>
         /// Gets whether vertical scrollbar is visible.
         /// </summary>
         public bool VertVisible => VertScrollBar?.Visible ?? false;
@@ -108,32 +159,32 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets position of the vertical scrollbar if it is created.
         /// </summary>
-        public virtual ScrollBar.AltPositionInfo VertPosition
+        public virtual ScrollBarInfo VertPosition
         {
             get
             {
-                return VertScrollBar?.AltPosInfo ?? ScrollBar.AltPositionInfo.Default;
+                return VertScrollBar?.Position ?? ScrollBarInfo.Default;
             }
 
             set
             {
-                VertScrollBar?.SetAltPosInfo(value);
+                VertScrollBar?.SetPosition(value);
             }
         }
 
         /// <summary>
         /// Gets or sets position of the horizontal scrollbar if it is created.
         /// </summary>
-        public virtual ScrollBar.AltPositionInfo HorzPosition
+        public virtual ScrollBarInfo HorzPosition
         {
             get
             {
-                return HorzScrollBar?.AltPosInfo ?? ScrollBar.AltPositionInfo.Default;
+                return HorzScrollBar?.Position ?? ScrollBarInfo.Default;
             }
 
             set
             {
-                HorzScrollBar?.SetAltPosInfo(value);
+                HorzScrollBar?.SetPosition(value);
             }
         }
 
@@ -161,25 +212,103 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs layout of the drawable childs.
+        /// Returns <see cref="HitTestsResult"/> which contains
+        /// interior hit test and scrollbar hit test.
+        /// </summary>
+        /// <param name="point">Point to check.</param>
+        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        /// <returns></returns>
+        public HitTestsResult HitTests(Coord scaleFactor, PointD point)
+        {
+            HitTestsResult result = new();
+
+            var rectangles = GetLayoutRectangles(scaleFactor);
+            var hitTest = HitTest(rectangles, point);
+            result.Interior = hitTest;
+
+            if (hitTest == InteriorDrawable.HitTestResult.HorzScrollBar && HorzScrollBar is not null
+                && HorzScrollBar.Visible)
+            {
+                var horzRectangles = HorzScrollBar.GetLayoutRectangles(scaleFactor);
+                result.ScrollBar = HorzScrollBar.HitTest(horzRectangles, point);
+            }
+            else
+            if (hitTest == InteriorDrawable.HitTestResult.VertScrollBar && VertScrollBar is not null
+                && VertScrollBar.Visible)
+            {
+                var vertRectangles = VertScrollBar.GetLayoutRectangles(scaleFactor);
+                result.ScrollBar = VertScrollBar.HitTest(vertRectangles, point);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns one of <see cref="HitTestResult"/> constants.
+        /// </summary>
+        /// <param name="point">Point to check.</param>
+        /// <param name="rectangles">Bounds of the different part of the drawable.</param>
+        /// <returns></returns>
+        public virtual HitTestResult HitTest(EnumArray<HitTestResult, RectD> rectangles, PointD point)
+        {
+            if (!Bounds.NotEmptyAndContains(point))
+                return HitTestResult.None;
+
+            var cornerRect = rectangles[HitTestResult.Corner];
+
+            if (cornerRect.NotEmptyAndContains(point))
+                return HitTestResult.Corner;
+
+            var vertScrollBarRect = rectangles[HitTestResult.VertScrollBar];
+
+            if (vertScrollBarRect.NotEmptyAndContains(point))
+                return HitTestResult.VertScrollBar;
+
+            if (rectangles[HitTestResult.HorzScrollBar].NotEmptyAndContains(point))
+                return HitTestResult.HorzScrollBar;
+
+            if (rectangles[HitTestResult.ClientRect].NotEmptyAndContains(point))
+                return HitTestResult.ClientRect;
+
+            if (rectangles[HitTestResult.TopBorder].NotEmptyAndContains(point))
+                return HitTestResult.TopBorder;
+
+            if (rectangles[HitTestResult.BottomBorder].NotEmptyAndContains(point))
+                return HitTestResult.BottomBorder;
+
+            if (rectangles[HitTestResult.LeftBorder].NotEmptyAndContains(point))
+                return HitTestResult.LeftBorder;
+
+            if (rectangles[HitTestResult.RightBorder].NotEmptyAndContains(point))
+                return HitTestResult.RightBorder;
+
+            return HitTestResult.None;
+        }
+
+        /// <summary>
+        /// Performs layout of the drawable childs and returns calculated bound of the different
+        /// parts of the drawable.
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
-        /// <param name="clientRect">Client rectangle which equals bounds of the object without the space
-        /// occupied by the scrollbars.</param>
-        public virtual void PerformLayout(Coord scaleFactor, out RectD clientRect)
+        /// <returns>Calculated bounds of the different parts of the drawable.</returns>
+        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(Coord scaleFactor)
         {
+            var result = new EnumArray<HitTestResult, RectD>();
+
             if (HasBorder)
-                Border!.Bounds = Bounds;
+            {
+                var borderSettings = Border!.Border;
+                if(borderSettings is not null)
+                {
+                    result[HitTestResult.TopBorder] = borderSettings.GetTopRectangle(Bounds);
+                    result[HitTestResult.BottomBorder] = borderSettings.GetBottomRectangle(Bounds);
+                    result[HitTestResult.LeftBorder] = borderSettings.GetLeftRectangle(Bounds);
+                    result[HitTestResult.RightBorder] = borderSettings.GetRightRectangle(Bounds);
+                }
+            }
 
-            var boundsInsideBorder = Bounds;
-            var borderWidth = BorderWidth;
-
-            boundsInsideBorder.Left += borderWidth.Left;
-            boundsInsideBorder.Top += borderWidth.Top;
-            boundsInsideBorder.Width -= borderWidth.Horizontal;
-            boundsInsideBorder.Height -= borderWidth.Vertical;
-
-            clientRect = boundsInsideBorder;
+            var boundsInsideBorder = Bounds.DeflatedWithPadding(BorderWidth);
+            var clientRect = boundsInsideBorder;
 
             var vertVisible = VertVisible;
             var horzVisible = HorzVisible;
@@ -211,26 +340,26 @@ namespace Alternet.Drawing
                 vertBounds.Height -= cornerSize.Height;
                 horzBounds.Width -= cornerSize.Width;
 
-                if(cornerVisible)
-                    Corner!.Bounds = cornerBounds;
+                if (cornerVisible)
+                {
+                    result[HitTestResult.Corner] = cornerBounds;
+                }
             }
 
             if (vertVisible)
             {
-                VertScrollBar!.Bounds = vertBounds;
                 clientRect.Width -= vertWidth;
+                result[HitTestResult.VertScrollBar] = vertBounds;
             }
 
             if (horzVisible)
             {
                 clientRect.Height -= horzHeight;
-                HorzScrollBar!.Bounds = horzBounds;
+                result[HitTestResult.HorzScrollBar] = horzBounds;
             }
 
-            if(Background is not null)
-            {
-                Background.Bounds = Bounds;
-            }
+            result[HitTestResult.ClientRect] = clientRect;
+            return result;
         }
 
         /// <inheritdoc/>
@@ -239,30 +368,35 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            PerformLayout(control.ScaleFactor, out _);
+            var rectangles = GetLayoutRectangles(control.ScaleFactor);
 
             if (Background is not null && Background.Visible)
             {
+                Background.Bounds = Bounds;
                 Background.Draw(control, dc);
             }
 
             if (HasCorner)
             {
+                Corner!.Bounds = rectangles[HitTestResult.Corner];
                 Corner!.Draw(control, dc);
             }
 
             if (VertVisible)
             {
+                VertScrollBar!.Bounds = rectangles[HitTestResult.VertScrollBar];
                 VertScrollBar!.Draw(control, dc);
             }
 
             if (HorzVisible)
             {
+                HorzScrollBar!.Bounds = rectangles[HitTestResult.HorzScrollBar];
                 HorzScrollBar!.Draw(control, dc);
             }
 
             if (Border is not null && Border.Visible)
             {
+                Border!.Bounds = Bounds;
                 Border.Draw(control, dc);
             }
         }
@@ -284,6 +418,35 @@ namespace Alternet.Drawing
         {
             var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
             themeObj.AssignTo(this);
+        }
+
+        /// <summary>
+        /// Contains full hit test result, including interior part and scrollbar part.
+        /// </summary>
+        public struct HitTestsResult
+        {
+            /// <summary>
+            /// Gets or sets interior hit test result.
+            /// </summary>
+            public InteriorDrawable.HitTestResult Interior;
+
+            /// <summary>
+            /// Gets or sets interior scrollbar test result.
+            /// Valid if <see cref="Interior"/> hit test contains scrollbars.
+            /// </summary>
+            public ScrollBarDrawable.HitTestResult ScrollBar;
+
+            /// <summary>
+            /// Returns a string that represents the current object.
+            /// </summary>
+            /// <returns>A string that represents the current object.</returns>
+            public override readonly string ToString()
+            {
+                string[] names = { nameof(Interior), nameof(ScrollBar) };
+                object[] values = { Interior, ScrollBar };
+
+                return StringUtils.ToString(names, values);
+            }
         }
     }
 }

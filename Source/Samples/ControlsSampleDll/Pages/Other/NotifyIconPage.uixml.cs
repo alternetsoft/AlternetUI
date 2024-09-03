@@ -6,7 +6,8 @@ namespace ControlsSample
 {
     internal partial class NotifyIconPage : Control
     {
-        public static readonly Image Image = new Bitmap(typeof(NotifyIconPage).Assembly.GetManifestResourceStream(
+        public static readonly Image Image =
+            new Bitmap(typeof(NotifyIconPage).Assembly.GetManifestResourceStream(
             "ControlsSampleDll.Resources.Logo16x16.png") ?? throw new Exception());
 
         private readonly NotifyIcon? notifyIcon;

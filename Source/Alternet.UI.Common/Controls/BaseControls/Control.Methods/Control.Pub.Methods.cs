@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Finds control which accepts mouse events (checks whether <see cref="InputTransparent"/>
         /// property is <c>true</c>). Returns control specified as a parameter or one
-        /// of it's parent controls.
+        /// of its parent controls.
         /// </summary>
         /// <param name="control">Control to check.</param>
         /// <returns></returns>
@@ -303,6 +303,16 @@ namespace Alternet.UI
         public virtual IReadOnlyFontAndColor GetDefaultFontAndColor()
         {
             return new FontAndColor.ControlDefaultFontAndColor(this);
+        }
+
+        /// <summary>
+        /// Updates <see cref="ToolTip"/> so it will be repainted in the screen if it is currently shown.
+        /// </summary>
+        public virtual void UpdateToolTip()
+        {
+            var s = ToolTip;
+            ToolTip = null;
+            ToolTip = s;
         }
 
         /// <summary>
@@ -1362,13 +1372,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the validation errors for this control and it's child controls.
+        /// Gets the validation errors for this control and its child controls.
         /// </summary>
         /// <param name="propertyName">
         /// The name of the property to retrieve validation errors for; or <c>null</c>
         /// or <see cref="string.Empty"/>, to retrieve entity-level errors.
         /// </param>
-        /// <returns>The validation errors for this control and it's child controls.</returns>
+        /// <returns>The validation errors for this control and its child controls.</returns>
         public virtual IEnumerable GetErrors(string? propertyName = null)
         {
             foreach (var item in AllChildren)

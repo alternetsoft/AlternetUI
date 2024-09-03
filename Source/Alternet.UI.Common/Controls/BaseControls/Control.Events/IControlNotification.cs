@@ -12,10 +12,10 @@ namespace Alternet.UI
     public interface IControlNotification
     {
         /// <summary>
-        /// Called after the <see cref="Control.SetScrollBarPosition(bool, ScrollBar.PositionInfo)" />
+        /// Called after the <see cref="Control.SetScrollBarInfo(bool, ScrollBarInfo)" />
         /// method is called.
         /// </summary>
-        void AfterSetScrollBarPosition(Control sender, bool isVertical, ScrollBar.PositionInfo value);
+        void AfterSetScrollBarInfo(Control sender, bool isVertical, ScrollBarInfo value);
 
         /// <summary>
         /// Called after the <see cref="Control.Scroll" /> event is raised.

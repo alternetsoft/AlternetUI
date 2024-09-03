@@ -121,9 +121,9 @@ namespace Alternet.UI
         private static bool logFileIsEnabled;
         private static App? current;
         private static string? logFilePath;
+        private static Window? mainWindow;
 
         private readonly List<Window> windows = new();
-        private Window? window;
 
         static App()
         {
@@ -417,6 +417,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets main window.
+        /// </summary>
+        public static Window? MainWindow
+        {
+            get => mainWindow;
+            internal set => mainWindow = value;
+        }
+
+        /// <summary>
         /// Gets whether execution is inside the <see cref="Run"/> method.
         /// </summary>
         public static bool IsRunning { get; protected set; }
@@ -579,15 +588,6 @@ namespace Alternet.UI
         /// was created on.
         /// </summary>
         internal virtual bool InvokeRequired => Handler.InvokeRequired;
-
-        /// <summary>
-        /// Gets or sets main window.
-        /// </summary>
-        protected Window? MainWindow
-        {
-            get => window;
-            set => window = value;
-        }
 
         /// <summary>
         /// Informs all message pumps that they must terminate, and then closes
@@ -1374,7 +1374,7 @@ namespace Alternet.UI
 
             try
             {
-                this.MainWindow = window ?? throw new ArgumentNullException(nameof(window));
+                MainWindow = window ?? throw new ArgumentNullException(nameof(window));
                 CheckDisposed();
                 window.Show();
 
@@ -1392,10 +1392,10 @@ namespace Alternet.UI
                 }
 
                 SynchronizationContext.Uninstall();
-                this.MainWindow = null;
             }
             finally
             {
+                MainWindow = null;
                 Terminating = true;
                 IsRunning = false;
             }
@@ -1438,8 +1438,8 @@ namespace Alternet.UI
 
         internal void UnregisterWindow(Window window)
         {
-            if (this.window == window)
-                this.window = null;
+            if (MainWindow == window)
+                MainWindow = null;
             windows.Remove(window);
         }
 

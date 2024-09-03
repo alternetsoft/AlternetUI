@@ -91,17 +91,17 @@ namespace Alternet.UI
         }
 
         public void SetScrollbar(
-            int position,
-            int thumbSize,
-            int range,
-            int pageSize,
+            int? position,
+            int? thumbSize,
+            int? range,
+            int? pageSize,
             bool refresh = true)
         {
             NativeControl.SetScrollbar(
-                position,
-                thumbSize,
-                range,
-                pageSize,
+                position ?? 0,
+                thumbSize ?? 0,
+                range ?? 0,
+                pageSize ?? 0,
                 refresh);
         }
 

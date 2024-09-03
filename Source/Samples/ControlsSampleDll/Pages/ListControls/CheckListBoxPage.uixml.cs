@@ -5,6 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
+    [IsCsLocalized(true)]
     internal partial class CheckListBoxPage : Control
     {
         private int newItemIndex = 0;
@@ -13,16 +14,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            checkListBox.Items.Add("One");
-            checkListBox.Items.Add("Two");
-            checkListBox.Items.Add("Three");
-            checkListBox.Items.Add("Four");
-            checkListBox.Items.Add("Five");
-            checkListBox.Items.Add("Six");
-            checkListBox.Items.Add("Seven");
-            checkListBox.Items.Add("Eight");
-            checkListBox.Items.Add("Nine");
-            checkListBox.Items.Add("Ten");
+            GenericStrings.AddTenRows(checkListBox.Items.Add);
 
             checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
             allowMultipleSelectionCheckBox.IsChecked =
@@ -40,8 +32,8 @@ namespace ControlsSample
         {
             var result = checkListBox.HitTest(Mouse.GetPosition(checkListBox));
             var item = (result == null ? 
-                "<none>" : checkListBox.Items[result.Value]);
-            App.Log($"HitTest result: Item: '{item}'");
+                GenericStrings.NoneInsideLessGreater : checkListBox.Items[result.Value]);
+            App.Log($"{GenericStrings.HitTestResult}: {GenericStrings.Item}: '{item}'");
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
@@ -61,7 +53,7 @@ namespace ControlsSample
             try
             {
                 for (int i = 0; i < 5000; i++)
-                    checkListBox.Items.Add("Item " + GenItemIndex());
+                    checkListBox.Items.Add($"{GenericStrings.Item} " + GenItemIndex());
             }
             finally
             {
@@ -72,7 +64,7 @@ namespace ControlsSample
         private static string IndicesToStr(IReadOnlyList<int> indices)
         {
             string result = indices.Count > 100 ? 
-                "too many indices to display" : string.Join(",", indices);
+                GenericStrings.TooManyIndexesToDisplay : string.Join(",", indices);
             return result;
         }
 
@@ -109,7 +101,7 @@ namespace ControlsSample
 
         private void RemoveItemsAndLog(IReadOnlyList<int> items)
         {
-            App.Log($"Remove items: ({IndicesToStr(items)})");
+            App.Log($"{GenericStrings.RemoveItems}: ({IndicesToStr(items)})");
             checkListBox.RemoveItems(items);
         }
 
@@ -120,7 +112,7 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            checkListBox.Items.Add("Item " + GenItemIndex());
+            checkListBox.Items.Add($"{GenericStrings.Item} " + GenItemIndex());
         }
 
         private void EnsureLastItemVisibleButton_Click(

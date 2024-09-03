@@ -566,12 +566,6 @@ namespace Alternet.UI
             }
         }
 
-        IWindow? IWindow.Owner
-        {
-            get => Owner;
-            set => Owner = value as Window;
-        }
-
         /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>
@@ -609,7 +603,7 @@ namespace Alternet.UI
         /// with the owner window.
         /// </remarks>
         [Browsable(false)]
-        public virtual IWindow[] OwnedWindows
+        public virtual Window[] OwnedWindows
         {
             get
             {
@@ -1075,6 +1069,24 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void Dispose(bool disposing)
+        {
+            if (IsDisposed)
+                return;
+
+            Visible = false;
+
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                App.Current.UnregisterWindow(this);
+                if (!App.Current.VisibleWindows.Any())
+                    App.Handler.ExitMainLoop();
+            }
+        }
+
+        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
             => ControlFactory.Handler.CreateWindowHandler(this);
 
@@ -1084,7 +1096,7 @@ namespace Alternet.UI
         /// <see cref="ControlFlags.StartLocationApplied"/> flag.
         /// </summary>
         /// <param name="owner"></param>
-        protected void ApplyStartLocationOnce(Control? owner)
+        protected virtual void ApplyStartLocationOnce(Control? owner)
         {
             if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
             {
@@ -1163,24 +1175,6 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
-        {
-            if (IsDisposed)
-                return;
-
-            Visible = false;
-
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                App.Current.UnregisterWindow(this);
-                if (!App.Current.VisibleWindows.Any())
-                    App.Handler.ExitMainLoop();
-            }
-        }
-
         /// <summary>
         /// Called when the value of the <see cref="IsToolWindow"/> property changes.
         /// </summary>
@@ -1256,7 +1250,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Iterates through all child control's shortcuts and
-        /// calls shortcut action if it's key is pressed.
+        /// calls shortcut action if its key is pressed.
         /// </summary>
         /// <param name="e"></param>
         protected virtual void ProcessShortcuts(KeyEventArgs e)

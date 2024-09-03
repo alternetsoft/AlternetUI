@@ -109,7 +109,7 @@ namespace Alternet.UI
         public virtual bool AddRootFolderItem { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets whether double click on folder opens it's content in the control.
+        /// Gets or sets whether double click on folder opens its content in the control.
         /// </summary>
         public virtual bool AllowGoToSubFolder { get; set; } = true;
 

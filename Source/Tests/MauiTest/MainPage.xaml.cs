@@ -13,11 +13,8 @@ namespace SpinPaint;
 
 public partial class MainPage : ContentPage
 {
-    internal readonly Alternet.UI.SkiaSampleControl skiaSample;
     internal readonly ControlsSample.CustomDrawControl customDrawControl;
     
-    private readonly Alternet.Drawing.InteriorDrawable interiorDrawable;
-
     static MainPage()
     {
     }
@@ -26,20 +23,11 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        skiaSample = new();
+        /*skiaSample = new();*/
         customDrawControl = new();
-
-        interiorDrawable = ControlsSample.CustomDrawTestPage.CreateInteriorDrawable(true);
 
         customDrawControl.SetPaintAction((control, canvas, rect) =>
         {
-            ControlsSample.CustomDrawTestPage.PaintInteriorDrawable(
-                        interiorDrawable,
-                        Alternet.UI.ScrollBar.KnownTheme.WindowsDark,
-                        control,
-                        canvas,
-                        rect,
-                        Alternet.UI.ScrollBar.AltPositionInfo.Default);
         });
 
 
@@ -170,6 +158,8 @@ public partial class MainPage : ContentPage
         OneNewitem.Text = e;
         MyItems.Add(OneNewitem);
         logControl.SelectedItem = MyItems[MyItems.Count - 1];
+
+        this.Title = e;
     }
 
     public class SimpleItem
