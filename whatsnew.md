@@ -1,3 +1,23 @@
+# 0.9.629 (2024 September 3)
+
+- <u>**SpeedButton.IsClickRepeated.**</u>
+- <u>**App.MainWindow.**</u>
+- Control: LastClickedTimestamp, ParentDisposed(), UpdateToolTip().
+- BaseComponent is now derived from DisposableObject and has Site and Tag properties.
+- Timer is now derived from BaseComponent.
+- Window: Owner and OwnedWindows properties type changed from IWindow to Window.
+- Added classes: ApplicationContext, BrushAndPen, TimerUtils, IntPtrUtils.
+- RectD: NotEmptyAndContains, WithHeight, WithWidth, DeflatedWithPadding, InflatedWithPadding, WithX, WithY.
+- RectI: WithHeight, WithWidth, WithX, WithY.
+- EnumArray: Assign, Clone, SetValues.
+- SkiaGraphics: Implemented some of the drawing methods which previosly throwed NotImplementedException.
+- Continued implementation of the generic scrollbar control.
+- SkiaGraphics: Fix image paint for Alternet.Editor.
+- Control: Simplified methods related to scrolling. Now implementing custom scrolling behavior is much easier.
+- Added attribute classes: BaseAtrtribute, BaseValueAttribute, BaseBoolAttribute, IsTextLocalizedAttribute, 
+IsTitleLocalizedAttribute, IsToolTipLocalizedAttribute.
+- Continued preparations for ControlsSample localization.
+
 # 0.9.628 (2024 August 29)
 
 - Control: Added subscription to notifications. You can use AddGlobalNotification, RemoveGlobalNotification, 
