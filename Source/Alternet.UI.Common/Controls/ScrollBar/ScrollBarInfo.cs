@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains information about the scrollbar position and range.
     /// </summary>
-    public struct ScrollBarInfo
+    public struct ScrollBarInfo : IEquatable<ScrollBarInfo>
     {
         /// <summary>
         /// Gets default value for the <see cref="ScrollBarInfo"/> structure.
@@ -17,7 +17,6 @@ namespace Alternet.UI
         private bool immutable;
         private HiddenOrVisible visibility;
         private int position;
-        private int thumbSize;
         private int range;
         private int pageSize;
 
@@ -41,20 +40,16 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct.
         /// </summary>
         /// <param name="position">The position of the scrollbar in scroll units.</param>
-        /// <param name="thumbSize">The size of the thumb, or visible portion of the
-        /// scrollbar, in scroll units.</param>
         /// <param name="range">The maximum position of the scrollbar.</param>
         /// <param name="pageSize">The size of the page size in scroll units. This is the
         /// number of units the scrollbar will scroll when it is paged up or down.
         /// Often it is the same as the thumb size.</param>
         public ScrollBarInfo(
             int position,
-            int thumbSize,
             int range,
             int pageSize)
         {
             this.position = position;
-            this.thumbSize = thumbSize;
             this.range = range;
             this.pageSize = pageSize;
         }
@@ -102,46 +97,8 @@ namespace Alternet.UI
             {
                 if (immutable)
                     return;
+                value = Math.Max(value, 0);
                 position = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the size of the thumb, or visible portion of the
-        /// scrollbar, in scroll units.
-        /// </summary>
-        public int ThumbSize
-        {
-            readonly get
-            {
-                return thumbSize;
-            }
-
-            set
-            {
-                if (immutable)
-                    return;
-                thumbSize = value;
-            }
-        }
-
-        /// <summary>
-        /// Returns <see cref="ThumbSize"/> if it's positive; otherwise returns <see cref="PageSize"/>.
-        /// Returned value is less than <see cref="Range"/>.
-        /// </summary>
-        public int SafeThumbSize
-        {
-            get
-            {
-                int result = 0;
-
-                if (ThumbSize > 0)
-                    result = ThumbSize;
-                else
-                if (PageSize > 0)
-                    result = PageSize;
-                result = Math.Min(result, Range);
-                return result;
             }
         }
 
@@ -159,6 +116,7 @@ namespace Alternet.UI
             {
                 if (immutable)
                     return;
+                value = Math.Max(value, 0);
                 range = value;
             }
         }
@@ -179,33 +137,83 @@ namespace Alternet.UI
             {
                 if (immutable)
                     return;
+                value = Math.Max(value, 0);
                 pageSize = value;
             }
         }
 
-        private static ScrollBarInfo WithAutoFlag { get; } = CreateImmutable(HiddenOrVisible.Auto);
-
-        private static ScrollBarInfo WithHiddenFlag { get; } = CreateImmutable(HiddenOrVisible.Hidden);
-
-        private static ScrollBarInfo WithVisibleFlag { get; } = CreateImmutable(HiddenOrVisible.Visible);
+        /// <summary>
+        /// Returns a copy of this object with the new page size and range values.
+        /// </summary>
+        /// <param name="pageSize">New page size value.</param>
+        /// <param name="range">New range value.</param>
+        /// <returns></returns>
+        public readonly ScrollBarInfo WithPageSizeAndRange(int pageSize, int range)
+        {
+            var result = Clone();
+            result.PageSize = pageSize;
+            result.Range = range;
+            return result;
+        }
 
         /// <summary>
-        /// Implicit conversion operator from <see cref="HiddenOrVisible"/>
-        /// to <see cref="ScrollBarInfo"/>.
+        /// Returns a copy of this object with the new position value.
         /// </summary>
-        /// <param name="value">Value to convert.</param>
-        public static implicit operator ScrollBarInfo(HiddenOrVisible value)
+        /// <param name="position">New position value.</param>
+        /// <returns></returns>
+        public readonly ScrollBarInfo WithPosition(int position)
         {
-            switch (value)
-            {
-                default:
-                case HiddenOrVisible.Auto:
-                    return WithAutoFlag;
-                case HiddenOrVisible.Hidden:
-                    return WithHiddenFlag;
-                case HiddenOrVisible.Visible:
-                    return WithVisibleFlag;
-            }
+            var result = Clone();
+            result.Position = position;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a copy of this object with the new visibility value.
+        /// </summary>
+        /// <param name="visibility">New visibility value.</param>
+        /// <returns></returns>
+        public readonly ScrollBarInfo WithVisibility(HiddenOrVisible visibility)
+        {
+            var result = Clone();
+            result.Visibility = visibility;
+            return result;
+        }
+
+        /// <summary>
+        /// Assigns all properties from the specified object to this object.
+        /// </summary>
+        /// <param name="assignFrom"></param>
+        public void Assign(ScrollBarInfo assignFrom)
+        {
+            if (immutable)
+                return;
+
+            visibility = assignFrom.visibility;
+            position = assignFrom.position;
+            range = assignFrom.range;
+            pageSize = assignFrom.pageSize;
+        }
+
+        /// <summary>
+        /// Creates clone of this object.
+        /// </summary>
+        public readonly ScrollBarInfo Clone()
+        {
+            ScrollBarInfo result = new();
+            result.Assign(this);
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public readonly bool Equals(ScrollBarInfo other)
+        {
+            var result =
+                visibility == other.visibility &&
+                position == other.position &&
+                range == other.range &&
+                pageSize == other.pageSize;
+            return result;
         }
 
         /// <inheritdoc cref="ImmutableObject.SetImmutable"/>
@@ -214,7 +222,7 @@ namespace Alternet.UI
             immutable = true;
         }
 
-        private static ScrollBarInfo CreateImmutable(HiddenOrVisible value)
+        internal static ScrollBarInfo CreateImmutable(HiddenOrVisible value)
         {
             ScrollBarInfo result = new();
             result.Visibility = value;

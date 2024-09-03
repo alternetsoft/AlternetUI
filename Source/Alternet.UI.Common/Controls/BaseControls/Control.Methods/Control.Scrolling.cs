@@ -115,7 +115,8 @@ namespace Alternet.UI
         /// <summary>
         /// Sets vertical or horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
-        /// <param name="isVertical">Whether to set position for the vertical or horizontal scrollbar.</param>
+        /// <param name="isVertical">Whether to set position for the vertical or
+        /// horizontal scrollbar.</param>
         /// <param name="value">Scrollbar position.</param>
         public void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
@@ -142,19 +143,19 @@ namespace Alternet.UI
         /// Sets system scrollbar properties.
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
-        /// <param name="visible">Is scrollbar visible or not.</param>
+        /// <param name="visibility">Scrollbar visibility mode.</param>
         /// <param name="value">Thumb position.</param>
         /// <param name="largeChange">Large change value (when scrolls page up or down).</param>
         /// <param name="maximum">Scrollbar Range.</param>
         public void SetScrollBar(
             bool isVertical,
-            bool visible,
+            HiddenOrVisible visibility,
             int value,
             int largeChange,
             int maximum)
         {
-            ScrollBarInfo info = new(value, largeChange, maximum, largeChange);
-            info.Visibility = visible ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
+            ScrollBarInfo info = new(value, maximum, largeChange);
+            info.Visibility = visibility;
 
             if (isVertical)
                 VertScrollBarInfo = info;
@@ -167,9 +168,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>
         /// <returns></returns>
-        public bool IsScrollBarVisible(bool isVertical)
+        public HiddenOrVisible GetScrollBarVisibility(bool isVertical)
         {
-            return GetScrollBarInfo(isVertical).IsVisible;
+            return GetScrollBarInfo(isVertical).Visibility;
         }
 
         /// <summary>

@@ -12,6 +12,11 @@ namespace Alternet.Drawing
     public class ScrollBarDrawable : BaseDrawable
     {
         /// <summary>
+        /// Gets or sets minimal scrollbar thumb size in dips.
+        /// </summary>
+        public static Coord MinThumbSize = 10;
+
+        /// <summary>
         /// Gets or sets distance (in dips) between arrow button and arrow.
         /// </summary>
         public EnumArray<VisualControlState, Coord>? ArrowMargin;
@@ -225,20 +230,17 @@ namespace Alternet.Drawing
 
             var hasStartButton = startButton is not null || startArrow is not null;
             var hasEndButton = endButton is not null || endArrow is not null;
+            var hasButtons = hasStartButton || hasEndButton;
 
             var btnSize = IsVertical ? Bounds.Width : Bounds.Height;
 
             var startButtonBounds = RectD.Empty;
             var endButtonBounds = RectD.Empty;
 
-            if (hasStartButton)
+            if (hasButtons)
             {
                 startButtonBounds = (Bounds.Left, Bounds.Top, btnSize, btnSize);
                 result[HitTestResult.StartButton] = startButtonBounds;
-            }
-
-            if (hasEndButton)
-            {
                 endButtonBounds = (Bounds.Right - btnSize, Bounds.Bottom - btnSize, btnSize, btnSize);
                 result[HitTestResult.EndButton] = endButtonBounds;
             }
@@ -247,9 +249,9 @@ namespace Alternet.Drawing
                 return result;
 
             RectD thumbMaximalBounds;
-            RectD thumbBounds;
-            RectD afterThumbBounds;
-            RectD beforeThumbBounds;
+            RectD thumbBounds = RectD.Empty;
+            RectD afterThumbBounds = RectD.Empty;
+            RectD beforeThumbBounds = RectD.Empty;
 
             if (IsVertical)
             {
@@ -258,24 +260,32 @@ namespace Alternet.Drawing
                     Bounds.Top + startButtonBounds.Height,
                     Bounds.Width,
                     Bounds.Height - endButtonBounds.Height - startButtonBounds.Height);
-                var thumbHeight = (Position.SafeThumbSize * thumbMaximalBounds.Height) / Position.Range;
-                var thumbMaxTop = thumbMaximalBounds.Height - thumbHeight;
-                var thumbTop = (thumbMaxTop * Position.Position) / Position.Range;
-                thumbBounds = (
-                    Bounds.Left,
-                    thumbMaximalBounds.Top + thumbTop,
-                    Bounds.Width,
-                    thumbHeight);
-                beforeThumbBounds = (
-                    Bounds.Left,
-                    thumbMaximalBounds.Top,
-                    Bounds.Width,
-                    thumbTop);
-                afterThumbBounds = (
-                    Bounds.Left,
-                    thumbBounds.Bottom,
-                    Bounds.Width,
-                    thumbMaximalBounds.Bottom - thumbBounds.Bottom);
+                var thumbHeight = (Position.PageSize * thumbMaximalBounds.Height) / Position.Range;
+                thumbHeight = Math.Max(thumbHeight, MinThumbSize);
+
+                if(thumbHeight >= thumbMaximalBounds.Height)
+                {
+                }
+                else
+                {
+                    var thumbMaxTop = thumbMaximalBounds.Height - thumbHeight;
+                    var thumbTop = (thumbMaxTop * Position.Position) / Position.Range;
+                    thumbBounds = (
+                        Bounds.Left,
+                        thumbMaximalBounds.Top + thumbTop,
+                        Bounds.Width,
+                        thumbHeight);
+                    beforeThumbBounds = (
+                        Bounds.Left,
+                        thumbMaximalBounds.Top,
+                        Bounds.Width,
+                        thumbTop);
+                    afterThumbBounds = (
+                        Bounds.Left,
+                        thumbBounds.Bottom,
+                        Bounds.Width,
+                        thumbMaximalBounds.Bottom - thumbBounds.Bottom);
+                }
             }
             else
             {
@@ -284,24 +294,32 @@ namespace Alternet.Drawing
                     Bounds.Top,
                     Bounds.Width - endButtonBounds.Width - startButtonBounds.Width,
                     Bounds.Height);
-                var thumbWidth = (Position.SafeThumbSize * thumbMaximalBounds.Width) / Position.Range;
-                var thumbMaxWidth = thumbMaximalBounds.Width - thumbWidth;
-                var thumbLeft = (thumbMaxWidth * Position.Position) / Position.Range;
-                thumbBounds = (
-                    thumbMaximalBounds.Left + thumbLeft,
-                    Bounds.Top,
-                    thumbWidth,
-                    Bounds.Height);
-                beforeThumbBounds = (
-                    thumbMaximalBounds.Left,
-                    Bounds.Top,
-                    thumbLeft,
-                    Bounds.Height);
-                afterThumbBounds = (
-                    thumbBounds.Right,
-                    Bounds.Top,
-                    thumbMaximalBounds.Right - thumbBounds.Right,
-                    Bounds.Height);
+                var thumbWidth = (Position.PageSize * thumbMaximalBounds.Width) / Position.Range;
+                thumbWidth = Math.Max(thumbWidth, MinThumbSize);
+
+                if (thumbWidth >= thumbMaximalBounds.Width)
+                {
+                }
+                else
+                {
+                    var thumbMaxWidth = thumbMaximalBounds.Width - thumbWidth;
+                    var thumbLeft = (thumbMaxWidth * Position.Position) / Position.Range;
+                    thumbBounds = (
+                        thumbMaximalBounds.Left + thumbLeft,
+                        Bounds.Top,
+                        thumbWidth,
+                        Bounds.Height);
+                    beforeThumbBounds = (
+                        thumbMaximalBounds.Left,
+                        Bounds.Top,
+                        thumbLeft,
+                        Bounds.Height);
+                    afterThumbBounds = (
+                        thumbBounds.Right,
+                        Bounds.Top,
+                        thumbMaximalBounds.Right - thumbBounds.Right,
+                        Bounds.Height);
+                }
             }
 
             result[HitTestResult.Thumb] = thumbBounds;

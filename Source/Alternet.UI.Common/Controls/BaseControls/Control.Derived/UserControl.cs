@@ -59,9 +59,9 @@ namespace Alternet.UI
                     return;
                 scrollBars = value;
 
-                var converted = ScrollBarUtils.AsHiddenOrVisible(value);
-                VertScrollBarInfo = converted.Vertical;
-                HorzScrollBarInfo = converted.Horizontal;
+                var (horizontal, vertical) = ScrollBarUtils.AsHiddenOrVisible(value);
+                VertScrollBarInfo = VertScrollBarInfo.WithVisibility(vertical);
+                HorzScrollBarInfo = HorzScrollBarInfo.WithVisibility(horizontal);
             }
         }
 

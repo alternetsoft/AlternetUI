@@ -201,9 +201,7 @@ namespace Alternet.UI
                 var range = (Maximum - Minimum) * SmallChange;
                 var pageSize = LargeChange * SmallChange;
                 var position = (Value - Minimum) * SmallChange;
-                var thumbSize = pageSize;
-
-                var result = new ScrollBarInfo(position, thumbSize, range, pageSize);
+                var result = new ScrollBarInfo(position, range, pageSize);
                 return result;
             }
         }
