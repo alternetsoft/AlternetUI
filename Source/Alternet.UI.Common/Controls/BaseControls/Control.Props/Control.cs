@@ -1404,7 +1404,7 @@ namespace Alternet.UI
         /// property.
         /// </summary>
         /// <remarks>
-        /// When <see cref="VisualStateOverride"/> is specified, it's value
+        /// When <see cref="VisualStateOverride"/> is specified, its value
         /// used instead of dynamic state calculation when <see cref="VisualState"/>
         /// returns its value.
         /// </remarks>
@@ -2148,6 +2148,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control is currently re-creating its handle.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the control is currently re-creating its handle;
+        /// otherwise, <see langword="false" />.</returns>
+        [Category("Behavior")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual bool RecreatingHandle
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Returns true if control's background color is darker than foreground color.
         /// </summary>
         [Browsable(false)]
@@ -2189,7 +2207,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns this control if it's visible; otherwise returns <c>null</c>.
+        /// Returns this control if it is visible; otherwise returns <c>null</c>.
         /// </summary>
         public Control? OnlyVisible
         {
@@ -2461,7 +2479,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value that indicates whether this control or it's child controls have validation errors.
+        /// Gets a value that indicates whether this control or its child controls
+        /// have validation errors.
         /// </summary>
         /// <returns><c>true</c> if the control currently has validation errors;
         /// otherwise, <c>false</c>.</returns>
