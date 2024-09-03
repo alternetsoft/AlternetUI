@@ -119,10 +119,9 @@ namespace ControlsSample
             drawable.Background.Brush = Color.GreenYellow.AsBrush;
 
             drawable.Bounds = rect;
-            drawable.VertPosition = position;
-            drawable.HorzPosition = position;
+            drawable.VertPosition = position.AsPositionInfo();
+            drawable.HorzPosition = position.AsPositionInfo();
             drawable.Draw(control, canvas);
-
         }
 
         public void DrawNativeComboBox()

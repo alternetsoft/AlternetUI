@@ -2189,6 +2189,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns this control if it's visible; otherwise returns <c>null</c>.
+        /// </summary>
+        public Control? OnlyVisible
+        {
+            get
+            {
+                if (Visible)
+                    return this;
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="Control.Children"/> or an empty array if there are no
         /// child controls.
         /// </summary>

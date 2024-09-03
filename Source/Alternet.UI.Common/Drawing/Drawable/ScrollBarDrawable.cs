@@ -121,9 +121,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets scrollbar position information.
+        /// Gets or sets scrollbar information.
         /// </summary>
-        public ScrollBar.AltPositionInfo? AltPosInfo { get; set; }
+        public ScrollBarInfo Position { get; set; }
 
         /// <inheritdoc/>
         public override RectD Bounds
@@ -158,12 +158,41 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Sets value of the <see cref="AltPosInfo"/>. Implemented for the convenience.
+        /// Returns one of <see cref="HitTestResult"/> constants.
         /// </summary>
-        /// <param name="altPosInfo">New value.</param>
-        public void SetAltPosInfo(ScrollBar.AltPositionInfo? altPosInfo)
+        /// <param name="point">Point to check.</param>
+        /// <param name="rectangles">Bounds of the different part of the drawable.</param>
+        /// <returns></returns>
+        public virtual HitTestResult HitTest(EnumArray<HitTestResult, RectD> rectangles, PointD point)
         {
-            AltPosInfo = altPosInfo;
+            if (!Bounds.NotEmptyAndContains(point))
+                return HitTestResult.None;
+
+            if (rectangles[HitTestResult.StartButton].NotEmptyAndContains(point))
+                return HitTestResult.StartButton;
+
+            if (rectangles[HitTestResult.EndButton].NotEmptyAndContains(point))
+                return HitTestResult.EndButton;
+
+            if (rectangles[HitTestResult.Thumb].NotEmptyAndContains(point))
+                return HitTestResult.Thumb;
+
+            if (rectangles[HitTestResult.BeforeThumb].NotEmptyAndContains(point))
+                return HitTestResult.BeforeThumb;
+
+            if (rectangles[HitTestResult.AfterThumb].NotEmptyAndContains(point))
+                return HitTestResult.AfterThumb;
+
+            return HitTestResult.None;
+        }
+
+        /// <summary>
+        /// Sets value of the <see cref="Position"/>. Implemented for the convenience.
+        /// </summary>
+        /// <param name="value">New value.</param>
+        public void SetPosition(ScrollBarInfo value)
+        {
+            Position = value;
         }
 
         /// <summary>
@@ -177,28 +206,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns one of <see cref="HitTestResult"/> constants.
-        /// </summary>
-        /// <param name="point">Point to check.</param>
-        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
-        /// <returns></returns>
-        public virtual HitTestResult HitTest(Coord scaleFactor, PointD point)
-        {
-            if (!Bounds.NotEmptyAndContains(point))
-                return HitTestResult.None;
-
-            var rectangles = GetLayoutRectangles(scaleFactor);
-
-            if (rectangles[HitTestResult.StartButton].NotEmptyAndContains(point))
-                return HitTestResult.StartButton;
-
-            if (rectangles[HitTestResult.EndButton].NotEmptyAndContains(point))
-                return HitTestResult.EndButton;
-
-            return HitTestResult.None;
-        }
-
-        /// <summary>
         /// Performs layout of the drawable childs and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
@@ -208,22 +215,105 @@ namespace Alternet.Drawing
         {
             EnumArray<HitTestResult, RectD> result = new();
 
-            Coord buttonSize = IsVertical ? Bounds.Width : Bounds.Height;
+            if (!Position.IsVisible)
+                return result;
 
-            RectD startButtonBounds = (Bounds.Left, Bounds.Top, buttonSize, buttonSize);
-            RectD endButtonBounds
-                = (Bounds.Right - buttonSize, Bounds.Bottom - buttonSize, buttonSize, buttonSize);
+            var startButton = GetVisibleStartButton(VisualControlState.Normal);
+            var endButton = GetVisibleEndButton(VisualControlState.Normal);
+            var startArrow = GetVisibleStartArrow(VisualControlState.Normal);
+            var endArrow = GetVisibleEndArrow(VisualControlState.Normal);
 
-            result[HitTestResult.StartButton] = startButtonBounds;
-            result[HitTestResult.EndButton] = endButtonBounds;
+            var hasStartButton = startButton is not null || startArrow is not null;
+            var hasEndButton = endButton is not null || endArrow is not null;
 
+            var btnSize = IsVertical ? Bounds.Width : Bounds.Height;
+
+            var startButtonBounds = RectD.Empty;
+            var endButtonBounds = RectD.Empty;
+
+            if (hasStartButton)
+            {
+                startButtonBounds = (Bounds.Left, Bounds.Top, btnSize, btnSize);
+                result[HitTestResult.StartButton] = startButtonBounds;
+            }
+
+            if (hasEndButton)
+            {
+                endButtonBounds = (Bounds.Right - btnSize, Bounds.Bottom - btnSize, btnSize, btnSize);
+                result[HitTestResult.EndButton] = endButtonBounds;
+            }
+
+            if (Position.Range <= 0)
+                return result;
+
+            RectD thumbMaximalBounds;
+            RectD thumbBounds;
+            RectD afterThumbBounds;
+            RectD beforeThumbBounds;
+
+            if (IsVertical)
+            {
+                thumbMaximalBounds = (
+                    Bounds.Left,
+                    Bounds.Top + startButtonBounds.Height,
+                    Bounds.Width,
+                    Bounds.Height - endButtonBounds.Height - startButtonBounds.Height);
+                var thumbHeight = (Position.SafeThumbSize * thumbMaximalBounds.Height) / Position.Range;
+                var thumbMaxTop = thumbMaximalBounds.Height - thumbHeight;
+                var thumbTop = (thumbMaxTop * Position.Position) / Position.Range;
+                thumbBounds = (
+                    Bounds.Left,
+                    thumbMaximalBounds.Top + thumbTop,
+                    Bounds.Width,
+                    thumbHeight);
+                beforeThumbBounds = (
+                    Bounds.Left,
+                    thumbMaximalBounds.Top,
+                    Bounds.Width,
+                    thumbTop);
+                afterThumbBounds = (
+                    Bounds.Left,
+                    thumbBounds.Bottom,
+                    Bounds.Width,
+                    thumbMaximalBounds.Bottom - thumbBounds.Bottom);
+            }
+            else
+            {
+                thumbMaximalBounds = (
+                    Bounds.Left + startButtonBounds.Width,
+                    Bounds.Top,
+                    Bounds.Width - endButtonBounds.Width - startButtonBounds.Width,
+                    Bounds.Height);
+                var thumbWidth = (Position.SafeThumbSize * thumbMaximalBounds.Width) / Position.Range;
+                var thumbMaxWidth = thumbMaximalBounds.Width - thumbWidth;
+                var thumbLeft = (thumbMaxWidth * Position.Position) / Position.Range;
+                thumbBounds = (
+                    thumbMaximalBounds.Left + thumbLeft,
+                    Bounds.Top,
+                    thumbWidth,
+                    Bounds.Height);
+                beforeThumbBounds = (
+                    thumbMaximalBounds.Left,
+                    Bounds.Top,
+                    thumbLeft,
+                    Bounds.Height);
+                afterThumbBounds = (
+                    thumbBounds.Right,
+                    Bounds.Top,
+                    thumbMaximalBounds.Right - thumbBounds.Right,
+                    Bounds.Height);
+            }
+
+            result[HitTestResult.Thumb] = thumbBounds;
+            result[HitTestResult.AfterThumb] = afterThumbBounds;
+            result[HitTestResult.BeforeThumb] = beforeThumbBounds;
             return result;
         }
 
         /// <inheritdoc/>
         public override void Draw(Control control, Graphics dc)
         {
-            if (!Visible)
+            if (!Visible || !Position.IsVisible)
                 return;
 
             var scaleFactor = control.ScaleFactor;
@@ -238,10 +328,17 @@ namespace Alternet.Drawing
             }
 
             var metrics = GetRealMetrics();
-            var startButton = GetStartButton();
-            var endButton = GetEndButton();
-            var startArrow = GetStartArrow();
-            var endArrow = GetEndArrow();
+
+            var startButtonState = VisualState;
+            var endButtonState = VisualState;
+            var startArrowState = VisualState;
+            var endArrowState = VisualState;
+            var thumbState = VisualState;
+
+            var startButton = GetVisibleStartButton(startButtonState);
+            var endButton = GetVisibleEndButton(endButtonState);
+            var startArrow = GetVisibleStartArrow(startArrowState);
+            var endArrow = GetVisibleEndArrow(endArrowState);
 
             var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor);
 
@@ -255,6 +352,14 @@ namespace Alternet.Drawing
                     Bounds.Width - arrowMargin,
                     Bounds.Height - arrowMargin);
             var realArrowSizeI = GraphicsFactory.PixelFromDip(realArrowSize, scaleFactor);
+
+            var thumb = Thumb?.GetObjectOrNormal(thumbState)?.OnlyVisible;
+
+            if (thumb is not null)
+            {
+                thumb.Bounds = rectangles[HitTestResult.Thumb];
+                thumb.Draw(control, dc);
+            }
 
             if (startButton is not null)
             {
@@ -283,32 +388,72 @@ namespace Alternet.Drawing
             }
         }
 
-        private RectangleDrawable? GetEndArrow()
+        /// <summary>
+        /// Gets end arrow with the specified visual state.
+        /// </summary>
+        /// <param name="state">Visual state for which element is requested.</param>
+        /// <returns></returns>
+        protected virtual RectangleDrawable? GetVisibleEndArrow(VisualControlState state)
         {
+            RectangleDrawable? result;
+
             if (IsVertical)
-                return DownArrow?.GetObjectOrNormal(VisualState);
-            return RightArrow?.GetObjectOrNormal(VisualState);
+                result = DownArrow?.GetObjectOrNormal(state);
+            else
+                result = RightArrow?.GetObjectOrNormal(state);
+
+            return result?.OnlyVisible;
         }
 
-        private RectangleDrawable? GetStartArrow()
+        /// <summary>
+        /// Gets start arrow with the specified visual state.
+        /// </summary>
+        /// <param name="state">Visual state for which element is requested.</param>
+        /// <returns></returns>
+        protected virtual RectangleDrawable? GetVisibleStartArrow(VisualControlState state)
         {
+            RectangleDrawable? result;
+
             if (IsVertical)
-                return UpArrow?.GetObjectOrNormal(VisualState);
-            return LeftArrow?.GetObjectOrNormal(VisualState);
+                result = UpArrow?.GetObjectOrNormal(state);
+            else
+                result = LeftArrow?.GetObjectOrNormal(state);
+
+            return result?.OnlyVisible;
         }
 
-        private RectangleDrawable? GetStartButton()
+        /// <summary>
+        /// Gets start button with the specified visual state.
+        /// </summary>
+        /// <param name="state">Visual state for which element is requested.</param>
+        /// <returns></returns>
+        protected virtual RectangleDrawable? GetVisibleStartButton(VisualControlState state)
         {
+            RectangleDrawable? result;
+
             if (IsVertical)
-                return UpButton?.GetObjectOrNormal(VisualState);
-            return LeftButton?.GetObjectOrNormal(VisualState);
+                result = UpButton?.GetObjectOrNormal(state);
+            else
+                result = LeftButton?.GetObjectOrNormal(state);
+
+            return result?.OnlyVisible;
         }
 
-        private RectangleDrawable? GetEndButton()
+        /// <summary>
+        /// Gets end button with the specified visual state.
+        /// </summary>
+        /// <param name="state">Visual state for which element is requested.</param>
+        /// <returns></returns>
+        protected virtual RectangleDrawable? GetVisibleEndButton(VisualControlState state)
         {
+            RectangleDrawable? result;
+
             if (IsVertical)
-                return DownButton?.GetObjectOrNormal(VisualState);
-            return RightButton?.GetObjectOrNormal(VisualState);
+                result = DownButton?.GetObjectOrNormal(state);
+            else
+                result = RightButton?.GetObjectOrNormal(state);
+
+            return result?.OnlyVisible;
         }
     }
 }

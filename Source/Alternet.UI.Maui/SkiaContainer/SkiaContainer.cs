@@ -236,8 +236,8 @@ namespace Alternet.UI
 
             dc.Restore();
 
-            interior.VertPosition = ScrollBar.AltPositionInfo.Default;
-            interior.HorzPosition = ScrollBar.AltPositionInfo.Default;
+            interior.VertPosition = control.VertScrollBarInfo;
+            interior.HorzPosition = control.HorzScrollBarInfo;
             interior.Draw(control, graphics);
 
             dc.Flush();

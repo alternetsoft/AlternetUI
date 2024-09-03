@@ -9,12 +9,26 @@ namespace Alternet.UI
     /// </summary>
     public struct ScrollBarInfo
     {
+        /// <summary>
+        /// Gets default value for the <see cref="ScrollBarInfo"/> structure.
+        /// </summary>
+        public static readonly ScrollBarInfo Default = new(immutable: true);
+
         private bool immutable;
         private HiddenOrVisible visibility;
         private int position;
         private int thumbSize;
         private int range;
         private int pageSize;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct
+        /// with the specified value of the immutable state.
+        /// </summary>
+        public ScrollBarInfo(bool immutable)
+        {
+            this.immutable = immutable;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct.
@@ -108,6 +122,26 @@ namespace Alternet.UI
                 if (immutable)
                     return;
                 thumbSize = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns <see cref="ThumbSize"/> if it's positive; otherwise returns <see cref="PageSize"/>.
+        /// Returned value is less than <see cref="Range"/>.
+        /// </summary>
+        public int SafeThumbSize
+        {
+            get
+            {
+                int result = 0;
+
+                if (ThumbSize > 0)
+                    result = ThumbSize;
+                else
+                if (PageSize > 0)
+                    result = PageSize;
+                result = Math.Min(result, Range);
+                return result;
             }
         }
 
