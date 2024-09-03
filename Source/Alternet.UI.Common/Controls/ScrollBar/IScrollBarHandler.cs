@@ -27,11 +27,6 @@ namespace Alternet.UI
         int Range { get; }
 
         /// <summary>
-        /// Gets or sets thumb size.
-        /// </summary>
-        int ThumbSize { get; }
-
-        /// <summary>
         /// Gets or sets page size.
         /// </summary>
         int PageSize { get; }
@@ -56,10 +51,9 @@ namespace Alternet.UI
         /// </summary>
         int EventNewPos { get; }
 
-        /// <inheritdoc cref="ScrollBar.SetScrollbar(int?, int?, int?, int?, bool)"/>
+        /// <inheritdoc cref="ScrollBar.SetScrollbar(int?, int?, int?, bool)"/>
         void SetScrollbar(
             int? position,
-            int? thumbSize,
             int? range,
             int? pageSize,
             bool refresh = true);

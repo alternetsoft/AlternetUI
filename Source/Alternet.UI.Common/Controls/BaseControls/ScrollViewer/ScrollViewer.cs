@@ -121,14 +121,13 @@ namespace Alternet.UI
             var size = ClientRectangle.Size;
 
             if (preferredSize.Width <= size.Width)
-                HorzScrollBarInfo = HiddenOrVisible.Hidden;
+                HorzScrollBarInfo = HorzScrollBarInfo.WithVisibility(HiddenOrVisible.Hidden);
             else
             {
                 ScrollBarInfo horz = new()
                 {
                     Visibility = HiddenOrVisible.Auto,
                     Range = (int)preferredSize.Width,
-                    ThumbSize = (int)size.Width,
                     PageSize = (int)size.Width,
                     Position = GetScrollBarValue(false),
                 };
@@ -137,14 +136,13 @@ namespace Alternet.UI
             }
 
             if (preferredSize.Height <= size.Height)
-                VertScrollBarInfo = HiddenOrVisible.Hidden;
+                VertScrollBarInfo = VertScrollBarInfo.WithVisibility(HiddenOrVisible.Hidden);
             else
             {
                 ScrollBarInfo vert = new()
                 {
                     Visibility = HiddenOrVisible.Auto,
                     Range = (int)preferredSize.Height,
-                    ThumbSize = (int)size.Height,
                     PageSize = (int)size.Height,
                     Position = GetScrollBarValue(true),
                 };

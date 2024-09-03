@@ -917,7 +917,6 @@ namespace Alternet.UI
 
             result.Range = GetScrollBarMaximum(isVertical);
             result.PageSize = GetScrollBarLargeChange(isVertical);
-            result.ThumbSize = result.PageSize;
             result.Position = GetScrollBarValue(isVertical);
 
             if (ScrollBarAlwaysVisible)

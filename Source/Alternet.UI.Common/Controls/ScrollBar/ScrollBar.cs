@@ -345,10 +345,9 @@ namespace Alternet.UI
         {
             App.Log(ToString());
             var position = $"Position: {Handler.ThumbPosition}";
-            var thumbSize = $"ThumbSize: {Handler.ThumbSize}";
             var range = $"Range: {Handler.Range}";
             var pageSize = $"PageSize: {Handler.PageSize}";
-            App.Log($"Native: {position}, {thumbSize}, {range}, {pageSize}");
+            App.Log($"Native: {position}, {range}, {pageSize}");
         }
 
         /// <summary>
@@ -357,7 +356,7 @@ namespace Alternet.UI
         public virtual void UpdateScrollInfo()
         {
             var posInfo = pos.AsPositionInfo();
-            SetScrollbar(posInfo.Position, posInfo.ThumbSize, posInfo.Range, posInfo.PageSize);
+            SetScrollbar(posInfo.Position, posInfo.Range, posInfo.PageSize);
         }
 
         /// <summary>
@@ -388,8 +387,6 @@ namespace Alternet.UI
         /// Sets the native scrollbar properties.
         /// </summary>
         /// <param name="position">The position of the scrollbar in scroll units.</param>
-        /// <param name="thumbSize">The size of the thumb, or visible portion of the
-        /// scrollbar, in scroll units.</param>
         /// <param name="range">The maximum position of the scrollbar.</param>
         /// <param name="pageSize">The size of the page size in scroll units. This is the
         /// number of units the scrollbar will scroll when it is paged up or down.
@@ -411,14 +408,12 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void SetScrollbar(
             int? position,
-            int? thumbSize,
             int? range,
             int? pageSize,
             bool refresh = true)
         {
             Handler.SetScrollbar(
                 position,
-                thumbSize,
                 range,
                 pageSize,
                 refresh);

@@ -238,6 +238,11 @@ namespace Alternet.UI
 
             interior.VertPosition = control.VertScrollBarInfo;
             interior.HorzPosition = control.HorzScrollBarInfo;
+
+            if (!interior.HorzPosition.Equals(ScrollBarInfo.Default))
+            {
+            }
+
             interior.Draw(control, graphics);
 
             dc.Flush();
