@@ -245,7 +245,7 @@ namespace Alternet.Drawing
                 result[HitTestResult.EndButton] = endButtonBounds;
             }
 
-            if (Position.Range <= 0)
+            if (Position.Range <= 0 || Position.Range <= Position.PageSize || Position.PageSize <= 0)
                 return result;
 
             RectD thumbMaximalBounds;
@@ -269,7 +269,8 @@ namespace Alternet.Drawing
                 else
                 {
                     var thumbMaxTop = thumbMaximalBounds.Height - thumbHeight;
-                    var thumbTop = (thumbMaxTop * Position.Position) / Position.Range;
+                    var thumbTop = (thumbMaxTop * Position.Position) / (Position.Range - Position.PageSize);
+                    thumbTop = Math.Min(thumbTop, thumbMaxTop);
                     thumbBounds = (
                         Bounds.Left,
                         thumbMaximalBounds.Top + thumbTop,
@@ -302,8 +303,10 @@ namespace Alternet.Drawing
                 }
                 else
                 {
-                    var thumbMaxWidth = thumbMaximalBounds.Width - thumbWidth;
-                    var thumbLeft = (thumbMaxWidth * Position.Position) / Position.Range;
+                    var thumbMaxLeft = thumbMaximalBounds.Width - thumbWidth;
+                    var thumbLeft = (thumbMaxLeft * Position.Position) / (Position.Range - Position.PageSize);
+                    thumbLeft = Math.Min(thumbLeft, thumbMaxLeft);
+
                     thumbBounds = (
                         thumbMaximalBounds.Left + thumbLeft,
                         Bounds.Top,

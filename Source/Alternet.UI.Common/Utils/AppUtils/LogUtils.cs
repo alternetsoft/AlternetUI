@@ -383,9 +383,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs message using <see cref="App.Log"/> and after that calls <see cref="LogToFile"/>.
+        /// </summary>
+        /// <param name="obj">Oject to log.</param>
+        public static void LogAndToFile(object? obj = null)
+        {
+            App.Log(obj);
+            if(!App.LogFileIsEnabled)
+                LogUtils.LogToFile(obj);
+        }
+
+        /// <summary>
         /// Logs message to the specified file or to default application log file.
         /// </summary>
-        /// <param name="obj">Log message or object.</param>
+        /// <param name="obj">Object to log.</param>
         /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
         /// when this parameter is <c>null</c>.</param>
         public static void LogToFile(object? obj = null, string? filename = null)

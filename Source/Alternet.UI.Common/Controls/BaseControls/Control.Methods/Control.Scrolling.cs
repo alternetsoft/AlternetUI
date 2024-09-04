@@ -120,13 +120,17 @@ namespace Alternet.UI
         /// <param name="value">Scrollbar position.</param>
         public void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
+            if (isVertical)
+            {
+                Handler.VertScrollBarInfo = value;
+            }
+            else
+            {
+                Handler.HorzScrollBarInfo = value;
+            }
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
-
-            if (isVertical)
-                Handler.VertScrollBarInfo = value;
-            else
-                Handler.HorzScrollBarInfo = value;
 
             foreach (var n in nn)
             {
