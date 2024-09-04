@@ -168,6 +168,8 @@ namespace Alternet.UI
 
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
         {
+            UpdateBounds(Bounds.ToRectD());
+            control?.RaiseHandlerSizeChanged();
         }
 
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
@@ -183,6 +185,28 @@ namespace Alternet.UI
             TouchEventArgs args = MauiTouchUtils.Convert(e);
             control?.RaiseTouch(args);
             e.Handled = args.Handled;
+        }
+
+        private void UpdateBounds(RectD max)
+        {
+            if (control is null)
+                return;
+
+            var scaleFactor = (float)control.ScaleFactor;
+            var bounds = Bounds;
+
+            RectD newBounds = (
+                0,
+                0,
+                Math.Min(bounds.Width, max.Width),
+                Math.Min(bounds.Height, max.Height));
+
+            interior.Bounds = newBounds;
+
+            var rectangles = interior.GetLayoutRectangles(scaleFactor);
+            var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
+
+            control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
         }
 
         private void Canvas_PaintSurface(object? sender, SKPaintSurfaceEventArgs e)
@@ -208,21 +232,7 @@ namespace Alternet.UI
 
             graphics.OriginalScaleFactor = scaleFactor;
 
-            var dirtyRect = dc.LocalClipBounds;
-            var bounds = Bounds;
-
-            RectD newBounds = (
-                0,
-                0,
-                Math.Min(bounds.Width, dirtyRect.Width),
-                Math.Min(bounds.Height, dirtyRect.Height));
-
-            interior.Bounds = newBounds;
-
-            var rectangles = interior.GetLayoutRectangles(scaleFactor);
-            var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
-
-            control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
+            UpdateBounds(dc.LocalClipBounds);
 
             dc.Clear(control.BackColor);
 

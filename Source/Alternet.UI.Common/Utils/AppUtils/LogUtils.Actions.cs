@@ -120,6 +120,7 @@ namespace Alternet.UI
             Fn("Log SkiaSharp: SKFont", LogUtils.LogSkiaFont);
             Fn("Log SkiaSharp: SKBitmap", LogUtils.LogSkiaBitmap);
             Fn("Log SkiaSharp: Mono fonts", LogUtils.LogSkiaMonoFonts);
+
             Fn("Log image bits formats", LogImageBitsFormats);
             Fn("Log Control descendants events", LogControlDescendantsEvents);
             Fn("Log Control descendants", LogControlDescendants);
@@ -409,6 +410,14 @@ namespace Alternet.UI
             App.LogEmptyLine();
             LogMeasureSkiaFont("Hello", font);
             LogMeasureSkiaFont("xy;", SkiaUtils.DefaultFont);
+            App.LogEmptyLine();
+
+            var canvas1 = GraphicsFactory.GetOrCreateMemoryCanvas(1);
+            var canvas2 = GraphicsFactory.GetOrCreateMemoryCanvas(2);
+
+            var textWidth1 = canvas1.MeasureText("Hello", Control.DefaultFont);
+            var textWidth2 = canvas2.MeasureText("Hello", Control.DefaultFont);
+            App.LogNameValue("Hello width with ScaleFactor 1/2", $"{textWidth1}/{textWidth2}");
 
             App.LogEndSection();
         }
