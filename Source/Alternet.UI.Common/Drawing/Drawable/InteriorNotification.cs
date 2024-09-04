@@ -39,8 +39,7 @@ namespace Alternet.UI
                 return;
             var prefix = isVertical ? "V: " : "H: ";
             var s = $"{prefix}{value}";
-            App.Log(s);
-            LogUtils.LogToFile(s);
+            LogUtils.LogAndToFile(s);
         }
 
         /// <inheritdoc/>

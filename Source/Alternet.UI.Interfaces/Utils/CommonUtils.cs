@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,8 +19,22 @@ namespace Alternet.UI
     public static class CommonUtils
     {
         /// <summary>
+        /// Calls the specified action if condition is <c>true</c>.
+        /// </summary>
+        /// <param name="condition">Condition to check.</param>
+        /// <param name="actionToCall">Action to call.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void CallIf(bool condition, Action actionToCall)
+        {
+            if (condition)
+                actionToCall();
+        }
+
+        /// <summary>
         /// Does nothing.
         /// </summary>
+        [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Nop()
         {
         }
@@ -100,6 +116,7 @@ namespace Alternet.UI
         /// Gets path to the exe file of the application.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAppExePath()
         {
             return System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;

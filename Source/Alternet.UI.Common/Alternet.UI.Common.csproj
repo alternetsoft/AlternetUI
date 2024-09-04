@@ -16,6 +16,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controls\BaseControls\Interfaces\**" />
+    <EmbeddedResource Remove="Controls\BaseControls\Interfaces\**" />
+    <None Remove="Controls\BaseControls\Interfaces\**" />
     <None Remove="Resources\ColorSvg\*.svg" />
     <None Remove="Resources\Png\*.png" />
     <None Remove="Resources\Svg\*.svg" />
@@ -79,10 +82,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:_GenerateResxSource</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controls\BaseControls\Interfaces\" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\SignDll.proj" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,19 @@ namespace Alternet.UI
 #endif
 
             DebugLoading = DebugUtils.IsDebugDefined && false;
+        }
+
+        /// <summary>
+        /// Calls the specified action if condition and <see cref="IsDebugDefined"/> are <c>true</c>.
+        /// </summary>
+        /// <param name="condition">Condition to check.</param>
+        /// <param name="actionToCall">Action to call.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Conditional("DEBUG")]
+        public static void DebugCallIf(bool condition, Action actionToCall)
+        {
+            if (condition)
+                actionToCall();
         }
 
         /// <summary>
