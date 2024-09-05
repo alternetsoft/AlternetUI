@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GenerateBindableSettings>
-	<GenerateBindableSetting>
-		<RootFolder>..\..\..\..\..\..\..\AlternetStudio\Source</RootFolder>
-		<PathToDll>$(RootFolder)\Editor\bin\Debug\net8.0\Alternet.Editor.AlterNetUI.v10.dll</PathToDll>
-		<TypeName>Alternet.Editor.SyntaxEdit</TypeName>
-		<PathToResult>$(RootFolder)\Editor.MAUI\Classes\SyntaxEditMaui.Generated.cs</PathToResult>
-		<ResultTypeName>Alternet.Editor.SyntaxEditMaui</ResultTypeName>
-	</GenerateBindableSetting>
+<GenerateBindableSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Items>
+    <GenerateBindableSetting>
+      <RootFolder>..\..\..\..\..\..\..\AlternetStudio\Source</RootFolder>
+      <PathToDll>$(RootFolder)\Editor\bin\Debug\net8.0\Alternet.Editor.AlterNetUI.v10.dll</PathToDll>
+      <TypeName>Alternet.Editor.SyntaxEdit</TypeName>
+      <PathToResult>$(RootFolder)\Editor.MAUI\Classes\SyntaxEditMaui.Generated.cs</PathToResult>
+      <ResultTypeName>Alternet.Editor.SyntaxEditMaui</ResultTypeName>
+    </GenerateBindableSetting>
+  </Items>
 </GenerateBindableSettings>
