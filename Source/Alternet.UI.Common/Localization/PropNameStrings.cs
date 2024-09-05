@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI.Localization
 {
@@ -46,7 +49,69 @@ namespace Alternet.UI.Localization
         public string Y { get; set; } = "Y";
 
         /// <summary>
+        /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure.
+        /// </summary>
+        /// <remarks>
+        /// Before this call all static classes similar to <see cref="ControlProperties"/> with
+        /// property name localizations should be
+        /// assigned with appropriate localization.
+        /// </remarks>
+        public static void RegisterPropNameLocalizations()
+        {
+            var rootType = typeof(PropNameStrings);
+            var asm = rootType.Assembly;
+            var nestedTypes = rootType.GetNestedTypes();
+
+            foreach(var nestedType in nestedTypes)
+            {
+                var splitted = nestedType.FullName.Split('+');
+                if (splitted.Length < 2)
+                    continue;
+                var suffix = splitted[1];
+                if (!suffix.HasSuffix("Properties"))
+                    continue;
+                suffix = suffix.Remove(suffix.Length - "Properties".Length);
+                var registerForTypeName = $"Alternet.UI.{suffix}";
+
+                var registerForType = asm.GetType(registerForTypeName);
+                if (registerForType is null)
+                    continue;
+                RegisterPropNameLocalizations(registerForType, nestedType);
+            }
+        }
+
+        /// <summary>
+        /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure
+        /// for the specified type using localization container specified in the
+        /// <paramref name="localizations"/> parameter.
+        /// </summary>
+        /// <param name="type">Type for which property name localizations are registered.</param>
+        /// <param name="localizations">Type similar to <see cref="ControlProperties"/> which contains
+        /// static fields with property name localizations.</param>
+        public static void RegisterPropNameLocalizations(Type type, Type localizations)
+        {
+            var fields = localizations.GetFields(BindingFlags.Static | BindingFlags.Public);
+
+            var registry = PropertyGrid.GetTypeRegistry(type);
+
+            foreach (var field in fields)
+            {
+                var name = field.Name;
+                var value = field.GetValue(null);
+
+                if (value is not string str)
+                    continue;
+                if (string.IsNullOrEmpty(str))
+                    continue;
+                var propRegistry = registry.GetPropRegistry(name);
+                var prm = propRegistry.NewItemParams;
+                prm.Label = str;
+            }
+        }
+
+        /// <summary>
         /// Contains localizations for <see cref="Control"/> property names.
+        /// Used by <see cref="RegisterPropNameLocalizations()"/>.
         /// </summary>
         public static class ControlProperties
         {

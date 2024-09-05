@@ -7,6 +7,10 @@
     "ControlsSample": {
       "commandName": "Project",
       "nativeDebugging": true
+    },
+    "UILanguage=ru": {
+      "commandName": "Project",
+      "commandLineArgs": "UILanguage=ru"
     }
   }
 }

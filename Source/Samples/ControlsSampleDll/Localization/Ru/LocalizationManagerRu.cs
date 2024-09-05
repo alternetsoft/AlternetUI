@@ -19,11 +19,11 @@ namespace ControlsSample
             PropNameStrings.ControlProperties.Enabled = "Включено";
             PropNameStrings.ControlProperties.Width = "Ширина";
             PropNameStrings.ControlProperties.Height = "Высота";
-            PropNameStrings.ControlProperties.SuggestedWidth = "Желаемая Ширина";
-            PropNameStrings.ControlProperties.SuggestedHeight = "Желаемая Высота";
-            PropNameStrings.ControlProperties.MinChildMargin = "Мин Отступ Элементов";
-            PropNameStrings.ControlProperties.Margin = "Внешний Отступ";
-            PropNameStrings.ControlProperties.Padding = "Внутренний Отступ";
+            PropNameStrings.ControlProperties.SuggestedWidth = "Желаем Ширина";
+            PropNameStrings.ControlProperties.SuggestedHeight = "Желаем Высота";
+            PropNameStrings.ControlProperties.MinChildMargin = "Мин Отступ Детей";
+            PropNameStrings.ControlProperties.Margin = "Внешн Отступ";
+            PropNameStrings.ControlProperties.Padding = "Внутр Отступ";
             PropNameStrings.ControlProperties.MinWidth = "Мин Ширина";
             PropNameStrings.ControlProperties.MinHeight = "Мин Высота";
             PropNameStrings.ControlProperties.MaxWidth = "Макс Ширина";
@@ -35,8 +35,8 @@ namespace ControlsSample
             PropNameStrings.ControlProperties.ForegroundColor = "Цвет Текста";
             PropNameStrings.ControlProperties.Font = "Шрифт";
             PropNameStrings.ControlProperties.IsBold = "Жирный шрифт";
-            PropNameStrings.ControlProperties.VerticalAlignment = "Вертикальное положение";
-            PropNameStrings.ControlProperties.HorizontalAlignment = "Горизонтальное положение";
+            PropNameStrings.ControlProperties.VerticalAlignment = "Вертик полож";
+            PropNameStrings.ControlProperties.HorizontalAlignment = "Горизонт полож";
         }
 
         public static void InitializeProperties()
@@ -47,6 +47,7 @@ namespace ControlsSample
         public static void Initialize()
         {
             InitializeProperties();
+            PropNameStrings.RegisterPropNameLocalizations();
         }
     }
 }

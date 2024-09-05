@@ -8,6 +8,23 @@ namespace Alternet.UI.Extensions
     public static partial class ExtensionsPrivate
     {
         /// <summary>
+        /// Checks whether string has the specified suffix (position of the <paramref name="suffix"/>
+        /// occurrence is at the end of the string).
+        /// </summary>
+        /// <param name="s">String to check.</param>
+        /// <param name="suffix">Suffix text to use for check.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasSuffix(this string s, string suffix)
+        {
+            var index = s.LastIndexOf(suffix);
+            var okIndex = s.Length - suffix.Length;
+            if (index == okIndex)
+                return true;
+            return false;
+        }
+
+        /// <summary>
         /// Removes underscore characters ('_') from string.
         /// </summary>
         /// <returns></returns>
