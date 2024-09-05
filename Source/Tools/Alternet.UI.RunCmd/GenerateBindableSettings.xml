@@ -5,8 +5,17 @@
       <RootFolder>..\..\..\..\..\..\..\AlternetStudio\Source</RootFolder>
       <PathToDll>$(RootFolder)\Editor\bin\Debug\net8.0\Alternet.Editor.AlterNetUI.v10.dll</PathToDll>
       <TypeName>Alternet.Editor.SyntaxEdit</TypeName>
-      <PathToResult>$(RootFolder)\Editor.MAUI\Classes\SyntaxEditMaui.Generated.cs</PathToResult>
+      <PathToResult>$(RootFolder)\Editor.MAUI\Classes\SyntaxEditMaui.Bindable.Generated.cs</PathToResult>
       <ResultTypeName>Alternet.Editor.SyntaxEditMaui</ResultTypeName>
+      <SubPropertyName>Editor</SubPropertyName>
+    </GenerateBindableSetting>
+    <GenerateBindableSetting>
+      <Ignore>true</Ignore> 
+      <RootFolder>..\..\..\..\..\Alternet.UI.Common</RootFolder>
+      <PathToDll>$(RootFolder)\bin\Debug\netstandard2.0\Alternet.UI.Common.dll</PathToDll>
+      <TypeName>Alternet.UI.Control</TypeName>
+      <PathToResult>e:\Control.Bindable.Generated.cs</PathToResult>
+      <ResultTypeName>Alternet.UI.Control</ResultTypeName>
     </GenerateBindableSetting>
   </Items>
 </GenerateBindableSettings>

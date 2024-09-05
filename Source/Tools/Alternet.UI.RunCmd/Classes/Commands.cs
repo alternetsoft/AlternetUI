@@ -126,6 +126,9 @@ namespace Alternet.UI
 
                 foreach (var item in settings.Items)
                 {
+                    if (item.Ignore ?? false)
+                        continue;
+
                     item.Prepare();
 
                     Console.WriteLine($"======================");
@@ -149,6 +152,8 @@ namespace Alternet.UI
                         Console.WriteLine($"Path not exists: {destFolder}");
                         continue;
                     }
+
+                    item.Execute();
                 }
             }
             catch (Exception e)

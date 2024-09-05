@@ -223,21 +223,23 @@ namespace Alternet.UI
             prefix ??= "(";
             suffix ??= ")";
             separator ??= ", ";
-            string result = string.Empty;
+
+            StringBuilder builder = new();
+
             foreach(var item in items)
             {
-                if (result == string.Empty)
-                    result = $"{prefix}{item}";
+                if (builder.Length == 0)
+                    builder.Append($"{prefix}{item}");
                 else
-                    result += $"{separator}{item}";
+                    builder.Append($"{separator}{item}");
             }
 
-            if (result == string.Empty)
+            if (builder.Length == 0)
                 return $"{prefix}{suffix}";
 
-            result += suffix;
+            builder.Append(suffix);
 
-            return result;
+            return builder.ToString();
         }
 
         /// <summary>
