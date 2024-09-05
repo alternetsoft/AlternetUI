@@ -5,16 +5,16 @@ using System.IO;
 
 Console.WriteLine();
 
+CommandLineArgs.Default.Parse(args);
+
+var commandNames = CommandLineArgs.Default.AsString("-r");
+
 if (CommandLineArgs.Default.HasArgument("-hr"))
 {
     Console.WriteLine("==================================================");
 }
 
 Console.WriteLine("Alternet.UI.RunCmd (c) 2023-2024 AlterNET Software");
-
-CommandLineArgs.Default.Parse(args);
-
-var commandNames = CommandLineArgs.Default.AsString("-r");
 
 Console.WriteLine();
 

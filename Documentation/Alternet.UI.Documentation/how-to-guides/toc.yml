@@ -6,3 +6,5 @@ items:
   href: using-alternet-ui-packages/using-alternet-ui-packages.md
 - name: Using UIXML Previewer
   href: using-uixml-previewer/using-uixml-previewer.md
+- name: Using SkiaSharp
+  href: using-skiasharp/using-skiasharp.md

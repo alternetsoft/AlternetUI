@@ -132,8 +132,13 @@ namespace ControlsSample
 
         private void GenericToSkia()
         {
+            // Creates generic image from the specified url
             GenericImage image = new(backgroundUrl1);
+
+            // Converts created generic image to SKBitmap
             var bitmap = (SKBitmap)image;
+
+            // Converts SKBitmap to Image and assigns it to PictureBox control
             pictureBox.Image = (Image)bitmap;
         }
 

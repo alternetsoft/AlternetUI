@@ -56,9 +56,27 @@ namespace ControlsSample
         }
 
         [STAThread]
-        public static void Main()
+        public static void Main(string[] args)
         {
-            if(DebugUtils.IsDebugDefined)
+            try
+            {
+                CommandLineArgs.Default.Parse(args);
+
+                var uiLanguage = CommandLineArgs.Default.AsString("UILanguage", "en");
+
+                if (uiLanguage != "en")
+                {
+                    if (uiLanguage == "ru")
+                    {
+                        LocalizationManagerRu.Initialize();
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            if (DebugUtils.IsDebugDefined)
                 DebugUtils.DebugLoading = false;
 
             LogSimple("===============================================");

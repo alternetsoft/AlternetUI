@@ -1544,7 +1544,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Getw whether control is performing updates.
+        /// Gets whether control is performing updates.
         /// </summary>
         /// <remarks>
         /// This property is <c>true</c> after call to <see cref="BeginUpdate"/>
@@ -2209,6 +2209,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns this control if it is visible; otherwise returns <c>null</c>.
         /// </summary>
+        [Browsable(false)]
         public Control? OnlyVisible
         {
             get
