@@ -48,6 +48,7 @@ namespace ControlsSample
         {
             InitializeProperties();
             PropNameStrings.RegisterPropNameLocalizations();
+            PropNameStrings.RegisterPropNameLocalizations(typeof(EnumValuesRu));
         }
     }
 }

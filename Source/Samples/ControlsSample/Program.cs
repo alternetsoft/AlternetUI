@@ -58,6 +58,20 @@ namespace ControlsSample
         [STAThread]
         public static void Main(string[] args)
         {
+            if (DebugUtils.IsDebugDefined)
+                DebugUtils.DebugLoading = false;
+
+            LogSimple("===============================================");
+            LogSimple("Alternet.UI ControlsSample application started.");
+
+            LogUtils.ShowDebugWelcomeMessage = true;
+
+            var testBadFont = false;
+
+            var application = new Application();
+
+            LogSimple("Application created.");
+
             try
             {
                 CommandLineArgs.Default.Parse(args);
@@ -75,20 +89,6 @@ namespace ControlsSample
             catch
             {
             }
-
-            if (DebugUtils.IsDebugDefined)
-                DebugUtils.DebugLoading = false;
-
-            LogSimple("===============================================");
-            LogSimple("Alternet.UI ControlsSample application started.");
-
-            LogUtils.ShowDebugWelcomeMessage = true;
-
-            var testBadFont = false;
-
-            var application = new Application();
-
-            LogSimple("Application created.");
 
             application.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
 
