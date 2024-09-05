@@ -3,6 +3,8 @@ using System.ComponentModel;
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -315,6 +317,28 @@ namespace Alternet.UI
         {
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Helper method which allows to draw on <see cref="SKCanvas"/>.
+        /// </summary>
+        /// <param name="action">Draw action with <see cref="SKCanvas"/> and size parameters.</param>
+        /// <param name="backgroundColor">Color to fill bacgkround. Optional.</param>
+        public virtual void Draw(Action<SKCanvas, int, int> action, Color? backgroundColor = null)
+        {
+            RectI rect = (0, 0, PixelFromDip(Width), PixelFromDip(Height));
+
+            SKBitmap bitmap = new(rect.Width, rect.Height);
+
+            SKCanvas canvas = new(bitmap);
+
+            if(backgroundColor is not null)
+                canvas.Clear(backgroundColor);
+
+            action(canvas, rect.Width, rect.Height);
+
+            var image = (Image)bitmap;
+            Image = image;
         }
 
         /// <inheritdoc/>
