@@ -50,23 +50,8 @@ namespace Alternet.UI.Localization
 
         /// <summary>
         /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure.
-        /// Uses nested types of the <see cref="PropNameStrings"/> type similar to
-        /// <see cref="ControlProperties"/> as a source of the localized property names.
-        /// </summary>
-        /// <remarks>
-        /// Before this call all static classes similar to <see cref="ControlProperties"/> with
-        /// property name localizations should be
-        /// assigned with appropriate localization.
-        /// </remarks>
-        public static void RegisterPropNameLocalizations()
-        {
-            RegisterPropNameLocalizations(typeof(PropNameStrings));
-        }
-
-        /// <summary>
-        /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure.
-        /// Uses nested types of the <paramref name="localizationsContainer"/> type similar to
-        /// <see cref="ControlProperties"/> as a source of the localized property names.
+        /// Uses nested types of the <paramref name="localizationsContainer"/> type as
+        /// a source of the localized property names.
         /// </summary>
         /// <remarks>
         /// Before this call all nested static classes of the
@@ -74,9 +59,8 @@ namespace Alternet.UI.Localization
         /// property name localizations should be
         /// assigned with appropriate localization.
         /// </remarks>
-        /// <param name="localizationsContainer">Container of the static classes with property name
-        /// localizations. Each such class should have 'Properties' suffix like
-        /// <see cref="ControlProperties"/> has.</param>
+        /// <param name="localizationsContainer">Container of the nested static classes with property name
+        /// localizations. Each such nested class should have 'Properties' suffix in the class name.</param>
         /// <param name="namespacePrefix">Prefix of the namespace. Optional.
         /// By default equals 'Alternet.UI.'.</param>
         /// <param name="asm">Assembly used to find types by name.</param>
@@ -125,7 +109,7 @@ namespace Alternet.UI.Localization
         /// <paramref name="localizations"/> parameter.
         /// </summary>
         /// <param name="type">Type for which enum values localizations are registered.</param>
-        /// <param name="localizations">Type similar to <see cref="ControlProperties"/> which contains
+        /// <param name="localizations">Type of the class which contains
         /// static fields with enum values localizations.</param>
         public static void RegisterEnumValueLocalizations(Type type, Type localizations)
         {
@@ -160,8 +144,8 @@ namespace Alternet.UI.Localization
         /// <paramref name="localizations"/> parameter.
         /// </summary>
         /// <param name="type">Type for which property name localizations are registered.</param>
-        /// <param name="localizations">Type similar to <see cref="ControlProperties"/> which contains
-        /// static fields with property name localizations.</param>
+        /// <param name="localizations">Type of the class which contains
+        /// static string fields with property name localizations.</param>
         public static void RegisterPropNameLocalizations(Type type, Type localizations)
         {
             var fields = localizations.GetFields(BindingFlags.Static | BindingFlags.Public);
@@ -181,112 +165,6 @@ namespace Alternet.UI.Localization
                 var prm = propRegistry.NewItemParams;
                 prm.Label = str;
             }
-        }
-
-        /// <summary>
-        /// Contains localizations for <see cref="Control"/> property names.
-        /// Used by <see cref="RegisterPropNameLocalizations()"/>.
-        /// </summary>
-        public static class ControlProperties
-        {
-            /// <summary>
-            /// Get or sets default localization for the corresponding property
-            /// of the <see cref="Control"/>.
-            /// </summary>
-            public static string? Layout;
-
-            /// <see cref="Layout"/>
-            public static string? Title;
-
-            /// <see cref="Layout"/>
-            public static string? Dock;
-
-            /// <see cref="Layout"/>
-            public static string? Text;
-
-            /// <see cref="Layout"/>
-            public static string? ToolTip;
-
-            /// <see cref="Layout"/>
-            public static string? Left;
-
-            /// <see cref="Layout"/>
-            public static string? Top;
-
-            /// <see cref="Layout"/>
-            public static string? Visible;
-
-            /// <see cref="Layout"/>
-            public static string? Enabled;
-
-            /// <see cref="Layout"/>
-            public static string? Width;
-
-            /// <see cref="Layout"/>
-            public static string? Height;
-
-            /// <see cref="Layout"/>
-            public static string? SuggestedWidth;
-
-            /// <see cref="Layout"/>
-            public static string? SuggestedHeight;
-
-            /// <see cref="Layout"/>
-            public static string? MinChildMargin;
-
-            /// <see cref="Layout"/>
-            public static string? Margin;
-
-            /// <see cref="Layout"/>
-            public static string? Padding;
-
-            /// <see cref="Layout"/>
-            public static string? MinWidth;
-
-            /// <see cref="Layout"/>
-            public static string? MinHeight;
-
-            /// <see cref="Layout"/>
-            public static string? MaxWidth;
-
-            /// <see cref="Layout"/>
-            public static string? MaxHeight;
-
-            /// <see cref="Layout"/>
-            public static string? BackgroundColor;
-
-            /// <see cref="Layout"/>
-            public static string? ParentBackColor;
-
-            /// <see cref="Layout"/>
-            public static string? ParentForeColor;
-
-            /// <see cref="Layout"/>
-            public static string? ParentFont;
-
-            /// <see cref="Layout"/>
-            public static string? ForegroundColor;
-
-            /// <see cref="Layout"/>
-            public static string? Font;
-
-            /// <see cref="Layout"/>
-            public static string? IsBold;
-
-            /// <see cref="Layout"/>
-            public static string? VerticalAlignment;
-
-            /// <see cref="Layout"/>
-            public static string? HorizontalAlignment;
-
-            /// <see cref="Layout"/>
-            public static string? CanFocus;
-
-            /// <see cref="Layout"/>
-            public static string? TabStop;
-
-            /// <see cref="Layout"/>
-            public static string? CanSelect;
         }
     }
 }
