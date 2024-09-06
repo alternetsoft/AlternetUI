@@ -108,6 +108,8 @@ namespace Alternet.UI
             Console.WriteLine($"Generate Bindable Properties...");
             Console.WriteLine($"Settings: {pathToSettings}");
 
+            DebugUtils.DebugCallIf(false, GenerateBindableSettings.TestSave);
+
             if(!File.Exists(pathToSettings))
             {
                 Console.WriteLine($"Settings file not found");
@@ -153,7 +155,7 @@ namespace Alternet.UI
                         continue;
                     }
 
-                    item.Execute();
+                    item.Execute(settings);
                 }
             }
             catch (Exception e)

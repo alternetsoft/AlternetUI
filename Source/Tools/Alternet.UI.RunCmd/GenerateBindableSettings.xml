@@ -9,6 +9,7 @@
       <ResultTypeName>Alternet.Editor.SyntaxEditMaui</ResultTypeName>
       <SubPropertyName>Editor</SubPropertyName>
     </GenerateBindableSetting>
+
     <GenerateBindableSetting>
       <Ignore>true</Ignore> 
       <RootFolder>..\..\..\..\..\Alternet.UI.Common</RootFolder>
@@ -18,4 +19,72 @@
       <ResultTypeName>Alternet.UI.Control</ResultTypeName>
     </GenerateBindableSetting>
   </Items>
+
+  <TypeAliases>
+    <TypeNameAlias>
+      <TypeName>System.Byte</TypeName>
+      <ChangeTo>byte</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.SByte</TypeName>
+      <ChangeTo>sbyte</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Int16</TypeName>
+      <ChangeTo>short</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.UInt16</TypeName>
+      <ChangeTo>ushort</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Int32</TypeName>
+      <ChangeTo>int</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.UInt32</TypeName>
+      <ChangeTo>uint</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Int64</TypeName>
+      <ChangeTo>long</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.UInt64</TypeName>
+      <ChangeTo>ulong</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.String</TypeName>
+      <ChangeTo>string</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Boolean</TypeName>
+      <ChangeTo>bool</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Double</TypeName>
+      <ChangeTo>double</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Single</TypeName>
+      <ChangeTo>float</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Char</TypeName>
+      <ChangeTo>char</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.Decimal</TypeName>
+      <ChangeTo>decimal</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.IntPtr</TypeName>
+      <ChangeTo>nint</ChangeTo>
+    </TypeNameAlias>
+    <TypeNameAlias>
+      <TypeName>System.UIntPtr</TypeName>
+      <ChangeTo>nuint</ChangeTo>
+    </TypeNameAlias>
+  </TypeAliases>
+
 </GenerateBindableSettings>
