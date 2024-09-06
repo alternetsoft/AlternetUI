@@ -82,6 +82,7 @@ namespace ControlsSample
                 {
                     if (uiLanguage == "ru")
                     {
+                        PropertyGridSample.MainWindow.DoSampleLocalization = false;
                         LocalizationManagerRu.Initialize();
                     }
                 }

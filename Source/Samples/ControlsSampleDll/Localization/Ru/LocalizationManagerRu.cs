@@ -6,7 +6,15 @@ namespace ControlsSample
 {
     public static class LocalizationManagerRu
     {
-        public static void InitializeControlProperties()
+        public static void Initialize()
+        {
+            InitializeControlProperties();
+            PropNameStrings.RegisterPropNameLocalizations();
+            PropNameStrings.RegisterPropNameLocalizations(typeof(EnumValuesRu));
+            PropNameStrings.RegisterPropNameLocalizations(typeof(PropNamesRu));
+        }
+
+        private static void InitializeControlProperties()
         {
             PropNameStrings.ControlProperties.Layout = "Макет";
             PropNameStrings.ControlProperties.Title = "Заголовок";
@@ -19,36 +27,27 @@ namespace ControlsSample
             PropNameStrings.ControlProperties.Enabled = "Включено";
             PropNameStrings.ControlProperties.Width = "Ширина";
             PropNameStrings.ControlProperties.Height = "Высота";
-            PropNameStrings.ControlProperties.SuggestedWidth = "Желаем Ширина";
-            PropNameStrings.ControlProperties.SuggestedHeight = "Желаем Высота";
-            PropNameStrings.ControlProperties.MinChildMargin = "Мин Отступ Детей";
-            PropNameStrings.ControlProperties.Margin = "Внешн Отступ";
-            PropNameStrings.ControlProperties.Padding = "Внутр Отступ";
-            PropNameStrings.ControlProperties.MinWidth = "Мин Ширина";
-            PropNameStrings.ControlProperties.MinHeight = "Мин Высота";
-            PropNameStrings.ControlProperties.MaxWidth = "Макс Ширина";
-            PropNameStrings.ControlProperties.MaxHeight = "Макс Высота";
-            PropNameStrings.ControlProperties.BackgroundColor = "Цвет Фона";
-            PropNameStrings.ControlProperties.ParentBackColor = "Цвет Фона Родителя";
-            PropNameStrings.ControlProperties.ParentForeColor = "Цвет Текста Родителя";
-            PropNameStrings.ControlProperties.ParentFont = "Шрифт Родителя";
-            PropNameStrings.ControlProperties.ForegroundColor = "Цвет Текста";
+            PropNameStrings.ControlProperties.SuggestedWidth = "Желаем ширина";
+            PropNameStrings.ControlProperties.SuggestedHeight = "Желаем высота";
+            PropNameStrings.ControlProperties.MinChildMargin = "Мин отступ детей";
+            PropNameStrings.ControlProperties.Margin = "Внешн отступ";
+            PropNameStrings.ControlProperties.Padding = "Внутр отступ";
+            PropNameStrings.ControlProperties.MinWidth = "Мин ширина";
+            PropNameStrings.ControlProperties.MinHeight = "Мин высота";
+            PropNameStrings.ControlProperties.MaxWidth = "Макс ширина";
+            PropNameStrings.ControlProperties.MaxHeight = "Макс высота";
+            PropNameStrings.ControlProperties.BackgroundColor = "Цвет фона";
+            PropNameStrings.ControlProperties.ParentBackColor = "Цвет фона родителя";
+            PropNameStrings.ControlProperties.ParentForeColor = "Цвет текста родителя";
+            PropNameStrings.ControlProperties.ParentFont = "Шрифт родителя";
+            PropNameStrings.ControlProperties.ForegroundColor = "Цвет текста";
             PropNameStrings.ControlProperties.Font = "Шрифт";
             PropNameStrings.ControlProperties.IsBold = "Жирный шрифт";
             PropNameStrings.ControlProperties.VerticalAlignment = "Вертик полож";
             PropNameStrings.ControlProperties.HorizontalAlignment = "Горизонт полож";
-        }
-
-        public static void InitializeProperties()
-        {
-            InitializeControlProperties();
-        }
-
-        public static void Initialize()
-        {
-            InitializeProperties();
-            PropNameStrings.RegisterPropNameLocalizations();
-            PropNameStrings.RegisterPropNameLocalizations(typeof(EnumValuesRu));
-        }
+            PropNameStrings.ControlProperties.CanFocus = "Могу фокус";
+            PropNameStrings.ControlProperties.TabStop = "Таб остановка";
+            PropNameStrings.ControlProperties.CanSelect = "Могу выбрать";
+        }        
     }
 }

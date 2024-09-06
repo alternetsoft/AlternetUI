@@ -278,6 +278,15 @@ namespace Alternet.UI.Localization
 
             /// <see cref="Layout"/>
             public static string? HorizontalAlignment;
+
+            /// <see cref="Layout"/>
+            public static string? CanFocus;
+
+            /// <see cref="Layout"/>
+            public static string? TabStop;
+
+            /// <see cref="Layout"/>
+            public static string? CanSelect;
         }
     }
 }
