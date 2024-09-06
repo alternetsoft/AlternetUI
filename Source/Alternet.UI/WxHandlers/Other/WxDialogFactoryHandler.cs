@@ -79,10 +79,7 @@ namespace Alternet.UI
             string message,
             string caption,
             string defaultValue,
-            Control? parent,
-            int x,
-            int y,
-            bool centre)
+            Control? parent)
         {
             var handle = WxApplicationHandler.WxWidget(parent);
             var result = Native.WxOtherFactory.GetTextFromUser(
@@ -90,9 +87,9 @@ namespace Alternet.UI
                 caption,
                 defaultValue,
                 handle,
-                x,
-                y,
-                centre);
+                -1,
+                -1,
+                true);
             if (result == DialogCancelGuid)
                 return null;
             return result;
@@ -124,7 +121,6 @@ namespace Alternet.UI
         /// <param name="min">A positive minimal value. Optional. Default is 0.</param>
         /// <param name="max">A positive maximal value. Optional. Default is 100.</param>
         /// <param name="parent">Dialog parent.</param>
-        /// <param name="pos"></param>
         public long? GetNumberFromUser(
             string message,
             string prompt,
@@ -132,8 +128,7 @@ namespace Alternet.UI
             long value,
             long min,
             long max,
-            Control? parent,
-            PointI pos)
+            Control? parent)
         {
             var handle = WxApplicationHandler.WxWidget(parent);
             var result = Native.WxOtherFactory.GetNumberFromUser(
@@ -144,7 +139,7 @@ namespace Alternet.UI
                 min,
                 max,
                 handle,
-                pos);
+                (-1,-1));
             if (result < 0)
                 return null;
             return result;

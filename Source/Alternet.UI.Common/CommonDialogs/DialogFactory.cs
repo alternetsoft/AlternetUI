@@ -177,7 +177,6 @@ namespace Alternet.UI
         /// <param name="min">A positive minimal value. Optional. Default is 0.</param>
         /// <param name="max">A positive maximal value. Optional. Default is 100.</param>
         /// <param name="parent">Dialog parent.</param>
-        /// <param name="pos"></param>
         public static long? GetNumberFromUser(
             string? message,
             string? prompt = null,
@@ -185,13 +184,11 @@ namespace Alternet.UI
             long value = 0,
             long min = 0,
             long max = 100,
-            Control? parent = null,
-            PointI? pos = default)
+            Control? parent = null)
         {
             message ??= string.Empty;
             prompt ??= string.Empty;
             caption ??= CommonStrings.Default.WindowTitleInput;
-            pos ??= PointI.MinusOne;
 
             return Handler.GetNumberFromUser(
                 message,
@@ -200,8 +197,7 @@ namespace Alternet.UI
                 value,
                 min,
                 max,
-                parent,
-                pos.Value);
+                parent);
         }
 
         /// <summary>
@@ -214,18 +210,11 @@ namespace Alternet.UI
         /// <param name="caption">Dialog title.</param>
         /// <param name="defaultValue">Default value. Optional.</param>
         /// <param name="parent">Parent control. Optional.</param>
-        /// <param name="x">X-position on the screen. Optional. By default is -1.</param>
-        /// <param name="y">Y-position on the screen. Optional. By default is -1.</param>
-        /// <param name="centre">If <c>true</c>, the message text (which may include new line
-        /// characters) is centred; if <c>false</c>, the message is left-justified.</param>
         public static string? GetTextFromUser(
             string? message,
             string? caption,
             string? defaultValue = null,
-            Control? parent = null,
-            int x = -1,
-            int y = -1,
-            bool centre = true)
+            Control? parent = null)
         {
             defaultValue ??= string.Empty;
             message ??= string.Empty;
@@ -235,10 +224,7 @@ namespace Alternet.UI
                 message,
                 caption,
                 defaultValue,
-                parent,
-                x,
-                y,
-                centre);
+                parent);
             return result;
         }
 
