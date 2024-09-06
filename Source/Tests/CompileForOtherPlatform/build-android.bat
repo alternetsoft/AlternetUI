@@ -1,0 +1,1 @@
+dotnet build --runtime android-arm64
