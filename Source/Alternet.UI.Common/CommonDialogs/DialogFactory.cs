@@ -157,8 +157,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The dialogs title is set to <paramref name="caption"/>, it contains a (possibly) multiline
         /// <paramref name="message"/> above the single line prompt and the zone for entering
-        /// the number. Dialog is centered on its parent unless an explicit position is given
-        /// in <paramref name="pos"/>.
+        /// the number. Dialog is centered on its parent.
         /// </remarks>
         /// <remarks>
         /// If the user cancels the dialog, the function returns <c>null</c>.

@@ -68,13 +68,6 @@ namespace Alternet.UI
                 return false;
             }
 
-            var props = type.GetProperties(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-
-            Console.WriteLine();
-            Console.WriteLine("Properties:");
-            Console.WriteLine();
-
             List<string> generatedFile = new();
 
             var lastPointPos = ResultTypeName.LastIndexOf('.');
@@ -86,42 +79,61 @@ namespace Alternet.UI
             var resultTypeNameOnly = ResultTypeName.Substring(lastPointPos + 1);
 
             generatedFile.Add(HeaderText);
+            /* generatedFile.Add("#pragma warning disable"); */
             generatedFile.Add($"namespace {resultNamespace}");
             generatedFile.Add("{");
 
             generatedFile.Add($"{indent}public partial class {resultTypeNameOnly}");
             generatedFile.Add($"{indent}{{");
 
-            foreach (var prop in props)
+
+            void GenerateProperties()
             {
-                var canWrite = prop.CanWrite ? $"set => {SubPropertyName}.{prop.Name} = value; " : string.Empty;
-                var canRead = prop.CanRead ? $"get => {SubPropertyName}.{prop.Name}; " : string.Empty;
-                var propType = ChangeAliasedType(prop.PropertyType.FullName);
-                if (propType is null)
-                    continue;
-                if (!TypeNameIsValid(propType))
+                var props = type.GetProperties(
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+                Console.WriteLine();
+                Console.WriteLine("Properties:");
+                Console.WriteLine();
+
+                foreach (var prop in props)
                 {
-                    Console.WriteLine($"Property '{prop.Name}' has unsupported type: {propType}");
-                    continue;
+                    var canWrite = prop.CanWrite
+                        ? $"set => {SubPropertyName}.{prop.Name} = value; " : string.Empty;
+                    var canRead = prop.CanRead
+                        ? $"get => {SubPropertyName}.{prop.Name}; " : string.Empty;
+                    var propType = ChangeAliasedType(prop.PropertyType);
+                    if (propType is null)
+                        continue;
+                    if (!TypeNameIsValid(propType.TrimEnd('[', ']', ',')))
+                    {
+                        Console.WriteLine($"Property '{prop.Name}' has unsupported type: {propType}");
+                        continue;
+                    }
+
+                    var realType = AssemblyUtils.GetRealType(prop.PropertyType);
+                    var typeCode = Type.GetTypeCode(realType);
+
+                    /*
+                    if (typeCode == TypeCode.Object || !realType.IsValueType)
+                        continue;
+                    */
+
+                    var inheritDocDecl
+                        = $"{indent}{indent}/// <inheritdoc cref=\"{TypeName}.{prop.Name}\"/>";
+
+                    var generatedDecl
+                        = $"{indent}{indent}public {propType} {prop.Name} {{ {canRead}{canWrite}}}";
+
+                    Console.WriteLine(generatedDecl);
+                    generatedFile.Add(inheritDocDecl);
+                    generatedFile.Add(generatedDecl);
+                    generatedFile.Add(string.Empty);
                 }
-
-                var realType = AssemblyUtils.GetRealType(prop.PropertyType);
-                var typeCode = Type.GetTypeCode(realType);
-
-                /*
-                if (typeCode == TypeCode.Object || !realType.IsValueType)
-                    continue;
-                */
-
-                var inheritDocDecl = $"{indent}{indent}/// <inheritdoc cref=\"{TypeName}.{prop.Name}\"/>";
-
-                var generatedDecl = $"{indent}{indent}public {propType} {prop.Name} {{ {canRead}{canWrite}}}";
-
-                Console.WriteLine(generatedDecl);
-                generatedFile.Add(inheritDocDecl);
-                generatedFile.Add(generatedDecl);
-                generatedFile.Add(string.Empty);
             }
+
+            GenerateProperties();
+            GenerateEvents();
 
             generatedFile.Add($"{indent}}}");
             generatedFile.Add("}");
@@ -141,6 +153,9 @@ namespace Alternet.UI
             stream.Flush();
             stream.Close();
 
+            Console.WriteLine();
+            Console.WriteLine();
+
             return true;
 
             bool TypeNameIsValid(string? typeNameToCheck)
@@ -148,20 +163,52 @@ namespace Alternet.UI
                 return StringUtils.HasOnlyValidChars(typeNameToCheck, StringUtils.IsEnglishCharOrDot);
             }
 
-            string? ChangeAliasedType(string? typeNameToChange)
+            string? ChangeAliasedType(Type? type)
             {
-                /*
-                if (typeNameToChange?.HasSuffix("[]") ?? false)
-                    typeNameToChange = typeNameToChange.TrimEnd('[', ']');
-                */
+                var t = type?.FullName;
+
+                if (t is null)
+                    return null;
+
+                if (type?.IsArray ?? false)
+                    return t;
 
                 foreach (var item in globals.TypeAliases)
                 {
-                    if (item.TypeName == typeNameToChange)
+                    if (item.TypeName == t)
+                    {
                         return item.ChangeTo;
+                    }
                 }
 
-                return typeNameToChange;
+                return t;
+            }
+
+            void GenerateEvents()
+            {
+                var events = type.GetEvents(
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+                Console.WriteLine();
+                Console.WriteLine("Events:");
+                Console.WriteLine();
+
+                foreach (var ev in events)
+                {
+                    var evText = ev.ToString();
+
+                    var handlerTypeName = ev.EventHandlerType?.ToString();
+
+                    if (handlerTypeName is null)
+                        continue;
+                    if(!TypeNameIsValid(handlerTypeName))
+                    {
+                        Console.WriteLine($"Event '{ev.Name}' has unsupported type: {handlerTypeName}");
+                        continue;
+                    }
+
+                    Console.WriteLine($"public event {handlerTypeName}? {ev.Name};");
+                }
             }
         }
 
