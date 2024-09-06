@@ -70,6 +70,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets parent <see cref="Microsoft.Maui.Controls.Page"/> for the specified control.
+        /// If control is not attached to the parent, this function returns main page.
+        /// </summary>
+        /// <param name="control">Control for which to get the parent page.</param>
+        /// <returns></returns>
+        public static Microsoft.Maui.Controls.Page? GetParentPage(Control? control)
+        {
+            var mainPage = Microsoft.Maui.Controls.Application.Current?.MainPage;
+
+            if (control is null)
+                return mainPage;
+            else
+            {
+                var handler = control.Handler as MauiControlHandler;
+                var container = handler?.Container;
+                var window = container?.Window;
+                var page = window?.Page;
+                return page ?? mainPage;
+            }
+        }
+
+        /// <summary>
         /// Converts screen coordinates to client coordinates.
         /// </summary>
         /// <param name="position">Point in screen coordinates.</param>

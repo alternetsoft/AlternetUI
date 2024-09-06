@@ -71,10 +71,6 @@ namespace Alternet.UI
         /// <param name="caption">Dialog title.</param>
         /// <param name="defaultValue">Default value. Optional.</param>
         /// <param name="parent">Parent control. Optional.</param>
-        /// <param name="x">X-position on the screen. Optional. By default is -1.</param>
-        /// <param name="y">Y-position on the screen. Optional. By default is -1.</param>
-        /// <param name="centre">If <c>true</c>, the message text (which may include new line
-        /// characters) is centred; if <c>false</c>, the message is left-justified.</param>
         public string? GetTextFromUser(
             string message,
             string caption,
@@ -101,8 +97,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The dialogs title is set to <paramref name="caption"/>, it contains a (possibly) multiline
         /// <paramref name="message"/> above the single line prompt and the zone for entering
-        /// the number. Dialog is centered on its parent unless an explicit position is given
-        /// in <paramref name="pos"/>.
+        /// the number. Dialog is centered on its parent.
         /// </remarks>
         /// <remarks>
         /// If the user cancels the dialog, the function returns <c>null</c>.
