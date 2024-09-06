@@ -220,7 +220,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         IDialogFactoryHandler IApplicationHandler.CreateDialogFactoryHandler()
         {
-            throw new NotImplementedException();
+            return new MauiDialogFactoryHandler();
         }
 
         /// <inheritdoc/>
