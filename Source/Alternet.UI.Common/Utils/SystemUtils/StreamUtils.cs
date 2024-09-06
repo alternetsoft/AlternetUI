@@ -38,6 +38,7 @@ namespace Alternet.UI
         {
             var writer = new StreamWriter(stream, Encoding.UTF8);
             writer.Write(s);
+            writer.Flush();
         }
 
         /// <summary>

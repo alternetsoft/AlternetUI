@@ -56,10 +56,7 @@ namespace Alternet.UI
             string message,
             string caption,
             string defaultValue,
-            Control? parent,
-            int x,
-            int y,
-            bool centre);
+            Control? parent);
 
         /// <inheritdoc cref="DialogFactory.GetNumberFromUser"/>
         long? GetNumberFromUser(
@@ -69,7 +66,6 @@ namespace Alternet.UI
             long value,
             long min,
             long max,
-            Control? parent,
-            PointI pos);
+            Control? parent);
     }
 }

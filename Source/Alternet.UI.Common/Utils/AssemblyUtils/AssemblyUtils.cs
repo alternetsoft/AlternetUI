@@ -17,6 +17,16 @@ namespace Alternet.UI
     /// </summary>
     public static partial class AssemblyUtils
     {
+        /// <summary>
+        /// Gets 'Alternet.UI.Common' assembly.
+        /// </summary>
+        public static readonly Assembly AssemblyCommon = typeof(Control).Assembly;
+
+        /// <summary>
+        /// Gets 'Alternet.UI.Interfaces' assembly.
+        /// </summary>
+        public static readonly Assembly AssemblyInterfaces = typeof(DockStyle).Assembly;
+
         private static AdvDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
         private static SortedList<string, EventInfo>? allControlEvents;

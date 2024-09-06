@@ -58,24 +58,6 @@ namespace ControlsSample
         [STAThread]
         public static void Main(string[] args)
         {
-            try
-            {
-                CommandLineArgs.Default.Parse(args);
-
-                var uiLanguage = CommandLineArgs.Default.AsString("UILanguage", "en");
-
-                if (uiLanguage != "en")
-                {
-                    if (uiLanguage == "ru")
-                    {
-                        LocalizationManagerRu.Initialize();
-                    }
-                }
-            }
-            catch
-            {
-            }
-
             if (DebugUtils.IsDebugDefined)
                 DebugUtils.DebugLoading = false;
 
@@ -89,6 +71,25 @@ namespace ControlsSample
             var application = new Application();
 
             LogSimple("Application created.");
+
+            try
+            {
+                CommandLineArgs.Default.Parse(args);
+
+                var uiLanguage = CommandLineArgs.Default.AsString("UILanguage", "en");
+
+                if (uiLanguage != "en")
+                {
+                    if (uiLanguage == "ru")
+                    {
+                        PropertyGridSample.MainWindow.DoSampleLocalization = false;
+                        LocalizationManagerRu.Initialize();
+                    }
+                }
+            }
+            catch
+            {
+            }
 
             application.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
 

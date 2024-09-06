@@ -100,6 +100,72 @@ namespace Alternet.UI
             }
         }
 
+        public static void CmdGenerateBindable(CommandLineArgs args)
+        {
+            string pathToSettings = args.AsString("Settings");
+            pathToSettings = Path.GetFullPath(pathToSettings);
+
+            Console.WriteLine($"Generate Bindable Properties...");
+            Console.WriteLine($"Settings: {pathToSettings}");
+
+            DebugUtils.DebugCallIf(false, GenerateBindableSettings.TestSave);
+
+            if(!File.Exists(pathToSettings))
+            {
+                Console.WriteLine($"Settings file not found");
+                return;
+            }
+
+            try
+            {
+                var settings = XmlUtils.DeserializeFromFile<GenerateBindableSettings>(pathToSettings);
+
+                if (settings is null)
+                {
+                    Console.WriteLine($"Settings file reading error");
+                    return;
+                }
+
+                foreach (var item in settings.Items)
+                {
+                    if (item.Ignore ?? false)
+                        continue;
+
+                    item.Prepare();
+
+                    Console.WriteLine($"======================");
+
+                    Console.WriteLine($"RootFolder: {item.RootFolder}");
+                    Console.WriteLine($"PathToDll: {item.PathToDll}");
+                    Console.WriteLine($"TypeName: {item.TypeName}");
+                    Console.WriteLine($"PathToResult: {item.PathToResult}");
+                    Console.WriteLine($"ResultTypeName: {item.ResultTypeName}");
+
+                    if (!File.Exists(item.PathToDll))
+                    {
+                        Console.WriteLine($"File not exists: {item.PathToDll}");
+                        continue;
+                    }
+
+                    var destFolder = Path.GetDirectoryName(item.PathToResult);
+
+                    if (!Path.Exists(destFolder))
+                    {
+                        Console.WriteLine($"Path not exists: {destFolder}");
+                        continue;
+                    }
+
+                    item.Execute(settings);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error generating bindable properties");
+                Console.WriteLine($"Error info logged to file");
+                LogUtils.LogExceptionToFile(e);
+            }
+        }
+
         public static void CmdDeleteFilesByMasks(CommandLineArgs args)
         {
             string path = args.AsString("Path");
@@ -256,6 +322,11 @@ namespace Alternet.UI
                 "deleteBinFolders",
                 CmdDeleteBinFolders,
                 "");
+
+            RegisterCommand(
+                "generateBindable",
+                CmdGenerateBindable,
+                "-r=generateBindable Settings=\"E:\\GenerateBindableSettings.xml\"");
 
             RegisterCommand(
                 "deleteBinObjSubFolders",

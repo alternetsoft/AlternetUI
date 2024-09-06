@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI.Localization
 {
@@ -46,99 +49,122 @@ namespace Alternet.UI.Localization
         public string Y { get; set; } = "Y";
 
         /// <summary>
-        /// Contains localizations for <see cref="Control"/> property names.
+        /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure.
+        /// Uses nested types of the <paramref name="localizationsContainer"/> type as
+        /// a source of the localized property names.
         /// </summary>
-        public static class ControlProperties
+        /// <remarks>
+        /// Before this call all nested static classes of the
+        /// <paramref name="localizationsContainer"/> type which contain
+        /// property name localizations should be
+        /// assigned with appropriate localization.
+        /// </remarks>
+        /// <param name="localizationsContainer">Container of the nested static classes with property name
+        /// localizations. Each such nested class should have 'Properties' suffix in the class name.</param>
+        /// <param name="namespacePrefix">Prefix of the namespace. Optional.
+        /// By default equals 'Alternet.UI.'.</param>
+        /// <param name="asm">Assembly used to find types by name.</param>
+        public static void RegisterPropNameLocalizations(
+            Type localizationsContainer,
+            Assembly? asm = null,
+            string namespacePrefix = "Alternet.UI.")
         {
-            /// <summary>
-            /// Get or sets default localization for the corresponding property
-            /// of the <see cref="Control"/>.
-            /// </summary>
-            public static string? Layout;
+            var nestedTypes = localizationsContainer.GetNestedTypes();
 
-            /// <see cref="Layout"/>
-            public static string? Title;
+            foreach(var nestedType in nestedTypes)
+            {
+                var splitted = nestedType.FullName.Split('+');
+                if (splitted.Length < 2)
+                    continue;
+                var suffix = splitted[1];
+                if (!suffix.HasSuffix("Properties"))
+                    continue;
+                suffix = suffix.Remove(suffix.Length - "Properties".Length);
+                var registerForTypeName = $"{namespacePrefix}{suffix}";
 
-            /// <see cref="Layout"/>
-            public static string? Dock;
+                var registerForType
+                    = Resolve(asm, registerForTypeName)
+                    ?? Resolve(AssemblyUtils.AssemblyInterfaces, registerForTypeName)
+                    ?? Resolve(AssemblyUtils.AssemblyCommon, registerForTypeName);
 
-            /// <see cref="Layout"/>
-            public static string? Text;
+                if (registerForType is null)
+                    continue;
 
-            /// <see cref="Layout"/>
-            public static string? ToolTip;
+                var realType = AssemblyUtils.GetRealType(registerForType);
+                if (realType.IsEnum)
+                    RegisterEnumValueLocalizations(realType, nestedType);
+                else
+                    RegisterPropNameLocalizations(registerForType, nestedType);
+            }
 
-            /// <see cref="Layout"/>
-            public static string? Left;
+            Type? Resolve(Assembly? asmToResolve, string typeName)
+            {
+                return asmToResolve?.GetType(typeName);
+            }
+        }
 
-            /// <see cref="Layout"/>
-            public static string? Top;
+        /// <summary>
+        /// Registers enum values localizations in the <see cref="PropertyGrid"/> infrastructure
+        /// for the specified type using localization container specified in the
+        /// <paramref name="localizations"/> parameter.
+        /// </summary>
+        /// <param name="type">Type for which enum values localizations are registered.</param>
+        /// <param name="localizations">Type of the class which contains
+        /// static fields with enum values localizations.</param>
+        public static void RegisterEnumValueLocalizations(Type type, Type localizations)
+        {
+            if (!type.IsEnum)
+                return;
 
-            /// <see cref="Layout"/>
-            public static string? Visible;
+            var fields = localizations.GetFields(BindingFlags.Static | BindingFlags.Public);
+            var choices = PropertyGrid.CreateChoicesOnce(type);
 
-            /// <see cref="Layout"/>
-            public static string? Enabled;
+            foreach (var field in fields)
+            {
+                var name = field.Name;
+                var value = field.GetValue(null);
 
-            /// <see cref="Layout"/>
-            public static string? Width;
+                if (value is not string str)
+                    continue;
+                if (string.IsNullOrEmpty(str))
+                    continue;
 
-            /// <see cref="Layout"/>
-            public static string? Height;
+                var parsedName = Enum.Parse(type, name);
 
-            /// <see cref="Layout"/>
-            public static string? SuggestedWidth;
+                if (parsedName is null)
+                    continue;
 
-            /// <see cref="Layout"/>
-            public static string? SuggestedHeight;
+                choices.SetLabelForValue(Convert.ToInt32(parsedName), str);
+            }
+        }
 
-            /// <see cref="Layout"/>
-            public static string? MinChildMargin;
+        /// <summary>
+        /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure
+        /// for the specified type using localization container specified in the
+        /// <paramref name="localizations"/> parameter.
+        /// </summary>
+        /// <param name="type">Type for which property name localizations are registered.</param>
+        /// <param name="localizations">Type of the class which contains
+        /// static string fields with property name localizations.</param>
+        public static void RegisterPropNameLocalizations(Type type, Type localizations)
+        {
+            var fields = localizations.GetFields(BindingFlags.Static | BindingFlags.Public);
 
-            /// <see cref="Layout"/>
-            public static string? Margin;
+            var registry = PropertyGrid.GetTypeRegistry(type);
 
-            /// <see cref="Layout"/>
-            public static string? Padding;
+            foreach (var field in fields)
+            {
+                var name = field.Name;
+                var value = field.GetValue(null);
 
-            /// <see cref="Layout"/>
-            public static string? MinWidth;
-
-            /// <see cref="Layout"/>
-            public static string? MinHeight;
-
-            /// <see cref="Layout"/>
-            public static string? MaxWidth;
-
-            /// <see cref="Layout"/>
-            public static string? MaxHeight;
-
-            /// <see cref="Layout"/>
-            public static string? BackgroundColor;
-
-            /// <see cref="Layout"/>
-            public static string? ParentBackColor;
-
-            /// <see cref="Layout"/>
-            public static string? ParentForeColor;
-
-            /// <see cref="Layout"/>
-            public static string? ParentFont;
-
-            /// <see cref="Layout"/>
-            public static string? ForegroundColor;
-
-            /// <see cref="Layout"/>
-            public static string? Font;
-
-            /// <see cref="Layout"/>
-            public static string? IsBold;
-
-            /// <see cref="Layout"/>
-            public static string? VerticalAlignment;
-
-            /// <see cref="Layout"/>
-            public static string? HorizontalAlignment;
+                if (value is not string str)
+                    continue;
+                if (string.IsNullOrEmpty(str))
+                    continue;
+                var propRegistry = registry.GetPropRegistry(name);
+                var prm = propRegistry.NewItemParams;
+                prm.Label = str;
+            }
         }
     }
 }

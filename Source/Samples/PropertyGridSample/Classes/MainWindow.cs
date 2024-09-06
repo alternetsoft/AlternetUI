@@ -14,6 +14,8 @@ namespace PropertyGridSample
 {
     public partial class MainWindow : Window
     {
+        public static bool DoSampleLocalization = true;
+
         internal readonly SplittedControlsPanel panel = new();
 
         private readonly Control controlPanel = new()
@@ -42,14 +44,16 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
-            InitSampleLocalization();
-
             // Registers known collection property editors.
             PropertyGrid.RegisterCollectionEditors();
         }
 
         private static void InitSampleLocalization()
         {
+            if (!DoSampleLocalization)
+                return;
+            DoSampleLocalization = false;
+
             // Sample localization of "Custom" color item (which calls color dialog)
             KnownColorStrings.Default.Custom = "Custom...";
 
@@ -85,6 +89,8 @@ namespace PropertyGridSample
 
         public MainWindow()
         {
+            InitSampleLocalization();
+
             DoInsideLayout(Fn);
             panel.PropGrid.SuggestedInitDefaults();
 

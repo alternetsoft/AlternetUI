@@ -51,7 +51,6 @@ namespace Alternet.UI
         private int columnIndex;
         private int columnSpan = 1;
         private int rowSpan = 1;
-        private ISite? site;
         private bool isMouseLeftButtonDown;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
@@ -869,24 +868,6 @@ namespace Alternet.UI
 
                 return null;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the object that contains data about the control.
-        /// </summary>
-        /// <value>An <see cref="object"/> that contains data about the control.
-        /// The default is <c>null</c>.</value>
-        /// <remarks>
-        /// Any type derived from the <see cref="object"/> class can be assigned
-        /// to this property.
-        /// A common use for the <see cref="Tag"/> property is to store data that
-        /// is closely associated with the control.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual object? Tag
-        {
-            get;
-            set;
         }
 
         /// <summary>
@@ -2412,19 +2393,6 @@ namespace Alternet.UI
                     return;
                 Handler.LangDirection = value;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets the site of the control.
-        /// </summary>
-        /// <returns>The <see cref="System.ComponentModel.ISite" /> associated
-        /// with the <see cref="Control" />, if any.</returns>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        [Browsable(false)]
-        public virtual ISite? Site
-        {
-            get => site;
-            set => site = value;
         }
 
         /// <summary>

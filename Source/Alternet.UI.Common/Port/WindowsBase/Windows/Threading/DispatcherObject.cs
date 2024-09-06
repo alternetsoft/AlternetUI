@@ -21,7 +21,7 @@ namespace Alternet.UI.Port
     ///     DispatcherObject cannot be independently instantiated; that is,
     ///     all constructors are protected.
     /// </remarks>
-    public abstract class DispatcherObject : DisposableObject
+    public abstract class DispatcherObject : BaseComponent
     {
         private Dispatcher _dispatcher;
         private static Dispatcher _sentinelDispatcher;

@@ -14,7 +14,7 @@ namespace PropertyGridSample
     {
         public static readonly List<Type> LimitedTypesStatic = new();
 
-        private List<Type> LimitedTypes = new();
+        private readonly List<Type> LimitedTypes = new();
 
         private T? GetSelectedControl<T>()
         {

@@ -81,15 +81,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the identifying name of the control.
-        /// The name provides a reference so that code-behind, such as event handler code,
-        /// can refer to a markup control after it is constructed during processing by a
-        /// UIXML processor.
-        /// </summary>
-        /// <value>The name of the control. The default is <c>null</c>.</value>
-        public string? Name { get; set; }
-
-        /// <summary>
         ///     DataContext Property
         /// </summary>
         [Browsable(false)]
