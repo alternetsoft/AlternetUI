@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Alternet.Drawing;
@@ -106,7 +107,8 @@ namespace Alternet.UI
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
-        public static bool LessThan(double value1, double value2)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool LessThanAndNotClose(double value1, double value2)
         {
             return (value1 < value2) && !AreClose(value1, value2);
         }
@@ -127,7 +129,8 @@ namespace Alternet.UI
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
-        public static bool GreaterThan(double value1, double value2)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GreaterThanAndNotClose(double value1, double value2)
         {
             return (value1 > value2) && !AreClose(value1, value2);
         }
@@ -148,6 +151,7 @@ namespace Alternet.UI
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool LessThanOrClose(double value1, double value2)
         {
             return (value1 < value2) || AreClose(value1, value2);
@@ -200,9 +204,6 @@ namespace Alternet.UI
             return Math.Abs(value) < 10.0 * DoubleEpsilon;
         }
 
-        // The Point, Size, Rect and Matrix class have moved to WinCorLib.  However, we provide
-        // internal AreClose methods for our own use here.
-
         /// <summary>
         /// Compares two Size instances for fuzzy equality.  This function
         /// helps compensate for the fact that double values can
@@ -220,7 +221,7 @@ namespace Alternet.UI
         /// <summary>
         ///
         /// </summary>
-        /// <param name="val"></param>
+        /// <param name="val">Value to convert.</param>
         /// <returns></returns>
         public static int DoubleToInt(double val)
         {
@@ -234,10 +235,12 @@ namespace Alternet.UI
         /// <returns></returns>
         public static bool IsNaN(double value)
         {
-            // The standard CLR double.IsNaN() function is approximately 100 times slower than our own wrapper,
+            // The standard CLR double.IsNaN() function is approximately 100 times slower
+            // than our own wrapper,
             // so please make sure to use DoubleUtil.IsNaN() in performance sensitive code.
             // PS item that tracks the CLR improvement is DevDiv Schedule : 26916.
-            // IEEE 754 : If the argument is any value in the range 0x7ff0000000000001L through 0x7fffffffffffffffL
+            // IEEE 754 : If the argument is any value in
+            // the range 0x7ff0000000000001L through 0x7fffffffffffffffL
             // or in the range 0xfff0000000000001L through 0xffffffffffffffffL, the result will be NaN.
             NanUnion t = new();
             t.DoubleValue = value;
