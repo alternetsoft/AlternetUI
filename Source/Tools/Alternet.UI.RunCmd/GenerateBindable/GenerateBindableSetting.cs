@@ -50,7 +50,8 @@ namespace Alternet.UI
 
         public bool Execute(GenerateBindableSettings globals)
         {
-            if (PathToDll is null || TypeName is null || PathToResult is null || ResultTypeName is null)
+            if (PathToDll is null || TypeName is null || PathToResult is null
+                || ResultTypeName is null || SubPropertyName is null)
                 return false;
 
             var indent = "    ";
@@ -76,6 +77,7 @@ namespace Alternet.UI
             List<string> errors = new();
             List<string> internals = new();
             List<string> protecteds = new();
+            List<string> privates = new();
 
             var lastPointPos = ResultTypeName.LastIndexOf('.');
 
@@ -97,54 +99,14 @@ namespace Alternet.UI
             generatedFile.Add($"{indent}public partial class {resultTypeNameOnly}");
             generatedFile.Add($"{indent}{{");
 
-            void GenerateProperties(bool first)
-            {
-                var props = type.GetProperties(
-                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-
-                Console.WriteLine();
-                Console.WriteLine("Properties:");
-                Console.WriteLine();
-
-                foreach (var prop in props)
-                {
-                    var canWrite = prop.CanWrite
-                        ? $"set => {SubPropertyName}.{prop.Name} = value; " : string.Empty;
-                    var canRead = prop.CanRead
-                        ? $"get => {SubPropertyName}.{prop.Name}; " : string.Empty;
-                    var propType = ChangeAliasedType(prop.PropertyType);
-                    if (propType is null)
-                        continue;
-                    if (!TypeNameIsValid(propType.TrimEnd('[', ']', ',')))
-                    {
-                        errors.Add($"Property '{prop.Name}' has unsupported type: {propType}");
-                        continue;
-                    }
-
-                    var realType = AssemblyUtils.GetRealType(prop.PropertyType);
-                    var typeCode = Type.GetTypeCode(realType);
-
-                    var inheritDocDecl
-                        = $"{indent2}/// <inheritdoc cref=\"{TypeName}.{prop.Name}\"/>";
-
-                    var generatedDecl
-                        = $"{indent2}public {propType} {prop.Name} {{ {canRead}{canWrite}}}";
-
-                    Console.WriteLine(generatedDecl);
-                    if (first)
-                        first = false;
-                    else
-                        generatedFile.Add(string.Empty);
-                    generatedFile.Add(inheritDocDecl);
-                    generatedFile.Add(generatedDecl);
-                }
-            }
-
             GenerateEvents(true);
             GenerateProperties(false);
+            GenerateBindEventsCall();
+            GenerateUnbindEventsCall();
 
             EnumerableUtils.ForEach(internals, generatedFile.Add);
             EnumerableUtils.ForEach(protecteds, generatedFile.Add);
+            EnumerableUtils.ForEach(privates, generatedFile.Add);
 
             generatedFile.Add($"{indent}}}");
             generatedFile.Add("}");
@@ -170,6 +132,49 @@ namespace Alternet.UI
             Console.WriteLine();
 
             return true;
+
+            void GenerateProperties(bool first)
+            {
+                var props = type.GetProperties(
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+                Console.WriteLine();
+                Console.WriteLine("Properties:");
+                Console.WriteLine();
+
+                foreach (var prop in props)
+                {
+                    var canWrite = prop.CanWrite
+                        ? $"set => {SubPropertyName}.{prop.Name} = value; " : string.Empty;
+                    var canRead = prop.CanRead
+                        ? $"get => {SubPropertyName}.{prop.Name}; " : string.Empty;
+                    var propType = ChangeAliasedType(prop.PropertyType);
+                    if (propType is null)
+                        continue;
+                    if (!TypeNameIsValid(propType.TrimEnd('[', ']', ',')))
+                    {
+                        errors.Add($"ERROR: Property '{prop.Name}' has unsupported type: {propType}");
+                        continue;
+                    }
+
+                    var realType = AssemblyUtils.GetRealType(prop.PropertyType);
+                    var typeCode = Type.GetTypeCode(realType);
+
+                    var inheritDocDecl
+                        = $"{indent2}/// <inheritdoc cref=\"{TypeName}.{prop.Name}\"/>";
+
+                    var generatedDecl
+                        = $"{indent2}public {propType} {prop.Name} {{ {canRead}{canWrite}}}";
+
+                    Console.WriteLine(generatedDecl);
+                    if (first)
+                        first = false;
+                    else
+                        generatedFile.Add(string.Empty);
+                    generatedFile.Add(inheritDocDecl);
+                    generatedFile.Add(generatedDecl);
+                }
+            }
 
             bool TypeNameIsValid(string? typeNameToCheck)
             {
@@ -197,10 +202,69 @@ namespace Alternet.UI
                 return t;
             }
 
-            void GenerateEvents(bool first)
+            void GenerateBindUnbindCall(string bindName, string operation, string xmlHelp)
+            {
+                var generatedDecl1
+                    = $"{indent2}/// {xmlHelp}.";
+                var generatedDecl2
+                    = $"{indent2}protected virtual void {bindName}({TypeName} obj)";
+                var generatedDecl3 = $"{indent2}{{";
+                protecteds.Add(string.Empty);
+                protecteds.Add(generatedDecl1);
+                protecteds.Add(generatedDecl2);
+                protecteds.Add(generatedDecl3);
+
+                var events = GetEvents();
+
+                foreach (var ev in events)
+                {
+                    if (!EventIsOk(ev))
+                        continue;
+                    var generatedDecl = $"{indent3}obj.{ev.Name} {operation}= {ev.Name}Handler;";
+                    protecteds.Add(generatedDecl);
+                }
+
+                var generatedDecl4 = $"{indent2}}}";
+                protecteds.Add(generatedDecl4);
+            }
+
+            void GenerateBindEventsCall()
+            {
+                GenerateBindUnbindCall("BindToEvents", "+", "Binds to the events");
+            }
+
+            void GenerateUnbindEventsCall()
+            {
+                GenerateBindUnbindCall("UnbindFromEvents", "-", "Undinds from the events");
+            }
+
+            EventInfo[] GetEvents()
             {
                 var events = type.GetEvents(
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                return events;
+            }
+
+            bool EventIsOk(EventInfo ev)
+            {
+                var handlerType = ev.EventHandlerType;
+                if (handlerType is null)
+                    return false;
+
+                var eventArgsType = AssemblyUtils.GetEventArgsType(ev);
+                if (eventArgsType is null)
+                    return false;
+
+                var handlerTypeName = handlerType.ToString();
+                if (!TypeNameIsValid(handlerTypeName))
+                    return false;
+
+                return true;
+            }
+
+            void GenerateEvents(bool first)
+            {
+                var events = GetEvents();
 
                 Console.WriteLine();
                 Console.WriteLine("Events:");
@@ -214,14 +278,13 @@ namespace Alternet.UI
                     if (handlerType is null)
                         continue;
 
-                    var eventArgsType = handlerType.GetMethod("Invoke")?.GetParameters()[1]?.ParameterType;
+                    var eventArgsType = AssemblyUtils.GetEventArgsType(ev);
                     if (eventArgsType is null)
                         continue;
 
-                    var handlerTypeName = handlerType.ToString();
-                    if(!TypeNameIsValid(handlerTypeName))
+                    if (!EventIsOk(ev))
                     {
-                        errors.Add($"Event '{ev.Name}' has unsupported type: {handlerTypeName}");
+                        errors.Add($"ERROR: Event '{ev.Name}' with type '{handlerType}' is unsupported.");
                         continue;
                     }
 
@@ -229,7 +292,7 @@ namespace Alternet.UI
                         = $"{indent2}/// <inheritdoc cref=\"{TypeName}.{ev.Name}\"/>";
 
                     var generatedDecl
-                        = $"{indent2}public event {handlerTypeName}? {ev.Name};";
+                        = $"{indent2}public event {handlerType}? {ev.Name};";
 
                     Console.WriteLine(generatedDecl);
                     if (first)
@@ -239,10 +302,25 @@ namespace Alternet.UI
                     generatedFile.Add(inheritDocDecl);
                     generatedFile.Add(generatedDecl);
 
-                    GenerateRaiseCall();
-                    GenerateOnEventCall();
+                    GenerateRaiseMethod();
+                    GenerateOnEventMethod();
+                    GenerateHandlerMethod();
 
-                    void GenerateRaiseCall()
+                    void GenerateHandlerMethod()
+                    {
+                        var generatedDecl1
+                            = $"{indent2}private void {ev.Name}Handler(object? sender, {eventArgsType.FullName} e)";
+                        var generatedDecl2 = $"{indent2}{{";
+                        var generatedDecl3 = $"{indent3}Raise{ev.Name}(e);";
+                        var generatedDecl4 = $"{indent2}}}";
+                        privates.Add(string.Empty);
+                        privates.Add(generatedDecl1);
+                        privates.Add(generatedDecl2);
+                        privates.Add(generatedDecl3);
+                        privates.Add(generatedDecl4);
+                    }
+
+                    void GenerateRaiseMethod()
                     {
                         var generatedDecl1
                             = $"{indent2}internal void Raise{ev.Name}({eventArgsType.FullName} e)";
@@ -258,7 +336,7 @@ namespace Alternet.UI
                         internals.Add(generatedDecl5);
                     }
 
-                    void GenerateOnEventCall()
+                    void GenerateOnEventMethod()
                     {
                         var generatedDecl1
                             = $"{indent2}/// Raised when <see cref=\"{ev.Name}\"/> event is called.";

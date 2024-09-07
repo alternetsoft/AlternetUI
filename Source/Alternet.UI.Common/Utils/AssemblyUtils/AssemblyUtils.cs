@@ -79,6 +79,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets type of the second parameter for the event. This is usually an
+        /// <see cref="EventArgs"/> descendant.
+        /// </summary>
+        /// <param name="ev">Event information.</param>
+        /// <returns></returns>
+        public static Type? GetEventArgsType(EventInfo? ev)
+        {
+            var eventArgsType = ev?.EventHandlerType.GetMethod("Invoke")?.GetParameters()[1]?.ParameterType;
+            return eventArgsType;
+        }
+
+        /// <summary>
         /// Gets image url for loading image resource from the specified assembly using
         /// "embres" protocol.
         /// </summary>
