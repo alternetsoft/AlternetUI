@@ -149,19 +149,13 @@ namespace Alternet.UI
             generatedFile.Add($"{indent}}}");
             generatedFile.Add("}");
 
-            File.Delete(PathToResult);
-
             var s = StringUtils.ToString(
                 generatedFile,
                 string.Empty,
                 string.Empty,
                 Environment.NewLine);
 
-            using var stream = File.Create(PathToResult);
-            StreamUtils.StringToStream(stream, s);
-
-            stream.Flush();
-            stream.Close();
+            FileUtils.StringToFileIfChanged(PathToResult, s);
 
             if (errors.Count > 0)
             {
