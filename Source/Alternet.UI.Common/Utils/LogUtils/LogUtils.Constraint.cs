@@ -18,10 +18,19 @@ namespace Alternet.UI
         {
             var controls = AssemblyUtils.AllControlDescendants.Values;
 
-            foreach(var control in controls)
+            App.LogBeginSection();
+
+            App.Log("Checking constraints...");
+            App.LogEmptyLine();
+
+            foreach (var control in controls)
             {
                 LogCheckConstraints(control);
             }
+
+            App.LogEmptyLine();
+            App.Log("Check constraints done.");
+            App.LogEndSection();
         }
     }
 }
