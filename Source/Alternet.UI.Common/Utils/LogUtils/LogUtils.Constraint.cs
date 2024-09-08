@@ -6,26 +6,39 @@ namespace Alternet.UI
 {
     public static partial class LogUtils
     {
-        internal static void LogCheckConstraints(Type control)
+        internal static void LogConstraintHasConstructorNoParams(Type type)
         {
-            if (!AssemblyUtils.HasConstructorNoParams(control))
+            if (!AssemblyUtils.HasConstructorNoParams(type))
             {
-                App.Log($"Control '{control}' has no constructor without params");
+                App.Log($"No constructor '{type}()'");
             }
+        }
+
+        internal static void LogConstraintHasConstructorWithParams(Type type, Type[] paramTypes)
+        {
+            if (!AssemblyUtils.HasConstructorWithParams(type, paramTypes))
+            {
+                App.Log($"No constructor '{type}{StringUtils.ToString(paramTypes)}'");
+            }
+        }
+
+        internal static void LogCheckConstraintsForControl(Type type)
+        {
+            LogConstraintHasConstructorNoParams(type);
+            LogConstraintHasConstructorWithParams(type, [typeof(Control)]);
         }
 
         internal static void LogCheckConstraints()
         {
-            var controls = AssemblyUtils.AllControlDescendants.Values;
-
             App.LogBeginSection();
 
             App.Log("Checking constraints...");
             App.LogEmptyLine();
 
+            var controls = AssemblyUtils.AllControlDescendants.Values;
             foreach (var control in controls)
             {
-                LogCheckConstraints(control);
+                LogCheckConstraintsForControl(control);
             }
 
             App.LogEmptyLine();

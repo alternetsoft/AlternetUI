@@ -104,6 +104,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Control"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public Control(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
         /// Gets the default foreground color of the control.
         /// </summary>
         /// <returns>
