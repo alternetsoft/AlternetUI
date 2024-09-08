@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Specifies the base class used for displaying standard system dialog windows on the screen.
     /// </summary>
     [ControlCategory("Hidden")]
-    public abstract class CommonDialog : DisposableObject
+    public abstract class CommonDialog : BaseComponent
     {
         private IDialogHandler? handler;
 
@@ -104,8 +104,7 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             base.DisposeManaged();
-            handler?.Dispose();
-            handler = null;
+            SafeDispose(ref handler);
         }
     }
 }
