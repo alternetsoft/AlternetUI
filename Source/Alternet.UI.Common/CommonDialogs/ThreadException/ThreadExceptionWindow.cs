@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
+
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -15,9 +16,30 @@ namespace Alternet.UI
     /// </summary>
     public class ThreadExceptionWindow : DialogWindow
     {
-        private readonly Exception exception;
-        private bool canContinue;
+        private Exception? exception;
+        private bool canContinue = true;
         private TextBox? messageTextBox;
+        private string? additionalInfo;
+
+        /// <summary>
+        ///  Initializes a new instance of the
+        ///  <see cref="ThreadExceptionWindow"/> class.
+        /// </summary>
+        public ThreadExceptionWindow()
+        {
+            InitializeControls();
+
+            if (App.FirstWindow() is not null)
+            {
+                var activeWindow = ActiveWindow;
+                if (activeWindow is null || activeWindow.Title.Length == 0)
+                    Title = ErrorMessages.Default.ErrorTitle;
+                else
+                    Title = activeWindow.Title;
+            }
+            else
+                Title = ErrorMessages.Default.ErrorTitle;
+        }
 
         /// <summary>
         ///  Initializes a new instance of the
@@ -30,53 +52,96 @@ namespace Alternet.UI
             Exception exception,
             string? additionalInfo = null,
             bool canContinue = true)
+            : this()
         {
-            this.exception = exception;
             this.canContinue = canContinue;
-            InitializeControls();
+            AdditionalInfo = additionalInfo;
+            Exception = exception;
+        }
 
-            if(App.FirstWindow() is not null)
+        /// <summary>
+        /// Gets or sets additional information related to the exception.
+        /// </summary>
+        public virtual string? AdditionalInfo
+        {
+            get
             {
-                var activeWindow = ActiveWindow;
-                if (activeWindow is null || activeWindow.Title.Length == 0)
-                    Title = ErrorMessages.Default.ErrorTitle;
-                else
-                    Title = activeWindow.Title;
-            }
-            else
-                Title = ErrorMessages.Default.ErrorTitle;
-
-            var s = GetMessageText(exception);
-
-            if(additionalInfo is not null)
-            {
-                s += "\n" + additionalInfo;
+                return additionalInfo;
             }
 
-            messageTextBox!.Text = s;
+            set
+            {
+                if (additionalInfo == value)
+                    return;
+                additionalInfo = value;
+                UpdateExceptionText();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an exception for which this window is shown.
+        /// </summary>
+        public virtual Exception? Exception
+        {
+            get
+            {
+                return exception;
+            }
+
+            set
+            {
+                if (exception == value)
+                    return;
+                exception = value;
+                UpdateExceptionText();
+            }
         }
 
         /// <summary>
         /// Gets or sets whether 'Continue' button is visible.
         /// </summary>
-        public bool CanContinue
+        public virtual bool CanContinue
         {
             get => canContinue;
+
             set => canContinue = value;
         }
 
-        private static string GetMessageText(Exception e)
+        /// <summary>
+        /// Gets message text used to show information about the exception.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetMessageText()
         {
-            var text = "Type: " + e.GetType().FullName;
+            string text = string.Empty;
 
-            if (e.Message != null)
-                text += "\n" + "Message: " + e.Message;
+            if (Exception is not null)
+            {
+                text = "Type: " + Exception.GetType().FullName;
+
+                if (Exception.Message != null)
+                    text += "\n" + "Message: " + Exception.Message;
+            }
+
+            if (additionalInfo is not null)
+            {
+                text += "\n" + additionalInfo;
+            }
 
             return text;
         }
 
-        private static string GetDetailsText(Exception e)
+        /// <summary>
+        /// Gets detailed information about the exception.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetDetailsText()
         {
+            var e = Exception;
+
+            if (e is null)
+                return string.Empty;
+
             StringBuilder detailsTextBuilder = new();
             string newline = "\n";
             string separator = "----------------------------------------\n";
@@ -185,7 +250,7 @@ namespace Alternet.UI
 
                 string[] lines;
 
-                if(canContinue)
+                if (CanContinue)
                     lines = new[] { s1, s2, s3, s4 };
                 else
                     lines = new[] { s1, s4 };
@@ -237,7 +302,7 @@ namespace Alternet.UI
                 continueButton.Click += ContinueButton_Click;
                 continueButton.HorizontalAlignment = HorizontalAlignment.Right;
                 buttonsGrid.Children.Add(continueButton);
-                continueButton.Visible = canContinue;
+                continueButton.Visible = CanContinue;
 
                 var quitButton = new Button { Text = CommonStrings.Default.ButtonQuit };
                 quitButton.Click += QuitButton_Click;
@@ -262,10 +327,18 @@ namespace Alternet.UI
             Close();
         }
 
+        /// <summary>
+        /// Updates exception text.
+        /// </summary>
+        private void UpdateExceptionText()
+        {
+            messageTextBox!.Text = GetMessageText();
+        }
+
         private void DetailsButton_Click(object? sender, EventArgs e)
         {
             using var detailsWindow =
-                new ThreadExceptionDetailsWindow(GetDetailsText(exception));
+                new ThreadExceptionDetailsWindow(GetDetailsText());
             detailsWindow.ShowModal(this);
         }
     }
