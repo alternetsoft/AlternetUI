@@ -36,8 +36,17 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public TabControl(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TabControl"/> class.
+        /// </summary>
         public TabControl()
-            : base()
         {
             cardPanelHeader.UserPaint = true;
             cardPanelHeader.Paint += Header_Paint;

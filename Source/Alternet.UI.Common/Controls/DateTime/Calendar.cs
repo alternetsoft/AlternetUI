@@ -47,6 +47,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="Calendar"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public Calendar(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Calendar"/> class.
+        /// </summary>
         public Calendar()
         {
         }
@@ -121,7 +131,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for the marked days.
         /// </summary>
-        public ICalendarDateAttr? MarkDateAttr
+        public virtual ICalendarDateAttr? MarkDateAttr
         {
             get
             {

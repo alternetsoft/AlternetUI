@@ -15,6 +15,23 @@ namespace Alternet.UI
         private StackPanelOrientation orientation;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StackPanel"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public StackPanel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StackPanel"/> class.
+        /// </summary>
+        public StackPanel()
+        {
+        }
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Orientation"/> property changes.
         /// </summary>
         public event EventHandler? OrientationChanged;

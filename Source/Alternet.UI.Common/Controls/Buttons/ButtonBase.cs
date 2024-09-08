@@ -11,6 +11,23 @@ namespace Alternet.UI
         private Action? clickAction;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ButtonBase"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ButtonBase(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ButtonBase"/> class.
+        /// </summary>
+        public ButtonBase()
+        {
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         [Browsable(false)]

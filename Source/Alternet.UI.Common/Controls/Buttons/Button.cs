@@ -16,6 +16,16 @@ namespace Alternet.UI
         private ControlStateImages? stateImages;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Button"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public Button(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
         /// Initializes a new <see cref="Button"/> instance.
         /// </summary>
         public Button()

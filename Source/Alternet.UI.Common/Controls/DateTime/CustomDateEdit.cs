@@ -27,6 +27,23 @@ namespace Alternet.UI
         private bool useMinDate = false;
         private bool useMaxDate = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomDateEdit"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public CustomDateEdit(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomDateEdit"/> class.
+        /// </summary>
+        public CustomDateEdit()
+        {
+        }
+
         /// <summary>Gets the maximum date value allowed for the control.</summary>
         /// <returns>A <see cref="System.DateTime" /> representing the
         /// maximum date value for the control.</returns>
@@ -243,7 +260,7 @@ namespace Alternet.UI
         /// <summary>
         /// Updates possible date range using current settings.
         /// </summary>
-        protected void SetRange()
+        protected virtual void SetRange()
         {
             if (UseMinDate)
             {

@@ -14,6 +14,23 @@ namespace Alternet.UI
     public class ContainerControl : Control
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerControl"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ContainerControl(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerControl"/> class.
+        /// </summary>
+        public ContainerControl()
+        {
+        }
+
+        /// <summary>
         /// Creates new <see cref="TabControl"/> and adds it to the <see cref="Control.Children"/>.
         /// </summary>
         public virtual TabControl AddTabControl()

@@ -19,6 +19,20 @@ namespace Alternet.UI
         private int? index;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TabPage"/> class.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="parent">Parent of the control.</param>
+        public TabPage(Control parent, string? title = null)
+            : this(title)
+        {
+            if (parent is TabControl tabControl)
+                tabControl.Add(this);
+            else
+                Parent = parent;
+        }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="TabPage"/> class.
         /// </summary>
         public TabPage()
@@ -28,6 +42,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of <see cref="TabPage"/> class with the specified title.
         /// </summary>
+        /// <param name="title">Page title.</param>
         public TabPage(string? title)
         {
             Title = title ?? string.Empty;
