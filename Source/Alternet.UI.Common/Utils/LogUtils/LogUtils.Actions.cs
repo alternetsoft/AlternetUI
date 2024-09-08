@@ -86,6 +86,7 @@ namespace Alternet.UI
             Fn("Log useful defines", LogUtils.LogUsefulDefines);
             Fn("Log system information", LogUtils.LogOSInformation);
             Fn("Log system colors", LogUtils.LogSystemColors);
+            Fn("Log constraint checks", LogUtils.LogCheckConstraints);
 
             Fn("Log Embedded Resources in Alternet.UI.Common", () =>
             {
@@ -236,18 +237,18 @@ namespace Alternet.UI
         /// <summary>
         /// Logs all descendants of the control.
         /// </summary>
-        public static void LogControlDescendants()
+        internal static void LogControlDescendants()
         {
-            var events = AssemblyUtils.AllControlDescendants;
+            var controls = AssemblyUtils.AllControlDescendants;
 
             App.Log("Control descendants added to log file");
-            LogRangeToFile(events.Keys);
+            LogRangeToFile(controls.Keys);
         }
 
         /// <summary>
         /// Logs events for all descendants of the control.
         /// </summary>
-        public static void LogControlDescendantsEvents()
+        internal static void LogControlDescendantsEvents()
         {
             var events = AssemblyUtils.AllControlEvents;
             App.Log("Control descendants event names added to log file");
@@ -257,7 +258,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs image pixel formats.
         /// </summary>
-        public static void LogImageBitsFormats()
+        internal static void LogImageBitsFormats()
         {
             GraphicsFactory.NativeBitsFormat.Log("NativeBitsFormat");
             GraphicsFactory.AlphaBitsFormat.Log("AlphaBitsFormat");
@@ -273,7 +274,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs to file all resource names.
         /// </summary>
-        public static void LogResourceNames()
+        internal static void LogResourceNames()
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
@@ -300,7 +301,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="SKFont"/> metrics.
         /// </summary>
-        public static void LogSkiaFont()
+        internal static void LogSkiaFont()
         {
             LogSkiaFont(SkiaUtils.DefaultFont);
         }
@@ -308,7 +309,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="SKBitmap"/> metrics.
         /// </summary>
-        public static void LogSkiaBitmap()
+        internal static void LogSkiaBitmap()
         {
             App.LogNameValue("SKImageInfo.PlatformColorType", SKImageInfo.PlatformColorType);
 
@@ -325,7 +326,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="SKBitmap"/> metrics.
         /// </summary>
-        public static void LogSkiaBitmap(SKBitmap bitmap, string? title = null)
+        internal static void LogSkiaBitmap(SKBitmap bitmap, string? title = null)
         {
             App.LogSection(
                 () =>
@@ -345,7 +346,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs useful c++ defines.
         /// </summary>
-        public static void LogUsefulDefines()
+        internal static void LogUsefulDefines()
         {
             var s = WebBrowser.DoCommandGlobal("GetUsefulDefines");
             var splitted = s?.Split(' ');
@@ -355,7 +356,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs monospaced Skia fonts.
         /// </summary>
-        public static void LogSkiaMonoFonts()
+        internal static void LogSkiaMonoFonts()
         {
             App.LogBeginSection();
             App.Log("Skia Mono Fonts:");
@@ -377,7 +378,7 @@ namespace Alternet.UI
         /// Logs <see cref="SKFont"/>.
         /// </summary>
         /// <param name="font">Font to log.</param>
-        public static void LogSkiaFont(SKFont font)
+        internal static void LogSkiaFont(SKFont font)
         {
             App.LogBeginSection("SKFont");
             App.LogNameValue("FamilyName", font.Typeface.FamilyName);
@@ -427,7 +428,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Text string.</param>
         /// <param name="font">Font.</param>
-        public static void LogMeasureSkiaFont(string text, SKFont font)
+        internal static void LogMeasureSkiaFont(string text, SKFont font)
         {
             SKRect bounds = SKRect.Empty;
             SKPaint paint = new(font);
@@ -438,7 +439,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="SKFontManager"/> related information.
         /// </summary>
-        public static void LogSkiaFontManager()
+        internal static void LogSkiaFontManager()
         {
             List<string> wxNames = new(FontFamily.FamiliesNames);
             wxNames.Sort();
@@ -492,7 +493,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs control related global information (metrics, fonts, etc.).
         /// </summary>
-        public static void LogControlInfo(Control control)
+        internal static void LogControlInfo(Control control)
         {
             App.LogNameValue("Toolbar images", ToolBarUtils.GetDefaultImageSize(control));
             App.LogNameValue("Control.DefaultFont", Control.DefaultFont.ToInfoString());
@@ -504,7 +505,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs OS related information (platform, version, etc.).
         /// </summary>
-        public static void LogOSInformation()
+        internal static void LogOSInformation()
         {
             var os = Environment.OSVersion;
             App.Log("Current OS Information:\n");
@@ -537,7 +538,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="SystemSettings"/>.
         /// </summary>
-        public static void LogSystemSettings()
+        internal static void LogSystemSettings()
         {
             App.LogBeginSection();
             App.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
@@ -584,7 +585,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="FontFamily.FamiliesNames"/>.
         /// </summary>
-        public static void LogFontFamilies()
+        internal static void LogFontFamilies()
         {
             List<string> skiaNames = new(SKFontManager.Default.FontFamilies);
             skiaNames.Sort();
@@ -609,7 +610,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs all system colors.
         /// </summary>
-        public static void LogSystemColors()
+        internal static void LogSystemColors()
         {
             var type = typeof(SystemColors);
             foreach (var prop in type.GetFields(
@@ -623,7 +624,7 @@ namespace Alternet.UI
         /// <summary>
         /// Tests different methods of getting Argb of the system color.
         /// </summary>
-        public static void TestSystemColors(
+        internal static void TestSystemColors(
             Func<KnownSystemColor, int> method1,
             Func<KnownSystemColor, int> method2)
         {
