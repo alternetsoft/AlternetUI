@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,42 @@ namespace Alternet.UI
     /// </summary>
     public static class ArrayUtils
     {
+        /// <summary>
+        /// Checks whether portions of two byte arrays are equal.
+        /// </summary>
+        /// <param name="a1">First array to compare.</param>
+        /// <param name="a2">Second array to compare.</param>
+        /// <param name="start">Starting position for the compare operation.</param>
+        /// <param name="length">Number of bytes to compare.</param>
+        /// <returns></returns>
+        public static bool AreEqual(byte[] a1, byte[] a2, int start, int length)
+        {
+            if (length <= 0)
+                return true;
+
+            var end = start + length;
+
+            if (a1.Length < end || a2.Length < end)
+                return false;
+
+            var span1 = a1.AsSpan(start, length);
+            var span2 = a2.AsSpan(start, length);
+
+            return span1.SequenceEqual(span2);
+        }
+
+        /// <summary>
+        /// Checks whether two byte arrays are equal.
+        /// </summary>
+        /// <param name="a1">First array to compare.</param>
+        /// <param name="a2">Second array to compare.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AreEqual(ReadOnlySpan<byte> a1, ReadOnlySpan<byte> a2)
+        {
+            return a1.SequenceEqual(a2);
+        }
+
         /// <summary>
         /// Fills specified array with the given value.
         /// </summary>

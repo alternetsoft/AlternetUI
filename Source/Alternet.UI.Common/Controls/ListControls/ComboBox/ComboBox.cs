@@ -53,12 +53,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
         /// </summary>
-        public static double DefaultImageVerticalOffset = 3;
+        public static Coord DefaultImageVerticalOffset = 3;
 
         /// <summary>
         /// Gets or sets default distance between image and text in the item.
         /// </summary>
-        public static double DefaultImageTextDistance = 3;
+        public static Coord DefaultImageTextDistance = 3;
 
         /// <summary>
         /// Gets or sets default color of the image border.
@@ -68,6 +68,16 @@ namespace Alternet.UI
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComboBox"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ComboBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.

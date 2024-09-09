@@ -72,6 +72,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="FileListBox"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public FileListBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileListBox"/> class.
+        /// </summary>
         public FileListBox()
         {
         }

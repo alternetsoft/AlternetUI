@@ -25,6 +25,16 @@ namespace Alternet.UI
         private bool threeState;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CheckBox"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public CheckBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CheckBox"/> class with the specified text.
         /// </summary>
         /// <param name="text"></param>

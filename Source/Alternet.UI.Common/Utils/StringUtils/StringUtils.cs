@@ -241,9 +241,12 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="T">Type of the array item.</typeparam>
         /// <param name="items">Array of items.</param>
-        /// <param name="prefix">Prefix string to add before items text.</param>
-        /// <param name="suffix">Suffix string to add after items text.</param>
-        /// <param name="separator">Separator string to add between each item text.</param>
+        /// <param name="prefix">Prefix string to add before items text. Optional.
+        /// Uses '(' if not specified.</param>
+        /// <param name="suffix">Suffix string to add after items text. Optional.
+        /// Uses '(' if not specified.</param>
+        /// <param name="separator">Separator string to add between each item text. Optional.
+        /// Uses ', ' if not specified.</param>
         public static string ToString<T>(
             IEnumerable<T> items,
             string? prefix = default,

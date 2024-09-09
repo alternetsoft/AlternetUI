@@ -80,7 +80,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image.
         /// </summary>
-        public virtual bool UseUnscaledDrawImage { get; set; } = true;
+        public virtual bool UseUnscaledDrawImage { get; set; } = false;
 
         /// <summary>
         /// Gets or sets attached <see cref="Alternet.UI.Control"/>.

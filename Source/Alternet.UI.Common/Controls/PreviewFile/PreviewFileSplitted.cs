@@ -23,6 +23,14 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class.
         /// </summary>
+        public PreviewFileSplitted()
+            : this(new PreviewFile(), new PreviewFileDummy(), true)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class.
+        /// </summary>
         /// <param name="centerPanel">Preview control which is docked in the center.</param>
         /// <param name="secondPanel">Second preview control.</param>
         /// <param name="isRight">Whether second panel is shown in the right side bar.</param>
@@ -49,12 +57,18 @@ namespace Alternet.UI
         /// <summary>
         /// First preview sub-control which default docking position is at the center.
         /// </summary>
-        public virtual IFilePreview First => first;
+        public virtual IFilePreview First
+        {
+            get => first;
+        }
 
         /// <summary>
         /// First preview sub-control which default docking position is at the right.
         /// </summary>
-        public virtual IFilePreview Second => second;
+        public virtual IFilePreview Second
+        {
+            get => second;
+        }
 
         /// <summary>
         /// <inheritdoc cref="IFilePreview.FileName"/>

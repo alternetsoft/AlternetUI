@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -73,9 +74,23 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">Property or event name.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsControlDescendantEventName(string name)
         {
             return AllControlEvents.ContainsKey(name);
+        }
+
+        /// <summary>
+        /// Gets type of the second parameter for the event. This is usually an
+        /// <see cref="EventArgs"/> descendant.
+        /// </summary>
+        /// <param name="ev">Event information.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Type? GetEventArgsType(EventInfo? ev)
+        {
+            var eventArgsType = ev?.EventHandlerType.GetMethod("Invoke")?.GetParameters()[1]?.ParameterType;
+            return eventArgsType;
         }
 
         /// <summary>
@@ -116,6 +131,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="instance">Object which contains the method.</param>
         /// <param name="method">Method which needs to be converted to <see cref="Action"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Action CreateAction(object instance, MethodInfo method)
         {
             Action action = (Action)Delegate.CreateDelegate(typeof(Action), instance, method);
@@ -209,6 +225,7 @@ namespace Alternet.UI
         /// in the sort order. Result value greater than 0 means that <paramref name="x"/> follows
         /// <paramref name="y"/> in the sort order.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int CompareByName(EventInfo x, EventInfo y)
         {
             return string.Compare(x.Name, y.Name);
@@ -230,6 +247,7 @@ namespace Alternet.UI
         /// in the sort order. Result value greater than 0 means that <paramref name="x"/> follows
         /// <paramref name="y"/> in the sort order.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int CompareByName(PropertyInfo x, PropertyInfo y)
         {
             return string.Compare(x.Name, y.Name);
@@ -271,9 +289,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="Type"/> has a public instance constructor
+        /// whose parameters match the types in the specified array.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        /// <param name="paramTypes">Array of constructor parameter types.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasConstructorWithParams(Type type, Type[] paramTypes)
+        {
+            var result = type.GetConstructor(paramTypes);
+            return result != null;
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="Type"/> has a public instance constructor
+        /// with single parameter which has the specified type.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        /// <param name="paramType">Constructor parameter type.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasConstructorWithParam(Type type, Type paramType)
+        {
+            var result = type.GetConstructor([paramType]);
+            return result != null;
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Type"/> has constructor without parameters.
         /// </summary>
         /// <param name="type">Object type.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasConstructorNoParams(Type type)
         {
             var result = type.GetConstructor(Type.EmptyTypes);
@@ -316,6 +361,7 @@ namespace Alternet.UI
         /// <param name="type">Type.</param>
         /// <returns><see cref="Nullable.GetUnderlyingType"/> if its not null or
         /// <paramref name="type"/> value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Type GetRealType(Type type)
         {
             var underlyingType = Nullable.GetUnderlyingType(type);
@@ -329,6 +375,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TypeCode GetRealTypeCode(Type type)
         {
             var realType = GetRealType(type);
@@ -500,6 +547,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="p">Property info.</param>
         /// <returns><c>true</c> if property is nullable, <c>false</c> otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool GetNullable(PropertyInfo p)
         {
             var propType = p.PropertyType;
@@ -556,6 +604,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if <paramref name="typeCode"/> is number type.
         /// </summary>
         /// <param name="typeCode">Type code.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsTypeCodeNumber(TypeCode typeCode)
         {
             return typeCode >= TypeCode.SByte && typeCode <= TypeCode.Decimal;
@@ -622,6 +671,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type of enumeration.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool EnumIsFlags(Type type)
         {
             var flags = type.GetCustomAttribute(typeof(FlagsAttribute)) as FlagsAttribute;
@@ -690,6 +740,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Property information.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsReadOnly(PropertyInfo prop)
         {
             var result = prop.SetMethod == null || !prop.SetMethod.IsPublic;

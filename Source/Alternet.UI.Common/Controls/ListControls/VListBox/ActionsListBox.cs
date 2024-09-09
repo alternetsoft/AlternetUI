@@ -13,6 +13,23 @@ namespace Alternet.UI
     public class ActionsListBox : VirtualListBox
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ActionsListBox"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ActionsListBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActionsListBox"/> class.
+        /// </summary>
+        public ActionsListBox()
+        {
+        }
+
+        /// <summary>
         /// Adds an empty space to the <see cref="ActionsListBox"/>.
         /// </summary>
         /// <remarks>

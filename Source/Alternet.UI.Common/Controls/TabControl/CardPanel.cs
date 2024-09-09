@@ -24,6 +24,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanel"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public CardPanel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CardPanel"/> class.
+        /// </summary>
         public CardPanel()
         {
             Cards.ThrowOnNullAdd = true;

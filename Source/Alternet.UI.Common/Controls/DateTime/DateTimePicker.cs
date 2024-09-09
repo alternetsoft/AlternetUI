@@ -23,6 +23,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public DateTimePicker(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
+        /// </summary>
         public DateTimePicker()
         {
         }

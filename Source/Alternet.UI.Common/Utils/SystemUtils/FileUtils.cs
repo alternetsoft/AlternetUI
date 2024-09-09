@@ -13,6 +13,64 @@ namespace Alternet.UI
     public static class FileUtils
     {
         /// <summary>
+        /// Saves string to the specified file only if its contents is different from the saved string.
+        /// </summary>
+        /// <param name="path">Path to file where string will be saved.</param>
+        /// <param name="s">String to save.</param>
+        /// <param name="encoding">Encoding to use for saving the string. Optional. If not specified,
+        /// <see cref="Encoding.UTF8"/> is used.</param>
+        public static void StringToFileIfChanged(string path, string s, Encoding? encoding = null)
+        {
+            if (!File.Exists(path))
+            {
+                StringToFile(path, s, encoding);
+                return;
+            }
+
+            MemoryStream memoryStream = new();
+            StreamUtils.StringToStream(memoryStream, s, encoding);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            long fileLength = new System.IO.FileInfo(path).Length;
+            long streamLength = memoryStream.Length;
+
+            if(fileLength != streamLength)
+            {
+                DoSave();
+                return;
+            }
+
+            using var fileStream = File.OpenRead(path);
+
+            var areEqual = StreamUtils.AreEqual(memoryStream, fileStream);
+
+            if (!areEqual)
+                DoSave();
+
+            void DoSave()
+            {
+                File.Delete(path);
+                StreamUtils.CopyStream(memoryStream, path);
+            }
+        }
+
+        /// <summary>
+        /// Saves string to file. If file with such name already exists,
+        /// it is deleted before saving the string.
+        /// </summary>
+        /// <param name="path">Path to file where string will be saved.</param>
+        /// <param name="s">String to save.</param>
+        /// <param name="encoding">Encoding to use for saving the string. Optional. If not specified,
+        /// <see cref="Encoding.UTF8"/> is used.</param>
+        public static void StringToFile(string path, string s, Encoding? encoding = null)
+        {
+            File.Delete(path);
+            using var stream = File.Create(path);
+            StreamUtils.StringToStream(stream, s, encoding);
+            stream.Close();
+        }
+
+        /// <summary>
         /// Returns the full file name that match a search pattern in a specified path,
         /// and optionally searches subdirectories.
         /// </summary>

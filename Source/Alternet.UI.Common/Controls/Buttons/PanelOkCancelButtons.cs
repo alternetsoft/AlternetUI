@@ -17,6 +17,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelOkCancelButtons"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public PanelOkCancelButtons(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelOkCancelButtons"/> class.
+        /// </summary>
         public PanelOkCancelButtons()
         {
             SuspendLayout();
@@ -84,7 +94,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Apply' button is visible.
         /// </summary>
-        public bool ShowApplyButton
+        public virtual bool ShowApplyButton
         {
             get
             {
@@ -101,7 +111,7 @@ namespace Alternet.UI
         /// Gets or sets whether 'Ok' and 'Cancel' buttons change
         /// <see cref="DialogWindow.ModalResult"/> when they are clicked.
         /// </summary>
-        public bool UseModalResult { get; set; }
+        public virtual bool UseModalResult { get; set; }
 
         [Browsable(false)]
         internal new string Text
@@ -110,7 +120,7 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
-        internal double SuggestedMinHeight
+        internal Coord SuggestedMinHeight
         {
             get
             {

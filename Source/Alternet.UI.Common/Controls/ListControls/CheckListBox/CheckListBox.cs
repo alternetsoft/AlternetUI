@@ -31,6 +31,23 @@ namespace Alternet.UI
         private readonly HashSet<int> checkedIndices = new();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CheckListBox"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public CheckListBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CheckListBox"/> class.
+        /// </summary>
+        public CheckListBox()
+        {
+        }
+
+        /// <summary>
         /// Occurs when the checkbox state of the item has changed.
         /// </summary>
         public event EventHandler? CheckedChanged;
@@ -65,7 +82,7 @@ namespace Alternet.UI
         /// <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
         [Browsable(false)]
-        public IReadOnlyList<int> CheckedIndices
+        public virtual IReadOnlyList<int> CheckedIndices
         {
             get
             {
@@ -106,7 +123,7 @@ namespace Alternet.UI
         /// <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
         [Browsable(false)]
-        public IReadOnlyList<int> CheckedIndicesDescending
+        public virtual IReadOnlyList<int> CheckedIndicesDescending
         {
             get
             {
@@ -127,7 +144,7 @@ namespace Alternet.UI
         /// <exception cref="ArgumentOutOfRangeException">The assigned value
         /// is less than 0 or greater than or equal to the item count.</exception>
         [Browsable(false)]
-        public int? CheckedIndex
+        public virtual int? CheckedIndex
         {
             get
             {
@@ -170,7 +187,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes checked items from the <see cref="CheckListBox"/>.
         /// </summary>
-        public void RemoveCheckedItems()
+        public virtual void RemoveCheckedItems()
         {
             RemoveItems(CheckedIndicesDescending);
         }
@@ -178,7 +195,7 @@ namespace Alternet.UI
         /// <summary>
         /// Checks items with specified indexes in the <see cref="CheckListBox"/>.
         /// </summary>
-        public void CheckItems(params int[] indexes)
+        public virtual void CheckItems(params int[] indexes)
         {
             CheckedIndices = GetValidIndexes(indexes);
         }
@@ -211,7 +228,7 @@ namespace Alternet.UI
         /// <summary>
         /// Unchecks all items in the ListBox.
         /// </summary>
-        public void ClearChecked()
+        public virtual void ClearChecked()
         {
             ClearCheckedCore();
             RaiseCheckedChanged(EventArgs.Empty);
@@ -227,7 +244,7 @@ namespace Alternet.UI
         /// otherwise, false.</param>
         /// <exception cref="ArgumentOutOfRangeException">The specified
         /// index was outside the range of valid values.</exception>
-        public void SetChecked(int index, bool value)
+        public virtual void SetChecked(int index, bool value)
         {
             if (index < 0 || index >= Items.Count)
                 throw new ArgumentOutOfRangeException(nameof(value));

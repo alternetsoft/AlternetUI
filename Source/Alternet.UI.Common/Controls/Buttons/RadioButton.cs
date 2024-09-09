@@ -33,6 +33,23 @@ namespace Alternet.UI
         private bool? reportedChecked;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RadioButton"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public RadioButton(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RadioButton"/> class.
+        /// </summary>
+        public RadioButton()
+        {
+        }
+
+        /// <summary>
         /// Occurs when the value of the <see cref="IsChecked"/> property changes.
         /// </summary>
         public event EventHandler? CheckedChanged;
