@@ -15,6 +15,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualCheckListBox"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public VirtualCheckListBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VirtualCheckListBox"/> class.
+        /// </summary>
         public VirtualCheckListBox()
         {
             CheckBoxVisible = true;

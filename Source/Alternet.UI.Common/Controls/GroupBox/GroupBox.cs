@@ -29,6 +29,23 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class GroupBox : ContainerControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupBox"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public GroupBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GroupBox"/> class.
+        /// </summary>
+        public GroupBox()
+        {
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 

@@ -16,8 +16,17 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="VerticalStackPanel"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public VerticalStackPanel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VerticalStackPanel"/> class.
+        /// </summary>
         public VerticalStackPanel()
-            : base()
         {
         }
 

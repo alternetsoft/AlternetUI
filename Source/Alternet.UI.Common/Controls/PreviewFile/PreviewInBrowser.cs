@@ -43,6 +43,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewInBrowser"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public PreviewInBrowser(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewInBrowser"/> class.
+        /// </summary>
         public PreviewInBrowser()
         {
             browser.Parent = this;
@@ -51,7 +61,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFilePreview.FileName"/>
         /// </summary>
-        public string? FileName
+        public virtual string? FileName
         {
             get => fileName;
             set
@@ -94,7 +104,7 @@ namespace Alternet.UI
         /// <summary>
         /// Reloads the file which is currently previewed.
         /// </summary>
-        public void Reload()
+        public virtual void Reload()
         {
             if(FileName is null)
             {

@@ -36,6 +36,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ListView"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ListView(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListView"/> class.
+        /// </summary>
         public ListView()
         {
             bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);

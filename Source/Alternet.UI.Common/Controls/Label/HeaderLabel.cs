@@ -26,6 +26,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="HeaderLabel"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public HeaderLabel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HeaderLabel"/> class.
+        /// </summary>
         public HeaderLabel()
         {
             control = CreateInnerControl?.Invoke() ?? CreateDefaultInnerControl();

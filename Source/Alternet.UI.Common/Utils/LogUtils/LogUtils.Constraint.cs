@@ -22,6 +22,11 @@ namespace Alternet.UI
             }
         }
 
+        internal static void LogCheckConstraintsForWindow(Type type)
+        {
+            LogConstraintHasConstructorNoParams(type);
+        }
+
         internal static void LogCheckConstraintsForControl(Type type)
         {
             LogConstraintHasConstructorNoParams(type);
@@ -35,10 +40,13 @@ namespace Alternet.UI
             App.Log("Checking constraints...");
             App.LogEmptyLine();
 
-            var controls = AssemblyUtils.AllControlDescendants.Values;
-            foreach (var control in controls)
+            var types = AssemblyUtils.AllControlDescendants.Values;
+            foreach (var type in types)
             {
-                LogCheckConstraintsForControl(control);
+                if(AssemblyUtils.TypeEqualsOrDescendant(type, typeof(Window)))
+                    LogCheckConstraintsForWindow(type);
+                else
+                    LogCheckConstraintsForControl(type);
             }
 
             App.LogEmptyLine();

@@ -13,10 +13,19 @@ namespace Alternet.UI
     public partial class VScrollBar : ScrollBar
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="VScrollBar"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public VScrollBar(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HScrollBar"/> class.
         /// </summary>
         public VScrollBar()
-            : base()
         {
             IsVertical = true;
         }

@@ -49,6 +49,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyGrid"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public PropertyGrid(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyGrid"/> class.
+        /// </summary>
+        public PropertyGrid()
+        {
+        }
+
+        /// <summary>
         /// Occurs when a property selection has been changed, either by user action
         /// or by indirect program function.
         /// </summary>

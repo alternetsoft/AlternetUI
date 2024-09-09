@@ -19,13 +19,21 @@ namespace Alternet.UI
     public partial class Grid : ContainerControl
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Grid"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public Grid(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="Grid"/>.
         /// </summary>
         public Grid()
         {
             SetFlags(ShowGridLinesDefaultValue, Flags.ShowGridLinesPropertyValue);
-
-            // UserPaint = true;
         }
 
         const bool ShowGridLinesDefaultValue = false;
