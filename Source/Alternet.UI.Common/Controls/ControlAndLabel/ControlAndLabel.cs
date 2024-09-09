@@ -40,6 +40,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ControlAndLabel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
+        /// </summary>
         public ControlAndLabel()
         {
             label = CreateLabel();

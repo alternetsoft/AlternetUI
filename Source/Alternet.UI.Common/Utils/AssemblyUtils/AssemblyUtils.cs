@@ -89,7 +89,8 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Type? GetEventArgsType(EventInfo? ev)
         {
-            var eventArgsType = ev?.EventHandlerType.GetMethod("Invoke")?.GetParameters()[1]?.ParameterType;
+            var eventArgsType
+                = ev?.EventHandlerType.GetMethod("Invoke")?.GetParameters()[1]?.ParameterType;
             return eventArgsType;
         }
 
@@ -697,6 +698,46 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if specified type equals any type from <paramref name="baseTypes"/>
+        /// or is a descendant of that type.
+        /// </summary>
+        /// <remarks>This method checks all base types recursively not only
+        /// the first <see cref="Type.BaseType"/> value.</remarks>
+        /// <param name="type">Type to check.</param>
+        /// <param name="baseTypes">Base types array.</param>
+        public static bool TypeEqualsOrDescendant(Type type, Type[] baseTypes)
+        {
+            foreach (var item in baseTypes)
+            {
+                if (type == item)
+                    return true;
+            }
+
+            foreach (var item in baseTypes)
+            {
+                if (TypeIsDescendant(type, item))
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if specified type equals <paramref name="baseType"/>
+        /// or is a descendant of that type.
+        /// </summary>
+        /// <remarks>This method checks all base types recursively not only
+        /// the first <see cref="Type.BaseType"/> value.</remarks>
+        /// <param name="type">Type to check.</param>
+        /// <param name="baseType">Base type.</param>
+        /// <returns></returns>
+        public static bool TypeEqualsOrDescendant(Type type, Type baseType)
+        {
+            var result = type == baseType || TypeIsDescendant(type, baseType);
+            return result;
         }
 
         /// <summary>

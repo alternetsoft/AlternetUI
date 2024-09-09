@@ -24,6 +24,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public NumericUpDown(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
+        /// </summary>
         public NumericUpDown()
         {
         }

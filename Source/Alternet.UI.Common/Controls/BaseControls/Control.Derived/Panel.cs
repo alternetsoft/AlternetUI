@@ -11,6 +11,23 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class Panel : ContainerControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Panel"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public Panel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Panel"/> class.
+        /// </summary>
+        public Panel()
+        {
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Panel;
 

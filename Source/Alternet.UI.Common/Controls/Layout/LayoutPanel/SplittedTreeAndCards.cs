@@ -28,6 +28,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public SplittedTreeAndCards(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
+        /// </summary>
         public SplittedTreeAndCards()
         {
             Initialize(TreeKind.TreeView);

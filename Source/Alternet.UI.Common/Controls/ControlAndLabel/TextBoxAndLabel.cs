@@ -18,6 +18,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public TextBoxAndLabel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
+        /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="text">Default value of the <see cref="Text"/> property.</param>
         public TextBoxAndLabel(string title, string? text = default)

@@ -81,6 +81,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeView"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public TreeView(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeView"/> class.
+        /// </summary>
         public TreeView()
         {
             Items.ItemInserted += Items_ItemInserted;

@@ -15,6 +15,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="HexEditorUInt32"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public HexEditorUInt32(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HexEditorUInt32"/> class.
+        /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="value">Default value.</param>
         public HexEditorUInt32(string title, uint? value = default)

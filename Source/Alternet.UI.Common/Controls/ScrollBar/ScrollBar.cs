@@ -45,6 +45,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBar"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ScrollBar(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollBar"/> class.
+        /// </summary>
         public ScrollBar()
         {
             pos.PropertyChanged += OnPositionPropertyChanged;

@@ -41,6 +41,23 @@ namespace Alternet.UI
         private SliderTickStyle? tickStyle;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Slider"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public Slider(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Slider"/> class.
+        /// </summary>
+        public Slider()
+        {
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="Value"/> property of a slider changes,
         /// either by movement of the scroll box or by manipulation in code.
         /// </summary>

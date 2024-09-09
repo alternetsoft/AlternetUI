@@ -1,3 +1,15 @@
+# 0.9.630 (2024 September 9)
+
+- MAUI platform: System scrollbars are now painted for the SkiaContainer.
+- MAUI platform: Fixed size changed events not fired.
+- Added 'Using SkiaSharp' article in the documentation.
+- PropertyGrid: Fixed localized prop names sorting.
+- Control is now indirectly derived from BaseComponent.
+- MAUI platform: fix exception in DlgGoto in Alternet.Editor.
+- All Control descendants: Add new constructor with parameter which allows to specify parent of the control.
+- CommonDialog is now derived from BaseComponent.
+- ArrayUtils.AreEqual, FileUtils.StringToFileIfChanged, FileUtils.StringToFile, StreamUtils.AreEqual, Font.WithSize.
+
 # 0.9.629 (2024 September 3)
 
 - <u>**SpeedButton.IsClickRepeated.**</u>

@@ -26,6 +26,23 @@ namespace Alternet.UI
         private TextBoxOptions options = TextBoxOptions.IntRangeInError;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CustomTextBox"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public CustomTextBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomTextBox"/> class.
+        /// </summary>
+        public CustomTextBox()
+        {
+        }
+
+        /// <summary>
         /// Occurs when <see cref="ReportValidatorError"/> is called.
         /// </summary>
         /// <remarks>

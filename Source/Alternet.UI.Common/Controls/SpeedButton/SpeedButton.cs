@@ -96,6 +96,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButton"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public SpeedButton(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpeedButton"/> class.
+        /// </summary>
         public SpeedButton()
         {
             Padding = 4;

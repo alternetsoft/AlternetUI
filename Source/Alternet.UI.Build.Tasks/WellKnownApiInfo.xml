@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.629.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.630.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -9700,7 +9700,6 @@
     <Type Name="Alternet.UI.SRID" />
     <Type Name="Alternet.UI.AppUtils" />
     <Type Name="Alternet.UI.DebugUtils" />
-    <Type Name="Alternet.UI.LogUtils" />
     <Type Name="Alternet.UI.AssemblyUtils" />
     <Type Name="Alternet.UI.ConsoleUtils" />
     <Type Name="Alternet.UI.ICustomConsole" />
@@ -9709,18 +9708,13 @@
     <Type Name="Alternet.UI.TextBoxUtils" />
     <Type Name="Alternet.UI.ToolBarUtils" />
     <Type Name="Alternet.UI.DrawingUtils" />
+    <Type Name="Alternet.UI.LogUtils" />
     <Type Name="Alternet.UI.CpuUtils" />
     <Type Name="Alternet.UI.LinuxUtils" />
     <Type Name="Alternet.UI.MacOsUtils" />
     <Type Name="Alternet.UI.OSUtils" />
     <Type Name="Alternet.UI.RegistryUtils" />
     <Type Name="Alternet.UI.WindowsUtils" />
-    <Type Name="Alternet.UI.CodeGeneratorUtils" />
-    <Type Name="Alternet.UI.FileMaskUtils" />
-    <Type Name="Alternet.UI.FileUtils" />
-    <Type Name="Alternet.UI.ValidationUtils" />
-    <Type Name="Alternet.UI.WebUtils" />
-    <Type Name="Alternet.UI.XmlUtils" />
     <Type Name="Alternet.UI.PlessUtils" />
     <Type Name="Alternet.UI.StringTokenizer" />
     <Type Name="Alternet.UI.TryParseNumberDelegate" />
@@ -9728,16 +9722,23 @@
     <Type Name="Alternet.UI.TokenizerHelper" />
     <Type Name="Alternet.UI.ActionUtils" />
     <Type Name="Alternet.UI.ArrayUtils" />
+    <Type Name="Alternet.UI.AsyncUtils" />
+    <Type Name="Alternet.UI.CodeGeneratorUtils" />
     <Type Name="Alternet.UI.DateUtils" />
     <Type Name="Alternet.UI.DoubleUtils" />
     <Type Name="Alternet.UI.EnumerableUtils" />
     <Type Name="Alternet.UI.EnumUtils" />
     <Type Name="Alternet.UI.EventArgsUtils" />
+    <Type Name="Alternet.UI.FileMaskUtils" />
+    <Type Name="Alternet.UI.FileUtils" />
     <Type Name="Alternet.UI.IntPtrUtils" />
     <Type Name="Alternet.UI.ListUtils" />
     <Type Name="Alternet.UI.MathUtils" />
     <Type Name="Alternet.UI.StreamUtils" />
     <Type Name="Alternet.UI.TimerUtils" />
+    <Type Name="Alternet.UI.WebUtils" />
+    <Type Name="Alternet.UI.XmlUtils" />
+    <Type Name="Alternet.UI.ValidationUtils" />
     <Type Name="Alternet.UI.SynchronousCompletionAsyncResult`1" />
     <Type Name="Alternet.UI.UnsetValueType" />
     <Type Name="Alternet.UI.ITestRootObjectProvider" />

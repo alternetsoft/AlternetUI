@@ -24,6 +24,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolBar"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ToolBar(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ToolBar"/> class.
+        /// </summary>
         public ToolBar()
         {
             Layout = LayoutStyle.Horizontal;

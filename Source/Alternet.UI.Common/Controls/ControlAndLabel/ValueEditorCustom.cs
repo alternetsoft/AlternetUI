@@ -15,6 +15,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorCustom"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ValueEditorCustom(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueEditorCustom"/> class.
+        /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="text">Default value of the Text property.</param>
         public ValueEditorCustom(string title, string? text = default)

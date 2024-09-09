@@ -71,6 +71,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewTextFile"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public PreviewTextFile(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewTextFile"/> class.
+        /// </summary>
         public PreviewTextFile()
         {
             textBox.Parent = this;

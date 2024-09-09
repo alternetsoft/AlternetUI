@@ -15,6 +15,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="MultilineTextBox"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public MultilineTextBox(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultilineTextBox"/> class.
+        /// </summary>
         public MultilineTextBox()
         {
             ProcessTab = true;

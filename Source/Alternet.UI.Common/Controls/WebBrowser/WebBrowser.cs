@@ -52,6 +52,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public WebBrowser(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebBrowser"/> class.
+        /// </summary>
         public WebBrowser()
         {
         }

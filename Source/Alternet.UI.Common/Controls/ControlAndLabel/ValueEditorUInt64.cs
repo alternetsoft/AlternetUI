@@ -15,6 +15,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorUInt64"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ValueEditorUInt64(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueEditorUInt64"/> class.
+        /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="value">Default value.</param>
         public ValueEditorUInt64(string title, ulong? value = default)

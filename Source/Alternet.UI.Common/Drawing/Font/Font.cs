@@ -955,6 +955,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns font with same parameters, but with different size.
+        /// </summary>
+        /// <param name="sizeInPoints">New font size in points.</param>
+        /// <returns></returns>
+        public virtual Font WithSize(Coord sizeInPoints)
+        {
+            FontInfo info = this;
+            info.SizeInPoints = sizeInPoints;
+            return new(info);
+        }
+
+        /// <summary>
         /// Returns font with same name and size, but with different <see cref="FontStyle"/>.
         /// </summary>
         /// <param name="style">New font style.</param>

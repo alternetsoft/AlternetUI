@@ -17,6 +17,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ComboBoxAndLabel(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
+        /// </summary>
         /// <param name="label">Label text.</param>
         public ComboBoxAndLabel(string label)
         {

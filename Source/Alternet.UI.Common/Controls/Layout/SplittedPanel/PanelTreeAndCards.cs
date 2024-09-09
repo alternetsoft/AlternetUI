@@ -18,8 +18,17 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public PanelTreeAndCards(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
+        /// </summary>
         public PanelTreeAndCards()
-            : base()
         {
             RightVisible = false;
             LeftTreeView.Required();
@@ -40,7 +49,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public int Add(string title, Func<Control> fnCreate)
+        public virtual int Add(string title, Func<Control> fnCreate)
         {
             var index = cardPanel.Add(title, fnCreate);
             var item = LeftTreeView.Add(title);
@@ -56,7 +65,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public int Add(string title, Control control)
+        public virtual int Add(string title, Control control)
         {
             var index = cardPanel.Add(title, control);
             var item = LeftTreeView.Add(title);

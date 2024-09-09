@@ -15,8 +15,17 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="HScrollBar"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public HScrollBar(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HScrollBar"/> class.
+        /// </summary>
         public HScrollBar()
-            : base()
         {
             IsVertical = false;
         }

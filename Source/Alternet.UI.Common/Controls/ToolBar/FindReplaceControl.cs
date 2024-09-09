@@ -102,6 +102,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public FindReplaceControl(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
+        /// </summary>
         public FindReplaceControl()
         {
             findEditBorder.BorderColor = FindEditBorderColor;

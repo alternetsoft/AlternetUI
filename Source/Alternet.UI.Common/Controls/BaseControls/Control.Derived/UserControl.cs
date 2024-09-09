@@ -21,8 +21,17 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="UserControl"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public UserControl(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserControl"/> class.
+        /// </summary>
         public UserControl()
-            : base()
         {
             UserPaint = true;
         }

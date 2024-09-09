@@ -16,6 +16,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorUrl"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public ValueEditorUrl(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueEditorUrl"/> class.
+        /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="url">Default url value.</param>
         public ValueEditorUrl(string title, string? url = default)
