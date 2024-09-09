@@ -105,7 +105,10 @@ namespace Alternet.Drawing
         /// </summary>
         public int Width
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => width;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => width = value;
         }
 
@@ -115,7 +118,10 @@ namespace Alternet.Drawing
         /// </summary>
         public int Height
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => height;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => height = value;
         }
 
@@ -263,6 +269,7 @@ namespace Alternet.Drawing
         /// <param name="v1">First <see cref="SizeI"/> value.</param>
         /// <param name="v2">Second <see cref="SizeI"/> value.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Max(SizeI v1, SizeI v2)
         {
             return new SizeI(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
@@ -271,6 +278,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Performs vector addition of two <see cref='SizeI'/> objects.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Add(SizeI sz1, SizeI sz2) =>
             new(unchecked(sz1.Width + sz2.Width),
                 unchecked(sz1.Height + sz2.Height));
@@ -279,9 +287,33 @@ namespace Alternet.Drawing
         /// Converts a SizeF to a Size by performing a ceiling operation
         /// on all the coordinates.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Ceiling(SizeD value) =>
             new(unchecked((int)Math.Ceiling(value.Width)),
                 unchecked((int)Math.Ceiling(value.Height)));
+
+        /// <summary>
+        /// Multiplies <see cref="SizeI"/> by an <see cref="int"/>
+        /// producing <see cref="SizeI"/>.
+        /// </summary>
+        /// <param name="size">Multiplicand of type <see cref="SizeI"/>.</param>
+        /// <param name="multiplier">Multiplier of type <see cref='int'/>.</param>
+        /// <returns>Product of type <see cref="SizeI"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeI Multiply(SizeI size, int multiplier) =>
+            new(unchecked(size.width * multiplier),
+                unchecked(size.height * multiplier));
+
+        /// <summary>
+        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
+        /// producing <see cref="SizeD"/>.
+        /// </summary>
+        /// <param name="size">Multiplicand of type <see cref="SizeI"/>.</param>
+        /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
+        /// <returns>Product of type SizeF.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD Multiply(SizeI size, Coord multiplier) =>
+            new(size.width * multiplier, size.height * multiplier);
 
         /// <summary>
         /// Contracts a <see cref='SizeI'/> by another
@@ -295,6 +327,7 @@ namespace Alternet.Drawing
         /// Converts a SizeF to a Size by performing a truncate operation
         /// on all the coordinates.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Truncate(SizeD value) =>
             new(unchecked((int)value.Width), unchecked((int)value.Height));
 
@@ -302,6 +335,7 @@ namespace Alternet.Drawing
         /// Converts a SizeF to a Size by performing a round operation on
         /// all the coordinates.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Round(SizeD value) =>
             new(unchecked((int)Math.Round(value.Width)),
                 unchecked((int)Math.Round(value.Height)));
@@ -347,30 +381,10 @@ namespace Alternet.Drawing
         /// <param name="scaleFactor">Scale factor. Optional. Default scale factor used if this
         /// parameter is not specified.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD PixelToDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelToDip(this, scaleFactor);
         }
-
-        /// <summary>
-        /// Multiplies <see cref="SizeI"/> by an <see cref="int"/>
-        /// producing <see cref="SizeI"/>.
-        /// </summary>
-        /// <param name="size">Multiplicand of type <see cref="SizeI"/>.</param>
-        /// <param name="multiplier">Multiplier of type <see cref='int'/>.</param>
-        /// <returns>Product of type <see cref="SizeI"/>.</returns>
-        private static SizeI Multiply(SizeI size, int multiplier) =>
-            new(unchecked(size.width * multiplier),
-                unchecked(size.height * multiplier));
-
-        /// <summary>
-        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
-        /// producing <see cref="SizeD"/>.
-        /// </summary>
-        /// <param name="size">Multiplicand of type <see cref="SizeI"/>.</param>
-        /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
-        /// <returns>Product of type SizeF.</returns>
-        private static SizeD Multiply(SizeI size, double multiplier) =>
-            new(size.width * multiplier, size.height * multiplier);
     }
 }

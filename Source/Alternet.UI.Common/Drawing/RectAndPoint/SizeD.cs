@@ -356,6 +356,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Multiplies <see cref="SizeD"/> by a value
+        /// producing <see cref="SizeD"/>.
+        /// </summary>
+        /// <param name="size">Multiplicand of type <see cref="SizeD"/>.</param>
+        /// <param name="multiplier">Multiplier.</param>
+        /// <returns>Product of type SizeF.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD Multiply(SizeD size, Coord multiplier) =>
+            new(size.width * multiplier, size.height * multiplier);
+
+        /// <summary>
         /// Returns an array filled with heights of the specified <see cref="SizeD"/> values.
         /// </summary>
         /// <param name="sizes">Array of <see cref="SizeD"/> values.</param>
@@ -564,16 +575,5 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2 ToVector2()
             => new(RectD.CoordToFloat(width), RectD.CoordToFloat(height));
-
-        /// <summary>
-        /// Multiplies <see cref="SizeD"/> by a value
-        /// producing <see cref="SizeD"/>.
-        /// </summary>
-        /// <param name="size">Multiplicand of type <see cref="SizeD"/>.</param>
-        /// <param name="multiplier">Multiplier.</param>
-        /// <returns>Product of type SizeF.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SizeD Multiply(SizeD size, Coord multiplier) =>
-            new(size.width * multiplier, size.height * multiplier);
     }
 }
