@@ -67,9 +67,14 @@ namespace Alternet.UI
             return registry.GetValueOrDefault(propInfo);
         }
 
-        public IPropertyGridPropInfoRegistry GetPropRegistry(string propName)
+        public IPropertyGridPropInfoRegistry? GetPropRegistry(string propName)
         {
-            return GetPropRegistry(type.GetProperty(propName)!);
+            var prop = type.GetProperty(propName);
+
+            if (prop is null)
+                return null;
+
+            return GetPropRegistry(prop);
         }
 
         public IPropertyGridPropInfoRegistry? GetPropRegistryOrNull(string propName)

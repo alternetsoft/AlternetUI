@@ -58,14 +58,15 @@ namespace Alternet.UI
         /// <param name="value"><c>true</c> to show ellipsis button, <c>false</c> to hide it.</param>
         /// <returns><see cref="IPropertyGridPropInfoRegistry"/> item for the property
         /// specified in <paramref name="propName"/>.</returns>
-        public static IPropertyGridPropInfoRegistry ShowEllipsisButton(
+        public static IPropertyGridPropInfoRegistry? ShowEllipsisButton(
             Type type,
             string propName,
             bool value = true)
         {
             var typeRegistry = PropertyGrid.GetTypeRegistry(type);
             var propRegistry = typeRegistry.GetPropRegistry(propName);
-            propRegistry.NewItemParams.HasEllipsis = value;
+            if(propRegistry is not null)
+                propRegistry.NewItemParams.HasEllipsis = value;
             return propRegistry;
         }
 
@@ -78,18 +79,22 @@ namespace Alternet.UI
         /// <see cref="IListEditSource"/> interface.</param>
         /// <returns><see cref="IPropertyGridPropInfoRegistry"/> item for the property
         /// specified in <paramref name="propName"/>.</returns>
-        public static IPropertyGridPropInfoRegistry RegisterCollectionEditor(
+        public static IPropertyGridPropInfoRegistry? RegisterCollectionEditor(
             Type type,
             string propName,
             Type? editType)
         {
             var propRegistry = ShowEllipsisButton(type, propName);
-            propRegistry.NewItemParams.OnlyTextReadOnly = true;
-            propRegistry.ListEditSourceType = editType;
-            propRegistry.NewItemParams.ButtonClick += (s, e) =>
+
+            if(propRegistry is not null)
             {
-                EditWithListEdit?.Invoke(s, e);
-            };
+                propRegistry.NewItemParams.OnlyTextReadOnly = true;
+                propRegistry.ListEditSourceType = editType;
+                propRegistry.NewItemParams.ButtonClick += (s, e) =>
+                {
+                    EditWithListEdit?.Invoke(s, e);
+                };
+            }
 
             return propRegistry;
         }
@@ -282,11 +287,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Object type.</param>
         /// <param name="propName">Property name.</param>
-        public static IPropertyGridNewItemParams GetNewItemParams(Type type, string propName)
+        public static IPropertyGridNewItemParams? GetNewItemParams(Type type, string propName)
         {
             var registry = GetTypeRegistry(type);
             var propRegistry = registry.GetPropRegistry(propName);
-            return propRegistry.NewItemParams;
+            return propRegistry?.NewItemParams;
         }
 
         /// Gets <see cref="IPropertyGridNewItemParams"/> for the given

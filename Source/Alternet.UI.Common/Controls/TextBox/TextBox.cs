@@ -29,13 +29,17 @@ namespace Alternet.UI
 
         static TextBox()
         {
-            var choices = PropertyGrid.CreateChoices();
-            choices.Add(PropNameStrings.Default.Left, GenericAlignment.Left);
-            choices.Add(PropNameStrings.Default.Right, GenericAlignment.Right);
-            choices.Add(PropNameStrings.Default.Center, GenericAlignment.CenterHorizontal);
             var prm = PropertyGrid.GetNewItemParams(typeof(TextBox), nameof(TextBox.TextAlign));
-            prm.EnumIsFlags = false;
-            prm.Choices = choices;
+            if(prm is not null)
+            {
+                var choices = PropertyGrid.CreateChoices();
+                choices.Add(PropNameStrings.Default.Left, GenericAlignment.Left);
+                choices.Add(PropNameStrings.Default.Right, GenericAlignment.Right);
+                choices.Add(PropNameStrings.Default.Center, GenericAlignment.CenterHorizontal);
+
+                prm.EnumIsFlags = false;
+                prm.Choices = choices;
+            }
 
             var useErrorColors = false;
             DefaultErrorUseForegroundColor = useErrorColors;
