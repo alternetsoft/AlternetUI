@@ -55,7 +55,7 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            if (AllowCustomCursors)
+            if (GetAllowCustomCursors())
                 Handler = Factory.CreateCursorHandler(cursorName, type, hotSpotX, hotSpotY);
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
@@ -82,7 +82,7 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            if(AllowCustomCursors)
+            if(GetAllowCustomCursors())
                 Handler = Factory.CreateCursorHandler(image, hotSpotX, hotSpotY);
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
@@ -99,7 +99,7 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            if (AllowCustomCursors)
+            if (GetAllowCustomCursors())
                 Handler = Factory.CreateCursorHandler(image, hotSpotX, hotSpotY);
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
@@ -188,6 +188,11 @@ namespace Alternet.UI
         protected override ICursorHandler CreateHandler()
         {
             return Factory.CreateCursorHandler();
+        }
+
+        private bool GetAllowCustomCursors()
+        {
+            return AllowCustomCursors && Factory.AllowCustomCursors;
         }
     }
 }

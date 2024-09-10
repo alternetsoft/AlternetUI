@@ -10,6 +10,17 @@ namespace Alternet.UI
 {
     internal class WxCursorFactoryHandler : DisposableObject, ICursorFactoryHandler
     {
+        private bool? allowCustomCursors;
+
+        /// <inheritdoc/>
+        public bool AllowCustomCursors
+        {
+            get
+            {
+                return allowCustomCursors ??= (Display.MaxScaleFactor <= 1);
+            }
+        }
+
         public bool SetGlobal(Cursor? cursor)
         {
             if (cursor is null)
