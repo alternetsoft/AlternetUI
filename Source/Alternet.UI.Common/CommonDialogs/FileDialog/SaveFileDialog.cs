@@ -55,19 +55,18 @@ namespace Alternet.UI
         public new ISaveFileDialogHandler Handler => (ISaveFileDialogHandler)base.Handler;
 
         /// <inheritdoc/>
-        public override ModalResult ShowModal(Window? owner)
+        protected override bool CoerceDialogResult(bool dialogResult)
         {
-            var result = base.ShowModal(owner);
-            if (result == ModalResult.Accepted)
+            if (dialogResult)
             {
                 if (!AllowNullFileName)
                 {
-                   if(string.IsNullOrEmpty(FileName))
-                        return ModalResult.Canceled;
+                    if (string.IsNullOrEmpty(FileName))
+                        return false;
                 }
             }
 
-            return result;
+            return dialogResult;
         }
 
         /// <inheritdoc/>

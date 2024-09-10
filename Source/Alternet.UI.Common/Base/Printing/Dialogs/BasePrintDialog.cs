@@ -43,16 +43,15 @@ namespace Alternet.UI
         public new IBasePrintDialogHandler Handler => (IBasePrintDialogHandler)base.Handler;
 
         /// <inheritdoc/>
-        public override ModalResult ShowModal(Window? owner)
+        protected override bool IsValidShowDialog()
         {
             if (Document == null)
             {
                 App.Alert("Cannot show the dialog when the Document is null.");
-                return ModalResult.Canceled;
+                return false;
             }
 
-            CheckDisposed();
-            return Handler.ShowModal(owner);
+            return true;
         }
     }
 }

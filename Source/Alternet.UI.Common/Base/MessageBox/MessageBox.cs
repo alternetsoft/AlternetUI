@@ -1,3 +1,5 @@
+#define ObsoleteModalDialogs
+
 using System;
 using System.Collections.Generic;
 
@@ -29,6 +31,9 @@ namespace Alternet.UI
         /// If an event handler is added to this event,
         /// default message box show handler is not used.
         /// </remarks>
+#if ObsoleteModalDialogs
+        [Obsolete("Event is deprecated.")]
+#endif
         public static event EventHandler<BaseEventArgs<MessageBoxInfo>>? ShowDialog;
 
         /// <summary>
@@ -41,6 +46,9 @@ namespace Alternet.UI
         /// specifies which buttons to display in the message box.</param>
         /// <param name="defaultButton">One of the <see cref="MessageBoxDefaultButton" /> values that
         /// specifies the default button for the message box.</param>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -76,6 +84,9 @@ namespace Alternet.UI
         ///   <see langword="true" /> to show the Help button; otherwise, <see langword="false" />.
         ///   The default is <see langword="false" />.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -106,6 +117,9 @@ namespace Alternet.UI
         /// <param name="helpFilePath">The path and name of the Help file to display when the user clicks
         /// the Help button.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -136,6 +150,9 @@ namespace Alternet.UI
         /// <param name="helpFilePath">The path and name of the Help file to display when the user clicks
         /// the Help button.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             Window? owner,
             object? text,
@@ -167,6 +184,9 @@ namespace Alternet.UI
         /// the Help button.</param>
         /// <param name="keyword">The Help keyword to display when the user clicks the Help button.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -199,6 +219,9 @@ namespace Alternet.UI
         /// clicks the Help button.</param>
         /// <param name="keyword">The Help keyword to display when the user clicks the Help button.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             Window? owner,
             object? text,
@@ -230,6 +253,9 @@ namespace Alternet.UI
         /// Help button.</param>
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -261,6 +287,9 @@ namespace Alternet.UI
         /// Help button.</param>
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             Window? owner,
             object? text,
@@ -293,6 +322,9 @@ namespace Alternet.UI
         /// the Help button.</param>
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
         /// <param name="param">The numeric ID of the Help topic to display when the user clicks the Help button.</param>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -328,6 +360,9 @@ namespace Alternet.UI
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
         /// <param name="param">The numeric ID of the Help topic to display when the user clicks the Help button.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             Window? owner,
             object? text,
@@ -358,6 +393,9 @@ namespace Alternet.UI
         /// which display and association options will be used for the message box. You may pass in 0 if you
         /// wish to use the defaults.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -379,6 +417,9 @@ namespace Alternet.UI
         /// <param name="defaultButton">One of the <see cref="MessageBoxDefaultButton" /> values that specifies the
         /// default button for the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             object? text,
             string? caption,
@@ -397,6 +438,9 @@ namespace Alternet.UI
         /// <param name="icon">One of the <see cref="MessageBoxIcon" /> values that specifies which icon to display
         /// in the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(object? text, string? caption, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
             return ShowCore(
@@ -416,6 +460,9 @@ namespace Alternet.UI
         /// <param name="buttons">One of the <see cref="MessageBoxButtons" /> values that specifies
         /// which buttons to display in the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(object? text, string? caption, MessageBoxButtons buttons)
         {
             return ShowCore(
@@ -433,6 +480,9 @@ namespace Alternet.UI
         /// <param name="text">The text to display in the message box.</param>
         /// <param name="caption">The text to display in the title bar of the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(object? text, string? caption)
         {
             return ShowCore(
@@ -449,6 +499,9 @@ namespace Alternet.UI
         /// <summary>Displays a message box with specified text.</summary>
         /// <param name="text">The text to display in the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(object? text)
         {
             return ShowCore(
@@ -476,6 +529,9 @@ namespace Alternet.UI
         /// <param name="options">One of the <see cref="MessageBoxOptions" /> values that specifies which display
         /// and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             Window? owner,
             object? text,
@@ -500,6 +556,9 @@ namespace Alternet.UI
         /// <param name="defaultButton">One of the <see cref="MessageBoxDefaultButton" /> values that specifies the
         /// default button for the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             Window? owner,
             object? text,
@@ -521,6 +580,9 @@ namespace Alternet.UI
         /// <param name="icon">One of the <see cref="MessageBoxIcon" /> values that specifies which icon to
         /// display in the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(
             Window? owner,
             object? text,
@@ -547,6 +609,9 @@ namespace Alternet.UI
         /// <param name="buttons">One of the <see cref="MessageBoxButtons" /> values that specifies which
         /// buttons to display in the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(Window? owner, object? text, string? caption, MessageBoxButtons buttons)
         {
             return ShowCore(
@@ -565,6 +630,9 @@ namespace Alternet.UI
         /// <param name="text">The text to display in the message box.</param>
         /// <param name="caption">The text to display in the title bar of the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(Window? owner, object? text, string? caption)
         {
             return ShowCore(
@@ -582,6 +650,9 @@ namespace Alternet.UI
         /// <param name="owner">A <see cref="Window"/> that will own the modal dialog box.</param>
         /// <param name="text">The text to display in the message box.</param>
         /// <returns>One of the <see cref="DialogResult" /> values.</returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult Show(Window? owner, object? text)
         {
             return ShowCore(
@@ -601,6 +672,9 @@ namespace Alternet.UI
         /// <param name="info">Message box parameters.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException">If some feature is not supported.</exception>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static DialogResult ShowDefault(MessageBoxInfo info)
         {
             info.Icon = ValidateIcon(info.Icon);

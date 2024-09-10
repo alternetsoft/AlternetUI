@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define ObsoleteModalDialogs
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -105,6 +107,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="defaultValue">Default value. Optional. If not specified, uses 100.</param>
         /// <returns></returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static byte? AskLightness(byte defaultValue = 100)
         {
             return AskByte("Lightness", 100, 200);
@@ -117,6 +122,9 @@ namespace Alternet.UI
         /// <param name="defaultValue">Default value. Optional. If not specified, uses 0.</param>
         /// <param name="maxValue">Maximal value. Optional. If not specified, uses 255.</param>
         /// <returns></returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static byte? AskByte(string title, byte defaultValue = 0, byte maxValue = 255)
         {
             var result = DialogFactory.GetNumberFromUser(
@@ -136,6 +144,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="defaultValue">Default value.</param>
         /// <returns></returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static byte? AskTransparency(byte defaultValue)
         {
             return AskByte("Transparency", defaultValue);
@@ -146,6 +157,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="defaultValue">Default value. Optional. If not specified, uses 255.</param>
         /// <returns></returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static byte? AskBrightness(byte defaultValue = 255)
         {
             return AskByte("Brightness", defaultValue);
@@ -176,6 +190,9 @@ namespace Alternet.UI
         /// <param name="min">A positive minimal value. Optional. Default is 0.</param>
         /// <param name="max">A positive maximal value. Optional. Default is 100.</param>
         /// <param name="parent">Dialog parent.</param>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static long? GetNumberFromUser(
             string? message,
             string? prompt = null,
@@ -209,6 +226,9 @@ namespace Alternet.UI
         /// <param name="caption">Dialog title.</param>
         /// <param name="defaultValue">Default value. Optional.</param>
         /// <param name="parent">Parent control. Optional.</param>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public static string? GetTextFromUser(
             string? message,
             string? caption,
