@@ -249,7 +249,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets border for all states of the control.
+        /// Gets or sets border for all visual states of the control.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
         [Browsable(false)]
         public virtual ControlStateBorders? Borders
@@ -363,10 +364,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
-        /// with this control.</summary>
-        /// <returns>The <see cref="ContextMenuStrip" /> for this control,
+        /// with this control.
+        /// Usage of this property depends on the control. Not all controls support it.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="ContextMenuStrip" /> for this control,
         /// or <see langword="null" /> if there is no attached <see cref="ContextMenuStrip"/>.
-        /// The default is <see langword="null" />.</returns>
+        /// The default is <see langword="null" />.
+        /// </returns>
         [Category("Behavior")]
         [DefaultValue(null)]
         [Browsable(false)]
@@ -739,10 +744,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets data (images, colors, borders, pens, brushes, etc.) for different
         /// control states.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
-        /// <remarks>
-        /// Usage of this data depends on the control.
-        /// </remarks>
         [Browsable(false)]
         public virtual ControlStateSettings? StateObjects
         {
@@ -774,10 +777,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets background brushes attached to this control.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
-        /// <remarks>
-        /// Usage of this data depends on the control.
-        /// </remarks>
         [Browsable(false)]
         public virtual ControlStateBrushes? Backgrounds
         {
@@ -791,6 +792,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets foreground brushes attached to this control.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
         [Browsable(false)]
         public virtual ControlStateBrushes? Foregrounds
@@ -2008,7 +2010,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the background brush for the control.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
+        /// <remarks>
+        /// Currently <see cref="PictureBox"/> and <see cref="Border"/> use brush assigned to
+        /// this property for background painting.
+        /// </remarks>
         [Browsable(false)]
         public virtual Brush? Background
         {
@@ -2024,10 +2031,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets background images attached to this control.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
-        /// <remarks>
-        /// Usage of this data depends on the control.
-        /// </remarks>
         [Browsable(false)]
         public virtual ControlStateImages? BackgroundImages
         {
@@ -2041,6 +2046,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the background image displayed in the control.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
         /// <returns>An <see cref="Image" /> that represents the image to display in
         /// the background of the control.</returns>
@@ -2064,6 +2070,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the foreground brush for the control.
+        /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
         [Browsable(false)]
         public virtual Brush? Foreground
@@ -2322,7 +2329,7 @@ namespace Alternet.UI
         /// <remarks><see cref="ControlBackgroundStyle.Transparent"/> style is not possible
         /// to set as it is not supported on all platforms.</remarks>
         [Browsable(false)]
-        public ControlBackgroundStyle BackgroundStyle
+        public virtual ControlBackgroundStyle BackgroundStyle
         {
             get
             {
@@ -2433,7 +2440,7 @@ namespace Alternet.UI
         /// plus all control's parents locations.
         /// </summary>
         [Browsable(false)]
-        public PointD AbsolutePosition
+        public virtual PointD AbsolutePosition
         {
             get
             {
@@ -2476,7 +2483,7 @@ namespace Alternet.UI
         /// Enumerates all parent controls.
         /// </summary>
         [Browsable(false)]
-        public IEnumerable<Control> AllParents
+        public virtual IEnumerable<Control> AllParents
         {
             get
             {
@@ -2510,7 +2517,7 @@ namespace Alternet.UI
         /// Gets collection of the attached <see cref="IControlNotification"/> objects.
         /// </summary>
         [Browsable(false)]
-        public IEnumerable<IControlNotification> Notifications
+        public virtual IEnumerable<IControlNotification> Notifications
         {
             get
             {

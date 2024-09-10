@@ -16,6 +16,9 @@ namespace Alternet.UI
         private int busyCursorCounter;
 
         /// <inheritdoc/>
+        public bool AllowCustomCursors => false;
+
+        /// <inheritdoc/>
         public virtual void BeginBusyCursor()
         {
             busyCursorCounter++;

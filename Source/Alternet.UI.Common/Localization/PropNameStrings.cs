@@ -162,6 +162,8 @@ namespace Alternet.UI.Localization
                 if (string.IsNullOrEmpty(str))
                     continue;
                 var propRegistry = registry.GetPropRegistry(name);
+                if (propRegistry is null)
+                    continue;
                 var prm = propRegistry.NewItemParams;
                 prm.Label = str;
             }

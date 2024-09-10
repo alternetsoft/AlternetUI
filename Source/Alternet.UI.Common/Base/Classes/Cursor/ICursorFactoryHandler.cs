@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public interface ICursorFactoryHandler : IDisposable
     {
+        /// <summary>
+        /// Gets whether custom cursors are supported.
+        /// </summary>
+        bool AllowCustomCursors { get; }
+
         /// <inheritdoc cref="App.IsBusyCursor"/>
         bool IsBusyCursor();
 

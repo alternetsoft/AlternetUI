@@ -40,6 +40,7 @@ namespace ControlsSample
             public static string CanFocus = "Могу фокус";
             public static string TabStop = "Таб остановка";
             public static string CanSelect = "Могу выбрать";
+            public static string Background = "Покрасить фон";
         }
 
         public static class BaseComponentProperties
@@ -47,5 +48,25 @@ namespace ControlsSample
             public static string Name = "(Имя)";
             public static string Tag = "Таг";
         }
+
+        public static class BorderProperties
+        {
+            public static string BorderWidth = "Ширина границ";
+            public static string UniformCornerRadius = "Общ радиус угла";
+            public static string UniformRadiusIsPercent = "Радиус угла процент";
+            public static string UniformBorderWidth = "Общ ширина границ";
+            public static string BorderColor = "Цвет границ";
+        }
+
+        public static class UserControlProperties
+        {
+            public static string ScrollBars = "Скроллбары";
+            public static string DropDownMenu = "Выпадающее меню";
+            public static string WantChars = "Разреш ввод символов";
+            public static string HasBorder = "Показать границу";
+        }
     }
 }
+
+
+
