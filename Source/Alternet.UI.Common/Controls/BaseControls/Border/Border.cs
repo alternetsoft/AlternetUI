@@ -87,7 +87,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.UniformCornerRadius"/>
-        public virtual double? UniformCornerRadius
+        public virtual Coord? UniformCornerRadius
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Alternet.UI
 #else
         [Browsable(false)]
 #endif
-        public virtual double? UniformBorderWidth
+        public virtual Coord? UniformBorderWidth
         {
             get
             {
