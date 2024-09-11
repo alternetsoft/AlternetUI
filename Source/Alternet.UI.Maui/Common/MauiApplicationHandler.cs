@@ -236,7 +236,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         IClipboardHandler IApplicationHandler.CreateClipboardHandler()
         {
-            throw new NotImplementedException();
+            return new MauiClipboardHandler();
         }
 
         /// <inheritdoc/>

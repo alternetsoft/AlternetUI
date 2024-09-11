@@ -15,6 +15,6 @@ namespace Alternet.UI
         IDataObject? GetData();
 
         /// <inheritdoc cref="Clipboard.SetDataObject(IDataObject?)"/>
-        void SetData(IDataObject value);
+        void SetData(IDataObject? value);
     }
 }
