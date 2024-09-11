@@ -219,6 +219,11 @@ namespace Alternet.UI
         public static event EventHandler? Idle;
 
         /// <summary>
+        /// Gets whether application is running on the desktop operating system.
+        /// </summary>
+        public static bool IsDesktopOs => IsWindowsOS || IsMacOS || IsLinuxOS;
+
+        /// <summary>
         /// Gets the path for the executable file that started the application, not including
         /// the executable name.</summary>
         /// <returns>
