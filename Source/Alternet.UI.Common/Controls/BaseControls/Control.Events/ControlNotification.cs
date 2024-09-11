@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// An empty implementation of the <see cref="IControlNotification"/> interface.
     /// </summary>
-    public class ControlNotification : IControlNotification
+    public class ControlNotification : DisposableObject, IControlNotification
     {
         /// <inheritdoc/>
         public virtual void AfterSetScrollBarInfo(

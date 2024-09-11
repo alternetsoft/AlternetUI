@@ -7,12 +7,12 @@
 // #define NESTED_OPERATIONS_CHECK
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
+using Alternet.UI.Extensions;
 using Alternet.UI.Threading;
-
 using Alternet.UI.Internal;
-using System.ComponentModel;
 
 namespace Alternet.UI.Port
 {
@@ -532,7 +532,7 @@ namespace Alternet.UI.Port
         [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetValue(DependencyProperty dp, bool value)
         {
-            SetValue(dp, BooleanBoxes.Box(value));
+            SetValue(dp, BoolBoxes.Box(value));
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Alternet.UI.Port
         [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetCurrentValue(DependencyProperty dp, bool value)
         {
-            SetCurrentValue(dp, BooleanBoxes.Box(value));
+            SetCurrentValue(dp, BoolBoxes.Box(value));
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Alternet.UI.Port
         [FriendAccessAllowed] // Built into Base, also used by Core and Framework.
         internal void SetValue(DependencyPropertyKey dp, bool value)
         {
-            SetValue(dp, BooleanBoxes.Box(value));
+            SetValue(dp, BoolBoxes.Box(value));
         }
 
         /// <summary>

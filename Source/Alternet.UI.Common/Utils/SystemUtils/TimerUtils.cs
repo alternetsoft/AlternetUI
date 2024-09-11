@@ -67,6 +67,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Checks whether <see cref="Control.LastClickedTimestamp"/> is less than
+        /// <see cref="ClickRepeatInterval"/>.
+        /// </summary>
+        /// <param name="control">Control to use.</param>
+        /// <returns></returns>
+        public static bool LastClickLessThanRepeatInterval(Control control)
+        {
+            var distance = DateUtils.GetAbsDistanceWithNow(
+                control.LastClickedTimestamp ?? DateTime.Now.Ticks);
+            if (distance < TimerUtils.ClickRepeatInterval)
+                return true;
+            return false;
+        }
+
         private static void ClickRepeatTimerTick(object? sender, EventArgs e)
         {
             ClickRepeatedEvent?.Invoke(sender, e);

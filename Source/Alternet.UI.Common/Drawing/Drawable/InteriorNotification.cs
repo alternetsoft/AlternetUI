@@ -13,6 +13,9 @@ namespace Alternet.UI
     {
         private readonly InteriorDrawable interior;
 
+        private Control? control;
+        private bool subscribedClickRepeated;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InteriorNotification"/> class.
         /// </summary>
@@ -25,8 +28,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseMove(Control sender, MouseEventArgs e)
         {
-            var hitTests = interior.HitTests(sender.ScaleFactor, e.Location);
-            App.LogIf(hitTests.ToString(), false);
+            DebugUtils.DebugCallIf(false, () =>
+            {
+                var hitTests = interior.HitTests(sender.ScaleFactor, e.Location);
+                App.LogIf(hitTests.ToString(), false);
+            });
         }
 
         /// <inheritdoc/>
@@ -35,11 +41,14 @@ namespace Alternet.UI
             bool isVertical,
             ScrollBarInfo value)
         {
-            if (isVertical)
-                return;
-            var prefix = isVertical ? "V: " : "H: ";
-            var s = $"{prefix}{value}";
-            LogUtils.LogAndToFile(s);
+            DebugUtils.DebugCallIf(false, () =>
+            {
+                if (isVertical)
+                    return;
+                var prefix = isVertical ? "V: " : "H: ";
+                var s = $"{prefix}{value}";
+                LogUtils.LogAndToFile(s);
+            });
         }
 
         /// <inheritdoc/>
@@ -58,13 +67,89 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void AfterMouseWheel(Control sender, MouseEventArgs e)
+        public override void AfterVisualStateChanged(Control sender)
         {
+            if (sender.VisualState == VisualControlState.Pressed)
+                SubscribeClickRepeated(sender);
+            else
+                UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
-        public override void AfterVisualStateChanged(Control sender)
+        protected override void DisposeManaged()
         {
+            UnsubscribeClickRepeated();
+            base.DisposeManaged();
+        }
+
+        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        {
+            if (control is null)
+                return;
+
+            if (control.VisualState != VisualControlState.Pressed)
+                return;
+
+            if (TimerUtils.LastClickLessThanRepeatInterval(control))
+                return;
+
+            var mouseLocation = Mouse.GetPosition(control);
+
+            var hitTests = interior.HitTests(control.ScaleFactor, mouseLocation);
+
+            if (!hitTests.IsScrollBar)
+                return;
+
+            ScrollEventType evType;
+
+            switch (hitTests.ScrollBar)
+            {
+                case ScrollBarDrawable.HitTestResult.None:
+                    return;
+                case ScrollBarDrawable.HitTestResult.Thumb:
+                    return;
+                case ScrollBarDrawable.HitTestResult.StartButton:
+                    evType = ScrollEventType.SmallDecrement;
+                    break;
+                case ScrollBarDrawable.HitTestResult.EndButton:
+                    evType = ScrollEventType.SmallIncrement;
+                    break;
+                case ScrollBarDrawable.HitTestResult.BeforeThumb:
+                    evType = ScrollEventType.LargeDecrement;
+                    break;
+                case ScrollBarDrawable.HitTestResult.AfterThumb:
+                    evType = ScrollEventType.LargeIncrement;
+                    break;
+                default:
+                    return;
+            }
+
+            ScrollEventArgs scrollArgs = new();
+
+            scrollArgs.ScrollOrientation = hitTests.Orientation;
+            scrollArgs.Type = evType;
+
+            control.RaiseScroll(scrollArgs);
+        }
+
+        private void UnsubscribeClickRepeated()
+        {
+            this.control = null;
+            if (subscribedClickRepeated)
+            {
+                TimerUtils.ClickRepeated -= OnClickRepeatTimerEvent;
+                subscribedClickRepeated = false;
+            }
+        }
+
+        private void SubscribeClickRepeated(Control control)
+        {
+            if (!subscribedClickRepeated)
+            {
+                this.control = control;
+                TimerUtils.ClickRepeated += OnClickRepeatTimerEvent;
+                subscribedClickRepeated = true;
+            }
         }
     }
 }

@@ -78,7 +78,7 @@ namespace ControlsSample
 
                 var uiLanguage = CommandLineArgs.Default.AsString("UILanguage", "en");
 
-                if (uiLanguage != "en")
+                if (uiLanguage != "en" && DebugUtils.IsDebugDefined)
                 {
                     if (uiLanguage == "ru")
                     {

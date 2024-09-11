@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define ObsoleteModalDialogs
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -97,6 +99,9 @@ namespace Alternet.UI
         /// The return value is the value of the <see cref="ModalResult"/> property before
         /// window closes.
         /// </returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public virtual ModalResult ShowModal()
         {
             return ShowModal(Owner);
@@ -114,6 +119,9 @@ namespace Alternet.UI
         /// The return value is the value of the <see cref="ModalResult"/> property before
         /// window closes.
         /// </returns>
+#if ObsoleteModalDialogs
+        [Obsolete("Method is deprecated.")]
+#endif
         public virtual ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();

@@ -18,8 +18,9 @@ namespace Alternet.UI
             return new UnmanagedDataObjectAdapter(unmanagedDataObject);
         }
 
-        public void SetData(IDataObject value)
+        public void SetData(IDataObject? value)
         {
+            value ??= DataObject.Empty;
             WxApplicationHandler.NativeClipboard.SetDataObject(
                 UnmanagedDataObjectService.GetUnmanagedDataObject(value));
         }

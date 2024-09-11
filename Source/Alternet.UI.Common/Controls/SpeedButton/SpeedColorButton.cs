@@ -200,8 +200,14 @@ namespace Alternet.UI
                 colorDialog ??= new ColorDialog();
                 if (Value is not null)
                     colorDialog.Color = Value;
-                if (colorDialog.ShowModal() == ModalResult.Accepted)
-                    Value = colorDialog.Color;
+
+                colorDialog.ShowAsync((dlg, dlgResult) =>
+                {
+                    if (IsDisposed)
+                        return;
+                    if(dlgResult)
+                        Value = colorDialog.Color;
+                });
             }
             else
             if(ShowPopupWindow)

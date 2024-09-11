@@ -2185,6 +2185,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets alignment as <see cref="HVAlignment"/>.
+        /// This property allows to avoid extra layout calculation when you need
+        /// to set both <see cref="HorizontalAlignment"/> and <see cref="VerticalAlignment"/>.
+        /// </summary>
+        [Browsable(false)]
+        public HVAlignment Alignment
+        {
+            get
+            {
+                return new(HorizontalAlignment, VerticalAlignment);
+            }
+
+            set
+            {
+                var verticalChanged = verticalAlignment != value.Vertical;
+                var horizontalChanged = horizontalAlignment != value.Horizontal;
+                var anyChanged = verticalChanged || horizontalChanged;
+
+                if (!anyChanged)
+                    return;
+
+                if (verticalChanged)
+                {
+                    verticalAlignment = value.Vertical;
+                    VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+                }
+
+                if (horizontalChanged)
+                {
+                    horizontalAlignment = value.Horizontal;
+                    HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+                }
+
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the vertical alignment applied to this control when it
         /// is positioned within a parent control.
         /// </summary>
