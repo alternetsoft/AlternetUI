@@ -22,7 +22,7 @@ namespace ControlsSample
             public static string SuggestedWidth = "Желаем ширина";
             public static string SuggestedHeight = "Желаем высота";
             public static string MinChildMargin = "Мин отступ детей";
-            public static string Margin = "Внешн отступ";
+            public static string Margin = "Внешний отступ";
             public static string Padding = "Внутр отступ";
             public static string MinWidth = "Мин ширина";
             public static string MinHeight = "Мин высота";
@@ -35,7 +35,7 @@ namespace ControlsSample
             public static string ForegroundColor = "Цвет текста";
             public static string Font = "Шрифт";
             public static string IsBold = "Жирный шрифт";
-            public static string VerticalAlignment = "Вертик полож";
+            public static string VerticalAlignment = "Вертикальн полож";
             public static string HorizontalAlignment = "Горизонт полож";
             public static string CanFocus = "Могу фокус";
             public static string TabStop = "Таб остановка";
@@ -65,8 +65,35 @@ namespace ControlsSample
             public static string WantChars = "Разреш ввод символов";
             public static string HasBorder = "Показать границу";
         }
+
+        public static class ButtonProperties
+        {
+            public static string HasBorder = "Показать границу";
+            public static string Image = "Картинка";
+            public static string HoveredImage = "Картинка активно";
+            public static string FocusedImage = "Картинка фокус";
+            public static string PressedImage = "Картинка нажато";
+            public static string DisabledImage = "Картинка неактивно";
+            public static string UseVisualStyleBackColor = "Использ фон стиля";
+            public static string IsDefault = "Кнопка по умолч";
+            public static string ExactFit = "Точный размер";
+            public static string IsCancel = "Кнопка отмены";
+            public static string TextVisible = "Показать текст";
+            public static string TextAlign = "Выравнивание текста";
+        }
+
+        public static class CheckBoxProperties
+        {
+            public static string CheckState = "Состояние отметки";
+            public static string ThreeState = "Три состояния";
+            public static string AlignRight = "Выравнивание вправо";
+            public static string AllowAllStatesForUser = "Разреш три состоян";
+            public static string IsChecked = "Отмечено";
+        }
+
+        public static class RadioButtonProperties
+        {
+            public static string IsChecked = "Отмечено";
+        }
     }
 }
-
-
-
