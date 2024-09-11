@@ -4,22 +4,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description:
-//     Validation-related methods and DependencyProperties
-//
-// See specs at Validation.mht
-//
-
 using System;
 using System.Collections.ObjectModel;
 
-
-
-
 using Alternet.UI;
-
-
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI.Port
 {
@@ -129,7 +118,7 @@ namespace Alternet.UI.Port
                 DependencyProperty.RegisterAttachedReadOnly("HasError",
                         typeof(bool), typeof(Validation),
                         new FrameworkPropertyMetadata(
-                                BooleanBoxes.FalseBox,
+                                BoolBoxes.FalseBox,
                                 PropMetadataOption.NotDataBindable,
                                 OnHasErrorChanged));
 
@@ -514,7 +503,7 @@ namespace Alternet.UI.Port
 
             if (wasValid)
             {
-                targetElement.SetValue(HasErrorPropertyKey, BooleanBoxes.TrueBox);
+                targetElement.SetValue(HasErrorPropertyKey, BoolBoxes.TrueBox);
             }
 
             if (shouldRaiseEvent)
