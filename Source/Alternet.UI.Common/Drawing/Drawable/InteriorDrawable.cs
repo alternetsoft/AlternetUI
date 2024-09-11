@@ -220,27 +220,28 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public HitTestsResult HitTests(Coord scaleFactor, PointD point)
         {
-            HitTestsResult result = new();
-
             var rectangles = GetLayoutRectangles(scaleFactor);
             var hitTest = HitTest(rectangles, point);
-            result.Interior = hitTest;
+
+            ScrollBarDrawable.HitTestResult scrollHitTest;
 
             if (hitTest == InteriorDrawable.HitTestResult.HorzScrollBar && HorzScrollBar is not null
                 && HorzScrollBar.Visible)
             {
                 var horzRectangles = HorzScrollBar.GetLayoutRectangles(scaleFactor);
-                result.ScrollBar = HorzScrollBar.HitTest(horzRectangles, point);
+                scrollHitTest = HorzScrollBar.HitTest(horzRectangles, point);
             }
             else
             if (hitTest == InteriorDrawable.HitTestResult.VertScrollBar && VertScrollBar is not null
                 && VertScrollBar.Visible)
             {
                 var vertRectangles = VertScrollBar.GetLayoutRectangles(scaleFactor);
-                result.ScrollBar = VertScrollBar.HitTest(vertRectangles, point);
+                scrollHitTest = VertScrollBar.HitTest(vertRectangles, point);
             }
+            else
+                scrollHitTest = ScrollBarDrawable.HitTestResult.None;
 
-            return result;
+            return new(hitTest, scrollHitTest);
         }
 
         /// <summary>
@@ -423,18 +424,51 @@ namespace Alternet.Drawing
         /// <summary>
         /// Contains full hit test result, including interior part and scrollbar part.
         /// </summary>
-        public struct HitTestsResult
+        public readonly struct HitTestsResult
         {
             /// <summary>
             /// Gets or sets interior hit test result.
             /// </summary>
-            public InteriorDrawable.HitTestResult Interior;
+            public readonly InteriorDrawable.HitTestResult Interior;
 
             /// <summary>
             /// Gets or sets interior scrollbar test result.
             /// Valid if <see cref="Interior"/> hit test contains scrollbars.
             /// </summary>
-            public ScrollBarDrawable.HitTestResult ScrollBar;
+            public readonly ScrollBarDrawable.HitTestResult ScrollBar;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="HitTestsResult"/> struct.
+            /// </summary>
+            /// <param name="interior"><see cref="Interior"/> property value.</param>
+            /// <param name="scrollBar"><see cref="ScrollBar"/> property value.</param>
+            public HitTestsResult(HitTestResult interior, ScrollBarDrawable.HitTestResult scrollBar)
+            {
+                Interior = interior;
+                ScrollBar = scrollBar;
+            }
+
+            /// <summary>
+            /// Gets whether hit test is on vertical scrollbar.
+            /// </summary>
+            public bool IsVertScrollBar => Interior == InteriorDrawable.HitTestResult.VertScrollBar;
+
+            /// <summary>
+            /// Gets whether hit test is on horizontal scrollbar.
+            /// </summary>
+            public bool IsHorzScrollBar => Interior == InteriorDrawable.HitTestResult.HorzScrollBar;
+
+            /// <summary>
+            /// Gets whether hit test is on horizontal or vertical scrollbar.
+            /// </summary>
+            public bool IsScrollBar => IsHorzScrollBar || IsVertScrollBar;
+
+            /// <summary>
+            /// Gets horizontal or vertical orientation depending on <see cref="IsVertScrollBar"/>
+            /// property value.
+            /// </summary>
+            public ScrollBarOrientation Orientation => IsVertScrollBar
+                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
 
             /// <summary>
             /// Returns a string that represents the current object.

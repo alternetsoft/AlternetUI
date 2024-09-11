@@ -799,8 +799,7 @@ namespace Alternet.UI
             if (VisualState != VisualControlState.Pressed)
                 return;
 
-            var distance = DateUtils.GetAbsDistanceWithNow(LastClickedTimestamp ?? DateTime.Now.Ticks);
-            if (distance < TimerUtils.ClickRepeatInterval)
+            if (TimerUtils.LastClickLessThanRepeatInterval(this))
                 return;
             RaiseClick();
         }

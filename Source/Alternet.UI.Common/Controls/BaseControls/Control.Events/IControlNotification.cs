@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// or control methods are called. Implement this interface or use <see cref="ControlNotification"/>
     /// descendant in order to extend control behavior.
     /// </summary>
-    public interface IControlNotification
+    public interface IControlNotification : IDisposable
     {
         /// <summary>
         /// Called after the <see cref="Control.SetScrollBarInfo(bool, ScrollBarInfo)" />
