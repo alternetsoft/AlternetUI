@@ -25,8 +25,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseMove(Control sender, MouseEventArgs e)
         {
-            var hitTests = interior.HitTests(sender.ScaleFactor, e.Location);
-            App.LogIf(hitTests.ToString(), false);
+            DebugUtils.DebugCallIf(false, () =>
+            {
+                var hitTests = interior.HitTests(sender.ScaleFactor, e.Location);
+                App.LogIf(hitTests.ToString(), false);
+            });
         }
 
         /// <inheritdoc/>
@@ -35,11 +38,14 @@ namespace Alternet.UI
             bool isVertical,
             ScrollBarInfo value)
         {
-            if (isVertical)
-                return;
-            var prefix = isVertical ? "V: " : "H: ";
-            var s = $"{prefix}{value}";
-            LogUtils.LogAndToFile(s);
+            DebugUtils.DebugCallIf(false, () =>
+            {
+                if (isVertical)
+                    return;
+                var prefix = isVertical ? "V: " : "H: ";
+                var s = $"{prefix}{value}";
+                LogUtils.LogAndToFile(s);
+            });
         }
 
         /// <inheritdoc/>
@@ -54,11 +60,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override void AfterMouseLeftButtonUp(Control sender, MouseEventArgs e)
-        {
-        }
-
-        /// <inheritdoc/>
-        public override void AfterMouseWheel(Control sender, MouseEventArgs e)
         {
         }
 
