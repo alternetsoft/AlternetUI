@@ -56,23 +56,20 @@ namespace Alternet.UI
         {
             ImageStretch = false,
             Visible = false,
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Center,
+            Alignment = HVAlignment.Center,
         };
 
         private readonly Control spacer = new Panel()
         {
             SuggestedSize = DefaultImageLabelDistance,
             Visible = false,
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Center,
+            Alignment = HVAlignment.Center,
         };
 
         private readonly GenericLabel label = new()
         {
             Visible = false,
-            VerticalAlignment = VerticalAlignment.Center,
-            HorizontalAlignment = HorizontalAlignment.Center,
+            Alignment = HVAlignment.Center,
         };
 
         private Action? clickAction;
