@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad Software//DTD HoTMetaL PRO 5.0::19981217::extensions to HTML 4.0//EN" "hmpro5.dtd">
+ 
+<HTML>
+<HEAD>
+<STYLE>
+body {background-color: powderblue;}
+h1   {color: blue;}
+p    {color: red;}
+</STYLE> 
+<TITLE></TITLE>
+</HEAD>
+
+<BODY>
+<SCRIPT LANGUAGE="JavaScript">
+var isNav4, isIE4;
+if (parseInt(navigator.appVersion) >= 4) {
+  isNav4 = (navigator.appName == 'Netscape')
+  isIE4 = (navigator.appName.indexOf("Microsoft") != -1)
+}
+</SCRIPT>
+
+<STYLE>
+	.available {color: darkgreen; }
+	.notavailable {color: darkred; }
+</STYLE>
+
+<SCRIPT language="VBScript">
+  Sub Window_onLoad()
+      mytext.style.visibility = "hidden"
+      call TImage1()
+  End Sub
+</SCRIPT>
+<SCRIPT language="PHP">
+  if(!isset($PHP_AUTH_USER)) {
+    Header("WWW-Authenticate: Basic realm=\"My Realm\"");
+    Header("HTTP/1.0 401 Unauthorized");
+    echo "Text to send if user hits Cancel button\n";
+    exit;
+  }
+  else {
+    echo "Hello $PHP_AUTH_USER.<P>";
+    echo "You entered $PHP_AUTH_PW as your password.<P>";
+  }
+</SCRIPT>
+<SCRIPT language="PHP">
+  if(!isset($PHP_AUTH_USER)) {
+    Header("WWW-Authenticate: Basic realm=\"My Realm\"");
+    Header("HTTP/1.0 401 Unauthorized");
+    echo "Text to send if user hits Cancel button\n";
+    exit;
+  }
+  else {
+    echo "Hello $PHP_AUTH_USER.<P>";
+    echo "You entered $PHP_AUTH_PW as your password.<P>";
+  }
+</SCRIPT>
+
+</BODY>

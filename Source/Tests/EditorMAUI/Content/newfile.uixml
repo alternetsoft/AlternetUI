@@ -1,0 +1,13 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Sample.MainWindow"
+        Title="Alternet.UI Sample Window"
+        Size="800,600" StartLocation="CenterScreen">
+
+  <VerticalStackPanel MinChildMargin="5">
+    <Label Text="Sample Label"/>
+
+    <Button Text="Click me" Name="sampleButton"  HorizontalAlignment="Left"
+              Click="SampleButton_Click"/>
+  </VerticalStackPanel>
+</Window>
