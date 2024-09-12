@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.630.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.631.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -309,7 +309,6 @@
     <Type Name="Alternet.UI.WindowsCaretHandler">
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.AutoPinner" />
     <Type Name="Alternet.UI.BaseChildObject`1" />
     <Type Name="Alternet.UI.BaseComponent">
       <Event Name="Disposed" />
@@ -325,7 +324,6 @@
     <Type Name="Alternet.UI.DisposableObject`1">
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.EnumArray`2" />
     <Type Name="Alternet.UI.HandledObject`1">
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
@@ -336,7 +334,6 @@
     </Type>
     <Type Name="Alternet.UI.NameValue`1" />
     <Type Name="Alternet.UI.ObjectToStringFactory" />
-    <Type Name="Alternet.UI.ObjectUniqueId" />
     <Type Name="Alternet.UI.StringSearch" />
     <Type Name="Alternet.UI.TwoDimensionalBuffer`1" />
     <Type Name="Alternet.UI.Cursor">
@@ -387,6 +384,9 @@
     <Type Name="Alternet.UI.DataObject" />
     <Type Name="Alternet.UI.IClipboardHandler" />
     <Type Name="Alternet.UI.IDataObject" />
+    <Type Name="Alternet.UI.PlessClipboardHandler">
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.UI.AdvDictionary`2" />
     <Type Name="Alternet.UI.AdvDictionaryCached`2" />
     <Type Name="Alternet.UI.Display">
@@ -497,6 +497,10 @@
       <Event Name="AfterWrite" />
     </Type>
     <Type Name="Alternet.UI.StreamReadWriteEventArgs" />
+    <Type Name="Alternet.UI.AutoPinner" />
+    <Type Name="Alternet.UI.EnumArray`2" />
+    <Type Name="Alternet.UI.HVAlignment" />
+    <Type Name="Alternet.UI.ObjectUniqueId" />
     <Type Name="Alternet.UI.SynchronizationContext" />
     <Type Name="Alternet.UI.SynchronizationService" />
     <Type Name="Alternet.UI.ISystemSettingsHandler" />
@@ -1265,7 +1269,9 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.ControlNotification" />
+    <Type Name="Alternet.UI.ControlNotification">
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.UI.IControlNotification" />
     <Type Name="Alternet.UI.ControlFactory" />
     <Type Name="Alternet.UI.IControlFactoryHandler" />
@@ -9521,7 +9527,9 @@
     </Type>
     <Type Name="Alternet.UI.WindowInfo" />
     <Type Name="Alternet.UI.SvgColors" />
-    <Type Name="Alternet.UI.InteriorNotification" />
+    <Type Name="Alternet.UI.InteriorNotification">
+      <Event Name="Disposed" />
+    </Type>
     <Type Name="Alternet.UI.SystemFonts" />
     <Type Name="Alternet.UI.ImageSet">
       <Event Name="Changed" />
@@ -9750,6 +9758,8 @@
     <Type Name="Alternet.UI.DeferredContentAttribute" />
     <Type Name="Alternet.UI.Markup.INameScope" />
     <Type Name="Alternet.UI.Extensions.ExtensionsPrivate" />
+    <Type Name="Alternet.UI.Extensions.BoolBoxes" />
+    <Type Name="Alternet.UI.Extensions.NullBoolBoxes" />
     <Type Name="Alternet.UI.Port.IValueSerializerContext" />
     <Type Name="Alternet.UI.Port.ValueSerializer" />
     <Type Name="Alternet.UI.Port.DependencyObject">
