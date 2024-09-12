@@ -49,6 +49,8 @@ namespace ControlsSample
             public static string Tag = "Таг";
         }
 
+        public static string HasBorderStr = "Показать границу";
+
         public static class BorderProperties
         {
             public static string BorderWidth = "Ширина границ";
@@ -63,12 +65,12 @@ namespace ControlsSample
             public static string ScrollBars = "Скроллбары";
             public static string DropDownMenu = "Выпадающее меню";
             public static string WantChars = "Разреш ввод символов";
-            public static string HasBorder = "Показать границу";
+            public static string HasBorder = HasBorderStr;
         }
 
         public static class ButtonProperties
         {
-            public static string HasBorder = "Показать границу";
+            public static string HasBorder = HasBorderStr;
             public static string Image = "Картинка";
             public static string HoveredImage = "Картинка активно";
             public static string FocusedImage = "Картинка фокус";
@@ -95,5 +97,35 @@ namespace ControlsSample
         {
             public static string IsChecked = "Отмечено";
         }
+
+        public static class CustomDateEditProperties
+        {
+            public static string MaxDate = "Макс дата";
+            public static string UseMinDate = "Использ мин дату";
+            public static string UseMaxDate = "Использ макс дату";
+            public static string Value = "Значение";
+            public static string MinDate = "Мин дата";
+        }
+
+        public static class CalendarProperties
+        {
+            public static string MarkDateAttr = "Атрибуты отмеч дней";
+            public static string ShowHolidays = "Показ праздников";
+            public static string NoMonthChange = "Запрет изм месяца";
+            public static string SequentalMonthSelect = "Последов выбор месяца";
+            public static string ShowSurroundWeeks = "Показ окруж недель";
+            public static string ShowWeekNumbers = "Показ номера недель";
+            public static string UseGeneric = "Использ независ календарь";
+            public static string HasBorder = HasBorderStr;
+            public static string FirstDayOfWeek = "Первый день недели";
+        }
+
+        public static class DateTimePickerProperties
+        {
+            public static string Kind = "Тип значения";
+            public static string PopupKind = "Тип редактора";
+        }
     }
 }
+
+ 
