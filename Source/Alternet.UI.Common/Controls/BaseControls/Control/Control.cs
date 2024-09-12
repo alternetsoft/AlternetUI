@@ -11,6 +11,13 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents the method that will handle paint event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">A <see cref="PaintEventArgs" /> that contains the event data.</param>
+    public delegate void PaintEventHandler(object? sender, PaintEventArgs e);
+
+    /// <summary>
     /// Defines the base class for controls, which are components with
     /// visual representation.
     /// </summary>

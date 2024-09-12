@@ -257,10 +257,13 @@ namespace Alternet.UI
         /// <summary>
         /// Paints the background of the control.
         /// </summary>
-        /// <param name="e">A <see cref="PaintEventArgs" /> that contains information
-        /// about the control to paint.</param>
+        /// <param name="e">
+        /// A <see cref="PaintEventArgs" /> that contains information about
+        /// the control to paint.
+        /// </param>
         /// <remarks>
-        /// Currently this method is provided for the compatibility and is not called.
+        /// This method is not called for all the controls.
+        /// It is up to the control to decide whether and how to call this method.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnPaintBackground(PaintEventArgs e)
