@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
-             xmlns:alternet="clr-namespace:Alternet.UI;assembly=Alternet.UI.Maui"
+             xmlns:alternet="http://schemas.alternetsoft.com/alternetui/2024"
              x:Class="SpinPaint.MainPage"
              Title="Alternet.UI MauiTest">
     <Grid RowDefinitions="Auto,*,Auto">
@@ -17,7 +17,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <StackLayout x:Name="panel" Grid.Row="1">
-            <alternet:SkiaContainer x:Name="skiaContainer" SampleProp="5"/>
+            <alternet:SkiaContainer x:Name="skiaContainer"/>
         </StackLayout>
 
         <HorizontalStackLayout x:Name="buttonPanel"

@@ -146,8 +146,11 @@ public partial class MainPage : ContentPage
         */
     }
 
-    private void Button1_Clicked(object? sender, EventArgs e)
+    private async void Button1_Clicked(object? sender, EventArgs e)
     {
+        await Alternet.UI.Clipboard.SetDataObjectAsync(new Alternet.UI.DataObject("Hello"));
+        var result = await Alternet.UI.Clipboard.GetDataObjectAsync();
+        var test = result?.ToString();
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = new();
