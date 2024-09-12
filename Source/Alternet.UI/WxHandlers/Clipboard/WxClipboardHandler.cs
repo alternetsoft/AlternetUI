@@ -8,6 +8,22 @@ namespace Alternet.UI
 {
     internal class WxClipboardHandler : DisposableObject, IClipboardHandler
     {
+        public bool AsyncRequired => false;
+
+        public bool OnlyText => false;
+
+        public Task<IDataObject?> GetDataAsync()
+        {
+            var result = GetData();
+            return Task.FromResult(result);
+        }
+
+        public void GetDataAsync(Action<IDataObject?> action)
+        {
+            var result = GetData();
+            action(result);
+        }
+
         public IDataObject? GetData()
         {
             var unmanagedDataObject =
@@ -23,6 +39,12 @@ namespace Alternet.UI
             value ??= DataObject.Empty;
             WxApplicationHandler.NativeClipboard.SetDataObject(
                 UnmanagedDataObjectService.GetUnmanagedDataObject(value));
+        }
+
+        public Task SetDataAsync(IDataObject? value)
+        {
+            SetData(value);
+            return Task.CompletedTask;
         }
     }
 }
