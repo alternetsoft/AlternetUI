@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class SkiaContainer : SKCanvasView
     {
-        /// <summary>
+        /*/// <summary>
         /// This is sample bindable property declaration.
         /// </summary>
         public static readonly BindableProperty SampleProperty = BindableProperty.Create(
@@ -30,7 +30,7 @@ namespace Alternet.UI
             typeof(float),
             typeof(SkiaContainer),
             0.0f,
-            propertyChanged: OnSamplePropChanged);
+            propertyChanged: OnSamplePropChanged);*/
 
         private readonly InteriorDrawable interior = new();
         private readonly InteriorNotification interiorNotification;
@@ -63,14 +63,14 @@ namespace Alternet.UI
             Unfocused += SkiaContainer_Unfocused;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// This is sample bindable property.
         /// </summary>
         public float SampleProp
         {
             get => (float)GetValue(SampleProperty);
             set => SetValue(SampleProperty, value);
-        }
+        }*/
 
         /// <summary>
         /// Gets control interior element (border and scrollbars).
@@ -78,7 +78,7 @@ namespace Alternet.UI
         public InteriorDrawable Interior => interior;
 
         /// <summary>
-        /// Gets or sets whether 'DrawImage' methods draw unscaled image.
+        /// Gets or sets whether 'DrawImage' methods draw unscaled image. Default is <c>true</c>.
         /// </summary>
         public virtual bool UseUnscaledDrawImage { get; set; } = true;
 
@@ -158,13 +158,13 @@ namespace Alternet.UI
             base.OnParentChanged();
         }
 
-        private static void OnSamplePropChanged(
+        /*private static void OnSamplePropChanged(
             BindableObject bindable,
             object oldValue,
             object newValue)
         {
             ((SkiaContainer)bindable).InvalidateSurface();
-        }
+        }*/
 
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
         {
@@ -175,10 +175,18 @@ namespace Alternet.UI
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
         {
 #if WINDOWS
-            var platformView = GetPlatformView();
-            platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+            if(e.ActionType == SKTouchAction.Pressed)
+            {
+                var platformView = GetPlatformView();
+                platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+            }
 #endif
-
+#if ANDROID
+#endif
+#if IOS
+#endif
+#if MACCATALYST
+#endif
             if (control is null)
                 return;
 
