@@ -1,3 +1,13 @@
+# 0.9.631 (2024 September 12)
+
+- MAUI platform: Fixed SkiaContainer was focused on mouse over and not on mouse down.
+- MAUI platform: Clipboard handler.
+- MAUI platform: Mouse clicks on system scrollbars raise scroll events.
+- Add HVAlignment struct and Control.Alignment property.
+- Temporary disabled custom mouse cursors on high dpi as they are not properly supported by wxWidgets.
+- Marked modal dialog methods as obsolete (MAUI platform doesn't support modal dialogs).
+- Add BoolBoxes, NullBoolBoxes, App.IsDesktopOs.
+
 # 0.9.630 (2024 September 9)
 
 - MAUI platform: System scrollbars are now painted for the SkiaContainer.
