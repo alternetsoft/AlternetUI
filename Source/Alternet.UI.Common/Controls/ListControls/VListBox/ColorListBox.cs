@@ -124,6 +124,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates item for the specified color and title.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <param name="value">Color value.</param>
+        /// <returns></returns>
+        public virtual ListControlItem CreateItem(Color value, string? title = null)
+        {
+            return ColorComboBox.DefaultCreateItem(value, title);
+        }
+
+        /// <summary>
+        /// Adds color to the list of colors.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <param name="value">Color value.</param>
+        public virtual void AddColor(Color value, string? title = null)
+        {
+            Items.Add(CreateItem(value, title));
+        }
+
+        /// <summary>
+        /// Adds colors from the specified color categories.
+        /// </summary>
+        /// <param name="categories">Array of categories to add colors from.</param>
+        public virtual void AddColors(KnownColorCategory[]? categories)
+        {
+            ListControlUtils.AddColors(this, false, null, categories);
+        }
+
+        /// <summary>
         /// Initializes control with default colors and assigns item painter.
         /// This method is called from constructor.
         /// </summary>

@@ -71,19 +71,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes <see cref="ListControl"/> with list of known colors
-        /// (Web and Standard colors are used).
+        /// Initializes <see cref="ListControl"/> with list of known colors.
         /// </summary>
         /// <param name="control">Control instance which items will be filled with colors.</param>
         /// <param name="defaultValue">Select this color in <see cref="ListControl"/>.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
+        /// <param name="cats">Array of categories to add colors from. Optional. If not specified,
+        /// standard and web colors will be added.</param>
         public static void AddColors(
             ListControl control,
             bool select = true,
-            Color? defaultValue = null)
+            Color? defaultValue = null,
+            KnownColorCategory[]? cats = null)
         {
+            cats ??= [KnownColorCategory.Standard, KnownColorCategory.Web];
+
             var knownColors =
-                Color.GetKnownColors(KnownColorCategory.Standard, KnownColorCategory.Web);
+                Color.GetKnownColors(cats);
             var colors = new List<Color>();
             colors.AddRange(knownColors);
 
@@ -92,13 +96,13 @@ namespace Alternet.UI
 
             foreach (var item in colors)
             {
-                ListControlItem controlItem = new(item.Name, item);
+                ListControlItem controlItem = new(item.NameLocalized, item);
                 control.Items.Add(controlItem);
             }
 
             if (select && defaultValue is not null)
             {
-                var found = control.FindStringExact(defaultValue.Name);
+                var found = control.FindStringExact(defaultValue.NameLocalized);
                 if (found != null)
                     control.SelectedIndex = found.Value;
             }
