@@ -88,16 +88,23 @@ namespace Alternet.UI.Build.Tasks
 
         private void GenerateCSharpOutput(ITaskItem inputFile)
         {
+            var targetPath = GetValidTargetFilePath(inputFile);
+
+            File.Delete(targetPath);
+
             using var stream = File.OpenRead(inputFile.ItemSpec);
 
+            var metadata = inputFile.GetMetadata("ResourceName")
+                ?? throw new InvalidOperationException("No resource name specified");
+
             var document = new UIXmlDocument(
-                inputFile.GetMetadata("ResourceName") ?? throw new InvalidOperationException("No resource name specified"),
+                metadata,
                 stream,
                 WellKnownApiInfo.Provider);
 
             var output = CSharpUIXmlCodeGenerator.Generate(document, this, inputFile);
 
-            File.WriteAllText(GetValidTargetFilePath(inputFile), output);
+            File.WriteAllText(targetPath, output);
 
             LogDebug($"{inputFile.ItemSpec}: Generated code.");
         }
@@ -116,7 +123,8 @@ namespace Alternet.UI.Build.Tasks
                 message, null);
 
         public void LogDebugHigh(string message) =>
-            Log.LogMessage(LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.High, message, null);
+            Log.LogMessage(
+                LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.High, message, null);
 
         public void LogError(
             ITaskItem? inputFile,

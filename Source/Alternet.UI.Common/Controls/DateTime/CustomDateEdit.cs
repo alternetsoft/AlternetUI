@@ -140,6 +140,7 @@ namespace Alternet.UI
         /// Gets or sets whether to use <see cref="MaxDate"/> and
         /// <see cref="MinDate"/> for the date range limitation.
         /// </summary>
+        [Browsable(false)]
         public virtual bool UseMinMaxDate
         {
             get

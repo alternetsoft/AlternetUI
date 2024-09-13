@@ -11,10 +11,25 @@ namespace Alternet.UI
     /// </summary>
     public interface IClipboardHandler : IDisposable
     {
+        /// <inheritdoc cref="Clipboard.AsyncRequired"/>
+        bool AsyncRequired { get; }
+
+        /// <inheritdoc cref="Clipboard.OnlyText"/>
+        bool OnlyText { get; }
+
         /// <inheritdoc cref="Clipboard.GetDataObject"/>
         IDataObject? GetData();
 
+        /// <inheritdoc cref="Clipboard.GetDataObjectAsync()"/>
+        Task<IDataObject?> GetDataAsync();
+
+        /// <inheritdoc cref="Clipboard.GetDataObjectAsync"/>
+        void GetDataAsync(Action<IDataObject?> action);
+
         /// <inheritdoc cref="Clipboard.SetDataObject(IDataObject?)"/>
         void SetData(IDataObject? value);
+
+        /// <inheritdoc cref="Clipboard.SetDataObjectAsync(IDataObject?)"/>
+        Task SetDataAsync(IDataObject? value);
     }
 }

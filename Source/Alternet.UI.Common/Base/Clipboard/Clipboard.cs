@@ -1,12 +1,22 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     /// <summary>
-    ///  Provides methods to place data on and retrieve data from the system clipboard.
+    /// Provides methods to place data on and retrieve data from the system clipboard.
     /// </summary>
+    /// <remarks>
+    /// Some platforms require using of async methods. Use <see cref="AsyncRequired"/>
+    /// to check this.
+    /// </remarks>
+    /// <remarks>
+    /// Some platforms support only text format on the clipboard.
+    /// Use <see cref="OnlyText"/> to check this.
+    /// </remarks>
     public static class Clipboard
     {
         private static IClipboardHandler? handler;
@@ -20,6 +30,16 @@ namespace Alternet.UI
 
             set => handler = value;
         }
+
+        /// <summary>
+        /// Gets whether async methods are required to use when working with the clipboard.
+        /// </summary>
+        public static bool AsyncRequired => Handler.AsyncRequired;
+
+        /// <summary>
+        /// Gets whether only text format is supported by the clipboard.
+        /// </summary>
+        public static bool OnlyText => Handler.OnlyText;
 
         /// <summary>
         /// Gets a value indicating whether there is data on the
@@ -53,8 +73,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the data that is currently on the system <see cref='Clipboard'/>,
-        /// or <see langword="null"/> if there is no data on the Clipboard.
+        /// Retrieves the data that is currently on the system clipboard,
+        /// or <see langword="null"/> if there is no data on the clipboard.
         /// </summary>
         public static IDataObject? GetDataObject()
         {
@@ -62,9 +82,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Clears the Clipboard and then adds data to it.
+        /// Retrieves the data that is currently on the system clipboard,
+        /// or <see langword="null"/> if there is no data on the clipboard.
+        /// Operation is performed asynchroniously.
         /// </summary>
-        /// <param name="value">The data to place on the Clipboard.</param>
+        public static Task<IDataObject?> GetDataObjectAsync()
+        {
+            return Handler.GetDataAsync();
+        }
+
+        /// <summary>
+        /// Retrieves the data that is currently on the system clipboard,
+        /// or <see langword="null"/> if there is no data on the clipboard.
+        /// Operation is performed asynchroniously.
+        /// </summary>
+        /// <param name="action">Action to call after operation is completed.</param>
+        public static void GetDataObjectAsync(Action<IDataObject?> action)
+        {
+            Handler.GetDataAsync(action);
+        }
+
+        /// <summary>
+        /// Sets data to the clipboard asynchroniously.
+        /// </summary>
+        /// <param name="value">The data to place on the clipboard.</param>
+        public static Task SetDataObjectAsync(IDataObject? value)
+        {
+            return Handler.SetDataAsync(value);
+        }
+
+        /// <summary>
+        /// Sets data to the clipboard.
+        /// </summary>
+        /// <param name="value">The data to place on the clipboard.</param>
         public static void SetDataObject(IDataObject? value)
         {
             SetDataObject(value, copy: false);
