@@ -1428,7 +1428,7 @@ namespace Alternet.Drawing
                 colors.Add(new Color(item.KnownColor));
             }
 
-            colors.Sort(new ColorNameComparer());
+            colors.Sort(new ColorNameLocalizedComparer());
             return colors;
         }
 
@@ -1942,8 +1942,28 @@ namespace Alternet.Drawing
                 color = KnownColorTable.KnownColorToArgb(knownColor);
         }
 
-        internal class ColorNameComparer : IComparer<Color>
+        /// <summary>
+        /// Implements <see cref="IComparer{Color}"/> interface. Compares two colors
+        /// using string compare of their names.
+        /// </summary>
+        public class ColorNameLocalizedComparer : IComparer<Color>
         {
+            /// <inheritdoc/>
+            public int Compare(Color? color1, Color? color2)
+            {
+                var name1 = color1?.NameLocalized;
+                var name2 = color2?.NameLocalized;
+                return string.Compare(name1, name2);
+            }
+        }
+
+        /// <summary>
+        /// Implements <see cref="IComparer{Color}"/> interface. Compares two colors
+        /// using string compare of their names.
+        /// </summary>
+        public class ColorNameComparer : IComparer<Color>
+        {
+            /// <inheritdoc/>
             public int Compare(Color? color1, Color? color2)
             {
                 var name1 = color1?.Name;

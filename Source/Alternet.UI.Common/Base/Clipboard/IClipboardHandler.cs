@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="Clipboard.GetDataObjectAsync()"/>
         Task<IDataObject?> GetDataAsync();
 
-        /// <inheritdoc cref="Clipboard.GetDataObjectAsync"/>
+        /// <inheritdoc cref="Clipboard.GetDataObjectAsync(Action{IDataObject?})"/>
         void GetDataAsync(Action<IDataObject?> action);
 
         /// <inheritdoc cref="Clipboard.SetDataObject(IDataObject?)"/>
