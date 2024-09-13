@@ -72,7 +72,8 @@ namespace PropertyGridSample
 
             // Sample localization of the property label
             var prm = PropertyGrid.GetNewItemParams(typeof(Control), "Name");
-            prm.Label = "(name)";
+            if(prm is not null)
+                prm.Label = "(name)";
         }
 
         private static void InitIgnorePropNames(ICollection<string> items)
