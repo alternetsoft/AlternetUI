@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <PropertyGroup>
+	<UseFullAlternetUI Condition="'$(UseFullAlternetUI)'==''">true</UseFullAlternetUI>
+    </PropertyGroup>
+
     <PropertyGroup Condition="'$(AlternetUIBuildTaskAllPlatformsPath)' == ''">
         <AlternetUIBuildTaskAllPlatformsPath>$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\bin\Debug\</AlternetUIBuildTaskAllPlatformsPath>
     </PropertyGroup>
@@ -8,21 +12,19 @@
     <Import Project="$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" />
     <Import Project="$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" />
 
-  <ItemGroup Condition="false">
-    <PackageReference Include="Alternet.UI" Version="0.9.516-beta" />
-  </ItemGroup>
-
   <ItemGroup Condition="Exists($(AlternetUIPath))">
-	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI\Alternet.UI.csproj" PrivateAssets="All">
+	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI\Alternet.UI.csproj"
+		Condition="'$(UseFullAlternetUI)'=='true'"
+		PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
-
 
 	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI.Common\Alternet.UI.Common.csproj" PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
+
 	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
