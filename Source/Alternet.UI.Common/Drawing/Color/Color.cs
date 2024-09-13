@@ -640,6 +640,37 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the localized name of this <see cref="Color"/>.
+        /// </summary>
+        /// <value>The localized name of this <see cref="Color"/>.</value>
+        /// <remarks>
+        /// This method returns either the user-defined name of the color, if
+        /// the color was created from a name,
+        /// or the name of the known color. For custom colors, the RGB value
+        /// is returned.
+        /// </remarks>
+        /// <remarks>
+        /// In order to get localized name of the known color, getter of this property calls
+        /// <see cref="ColorUtils.GetColorInfo(KnownColor)"/> and uses
+        /// <see cref="IKnownColorInfo.LabelLocalized"/> property.
+        /// </remarks>
+        public string NameLocalized
+        {
+            get
+            {
+                if (IsKnownColor)
+                {
+                    var info = ColorUtils.GetColorInfo(knownColor);
+                    var result = info.LabelLocalized;
+                    if (!string.IsNullOrEmpty(result))
+                        return result;
+                }
+
+                return Name;
+            }
+        }
+
+        /// <summary>
         /// Gets color name and ARGB for the debug purposes.
         /// </summary>
         public string NameAndARGBValue

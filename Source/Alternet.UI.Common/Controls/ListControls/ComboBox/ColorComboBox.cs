@@ -24,7 +24,7 @@ namespace Alternet.UI
         public static IComboBoxItemPainter Painter = new DefaultItemPainter();
 
         /// <summary>
-        /// Gets or sets method that initializes items in <see cref="ColorComboBox"/>.
+        /// Gets or sets default method that initializes items in <see cref="ColorComboBox"/>.
         /// </summary>
         public static Action<ColorComboBox>? InitColors = InitDefaultColors;
 
@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// Color value must be added to the list of colors
         /// before selecting it.
         /// </summary>
-        public Color? Value
+        public virtual Color? Value
         {
             get
             {
@@ -145,7 +145,57 @@ namespace Alternet.UI
             ListControlUtils.AddColors(control);
         }
 
-        private void Initialize(bool defaultColors = true)
+        /// <summary>
+        /// Default method of the item creation for the specified color and title.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <param name="value">Color value.</param>
+        /// <returns></returns>
+        public static ListControlItem DefaultCreateItem(Color value, string? title = null)
+        {
+            title ??= value.NameLocalized;
+            ListControlItem controlItem = new(title, value);
+            return controlItem;
+        }
+
+        /// <summary>
+        /// Creates item for the specified color and title.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <param name="value">Color value.</param>
+        /// <returns></returns>
+        public virtual ListControlItem CreateItem(Color value, string? title = null)
+        {
+            return DefaultCreateItem(value, title);
+        }
+
+        /// <summary>
+        /// Adds colors from the specified color categories.
+        /// </summary>
+        /// <param name="categories">Array of categories to add colors from.</param>
+        public virtual void AddColors(KnownColorCategory[]? categories)
+        {
+            ListControlUtils.AddColors(this, false, null, categories);
+        }
+
+        /// <summary>
+        /// Adds color to the list of colors.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <param name="value">Color value.</param>
+        public virtual void AddColor(Color value, string? title = null)
+        {
+            Items.Add(CreateItem(value, title));
+        }
+
+        /// <summary>
+        /// Performs default initialization of the colors list and assigns item painter.
+        /// </summary>
+        /// <param name="defaultColors">Whether to add default colors.</param>
+        protected virtual void Initialize(bool defaultColors = true)
         {
             if (defaultColors)
             {

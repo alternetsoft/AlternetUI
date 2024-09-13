@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -1659,6 +1660,34 @@ namespace Alternet.UI.Localization
         public virtual void SetLabel(KnownColor color, string label)
         {
             ColorUtils.SetLabelLocalized(color, label);
+        }
+
+        /// <summary>
+        /// Loads color name localizations from the static fields of the specified type.
+        /// </summary>
+        /// <param name="container">Container with static fields which
+        /// store color names localizations.</param>
+        public virtual void LoadFromStaticFields(Type container)
+        {
+            var fields = container.GetFields(BindingFlags.Static | BindingFlags.Public);
+
+            foreach (var field in fields)
+            {
+                var name = field.Name;
+                var value = field.GetValue(null);
+
+                if (value is not string str)
+                    continue;
+                if (string.IsNullOrEmpty(str))
+                    continue;
+
+                var propInfo = GetType().GetProperty(name);
+
+                if (propInfo is null)
+                    continue;
+
+                propInfo.SetValue(this, value);
+            }
         }
     }
 }

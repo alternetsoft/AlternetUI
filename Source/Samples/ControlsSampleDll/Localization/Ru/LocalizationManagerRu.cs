@@ -10,6 +10,7 @@ namespace ControlsSample
         {
             PropNameStrings.RegisterPropNameLocalizations(typeof(EnumValuesRu));
             PropNameStrings.RegisterPropNameLocalizations(typeof(PropNamesRu));
+            KnownColorStrings.Default.LoadFromStaticFields(typeof(ColorNamesRu));
         }
     }
 }

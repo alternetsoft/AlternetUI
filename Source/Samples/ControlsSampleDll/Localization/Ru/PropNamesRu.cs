@@ -6,6 +6,14 @@ namespace ControlsSample
 {
     public static class PropNamesRu
     {
+        public static class ThicknessProperties
+        {
+            public static string Left = "Слева";
+            public static string Top = "Сверху";
+            public static string Right = "Справа";
+            public static string Bottom = "Снизу";
+        }
+
         public static class ControlProperties
         {
             public static string Layout = "Макет";
