@@ -11,6 +11,8 @@ namespace Alternet.UI.Build.Tasks
         private const string EditorNamespace = "http://schemas.alternetsoft.com/editor/2024";
         private const string UINamespace = "http://schemas.alternetsoft.com/ui/2021";
         private const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
+        private const string DebuggerUINamespace = "http://schemas.alternetsoft.com/debuggerui/2024";
+
         private const string ClassAttributeNotFound = "x:Class attribute on root node was not found.";
         private const string NameAttributeName = "Name";
         private static readonly XName classAttributeName = (XNamespace)UIXmlNamespace + "Class";
@@ -171,6 +173,8 @@ namespace Alternet.UI.Build.Tasks
                 return "Alternet.UI";
             if(ns == EditorNamespace)
                 return "Alternet.Editor";
+            if (ns == DebuggerUINamespace)
+                return "Alternet.Scripter.Debugger.UI.AlternetUI";
 
             return ParseClrNamespaceFromXmlns(ns);
         }
@@ -181,7 +185,9 @@ namespace Alternet.UI.Build.Tasks
             if (ns == UINamespace)
                 return "Alternet.UI.Common";
             if (ns == EditorNamespace)
-                return "Alternet.Editor.X.v9";
+                return "Alternet.Editor.AlterNetUI.v10";
+            if (ns == DebuggerUINamespace)
+                return "Alternet.Scripter.Debugger.UI.AlternetUI";
 
             return "<unknown-assembly>";
         }

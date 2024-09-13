@@ -65,7 +65,6 @@ using System;
             w.WriteLine();
             w.WriteLine("private bool contentLoaded;");
             w.WriteLine();
-            /*w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");*/
             w.WriteLine("public void InitializeComponent()");
             using (new BlockIndent(w))
             {
@@ -74,12 +73,6 @@ using System;
                 w.WriteLine("if (contentLoaded)");
                     w.WriteLineIndented("return;");
                 w.WriteLine("contentLoaded = true;");
-/*
-                w.WriteLine($"var uixmlStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(\"{document.ResourceName}\");");
-                w.WriteLine("if (uixmlStream == null)");
-                    w.WriteLineIndented("throw new InvalidOperationException();");
-                w.WriteLine("new Alternet.UI.UixmlLoader().LoadExisting(uixmlStream, this);");
-*/
                 w.WriteLine($"Alternet.UI.UixmlLoader.LoadExisting(\"{document.ResourceName}\", this);");
 
                 w.WriteLine();
@@ -100,7 +93,6 @@ using System;
             w.WriteLine("[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]");
             w.WriteLine("class " + UIXmlPreviewerConstructorMarkerTypeName + " {}");
             w.WriteLine();
-            /*w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");*/
             w.WriteLine($"{document.ClassName}(UIXmlPreviewerConstructorMarkerType _)");
             using (new BlockIndent(w))
             {
