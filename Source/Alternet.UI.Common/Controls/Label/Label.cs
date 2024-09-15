@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// necessarily the total width of the control, since a padding for the
         /// border (depending on the controls border style) may be added.
         /// </remarks>
-        public virtual double? MaxTextWidth
+        public virtual Coord? MaxTextWidth
         {
             get
             {
@@ -123,6 +123,15 @@ namespace Alternet.UI
         public virtual void Wrap(Coord? value = null)
         {
             MaxTextWidth = value;
+        }
+
+        /// <summary>
+        /// Sets <see cref="MaxTextWidth"/> to the parent's client width.
+        /// </summary>
+        public virtual void WrapToParent()
+        {
+            if (Parent is not null)
+                MaxTextWidth = Parent.ClientSize.Width - Parent.Padding.Horizontal;
         }
 
         /// <inheritdoc/>
