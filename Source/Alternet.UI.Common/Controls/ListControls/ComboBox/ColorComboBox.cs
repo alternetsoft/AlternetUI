@@ -101,17 +101,8 @@ namespace Alternet.UI
             {
                 if (Value == value)
                     return;
-                foreach(var item in Items)
-                {
-                    if (item is not ListControlItem item2)
-                        continue;
-                    if (item2.Value is not Color color)
-                        continue;
-                    if (color != value)
-                        continue;
-                    SelectedItem = item;
-                    break;
-                }
+                var item = Find(value);
+                SelectedItem = item;
             }
         }
 
@@ -186,9 +177,48 @@ namespace Alternet.UI
         /// <param name="title">Color title. Optional. If not specified,
         /// <see cref="Color.NameLocalized"/> will be used.</param>
         /// <param name="value">Color value.</param>
-        public virtual void AddColor(Color value, string? title = null)
+        public virtual ListControlItem AddColor(Color value, string? title = null)
         {
-            Items.Add(CreateItem(value, title));
+            var item = CreateItem(value, title);
+            Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Finds item with the specified color.
+        /// </summary>
+        /// <param name="value">Color value.</param>
+        /// <returns></returns>
+        public virtual ListControlItem? Find(Color? value)
+        {
+            if (value is null)
+                return null;
+
+            foreach (var item in Items)
+            {
+                if (item is not ListControlItem item2)
+                    continue;
+                if (item2.Value is not Color color)
+                    continue;
+                if (color != value)
+                    continue;
+                return item2;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Finds item with the specified color or adds it.
+        /// </summary>
+        /// <param name="value">Color value.</param>
+        /// <param name="title">Color title. Optional.</param>
+        /// <returns></returns>
+        public virtual ListControlItem FindOrAdd(Color value, string? title = null)
+        {
+            var result = Find(value);
+            result ??= AddColor(value, title);
+            return result;
         }
 
         /// <summary>
