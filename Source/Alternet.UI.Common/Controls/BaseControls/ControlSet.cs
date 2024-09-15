@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to perform group operations on the controls.
     /// </summary>
-    public class ControlSet
+    public partial class ControlSet
     {
         /// <summary>
         /// Gets <see cref="ControlSet"/> without items.
@@ -45,11 +45,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the maximum width among all controls in the set.
         /// </summary>
-        public double MaxWidth
+        public virtual Coord MaxWidth
         {
             get
             {
-                double result = 0;
+                Coord result = 0;
                 foreach (var item in items)
                     result = Math.Max(result, item.Width);
                 return result;
@@ -62,11 +62,11 @@ namespace Alternet.UI
         /// <remarks>
         /// Useful for <see cref="ControlAndLabel"/> and other controls that have inner label.
         /// </remarks>
-        public double LabelMaxWidth
+        public virtual Coord LabelMaxWidth
         {
             get
             {
-                double result = 0;
+                Coord result = 0;
                 foreach (var item in items)
                 {
                     if (item is IControlAndLabel control)
@@ -84,11 +84,11 @@ namespace Alternet.UI
         /// Useful for <see cref="ControlAndLabel"/> and other controls that have inner controls.
         /// This function works with <see cref="ControlAndLabel.MainControl"/>.
         /// </remarks>
-        public double InnerMaxWidth
+        public virtual Coord InnerMaxWidth
         {
             get
             {
-                double result = 0;
+                Coord result = 0;
                 foreach (var item in items)
                 {
                     if (item is IControlAndLabel control)
@@ -102,11 +102,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the maximum height among all controls in the set.
         /// </summary>
-        public double MaxHeight
+        public virtual Coord MaxHeight
         {
             get
             {
-                double result = 0;
+                Coord result = 0;
                 foreach (var item in items)
                     result = Math.Max(result, item.Height);
                 return result;
@@ -161,40 +161,46 @@ namespace Alternet.UI
         /// Sets vertical alignmnent for all the controls in the set.
         /// </summary>
         /// <param name="value">A vertical alignment setting.</param>
-        public ControlSet VerticalAlignment(VerticalAlignment value)
+        public virtual ControlSet VerticalAlignment(VerticalAlignment value)
         {
-            foreach (var item in items)
-                item.VerticalAlignment = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.VerticalAlignment = value;
+            });
         }
 
         /// <summary>
         /// Sets font for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
-        public ControlSet Font(Font? value)
+        public virtual ControlSet Font(Font? value)
         {
-            foreach (var item in items)
-                item.Font = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.Font = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="Control.IsBold"/> for all the controls in the set.
         /// </summary>
         /// <param name="value">New value.</param>
-        public ControlSet IsBold(bool value)
+        public virtual ControlSet IsBold(bool value)
         {
-            foreach (var item in items)
-                item.IsBold = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.IsBold = value;
+            });
         }
 
         /// <summary>
         /// Sets background color for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
-        public ControlSet BackgroundColor(Color? value)
+        public virtual ControlSet BackgroundColor(Color? value)
         {
             foreach (var item in items)
                 item.BackgroundColor = value;
@@ -205,7 +211,7 @@ namespace Alternet.UI
         /// Sets background color for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
-        public ControlSet ForegroundColor(Color? value)
+        public virtual ControlSet ForegroundColor(Color? value)
         {
             foreach (var item in items)
                 item.ForegroundColor = value;
@@ -213,14 +219,63 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="Control.SuspendLayout()"/> for all parents of the controls in the set.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlSet SuspendLayout()
+        {
+            foreach (var item in items)
+            {
+                item.Parent?.SuspendLayout();
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Calls <see cref="Control.SuspendLayout()"/> for all parents of the controls in the set.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlSet ResumeLayout()
+        {
+            foreach (var item in items)
+            {
+                item.Parent?.ResumeLayout();
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="SuspendLayout"/>
+        /// and <see cref="ResumeLayout"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        public virtual ControlSet DoInsideLayout(Action action)
+        {
+            SuspendLayout();
+            try
+            {
+                action();
+                return this;
+            }
+            finally
+            {
+                ResumeLayout();
+            }
+        }
+
+        /// <summary>
         /// Sets <see cref="Control.Visible"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">New property value.</param>
-        public ControlSet Visible(bool value)
+        public virtual ControlSet Visible(bool value)
         {
-            foreach (var item in items)
-                item.Visible = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.Visible = value;
+            });
         }
 
         /// <summary>
@@ -228,7 +283,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New 'Enabled' property value.</param>
         /// <param name="index">Index of the control.</param>
-        public ControlSet Enabled(int index, bool value)
+        public virtual ControlSet Enabled(int index, bool value)
         {
             items[index].Enabled = value;
             return this;
@@ -238,7 +293,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Enabled"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">New 'Enabled' property value.</param>
-        public ControlSet Enabled(bool value)
+        public virtual ControlSet Enabled(bool value)
         {
             foreach (var item in items)
                 item.Enabled = value;
@@ -250,7 +305,7 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="T">Type of the action parameter.</typeparam>
         /// <param name="action">Action to execute.</param>
-        public ControlSet Action<T>(Action<T> action)
+        public virtual ControlSet Action<T>(Action<T> action)
             where T : Control
         {
             if (typeof(T) == typeof(Control))
@@ -272,7 +327,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
-        public ControlSet SuggestedWidthToMax()
+        public virtual ControlSet SuggestedWidthToMax()
         {
             var v = MaxWidth;
             return SuggestedWidth(v);
@@ -281,7 +336,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
-        public ControlSet WidthToMax()
+        public virtual ControlSet WidthToMax()
         {
             var v = MaxWidth;
             return Width(v);
@@ -290,7 +345,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested height for all the controls to the max value in the set.
         /// </summary>
-        public ControlSet SuggestedHeightToMax()
+        public virtual ControlSet SuggestedHeightToMax()
         {
             return SuggestedHeight(MaxHeight);
         }
@@ -298,114 +353,132 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the suggested width for all the controls in the set.
         /// </summary>
-        public ControlSet SuggestedWidth(double width)
+        public virtual ControlSet SuggestedWidth(double width)
         {
-            foreach (var item in items)
+            return DoInsideLayout(() =>
             {
-                item.SuggestedWidth = width;
-            }
-
-            return this;
+                foreach (var item in items)
+                {
+                    item.SuggestedWidth = width;
+                }
+            });
         }
 
         /// <summary>
         /// Sets the width for all the controls in the set.
         /// </summary>
-        public ControlSet Width(double width)
+        public virtual ControlSet Width(double width)
         {
-            foreach (var item in items)
+            return DoInsideLayout(() =>
             {
-                item.Width = width;
-            }
-
-            return this;
+                foreach (var item in items)
+                {
+                    item.Width = width;
+                }
+            });
         }
 
         /// <summary>
         /// Sets the suggested height for all the controls in the set.
         /// </summary>
-        public ControlSet SuggestedHeight(double height)
+        public virtual ControlSet SuggestedHeight(double height)
         {
-            foreach (var item in items)
-                item.SuggestedHeight = height;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.SuggestedHeight = height;
+            });
         }
 
         /// <summary>
         /// Sets horizontal alignmnent for all the controls in the set.
         /// </summary>
         /// <param name="value">A horizontal alignment setting.</param>
-        public ControlSet HorizontalAlignment(HorizontalAlignment value)
+        public virtual ControlSet HorizontalAlignment(HorizontalAlignment value)
         {
-            foreach (var item in items)
-                item.HorizontalAlignment = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.HorizontalAlignment = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="Control.Margin"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">An oouter margin of a control.</param>
-        public ControlSet Margin(Thickness value)
+        public virtual ControlSet Margin(Thickness value)
         {
-            foreach (var item in items)
-                item.Margin = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.Margin = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="Control.Padding"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">A padding of a control.</param>
-        public ControlSet Padding(Thickness value)
+        public virtual ControlSet Padding(Thickness value)
         {
-            foreach (var item in items)
-                item.Padding = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.Padding = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="Control.Size"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">size of a control.</param>
-        public ControlSet Size(SizeD value)
+        public virtual ControlSet Size(SizeD value)
         {
-            foreach (var item in items)
-                item.Size = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.Size = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="Control.MinimumSize"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum size of a control.</param>
-        public ControlSet MinSize(SizeD value)
+        public virtual ControlSet MinSize(SizeD value)
         {
-            foreach (var item in items)
-                item.MinimumSize = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.MinimumSize = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="Control.MinWidth"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum width of a control.</param>
-        public ControlSet MinWidth(double value)
+        public virtual ControlSet MinWidth(double value)
         {
-            foreach (var item in items)
-                item.MinWidth = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.MinWidth = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="Control.MinHeight"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum height of a control.</param>
-        public ControlSet MinHeight(double value)
+        public virtual ControlSet MinHeight(double value)
         {
-            foreach (var item in items)
-                item.MinHeight = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.MinHeight = value;
+            });
         }
 
         /// <summary>
@@ -415,33 +488,36 @@ namespace Alternet.UI
         /// <param name="top">The margin for the top side.</param>
         /// <param name="right">The margin for the right side.</param>
         /// <param name="bottom">The margin for the bottom side.</param>
-        public ControlSet Margin(double left, double top, double right, double bottom)
+        public virtual ControlSet Margin(Coord left, Coord top, Coord right, Coord bottom)
         {
-            Thickness value = new(left, top, right, bottom);
-            foreach (var item in items)
-                item.Margin = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                Thickness value = new(left, top, right, bottom);
+                foreach (var item in items)
+                    item.Margin = value;
+            });
         }
 
         /// <summary>
         /// Sets <see cref="ControlAndLabel.LabelSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>
-        public ControlSet LabelSuggestedWidth(double value)
+        public virtual ControlSet LabelSuggestedWidth(double value)
         {
-            foreach (var item in Items)
+            return DoInsideLayout(() =>
             {
-                if (item is IControlAndLabel control)
-                    control.Label.SuggestedWidth = value;
-            }
-
-            return this;
+                foreach (var item in Items)
+                {
+                    if (item is IControlAndLabel control)
+                        control.Label.SuggestedWidth = value;
+                }
+            });
         }
 
         /// <summary>
         /// Sets suggested width for inner childs of the controls in the set.
         /// </summary>
-        public ControlSet InnerSuggestedWidthToMax()
+        public virtual ControlSet InnerSuggestedWidthToMax()
         {
             var v = InnerMaxWidth;
             return InnerSuggestedWidth(v);
@@ -450,7 +526,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested width for all the controls in the set.
         /// </summary>
-        public ControlSet LabelSuggestedWidthToMax()
+        public virtual ControlSet LabelSuggestedWidthToMax()
         {
             var v = LabelMaxWidth;
             return LabelSuggestedWidth(v);
@@ -460,15 +536,16 @@ namespace Alternet.UI
         /// Sets <see cref="ControlAndLabel.InnerSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>
-        public ControlSet InnerSuggestedWidth(double value)
+        public virtual ControlSet InnerSuggestedWidth(double value)
         {
-            foreach (var item in Items)
+            return DoInsideLayout(() =>
             {
-                if (item is IControlAndLabel control)
-                    control.MainControl.SuggestedWidth = value;
-            }
-
-            return this;
+                foreach (var item in Items)
+                {
+                    if (item is IControlAndLabel control)
+                        control.MainControl.SuggestedWidth = value;
+                }
+            });
         }
 
         /// <summary>
@@ -476,7 +553,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"><c>true</c> enables editing of the text;
         /// <c>false</c> disables it.</param>
-        public ControlSet IsEditable(bool value)
+        public virtual ControlSet IsEditable(bool value)
         {
             foreach (var item in Items)
             {
@@ -491,11 +568,13 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Parent"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Parent control.</param>
-        public ControlSet Parent(Control? value)
+        public virtual ControlSet Parent(Control? value)
         {
-            foreach (var item in items)
-                item.Parent = value;
-            return this;
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.Parent = value;
+            });
         }
     }
 }
