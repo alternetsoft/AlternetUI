@@ -90,9 +90,7 @@ namespace Alternet.UI
         /// Runs a common dialog window with the specified owner asynchroniously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
-        /// <param name="owner">
-        /// A window that will own the dialog.
-        /// </param>
+        /// <param name="owner">A window that will own the dialog.</param>
         /// <remarks>
         /// On some platforms dialogs are shown synchroniously and application waits
         /// until dialog is closed.
@@ -104,6 +102,37 @@ namespace Alternet.UI
 #pragma warning restore
             var resultAsBool = result == ModalResult.Accepted;
             onClose?.Invoke(this, resultAsBool);
+        }
+
+        /// <summary>
+        /// Runs a common dialog window asynchroniously.
+        /// </summary>
+        /// <param name="onAccepted">Action to call after dialog is accepted.</param>
+        /// <remarks>
+        /// On some platforms dialogs are shown synchroniously and application waits
+        /// until dialog is closed.
+        /// </remarks>
+        public void ShowAsync(Action onAccepted)
+        {
+            ShowAsync(null, onAccepted);
+        }
+
+        /// <summary>
+        /// Runs a common dialog window asynchroniously.
+        /// </summary>
+        /// <param name="onAccepted">Action to call after dialog is accepted.</param>
+        /// <param name="owner">A window that will own the dialog.</param>
+        /// <remarks>
+        /// On some platforms dialogs are shown synchroniously and application waits
+        /// until dialog is closed.
+        /// </remarks>
+        public void ShowAsync(Window? owner, Action onAccepted)
+        {
+            ShowAsync(owner, (dialog, result) =>
+            {
+                if (result)
+                    onAccepted?.Invoke();
+            });
         }
 
         /// <summary>
