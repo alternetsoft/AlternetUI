@@ -1971,6 +1971,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="RowIndex"/> and <see cref="ColumnIndex"/> properties
+        /// as tuple with two <see cref="int"/> values.
+        /// </summary>
+        /// <remarks>
+        /// Currently this property works only in <see cref="Grid"/> container.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual RowColumnIndex RowColumn
+        {
+            get
+            {
+                return new (RowIndex, ColumnIndex);
+            }
+
+            set
+            {
+                SetRowColumn(value.Row, value.Column);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value that indicates the total number of columns
         /// this control's content spans within a container.
         /// </summary>
