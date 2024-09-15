@@ -43,6 +43,12 @@ namespace Alternet.UI.Localization
         public string Center { get; set; } = "Center";
 
         /// <inheritdoc cref="Left"/>
+        public string Column { get; set; } = "Column";
+
+        /// <inheritdoc cref="Left"/>
+        public string Row { get; set; } = "Row";
+
+        /// <inheritdoc cref="Left"/>
         public string X { get; set; } = "X";
 
         /// <inheritdoc cref="Left"/>

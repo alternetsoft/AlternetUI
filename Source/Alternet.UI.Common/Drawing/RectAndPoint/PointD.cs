@@ -272,9 +272,9 @@ namespace Alternet.Drawing
         public static PointD Subtract(PointD pt, SizeD sz) => new(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
-        /// Parse - returns an instance converted from the provided string using
-        /// the culture "en-US"
-        /// <param name="source"> string with Point data </param>
+        /// Returns an instance converted from the provided string using
+        /// <see cref="App.InvariantEnglishUS"/> culture.
+        /// <param name="source">String with data.</param>
         /// </summary>
         public static PointD Parse(string source)
         {
