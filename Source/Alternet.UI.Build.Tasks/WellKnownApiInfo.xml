@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.631.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.632.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -501,6 +501,7 @@
     <Type Name="Alternet.UI.EnumArray`2" />
     <Type Name="Alternet.UI.HVAlignment" />
     <Type Name="Alternet.UI.ObjectUniqueId" />
+    <Type Name="Alternet.UI.RowColumnIndex" />
     <Type Name="Alternet.UI.SynchronizationContext" />
     <Type Name="Alternet.UI.SynchronizationService" />
     <Type Name="Alternet.UI.ISystemSettingsHandler" />
@@ -1344,6 +1345,7 @@
     <Type Name="Alternet.UI.ControlStateSettings" />
     <Type Name="Alternet.UI.FontAndColor" />
     <Type Name="Alternet.UI.IControlStateObjectChanged" />
+    <Type Name="Alternet.UI.PaintEventHandler" />
     <Type Name="Alternet.UI.AllControlDefaults" />
     <Type Name="Alternet.UI.AllPlatformDefaults" />
     <Type Name="Alternet.UI.ControlDefaults">
@@ -9783,6 +9785,8 @@
     <Type Name="Alternet.UI.Localization.PropCategoryStrings" />
     <Type Name="Alternet.UI.Localization.PropNameStrings" />
     <Type Name="Alternet.Drawing.Color+StateFlags" />
+    <Type Name="Alternet.Drawing.Color+ColorNameLocalizedComparer" />
+    <Type Name="Alternet.Drawing.Color+ColorNameComparer" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsDark" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsLight" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsLightOrDark" />
