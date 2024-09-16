@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/75449405/maui-handler-confused-at-what-to-put-inside-of-createplatformview-ios

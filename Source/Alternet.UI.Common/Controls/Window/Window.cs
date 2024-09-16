@@ -31,6 +31,7 @@ namespace Alternet.UI
         private bool needLayout = false;
         private Collection<InputBinding>? inputBindings;
         private int? oldDisplay;
+        private bool loadedCalled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -53,6 +54,12 @@ namespace Alternet.UI
             windowKindOverride = windowKind;
             Initialize();
         }
+
+        /// <summary>
+        /// Occurs before a window is displayed for the first time.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? Load;
 
         /// <summary>
         /// Occurs when window moves to another display.
@@ -779,6 +786,7 @@ namespace Alternet.UI
                 if (value)
                 {
                     ApplyStartLocationOnce(Owner);
+                    RaiseLoadedOnce();
                 }
 
                 base.Visible = value;
@@ -1433,6 +1441,14 @@ namespace Alternet.UI
             DisplayChanged?.Invoke(this, EventArgs.Empty);
 
             oldDisplay = newDisplay;
+        }
+
+        private void RaiseLoadedOnce()
+        {
+            if (loadedCalled)
+                return;
+            loadedCalled = true;
+            Load?.Invoke(this, EventArgs.Empty);
         }
 
         private void Initialize()

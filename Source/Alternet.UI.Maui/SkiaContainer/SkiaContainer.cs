@@ -10,6 +10,7 @@ using Alternet.UI.Extensions;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Platform;
 
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
@@ -22,16 +23,6 @@ namespace Alternet.UI
     /// </summary>
     public partial class SkiaContainer : SKCanvasView
     {
-        /*/// <summary>
-        /// This is sample bindable property declaration.
-        /// </summary>
-        public static readonly BindableProperty SampleProperty = BindableProperty.Create(
-            nameof(SampleProp),
-            typeof(float),
-            typeof(SkiaContainer),
-            0.0f,
-            propertyChanged: OnSamplePropChanged);*/
-
         private readonly InteriorDrawable interior = new();
         private readonly InteriorNotification interiorNotification;
 
@@ -62,15 +53,6 @@ namespace Alternet.UI
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
         }
-
-        /*/// <summary>
-        /// This is sample bindable property.
-        /// </summary>
-        public float SampleProp
-        {
-            get => (float)GetValue(SampleProperty);
-            set => SetValue(SampleProperty, value);
-        }*/
 
         /// <summary>
         /// Gets control interior element (border and scrollbars).
@@ -158,14 +140,6 @@ namespace Alternet.UI
             base.OnParentChanged();
         }
 
-        /*private static void OnSamplePropChanged(
-            BindableObject bindable,
-            object oldValue,
-            object newValue)
-        {
-            ((SkiaContainer)bindable).InvalidateSurface();
-        }*/
-
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
         {
             UpdateBounds(Bounds.ToRectD());
@@ -182,10 +156,22 @@ namespace Alternet.UI
             }
 #endif
 #if ANDROID
+            if (e.ActionType == SKTouchAction.Pressed)
+            {
+            }
 #endif
 #if IOS
+            if (e.ActionType == SKTouchAction.Pressed)
+            {
+            }
 #endif
 #if MACCATALYST
+            if (e.ActionType == SKTouchAction.Pressed)
+            {
+                var platformView = GetPlatformView();
+                var request = new FocusRequest();
+                platformView?.Focus(request);
+            }
 #endif
             if (control is null)
                 return;

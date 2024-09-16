@@ -1,0 +1,5 @@
+Run this command after dotnet installation:
+
+ln -s /usr/local/share/dotnet/x64/dotnet /usr/local/bin/
+
+If folders /usr/local/bin/ or /usr/local/ are not found, created them before that.
