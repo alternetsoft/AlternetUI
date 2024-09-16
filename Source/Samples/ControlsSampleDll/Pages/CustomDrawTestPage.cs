@@ -17,7 +17,7 @@ namespace ControlsSample
 
         /* private static readonly WxControlPainterHandler Painter = new(); */
 
-        private readonly CustomDrawControl customDrawControl = new()
+        private readonly PaintActionsControl customDrawControl = new()
         {
             VerticalAlignment = VerticalAlignment.Fill,
             Background = Brushes.White,

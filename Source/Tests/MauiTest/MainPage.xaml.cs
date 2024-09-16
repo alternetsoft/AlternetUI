@@ -13,7 +13,7 @@ namespace SpinPaint;
 
 public partial class MainPage : ContentPage
 {
-    internal readonly ControlsSample.CustomDrawControl customDrawControl;
+    internal readonly Alternet.UI.PaintActionsControl customDrawControl;
     
     static MainPage()
     {

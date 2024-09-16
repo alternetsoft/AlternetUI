@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+      <RestoreFallbackFolders>clear</RestoreFallbackFolders>
       <TargetFrameworks>net8.0-maccatalyst;</TargetFrameworks>
       
 		<!-- net8.0-ios;net8.0-android -->
@@ -68,6 +69,5 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
-	  <ProjectReference Include="..\..\Samples\ControlsSampleDll\ControlsSampleDll.csproj" />
 	</ItemGroup>
 </Project>
