@@ -6,7 +6,7 @@ namespace Alternet.UI
 {
     internal class UnboundControl : Control
     {
-        public static bool UseUnboundControls = false;
+        public static bool UseUnboundControls = true;
 
         public static IControlHandler CreateUnboundControlHandler(Control control)
         {
