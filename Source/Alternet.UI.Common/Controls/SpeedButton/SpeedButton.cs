@@ -52,21 +52,21 @@ namespace Alternet.UI
         /// </summary>
         public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
 
-        private readonly PictureBox picture = new()
+        private readonly PictureBox picture = new UnboundPictureBox()
         {
             ImageStretch = false,
             Visible = false,
             Alignment = HVAlignment.Center,
         };
 
-        private readonly Control spacer = new Panel()
+        private readonly Control spacer = new UnboundPanel()
         {
             SuggestedSize = DefaultImageLabelDistance,
             Visible = false,
             Alignment = HVAlignment.Center,
         };
 
-        private readonly GenericLabel label = new()
+        private readonly GenericLabel label = new UnboundGenericLabel()
         {
             Visible = false,
             Alignment = HVAlignment.Center,

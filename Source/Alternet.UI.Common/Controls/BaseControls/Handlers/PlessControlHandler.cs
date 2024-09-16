@@ -13,6 +13,18 @@ namespace Alternet.UI
     /// </summary>
     public class PlessControlHandler : BaseControlHandler, IControlHandler
     {
+        private bool enabled = true;
+        private string? toolTip;
+        private bool canSelect = true;
+        private bool tabStop = true;
+        private bool acceptsFocusRecursively = true;
+        private Cursor? cursor;
+
+        /// <summary>
+        /// Gets or sets scale factor override.
+        /// </summary>
+        public Coord? ScaleFactorOverride { get; set; }
+
         /// <inheritdoc cref="Control.VertScrollBarInfo"/>
         ScrollBarInfo IControlHandler.VertScrollBarInfo { get; set; }
 
@@ -100,9 +112,29 @@ namespace Alternet.UI
 
         Color IControlHandler.ForegroundColor { get; set; } = SystemColors.WindowText;
 
-        Font? IControlHandler.Font { get; set; }
+        /// <inheritdoc/>
+        public virtual Font? Font { get; set; }
 
-        bool IControlHandler.IsBold { get; set; }
+        /// <inheritdoc/>
+        public virtual bool IsBold
+        {
+            get
+            {
+                if (Font is null)
+                    return false;
+                return Font.IsBold;
+            }
+
+            set
+            {
+                if (IsBold == value)
+                    return;
+                if (Font is null)
+                    Font = Control.DefaultFont.AsBold;
+                else
+                    Font = Font.AsBold;
+            }
+        }
 
         bool IControlHandler.AllowDrop { get; set; }
 
@@ -206,7 +238,7 @@ namespace Alternet.UI
 
         Coord IControlHandler.GetPixelScaleFactor()
         {
-            return Display.Primary.ScaleFactor;
+            return ScaleFactorOverride ?? Display.Primary.ScaleFactor;
         }
 
         SizeD IControlHandler.GetPreferredSize(SizeD availableSize)
@@ -294,10 +326,12 @@ namespace Alternet.UI
 
         void IControlHandler.SetCursor(Cursor? value)
         {
+            cursor = value;
         }
 
         void IControlHandler.SetEnabled(bool value)
         {
+            enabled = value;
         }
 
         bool IControlHandler.SetFocus()
@@ -307,14 +341,19 @@ namespace Alternet.UI
 
         void IControlHandler.SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
         {
+            this.canSelect = canSelect;
+            this.tabStop = tabStop;
+            this.acceptsFocusRecursively = acceptsFocusRecursively;
         }
 
         void IControlHandler.SetToolTip(string? value)
         {
+            toolTip = value;
         }
 
         void IControlHandler.UnsetToolTip()
         {
+            toolTip = null;
         }
 
         void IControlHandler.Update()
