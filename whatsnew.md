@@ -1,3 +1,14 @@
+# 0.9.632 (2024 September 16)
+
+- Clipboard: AsyncRequired, OnlyText, GetDataObjectAsync, SetDataObjectAsync.
+- Added RowColumnIndex struct.
+- Control.RowColumn, Color.NameLocalized, Label.WrapToParent().
+- ControlSet: SuspendLayout, ResumeLayout, DoInsideLayout methods.
+- ControlSet: SuspendLayout is called when multiple layout related operations are performed.
+- ColorListBox, ColorComboBox: Default colors are sorted by localized name.
+- ColorListBox, ColorComboBox: Use localized color names if they are specified.
+- ColorListBox, ColorComboBox: AddColor, CreateItem, AddColors, Find, FindOrAdd.
+
 # 0.9.631 (2024 September 12)
 
 - MAUI platform: Fixed SkiaContainer was focused on mouse over and not on mouse down.
