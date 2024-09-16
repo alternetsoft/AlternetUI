@@ -1,0 +1,27 @@
+        /*/// <summary>
+        /// This is sample bindable property declaration.
+        /// </summary>
+        public static readonly BindableProperty SampleProperty = BindableProperty.Create(
+            nameof(SampleProp),
+            typeof(float),
+            typeof(SkiaContainer),
+            0.0f,
+            propertyChanged: OnSamplePropChanged);*/
+
+        /*/// <summary>
+        /// This is sample bindable property.
+        /// </summary>
+        public float SampleProp
+        {
+            get => (float)GetValue(SampleProperty);
+            set => SetValue(SampleProperty, value);
+        }*/
+
+        /*private static void OnSamplePropChanged(
+            BindableObject bindable,
+            object oldValue,
+            object newValue)
+        {
+            ((SkiaContainer)bindable).InvalidateSurface();
+        }*/
+
