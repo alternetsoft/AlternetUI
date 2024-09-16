@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">net8.0-windows10.0.19041.0</TargetFrameworks>
 
-		<TargetFrameworks>$(TargetFrameworks)</TargetFrameworks>
-		<!-- ;net8.0-ios;net8.0-maccatalyst;net8.0-android -->
+	      <TargetFrameworks>net8.0-maccatalyst;</TargetFrameworks>
       
+		<!-- net8.0-ios;net8.0-android -->
+      
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+     
       
       <!-- Uncomment to also build the tizen app. You will need to install tizen
       by following this: https://github.com/Samsung/Tizen.NET -->
@@ -104,7 +106,6 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="SharpHook" Version="5.3.6" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
 	</ItemGroup>
 
