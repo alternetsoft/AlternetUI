@@ -19,6 +19,17 @@ namespace Alternet.UI
     public class ColorComboBox : ComboBox
     {
         /// <summary>
+        /// Gets or sets default disabled image color.
+        /// </summary>
+        /// <remarks>
+        /// This color is used when <see cref="ColorComboBox"/> is disabled
+        /// for painting color image when <see cref="ColorComboBox.DisabledImageColor"/> is null.
+        /// If this property is null, color image will be painted in the same way like it is done
+        /// when control is enabled.
+        /// </remarks>
+        public static Color? DefaultDisabledImageColor = Color.LightGray;
+
+        /// <summary>
         /// Gets or sets default painter for the <see cref="ColorComboBox"/> items.
         /// </summary>
         public static IComboBoxItemPainter Painter = new DefaultItemPainter();
@@ -33,6 +44,8 @@ namespace Alternet.UI
         /// color image are also painted by this method.
         /// </summary>
         public static Action<Graphics, RectD, Color> PaintColorImage = PaintDefaultColorImage;
+
+        private Color? disabledImageColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorComboBox"/> class.
@@ -60,6 +73,33 @@ namespace Alternet.UI
         public ColorComboBox(bool defaultColors)
         {
             Initialize(defaultColors);
+        }
+
+        /// <summary>
+        /// Gets or sets disabled image color.
+        /// </summary>
+        /// <remarks>
+        /// This color is used when <see cref="ColorComboBox"/> is disabled
+        /// for painting color image.
+        /// If this property is null, color image will be painted using
+        /// <see cref="DefaultDisabledImageColor"/>.
+        /// </remarks>
+        public virtual Color? DisabledImageColor
+        {
+            get
+            {
+                return disabledImageColor;
+            }
+
+            set
+            {
+                if (disabledImageColor == value)
+                    return;
+                disabledImageColor = value;
+                if (Enabled)
+                    return;
+                Invalidate();
+            }
         }
 
         /// <inheritdoc/>
@@ -281,6 +321,14 @@ namespace Alternet.UI
 
                 if (!itemColor.IsOk)
                     itemColor = Color.White;
+
+                if (e.IsPaintingControl && !sender.Enabled)
+                {
+                    var disabledColor = (sender as ColorComboBox)?.DisabledImageColor
+                        ?? DefaultDisabledImageColor;
+                    if(disabledColor is not null)
+                        itemColor = disabledColor;
+                }
 
                 var (colorRect, itemRect) = sender.GetItemImageRect(e);
                 PaintColorImage(e.Graphics, colorRect, itemColor);
