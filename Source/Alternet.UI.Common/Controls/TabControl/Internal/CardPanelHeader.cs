@@ -86,6 +86,11 @@ namespace Alternet.UI
         public event EventHandler<BaseEventArgs<Control>>? ButtonSizeChanged;
 
         /// <summary>
+        /// Occurs before the tab is clicked.
+        /// </summary>
+        public event EventHandler<BaseCancelEventArgs>? BeforeTabClick;
+
+        /// <summary>
         /// Occurs when the tab is clicked.
         /// </summary>
         public event EventHandler? TabClick;
@@ -434,7 +439,7 @@ namespace Alternet.UI
         public bool UpdateCardsVisible { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets whether to update width of the cards when selected tab is changed.
+        /// Gets or sets whether to update size of the cards when selected tab is changed.
         /// </summary>
         public WindowSizeToContentMode UpdateCardsMode { get; set; } =
             WindowSizeToContentMode.WidthAndHeight;
@@ -617,10 +622,10 @@ namespace Alternet.UI
             switch (mode)
             {
                 case WindowSizeToContentMode.Width:
-                    update = double.IsNaN(parent.SuggestedWidth);
+                    update = Coord.IsNaN(parent.SuggestedWidth);
                     break;
                 case WindowSizeToContentMode.Height:
-                    update = double.IsNaN(parent.SuggestedHeight);
+                    update = Coord.IsNaN(parent.SuggestedHeight);
                     break;
                 case WindowSizeToContentMode.WidthAndHeight:
                     update = SizeD.AnyIsNaN(parent.SuggestedSize);
@@ -913,6 +918,15 @@ namespace Alternet.UI
         {
             if (sender is not Control control)
                 return;
+
+            if(BeforeTabClick is not null)
+            {
+                BaseCancelEventArgs beforeArgs = new();
+                BeforeTabClick(this, beforeArgs);
+                if (beforeArgs.Cancel)
+                    return;
+            }
+
             foreach(var tab in tabs)
             {
                 if(control == tab.HeaderButton || control.HasIndirectParent(tab.HeaderButton))
