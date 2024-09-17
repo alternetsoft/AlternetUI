@@ -147,9 +147,19 @@ namespace ControlsSample
 
         private void ChangeTextButton_Click(object? sender, EventArgs e)
         {
-            var result = DialogFactory.GetTextFromUser("Text", "Enter text value", textBox.Text);
-            if(result is not null)
-                textBox.Text = result;
+            TextFromUserParams prm = new()
+            {
+                Title = "Enter text value",
+                Message = "Text",
+                DefaultValue = textBox.Text,
+                OnApply = (s) =>
+                {
+                    if (s is not null)
+                        textBox.Text = s;
+                },
+            };
+
+            DialogFactory.GetTextFromUserAsync(prm);
         }
     }
 }

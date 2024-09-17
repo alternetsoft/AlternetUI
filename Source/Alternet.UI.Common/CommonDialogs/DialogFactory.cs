@@ -43,14 +43,19 @@ namespace Alternet.UI
         /// <param name="defaultValue"></param>
         public static void ShowRunTerminalCommandDlg(string? defaultValue = default)
         {
-            var command = GetTextFromUser(
-                        null,
-                        "Run terminal command",
-                        defaultValue);
+            TextFromUserParams prm = new()
+            {
+                Title = "Run terminal command",
+                DefaultValue = defaultValue,
+                OnApply = (s) =>
+                {
+                    if (s is null)
+                        return;
+                    AppUtils.OpenTerminalAndRunCommand(s);
+                },
+            };
 
-            if (command is null)
-                return;
-            AppUtils.OpenTerminalAndRunCommand(command);
+            GetTextFromUserAsync(prm);
         }
 
         /// <summary>
@@ -217,9 +222,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Pop up a dialog box with title set to <paramref name="caption"/>,
-        /// <paramref name="message"/>, and a <paramref name="defaultValue"/>.
-        /// The user may type in text and press OK to return this text, or press Cancel
+        /// Popups a dialog box with a title, message and input box.
+        /// The user may type in text and press 'OK' to return this text, or press 'Cancel'
         /// to return the empty string.
         /// </summary>
         /// <param name="message">Dialog message.</param>
@@ -245,6 +249,22 @@ namespace Alternet.UI
                 defaultValue,
                 parent);
             return result;
+        }
+
+        /// <summary>
+        /// Popups a dialog box with a title, message and input box.
+        /// The user may type in text and press 'OK' to return this text, or press 'Cancel'
+        /// to return the empty string.
+        /// </summary>
+        /// <param name="prm">Dialog parameters.</param>
+        public static void GetTextFromUserAsync(TextFromUserParams prm)
+        {
+            var result = Handler.GetTextFromUser(
+                prm.SafeMessage,
+                prm.SafeTitle,
+                prm.SafeDefaultValueAsString,
+                prm.Parent);
+            prm.RaiseActions(result);
         }
 
         /// <summary>
