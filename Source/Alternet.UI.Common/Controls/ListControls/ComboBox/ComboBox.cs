@@ -65,6 +65,11 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultImageBorderColor = SystemColors.GrayText;
 
+        /// <summary>
+        /// Gets or sets default disabled text color.
+        /// </summary>
+        public static Color DefaultDisabledTextColor = SystemColors.GrayText;
+
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
@@ -534,6 +539,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets text color when control is disabled.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Color GetDisabledTextColor()
+        {
+            return DefaultDisabledTextColor;
+        }
+
+        /// <summary>
         /// Default item paint method.
         /// </summary>
         /// <param name="e">Paint arguments.</param>
@@ -557,7 +571,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    color = SystemColors.GrayText;
+                    color = GetDisabledTextColor();
                 }
 
                 var size = e.Graphics.GetTextExtent(s, font);
