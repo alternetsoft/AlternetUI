@@ -114,6 +114,14 @@ namespace Alternet.UI
             };
 
             /// <summary>
+            /// Gets or sets keys used in the rich edit to show go to line dialog.
+            /// </summary>
+            public static KeyInfo[] ShowGoToLineDialog { get; set; } =
+            {
+                new(Key.G, ModifierKeys.Control, OperatingSystems.Any),
+            };
+
+            /// <summary>
             /// Gets or sets keys used in the rich edit to clear text formatting.
             /// </summary>
             public static KeyInfo[] ClearTextFormatting { get; set; } =

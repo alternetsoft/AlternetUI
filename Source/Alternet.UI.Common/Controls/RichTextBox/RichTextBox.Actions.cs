@@ -124,6 +124,8 @@ namespace Alternet.UI
                 return true;
             if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ClearTextFormatting, e, SelectionClearFormatting))
                 return true;
+            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ShowGoToLineDialog, e, ShowDialogGoToLine))
+                return true;
             return false;
         }
     }
