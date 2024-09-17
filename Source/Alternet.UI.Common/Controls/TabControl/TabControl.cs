@@ -919,13 +919,13 @@ namespace Alternet.UI
             switch (TabPageSizeMode)
             {
                 case WindowSizeToContentMode.Width:
-                    MinWidth = Width;
+                    MinWidth = ControlUtils.GrowCoord(MinWidth, Width);
                     break;
                 case WindowSizeToContentMode.Height:
-                    MinHeight = Height;
+                    MinHeight = ControlUtils.GrowCoord(MinHeight, Height);
                     break;
                 case WindowSizeToContentMode.WidthAndHeight:
-                    MinimumSize = Size;
+                    MinimumSize = ControlUtils.GrowSize(MinimumSize, Size);
                     break;
             }
         }
