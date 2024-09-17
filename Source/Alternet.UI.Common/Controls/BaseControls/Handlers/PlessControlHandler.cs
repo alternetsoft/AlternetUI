@@ -20,11 +20,6 @@ namespace Alternet.UI
         private bool acceptsFocusRecursively = true;
         private Cursor? cursor;
 
-        /// <summary>
-        /// Gets or sets scale factor override.
-        /// </summary>
-        public Coord? ScaleFactorOverride { get; set; }
-
         /// <inheritdoc cref="Control.VertScrollBarInfo"/>
         ScrollBarInfo IControlHandler.VertScrollBarInfo { get; set; }
 
@@ -102,15 +97,24 @@ namespace Alternet.UI
 
         bool IControlHandler.Visible { get; set; }
 
-        bool IControlHandler.UserPaint { get; set; }
+        bool IControlHandler.UserPaint
+        {
+            get => true;
+
+            set
+            {
+            }
+        }
 
         SizeD IControlHandler.MinimumSize { get; set; }
 
         SizeD IControlHandler.MaximumSize { get; set; }
 
-        Color IControlHandler.BackgroundColor { get; set; } = SystemColors.Window;
+        /// <inheritdoc/>
+        public virtual Color BackgroundColor { get; set; } = SystemColors.Window;
 
-        Color IControlHandler.ForegroundColor { get; set; } = SystemColors.WindowText;
+        /// <inheritdoc/>
+        public virtual Color ForegroundColor { get; set; } = SystemColors.WindowText;
 
         /// <inheritdoc/>
         public virtual Font? Font { get; set; }
@@ -154,7 +158,7 @@ namespace Alternet.UI
 
         bool IControlHandler.IsMouseCaptured { get; }
 
-        bool IControlHandler.IsHandleCreated { get; }
+        bool IControlHandler.IsHandleCreated => true;
 
         Action? IControlHandler.SystemColorsChanged { get; set; }
 
@@ -164,9 +168,9 @@ namespace Alternet.UI
 
         Action? IControlHandler.DpiChanged { get; set; }
 
-        bool IControlHandler.TabStop => true;
+        bool IControlHandler.TabStop => tabStop;
 
-        bool IControlHandler.CanSelect => true;
+        bool IControlHandler.CanSelect => canSelect;
 
         void IControlHandler.BeginInit()
         {
@@ -186,7 +190,17 @@ namespace Alternet.UI
 
         PointD IControlHandler.ClientToScreen(PointD point)
         {
-            return point;
+            PointD result;
+            var parent = Control.Parent;
+
+            if (parent == null)
+            {
+                result = PlessUtils.ClientToScreen(point, Control);
+                return result;
+            }
+
+            result = parent.ClientToScreen(point) + Control.Location;
+            return result;
         }
 
         Graphics IControlHandler.CreateDrawingContext()
@@ -213,32 +227,32 @@ namespace Alternet.UI
 
         Color IControlHandler.GetDefaultAttributesBgColor()
         {
-            return SystemColors.Window;
+            return Control.Parent?.GetDefaultAttributesBgColor() ?? SystemColors.Window;
         }
 
         Color IControlHandler.GetDefaultAttributesFgColor()
         {
-            return SystemColors.WindowText;
+            return Control.Parent?.GetDefaultAttributesFgColor() ?? SystemColors.WindowText;
         }
 
         Font? IControlHandler.GetDefaultAttributesFont()
         {
-            return default;
+            return Control.Parent?.GetDefaultAttributesFont() ?? Control.DefaultFont;
         }
 
         nint IControlHandler.GetHandle()
         {
-            return default;
+            return Control.Parent?.GetHandle() ?? default;
         }
 
         object IControlHandler.GetNativeControl()
         {
-            return AssemblyUtils.Default;
+            return Control.Parent?.Handler.GetNativeControl() ?? AssemblyUtils.Default;
         }
 
         Coord IControlHandler.GetPixelScaleFactor()
         {
-            return ScaleFactorOverride ?? Display.Primary.ScaleFactor;
+            return Control.Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
         }
 
         SizeD IControlHandler.GetPreferredSize(SizeD availableSize)
@@ -263,15 +277,17 @@ namespace Alternet.UI
 
         void IControlHandler.HandleNeeded()
         {
+            Control.Parent?.HandleNeeded();
         }
 
         void IControlHandler.Invalidate()
         {
+            Control.Parent?.Invalidate(Control.Bounds);
         }
 
         bool IControlHandler.IsTransparentBackgroundSupported()
         {
-            return default;
+            return Control.Parent?.IsTransparentBackgroundSupported() ?? false;
         }
 
         void IControlHandler.Lower()
@@ -301,18 +317,22 @@ namespace Alternet.UI
 
         void IControlHandler.RefreshRect(RectD rect, bool eraseBackground)
         {
+            Control.Parent?.Invalidate((rect.Location + Control.Location, rect.Size));
         }
 
         void IControlHandler.ReleaseMouseCapture()
         {
+            Control.Parent?.ReleaseMouseCapture();
         }
 
         void IControlHandler.ResetBackgroundColor()
         {
+            BackgroundColor = SystemColors.Window;
         }
 
         void IControlHandler.ResetForegroundColor()
         {
+            ForegroundColor = SystemColors.WindowText;
         }
 
         void IControlHandler.SaveScreenshot(string fileName)
@@ -321,7 +341,17 @@ namespace Alternet.UI
 
         PointD IControlHandler.ScreenToClient(PointD point)
         {
-            return point;
+            PointD result;
+            var parent = Control.Parent;
+
+            if (parent == null)
+            {
+                result = PlessUtils.ScreenToClient(point, Control);
+                return result;
+            }
+
+            result = parent.ScreenToClient(point) - Control.Location;
+            return result;
         }
 
         void IControlHandler.SetCursor(Cursor? value)
@@ -358,6 +388,7 @@ namespace Alternet.UI
 
         void IControlHandler.Update()
         {
+            Control.Parent?.Update();
         }
     }
 }
