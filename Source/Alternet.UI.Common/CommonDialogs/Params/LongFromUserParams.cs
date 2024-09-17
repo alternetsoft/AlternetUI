@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Contains properties which allow to customize dialog box which asks a <see cref="long"/>
     /// value from the user.
     /// </summary>
-    public class LongFromUserParams : ValueFromUserParams<long?>
+    public class LongFromUserParams : NumericFromUserParams<long?>
     {
     }
 }

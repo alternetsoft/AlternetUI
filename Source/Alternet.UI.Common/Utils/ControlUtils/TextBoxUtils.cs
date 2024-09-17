@@ -19,26 +19,34 @@ namespace Alternet.UI
         /// <param name="lines">Number of lines.</param>
         /// <param name="line">Current line number.</param>
         /// <param name="owner">Dialog owner.</param>
-        /// <returns></returns>
-        public static DialogResult ShowDialogGoToLine(
+        /// <param name="onApply">Action to call when the user clicks 'Ok' button.</param>
+        public static void ShowDialogGoToLine(
             int lines,
-            ref int line,
-            Control? owner)
+            int line,
+            Control? owner,
+            Action<int> onApply)
         {
             var lastLineNumber = lines;
             var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
-            var result = DialogFactory.GetNumberFromUser(
-                null,
-                prompt,
-                CommonStrings.Default.WindowTitleGoToLine,
-                line + 1,
-                1,
-                lastLineNumber,
-                owner);
-            if (result is null)
-                return DialogResult.Cancel;
-            line = (int)result.Value - 1;
-            return DialogResult.OK;
+
+            LongFromUserParams prm = new()
+            {
+                Title = CommonStrings.Default.WindowTitleGoToLine,
+                Message = prompt,
+                Parent = owner,
+                MinValue = 1,
+                MaxValue = lastLineNumber,
+                DefaultValue = line + 1,
+                OnApply = (value) =>
+                {
+                    if (value is null)
+                        return;
+                    line = (int)value.Value - 1;
+                    onApply(line);
+                },
+            };
+
+            DialogFactory.GetNumberFromUserAsync(prm);
         }
 
         /// <summary>
@@ -48,33 +56,38 @@ namespace Alternet.UI
         /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
         /// interface.
         /// </remarks>
-        public static bool ShowDialogGoToLine(object? textBox)
+        public static void ShowDialogGoToLine(object? textBox)
         {
             if (textBox is not ISimpleRichTextBox richTextBox)
-                return false;
+                return;
 
             var lastLineNumber = richTextBox.LastLineNumber + 1;
             var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
-            var result = DialogFactory.GetNumberFromUser(
-                null,
-                prompt,
-                CommonStrings.Default.WindowTitleGoToLine,
-                richTextBox.InsertionPointLineNumber + 1,
-                1,
-                lastLineNumber,
-                textBox as Control);
-            if (result is null)
-                return false;
-            var newPosition = richTextBox.XYToPosition(0, result.Value - 1);
-            richTextBox.SetInsertionPoint(newPosition);
-            richTextBox.ShowPosition(newPosition);
-            if (textBox is IFocusable focusable)
-            {
-                if (focusable.CanFocus)
-                    focusable.SetFocus();
-            }
 
-            return true;
+            LongFromUserParams prm = new()
+            {
+                Title = CommonStrings.Default.WindowTitleGoToLine,
+                Message = prompt,
+                Parent = textBox as Control,
+                MinValue = 1,
+                MaxValue = lastLineNumber,
+                DefaultValue = richTextBox.InsertionPointLineNumber + 1,
+                OnApply = (value) =>
+                {
+                    if (value is null)
+                        return;
+                    var newPosition = richTextBox.XYToPosition(0, value.Value - 1);
+                    richTextBox.SetInsertionPoint(newPosition);
+                    richTextBox.ShowPosition(newPosition);
+                    if (textBox is IFocusable focusable)
+                    {
+                        if (focusable.CanFocus)
+                            focusable.SetFocus();
+                    }
+                },
+            };
+
+            DialogFactory.GetNumberFromUserAsync(prm);
         }
 
         /// <summary>

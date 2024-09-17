@@ -48,16 +48,6 @@ namespace Alternet.UI
         public T? DefaultValue;
 
         /// <summary>
-        /// Gets or sets minimal value. Makes sense for numbers.
-        /// </summary>
-        public T? MinValue;
-
-        /// <summary>
-        /// Gets or sets maximal value. Makes sense for numbers.
-        /// </summary>
-        public T? MaxValue;
-
-        /// <summary>
         /// Gets <see cref="Message"/> or an empty string.
         /// </summary>
         public virtual string SafeMessage => Message ?? string.Empty;
