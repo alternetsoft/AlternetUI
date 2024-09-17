@@ -13,6 +13,22 @@ namespace Alternet.UI
     public class ValueFromUserParams<T>
     {
         /// <summary>
+        /// Gets or sets virtual keyboard class used in the input dialog.
+        /// </summary>
+        /// <remarks>
+        /// Not all platforms support this option.
+        /// </remarks>
+        public VirtualKeyboardClass? VirtualKeyboardClass;
+
+        /// <summary>
+        /// Gets or sets virtual keyboard flags used in the input dialog.
+        /// </summary>
+        /// <remarks>
+        /// Not all platforms support this option.
+        /// </remarks>
+        public VirtualKeyboardFlags? VirtualKeyboardFlags;
+
+        /// <summary>
         /// Gets or sets dialog message.
         /// </summary>
         public string? Message;
