@@ -125,13 +125,13 @@ namespace Alternet.UI
 
                 Unbind();
                 dataSource = value;
-                Load();
+                LoadData();
                 Bind();
                 UpdateButtons();
             }
         }
 
-        internal void Save()
+        internal void SaveData()
         {
             if (dataSource is null)
                 return;
@@ -153,7 +153,7 @@ namespace Alternet.UI
             ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
             if (ModalResult == ModalResult.Accepted)
             {
-                Save();
+                SaveData();
                 Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
             }
         }
@@ -187,9 +187,6 @@ namespace Alternet.UI
 
         private void CancelButton_Click(object? sender, EventArgs e)
         {
-            /*toolbar.SetMouseCapture(false);
-            SetFocusIfPossible();
-            BaseApplication.DoEvents();*/
             if (Modal)
                 ModalResult = ModalResult.Canceled;
             Close();
@@ -197,11 +194,9 @@ namespace Alternet.UI
 
         private void OkButton_Click(object? sender, EventArgs e)
         {
-            /*toolbar.SetMouseCapture(false);*/
             if (!propertyGrid.ClearSelection(true))
                 return;
             SetFocusIfPossible();
-            /*BaseApplication.DoEvents();*/
             if (Modal)
                 ModalResult = ModalResult.Accepted;
             Close();
@@ -303,7 +298,7 @@ namespace Alternet.UI
             propertyGrid.SetProps(propInstance);
         }
 
-        private void Load()
+        private void LoadData()
         {
             Clear();
             if (dataSource == null)

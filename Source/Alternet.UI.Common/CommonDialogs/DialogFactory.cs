@@ -170,80 +170,12 @@ namespace Alternet.UI
         /// Shows a dialog asking the user for numeric input.
         /// </summary>
         /// <remarks>
-        /// The dialogs title is set to <paramref name="caption"/>, it contains a (possibly) multiline
-        /// <paramref name="message"/> above the single line prompt and the zone for entering
-        /// the number. Dialog is centered on its parent.
-        /// </remarks>
-        /// <remarks>
-        /// If the user cancels the dialog, the function returns <c>null</c>.
-        /// </remarks>
-        /// <remarks>
-        /// The number entered must be in the range <paramref name="min"/> to <paramref name="max"/>
-        /// (both of which should be positive) and
-        /// value is the initial value of it. If the user enters an invalid value, it is forced to fall
-        /// into the specified range.
-        /// </remarks>
-        /// <param name="message">A (possibly) multiline dialog message above the single line
-        /// <paramref name="prompt"/>.</param>
-        /// <param name="prompt">Single line dialog prompt.</param>
-        /// <param name="caption">Dialog title.</param>
-        /// <param name="value">Default value. Optional. Default is 0.</param>
-        /// <param name="min">A positive minimal value. Optional. Default is 0.</param>
-        /// <param name="max">A positive maximal value. Optional. Default is 100.</param>
-        /// <param name="parent">Dialog parent.</param>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static long? GetNumberFromUser(
-            string? message,
-            string? prompt = null,
-            string? caption = null,
-            long value = 0,
-            long min = 0,
-            long max = 100,
-            Control? parent = null)
-        {
-            message ??= string.Empty;
-            prompt ??= string.Empty;
-            caption ??= CommonStrings.Default.WindowTitleInput;
-
-            return Handler.GetNumberFromUser(
-                message,
-                prompt,
-                caption,
-                value,
-                min,
-                max,
-                parent);
-        }
-
-        /// <summary>
-        /// Shows a dialog asking the user for numeric input.
-        /// </summary>
-        /// <remarks>
         /// Minimal, maximal and default values specified in the dialog parameters must be positive.
         /// </remarks>
         /// <param name="prm">Dialog parameters.</param>
         public static void GetNumberFromUserAsync(LongFromUserParams prm)
         {
-            long minValue = MathUtils.ValueOrMin(prm.MinValue);
-            long maxValue;
-            long value = MathUtils.ValueOrMin(prm.DefaultValue);
-
-            if (prm.MaxValue is null || prm.MaxValue < 0)
-                maxValue = long.MaxValue;
-            else
-                maxValue = prm.MaxValue.Value;
-
-            var result = Handler.GetNumberFromUser(
-                string.Empty,
-                prm.SafeMessage,
-                prm.SafeTitle,
-                value,
-                minValue,
-                maxValue,
-                prm.Parent);
-            prm.RaiseActions(result);
+            Handler.GetNumberFromUserAsync(prm);
         }
 
         /// <summary>
@@ -254,12 +186,7 @@ namespace Alternet.UI
         /// <param name="prm">Dialog parameters.</param>
         public static void GetTextFromUserAsync(TextFromUserParams prm)
         {
-            var result = Handler.GetTextFromUser(
-                prm.SafeMessage,
-                prm.SafeTitle,
-                prm.SafeDefaultValueAsString,
-                prm.Parent);
-            prm.RaiseActions(result);
+            Handler.GetTextFromUserAsync(prm);
         }
 
         /// <summary>
@@ -293,17 +220,16 @@ namespace Alternet.UI
         /// <returns><c>null</c> if property editing is not supported; <c>true</c> if editing
         /// was performed and user pressed 'Ok' button; <c>false</c> if user pressed
         /// 'Cancel' button.</returns>
-        public static bool? EditPropertyWithListEditor(object? instance, PropertyInfo? propInfo)
+        public static void EditPropertyWithListEditor(object? instance, PropertyInfo? propInfo)
         {
             PropertyGrid.RegisterCollectionEditors();
 
             var source = ListEditSource.CreateEditSource(instance, propInfo);
             if (source == null)
-                return null;
+                return;
 
             using ListEditDialogWindow dialog = new(source);
-            var result = dialog.ShowModal(Window.ActiveWindow) == ModalResult.Accepted;
-            return result;
+            dialog.ShowModal(Window.ActiveWindow);
         }
 
         /// <summary>
@@ -317,48 +243,47 @@ namespace Alternet.UI
         /// <returns><c>null</c> if property editing is not supported; <c>true</c> if editing
         /// was performed and user pressed 'Ok' button; <c>false</c> if user pressed
         /// 'Cancel' button.</returns>
-        public static bool? EditPropertyWithListEditor(object? instance, string propName)
+        public static void EditPropertyWithListEditor(object? instance, string propName)
         {
             var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
-            var result = EditPropertyWithListEditor(instance, propInfo);
-            return result;
+            EditPropertyWithListEditor(instance, propInfo);
         }
 
         /// <summary>
         /// Edits <see cref="ListView.Columns"/> with list editor.
         /// </summary>
         /// <param name="control">Control which columns will be edited.</param>
-        public static bool? EditColumnsWithListEditor(ListView control) =>
+        public static void EditColumnsWithListEditor(ListView control) =>
             EditPropertyWithListEditor(control, nameof(ListView.Columns));
 
         /// <summary>
         /// Edits <see cref="ListView.Items"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
-        public static bool? EditItemsWithListEditor(ListView control) =>
+        public static void EditItemsWithListEditor(ListView control) =>
             EditPropertyWithListEditor(control, nameof(ListView.Items));
 
         /// <summary>
         /// Edits <see cref="StatusBar.Panels"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
-        public static bool? EditItemsWithListEditor(StatusBar? control)
+        public static void EditItemsWithListEditor(StatusBar? control)
         {
-            return EditPropertyWithListEditor(control, nameof(StatusBar.Panels));
+            EditPropertyWithListEditor(control, nameof(StatusBar.Panels));
         }
 
         /// <summary>
         /// Edits <see cref="TreeView.Items"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
-        public static bool? EditItemsWithListEditor(TreeView control) =>
+        public static void EditItemsWithListEditor(TreeView control) =>
             EditPropertyWithListEditor(control, nameof(TreeView.Items));
 
         /// <summary>
         /// Edits <see cref="ListControl.Items"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
-        public static bool? EditItemsWithListEditor(ListControl control) =>
+        public static void EditItemsWithListEditor(ListControl control) =>
             EditPropertyWithListEditor(control, nameof(ListControl.Items));
     }
 }

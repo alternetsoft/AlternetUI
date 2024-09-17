@@ -131,11 +131,20 @@ namespace ControlsSample
 
         private void ImageMarginsButton_Click(object? sender, EventArgs e)
         {
-            var value = DialogFactory.GetNumberFromUser(GenericStrings.ImageMargin, null, null, imageMargins);
-            if (value is null)
-                return;
-            imageMargins = (int)value;
-            button.SetImageMargins(value.Value);
+            ByteFromUserParams prm = new()
+            {
+                Message = GenericStrings.ImageMargin,
+                DefaultValue = imageMargins,
+                OnApply = (value) =>
+                {
+                    if (value is null)
+                        return;
+                    imageMargins = (int)value;
+                    button.SetImageMargins(imageMargins);
+                },
+            };
+
+            DialogFactory.GetNumberFromUserAsync(prm);
         }
 
         public void DoInside(Action action)

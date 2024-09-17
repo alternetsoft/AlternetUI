@@ -51,21 +51,10 @@ namespace Alternet.UI
         /// <inheritdoc cref="MessageBox.ShowDefault(MessageBoxInfo)"/>
         DialogResult ShowMessageBox(MessageBoxInfo info);
 
-        /// <inheritdoc cref="DialogFactory.GetTextFromUser"/>
-        string? GetTextFromUser(
-            string message,
-            string caption,
-            string defaultValue,
-            Control? parent);
+        /// <inheritdoc cref="DialogFactory.GetTextFromUserAsync"/>
+        void GetTextFromUserAsync(TextFromUserParams prm);
 
-        /// <inheritdoc cref="DialogFactory.GetNumberFromUser"/>
-        long? GetNumberFromUser(
-            string message,
-            string prompt,
-            string caption,
-            long value,
-            long min,
-            long max,
-            Control? parent);
+        /// <inheritdoc cref="DialogFactory.GetNumberFromUserAsync"/>
+        void GetNumberFromUserAsync(LongFromUserParams prm);
     }
 }
