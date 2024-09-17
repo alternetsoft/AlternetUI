@@ -111,63 +111,59 @@ namespace Alternet.UI
         /// Shows dialog which asks to enter the lightness value. Possible values are 0..200.
         /// </summary>
         /// <param name="defaultValue">Default value. Optional. If not specified, uses 100.</param>
-        /// <returns></returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static byte? AskLightness(byte defaultValue = 100)
+        /// <param name="onApply">Action to call when 'Ok' button is pressed in the dialog.</param>
+        public static void AskLightnessAsync(Action<byte> onApply, byte defaultValue = 100)
         {
-            return AskByte("Lightness", 100, 200);
+            AskByteAsync("Lightness", onApply, 100, 200);
         }
 
         /// <summary>
         /// Shows dialog which asks to enter a <see cref="byte"/> value.
         /// </summary>
         /// <param name="title">Dialog title.</param>
+        /// <param name="onApply">Action to call when 'Ok' button is pressed in the dialog.</param>
         /// <param name="defaultValue">Default value. Optional. If not specified, uses 0.</param>
         /// <param name="maxValue">Maximal value. Optional. If not specified, uses 255.</param>
-        /// <returns></returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static byte? AskByte(string title, byte defaultValue = 0, byte maxValue = 255)
+        public static void AskByteAsync(
+            string title,
+            Action<byte> onApply,
+            byte defaultValue = 0,
+            byte maxValue = 255)
         {
-            var result = DialogFactory.GetNumberFromUser(
-                null,
-                $"{title} (0..{maxValue})",
-                null,
-                defaultValue,
-                0,
-                maxValue);
-            if (result is null)
-                return null;
-            return (byte)result.Value;
+            ByteFromUserParams prm = new()
+            {
+                MaxValue = maxValue,
+                Title = title,
+                Message = $"{title} (0..{maxValue})",
+                DefaultValue = defaultValue,
+                OnApply = (v) =>
+                {
+                    if (v is not null)
+                        onApply(Convert.ToByte(v.Value));
+                },
+            };
+
+            GetNumberFromUserAsync(prm);
         }
 
         /// <summary>
         /// Shows dialog which asks to enter the transparency value. Possible values are 0..255.
         /// </summary>
+        /// <param name="onApply">Action to call when 'Ok' button is pressed in the dialog.</param>
         /// <param name="defaultValue">Default value.</param>
-        /// <returns></returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static byte? AskTransparency(byte defaultValue)
+        public static void AskTransparencyAsync(Action<byte> onApply, byte defaultValue)
         {
-            return AskByte("Transparency", defaultValue);
+            AskByteAsync("Transparency", onApply, defaultValue);
         }
 
         /// <summary>
         /// Shows dialog which asks to enter the brightness value. Possible values are 0..255.
         /// </summary>
         /// <param name="defaultValue">Default value. Optional. If not specified, uses 255.</param>
-        /// <returns></returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static byte? AskBrightness(byte defaultValue = 255)
+        /// <param name="onApply">Action to call when 'Ok' button is pressed in the dialog.</param>
+        public static void AskBrightnessAsync(Action<byte> onApply, byte defaultValue = 255)
         {
-            return AskByte("Brightness", defaultValue);
+            AskByteAsync("Brightness", onApply, defaultValue);
         }
 
         /// <summary>
@@ -222,33 +218,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Popups a dialog box with a title, message and input box.
-        /// The user may type in text and press 'OK' to return this text, or press 'Cancel'
-        /// to return the empty string.
+        /// Shows a dialog asking the user for numeric input.
         /// </summary>
-        /// <param name="message">Dialog message.</param>
-        /// <param name="caption">Dialog title.</param>
-        /// <param name="defaultValue">Default value. Optional.</param>
-        /// <param name="parent">Parent control. Optional.</param>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static string? GetTextFromUser(
-            string? message,
-            string? caption,
-            string? defaultValue = null,
-            Control? parent = null)
+        /// <remarks>
+        /// Minimal, maximal and default values specified in the dialog parameters must be positive.
+        /// </remarks>
+        /// <param name="prm">Dialog parameters.</param>
+        public static void GetNumberFromUserAsync(LongFromUserParams prm)
         {
-            defaultValue ??= string.Empty;
-            message ??= string.Empty;
-            caption ??= CommonStrings.Default.WindowTitleInput;
+            long minValue = MathUtils.ValueOrMin(prm.MinValue);
+            long maxValue;
+            long value = MathUtils.ValueOrMin(prm.DefaultValue);
 
-            var result = Handler.GetTextFromUser(
-                message,
-                caption,
-                defaultValue,
-                parent);
-            return result;
+            if (prm.MaxValue is null || prm.MaxValue < 0)
+                maxValue = long.MaxValue;
+            else
+                maxValue = prm.MaxValue.Value;
+
+            var result = Handler.GetNumberFromUser(
+                string.Empty,
+                prm.SafeMessage,
+                prm.SafeTitle,
+                value,
+                minValue,
+                maxValue,
+                prm.Parent);
+            prm.RaiseActions(result);
         }
 
         /// <summary>

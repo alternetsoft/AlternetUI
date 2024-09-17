@@ -391,12 +391,15 @@ namespace PaintSample
             {
                 Filter = FileMaskUtils.GetFileDialogFilterForImageOpen(false),
                 InitialDirectory = s,
+                FileMustExist = true,
             };
 
-            if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
-                return;
-
-            Document = new PaintSampleDocument(this, dialog.FileName);
+            dialog.ShowAsync(() =>
+            {
+                if (dialog.FileName == null)
+                    return;
+                Document = new PaintSampleDocument(this, dialog.FileName);
+            });
         }
 
         string? PromptForSaveFileName()
@@ -473,55 +476,67 @@ namespace PaintSample
 
         public void DoChangeLightness()
         {
-            var lightness = DialogFactory.AskLightness() ?? 100;
-            App.Log($"Image.ChangeLightness: {lightness}");
-            Document.Bitmap = Document.Bitmap.ChangeLightness(lightness);
+            DialogFactory.AskLightnessAsync((lightness) =>
+            {
+                App.Log($"Image.ChangeLightness: {lightness}");
+                Document.Bitmap = Document.Bitmap.ChangeLightness(lightness);
+            });
         }
 
         public void DoConvertToDisabled()
         {
-            var value = DialogFactory.AskBrightness() ?? 255;
-            App.Log($"Image.ConvertToDisabled: {value}");
-            Document.Bitmap = Document.Bitmap.ConvertToDisabled(value);
+            DialogFactory.AskBrightnessAsync((value) =>
+            {
+                App.Log($"Image.ConvertToDisabled: {value}");
+                Document.Bitmap = Document.Bitmap.ConvertToDisabled(value);
+            });
         }
 
         public unsafe void DoFillGreenUseSkiaColors()
         {
-            var alpha = DialogFactory.AskTransparency(100) ?? 100;
-            App.Log($"Fill green color (alpha = {alpha}) using new image with native data");
+            DialogFactory.AskTransparencyAsync((alpha) =>
+            {
+                App.Log($"Fill green color (alpha = {alpha}) using new image with native data");
 
-            var height = 600;
-            var width = 600;
+                var height = 600;
+                var width = 600;
 
-            var pixels = GenericImage.CreatePixels(width, height, Color.Green.WithAlpha(alpha));
-            Document.Bitmap = Bitmap.Create(width, height, pixels);
+                var pixels = GenericImage.CreatePixels(width, height, Color.Green.WithAlpha(alpha));
+                Document.Bitmap = Bitmap.Create(width, height, pixels);
+            }, 100);
         }
 
         public void DoFillRedUseSetData()
         {
-            var alpha = DialogFactory.AskTransparency(100) ?? 100;
-            App.Log($"Fill red color (alpha = {alpha}) using new image with native data");
-            Document.Bitmap = Bitmap.Create(600, 600, Color.Red.WithAlpha(alpha));
+            DialogFactory.AskTransparencyAsync((alpha) =>
+            {
+                App.Log($"Fill red color (alpha = {alpha}) using new image with native data");
+                Document.Bitmap = Bitmap.Create(600, 600, Color.Red.WithAlpha(alpha));
+            }, 100);
         }
 
         public unsafe void DoMakeFileGray()
         {
             OpenFileDialog dialog = new()
             {
-                Filter = "Images | *.bmp; *.png; *.jpg; *.jpeg"
+                Filter = "Images | *.bmp; *.png; *.jpg; *.jpeg",
+                FileMustExist = true,
             };
 
-            if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
-                return;
+            dialog.ShowAsync(() =>
+            {
+                if (dialog.FileName is null)
+                    return;
 
-            string ext = Path.GetExtension(dialog.FileName);
-            var bm = new Bitmap();
-            bm.Load(dialog.FileName, BitmapType.Any);
-            var image = (GenericImage)bm;
-            image.ChangeToGrayScale();
-            var greyBm = (Bitmap)image;
-            greyBm.Save(dialog.FileName.Replace(ext, "_Gray" + ext));
-            Document.Bitmap = greyBm;
+                string ext = Path.GetExtension(dialog.FileName);
+                var bm = new Bitmap();
+                bm.Load(dialog.FileName, BitmapType.Any);
+                var image = (GenericImage)bm;
+                image.ChangeToGrayScale();
+                var greyBm = (Bitmap)image;
+                greyBm.Save(dialog.FileName.Replace(ext, "_Gray" + ext));
+                Document.Bitmap = greyBm;
+            });
         }
 
         public void DoRotate()

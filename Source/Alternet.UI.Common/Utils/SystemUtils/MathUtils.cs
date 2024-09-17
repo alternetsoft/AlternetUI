@@ -36,6 +36,20 @@ namespace Alternet.UI
         public static short LowInt16(int n) => unchecked((short)(n & 0xffff));
 
         /// <summary>
+        /// Returns <paramref name="min"/> if <paramref name="value"/> is null
+        /// or less than <paramref name="min"/>; otherwise returns <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">Value.</param>
+        /// <param name="min">Minimal value.</param>
+        /// <returns></returns>
+        public static long ValueOrMin(long? value, long min = default)
+        {
+            if (value is null || value <= min)
+                return min;
+            return value.Value;
+        }
+
+        /// <summary>
         /// Maps value from range specified by
         /// (<paramref name="fromLow"/>, <paramref name="fromHigh"/>)
         /// to range specified by
