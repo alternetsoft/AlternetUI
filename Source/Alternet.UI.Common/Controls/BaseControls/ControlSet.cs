@@ -570,11 +570,9 @@ namespace Alternet.UI
         /// <param name="value">Parent control.</param>
         public virtual ControlSet Parent(Control? value)
         {
-            return DoInsideLayout(() =>
-            {
-                foreach (var item in items)
-                    item.Parent = value;
-            });
+            foreach (var item in items)
+                item.Parent = value;
+            return this;
         }
     }
 }
