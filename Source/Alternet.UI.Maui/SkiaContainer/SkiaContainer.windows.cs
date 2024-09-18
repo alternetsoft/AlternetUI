@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
+#if WINDOWS
+
 namespace Alternet.UI
 {
     public partial class SkiaContainer
@@ -202,3 +204,5 @@ namespace Alternet.UI
         }
     }
 }
+
+#endif

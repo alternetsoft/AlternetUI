@@ -7,10 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Maui.Controls.PlatformConfiguration;
-using Microsoft.UI.Xaml;
 
-using Windows.UI.ViewManagement;
-using Windows.UI.ViewManagement.Core;
+#if IOS
 
 namespace Alternet.UI
 {
@@ -18,6 +16,12 @@ namespace Alternet.UI
     {
         static MauiKeyboardHandler()
         {
+        }
+
+        /// <inheritdoc/>
+        public virtual bool IsValidKey(Key key)
+        {
+            return (int)key >= (int)Key.None && (int)key <= (int)Key.MaxMaui;
         }
 
         public KeyStates GetKeyStatesFromSystem(Key key)
@@ -41,3 +45,5 @@ namespace Alternet.UI
         }
     }
 }
+
+#endif

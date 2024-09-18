@@ -6,15 +6,23 @@ using System.Threading.Tasks;
 
 #if MACCATALYST
 using Foundation;
+
 using UIKit;
 #endif
 
 namespace Alternet.UI
 {
 #if MACCATALYST
-    public partial class EventView : UIView
+    /// <summary>
+    /// Adds additional functionality to the <see cref="SkiaSharp.Views.iOS.SKCanvasView"/> control.
+    /// </summary>
+    public partial class SKCanvasViewAdv : SkiaSharp.Views.iOS.SKCanvasView
     {
-        public EventView(IntPtr handle)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SKCanvasViewAdv"/> class.
+        /// </summary>
+        /// <param name="handle"></param>
+        public SKCanvasViewAdv(IntPtr handle)
             : base(handle)
         {
         }
@@ -44,6 +52,31 @@ namespace Alternet.UI
 
                 if (press.Key is null)
                     continue;
+
+                /*
+                    public enum UIKeyModifierFlags : long
+                    {
+                        AlphaShift = 65536,
+                        Shift = 131072,
+                        Control = 262144,
+                        Alternate = 524288,
+                        Command = 1048576,
+                        NumericPad = 2097152
+                    }
+
+                    static var alphaShift: UIKeyModifierFlags
+                        A modifier flag that indicates the user pressed the Caps Lock key.
+                    static var shift: UIKeyModifierFlags
+                        A modifier flag that indicates the user pressed the Shift key.
+                    static var control: UIKeyModifierFlags
+                        A modifier flag that indicates the user pressed the Control key.
+                    static var alternate: UIKeyModifierFlags
+                        A modifier flag that indicates the user pressed the Option key.
+                    static var command: UIKeyModifierFlags
+                        A modifier flag that indicates the user pressed the Command key.
+                    static var numericPad: UIKeyModifierFlags
+                        A modifier flag that indicates the user pressed a key located on the numeric keypad.
+                */
 
                 var shift =
                     press.Key.ModifierFlags.HasFlag(UIKeyModifierFlags.AlphaShift) ||

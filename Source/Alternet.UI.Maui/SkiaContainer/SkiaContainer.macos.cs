@@ -9,18 +9,16 @@ using Microsoft.Maui.Controls;
 
 namespace Alternet.UI
 {
+#if MACCATALYST
     public partial class SkiaContainer
     {
-#if MACCATALYST
         internal SkiaSharp.Views.iOS.SKCanvasView? GetPlatformView(IElementHandler? handler = null)
         {
             handler ??= Handler;
             var platformView = handler?.PlatformView as SkiaSharp.Views.iOS.SKCanvasView;
             return platformView;
         }
-#endif
 
-#if MACCATALYST
         /// <inheritdoc/>
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {
@@ -30,9 +28,7 @@ namespace Alternet.UI
             if (platformView is null)
                 return;
         }
-#endif
 
-#if MACCATALYST
         /// <inheritdoc/>
         protected override void OnHandlerChanged()
         {
@@ -42,6 +38,6 @@ namespace Alternet.UI
             if (platformView is null)
                 return;
         }
+    }
 #endif
-}
 }
