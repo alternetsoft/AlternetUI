@@ -195,6 +195,18 @@ namespace Alternet.UI
         public virtual Font? Font { get; set; }
 
         /// <summary>
+        /// Gets or sets whether to hide selection for this item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HideSelection { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to hide focus rectangle for this item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HideFocusRect { get; set; }
+
+        /// <summary>
         /// Gets or sets foreground color of the item.
         /// </summary>
         /// <remarks>
