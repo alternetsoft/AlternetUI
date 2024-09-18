@@ -853,6 +853,9 @@ namespace Alternet.UI
 
             var item = SafeItem(e.ItemIndex);
 
+            var hideSelection = item?.HideSelection ?? false;
+            var hideFocusRect = item?.HideFocusRect ?? false;
+
             if (Enabled)
             {
                 dc.FillBorderRectangle(
@@ -864,15 +867,18 @@ namespace Alternet.UI
 
                 if (isSelected && selectionVisible)
                 {
-                    dc.FillBorderRectangle(
-                        rect,
-                        GetSelectedItemBackColor(e.ItemIndex).AsBrush,
-                        selectionBorder,
-                        true,
-                        this);
+                    if(!hideSelection)
+                    {
+                        dc.FillBorderRectangle(
+                            rect,
+                            GetSelectedItemBackColor(e.ItemIndex).AsBrush,
+                            selectionBorder,
+                            true,
+                            this);
+                    }
                 }
 
-                if (isCurrent && Focused && currentItemBorderVisible)
+                if (isCurrent && Focused && currentItemBorderVisible && !hideFocusRect)
                 {
                     var border = CurrentItemBorder ?? DefaultCurrentItemBorder;
                     DrawingUtils.DrawBorder(this, e.Graphics, rect, border);
@@ -1381,8 +1387,13 @@ namespace Alternet.UI
                 }
             }
 
+            var isSelected = e.IsSelected;
+            var hideSelection = item?.HideSelection ?? false;
+            if (hideSelection)
+                isSelected = false;
+
             var (normalImage, disabledImage, selectedImage) = e.ItemImages;
-            var image = Enabled ? (e.IsSelected ? selectedImage : normalImage) : disabledImage;
+            var image = Enabled ? (isSelected ? selectedImage : normalImage) : disabledImage;
 
             var s = textVisible ? e.ItemText.Trim() : string.Empty;
 
@@ -1392,7 +1403,7 @@ namespace Alternet.UI
             e.Graphics.DrawLabel(
                 s,
                 e.ItemFont,
-                e.TextColor,
+                e.GetTextColor(isSelected),
                 Color.Empty,
                 image,
                 e.ClipRectangle,
