@@ -525,7 +525,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to increase minimal size when size is increased.
+        /// Gets or sets how to increase minimal size when size is increased.
         /// </summary>
         public virtual WindowSizeToContentMode MinSizeGrowMode
         {
