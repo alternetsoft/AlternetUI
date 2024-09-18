@@ -2003,6 +2003,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Increase minimal size to the specified value.
+        /// </summary>
+        /// <param name="mode">Minimal size increase mode.</param>
+        /// <param name="minWidthAtLeast">Minimal width will be at least. Optional.
+        /// If not specified, current control's width is used.</param>
+        /// <param name="minHeightAtLeast">Minimal height will be at least. Optional.
+        /// If not specified, current control's height is used.</param>
+        public virtual void GrowMinSize(
+            WindowSizeToContentMode mode,
+            Coord? minWidthAtLeast = null,
+            Coord? minHeightAtLeast = null)
+        {
+            if (mode == WindowSizeToContentMode.None)
+                return;
+            SizeD currentSize = Size;
+            var minW = minWidthAtLeast ?? currentSize.Width;
+            var minH = minHeightAtLeast ?? currentSize.Height;
+
+            switch (mode)
+            {
+                case WindowSizeToContentMode.Width:
+                    MinWidth = ControlUtils.GrowCoord(MinWidth, minW);
+                    break;
+                case WindowSizeToContentMode.Height:
+                    MinHeight = ControlUtils.GrowCoord(MinHeight, minH);
+                    break;
+                case WindowSizeToContentMode.WidthAndHeight:
+                    MinimumSize = ControlUtils.GrowSize(MinimumSize, (minW, minH));
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Adds <see cref="IControlNotification"/> object to the list of notifications.
         /// </summary>
         /// <param name="n">Notification object to add.</param>
