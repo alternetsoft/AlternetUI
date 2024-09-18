@@ -64,6 +64,42 @@ namespace Alternet.UI
         public T? DefaultValue;
 
         /// <summary>
+        /// Gets or sets max length of the input value.
+        /// </summary>
+        /// <remarks>
+        /// Not used on some platforms.
+        /// </remarks>
+        public int MaxLength = -1;
+
+        /// <summary>
+        /// Gets or sets accept button text.
+        /// </summary>
+        /// <remarks>
+        /// Not used on some platforms.
+        /// </remarks>
+        public string? AcceptButtonText;
+
+        /// <summary>
+        /// Gets or sets cancel button text.
+        /// </summary>
+        /// <remarks>
+        /// Not used on some platforms.
+        /// </remarks>
+        public string? CancelButtonText;
+
+        /// <summary>
+        /// Returns <see cref="AcceptButtonText"/> if it's specified;
+        /// otherwise returns default text for the accept button.
+        /// </summary>
+        public virtual string SafeAcceptButtonText => CommonStrings.Default.ButtonOk;
+
+        /// <summary>
+        /// Returns <see cref="CancelButtonText"/> if it's specified;
+        /// otherwise returns default text for the cancel button.
+        /// </summary>
+        public virtual string SafeCancelButtonText => CommonStrings.Default.ButtonCancel;
+
+        /// <summary>
         /// Gets <see cref="Message"/> or an empty string.
         /// </summary>
         public virtual string SafeMessage => Message ?? string.Empty;
