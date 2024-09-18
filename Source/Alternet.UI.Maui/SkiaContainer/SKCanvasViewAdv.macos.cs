@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 #if MACCATALYST
 using Foundation;
 
+using SkiaSharp;
+
 using UIKit;
 #endif
 
@@ -18,6 +20,19 @@ namespace Alternet.UI
     /// </summary>
     public partial class SKCanvasViewAdv : SkiaSharp.Views.iOS.SKCanvasView
     {
+        private static readonly Lazy<bool> isValidEnvironment = new(() =>
+        {
+            try
+            {
+                SKPMColor.PreMultiply(SKColors.Black);
+                return true;
+            }
+            catch (DllNotFoundException)
+            {
+                return false;
+            }
+        });
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SKCanvasViewAdv"/> class.
         /// </summary>
@@ -26,6 +41,8 @@ namespace Alternet.UI
             : base(handle)
         {
         }
+
+        internal static bool IsValidEnvironment => isValidEnvironment.Value;
 
         /// <inheritdoc/>
         public override bool CanBecomeFocused

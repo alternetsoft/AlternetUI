@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,6 +96,21 @@ namespace Alternet.UI
 
                 InvalidateSurface();
             }
+        }
+
+        /// <summary>
+        /// Gets whether control is in the design mode.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool GetIsDesignMode()
+        {
+            ISite? site = ((IComponent)this).Site;
+            var designMode = site != null && site.DesignMode;
+
+#if MACCATALYST
+            designMode = designMode || !SKCanvasViewAdv.IsValidEnvironment;
+#endif
+            return designMode;
         }
 
         /// <summary>
