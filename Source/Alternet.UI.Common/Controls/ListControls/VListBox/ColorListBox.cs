@@ -27,6 +27,9 @@ namespace Alternet.UI
         /// </summary>
         public static Action<ColorListBox>? InitColors = InitDefaultColors;
 
+        private Color? disabledImageColor;
+        private bool useDisabledImageColor = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
         /// </summary>
@@ -53,6 +56,54 @@ namespace Alternet.UI
         public ColorListBox(bool defaultColors)
         {
             Initialize(defaultColors);
+        }
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting of the color image
+        /// when control is disabled.
+        /// </summary>
+        public virtual bool UseDisabledImageColor
+        {
+            get
+            {
+                return useDisabledImageColor;
+            }
+
+            set
+            {
+                if (useDisabledImageColor == value)
+                    return;
+                useDisabledImageColor = value;
+                if (Enabled)
+                    return;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets disabled image color.
+        /// </summary>
+        /// <remarks>
+        /// This color is used for painting color image when control is disabled.
+        /// If this property is null, color image will be painted using
+        /// <see cref="ColorComboBox.DefaultDisabledImageColor"/>.
+        /// </remarks>
+        public virtual Color? DisabledImageColor
+        {
+            get
+            {
+                return disabledImageColor;
+            }
+
+            set
+            {
+                if (disabledImageColor == value)
+                    return;
+                disabledImageColor = value;
+                if (Enabled)
+                    return;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -212,11 +263,33 @@ namespace Alternet.UI
                 return sender.DefaultMeasureItemSize(index);
             }
 
+            /// <summary>
+            /// Gets image color for the item.
+            /// </summary>
+            /// <param name="sender">Control.</param>
+            /// <param name="e">Parameters.</param>
+            /// <returns></returns>
+            public virtual Color GetImageColor(VirtualListBox sender, ListBoxItemPaintEventArgs e)
+            {
+                var itemColor = GetItemValueOrDefault(sender, e.ItemIndex, Color.White);
+                var colorListBox = sender as ColorListBox;
+                var useDisabledImageColor = colorListBox?.UseDisabledImageColor ?? false;
+
+                if (!sender.Enabled && useDisabledImageColor)
+                {
+                    var disabledColor = colorListBox?.DisabledImageColor
+                        ?? ColorComboBox.DefaultDisabledImageColor;
+                    if (disabledColor is not null)
+                        itemColor = disabledColor;
+                }
+
+                return itemColor;
+            }
+
             /// <inheritdoc/>
             public virtual void Paint(VirtualListBox sender, ListBoxItemPaintEventArgs e)
             {
-                var itemColor = GetItemValueOrDefault(sender, e.ItemIndex, Color.White);
-
+                var itemColor = GetImageColor(sender, e);
                 if (sender.TextVisible)
                 {
                     var (colorRect, itemRect) = sender.GetItemImageRect(e.ClipRectangle);
