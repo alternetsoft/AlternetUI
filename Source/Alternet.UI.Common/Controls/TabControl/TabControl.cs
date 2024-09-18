@@ -32,7 +32,6 @@ namespace Alternet.UI
         private TabSizeMode sizeMode = TabSizeMode.Normal;
         private TabAppearance tabAppearance = TabAppearance.Normal;
         private int addSuspended;
-        private WindowSizeToContentMode tabPageSizeMode = WindowSizeToContentMode.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -89,16 +88,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.TabControl;
-
-        /// <summary>
-        /// Gets or sets whether to update size of the cards when selected tab is changed.
-        /// </summary>
-        [Browsable(false)]
-        public virtual WindowSizeToContentMode TabPageSizeMode
-        {
-            get => tabPageSizeMode;
-            set => tabPageSizeMode = value;
-        }
 
         /// <summary>
         /// Gets the collection of tab pages in this tab control.
@@ -906,7 +895,7 @@ namespace Alternet.UI
 
         private void CardPanelHeader_BeforeTabClick(object sender, BaseCancelEventArgs e)
         {
-            ApplyTabPageSizeMode();
+            GrowMinSize(MinSizeGrowMode);
         }
 
         private void CardPanelHeader_TabClick(object? sender, EventArgs e)
@@ -914,27 +903,11 @@ namespace Alternet.UI
             RaiseSelectedIndexChanged();
         }
 
-        private void ApplyTabPageSizeMode()
-        {
-            switch (TabPageSizeMode)
-            {
-                case WindowSizeToContentMode.Width:
-                    MinWidth = ControlUtils.GrowCoord(MinWidth, Width);
-                    break;
-                case WindowSizeToContentMode.Height:
-                    MinHeight = ControlUtils.GrowCoord(MinHeight, Height);
-                    break;
-                case WindowSizeToContentMode.WidthAndHeight:
-                    MinimumSize = ControlUtils.GrowSize(MinimumSize, Size);
-                    break;
-            }
-        }
-
         private void RaiseSelectedIndexChanged()
         {
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
             SelectedPageChanged?.Invoke(this, EventArgs.Empty);
-            ApplyTabPageSizeMode();
+            GrowMinSize(MinSizeGrowMode);
         }
 
         private void Pages_ItemRemoved(object? sender, int index, Control item)

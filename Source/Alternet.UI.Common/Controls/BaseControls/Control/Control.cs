@@ -51,6 +51,7 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
         private bool enabled = true;
         private int handlerTextChanging;
@@ -520,6 +521,21 @@ namespace Alternet.UI
             set
             {
                 IntFlags[LocalizationManager.ShouldLocalizeTextIdentifier] = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to increase minimal size when size is increased.
+        /// </summary>
+        public virtual WindowSizeToContentMode MinSizeGrowMode
+        {
+            get => minSizeGrowMode;
+            set
+            {
+                if (minSizeGrowMode == value)
+                    return;
+                minSizeGrowMode = value;
+                GrowMinSize(value);
             }
         }
 
