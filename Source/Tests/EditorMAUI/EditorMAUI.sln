@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Editor.MAUI", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Editor.AlternetUI", "..\..\..\..\AlternetStudio\Source\Editor\Alternet.Editor.AlternetUI.csproj", "{D832E9FE-E536-4D31-A82E-0FD588273EDB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Common", "..\..\Alternet.UI.Common\Alternet.UI.Common.csproj", "{EAF2185C-F586-490A-BCFE-D5B83A81486D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Interfaces", "..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj", "{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +75,14 @@ Global
 		{D832E9FE-E536-4D31-A82E-0FD588273EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D832E9FE-E536-4D31-A82E-0FD588273EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D832E9FE-E536-4D31-A82E-0FD588273EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF2185C-F586-490A-BCFE-D5B83A81486D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF2185C-F586-490A-BCFE-D5B83A81486D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF2185C-F586-490A-BCFE-D5B83A81486D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF2185C-F586-490A-BCFE-D5B83A81486D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,6 +9,8 @@ namespace EditorMAUI;
 
 public partial class MainPage : ContentPage
 {
+    private static int counter = 0;
+
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
 
     private readonly Alternet.Syntax.Parsers.Roslyn.CodeCompletion.CsSolution solution;
@@ -72,7 +74,7 @@ public partial class MainPage : ContentPage
 
     private void Control_FocusedControlChanged(object? sender, EventArgs e)
     {
-        Alternet.UI.App.LogIf($"FocusedControlChanged: {sender?.GetType()}", false);
+        Alternet.UI.App.LogIf($"FocusedControlChanged: {sender?.GetType()}", true);
     }
 
     private void InitEdit()
@@ -117,7 +119,7 @@ public partial class MainPage : ContentPage
         try
         {
             if (Window is not null)
-                Window.Title = e ?? string.Empty;
+                Window.Title = $"{counter++} {e}" ?? string.Empty;
         }
         catch
         {

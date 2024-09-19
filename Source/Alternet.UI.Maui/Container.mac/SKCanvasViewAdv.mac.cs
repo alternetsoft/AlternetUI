@@ -44,6 +44,16 @@ namespace Alternet.UI
         public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesChanged;
 
         /// <summary>
+        /// Raised when <see cref="BecomeFirstResponder"/> is called.
+        /// </summary>
+        public Action<SKCanvasViewAdv>? OnBecomeFirstResponder;
+
+        /// <summary>
+        /// Raised when <see cref="ResignFirstResponder"/> is called.
+        /// </summary>
+        public Action<SKCanvasViewAdv>? OnResignFirstResponder;
+
+        /// <summary>
         /// Raised when <see cref="PressesEnded"/> is called.
         /// </summary>
         public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesEnded;
@@ -78,6 +88,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool CanResignFirstResponder => true;
+
+        /// <inheritdoc/>
+        public override bool CanBecomeFirstResponder => true;
+
+        /// <inheritdoc/>
         public override bool CanBecomeFocused
         {
             get
@@ -92,6 +108,18 @@ namespace Alternet.UI
         public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
         {
             CallAction(presses, evt, OnPressesBegan, base.PressesBegan);
+        }
+
+        /// <inheritdoc/>
+        public override bool BecomeFirstResponder()
+        {
+            return base.BecomeFirstResponder();
+        }
+
+        /// <inheritdoc/>
+        public override bool ResignFirstResponder()
+        {
+            return base.ResignFirstResponder();
         }
 
         /// <inheritdoc/>

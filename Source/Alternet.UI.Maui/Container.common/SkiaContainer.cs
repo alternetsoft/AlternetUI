@@ -193,6 +193,7 @@ namespace Alternet.UI
             {
                 var platformView = GetPlatformView();
                 var request = new FocusRequest();
+                App.Log("Try to set focus");
                 platformView?.Focus(request);
             }
 #endif

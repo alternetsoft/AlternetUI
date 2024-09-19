@@ -30,6 +30,8 @@ namespace Alternet.UI
             platformView.OnPressesEnded = null;
             platformView.OnShouldUpdateFocus = null;
             platformView.OnDidUpdateFocus = null;
+            platformView.OnResignFirstResponder = null;
+            platformView.OnBecomeFirstResponder = null;
         }
 
         /// <inheritdoc/>
@@ -47,6 +49,28 @@ namespace Alternet.UI
             platformView.OnPressesEnded = HandlePressesEnded;
             platformView.OnShouldUpdateFocus = HandleShouldUpdateFocus;
             platformView.OnDidUpdateFocus = HandleDidUpdateFocus;
+            platformView.OnResignFirstResponder = HandleResignFirstResponder;
+            platformView.OnBecomeFirstResponder = HandleBecomeFirstResponder;
+        }
+
+        /// <summary>
+        /// Handles 'ResignFirstResponder' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        protected virtual void HandleResignFirstResponder(SKCanvasViewAdv sender)
+        {
+            App.DebugLogIf($"ResignFirstResponder", true);
+            Control?.RaiseLostFocus();
+        }
+
+        /// <summary>
+        /// Handles 'BecomeFirstResponder' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        protected virtual void HandleBecomeFirstResponder(SKCanvasViewAdv sender)
+        {
+            App.DebugLogIf($"BecomeFirstResponder", true);
+            Control?.RaiseGotFocus();
         }
 
         /// <summary>
@@ -66,15 +90,6 @@ namespace Alternet.UI
         /// <param name="context">Event context.</param>
         protected virtual void HandleDidUpdateFocus(SKCanvasViewAdv sender, UIFocusUpdateContext context)
         {
-            if (context.NextFocusedView == sender)
-            {
-                Control?.RaiseGotFocus();
-            }
-            else
-            if (context.PreviouslyFocusedView == sender)
-            {
-                Control?.RaiseLostFocus();
-            }
         }
 
         /// <summary>
