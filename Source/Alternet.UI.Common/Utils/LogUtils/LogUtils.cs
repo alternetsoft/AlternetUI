@@ -416,6 +416,21 @@ namespace Alternet.UI
 
         /// <summary>
         /// Same as <see cref="LogToFile"/> but writes message to file only under debug environment
+        /// (DEBUG conditional is defined) and if <paramref name="conditional"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="obj">Log message or object.</param>
+        /// <param name="conditional">Whether to log message to file.</param>
+        /// <param name="filename">Log file path. <see cref="App.LogFilePath"/> is used
+        /// when this parameter is <c>null</c>.</param>
+        [Conditional("DEBUG")]
+        public static void DebugLogToFileIf(object? obj, bool conditional, string? filename = null)
+        {
+            if(conditional)
+                LogToFile(obj, filename);
+        }
+
+        /// <summary>
+        /// Same as <see cref="LogToFile"/> but writes message to file only under debug environment
         /// (DEBUG conditional is defined).
         /// </summary>
         /// <param name="obj">Log message or object.</param>

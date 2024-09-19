@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Maui.Controls.PlatformConfiguration;
+
+#if WINDOWS
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 
@@ -426,3 +428,4 @@ namespace Alternet.UI
         }
     }
 }
+#endif

@@ -46,6 +46,7 @@ namespace Alternet.UI
         public static Action<Graphics, RectD, Color> PaintColorImage = PaintDefaultColorImage;
 
         private Color? disabledImageColor;
+        private bool useDisabledImageColor = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorComboBox"/> class.
@@ -76,11 +77,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting of the color image
+        /// when control is disabled.
+        /// </summary>
+        public virtual bool UseDisabledImageColor
+        {
+            get
+            {
+                return useDisabledImageColor;
+            }
+
+            set
+            {
+                if (useDisabledImageColor == value)
+                    return;
+                useDisabledImageColor = value;
+                if (Enabled)
+                    return;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets disabled image color.
         /// </summary>
         /// <remarks>
-        /// This color is used when <see cref="ColorComboBox"/> is disabled
-        /// for painting color image.
+        /// This color is used for painting color image when control is disabled.
         /// If this property is null, color image will be painted using
         /// <see cref="DefaultDisabledImageColor"/>.
         /// </remarks>
@@ -322,9 +344,13 @@ namespace Alternet.UI
                 if (!itemColor.IsOk)
                     itemColor = Color.White;
 
-                if (e.IsPaintingControl && !sender.Enabled)
+                var colorComboBox = sender as ColorComboBox;
+
+                var useDisabledImageColor = colorComboBox?.UseDisabledImageColor ?? false;
+
+                if (e.IsPaintingControl && !sender.Enabled && useDisabledImageColor)
                 {
-                    var disabledColor = (sender as ColorComboBox)?.DisabledImageColor
+                    var disabledColor = colorComboBox?.DisabledImageColor
                         ?? DefaultDisabledImageColor;
                     if(disabledColor is not null)
                         itemColor = disabledColor;

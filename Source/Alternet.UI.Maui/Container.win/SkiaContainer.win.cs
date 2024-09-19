@@ -7,17 +7,12 @@ using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
+#if WINDOWS
+
 namespace Alternet.UI
 {
     public partial class SkiaContainer
     {
-        internal SkiaSharp.Views.Windows.SKXamlCanvas? GetPlatformView(IElementHandler? handler = null)
-        {
-            handler ??= Handler;
-            var platformView = handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
-            return platformView;
-        }
-
         /// <inheritdoc/>
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {
@@ -202,3 +197,5 @@ namespace Alternet.UI
         }
     }
 }
+
+#endif
