@@ -8,7 +8,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <ListView x:Name="logControl" 
                            Grid.Row="0"
-                  HeightRequest="100"
+                  HeightRequest="350"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate>

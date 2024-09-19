@@ -74,22 +74,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handles 'HandleShouldUpdateFocus' event of the platform view on mac platform.
+        /// Handles 'ShouldUpdateFocus' event of the platform view on mac platform.
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="context">Event context.</param>
-        protected virtual bool HandleShouldUpdateFocus(SKCanvasViewAdv sender, UIFocusUpdateContext context)
+        protected virtual bool HandleShouldUpdateFocus(
+            SKCanvasViewAdv sender,
+            UIFocusUpdateContext context)
         {
             return true;
         }
 
         /// <summary>
-        /// Handles 'HandleDidUpdateFocus' event of the platform view on mac platform.
+        /// Handles 'DidUpdateFocus' event of the platform view on mac platform.
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="context">Event context.</param>
         protected virtual void HandleDidUpdateFocus(SKCanvasViewAdv sender, UIFocusUpdateContext context)
         {
+            App.DebugLogIf($"DidUpdateFocus", true);
+            if (context.NextFocusedView == sender)
+            {
+                Control?.RaiseGotFocus();
+            }
+            else
+            if (context.PreviouslyFocusedView == sender)
+            {
+                Control?.RaiseLostFocus();
+            }
         }
 
         /// <summary>
@@ -101,7 +113,7 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesEnded: {e}", true);
+            App.DebugLogIf($"PressesEnded: {e}", false);
         }
 
         /// <summary>
@@ -113,7 +125,7 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesChanged: {e}", true);
+            App.DebugLogIf($"PressesChanged: {e}", false);
         }
 
         /// <summary>
@@ -125,7 +137,7 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesCancelled: {e}", true);
+            App.DebugLogIf($"PressesCancelled: {e}", false);
         }
 
         /// <summary>
