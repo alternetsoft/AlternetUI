@@ -13,13 +13,6 @@ namespace Alternet.UI
 {
     public partial class SkiaContainer
     {
-        internal SkiaSharp.Views.Windows.SKXamlCanvas? GetPlatformView(IElementHandler? handler = null)
-        {
-            handler ??= Handler;
-            var platformView = handler?.PlatformView as SkiaSharp.Views.Windows.SKXamlCanvas;
-            return platformView;
-        }
-
         /// <inheritdoc/>
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {

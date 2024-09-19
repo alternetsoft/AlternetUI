@@ -12,13 +12,6 @@ namespace Alternet.UI
 #if MACCATALYST
     public partial class SkiaContainer
     {
-        internal SKCanvasViewAdv? GetPlatformView(IElementHandler? handler = null)
-        {
-            handler ??= Handler;
-            var platformView = handler?.PlatformView as SKCanvasViewAdv;
-            return platformView;
-        }
-
         /// <inheritdoc/>
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {

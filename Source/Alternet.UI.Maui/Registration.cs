@@ -24,11 +24,7 @@ public static class Registration
     {
         builder.ConfigureMauiHandlers(h =>
         {
-#if MACCATALYST
             h.AddHandler<SkiaContainer, SKCanvasViewHandlerAdv>();
-#else
-            h.AddHandler<SkiaContainer, SKCanvasViewHandler>();
-#endif
         });
 
         return builder;

@@ -4,24 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#if MACCATALYST
+#if WINDOWS
 
-using SkiaSharp.Views.iOS;
 using SkiaSharp.Views.Maui.Handlers;
-
-using UIKit;
+using SkiaSharp.Views.Windows;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Overrides view handler and changes platform view to the <see cref="SKCanvasViewAdv"/>.
+    /// </summary>
     public class SKCanvasViewHandlerAdv : SKCanvasViewHandler
     {
         /// <inheritdoc/>
-        protected override SKCanvasView CreatePlatformView()
+        protected override SKXamlCanvas CreatePlatformView()
         {
-            return new SKCanvasViewAdv
-            {
-                BackgroundColor = UIColor.Clear,
-            };
+            return new SKCanvasViewAdv();
         }
     }
 }

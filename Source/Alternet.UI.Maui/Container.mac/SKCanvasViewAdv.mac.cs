@@ -10,11 +10,9 @@ using Foundation;
 using SkiaSharp;
 
 using UIKit;
-#endif
 
 namespace Alternet.UI
 {
-#if MACCATALYST
     /// <summary>
     /// Adds additional functionality to the <see cref="SkiaSharp.Views.iOS.SKCanvasView"/> control.
     /// </summary>
@@ -209,5 +207,5 @@ namespace Alternet.UI
             }
         }
     }
-#endif
 }
+#endif

@@ -99,6 +99,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets platform view.
+        /// </summary>
+        /// <param name="handler">Element handler.</param>
+        /// <returns></returns>
+        public virtual SKCanvasViewAdv? GetPlatformView(IElementHandler? handler = null)
+        {
+            handler ??= Handler;
+            var platformView = handler?.PlatformView as SKCanvasViewAdv;
+            return platformView;
+        }
+
+        /// <summary>
         /// Gets whether control is in the design mode.
         /// </summary>
         /// <returns></returns>
