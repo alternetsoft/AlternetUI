@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.632.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.633.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -562,10 +562,16 @@
     <Type Name="Alternet.UI.ISaveFileDialogHandler" />
     <Type Name="Alternet.UI.ISelectDirectoryDialogHandler" />
     <Type Name="Alternet.UI.ListEditSource" />
+    <Type Name="Alternet.UI.ByteFromUserParams" />
+    <Type Name="Alternet.UI.LongFromUserParams" />
+    <Type Name="Alternet.UI.NumericFromUserParams`1" />
+    <Type Name="Alternet.UI.TextFromUserParams" />
+    <Type Name="Alternet.UI.ValueFromUserParams`1" />
     <Type Name="Alternet.UI.SelectDirectoryDialog">
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ThreadExceptionWindow">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -940,6 +946,72 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.NonVisualControl">
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Idle" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Scroll" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.PaintActionsControl">
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3295,6 +3367,7 @@
     <Type Name="Alternet.UI.ICalendarHandler" />
     <Type Name="Alternet.UI.IDateTimePickerHandler" />
     <Type Name="Alternet.UI.PopupCalendar">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -4467,6 +4540,7 @@
     </Type>
     <Type Name="Alternet.UI.ICheckListBoxHandler" />
     <Type Name="Alternet.UI.PopupCheckListBox">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -4764,6 +4838,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupListBox">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -4848,6 +4923,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupListBox`1">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -5359,6 +5435,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupColorListBox">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -5583,6 +5660,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.WindowLogListBox">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -6529,6 +6607,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupPictureBox">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -6613,6 +6692,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupWindow">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -6697,6 +6777,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupWindow`1">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -7184,6 +7265,7 @@
     <Type Name="Alternet.UI.CreatePropertyEventHandler" />
     <Type Name="Alternet.UI.CreatePropertyEventArgs" />
     <Type Name="Alternet.UI.PopupPropertyGrid">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -7355,6 +7437,7 @@
     </Type>
     <Type Name="Alternet.UI.PropertyGridItemHandle" />
     <Type Name="Alternet.UI.WindowPropertyGrid">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -8133,6 +8216,12 @@
     <Type Name="Alternet.UI.CardPanelItem">
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.TabControlCancelEventHandler" />
+    <Type Name="Alternet.UI.TabControlCancelEventArgs" />
+    <Type Name="Alternet.UI.TabControlEventHandler" />
+    <Type Name="Alternet.UI.TabControlEventArgs" />
+    <Type Name="Alternet.UI.TabPageChangedEventHandler" />
+    <Type Name="Alternet.UI.TabPageChangedEventArgs" />
     <Type Name="Alternet.UI.SideBarPanel">
       <Event Name="TabSizeChanged" />
       <Event Name="SelectedIndexChanged" />
@@ -8271,10 +8360,6 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.TabControlCancelEventHandler" />
-    <Type Name="Alternet.UI.TabControlCancelEventArgs" />
-    <Type Name="Alternet.UI.TabControlEventHandler" />
-    <Type Name="Alternet.UI.TabControlEventArgs" />
     <Type Name="Alternet.UI.TabPage">
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -8341,8 +8426,6 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.TabPageChangedEventHandler" />
-    <Type Name="Alternet.UI.TabPageChangedEventArgs" />
     <Type Name="Alternet.UI.CustomTextBox">
       <Event Name="ErrorStatusChanged" />
       <Event Name="CellChanged" />
@@ -8767,6 +8850,7 @@
     </Type>
     <Type Name="Alternet.UI.ITreeViewHandler" />
     <Type Name="Alternet.UI.PopupTreeView">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -9104,6 +9188,7 @@
     <Type Name="Alternet.UI.WebBrowserEventArgs" />
     <Type Name="Alternet.UI.WebBrowserFindParams" />
     <Type Name="Alternet.UI.DialogWindow">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -9188,6 +9273,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Form">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -9272,6 +9358,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.HiddenWindow">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -9357,6 +9444,7 @@
     </Type>
     <Type Name="Alternet.UI.IWindowHandler" />
     <Type Name="Alternet.UI.MiniFrameWindow">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -9444,6 +9532,7 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Window">
+      <Event Name="Load" />
       <Event Name="DisplayChanged" />
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
@@ -9902,6 +9991,7 @@
       <Event Name="ThemeInitialize" />
     </Type>
     <Type Name="Alternet.UI.SpeedButton+KnownTheme" />
+    <Type Name="Alternet.UI.SpeedColorButton+ClickActionKind" />
     <Type Name="Alternet.UI.FindReplaceControl+IFindReplaceConnect" />
     <Type Name="Alternet.UI.DebugUtils+DebugTraceListener" />
     <Type Name="Alternet.UI.LogUtils+LogFlags" />
