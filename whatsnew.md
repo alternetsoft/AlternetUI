@@ -1,3 +1,17 @@
+# 0.9.633 (2024 September 19)
+
+- Added Window.Load event.
+- MAUI: Added MacCatalyst to the TargetFrameworks to all MAUI related csproj.
+- Added PaintActionsControl.
+- Fix exception in ControlSet.Parent method.
+- Added async methods to DialogFactory.
+- RichTextBox: Ctrl+G opens GoToLine dialog.
+- ComboBox: DefaultDisabledTextColor, GetDisabledTextColor()
+- ColorComboBox, ColorListBox, SpeedColorButton: DefaultDisabledImageColor, DisabledImageColor, UseDisabledImageColor.
+- Control: GrowMinSize method, MinSizeGrowMode property.
+- ListControlItem: HideSelection, HideFocusRect. Allow to hide selection and focus rect for the item in VirtualListBox.
+- SpeedColorButton: ActionKind, ColorDialog, ColorImageSize -> ColorImageSizeDips, DefaultColorImageSize -> DefaultColorImageSizeDips.
+
 # 0.9.632 (2024 September 16)
 
 - Clipboard: AsyncRequired, OnlyText, GetDataObjectAsync, SetDataObjectAsync.
