@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorMAUI", "EditorMAUI.csproj", "{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Maui", "..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj", "{1C9ED836-6338-4373-9A83-28F49B631565}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Common.AlternetUI", "..\..\..\..\AlternetStudio\Source\Common.AlternetUI\Alternet.Common.AlternetUI.csproj", "{80B26765-8E99-4BA0-805C-E8D707C593B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Common.Python", "..\..\..\..\AlternetStudio\Source\Common\Python\Alternet.Common.Python.csproj", "{61ABF843-B82F-4426-902F-CB6EA9FB57B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax.Parsers.Roslyn", "..\..\..\..\AlternetStudio\Source\Parsers\Roslyn\Alternet.Syntax.Parsers.Roslyn.csproj", "{901C6E0B-DBED-46D6-8EA8-3518BE63EBE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax.Parsers.Advanced.Python", "..\..\..\..\AlternetStudio\Source\Parsers\Python\Alternet.Syntax.Parsers.Advanced.Python.csproj", "{11047CC9-7534-4448-A0FF-CAC6B23549CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Common", "..\..\..\..\AlternetStudio\Source\Common\Alternet.Common.csproj", "{13F73B3B-A7BF-420A-AF91-72947517043C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax", "..\..\..\..\AlternetStudio\Source\Parsers\Alternet.Syntax.csproj", "{04FACA51-4341-449E-B330-ACA0ECB0B20C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Editor.MAUI", "..\..\..\..\AlternetStudio\Source\Editor.MAUI\Alternet.Editor.MAUI.csproj", "{2FDC07CA-7AA4-4457-8E79-F6E303AC1751}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Editor.AlternetUI", "..\..\..\..\AlternetStudio\Source\Editor\Alternet.Editor.AlternetUI.csproj", "{D832E9FE-E536-4D31-A82E-0FD588273EDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1C9ED836-6338-4373-9A83-28F49B631565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9ED836-6338-4373-9A83-28F49B631565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9ED836-6338-4373-9A83-28F49B631565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9ED836-6338-4373-9A83-28F49B631565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80B26765-8E99-4BA0-805C-E8D707C593B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B26765-8E99-4BA0-805C-E8D707C593B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B26765-8E99-4BA0-805C-E8D707C593B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B26765-8E99-4BA0-805C-E8D707C593B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61ABF843-B82F-4426-902F-CB6EA9FB57B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61ABF843-B82F-4426-902F-CB6EA9FB57B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61ABF843-B82F-4426-902F-CB6EA9FB57B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61ABF843-B82F-4426-902F-CB6EA9FB57B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{901C6E0B-DBED-46D6-8EA8-3518BE63EBE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{901C6E0B-DBED-46D6-8EA8-3518BE63EBE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{901C6E0B-DBED-46D6-8EA8-3518BE63EBE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{901C6E0B-DBED-46D6-8EA8-3518BE63EBE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11047CC9-7534-4448-A0FF-CAC6B23549CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11047CC9-7534-4448-A0FF-CAC6B23549CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11047CC9-7534-4448-A0FF-CAC6B23549CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11047CC9-7534-4448-A0FF-CAC6B23549CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F73B3B-A7BF-420A-AF91-72947517043C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F73B3B-A7BF-420A-AF91-72947517043C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F73B3B-A7BF-420A-AF91-72947517043C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F73B3B-A7BF-420A-AF91-72947517043C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FACA51-4341-449E-B330-ACA0ECB0B20C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FACA51-4341-449E-B330-ACA0ECB0B20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FACA51-4341-449E-B330-ACA0ECB0B20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FACA51-4341-449E-B330-ACA0ECB0B20C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FDC07CA-7AA4-4457-8E79-F6E303AC1751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FDC07CA-7AA4-4457-8E79-F6E303AC1751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FDC07CA-7AA4-4457-8E79-F6E303AC1751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FDC07CA-7AA4-4457-8E79-F6E303AC1751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D832E9FE-E536-4D31-A82E-0FD588273EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D832E9FE-E536-4D31-A82E-0FD588273EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D832E9FE-E536-4D31-A82E-0FD588273EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D832E9FE-E536-4D31-A82E-0FD588273EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F95CA668-BA7A-4B96-BAC6-3B0B1B4A50DC}
+	EndGlobalSection
+EndGlobal

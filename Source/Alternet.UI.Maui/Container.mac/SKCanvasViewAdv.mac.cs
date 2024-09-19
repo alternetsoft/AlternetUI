@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#if MACCATALYST
+#if IOS || MACCATALYST
 using Foundation;
 
 using SkiaSharp;
@@ -27,6 +27,16 @@ namespace Alternet.UI
         /// Raised when <see cref="PressesCancelled"/> is called.
         /// </summary>
         public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesCancelled;
+
+        /// <summary>
+        /// Raised when <see cref="ShouldUpdateFocus"/> is called.
+        /// </summary>
+        public Func<SKCanvasViewAdv, UIFocusUpdateContext, bool>? OnShouldUpdateFocus;
+
+        /// <summary>
+        /// Raised when <see cref="DidUpdateFocus"/> is called.
+        /// </summary>
+        public Action<SKCanvasViewAdv, UIFocusUpdateContext>? OnDidUpdateFocus;
 
         /// <summary>
         /// Raised when <see cref="PressesChanged"/> is called.
@@ -82,6 +92,30 @@ namespace Alternet.UI
         public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
         {
             CallAction(presses, evt, OnPressesBegan, base.PressesBegan);
+        }
+
+        /// <inheritdoc/>
+        public override void DidUpdateFocus(
+            UIFocusUpdateContext context,
+            UIFocusAnimationCoordinator coordinator)
+        {
+            if(OnDidUpdateFocus is not null)
+            {
+                OnDidUpdateFocus(this, context);
+            }
+
+            base.DidUpdateFocus(context, coordinator);
+        }
+
+        /// <inheritdoc/>
+        public override bool ShouldUpdateFocus(UIFocusUpdateContext context)
+        {
+            if(OnShouldUpdateFocus is not null)
+            {
+                return OnShouldUpdateFocus(this, context);
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>

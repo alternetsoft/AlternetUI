@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
+#if IOS || MACCATALYST
+
+using UIKit;
+
 namespace Alternet.UI
 {
-#if MACCATALYST
     public partial class SkiaContainer
     {
         /// <inheritdoc/>
@@ -25,6 +28,8 @@ namespace Alternet.UI
             platformView.OnPressesCancelled = null;
             platformView.OnPressesChanged = null;
             platformView.OnPressesEnded = null;
+            platformView.OnShouldUpdateFocus = null;
+            platformView.OnDidUpdateFocus = null;
         }
 
         /// <inheritdoc/>
@@ -40,27 +45,85 @@ namespace Alternet.UI
             platformView.OnPressesCancelled = HandlePressesCancelled;
             platformView.OnPressesChanged = HandlePressesChanged;
             platformView.OnPressesEnded = HandlePressesEnded;
+            platformView.OnShouldUpdateFocus = HandleShouldUpdateFocus;
+            platformView.OnDidUpdateFocus = HandleDidUpdateFocus;
         }
 
-        private void HandlePressesEnded(SKCanvasViewAdv sender, SKCanvasViewAdv.PressesEventArgs e)
+        /// <summary>
+        /// Handles 'HandleShouldUpdateFocus' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="context">Event context.</param>
+        protected virtual bool HandleShouldUpdateFocus(SKCanvasViewAdv sender, UIFocusUpdateContext context)
         {
-            LogUtils.DebugLogToFileIf($"PressesEnded: {e}", true);
+            return true;
         }
 
-        private void HandlePressesChanged(SKCanvasViewAdv sender, SKCanvasViewAdv.PressesEventArgs e)
+        /// <summary>
+        /// Handles 'HandleDidUpdateFocus' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="context">Event context.</param>
+        protected virtual void HandleDidUpdateFocus(SKCanvasViewAdv sender, UIFocusUpdateContext context)
         {
-            LogUtils.DebugLogToFileIf($"PressesChanged: {e}", true);
+            if (context.NextFocusedView == sender)
+            {
+                Control?.RaiseGotFocus();
+            }
+            else
+            if (context.PreviouslyFocusedView == sender)
+            {
+                Control?.RaiseLostFocus();
+            }
         }
 
-        private void HandlePressesCancelled(SKCanvasViewAdv sender, SKCanvasViewAdv.PressesEventArgs e)
+        /// <summary>
+        /// Handles 'PressesEnded' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandlePressesEnded(
+            SKCanvasViewAdv sender,
+            SKCanvasViewAdv.PressesEventArgs e)
         {
-            LogUtils.DebugLogToFileIf($"PressesCancelled: {e}", true);
+            App.DebugLogIf($"PressesEnded: {e}", true);
         }
 
-        private void HandlePressesBegan(SKCanvasViewAdv sender, SKCanvasViewAdv.PressesEventArgs e)
+        /// <summary>
+        /// Handles 'PressesChanged' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandlePressesChanged(
+            SKCanvasViewAdv sender,
+            SKCanvasViewAdv.PressesEventArgs e)
         {
-            LogUtils.DebugLogToFileIf($"PressesBegan: {e}", true);
+            App.DebugLogIf($"PressesChanged: {e}", true);
+        }
+
+        /// <summary>
+        /// Handles 'PressesCancelled' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandlePressesCancelled(
+            SKCanvasViewAdv sender,
+            SKCanvasViewAdv.PressesEventArgs e)
+        {
+            App.DebugLogIf($"PressesCancelled: {e}", true);
+        }
+
+        /// <summary>
+        /// Handles 'PressesBegan' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandlePressesBegan(
+            SKCanvasViewAdv sender,
+            SKCanvasViewAdv.PressesEventArgs e)
+        {
+            App.DebugLogIf($"PressesBegan: {e}", true);
         }
     }
-#endif
 }
+#endif

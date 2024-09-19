@@ -119,7 +119,7 @@ namespace Alternet.UI
             ISite? site = ((IComponent)this).Site;
             var designMode = site != null && site.DesignMode;
 
-#if MACCATALYST
+#if IOS || MACCATALYST
             designMode = designMode || !SKCanvasViewAdv.IsValidEnvironment;
 #endif
             return designMode;
@@ -177,7 +177,7 @@ namespace Alternet.UI
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
         {
 #if WINDOWS
-            if(e.ActionType == SKTouchAction.Pressed)
+            if(e.ActionType == SKTouchAction.Pressed && !IsFocused)
             {
                 var platformView = GetPlatformView();
                 platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
@@ -188,13 +188,8 @@ namespace Alternet.UI
             {
             }
 #endif
-#if IOS
-            if (e.ActionType == SKTouchAction.Pressed)
-            {
-            }
-#endif
-#if MACCATALYST
-            if (e.ActionType == SKTouchAction.Pressed)
+#if IOS || MACCATALYST
+            if (e.ActionType == SKTouchAction.Pressed && !IsFocused)
             {
                 var platformView = GetPlatformView();
                 var request = new FocusRequest();

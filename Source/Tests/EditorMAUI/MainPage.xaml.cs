@@ -55,8 +55,6 @@ public partial class MainPage : ContentPage
         vo.Alignment = LayoutAlignment.Fill;
         editor.VerticalOptions = vo;
 
-        // panel.Children.Add(editor);
-
         openLogFileButton.Clicked += OpenLogFileButton_Clicked;
 
         Alternet.UI.Control.FocusedControlChanged += Control_FocusedControlChanged;
@@ -110,7 +108,6 @@ public partial class MainPage : ContentPage
 
     private void OpenLogFileButton_Clicked(object? sender, EventArgs e)
     {
-        Alternet.UI.AppUtils.OpenLogFile();
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];

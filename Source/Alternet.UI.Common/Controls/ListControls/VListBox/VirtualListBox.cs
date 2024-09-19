@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default minimal item height.
         /// </summary>
-        public static double DefaultMinItemHeight = 24;
+        public static Coord DefaultMinItemHeight = 24;
 
         /// <summary>
         /// Gets or sets default current item border.
@@ -58,7 +58,7 @@ namespace Alternet.UI
         private Color? disabledItemTextColor;
         private IListBoxItemPainter? painter;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
-        private double minItemHeight = DefaultMinItemHeight;
+        private Coord minItemHeight = DefaultMinItemHeight;
         private bool textVisible = true;
         private bool currentItemBorderVisible = true;
         private bool selectionVisible = true;
@@ -66,7 +66,7 @@ namespace Alternet.UI
         private BorderSettings? selectionBorder;
         private bool checkBoxesVisible;
         private bool checkBoxThreeState;
-        private double scrollOffset;
+        private Coord scrollOffset;
 
         private GenericAlignment itemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
@@ -404,7 +404,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets minimal height of the items. Default is 24 dip.
         /// </summary>
-        public virtual double MinItemHeight
+        public virtual Coord MinItemHeight
         {
             get
             {
@@ -979,7 +979,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
         /// <returns></returns>
-        public virtual double GetItemMinHeight(int itemIndex)
+        public virtual Coord GetItemMinHeight(int itemIndex)
         {
             var item = SafeItem(itemIndex);
             if (item is null)
@@ -1513,9 +1513,9 @@ namespace Alternet.UI
         {
             if (!App.IsWindowsOS)
                 return;
-            double CharWidth() => MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
+            Coord CharWidth() => MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
 
-            void IncOffset(double delta)
+            void IncOffset(Coord delta)
             {
                 var newOffset = Math.Max(scrollOffset + delta, 0);
                 if (newOffset != scrollOffset)

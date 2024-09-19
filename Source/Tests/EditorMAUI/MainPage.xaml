@@ -13,7 +13,7 @@
         <Button Grid.Row="1"
                 Margin="0,20"
                 FontSize="12"
-                Text="OpenLogFile"
+                Text="Button1"
                 x:Name="openLogFileButton"
                 HorizontalOptions="Center" />
     </Grid>
