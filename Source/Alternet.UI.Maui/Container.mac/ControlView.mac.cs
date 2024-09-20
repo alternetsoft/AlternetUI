@@ -74,8 +74,9 @@ namespace Alternet.UI
                     Control?.RaiseMouseEnter();
                     break;
                 case UIGestureRecognizerState.Changed:
+                    // This is like mouse move
                     break;
-                case UIGestureRecognizerState.Ended: // same as Recognized
+                case UIGestureRecognizerState.Ended:
                     Control?.RaiseMouseLeave();
                     break;
                 case UIGestureRecognizerState.Cancelled:

@@ -40,7 +40,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        bool IApplicationHandler.ExitOnFrameDelete
+        public virtual bool ExitOnFrameDelete
         {
             get => false;
             set
@@ -49,13 +49,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        bool IApplicationHandler.IsActive
+        public virtual bool IsActive
         {
             get => false;
         }
 
         /// <inheritdoc/>
-        bool IApplicationHandler.InUixmlPreviewerMode
+        public virtual bool InUixmlPreviewerMode
         {
             get => false;
             set
@@ -64,7 +64,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        bool IApplicationHandler.InvokeRequired
+        public virtual bool InvokeRequired
         {
             get => false;
         }
@@ -134,137 +134,137 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        void IApplicationHandler.ExitMainLoop()
+        public virtual void ExitMainLoop()
         {
             Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
         /// <inheritdoc/>
-        IControlFactoryHandler IApplicationHandler.CreateControlFactoryHandler()
+        public virtual IControlFactoryHandler CreateControlFactoryHandler()
         {
             return new MauiControlFactoryHandler();
         }
 
         /// <inheritdoc/>
-        IPrintingHandler IApplicationHandler.CreatePrintingHandler()
+        public virtual IPrintingHandler CreatePrintingHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        void IApplicationHandler.ProcessPendingEvents()
+        public virtual void ProcessPendingEvents()
         {
         }
 
         /// <inheritdoc/>
-        Window? IApplicationHandler.GetActiveWindow()
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
-        Control? IApplicationHandler.GetFocusedControl()
+        public virtual Window? GetActiveWindow()
         {
             return null;
         }
 
         /// <inheritdoc/>
-        ISystemSettingsHandler IApplicationHandler.CreateSystemSettingsHandler()
+        public virtual Control? GetFocusedControl()
+        {
+            return Control.FocusedControl;
+        }
+
+        /// <inheritdoc/>
+        public virtual ISystemSettingsHandler CreateSystemSettingsHandler()
         {
             return new MauiSystemSettingsHandler();
         }
 
         /// <inheritdoc/>
-        ISoundFactoryHandler IApplicationHandler.CreateSoundFactoryHandler()
+        public virtual ISoundFactoryHandler CreateSoundFactoryHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        ITimerHandler IApplicationHandler.CreateTimerHandler(Timer timer)
+        public virtual ITimerHandler CreateTimerHandler(Timer timer)
         {
             return new MauiTimerHandler();
         }
 
         /// <inheritdoc/>
-        void IApplicationHandler.Run(Window window)
+        public virtual void Run(Window window)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        void IApplicationHandler.SetTopWindow(Window window)
+        public virtual void SetTopWindow(Window window)
         {
         }
 
         /// <inheritdoc/>
-        public IActionSimulatorHandler CreateActionSimulatorHandler()
+        public virtual IActionSimulatorHandler CreateActionSimulatorHandler()
         {
             return new DummyActionSimulatorHandler();
         }
 
         /// <inheritdoc/>
-        void IApplicationHandler.BeginInvoke(Action action)
+        public virtual void BeginInvoke(Action action)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        bool IApplicationHandler.HasPendingEvents()
+        public virtual bool HasPendingEvents()
         {
             return false;
         }
 
         /// <inheritdoc/>
-        void IApplicationHandler.Exit()
+        public virtual void Exit()
         {
             Microsoft.Maui.Controls.Application.Current?.Quit();
         }
 
         /// <inheritdoc/>
-        IMemoryHandler IApplicationHandler.CreateMemoryHandler()
+        public virtual IMemoryHandler CreateMemoryHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        IControlPainterHandler IApplicationHandler.CreateControlPainterHandler()
+        public virtual IControlPainterHandler CreateControlPainterHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        IClipboardHandler IApplicationHandler.CreateClipboardHandler()
+        public virtual IClipboardHandler CreateClipboardHandler()
         {
             return new MauiClipboardHandler();
         }
 
         /// <inheritdoc/>
-        IDialogFactoryHandler IApplicationHandler.CreateDialogFactoryHandler()
+        public virtual IDialogFactoryHandler CreateDialogFactoryHandler()
         {
             return new MauiDialogFactoryHandler();
         }
 
         /// <inheritdoc/>
-        INotifyIconHandler IApplicationHandler.CreateNotifyIconHandler()
+        public virtual INotifyIconHandler CreateNotifyIconHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        object? IApplicationHandler.GetAttributeValue(string name)
+        public virtual object? GetAttributeValue(string name)
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public virtual IToolTipFactoryHandler CreateToolTipFactoryHandler()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        IToolTipFactoryHandler IApplicationHandler.CreateToolTipFactoryHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        ICaretHandler IApplicationHandler.CreateCaretHandler(Control control, int width, int height)
+        public virtual ICaretHandler CreateCaretHandler(Control control, int width, int height)
         {
             if(WindowsCaretHandler.UseIfPossible)
                 return new WindowsCaretHandler(control, width, height);
@@ -272,30 +272,26 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        IGraphicsFactoryHandler IApplicationHandler.CreateGraphicsFactoryHandler()
+        public virtual IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
         {
             return new MauiGraphicsFactoryHandler();
         }
 
         /// <inheritdoc/>
-        void IApplicationHandler.CrtSetDbgFlag(int value)
+        public virtual void CrtSetDbgFlag(int value)
         {
         }
 
         /// <inheritdoc/>
-        public IMouseHandler CreateMouseHandler()
+        public virtual IMouseHandler CreateMouseHandler()
         {
             return new PlessMouseHandler();
         }
 
         /// <inheritdoc/>
-        public IKeyboardHandler CreateKeyboardHandler()
+        public virtual IKeyboardHandler CreateKeyboardHandler()
         {
-#if WINDOWS
-            return new MauiKeyboardHandler();
-#else
-            return new PlessKeyboardHandler();
-#endif
+            return MauiKeyboardHandler.Default;
         }
     }
 }

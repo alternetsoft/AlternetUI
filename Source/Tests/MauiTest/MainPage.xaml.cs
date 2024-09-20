@@ -17,6 +17,10 @@ public partial class MainPage : ContentPage
     
     static MainPage()
     {
+        Alternet.UI.DebugUtils.DebugCallIf(true, () =>
+        {
+            Alternet.UI.PlessMouse.ShowTestMouseInControl = true;
+        });
     }
 
     public MainPage()

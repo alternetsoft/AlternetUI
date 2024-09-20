@@ -71,9 +71,11 @@ namespace Alternet.UI
         /// <summary>
         /// Registers two way key mapping between platform key and <see cref="Key"/>.
         /// </summary>
-        public virtual void AddMapping(T source, Key dest)
+        public virtual void AddMapping(T source, Key? dest)
         {
-            Mapping.Add(source, dest);
+            if (dest is null)
+                return;
+            Mapping.Add(source, dest.Value);
         }
 
         /// <summary>
