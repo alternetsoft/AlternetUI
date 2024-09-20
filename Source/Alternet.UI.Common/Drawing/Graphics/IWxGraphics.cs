@@ -26,7 +26,7 @@ namespace Alternet.Drawing
         /// in device-independent units, of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        SizeD MeasureText(string text, Font font, double maximumWidth);
+        SizeD MeasureText(string text, Font font, Coord maximumWidth);
 
         /// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/>,
@@ -46,7 +46,7 @@ namespace Alternet.Drawing
         SizeD MeasureText(
             string text,
             Font font,
-            double maximumWidth,
+            Coord maximumWidth,
             TextFormat format);
 
         /// <summary>

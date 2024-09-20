@@ -10,8 +10,8 @@ namespace Alternet.UI
     public class ColumnDefinition : GridDefinitionBase
     {
         private GridLength width = GridLength.Star;
-        private double minWidth;
-        private double maxWidth = double.PositiveInfinity;
+        private Coord minWidth;
+        private Coord maxWidth = Coord.PositiveInfinity;
 
         /// <summary>Initializes a new instance of the <see cref="ColumnDefinition" />
         /// class.</summary>
@@ -47,10 +47,10 @@ namespace Alternet.UI
 
         /// <summary>Gets or sets a value that represents the minimum width of
         /// a <see cref="ColumnDefinition" />.   </summary>
-        /// <returns>A <see cref="double" /> that represents the minimum width.
+        /// <returns>A value that represents the minimum width.
         /// The default value is 0.</returns>
         [TypeConverter(typeof(LengthConverter))]
-        public double MinWidth
+        public Coord MinWidth
         {
             get
             {
@@ -69,10 +69,10 @@ namespace Alternet.UI
 
         /// <summary>Gets or sets a value that represents the maximum width of a
         /// <see cref="ColumnDefinition" />.   </summary>
-        /// <returns>A <see cref="double" /> that represents the maximum width.
-        /// The default value is <see cref="double.PositiveInfinity" />.</returns>
+        /// <returns>A value that represents the maximum width.
+        /// The default value is positive-infinity.</returns>
         [TypeConverter(typeof(LengthConverter))]
-        public double MaxWidth
+        public Coord MaxWidth
         {
             get
             {
@@ -91,13 +91,13 @@ namespace Alternet.UI
 
         /// <summary>Gets a value that represents the actual calculated width of a
         /// <see cref="ColumnDefinition" />. </summary>
-        /// <returns>A <see cref="double" /> that represents the actual calculated width in
-        /// device independent pixels. The default value is 0.</returns>
-        public double ActualWidth
+        /// <returns>A value that represents the actual calculated width in
+        /// device-independent points. The default value is 0.</returns>
+        public Coord ActualWidth
         {
             get
             {
-                double result = 0;
+                Coord result = 0;
                 if (InParentLogicalTree)
                 {
                     result = ((Grid)LogicalParent).GetFinalColumnDefinitionWidth(Index);
@@ -109,13 +109,13 @@ namespace Alternet.UI
 
         /// <summary>Gets a value that represents the offset value of this
         /// <see cref="ColumnDefinition" />. </summary>
-        /// <returns>A <see cref="double" /> that represents the offset of the column.
+        /// <returns>A value that represents the offset of the column.
         /// The default value is 0.</returns>
-        public double Offset
+        public Coord Offset
         {
             get
             {
-                double result = 0;
+                Coord result = 0;
                 if (Index != 0)
                 {
                     result = FinalOffset;

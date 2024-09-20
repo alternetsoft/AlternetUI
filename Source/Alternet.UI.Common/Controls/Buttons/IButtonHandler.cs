@@ -65,6 +65,6 @@ namespace Alternet.UI
         void SetImagePosition(GenericDirection dir);
 
         /// <inheritdoc cref="Button.SetImageMargins"/>
-        void SetImageMargins(double x, double y);
+        void SetImageMargins(Coord x, Coord y);
     }
 }

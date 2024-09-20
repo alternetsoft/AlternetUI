@@ -94,7 +94,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="deviceDpi">DPI for which default image size is
         /// returned.</param>
-        public static int GetDefaultImageSize(double deviceDpi)
+        public static int GetDefaultImageSize(Coord deviceDpi)
         {
             decimal deviceDpiRatio = (decimal)deviceDpi / 96m;
 
@@ -126,7 +126,7 @@ namespace Alternet.UI
             return result;
         }
 
-        /// <inheritdoc cref="GetDefaultImageSize(double)"/>
+        /// <inheritdoc cref="GetDefaultImageSize(Coord)"/>
         public static SizeI GetDefaultImageSize(SizeD deviceDpi)
         {
             var width = GetDefaultImageSize(deviceDpi.Width);
@@ -168,7 +168,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(double)"/>
+        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used

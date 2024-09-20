@@ -27,6 +27,11 @@ namespace Alternet.UI
         public static readonly BorderSettings Temp = new();
 
         /// <summary>
+        /// Gets or sets size of the design corners used in <see cref="DrawDesignCorners"/>.
+        /// </summary>
+        public static Coord DesignCornerSize = 5;
+
+        /// <summary>
         /// Gets or sets default border color.
         /// </summary>
         public static LightDarkColor? DefaultColor;
@@ -40,7 +45,7 @@ namespace Alternet.UI
         private readonly BorderSideSettings top = new();
         private readonly BorderSideSettings right = new();
         private readonly BorderSideSettings bottom = new();
-        private double? uniformCornerRadius;
+        private Coord? uniformCornerRadius;
         private bool? uniformRadiusIsPercent = false;
         private BorderCornerRadius? topLeftRadius;
         private BorderCornerRadius? topRightRadius;
@@ -81,7 +86,7 @@ namespace Alternet.UI
         /// This value is applied to all the corners. If returned value is not null, all border corners
         /// have the same settings.
         /// </remarks>
-        public virtual double? UniformCornerRadius
+        public virtual Coord? UniformCornerRadius
         {
             get
             {
@@ -292,15 +297,13 @@ namespace Alternet.UI
         /// <param name="args">Event arguments.</param>
         public static void DrawDesignCorners(object? sender, PaintEventArgs args)
         {
-            const double cornerSize = 5;
-
             void DrawHorizontal(Graphics dc, Brush brush, RectD rect)
             {
                 var rect1 = rect;
                 var rect2 = rect;
-                rect1.Width = cornerSize;
-                rect2.Location = rect2.TopRight - new SizeD(cornerSize, 0);
-                rect2.Width = cornerSize;
+                rect1.Width = DesignCornerSize;
+                rect2.Location = rect2.TopRight - new SizeD(DesignCornerSize, 0);
+                rect2.Width = DesignCornerSize;
                 dc.FillRectangle(brush, rect1);
                 dc.FillRectangle(brush, rect2);
             }
@@ -309,9 +312,9 @@ namespace Alternet.UI
             {
                 var rect1 = rect;
                 var rect2 = rect;
-                rect1.Height = cornerSize;
-                rect2.Location = rect2.BottomLeft - new SizeD(0, cornerSize);
-                rect2.Height = cornerSize;
+                rect1.Height = DesignCornerSize;
+                rect2.Location = rect2.BottomLeft - new SizeD(0, DesignCornerSize);
+                rect2.Height = DesignCornerSize;
                 dc.FillRectangle(brush, rect1);
                 dc.FillRectangle(brush, rect2);
             }
@@ -394,7 +397,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rect">Ractangle for percentage calculation.</param>
         /// <returns></returns>
-        public virtual double? GetUniformCornerRadius(RectD rect)
+        public virtual Coord? GetUniformCornerRadius(RectD rect)
         {
             var radius = UniformCornerRadius;
             if (radius is null)

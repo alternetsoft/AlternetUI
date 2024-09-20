@@ -356,7 +356,7 @@ namespace Alternet.UI
         {
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
-            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
+            if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
                 return new SizeD(specifiedWidth, specifiedHeight);
 
             var result = GetImageAndTextSize();

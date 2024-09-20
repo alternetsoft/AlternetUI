@@ -217,36 +217,36 @@ namespace Alternet.Drawing
             new(unchecked(left.width / right), unchecked(left.height / right));
 
         /// <summary>
-        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
+        /// Multiplies <see cref="SizeI"/> by a coordinate value
         /// producing <see cref="SizeD"/>.
         /// </summary>
-        /// <param name="left">Multiplier of type <see cref="double"/>.</param>
+        /// <param name="left">Multiplier.</param>
         /// <param name="right">Multiplicand of type <see cref="SizeI"/>.</param>
         /// <returns>Product of type <see cref="SizeD"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD operator *(double left, SizeI right) =>
+        public static SizeD operator *(Coord left, SizeI right) =>
             Multiply(right, left);
 
         /// <summary>
-        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
+        /// Multiplies <see cref="SizeI"/> by a coordinate
         /// producing <see cref="SizeD"/>.
         /// </summary>
         /// <param name="left">Multiplicand of type <see cref="SizeI"/>.</param>
-        /// <param name="right">Multiplier of type <see cref="double"/>.</param>
+        /// <param name="right">Multiplier.</param>
         /// <returns>Product of type <see cref="SizeD"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD operator *(SizeI left, double right) =>
+        public static SizeD operator *(SizeI left, Coord right) =>
             Multiply(left, right);
 
         /// <summary>
-        /// Divides <see cref="SizeI"/> by a <see cref="double"/>
+        /// Divides <see cref="SizeI"/> by a coordinate
         /// producing <see cref="SizeD"/>.
         /// </summary>
         /// <param name="left">Dividend of type <see cref="SizeI"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="SizeD"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD operator /(SizeI left, double right)
+        public static SizeD operator /(SizeI left, Coord right)
             => new(left.width / right, left.height / right);
 
         /// <summary>
@@ -305,12 +305,12 @@ namespace Alternet.Drawing
                 unchecked(size.height * multiplier));
 
         /// <summary>
-        /// Multiplies <see cref="SizeI"/> by a <see cref="double"/>
+        /// Multiplies <see cref="SizeI"/> by a coordinate
         /// producing <see cref="SizeD"/>.
         /// </summary>
         /// <param name="size">Multiplicand of type <see cref="SizeI"/>.</param>
-        /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
-        /// <returns>Product of type SizeF.</returns>
+        /// <param name="multiplier">Multiplier.</param>
+        /// <returns>Product of type SizeD.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeD Multiply(SizeI size, Coord multiplier) =>
             new(size.width * multiplier, size.height * multiplier);

@@ -2,9 +2,9 @@
 {
     internal class ControlExtendedProps
     {
-        internal double DistanceRight { get; set; }
+        internal Coord DistanceRight { get; set; }
 
-        internal double DistanceBottom { get; set; }
+        internal Coord DistanceBottom { get; set; }
 
         internal AutoSizeMode AutoSizeMode { get; set; }
 

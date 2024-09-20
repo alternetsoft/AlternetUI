@@ -9,7 +9,7 @@ namespace Alternet.UI
     public class PropertyGridAdapterFont : PropertyGridAdapterGeneric
     {
         private static IPropertyGridChoices? fontNameChoices;
-        private double sizeInPoints = Font.Default.SizeInPoints;
+        private Coord sizeInPoints = Font.Default.SizeInPoints;
         private string name = Font.Default.Name;
         private FontStyle style = FontStyle.Regular;
 
@@ -39,7 +39,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Font.SizeInPoints"/>
-        public double SizeInPoints
+        public Coord SizeInPoints
         {
             get
             {

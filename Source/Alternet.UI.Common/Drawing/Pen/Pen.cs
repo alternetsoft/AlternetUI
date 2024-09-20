@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         private DashStyle dashStyle;
         private LineCap lineCap;
         private LineJoin lineJoin;
-        private double width;
+        private Coord width;
         private SKPaint? paint;
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Alternet.Drawing
         /// device-independent units.</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this
         /// <see cref="Pen"/>.</param>
-        public Pen(Color color, double width, DashStyle dashStyle)
+        public Pen(Color color, Coord width, DashStyle dashStyle)
             : this(color, width, dashStyle, LineCap.Flat, LineJoin.Miter)
         {
         }
@@ -55,7 +55,7 @@ namespace Alternet.Drawing
         /// <param name="lineJoin">Specifies how to join consecutive line or curve segments.</param>
         public Pen(
             Color color,
-            double width,
+            Coord width,
             DashStyle dashStyle,
             LineCap lineCap,
             LineJoin lineJoin)
@@ -71,7 +71,7 @@ namespace Alternet.Drawing
         /// <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in
         /// device-independent units.</param>
-        public Pen(Color color, double width)
+        public Pen(Color color, Coord width)
             : this(color, width, DashStyle.Solid)
         {
         }
@@ -100,7 +100,7 @@ namespace Alternet.Drawing
 
         internal Pen(
             Color color,
-            double width,
+            Coord width,
             DashStyle dashStyle,
             LineCap lineCap,
             LineJoin lineJoin,

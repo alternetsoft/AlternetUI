@@ -217,7 +217,7 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="origin">Location.</param>
             /// <param name="size">Size.</param>
-            public AlignedPosition(double origin, double size)
+            public AlignedPosition(Coord origin, Coord size)
             {
                 Origin = origin;
                 Size = size;
@@ -226,12 +226,12 @@ namespace Alternet.UI
             /// <summary>
             /// Gets location.
             /// </summary>
-            public double Origin { get; }
+            public Coord Origin { get; }
 
             /// <summary>
             /// Gets size.
             /// </summary>
-            public double Size { get; }
+            public Coord Size { get; }
         }
     }
 }

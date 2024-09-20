@@ -294,7 +294,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public Graphics CreateMemoryCanvas(double scaleFactor)
+        public Graphics CreateMemoryCanvas(Coord scaleFactor)
         {
             SKBitmap bitmap = new();
             SKCanvas canvas = new(bitmap);

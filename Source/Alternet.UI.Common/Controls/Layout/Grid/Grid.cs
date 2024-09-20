@@ -144,8 +144,8 @@ namespace Alternet.UI
                 else
                 {
                     {
-                        bool sizeToContentU = double.IsPositiveInfinity(availableSize.Width);
-                        bool sizeToContentV = double.IsPositiveInfinity(availableSize.Height);
+                        bool sizeToContentU = Coord.IsPositiveInfinity(availableSize.Width);
+                        bool sizeToContentV = Coord.IsPositiveInfinity(availableSize.Height);
 
                         // Clear index information and rounding errors
                         if (RowDefinitionCollectionDirty || ColumnDefinitionCollectionDirty)
@@ -367,8 +367,8 @@ namespace Alternet.UI
                                 int cnt = 0;
 
                                 // Cache Group2MinWidths & Group3MinHeights
-                                double[] group2MinSizes = CacheMinSizes(extData.CellGroup2, false);
-                                double[] group3MinSizes = CacheMinSizes(extData.CellGroup3, true);
+                                Coord[] group2MinSizes = CacheMinSizes(extData.CellGroup2, false);
+                                Coord[] group3MinSizes = CacheMinSizes(extData.CellGroup3, true);
 
                                 MeasureCellsGroup(extData.CellGroup2, availableSize, false, true);
 
@@ -433,7 +433,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void OnLayout()
         {
-            GetPreferredSize(new SizeD(double.PositiveInfinity, double.PositiveInfinity)); // yezo
+            GetPreferredSize(SizeD.PositiveInfinity); // yezo
 
             var arrangeSize = ChildrenLayoutBounds.Size;
             try
@@ -542,9 +542,9 @@ namespace Alternet.UI
             CellsStructureDirty = true;
         }
 
-        internal double GetFinalColumnDefinitionWidth(int columnIndex)
+        internal Coord GetFinalColumnDefinitionWidth(int columnIndex)
         {
-            double value = 0;
+            Coord value = 0;
 
             Debug.Assert(_data != null);
 
@@ -564,9 +564,9 @@ namespace Alternet.UI
         /// <remarks>
         ///     Used from public RowDefinition ActualHeight. Calculates final height using offset data.
         /// </remarks>
-        internal double GetFinalRowDefinitionHeight(int rowIndex)
+        internal Coord GetFinalRowDefinitionHeight(int rowIndex)
         {
-            double value = 0;
+            Coord value = 0;
 
             Debug.Assert(_data != null);
 
@@ -828,9 +828,9 @@ namespace Alternet.UI
             {
                 definitions[i].OnBeforeLayout(this);
 
-                double userMinSize = definitions[i].UserMinSize;
-                double userMaxSize = definitions[i].UserMaxSize;
-                double userSize = 0;
+                Coord userMinSize = definitions[i].UserMinSize;
+                Coord userMaxSize = definitions[i].UserMaxSize;
+                Coord userSize = 0;
 
                 switch (definitions[i].UserSize.GridUnitType)
                 {
@@ -842,18 +842,18 @@ namespace Alternet.UI
                         break;
                     case (GridUnitType.Auto):
                         definitions[i].SizeType = LayoutTimeSizeType.Auto;
-                        userSize = double.PositiveInfinity;
+                        userSize = Coord.PositiveInfinity;
                         break;
                     case (GridUnitType.Star):
                         if (treatStarAsAuto)
                         {
                             definitions[i].SizeType = LayoutTimeSizeType.Auto;
-                            userSize = double.PositiveInfinity;
+                            userSize = Coord.PositiveInfinity;
                         }
                         else
                         {
                             definitions[i].SizeType = LayoutTimeSizeType.Star;
-                            userSize = double.PositiveInfinity;
+                            userSize = Coord.PositiveInfinity;
                         }
                         break;
                     default:
@@ -866,9 +866,9 @@ namespace Alternet.UI
             }
         }
 
-        private double[] CacheMinSizes(int cellsHead, bool isRows)
+        private Coord[] CacheMinSizes(int cellsHead, bool isRows)
         {
-            double[] minSizes = isRows ? new double[DefinitionsV.Length] : new double[DefinitionsU.Length];
+            Coord[] minSizes = isRows ? new Coord[DefinitionsV.Length] : new Coord[DefinitionsU.Length];
 
             for (int j = 0; j < minSizes.Length; j++)
             {
@@ -893,7 +893,7 @@ namespace Alternet.UI
             return minSizes;
         }
 
-        private void ApplyCachedMinSizes(double[] minSizes, bool isRows)
+        private void ApplyCachedMinSizes(Coord[] minSizes, bool isRows)
         {
             for (int i = 0; i < minSizes.Length; i++)
             {
@@ -956,7 +956,7 @@ namespace Alternet.UI
                 var child = children[i];
                 var s = child.GetPreferredSize(referenceSize);
                 var childPreferredSize = new SizeD(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
-                double oldWidth = childPreferredSize.Width;
+                Coord oldWidth = childPreferredSize.Width;
 
                 MeasureCell(i, forceInfinityV);
 
@@ -1004,7 +1004,7 @@ namespace Alternet.UI
                 foreach (DictionaryEntry e in spanStore)
                 {
                     SpanKey key = (SpanKey)e.Key;
-                    double requestedSize = (double)e.Value;
+                    Coord requestedSize = (Coord)e.Value;
 
                     EnsureMinSizeInDefinitionRange(
                         key.U ? DefinitionsU : DefinitionsV,
@@ -1029,7 +1029,7 @@ namespace Alternet.UI
             int start,
             int count,
             bool u,
-            double value)
+            Coord value)
         {
             if (store == null)
             {
@@ -1040,7 +1040,7 @@ namespace Alternet.UI
             object o = store[key];
 
             if (o == null
-                || value > (double)o)
+                || value > (Coord)o)
             {
                 store[key] = value;
             }
@@ -1058,8 +1058,8 @@ namespace Alternet.UI
         {
             EnterCounter(Counters._MeasureCell);
 
-            double cellMeasureWidth;
-            double cellMeasureHeight;
+            Coord cellMeasureWidth;
+            Coord cellMeasureHeight;
 
             if (PrivateCells[cell].IsAutoU
                 && !PrivateCells[cell].IsStarU)
@@ -1067,7 +1067,7 @@ namespace Alternet.UI
                 // if cell belongs to at least one Auto column and not a single Star column
                 //  then it should be calculated "to content", thus it is possible to "shortcut"
                 //  calculations and simply assign PositiveInfinity here.
-                cellMeasureWidth = double.PositiveInfinity;
+                cellMeasureWidth = Coord.PositiveInfinity;
             }
             else
             {
@@ -1080,7 +1080,7 @@ namespace Alternet.UI
 
             if (forceInfinityV)
             {
-                cellMeasureHeight = double.PositiveInfinity;
+                cellMeasureHeight = Coord.PositiveInfinity;
             }
             else if (PrivateCells[cell].IsAutoV
                     && !PrivateCells[cell].IsStarV)
@@ -1088,7 +1088,7 @@ namespace Alternet.UI
                 //  if cell belongs to at least one Auto row and not a single Star row
                 //  then it should be calculated "to content", thus it is possible to "shortcut"
                 //  calculations and simply assign PositiveInfinity here.
-                cellMeasureHeight = double.PositiveInfinity;
+                cellMeasureHeight = Coord.PositiveInfinity;
             }
             else
             {
@@ -1121,14 +1121,14 @@ namespace Alternet.UI
         /// <remarks>
         /// For "Auto" definitions MinWidth is used in place of PreferredSize.
         /// </remarks>
-        private double GetMeasureSizeForRange(
+        private Coord GetMeasureSizeForRange(
             GridDefinitionBase[] definitions,
             int start,
             int count)
         {
             Debug.Assert(0 < count && 0 <= start && (start + count) <= definitions.Length);
 
-            double measureSize = 0;
+            Coord measureSize = 0;
             int i = start + count - 1;
 
             do
@@ -1178,8 +1178,8 @@ namespace Alternet.UI
             GridDefinitionBase[] definitions,
             int start,
             int count,
-            double requestedSize,
-            double percentReferenceSize)
+            Coord requestedSize,
+            Coord percentReferenceSize)
         {
             Debug.Assert(1 < count && 0 <= start && (start + count) <= definitions.Length);
 
@@ -1189,10 +1189,10 @@ namespace Alternet.UI
                 GridDefinitionBase[] tempDefinitions = TempDefinitions; //  temp array used to remember definitions for sorting
                 int end = start + count;
                 int autoDefinitionsCount = 0;
-                double rangeMinSize = 0;
-                double rangePreferredSize = 0;
-                double rangeMaxSize = 0;
-                double maxMaxSize = 0;                              //  maximum of maximum sizes
+                Coord rangeMinSize = 0;
+                Coord rangePreferredSize = 0;
+                Coord rangeMaxSize = 0;
+                Coord maxMaxSize = 0;                              //  maximum of maximum sizes
 
                 //  first accumulate the necessary information:
                 //  a) sum up the sizes in the range;
@@ -1202,9 +1202,9 @@ namespace Alternet.UI
                 //  e) accumulate max of max sizes
                 for (int i = start; i < end; ++i)
                 {
-                    double minSize = definitions[i].MinSize;
-                    double preferredSize = definitions[i].PreferredSize;
-                    double maxSize = Math.Max(definitions[i].UserMaxSize, minSize);
+                    Coord minSize = definitions[i].MinSize;
+                    Coord preferredSize = definitions[i].PreferredSize;
+                    Coord maxSize = Math.Max(definitions[i].UserMaxSize, minSize);
 
                     rangeMinSize += minSize;
                     rangePreferredSize += preferredSize;
@@ -1238,7 +1238,7 @@ namespace Alternet.UI
                         //  in order to achieve that, definitions are sorted in a way that all auto definitions
                         //  are first, then definitions follow ascending order with PreferredSize as the key of sorting.
                         //
-                        double sizeToDistribute;
+                        Coord sizeToDistribute;
                         int i;
 
                         Array.Sort(tempDefinitions, 0, count, s_spanPreferredDistributionOrderComparer);
@@ -1256,7 +1256,7 @@ namespace Alternet.UI
                             //  sanity check: no auto definitions allowed in this loop
                             Debug.Assert(!tempDefinitions[i].UserSize.IsAuto);
 
-                            double newMinSize = Math.Min(sizeToDistribute / (count - i), tempDefinitions[i].PreferredSize);
+                            Coord newMinSize = Math.Min(sizeToDistribute / (count - i), tempDefinitions[i].PreferredSize);
                             if (newMinSize > tempDefinitions[i].MinSize) { tempDefinitions[i].UpdateMinSize(newMinSize); }
                             sizeToDistribute -= newMinSize;
                         }
@@ -1275,7 +1275,7 @@ namespace Alternet.UI
                         //  in order to achieve that, definitions are sorted in a way that all non-auto definitions
                         //  are last, then definitions follow ascending order with MaxSize as the key of sorting.
                         //
-                        double sizeToDistribute;
+                        Coord sizeToDistribute;
                         int i;
 
                         Array.Sort(tempDefinitions, 0, count, s_spanMaxDistributionOrderComparer);
@@ -1284,8 +1284,8 @@ namespace Alternet.UI
                             //  sanity check: no auto definitions allowed in this loop
                             Debug.Assert(!tempDefinitions[i].UserSize.IsAuto);
 
-                            double preferredSize = tempDefinitions[i].PreferredSize;
-                            double newMinSize = preferredSize + sizeToDistribute / (count - autoDefinitionsCount - i);
+                            Coord preferredSize = tempDefinitions[i].PreferredSize;
+                            Coord newMinSize = preferredSize + sizeToDistribute / (count - autoDefinitionsCount - i);
                             tempDefinitions[i].UpdateMinSize(Math.Min(newMinSize, tempDefinitions[i].SizeCache));
                             sizeToDistribute -= (tempDefinitions[i].MinSize - preferredSize);
                         }
@@ -1295,8 +1295,8 @@ namespace Alternet.UI
                             //  sanity check: only auto definitions allowed in this loop
                             Debug.Assert(tempDefinitions[i].UserSize.IsAuto);
 
-                            double preferredSize = tempDefinitions[i].MinSize;
-                            double newMinSize = preferredSize + sizeToDistribute / (count - i);
+                            Coord preferredSize = tempDefinitions[i].MinSize;
+                            Coord newMinSize = preferredSize + sizeToDistribute / (count - i);
                             tempDefinitions[i].UpdateMinSize(Math.Min(newMinSize, tempDefinitions[i].SizeCache));
                             sizeToDistribute -= (tempDefinitions[i].MinSize - preferredSize);
                         }
@@ -1311,7 +1311,7 @@ namespace Alternet.UI
                         //  distribute according to the following logic:
                         //  * for all definitions distribute to equi-size min sizes.
                         //
-                        double equalSize = requestedSize / count;
+                        Coord equalSize = requestedSize / count;
 
                         if (equalSize < maxMaxSize
                             && !_AreClose(equalSize, maxMaxSize))
@@ -1319,20 +1319,22 @@ namespace Alternet.UI
                             //  equi-size is less than maximum of maxSizes.
                             //  in this case distribute so that smaller definitions grow faster than
                             //  bigger ones.
-                            double totalRemainingSize = maxMaxSize * count - rangeMaxSize;
-                            double sizeToDistribute = requestedSize - rangeMaxSize;
+                            Coord totalRemainingSize = maxMaxSize * count - rangeMaxSize;
+                            Coord sizeToDistribute = requestedSize - rangeMaxSize;
 
-                            //  sanity check: totalRemainingSize and sizeToDistribute must be real positive numbers
-                            Debug.Assert(!double.IsInfinity(totalRemainingSize)
+                            //  sanity check: totalRemainingSize and sizeToDistribute
+                            //  must be real positive numbers
+                            Debug.Assert(!Coord.IsInfinity(totalRemainingSize)
                                         && !DoubleUtils.IsNaN(totalRemainingSize)
                                         && totalRemainingSize > 0
-                                        && !double.IsInfinity(sizeToDistribute)
+                                        && !Coord.IsInfinity(sizeToDistribute)
                                         && !DoubleUtils.IsNaN(sizeToDistribute)
                                         && sizeToDistribute > 0);
 
                             for (int i = 0; i < count; ++i)
                             {
-                                double deltaSize = (maxMaxSize - tempDefinitions[i].SizeCache) * sizeToDistribute / totalRemainingSize;
+                                Coord deltaSize = (maxMaxSize - tempDefinitions[i].SizeCache)
+                                    * sizeToDistribute / totalRemainingSize;
                                 tempDefinitions[i].UpdateMinSize(tempDefinitions[i].SizeCache + deltaSize);
                             }
                         }
@@ -1364,7 +1366,7 @@ namespace Alternet.UI
         /// </remarks>
         private void ResolveStar(
             GridDefinitionBase[] definitions,
-            double availableSize)
+            Coord availableSize)
         {
             if (StarDefinitionsCanExceedAvailableSpace)
             {
@@ -1379,11 +1381,11 @@ namespace Alternet.UI
         // original implementation, used from 3.0 through 4.6.2
         private void ResolveStarLegacy(
             GridDefinitionBase[] definitions,
-            double availableSize)
+            Coord availableSize)
         {
             GridDefinitionBase[] tempDefinitions = TempDefinitions;
             int starDefinitionsCount = 0;
-            double takenSize = 0;
+            Coord takenSize = 0;
 
             for (int i = 0; i < definitions.Length; ++i)
             {
@@ -1399,7 +1401,7 @@ namespace Alternet.UI
                         {
                             tempDefinitions[starDefinitionsCount++] = definitions[i];
 
-                            double starValue = definitions[i].UserSize.Value;
+                            Coord starValue = definitions[i].UserSize.Value;
 
                             if (_IsZero(starValue))
                             {
@@ -1408,13 +1410,15 @@ namespace Alternet.UI
                             }
                             else
                             {
-                                //  clipping by c_starClip guarantees that sum of even a very big number of max'ed out star values
+                                //  clipping by c_starClip guarantees that sum of even
+                                //  a very big number of max'ed out star values
                                 //  can be summed up without overflow
                                 starValue = Math.Min(starValue, c_starClip);
 
                                 //  Note: normalized star value is temporary cached into MeasureSize
                                 definitions[i].MeasureSize = starValue;
-                                double maxSize = Math.Max(definitions[i].MinSize, definitions[i].UserMaxSize);
+                                Coord maxSize
+                                    = Math.Max(definitions[i].MinSize, definitions[i].UserMaxSize);
                                 maxSize = Math.Min(maxSize, c_starClip);
                                 definitions[i].SizeCache = maxSize / starValue;
                             }
@@ -1433,7 +1437,7 @@ namespace Alternet.UI
                 //  (starValue / definition.SizeCache) will never overflow due to sum of star weights becoming zero.
                 //  this is an important change from previous implementation where the following was possible:
                 //  ((BigValueStar + SmallValueStar) - BigValueStar) resulting in 0...
-                double allStarWeights = 0;
+                Coord allStarWeights = 0;
                 int i = starDefinitionsCount - 1;
                 do
                 {
@@ -1444,8 +1448,8 @@ namespace Alternet.UI
                 i = 0;
                 do
                 {
-                    double resolvedSize;
-                    double starValue = tempDefinitions[i].MeasureSize;
+                    Coord resolvedSize;
+                    Coord starValue = tempDefinitions[i].MeasureSize;
 
                     if (_IsZero(starValue))
                     {
@@ -1453,7 +1457,8 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        double userSize = Math.Max(availableSize - takenSize, 0) * (starValue / tempDefinitions[i].SizeCache);
+                        Coord userSize = Math.Max(availableSize - takenSize, 0)
+                            * (starValue / tempDefinitions[i].SizeCache);
                         resolvedSize = Math.Min(userSize, tempDefinitions[i].UserMaxSize);
                         resolvedSize = Math.Max(tempDefinitions[i].MinSize, resolvedSize);
                     }
@@ -1479,18 +1484,18 @@ namespace Alternet.UI
         // 3. Correct handling of large *-values, including Infinity.
         private void ResolveStarMaxDiscrepancy(
             GridDefinitionBase[] definitions,
-            double availableSize)
+            Coord availableSize)
         {
             int defCount = definitions.Length;
             GridDefinitionBase[] tempDefinitions = TempDefinitions;
             int minCount = 0, maxCount = 0;
-            double takenSize = 0;
-            double totalStarWeight = 0;
+            Coord takenSize = 0;
+            Coord totalStarWeight = 0;
             int starCount = 0;      // number of unresolved *-definitions
-            double scale = 1;     // scale factor applied to each *-weight;  negative means "Infinity is present"
+            Coord scale = 1; // scale factor applied to each *-weight;  negative = "Infinity is present"
 
             // Phase 1.  Determine the maximum *-weight and prepare to adjust *-weights
-            double maxStar = 0;
+            Coord maxStar = 0;
             for (int i = 0; i < defCount; ++i)
             {
                 GridDefinitionBase def = definitions[i];
@@ -1506,20 +1511,20 @@ namespace Alternet.UI
                 }
             }
 
-            if (Double.IsPositiveInfinity(maxStar))
+            if (Coord.IsPositiveInfinity(maxStar))
             {
                 // negative scale means one or more of the weights was Infinity
                 scale = -1;
             }
             else if (starCount > 0)
             {
-                // if maxStar * starCount > Double.Max, summing all the weights could cause
+                // if maxStar * starCount > Coord.Max, summing all the weights could cause
                 // floating-point overflow.  To avoid that, scale the weights by a factor to keep
                 // the sum within limits.  Choose a power of 2, to preserve precision.
-                var power = Math.Floor(Math.Log(double.MaxValue / maxStar / starCount, 2));
+                var power = Math.Floor(Math.Log(Coord.MaxValue / maxStar / starCount, 2));
                 if (power < 0)
                 {
-                    scale = (double)Math.Pow(2, power - 4); // -4 is just for paranoia
+                    scale = (Coord)Math.Pow(2, power - 4); // -4 is just for paranoia
                 }
             }
 
@@ -1557,7 +1562,7 @@ namespace Alternet.UI
                             }
                             else
                             {
-                                double starWeight = StarWeight(def, scale);
+                                Coord starWeight = StarWeight(def, scale);
                                 totalStarWeight += starWeight;
 
                                 if (def.MinSize > 0)
@@ -1567,8 +1572,8 @@ namespace Alternet.UI
                                     def.MeasureSize = starWeight / def.MinSize;
                                 }
 
-                                double effectiveMaxSize = Math.Max(def.MinSize, def.UserMaxSize);
-                                if (!Double.IsPositiveInfinity(effectiveMaxSize))
+                                Coord effectiveMaxSize = Math.Max(def.MinSize, def.UserMaxSize);
+                                if (!Coord.IsPositiveInfinity(effectiveMaxSize))
                                 {
                                     // store ratio w/max in SizeCache (for now)
                                     tempDefinitions[defCount + maxCount++] = def;
@@ -1581,9 +1586,9 @@ namespace Alternet.UI
 
                 // Phase 3.  Resolve *-items whose proportional sizes are too big or too small.
                 int minCountPhase2 = minCount, maxCountPhase2 = maxCount;
-                double takenStarWeight = 0;
-                double remainingAvailableSize = availableSize - takenSize;
-                double remainingStarWeight = totalStarWeight - takenStarWeight;
+                Coord takenStarWeight = 0;
+                Coord remainingAvailableSize = availableSize - takenSize;
+                Coord remainingStarWeight = totalStarWeight - takenStarWeight;
                 Array.Sort(tempDefinitions, 0, minCount, s_minRatioComparer);
                 Array.Sort(tempDefinitions, defCount, maxCount, s_maxRatioComparer);
 
@@ -1595,7 +1600,7 @@ namespace Alternet.UI
                     // which leads to meaningless results.   Check for that, and recompute from
                     // the remaining definitions.   [This leads to quadratic behavior in really
                     // pathological cases - but they'd never arise in practice.]
-                    const double starFactor = 1 / 256;      // lose more than 8 bits of precision -> recalculate
+                    const Coord starFactor = 1 / 256; // lose more than 8 bits of precision -> recalculate
                     if (remainingStarWeight < totalStarWeight * starFactor)
                     {
                         takenStarWeight = 0;
@@ -1613,11 +1618,13 @@ namespace Alternet.UI
                         remainingStarWeight = totalStarWeight - takenStarWeight;
                     }
 
-                    double minRatio = (minCount > 0) ? tempDefinitions[minCount - 1].MeasureSize : double.PositiveInfinity;
-                    double maxRatio = (maxCount > 0) ? tempDefinitions[defCount + maxCount - 1].SizeCache : -1;
+                    Coord minRatio = (minCount > 0)
+                        ? tempDefinitions[minCount - 1].MeasureSize : Coord.PositiveInfinity;
+                    Coord maxRatio = (maxCount > 0)
+                        ? tempDefinitions[defCount + maxCount - 1].SizeCache : -1;
 
                     // choose the def with larger ratio to the current proportion ("max discrepancy")
-                    double proportion = remainingStarWeight / remainingAvailableSize;
+                    Coord proportion = remainingStarWeight / remainingAvailableSize;
                     bool? chooseMin = Choose(minRatio, maxRatio, proportion);
 
                     // if no def was chosen, advance to phase 4;  the current proportion doesn't
@@ -1629,7 +1636,7 @@ namespace Alternet.UI
 
                     // get the chosen definition and its resolved size
                     GridDefinitionBase resolvedDef;
-                    double resolvedSize;
+                    Coord resolvedSize;
                     if (chooseMin == true)
                     {
                         resolvedDef = tempDefinitions[minCount - 1];
@@ -1757,7 +1764,8 @@ namespace Alternet.UI
                 for (int i = starCount - 1; i >= 0; --i)
                 {
                     GridDefinitionBase def = tempDefinitions[i];
-                    double resolvedSize = (def.MeasureSize > 0) ? Math.Max(availableSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
+                    Coord resolvedSize = (def.MeasureSize > 0)
+                        ? Math.Max(availableSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
 
                     // min and max should have no effect by now, but just in case...
                     resolvedSize = Math.Min(resolvedSize, def.UserMaxSize);
@@ -1774,10 +1782,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="definitions">Array of definitions to use for calculations.</param>
         /// <returns>Desired size.</returns>
-        private double CalculateDesiredSize(
+        private Coord CalculateDesiredSize(
             GridDefinitionBase[] definitions)
         {
-            double desiredSize = 0;
+            Coord desiredSize = 0;
 
             for (int i = 0; i < definitions.Length; ++i)
             {
@@ -1795,7 +1803,7 @@ namespace Alternet.UI
         /// <param name="columns">True if sizing column definitions, false for rows</param>
         private void SetFinalSize(
             GridDefinitionBase[] definitions,
-            double finalSize,
+            Coord finalSize,
             bool columns)
         {
             if (StarDefinitionsCanExceedAvailableSpace)
@@ -1815,27 +1823,29 @@ namespace Alternet.UI
         /// <param name="dpiScale">Ratio of screen's DPI to layout DPI</param>
         /// <returns>Adjusted value that will produce layout rounding on screen at high dpi.</returns>
         /// <remarks>This is a layout helper method. It takes DPI into account and also does not return
-        /// the rounded value if it is unacceptable for layout, e.g. Infinity or NaN. It's a helper associated with
+        /// the rounded value if it is unacceptable for layout, e.g. Infinity or NaN.
+        /// It's a helper associated with
         /// UseLayoutRounding  property and should not be used as a general rounding utility.</remarks>
-        static double RoundLayoutValue(double value, double dpiScale)
+        static Coord RoundLayoutValue(Coord value, Coord dpiScale)
         {
-            double newValue;
+            Coord newValue;
 
             // If DPI == 1, don't use DPI-aware rounding.
             if (!DoubleUtils.AreClose(dpiScale, 1.0))
             {
-                newValue = (double)Math.Round(value * dpiScale) / dpiScale;
-                // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
+                newValue = (Coord)Math.Round(value * dpiScale) / dpiScale;
+                // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue),
+                // use the original value.
                 if (DoubleUtils.IsNaN(newValue) ||
-                    double.IsInfinity(newValue) ||
-                    DoubleUtils.AreClose(newValue, double.MaxValue))
+                    Coord.IsInfinity(newValue) ||
+                    DoubleUtils.AreClose(newValue, Coord.MaxValue))
                 {
                     newValue = value;
                 }
             }
             else
             {
-                newValue = (double)Math.Round(value);
+                newValue = (Coord)Math.Round(value);
             }
 
             return newValue;
@@ -1844,18 +1854,18 @@ namespace Alternet.UI
         // original implementation, used from 3.0 through 4.6.2
         private void SetFinalSizeLegacy(
             GridDefinitionBase[] definitions,
-            double finalSize,
+            Coord finalSize,
             bool columns)
         {
             int starDefinitionsCount = 0;                       //  traverses form the first entry up
             int nonStarIndex = definitions.Length;              //  traverses from the last entry down
-            double allPreferredArrangeSize = 0;
+            Coord allPreferredArrangeSize = 0;
             bool useLayoutRounding = this.UseLayoutRounding;
             int[] definitionIndices = DefinitionIndices;
-            double[] roundingErrors = null;
+            Coord[] roundingErrors = null;
 
             // If using layout rounding, check whether rounding needs to compensate for high DPI
-            double dpi = 1; // yezo todo
+            Coord dpi = 1; // yezo todo
 
             if (useLayoutRounding)
             {
@@ -1871,7 +1881,7 @@ namespace Alternet.UI
 
                 if (definitions[i].UserSize.IsStar)
                 {
-                    double starValue = definitions[i].UserSize.Value;
+                    Coord starValue = definitions[i].UserSize.Value;
 
                     if (_IsZero(starValue))
                     {
@@ -1881,13 +1891,15 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        //  clipping by c_starClip guarantees that sum of even a very big number of max'ed out star values
+                        // clipping by c_starClip guarantees that sum of even a very
+                        // big number of max'ed out star values
                         //  can be summed up without overflow
                         starValue = Math.Min(starValue, c_starClip);
 
                         //  Note: normalized star value is temporary cached into MeasureSize
                         definitions[i].MeasureSize = starValue;
-                        double maxSize = Math.Max(definitions[i].MinSizeForArrange, definitions[i].UserMaxSize);
+                        Coord maxSize
+                            = Math.Max(definitions[i].MinSizeForArrange, definitions[i].UserMaxSize);
                         maxSize = Math.Min(maxSize, c_starClip);
                         definitions[i].SizeCache = maxSize / starValue;
                         if (useLayoutRounding)
@@ -1900,7 +1912,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    double userSize = 0;
+                    Coord userSize = 0;
 
                     switch (definitions[i].UserSize.GridUnitType)
                     {
@@ -1913,7 +1925,7 @@ namespace Alternet.UI
                             break;
                     }
 
-                    double userMaxSize;
+                    Coord userMaxSize;
 
                     if (definitions[i].IsShared)
                     {
@@ -1954,7 +1966,7 @@ namespace Alternet.UI
                 //  (starValue / definition.SizeCache) will never overflow due to sum of star weights becoming zero.
                 //  this is an important change from previous implementation where the following was possible:
                 //  ((BigValueStar + SmallValueStar) - BigValueStar) resulting in 0...
-                double allStarWeights = 0;
+                Coord allStarWeights = 0;
                 int i = starDefinitionsCount - 1;
                 do
                 {
@@ -1965,8 +1977,8 @@ namespace Alternet.UI
                 i = 0;
                 do
                 {
-                    double resolvedSize;
-                    double starValue = definitions[definitionIndices[i]].MeasureSize;
+                    Coord resolvedSize;
+                    Coord starValue = definitions[definitionIndices[i]].MeasureSize;
 
                     if (_IsZero(starValue))
                     {
@@ -1974,7 +1986,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        double userSize = Math.Max(finalSize - allPreferredArrangeSize, 0) * (starValue / definitions[definitionIndices[i]].SizeCache);
+                        Coord userSize = Math.Max(finalSize - allPreferredArrangeSize, 0) * (starValue / definitions[definitionIndices[i]].SizeCache);
                         resolvedSize = Math.Min(userSize, definitions[definitionIndices[i]].UserMaxSize);
                         resolvedSize = Math.Max(definitions[definitionIndices[i]].MinSizeForArrange, resolvedSize);
                     }
@@ -1995,13 +2007,13 @@ namespace Alternet.UI
             {
                 DistributionOrderIndexComparer distributionOrderIndexComparer = new DistributionOrderIndexComparer(definitions);
                 Array.Sort(definitionIndices, 0, definitions.Length, distributionOrderIndexComparer);
-                double sizeToDistribute = finalSize - allPreferredArrangeSize;
+                Coord sizeToDistribute = finalSize - allPreferredArrangeSize;
 
                 for (int i = 0; i < definitions.Length; ++i)
                 {
                     int definitionIndex = definitionIndices[i];
-                    double final = definitions[definitionIndex].SizeCache + (sizeToDistribute / (definitions.Length - i));
-                    double finalOld = final;
+                    Coord final = definitions[definitionIndex].SizeCache + (sizeToDistribute / (definitions.Length - i));
+                    Coord finalOld = final;
                     final = Math.Max(final, definitions[definitionIndex].MinSizeForArrange);
                     final = Math.Min(final, definitions[definitionIndex].SizeCache);
 
@@ -2034,8 +2046,8 @@ namespace Alternet.UI
                     // Sort rounding errors
                     RoundingErrorIndexComparer roundingErrorIndexComparer = new RoundingErrorIndexComparer(roundingErrors);
                     Array.Sort(definitionIndices, 0, definitions.Length, roundingErrorIndexComparer);
-                    double adjustedSize = allPreferredArrangeSize;
-                    double dpiIncrement = RoundLayoutValue(1, dpi);
+                    Coord adjustedSize = allPreferredArrangeSize;
+                    Coord dpiIncrement = RoundLayoutValue(1, dpi);
 
                     if (allPreferredArrangeSize > finalSize)
                     {
@@ -2043,7 +2055,7 @@ namespace Alternet.UI
                         while ((adjustedSize > finalSize && !_AreClose(adjustedSize, finalSize)) && i >= 0)
                         {
                             GridDefinitionBase definition = definitions[definitionIndices[i]];
-                            double final = definition.SizeCache - dpiIncrement;
+                            Coord final = definition.SizeCache - dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final < definition.SizeCache)
                             {
@@ -2059,7 +2071,7 @@ namespace Alternet.UI
                         while ((adjustedSize < finalSize && !_AreClose(adjustedSize, finalSize)) && i < definitions.Length)
                         {
                             GridDefinitionBase definition = definitions[definitionIndices[i]];
-                            double final = definition.SizeCache + dpiIncrement;
+                            Coord final = definition.SizeCache + dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final > definition.SizeCache)
                             {
@@ -2093,19 +2105,19 @@ namespace Alternet.UI
         // 3. Applies rounding only to real pixel values (not to ratios)
         private void SetFinalSizeMaxDiscrepancy(
             GridDefinitionBase[] definitions,
-            double finalSize,
+            Coord finalSize,
             bool columns)
         {
             int defCount = definitions.Length;
             int[] definitionIndices = DefinitionIndices;
             int minCount = 0, maxCount = 0;
-            double takenSize = 0;
-            double totalStarWeight = 0;
+            Coord takenSize = 0;
+            Coord totalStarWeight = 0;
             int starCount = 0;      // number of unresolved *-definitions
-            double scale = 1;   // scale factor applied to each *-weight;  negative means "Infinity is present"
+            Coord scale = 1;   // scale factor applied to each *-weight;  negative = "Infinity is present"
 
             // Phase 1.  Determine the maximum *-weight and prepare to adjust *-weights
-            double maxStar = 0;
+            Coord maxStar = 0;
             for (int i = 0; i < defCount; ++i)
             {
                 GridDefinitionBase def = definitions[i];
@@ -2121,20 +2133,20 @@ namespace Alternet.UI
                 }
             }
 
-            if (Double.IsPositiveInfinity(maxStar))
+            if (Coord.IsPositiveInfinity(maxStar))
             {
                 // negative scale means one or more of the weights was Infinity
                 scale = -1;
             }
             else if (starCount > 0)
             {
-                // if maxStar * starCount > Double.Max, summing all the weights could cause
+                // if maxStar * starCount > Coord.Max, summing all the weights could cause
                 // floating-point overflow.  To avoid that, scale the weights by a factor to keep
                 // the sum within limits.  Choose a power of 2, to preserve precision.
-                var power = Math.Floor(Math.Log(Double.MaxValue / maxStar / starCount, 2));
+                var power = Math.Floor(Math.Log(Coord.MaxValue / maxStar / starCount, 2));
                 if (power < 0)
                 {
-                    scale = (double)Math.Pow(2, power - 4.0); // -4 is just for paranoia
+                    scale = (Coord)Math.Pow(2, power - 4.0); // -4 is just for paranoia
                 }
             }
 
@@ -2168,7 +2180,7 @@ namespace Alternet.UI
                         }
                         else
                         {
-                            double starWeight = StarWeight(def, scale);
+                            Coord starWeight = StarWeight(def, scale);
                             totalStarWeight += starWeight;
 
                             if (def.MinSizeForArrange > 0)
@@ -2178,8 +2190,8 @@ namespace Alternet.UI
                                 def.MeasureSize = starWeight / def.MinSizeForArrange;
                             }
 
-                            double effectiveMaxSize = Math.Max(def.MinSizeForArrange, def.UserMaxSize);
-                            if (!Double.IsPositiveInfinity(effectiveMaxSize))
+                            Coord effectiveMaxSize = Math.Max(def.MinSizeForArrange, def.UserMaxSize);
+                            if (!Coord.IsPositiveInfinity(effectiveMaxSize))
                             {
                                 // store ratio w/max in SizeCache (for now)
                                 definitionIndices[defCount + maxCount++] = i;
@@ -2189,7 +2201,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        double userSize = 0;
+                        Coord userSize = 0;
 
                         switch (def.UserSize.GridUnitType)
                         {
@@ -2202,7 +2214,7 @@ namespace Alternet.UI
                                 break;
                         }
 
-                        double userMaxSize;
+                        Coord userMaxSize;
 
                         if (def.IsShared)
                         {
@@ -2224,9 +2236,9 @@ namespace Alternet.UI
 
                 // Phase 3.  Resolve *-items whose proportional sizes are too big or too small.
                 int minCountPhase2 = minCount, maxCountPhase2 = maxCount;
-                double takenStarWeight = 0;
-                double remainingAvailableSize = finalSize - takenSize;
-                double remainingStarWeight = totalStarWeight - takenStarWeight;
+                Coord takenStarWeight = 0;
+                Coord remainingAvailableSize = finalSize - takenSize;
+                Coord remainingStarWeight = totalStarWeight - takenStarWeight;
 
                 MinRatioIndexComparer minRatioIndexComparer = new MinRatioIndexComparer(definitions);
                 Array.Sort(definitionIndices, 0, minCount, minRatioIndexComparer);
@@ -2241,7 +2253,7 @@ namespace Alternet.UI
                     // which leads to meaningless results.   Check for that, and recompute from
                     // the remaining definitions.   [This leads to quadratic behavior in really
                     // pathological cases - but they'd never arise in practice.]
-                    const double starFactor = 1 / 256;      // lose more than 8 bits of precision -> recalculate
+                    const Coord starFactor = 1 / 256; // lose more than 8 bits of precision -> recalculate
                     if (remainingStarWeight < totalStarWeight * starFactor)
                     {
                         takenStarWeight = 0;
@@ -2259,11 +2271,14 @@ namespace Alternet.UI
                         remainingStarWeight = totalStarWeight - takenStarWeight;
                     }
 
-                    double minRatio = (minCount > 0) ? definitions[definitionIndices[minCount - 1]].MeasureSize : double.PositiveInfinity;
-                    double maxRatio = (maxCount > 0) ? definitions[definitionIndices[defCount + maxCount - 1]].SizeCache : -1;
+                    Coord minRatio = (minCount > 0)
+                        ? definitions[definitionIndices[minCount - 1]].MeasureSize
+                        : Coord.PositiveInfinity;
+                    Coord maxRatio = (maxCount > 0)
+                        ? definitions[definitionIndices[defCount + maxCount - 1]].SizeCache : -1;
 
                     // choose the def with larger ratio to the current proportion ("max discrepancy")
-                    double proportion = remainingStarWeight / remainingAvailableSize;
+                    Coord proportion = remainingStarWeight / remainingAvailableSize;
                     bool? chooseMin = Choose(minRatio, maxRatio, proportion);
 
                     // if no def was chosen, advance to phase 4;  the current proportion doesn't
@@ -2276,7 +2291,7 @@ namespace Alternet.UI
                     // get the chosen definition and its resolved size
                     int resolvedIndex;
                     GridDefinitionBase resolvedDef;
-                    double resolvedSize;
+                    Coord resolvedSize;
                     if (chooseMin == true)
                     {
                         resolvedIndex = definitionIndices[minCount - 1];
@@ -2407,7 +2422,8 @@ namespace Alternet.UI
                 for (int i = starCount - 1; i >= 0; --i)
                 {
                     GridDefinitionBase def = definitions[definitionIndices[i]];
-                    double resolvedSize = (def.MeasureSize > 0) ? Math.Max(finalSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
+                    Coord resolvedSize = (def.MeasureSize > 0)
+                        ? Math.Max(finalSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
 
                     // min and max should have no effect by now, but just in case...
                     resolvedSize = Math.Min(resolvedSize, def.UserMaxSize);
@@ -2426,16 +2442,16 @@ namespace Alternet.UI
             if (UseLayoutRounding)
             {
                 // DpiScale dpiScale = GetDpi(); // todo yezo
-                // double dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
+                // Coord dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
                 var dpi = 1.0f;
-                double[] roundingErrors = RoundingErrors;
-                double roundedTakenSize = 0;
+                Coord[] roundingErrors = RoundingErrors;
+                Coord roundedTakenSize = 0;
 
                 // round each of the allocated sizes, keeping track of the deltas
                 for (int i = 0; i < definitions.Length; ++i)
                 {
                     GridDefinitionBase def = definitions[i];
-                    double roundedSize = RoundLayoutValue(def.SizeCache, dpi);
+                    Coord roundedSize = RoundLayoutValue(def.SizeCache, dpi);
                     roundingErrors[i] = (roundedSize - def.SizeCache);
                     def.SizeCache = roundedSize;
                     roundedTakenSize += roundedSize;
@@ -2492,10 +2508,11 @@ namespace Alternet.UI
                     }
 
                     // Sort rounding errors
-                    RoundingErrorIndexComparer roundingErrorIndexComparer = new RoundingErrorIndexComparer(roundingErrors);
+                    RoundingErrorIndexComparer roundingErrorIndexComparer
+                        = new RoundingErrorIndexComparer(roundingErrors);
                     Array.Sort(definitionIndices, 0, definitions.Length, roundingErrorIndexComparer);
-                    double adjustedSize = roundedTakenSize;
-                    double dpiIncrement = 1 / dpi;
+                    Coord adjustedSize = roundedTakenSize;
+                    Coord dpiIncrement = 1 / dpi;
 
                     if (roundedTakenSize > finalSize)
                     {
@@ -2503,7 +2520,7 @@ namespace Alternet.UI
                         while ((adjustedSize > finalSize && !_AreClose(adjustedSize, finalSize)) && i >= 0)
                         {
                             GridDefinitionBase definition = definitions[definitionIndices[i]];
-                            double final = definition.SizeCache - dpiIncrement;
+                            Coord final = definition.SizeCache - dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final < definition.SizeCache)
                             {
@@ -2519,7 +2536,7 @@ namespace Alternet.UI
                         while ((adjustedSize < finalSize && !_AreClose(adjustedSize, finalSize)) && i < definitions.Length)
                         {
                             GridDefinitionBase definition = definitions[definitionIndices[i]];
-                            double final = definition.SizeCache + dpiIncrement;
+                            Coord final = definition.SizeCache + dpiIncrement;
                             final = Math.Max(final, definition.MinSizeForArrange);
                             if (final > definition.SizeCache)
                             {
@@ -2553,7 +2570,7 @@ namespace Alternet.UI
         /// and the minRatio has higher discrepancy if
         ///         (proportion / minRatio) &gt; (maxRatio / proportion)
         /// </summary>
-        private static bool? Choose(double minRatio, double maxRatio, double proportion)
+        private static bool? Choose(Coord minRatio, Coord maxRatio, Coord proportion)
         {
             if (minRatio < proportion)
             {
@@ -2564,7 +2581,7 @@ namespace Alternet.UI
                     // and divide-by-0.
                     var minPower = Math.Floor(Math.Log(minRatio, 2));
                     var maxPower = Math.Floor(Math.Log(maxRatio, 2));
-                    double f = (double)Math.Pow(2, Math.Floor((minPower + maxPower) / 2));
+                    Coord f = (Coord)Math.Pow(2, Math.Floor((minPower + maxPower) / 2));
                     if ((proportion / f) * (proportion / f) > (minRatio / f) * (maxRatio / f))
                     {
                         return true;
@@ -2593,7 +2610,7 @@ namespace Alternet.UI
         /// <param name="x">Index, rounding error pair</param>
         /// <param name="y">Index, rounding error pair</param>
         /// <returns>1 if x.Value > y.Value, 0 if equal, -1 otherwise</returns>
-        private static int CompareRoundingErrors(KeyValuePair<int, double> x, KeyValuePair<int, double> y)
+        private static int CompareRoundingErrors(KeyValuePair<int, Coord> x, KeyValuePair<int, Coord> y)
         {
             if (x.Value < y.Value)
             {
@@ -2613,12 +2630,12 @@ namespace Alternet.UI
         /// <param name="start">Start of the range.</param>
         /// <param name="count">Number of items in the range.</param>
         /// <returns>Final size.</returns>
-        private double GetFinalSizeForRange(
+        private Coord GetFinalSizeForRange(
             GridDefinitionBase[] definitions,
             int start,
             int count)
         {
-            double size = 0;
+            Coord size = 0;
             int i = start + count - 1;
 
             do
@@ -2870,7 +2887,7 @@ namespace Alternet.UI
         /// <summary>
         /// Helper accessor to rounding errors.
         /// </summary>
-        private double[] RoundingErrors
+        private Coord[] RoundingErrors
         {
             get
             {
@@ -2878,11 +2895,11 @@ namespace Alternet.UI
 
                 if (_roundingErrors == null && requiredLength == 0)
                 {
-                    _roundingErrors = new double[1];
+                    _roundingErrors = new Coord[1];
                 }
                 else if (_roundingErrors == null || _roundingErrors.Length < requiredLength)
                 {
-                    _roundingErrors = new double[requiredLength];
+                    _roundingErrors = new Coord[requiredLength];
                 }
                 return _roundingErrors;
             }
@@ -2964,7 +2981,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="d">Value to check.</param>
         /// <returns><c>true</c> if d == 0.</returns>
-        private static bool _IsZero(double d)
+        private static bool _IsZero(Coord d)
         {
             return (Math.Abs(d) < c_epsilon);
         }
@@ -2975,7 +2992,7 @@ namespace Alternet.UI
         /// <param name="d1">First value to compare</param>
         /// <param name="d2">Second value to compare</param>
         /// <returns><c>true</c> if d1 == d2</returns>
-        private static bool _AreClose(double d1, double d2)
+        private static bool _AreClose(Coord d1, Coord d2)
         {
             return (Math.Abs(d1 - d2) < c_epsilon);
         }
@@ -2991,14 +3008,14 @@ namespace Alternet.UI
         /// <summary>
         /// Returns *-weight, adjusted for scale computed during Phase 1
         /// </summary>
-        static double StarWeight(GridDefinitionBase def, double scale)
+        static Coord StarWeight(GridDefinitionBase def, Coord scale)
         {
             if (scale < 0)
             {
                 // if one of the *-weights is Infinity, adjust the weights by mapping
                 // Infinty to 1 and everything else to 0:  the infinite items share the
                 // available space equally, everyone else gets nothing.
-                return (Double.IsPositiveInfinity(def.UserSize.Value)) ? 1 : 0;
+                return (Coord.IsPositiveInfinity(def.UserSize.Value)) ? 1 : 0;
             }
             else
             {
@@ -3014,10 +3031,10 @@ namespace Alternet.UI
         int[] _definitionIndices;
 
         // Stores unrounded values and rounding errors during layout rounding.
-        double[] _roundingErrors;
+        Coord[] _roundingErrors;
 
-        private const double c_epsilon = 1e-5f;                  //  used in fp calculations
-        private const double c_starClip = 1e38f;                //  used as maximum for clipping star values during normalization
+        private const Coord c_epsilon = 1e-5f;                  //  used in fp calculations
+        private const Coord c_starClip = 1e38f; // used as max for clipping * values during normalization
         private const int c_layoutLoopMaxCount = 5;             // 5 is an arbitrary constant chosen to end the measure loop
         private static readonly LocalDataStoreSlot s_tempDefinitionsDataSlot = Thread.AllocateDataSlot();
         private static readonly IComparer s_spanPreferredDistributionOrderComparer = new SpanPreferredDistributionOrderComparer();
@@ -3300,8 +3317,8 @@ namespace Alternet.UI
 
                 if (!CompareNullRefs(definitionX, definitionY, out result))
                 {
-                    double xprime = definitionX.SizeCache - definitionX.MinSizeForArrange;
-                    double yprime = definitionY.SizeCache - definitionY.MinSizeForArrange;
+                    Coord xprime = definitionX.SizeCache - definitionX.MinSizeForArrange;
+                    Coord yprime = definitionY.SizeCache - definitionY.MinSizeForArrange;
                     result = xprime.CompareTo(yprime);
                 }
 
@@ -3387,8 +3404,8 @@ namespace Alternet.UI
 
                 if (!CompareNullRefs(definitionX, definitionY, out result))
                 {
-                    double xprime = definitionX.SizeCache - definitionX.MinSizeForArrange;
-                    double yprime = definitionY.SizeCache - definitionY.MinSizeForArrange;
+                    Coord xprime = definitionX.SizeCache - definitionX.MinSizeForArrange;
+                    Coord yprime = definitionY.SizeCache - definitionY.MinSizeForArrange;
                     result = xprime.CompareTo(yprime);
                 }
 
@@ -3401,9 +3418,9 @@ namespace Alternet.UI
         /// </summary>
         private class RoundingErrorIndexComparer : IComparer
         {
-            private readonly double[] errors;
+            private readonly Coord[] errors;
 
-            internal RoundingErrorIndexComparer(double[] errors)
+            internal RoundingErrorIndexComparer(Coord[] errors)
             {
                 Debug.Assert(errors != null);
                 this.errors = errors;
@@ -3418,8 +3435,8 @@ namespace Alternet.UI
 
                 if (!CompareNullRefs(indexX, indexY, out result))
                 {
-                    double errorX = errors[indexX.Value];
-                    double errorY = errors[indexY.Value];
+                    Coord errorX = errors[indexX.Value];
+                    Coord errorY = errors[indexY.Value];
                     result = errorX.CompareTo(errorY);
                 }
 
@@ -3774,10 +3791,10 @@ namespace Alternet.UI
             /// </summary>
             private static void DrawGridLine(
                 Graphics drawingContext,
-                double startX,
-                double startY,
-                double endX,
-                double endY)
+                Coord startX,
+                Coord startY,
+                Coord endX,
+                Coord endY)
             {
                 //Point start = new Point(startX, startY);
                 //Point end = new Point(endX, endY);
@@ -3785,8 +3802,8 @@ namespace Alternet.UI
                 //drawingContext.DrawLine(s_evenDashPen, start, end);
             }
 
-            //private const double c_dashLength = 4.0;    //
-            //private const double c_penWidth = 1;      //
+            //private const Coord c_dashLength = 4.0;    //
+            //private const Coord c_penWidth = 1;      //
             //private static readonly Pen s_oddDashPen;   //  first pen to draw dash
             //private static readonly Pen s_evenDashPen;  //  second pen to draw dash
             //private static readonly Point c_zeroPoint = new Point(0, 0);
@@ -3799,16 +3816,16 @@ namespace Alternet.UI
         //------------------------------------------------------
 
 #if GRIDPARANOIA
-        private static double _performanceFrequency;
+        private static Coord _performanceFrequency;
         private static readonly bool _performanceFrequencyInitialized = InitializePerformanceFrequency();
 
         private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
 
         private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
-        private static double CostInMilliseconds(long count)
+        private static Coord CostInMilliseconds(long count)
         {
-            return ((double)count / _performanceFrequency);
+            return ((Coord)count / _performanceFrequency);
         }
 
         private static long Cost(long startCount, long endCount)
@@ -3822,7 +3839,7 @@ namespace Alternet.UI
         {
             long l;
             QueryPerformanceFrequency(out l);
-            _performanceFrequency = (double)l * 0.001;
+            _performanceFrequency = (Coord)l * 0.001;
             return (true);
         }
 
@@ -3890,8 +3907,8 @@ namespace Alternet.UI
                         if (_counters[i].Calls > 0)
                         {
                             Counters counter = (Counters)i;
-                            double total = CostInMilliseconds(_counters[i].Total);
-                            double single = total / _counters[i].Calls;
+                            Coord total = CostInMilliseconds(_counters[i].Total);
+                            Coord single = total / _counters[i].Calls;
                             string counterName = counter.ToString();
                             string separator;
 

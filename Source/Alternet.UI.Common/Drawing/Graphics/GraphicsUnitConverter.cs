@@ -16,11 +16,11 @@ namespace Alternet.Drawing
     /// <param name="nSrc">Value to convert.</param>
     /// <param name="type">Type of the graphics.</param>
     /// <returns></returns>
-    public delegate double ConvertGraphicsUnit(
+    public delegate Coord ConvertGraphicsUnit(
             GraphicsUnit from,
             GraphicsUnit to,
-            double dpi,
-            double nSrc,
+            Coord dpi,
+            Coord nSrc,
             GraphicsUnitConverter.GraphicsType type = GraphicsUnitConverter.GraphicsType.Undefined);
 
     /// <summary>
@@ -144,14 +144,14 @@ namespace Alternet.Drawing
         /// <param name="nSrc">Value to convert.</param>
         /// <param name="type">Type of the graphics.</param>
         /// <returns></returns>
-        public static double DefaultConvert(
+        public static Coord DefaultConvert(
             GraphicsUnit from,
             GraphicsUnit to,
-            double dpi,
-            double nSrc,
+            Coord dpi,
+            Coord nSrc,
             GraphicsType type = GraphicsType.Undefined)
         {
-            double inchs;
+            Coord inchs;
 
             if (from == to)
                 return nSrc;

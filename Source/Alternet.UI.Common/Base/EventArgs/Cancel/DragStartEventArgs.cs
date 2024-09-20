@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// <see cref="Control.MouseDown"/> event was fired. If distance is greater
         /// than <see cref="MinDragStartDistance"/>, drag operation can be started.
         /// </remarks>
-        public static double MinDragStartDistance { get; set; } = 7;
+        public static Coord MinDragStartDistance { get; set; } = 7;
 
         /// <summary>
         /// Gets the client coordinates of the mouse pointer in device-independent units.

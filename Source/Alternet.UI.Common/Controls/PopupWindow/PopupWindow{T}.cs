@@ -451,7 +451,7 @@ namespace Alternet.UI
 
             // is there enough space to put the popup below the window (where we put it
             // by default)?
-            double y = ptOrigin.Y + size.Height;
+            Coord y = ptOrigin.Y + size.Height;
             if (y + sizeSelf.Height > posScreen.Y + sizeScreen.Height)
             {
                 // check if there is enough space above
@@ -465,7 +465,7 @@ namespace Alternet.UI
             }
 
             // now check left/right too
-            double x = ptOrigin.X;
+            Coord x = ptOrigin.X;
 
             if (App.Current.LangDirection == LangDirection.RightToLeft)
             {

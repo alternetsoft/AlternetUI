@@ -407,7 +407,7 @@ namespace Alternet.UI
         /// <param name="max">Maximal possible thikness.</param>
         public void ApplyMinMax(Coord min, Coord max)
         {
-            double SetMinMaxValue(double value)
+            Coord SetMinMaxValue(Coord value)
             {
                 if (value > max)
                     return max;

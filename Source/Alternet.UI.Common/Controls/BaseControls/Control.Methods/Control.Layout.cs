@@ -14,8 +14,8 @@ namespace Alternet.UI
             Control container,
             SizeD availableSize)
         {
-            var isNanHeight = double.IsNaN(container.SuggestedHeight);
-            var isNanWidth = double.IsNaN(container.SuggestedWidth);
+            var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
+            var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
             if (!isNanHeight && !isNanWidth)
                 return container.SuggestedHeight;
 
@@ -52,8 +52,8 @@ namespace Alternet.UI
             Control container,
             SizeD availableSize)
         {
-            var isNanWidth = double.IsNaN(container.SuggestedWidth);
-            var isNanHeight = double.IsNaN(container.SuggestedHeight);
+            var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
+            var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
 
             var padding = container.Padding;
 
@@ -78,11 +78,11 @@ namespace Alternet.UI
             RectD childrenLayoutBounds,
             IReadOnlyList<Control> controls)
         {
-            double x = 0;
-            double w = 0;
+            Coord x = 0;
+            Coord w = 0;
 
             Stack<Control> rightControls = new();
-            List<(Control Control, double Top, SizeD Size)>? centerControls = null;
+            List<(Control Control, Coord Top, SizeD Size)>? centerControls = null;
 
             foreach (var control in controls)
             {
@@ -189,7 +189,7 @@ namespace Alternet.UI
             RectD lBounds,
             IReadOnlyList<Control> items)
         {
-            double stretchedSize = 0;
+            Coord stretchedSize = 0;
 
             if (items.Count > 0)
             {
@@ -209,8 +209,8 @@ namespace Alternet.UI
 
             stretchedSize = lBounds.Height - stretchedSize;
 
-            double y = 0;
-            double h = 0;
+            Coord y = 0;
+            Coord h = 0;
             int bottomCount = 0;
 
             foreach (var control in items)

@@ -164,7 +164,7 @@ namespace Alternet.UI
             Control? textBox)
         {
             var comboBoxHeight = comboBox.Bounds.Height;
-            double textBoxHeight = 0;
+            Coord textBoxHeight = 0;
             if (textBox != null)
             {
                 textBoxHeight = textBox.Bounds.Height;

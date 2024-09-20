@@ -172,7 +172,7 @@ namespace Alternet.UI
         /// Gets or sets minimal item height.
         /// </summary>
         [Browsable(false)]
-        public virtual double MinHeight { get; set; }
+        public virtual Coord MinHeight { get; set; }
 
         /// <summary>
         /// Gets or sets <see cref="FontStyle"/> associated with the item.

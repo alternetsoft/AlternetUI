@@ -42,9 +42,9 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="GraphicsPath.AddArc"/>
         void AddArc(
             PointD center,
-            double radius,
-            double startAngle,
-            double sweepAngle);
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle);
 
         /// <inheritdoc cref="GraphicsPath.AddRectangle"/>
         void AddRectangle(RectD rect);
@@ -52,7 +52,7 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="GraphicsPath.AddRoundedRectangle"/>
         void AddRoundedRectangle(
             RectD rect,
-            double cornerRadius);
+            Coord cornerRadius);
 
         /// <inheritdoc cref="GraphicsPath.GetBounds"/>
         RectD GetBounds();

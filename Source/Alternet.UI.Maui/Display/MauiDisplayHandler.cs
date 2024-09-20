@@ -76,7 +76,7 @@ namespace Alternet.UI
             return "MainDisplay";
         }
 
-        public double GetScaleFactor()
+        public Coord GetScaleFactor()
         {
             return DeviceDisplay.Current.MainDisplayInfo.Density;
         }

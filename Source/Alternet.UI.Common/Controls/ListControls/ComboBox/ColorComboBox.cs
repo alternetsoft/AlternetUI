@@ -305,13 +305,13 @@ namespace Alternet.UI
         public class DefaultItemPainter : IComboBoxItemPainter
         {
             /// <inheritdoc/>
-            public virtual double GetHeight(ComboBox sender, int index, double defaultHeight)
+            public virtual Coord GetHeight(ComboBox sender, int index, Coord defaultHeight)
             {
                 return -1;
             }
 
             /// <inheritdoc/>
-            public virtual double GetWidth(ComboBox sender, int index, double defaultWidth)
+            public virtual Coord GetWidth(ComboBox sender, int index, Coord defaultWidth)
             {
                 return -1;
             }

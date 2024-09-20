@@ -353,7 +353,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the suggested width for all the controls in the set.
         /// </summary>
-        public virtual ControlSet SuggestedWidth(double width)
+        public virtual ControlSet SuggestedWidth(Coord width)
         {
             return DoInsideLayout(() =>
             {
@@ -367,7 +367,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the width for all the controls in the set.
         /// </summary>
-        public virtual ControlSet Width(double width)
+        public virtual ControlSet Width(Coord width)
         {
             return DoInsideLayout(() =>
             {
@@ -381,7 +381,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the suggested height for all the controls in the set.
         /// </summary>
-        public virtual ControlSet SuggestedHeight(double height)
+        public virtual ControlSet SuggestedHeight(Coord height)
         {
             return DoInsideLayout(() =>
             {
@@ -459,7 +459,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.MinWidth"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum width of a control.</param>
-        public virtual ControlSet MinWidth(double value)
+        public virtual ControlSet MinWidth(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -472,7 +472,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.MinHeight"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum height of a control.</param>
-        public virtual ControlSet MinHeight(double value)
+        public virtual ControlSet MinHeight(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -502,7 +502,7 @@ namespace Alternet.UI
         /// Sets <see cref="ControlAndLabel.LabelSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>
-        public virtual ControlSet LabelSuggestedWidth(double value)
+        public virtual ControlSet LabelSuggestedWidth(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -536,7 +536,7 @@ namespace Alternet.UI
         /// Sets <see cref="ControlAndLabel.InnerSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>
-        public virtual ControlSet InnerSuggestedWidth(double value)
+        public virtual ControlSet InnerSuggestedWidth(Coord value)
         {
             return DoInsideLayout(() =>
             {

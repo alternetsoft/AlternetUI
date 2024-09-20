@@ -233,8 +233,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="RichTextBox.BeginFontSize(int)"/>
         bool BeginFontSize(int pointSize);
 
-        /// <inheritdoc cref="RichTextBox.BeginFontSize(double)"/>
-        bool BeginFontSize(double pointSize);
+        /// <inheritdoc cref="RichTextBox.BeginFontSize(Coord)"/>
+        bool BeginFontSize(Coord pointSize);
 
         /// <inheritdoc cref="RichTextBox.EndFontSize"/>
         bool EndFontSize();
@@ -448,10 +448,10 @@ namespace Alternet.UI
         bool GetVerticalScrollbarEnabled();
 
         /// <inheritdoc cref="RichTextBox.SetFontScale"/>
-        void SetFontScale(double fontScale, bool refresh = false);
+        void SetFontScale(Coord fontScale, bool refresh = false);
 
         /// <inheritdoc cref="RichTextBox.GetFontScale"/>
-        double GetFontScale();
+        Coord GetFontScale();
 
         /// <inheritdoc cref="RichTextBox.GetVirtualAttributesEnabled"/>
         bool GetVirtualAttributesEnabled();

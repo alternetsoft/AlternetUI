@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default sash position.
         /// </summary>
-        public double DefaultSashPosition = 140;
+        public Coord DefaultSashPosition = 140;
 
         private readonly CardPanel cardPanel = new()
         {

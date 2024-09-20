@@ -73,7 +73,7 @@ namespace Alternet.Drawing
         /// <param name="width">The width used to create the image</param>
         /// <param name="height">The height used to create the image</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SkiaBitmap(double width, double height)
+        public SkiaBitmap(Coord width, Coord height)
             : this((int)width, (int)height)
         {
         }
