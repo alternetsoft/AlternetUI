@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListViewColumn : BaseControlItem
     {
-        private double width = 80;
+        private Coord width = 80;
         private ListViewColumnWidthMode widthMode;
         private ListView? listView;
         private string title = string.Empty;
@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// Gets or sets the title text displayed in the column header.
         /// </summary>
         /// <value>The text displayed in the column header.</value>
-        public string Title
+        public virtual string Title
         {
             get => title;
             set
@@ -106,7 +106,7 @@ namespace Alternet.UI
         /// The fixed width of the column, in device-independent units.
         /// Default value is 80.
         /// </value>
-        public double Width
+        public virtual Coord Width
         {
             get => width;
             set
@@ -123,7 +123,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="ListViewColumnWidthMode"/> which specifies the width sizing behavior.
         /// Default is <see cref="ListViewColumnWidthMode.Fixed"/>.</value>
-        public ListViewColumnWidthMode WidthMode
+        public virtual ListViewColumnWidthMode WidthMode
         {
             get => widthMode;
             set
@@ -138,7 +138,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates copy of this <see cref="ListViewColumn"/>.
         /// </summary>
-        public ListViewColumn Clone()
+        public virtual ListViewColumn Clone()
         {
             var result = new ListViewColumn();
             result.Assign(this);
@@ -149,7 +149,7 @@ namespace Alternet.UI
         /// Assigns properties from another <see cref="ListViewColumn"/>.
         /// </summary>
         /// <param name="item">Source of the properties to assign.</param>
-        public void Assign(ListViewColumn item)
+        public virtual void Assign(ListViewColumn item)
         {
             Tag = item.Tag;
 
@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner control.</param>
         /// <param name="newIndex">New column index.</param>
-        public void InternalSetListViewAndIndex(ListView? control, int? newIndex)
+        public virtual void InternalSetListViewAndIndex(ListView? control, int? newIndex)
         {
             var changed = listView != control || index != newIndex;
             if (changed)

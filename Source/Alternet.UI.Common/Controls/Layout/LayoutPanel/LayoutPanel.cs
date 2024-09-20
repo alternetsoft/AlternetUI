@@ -57,28 +57,28 @@ namespace Alternet.UI
             return control.ExtendedProps.Anchor;
         }
 
-        internal static void SetDistanceRight(Control control, double value)
+        internal static void SetDistanceRight(Control control, Coord value)
         {
             if (control == null)
                 return;
             control.ExtendedProps.DistanceRight = value;
         }
 
-        internal static double GetDistanceRight(Control control)
+        internal static Coord GetDistanceRight(Control control)
         {
             if (control == null || !control.HasExtendedProps)
                 return 0;
             return control.ExtendedProps.DistanceRight;
         }
 
-        internal static void SetDistanceBottom(Control control, double value)
+        internal static void SetDistanceBottom(Control control, Coord value)
         {
             if (control == null)
                 return;
             control.ExtendedProps.DistanceBottom = value;
         }
 
-        internal static double GetDistanceBottom(Control control)
+        internal static Coord GetDistanceBottom(Control control)
         {
             if (control == null || !control.HasExtendedProps)
                 return 0;

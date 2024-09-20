@@ -16,7 +16,7 @@ namespace Alternet.UI
         private DashStyle dashStyle = DashStyle.Solid;
         private LineCap lineCap = LineCap.Flat;
         private LineJoin lineJoin = LineJoin.Miter;
-        private double width = 1;
+        private Coord width = 1;
 
         /// <summary>
         /// Returns <see cref="PropertyGridAdapterGeneric.Value"/> as <see cref="Pen"/>.
@@ -88,7 +88,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="Pen.Width"/>
-        public double Width
+        public Coord Width
         {
             get
             {

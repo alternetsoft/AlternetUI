@@ -14,7 +14,7 @@ namespace Alternet.UI
     [TypeConverter(typeof(GridLengthConverter))]
     public struct GridLength : IEquatable<GridLength>
     {
-        private readonly double _unitValue;
+        private readonly Coord _unitValue;
         private readonly GridUnitType _unitType;
 
         /// <summary>
@@ -23,11 +23,11 @@ namespace Alternet.UI
         /// <param name="pixels">Specifies the number of 'device-independent pixels'
         /// (96 pixels-per-inch).</param>
         /// <exception cref="ArgumentException">
-        /// If <c>pixels</c> parameter is <c>double.NaN</c>
-        /// or <c>pixels</c> parameter is <c>double.NegativeInfinity</c>
-        /// or <c>pixels</c> parameter is <c>double.PositiveInfinity</c>.
+        /// If <c>pixels</c> parameter is <c>Coord.NaN</c>
+        /// or <c>pixels</c> parameter is <c>Coord.NegativeInfinity</c>
+        /// or <c>pixels</c> parameter is <c>Coord.PositiveInfinity</c>.
         /// </exception>
-        public GridLength(double pixels)
+        public GridLength(Coord pixels)
             : this(pixels, GridUnitType.Pixel)
         {
         }
@@ -45,16 +45,16 @@ namespace Alternet.UI
         /// then passed in value is ignored and replaced with <c>0</c>.
         /// </remarks>
         /// <exception cref="ArgumentException">
-        /// If <c>value</c> parameter is <c>double.NaN</c>
-        /// or <c>value</c> parameter is <c>double.NegativeInfinity</c>
-        /// or <c>value</c> parameter is <c>double.PositiveInfinity</c>.
+        /// If <c>value</c> parameter is <c>Coord.NaN</c>
+        /// or <c>value</c> parameter is <c>Coord.NegativeInfinity</c>
+        /// or <c>value</c> parameter is <c>Coord.PositiveInfinity</c>.
         /// </exception>
-        public GridLength(double value = 0, GridUnitType type = GridUnitType.Auto)
+        public GridLength(Coord value = 0, GridUnitType type = GridUnitType.Auto)
         {
-            if (DoubleUtils.IsNaN(value))
+            if (CoordUtils.IsNaN(value))
                 throw new ArgumentException();
 
-            if (double.IsInfinity(value))
+            if (Coord.IsInfinity(value))
                 throw new ArgumentException();
 
             if (type != GridUnitType.Auto
@@ -147,7 +147,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns value part of this GridLength instance.
         /// </summary>
-        public double Value { get { return ((_unitType == GridUnitType.Auto) ? 1 : _unitValue); } }
+        public Coord Value { get { return ((_unitType == GridUnitType.Auto) ? 1 : _unitValue); } }
 
         /// <summary>
         /// Returns unit type of this GridLength instance.

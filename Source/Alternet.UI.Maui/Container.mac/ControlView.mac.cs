@@ -32,6 +32,7 @@ namespace Alternet.UI
             platformView.OnDidUpdateFocus = null;
             platformView.OnResignFirstResponder = null;
             platformView.OnBecomeFirstResponder = null;
+            platformView.OnHoverGestureRecognizer = null;
         }
 
         /// <inheritdoc/>
@@ -43,21 +44,55 @@ namespace Alternet.UI
             if (platformView is null)
                 return;
 
-            platformView.OnPressesBegan = HandlePressesBegan;
-            platformView.OnPressesCancelled = HandlePressesCancelled;
-            platformView.OnPressesChanged = HandlePressesChanged;
-            platformView.OnPressesEnded = HandlePressesEnded;
-            platformView.OnShouldUpdateFocus = HandleShouldUpdateFocus;
-            platformView.OnDidUpdateFocus = HandleDidUpdateFocus;
-            platformView.OnResignFirstResponder = HandleResignFirstResponder;
-            platformView.OnBecomeFirstResponder = HandleBecomeFirstResponder;
+            platformView.OnPressesBegan = HandleMacPlatformPressesBegan;
+            platformView.OnPressesCancelled = HandleMacPlatformPressesCancelled;
+            platformView.OnPressesChanged = HandleMacPlatformPressesChanged;
+            platformView.OnPressesEnded = HandleMacPlatformPressesEnded;
+            platformView.OnShouldUpdateFocus = HandleMacPlatformShouldUpdateFocus;
+            platformView.OnDidUpdateFocus = HandleMacPlatformDidUpdateFocus;
+            platformView.OnResignFirstResponder = HandleMacPlatformResignFirstResponder;
+            platformView.OnBecomeFirstResponder = HandleMacPlatformBecomeFirstResponder;
+            platformView.OnHoverGestureRecognizer = HandleMacPlatformHoverGestureRecognizer;
+        }
+
+        /// <summary>
+        /// Handles 'HoverGestureRecognizer' event of the platform view on mac platform.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="recognizer">Gesture recognizer.</param>
+        protected virtual void HandleMacPlatformHoverGestureRecognizer(
+            SKCanvasViewAdv sender,
+            UIHoverGestureRecognizer recognizer)
+        {
+            App.DebugLogIf($"HoverGestureRecognizer: {recognizer.State}", true);
+
+            switch (recognizer.State)
+            {
+                case UIGestureRecognizerState.Possible:
+                    break;
+                case UIGestureRecognizerState.Began:
+                    Control?.RaiseMouseEnter();
+                    break;
+                case UIGestureRecognizerState.Changed:
+                    // This is like mouse move
+                    break;
+                case UIGestureRecognizerState.Ended:
+                    Control?.RaiseMouseLeave();
+                    break;
+                case UIGestureRecognizerState.Cancelled:
+                    break;
+                case UIGestureRecognizerState.Failed:
+                    break;
+                default:
+                    break;
+            }
         }
 
         /// <summary>
         /// Handles 'ResignFirstResponder' event of the platform view on mac platform.
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
-        protected virtual void HandleResignFirstResponder(SKCanvasViewAdv sender)
+        protected virtual void HandleMacPlatformResignFirstResponder(SKCanvasViewAdv sender)
         {
             App.DebugLogIf($"ResignFirstResponder", true);
             Control?.RaiseLostFocus();
@@ -67,7 +102,7 @@ namespace Alternet.UI
         /// Handles 'BecomeFirstResponder' event of the platform view on mac platform.
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
-        protected virtual void HandleBecomeFirstResponder(SKCanvasViewAdv sender)
+        protected virtual void HandleMacPlatformBecomeFirstResponder(SKCanvasViewAdv sender)
         {
             App.DebugLogIf($"BecomeFirstResponder", true);
             Control?.RaiseGotFocus();
@@ -78,7 +113,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="context">Event context.</param>
-        protected virtual bool HandleShouldUpdateFocus(
+        protected virtual bool HandleMacPlatformShouldUpdateFocus(
             SKCanvasViewAdv sender,
             UIFocusUpdateContext context)
         {
@@ -90,7 +125,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="context">Event context.</param>
-        protected virtual void HandleDidUpdateFocus(SKCanvasViewAdv sender, UIFocusUpdateContext context)
+        protected virtual void HandleMacPlatformDidUpdateFocus(
+            SKCanvasViewAdv sender,
+            UIFocusUpdateContext context)
         {
             App.DebugLogIf($"DidUpdateFocus", true);
             if (context.NextFocusedView == sender)
@@ -109,7 +146,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void HandlePressesEnded(
+        protected virtual void HandleMacPlatformPressesEnded(
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
@@ -121,7 +158,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void HandlePressesChanged(
+        protected virtual void HandleMacPlatformPressesChanged(
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
@@ -133,7 +170,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void HandlePressesCancelled(
+        protected virtual void HandleMacPlatformPressesCancelled(
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
@@ -145,7 +182,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void HandlePressesBegan(
+        protected virtual void HandleMacPlatformPressesBegan(
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {

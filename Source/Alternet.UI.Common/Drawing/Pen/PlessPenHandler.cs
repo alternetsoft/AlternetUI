@@ -17,7 +17,7 @@ namespace Alternet.Drawing
         private DashStyle dashStyle;
         private LineCap lineCap;
         private LineJoin lineJoin;
-        private double width;
+        private Coord width;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlessPenHandler"/> class.

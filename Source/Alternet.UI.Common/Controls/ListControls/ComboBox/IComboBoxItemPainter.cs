@@ -28,7 +28,7 @@ namespace Alternet.UI
         /// <param name="index">Index of the item.</param>
         /// <param name="defaultHeight">Default height of the item.</param>
         /// <returns></returns>
-        double GetHeight(ComboBox sender, int index, double defaultHeight);
+        Coord GetHeight(ComboBox sender, int index, Coord defaultHeight);
 
         /// <summary>
         /// Called by owner drawn <see cref="ComboBox"/> control in order
@@ -38,6 +38,6 @@ namespace Alternet.UI
         /// <param name="index">Index of the item.</param>
         /// <param name="defaultWidth">Default width of the item.</param>
         /// <returns></returns>
-        double GetWidth(ComboBox sender, int index, double defaultWidth);
+        Coord GetWidth(ComboBox sender, int index, Coord defaultWidth);
     }
 }

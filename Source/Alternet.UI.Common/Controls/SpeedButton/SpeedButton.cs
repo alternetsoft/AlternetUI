@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default image and label distance in the <see cref="SpeedButton"/>.
         /// </summary>
-        public static double DefaultImageLabelDistance = 4;
+        public static Coord DefaultImageLabelDistance = 4;
 
         /// <summary>
         /// Gets ot sets default value of <see cref="UseTheme"/> property.

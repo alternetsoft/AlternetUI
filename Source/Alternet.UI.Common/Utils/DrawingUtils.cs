@@ -202,8 +202,8 @@ namespace Alternet.UI
         /// <param name="p2">Second point.</param>
         /// <returns></returns>
         public static Coord GetDistanceSquared(PointD p1, PointD p2) =>
-            ((double)(p1.X - p2.X) * (double)(p1.X - p2.X))
-            + ((double)(p1.Y - p2.Y) * (double)(p1.Y - p2.Y));
+            ((Coord)(p1.X - p2.X) * (Coord)(p1.X - p2.X))
+            + ((Coord)(p1.Y - p2.Y) * (Coord)(p1.Y - p2.Y));
 
         /// <summary>
         /// Gets whether point is inside the circle.

@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     {
         private string name = string.Empty;
         private FontStyle style = FontStyle.Regular;
-        private double sizeInPoints = 12;
+        private Coord sizeInPoints = 12;
         private FontWeight weight = FontWeight.Normal;
         private FontEncoding encoding = FontEncoding.Default;
         private bool isFixedWidth = false;
@@ -26,7 +26,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="name"></param>
         /// <param name="sizeInPoints"></param>
-        public PlessFontHandler(string name, double sizeInPoints)
+        public PlessFontHandler(string name, Coord sizeInPoints)
         {
             this.Name = name;
             this.SizeInPoints = sizeInPoints;
@@ -85,7 +85,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual double SizeInPoints
+        public virtual Coord SizeInPoints
         {
             get
             {

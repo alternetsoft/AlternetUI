@@ -213,7 +213,7 @@ namespace Alternet.Drawing
         /// angle.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddArc(PointD center, double radius, double startAngle, double sweepAngle)
+        public void AddArc(PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
             CheckDisposed();
             Handler.AddArc(
@@ -240,7 +240,7 @@ namespace Alternet.Drawing
         /// <param name="rect">A <see cref="RectD"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddRoundedRectangle(RectD rect, double cornerRadius)
+        public void AddRoundedRectangle(RectD rect, Coord cornerRadius)
         {
             CheckDisposed();
             Handler.AddRoundedRectangle(rect, cornerRadius);

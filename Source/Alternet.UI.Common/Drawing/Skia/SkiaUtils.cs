@@ -52,7 +52,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets default font size for use with SkiaSharp.
         /// </summary>
-        public static double DefaultFontSize
+        public static Coord DefaultFontSize
         {
             get => defaultSkiaFont?.Size ?? defaultFontSize;
 

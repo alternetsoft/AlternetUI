@@ -15,7 +15,7 @@ namespace Alternet.UI
     {
         private Pen? pen;
         private Brush? brush;
-        private double width = 1;
+        private Coord width = 1;
         private Color? color;
         private bool incStartPoint;
         private bool decLength;

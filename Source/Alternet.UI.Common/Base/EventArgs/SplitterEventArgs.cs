@@ -17,10 +17,10 @@ namespace Alternet.UI
     /// </summary>
     public class SplitterEventArgs : BaseEventArgs
     {
-        private readonly double x;
-        private readonly double y;
-        private double splitX;
-        private double splitY;
+        private readonly Coord x;
+        private readonly Coord y;
+        private Coord splitX;
+        private Coord splitY;
 
         /// <summary>
         /// Initializes an instance of the <see cref="SplitterEventArgs" /> class with the
@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Parameters are in client coordinates.
         /// </remarks>
-        public SplitterEventArgs(double x, double y, double splitX, double splitY)
+        public SplitterEventArgs(Coord x, Coord y, Coord splitX, Coord splitY)
         {
             this.x = x;
             this.y = y;
@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Property value is in client coordinates.
         /// </remarks>
-        public double X => x;
+        public Coord X => x;
 
         /// <summary>
         /// Gets the y-coordinate of the mouse pointer.
@@ -59,7 +59,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Property value is in client coordinates.
         /// </remarks>
-        public double Y => y;
+        public Coord Y => y;
 
         /// <summary>
         /// Gets or sets the x-coordinate of the upper-left corner of the splitter.
@@ -68,7 +68,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Property value is in client coordinates.
         /// </remarks>
-        public double SplitX
+        public Coord SplitX
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Property value is in client coordinates.
         /// </remarks>
-        public double SplitY
+        public Coord SplitY
         {
             get
             {

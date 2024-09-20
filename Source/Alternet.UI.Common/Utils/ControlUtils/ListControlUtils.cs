@@ -118,14 +118,14 @@ namespace Alternet.UI
         public static void AddFontSizes(
             ListControl control,
             bool select = true,
-            double? defaultSize = null)
+            Coord? defaultSize = null)
         {
-            var fontSizes = new List<double>();
+            var fontSizes = new List<Coord>();
             fontSizes.AddRange(
                 new double[] { 8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96 });
             var fontSize = defaultSize ?? Control.DefaultFont.SizeInPoints;
 
-            void AddAdditionalSize(double value)
+            void AddAdditionalSize(Coord value)
             {
                 if (!fontSizes!.Exists(x => x == value))
                 {

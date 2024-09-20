@@ -229,7 +229,7 @@ namespace Alternet.Drawing
         /// <param name="dx">The amount to offset this <see cref="Region"/> horizontally.</param>
         /// <param name="dy">The amount to offset this <see cref="Region"/> vertically.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Translate(double dx, double dy)
+        public void Translate(Coord dx, Coord dy)
         {
             CheckDisposed();
             Handler.Translate(dx, dy);

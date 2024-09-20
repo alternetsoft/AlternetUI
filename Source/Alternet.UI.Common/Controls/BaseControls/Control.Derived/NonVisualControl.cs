@@ -19,19 +19,19 @@ namespace Alternet.UI
         /// This property has no meaning.
         /// </summary>
         [Browsable(false)]
-        public override double Left { get; set; }
+        public override Coord Left { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]
-        public override double Top { get; set; }
+        public override Coord Top { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]
-        public new double Width { get; set; }
+        public new Coord Width { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]
-        public new double Height { get; set; }
+        public new Coord Height { get; set; }
 
         /// <inheritdoc cref="Left"/>
         [Browsable(false)]

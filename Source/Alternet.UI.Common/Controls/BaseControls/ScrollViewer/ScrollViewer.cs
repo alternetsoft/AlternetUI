@@ -84,8 +84,7 @@ namespace Alternet.UI
             {
                 var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
                 var unboundedPreferredSize =
-                    control.GetPreferredSize(
-                        new SizeD(double.PositiveInfinity, double.PositiveInfinity));
+                    control.GetPreferredSize(SizeD.PositiveInfinity);
 
                 var verticalAlignment = control.VerticalAlignment;
                 var horizontalAlignment = control.HorizontalAlignment;
@@ -126,8 +125,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void SetScrollInfo()
         {
-            var preferredSize = GetChildrenMaxPreferredSizePadded(
-                new SizeD(Coord.PositiveInfinity, Coord.PositiveInfinity));
+            var preferredSize = GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
             var size = ClientRectangle.Size;
 
             if (preferredSize.Width <= size.Width)

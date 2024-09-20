@@ -54,7 +54,7 @@ namespace Alternet.UI
         /// Sets font size in points.
         /// </summary>
         /// <param name="pointSize">New font size in points.</param>
-        ITextBoxTextAttr SetFontPointSize(double pointSize);
+        ITextBoxTextAttr SetFontPointSize(Coord pointSize);
 
         /// <summary>
         /// Sets name of the font.

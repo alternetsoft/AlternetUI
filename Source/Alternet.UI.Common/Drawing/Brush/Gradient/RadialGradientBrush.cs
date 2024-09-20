@@ -54,7 +54,7 @@ namespace Alternet.Drawing
         /// <param name="radius">The radius of the outermost circle of the radial gradient.</param>
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on
         /// this brush.</param>
-        public RadialGradientBrush(PointD center, double radius, GradientStop[] gradientStops)
+        public RadialGradientBrush(PointD center, Coord radius, GradientStop[] gradientStops)
             : this(center, radius, new PointD(0, 0), gradientStops)
         {
         }
@@ -72,7 +72,7 @@ namespace Alternet.Drawing
         /// this brush.</param>
         public RadialGradientBrush(
             PointD center,
-            double radius,
+            Coord radius,
             PointD gradientOrigin,
             GradientStop[] gradientStops)
             : base(gradientStops, false)
@@ -101,7 +101,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the radius of the outermost circle of the radial gradient.
         /// </summary>
-        public virtual double Radius
+        public virtual Coord Radius
         {
             get => radius;
             set

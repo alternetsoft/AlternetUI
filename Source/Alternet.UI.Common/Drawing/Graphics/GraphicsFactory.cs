@@ -103,7 +103,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool DefaultAntialias = true;
 
-        private static readonly AdvDictionary<double, Graphics> MemoryCanvases = new();
+        private static readonly AdvDictionary<Coord, Graphics> MemoryCanvases = new();
 
         private static bool imageBitsFormatsLoaded = false;
         private static ImageBitsFormat nativeBitsFormat;
@@ -261,7 +261,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns></returns>
-        public static Graphics GetOrCreateMemoryCanvas(double? scaleFactor = null)
+        public static Graphics GetOrCreateMemoryCanvas(Coord? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
             var result = MemoryCanvases.GetOrCreate(factor, () => CreateMemoryCanvas(factor));
@@ -284,7 +284,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns></returns>
-        public static Graphics CreateMemoryCanvas(double? scaleFactor = null)
+        public static Graphics CreateMemoryCanvas(Coord? scaleFactor = null)
         {
             return Handler.CreateMemoryCanvas(ScaleFactorOrDefault(scaleFactor));
         }

@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets width of the left panel.
         /// </summary>
-        public virtual double LeftPanelWidth
+        public virtual Coord LeftPanelWidth
         {
             get => LeftPanel.Width;
             set => LeftPanel.Width = value;
@@ -166,7 +166,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets width of the right panel.
         /// </summary>
-        public virtual double RightPanelWidth
+        public virtual Coord RightPanelWidth
         {
             get => RightPanel.Width;
             set => RightPanel.Width = value;
@@ -175,7 +175,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets height of the top panel.
         /// </summary>
-        public virtual double TopPanelHeight
+        public virtual Coord TopPanelHeight
         {
             get => TopPanel.Height;
             set => TopPanel.Height = value;
@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets height of the bottom panel.
         /// </summary>
-        public virtual double BottomPanelHeight
+        public virtual Coord BottomPanelHeight
         {
             get => BottomPanel.Height;
             set => BottomPanel.Height = value;

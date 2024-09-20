@@ -394,10 +394,10 @@ namespace Alternet.UI
                 result.Width += PixelToDip(image.Width);
             }
 
-            if (!double.IsNaN(specifiedWidth))
+            if (!Coord.IsNaN(specifiedWidth))
                 result.Width = Math.Max(result.Width, specifiedWidth);
 
-            if (!double.IsNaN(specifiedHeight))
+            if (!Coord.IsNaN(specifiedHeight))
                 result.Height = Math.Max(result.Height, specifiedHeight);
 
             return result + Padding.Size;

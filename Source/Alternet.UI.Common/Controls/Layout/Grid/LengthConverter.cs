@@ -10,16 +10,10 @@ using System.Reflection;
 namespace Alternet.UI
 {
     /// <summary>
-    /// LengthConverter - Converter class for converting instances of other types to and from double representing length.
+    /// Converter class for converting instances of other types to and from coord representing length.
     /// </summary> 
     public class LengthConverter : TypeConverter
     {
-        //-------------------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //-------------------------------------------------------------------
-
         #region Public Methods
 
         /// <summary>
@@ -78,18 +72,18 @@ namespace Alternet.UI
         /// ConvertFrom - Attempt to convert to a length from the given object
         /// </summary>
         /// <returns>
-        /// The double representing the size in device-independent units.
+        /// The value representing the size in device-independent units.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// An ArgumentNullException is thrown if the example object is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// An ArgumentException is thrown if the example object is not null and is not a valid type
-        /// which can be converted to a double.
+        /// which can be converted to a coordinate.
         /// </exception>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
-        /// <param name="source"> The object to convert to a double. </param>
+        /// <param name="source"> The object to convert to a coordinate. </param>
         public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext,
                                            CultureInfo cultureInfo,
                                            object source)
@@ -97,14 +91,14 @@ namespace Alternet.UI
             if (source != null)
             {
                 if (source is string) { return FromString((string)source, cultureInfo); }
-                else { return (double)(Convert.ToDouble(source, cultureInfo)); }
+                else { return (Coord)(Convert.ToSingle(source, cultureInfo)); }
             }
 
             throw GetConvertFromException(source);
         }
 
         /// <summary>
-        /// ConvertTo - Attempt to convert a double to the given type
+        /// Attempt to convert a coordinate to the given type
         /// </summary>
         /// <returns>
         /// The object which was constructed.
@@ -118,8 +112,8 @@ namespace Alternet.UI
         /// </exception>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
-        /// <param name="value"> The double to convert. </param>
-        /// <param name="destinationType">The type to which to convert the double. </param>
+        /// <param name="value"> The value to convert. </param>
+        /// <param name="destinationType">The type to which to convert the value. </param>
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,
@@ -131,19 +125,19 @@ namespace Alternet.UI
             }
 
             if (value != null
-                && value is double)
+                && value is Coord)
             {
-                double l = (double)value;
+                Coord l = (Coord)value;
                 if (destinationType == typeof(string))
                 {
-                    if (DoubleUtils.IsNaN(l))
+                    if (CoordUtils.IsNaN(l))
                         return "Auto";
                     else
                         return Convert.ToString(l, cultureInfo);
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
-                    ConstructorInfo ci = typeof(double).GetConstructor(new Type[] { typeof(double) });
+                    ConstructorInfo ci = typeof(Coord).GetConstructor(new Type[] { typeof(Coord) });
                     return new InstanceDescriptor(ci, new object[] { l });
                 }
             }
@@ -163,21 +157,21 @@ namespace Alternet.UI
         // Parse a Length from a string given the CultureInfo.
         // Formats: 
         //"[value][unit]"
-        //   [value] is a double
+        //   [value] is a coordinate
         //   [unit] is a string specifying the unit, like 'in' or 'px', or nothing (means pixels)
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
-        static internal double FromString(string s, CultureInfo cultureInfo)
+        static internal Coord FromString(string s, CultureInfo cultureInfo)
         {
             string valueString = s.Trim();
             string goodString = valueString.ToLowerInvariant();
             int strLen = goodString.Length;
             int strLenUnit = 0;
-            double unitFactor = 1.0;
+            Coord unitFactor = 1.0;
 
-            //Auto is represented and Double.NaN
+            //Auto is represented and Coord.NaN
             //properties that do not want Auto and NaN to be in their ligit values,
             //should disallow NaN in validation callbacks (same goes for negative values)
-            if (goodString == "auto") return Double.NaN;
+            if (goodString == "auto") return Coord.NaN;
 
             for (int i = 0; i < PixelUnitStrings.Length; i++)
             {
@@ -192,7 +186,7 @@ namespace Alternet.UI
             }
 
             //  important to substring original non-lowered string 
-            //  this allows case sensitive ToDouble below handle "NaN" and "Infinity" correctly. 
+            //  this allows case sensitive ToDouble/ToSingle below handle "NaN" and "Infinity" correctly. 
             //  this addresses windows bug 1177408
             valueString = valueString.Substring(0, strLen - strLenUnit);
 
@@ -201,7 +195,7 @@ namespace Alternet.UI
             // to create a Length instance from a string.  This addresses windows bug 968884
             try
             {
-                double result = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
+                Coord result = Convert.ToSingle(valueString, cultureInfo) * unitFactor;
                 return result;
             }
             catch (FormatException)
@@ -214,7 +208,7 @@ namespace Alternet.UI
         // These are effectively "TypeConverter only" units.
         // They are all expressable in terms of the Pixel unit type and a conversion factor.
         static private string[] PixelUnitStrings = { "px", "in", "cm", "pt" };
-        static private double[] PixelUnitFactors =
+        static private Coord[] PixelUnitFactors =
         {
             1.0,              // Pixel itself
             96.0,             // Pixels per Inch
@@ -222,9 +216,9 @@ namespace Alternet.UI
             96.0 / 72.0,      // Pixels per Point
         };
 
-        static internal string ToString(double l, CultureInfo cultureInfo)
+        static internal string ToString(Coord l, CultureInfo cultureInfo)
         {
-            if (DoubleUtils.IsNaN(l)) return "Auto";
+            if (CoordUtils.IsNaN(l)) return "Auto";
             return Convert.ToString(l, cultureInfo);
         }
 

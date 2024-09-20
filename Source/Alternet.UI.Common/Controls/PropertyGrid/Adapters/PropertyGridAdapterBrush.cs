@@ -20,11 +20,11 @@ namespace Alternet.UI
         private PointD radialGradientCenter = DefaultRadialGradientCenter;
         private PointD radialGradientOrigin = DefaultRadialGradientOrigin;
         private Color endColor = DefaultEndColor;
-        private double radialGradientRadius = DefaultRadialGradientRadius;
+        private Coord radialGradientRadius = DefaultRadialGradientRadius;
         private BrushHatchStyle hatchStyle;
         private Image? image;
 
-        // (Color color, double offset)
+        // (Color color, Coord offset)
         private GradientStop[] gradientStops = Array.Empty<GradientStop>();
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the <see cref="RadialGradientRadius"/> property.
         /// </summary>
-        public static double DefaultRadialGradientRadius { get; set; } = 200;
+        public static Coord DefaultRadialGradientRadius { get; set; } = 200;
 
         /// <summary>
         /// Returns <see cref="PropertyGridAdapterGeneric.Value"/> as <see cref="Brush"/>.
@@ -184,7 +184,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="RadialGradientBrush.Radius"/>
-        public double RadialGradientRadius
+        public Coord RadialGradientRadius
         {
             get
             {

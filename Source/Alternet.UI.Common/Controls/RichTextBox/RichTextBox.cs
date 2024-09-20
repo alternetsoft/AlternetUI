@@ -1069,7 +1069,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using the given point size.
         /// </summary>
-        public virtual bool BeginFontSize(double pointSize)
+        public virtual bool BeginFontSize(Coord pointSize)
         {
             return Handler.BeginFontSize((int)pointSize);
         }
@@ -1678,7 +1678,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the scale factor for displaying fonts, for example for more comfortableediting.
         /// </summary>
-        public virtual void SetFontScale(double fontScale, bool refresh = false)
+        public virtual void SetFontScale(Coord fontScale, bool refresh = false)
         {
             Handler.SetFontScale(fontScale, refresh);
         }
@@ -1686,7 +1686,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the scale factor for displaying fonts, for example for more comfortable editing.
         /// </summary>
-        public virtual double GetFontScale()
+        public virtual Coord GetFontScale()
         {
             return Handler.GetFontScale();
         }

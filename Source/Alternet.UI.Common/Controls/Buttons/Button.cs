@@ -326,7 +326,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="x">New horizontal margin.</param>
         /// <param name="y">New vertical margin.</param>
-        public virtual void SetImageMargins(double x, double? y = null)
+        public virtual void SetImageMargins(Coord x, Coord? y = null)
         {
             y ??= x;
             Handler.SetImageMargins(x, y.Value);

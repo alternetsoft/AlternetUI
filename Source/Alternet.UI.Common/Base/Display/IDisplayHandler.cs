@@ -20,7 +20,7 @@ namespace Alternet.UI
         public string GetName();
 
         /// <inheritdoc cref="Display.ScaleFactor"/>
-        public double GetScaleFactor();
+        public Coord GetScaleFactor();
 
         /// <inheritdoc cref="Display.IsPrimary"/>
         public bool IsPrimary();

@@ -98,12 +98,12 @@ namespace Alternet.UI
                 else
                 {
                     // conversion from numeric type
-                    double value;
+                    Coord value;
                     GridUnitType type;
 
                     value = Convert.ToSingle(source, cultureInfo);
 
-                    if (DoubleUtils.IsNaN(value))
+                    if (CoordUtils.IsNaN(value))
                     {
                         // this allows for conversion from Width / Height = "Auto"
                         value = 1.0f;
@@ -165,7 +165,7 @@ namespace Alternet.UI
                         typeof(GridLength).GetConstructor(
                             new Type[]
                             {
-                                typeof(double),
+                                typeof(Coord),
                                 typeof(GridUnitType),
                             });
                     return new InstanceDescriptor(ci, new object[] { gl.Value, gl.GridUnitType });
@@ -197,7 +197,7 @@ namespace Alternet.UI
                 // in this case drop value part and print only "Star"
                 case GridUnitType.Star:
                     return
-                        DoubleUtils.IsOne(gl.Value)
+                        CoordUtils.IsOne(gl.Value)
                         ? "*" : Convert.ToString(gl.Value, cultureInfo) + "*";
 
                 // for Pixel print out the numeric value. "px" can be omitted.
@@ -215,7 +215,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Formats:
         /// "[value][unit]"
-        ///     [value] is a double
+        ///     [value] is a Coord
         ///     [unit] is a string in GridLength._unitTypes connected to a GridUnitType
         /// "[value]"
         ///     As above, but the GridUnitType is assumed to be GridUnitType.Pixel
@@ -228,7 +228,7 @@ namespace Alternet.UI
             XamlGridLengthSerializer.FromString(
                 s,
                 cultureInfo,
-                out double value,
+                out Coord value,
                 out GridUnitType unit);
 
             return new GridLength(value, unit);

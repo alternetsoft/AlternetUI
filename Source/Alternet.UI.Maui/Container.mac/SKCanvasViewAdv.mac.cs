@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,11 @@ namespace Alternet.UI
         /// Raised when <see cref="PressesCancelled"/> is called.
         /// </summary>
         public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesCancelled;
+
+        /// <summary>
+        /// Raised when <see cref="UIHoverGestureRecognizer"/> state is changed.
+        /// </summary>
+        public Action<SKCanvasViewAdv, UIHoverGestureRecognizer>? OnHoverGestureRecognizer;
 
         /// <summary>
         /// Raised when <see cref="ShouldUpdateFocus"/> is called.
@@ -78,6 +84,7 @@ namespace Alternet.UI
         public SKCanvasViewAdv(IntPtr handle)
             : base(handle)
         {
+            Initialize();
         }
 
         /// <summary>
@@ -85,6 +92,7 @@ namespace Alternet.UI
         /// </summary>
         public SKCanvasViewAdv()
         {
+            Initialize();
         }
 
         /// <inheritdoc/>
@@ -213,6 +221,19 @@ namespace Alternet.UI
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// Common initialization method which is called from the constructors.
+        /// </summary>
+        protected virtual void Initialize()
+        {
+            var recognizer = new UIHoverGestureRecognizer((g) =>
+            {
+                OnHoverGestureRecognizer?.Invoke(this, g);
+            });
+
+            AddGestureRecognizer(recognizer);
         }
 
         private void CallAction(

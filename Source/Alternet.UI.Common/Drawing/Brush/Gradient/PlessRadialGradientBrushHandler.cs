@@ -14,7 +14,7 @@ namespace Alternet.Drawing
     public class PlessRadialGradientBrushHandler : PlessBrushHandler, IRadialGradientBrushHandler
     {
         private PointD center;
-        private double radius;
+        private Coord radius;
         private PointD gradientOrigin;
         private GradientStop[]? gradientStops;
 
@@ -31,7 +31,7 @@ namespace Alternet.Drawing
         public PointD Center => center;
 
         /// <inheritdoc cref="RadialGradientBrush.Radius"/>
-        public double Radius => radius;
+        public Coord Radius => radius;
 
         /// <inheritdoc cref="RadialGradientBrush.GradientOrigin"/>
         public PointD GradientOrigin => gradientOrigin;

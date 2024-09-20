@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// <param name="widthMode">Width mode.</param>
         void SetColumnWidth(
             long columnIndex,
-            double width,
+            Coord width,
             ListViewColumnWidthMode widthMode);
 
         /// <summary>
