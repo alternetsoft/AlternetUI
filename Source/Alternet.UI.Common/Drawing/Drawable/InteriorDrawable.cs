@@ -38,6 +38,7 @@ namespace Alternet.Drawing
         public BorderDrawable? Border;
 
         private ScrollBar.MetricsInfo? metrics;
+        private InteriorNotification? notification;
 
         /// <summary>
         /// Enumerates possible hit test return values.
@@ -119,6 +120,17 @@ namespace Alternet.Drawing
         /// Gets whether interior has border.
         /// </summary>
         public bool HasBorder => Border?.Visible ?? false;
+
+        /// <summary>
+        /// Gets <see cref="InteriorNotification"/> attached to this object.
+        /// </summary>
+        public InteriorNotification Notification
+        {
+            get
+            {
+                return notification ??= new(this);
+            }
+        }
 
         /// <inheritdoc/>
         public override RectD Bounds

@@ -24,8 +24,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class SkiaContainer : SKCanvasView
     {
-        private readonly InteriorDrawable interior = new();
-        private readonly InteriorNotification interiorNotification;
+        private InteriorDrawable? interior;
 
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
@@ -40,11 +39,6 @@ namespace Alternet.UI
         /// </summary>
         public SkiaContainer()
         {
-            interior.Metrics = ScrollBar.DefaultMetrics;
-            interior.SetDefaultBorder(true);
-            interior.SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
-            interiorNotification = new(interior);
-
             EnableTouchEvents = true;
             Touch += Canvas_Touch;
             SizeChanged += SkiaContainer_SizeChanged;
@@ -58,7 +52,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control interior element (border and scrollbars).
         /// </summary>
-        public InteriorDrawable Interior => interior;
+        public virtual InteriorDrawable Interior
+        {
+            get
+            {
+                if(interior is null)
+                {
+                    interior = new();
+                    interior.Metrics = ScrollBar.DefaultMetrics;
+                    interior.SetDefaultBorder(true);
+                    interior.SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
+                }
+
+                return interior;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image. Default is <c>true</c>.
@@ -79,7 +87,8 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
-                    control.RemoveNotification(interiorNotification);
+                    if(interior is not null)
+                        control.RemoveNotification(interior.Notification);
 
                     if (control.Handler is MauiControlHandler handler)
                         handler.Container = null;
@@ -89,7 +98,8 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
-                    control.AddNotification(interiorNotification);
+                    if (interior is not null)
+                        control.AddNotification(interior.Notification);
                     if (control.Handler is MauiControlHandler handler)
                         handler.Container = this;
                 }
@@ -222,12 +232,19 @@ namespace Alternet.UI
                 Math.Min(bounds.Width, max.Width),
                 Math.Min(bounds.Height, max.Height));
 
-            interior.Bounds = newBounds;
+            if (interior is null)
+            {
+                control.Bounds = newBounds;
+            }
+            else
+            {
+                interior.Bounds = newBounds;
 
-            var rectangles = interior.GetLayoutRectangles(scaleFactor);
-            var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
+                var rectangles = interior.GetLayoutRectangles(scaleFactor);
+                var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
-            control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
+                control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
+            }
         }
 
         private void Canvas_PaintSurface(object? sender, SKPaintSurfaceEventArgs e)
@@ -267,14 +284,12 @@ namespace Alternet.UI
 
             dc.Restore();
 
-            interior.VertPosition = control.VertScrollBarInfo;
-            interior.HorzPosition = control.HorzScrollBarInfo;
-
-            if (!interior.HorzPosition.Equals(ScrollBarInfo.Default))
+            if(interior is not null)
             {
+                interior.VertPosition = control.VertScrollBarInfo;
+                interior.HorzPosition = control.HorzScrollBarInfo;
+                interior.Draw(control, graphics);
             }
-
-            interior.Draw(control, graphics);
 
             dc.Flush();
             dc.Restore();
