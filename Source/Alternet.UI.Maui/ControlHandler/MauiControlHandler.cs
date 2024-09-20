@@ -18,7 +18,7 @@ namespace Alternet.UI
 
         public static Color DefaultForegroundColor = SystemColors.WindowText;
 
-        private SkiaContainer? container;
+        private ControlView? container;
         private Color backgroundColor = DefaultBackgroundColor;
         private Color foregroundColor = DefaultForegroundColor;
 
@@ -53,7 +53,7 @@ namespace Alternet.UI
             }
         }
 
-        public SkiaContainer? Container
+        public ControlView? Container
         {
             get => container;
 

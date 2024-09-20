@@ -22,22 +22,22 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="Alternet.UI.Control"/> container using <see cref="SKCanvasView"/>.
     /// </summary>
-    public partial class SkiaContainer : SKCanvasView
+    public partial class ControlView : SKCanvasView
     {
         private InteriorDrawable? interior;
 
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
 
-        static SkiaContainer()
+        static ControlView()
         {
             InitMauiHandler();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaContainer"/> class.
+        /// Initializes a new instance of the <see cref="ControlView"/> class.
         /// </summary>
-        public SkiaContainer()
+        public ControlView()
         {
             EnableTouchEvents = true;
             Touch += Canvas_Touch;

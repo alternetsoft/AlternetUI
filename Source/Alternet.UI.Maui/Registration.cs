@@ -24,7 +24,7 @@ public static class Registration
     {
         builder.ConfigureMauiHandlers(h =>
         {
-            h.AddHandler<SkiaContainer, SKCanvasViewHandlerAdv>();
+            h.AddHandler<ControlView, SKCanvasViewHandlerAdv>();
         });
 
         return builder;

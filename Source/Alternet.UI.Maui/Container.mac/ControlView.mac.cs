@@ -13,7 +13,7 @@ using UIKit;
 
 namespace Alternet.UI
 {
-    public partial class SkiaContainer
+    public partial class ControlView
     {
         /// <inheritdoc/>
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)

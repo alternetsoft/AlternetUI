@@ -8,7 +8,8 @@
     <Grid RowDefinitions="*,Auto">
         <StackLayout x:Name="panel" 
                            Grid.Row="0">
-            <editor:SyntaxEditMaui x:Name="editor" ReadOnly="False" SelectionChanged="editor_SelectionChanged"/>
+            <editor:SyntaxEditView x:Name="editor" ReadOnly="False" 
+                                   SelectionChanged="editor_SelectionChanged"/>
         </StackLayout>
         <Button Grid.Row="1"
                 Margin="0,20"
