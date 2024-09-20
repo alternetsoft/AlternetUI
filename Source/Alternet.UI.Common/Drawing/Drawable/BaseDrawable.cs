@@ -66,6 +66,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public void SetVisible(bool value) => Visible = value;
+
+        /// <inheritdoc/>
         public virtual void Draw(Control control, Graphics dc)
         {
         }

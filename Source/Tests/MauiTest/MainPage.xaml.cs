@@ -23,15 +23,17 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        /*skiaSample = new();*/
         customDrawControl = new();
+        customDrawControl.Name = "customDrawControl";
 
         customDrawControl.SetPaintAction((control, canvas, rect) =>
         {
         });
 
-
         skiaContainer.BackgroundColor = Colors.Cornsilk;
+
+        skiaContainer.Interior.Required();
+        skiaContainer.Interior.HorzScrollBar?.SetVisible(false);
 
         skiaContainer.Control = customDrawControl;
 
@@ -52,13 +54,18 @@ public partial class MainPage : ContentPage
         vo.Expands = true;
         vo.Alignment = LayoutAlignment.Fill;
         skiaContainer.VerticalOptions = vo;
-
         button1.Clicked += Button1_Clicked;
         button2.Clicked += Button2_Clicked;
 
         skiaContainer.HandlerChanged += SkiaContainer_HandlerChanged;
-        skiaContainer.Focused += GraphicsView_Focused;
-        skiaContainer.Unfocused += GraphicsView_Unfocused;
+
+        Alternet.UI.Control.FocusedControlChanged += Control_FocusedControlChanged;
+    }
+
+    private void Control_FocusedControlChanged(object? sender, EventArgs e)
+    {
+        var name = Alternet.UI.Control.FocusedControl?.Name ?? "null";
+        Log($"FocusedControlChanged: {name}");
     }
 
     private void SkiaContainer_HandlerChanged(object? sender, EventArgs e)
@@ -121,16 +128,6 @@ public partial class MainPage : ContentPage
     private void Log(object? s)
     {
         Alternet.UI.App.Log(s);
-    }
-
-    private void GraphicsView_Unfocused(object? sender, FocusEventArgs e)
-    {
-        Log("GraphicsView_Unfocused");
-    }
-
-    private void GraphicsView_Focused(object? sender, FocusEventArgs e)
-    {
-        Log("GraphicsView_Focused");
     }
 
     private void Button2_Clicked(object? sender, EventArgs e)

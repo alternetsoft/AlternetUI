@@ -10,11 +10,20 @@ namespace Alternet.Drawing
     public partial class SkiaGraphics
     {
         /// <inheritdoc/>
+        public override bool HasClip
+        {
+            get
+            {
+                return !canvas.IsClipEmpty;
+            }
+        }
+
+        /// <inheritdoc/>
         public override Region? Clip
         {
             get
             {
-                throw new NotImplementedException();
+                return null;
             }
 
             set

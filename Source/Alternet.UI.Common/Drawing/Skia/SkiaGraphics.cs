@@ -107,6 +107,18 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override bool HasTransform
+        {
+            get
+            {
+                var m = canvas.TotalMatrix;
+                if (m.IsIdentity)
+                    return false;
+                return true;
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool IsOk
         {
             get => true;

@@ -8,7 +8,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <ListView x:Name="logControl" 
                            Grid.Row="0"
-                  HeightRequest="100"
+                  HeightRequest="350"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -17,7 +17,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <StackLayout x:Name="panel" Grid.Row="1">
-            <alternet:SkiaContainer x:Name="skiaContainer"/>
+            <alternet:ControlView x:Name="skiaContainer"/>
         </StackLayout>
 
         <HorizontalStackLayout x:Name="buttonPanel"

@@ -25,6 +25,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override bool HasTransform => false;
+
+        /// <inheritdoc/>
+        public override bool HasClip => Clip is not null;
+
+        /// <inheritdoc/>
         public override TransformMatrix Transform
         {
             get => TransformMatrix.Default;

@@ -51,6 +51,29 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override bool HasTransform
+        {
+            get
+            {
+                var matrix = dc.Transform;
+                if (matrix.IsIdentity)
+                    return false;
+                return true;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool HasClip
+        {
+            get
+            {
+                if (dc.Clip == null)
+                    return false;
+                return true;
+            }
+        }
+
+        /// <inheritdoc/>
         public override Region? Clip
         {
             get

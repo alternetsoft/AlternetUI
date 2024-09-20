@@ -31,6 +31,12 @@ namespace Alternet.Drawing
         public abstract TransformMatrix Transform { get; set; }
 
         /// <summary>
+        /// Gets whether <see cref="Transform"/> is assigned with transform matrix
+        /// which is not <see cref="TransformMatrix.Default"/>.
+        /// </summary>
+        public abstract bool HasTransform { get; }
+
+        /// <summary>
         /// Gets used scale factor.
         /// </summary>
         public Coord ScaleFactor
@@ -67,6 +73,11 @@ namespace Alternet.Drawing
         /// Gets or sets clipping region.
         /// </summary>
         public abstract Region? Clip { get; set; }
+
+        /// <summary>
+        /// Gets whether <see cref="Clip"/> property is assigned.
+        /// </summary>
+        public abstract bool HasClip { get; }
 
         /// <summary>
         /// Gets or sets the interpolation mode associated with this <see cref="Graphics"/>.

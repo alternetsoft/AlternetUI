@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Maui.Controls.PlatformConfiguration;
 
-#if MACCATALYST
+#if IOS || MACCATALYST
 
 namespace Alternet.UI
 {

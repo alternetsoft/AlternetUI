@@ -16,7 +16,7 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class ToolBar : Control
     {
-        private double itemSize;
+        private Coord itemSize;
         private bool textVisible = false;
         private bool imageVisible = true;
         private ImageToText imageToText = ImageToText.Horizontal;
@@ -90,12 +90,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default item size in dips.
         /// </summary>
-        public static double DefaultSize { get; set; } = 24;
+        public static Coord DefaultSize { get; set; } = 24;
 
         /// <summary>
         /// Gets or sets default spacer item size.
         /// </summary>
-        public static double DefaultSpacerSize { get; set; } = 4;
+        public static Coord DefaultSpacerSize { get; set; } = 4;
 
         /// <summary>
         /// Gets or sets default margin of the sticky button item.
@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default width of the separator item.
         /// </summary>
-        public static double DefaultSeparatorWidth { get; set; } = 1;
+        public static Coord DefaultSeparatorWidth { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets default margin of the separator item.
@@ -848,7 +848,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="size">Optional spacer size.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId AddSpacer(double? size = null)
+        public virtual ObjectUniqueId AddSpacer(Coord? size = null)
         {
             Panel control = new()
             {
@@ -1466,7 +1466,7 @@ namespace Alternet.UI
             if (control is PictureBox)
                 return itemSize;
             if (TextVisible)
-                return (double.NaN, itemSize);
+                return (Coord.NaN, itemSize);
             return itemSize;
         }
 

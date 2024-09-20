@@ -2039,8 +2039,10 @@ namespace Alternet.UI
         /// Adds <see cref="IControlNotification"/> object to the list of notifications.
         /// </summary>
         /// <param name="n">Notification object to add.</param>
-        public virtual void AddNotification(IControlNotification n)
+        public virtual void AddNotification(IControlNotification? n)
         {
+            if (n is null)
+                return;
             notifications ??= new();
             notifications.Add(n);
         }
@@ -2049,9 +2051,9 @@ namespace Alternet.UI
         /// Removes <see cref="IControlNotification"/> object from the list of notifications.
         /// </summary>
         /// <param name="n">Notification object to remove.</param>
-        public virtual void RemoveNotification(IControlNotification n)
+        public virtual void RemoveNotification(IControlNotification? n)
         {
-            if (notifications is null)
+            if (notifications is null || n is null)
                 return;
             notifications.Remove(n);
         }

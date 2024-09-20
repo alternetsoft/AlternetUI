@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default distance (in dips) between toolbars.
         /// </summary>
-        public static double DefaultToolBarDistance = 2;
+        public static Coord DefaultToolBarDistance = 2;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolBarSet"/> class.
@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets distance (in dips) between toolbars.
         /// </summary>
-        public virtual double? ToolBarDistance { get; set; }
+        public virtual Coord? ToolBarDistance { get; set; }
 
         /// <summary>
         /// Gets or sets the number of toolbars.
@@ -69,7 +69,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="ToolBar.ItemSize"/> for the child toolbars.
         /// </summary>
-        public virtual double ItemSize
+        public virtual Coord ItemSize
         {
             get
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#if MACCATALYST
+#if IOS || MACCATALYST
 
 using SkiaSharp.Views.iOS;
 using SkiaSharp.Views.Maui.Handlers;
