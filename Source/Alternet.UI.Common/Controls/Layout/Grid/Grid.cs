@@ -897,7 +897,7 @@ namespace Alternet.UI
         {
             for (int i = 0; i < minSizes.Length; i++)
             {
-                if (DoubleUtils.GreaterThanOrClose(minSizes[i], 0))
+                if (CoordUtils.GreaterThanOrClose(minSizes[i], 0))
                 {
                     if (isRows)
                     {
@@ -960,7 +960,7 @@ namespace Alternet.UI
 
                 MeasureCell(i, forceInfinityV);
 
-                hasDesiredSizeUChanged |= !DoubleUtils.AreClose(oldWidth, childPreferredSize.Width);
+                hasDesiredSizeUChanged |= !CoordUtils.AreClose(oldWidth, childPreferredSize.Width);
 
                 if (!ignoreDesiredSizeU)
                 {
@@ -1325,10 +1325,10 @@ namespace Alternet.UI
                             //  sanity check: totalRemainingSize and sizeToDistribute
                             //  must be real positive numbers
                             Debug.Assert(!Coord.IsInfinity(totalRemainingSize)
-                                        && !DoubleUtils.IsNaN(totalRemainingSize)
+                                        && !CoordUtils.IsNaN(totalRemainingSize)
                                         && totalRemainingSize > 0
                                         && !Coord.IsInfinity(sizeToDistribute)
-                                        && !DoubleUtils.IsNaN(sizeToDistribute)
+                                        && !CoordUtils.IsNaN(sizeToDistribute)
                                         && sizeToDistribute > 0);
 
                             for (int i = 0; i < count; ++i)
@@ -1831,14 +1831,14 @@ namespace Alternet.UI
             Coord newValue;
 
             // If DPI == 1, don't use DPI-aware rounding.
-            if (!DoubleUtils.AreClose(dpiScale, 1.0))
+            if (!CoordUtils.AreClose(dpiScale, 1.0))
             {
                 newValue = (Coord)Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue),
                 // use the original value.
-                if (DoubleUtils.IsNaN(newValue) ||
+                if (CoordUtils.IsNaN(newValue) ||
                     Coord.IsInfinity(newValue) ||
-                    DoubleUtils.AreClose(newValue, Coord.MaxValue))
+                    CoordUtils.AreClose(newValue, Coord.MaxValue))
                 {
                     newValue = value;
                 }

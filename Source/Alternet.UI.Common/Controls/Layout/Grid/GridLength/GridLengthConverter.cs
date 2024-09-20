@@ -103,7 +103,7 @@ namespace Alternet.UI
 
                     value = Convert.ToSingle(source, cultureInfo);
 
-                    if (DoubleUtils.IsNaN(value))
+                    if (CoordUtils.IsNaN(value))
                     {
                         // this allows for conversion from Width / Height = "Auto"
                         value = 1.0f;
@@ -197,7 +197,7 @@ namespace Alternet.UI
                 // in this case drop value part and print only "Star"
                 case GridUnitType.Star:
                     return
-                        DoubleUtils.IsOne(gl.Value)
+                        CoordUtils.IsOne(gl.Value)
                         ? "*" : Convert.ToString(gl.Value, cultureInfo) + "*";
 
                 // for Pixel print out the numeric value. "px" can be omitted.

@@ -130,7 +130,7 @@ namespace Alternet.UI
                 Coord l = (Coord)value;
                 if (destinationType == typeof(string))
                 {
-                    if (DoubleUtils.IsNaN(l))
+                    if (CoordUtils.IsNaN(l))
                         return "Auto";
                     else
                         return Convert.ToString(l, cultureInfo);
@@ -218,7 +218,7 @@ namespace Alternet.UI
 
         static internal string ToString(Coord l, CultureInfo cultureInfo)
         {
-            if (DoubleUtils.IsNaN(l)) return "Auto";
+            if (CoordUtils.IsNaN(l)) return "Auto";
             return Convert.ToString(l, cultureInfo);
         }
 
