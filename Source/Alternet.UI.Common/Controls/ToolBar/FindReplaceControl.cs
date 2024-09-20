@@ -382,7 +382,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to show error border around find text editor.
         /// </summary>
-        public bool ShowErrorBorder
+        public virtual bool ShowErrorBorder
         {
             get
             {
@@ -408,7 +408,7 @@ namespace Alternet.UI
         /// <summary>
         /// Get or sets whether 'Current Document' find scope is available.
         /// </summary>
-        public bool CanFindInCurrentDocument
+        public virtual bool CanFindInCurrentDocument
         {
             get
             {
@@ -427,7 +427,7 @@ namespace Alternet.UI
         /// <summary>
         /// Get or sets whether 'All Open Documents' find scope is available.
         /// </summary>
-        public bool CanFindInAllOpenDocuments
+        public virtual bool CanFindInAllOpenDocuments
         {
             get
             {
@@ -446,7 +446,7 @@ namespace Alternet.UI
         /// <summary>
         /// Get or sets whether 'Current Project' find scope is available.
         /// </summary>
-        public bool CanFindInCurrentProject
+        public virtual bool CanFindInCurrentProject
         {
             get
             {
@@ -465,7 +465,7 @@ namespace Alternet.UI
         /// <summary>
         /// Get or sets whether 'Current Project' find scope is available.
         /// </summary>
-        public bool CanFindInSelectionOnly
+        public virtual bool CanFindInSelectionOnly
         {
             get
             {
@@ -485,7 +485,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="IFindReplaceConnect"/> instance.
         /// </summary>
         [Browsable(false)]
-        public IFindReplaceConnect? Manager
+        public virtual IFindReplaceConnect? Manager
         {
             get => manager;
 
@@ -525,7 +525,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets 'Hidden Text' option.
         /// </summary>
-        public bool OptionHiddenText
+        public virtual bool OptionHiddenText
         {
             get;
             set;
@@ -534,7 +534,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets 'Search Up' option.
         /// </summary>
-        public bool OptionSearchUp
+        public virtual bool OptionSearchUp
         {
             get;
             set;
@@ -543,7 +543,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets 'Match Case' option.
         /// </summary>
-        public bool OptionMatchCase
+        public virtual bool OptionMatchCase
         {
             get
             {
@@ -563,7 +563,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Match Case' option is enabled.
         /// </summary>
-        public bool OptionMatchCaseEnabled
+        public virtual bool OptionMatchCaseEnabled
         {
             get
             {
@@ -581,7 +581,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets 'Match Whole Word' option.
         /// </summary>
-        public bool OptionMatchWholeWord
+        public virtual bool OptionMatchWholeWord
         {
             get
             {
@@ -601,7 +601,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Match Whole Word' option is enabled.
         /// </summary>
-        public bool OptionMatchWholeWordEnabled
+        public virtual bool OptionMatchWholeWordEnabled
         {
             get
             {
@@ -619,7 +619,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets 'Use Regular Expressions' option.
         /// </summary>
-        public bool OptionUseRegularExpressions
+        public virtual bool OptionUseRegularExpressions
         {
             get
             {
@@ -639,7 +639,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Use Regular Expressions' option is enabled.
         /// </summary>
-        public bool OptionUseRegularExpressionsEnabled
+        public virtual bool OptionUseRegularExpressionsEnabled
         {
             get
             {
@@ -657,7 +657,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Use Regular Expressions' option is visible.
         /// </summary>
-        public bool OptionUseRegularExpressionsVisible
+        public virtual bool OptionUseRegularExpressionsVisible
         {
             get
             {
@@ -675,7 +675,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Close' button is visible.
         /// </summary>
-        public bool CloseButtonVisible
+        public virtual bool CloseButtonVisible
         {
             get
             {
@@ -801,7 +801,7 @@ namespace Alternet.UI
         /// controls.
         /// </summary>
         [Browsable(false)]
-        public double TextBoxWidth
+        public virtual Coord TextBoxWidth
         {
             get
             {
@@ -821,12 +821,69 @@ namespace Alternet.UI
         /// Gets or sets whether keys specified in <see cref="KnownShortcuts.FindReplaceControlKeys"/>
         /// are automatically handled.
         /// </summary>
-        public bool WantKeys { get; set; } = true;
+        public virtual bool WantKeys { get; set; } = true;
+
+        /// <summary>
+        /// Gets whether the user can perform 'Find Next' action.
+        /// Returns <c>true</c> if <see cref="FindToolBar"/> and 'Find Next' button are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanFindNext =>
+            FindToolBar.Visible && FindToolBar.GetToolEnabledAndVisible(IdFindNext);
+
+        /// <summary>
+        /// Gets whether the user can perform 'Find Previous' action.
+        /// Returns <c>true</c> if <see cref="FindToolBar"/> and 'Find Previous' button are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanFindPrevious =>
+            FindToolBar.Visible && FindToolBar.GetToolEnabledAndVisible(IdFindPrevious);
+
+        /// <summary>
+        /// Gets whether the user can perform 'Replace' action.
+        /// Returns <c>true</c> if <see cref="ReplaceToolBar"/> and 'Replace' button are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanReplace =>
+            ReplaceVisible && ReplaceToolBar.GetToolEnabledAndVisible(IdReplace);
+
+        /// <summary>
+        /// Gets whether the user can perform 'Replace All' action.
+        /// Returns <c>true</c> if <see cref="ReplaceToolBar"/> and 'Replace All' button are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanReplaceAll =>
+            ReplaceVisible && ReplaceToolBar.GetToolEnabledAndVisible(IdReplaceAll);
+
+        /// <summary>
+        /// Gets whether the user can perform 'Match Case' action.
+        /// Returns <c>true</c> if <see cref="OptionsToolBar"/> and 'Match Case' button are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanMatchCase =>
+            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdMatchCase);
+
+        /// <summary>
+        /// Gets whether the user can perform 'Match Whole Word' action.
+        /// Returns <c>true</c> if <see cref="OptionsToolBar"/> and 'Match Whole Word' button are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanMatchWholeWord =>
+            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdMatchWholeWord);
+
+        /// <summary>
+        /// Gets whether the user can perform 'Use Regular Expressions' action.
+        /// Returns <c>true</c> if <see cref="OptionsToolBar"/> and
+        /// 'Use Regular Expressions' button are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanUseRegularExpressions =>
+            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdUseRegularExpressions);
 
         /// <summary>
         /// Gets or sets whether <see cref="ReplaceToolBar"/> is visible.
         /// </summary>
-        public bool ReplaceVisible
+        public virtual bool ReplaceVisible
         {
             get
             {
@@ -861,27 +918,6 @@ namespace Alternet.UI
             get => base.Text;
             set => base.Text = value;
         }
-
-        private bool CanFindNext =>
-            FindToolBar.Visible && FindToolBar.GetToolEnabledAndVisible(IdFindNext);
-
-        private bool CanFindPrevious =>
-            FindToolBar.Visible && FindToolBar.GetToolEnabledAndVisible(IdFindPrevious);
-
-        private bool CanReplace =>
-            ReplaceVisible && ReplaceToolBar.GetToolEnabledAndVisible(IdReplace);
-
-        private bool CanReplaceAll =>
-            ReplaceVisible && ReplaceToolBar.GetToolEnabledAndVisible(IdReplaceAll);
-
-        private bool CanMatchCase =>
-            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdMatchCase);
-
-        private bool CanMatchWholeWord =>
-            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdMatchWholeWord);
-
-        private bool CanUseRegularExpressions =>
-            OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdUseRegularExpressions);
 
         /// <summary>
         /// Creates <see cref="FindReplaceControl"/> inside <see cref="DialogWindow"/>.
@@ -919,7 +955,7 @@ namespace Alternet.UI
         /// Creates <see cref="IFindReplaceConnect"/> instance which logs all method calls.
         /// </summary>
         /// <returns></returns>
-        public IFindReplaceConnect CreateLogger()
+        public virtual IFindReplaceConnect CreateLogger()
         {
             return new FindReplaceManagerLogger();
         }
@@ -942,7 +978,8 @@ namespace Alternet.UI
 
             if (CanFindNext && Run(KnownShortcuts.FindReplaceControlKeys.FindNext, OnClickFindNext))
                 return true;
-            if (CanFindPrevious && Run(KnownShortcuts.FindReplaceControlKeys.FindPrevious, OnClickFindPrevious))
+            if (CanFindPrevious
+                && Run(KnownShortcuts.FindReplaceControlKeys.FindPrevious, OnClickFindPrevious))
                 return true;
             if (CanReplace && Run(KnownShortcuts.FindReplaceControlKeys.Replace, OnClickReplace))
                 return true;
@@ -950,9 +987,12 @@ namespace Alternet.UI
                 return true;
             if (CanMatchCase && Run(KnownShortcuts.FindReplaceControlKeys.MatchCase, OnClickMatchCase))
                 return true;
-            if (CanMatchWholeWord && Run(KnownShortcuts.FindReplaceControlKeys.MatchWholeWord, OnClickMatchWholeWord))
+            if (CanMatchWholeWord
+                && Run(KnownShortcuts.FindReplaceControlKeys.MatchWholeWord, OnClickMatchWholeWord))
                 return true;
-            if (CanUseRegularExpressions && Run(KnownShortcuts.FindReplaceControlKeys.UseRegularExpressions, OnClickUseRegularExpressions))
+            if (CanUseRegularExpressions && Run(
+                KnownShortcuts.FindReplaceControlKeys.UseRegularExpressions,
+                OnClickUseRegularExpressions))
                 return true;
             return false;
         }
