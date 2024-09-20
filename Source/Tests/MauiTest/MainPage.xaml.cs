@@ -98,12 +98,12 @@ public partial class MainPage : ContentPage
         };
         platformView.CharacterReceived += (s, e) =>
         {
-            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Convert(null!, e);
+            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Default.Convert(null!, e);
             Log($" KeyPress => {alternetArgs.KeyChar}");
         };
         platformView.KeyDown += (s, e) =>
         {
-            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Convert(null!, e);
+            var alternetArgs = Alternet.UI.MauiKeyboardHandler.Default.Convert(null!, e);
             var isPressed = Alternet.UI.Keyboard.IsKeyDown(alternetArgs.Key);
             Log($"KeyDown {e.Key} => {alternetArgs.Key} {isPressed}");
             Window.Title = alternetArgs.ToString();

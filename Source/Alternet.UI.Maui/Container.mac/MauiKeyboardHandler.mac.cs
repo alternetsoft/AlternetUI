@@ -10,38 +10,37 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 
 #if IOS || MACCATALYST
 
+using UIKit;
+
 namespace Alternet.UI
 {
-    internal class MauiKeyboardHandler : DisposableObject, IKeyboardHandler
+    /// <summary>
+    /// Implements <see cref="IKeyboardHandler"/> for MAUI platform under MacOs.
+    /// </summary>
+    public class MauiKeyboardHandler : MappedKeyboardHandler<UIKeyboardHidUsage>
     {
-        static MauiKeyboardHandler()
+        /// <summary>
+        /// Gets or sets default <see cref="IKeyboardHandler"/> implementation.
+        /// </summary>
+        public static MauiKeyboardHandler Default = new();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MauiKeyboardHandler"/> class.
+        /// </summary>
+        public MauiKeyboardHandler()
+            : base(UIKeyboardHidUsage.KeyboardRightGui, Key.MaxMaui)
         {
         }
 
         /// <inheritdoc/>
-        public virtual bool IsValidKey(Key key)
+        public override void RegisterKeyMappings()
         {
-            return (int)key >= (int)Key.None && (int)key <= (int)Key.MaxMaui;
         }
 
-        public KeyStates GetKeyStatesFromSystem(Key key)
+        /// <inheritdoc/>
+        public override KeyStates GetKeyStatesFromSystem(Key key)
         {
             return KeyStates.None;
-        }
-
-        public bool HideKeyboard(Control? control)
-        {
-            return false;
-        }
-
-        public bool IsSoftKeyboardShowing(Control? control)
-        {
-            return false;
-        }
-
-        public bool ShowKeyboard(Control? control)
-        {
-            return false;
         }
     }
 }

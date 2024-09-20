@@ -21,22 +21,22 @@ namespace Alternet.UI
             var platformView = GetPlatformView(args.OldHandler);
             if (platformView is null)
                 return;
-            platformView.PointerEntered -= PlatformView_PointerEntered;
-            platformView.PointerExited -= PlatformView_PointerExited;
-            platformView.PointerPressed -= PlatformView_PointerPressed;
-            platformView.PointerWheelChanged -= PlatformView_PointerWheelChanged;
-            platformView.PointerReleased -= PlatformView_PointerReleased;
-            platformView.KeyDown -= PlatformView_KeyDown;
-            platformView.KeyUp -= PlatformView_KeyUp;
-            platformView.CharacterReceived -= PlatformView_CharacterReceived;
-            platformView.GotFocus -= PlatformView_GotFocus;
-            platformView.LostFocus -= PlatformView_LostFocus;
-            platformView.DragEnter -= PlatformView_DragEnter;
-            platformView.DragLeave -= PlatformView_DragLeave;
-            platformView.DragOver -= PlatformView_DragOver;
-            platformView.DragStarting -= PlatformView_DragStarting;
-            platformView.Drop -= PlatformView_Drop;
-            platformView.DropCompleted -= PlatformView_DropCompleted;
+            platformView.PointerEntered -= HandleWinPlatformPointerEntered;
+            platformView.PointerExited -= HandleWinPlatformPointerExited;
+            platformView.PointerPressed -= HandleWinPlatformPointerPressed;
+            platformView.PointerWheelChanged -= HandleWinPlatformPointerWheelChanged;
+            platformView.PointerReleased -= HandleWinPlatformPointerReleased;
+            platformView.KeyDown -= HandleWinPlatformKeyDown;
+            platformView.KeyUp -= HandleWinPlatformKeyUp;
+            platformView.CharacterReceived -= HandleWinPlatformCharacterReceived;
+            platformView.GotFocus -= HandleWinPlatformGotFocus;
+            platformView.LostFocus -= HandleWinPlatformLostFocus;
+            platformView.DragEnter -= HandleWinPlatformDragEnter;
+            platformView.DragLeave -= HandleWinPlatformDragLeave;
+            platformView.DragOver -= HandleWinPlatformDragOver;
+            platformView.DragStarting -= HandleWinPlatformDragStarting;
+            platformView.Drop -= HandleWinPlatformDrop;
+            platformView.DropCompleted -= HandleWinPlatformDropCompleted;
         }
 
         /// <inheritdoc/>
@@ -51,110 +51,176 @@ namespace Alternet.UI
             platformView.AllowFocusOnInteraction = true;
             platformView.IsTabStop = true;
 
-            platformView.PointerEntered += PlatformView_PointerEntered;
-            platformView.PointerExited += PlatformView_PointerExited;
-            platformView.PointerPressed += PlatformView_PointerPressed;
-            platformView.PointerWheelChanged += PlatformView_PointerWheelChanged;
-            platformView.PointerReleased += PlatformView_PointerReleased;
-            platformView.KeyDown += PlatformView_KeyDown;
-            platformView.KeyUp += PlatformView_KeyUp;
-            platformView.CharacterReceived += PlatformView_CharacterReceived;
-            platformView.GotFocus += PlatformView_GotFocus;
-            platformView.LostFocus += PlatformView_LostFocus;
-            platformView.DragEnter += PlatformView_DragEnter;
-            platformView.DragLeave += PlatformView_DragLeave;
-            platformView.DragOver += PlatformView_DragOver;
-            platformView.DragStarting += PlatformView_DragStarting;
-            platformView.Drop += PlatformView_Drop;
-            platformView.DropCompleted += PlatformView_DropCompleted;
+            platformView.PointerEntered += HandleWinPlatformPointerEntered;
+            platformView.PointerExited += HandleWinPlatformPointerExited;
+            platformView.PointerPressed += HandleWinPlatformPointerPressed;
+            platformView.PointerWheelChanged += HandleWinPlatformPointerWheelChanged;
+            platformView.PointerReleased += HandleWinPlatformPointerReleased;
+            platformView.KeyDown += HandleWinPlatformKeyDown;
+            platformView.KeyUp += HandleWinPlatformKeyUp;
+            platformView.CharacterReceived += HandleWinPlatformCharacterReceived;
+            platformView.GotFocus += HandleWinPlatformGotFocus;
+            platformView.LostFocus += HandleWinPlatformLostFocus;
+            platformView.DragEnter += HandleWinPlatformDragEnter;
+            platformView.DragLeave += HandleWinPlatformDragLeave;
+            platformView.DragOver += HandleWinPlatformDragOver;
+            platformView.DragStarting += HandleWinPlatformDragStarting;
+            platformView.Drop += HandleWinPlatformDrop;
+            platformView.DropCompleted += HandleWinPlatformDropCompleted;
         }
 
-        private void PlatformView_DropCompleted(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformDropCompleted(
             Microsoft.UI.Xaml.UIElement sender,
-            Microsoft.UI.Xaml.DropCompletedEventArgs args)
+            Microsoft.UI.Xaml.DropCompletedEventArgs e)
         {
             if (Control is null)
                 return;
         }
 
-        private void PlatformView_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformDrop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             if (Control is null)
                 return;
         }
 
-        private void PlatformView_DragStarting(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformDragStarting(
             Microsoft.UI.Xaml.UIElement sender,
-            Microsoft.UI.Xaml.DragStartingEventArgs args)
+            Microsoft.UI.Xaml.DragStartingEventArgs e)
         {
             if (Control is null)
                 return;
         }
 
-        private void PlatformView_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformDragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             if (Control is null)
                 return;
         }
 
-        private void PlatformView_DragLeave(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformDragLeave(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             if (Control is null)
                 return;
         }
 
-        private void PlatformView_DragEnter(object sender, Microsoft.UI.Xaml.DragEventArgs e)
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformDragEnter(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             if (Control is null)
                 return;
         }
 
-        private void PlatformView_LostFocus(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformLostFocus(
+            object sender,
+            Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             if (Control is null)
                 return;
             Control.RaiseLostFocus();
         }
 
-        private void PlatformView_GotFocus(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformGotFocus(
+            object sender,
+            Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             if (Control is null)
                 return;
             Control.RaiseGotFocus();
         }
 
-        private void PlatformView_CharacterReceived(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformCharacterReceived(
             Microsoft.UI.Xaml.UIElement sender,
             Microsoft.UI.Xaml.Input.CharacterReceivedRoutedEventArgs e)
         {
             if (Control is null)
                 return;
-            var args = Alternet.UI.MauiKeyboardHandler.Convert(Control, e);
+            var args = Alternet.UI.MauiKeyboardHandler.Default.Convert(Control, e);
             Control.BubbleKeyPress(args);
             e.Handled = args.Handled;
         }
 
-        private void PlatformView_KeyUp(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (Control is null)
-                return;
-            var args = Alternet.UI.MauiKeyboardHandler.Convert(Control, e);
-            Control.BubbleKeyUp(args);
-            e.Handled = args.Handled;
-        }
-
-        private void PlatformView_KeyDown(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformKeyUp(
             object sender,
             Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (Control is null)
                 return;
-            var args = Alternet.UI.MauiKeyboardHandler.Convert(Control, e);
+            var args = Alternet.UI.MauiKeyboardHandler.Default.Convert(Control, e);
+            Control.BubbleKeyUp(args);
+            e.Handled = args.Handled;
+        }
+
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformKeyDown(
+            object sender,
+            Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (Control is null)
+                return;
+            var args = Alternet.UI.MauiKeyboardHandler.Default.Convert(Control, e);
             Control.BubbleKeyDown(args);
             e.Handled = args.Handled;
         }
 
-        private void PlatformView_PointerReleased(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformPointerReleased(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -162,7 +228,12 @@ namespace Alternet.UI
                 return;
         }
 
-        private void PlatformView_PointerWheelChanged(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformPointerWheelChanged(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -170,7 +241,12 @@ namespace Alternet.UI
                 return;
         }
 
-        private void PlatformView_PointerPressed(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformPointerPressed(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -178,7 +254,12 @@ namespace Alternet.UI
                 return;
         }
 
-        private void PlatformView_PointerExited(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformPointerExited(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
@@ -187,7 +268,12 @@ namespace Alternet.UI
             Control.RaiseMouseLeave();
         }
 
-        private void PlatformView_PointerEntered(
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformPointerEntered(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
