@@ -24,6 +24,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override bool HasTransform => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public override bool HasClip => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         public override TransformMatrix Transform
         {
             get
