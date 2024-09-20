@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
+using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 using Alternet.UI;
 
@@ -35,18 +37,30 @@ namespace Alternet.Drawing
     /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform.
     /// This class cannot be inherited.
     /// </summary>
-    public partial class TransformMatrix : BaseObject
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    public partial class TransformMatrix
     {
         /// <summary>
         /// Gets identity matrix.
         /// </summary>
         public static readonly TransformMatrix Default = new();
 
+        [FieldOffset(0)]
         private Coord m11;
+
+        [FieldOffset(sizeof(Coord))]
         private Coord m12;
+
+        [FieldOffset(sizeof(Coord) * 2)]
         private Coord m21;
+
+        [FieldOffset(sizeof(Coord) * 3)]
         private Coord m22;
+
+        [FieldOffset(sizeof(Coord) * 4)]
         private Coord dx;
+
+        [FieldOffset(sizeof(Coord) * 5)]
         private Coord dy;
 
         /// <summary>
