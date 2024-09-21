@@ -286,6 +286,26 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public override string? ToString()
             {
+                string? result = null;
+
+                foreach (UIPress press in Presses)
+                {
+                    if (press.Key is null)
+                        continue;
+                    var keyCode = press.Key.KeyCode;
+
+                    if (result is null)
+                        result = keyCode.ToString();
+                    else
+                        result = $"{result},{keyCode}";
+                }
+
+                if (result is not null)
+                {
+                    result = $"({result})";
+                    return result;
+                }
+
                 return base.ToString();
             }
         }

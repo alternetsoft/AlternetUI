@@ -78,7 +78,7 @@ namespace Alternet.UI
             AddMapping(UIKeyboardHidUsage.KeyboardBackslash, Key.Backslash);
             AddMapping(UIKeyboardHidUsage.KeyboardSemicolon, Key.Semicolon);
             AddMapping(UIKeyboardHidUsage.KeyboardQuote, Key.Quote);
-            AddMapping(UIKeyboardHidUsage.KeyboardGraveAccentAndTilde, null);
+            AddMapping(UIKeyboardHidUsage.KeyboardGraveAccentAndTilde, Key.Tilde);
             AddMapping(UIKeyboardHidUsage.KeyboardComma, Key.Comma);
             AddMapping(UIKeyboardHidUsage.KeyboardPeriod, Key.Period);
             AddMapping(UIKeyboardHidUsage.KeyboardSlash, Key.Slash);
@@ -135,83 +135,113 @@ namespace Alternet.UI
             AddMapping(UIKeyboardHidUsage.KeyboardMute, Key.VolumeMute);
             AddMapping(UIKeyboardHidUsage.KeyboardVolumeUp, Key.VolumeUp);
             AddMapping(UIKeyboardHidUsage.KeyboardVolumeDown, Key.VolumeDown);
-            AddMapping(UIKeyboardHidUsage.KeyboardHangul, Key.Hangul);
-            AddMapping(UIKeyboardHidUsage.KeyboardKanaSwitch, Key.Kana);
-            AddMapping(UIKeyboardHidUsage.KeyboardHanja, Key.Hanja);
-
-            AddMapping(UIKeyboardHidUsage.KeyboardAlphanumericSwitch, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardKatakana, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardHiragana, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardZenkakuHankakuKanji, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang6, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang7, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang8, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang9, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardAlternateErase, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardSysReqOrAttention, null);
+            AddMapping(UIKeyboardHidUsage.KeypadEqualSign, Key.Equals);
             AddMapping(UIKeyboardHidUsage.KeyboardCancel, Key.NavigationCancel);
             AddMapping(UIKeyboardHidUsage.KeyboardClear, Key.Clear);
             AddMapping(UIKeyboardHidUsage.KeyboardPrior, Key.Prior);
             AddMapping(UIKeyboardHidUsage.KeyboardReturn, Key.Return);
-            AddMapping(UIKeyboardHidUsage.KeyboardSeparator, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardOut, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardOper, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardClearOrAgain, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardCrSelOrProps, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardExSel, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLeftControl, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLeftShift, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLeftAlt, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLeftGui, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardRightControl, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardRightShift, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardRightAlt, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardRightGui, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardReturnOrEnter, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardDeleteOrBackspace, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardHyphen, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardOpenBracket, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardCloseBracket, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardNonUSPound, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardDeleteForward, null);
-            AddMapping(UIKeyboardHidUsage.KeypadAsterisk, null);
-            AddMapping(UIKeyboardHidUsage.KeypadHyphen, null);
-            AddMapping(UIKeyboardHidUsage.KeypadEnter, null);
-            AddMapping(UIKeyboardHidUsage.KeypadPeriod, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardNonUSBackslash, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardApplication, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardPower, null);
-            AddMapping(UIKeyboardHidUsage.KeypadEqualSign, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardExecute, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardHelp, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardMenu, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardSelect, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardStop, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardAgain, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardUndo, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardCut, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardCopy, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardPaste, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardFind, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLockingCapsLock, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLockingNumLock, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLockingScrollLock, null);
-            AddMapping(UIKeyboardHidUsage.KeypadComma, null);
-            AddMapping(UIKeyboardHidUsage.KeypadEqualSignAS400, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational1, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational2, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational3, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational4, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational5, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational6, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational7, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational8, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardInternational9, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang1, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang2, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang3, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang4, null);
-            AddMapping(UIKeyboardHidUsage.KeyboardLang5, null);
+            AddMapping(UIKeyboardHidUsage.KeypadAsterisk, Key.Asterisk);
+            AddMapping(UIKeyboardHidUsage.KeyboardSelect, Key.Select);
+            AddMapping(UIKeyboardHidUsage.KeypadPeriod, Key.Period);
+            AddMapping(UIKeyboardHidUsage.KeyboardStop, Key.MediaStop);
+            AddMapping(UIKeyboardHidUsage.KeyboardExecute, Key.Execute);
+            AddMapping(UIKeyboardHidUsage.KeyboardOpenBracket, Key.OpenBracket);
+            AddMapping(UIKeyboardHidUsage.KeyboardCloseBracket, Key.CloseBracket);
+            AddMapping(UIKeyboardHidUsage.KeyboardDeleteForward, Key.Delete);
+            AddMapping(UIKeyboardHidUsage.KeyboardDeleteOrBackspace, Key.Backspace);
+            AddMapping(UIKeyboardHidUsage.KeypadHyphen, Key.NumPadMinus);
+            AddMapping(UIKeyboardHidUsage.KeyboardHyphen, Key.Minus);
+            AddMapping(UIKeyboardHidUsage.KeyboardMenu, Key.Menu);
+
+            AddMapping(UIKeyboardHidUsage.KeyboardLeftControl, Key.Control);
+            AddMapping(UIKeyboardHidUsage.KeyboardLeftShift, Key.Shift);
+            AddMapping(UIKeyboardHidUsage.KeyboardLeftAlt, Key.Alt);
+            AddMapping(UIKeyboardHidUsage.KeyboardLeftGui, Key.Windows);
+
+            /* ==================================== */
+
+            AddOneWayMapping(UIKeyboardHidUsage.KeypadEnter, Key.Enter);
+            AddOneWayMapping(UIKeyboardHidUsage.KeyboardReturnOrEnter, Key.Enter);
+            AddOneWayMapping(UIKeyboardHidUsage.KeypadComma, Key.Comma);
+
+            AddOneWayMapping(UIKeyboardHidUsage.KeyboardRightControl, Key.Control);
+            AddOneWayMapping(UIKeyboardHidUsage.KeyboardRightShift, Key.Shift);
+            AddOneWayMapping(UIKeyboardHidUsage.KeyboardRightAlt, Key.Alt);
+            AddOneWayMapping(UIKeyboardHidUsage.KeyboardRightGui, Key.Windows);
+
+            /* ==================================== */
+
+            // An alias for the LANG1 key on Korean language keyboards.
+            AddMapping(UIKeyboardHidUsage.KeyboardHangul, Key.Hangul);
+
+            // An alias for the LANG2 key on Korean language keyboards.
+            AddMapping(UIKeyboardHidUsage.KeyboardHanja, Key.Hanja);
+
+            /* ==================================== */
+
+            // An alias for the LANG1 key on Japanese language keyboards from Apple.
+            AddMapping(UIKeyboardHidUsage.KeyboardKanaSwitch, Key.Kana);
+
+            // An alias for the LANG2 key on Japanese language keyboards from Apple.
+            AddMapping(UIKeyboardHidUsage.KeyboardAlphanumericSwitch, Key.AlphanumericSwitch);
+
+            // An alias for the LANG3 key on Japanese language keyboards.
+            AddMapping(UIKeyboardHidUsage.KeyboardKatakana, Key.Katakana);
+
+            // An alias for the LANG4 key on Japanese language keyboards.
+            AddMapping(UIKeyboardHidUsage.KeyboardHiragana, Key.Hiragana);
+
+            // An alias for the LANG5 key on Japanese language keyboards.
+            AddMapping(UIKeyboardHidUsage.KeyboardZenkakuHankakuKanji, Key.Kanji);
+
+            /* ==================================== */
+
+            AddMapping(UIKeyboardHidUsage.KeyboardAlternateErase, Key.AlternateErase);
+            AddMapping(UIKeyboardHidUsage.KeyboardSysReqOrAttention, Key.SysReqOrAttention);
+            AddMapping(UIKeyboardHidUsage.KeyboardClearOrAgain, Key.ClearOrAgain);
+            AddMapping(UIKeyboardHidUsage.KeyboardCrSelOrProps, Key.CrSelOrProps);
+            AddMapping(UIKeyboardHidUsage.KeyboardExSel, Key.ExSel);
+            AddMapping(UIKeyboardHidUsage.KeyboardLockingCapsLock, Key.LockingCapsLock);
+            AddMapping(UIKeyboardHidUsage.KeyboardLockingNumLock, Key.LockingNumLock);
+            AddMapping(UIKeyboardHidUsage.KeyboardLockingScrollLock, Key.LockingScrollLock);
+            AddMapping(UIKeyboardHidUsage.KeyboardUndo, Key.Undo);
+            AddMapping(UIKeyboardHidUsage.KeyboardCut, Key.Cut);
+            AddMapping(UIKeyboardHidUsage.KeyboardCopy, Key.Copy);
+            AddMapping(UIKeyboardHidUsage.KeyboardPaste, Key.Paste);
+            AddMapping(UIKeyboardHidUsage.KeyboardFind, Key.Find);
+            AddMapping(UIKeyboardHidUsage.KeypadEqualSignAS400, Key.NumPadEqualSignAS400);
+            AddMapping(UIKeyboardHidUsage.KeyboardHelp, Key.Help);
+            AddMapping(UIKeyboardHidUsage.KeyboardPower, Key.Power);
+            AddMapping(UIKeyboardHidUsage.KeyboardNonUSBackslash, Key.NonUSBackslash);
+
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational1, Key.International1);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational2, Key.International2);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational3, Key.International3);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational4, Key.International4);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational5, Key.International5);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational6, Key.International6);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational7, Key.International7);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational8, Key.International8);
+            AddMapping(UIKeyboardHidUsage.KeyboardInternational9, Key.International9);
+
+            AddMapping(UIKeyboardHidUsage.KeyboardLang1, Key.Lang1);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang2, Key.Lang2);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang3, Key.Lang3);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang4, Key.Lang4);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang5, Key.Lang5);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang6, Key.Lang6);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang7, Key.Lang7);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang8, Key.Lang8);
+            AddMapping(UIKeyboardHidUsage.KeyboardLang9, Key.Lang9);
+
+            /* ==================================== */
+
+            AddMapping(UIKeyboardHidUsage.KeyboardSeparator, Key.Separator);
+            AddMapping(UIKeyboardHidUsage.KeyboardOut, Key.Out);
+            AddMapping(UIKeyboardHidUsage.KeyboardOper, Key.Oper);
+            AddMapping(UIKeyboardHidUsage.KeyboardNonUSPound, Key.NonUSPound);
+            AddMapping(UIKeyboardHidUsage.KeyboardApplication, Key.Application);
+            AddMapping(UIKeyboardHidUsage.KeyboardAgain, Key.Again);
         }
 
         /// <inheritdoc/>
