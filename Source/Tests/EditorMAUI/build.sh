@@ -1,1 +1,1 @@
-dotnet build -f net8.0-maccatalyst
+dotnet build
