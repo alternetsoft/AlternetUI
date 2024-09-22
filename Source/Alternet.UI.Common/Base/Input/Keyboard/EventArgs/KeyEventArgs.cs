@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.ComponentModel;
 using System.Security;
@@ -9,13 +5,12 @@ using System.Security;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The delegate to use for handlers that receive KeyboardEventArgs.
+    /// The delegate to use for handlers that receive KeyEventArgs.
     /// </summary>
-    /// <ExternalAPI Inherit="true"/>
-    public delegate void KeyEventHandler(object sender, KeyEventArgs e);
+    public delegate void KeyEventHandler(object? sender, KeyEventArgs e);
 
     /// <summary>
-    ///     The KeyEventArgs class contains information about key states.
+    /// Contains information about key presses and key states.
     /// </summary>
     public class KeyEventArgs : KeyboardEventArgs
     {
@@ -39,19 +34,27 @@ namespace Alternet.UI
         /// <param name="key">
         /// The key referenced by the event.
         /// </param>
+        /// <param name="modifiers">The set of modifier keys pressed
+        /// at the time when event was received.</param>
+        /// <param name="keyStates">The state of the key referenced by the event.</param>
         /// <param name="repeatCount">Number of repeated key presses.</param>
-        /// <param name="originalTarget"></param>
-        public KeyEventArgs(object originalTarget, Key key, uint repeatCount)
+        /// <param name="originalTarget">Original target object which received the event.</param>
+        public KeyEventArgs(
+            object originalTarget,
+            Key key,
+            KeyStates keyStates,
+            ModifierKeys modifiers,
+            uint repeatCount)
             : base(originalTarget)
         {
             this.key = key;
             this.repeatCount = repeatCount;
-            keyStates = Keyboard.GetKeyStates(key);
-            modifiers = Keyboard.Modifiers;
+            this.keyStates = keyStates;
+            this.modifiers = modifiers;
         }
 
         /// <summary>
-        /// The Key referenced by the event, if the key is not being handled specially.
+        /// Gets or sets the key referenced by the event.
         /// </summary>
         public virtual Key Key
         {
@@ -75,7 +78,7 @@ namespace Alternet.UI
         public virtual Keys Modifiers => KeyData & Keys.Modifiers;
 
         /// <summary>
-        /// Returns the set of modifier keys currently pressed.
+        /// Gets or sets the set of modifier keys pressed at the time when event was received.
         /// </summary>
         public virtual ModifierKeys ModifierKeys
         {
@@ -182,7 +185,7 @@ namespace Alternet.UI
         public virtual bool Shift => modifiers.HasFlag(ModifierKeys.Shift);
 
         /// <summary>
-        /// The state of the key referenced by the event.
+        /// Gets or sets the state of the key referenced by the event.
         /// </summary>
         public virtual KeyStates KeyStates
         {
@@ -208,7 +211,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Whether the key pressed is a repeated key or not.
+        /// Gets whether the key pressed is a repeated key or not.
         /// </summary>
         public virtual bool IsRepeat
         {
@@ -219,17 +222,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Whether or not the key referenced by the event is down.
+        /// Gets whether or not the key referenced by the event is down.
         /// </summary>
         public virtual bool IsDown => keyStates == KeyStates.Down;
 
         /// <summary>
-        /// Whether or not the key referenced by the event is up.
+        /// Gets whether or not the key referenced by the event is up.
         /// </summary>
         public virtual bool IsUp => !IsDown;
 
         /// <summary>
-        /// Whether or not the key referenced by the event is toggled.
+        /// Gets whether or not the key referenced by the event is toggled.
         /// </summary>
         public virtual bool IsToggled => keyStates == KeyStates.Toggled;
 

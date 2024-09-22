@@ -172,57 +172,6 @@ namespace Alternet.UI
             CallAction(presses, evt, OnPressesEnded, base.PressesEnded);
         }
 
-        internal static void SamplePressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
-        {
-            foreach (UIPress press in presses)
-            {
-                var pressType = press.Type;
-
-                // Was the Touch Surface clicked?
-                if (press.Type == UIPressType.Select)
-                {
-                }
-
-                if (press.Key is null)
-                    continue;
-
-                /*
-                    public enum UIKeyModifierFlags : long
-                    {
-                        AlphaShift = 65536,
-                        Shift = 131072,
-                        Control = 262144,
-                        Alternate = 524288,
-                        Command = 1048576,
-                        NumericPad = 2097152
-                    }
-
-                    static var alphaShift: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Caps Lock key.
-                    static var shift: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Shift key.
-                    static var control: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Control key.
-                    static var alternate: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Option key.
-                    static var command: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Command key.
-                    static var numericPad: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed a key located on the numeric keypad.
-                */
-
-                var shift =
-                    press.Key.ModifierFlags.HasFlag(UIKeyModifierFlags.AlphaShift) ||
-                    press.Key.ModifierFlags.HasFlag(UIKeyModifierFlags.Shift);
-
-                var keyCode = press.Key.KeyCode;
-
-                if (keyCode == UIKeyboardHidUsage.KeyboardTab)
-                {
-                }
-            }
-        }
-
         /// <summary>
         /// Common initialization method which is called from the constructors.
         /// </summary>
@@ -293,11 +242,13 @@ namespace Alternet.UI
                     if (press.Key is null)
                         continue;
                     var keyCode = press.Key.KeyCode;
+                    var modifiers = press.Key.ModifierFlags;
+                    var s = $"{keyCode} with {modifiers}";
 
                     if (result is null)
-                        result = keyCode.ToString();
+                        result = s;
                     else
-                        result = $"{result},{keyCode}";
+                        result = $"{result},{s}";
                 }
 
                 if (result is not null)

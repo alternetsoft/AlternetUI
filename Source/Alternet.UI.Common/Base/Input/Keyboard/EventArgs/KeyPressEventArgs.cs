@@ -11,7 +11,7 @@ namespace Alternet.UI
     public delegate void KeyPressEventHandler(object? sender, KeyPressEventArgs e);
 
     /// <summary>
-    /// This class is used in the <see cref="Control.KeyPress"/> event as EventArgs.
+    /// This class is used in the <see cref="Control.KeyPress"/> event as event arguments.
     /// </summary>
     public class KeyPressEventArgs : KeyboardEventArgs
     {
@@ -20,6 +20,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
         /// </summary>
+        /// <param name="originalTarget">Original target object which received the event.</param>
+        /// <param name="keyChar">The character referenced by the event.</param>
         public KeyPressEventArgs(object originalTarget, char keyChar)
             : base(originalTarget)
         {
@@ -27,7 +29,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The Key referenced by the event.
+        /// Gets or sets the character referenced by the event.
         /// </summary>
         public virtual char KeyChar
         {

@@ -23,6 +23,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="KeyboardEventArgs"/> class
         /// with the specified original target object.
         /// </summary>
+        /// <param name="originalTarget">Original target object which received the event.</param>
         public KeyboardEventArgs(object originalTarget)
         {
             this.originalTarget = originalTarget;
