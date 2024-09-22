@@ -76,7 +76,7 @@ namespace Alternet.UI
 
                 LogUtils.RegisterLogAction(
                     "Log mapping: Key <-> WxWidgetsKeyCode",
-                    WxKeyboardHandler.KeyAndWxMapping.Log);
+                    WxKeyboardHandler.KeyAndWxMapping.LogToFile);
             }
         }
 

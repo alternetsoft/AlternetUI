@@ -1306,6 +1306,51 @@ namespace Alternet.UI
         /// </summary>
         Again = 242,
 
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        LineFeed = 243,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Oem8 = 244,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        ProcessKey = 245,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Packet = 246,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Attn = 247,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        EraseEof = 248,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Zoom = 249,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        NoName = 250,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Pa1 = 251,
+
         /* max values */
 
         /// <summary>
@@ -1314,13 +1359,8 @@ namespace Alternet.UI
         MaxWxWidgets = Tilde,
 
         /// <summary>
-        /// Max supported enum value when library is running on Maui platform.
-        /// </summary>
-        MaxMaui = Again,
-
-        /// <summary>
         /// Max enum value.
         /// </summary>
-        Max = MaxMaui,
+        Max = Pa1,
     }
 }
