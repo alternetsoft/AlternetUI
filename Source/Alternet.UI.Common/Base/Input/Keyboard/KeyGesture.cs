@@ -1,13 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-// Description: The KeyGesture class is used by the developer to create
-// Keyboard Input Bindings
-// See spec at : http://avalon/coreUI/Specs/Commanding%20--%20design.htm
-// KeyGesture class serves the purpose of Input Bindings for Keyboard Device.
-// one will be passing the instance of this around with CommandLink
-// to represent Accelerator Keys
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,8 +8,7 @@ using Alternet.UI.Markup;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Key and Modifier combination.
-    /// Can be set on properties of KeyBinding.
+    /// Contains key and key modifiers combination.
     /// </summary>
     [TypeConverter(typeof(KeyGestureConverter))]
     [ValueSerializer(typeof(KeyGestureValueSerializer))]
@@ -31,13 +20,12 @@ namespace Alternet.UI
             new KeyGestureConverter();
 
         private readonly ModifierKeys fmodifiers = ModifierKeys.None;
-
         private readonly Key fkey = Key.None;
-
         private readonly string fdisplayString;
 
         /// <summary>
-        /// Creates <see cref="KeyGesture"/> instance with key value.
+        /// Initializes a new instance of the <see cref="KeyGesture"/> class
+        /// with key value.
         /// </summary>
         /// <param name="key">Key definition.</param>
         public KeyGesture(Key key)
@@ -46,8 +34,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates <see cref="KeyGesture"/> instance with key and key
-        /// modifiers values.
+        /// Initializes a new instance of the <see cref="KeyGesture"/> class
+        /// with key and key modifiers values.
         /// </summary>
         /// <param name="key">Key definition.</param>
         /// <param name="modifiers">Modifiers for the key.</param>
@@ -57,8 +45,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates <see cref="KeyGesture"/> instance with key, key
-        /// modifiers and display string values.
+        /// Initializes a new instance of the <see cref="KeyGesture"/> class
+        /// with key, key modifiers and display string values.
         /// </summary>
         /// <param name="key">Key definition.</param>
         /// <param name="modifiers">Modifiers for the key.</param>
@@ -70,30 +58,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Internal constructor used by KeyBinding to avoid key and
-        /// modifier validation
-        /// This allows setting KeyBinding.Key and KeyBinding.Modifiers without
-        /// regard to order.
+        /// Initializes a new instance of the <see cref="KeyGesture"/> class.
         /// </summary>
         /// <param name="key">Key definition.</param>
         /// <param name="modifiers">Modifiers for the key.</param>
         /// <param name="validateGesture">If true, throws an exception
-        /// if the key and modifier are not valid</param>
+        /// if the key and modifier are not valid.</param>
         public KeyGesture(Key key, ModifierKeys modifiers, bool validateGesture)
             : this(key, modifiers, string.Empty, validateGesture)
         {
         }
 
         /// <summary>
-        /// Private constructor that does the real work.
+        /// Initializes a new instance of the <see cref="KeyGesture"/> class.
         /// </summary>
         /// <param name="key">Key definition.</param>
         /// <param name="modifiers">Modifiers for the key.</param>
         /// <param name="displayString">Display string for the
-        /// key and modifiers </param>
+        /// key and modifiers.</param>
         /// <param name="validateGesture">If true, throws an exception if
-        /// the key and modifier are not valid</param>
-        private KeyGesture(
+        /// the key and modifier are not valid.</param>
+        public KeyGesture(
             Key key,
             ModifierKeys modifiers,
             string displayString,
@@ -125,7 +110,7 @@ namespace Alternet.UI
         /// Gets key modifiers asociated with this <see cref="KeyGesture"/>
         /// (Alt, Control, Shift, etc.)
         /// </summary>
-        public ModifierKeys Modifiers
+        public virtual ModifierKeys Modifiers
         {
             get
             {
@@ -136,7 +121,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets key asociated with this <see cref="KeyGesture"/>.
         /// </summary>
-        public Key Key
+        public virtual Key Key
         {
             get
             {
@@ -147,7 +132,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets display string for the end user.
         /// </summary>
-        public string DisplayString
+        public virtual string DisplayString
         {
             get
             {
@@ -168,6 +153,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Checks for valid enum, as any int can be casted to the enum.
+        /// </summary>
+        /// <param name="key">Key to check.</param>
+        /// <returns></returns>
+        public static bool IsDefinedKey(Key key)
+        {
+            return key >= Key.None && key <= Key.Max;
+        }
+
+        /// <summary>
+        /// Checks whether key and key modifiers combination is valid.
+        /// </summary>
+        public static bool IsValid(Key key, ModifierKeys modifiers)
+        {
+            // Don't enforce any rules on the Function keys or on the number pad keys.
+            if (!((key >= Key.F1 && key <= Key.F24) ||
+                (key >= Key.NumPad0 && key <= Key.NumPadSlash)))
+            {
+                // We check whether Control/Alt/Windows key is down for modifiers.
+                // We don't check
+                // for shift at this time as Shift with any combination
+                // is already covered in above check.
+                // Shift alone as modifier case, we defer to the next
+                // condition to avoid conflicing with TextInput.
+                if ((modifiers & (ModifierKeys.Control | ModifierKeys.Alt |
+                    ModifierKeys.Windows)) != 0)
+                {
+                    return true;
+                }
+                else if ((key >= Key.D0 && key <= Key.D9) ||
+                    (key >= Key.A && key <= Key.Z))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Returns a string that can be used to display the KeyGesture.  If the
         /// DisplayString was set by the constructor, it is returned.  Otherwise
         /// a suitable string is created from the Key and Modifiers, with any
@@ -175,7 +200,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="culture">the culture used when creating a string
         /// from Key and Modifiers</param>
-        public string? GetDisplayStringForCulture(CultureInfo culture)
+        public virtual string? GetDisplayStringForCulture(CultureInfo culture)
         {
             // return the DisplayString, if it was set by the ctor
             if (!string.IsNullOrEmpty(fdisplayString))
@@ -191,54 +216,8 @@ namespace Alternet.UI
                 typeof(string));
         }
 
-        // Check for Valid enum, as any int can be casted to the enum.
-        internal static bool IsDefinedKey(Key key)
-        {
-            return key >= Key.None && key <= Key.Menu;
-        }
-
         /// <summary>
-        /// Is Valid Keyboard input to process for commands
-        /// </summary>
-        internal static bool IsValid(Key key, ModifierKeys modifiers)
-        {
-            // Don't enforce any rules on the Function keys or on the number pad keys.
-            if (!((key >= Key.F1 && key <= Key.F24) ||
-                (key >= Key.NumPad0 && key <= Key.NumPadSlash)))
-            {
-                // We check whether Control/Alt/Windows key is down for modifiers.
-                // We don't check
-                // for shift at this time as Shift with any combination
-                // is already covered in above check.
-                // Shift alone as modifier case, we defer to the next
-                // condition to avoid conflicing with TextInput.
-                if ((modifiers & (ModifierKeys.Control | ModifierKeys.Alt |
-                    ModifierKeys.Windows)) != 0)
-                {
-                    /*//switch(key)
-                    //{
-                    //    case Key.LeftCtrl:
-                    //    case Key.RightCtrl:
-                    //    case Key.LeftAlt:
-                    //    case Key.RightAlt:
-                    //    case Key.LWin:
-                    //    case Key.RWin:
-                    //        return false;
-                    //    default:*/
-                    return true;
-                }
-                else if ((key >= Key.D0 && key <= Key.D9) ||
-                    (key >= Key.A && key <= Key.Z))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Decode the strings keyGestures and displayStrings, creating a sequence
+        /// Decodes the strings keyGestures and displayStrings, creating a sequence
         /// of KeyGestures.  Add each KeyGesture to the given InputGestureCollection.
         /// The two input strings typically come from a resource file.
         /// </summary>
