@@ -41,11 +41,11 @@ namespace Alternet.UI
         /// <param name="press">Information about the pressed key.</param>
         /// <returns></returns>
         public virtual Alternet.UI.KeyEventArgs? Convert(
-            Control control,
+            Control? control,
             UIPress press,
             KeyStates keyStates)
         {
-            if (press.Key is null)
+            if (press.Key is null || control is null)
                 return null;
 
             var key = Convert(press.Key.KeyCode);
@@ -70,7 +70,7 @@ namespace Alternet.UI
         {
             ModifierKeys result = ModifierKeys.None;
 
-            if (flags.HasFlag(UIKeyModifierFlags.Shift | UIKeyModifierFlags.AlphaShift))
+            if (flags.HasFlag(UIKeyModifierFlags.Shift) || flags.HasFlag(UIKeyModifierFlags.AlphaShift))
                 result |= ModifierKeys.Shift;
 
             if (flags.HasFlag(UIKeyModifierFlags.Control))

@@ -326,6 +326,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Bubbles <see cref="RaiseKeyUp"/> or <see cref="RaiseKeyDown"/>.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        /// <param name="raiseUpEvent">Whether to raise up or down event.</param>
+        public virtual void BubbleKeyUpOrDown(KeyEventArgs e, bool raiseUpEvent)
+        {
+            BubbleKeyAction(e, (s, e) =>
+            {
+                e.CurrentTarget = s;
+                if(raiseUpEvent)
+                    s.RaiseKeyUp(e);
+                else
+                    s.RaiseKeyDown(e);
+            });
+        }
+
+        /// <summary>
         /// Bubbles <see cref="RaiseHelpRequested"/>.
         /// </summary>
         /// <param name="e">Event arguments.</param>

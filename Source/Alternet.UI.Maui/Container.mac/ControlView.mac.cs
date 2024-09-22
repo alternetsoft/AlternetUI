@@ -163,7 +163,7 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesEnded: {e}", true);
+            App.DebugLogIf($"PressesEnded: {e}", false);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesChanged: {e}", true);
+            App.DebugLogIf($"PressesChanged: {e}", false);
         }
 
         /// <summary>
@@ -187,7 +187,8 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesCancelled: {e}", true);
+            App.DebugLogIf($"PressesCancelled: {e}", false);
+            RaiseUpOrDown(sender, e, true);
         }
 
         /// <summary>
@@ -199,7 +200,27 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesBegan: {e}", true);
+            App.DebugLogIf($"PressesBegan: {e}", false);
+            RaiseUpOrDown(sender, e, false);
+        }
+
+        private void RaiseUpOrDown(
+            SKCanvasViewAdv sender,
+            SKCanvasViewAdv.PressesEventArgs e,
+            bool raiseUpEvent)
+        {
+            if (Control is null)
+                return;
+            foreach (var press in e.Presses)
+            {
+                var evt = MauiKeyboardHandler.Default.Convert(Control, press, KeyStates.Down);
+                if (evt is null)
+                    return;
+                Control.BubbleKeyUpOrDown(evt, raiseUpEvent);
+
+                if (evt.Handled)
+                    e.Handled = true;
+            }
         }
     }
 }
