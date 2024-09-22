@@ -16,7 +16,8 @@ namespace Alternet.UI
         where TDest : struct, Enum
     {
         private readonly TDest?[] values;
-        private readonly int maxValue;
+        private readonly int maxValueAsInt;
+        private readonly TSource maxValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumMapping{TSource, TDest}"/> class.
@@ -24,12 +25,19 @@ namespace Alternet.UI
         /// <param name="maxValue">Maximal value of the source enum.</param>
         public EnumMapping(TSource maxValue)
         {
-            this.maxValue = System.Convert.ToInt32(maxValue);
-            values = new TDest?[this.maxValue + 1];
+            this.maxValue = maxValue;
+            this.maxValueAsInt = System.Convert.ToInt32(maxValue);
+            values = new TDest?[this.maxValueAsInt + 1];
         }
 
         /// <inheritdoc/>
-        public override void Log(string? logFileName = default)
+        public override TSource SourceMaxValue => maxValue;
+
+        /// <inheritdoc/>
+        public override int SourceMaxValueAsInt => maxValueAsInt;
+
+        /// <inheritdoc/>
+        public override void LogToFile(string? logFileName = default)
         {
             var stype = typeof(TSource);
             var dtype = typeof(TDest);
@@ -66,7 +74,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="from">Source enum value.</param>
         /// <param name="to">Destination enum value.</param>
-        public override void Add(TSource from, TDest to)
+        public override void Add(TSource from, TDest? to)
         {
             var intValue = System.Convert.ToInt32(from);
             values[intValue] = to;
@@ -96,7 +104,7 @@ namespace Alternet.UI
         {
             var intValue = System.Convert.ToInt32(value);
 
-            if (intValue < 0 || intValue > maxValue)
+            if (intValue < 0 || intValue > maxValueAsInt)
                 return null;
 
             var result = values[intValue];

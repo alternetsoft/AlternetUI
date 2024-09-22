@@ -130,7 +130,7 @@ namespace Alternet.UI
             Fn("Test Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
             Fn("Run terminal command", () => DialogFactory.ShowRunTerminalCommandDlg());
             Fn("Show Second MainForm", () => AppUtils.CreateFirstWindowClone());
-            Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.Log);
+            Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.LogToFile);
             Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics.Log);
 
             if (registeredLogActions is not null)
