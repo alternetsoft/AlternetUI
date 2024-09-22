@@ -11,13 +11,13 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TKey">Type of the enum used as the index in the array.</typeparam>
     /// <typeparam name="TValue">Type of the array elements.</typeparam>
-    public readonly struct EnumArray<TKey, TValue>
+    public struct EnumArray<TKey, TValue>
         where TKey : struct, Enum, IConvertible
     {
         /// <summary>
         /// Array with data.
         /// </summary>
-        public readonly TValue[] Data;
+        public TValue[] Data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArray{TKey, TValue}"/> struct.
@@ -33,8 +33,8 @@ namespace Alternet.UI
         /// <param name="maxKeyValue">Maximal value in the enum.</param>
         public EnumArray(TKey maxKeyValue)
         {
-            var m = System.Convert.ToInt32(maxKeyValue);
-            Data = new TValue[m + 1];
+            var maxKeyValueAsInt = System.Convert.ToInt32(maxKeyValue);
+            Data = new TValue[maxKeyValueAsInt + 1];
         }
 
         /// <summary>
@@ -96,6 +96,14 @@ namespace Alternet.UI
             {
                 SetValues(value, keys);
             }
+        }
+
+        /// <summary>
+        /// Resets all data.
+        /// </summary>
+        public void Reset()
+        {
+            Data = new TValue[Data.Length];
         }
 
         /// <summary>

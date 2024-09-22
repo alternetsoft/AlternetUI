@@ -133,6 +133,8 @@ namespace Alternet.UI
             Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.LogToFile);
             Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics.Log);
 
+            EnumDebugLogActions(Fn);
+
             if (registeredLogActions is not null)
             {
                 foreach (var item in registeredLogActions)
@@ -673,6 +675,22 @@ namespace Alternet.UI
             Test(KnownSystemColor.GradientInactiveCaption);
             Test(KnownSystemColor.MenuBar);
             Test(KnownSystemColor.MenuHighlight);
+        }
+
+        [Conditional("DEBUG")]
+        private static void EnumDebugLogActions(Action<string, Action> fn)
+        {
+#if DEBUG
+            fn("Test BitArray64", () =>
+            {
+                BitArray64 value = new();
+                value[1] = true;
+                value[3] = true;
+                value[63] = true;
+
+                App.Log(value);
+            });
+#endif
         }
     }
 }
