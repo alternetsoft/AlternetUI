@@ -37,6 +37,7 @@ namespace Alternet.UI
         {
             Control.BubbleKeyDown(
                 (Key)e.Data.key,
+                Keyboard.Modifiers,
                 Keyboard.IsRepeatToRepeatCount(e.Data.isRepeat),
                 out var handled);
             e.Handled = handled;
@@ -48,6 +49,7 @@ namespace Alternet.UI
         {
             Control.BubbleKeyUp(
                 (Key)e.Data.key,
+                Keyboard.Modifiers,
                 Keyboard.IsRepeatToRepeatCount(e.Data.isRepeat),
                 out var handled);
             e.Handled = handled;
