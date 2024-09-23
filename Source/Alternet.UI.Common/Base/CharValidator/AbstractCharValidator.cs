@@ -13,16 +13,16 @@ namespace Alternet.UI
     {
         /// <inheritdoc/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ICharValidator AllowDigitsAndNegativeSign()
+        public ICharValidator AllowNegativeSign()
         {
-            return AllowDigits().ValidChar('-').ValidChars(CharValidator.NegativeSign);
+            return ValidChar('-').ValidChars(CharValidator.NegativeSign);
         }
 
         /// <inheritdoc/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ICharValidator AllowDigitsAndSign()
+        public ICharValidator AllowPositiveSign()
         {
-            return AllowDigitsAndNegativeSign().ValidChars("+").ValidChars(CharValidator.PositiveSign);
+            return ValidChars("+").ValidChars(CharValidator.PositiveSign);
         }
 
         /// <inheritdoc/>
@@ -124,7 +124,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ICharValidator ValidChars(char minCh, char maxCh, bool valid = true)
+        public ICharValidator ValidRange(char minCh, char maxCh, bool valid = true)
         {
             for (char i = minCh; i <= maxCh; i++)
             {
@@ -136,9 +136,9 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ICharValidator BadChars(char minCh, char maxCh)
+        public ICharValidator BadRange(char minCh, char maxCh)
         {
-            return ValidChars(minCh, maxCh, false);
+            return ValidRange(minCh, maxCh, false);
         }
 
         /// <inheritdoc/>

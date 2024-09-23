@@ -63,7 +63,7 @@ namespace Alternet.UI
             base.Init();
             TextBox.MinValue = 0f;
             if (UseCharValidator)
-                TextBox.UseValidator<float>();
+                TextBox.UseCharValidator<float>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
         }
     }

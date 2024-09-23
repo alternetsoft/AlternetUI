@@ -46,6 +46,8 @@ namespace Alternet.UI
         private static ICustomCharValidator? digitsAndNegativeSignValidator;
         private static ICustomCharValidator? digitsAndSignValidator;
         private static ICustomCharValidator? unsignedHexValidator;
+        private static ICustomCharValidator? signedFloatValidator;
+        private static ICustomCharValidator? unsignedFloatValidator;
 
         private BitArray? charInfo;
         private BitArray64 catInfo = new(true);
@@ -146,6 +148,82 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets number decimal separator from the <see cref="Culture"/> settings.
+        /// </summary>
+        public static string NumberDecimalSeparator
+        {
+            get
+            {
+                return Culture.NumberFormat.NumberDecimalSeparator;
+            }
+        }
+
+        /// <summary>
+        /// Gets number group separator from the <see cref="Culture"/> settings.
+        /// </summary>
+        public static string NumberGroupSeparator
+        {
+            get
+            {
+                return Culture.NumberFormat.NumberGroupSeparator;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="ICustomCharValidator"/> instance
+        /// for the signed float validation.
+        /// </summary>
+        public static ICustomCharValidator SignedFloatValidator
+        {
+            get
+            {
+                if (signedFloatValidator is null)
+                {
+                    var validator = new CharValidator();
+                    InitUnsignedFloat(validator);
+                    validator.AllowPositiveSign().AllowNegativeSign().SetImmutable();
+                    signedFloatValidator = validator;
+                }
+
+                return signedFloatValidator;
+            }
+
+            set
+            {
+                if (value is null)
+                    return;
+                signedFloatValidator = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="ICustomCharValidator"/> instance
+        /// for the unsigned float validation.
+        /// </summary>
+        public static ICustomCharValidator UnsignedFloatValidator
+        {
+            get
+            {
+                if (unsignedFloatValidator is null)
+                {
+                    var validator = new CharValidator();
+                    InitUnsignedFloat(validator);
+                    validator.SetImmutable();
+                    unsignedFloatValidator = validator;
+                }
+
+                return unsignedFloatValidator;
+            }
+
+            set
+            {
+                if (value is null)
+                    return;
+                unsignedFloatValidator = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="ICustomCharValidator"/> instance
         /// which allows only digits and minus sign.
         /// </summary>
@@ -156,7 +234,7 @@ namespace Alternet.UI
                 if (digitsAndNegativeSignValidator is null)
                 {
                     var validator = new CharValidator();
-                    validator.AllCharsBad().AllowDigitsAndNegativeSign();
+                    validator.AllCharsBad().AllowDigits().AllowNegativeSign();
                     if (AllowNativeDigitsInNumbers)
                         validator.AllowNativeDigits();
                     validator.SetImmutable();
@@ -185,7 +263,8 @@ namespace Alternet.UI
                 if (digitsAndSignValidator is null)
                 {
                     var validator = new CharValidator();
-                    validator.AllCharsBad().AllowDigitsAndSign().SetImmutable();
+                    validator.AllCharsBad().AllowDigits().AllowPositiveSign()
+                        .AllowNegativeSign().SetImmutable();
                     if (AllowNativeDigitsInNumbers)
                         validator.AllowNativeDigits();
                     digitsAndSignValidator = validator;
@@ -259,9 +338,10 @@ namespace Alternet.UI
                         return DigitsAndSignValidator;
                     else
                         return DigitsAndNegativeSignValidator;
-                case TypeCode.Decimal:
                 case TypeCode.Double:
                 case TypeCode.Single:
+                    return SignedFloatValidator;
+                case TypeCode.Decimal:
                 default:
                     return null;
             }
@@ -356,6 +436,15 @@ namespace Alternet.UI
             }
 
             return this;
+        }
+
+        internal static void InitUnsignedFloat(ICharValidator validator)
+        {
+            validator.AllCharsBad().ValidChars('e', 'E').ValidChars('.', ',')
+                .ValidChars(NumberDecimalSeparator).ValidChars(NumberGroupSeparator);
+            if (AllowNativeDigitsInNumbers)
+                validator.AllowNativeDigits();
+            validator.AllowDigits();
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Alternet.UI
         {
             base.Init();
             if (UseCharValidator)
-                TextBox.UseValidator<double>();
+                TextBox.UseCharValidator<double>();
             TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
         }
     }
