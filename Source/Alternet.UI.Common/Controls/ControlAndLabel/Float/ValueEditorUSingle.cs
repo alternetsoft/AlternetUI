@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial class ValueEditorUSingle : ValueEditorCustom
     {
         /// <summary>
+        /// Gets or sets whether to use char validator to limit unwanted chars in the input.
+        /// </summary>
+        public static bool UseCharValidator = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorUSingle"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -57,7 +62,8 @@ namespace Alternet.UI
         {
             base.Init();
             TextBox.MinValue = 0f;
-            TextBox.UseValidator<float>();
+            if (UseCharValidator)
+                TextBox.UseValidator<float>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
         }
     }

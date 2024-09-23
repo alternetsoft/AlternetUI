@@ -13,6 +13,11 @@ namespace Alternet.UI
     public partial class HexEditorUInt32 : ValueEditorCustom
     {
         /// <summary>
+        /// Gets or sets whether to use char validator to limit unwanted chars in the input.
+        /// </summary>
+        public static bool UseCharValidator = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HexEditorUInt32"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -48,7 +53,8 @@ namespace Alternet.UI
             base.Init();
             TextBox.NumberStyles = NumberStyles.HexNumber;
             TextBox.DefaultFormat = "X";
-            TextBox.CharValidator = Alternet.UI.CharValidator.UnsignedHexValidator;
+            if(UseCharValidator)
+                TextBox.CharValidator = Alternet.UI.CharValidator.UnsignedHexValidator;
             TextBox.DataType = typeof(uint);
             TextBox.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
         }

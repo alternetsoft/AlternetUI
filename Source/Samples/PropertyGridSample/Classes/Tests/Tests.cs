@@ -49,7 +49,7 @@ namespace PropertyGridSample
             if (control is null)
                 return;
             var pair = FindReplaceControl.CreateInsideDialog(replace);
-            pair.Dialog.ShowModal();
+            pair.Dialog.Show();
         }
 
         internal void TestMemoFind()

@@ -13,6 +13,11 @@ namespace Alternet.UI
     public partial class ValueEditorInt16 : ValueEditorCustom
     {
         /// <summary>
+        /// Gets or sets whether to use char validator to limit unwanted chars in the input.
+        /// </summary>
+        public static bool UseCharValidator = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorInt16"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -46,7 +51,8 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseCharValidator<short>();
+            if(UseCharValidator)
+                TextBox.UseCharValidator<short>();
             TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
         }
     }

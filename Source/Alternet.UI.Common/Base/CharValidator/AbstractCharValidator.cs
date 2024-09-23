@@ -158,7 +158,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ICharValidator BadChars(string s)
+        public ICharValidator BadChars(string? s)
         {
             return ValidChars(s, false);
         }

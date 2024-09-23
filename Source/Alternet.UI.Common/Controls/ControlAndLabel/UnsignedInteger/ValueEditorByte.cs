@@ -13,6 +13,11 @@ namespace Alternet.UI
     public partial class ValueEditorByte : ValueEditorCustom
     {
         /// <summary>
+        /// Gets or sets whether to use char validator to limit unwanted chars in the input.
+        /// </summary>
+        public static bool UseCharValidator = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -46,7 +51,8 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseCharValidator<byte>();
+            if (UseCharValidator)
+                TextBox.UseCharValidator<byte>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
         }
     }
