@@ -48,7 +48,7 @@ namespace Alternet.UI
             base.Init();
             TextBox.NumberStyles = NumberStyles.HexNumber;
             TextBox.DefaultFormat = "X";
-            TextBox.Validator = TextBox.CreateValidator(ValueValidatorKind.UnsignedHex);
+            TextBox.CharValidator = Alternet.UI.CharValidator.UnsignedHexValidator;
             TextBox.DataType = typeof(uint);
             TextBox.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
         }

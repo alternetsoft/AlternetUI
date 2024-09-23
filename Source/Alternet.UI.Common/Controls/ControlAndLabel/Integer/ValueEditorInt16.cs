@@ -46,7 +46,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseValidator<short>();
+            TextBox.UseCharValidator<short>();
             TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
         }
     }

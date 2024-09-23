@@ -540,6 +540,16 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc/>
+        public override bool IsValidInputChar(char ch)
+        {
+            if (ch == CharUtils.BackspaceChar)
+                return true;
+
+            var result = base.IsValidInputChar(ch);
+            return result;
+        }
+
         /// <summary>
         /// Gets "real" maxmimal value taking into account <see cref="CustomTextBox.DataType"/>
         /// and <see cref="MinValue"/>.

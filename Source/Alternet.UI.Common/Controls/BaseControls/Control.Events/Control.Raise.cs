@@ -988,6 +988,14 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyPress(KeyPressEventArgs e)
         {
+            var isValidChar = IsValidInputChar(e.KeyChar);
+
+            if (!isValidChar)
+            {
+                e.Handled = true;
+                return;
+            }
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 

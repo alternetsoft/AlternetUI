@@ -7,37 +7,37 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements <see cref="uint"/> editor with validation.
+    /// Imlements <see cref="sbyte"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public partial class ValueEditorUInt32 : ValueEditorCustom
+    public partial class ValueEditorSByte : ValueEditorCustom
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorUInt32"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorSByte"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ValueEditorUInt32(Control parent)
+        public ValueEditorSByte(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorUInt32"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorSByte"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="value">Default value.</param>
-        public ValueEditorUInt32(string title, uint? value = default)
+        public ValueEditorSByte(string title, sbyte? value = default)
                     : base(title)
         {
             if (value is not null)
-                TextBox.SetTextAsUInt32(value.Value);
+                TextBox.SetTextAsSByte(value.Value);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorUInt32"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorSByte"/> class.
         /// </summary>
-        public ValueEditorUInt32()
+        public ValueEditorSByte()
             : base()
         {
         }
@@ -46,8 +46,8 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseValidator<uint>();
-            TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+            TextBox.UseCharValidator<sbyte>();
+            TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
         }
     }
 }

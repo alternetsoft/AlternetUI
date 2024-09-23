@@ -7,37 +7,37 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements <see cref="ushort"/> editor with validation.
+    /// Imlements <see cref="byte"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public partial class ValueEditorUInt16 : TextBoxAndLabel
+    public partial class ValueEditorByte : ValueEditorCustom
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorUInt16"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ValueEditorUInt16(Control parent)
+        public ValueEditorByte(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorUInt16"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="value">Default value.</param>
-        public ValueEditorUInt16(string title, ushort? value = default)
-                   : base(title)
+        public ValueEditorByte(string title, byte? value = default)
+                    : base(title)
         {
             if (value is not null)
-                TextBox.SetTextAsUInt16(value.Value);
+                TextBox.SetTextAsByte(value.Value);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorUInt16"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
         /// </summary>
-        public ValueEditorUInt16()
+        public ValueEditorByte()
             : base()
         {
         }
@@ -46,7 +46,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseValidator<ushort>();
+            TextBox.UseCharValidator<byte>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
         }
     }

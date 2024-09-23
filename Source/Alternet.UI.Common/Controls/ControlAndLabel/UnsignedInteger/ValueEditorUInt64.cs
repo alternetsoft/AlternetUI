@@ -7,37 +7,37 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements <see cref="byte"/> editor with validation.
+    /// Imlements <see cref="ulong"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public partial class ValueEditorByte : ValueEditorCustom
+    public partial class ValueEditorUInt64 : ValueEditorCustom
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorUInt64"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ValueEditorByte(Control parent)
+        public ValueEditorUInt64(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorUInt64"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="value">Default value.</param>
-        public ValueEditorByte(string title, byte? value = default)
+        public ValueEditorUInt64(string title, ulong? value = default)
                     : base(title)
         {
             if (value is not null)
-                TextBox.SetTextAsByte(value.Value);
+                TextBox.SetTextAsUInt64(value.Value);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorByte"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorUInt64"/> class.
         /// </summary>
-        public ValueEditorByte()
+        public ValueEditorUInt64()
             : base()
         {
         }
@@ -46,7 +46,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseValidator<byte>();
+            TextBox.UseCharValidator<ulong>();
             TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
         }
     }

@@ -2562,6 +2562,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets attacher <see cref="ICustomCharValidator"/> provider.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ICustomCharValidator? CharValidator { get; set; }
+
+        /// <summary>
         /// Enumerates all parent controls.
         /// </summary>
         [Browsable(false)]

@@ -7,37 +7,37 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements <see cref="sbyte"/> editor with validation.
+    /// Imlements <see cref="int"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
-    public partial class ValueEditorSByte : ValueEditorCustom
+    public partial class ValueEditorInt32 : ValueEditorCustom
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorSByte"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorInt32"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ValueEditorSByte(Control parent)
+        public ValueEditorInt32(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorSByte"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorInt32"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="value">Default value.</param>
-        public ValueEditorSByte(string title, sbyte? value = default)
+        public ValueEditorInt32(string title, int? value = default)
                     : base(title)
         {
             if (value is not null)
-                TextBox.SetTextAsSByte(value.Value);
+                TextBox.SetTextAsInt32(value.Value);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorSByte"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorInt32"/> class.
         /// </summary>
-        public ValueEditorSByte()
+        public ValueEditorInt32()
             : base()
         {
         }
@@ -46,7 +46,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.UseValidator<sbyte>();
+            TextBox.UseCharValidator<int>();
             TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
         }
     }
