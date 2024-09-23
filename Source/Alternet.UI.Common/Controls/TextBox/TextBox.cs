@@ -719,28 +719,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public new ITextBoxHandler Handler => (ITextBoxHandler)base.Handler;
 
-        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator(ValueValidatorKind)"/>
-        public static IValueValidatorText CreateValidator(ValueValidatorKind kind)
-        {
-            return ValueValidatorFactory.CreateValidator(kind);
-        }
-
-        /// <inheritdoc cref="ValueValidatorFactory.CreateValidator(TypeCode)"/>
-        public static IValueValidatorText CreateValidator(TypeCode typeCode)
-        {
-            return ValueValidatorFactory.CreateValidator(typeCode);
-        }
-
-        /// <summary>
-        /// Creates <see cref="IValueValidatorText"/> instance for the specified type.
-        /// </summary>
-        /// <param name="type">Type.</param>
-        public static IValueValidatorText CreateValidator(Type type)
-        {
-            var typeCode = AssemblyUtils.GetRealTypeCode(type);
-            return CreateValidator(typeCode);
-        }
-
         /// <summary>
         /// Changes the style of selection (if any). If no text is selected, style of the
         /// insertion point is changed.
@@ -875,17 +853,6 @@ namespace Alternet.UI
         public virtual void SelectionToggleStrikethrough()
         {
             SelectionToggleFontStyle(FontStyle.Strikeout);
-        }
-
-        /// <summary>
-        /// Sets <see cref="CustomTextBox.DataType"/> property to <typeparamref name="T"/>
-        /// and <see cref="Validator"/> to the appropriate validator provider.
-        /// </summary>
-        /// <typeparam name="T">New <see cref="CustomTextBox.DataType"/> property value.</typeparam>
-        public virtual void UseValidator<T>()
-        {
-            DataType = typeof(T);
-            Validator = CreateValidator(typeof(T));
         }
 
         /// <summary>

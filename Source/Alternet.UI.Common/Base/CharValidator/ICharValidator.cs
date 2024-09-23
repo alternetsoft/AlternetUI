@@ -19,22 +19,22 @@ namespace Alternet.UI
         ICharValidator AllowNativeDigits();
 
         /// <summary>
-        /// Allows digits [0..9], plus and minus chars for the input.
+        /// Allows negative sign chars for the input (minus).
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        ICharValidator AllowDigitsAndSign();
+        ICharValidator AllowNegativeSign();
+
+        /// <summary>
+        /// Allows positive sign chars for the input (plus).
+        /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        ICharValidator AllowPositiveSign();
 
         /// <summary>
         /// Allows digits [0..9] for the input.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         ICharValidator AllowDigits();
-
-        /// <summary>
-        /// Allows digits [0..9] and minus char for the input.
-        /// </summary>
-        /// <returns>Returns this object instance for use in the call sequences.</returns>
-        ICharValidator AllowDigitsAndNegativeSign();
 
         /// <summary>
         /// Allows hex digits for the input. Hex digits are [0..9], [a..f], [A..F].
@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// <param name="maxCh">Maximal character to change state for.</param>
         /// <param name="valid">Whether char is valid or invalid for the input.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        ICharValidator ValidChars(char minCh, char maxCh, bool valid = true);
+        ICharValidator ValidRange(char minCh, char maxCh, bool valid = true);
 
         /// <summary>
         /// Sets all the characters in the range between
@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// <param name="minCh">Minimal character to change state for.</param>
         /// <param name="maxCh">Maximal character to change state for.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        ICharValidator BadChars(char minCh, char maxCh);
+        ICharValidator BadRange(char minCh, char maxCh);
 
         /// <summary>
         /// Sets all the characters from the specified array
