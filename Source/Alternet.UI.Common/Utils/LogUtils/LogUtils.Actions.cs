@@ -680,17 +680,25 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         private static void EnumDebugLogActions(Action<string, Action> fn)
         {
-#if DEBUG
-            fn("Test BitArray64", () =>
-            {
-                BitArray64 value = new();
-                value[1] = true;
-                value[3] = true;
-                value[63] = true;
+            var type = typeof(Alternet.UI.Tests.Tests);
 
-                App.Log(value);
-            });
-#endif
+            var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
+
+            foreach(var method in methods)
+            {
+                var name = method.Name;
+                if (!method.Name.StartsWith("Test"))
+                    continue;
+                var prm = method.GetParameters();
+                if (prm is not null && prm.Length > 0)
+                    continue;
+                name = name.Insert(4, StringUtils.OneSpace);
+
+                fn(name, () =>
+                {
+                    method.Invoke(null, null);
+                });
+            }
         }
     }
 }
