@@ -1,0 +1,6 @@
+- Return ToolBar property in Window or even in Control.
+- public bool IsBottom
+- public bool IsRight
+- public bool NoDivider
+- public bool IsVertical
+- public Collection<ToolbarItem> Items
