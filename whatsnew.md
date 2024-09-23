@@ -1,3 +1,13 @@
+# 0.9.634 (2024 September 23)
+
+- MAUI: Renamed SkiaContainer -> ControlView.
+- MAUI: ControlView.Interior is now created only on demand.
+- MAUI: macOs keyboard support added for ControlView.
+- Control.CharValidator property and CharValidator class.
+- Graphics: HasTransform, HasClip.
+- EnumMapping: many new properties and methods.
+- Added BitArray64, IntUtils, ULongUtlis.
+
 # 0.9.633 (2024 September 19)
 
 - Added Window.Load event.
