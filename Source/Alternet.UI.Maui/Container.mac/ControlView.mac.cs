@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 
 #if IOS || MACCATALYST
+
+using SkiaSharp.Views.iOS;
 
 using UIKit;
 
@@ -64,20 +68,29 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             UIHoverGestureRecognizer recognizer)
         {
-            App.DebugLogIf($"HoverGestureRecognizer: {recognizer.State}", true);
+            App.DebugLogIf($"HoverGestureRecognizer: {recognizer.State}", false);
+            if (Control is null)
+                return;
 
             switch (recognizer.State)
             {
                 case UIGestureRecognizerState.Possible:
                     break;
                 case UIGestureRecognizerState.Began:
-                    Control?.RaiseMouseEnter();
+                    Control.RaiseMouseEnter();
                     break;
                 case UIGestureRecognizerState.Changed:
-                    // This is like mouse move
+                    long timestamp = DateUtils.GetNowInMilliseconds();
+                    var locationInView = recognizer.LocationInView(sender);
+                    PointD position = locationInView.ToSKPoint();
+                    Control.BubbleMouseMove(
+                                Control,
+                                timestamp,
+                                position,
+                                out _);
                     break;
                 case UIGestureRecognizerState.Ended:
-                    Control?.RaiseMouseLeave();
+                    Control.RaiseMouseLeave();
                     break;
                 case UIGestureRecognizerState.Cancelled:
                     break;
@@ -94,7 +107,7 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         protected virtual void HandleMacPlatformResignFirstResponder(SKCanvasViewAdv sender)
         {
-            App.DebugLogIf($"ResignFirstResponder", true);
+            App.DebugLogIf($"ResignFirstResponder", false);
             Control?.RaiseLostFocus();
         }
 
@@ -104,7 +117,7 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         protected virtual void HandleMacPlatformBecomeFirstResponder(SKCanvasViewAdv sender)
         {
-            App.DebugLogIf($"BecomeFirstResponder", true);
+            App.DebugLogIf($"BecomeFirstResponder", false);
             Control?.RaiseGotFocus();
         }
 
@@ -129,7 +142,7 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             UIFocusUpdateContext context)
         {
-            App.DebugLogIf($"DidUpdateFocus", true);
+            App.DebugLogIf($"DidUpdateFocus", false);
             if (context.NextFocusedView == sender)
             {
                 Control?.RaiseGotFocus();
@@ -175,6 +188,7 @@ namespace Alternet.UI
             SKCanvasViewAdv.PressesEventArgs e)
         {
             App.DebugLogIf($"PressesCancelled: {e}", false);
+            RaiseUpOrDown(sender, e, true);
         }
 
         /// <summary>
@@ -187,6 +201,39 @@ namespace Alternet.UI
             SKCanvasViewAdv.PressesEventArgs e)
         {
             App.DebugLogIf($"PressesBegan: {e}", true);
+            RaiseUpOrDown(sender, e, false);
+        }
+
+        private void RaiseUpOrDown(
+            SKCanvasViewAdv sender,
+            SKCanvasViewAdv.PressesEventArgs e,
+            bool raiseUpEvent)
+        {
+            if (Control is null)
+                return;
+            foreach (var press in e.Presses)
+            {
+                var evt = MauiKeyboardHandler.Default.ToKeyEventArgs(Control, press, KeyStates.Down);
+                if (evt is null)
+                    return;
+                Control.BubbleKeyUpOrDown(evt, raiseUpEvent);
+
+                if (evt.Handled)
+                    e.Handled = true;
+                else
+                if(!raiseUpEvent)
+                {
+                    var evtKeyPresses = MauiKeyboardHandler.Default.ToKeyPressEventArgs(Control, press);
+                    if (evtKeyPresses is null)
+                        continue;
+                    foreach(var item in evtKeyPresses)
+                    {
+                        Control.BubbleKeyPress(item);
+                        if (item.Handled)
+                            e.Handled = true;
+                    }
+                }
+            }
         }
     }
 }

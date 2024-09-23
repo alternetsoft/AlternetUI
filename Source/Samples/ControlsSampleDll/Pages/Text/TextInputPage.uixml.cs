@@ -11,10 +11,12 @@ namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
-        [IsTextLocalized(true)]
-        private readonly ValueEditorUInt32 minLengthEdit;
+        public static string MinLengthEditLabel = "Min Length";
+        public static string MaxLengthEditLabel = "Max Length";
+        public static string TextBoxEmptyTextHint = "Sample Hint";
+        public static string TextBoxSampleText = "Sample Text";
 
-        [IsTextLocalized(true)]
+        private readonly ValueEditorUInt32 minLengthEdit;
         private readonly ValueEditorUInt32 maxLengthEdit;
 
         private PopupPropertyGrid? popup;
@@ -25,18 +27,19 @@ namespace ControlsSample
 
         public TextInputPage()
         {
-            minLengthEdit = new("Min Length", 0);
-            maxLengthEdit = new("Max Length", 0);
+            minLengthEdit = new(MinLengthEditLabel, 0);
+            maxLengthEdit = new(MaxLengthEditLabel, 0);
 
             InitializeComponent();
 
-            textBox.EmptyTextHint = "Sample Hint";
-            textBox.Text = "sample text";
+            textBox.EmptyTextHint = TextBoxEmptyTextHint;
+            textBox.Text = TextBoxSampleText;
             textBox.ValidatorReporter = textImage;
             textBox.TextMaxLength += TextBox_TextMaxLength;
             textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             textBox.Options |= TextBoxOptions.DefaultValidation;
             textBox.TextChanged += ReportValueChanged;
+            textBox.KeyPress += TextBox_KeyPress;
             TextBox.InitErrorPicture(textImage);
 
             ErrorsChanged += TextBox_ErrorsChanged;
@@ -64,6 +67,12 @@ namespace ControlsSample
             maxLengthEdit.TextBox.IsRequired = true;
 
             Idle += TextInputPage_Idle;
+        }
+
+        private void TextBox_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == ' ' && !allowSpaceCheckBox.IsChecked)
+                e.Handled = true;
         }
 
         internal static void TextBox_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
@@ -149,7 +158,6 @@ namespace ControlsSample
         {
             TextFromUserParams prm = new()
             {
-                Title = "Enter text value",
                 Message = "Text",
                 DefaultValue = textBox.Text,
                 OnApply = (s) =>

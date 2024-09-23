@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Extends <see cref="DisposableObject"/> with immutable feature.
     /// Allows to implement immutable objects with properties that can not be changed.
     /// </summary>
-    public class ImmutableObject : DisposableObject, INotifyPropertyChanged
+    public class ImmutableObject : DisposableObject, IImmutableObject, INotifyPropertyChanged
     {
         private bool immutable;
 

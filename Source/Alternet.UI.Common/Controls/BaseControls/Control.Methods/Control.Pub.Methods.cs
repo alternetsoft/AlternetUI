@@ -211,6 +211,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether the specified character is valid for the input.
+        /// This function allows to ignore unwanted characters in the input.
+        /// </summary>
+        /// <param name="ch">Character to check.</param>
+        /// <returns></returns>
+        public virtual bool IsValidInputChar(char ch)
+        {
+            if (CharValidator is not null)
+            {
+                var isValid = CharValidator.IsValid(ch);
+                return isValid;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Sets <see cref="Title"/> property.
         /// </summary>
         /// <param name="title">New title</param>

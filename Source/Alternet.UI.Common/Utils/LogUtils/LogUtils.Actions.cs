@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -130,8 +131,11 @@ namespace Alternet.UI
             Fn("Test Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
             Fn("Run terminal command", () => DialogFactory.ShowRunTerminalCommandDlg());
             Fn("Show Second MainForm", () => AppUtils.CreateFirstWindowClone());
-            Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.Log);
+            Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.LogToFile);
             Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics.Log);
+            Fn("Log CultureInfo.CurrentCulture", LogCurrentCulture);
+
+            EnumDebugLogActions(Fn);
 
             if (registeredLogActions is not null)
             {
@@ -535,6 +539,45 @@ namespace Alternet.UI
             App.LogNameValue("CommonUtils.GetAppExePath()", CommonUtils.GetAppExePath());
         }
 
+        internal static void LogCulture(string sectionName, CultureInfo culture)
+        {
+            App.LogBeginSection(sectionName + " NumberFormat");
+
+            App.LogNameValue("NumberDecimalDigits", culture.NumberFormat.NumberDecimalDigits);
+            App.LogNameValue("NumberDecimalSeparator", culture.NumberFormat.NumberDecimalSeparator);
+            App.LogNameValue("NumberGroupSeparator", culture.NumberFormat.NumberGroupSeparator);
+            App.LogNameValue("NumberGroupSizes", culture.NumberFormat.NumberGroupSizes);
+            App.LogNameValue("NumberNegativePattern", culture.NumberFormat.NumberNegativePattern);
+            App.LogNameValue("PercentDecimalDigits", culture.NumberFormat.PercentDecimalDigits);
+            App.LogNameValue("PercentDecimalSeparator", culture.NumberFormat.PercentDecimalSeparator);
+            App.LogNameValue("PercentGroupSeparator", culture.NumberFormat.PercentGroupSeparator);
+            App.LogNameValue("PercentGroupSizes", culture.NumberFormat.PercentGroupSizes);
+            App.LogNameValue("PercentNegativePattern", culture.NumberFormat.PercentNegativePattern);
+            App.LogNameValue("PercentPositivePattern", culture.NumberFormat.PercentPositivePattern);
+            App.LogNameValue("PercentSymbol", culture.NumberFormat.PercentSymbol);
+            App.LogNameValue("PerMilleSymbol", culture.NumberFormat.PerMilleSymbol);
+            App.LogNameValue("NegativeSign", culture.NumberFormat.NegativeSign);
+            App.LogNameValue("NegativeInfinitySymbol", culture.NumberFormat.NegativeInfinitySymbol);
+            App.LogNameValue("NativeDigits", culture.NumberFormat.NativeDigits);
+            App.LogNameValue("NaNSymbol", culture.NumberFormat.NaNSymbol);
+            App.LogNameValue("DigitSubstitution", culture.NumberFormat.DigitSubstitution);
+            App.LogNameValue("CurrencySymbol", culture.NumberFormat.CurrencySymbol);
+            App.LogNameValue("CurrencyPositivePattern", culture.NumberFormat.CurrencyPositivePattern);
+            App.LogNameValue("CurrencyNegativePattern", culture.NumberFormat.CurrencyNegativePattern);
+            App.LogNameValue("CurrencyGroupSizes", culture.NumberFormat.CurrencyGroupSizes);
+            App.LogNameValue("CurrencyGroupSeparator", culture.NumberFormat.CurrencyGroupSeparator);
+            App.LogNameValue("CurrencyDecimalSeparator", culture.NumberFormat.CurrencyDecimalSeparator);
+            App.LogNameValue("CurrencyDecimalDigits", culture.NumberFormat.CurrencyDecimalDigits);
+            App.LogNameValue("PositiveInfinitySymbol", culture.NumberFormat.PositiveInfinitySymbol);
+            App.LogNameValue("PositiveSign", culture.NumberFormat.PositiveSign);
+            App.LogEndSection();
+        }
+
+        internal static void LogCurrentCulture()
+        {
+            LogCulture("CultureInfo.CurrentCulture", CultureInfo.CurrentCulture);
+        }
+
         /// <summary>
         /// Logs <see cref="SystemSettings"/>.
         /// </summary>
@@ -673,6 +716,30 @@ namespace Alternet.UI
             Test(KnownSystemColor.GradientInactiveCaption);
             Test(KnownSystemColor.MenuBar);
             Test(KnownSystemColor.MenuHighlight);
+        }
+
+        [Conditional("DEBUG")]
+        private static void EnumDebugLogActions(Action<string, Action> fn)
+        {
+            var type = typeof(Alternet.UI.Tests.Tests);
+
+            var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
+
+            foreach(var method in methods)
+            {
+                var name = method.Name;
+                if (!method.Name.StartsWith("Test"))
+                    continue;
+                var prm = method.GetParameters();
+                if (prm is not null && prm.Length > 0)
+                    continue;
+                name = name.Insert(4, StringUtils.OneSpace);
+
+                fn(name, () =>
+                {
+                    method.Invoke(null, null);
+                });
+            }
         }
     }
 }

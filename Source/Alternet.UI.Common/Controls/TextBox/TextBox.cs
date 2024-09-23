@@ -889,6 +889,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="CustomTextBox.DataType"/> property to <typeparamref name="T"/>
+        /// and <see cref="CharValidator"/> to the appropriate validator provider.
+        /// </summary>
+        /// <typeparam name="T">New <see cref="CustomTextBox.DataType"/> property value.</typeparam>
+        public virtual void UseCharValidator<T>()
+        {
+            DataType = typeof(T);
+            CharValidator = Alternet.UI.CharValidator.CreateValidator(typeof(T));
+        }
+
+        /// <summary>
         /// Gets the length of the specified line, not including any trailing
         /// newline character(s).
         /// </summary>

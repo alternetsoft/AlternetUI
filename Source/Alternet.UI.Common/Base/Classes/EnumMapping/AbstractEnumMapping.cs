@@ -18,11 +18,21 @@ namespace Alternet.UI
         where TDest : struct, Enum
     {
         /// <summary>
+        /// Maximal value of the source enum as integer.
+        /// </summary>
+        public abstract int SourceMaxValueAsInt { get; }
+
+        /// <summary>
+        /// Maximal value of the source enum.
+        /// </summary>
+        public abstract TSource SourceMaxValue { get; }
+
+        /// <summary>
         /// Adds enum mapping.
         /// </summary>
         /// <param name="from">From value.</param>
         /// <param name="to">To value.</param>
-        public abstract void Add(TSource from, TDest to);
+        public abstract void Add(TSource from, TDest? to);
 
         /// <summary>
         /// Removes enum mapping.
@@ -41,7 +51,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs enum mappings to file.
         /// </summary>
-        public abstract void Log(string? logFileName = default);
+        public abstract void LogToFile(string? logFileName = default);
 
         /// <summary>
         /// Converts source enum value to the destination enum value if mapping exists.

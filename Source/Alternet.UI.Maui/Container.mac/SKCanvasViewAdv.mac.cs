@@ -135,7 +135,7 @@ namespace Alternet.UI
             UIFocusUpdateContext context,
             UIFocusAnimationCoordinator coordinator)
         {
-            if(OnDidUpdateFocus is not null)
+            if (OnDidUpdateFocus is not null)
             {
                 OnDidUpdateFocus(this, context);
             }
@@ -146,7 +146,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool ShouldUpdateFocus(UIFocusUpdateContext context)
         {
-            if(OnShouldUpdateFocus is not null)
+            if (OnShouldUpdateFocus is not null)
             {
                 return OnShouldUpdateFocus(this, context);
             }
@@ -170,57 +170,6 @@ namespace Alternet.UI
         public override void PressesEnded(NSSet<UIPress> presses, UIPressesEvent evt)
         {
             CallAction(presses, evt, OnPressesEnded, base.PressesEnded);
-        }
-
-        internal static void SamplePressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
-        {
-            foreach (UIPress press in presses)
-            {
-                var pressType = press.Type;
-
-                // Was the Touch Surface clicked?
-                if (press.Type == UIPressType.Select)
-                {
-                }
-
-                if (press.Key is null)
-                    continue;
-
-                /*
-                    public enum UIKeyModifierFlags : long
-                    {
-                        AlphaShift = 65536,
-                        Shift = 131072,
-                        Control = 262144,
-                        Alternate = 524288,
-                        Command = 1048576,
-                        NumericPad = 2097152
-                    }
-
-                    static var alphaShift: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Caps Lock key.
-                    static var shift: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Shift key.
-                    static var control: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Control key.
-                    static var alternate: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Option key.
-                    static var command: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed the Command key.
-                    static var numericPad: UIKeyModifierFlags
-                        A modifier flag that indicates the user pressed a key located on the numeric keypad.
-                */
-
-                var shift =
-                    press.Key.ModifierFlags.HasFlag(UIKeyModifierFlags.AlphaShift) ||
-                    press.Key.ModifierFlags.HasFlag(UIKeyModifierFlags.Shift);
-
-                var keyCode = press.Key.KeyCode;
-
-                if (keyCode == UIKeyboardHidUsage.KeyboardTab)
-                {
-                }
-            }
         }
 
         /// <summary>
@@ -286,7 +235,48 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public override string? ToString()
             {
+                string? result = null;
+
+                foreach (UIPress press in Presses)
+                {
+                    if (press.Key is null)
+                        continue;
+                    var keyCode = press.Key.KeyCode;
+                    var modifiers = press.Key.ModifierFlags;
+                    var s = $"{keyCode}, modifiers: {modifiers}, chars: <{press.Key.Characters}>";
+
+                    if (result is null)
+                        result = s;
+                    else
+                        result = $"{result},{s}";
+                }
+
+                if (result is not null)
+                {
+                    result = $"({result})";
+                    return result;
+                }
+
                 return base.ToString();
+            }
+        }
+
+        internal class UIHoverGestureRecognizerAdv : UIHoverGestureRecognizer
+        {
+            public UIHoverGestureRecognizerAdv(Action<UIHoverGestureRecognizer> action)
+                : base(action)
+            {
+            }
+
+            public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
+            {
+                base.PressesCancelled(presses, evt);
+            }
+
+            public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
+            {
+                App.Log("UIHoverGestureRecognizerAdv");
+                base.PressesBegan(presses, evt);
             }
         }
     }

@@ -1081,6 +1081,276 @@ namespace Alternet.UI
         /// </summary>
         NavigationCancel = 198,
 
+        /* MacOs */
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        AlternateErase = 199,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        SysReqOrAttention = 200,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        ClearOrAgain = 201,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        CrSelOrProps = 202,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        ExSel = 203,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// An alias for the LANG3 key on Japanese language keyboards.
+        /// </summary>
+        Katakana = 204,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// An alias for the LANG4 key on Japanese language keyboards.
+        /// </summary>
+        Hiragana = 205,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        LockingCapsLock = 206,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        LockingNumLock = 207,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        LockingScrollLock = 208,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Undo = 209,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Cut = 210,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Copy = 211,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Paste = 212,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Find = 213,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        NumPadEqualSignAS400 = 214,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Help = 215,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Power = 216,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        NonUSBackslash = 217,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International1 = 218,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International2 = 219,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International3 = 220,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International4 = 221,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International5 = 222,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International6 = 223,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International7 = 224,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International8 = 225,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        International9 = 226,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang1 = 227,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang2 = 228,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang3 = 229,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang4 = 230,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang5 = 231,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang6 = 232,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang7 = 233,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang8 = 234,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Lang9 = 235,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// An alias for the LANG2 key on Japanese language keyboards from Apple.
+        /// </summary>
+        AlphanumericSwitch = 236,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Separator = 237,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Out = 238,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Oper = 239,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        NonUSPound = 240,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Application = 241,
+
+        /// <summary>
+        /// Key mapped from UIKeyboardHidUsage enum value.
+        /// </summary>
+        Again = 242,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        LineFeed = 243,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Oem8 = 244,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        ProcessKey = 245,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Packet = 246,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Attn = 247,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        EraseEof = 248,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Zoom = 249,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        NoName = 250,
+
+        /// <summary>
+        /// Mappped from the correspoding <see cref="Keys"/> value.
+        /// </summary>
+        Pa1 = 251,
+
         /* max values */
 
         /// <summary>
@@ -1089,13 +1359,8 @@ namespace Alternet.UI
         MaxWxWidgets = Tilde,
 
         /// <summary>
-        /// Max supported enum value when library is running on Maui platform.
-        /// </summary>
-        MaxMaui = NavigationCancel,
-
-        /// <summary>
         /// Max enum value.
         /// </summary>
-        Max = MaxMaui,
+        Max = Pa1,
     }
 }

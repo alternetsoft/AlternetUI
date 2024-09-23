@@ -35,7 +35,10 @@
           <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" Margin="5,0,0,5" IsTextLocalized="true"/>
           <CheckBox Name="passwordCheckBox" Text="Password" Margin="5,0,0,5" IsTextLocalized="true"/>
           <CheckBox Name="hasBorderCheckBox" Text="Has Border" Margin="5,0,0,5" IsTextLocalized="true"/>
-          <CheckBox Name="logPositionCheckBox" Text="Log Position" Margin="5,0,0,5" IsTextLocalized="true"/>
+          <CheckBox Name="logPositionCheckBox" Text="Log Position" Margin="5,0,0,5"
+                    IsTextLocalized="true"/>
+          <CheckBox Name="allowSpaceCheckBox" Text="Allow space char" Margin="5,0,0,5"
+                    IsTextLocalized="true" IsChecked="true"/>
         </VerticalStackPanel>
         <!-- ========================= -->
       </HorizontalStackPanel>

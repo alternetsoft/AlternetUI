@@ -180,10 +180,19 @@ namespace Alternet.UI
         /// Calls <see cref="BubbleKeyDown(KeyEventArgs)"/> for the focused control with
         /// the specified parameters.
         /// </summary>
+        /// <param name="modifiers">The set of modifier keys pressed
+        /// at the time when event was received.</param>
         /// <param name="key">Key.</param>
         /// <param name="repeatCount">Key repeat count.</param>
         /// <param name="handled">Result of the key procesing.</param>
-        public static void BubbleKeyDown(Key key, uint repeatCount, out bool handled)
+        /// <param name="keyStates">The state of the key referenced by the event. Optional.
+        /// Equals <see cref="KeyStates.Down"/> if not specified.</param>
+        public static void BubbleKeyDown(
+            Key key,
+            ModifierKeys modifiers,
+            uint repeatCount,
+            out bool handled,
+            KeyStates keyStates = KeyStates.Down)
         {
             var control = Control.GetFocusedControl();
             if (control is null)
@@ -192,7 +201,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, repeatCount);
+            var eventArgs = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
             control.BubbleKeyDown(eventArgs);
             handled = eventArgs.Handled;
         }
@@ -201,10 +210,19 @@ namespace Alternet.UI
         /// Calls <see cref="BubbleKeyUp(KeyEventArgs)"/> for the focused control with
         /// the specified parameters.
         /// </summary>
+        /// <param name="modifiers">The set of modifier keys pressed
+        /// at the time when event was received.</param>
         /// <param name="key">Key.</param>
         /// <param name="repeatCount">Key repeat count.</param>
         /// <param name="handled">Result of the key procesing.</param>
-        public static void BubbleKeyUp(Key key, uint repeatCount, out bool handled)
+        /// <param name="keyStates">The state of the key referenced by the event. Optional.
+        /// Equals <see cref="KeyStates.None"/> if not specified.</param>
+        public static void BubbleKeyUp(
+            Key key,
+            ModifierKeys modifiers,
+            uint repeatCount,
+            out bool handled,
+            KeyStates keyStates = KeyStates.None)
         {
             var control = Control.GetFocusedControl();
             if (control is null)
@@ -213,7 +231,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, repeatCount);
+            var eventArgs = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
             control.BubbleKeyUp(eventArgs);
             handled = eventArgs.Handled;
         }
@@ -304,6 +322,23 @@ namespace Alternet.UI
             {
                 e.CurrentTarget = s;
                 s.RaiseKeyDown(e);
+            });
+        }
+
+        /// <summary>
+        /// Bubbles <see cref="RaiseKeyUp"/> or <see cref="RaiseKeyDown"/>.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        /// <param name="raiseUpEvent">Whether to raise up or down event.</param>
+        public virtual void BubbleKeyUpOrDown(KeyEventArgs e, bool raiseUpEvent)
+        {
+            BubbleKeyAction(e, (s, e) =>
+            {
+                e.CurrentTarget = s;
+                if(raiseUpEvent)
+                    s.RaiseKeyUp(e);
+                else
+                    s.RaiseKeyDown(e);
             });
         }
 
