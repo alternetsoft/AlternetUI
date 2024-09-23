@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// <param name="keyStates">The state of the key referenced by the event.</param>
         /// <param name="press">Information about the pressed key.</param>
         /// <returns></returns>
-        public virtual Alternet.UI.KeyEventArgs? Convert(
+        public virtual Alternet.UI.KeyEventArgs? ToKeyEventArgs(
             Control? control,
             UIPress press,
             KeyStates keyStates)
@@ -57,6 +57,42 @@ namespace Alternet.UI
                 keyStates,
                 modifiers,
                 0);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts event arguments from <see cref="UIPress"/> to
+        /// <see cref="Alternet.UI.KeyPressEventArgs"/>.
+        /// </summary>
+        /// <param name="control">Target control.</param>
+        /// <param name="press">Information about the pressed key.</param>
+        /// <returns></returns>
+        public virtual Alternet.UI.KeyPressEventArgs[]? ToKeyPressEventArgs(
+            Control? control,
+            UIPress press)
+        {
+            if (press.Key is null || control is null)
+                return null;
+
+            var inputChars = press.Key.Characters;
+
+            if (inputChars is null)
+                return null;
+
+            var length = inputChars.Length;
+
+            if (length == 0)
+                return null;
+
+            Alternet.UI.KeyPressEventArgs[] result = new Alternet.UI.KeyPressEventArgs[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                var inputChar = inputChars[i];
+
+                result[i] = new(control, inputChar);
+            }
 
             return result;
         }

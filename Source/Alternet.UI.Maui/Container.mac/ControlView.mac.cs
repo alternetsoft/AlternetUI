@@ -200,7 +200,7 @@ namespace Alternet.UI
             SKCanvasViewAdv sender,
             SKCanvasViewAdv.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesBegan: {e}", false);
+            App.DebugLogIf($"PressesBegan: {e}", true);
             RaiseUpOrDown(sender, e, false);
         }
 
@@ -213,13 +213,26 @@ namespace Alternet.UI
                 return;
             foreach (var press in e.Presses)
             {
-                var evt = MauiKeyboardHandler.Default.Convert(Control, press, KeyStates.Down);
+                var evt = MauiKeyboardHandler.Default.ToKeyEventArgs(Control, press, KeyStates.Down);
                 if (evt is null)
                     return;
                 Control.BubbleKeyUpOrDown(evt, raiseUpEvent);
 
                 if (evt.Handled)
                     e.Handled = true;
+                else
+                if(!raiseUpEvent)
+                {
+                    var evtKeyPresses = MauiKeyboardHandler.Default.ToKeyPressEventArgs(Control, press);
+                    if (evtKeyPresses is null)
+                        continue;
+                    foreach(var item in evtKeyPresses)
+                    {
+                        Control.BubbleKeyPress(item);
+                        if (item.Handled)
+                            e.Handled = true;
+                    }
+                }
             }
         }
     }

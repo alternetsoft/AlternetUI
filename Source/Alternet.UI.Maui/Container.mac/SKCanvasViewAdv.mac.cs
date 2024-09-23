@@ -135,7 +135,7 @@ namespace Alternet.UI
             UIFocusUpdateContext context,
             UIFocusAnimationCoordinator coordinator)
         {
-            if(OnDidUpdateFocus is not null)
+            if (OnDidUpdateFocus is not null)
             {
                 OnDidUpdateFocus(this, context);
             }
@@ -146,7 +146,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool ShouldUpdateFocus(UIFocusUpdateContext context)
         {
-            if(OnShouldUpdateFocus is not null)
+            if (OnShouldUpdateFocus is not null)
             {
                 return OnShouldUpdateFocus(this, context);
             }
@@ -243,7 +243,7 @@ namespace Alternet.UI
                         continue;
                     var keyCode = press.Key.KeyCode;
                     var modifiers = press.Key.ModifierFlags;
-                    var s = $"{keyCode} with {modifiers}";
+                    var s = $"{keyCode}, modifiers: {modifiers}, chars: <{press.Key.Characters}>";
 
                     if (result is null)
                         result = s;
@@ -258,6 +258,25 @@ namespace Alternet.UI
                 }
 
                 return base.ToString();
+            }
+        }
+
+        internal class UIHoverGestureRecognizerAdv : UIHoverGestureRecognizer
+        {
+            public UIHoverGestureRecognizerAdv(Action<UIHoverGestureRecognizer> action)
+                : base(action)
+            {
+            }
+
+            public override void PressesCancelled(NSSet<UIPress> presses, UIPressesEvent evt)
+            {
+                base.PressesCancelled(presses, evt);
+            }
+
+            public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
+            {
+                App.Log("UIHoverGestureRecognizerAdv");
+                base.PressesBegan(presses, evt);
             }
         }
     }
