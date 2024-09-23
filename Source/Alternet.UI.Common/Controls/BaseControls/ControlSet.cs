@@ -161,6 +161,7 @@ namespace Alternet.UI
         /// Sets vertical alignmnent for all the controls in the set.
         /// </summary>
         /// <param name="value">A vertical alignment setting.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet VerticalAlignment(VerticalAlignment value)
         {
             return DoInsideLayout(() =>
@@ -174,6 +175,7 @@ namespace Alternet.UI
         /// Sets font for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Font(Font? value)
         {
             return DoInsideLayout(() =>
@@ -187,6 +189,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.IsBold"/> for all the controls in the set.
         /// </summary>
         /// <param name="value">New value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet IsBold(bool value)
         {
             return DoInsideLayout(() =>
@@ -200,6 +203,7 @@ namespace Alternet.UI
         /// Sets background color for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet BackgroundColor(Color? value)
         {
             foreach (var item in items)
@@ -211,6 +215,7 @@ namespace Alternet.UI
         /// Sets background color for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet ForegroundColor(Color? value)
         {
             foreach (var item in items)
@@ -221,7 +226,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="Control.SuspendLayout()"/> for all parents of the controls in the set.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet SuspendLayout()
         {
             foreach (var item in items)
@@ -235,7 +240,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="Control.SuspendLayout()"/> for all parents of the controls in the set.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet ResumeLayout()
         {
             foreach (var item in items)
@@ -251,6 +256,7 @@ namespace Alternet.UI
         /// and <see cref="ResumeLayout"/>.
         /// </summary>
         /// <param name="action">Action that will be executed.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet DoInsideLayout(Action action)
         {
             SuspendLayout();
@@ -269,6 +275,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Visible"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">New property value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Visible(bool value)
         {
             return DoInsideLayout(() =>
@@ -283,6 +290,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New 'Enabled' property value.</param>
         /// <param name="index">Index of the control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Enabled(int index, bool value)
         {
             items[index].Enabled = value;
@@ -293,6 +301,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Enabled"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">New 'Enabled' property value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Enabled(bool value)
         {
             foreach (var item in items)
@@ -305,6 +314,7 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="T">Type of the action parameter.</typeparam>
         /// <param name="action">Action to execute.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Action<T>(Action<T> action)
             where T : Control
         {
@@ -327,6 +337,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet SuggestedWidthToMax()
         {
             var v = MaxWidth;
@@ -336,6 +347,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet WidthToMax()
         {
             var v = MaxWidth;
@@ -345,6 +357,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested height for all the controls to the max value in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet SuggestedHeightToMax()
         {
             return SuggestedHeight(MaxHeight);
@@ -353,6 +366,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the suggested width for all the controls in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet SuggestedWidth(Coord width)
         {
             return DoInsideLayout(() =>
@@ -367,6 +381,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the width for all the controls in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Width(Coord width)
         {
             return DoInsideLayout(() =>
@@ -381,6 +396,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the suggested height for all the controls in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet SuggestedHeight(Coord height)
         {
             return DoInsideLayout(() =>
@@ -394,6 +410,7 @@ namespace Alternet.UI
         /// Sets horizontal alignmnent for all the controls in the set.
         /// </summary>
         /// <param name="value">A horizontal alignment setting.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet HorizontalAlignment(HorizontalAlignment value)
         {
             return DoInsideLayout(() =>
@@ -407,6 +424,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Margin"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">An oouter margin of a control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Margin(Thickness value)
         {
             return DoInsideLayout(() =>
@@ -420,6 +438,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Padding"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">A padding of a control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Padding(Thickness value)
         {
             return DoInsideLayout(() =>
@@ -433,6 +452,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Size"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">size of a control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Size(SizeD value)
         {
             return DoInsideLayout(() =>
@@ -446,6 +466,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.MinimumSize"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum size of a control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet MinSize(SizeD value)
         {
             return DoInsideLayout(() =>
@@ -459,6 +480,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.MinWidth"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum width of a control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet MinWidth(Coord value)
         {
             return DoInsideLayout(() =>
@@ -472,6 +494,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.MinHeight"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum height of a control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet MinHeight(Coord value)
         {
             return DoInsideLayout(() =>
@@ -488,6 +511,7 @@ namespace Alternet.UI
         /// <param name="top">The margin for the top side.</param>
         /// <param name="right">The margin for the right side.</param>
         /// <param name="bottom">The margin for the bottom side.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Margin(Coord left, Coord top, Coord right, Coord bottom)
         {
             return DoInsideLayout(() =>
@@ -502,6 +526,7 @@ namespace Alternet.UI
         /// Sets <see cref="ControlAndLabel.LabelSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet LabelSuggestedWidth(Coord value)
         {
             return DoInsideLayout(() =>
@@ -517,6 +542,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested width for inner childs of the controls in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet InnerSuggestedWidthToMax()
         {
             var v = InnerMaxWidth;
@@ -526,6 +552,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets suggested width for all the controls in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet LabelSuggestedWidthToMax()
         {
             var v = LabelMaxWidth;
@@ -536,6 +563,7 @@ namespace Alternet.UI
         /// Sets <see cref="ControlAndLabel.InnerSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet InnerSuggestedWidth(Coord value)
         {
             return DoInsideLayout(() =>
@@ -553,6 +581,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"><c>true</c> enables editing of the text;
         /// <c>false</c> disables it.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet IsEditable(bool value)
         {
             foreach (var item in Items)
@@ -568,6 +597,7 @@ namespace Alternet.UI
         /// Sets <see cref="Control.Parent"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Parent control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Parent(Control? value)
         {
             foreach (var item in items)
