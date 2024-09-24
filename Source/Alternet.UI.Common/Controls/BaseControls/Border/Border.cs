@@ -220,13 +220,6 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
-        [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
         /// <summary>
         /// Creates border filled with default settings.
         /// </summary>

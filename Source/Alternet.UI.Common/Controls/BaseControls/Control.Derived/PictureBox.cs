@@ -302,13 +302,6 @@ namespace Alternet.UI
             }
         }
 
-        [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
         internal ImageDrawable Primitive => primitive;
 
         void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
