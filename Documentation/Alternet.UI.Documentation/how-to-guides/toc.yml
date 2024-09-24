@@ -8,3 +8,5 @@ items:
   href: using-uixml-previewer/using-uixml-previewer.md
 - name: Using SkiaSharp
   href: using-skiasharp/using-skiasharp.md
+- name: Running MAUI apps on macOs
+  href: run-macos-maui/run-macos-maui.md
