@@ -31,8 +31,12 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<ToolBar>("Test Enabled", TestGenericToolBarEnabled);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Delete", TestGenericToolBarDelete);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Sticky", TestGenericToolBarSticky);
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Foreground Color", TestGenericToolBarForegroundColor);
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Background Color", TestGenericToolBarBackgroundColor);
+            PropertyGrid.AddSimpleAction<ToolBar>(
+                "Test Foreground Color",
+                TestGenericToolBarForegroundColor);
+            PropertyGrid.AddSimpleAction<ToolBar>(
+                "Test Background Color",
+                TestGenericToolBarBackgroundColor);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Font", TestGenericToolBarFont);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Background", TestGenericToolBarBackground);
             PropertyGrid.AddSimpleAction<ToolBar>("Reset Background", TestGenericToolBarResetBackground);
@@ -40,6 +44,54 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<ToolBar>("Add OK button", TestGenericToolBarAddOk);
             PropertyGrid.AddSimpleAction<ToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
             PropertyGrid.AddSimpleAction<ToolBar>("ReInit", TestGenericToolBarReInit);
+
+            PropertyGrid.AddSimpleAction<TextBox>("SelectionStart++", () =>
+            {
+                var control = GetSelectedControl<TextBox>();
+                if (control is null)
+                    return;
+                control.SelectionStart += 1;
+            });
+
+            PropertyGrid.AddSimpleAction<TextBox>("SelectionStart--", () =>
+            {
+                var control = GetSelectedControl<TextBox>();
+                if (control is null)
+                    return;
+                control.SelectionStart -= 1;
+            });
+
+            PropertyGrid.AddSimpleAction<TextBox>("SelectionLength--", () =>
+            {
+                var control = GetSelectedControl<TextBox>();
+                if (control is null)
+                    return;
+                control.SelectionLength -= 1;
+            });
+
+            PropertyGrid.AddSimpleAction<TextBox>("SelectionLength++", () =>
+            {
+                var control = GetSelectedControl<TextBox>();
+                if (control is null)
+                    return;
+                control.SelectionLength += 1;
+            });
+
+            PropertyGrid.AddSimpleAction<TextBox>("Change SelectedText", () =>
+            {
+                var control = GetSelectedControl<TextBox>();
+                if (control is null)
+                    return;
+
+                TextFromUserParams prm = new();
+                prm.OnApply = (s) =>
+                {
+                    control.SelectedText = s ?? string.Empty;
+                };
+
+                DialogFactory.GetTextFromUserAsync(prm);
+            });
+
 #endif
         }
 
