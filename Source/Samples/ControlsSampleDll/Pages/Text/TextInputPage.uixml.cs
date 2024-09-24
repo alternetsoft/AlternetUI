@@ -102,6 +102,18 @@ namespace ControlsSample
             if (tab1.Visible)
             {
                 textBox.IdleAction();
+
+                object[] info =
+                    [
+                        "Text:", $"<{textBox.Text}>", Environment.NewLine,
+                        "SelectedText:", $"<{textBox.SelectedText}> ({textBox.SelectedText.Length})", 
+                        Environment.NewLine,
+                        "SelectionStart:", $"<{textBox.SelectionStart}>", Environment.NewLine,
+                        "SelectionLength:", $"<{textBox.SelectionLength}>", Environment.NewLine,
+                    ];
+
+                var s = StringUtils.ToStringSimple(info);
+                memo.Text = s;
             }
         }
 

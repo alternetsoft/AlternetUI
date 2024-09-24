@@ -270,13 +270,6 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.RichTextBox;
 
         [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
-        [Browsable(false)]
         internal new IRichTextBoxHandler Handler
         {
             get

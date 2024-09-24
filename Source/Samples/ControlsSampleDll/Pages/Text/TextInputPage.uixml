@@ -14,34 +14,39 @@
         <PictureBox Name="textImage"/>
       </HorizontalStackPanel>
 
-      <HorizontalStackPanel Margin="5" HorizontalAlignment="Left">
+      <HorizontalStackPanel Margin="0,5,0,5" HorizontalAlignment="Left">
         <Button Text="Change text..." Margin="0,0,0,5" Name="changeTextButton"
                 Click="ChangeTextButton_Click"  IsTextLocalized="true"/>
         <Button Text="Properties..." Margin="0,0,0,5" Name="showPropertiesButton"
                 Click="ShowProperties_Click" IsTextLocalized="true" />
       </HorizontalStackPanel>
 
-      <HorizontalStackPanel>
+      <TabControl MinSizeGrowMode="Height">
         <!-- ========================= -->
-        <VerticalStackPanel Margin="5" HorizontalAlignment="Left" Name="textBoxOptionsPanel">
-          <HorizontalStackPanel>
-            <ComboBoxAndLabel Title="Text Align" Name="textAlignEdit" IsTitleLocalized="true"
-                              Margin="0,0,0,5" VerticalAlignment="Center"/>
-          </HorizontalStackPanel>
+        <HorizontalStackPanel Title="Settings" Padding="5">
+          <VerticalStackPanel Margin="5" HorizontalAlignment="Left" Name="textBoxOptionsPanel">
+            <HorizontalStackPanel>
+              <ComboBoxAndLabel Title="Text Align" Name="textAlignEdit" IsTitleLocalized="true"
+                                Margin="0,0,0,5" VerticalAlignment="Center"/>
+            </HorizontalStackPanel>
 
-        </VerticalStackPanel>
+          </VerticalStackPanel>
+          <VerticalStackPanel Margin="5" HorizontalAlignment="Left">
+            <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" Margin="5,0,0,5" IsTextLocalized="true"/>
+            <CheckBox Name="passwordCheckBox" Text="Password" Margin="5,0,0,5" IsTextLocalized="true"/>
+            <CheckBox Name="hasBorderCheckBox" Text="Has Border" Margin="5,0,0,5" IsTextLocalized="true"/>
+            <CheckBox Name="logPositionCheckBox" Text="Log Position" Margin="5,0,0,5"
+                      IsTextLocalized="true"/>
+            <CheckBox Name="allowSpaceCheckBox" Text="Allow space char" Margin="5,0,0,5"
+                      IsTextLocalized="true" IsChecked="true"/>
+          </VerticalStackPanel>
+        </HorizontalStackPanel>
         <!-- ========================= -->
-        <VerticalStackPanel Margin="5" HorizontalAlignment="Left">
-          <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" Margin="5,0,0,5" IsTextLocalized="true"/>
-          <CheckBox Name="passwordCheckBox" Text="Password" Margin="5,0,0,5" IsTextLocalized="true"/>
-          <CheckBox Name="hasBorderCheckBox" Text="Has Border" Margin="5,0,0,5" IsTextLocalized="true"/>
-          <CheckBox Name="logPositionCheckBox" Text="Log Position" Margin="5,0,0,5"
-                    IsTextLocalized="true"/>
-          <CheckBox Name="allowSpaceCheckBox" Text="Allow space char" Margin="5,0,0,5"
-                    IsTextLocalized="true" IsChecked="true"/>
-        </VerticalStackPanel>
+        <MultilineTextBox Name="memo" Title="Information" HasBorder="false" ReadOnly="true"
+                          Text="TextBox information will be here"/>
         <!-- ========================= -->
-      </HorizontalStackPanel>
+      </TabControl>
+
 
 
     </VerticalStackPanel>

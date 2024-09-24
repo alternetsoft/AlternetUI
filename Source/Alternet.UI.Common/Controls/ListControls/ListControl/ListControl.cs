@@ -205,12 +205,6 @@ namespace Alternet.UI
             set => base.Layout = value;
         }
 
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
         internal new Thickness Padding
         {
             get => base.Padding;

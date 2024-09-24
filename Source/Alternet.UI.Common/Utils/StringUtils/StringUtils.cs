@@ -190,7 +190,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static bool StartsWith<T>(string s, IEnumerable<T> items)
         {
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 var value = item?.ToString();
                 if (value is null)
@@ -237,7 +237,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Combines array elements to comma separated string inside round brackets.
+        /// Combines array elements to string without any separators.
+        /// </summary>
+        public static string ToStringSimple<T>(IEnumerable<T> items)
+        {
+            StringBuilder builder = new();
+
+            foreach (var item in items)
+            {
+                if (item is not null)
+                    builder.Append(item.ToString());
+            }
+
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Combines array elements to string inside <paramref name="prefix"/>
+        /// and <paramref name="suffix"/>. Array elements are separated by the
+        /// string specified in the <paramref name="separator"/> parameter.
         /// </summary>
         /// <typeparam name="T">Type of the array item.</typeparam>
         /// <param name="items">Array of items.</param>
@@ -259,7 +277,7 @@ namespace Alternet.UI
 
             StringBuilder builder = new();
 
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 if (builder.Length == 0)
                     builder.Append($"{prefix}{item}");

@@ -603,13 +603,6 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
-        [Browsable(false)]
         internal new string Text
         {
             get => base.Text;

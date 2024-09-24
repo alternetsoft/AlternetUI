@@ -128,6 +128,125 @@ namespace Alternet.UI
         public static ModifierKeys? DefaultAutoUrlModifiers { get; set; }
 
         /// <summary>
+        /// Gets or sets the starting point of text selected in the control.
+        /// </summary>
+        /// <returns>
+        /// The starting position of text selected in the control.
+        /// </returns>
+        [Category("Appearance")]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual int SelectionStart
+        {
+            get
+            {
+                return (int)GetSelectionStart();
+            }
+
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                if (SelectionStart == value)
+                    return;
+                SetSelection(value, GetSelectionEnd());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the currently selected text in the control.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the currently selected text in the control.
+        /// </returns>
+        /// <remarks>
+        /// If there is no selection, the replacement text is inserted at the caret.
+        /// </remarks>
+        [Category("Appearance")]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual string SelectedText
+        {
+            get
+            {
+                return GetStringSelection();
+            }
+
+            set
+            {
+                value ??= string.Empty;
+
+                if (SelectedText == value)
+                    return;
+
+                if (HasSelection)
+                {
+                    Replace(GetSelectionStart(), GetSelectionEnd(), value);
+                }
+                else
+                {
+                    WriteText(value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the number of characters selected in the control.
+        /// </summary>
+        /// <returns>
+        /// The number of characters selected in the control.
+        /// </returns>
+        [Category("Appearance")]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual int SelectionLength
+        {
+            get
+            {
+                if (HasSelection)
+                {
+                    var selectionStart = GetSelectionStart();
+                    var selectionEnd = GetSelectionEnd();
+                    var selectionLength = (int)(selectionEnd - selectionStart);
+                    if (selectionLength < 0)
+                        selectionLength = 0;
+                    return selectionLength;
+                }
+                else
+                    return 0;
+            }
+
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                if (SelectionLength == value)
+                    return;
+                if(value == 0)
+                {
+                    SelectNone();
+                }
+                else
+                {
+                    if (HasSelection)
+                    {
+                        var selectionStart = GetSelectionStart();
+                        var selectionEnd = selectionStart + value;
+                        SetSelection(selectionStart, selectionEnd);
+                    }
+                    else
+                    {
+                        var selectionStart = GetInsertionPoint();
+                        if (selectionStart < 0)
+                            selectionStart = 0;
+                        var selectionEnd = selectionStart + value;
+                        SetSelection(selectionStart, selectionEnd);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
         /// are opened in the default browser.
         /// </summary>
@@ -270,6 +389,21 @@ namespace Alternet.UI
                     return;
                 textAlign = value;
                 Handler.TextAlign = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the length of text in the control.
+        /// </summary>
+        /// <returns>
+        /// The number of characters contained in the text of the control.
+        /// </returns>
+        [Browsable(false)]
+        public virtual int TextLength
+        {
+            get
+            {
+                return Text.Length;
             }
         }
 
@@ -782,7 +916,7 @@ namespace Alternet.UI
         /// <summary>
         /// Clears text formatting when <see cref="TextBox"/> is in rich edit mode.
         /// </summary>
-        public void ClearTextFormatting()
+        public virtual void ClearTextFormatting()
         {
             var attr = CreateTextAttr();
             attr.SetFlags(TextBoxTextAttrFlags.All);
@@ -806,7 +940,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If any of the color parameters is null, it will not be changed.
         /// </remarks>
-        public void SelectionSetColor(Color? textColor, Color? backColor = null)
+        public virtual void SelectionSetColor(Color? textColor, Color? backColor = null)
         {
             var position = GetInsertionPoint();
             var fs = GetStyle(position);
