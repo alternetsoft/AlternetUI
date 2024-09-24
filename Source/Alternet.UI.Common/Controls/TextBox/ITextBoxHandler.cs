@@ -191,11 +191,5 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="TextBox.SetStyle"/>
         bool SetStyle(long start, long end, ITextBoxTextAttr style);
-
-        /// <summary>
-        /// Sets text validator.
-        /// </summary>
-        /// <param name="value">Text validator.</param>
-        void SetValidator(IValueValidator? value);
     }
 }

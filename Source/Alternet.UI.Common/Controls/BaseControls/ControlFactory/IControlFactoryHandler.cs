@@ -87,23 +87,6 @@ namespace Alternet.UI
         IPropertyGridChoices CreateChoices();
 
         /// <summary>
-        /// Creates <see cref="IValueValidatorText"/> interface provider.
-        /// </summary>
-        /// <returns></returns>
-        /// <param name="style"></param>
-        IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style);
-
-        /// <summary>
-        /// Creates <see cref="IValueValidatorText"/> interface provider.
-        /// </summary>
-        /// <param name="numericType"></param>
-        /// <param name="valueBase"></param>
-        /// <returns></returns>
-        IValueValidatorText CreateValueValidatorNum(
-            ValueValidatorNumStyle numericType,
-            int valueBase = 10);
-
-        /// <summary>
         /// Creates <see cref="IPropertyGridHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

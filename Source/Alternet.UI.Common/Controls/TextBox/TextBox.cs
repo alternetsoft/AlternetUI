@@ -25,7 +25,6 @@ namespace Alternet.UI
         private bool readOnly = false;
         private TextBoxTextWrap textWrap;
         private GenericAlignment textAlign;
-        private IValueValidator? validator;
 
         static TextBox()
         {
@@ -262,31 +261,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual ModifierKeys? AutoUrlModifiers { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="IValueValidator"/> for the <see cref="TextBox"/> control.
-        /// </summary>
-        /// <remarks>
-        /// <see cref="IValueValidator"/> allows to set limitations on possible values of
-        /// the <see cref="Control.Text"/> property. See <see cref="IValueValidatorText"/> and
-        /// <see cref="ValueValidatorFactory.CreateValueValidatorText"/>.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual IValueValidator? Validator
-        {
-            get
-            {
-                return validator;
-            }
-
-            set
-            {
-                if (validator == value)
-                    return;
-                validator = value;
-                Handler.SetValidator(value);
-            }
-        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.TextBox;

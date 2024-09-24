@@ -373,7 +373,7 @@ namespace Alternet.UI
             return new TextBoxTextAttr(NativeControl.GetDefaultStyle());
         }
 
-        void ITextBoxHandler.SetValidator(IValueValidator? value)
+        public void SetValidator(IValueValidator? value)
         {
             if (value == null)
                 NativeControl.Validator = IntPtr.Zero;
@@ -499,11 +499,7 @@ namespace Alternet.UI
         {
             public NativeTextBox(TextBox control)
             {
-                var validator = control.Validator;
                 IntPtr ptr = default;
-                if (validator != null)
-                    ptr = validator.Handle;
-
                 SetNativePointer(NativeApi.TextBox_CreateTextBox_(ptr));
             }
         }

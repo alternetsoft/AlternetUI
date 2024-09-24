@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <remarks>
     /// Creates <see cref="IValueValidator"/> instances.
     /// </remarks>
-    public class ValueValidatorFactory
+    internal class ValueValidatorFactory
     {
         private static bool isSilent;
 

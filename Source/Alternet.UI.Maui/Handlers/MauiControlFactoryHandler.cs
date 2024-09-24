@@ -153,16 +153,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IValueValidatorText IControlFactoryHandler.CreateValueValidatorNum(ValueValidatorNumStyle numericType, int valueBase)
-        {
-            throw new NotImplementedException();
-        }
-
-        IValueValidatorText IControlFactoryHandler.CreateValueValidatorText(ValueValidatorTextStyle style)
-        {
-            throw new NotImplementedException();
-        }
-
         IPropertyGridVariant IControlFactoryHandler.CreateVariant()
         {
             throw new NotImplementedException();

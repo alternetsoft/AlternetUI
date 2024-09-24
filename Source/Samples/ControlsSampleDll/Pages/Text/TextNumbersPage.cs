@@ -30,9 +30,6 @@ namespace ControlsSample
         private readonly HexEditorUInt32 uint32HexEdit = new("UInt32 Hex", 0x25E6);
 
         [IsTextLocalized(true)]
-        private readonly CheckBox bellOnErrorCheckBox = new("Bell On Error");
-
-        [IsTextLocalized(true)]
         private readonly Label label = new("Try to enter invalid numbers");
 
         private readonly ValueEditorByte twoDigitsEdit = new("Two digits", 15);
@@ -52,10 +49,6 @@ namespace ControlsSample
             Group(shortEdit, byteEdit, doubleEdit, udoubleEdit, uint32HexEdit, twoDigitsEdit)
                 .Margin(0, 5, 5, 5).Parent(this).InnerSuggestedWidth(200)
                 .Action<ValueEditorCustom>(BindTextChanged).LabelSuggestedWidthToMax();
-
-            bellOnErrorCheckBox.BindBoolProp(
-                ValueValidatorFactory.Default,
-                nameof(ValueValidatorFactory.BellOnError));
 
             label.Parent = this;
         }
