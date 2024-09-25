@@ -462,9 +462,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.GetImageSize"/>
         SizeI GetImageSize(IPropertyGridItem? p, int item);
 
-        /// <inheritdoc cref="PropertyGrid.SetPropertyValidator"/>
-        void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator);
-
         /// <summary>
         /// Creates color property.
         /// </summary>

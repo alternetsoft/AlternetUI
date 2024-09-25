@@ -1333,7 +1333,6 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             var result = CreateStringItemWithKind(label, name, value.ToString(), prm);
-            SetPropertyValidator(result, ValueValidatorFactory.Default.DecimalValidator);
             return result;
         }
 
@@ -3663,16 +3662,6 @@ namespace Alternet.UI
         public virtual RectI GetImageRect(IPropertyGridItem prop, int item)
         {
             return Handler.GetImageRect(prop, item);
-        }
-
-        /// <summary>
-        /// Sets validator of a property.
-        /// </summary>
-        /// <param name="prop">Property item.</param>
-        /// <param name="validator">Value validator.</param>
-        public virtual void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator)
-        {
-            Handler.SetPropertyValidator(prop, validator);
         }
 
         /// <summary>

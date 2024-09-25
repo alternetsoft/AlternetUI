@@ -720,9 +720,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGrid.GetImageRect"/>
         RectI GetImageRect(IPropertyGridItem prop, int item);
 
-        /// <inheritdoc cref="PropertyGrid.SetPropertyValidator"/>
-        void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator);
-
         /// <inheritdoc cref="PropertyGrid.GetImageSize"/>
         SizeI GetImageSize(IPropertyGridItem? prop, int item);
 

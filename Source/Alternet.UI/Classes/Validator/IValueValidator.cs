@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// error message. It filters events (such as keystrokes), thereby changing the behaviour
     /// of the associated control. Validators can be plugged into controls dynamically.
     /// </remarks>
-    public interface IValueValidator : IDisposable
+    internal interface IValueValidator : IDisposable
     {
         /// <summary>
         /// Object handle.

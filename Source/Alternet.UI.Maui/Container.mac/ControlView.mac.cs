@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         /// <param name="recognizer">Gesture recognizer.</param>
         protected virtual void HandleMacPlatformHoverGestureRecognizer(
-            SKCanvasViewAdv sender,
+            PlatformView sender,
             UIHoverGestureRecognizer recognizer)
         {
             App.DebugLogIf($"HoverGestureRecognizer: {recognizer.State}", false);
@@ -105,7 +105,7 @@ namespace Alternet.UI
         /// Handles 'ResignFirstResponder' event of the platform view on mac platform.
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
-        protected virtual void HandleMacPlatformResignFirstResponder(SKCanvasViewAdv sender)
+        protected virtual void HandleMacPlatformResignFirstResponder(PlatformView sender)
         {
             App.DebugLogIf($"ResignFirstResponder", false);
             Control?.RaiseLostFocus();
@@ -115,7 +115,7 @@ namespace Alternet.UI
         /// Handles 'BecomeFirstResponder' event of the platform view on mac platform.
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
-        protected virtual void HandleMacPlatformBecomeFirstResponder(SKCanvasViewAdv sender)
+        protected virtual void HandleMacPlatformBecomeFirstResponder(PlatformView sender)
         {
             App.DebugLogIf($"BecomeFirstResponder", false);
             Control?.RaiseGotFocus();
@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         /// <param name="context">Event context.</param>
         protected virtual bool HandleMacPlatformShouldUpdateFocus(
-            SKCanvasViewAdv sender,
+            PlatformView sender,
             UIFocusUpdateContext context)
         {
             return true;
@@ -139,7 +139,7 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         /// <param name="context">Event context.</param>
         protected virtual void HandleMacPlatformDidUpdateFocus(
-            SKCanvasViewAdv sender,
+            PlatformView sender,
             UIFocusUpdateContext context)
         {
             App.DebugLogIf($"DidUpdateFocus", false);
@@ -160,8 +160,8 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
         protected virtual void HandleMacPlatformPressesEnded(
-            SKCanvasViewAdv sender,
-            SKCanvasViewAdv.PressesEventArgs e)
+            PlatformView sender,
+            PlatformView.PressesEventArgs e)
         {
             App.DebugLogIf($"PressesEnded: {e}", false);
         }
@@ -172,8 +172,8 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
         protected virtual void HandleMacPlatformPressesChanged(
-            SKCanvasViewAdv sender,
-            SKCanvasViewAdv.PressesEventArgs e)
+            PlatformView sender,
+            PlatformView.PressesEventArgs e)
         {
             App.DebugLogIf($"PressesChanged: {e}", false);
         }
@@ -184,8 +184,8 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
         protected virtual void HandleMacPlatformPressesCancelled(
-            SKCanvasViewAdv sender,
-            SKCanvasViewAdv.PressesEventArgs e)
+            PlatformView sender,
+            PlatformView.PressesEventArgs e)
         {
             App.DebugLogIf($"PressesCancelled: {e}", false);
             RaiseUpOrDown(sender, e, true);
@@ -197,16 +197,16 @@ namespace Alternet.UI
         /// <param name="sender">Sender of the event.</param>
         /// <param name="e">Event arguments.</param>
         protected virtual void HandleMacPlatformPressesBegan(
-            SKCanvasViewAdv sender,
-            SKCanvasViewAdv.PressesEventArgs e)
+            PlatformView sender,
+            PlatformView.PressesEventArgs e)
         {
             App.DebugLogIf($"PressesBegan: {e}", true);
             RaiseUpOrDown(sender, e, false);
         }
 
         private void RaiseUpOrDown(
-            SKCanvasViewAdv sender,
-            SKCanvasViewAdv.PressesEventArgs e,
+            PlatformView sender,
+            PlatformView.PressesEventArgs e,
             bool raiseUpEvent)
         {
             if (Control is null)

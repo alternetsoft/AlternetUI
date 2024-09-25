@@ -17,52 +17,52 @@ namespace Alternet.UI
     /// <summary>
     /// Adds additional functionality to the <see cref="SkiaSharp.Views.iOS.SKCanvasView"/> control.
     /// </summary>
-    public partial class SKCanvasViewAdv : SkiaSharp.Views.iOS.SKCanvasView
+    public partial class PlatformView : SkiaSharp.Views.iOS.SKCanvasView
     {
         /// <summary>
         /// Raised when <see cref="PressesBegan"/> is called.
         /// </summary>
-        public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesBegan;
+        public Action<PlatformView, PressesEventArgs>? OnPressesBegan;
 
         /// <summary>
         /// Raised when <see cref="PressesCancelled"/> is called.
         /// </summary>
-        public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesCancelled;
+        public Action<PlatformView, PressesEventArgs>? OnPressesCancelled;
 
         /// <summary>
         /// Raised when <see cref="UIHoverGestureRecognizer"/> state is changed.
         /// </summary>
-        public Action<SKCanvasViewAdv, UIHoverGestureRecognizer>? OnHoverGestureRecognizer;
+        public Action<PlatformView, UIHoverGestureRecognizer>? OnHoverGestureRecognizer;
 
         /// <summary>
         /// Raised when <see cref="ShouldUpdateFocus"/> is called.
         /// </summary>
-        public Func<SKCanvasViewAdv, UIFocusUpdateContext, bool>? OnShouldUpdateFocus;
+        public Func<PlatformView, UIFocusUpdateContext, bool>? OnShouldUpdateFocus;
 
         /// <summary>
         /// Raised when <see cref="DidUpdateFocus"/> is called.
         /// </summary>
-        public Action<SKCanvasViewAdv, UIFocusUpdateContext>? OnDidUpdateFocus;
+        public Action<PlatformView, UIFocusUpdateContext>? OnDidUpdateFocus;
 
         /// <summary>
         /// Raised when <see cref="PressesChanged"/> is called.
         /// </summary>
-        public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesChanged;
+        public Action<PlatformView, PressesEventArgs>? OnPressesChanged;
 
         /// <summary>
         /// Raised when <see cref="BecomeFirstResponder"/> is called.
         /// </summary>
-        public Action<SKCanvasViewAdv>? OnBecomeFirstResponder;
+        public Action<PlatformView>? OnBecomeFirstResponder;
 
         /// <summary>
         /// Raised when <see cref="ResignFirstResponder"/> is called.
         /// </summary>
-        public Action<SKCanvasViewAdv>? OnResignFirstResponder;
+        public Action<PlatformView>? OnResignFirstResponder;
 
         /// <summary>
         /// Raised when <see cref="PressesEnded"/> is called.
         /// </summary>
-        public Action<SKCanvasViewAdv, PressesEventArgs>? OnPressesEnded;
+        public Action<PlatformView, PressesEventArgs>? OnPressesEnded;
 
         private static readonly Lazy<bool> isValidEnvironment = new(() =>
         {
@@ -78,19 +78,19 @@ namespace Alternet.UI
         });
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SKCanvasViewAdv"/> class.
+        /// Initializes a new instance of the <see cref="PlatformView"/> class.
         /// </summary>
         /// <param name="handle"></param>
-        public SKCanvasViewAdv(IntPtr handle)
+        public PlatformView(IntPtr handle)
             : base(handle)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SKCanvasViewAdv"/> class.
+        /// Initializes a new instance of the <see cref="PlatformView"/> class.
         /// </summary>
-        public SKCanvasViewAdv()
+        public PlatformView()
         {
             Initialize();
         }
@@ -188,7 +188,7 @@ namespace Alternet.UI
         private void CallAction(
             NSSet<UIPress> presses,
             UIPressesEvent evt,
-            Action<SKCanvasViewAdv, PressesEventArgs>? action,
+            Action<PlatformView, PressesEventArgs>? action,
             Action<NSSet<UIPress>, UIPressesEvent> baseAction)
         {
             var handled = false;

@@ -12,14 +12,15 @@ using SkiaSharp.Views.Windows;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Overrides view handler and changes platform view to the <see cref="SKCanvasViewAdv"/>.
+    /// Overrides <see cref="SKCanvasViewHandler"/> and changes
+    /// platform view to the <see cref="PlatformView"/>.
     /// </summary>
-    public class SKCanvasViewHandlerAdv : SKCanvasViewHandler
+    public class PlatformViewHandler : SKCanvasViewHandler
     {
         /// <inheritdoc/>
         protected override SKXamlCanvas CreatePlatformView()
         {
-            return new SKCanvasViewAdv();
+            return new PlatformView();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Validates text controls, providing a variety of filtering behaviours.
     /// </summary>
-    public interface IValueValidatorText : IValueValidator
+    internal interface IValueValidatorText : IValueValidator
     {
         /// <summary>
         /// Gets or sets whether non-ASCII characters are filtered out.
