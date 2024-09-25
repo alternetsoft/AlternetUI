@@ -29,6 +29,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets text for <see cref="LogVersion"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLogVersionText()
+        {
+            var wxWidgets = SystemSettings.Handler.GetLibraryVersionString();
+            var bitsOS = App.Is64BitOS ? "x64" : "x86";
+            var bitsApp = App.Is64BitProcess ? "x64" : "x86";
+
+            var mauiPlatform = AssemblyUtils.InvokeMauiUtilsGetDevicePlatform();
+
+            if(mauiPlatform is not null)
+            {
+                mauiPlatform = $" ({mauiPlatform})";
+            }
+
+            var backendOs = $"{App.BackendOS}{mauiPlatform}";
+
+            var net = $"Net: {Environment.Version}, OS: {bitsOS} {backendOs}, App: {bitsApp}";
+
+            var minDPI = Display.MinDPI;
+            var maxDPI = Display.MaxDPI;
+            string dpiValue;
+
+            if (minDPI == maxDPI)
+                dpiValue = $"{minDPI}";
+            else
+                dpiValue = $"{minDPI}..{maxDPI}";
+
+            var dpi = $"DPI: {dpiValue}";
+            var ui = $"UI: {SystemSettings.Handler.GetUIVersion()}";
+            var s = $"{ui}, {net}, {wxWidgets}, {dpi}";
+
+            return s;
+        }
+
+        /// <summary>
         /// Logs environment versions.
         /// </summary>
         public static void LogVersion(bool showAnyway = false)
@@ -42,25 +79,8 @@ namespace Alternet.UI
             if (LogUtils.Flags.HasFlag(LogUtils.LogFlags.VersionLogged))
                 return;
             LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
-            var wxWidgets = SystemSettings.Handler.GetLibraryVersionString();
-            var bitsOS = App.Is64BitOS ? "x64" : "x86";
-            var bitsApp = App.Is64BitProcess ? "x64" : "x86";
-            var net = $"Net: {Environment.Version}, OS: {bitsOS}, App: {bitsApp}";
 
-            var minDPI = Display.MinDPI;
-            var maxDPI = Display.MaxDPI;
-            string dpiValue;
-
-            if (minDPI == maxDPI)
-                dpiValue = $"{minDPI}";
-            else
-                dpiValue = $"{minDPI}..{maxDPI}";
-
-            var dpi = $"DPI: {dpiValue}";
-            var ui = $"UI: {SystemSettings.Handler.GetUIVersion()}";
-            var counterStr = $"Counter: {App.BuildCounter}";
-            var s = $"{ui}, {net}, {wxWidgets}, {dpi}, {counterStr}";
-            App.Log(s);
+            App.Log(GetLogVersionText());
             if (App.LogFileIsEnabled)
                 App.DebugLog($"Log File = {App.LogFilePath}");
             if (Display.MinScaleFactor != Display.MaxScaleFactor)

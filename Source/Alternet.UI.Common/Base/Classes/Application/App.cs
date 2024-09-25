@@ -134,9 +134,10 @@ namespace Alternet.UI
 
             if (IsWindowsOS)
             {
-#if !DEBUG
-                FastThreadExceptions = true;
-#endif
+                if (!DebugUtils.IsDebugDefined)
+                {
+                    FastThreadExceptions = true;
+                }
 
                 BackendOS = OperatingSystems.Windows;
                 return;
@@ -155,6 +156,33 @@ namespace Alternet.UI
             if (IsLinuxOS)
             {
                 BackendOS = OperatingSystems.Linux;
+                return;
+            }
+
+            if (AssemblyUtils.InvokeIsAndroid() == true)
+            {
+                App.IsAndroidOS = true;
+                App.IsUnknownOS = false;
+                App.BackendOS = OperatingSystems.Android;
+                return;
+            }
+
+            if (AssemblyUtils.InvokeIsIOS() == true)
+            {
+                var isCatalyst = AssemblyUtils.InvokeMauiUtilsIsMacCatalyst();
+
+                if(isCatalyst == true)
+                {
+                    App.IsMacOS = true;
+                    BackendOS = OperatingSystems.MacOs;
+                }
+                else
+                {
+                    App.IsIOS = true;
+                    App.BackendOS = OperatingSystems.IOS;
+                }
+
+                App.IsUnknownOS = false;
                 return;
             }
 

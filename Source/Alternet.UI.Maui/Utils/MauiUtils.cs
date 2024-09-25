@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
 
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
+
+/*
+    Do not change namespace of the MauiUtils as it is used in App static constructor and other places
+    in order to determine device platform and get other MAUI related settings.
+*/
 
 namespace Alternet.UI
 {
@@ -82,6 +88,40 @@ namespace Alternet.UI
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks whether device platform is Android.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsAndroid() => DeviceInfo.Current.Platform == DevicePlatform.Android;
+
+        /// <summary>
+        /// Checks whether device platform is iOS.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsIOS() => DeviceInfo.Current.Platform == DevicePlatform.iOS;
+
+        /// <summary>
+        /// Checks whether device platform is macOS.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMacOS() => DeviceInfo.Current.Platform == DevicePlatform.macOS;
+
+        /// <summary>
+        /// Checks whether device platform is MacCatalyst.
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsMacCatalyst() => DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
+
+        /// <summary>
+        /// Gets device platform.
+        /// </summary>
+        /// <returns></returns>
+        public static DevicePlatform GetDevicePlatform()
+        {
+            var result = DeviceInfo.Current.Platform;
+            return result;
         }
 
         /// <summary>
