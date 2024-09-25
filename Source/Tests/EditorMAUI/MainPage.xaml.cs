@@ -106,6 +106,16 @@ public partial class MainPage : ContentPage
             ed.Text = $"Error loading text: {url}";
             return;
         }
+
+        Alternet.UI.DebugUtils.DebugCallIf(true, () =>
+        {
+            void InsertText(string s)
+            {
+                ed.Text = s + ed.Text;
+            }
+
+            InsertText("// " + Alternet.UI.LogUtils.GetLogVersionText() + Environment.NewLine);
+        });
     }
 
     private void OpenLogFileButton_Clicked(object? sender, EventArgs e)
