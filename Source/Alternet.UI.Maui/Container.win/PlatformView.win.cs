@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Adds additional functionality to the <see cref="SkiaSharp.Views.Windows.SKXamlCanvas"/> control.
     /// </summary>
-    public class SKCanvasViewAdv : SkiaSharp.Views.Windows.SKXamlCanvas
+    public class PlatformView : SkiaSharp.Views.Windows.SKXamlCanvas
     {
     }
 }

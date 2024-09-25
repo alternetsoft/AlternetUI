@@ -113,10 +113,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="handler">Element handler.</param>
         /// <returns></returns>
-        public virtual SKCanvasViewAdv? GetPlatformView(IElementHandler? handler = null)
+        public virtual PlatformView? GetPlatformView(IElementHandler? handler = null)
         {
             handler ??= Handler;
-            var platformView = handler?.PlatformView as SKCanvasViewAdv;
+            var platformView = handler?.PlatformView as PlatformView;
             return platformView;
         }
 
@@ -130,7 +130,7 @@ namespace Alternet.UI
             var designMode = site != null && site.DesignMode;
 
 #if IOS || MACCATALYST
-            designMode = designMode || !SKCanvasViewAdv.IsValidEnvironment;
+            designMode = designMode || !PlatformView.IsValidEnvironment;
 #endif
             return designMode;
         }
