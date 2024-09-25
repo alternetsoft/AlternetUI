@@ -25,6 +25,8 @@ namespace ControlsSample
             public static string Top = "Верх";
             public static string Visible = "Видимый";
             public static string Enabled = "Включено";
+            public static string IsVisible = "Видимый";
+            public static string IsEnabled = "Включено";
             public static string Width = "Ширина";
             public static string Height = "Высота";
             public static string SuggestedWidth = "Желаем ширина";
@@ -49,6 +51,7 @@ namespace ControlsSample
             public static string TabStop = "Таб остановка";
             public static string CanSelect = "Могу выбрать";
             public static string Background = "Покрасить фон";
+            public static string MinSizeGrowMode = "Увелич мин размера";
         }
 
         public static class BaseComponentProperties

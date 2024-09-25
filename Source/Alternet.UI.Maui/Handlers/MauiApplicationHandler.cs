@@ -17,26 +17,6 @@ namespace Alternet.UI
     {
         static MauiApplicationHandler()
         {
-            if (App.IsUnknownOS)
-            {
-                App.IsAndroidOS = OperatingSystem.IsAndroid();
-
-                if (App.IsAndroidOS)
-                {
-                    App.IsUnknownOS = false;
-                    App.BackendOS = OperatingSystems.Android;
-                    return;
-                }
-
-                App.IsIOS = OperatingSystem.IsIOS();
-
-                if (App.IsIOS)
-                {
-                    App.IsUnknownOS = false;
-                    App.BackendOS = OperatingSystems.IOS;
-                    return;
-                }
-            }
         }
 
         /// <inheritdoc/>

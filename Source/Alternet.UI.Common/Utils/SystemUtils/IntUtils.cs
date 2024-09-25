@@ -15,6 +15,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value to convert.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string AsBinaryString(int value)
         {
             return Convert.ToString(value, 2).PadLeft(32, '0');

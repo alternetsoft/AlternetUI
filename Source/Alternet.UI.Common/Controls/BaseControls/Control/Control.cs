@@ -1008,9 +1008,30 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control and all its
         /// child controls are displayed.
+        /// This is the same as <see cref="Visible"/> property.
         /// </summary>
         /// <value><c>true</c> if the control and all its child controls are
         /// displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
+        public bool IsVisible
+        {
+            get
+            {
+                return Visible;
+            }
+
+            set
+            {
+                Visible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control and all its
+        /// child controls are displayed.
+        /// </summary>
+        /// <value><c>true</c> if the control and all its child controls are
+        /// displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
+        [Browsable(false)]
         public virtual bool Visible
         {
             get => visible;
@@ -1037,8 +1058,10 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the control can respond
         /// to user interaction.
         /// </summary>
-        /// <value><c>true</c> if the control can respond to user
-        /// interaction; otherwise, <c>false</c>. The default is <c>true</c>.</value>
+        /// <value>
+        /// <c>true</c> if the control can respond to user
+        /// interaction; otherwise, <c>false</c>. The default is <c>true</c>.
+        /// </value>
         /// <remarks>
         /// With the <see cref="Enabled"/> property, you can enable or disable
         /// controls at run time.
@@ -1052,6 +1075,7 @@ namespace Alternet.UI
         /// explicitly disabled when one of its parent controls is disabled. To get the intrinsic
         /// status of this control, use <see cref="IsThisEnabled"/>.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool Enabled
         {
             get
@@ -1066,6 +1090,24 @@ namespace Alternet.UI
                 enabled = value;
                 RaiseEnabledChanged(EventArgs.Empty);
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control can respond
+        /// to user interaction. This is the same as <see cref="Enabled"/> property.
+        /// Read more information there.
+        /// </summary>
+        public bool IsEnabled
+        {
+            get
+            {
+                return Enabled;
+            }
+
+            set
+            {
+                Enabled = value;
             }
         }
 

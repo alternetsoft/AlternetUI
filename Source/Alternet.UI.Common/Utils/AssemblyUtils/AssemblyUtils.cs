@@ -32,6 +32,25 @@ namespace Alternet.UI
         private static int resNameToAssemblySavedLength = 0;
         private static SortedList<string, EventInfo>? allControlEvents;
         private static SortedList<string, Type>? allControlDescendants;
+        private static Type? mauiUtilsType;
+        private static bool mauiUtilsTypeLoaded;
+
+        /// <summary>
+        /// Gets 'Alternet.UI.MauiUtils' type.
+        /// </summary>
+        public static Type? MauiUtilsType
+        {
+            get
+            {
+                if (!mauiUtilsTypeLoaded)
+                {
+                    mauiUtilsTypeLoaded = true;
+                    mauiUtilsType = AssemblyUtils.GetTypeByName("Alternet.UI.MauiUtils");
+                }
+
+                return mauiUtilsType;
+            }
+        }
 
         /// <summary>
         /// Gets or sets list of all <see cref="Control"/> descendants.
@@ -125,6 +144,36 @@ namespace Alternet.UI
             var name = Path.GetFileNameWithoutExtension(path);
             var result = name + ".";
             return result;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="System.Type"/> object with the specified name
+        /// searching it through all assemblies of the current domain.
+        /// </summary>
+        /// <param name="name">Name of the type in the same format as passed to
+        /// <see cref="Assembly.GetType(string)"/>.</param>
+        /// <param name="reverse">if <c>true</c> gives priority to most recently loaded types.
+        /// Optional. Default is <c>false</c>.</param>
+        /// <returns></returns>
+        public static Type? GetTypeByName(string name, bool reverse = false)
+        {
+            IEnumerable<Assembly> assemblies;
+
+            if (reverse)
+                assemblies = AppDomain.CurrentDomain.GetAssemblies().Reverse();
+            else
+                assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+                var tt = assembly.GetType(name);
+                if (tt != null)
+                {
+                    return tt;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -347,6 +396,7 @@ namespace Alternet.UI
         /// <param name="propInfo">Property info.</param>
         /// <param name="defValue">Default property value (used if property value is null).</param>
         /// <typeparam name="T">Type of result.</typeparam>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T GetPropValue<T>(object? instance, PropertyInfo propInfo, T defValue)
         {
             object? result = propInfo.GetValue(instance, null);
@@ -575,6 +625,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type of the control.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ControlCategoryAttribute? GetControlCategory(Type type)
         {
             var attr = type.GetCustomAttribute(typeof(ControlCategoryAttribute))
@@ -734,6 +785,7 @@ namespace Alternet.UI
         /// <param name="type">Type to check.</param>
         /// <param name="baseType">Base type.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TypeEqualsOrDescendant(Type type, Type baseType)
         {
             var result = type == baseType || TypeIsDescendant(type, baseType);
@@ -893,6 +945,137 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets device platform using invoke of 'MauiUtils.GetDevicePlatform'.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static object? InvokeMauiUtilsGetDevicePlatform()
+        {
+            var result = InvokeMethodWithResult(MauiUtilsType, "GetDevicePlatform");
+            return result;
+        }
+
+        /// <summary>
+        /// Gets whether device platform is MacCatalyst using invoke of 'MauiUtils.IsMacCatalyst'.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool? InvokeMauiUtilsIsMacCatalyst()
+        {
+            var result = InvokeBoolMethod(MauiUtilsType, "IsMacCatalyst");
+            return result;
+        }
+
+        /// <summary>
+        /// Invokes 'OperatingSystem.IsAndroid' through the reflection.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool? InvokeIsAndroid()
+        {
+            var result = InvokeBoolMethod<OperatingSystem>("IsAndroid");
+            return result;
+        }
+
+        /// <summary>
+        /// Invokes 'OperatingSystem.IsAndroid' through the reflection.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool? InvokeIsIOS()
+        {
+            var result = InvokeBoolMethod<OperatingSystem>("IsIOS");
+            return result;
+        }
+
+        /// <summary>
+        /// Invokes method with boolean result through the reflection.
+        /// </summary>
+        /// <typeparam name="T">Type of object.</typeparam>
+        /// <param name="methodName">Method name.</param>
+        /// <param name="obj">Object instance. Optional. Default is null.</param>
+        /// <param name="param">Method parameters. Optional. Default is null.</param>
+        /// <returns>
+        /// <c>null</c> if method not found; otherwise result of the method invoke.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool? InvokeBoolMethod<T>(
+            string methodName,
+            object? obj = null,
+            object[]? param = null)
+        {
+            return InvokeBoolMethod(typeof(T), methodName, obj, param);
+        }
+
+        /// <summary>
+        /// Invokes method with boolean result through the reflection.
+        /// </summary>
+        /// <param name="type">Type where to search the method.</param>
+        /// <param name="methodName">Method name.</param>
+        /// <param name="obj">Object instance. Optional. Default is null.</param>
+        /// <param name="param">Method parameters. Optional. Default is null.</param>
+        /// <returns>
+        /// <c>null</c> if method not found; otherwise result of the method invoke.
+        /// </returns>
+        public static bool? InvokeBoolMethod(
+            Type? type,
+            string methodName,
+            object? obj = null,
+            object[]? param = null)
+        {
+            try
+            {
+                var method = type?.GetMethod(methodName);
+
+                if (method is not null)
+                {
+                    var result = (bool)method.Invoke(obj, param);
+                    return result;
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Invokes method with object result through the reflection.
+        /// </summary>
+        /// <param name="type">Type where to search the method.</param>
+        /// <param name="methodName">Method name</param>
+        /// <param name="obj">Object instance. Optional. Default is null.</param>
+        /// <param name="param">Method parameters. Optional. Default is null.</param>
+        /// <returns>
+        /// <c>null</c> if method not found; otherwise result of the method invoke.
+        /// </returns>
+        public static object? InvokeMethodWithResult(
+            Type? type,
+            string methodName,
+            object? obj = null,
+            object[]? param = null)
+        {
+            try
+            {
+                var method = type?.GetMethod(methodName);
+
+                if (method is not null)
+                {
+                    var result = method.Invoke(obj, param);
+                    return result;
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
