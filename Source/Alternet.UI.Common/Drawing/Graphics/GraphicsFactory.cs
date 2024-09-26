@@ -515,6 +515,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI PixelFromDip(SizeD value, Coord? scaleFactor = null)
         {
@@ -528,6 +529,7 @@ namespace Alternet.Drawing
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
         /// <returns></returns>
+        /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointI PixelFromDip(PointD value, Coord? scaleFactor = null)
         {
@@ -541,10 +543,39 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectI PixelFromDip(RectD value, Coord? scaleFactor = null)
         {
             return new(PixelFromDip(value.Location, scaleFactor), PixelFromDip(value.Size, scaleFactor));
+        }
+
+        /// <summary>
+        /// Converts <see cref="int"/> value (pixels) to <see cref="Coord"/> value (inches).
+        /// </summary>
+        /// <param name="value">Value in pixels to convert.</param>
+        /// <returns>Converted value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Coord PixelToInch(int value)
+        {
+            var result = GraphicsUnitConverter.Convert(
+                GraphicsUnit.Pixel,
+                GraphicsUnit.Inch,
+                0,
+                value);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts <see cref="SizeI"/> value (pixels) to <see cref="SizeD"/> value (inches).
+        /// </summary>
+        /// <param name="value">Value in pixels to convert.</param>
+        /// <returns>Converted value (inches).</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD PixelToInch(SizeI value)
+        {
+            var result = (PixelToInch(value.Width), PixelToInch(value.Height));
+            return result;
         }
 
         /// <summary>
@@ -554,6 +585,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeD PixelToDip(SizeI value, Coord? scaleFactor = null)
         {
@@ -577,6 +609,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
         public static RectD[] PixelToDip(RectI[] rects, Coord? scaleFactor = null)
         {
             var length = rects.Length;
@@ -593,6 +626,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointD PixelToDip(PointI value, Coord? scaleFactor = null)
         {
@@ -606,6 +640,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD PixelToDip(RectI value, Coord? scaleFactor = null)
         {
@@ -617,7 +652,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
         /// <param name="scaleFactor">Scale factor.</param>
-        /// <returns></returns>
+        /// <returns>Converted value.</returns>
         public static int PixelFromDip(Coord value, Coord? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
@@ -632,7 +667,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="value">Value in pixels.</param>
         /// <param name="scaleFactor">Scale factor.</param>
-        /// <returns></returns>
+        /// <returns>Converted value.</returns>
         public static Coord PixelToDip(int value, Coord? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
