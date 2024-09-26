@@ -57,7 +57,7 @@ public partial class MainPage : ContentPage
         vo.Alignment = LayoutAlignment.Fill;
         editor.VerticalOptions = vo;
 
-        openLogFileButton.Clicked += OpenLogFileButton_Clicked;
+        button1.Clicked += Button1_Clicked;
 
         Alternet.UI.Control.FocusedControlChanged += Control_FocusedControlChanged;
 
@@ -118,8 +118,10 @@ public partial class MainPage : ContentPage
         });
     }
 
-    private void OpenLogFileButton_Clicked(object? sender, EventArgs e)
+    private async void Button1_Clicked(object? sender, EventArgs e)
     {
+        var page = new Alternet.MAUI.SelectDevToolsActionPage();
+        await Navigation.PushModalAsync(page);
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];
@@ -145,7 +147,7 @@ public partial class MainPage : ContentPage
                 ed.EndUpdate();
             }
 
-            InsertText("// " + e + Environment.NewLine);
+            InsertText("// " + e);
         }
         catch
         {
