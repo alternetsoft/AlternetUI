@@ -555,14 +555,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="value">Value in pixels to convert.</param>
         /// <returns>Converted value.</returns>
+        /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
+        /// If not specified, default value is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Coord PixelToInch(int value)
+        public static Coord PixelToInch(int value, Coord? scaleFactor = null)
         {
-            var result = GraphicsUnitConverter.Convert(
-                GraphicsUnit.Pixel,
-                GraphicsUnit.Inch,
-                0,
-                value);
+            var result = PixelToDip(value, scaleFactor);
+            result /= 96.0;
             return result;
         }
 
@@ -571,8 +570,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="value">Value in pixels to convert.</param>
         /// <returns>Converted value (inches).</returns>
+        /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
+        /// If not specified, default value is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SizeD PixelToInch(SizeI value)
+        public static SizeD PixelToInch(SizeI value, Coord? scaleFactor = null)
         {
             var result = (PixelToInch(value.Width), PixelToInch(value.Height));
             return result;
