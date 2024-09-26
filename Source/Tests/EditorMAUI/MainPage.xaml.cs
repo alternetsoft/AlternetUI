@@ -130,6 +130,22 @@ public partial class MainPage : ContentPage
         {
             if (Window is not null)
                 Window.Title = $"{counter++} {e}" ?? string.Empty;
+
+            var ed = editor?.Editor;
+
+            if (ed is null)
+                return;
+
+            void InsertText(string s)
+            {
+                ed.BeginUpdate();
+                ed.MoveFileEnd();
+                ed.BreakLine();
+                ed.Insert(s);
+                ed.EndUpdate();
+            }
+
+            InsertText("// " + e + Environment.NewLine);
         }
         catch
         {
