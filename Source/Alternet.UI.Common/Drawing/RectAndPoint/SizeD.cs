@@ -117,6 +117,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets diagonal of the rectangle with height and width specified in this object.
+        /// </summary>
+        public readonly Coord Diagonal
+        {
+            get
+            {
+                var result = Math.Pow(Width, 2) + Math.Pow(Height, 2);
+                result = Math.Sqrt(result);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Tests whether this <see cref='Drawing.SizeD'/> has zero width and height.
         /// </summary>
         [Browsable(false)]

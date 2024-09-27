@@ -200,7 +200,7 @@ namespace Alternet.UI
             PlatformView sender,
             PlatformView.PressesEventArgs e)
         {
-            App.DebugLogIf($"PressesBegan: {e}", true);
+            App.DebugLogIf($"PressesBegan: {e}", false);
             RaiseUpOrDown(sender, e, false);
         }
 
@@ -211,9 +211,12 @@ namespace Alternet.UI
         {
             if (Control is null)
                 return;
+
+            KeyStates keyStates = raiseUpEvent ? KeyStates.None : KeyStates.Down;
+
             foreach (var press in e.Presses)
             {
-                var evt = MauiKeyboardHandler.Default.ToKeyEventArgs(Control, press, KeyStates.Down);
+                var evt = MauiKeyboardHandler.Default.ToKeyEventArgs(Control, press, keyStates);
                 if (evt is null)
                     return;
                 Control.BubbleKeyUpOrDown(evt, raiseUpEvent);

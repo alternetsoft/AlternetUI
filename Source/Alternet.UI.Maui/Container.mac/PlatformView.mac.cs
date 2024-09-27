@@ -275,7 +275,7 @@ namespace Alternet.UI
 
             public override void PressesBegan(NSSet<UIPress> presses, UIPressesEvent evt)
             {
-                App.Log("UIHoverGestureRecognizerAdv");
+                App.LogIf("UIHoverGestureRecognizerAdv", false);
                 base.PressesBegan(presses, evt);
             }
         }

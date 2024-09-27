@@ -10,6 +10,18 @@ namespace Alternet.UI
     /// </summary>
     public class Display : HandledObject<IDisplayHandler>
     {
+        /// <summary>
+        /// Gets or sets maximal phone screen diagonal size.
+        /// This value is used in <see cref="IsPhoneScreen"/> and other methods.
+        /// </summary>
+        public static Coord MaxPhoneScreenDiagonalInch = 7;
+
+        /// <summary>
+        /// Gets or sets maximal tablet screen diagonal size.
+        /// This value is used in <see cref="IsTabletScreen"/> and other methods.
+        /// </summary>
+        public static Coord MaxTabletScreenDiagonalInch = 14;
+
         private static IDisplayFactoryHandler? factory;
         private static Coord? maxScaleFactor;
         private static SizeI? baseDPI;
@@ -83,6 +95,7 @@ namespace Alternet.UI
                 return factory ??= SystemSettings.Handler.CreateDisplayFactoryHandler();
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 factory = value;
@@ -92,7 +105,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the number of connected displays.
         /// </summary>
-        public static int Count => Factory.GetCount();
+        public static int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Factory.GetCount();
+            }
+        }
 
         /// <summary>
         /// Gets base display resolution for the current platform in pixels per inch.
@@ -102,7 +122,14 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static int BaseDPIValue => BaseDPI.Width;
+        public static int BaseDPIValue
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return BaseDPI.Width;
+            }
+        }
 
         /// <summary>
         ///  Gets an array of all of the displays on the system.
@@ -165,6 +192,7 @@ namespace Alternet.UI
         /// </summary>
         public static int MinDPI
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return MathUtils.Min(AllDPI);
@@ -176,6 +204,7 @@ namespace Alternet.UI
         /// </summary>
         public static int MaxDPI
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return MathUtils.Max(AllDPI);
@@ -185,7 +214,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether system has displays with different DPI values.
         /// </summary>
-        public static bool HasDifferentDPI => MaxDPI != MinDPI;
+        public static bool HasDifferentDPI
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return MaxDPI != MinDPI;
+            }
+        }
 
         /// <summary>
         /// Gets primary display.
@@ -207,24 +243,51 @@ namespace Alternet.UI
         /// directions on all platforms and its value is 96 everywhere except under
         /// Apple devices (those running macOS, iOS, watchOS etc), where it is 72.
         /// </remarks>
-        public static SizeI BaseDPI => baseDPI ??= Factory.GetDefaultDPI();
+        public static SizeI BaseDPI
+        {
+            get
+            {
+                return baseDPI ??= Factory.GetDefaultDPI();
+            }
+        }
 
         /// <summary>
         /// Gets the display's name.
         /// </summary>
         /// <remarks>Same as <see cref="Name"/></remarks>
-        public string DeviceName => Name;
+        public string DeviceName
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Name;
+            }
+        }
 
         /// <summary>
         /// Gets the display's name.
         /// </summary>
         /// <remarks>Same as <see cref="DeviceName"/></remarks>
-        public string Name => Handler.GetName();
+        public string Name
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Handler.GetName();
+            }
+        }
 
         /// <summary>
         /// Gets whether this <see cref="Display"/> object is ok.
         /// </summary>
-        public bool IsOk => Handler.IsOk;
+        public bool IsOk
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Handler.IsOk;
+            }
+        }
 
         /// <summary>
         /// Gets display resolution in pixels per inch.
@@ -251,24 +314,63 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <c>true</c> if the display is the primary display.
         /// </summary>
-        public bool IsPrimary => Handler.IsPrimary();
+        public bool IsPrimary
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Handler.IsPrimary();
+            }
+        }
 
         /// <summary>
         /// Gets the client area of the display.
         /// </summary>
-        public RectI ClientArea => Handler.GetClientArea();
+        public RectI ClientArea
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Handler.GetClientArea();
+            }
+        }
 
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
         /// </summary>
         /// <remarks>Same as <see cref="Geometry"/></remarks>
-        public RectI Bounds => Geometry;
+        public RectI Bounds
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Geometry;
+            }
+        }
 
         /// <summary>
         /// Returns the bounding rectangle of the display in dips.
         /// </summary>
         /// <remarks>Same as <see cref="GeometryDip"/></remarks>
-        public RectD BoundsDip => GeometryDip;
+        public RectD BoundsDip
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return GeometryDip;
+            }
+        }
+
+        /// <summary>
+        /// Returns the bounding rectangle of the display in inches.
+        /// </summary>
+        public SizeD SizeInch
+        {
+            get
+            {
+                return GraphicsFactory.PixelToInch(Bounds.Size);
+            }
+        }
 
         /// <summary>
         /// Gets whether display height is bigger than width.
@@ -297,12 +399,67 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the bounding rectangle of the display in pixels.
         /// </summary>
-        public RectI Geometry => Handler.GetGeometry();
+        public RectI Geometry
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Handler.GetGeometry();
+            }
+        }
+
+        public Coord DiagonalSizeInInches
+        {
+            get
+            {
+                return SizeInch.Diagonal;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this display has diagonal less or
+        /// equal to <see cref="MaxPhoneScreenDiagonalInch"/>.
+        /// </summary>
+        public bool IsPhoneScreen
+        {
+            get
+            {
+                return DiagonalSizeInInches <= MaxPhoneScreenDiagonalInch;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this display has diagonal
+        /// greater than <see cref="MaxPhoneScreenDiagonalInch"/>
+        /// and less or equal to <see cref="MaxTabletScreenDiagonalInch"/>.
+        /// </summary>
+        public bool IsTabletScreen
+        {
+            get
+            {
+                var diagonal = DiagonalSizeInInches;
+
+                return diagonal <= MaxTabletScreenDiagonalInch && !IsPhoneScreen;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this display has diagonal
+        /// greater than <see cref="MaxTabletScreenDiagonalInch"/>.
+        /// </summary>
+        public bool IsDesktopScreen
+        {
+            get
+            {
+                return DiagonalSizeInInches > MaxTabletScreenDiagonalInch;
+            }
+        }
 
         /// <summary>
         /// Returns the bounding rectangle of the display in the
         /// device-independent units.
         /// </summary>
+        /// <remarks>Same as <see cref="BoundsDip"/></remarks>
         public RectD GeometryDip
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -317,6 +474,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Index of the display.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Display GetDisplay(int index)
         {
             return new Display(index);
@@ -371,9 +529,15 @@ namespace Alternet.UI
                 method($"IsPrimary: {display.IsPrimary}");
                 method($"IsVertical: {display.IsVertical}");
                 method($"ClientArea: {display.ClientArea}");
+                method($"SizeInch: {display.SizeInch}");
+                method($"Diagonal (inch): {display.SizeInch.Diagonal}");
                 method($"Bounds: {display.Bounds}");
                 method($"BoundsDip: {display.BoundsDip}");
                 method($"PixelToDip(100): {display.PixelToDip(100)}");
+
+                method($"IsDesktopScreen: {display.IsDesktopScreen}");
+                method($"IsTabletScreen: {display.IsTabletScreen}");
+                method($"IsPhoneScreen: {display.IsPhoneScreen}");
             }
 
             method(LogUtils.SectionSeparator);

@@ -24,7 +24,7 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
-        /*Alternet.UI.PlessMouse.ShowTestMouseInControl = true;*/
+        Alternet.UI.PlessMouse.ShowTestMouseInControl = true;
 
         InitializeComponent();
 
@@ -36,16 +36,22 @@ public partial class MainPage : ContentPage
 
         LoadFile(NewFileNameNoExt + "-small.cs");
 
-        editor.BackgroundColor = Colors.White;
-
         button.Text = "Hello";
 
-        panel.BackgroundColor = Colors.White;
-        panel.Padding = new(10);
+        if (Alternet.UI.Display.Primary.IsPhoneScreen)
+        {
+            editor.Interior.HasBorder = false;
+        }
+        else
+        {
+            editor.Interior.HasBorder = true;
+            panel.BackgroundColor = Colors.White;
+            panel.Padding = new(10);
+        }
 
         BindingContext = this;
 
-        App.LogMessage += App_LogMessage;
+        Alternet.UI.App.LogMessage += App_LogMessage;
 
         var ho = editor.HorizontalOptions;
         ho.Expands = true;
@@ -57,7 +63,7 @@ public partial class MainPage : ContentPage
         vo.Alignment = LayoutAlignment.Fill;
         editor.VerticalOptions = vo;
 
-        openLogFileButton.Clicked += OpenLogFileButton_Clicked;
+        button1.Clicked += Button1_Clicked;
 
         Alternet.UI.Control.FocusedControlChanged += Control_FocusedControlChanged;
 
@@ -106,20 +112,41 @@ public partial class MainPage : ContentPage
             ed.Text = $"Error loading text: {url}";
             return;
         }
+
+        Alternet.UI.DebugUtils.DebugCallIf(true, () =>
+        {
+            void InsertText(string s)
+            {
+                var position = ed.Position;
+                ed.Lines.Insert(0, s);
+                ed.Position = position;
+            }
+
+            InsertText("// " + Alternet.UI.LogUtils.GetLogVersionText() + Environment.NewLine);
+        });
     }
 
-    private void OpenLogFileButton_Clicked(object? sender, EventArgs e)
+    private async void Button1_Clicked(object? sender, EventArgs e)
     {
+        Alternet.UI.Display.Log();
+
+        var page = new Alternet.MAUI.SelectDevToolsActionPage();
+        await Navigation.PushModalAsync(page);
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];
 
-    private void App_LogMessage(object? sender, string e)
+    private void App_LogMessage(object? sender, Alternet.UI.LogMessageEventArgs e)
     {
         try
         {
+            var s = e.Message;
+
+            if (s is null)
+                return;
+
             if (Window is not null)
-                Window.Title = $"{counter++} {e}" ?? string.Empty;
+                Window.Title = $"{counter++} {s}" ?? string.Empty;
         }
         catch
         {
