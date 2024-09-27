@@ -194,8 +194,11 @@ namespace Alternet.UI
             }
 #endif
 #if ANDROID
-            if (e.ActionType == SKTouchAction.Pressed)
+            if (e.ActionType == SKTouchAction.Pressed && !IsFocused)
             {
+                var platformView = GetPlatformView();
+                var request = new FocusRequest();
+                platformView?.Focus(request);
             }
 #endif
 #if IOS || MACCATALYST

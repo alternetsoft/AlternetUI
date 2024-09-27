@@ -24,7 +24,7 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
-        /*Alternet.UI.PlessMouse.ShowTestMouseInControl = true;*/
+        Alternet.UI.PlessMouse.ShowTestMouseInControl = true;
 
         InitializeComponent();
 
@@ -45,7 +45,7 @@ public partial class MainPage : ContentPage
 
         BindingContext = this;
 
-        App.LogMessage += App_LogMessage;
+        Alternet.UI.App.LogMessage += App_LogMessage;
 
         var ho = editor.HorizontalOptions;
         ho.Expands = true;
@@ -111,7 +111,9 @@ public partial class MainPage : ContentPage
         {
             void InsertText(string s)
             {
-                ed.Text = s + ed.Text;
+                var position = ed.Position;
+                ed.Lines.Insert(0, s);
+                ed.Position = position;
             }
 
             InsertText("// " + Alternet.UI.LogUtils.GetLogVersionText() + Environment.NewLine);
@@ -120,34 +122,25 @@ public partial class MainPage : ContentPage
 
     private async void Button1_Clicked(object? sender, EventArgs e)
     {
+        Alternet.UI.Display.Log();
+
         var page = new Alternet.MAUI.SelectDevToolsActionPage();
         await Navigation.PushModalAsync(page);
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];
 
-    private void App_LogMessage(object? sender, string e)
+    private void App_LogMessage(object? sender, Alternet.UI.LogMessageEventArgs e)
     {
         try
         {
-            if (Window is not null)
-                Window.Title = $"{counter++} {e}" ?? string.Empty;
+            var s = e.Message;
 
-            var ed = editor?.Editor;
-
-            if (ed is null)
+            if (s is null)
                 return;
 
-            void InsertText(string s)
-            {
-                ed.BeginUpdate();
-                ed.MoveFileEnd();
-                ed.BreakLine();
-                ed.Insert(s);
-                ed.EndUpdate();
-            }
-
-            InsertText("// " + e);
+            if (Window is not null)
+                Window.Title = $"{counter++} {s}" ?? string.Empty;
         }
         catch
         {

@@ -33,6 +33,58 @@ namespace Alternet.UI
         {
         }
 
+        public virtual Alternet.UI.KeyEventArgs? ToKeyEventArgs(
+                    Control? control,
+                    KeyStates keyStates,
+                    Keycode keyCode,
+                    KeyEvent? e)
+        {
+            if (control is null)
+                return null;
+
+            var key = Convert(keyCode);
+
+            ModifierKeys modifiers = ModifierKeys.None;
+            int repeatCount = 0;
+
+            if (e is null)
+            {
+            }
+            else
+            {
+                modifiers = Convert(e.MetaState);
+
+                repeatCount = e.RepeatCount;
+
+                if (repeatCount < 0)
+                    repeatCount = 0;
+            }
+
+            Alternet.UI.KeyEventArgs result = new(
+                control,
+                key,
+                keyStates,
+                modifiers,
+                (uint)repeatCount);
+
+            return result;
+        }
+
+        public virtual ModifierKeys Convert(MetaKeyStates states)
+        {
+            var shiftPressed = (states & MetaKeyStates.ShiftMask) != 0;
+            var altPressed = (states & MetaKeyStates.AltMask) != 0;
+            var controlPressed = (states & MetaKeyStates.CtrlMask) != 0;
+            ModifierKeys result = ModifierKeys.None;
+            if (shiftPressed)
+                result |= ModifierKeys.Shift;
+            if (altPressed)
+                result |= ModifierKeys.Alt;
+            if (controlPressed)
+                result |= ModifierKeys.Control;
+            return result;
+        }
+
         /// <inheritdoc/>
         public override void RegisterKeyMappings()
         {
@@ -403,16 +455,16 @@ namespace Alternet.UI
             Add(Keycode.Endcall, Key.Endcall);
 
             // Directional Pad Up key. May also be synthesized from trackball motions.
-            Add(Keycode.DpadUp, Key.DpadUp);
+            Add(Keycode.DpadUp, Key.UpArrow);
 
             // Directional Pad Down key. May also be synthesized from trackball motions.
-            Add(Keycode.DpadDown, Key.DpadDown);
+            Add(Keycode.DpadDown, Key.DownArrow);
 
             // Directional Pad Left key. May also be synthesized from trackball motions.
-            Add(Keycode.DpadLeft, Key.DpadLeft);
+            Add(Keycode.DpadLeft, Key.LeftArrow);
 
             // Directional Pad Right key. May also be synthesized from trackball motions.
-            Add(Keycode.DpadRight, Key.DpadRight);
+            Add(Keycode.DpadRight, Key.RightArrow);
 
             // Directional Pad Center key. May also be synthesized from trackball motions.
             Add(Keycode.DpadCenter, Key.DpadCenter);

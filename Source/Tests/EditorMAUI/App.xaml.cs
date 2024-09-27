@@ -8,17 +8,7 @@ public partial class App : Application
 
 		MainPage = new AppShell();
 
-        Alternet.UI.App.LogMessage += App_LogMessage;
-
     }
-
-    private void App_LogMessage(object? sender, Alternet.UI.LogMessageEventArgs e)
-    {
-        if (e.Message is not null)
-            LogMessage?.Invoke(this, e.Message);
-    }
-
-    public static event EventHandler<string>? LogMessage;
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
@@ -47,14 +37,6 @@ public partial class App : Application
 
     private void Window_Destroying(object? sender, EventArgs e)
     {
-    }
-
-    public void Log(string s)
-    {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            LogMessage?.Invoke(null, s);
-        });
     }
 }
 
