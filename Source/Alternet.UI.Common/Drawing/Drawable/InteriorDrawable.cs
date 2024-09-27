@@ -94,32 +94,74 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether vertical scrollbar is visible.
         /// </summary>
-        public bool VertVisible => VertScrollBar?.Visible ?? false;
+        public virtual bool VertVisible
+        {
+            get
+            {
+                return VertScrollBar?.Visible ?? false;
+            }
+        }
 
         /// <summary>
         /// Gets whether horizontal scrollbar is visible.
         /// </summary>
-        public bool HorzVisible => HorzScrollBar?.Visible ?? false;
+        public virtual bool HorzVisible
+        {
+            get
+            {
+                return HorzScrollBar?.Visible ?? false;
+            }
+        }
 
         /// <summary>
         /// Gets whether vertical and horizontal scrollbars are visible.
         /// </summary>
-        public bool BothVisible => VertVisible && HorzVisible;
+        public virtual bool BothVisible
+        {
+            get
+            {
+                return VertVisible && HorzVisible;
+            }
+        }
 
         /// <summary>
         /// Gets whether corner is visible.
         /// </summary>
-        public bool CornerVisible => Corner?.Visible ?? false;
+        public virtual bool CornerVisible
+        {
+            get
+            {
+                return Corner?.Visible ?? false;
+            }
+        }
 
         /// <summary>
         /// Gets whether corner and both scrollbars are visible.
         /// </summary>
-        public bool HasCorner => BothVisible && CornerVisible;
+        public virtual bool HasCorner
+        {
+            get
+            {
+                return BothVisible && CornerVisible;
+            }
+        }
 
         /// <summary>
         /// Gets whether interior has border.
         /// </summary>
-        public bool HasBorder => Border?.Visible ?? false;
+        public virtual bool HasBorder
+        {
+            get
+            {
+                return Border?.Visible ?? false;
+            }
+
+            set
+            {
+                if (Border is not null)
+                    Border.Visible = value;
+            }
+        }
 
         /// <summary>
         /// Gets <see cref="InteriorNotification"/> attached to this object.
@@ -230,7 +272,7 @@ namespace Alternet.Drawing
         /// <param name="point">Point to check.</param>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
         /// <returns></returns>
-        public HitTestsResult HitTests(Coord scaleFactor, PointD point)
+        public virtual HitTestsResult HitTests(Coord scaleFactor, PointD point)
         {
             var rectangles = GetLayoutRectangles(scaleFactor);
             var hitTest = HitTest(rectangles, point);
@@ -427,7 +469,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initialized this drawable with default settings for the specified color theme.
         /// </summary>
-        public void SetThemeMetrics(ScrollBar.KnownTheme theme, bool isDark = false)
+        public virtual void SetThemeMetrics(ScrollBar.KnownTheme theme, bool isDark = false)
         {
             var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
             themeObj.AssignTo(this);

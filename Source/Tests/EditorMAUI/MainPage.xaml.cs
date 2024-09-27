@@ -36,12 +36,18 @@ public partial class MainPage : ContentPage
 
         LoadFile(NewFileNameNoExt + "-small.cs");
 
-        editor.BackgroundColor = Colors.White;
-
         button.Text = "Hello";
 
-        panel.BackgroundColor = Colors.White;
-        panel.Padding = new(10);
+        if (Alternet.UI.Display.Primary.IsPhoneScreen)
+        {
+            editor.Interior.HasBorder = false;
+        }
+        else
+        {
+            editor.Interior.HasBorder = true;
+            panel.BackgroundColor = Colors.White;
+            panel.Padding = new(10);
+        }
 
         BindingContext = this;
 

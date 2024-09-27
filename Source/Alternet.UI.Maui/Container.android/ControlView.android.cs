@@ -8,6 +8,8 @@ using Alternet.Drawing;
 
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using System.Diagnostics;
+
 
 #if ANDROID
 
@@ -33,6 +35,7 @@ namespace Alternet.UI
             platformView.NotifyFocusChanged = null;
             platformView.KeyPress -= HandleKeyPress;
             platformView.UnhandledKeyEvent -= HandleUnhandledKeyEvent;
+            platformView.CapturedPointer -= HandleCapturedPointer;
         }
 
         /// <inheritdoc/>
@@ -51,13 +54,62 @@ namespace Alternet.UI
             platformView.NotifyFocusChanged = HandleFocusChanged;
             platformView.KeyPress += HandleKeyPress;
             platformView.UnhandledKeyEvent += HandleUnhandledKeyEvent;
+            platformView.CapturedPointer += HandleCapturedPointer;
+            platformView.GenericMotion += HandleGenericMotion;
+        }
+
+        protected virtual void HandleGenericMotion(
+            object? sender,
+            Android.Views.View.GenericMotionEventArgs e)
+        {
+            if (Control is null || e.Event is null)
+                return;
+
+            if (!e.Event.IsFromSource(InputSourceType.ClassPointer))
+                return;
+
+            Debug.WriteLine($"HandleGenericMotion: {e.Event.Action}");
+
+            switch (e.Event.Action)
+            {
+                case MotionEventActions.HoverEnter:
+                    Debug.WriteLine("Mouse hover enter");
+                    Control.RaiseMouseEnter();
+                    break;
+                case MotionEventActions.HoverExit:
+                    Debug.WriteLine("Mouse hover exit");
+                    Control.RaiseMouseLeave();
+                    break;
+                case MotionEventActions.HoverMove:
+                    var x = e.Event.GetX();
+                    var y = e.Event.GetY();
+                    long timestamp = DateUtils.GetNowInMilliseconds();
+                    PointD position = (x, y);
+                    Control.BubbleMouseMove(
+                                Control,
+                                timestamp,
+                                position,
+                                out _);
+                    break;
+                case MotionEventActions.Scroll:
+                    var scrollX = e.Event.GetAxisValue(Axis.Hscroll);
+                    var scrollY = e.Event.GetAxisValue(Axis.Vscroll);
+                    Debug.WriteLine("Mouse scrolled " + scrollX + ", " + scrollY);
+                    break;
+            }
+        }
+
+        protected virtual void HandleCapturedPointer(
+            object? sender,
+            Android.Views.View.CapturedPointerEventArgs e)
+        {
         }
 
         protected virtual void HandleUnhandledKeyEvent(
             object? sender,
             Android.Views.View.UnhandledKeyEventEventArgs e)
         {
-            e.Handled = true;
+            e.Handled = false;
         }
 
         protected virtual void HandleKeyPress(object? sender, Android.Views.View.KeyEventArgs e)

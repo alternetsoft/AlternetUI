@@ -55,9 +55,11 @@ namespace Alternet.UI
 
         public override bool IsInTouchMode => base.IsInTouchMode;
 
+        public override bool HasPointerCapture => true;
+
         public override bool OnKeyMultiple(Keycode keyCode, int count, KeyEvent? e)
         {
-            LogEvent("OnKeyMultiple", keyCode, count, e, true);
+            LogEvent("OnKeyMultiple", keyCode, count, e, false);
 
             if (NotifyKeyMultiple is not null)
             {
@@ -71,7 +73,7 @@ namespace Alternet.UI
 
         public override bool OnKeyDown(Keycode keyCode, KeyEvent? e)
         {
-            LogEvent("OnKeyDown", keyCode, 0, e, true);
+            LogEvent("OnKeyDown", keyCode, 0, e, false);
 
             if (NotifyKeyDown is not null)
             {
@@ -85,7 +87,7 @@ namespace Alternet.UI
 
         public override bool OnKeyUp(Keycode keyCode, KeyEvent? e)
         {
-            LogEvent("OnKeyUp", keyCode, 0, e, true);
+            LogEvent("OnKeyUp", keyCode, 0, e, false);
             if (NotifyKeyUp is not null)
             {
                 var result = NotifyKeyUp(this, keyCode, e);
@@ -103,7 +105,7 @@ namespace Alternet.UI
 
         public override bool OnKeyLongPress(Keycode keyCode, KeyEvent? e)
         {
-            LogEvent("OnKeyLongPress", keyCode, 0, e, true);
+            LogEvent("OnKeyLongPress", keyCode, 0, e, false);
             if (NotifyKeyLongPress is not null)
             {
                 var result = NotifyKeyLongPress(this, keyCode, e);
@@ -112,6 +114,16 @@ namespace Alternet.UI
             }
 
             return base.OnKeyLongPress(keyCode, e);
+        }
+
+        public override bool OnCapturedPointerEvent(MotionEvent? e)
+        {
+            return base.OnCapturedPointerEvent(e);
+        }
+
+        public override void DispatchPointerCaptureChanged(bool hasCapture)
+        {
+            base.DispatchPointerCaptureChanged(hasCapture);
         }
 
         protected override void OnFocusChanged(
