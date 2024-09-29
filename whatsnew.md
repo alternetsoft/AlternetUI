@@ -1,3 +1,19 @@
+# 0.9.635 (2024 September 29)
+
+- Returned Title property in some controls as they can be used in TabControl instead of TabPage.
+- TextBox: SelectionStart, SelectedText, SelectionLength, TextLength.
+- Removed TextBox.ValueValidator. Use Control.CharValidator instead of this property. Removed because it was only WxWidgets specific and had very limited functionality.
+- App: DeviceType, IsDesktopDevice, IsPhoneDevice, IsTabletDevice.
+- MAUI: Renamed SKCanvasViewAdv -> PlatformView.
+- MAUI: Added ios and Android to TargetFrameworks of MAUI related libraries and projects.
+- MAUI: Fixed MacCatalyst platform detection.
+- MAUI: Keyboard events raised on Android.
+- MAUI: Fixed key handling on macOs.
+- MAUI: Raise scroll thumb events on Android.
+- MAUI: Fix border paint in ControlView.
+- Control: IsVisible, IsEnabled (aliases to Visible and Enabled).
+- Created KnownAssemblies, KnownTypes, LazyStruct{T}, ExceptionUtils.
+
 # 0.9.634 (2024 September 23)
 
 - MAUI: Renamed SkiaContainer -> ControlView.
