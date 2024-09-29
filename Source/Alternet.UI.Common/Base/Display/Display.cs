@@ -14,13 +14,13 @@ namespace Alternet.UI
         /// Gets or sets maximal phone screen diagonal size.
         /// This value is used in <see cref="IsPhoneScreen"/> and other methods.
         /// </summary>
-        public static Coord MaxPhoneScreenDiagonalInch = 7;
+        internal static Coord MaxPhoneScreenDiagonalInch = 7;
 
         /// <summary>
         /// Gets or sets maximal tablet screen diagonal size.
         /// This value is used in <see cref="IsTabletScreen"/> and other methods.
         /// </summary>
-        public static Coord MaxTabletScreenDiagonalInch = 14;
+        internal static Coord MaxTabletScreenDiagonalInch = 14;
 
         private static IDisplayFactoryHandler? factory;
         private static Coord? maxScaleFactor;
@@ -362,17 +362,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the bounding rectangle of the display in inches.
-        /// </summary>
-        public SizeD SizeInch
-        {
-            get
-            {
-                return GraphicsFactory.PixelToInch(Bounds.Size);
-            }
-        }
-
-        /// <summary>
         /// Gets whether display height is bigger than width.
         /// </summary>
         public bool IsVertical
@@ -408,7 +397,35 @@ namespace Alternet.UI
             }
         }
 
-        public Coord DiagonalSizeInInches
+        /// <summary>
+        /// Returns the bounding rectangle of the display in the
+        /// device-independent units.
+        /// </summary>
+        /// <remarks>Same as <see cref="BoundsDip"/></remarks>
+        public RectD GeometryDip
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return PixelToDip(Geometry);
+            }
+        }
+
+        /// <summary>
+        /// Returns the bounding rectangle of the display in inches.
+        /// </summary>
+        internal SizeD SizeInch
+        {
+            get
+            {
+                return GraphicsFactory.PixelToInch(Bounds.Size);
+            }
+        }
+
+        /// <summary>
+        /// Gets display diagonal (inches).
+        /// </summary>
+        internal Coord DiagonalSizeInInches
         {
             get
             {
@@ -420,7 +437,7 @@ namespace Alternet.UI
         /// Gets whether this display has diagonal less or
         /// equal to <see cref="MaxPhoneScreenDiagonalInch"/>.
         /// </summary>
-        public bool IsPhoneScreen
+        internal bool IsPhoneScreen
         {
             get
             {
@@ -433,7 +450,7 @@ namespace Alternet.UI
         /// greater than <see cref="MaxPhoneScreenDiagonalInch"/>
         /// and less or equal to <see cref="MaxTabletScreenDiagonalInch"/>.
         /// </summary>
-        public bool IsTabletScreen
+        internal bool IsTabletScreen
         {
             get
             {
@@ -447,25 +464,11 @@ namespace Alternet.UI
         /// Gets whether this display has diagonal
         /// greater than <see cref="MaxTabletScreenDiagonalInch"/>.
         /// </summary>
-        public bool IsDesktopScreen
+        internal bool IsDesktopScreen
         {
             get
             {
                 return DiagonalSizeInInches > MaxTabletScreenDiagonalInch;
-            }
-        }
-
-        /// <summary>
-        /// Returns the bounding rectangle of the display in the
-        /// device-independent units.
-        /// </summary>
-        /// <remarks>Same as <see cref="BoundsDip"/></remarks>
-        public RectD GeometryDip
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                return PixelToDip(Geometry);
             }
         }
 
