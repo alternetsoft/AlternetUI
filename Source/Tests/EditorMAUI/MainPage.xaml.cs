@@ -112,11 +112,6 @@ public partial class MainPage : ContentPage
             ed.Text = $"Error loading text: {url}";
             return;
         }
-
-        Alternet.UI.DebugUtils.DebugCallIf(true, () =>
-        {
-            InsertText("// " + Alternet.UI.LogUtils.GetLogVersionText() + Environment.NewLine);
-        });
     }
 
     void InsertText(string s)
@@ -142,6 +137,7 @@ public partial class MainPage : ContentPage
         try
         {
             ed.Lines.Clear();
+            AppendText(Alternet.UI.LogUtils.GetLogVersionText());
             Alternet.UI.LogUtils.LogActionToAction(action, AppendText);
         }
         finally
@@ -153,6 +149,7 @@ public partial class MainPage : ContentPage
     private void Button1_Clicked(object? sender, EventArgs e)
     {
         LogToEditor(Alternet.UI.Display.Log);
+
         /*
         var page = new Alternet.MAUI.SelectDevToolsActionPage();
         await Navigation.PushModalAsync(page);

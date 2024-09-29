@@ -60,14 +60,6 @@
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\LabelView\" />
-    <Folder Include="Views\BorderView\" />
-    <Folder Include="Views\ToolBarView\" />
-    <Folder Include="Views\SpeedButtonView\" />
-    <Folder Include="Views\PictureBoxView\" />
-  </ItemGroup>
-
   <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\SignDll.proj" />
 
 </Project>
