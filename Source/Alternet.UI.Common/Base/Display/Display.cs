@@ -520,10 +520,11 @@ namespace Alternet.UI
             method("Display:");
             method($"Count: {Count}");
             method($"DefaultDPI: {GraphicsFactory.DefaultDPI}");
+            method($"DeviceType: {App.DeviceType}");
 
             for (int i = 0; i < Display.AllScreens.Length; i++)
             {
-                method(" ");
+                method(StringUtils.OneSpace);
                 var display = Display.AllScreens[i];
                 method($"Index: {i}");
                 method($"Name: {display.DeviceName}");
@@ -532,15 +533,10 @@ namespace Alternet.UI
                 method($"IsPrimary: {display.IsPrimary}");
                 method($"IsVertical: {display.IsVertical}");
                 method($"ClientArea: {display.ClientArea}");
-                method($"SizeInch: {display.SizeInch}");
                 method($"Diagonal (inch): {display.SizeInch.Diagonal}");
                 method($"Bounds: {display.Bounds}");
                 method($"BoundsDip: {display.BoundsDip}");
                 method($"PixelToDip(100): {display.PixelToDip(100)}");
-
-                method($"IsDesktopScreen: {display.IsDesktopScreen}");
-                method($"IsTabletScreen: {display.IsTabletScreen}");
-                method($"IsPhoneScreen: {display.IsPhoneScreen}");
             }
 
             method(LogUtils.SectionSeparator);
