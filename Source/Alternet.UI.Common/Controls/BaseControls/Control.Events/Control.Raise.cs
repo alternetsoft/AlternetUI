@@ -1125,9 +1125,10 @@ namespace Alternet.UI
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
-            TouchToMouseEvents(e);
             OnTouch(e);
             Touch?.Invoke(this, e);
+            if(!e.Handled)
+                TouchToMouseEvents(e);
 
             foreach (var n in nn)
             {

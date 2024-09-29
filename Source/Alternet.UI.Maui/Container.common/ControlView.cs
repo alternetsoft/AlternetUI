@@ -217,6 +217,15 @@ namespace Alternet.UI
                 return;
 
             TouchEventArgs args = MauiTouchUtils.Convert(e);
+
+#if ANDROID
+            if(args.ActionType == TouchAction.WheelChanged)
+            {
+                // Wheel changed is handled in the platform view for android.
+                return;
+            }
+#endif
+
             control?.RaiseTouch(args);
             e.Handled = args.Handled;
         }

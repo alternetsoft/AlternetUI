@@ -68,34 +68,45 @@ namespace Alternet.UI
             if (!e.Event.IsFromSource(InputSourceType.ClassPointer))
                 return;
 
-            Debug.WriteLineIf(true, $"HandleGenericMotion: {e.Event.Action}");
+            PointD GetEventPoint(MotionEvent motionEvent)
+            {
+                var x = motionEvent.GetX();
+                var y = motionEvent.GetY();
+                PointI pt = ((int)x, (int)y);
+                PointD position = GraphicsFactory.PixelToDip(pt, Control!.ScaleFactor);
+                return position;
+            }
+
+            Debug.WriteLineIf(false, $"HandleGenericMotion: {e.Event.Action}");
 
             switch (e.Event.Action)
             {
                 case MotionEventActions.HoverEnter:
-                    Debug.WriteLineIf(true, "Mouse hover enter");
+                    Debug.WriteLineIf(false, "Mouse hover enter");
                     Control.RaiseMouseEnter();
                     break;
                 case MotionEventActions.HoverExit:
-                    Debug.WriteLineIf(true, "Mouse hover exit");
+                    Debug.WriteLineIf(false, "Mouse hover exit");
                     Control.RaiseMouseLeave();
                     break;
                 case MotionEventActions.HoverMove:
-                    var x = e.Event.GetX();
-                    var y = e.Event.GetY();
-                    PointI pt = ((int)x, (int)y);
                     long timestamp = DateUtils.GetNowInMilliseconds();
-                    PointD position = GraphicsFactory.PixelToDip(pt, Control.ScaleFactor);
                     Control.BubbleMouseMove(
                                 Control,
                                 timestamp,
-                                position,
+                                GetEventPoint(e.Event),
                                 out _);
                     break;
                 case MotionEventActions.Scroll:
-                    var scrollX = e.Event.GetAxisValue(Axis.Hscroll);
-                    var scrollY = e.Event.GetAxisValue(Axis.Vscroll);
-                    Debug.WriteLineIf(true, "Mouse scrolled " + scrollX + ", " + scrollY);
+                    var scrollX = (int)e.Event.GetAxisValue(Axis.Hscroll);
+                    var scrollY = (int)e.Event.GetAxisValue(Axis.Vscroll);
+                    Debug.WriteLineIf(false, "Mouse scrolled " + scrollX + ", " + scrollY);
+                    TouchEventArgs touchArgs = new();
+                    touchArgs.DeviceType = TouchDeviceType.Mouse;
+                    touchArgs.Location = GetEventPoint(e.Event);
+                    touchArgs.ActionType = TouchAction.WheelChanged;
+                    touchArgs.WheelDelta = scrollX == 0 ? scrollY : scrollX;
+                    Control?.RaiseTouch(touchArgs);
                     break;
             }
         }
