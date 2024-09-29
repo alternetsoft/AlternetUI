@@ -18,39 +18,10 @@ namespace Alternet.UI
     /// </summary>
     public static partial class AssemblyUtils
     {
-        /// <summary>
-        /// Gets 'Alternet.UI.Common' assembly.
-        /// </summary>
-        public static readonly Assembly AssemblyCommon = typeof(Control).Assembly;
-
-        /// <summary>
-        /// Gets 'Alternet.UI.Interfaces' assembly.
-        /// </summary>
-        public static readonly Assembly AssemblyInterfaces = typeof(DockStyle).Assembly;
-
         private static AdvDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
         private static SortedList<string, EventInfo>? allControlEvents;
         private static SortedList<string, Type>? allControlDescendants;
-        private static Type? mauiUtilsType;
-        private static bool mauiUtilsTypeLoaded;
-
-        /// <summary>
-        /// Gets 'Alternet.UI.MauiUtils' type.
-        /// </summary>
-        public static Type? MauiUtilsType
-        {
-            get
-            {
-                if (!mauiUtilsTypeLoaded)
-                {
-                    mauiUtilsTypeLoaded = true;
-                    mauiUtilsType = AssemblyUtils.GetTypeByName("Alternet.UI.MauiUtils");
-                }
-
-                return mauiUtilsType;
-            }
-        }
 
         /// <summary>
         /// Gets or sets list of all <see cref="Control"/> descendants.
@@ -84,6 +55,26 @@ namespace Alternet.UI
             set
             {
                 allControlEvents = value;
+            }
+        }
+
+        /// <summary>
+        /// Creates the specified type via default parameterless constructor.
+        /// </summary>
+        /// <typeparam name="T">Type of the object to create.</typeparam>
+        /// <returns></returns>
+        /// <exception cref="MissingMemberException">Raised when type
+        /// does not have a public, parameterless constructor.</exception>
+        public static T CreateViaDefaultConstructor<T>()
+        {
+            try
+            {
+                return Activator.CreateInstance<T>();
+            }
+            catch (MissingMethodException)
+            {
+                throw new MissingMemberException(
+                    $"Type '{typeof(T)}' does not have a public, parameterless constructor.");
             }
         }
 
@@ -144,6 +135,25 @@ namespace Alternet.UI
             var name = Path.GetFileNameWithoutExtension(path);
             var result = name + ".";
             return result;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Assembly"/> with the specified name
+        /// searching it through all assemblies of the current domain.
+        /// <param name="name">Name of the assembly.</param>
+        /// <returns></returns>
+        public static Assembly? GetAssemblyByName(string name)
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+                var asmName = assembly.GetName().Name;
+                if (asmName == name)
+                    return assembly;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -954,7 +964,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static object? InvokeMauiUtilsGetDevicePlatform()
         {
-            var result = InvokeMethodWithResult(MauiUtilsType, "GetDevicePlatform");
+            var result = InvokeMethodWithResult(KnownTypes.MauiUtils.Value, "GetDevicePlatform");
             return result;
         }
 
@@ -965,7 +975,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool? InvokeMauiUtilsIsMacCatalyst()
         {
-            var result = InvokeBoolMethod(MauiUtilsType, "IsMacCatalyst");
+            var result = InvokeBoolMethod(KnownTypes.MauiUtils.Value, "IsMacCatalyst");
             return result;
         }
 
