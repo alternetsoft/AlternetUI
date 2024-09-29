@@ -349,6 +349,7 @@ namespace Alternet.Drawing
         public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(Coord scaleFactor)
         {
             var result = new EnumArray<HitTestResult, RectD>();
+            var borderWidth = BorderWidth;
 
             if (HasBorder)
             {
@@ -361,8 +362,12 @@ namespace Alternet.Drawing
                     result[HitTestResult.RightBorder] = borderSettings.GetRightRectangle(Bounds);
                 }
             }
+            else
+            {
+                borderWidth = 0;
+            }
 
-            var boundsInsideBorder = Bounds.DeflatedWithPadding(BorderWidth);
+            var boundsInsideBorder = Bounds.DeflatedWithPadding(borderWidth);
             var clientRect = boundsInsideBorder;
 
             var vertVisible = VertVisible;
