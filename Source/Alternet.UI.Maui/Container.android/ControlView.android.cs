@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,6 @@ using Alternet.Drawing;
 
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using System.Diagnostics;
-
 
 #if ANDROID
 
@@ -36,6 +35,7 @@ namespace Alternet.UI
             platformView.KeyPress -= HandleKeyPress;
             platformView.UnhandledKeyEvent -= HandleUnhandledKeyEvent;
             platformView.CapturedPointer -= HandleCapturedPointer;
+            platformView.GenericMotion -= HandleGenericMotion;
         }
 
         /// <inheritdoc/>
@@ -68,23 +68,24 @@ namespace Alternet.UI
             if (!e.Event.IsFromSource(InputSourceType.ClassPointer))
                 return;
 
-            Debug.WriteLine($"HandleGenericMotion: {e.Event.Action}");
+            Debug.WriteLineIf(true, $"HandleGenericMotion: {e.Event.Action}");
 
             switch (e.Event.Action)
             {
                 case MotionEventActions.HoverEnter:
-                    Debug.WriteLine("Mouse hover enter");
+                    Debug.WriteLineIf(true, "Mouse hover enter");
                     Control.RaiseMouseEnter();
                     break;
                 case MotionEventActions.HoverExit:
-                    Debug.WriteLine("Mouse hover exit");
+                    Debug.WriteLineIf(true, "Mouse hover exit");
                     Control.RaiseMouseLeave();
                     break;
                 case MotionEventActions.HoverMove:
                     var x = e.Event.GetX();
                     var y = e.Event.GetY();
+                    PointI pt = ((int)x, (int)y);
                     long timestamp = DateUtils.GetNowInMilliseconds();
-                    PointD position = (x, y);
+                    PointD position = GraphicsFactory.PixelToDip(pt, Control.ScaleFactor);
                     Control.BubbleMouseMove(
                                 Control,
                                 timestamp,
@@ -94,7 +95,7 @@ namespace Alternet.UI
                 case MotionEventActions.Scroll:
                     var scrollX = e.Event.GetAxisValue(Axis.Hscroll);
                     var scrollY = e.Event.GetAxisValue(Axis.Vscroll);
-                    Debug.WriteLine("Mouse scrolled " + scrollX + ", " + scrollY);
+                    Debug.WriteLineIf(true, "Mouse scrolled " + scrollX + ", " + scrollY);
                     break;
             }
         }
@@ -193,14 +194,11 @@ namespace Alternet.UI
             KeyEvent? e,
             bool raiseUpEvent)
         {
-            if (Control is null)
+            if (Control is null || e is null)
                 return false;
 
             KeyStates keyStates = raiseUpEvent ? KeyStates.None : KeyStates.Down;
-
             var evt = MauiKeyboardHandler.Default.ToKeyEventArgs(Control, keyStates, keyCode, e);
-            if (evt is null)
-                return false;
 
             Control.BubbleKeyUpOrDown(evt, raiseUpEvent);
 
@@ -210,6 +208,13 @@ namespace Alternet.UI
             {
                 if (!raiseUpEvent)
                 {
+                    char ch = (char)e.UnicodeChar;
+                    if (ch == 0)
+                        return false;
+                    var keyPressEvt = new KeyPressEventArgs(Control, ch);
+                    Control.BubbleKeyPress(keyPressEvt);
+                    if (keyPressEvt.Handled)
+                        return true;
                 }
 
                 return false;

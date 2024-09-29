@@ -12,7 +12,7 @@ namespace Alternet.MAUI
     /// <summary>
     /// Shows list with registered developer tools actions.
     /// </summary>
-    public class SelectDevToolsActionPage : ContentPage
+    internal class SelectDevToolsActionPage : ContentPage
     {
         private readonly StackLayout layout;
         private readonly StackLayout buttonLayout;
