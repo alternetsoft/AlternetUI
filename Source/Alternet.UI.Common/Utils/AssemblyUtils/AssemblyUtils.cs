@@ -958,6 +958,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets device the app is running on, such as a desktop computer or a tablet.
+        /// Uses invoke of 'MauiUtils.GetDeviceType'.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static GenericDeviceType InvokeMauiUtilsGetDeviceType()
+        {
+            var result = InvokeMethodWithResult(KnownTypes.MauiUtils.Value, "GetDeviceType");
+            if (result is null)
+                return GenericDeviceType.Unknown;
+            return (GenericDeviceType)result;
+        }
+
+        /// <summary>
         /// Gets device platform using invoke of 'MauiUtils.GetDevicePlatform'.
         /// </summary>
         /// <returns></returns>

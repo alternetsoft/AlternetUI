@@ -54,22 +54,27 @@ namespace Alternet.UI
         /// <summary>
         /// Gets operating system as <see cref="OperatingSystems"/> enumeration.
         /// </summary>
-        public static OperatingSystems BackendOS;
+        public static readonly OperatingSystems BackendOS;
 
         /// <summary>
         /// Indicates whether the current application is running on Android.
         /// </summary>
-        public static bool IsAndroidOS;
+        public static readonly bool IsAndroidOS;
 
         /// <summary>
         /// Indicates whether the current application is running on unknown OS.
         /// </summary>
-        public static bool IsUnknownOS;
+        public static readonly bool IsUnknownOS;
 
         /// <summary>
         /// Indicates whether the current application is running on Apple iOS.
         /// </summary>
-        public static bool IsIOS;
+        public static readonly bool IsIOS;
+
+        /// <summary>
+        /// Gets device the app is running on, such as a desktop computer or a tablet.
+        /// </summary>
+        public static readonly GenericDeviceType DeviceType;
 
         /// <summary>
         /// Gets or sets application exit code used when application terminates
@@ -129,6 +134,8 @@ namespace Alternet.UI
         {
             Is64BitOS = Environment.Is64BitOperatingSystem;
             Is64BitProcess = Environment.Is64BitProcess;
+
+            DeviceType = AssemblyUtils.InvokeMauiUtilsGetDeviceType();
 
             IsWindowsOS = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
@@ -250,6 +257,21 @@ namespace Alternet.UI
         /// Gets whether application is running on the desktop operating system.
         /// </summary>
         public static bool IsDesktopOs => IsWindowsOS || IsMacOS || IsLinuxOS;
+
+        /// <summary>
+        /// Gets whether device the app is running on is desktop.
+        /// </summary>
+        public static bool IsDesktopDevice => DeviceType == GenericDeviceType.Desktop;
+
+        /// <summary>
+        /// Gets whether device the app is running on is tablet.
+        /// </summary>
+        public static bool IsTabletDevice => DeviceType == GenericDeviceType.Tablet;
+
+        /// <summary>
+        /// Gets whether device the app is running on is phone.
+        /// </summary>
+        public static bool IsPhoneDevice => DeviceType == GenericDeviceType.Phone;
 
         /// <summary>
         /// Gets the path for the executable file that started the application, not including

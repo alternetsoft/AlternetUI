@@ -26,6 +26,7 @@ namespace Alternet.UI
     /// </summary>
     public static partial class MauiUtils
     {
+        private static GenericDeviceType? deviceType;
         private static PlatformApplication? platformApplication;
 
         /// <summary>
@@ -113,6 +114,34 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         public static bool IsMacCatalyst() => DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
+
+        /// <summary>
+        /// Gets device the app is running on, such as a desktop computer or a tablet.
+        /// </summary>
+        /// <returns></returns>
+        public static GenericDeviceType GetDeviceType()
+        {
+            deviceType ??= Fn();
+            return deviceType.Value;
+
+            GenericDeviceType Fn()
+            {
+                var idiom = DeviceInfo.Current.Idiom;
+
+                if (idiom == DeviceIdiom.Desktop)
+                    return GenericDeviceType.Desktop;
+                if (idiom == DeviceIdiom.Phone)
+                    return GenericDeviceType.Phone;
+                if (idiom == DeviceIdiom.Tablet)
+                    return GenericDeviceType.Tablet;
+                if (idiom == DeviceIdiom.TV)
+                    return GenericDeviceType.TV;
+                if (idiom == DeviceIdiom.Watch)
+                    return GenericDeviceType.Watch;
+
+                return GenericDeviceType.Unknown;
+            }
+        }
 
         /// <summary>
         /// Gets device platform.

@@ -38,7 +38,7 @@ public partial class MainPage : ContentPage
 
         button.Text = "Hello";
 
-        if (Alternet.UI.Display.Primary.IsPhoneScreen)
+        if (!Alternet.UI.App.IsDesktopDevice)
         {
             editor.Interior.HasBorder = false;
         }
@@ -115,23 +115,48 @@ public partial class MainPage : ContentPage
 
         Alternet.UI.DebugUtils.DebugCallIf(true, () =>
         {
-            void InsertText(string s)
-            {
-                var position = ed.Position;
-                ed.Lines.Insert(0, s);
-                ed.Position = position;
-            }
-
             InsertText("// " + Alternet.UI.LogUtils.GetLogVersionText() + Environment.NewLine);
         });
     }
 
-    private async void Button1_Clicked(object? sender, EventArgs e)
+    void InsertText(string s)
     {
-        Alternet.UI.Display.Log();
+        var ed = editor.Editor;
+        var position = ed.Position;
+        ed.Lines.Insert(0, s);
+        ed.Position = position;
+    }
 
+    void AppendText(string s)
+    {
+        var ed = editor.Editor;
+        var position = ed.Position;
+        ed.Lines.Add(s);
+        ed.Position = position;
+    }
+
+    void LogToEditor(Action action)
+    {
+        var ed = editor.Editor;
+        ed.BeginUpdate();
+        try
+        {
+            ed.Lines.Clear();
+            Alternet.UI.LogUtils.LogActionToAction(action, AppendText);
+        }
+        finally
+        {
+            ed.EndUpdate();
+        }
+    }
+
+    private void Button1_Clicked(object? sender, EventArgs e)
+    {
+        LogToEditor(Alternet.UI.Display.Log);
+        /*
         var page = new Alternet.MAUI.SelectDevToolsActionPage();
         await Navigation.PushModalAsync(page);
+        */
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];
