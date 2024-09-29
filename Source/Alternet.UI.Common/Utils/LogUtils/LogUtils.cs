@@ -115,6 +115,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Temporary adds <paramref name="logAction"/> to <see cref="App.LogMessage"/> event
+        /// and calls <paramref name="action"/>.
+        /// </summary>
+        /// <param name="action">Action to call.</param>
+        /// <param name="logAction">Log action to use for log messages output.</param>
+        public static void LogActionToAction(Action action, Action<string> logAction)
+        {
+            App.LogMessage += HandleLogMessage;
+            try
+            {
+                action();
+            }
+            finally
+            {
+                App.LogMessage -= HandleLogMessage;
+            }
+
+            void HandleLogMessage(object sender, LogMessageEventArgs e)
+            {
+                logAction(e.Message ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         /// Sets whether to log specified event.
         /// </summary>
         /// <param name="type">Type of the object.</param>

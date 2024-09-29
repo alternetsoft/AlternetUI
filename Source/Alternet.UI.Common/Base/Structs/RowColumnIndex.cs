@@ -147,7 +147,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts this <see cref='Drawing.PointI'/> to a human readable string.
+        /// Converts this object to a human readable string.
         /// </summary>
         public override readonly string ToString()
         {

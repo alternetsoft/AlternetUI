@@ -65,7 +65,7 @@ namespace Alternet.UI
             {
                 var result = NotifyKeyMultiple(this, keyCode, count, e);
                 if (result)
-                    return false;
+                    return true;
             }
 
             return base.OnKeyMultiple(keyCode, count, e);
@@ -79,7 +79,7 @@ namespace Alternet.UI
             {
                 var result = NotifyKeyDown(this, keyCode, e);
                 if (result)
-                    return false;
+                    return true;
             }
 
             return base.OnKeyDown(keyCode, e);
@@ -92,7 +92,7 @@ namespace Alternet.UI
             {
                 var result = NotifyKeyUp(this, keyCode, e);
                 if (result)
-                    return false;
+                    return true;
             }
 
             return base.OnKeyUp(keyCode, e);
@@ -110,7 +110,7 @@ namespace Alternet.UI
             {
                 var result = NotifyKeyLongPress(this, keyCode, e);
                 if (result)
-                    return false;
+                    return true;
             }
 
             return base.OnKeyLongPress(keyCode, e);

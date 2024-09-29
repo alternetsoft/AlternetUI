@@ -33,32 +33,23 @@ namespace Alternet.UI
         {
         }
 
-        public virtual Alternet.UI.KeyEventArgs? ToKeyEventArgs(
-                    Control? control,
+        public virtual Alternet.UI.KeyEventArgs ToKeyEventArgs(
+                    Control control,
                     KeyStates keyStates,
                     Keycode keyCode,
-                    KeyEvent? e)
+                    KeyEvent e)
         {
-            if (control is null)
-                return null;
-
             var key = Convert(keyCode);
 
-            ModifierKeys modifiers = ModifierKeys.None;
-            int repeatCount = 0;
+            ModifierKeys modifiers;
+            int repeatCount;
 
-            if (e is null)
-            {
-            }
-            else
-            {
-                modifiers = Convert(e.MetaState);
+            modifiers = Convert(e.MetaState);
 
-                repeatCount = e.RepeatCount;
+            repeatCount = e.RepeatCount;
 
-                if (repeatCount < 0)
-                    repeatCount = 0;
-            }
+            if (repeatCount < 0)
+                repeatCount = 0;
 
             Alternet.UI.KeyEventArgs result = new(
                 control,
