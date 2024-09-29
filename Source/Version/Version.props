@@ -8,15 +8,15 @@
   </PropertyGroup>
   <!-- Assembly Information -->
   <PropertyGroup>
-    <AssemblyVersion>0.9.634.0</AssemblyVersion>
-    <FileVersion>0.9.634.0</FileVersion>
+    <AssemblyVersion>0.9.635.0</AssemblyVersion>
+    <FileVersion>0.9.635.0</FileVersion>
     <!-- Format of InformationalVersion:  0.9.2 (0.9 Beta build 2) -->
-    <InformationalVersion>0.9.634 (0.9 Beta build 634)</InformationalVersion>
+    <InformationalVersion>0.9.635 (0.9 Beta build 635)</InformationalVersion>
   </PropertyGroup>
   <!-- NuGet Specification -->
   <PropertyGroup>
-    <PackageVersion>0.9.634-beta</PackageVersion>
-    <Version>0.9.634-beta</Version>
+    <PackageVersion>0.9.635-beta</PackageVersion>
+    <Version>0.9.635-beta</Version>
     <Authors>AlterNET Software</Authors>
   </PropertyGroup>
 </Project>

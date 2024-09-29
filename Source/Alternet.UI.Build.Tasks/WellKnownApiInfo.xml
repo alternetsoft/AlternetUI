@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.634.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.635.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -373,6 +373,8 @@
     <Type Name="Alternet.UI.FlagsAndAttributesFactory" />
     <Type Name="Alternet.UI.FlagsAndAttributes`2" />
     <Type Name="Alternet.UI.FlagsFactory" />
+    <Type Name="Alternet.UI.KnownAssemblies" />
+    <Type Name="Alternet.UI.KnownTypes" />
     <Type Name="Alternet.UI.BaseMemory" />
     <Type Name="Alternet.UI.IMemoryHandler" />
     <Type Name="Alternet.UI.INotifyIconHandler" />
@@ -392,7 +394,6 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.UixmlLoader" />
-    <Type Name="Alternet.UI.ValueValidatorFactory" />
     <Type Name="Alternet.UI.Clipboard" />
     <Type Name="Alternet.UI.ClipboardUtils" />
     <Type Name="Alternet.UI.DataFormats" />
@@ -522,6 +523,7 @@
     <Type Name="Alternet.UI.AutoPinner" />
     <Type Name="Alternet.UI.EnumArray`2" />
     <Type Name="Alternet.UI.HVAlignment" />
+    <Type Name="Alternet.UI.LazyStruct`1" />
     <Type Name="Alternet.UI.ObjectUniqueId" />
     <Type Name="Alternet.UI.RowColumnIndex" />
     <Type Name="Alternet.UI.SynchronizationContext" />
@@ -9753,8 +9755,6 @@
     <Type Name="Alternet.UI.IReadOnlyStrings" />
     <Type Name="Alternet.UI.ITextProperty" />
     <Type Name="Alternet.UI.IValidatorReporter" />
-    <Type Name="Alternet.UI.IValueValidator" />
-    <Type Name="Alternet.UI.IValueValidatorText" />
     <Type Name="Alternet.UI.IWin32Window" />
     <Type Name="Alternet.UI.IWindow">
       <Event Name="MenuChanged" />
@@ -9852,6 +9852,7 @@
     <Type Name="Alternet.UI.EnumerableUtils" />
     <Type Name="Alternet.UI.EnumUtils" />
     <Type Name="Alternet.UI.EventArgsUtils" />
+    <Type Name="Alternet.UI.ExceptionUtils" />
     <Type Name="Alternet.UI.FileMaskUtils" />
     <Type Name="Alternet.UI.FileUtils" />
     <Type Name="Alternet.UI.IntPtrUtils" />
