@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// Implements control interior drawing.
     /// This includes border, background, vertical and horizontal scrollbars drawing.
     /// </summary>
-    public class InteriorDrawable : BaseDrawable
+    public partial class InteriorDrawable : BaseDrawable
     {
         /// <summary>
         /// Gets or sets vertical scrollbar element.
