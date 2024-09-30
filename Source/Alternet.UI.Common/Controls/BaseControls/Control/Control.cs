@@ -1441,17 +1441,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether left mouse button is over control and is down.
+        /// Gets whether left mouse button is down.
         /// </summary>
         [Browsable(false)]
         public virtual bool IsMouseLeftButtonDown
         {
             get
             {
-                return isMouseLeftButtonDown && IsMouseOver;
+                return isMouseLeftButtonDown;
             }
 
-            internal set
+            set
             {
                 isMouseLeftButtonDown = value;
             }
@@ -1482,14 +1482,10 @@ namespace Alternet.UI
 
                 if (!Enabled)
                     return VisualControlState.Disabled;
+                if (IsMouseLeftButtonDown)
+                    return VisualControlState.Pressed;
                 if (IsMouseOver)
-                {
-                    if (IsMouseLeftButtonDown)
-                        return VisualControlState.Pressed;
-                    else
-                        return VisualControlState.Hovered;
-                }
-
+                    return VisualControlState.Hovered;
                 if (Focused)
                     return VisualControlState.Focused;
                 return VisualControlState.Normal;

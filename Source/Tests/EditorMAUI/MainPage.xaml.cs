@@ -68,6 +68,13 @@ public partial class MainPage : ContentPage
         Alternet.UI.Control.FocusedControlChanged += Control_FocusedControlChanged;
 
         Alternet.UI.PlessMouse.LastMousePositionChanged += PlessMouse_LastMousePositionChanged;
+
+        editor.Interior.CornerClick += Interior_CornerClick;
+    }
+
+    private void Interior_CornerClick(object? sender, EventArgs e)
+    {
+        editor.Editor.Font = editor.Editor.Font.Larger();
     }
 
     private void PlessMouse_LastMousePositionChanged(object? sender, EventArgs e)

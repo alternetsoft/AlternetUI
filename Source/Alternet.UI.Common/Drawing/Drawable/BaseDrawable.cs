@@ -11,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Base class for the drawable objects.
     /// </summary>
-    public class BaseDrawable : BaseObject, IBaseDrawable
+    public partial class BaseDrawable : BaseObject, IBaseDrawable
     {
         private RectD bounds;
 
