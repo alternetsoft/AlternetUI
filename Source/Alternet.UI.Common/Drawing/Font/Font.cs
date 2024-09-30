@@ -19,6 +19,15 @@ namespace Alternet.Drawing
     [DebuggerDisplay("{ToInfoString()}")]
     public class Font : DisposableObject, IEquatable<Font>
     {
+        /// <summary>
+        /// Gets or sets default font size scaling fator for <see cref="Smaller"/>
+        /// and <see cref="Larger"/> methods.
+        /// </summary>
+        /// <remarks>
+        /// Default value of 1.2 was inspired by the W3C CSS specification.
+        /// </remarks>
+        public static FontSize SmallerLargerSizeScaleFactor = 1.2;
+
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
 
@@ -892,22 +901,20 @@ namespace Alternet.Drawing
         /// Returns a smaller version of this font.
         /// </summary>
         /// <remarks>
-        /// The font size is divided by 1.2, the factor of 1.2 being inspired by the
-        /// W3C CSS specification.
+        /// The font size is divided by <see cref="SmallerLargerSizeScaleFactor"/>.
         /// </remarks>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual Font Smaller()
         {
-            return Get(Name, SizeInPoints / 1.2, Style);
+            return Get(Name, SizeInPoints / SmallerLargerSizeScaleFactor, Style);
         }
 
         /// <summary>
         /// Returns a larger version of this font.
         /// </summary>
         /// <remarks>
-        /// The font size is divided by 1.2, the factor of 1.2 being inspired by the
-        /// W3C CSS specification.
+        /// The font size is multiplied by <see cref="SmallerLargerSizeScaleFactor"/>.
         /// </remarks>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
