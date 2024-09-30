@@ -41,6 +41,11 @@ namespace Alternet.Drawing
         private InteriorNotification? notification;
 
         /// <summary>
+        /// Occurs when the corner which is below vertical scrollbar is clicked.
+        /// </summary>
+        public event EventHandler? CornerClick;
+
+        /// <summary>
         /// Enumerates possible hit test return values.
         /// </summary>
         public enum HitTestResult
@@ -422,6 +427,15 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Raises <see cref="CornerClick"/> event.
+        /// </summary>
+        /// <param name="sender">Value to pass as a sender to the event.</param>
+        public void RaiseCornerClick(object sender)
+        {
+            CornerClick?.Invoke(sender, EventArgs.Empty);
+        }
+
         /// <inheritdoc/>
         public override void Draw(Control control, Graphics dc)
         {
@@ -521,6 +535,11 @@ namespace Alternet.Drawing
             /// Gets whether hit test is on horizontal or vertical scrollbar.
             /// </summary>
             public bool IsScrollBar => IsHorzScrollBar || IsVertScrollBar;
+
+            /// <summary>
+            /// Gets whether hit test is on the corner which is below vertical scrollbar.
+            /// </summary>
+            public bool IsCorner => Interior == InteriorDrawable.HitTestResult.Corner;
 
             /// <summary>
             /// Gets horizontal or vertical orientation depending on <see cref="IsVertScrollBar"/>

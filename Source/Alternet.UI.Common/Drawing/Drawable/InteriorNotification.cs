@@ -67,6 +67,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void AfterClick(Control sender)
+        {
+            var mouseLocation = Mouse.GetPosition(sender);
+            var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
+
+            if (hitTests.IsCorner)
+            {
+                interior.RaiseCornerClick(sender);
+            }
+        }
+
+        /// <inheritdoc/>
         public override void AfterVisualStateChanged(Control sender)
         {
             if (sender.VisualState == VisualControlState.Pressed)

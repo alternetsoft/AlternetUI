@@ -9,13 +9,21 @@
         <StackLayout x:Name="panel" 
                            Grid.Row="0">
             <editor:SyntaxEditView x:Name="editor" ReadOnly="False" 
-                                   SelectionChanged="editor_SelectionChanged"/>
+                                   SelectionChanged="editor_SelectionChanged">
+            </editor:SyntaxEditView>
         </StackLayout>
         <Button Grid.Row="1"
                 Margin="0,20"
                 FontSize="12"
                 Text="Run Action"
                 x:Name="button1"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center">
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Go to docs repo"/>
+                    <MenuFlyoutItem Text="Go to engineering repo"/>
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
+        </Button>
     </Grid>
 </ContentPage>
