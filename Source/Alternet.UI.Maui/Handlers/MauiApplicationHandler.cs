@@ -265,7 +265,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual IMouseHandler CreateMouseHandler()
         {
-            return new PlessMouseHandler();
+            return new MauiMouseHandler();
         }
 
         /// <inheritdoc/>

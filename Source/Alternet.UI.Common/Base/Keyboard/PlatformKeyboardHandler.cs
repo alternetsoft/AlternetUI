@@ -22,6 +22,9 @@ namespace Alternet.UI
                 RegisterKeyMappings();
         }
 
+        /// <inheritdoc/>
+        public virtual bool? KeyboardPresent => null;
+
         /// <summary>
         /// Registers default key mappings between platform keys and <see cref="Key"/>.
         /// </summary>

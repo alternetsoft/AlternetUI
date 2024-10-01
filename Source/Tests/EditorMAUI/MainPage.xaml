@@ -14,7 +14,7 @@
         </StackLayout>
 
         <StackLayout Margin="0,20" Grid.Row="1">
-            <Button Text="Action 1" x:Name="button1">
+            <Button Text="Action 1" x:Name="button1" WidthRequest="50">
                 <FlyoutBase.ContextFlyout>
                     <MenuFlyout>
                         <MenuFlyoutItem Text="Go to docs repo"/>

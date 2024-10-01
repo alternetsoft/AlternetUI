@@ -32,7 +32,7 @@ public partial class MainPage : ContentPage
         InitEdit();
         editor.Editor.Lexer = parserCs;
 
-        LoadFile(NewFileNameNoExt + "-small.cs");
+        LoadFile(NewFileNameNoExt + ".cs");
 
         button.Text = "Hello";
 

@@ -14,6 +14,11 @@ namespace Alternet.UI
     public interface IMouseHandler : IDisposable
     {
         /// <summary>
+        /// Gets whether mouse is present.
+        /// </summary>
+        bool? MousePresent { get; }
+
+        /// <summary>
         /// Gets the current state of the specified button from
         /// the device from the underlying system.
         /// </summary>

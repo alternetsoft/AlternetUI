@@ -42,6 +42,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public bool? KeyboardPresent => null;
+
         /// <summary>
         /// Registers default <see cref="WxWidgetsKeyCode"/> to/from <see cref="Key"/> enum mappings.
         /// </summary>
