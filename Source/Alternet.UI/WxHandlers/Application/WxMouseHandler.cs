@@ -11,6 +11,9 @@ namespace Alternet.UI
     internal class WxMouseHandler : DisposableObject, IMouseHandler
     {
         /// <inheritdoc/>
+        public bool? MousePresent => null;
+
+        /// <inheritdoc/>
         public ICursorFactoryHandler CreateCursorFactoryHandler()
         {
             return new WxCursorFactoryHandler();

@@ -32,6 +32,17 @@ namespace Alternet.UI
         private static IMouseHandler? handler;
 
         /// <summary>
+        /// Gets whether mouse is present.
+        /// </summary>
+        public static bool? IsMousePresent
+        {
+            get
+            {
+                return Handler.MousePresent;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="IMouseHandler"/> used to access mouse.
         /// </summary>
         public static IMouseHandler Handler

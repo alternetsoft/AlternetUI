@@ -14,6 +14,9 @@ namespace Alternet.UI
     public class PlessMouseHandler : DisposableObject, IMouseHandler
     {
         /// <inheritdoc/>
+        public virtual bool? MousePresent => null;
+
+        /// <inheritdoc/>
         public virtual MouseButtonState GetButtonState(MouseButton mouseButton)
         {
             return PlessMouse.GetButtonState(mouseButton);
