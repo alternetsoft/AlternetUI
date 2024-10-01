@@ -109,6 +109,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="ControlView"/> for the specified <see cref="Control"/>.
+        /// </summary>
+        /// <param name="control">Control to get container from.</param>
+        /// <returns></returns>
+        public static ControlView? GetContainer(Control? control)
+        {
+            if (control?.Handler is MauiControlHandler handler)
+                return handler.Container;
+            return null;
+        }
+
+        /// <summary>
+        /// Gets <see cref="PlatformView"/> for the specified <see cref="Control"/>.
+        /// </summary>
+        /// <param name="control">Control to get <see cref="PlatformView"/> from.</param>
+        /// <returns></returns>
+        public static PlatformView? GetPlatformView(Control? control)
+        {
+            var container = GetContainer(control);
+            if (container is null)
+                return null;
+            var platformView = container.GetPlatformView(container.Handler);
+            return platformView;
+        }
+
+        /// <summary>
         /// Gets platform view.
         /// </summary>
         /// <param name="handler">Element handler.</param>

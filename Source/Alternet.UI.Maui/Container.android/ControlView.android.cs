@@ -196,7 +196,29 @@ namespace Alternet.UI
             int repeatCount,
             KeyEvent? e)
         {
-            return false;
+            if (Control is null || e is null)
+                return false;
+
+            if (keyCode == Keycode.Unknown)
+            {
+                var ch = e?.Characters;
+                if (ch is null || ch.Length == 0)
+                    return false;
+
+                var handled = false;
+
+                for(int i = 0; i < ch.Length; i++)
+                {
+                    var keyPressEvt = new KeyPressEventArgs(Control, ch[i]);
+                    Control.BubbleKeyPress(keyPressEvt);
+                    if (keyPressEvt.Handled)
+                        handled = true;
+                }
+
+                return handled;
+            }
+
+            return RaiseUpOrDown(sender, keyCode, e, false);
         }
 
         private bool RaiseUpOrDown(
@@ -209,11 +231,17 @@ namespace Alternet.UI
                 return false;
 
             KeyStates keyStates = raiseUpEvent ? KeyStates.None : KeyStates.Down;
-            var evt = MauiKeyboardHandler.Default.ToKeyEventArgs(Control, keyStates, keyCode, e);
 
-            Control.BubbleKeyUpOrDown(evt, raiseUpEvent);
+            bool handled = false;
 
-            if (evt.Handled)
+            if(keyCode != Keycode.Unknown)
+            {
+                var evt = MauiKeyboardHandler.Default.ToKeyEventArgs(Control, keyStates, keyCode, e);
+                Control.BubbleKeyUpOrDown(evt, raiseUpEvent);
+                handled = evt.Handled;
+            }
+
+            if (handled)
                 return true;
             else
             {

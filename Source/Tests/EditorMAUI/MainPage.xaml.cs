@@ -24,7 +24,7 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
-        Alternet.UI.PlessMouse.ShowTestMouseInControl = true;
+        Alternet.UI.PlessMouse.ShowTestMouseInControl = false;
 
         InitializeComponent();
 
@@ -74,7 +74,11 @@ public partial class MainPage : ContentPage
 
     private void Interior_CornerClick(object? sender, EventArgs e)
     {
+        Alternet.UI.Keyboard.ToggleKeyboardVisibility(editor.Editor);
+
+        /*
         editor.Editor.Font = editor.Editor.Font.Larger();
+        */
     }
 
     private void PlessMouse_LastMousePositionChanged(object? sender, EventArgs e)
@@ -87,7 +91,7 @@ public partial class MainPage : ContentPage
 
     private void Control_FocusedControlChanged(object? sender, EventArgs e)
     {
-        Alternet.UI.App.LogIf($"FocusedControlChanged: {sender?.GetType()}", true);
+        Alternet.UI.App.LogIf($"FocusedControlChanged: {sender?.GetType()}", false);
     }
 
     private void InitEdit()
@@ -161,6 +165,16 @@ public partial class MainPage : ContentPage
         var page = new Alternet.MAUI.SelectDevToolsActionPage();
         await Navigation.PushModalAsync(page);
         */
+    }
+
+    private void Button3_Clicked(object? sender, EventArgs e)
+    {
+        Alternet.UI.Keyboard.HideKeyboard(editor.Editor);
+    }
+
+    private void Button2_Clicked(object? sender, EventArgs e)
+    {
+        Alternet.UI.Keyboard.ShowKeyboard(editor.Editor);
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];
