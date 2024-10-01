@@ -222,16 +222,16 @@ namespace Alternet.UI
             Add(Windows.System.VirtualKey.GamepadDPadRight, Alternet.UI.Key.GamepadDPadRight);
             Add(Windows.System.VirtualKey.GamepadMenu, Alternet.UI.Key.GamepadMenu);
             Add(Windows.System.VirtualKey.GamepadView, Alternet.UI.Key.GamepadView);
-            Add(Windows.System.VirtualKey.GamepadLeftThumbstickButton, Alternet.UI.Key.GamepadLeftThumbstickButton);
-            Add(Windows.System.VirtualKey.GamepadRightThumbstickButton, Alternet.UI.Key.GamepadRightThumbstickButton);
+            Add(Windows.System.VirtualKey.GamepadLeftThumbstickButton, Key.GamepadLeftThumbstickButton);
+            Add(Windows.System.VirtualKey.GamepadRightThumbstickButton, Key.GamepadRightThumbstickButton);
             Add(Windows.System.VirtualKey.GamepadLeftThumbstickUp, Alternet.UI.Key.GamepadLeftThumbstickUp);
-            Add(Windows.System.VirtualKey.GamepadLeftThumbstickDown, Alternet.UI.Key.GamepadLeftThumbstickDown);
-            Add(Windows.System.VirtualKey.GamepadLeftThumbstickRight, Alternet.UI.Key.GamepadLeftThumbstickRight);
-            Add(Windows.System.VirtualKey.GamepadLeftThumbstickLeft, Alternet.UI.Key.GamepadLeftThumbstickLeft);
-            Add(Windows.System.VirtualKey.GamepadRightThumbstickUp, Alternet.UI.Key.GamepadRightThumbstickUp);
-            Add(Windows.System.VirtualKey.GamepadRightThumbstickDown, Alternet.UI.Key.GamepadRightThumbstickDown);
-            Add(Windows.System.VirtualKey.GamepadRightThumbstickRight, Alternet.UI.Key.GamepadRightThumbstickRight);
-            Add(Windows.System.VirtualKey.GamepadRightThumbstickLeft, Alternet.UI.Key.GamepadRightThumbstickLeft);
+            Add(Windows.System.VirtualKey.GamepadLeftThumbstickDown, Key.GamepadLeftThumbstickDown);
+            Add(Windows.System.VirtualKey.GamepadLeftThumbstickRight, Key.GamepadLeftThumbstickRight);
+            Add(Windows.System.VirtualKey.GamepadLeftThumbstickLeft, Key.GamepadLeftThumbstickLeft);
+            Add(Windows.System.VirtualKey.GamepadRightThumbstickUp, Key.GamepadRightThumbstickUp);
+            Add(Windows.System.VirtualKey.GamepadRightThumbstickDown, Key.GamepadRightThumbstickDown);
+            Add(Windows.System.VirtualKey.GamepadRightThumbstickRight, Key.GamepadRightThumbstickRight);
+            Add(Windows.System.VirtualKey.GamepadRightThumbstickLeft, Key.GamepadRightThumbstickLeft);
 
             Add(Windows.System.VirtualKey.Escape, Alternet.UI.Key.Escape);
 
@@ -271,14 +271,6 @@ namespace Alternet.UI
             Add(Windows.System.VirtualKey.NavigationRight, Alternet.UI.Key.NavigationRight);
             Add(Windows.System.VirtualKey.NavigationAccept, Alternet.UI.Key.NavigationAccept);
             Add(Windows.System.VirtualKey.NavigationCancel, Alternet.UI.Key.NavigationCancel);
-
-            // Add(Windows.System.VirtualKey.LeftShift      , Alternet.UI.Key.LeftShift);
-            // Add(Windows.System.VirtualKey.RightShift     , Alternet.UI.Key.RightShift);
-            // Add(Windows.System.VirtualKey.LeftControl    , Alternet.UI.Key.LeftControl);
-            // Add(Windows.System.VirtualKey.RightControl   , Alternet.UI.Key.RightControl);
-            // Add(Windows.System.VirtualKey.LeftMenu       , Alternet.UI.Key.LeftMenu);
-            // Add(Windows.System.VirtualKey.RightMenu      , Alternet.UI.Key.RightMenu      );
-
 #pragma warning restore
         }
 
@@ -303,6 +295,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override KeyStates GetKeyStatesFromSystem(Key key)
         {
+            /*
+            There is no need to get left and right modifiers state
+            as there is key code for modifiers without separation on left/right.
+            */
+
             return Fn(Convert(key));
 
             KeyStates Fn(Windows.System.VirtualKey key)

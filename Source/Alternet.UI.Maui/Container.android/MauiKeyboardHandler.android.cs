@@ -5,11 +5,16 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Platform;
 
 #if ANDROID
 
+using Android.Content;
 using Android.Views;
+using Android.Views.InputMethods;
+using AndroidX.Core.View;
 
 namespace Alternet.UI
 {
@@ -726,6 +731,59 @@ namespace Alternet.UI
         public override KeyStates GetKeyStatesFromSystem(Key key)
         {
             return KeyStates.None;
+        }
+
+        /// <inheritdoc/>
+        public override bool HideKeyboard(Control? control)
+        {
+            var platformView = ControlView.GetPlatformView(control);
+            if (platformView is null)
+                return false;
+
+            var focusedView = platformView.Context?.GetActivity()?.Window?.CurrentFocus;
+            View tokenView = focusedView ?? platformView;
+
+            using var inputMethodManager
+                = (InputMethodManager?)tokenView.Context?.GetSystemService(Context.InputMethodService);
+            var windowToken = tokenView.WindowToken;
+
+            if (windowToken is not null && inputMethodManager is not null)
+            {
+                return inputMethodManager.HideSoftInputFromWindow(windowToken, HideSoftInputFlags.None);
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override bool IsSoftKeyboardShowing(Control? control)
+        {
+            var platformView = ControlView.GetPlatformView(control);
+            if (platformView is null)
+                return false;
+
+            var insets = ViewCompat.GetRootWindowInsets(platformView);
+            if (insets is null)
+                return false;
+
+            var result = insets.IsVisible(WindowInsetsCompat.Type.Ime());
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override bool ShowKeyboard(Control? control)
+        {
+            var platformView = ControlView.GetPlatformView(control);
+            if (platformView is null)
+                return false;
+
+            using var inputMethodManager
+                = (InputMethodManager?)platformView.Context?.GetSystemService(Context.InputMethodService);
+
+            // The zero value for the second parameter comes from
+            // https://developer.android.com/reference/android/view/inputmethod/InputMethodManager#showSoftInput(android.view.View,%20int)
+            // Apparently there's no named value for zero in this case
+            return inputMethodManager?.ShowSoftInput(platformView, 0) is true;
         }
     }
 }

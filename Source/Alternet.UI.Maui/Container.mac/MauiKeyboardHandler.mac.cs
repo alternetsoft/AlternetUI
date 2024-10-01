@@ -338,6 +338,24 @@ namespace Alternet.UI
         {
             return KeyStates.None;
         }
+
+        /// <inheritdoc/>
+        public override bool HideKeyboard(Control? control)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override bool IsSoftKeyboardShowing(Control? control)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override bool ShowKeyboard(Control? control)
+        {
+            return false;
+        }
     }
 }
 #endif
