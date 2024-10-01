@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Common", "..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Interfaces", "..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj", "{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax.Parsers.Advanced", "..\..\..\..\AlternetStudio\Source\Parsers\Advanced\Alternet.Syntax.Parsers.Advanced.csproj", "{977B5DAA-DCC3-4ADC-929A-3DED0C039421}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977B5DAA-DCC3-4ADC-929A-3DED0C039421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977B5DAA-DCC3-4ADC-929A-3DED0C039421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977B5DAA-DCC3-4ADC-929A-3DED0C039421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977B5DAA-DCC3-4ADC-929A-3DED0C039421}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

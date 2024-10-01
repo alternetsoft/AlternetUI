@@ -106,16 +106,21 @@
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
+  <PropertyGroup>
+    <StudioPath>$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio</StudioPath>
+  </PropertyGroup>
 
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Common.AlternetUI\Alternet.Common.AlternetUI.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Common\Alternet.Common.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Editor.MAUI\Alternet.Editor.MAUI.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Editor\Alternet.Editor.AlternetUI.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Common\Python\Alternet.Common.Python.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Parsers\Alternet.Syntax.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Parsers\Python\Alternet.Syntax.Parsers.Advanced.Python.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio\Source\Parsers\Roslyn\Alternet.Syntax.Parsers.Roslyn.csproj" />
+  <ItemGroup>
+    <ProjectReference
+      Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
+
+    <ProjectReference Include="$(StudioPath)\Source\Common.AlternetUI\Alternet.Common.AlternetUI.csproj" />
+    <ProjectReference Include="$(StudioPath)\Source\Common\Alternet.Common.csproj" />
+    <ProjectReference Include="$(StudioPath)\Source\Editor.MAUI\Alternet.Editor.MAUI.csproj" />
+    <ProjectReference Include="$(StudioPath)\Source\Editor\Alternet.Editor.AlternetUI.csproj" />
+    <ProjectReference Include="$(StudioPath)\Source\Parsers\Alternet.Syntax.csproj" />
+    <ProjectReference
+      Include="$(StudioPath)\Source\Parsers\Advanced\Alternet.Syntax.Parsers.Advanced.csproj" />
   </ItemGroup>
+  
 </Project>

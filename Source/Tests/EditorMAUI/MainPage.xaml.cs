@@ -13,8 +13,7 @@ public partial class MainPage : ContentPage
 
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
 
-    private readonly Alternet.Syntax.Parsers.Roslyn.CodeCompletion.CsSolution solution;
-    private readonly Alternet.Syntax.Parsers.Roslyn.CsParser parserCs;
+    private readonly Alternet.Syntax.Parsers.Advanced.CsParser parserCs;
 
     private readonly Button button = new();
 
@@ -28,8 +27,7 @@ public partial class MainPage : ContentPage
 
         InitializeComponent();
 
-        solution = new(Microsoft.CodeAnalysis.SourceCodeKind.Regular);
-        parserCs = new(solution);
+        parserCs = new();
 
         InitEdit();
         editor.Editor.Lexer = parserCs;
