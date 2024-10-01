@@ -342,19 +342,35 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool HideKeyboard(Control? control)
         {
-            return false;
+            var platformView = ControlView.GetPlatformView(control);
+            if (platformView is null)
+                return false;
+
+            var result = platformView.ResignFirstResponder();
+
+            return result;
         }
 
         /// <inheritdoc/>
         public override bool IsSoftKeyboardShowing(Control? control)
         {
-            return false;
+            var platformView = ControlView.GetPlatformView(control);
+            if (platformView is null)
+                return false;
+
+            var result = platformView.IsFirstResponder;
+            return result;
         }
 
         /// <inheritdoc/>
         public override bool ShowKeyboard(Control? control)
         {
-            return false;
+            var platformView = ControlView.GetPlatformView(control);
+            if (platformView is null)
+                return false;
+
+            var result = platformView.BecomeFirstResponder();
+            return result;
         }
     }
 }

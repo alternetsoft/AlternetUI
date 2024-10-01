@@ -12,6 +12,11 @@ namespace Alternet.UI
     public interface IKeyboardHandler : IDisposable
     {
         /// <summary>
+        /// Gets whether hardware keyboard is present.
+        /// </summary>
+        bool? KeyboardPresent { get; }
+
+        /// <summary>
         /// Gets the current state of the specified key from the device
         /// from the underlying system
         /// </summary>

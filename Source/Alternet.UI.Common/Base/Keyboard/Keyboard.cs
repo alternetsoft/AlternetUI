@@ -21,6 +21,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether hardware keyboard is present.
+        /// </summary>
+        public static bool? IsKeyboardPresent
+        {
+            get
+            {
+                return Handler.KeyboardPresent;
+            }
+        }
+
+        /// <summary>
         /// Gets the set of modifier keys currently pressed (Control, Alt, Shift, etc.).
         /// </summary>
         public static ModifierKeys Modifiers

@@ -12,6 +12,7 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 
+using Windows.Devices.Input;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.ViewManagement.Core;
@@ -34,12 +35,35 @@ namespace Alternet.UI
         /// </summary>
         public static MauiKeyboardHandler Default = new();
 
+        private static KeyboardCapabilities? keyboardCapabilities;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MauiKeyboardHandler"/> class.
         /// </summary>
         public MauiKeyboardHandler()
             : base(VirtualKeyMaxValue, Key.Max)
         {
+        }
+
+        /// <summary>
+        /// Gets keyboard capabilities.
+        /// </summary>
+        public static KeyboardCapabilities KeyboardCapabilities
+        {
+            get
+            {
+                return keyboardCapabilities ??= new Windows.Devices.Input.KeyboardCapabilities();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool? KeyboardPresent
+        {
+            get
+            {
+                var result = KeyboardCapabilities.KeyboardPresent != 0;
+                return result;
+            }
         }
 
         /// <summary>

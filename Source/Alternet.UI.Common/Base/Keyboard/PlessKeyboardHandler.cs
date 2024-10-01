@@ -12,6 +12,9 @@ namespace Alternet.UI
     public class PlessKeyboardHandler : DisposableObject, IKeyboardHandler
     {
         /// <inheritdoc/>
+        public bool? KeyboardPresent => null;
+
+        /// <inheritdoc/>
         public KeyStates GetKeyStatesFromSystem(Key key)
         {
             return KeyStates.None;

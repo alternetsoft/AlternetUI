@@ -11,6 +11,7 @@ using Microsoft.Maui.Platform;
 
 #if ANDROID
 
+using Android.App;
 using Android.Content;
 using Android.Views;
 using Android.Views.InputMethods;
@@ -37,6 +38,12 @@ namespace Alternet.UI
             : base(MaxKeyValue, Key.Max)
         {
         }
+
+        /// <summary>
+        /// Gets input method manager.
+        /// </summary>
+        public static InputMethodManager? InputMethodManager =>
+            Application.Context.GetSystemService(Context.InputMethodService) as InputMethodManager;
 
         public virtual Alternet.UI.KeyEventArgs ToKeyEventArgs(
                     Control control,
