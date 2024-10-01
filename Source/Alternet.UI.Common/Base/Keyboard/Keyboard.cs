@@ -186,5 +186,41 @@ namespace Alternet.UI
             else
                 return 0;
         }
+
+        /// <summary>
+        /// Toggles on-screen keyboard visibility for the specified control.
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ToggleKeyboardVisibility(Control? control)
+        {
+            var visible = IsSoftKeyboardShowing(control);
+            if (visible)
+                return HideKeyboard(control);
+            else
+                return ShowKeyboard(control);
+        }
+
+        /// <inheritdoc cref="IKeyboardHandler.HideKeyboard"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HideKeyboard(Control? control)
+        {
+            return Handler.HideKeyboard(control);
+        }
+
+        /// <inheritdoc cref="IKeyboardHandler.ShowKeyboard"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ShowKeyboard(Control? control)
+        {
+            return Handler.ShowKeyboard(control);
+        }
+
+        /// <inheritdoc cref="IKeyboardHandler.IsSoftKeyboardShowing"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsSoftKeyboardShowing(Control? control)
+        {
+            return Handler.IsSoftKeyboardShowing(control);
+        }
     }
 }
