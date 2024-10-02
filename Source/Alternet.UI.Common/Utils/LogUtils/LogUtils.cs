@@ -22,6 +22,11 @@ namespace Alternet.UI
     public static partial class LogUtils
     {
         /// <summary>
+        /// Gets or sets whether to redirect all log to file operations to <see cref="App.Log"/>.
+        /// </summary>
+        public static bool RedirectLogFromFileToScreen = false;
+
+        /// <summary>
         /// Gets or sets whether to show debug welcome message
         /// with version number and other information.
         /// </summary>
@@ -425,6 +430,13 @@ namespace Alternet.UI
         /// when this parameter is <c>null</c>.</param>
         public static void LogToFile(object? obj = null, string? filename = null)
         {
+            if (RedirectLogFromFileToScreen)
+            {
+                App.LogFileIsEnabled = false;
+                App.Log(obj);
+                return;
+            }
+
             var msg = obj?.ToString() ?? string.Empty;
             filename ??= App.LogFilePath;
 

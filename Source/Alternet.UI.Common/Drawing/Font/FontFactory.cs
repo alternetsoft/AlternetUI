@@ -188,6 +188,9 @@ namespace Alternet.Drawing
                 case OperatingSystems.Windows:
                     result = GetFixedPitchFontsWindows();
                     break;
+                case OperatingSystems.Android:
+                    result = GetFixedPitchFontsAndroid();
+                    break;
                 case OperatingSystems.MacOs:
                 case OperatingSystems.IOS:
                     result = GetFixedPitchFontsMacOs();
@@ -199,6 +202,15 @@ namespace Alternet.Drawing
 
             result = FontFamily.RemoveNonSkiaFonts(result);
             return result;
+
+            static string[] GetFixedPitchFontsAndroid()
+            {
+                return new string[]
+                {
+                    "monospace",
+                    "serif-monospace",
+                };
+            }
 
             static string[] GetFixedPitchFontsWindows()
             {
