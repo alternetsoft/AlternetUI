@@ -10,6 +10,19 @@ void InsertItemAt(int index, MenuItem* item);
 void RemoveItemAt(int index);
 void ShowContextMenu(Control* control, const PointD& position);
 public:
+enum class MenuEvent
+{
+    Opened,
+    Closed,
+};
+typedef void* (*MenuEventCallbackType)(Menu* obj, MenuEvent event, void* param);
+static void SetEventCallback(MenuEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(MenuEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(MenuEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
+private:
+inline static MenuEventCallbackType eventCallback = nullptr;
+public:
 Menu();
 protected:
 virtual ~Menu();

@@ -103,6 +103,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when menu item is opened.
+        /// </summary>
+        public event EventHandler? Opened;
+
+        /// <summary>
+        /// Occurs when menu item is closed.
+        /// </summary>
+        public event EventHandler? Closed;
+
+        /// <summary>
+        /// Occurs when menu item is highlighted.
+        /// </summary>
+        public event EventHandler? Highlighted;
+
+        /// <summary>
         /// Occurs when the <see cref="Shortcut"/> property changes.
         /// </summary>
         public event EventHandler? ShortcutChanged;
@@ -394,6 +409,21 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="keys"></param>
         public void SetShortcutKeys(Keys keys) => ShortcutKeys = keys;
+
+        /// <summary>
+        /// Raises <see cref="Opened"/> event.
+        /// </summary>
+        public void RaiseOpened() => Opened?.Invoke(this, EventArgs.Empty);
+
+        /// <summary>
+        /// Raises <see cref="Closed"/> event.
+        /// </summary>
+        public void RaiseClosed() => Closed?.Invoke(this, EventArgs.Empty);
+
+        /// <summary>
+        /// Raises <see cref="Highlighted"/> event.
+        /// </summary>
+        public void RaiseHighlighted() => Highlighted?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Returns a string that represents the current object.

@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
     {
         static Menu()
         {
+            SetEventCallback();
         }
         
         public Menu()
@@ -61,11 +62,61 @@ namespace Alternet.UI.Native
             NativeApi.Menu_ShowContextMenu_(NativePointer, control.NativePointer, position);
         }
         
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.MenuEventCallbackType((obj, e, parameter) =>
+                    UI.Application.HandleThreadExceptions(() =>
+                    {
+                        var w = NativeObject.GetFromNativePointer<Menu>(obj, p => new Menu(p));
+                        if (w == null) return IntPtr.Zero;
+                        return w.OnEvent(e, parameter);
+                    }
+                    )
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.Menu_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.MenuEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.MenuEvent.Opened:
+                {
+                    Opened?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.MenuEvent.Closed:
+                {
+                    Closed?.Invoke(); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected MenuEvent value: " + e);
+            }
+        }
+        
+        public Action? Opened;
+        public Action? Closed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr MenuEventCallbackType(IntPtr obj, MenuEvent e, IntPtr param);
+            
+            public enum MenuEvent
+            {
+                Opened,
+                Closed,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Menu_SetEventCallback_(MenuEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Menu_Create_();

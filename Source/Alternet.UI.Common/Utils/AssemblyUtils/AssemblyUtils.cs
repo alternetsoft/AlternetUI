@@ -140,6 +140,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="Assembly"/> with the specified name
         /// searching it through all assemblies of the current domain.
+        /// </summary>
         /// <param name="name">Name of the assembly.</param>
         /// <returns></returns>
         public static Assembly? GetAssemblyByName(string name)

@@ -33,6 +33,9 @@ public:
 enum class MenuItemEvent
 {
     Click,
+    Highlight,
+    Opened,
+    Closed,
 };
 typedef void* (*MenuItemEventCallbackType)(MenuItem* obj, MenuItemEvent event, void* param);
 static void SetEventCallback(MenuItemEventCallbackType value) { eventCallback = value; }

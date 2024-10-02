@@ -10,7 +10,8 @@
     },
     "UILanguage=ru": {
       "commandName": "Project",
-      "commandLineArgs": "UILanguage=ru"
+      "commandLineArgs": "UILanguage=ru",
+      "nativeDebugging": true
     }
   }
 }

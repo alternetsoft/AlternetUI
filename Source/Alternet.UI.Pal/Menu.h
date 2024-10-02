@@ -25,6 +25,9 @@ namespace Alternet::UI
             MenusByWxMenusMap);
 
         void OnMenuCommand(wxCommandEvent& evt);
+        void OnMenuOpen(wxMenuEvent& evt);
+        void OnMenuClose(wxMenuEvent& evt);
+        void OnMenuHighlight(wxMenuEvent& evt);
 
         void SetParent(MainMenu* mainMenu);
         void SetParent(MenuItem* item);
