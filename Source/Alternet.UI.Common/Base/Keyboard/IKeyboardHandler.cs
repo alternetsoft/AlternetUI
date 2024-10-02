@@ -29,14 +29,14 @@ namespace Alternet.UI
         KeyStates GetKeyStatesFromSystem(Key key);
 
         /// <summary>
-        /// Hide on-screen keyboard for the specified control.
+        /// Hides on-screen keyboard for the specified control.
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
         bool HideKeyboard(Control? control);
 
         /// <summary>
-        /// Show on-screen keyboard for the specified control.
+        /// Shows on-screen keyboard for the specified control.
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>

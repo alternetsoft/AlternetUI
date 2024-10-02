@@ -61,6 +61,16 @@ namespace Alternet.UI
         private static SvgImage? imgTriangleArrowUp;
         private static SvgImage? imgTriangleArrowLeft;
         private static SvgImage? imgTriangleArrowRight;
+        private static SvgImage? imgKeyboard;
+
+        /// <summary>
+        /// Gets or sets 'Keyboard' image.
+        /// </summary>
+        public static SvgImage ImgKeyboard
+        {
+            get => imgKeyboard ??= new MonoSvgImage(KnownSvgUrls.UrlImageKeyboard);
+            set => imgKeyboard = value;
+        }
 
         /// <summary>
         /// Gets or sets 'Triangle Arrow Down' image.
