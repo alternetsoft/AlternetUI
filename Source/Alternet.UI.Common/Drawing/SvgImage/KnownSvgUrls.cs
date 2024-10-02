@@ -63,6 +63,11 @@ namespace Alternet.UI
         public static string UrlImageSquarePlus { get; set; } = GetImageUrl("alternet-square-plus");
 
         /// <summary>
+        /// Gets or sets url used to load "Keyboard" svg image.
+        /// </summary>
+        public static string UrlImageKeyboard { get; set; } = GetImageUrl("alternet-keyboard");
+
+        /// <summary>
         /// Gets or sets url used to load "Minus Inside Square" svg image.
         /// </summary>
         public static string UrlImageSquareMinus { get; set; } = GetImageUrl("alternet-square-minus");
