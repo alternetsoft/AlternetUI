@@ -88,6 +88,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs all fonts related information.
+        /// </summary>
+        public static void LogFontsInformation()
+        {
+            SystemSettings.LogSystemFonts();
+            SystemSettings.LogFixedWidthFonts();
+
+            LogSkiaFontManager();
+            LogSkiaFont();
+            LogSkiaMonoFonts();
+        }
+
+        /// <summary>
         /// Enumerates registered log actions.
         /// </summary>
         public static void EnumLogActions(Action<string, Action> addLogAction)

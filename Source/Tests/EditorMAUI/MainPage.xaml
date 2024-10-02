@@ -4,7 +4,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              xmlns:editor="clr-namespace:Alternet.Editor;assembly=Alternet.Editor.MAUI.v10"
              x:Class="EditorMAUI.MainPage"
-             Title="Alternet.Editor MAUI Demo">
+             Title="Alternet.Editor Demo">
     <Grid RowDefinitions="*,Auto">
         <StackLayout x:Name="panel" 
                            Grid.Row="0">

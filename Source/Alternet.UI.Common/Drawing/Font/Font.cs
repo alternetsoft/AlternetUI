@@ -400,10 +400,14 @@ namespace Alternet.Drawing
         /// </value>
         public static Font DefaultMono
         {
-            get => defaultMonoFont ??= CreateDefaultMonoFont();
+            get
+            {
+                return defaultMonoFont ??= CreateDefaultMonoFont();
+            }
+
             set
             {
-                if(value is null)
+                if (value is null)
                     defaultMonoFont = CreateDefaultMonoFont();
                 else
                     defaultMonoFont = value;

@@ -174,7 +174,7 @@ namespace Alternet.Drawing
 
             if (genericFamily == GenericFontFamily.Monospace)
             {
-                if(DefaultMonoFontName is null)
+                if(defaultMonoFontName is null)
                 {
                     var result = FontFactory.GetSampleFixedPitchFont();
                     if (result is not null)

@@ -9,6 +9,8 @@ namespace EditorMAUI;
 
 public partial class MainPage : ContentPage
 {
+    public bool LogToWindowTitle = false;
+
     private static int counter = 0;
 
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
@@ -31,6 +33,7 @@ public partial class MainPage : ContentPage
 
         InitEdit();
         editor.Editor.Lexer = parserCs;
+        editor.Editor.NavigateOptions |= Alternet.Editor.TextSource.NavigateOptions.BeyondEof;
 
         LoadFile(NewFileNameNoExt + ".cs");
 
@@ -142,6 +145,7 @@ public partial class MainPage : ContentPage
     void LogToEditor(Action action)
     {
         var ed = editor.Editor;
+        ed.Lexer = null;
         ed.BeginUpdate();
         try
         {
@@ -157,7 +161,15 @@ public partial class MainPage : ContentPage
 
     private void Button1_Clicked(object? sender, EventArgs e)
     {
-        LogToEditor(Alternet.UI.Display.Log);
+        Alternet.UI.LogUtils.RedirectLogFromFileToScreen = true;
+
+        LogToEditor(Fn);
+
+        void Fn()
+        {
+            Alternet.UI.Display.Log();
+            Alternet.UI.LogUtils.LogFontsInformation();
+        }
 
         /*
         var page = new Alternet.MAUI.SelectDevToolsActionPage();
@@ -181,6 +193,9 @@ public partial class MainPage : ContentPage
     {
         try
         {
+            if (!LogToWindowTitle)
+                return;
+
             var s = e.Message;
 
             if (s is null)

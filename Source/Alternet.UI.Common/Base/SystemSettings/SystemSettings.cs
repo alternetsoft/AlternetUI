@@ -153,8 +153,9 @@ namespace Alternet.UI
         /// </summary>
         public static void LogFixedWidthFonts()
         {
-            App.LogBeginSection();
+            App.LogBeginSection("Fixed Width Fonts");
             var items = FontFamily.FamiliesNamesAscending;
+            var hasFonts = false;
             foreach(var item in items)
             {
                 var font = new Font(item, 10);
@@ -162,7 +163,13 @@ namespace Alternet.UI
                 if(font.IsFixedWidth && font.Style == FontStyle.Regular && !font.GdiVerticalFont)
                 {
                     App.Log(font.ToInfoString());
+                    hasFonts = true;
                 }
+            }
+
+            if (!hasFonts)
+            {
+                App.Log("No fixed width fonts are found.");
             }
 
             App.LogEndSection();
