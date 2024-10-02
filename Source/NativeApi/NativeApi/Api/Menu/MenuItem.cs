@@ -16,6 +16,9 @@ namespace NativeApi.Api
         public void SetShortcut(Key key, ModifierKeys modifierKeys) {}
 
         public event EventHandler? Click;
+        public event EventHandler? Highlight;
+        public event EventHandler? Opened;
+        public event EventHandler? Closed;
 
         public Menu? Submenu { get; set; }
 

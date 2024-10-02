@@ -29,6 +29,9 @@ namespace Alternet::UI
         static MenuItem* GetMenuItemById(int id);
 
         void RaiseClick();
+        void RaiseMenuOpen();
+        void RaiseMenuClose();
+        void RaiseMenuHighlight();
 
         void SetParentMenu(Menu* value, optional<int> index);
         Menu* GetParentMenu();

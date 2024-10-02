@@ -166,10 +166,32 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.MenuItemEvent e, IntPtr parameter)
         {
-            Click?.Invoke(); return IntPtr.Zero;
+            switch (e)
+            {
+                case NativeApi.MenuItemEvent.Click:
+                {
+                    Click?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.MenuItemEvent.Highlight:
+                {
+                    Highlight?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.MenuItemEvent.Opened:
+                {
+                    Opened?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.MenuItemEvent.Closed:
+                {
+                    Closed?.Invoke(); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected MenuItemEvent value: " + e);
+            }
         }
         
         public Action? Click;
+        public Action? Highlight;
+        public Action? Opened;
+        public Action? Closed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -182,6 +204,9 @@ namespace Alternet.UI.Native
             public enum MenuItemEvent
             {
                 Click,
+                Highlight,
+                Opened,
+                Closed,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

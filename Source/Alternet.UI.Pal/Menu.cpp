@@ -27,12 +27,49 @@ namespace Alternet::UI
         _menu = new wxMenu();
         AssociateMenuWithWxMenu(_menu, this);
         _menu->Bind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+        _menu->Bind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
+        _menu->Bind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
+        _menu->Bind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
     }
 
     void Menu::UnregisterWxMenu()
     {
         _menu->Unbind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+        _menu->Unbind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
+        _menu->Unbind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
+        _menu->Unbind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
         RemoveWxMenuAssociation(_menu);
+    }
+
+    void Menu::OnMenuOpen(wxMenuEvent& evt)
+    {
+        evt.StopPropagation();
+        RaiseEvent(MenuEvent::Opened);
+
+        for (auto item : _items)
+        {
+            item->RaiseMenuOpen();
+        }
+    }
+
+    void Menu::OnMenuClose(wxMenuEvent& evt)
+    {
+        evt.StopPropagation();
+        RaiseEvent(MenuEvent::Closed);
+
+        for (auto item : _items)
+        {
+            item->RaiseMenuClose();
+        }
+    }
+
+    void Menu::OnMenuHighlight(wxMenuEvent& evt)
+    {
+        evt.StopPropagation();
+        auto item = MenuItem::GetMenuItemById(evt.GetMenuId());
+        if (item == nullptr)
+            return;
+        item->RaiseMenuHighlight();
     }
 
     void Menu::OnMenuCommand(wxCommandEvent& event)

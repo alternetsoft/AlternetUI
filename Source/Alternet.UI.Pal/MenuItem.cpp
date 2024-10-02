@@ -411,6 +411,21 @@ namespace Alternet::UI
         return it->second;
     }
 
+    void MenuItem::RaiseMenuOpen()
+    {
+        RaiseEvent(MenuItemEvent::Opened);
+    }
+
+    void MenuItem::RaiseMenuClose()
+    {
+        RaiseEvent(MenuItemEvent::Closed);
+    }
+
+    void MenuItem::RaiseMenuHighlight()
+    {
+        RaiseEvent(MenuItemEvent::Highlight);
+    }
+
     void MenuItem::RaiseClick()
     {
         if (_menuItem->IsCheckable())

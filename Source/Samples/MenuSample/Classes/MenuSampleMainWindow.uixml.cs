@@ -100,6 +100,25 @@ namespace MenuSample
             saveMenuItem.Image = KnownSvgImages.ImgFileSave.AsNormal(16, IsDarkBackground);
 
             eventsListBox.BindApplicationLog();
+
+            openMenuItem.Opened += OpenMenuItem_Opened;
+            openMenuItem.Closed += OpenMenuItem_Closed;
+            openMenuItem.Highlighted += OpenMenuItem_Highlighted;
+        }
+
+        private void OpenMenuItem_Highlighted(object sender, EventArgs e)
+        {
+            LogEvent("Open Menu Item: Highlighted");
+        }
+
+        private void OpenMenuItem_Closed(object sender, EventArgs e)
+        {
+            LogEvent("Open Menu Item: Closed");
+        }
+
+        private void OpenMenuItem_Opened(object sender, EventArgs e)
+        {
+            LogEvent("Open Menu Item: Opened");
         }
 
         private StatusBar? GetStatusBar() => StatusBar as StatusBar;

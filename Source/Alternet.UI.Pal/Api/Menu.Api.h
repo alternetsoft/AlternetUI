@@ -76,3 +76,8 @@ ALTERNET_UI_API void Menu_ShowContextMenu_(Menu* obj, Control* control, PointD p
     #endif
 }
 
+ALTERNET_UI_API void Menu_SetEventCallback_(Menu::MenuEventCallbackType callback)
+{
+    Menu::SetEventCallback(callback);
+}
+

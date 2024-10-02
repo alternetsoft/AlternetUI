@@ -41,6 +41,9 @@ namespace Alternet.UI
             Control.DisabledImageChanged -= Control_DisabledImageChanged;
 
             NativeControl.Click = null;
+            NativeControl.Opened = null;
+            NativeControl.Closed = null;
+            NativeControl.Highlight = null;
 
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
@@ -66,6 +69,9 @@ namespace Alternet.UI
             Control.DisabledImageChanged += Control_DisabledImageChanged;
 
             NativeControl.Click = NativeControl_Click;
+            NativeControl.Opened = NativeControl_Opened;
+            NativeControl.Closed = NativeControl_Closed;
+            NativeControl.Highlight = NativeControl_Highlight;
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
@@ -164,6 +170,21 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             EnsureNativeSubmenuCreated().InsertItemAt(index, handler.NativeControl);
+        }
+
+        private void NativeControl_Opened()
+        {
+            Control.RaiseOpened();
+        }
+
+        private void NativeControl_Closed()
+        {
+            Control.RaiseClosed();
+        }
+
+        private void NativeControl_Highlight()
+        {
+            Control.RaiseHighlighted();
         }
 
         private void NativeControl_Click()
