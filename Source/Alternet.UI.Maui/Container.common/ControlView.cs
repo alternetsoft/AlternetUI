@@ -179,6 +179,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether on-screen keyboard is shown for this control.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool IsKeyboardShowing() => Alternet.UI.Keyboard.IsSoftKeyboardShowing(Control);
+
+        /// <summary>
+        /// Shows on-screen keyboard for this control.
+        /// </summary>
+        public virtual void ShowKeyboard()
+        {
+            Alternet.UI.Keyboard.ShowKeyboard(Control);
+        }
+
+        /// <summary>
+        /// Hides on-screen keyboard for this control.
+        /// </summary>
+        public virtual void HideKeyboard()
+        {
+            Alternet.UI.Keyboard.HideKeyboard(Control);
+        }
+
+        /// <summary>
+        /// Toggles on-screen keyboard visibility for this control.
+        /// </summary>
+        public virtual void ToggleKeyboard()
+        {
+            Alternet.UI.Keyboard.ToggleKeyboardVisibility(Control);
+        }
+
+        /// <summary>
         /// Initializes application handler.
         /// </summary>
         protected static void InitMauiHandler()

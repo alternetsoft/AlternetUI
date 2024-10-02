@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
 
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
+using SkiaSharp.Views.Maui.Controls;
 
 /*
     Do not change namespace of the MauiUtils as it is used in App static constructor and other places
@@ -28,6 +30,20 @@ namespace Alternet.UI
     {
         private static GenericDeviceType? deviceType;
         private static PlatformApplication? platformApplication;
+
+        /// <summary>
+        /// Gets whether current application theme is dark.
+        /// </summary>
+        public static bool? IsDarkTheme
+        {
+            get
+            {
+                var currentTheme = Application.Current?.RequestedTheme;
+                if (currentTheme == AppTheme.Dark)
+                    return true;
+                return false;
+            }
+        }
 
         /// <summary>
         /// Gets <see cref="PlatformApplication"/>.
@@ -141,6 +157,31 @@ namespace Alternet.UI
 
                 return GenericDeviceType.Unknown;
             }
+        }
+
+        /// <summary>
+        /// Creates <see cref="ImageSource"/> from the specified <see cref="SvgImage"/>.
+        /// Default normal color is used for the single color svg images.
+        /// </summary>
+        /// <param name="svgImage">Svg image.</param>
+        /// <param name="sizeInPixels">Image size in pixels.</param>
+        /// <param name="isDark">Whether background is dark.</param>
+        /// <returns></returns>
+        public static ImageSource? ImageSourceFromSvg(
+            SvgImage? svgImage,
+            int sizeInPixels,
+            bool isDark)
+        {
+            var img = svgImage?.AsNormalImage(sizeInPixels, isDark);
+            if (img is not null)
+            {
+                var skiaImg = (SKBitmap)img;
+                var imageSource = new SKBitmapImageSource();
+                imageSource.Bitmap = skiaImg;
+                return imageSource;
+            }
+
+            return null;
         }
 
         /// <summary>
