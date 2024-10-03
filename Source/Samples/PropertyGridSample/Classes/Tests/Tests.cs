@@ -26,7 +26,7 @@ namespace PropertyGridSample
         [Conditional("DEBUG")]
         void InitSimpleTestActions()
         {
-            PropertyGrid.AddSimpleAction<TreeView>("Load *.svg", () =>
+            PropertyGrid.AddSimpleAction<TreeView>("Load all *.svg in folder...", () =>
             {
                 var control = GetSelectedControl<TreeView>();
                 if (control is null)
