@@ -32,6 +32,7 @@ namespace ControlsSample
                 treeView.Items.ItemRemoved += Items_ItemRemoved;
                 treeView.MouseUp += TreeView_MouseUp;
                 treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
+                treeView.MouseMove += TreeView_MouseMove;
 
                 treeView.ImageList = DemoResourceLoader.LoadImageLists().Small;
                 AddDefaultItems();
@@ -41,6 +42,14 @@ namespace ControlsSample
                 AddItems(popupTreeView.MainControl, 10);
                 popupTreeView.AfterHide += PopupTreeView_AfterHide;
             }
+        }
+
+        private void TreeView_MouseMove(object sender, MouseEventArgs e)
+        {
+            var item = treeView.GetNodeAtMouseCursor();
+            var s = item?.Text ?? "<none>";
+            var prefix = "MouseMove. Item under mouse:";
+            App.LogReplace($"{prefix} '{s}'", prefix);
         }
 
         private void PopupTreeView_AfterHide(object? sender, EventArgs e)
@@ -135,7 +144,8 @@ namespace ControlsSample
             string s = selectedItems.Count > 100 ?
                 "too many indices to display" :
                 string.Join(",", selectedItems.Select(x => x.Text));
-            App.Log($"TreeView: SelectionChanged. SelectedItems: ({s})");
+            var prefix = "TreeView: SelectionChanged. SelectedItems:";
+            App.LogReplace($"{prefix} ({s})", prefix);
         }
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
@@ -143,14 +153,16 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             var exp = e.Item.IsExpanded;
-            App.Log($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {exp}");
+            var prefix = "TreeView: ExpandedChanged. Item:";
+            App.LogReplace($"{prefix} '{e.Item.Text}', IsExpanded: {exp}", prefix);
         }
 
         private void TreeView_BeforeLabelEdit(object? sender, TreeViewEditEventArgs e)
         {
             e.Cancel = cancelBeforeLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
-            App.Log($"TreeView: BeforeLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
+            var prefix = "TreeView: BeforeLabelEdit. Item:";
+            App.LogReplace($"{prefix} '{e.Item.Text}', Label: '{s}'", prefix);
         }
 
         private void TreeView_AfterLabelEdit(
@@ -159,7 +171,8 @@ namespace ControlsSample
         {
             e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
             var s = e.Label ?? "<null>";
-            App.Log($"TreeView: AfterLabelEdit. Item: '{e.Item.Text}', Label: '{s}'");
+            var prefix = "TreeView: AfterLabelEdit. Item:";
+            App.LogReplace($"{prefix} '{e.Item.Text}', Label: '{s}'", prefix);
         }
 
         private void TreeView_BeforeExpand(
@@ -169,7 +182,8 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeExpandEventsCheckBox.IsChecked;
-            App.Log($"TreeView: BeforeExpand. Item: '{e.Item.Text}'");
+            var prefix = "TreeView: BeforeExpand. Item:";
+            App.LogReplace($"{prefix} '{e.Item.Text}'", prefix);
         }
 
         private void TreeView_BeforeCollapse(
@@ -179,7 +193,8 @@ namespace ControlsSample
             if (supressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeCollapseEventsCheckBox.IsChecked;
-            App.Log($"TreeView: BeforeCollapse. Item: '{e.Item.Text}'");
+            var prefix = "TreeView: BeforeCollapse. Item:";
+            App.LogReplace($"{prefix} '{e.Item.Text}'", prefix);
         }
 
         private void CancelBeforeExpandEventsCheckBox_CheckedChanged(
@@ -286,7 +301,8 @@ namespace ControlsSample
         {
             var result = treeView.HitTest(Mouse.GetPosition(treeView));
             var s = result.Item?.Text ?? "<none>";
-            App.Log($"HitTest result: Item: '{s}, Location: {result.Location}'");
+            var prefix = "HitTest result: Item:";
+            App.LogReplace($"{prefix} '{s}', Location: {result.Location}", prefix);
         }
 
         private void ModifyLastItemButton_Click(object? sender, System.EventArgs e)
