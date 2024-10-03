@@ -551,7 +551,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual SizeD GetMaxCardSize()
         {
-            return SizeD.MaxWidthHeight(GetCardSizes());
+            return SizeD.MaxWidthHeights(GetCardSizes());
         }
 
         /// <summary>

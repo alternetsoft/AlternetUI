@@ -8,6 +8,7 @@ using Alternet.Base.Collections;
 using Alternet.Drawing;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.IO;
 
 namespace PropertyGridSample
 {
@@ -22,9 +23,41 @@ namespace PropertyGridSample
         {
         }
 
+        [Conditional("DEBUG")]
         void InitSimpleTestActions()
         {
-#if DEBUG
+            PropertyGrid.AddSimpleAction<TreeView>("Load *.svg", () =>
+            {
+                var control = GetSelectedControl<TreeView>();
+                if (control is null)
+                    return;
+
+                var dialog = SelectDirectoryDialog.Default;
+
+                dialog.ShowAsync(() =>
+                {
+                    int size = 32;
+                    ImageList imgList = new();
+                    imgList.ImageSize = size;
+
+                    control.RemoveAll();
+                    control.ImageList = imgList;
+                    int index = 0;
+
+                    var folder = dialog.DirectoryName;
+                    var files = Directory.GetFiles(folder, "*.svg");
+                    foreach(var file in files)
+                    {
+                        var svg = new MonoSvgImage(file);
+                        imgList.AddSvg(svg, control.IsDarkBackground);
+
+                        TreeViewItem item = new(Path.GetFileName(file), index);
+                        control.Add(item);
+                        index++;
+                    }
+                });
+            });
+
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
 
             PropertyGrid.AddSimpleAction<ToolBar>("Test Visible", TestGenericToolBarVisible);
@@ -91,8 +124,6 @@ namespace PropertyGridSample
 
                 DialogFactory.GetTextFromUserAsync(prm);
             });
-
-#endif
         }
 
         void TestMemoFindReplace(bool replace)
