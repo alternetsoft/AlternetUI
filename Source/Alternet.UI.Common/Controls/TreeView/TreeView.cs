@@ -720,7 +720,56 @@ namespace Alternet.UI
         /// </remarks>
         public virtual TreeViewHitTestInfo HitTest(PointD point)
         {
-            return Handler.HitTest(point);
+            var htResult = Handler.HitTest(point, out var item, out var locations);
+            if (htResult)
+            {
+                return new TreeViewHitTestInfo(locations, item);
+            }
+            else
+                return TreeViewHitTestInfo.Empty;
+        }
+
+        /// <summary>
+        /// Gets <see cref="TreeViewHitTestLocations"/> at a given
+        /// client point, in device-independent units.
+        /// </summary>
+        /// <param name="point">The <see cref="PointD"/> at which to retrieve
+        /// item information.</param>
+        /// <returns>The hit test result.</returns>
+        /// <remarks>
+        /// Use this method to determine whether a point is located in a
+        /// <see cref="TreeViewItem"/> and where within the
+        /// item the point is located, such as on the label or image area.
+        /// </remarks>
+        public virtual TreeViewHitTestLocations HitTestLocation(PointD point)
+        {
+            Handler.HitTest(point, out _, out var locations, false);
+            return locations;
+        }
+
+        /// <summary>
+        /// Gets tree view item at the current cursor position.
+        /// </summary>
+        /// <returns>Tree view item if success; <c>null</c> otherwise.</returns>
+        public virtual TreeViewItem? GetNodeAtMouseCursor()
+        {
+            return GetNodeAt(Mouse.GetPosition(this));
+        }
+
+        /// <summary>
+        /// Retrieves the tree view item that is at the specified point.
+        /// </summary>
+        /// <param name="pt">
+        /// The <see cref="PointD" /> to evaluate and retrieve the node from.
+        /// </param>
+        /// <returns>
+        /// The <see cref="TreeViewItem" /> at the specified point, in tree view (client) coordinates,
+        /// or <see langword="null" /> if there is no item at that location.
+        /// </returns>
+        public virtual TreeViewItem? GetNodeAt(PointD pt)
+        {
+            Handler.HitTest(pt, out var item, out _);
+            return item;
         }
 
         /// <summary>

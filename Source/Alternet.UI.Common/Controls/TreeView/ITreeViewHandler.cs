@@ -58,8 +58,28 @@ namespace Alternet.UI
         /// <inheritdoc cref="TreeView.CollapseAll"/>
         void CollapseAll();
 
-        /// <inheritdoc cref="TreeView.HitTest"/>
-        TreeViewHitTestInfo HitTest(PointD point);
+        /// <summary>
+        /// Provides tree view item information, at a given client point, in
+        /// device-independent units.
+        /// </summary>
+        /// <param name="point">The <see cref="PointD"/> at which to retrieve
+        /// item information.</param>
+        /// <returns><c>true</c> if <paramref name="item"/> or <paramref name="locations"/>
+        /// is not empty; <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// Use this method to determine whether a point is located in a
+        /// <see cref="TreeViewItem"/> and where within the
+        /// item the point is located, such as on the label or image area.
+        /// </remarks>
+        /// <param name="item">Output parameter. Returns item at the specified point.</param>
+        /// <param name="locations">Output parameter. Returns point location.</param>
+        /// <param name="needItem">Whether to get <paramref name="item"/> parameter.</param>
+        /// <returns></returns>
+        public bool HitTest(
+            PointD point,
+            out TreeViewItem? item,
+            out TreeViewHitTestLocations locations,
+            bool needItem = true);
 
         /// <summary>
         /// Gets whether item is selected.

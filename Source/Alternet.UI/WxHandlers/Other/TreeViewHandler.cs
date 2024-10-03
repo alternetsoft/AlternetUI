@@ -173,24 +173,50 @@ namespace Alternet.UI
 
         public void CollapseAll() => NativeControl.CollapseAll();
 
-        public TreeViewHitTestInfo HitTest(PointD point)
+        public bool HitTest(
+            PointD point,
+            out TreeViewItem? item,
+            out TreeViewHitTestLocations locations,
+            bool needItem = true)
         {
             var result = NativeControl.ItemHitTest(point);
             if (result == IntPtr.Zero)
-                throw new Exception();
+            {
+                item = null;
+                locations = 0;
+                return false;
+            }
 
             try
             {
-                var itemHandle = NativeControl.GetHitTestResultItem(result);
-                return new TreeViewHitTestInfo(
-                    (TreeViewHitTestLocations)NativeControl.
-                        GetHitTestResultLocations(result),
-                    itemHandle == IntPtr.Zero ? null : GetItemFromHandle(itemHandle));
+                if (needItem)
+                {
+                    var itemHandle = NativeControl.GetHitTestResultItem(result);
+                    item = itemHandle == IntPtr.Zero ? null : GetItemFromHandle(itemHandle);
+                }
+                else
+                {
+                    item = null;
+                }
+
+                locations = (TreeViewHitTestLocations)NativeControl.GetHitTestResultLocations(result);
+                return locations != 0 || item != null;
             }
             finally
             {
                 NativeControl.FreeHitTestResult(result);
             }
+        }
+
+        public TreeViewHitTestInfo HitTest(PointD point)
+        {
+            var htResult = HitTest(point, out var item, out var locations);
+            if (htResult)
+            {
+                return new TreeViewHitTestInfo(locations, item);
+            }
+            else
+                return TreeViewHitTestInfo.Empty;
         }
 
         public bool IsItemSelected(TreeViewItem item)
