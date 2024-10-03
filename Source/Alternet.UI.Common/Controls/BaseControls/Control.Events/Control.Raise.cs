@@ -282,6 +282,8 @@ namespace Alternet.UI
             {
                 n.AfterGotFocus(this);
             }
+
+            RunKnownAction(RunAfterGotFocus);
         }
 
         /// <summary>
@@ -313,6 +315,8 @@ namespace Alternet.UI
             {
                 n.AfterLostFocus(this);
             }
+
+            RunKnownAction(RunAfterLostFocus);
         }
 
         /// <summary>
@@ -1127,7 +1131,7 @@ namespace Alternet.UI
 
             OnTouch(e);
             Touch?.Invoke(this, e);
-            if(!e.Handled)
+            if(!e.Handled && TouchEventsAsMouse)
                 TouchToMouseEvents(e);
 
             foreach (var n in nn)
