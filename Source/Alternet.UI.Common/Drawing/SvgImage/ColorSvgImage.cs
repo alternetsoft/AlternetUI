@@ -44,5 +44,17 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override SvgImageNumOfColors NumOfColors => SvgImageNumOfColors.Many;
+
+        /// <summary>
+        /// Creates <see cref="ColorSvgImage"/> from the specified svg file.
+        /// </summary>
+        /// <param name="path">Path to file.</param>
+        /// <returns></returns>
+        public static ColorSvgImage FromFile(string path)
+        {
+            using var stream = FileSystem.Default.OpenRead(path);
+            var result = new ColorSvgImage(stream);
+            return result;
+        }
     }
 }

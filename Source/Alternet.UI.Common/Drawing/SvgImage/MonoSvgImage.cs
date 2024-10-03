@@ -44,5 +44,17 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override SvgImageNumOfColors NumOfColors => SvgImageNumOfColors.One;
+
+        /// <summary>
+        /// Creates <see cref="MonoSvgImage"/> from the specified svg file.
+        /// </summary>
+        /// <param name="path">Path to file.</param>
+        /// <returns></returns>
+        public static MonoSvgImage FromFile(string path)
+        {
+            using var stream = FileSystem.Default.OpenRead(path);
+            var result = new MonoSvgImage(stream);
+            return result;
+        }
     }
 }

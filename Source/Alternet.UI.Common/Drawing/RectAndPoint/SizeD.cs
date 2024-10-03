@@ -117,6 +117,30 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets minimal of width and height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly Coord MinWidthHeight
+        {
+            get
+            {
+                return Math.Min(width, height);
+            }
+        }
+
+        /// <summary>
+        /// Gets maximal of width and height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly Coord MaxWidthHeight
+        {
+            get
+            {
+                return Math.Max(width, height);
+            }
+        }
+
+        /// <summary>
         /// Gets diagonal of the rectangle with height and width specified in this object.
         /// </summary>
         public readonly Coord Diagonal
@@ -397,7 +421,7 @@ namespace Alternet.Drawing
         /// <param name="sizes">Array of <see cref="SizeD"/> values.</param>
         /// <exception cref="ArgumentOutOfRangeException">if <paramref name="sizes"/> is
         /// an empty array.</exception>
-        public static SizeD MaxWidthHeight(SizeD[] sizes)
+        public static SizeD MaxWidthHeights(SizeD[] sizes)
         {
             var widths = GetWidths(sizes);
             var heights = GetHeights(sizes);

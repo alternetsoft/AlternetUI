@@ -126,6 +126,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether width and height are equal.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool SameWidthHeight => width == height;
+
+        /// <summary>
+        /// Gets minimal of width and height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly int MinWidthHeight
+        {
+            get
+            {
+                return Math.Min(width, height);
+            }
+        }
+
+        /// <summary>
+        /// Gets maximal of width and height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly int MaxWidthHeight
+        {
+            get
+            {
+                return Math.Max(width, height);
+            }
+        }
+
+        /// <summary>
         /// Converts the specified <see cref='SizeI'/> to a
         /// <see cref='PointI'/>.
         /// </summary>

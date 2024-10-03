@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="Wrench.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="25.4375"
+     inkscape:cx="15.980344"
+     inkscape:cy="16"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="M 7.9003906,3.3457031 C 7.8213774,3.3535698 7.742533,3.3713925 7.6660156,3.3984375 4.9485883,4.3589165 3,6.950613 3,10 c 0,2.793697 1.6360924,5.203173 4,6.326172 V 26 c 0,1.656898 1.3431517,3 3,3 1.656898,0 3,-1.343102 3,-3 V 16.326172 C 15.363898,15.203173 17,12.793697 17,10 17,6.950613 15.051482,4.3589165 12.333984,3.3984375 12.027985,3.2902576 11.686975,3.3379608 11.421875,3.5253906 11.156875,3.7128204 11,4.0171772 11,4.3417969 V 9 c 0,0.5522794 -0.447701,1 -1,1 C 9.4477206,10 9,9.5522794 9,9 V 4.3417969 C 9,4.0171772 8.8431647,3.7128204 8.578125,3.5253906 8.3793452,3.3848183 8.1374302,3.322103 7.9003906,3.3457031 Z"
+     style="fill:#000000"
+     id="path3" />
+</svg>
