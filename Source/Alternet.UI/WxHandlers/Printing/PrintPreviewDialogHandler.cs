@@ -12,6 +12,11 @@ namespace Alternet.UI.Native
     {
         public bool ShowHelp { get; set; }
 
+        public void ShowAsync(Alternet.UI.Window? owner, Action<bool>? onClose)
+        {
+            ColorDialog.DefaultShowAsync(owner, onClose, ShowModal);
+        }
+
         public void SetDocument(Alternet.Drawing.Printing.IPrintDocumentHandler? value)
         {
             Document = value as Alternet.Drawing.Printing.PrintDocumentHandler;

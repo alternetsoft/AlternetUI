@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Contains properties which allow to customize dialog box which asks a value from the user.
     /// </summary>
     /// <typeparam name="T">Type of value.</typeparam>
-    public class ValueFromUserParams<T>
+    public class ValueFromUserParams<T> : BaseObject
     {
         /// <summary>
         /// Gets or sets virtual keyboard class used in the input dialog.

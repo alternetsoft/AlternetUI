@@ -14,7 +14,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     [ControlCategory("Hidden")]
-    internal class ListEditDialogWindow : DialogWindow
+    internal class ListEditWindow : DialogWindow
     {
         private readonly SplittedPanel panel = new()
         {
@@ -51,7 +51,7 @@ namespace Alternet.UI
         private IListEditSource? dataSource;
         private object? lastPropInstance;
 
-        public ListEditDialogWindow(IListEditSource source)
+        public ListEditWindow(IListEditSource source)
         {
             Layout = LayoutStyle.Vertical;
             Size = new(750, 600);

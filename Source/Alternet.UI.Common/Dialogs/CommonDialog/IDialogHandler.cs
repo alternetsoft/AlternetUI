@@ -26,6 +26,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="owner">Dialog owner.</param>
         /// <returns></returns>
+        [Obsolete("Method is deprecated. Use ShowAsync method instead of it.")]
         ModalResult ShowModal(Window? owner);
+
+        /// <summary>
+        /// Shows dialog on screen asynchroniusly.
+        /// </summary>
+        /// <param name="owner">Dialog owner.</param>
+        /// <param name="onClose">Action to call after dialog is closed.</param>
+        void ShowAsync(Window? owner, Action<bool>? onClose);
     }
 }

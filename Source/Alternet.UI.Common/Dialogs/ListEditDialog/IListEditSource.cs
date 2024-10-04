@@ -10,7 +10,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines properties and methods for use in the <see cref="ListEditDialogWindow"/>
+    /// Defines properties and methods for use in the <see cref="ListEditWindow"/>
     /// collection editor.
     /// </summary>
     public interface IListEditSource

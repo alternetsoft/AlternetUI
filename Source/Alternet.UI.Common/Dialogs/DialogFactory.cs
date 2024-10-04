@@ -228,7 +228,7 @@ namespace Alternet.UI
             if (source == null)
                 return;
 
-            using ListEditDialogWindow dialog = new(source);
+            using ListEditWindow dialog = new(source);
             dialog.ShowModal(Window.ActiveWindow);
         }
 
