@@ -24,8 +24,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class ControlView : SKCanvasView
     {
+        private SwipeGestureRecognizer? swipeGesture;
         private InteriorDrawable? interior;
-
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
 
@@ -135,6 +135,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Registers to receive swipe gestures.
+        /// </summary>
+        /// <param name="direction"></param>
+        public virtual void RequireSwipeGesture(SwipeDirection direction
+            = SwipeDirection.Down | SwipeDirection.Right | SwipeDirection.Left | SwipeDirection.Up)
+        {
+            if (swipeGesture is not null)
+                return;
+
+            swipeGesture = new() { Direction = direction };
+            swipeGesture.Swiped += (sender, e) =>
+            {
+                OnSwipeGesture(e);
+            };
+
+            GestureRecognizers.Add(swipeGesture);
+        }
+
+        /// <summary>
         /// Gets platform view.
         /// </summary>
         /// <param name="handler">Element handler.</param>
@@ -214,6 +233,69 @@ namespace Alternet.UI
         protected static void InitMauiHandler()
         {
             App.Handler ??= new MauiApplicationHandler();
+        }
+
+        /// <summary>
+        /// Raised when swipe gesture with direction to the right is recognized.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnSwipeRight(SwipedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raised when swipe gesture with direction to the right is recognized.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnSwipeLeft(SwipedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raised when swipe gesture with direction to the right is recognized.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnSwipeUp(SwipedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raised when swipe gesture with direction to the right is recognized.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnSwipeDown(SwipedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raised when swipe gesture is recognized.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnSwipeGesture(SwipedEventArgs e)
+        {
+            if (e.Direction.HasFlag(SwipeDirection.Right))
+            {
+                OnSwipeRight(e);
+                return;
+            }
+
+            if (e.Direction.HasFlag(SwipeDirection.Left))
+            {
+                OnSwipeLeft(e);
+                return;
+            }
+
+            if (e.Direction.HasFlag(SwipeDirection.Up))
+            {
+                OnSwipeUp(e);
+                return;
+            }
+
+            if (e.Direction.HasFlag(SwipeDirection.Down))
+            {
+                OnSwipeDown(e);
+                return;
+            }
         }
 
         /// <inheritdoc/>
