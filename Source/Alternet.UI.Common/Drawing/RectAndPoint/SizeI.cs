@@ -402,7 +402,7 @@ namespace Alternet.Drawing
             string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
             int[] values = { width, height };
 
-            return StringUtils.ToString<int>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<int>(names, values);
         }
 
         /// <summary>

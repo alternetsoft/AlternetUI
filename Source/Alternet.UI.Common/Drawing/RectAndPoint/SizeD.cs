@@ -575,7 +575,7 @@ namespace Alternet.Drawing
             string[] names = { PropNameStrings.Default.Width, PropNameStrings.Default.Height };
             Coord[] values = { width, height };
 
-            return StringUtils.ToString<Coord>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<Coord>(names, values);
         }
 
         /// <summary>

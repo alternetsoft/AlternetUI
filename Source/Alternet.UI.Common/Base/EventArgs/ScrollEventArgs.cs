@@ -178,5 +178,30 @@ namespace Alternet.UI
             get => oldValue;
             set => oldValue = value;
         }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string? ToString()
+        {
+            string[] names =
+            {
+                nameof(ScrollOrientation),
+                nameof(Type),
+                nameof(NewValue),
+                nameof(OldValue),
+            };
+
+            object[] values =
+            {
+                ScrollOrientation,
+                Type,
+                NewValue,
+                OldValue,
+            };
+
+            return StringUtils.ToStringWithOrWithoutNames<object>(names, values);
+        }
     }
 }

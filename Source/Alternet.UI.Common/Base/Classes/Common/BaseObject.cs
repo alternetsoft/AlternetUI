@@ -59,6 +59,46 @@ namespace Alternet.UI
     public partial class BaseObject : IBaseObject
     {
         /// <summary>
+        /// Gets or sets static options which are common to all
+        /// descendants of <see cref="BaseObject"/>.
+        /// </summary>
+        public static GenericStaticOptions StaticOptions;
+
+        /// <summary>
+        /// Enumerates static options which customize behavior of all <see cref="BaseObject"/>
+        /// descendants.
+        /// </summary>
+        [Flags]
+        public enum GenericStaticOptions
+        {
+            /// <summary>
+            /// Specifies that <see cref="object.ToString()"/> should not include property
+            /// names in result. This is not supported in all the objects.
+            /// </summary>
+            NoNamesInToString,
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="object.ToString()"/> should not include property
+        /// names in result.
+        /// </summary>
+        public static bool UseNamesInToString
+        {
+            get
+            {
+                return !StaticOptions.HasFlag(GenericStaticOptions.NoNamesInToString);
+            }
+
+            set
+            {
+                if (value)
+                    StaticOptions &= ~GenericStaticOptions.NoNamesInToString;
+                else
+                    StaticOptions |= GenericStaticOptions.NoNamesInToString;
+            }
+        }
+
+        /// <summary>
         /// Safely disposes specified object which supports
         /// <see cref="IDisposable"/> interface.
         /// </summary>

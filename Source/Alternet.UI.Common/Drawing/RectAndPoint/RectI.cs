@@ -583,7 +583,7 @@ namespace Alternet.Drawing
 
             int[] values = { x, y, width, height };
 
-            return StringUtils.ToString<int>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<int>(names, values);
         }
 
         /// <summary>
