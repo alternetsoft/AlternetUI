@@ -1,3 +1,18 @@
+# 0.9.636 (2024 October 4)
+
+- MenuItem: Opened, Closed, Highlighted events.
+- TreeView: HitTestLocation, GetNodeAt, GetNodeAtMouseCursor.
+- Control: RunKnownAction, RunAfterGotFocus, RunAfterLostFocus, TouchEventsAsMouse.
+- Control: Fixed visual state determination in order to make it more compatible with mobile devices.
+- Keyboard: IsKeyboardPresent, ToggleKeyboardVisibility, HideKeyboard, ShowKeyboard, IsSoftKeyboardShowing.
+- MAUI: Add support for multiple key events on Android.
+- MAUI: Fixed default mono font detection.
+- ControlView: Added keyboard show/hide methods.
+- ImageList.AddSvg, GenericImage.AsImage.
+- SizeI, SizeD: MinWidthHeight, MaxWidthHeight.
+- ColorSvgImage, MonoSvgImage: FromFile.
+- SizeI.SameWidthHeight, Mouse.IsMousePresent, InteriorDrawable.CornerClick, Font.SmallerLargerSizeScaleFactor.
+
 # 0.9.635 (2024 September 29)
 
 - Returned Title property in some controls as they can be used in TabControl instead of TabPage.
