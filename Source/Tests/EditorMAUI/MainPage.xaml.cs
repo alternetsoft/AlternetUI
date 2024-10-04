@@ -43,6 +43,8 @@ public partial class MainPage : ContentPage
         {
             editor.Interior.HasBorder = false;
             editor.Editor.RunAfterGotFocus = Alternet.UI.GenericControlAction.ShowKeyboardIfUnknown;
+
+            editor.Editor.Selection.Options |= SelectionOptions.DisableSelectionByMouse;
         }
         else
         {
