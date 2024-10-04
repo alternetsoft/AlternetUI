@@ -109,7 +109,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises scroll event which scrolls page left.
+        /// Raises scroll event which scrolls line down.
+        /// </summary>
+        public void RaiseScrollLineDown()
+        {
+            RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.SmallIncrement);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls line up.
+        /// </summary>
+        public void RaiseScrollLineUp()
+        {
+            RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.SmallDecrement);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls char right.
+        /// </summary>
+        public void RaiseScrollCharRight()
+        {
+            RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.LargeIncrement);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls char left.
+        /// </summary>
+        public void RaiseScrollCharLeft()
+        {
+            RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.SmallDecrement);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls page right.
         /// </summary>
         public void RaiseScrollPageRight()
         {
@@ -117,7 +149,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises scroll event which scrolls page right.
+        /// Raises scroll event which scrolls page left.
         /// </summary>
         public void RaiseScrollPageLeft()
         {

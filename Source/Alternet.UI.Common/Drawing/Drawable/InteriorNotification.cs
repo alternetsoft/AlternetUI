@@ -83,6 +83,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseLeftButtonDown(Control sender, MouseEventArgs e)
         {
+            OnClickElement(sender);
             SubscribeClickRepeated(sender);
         }
 
@@ -116,17 +117,11 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
-        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        private void OnClickElement(Control sender)
         {
-            if (control is null)
-                return;
+            var mouseLocation = Mouse.GetPosition(sender);
 
-            if (TimerUtils.LastClickLessThanRepeatInterval(control))
-                return;
-
-            var mouseLocation = Mouse.GetPosition(control);
-
-            var hitTests = interior.HitTests(control.ScaleFactor, mouseLocation);
+            var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
 
             if (!hitTests.IsScrollBar)
                 return;
@@ -160,10 +155,20 @@ namespace Alternet.UI
             scrollArgs.ScrollOrientation = hitTests.Orientation;
             scrollArgs.Type = evType;
 
-            interior.RaiseScroll(control, scrollArgs);
+            interior.RaiseScroll(sender, scrollArgs);
 
-            if(SendScrollToControl)
-                control.RaiseScroll(scrollArgs);
+            if (SendScrollToControl)
+                sender.RaiseScroll(scrollArgs);
+        }
+
+        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        {
+            if (control is null)
+                return;
+
+            if (TimerUtils.LastClickLessThanRepeatInterval(control))
+                return;
+            OnClickElement(control);
         }
 
         private void UnsubscribeClickRepeated()
