@@ -25,6 +25,11 @@ namespace Alternet.UI
             this.interior = interior;
         }
 
+        /// <summary>
+        /// Gets or sets whether to send scroll events to the attached control. Default is <c>true</c>.
+        /// </summary>
+        public virtual bool SendScrollToControl { get; set; } = true;
+
         /// <inheritdoc/>
         public override void AfterMouseMove(Control sender, MouseEventArgs e)
         {
@@ -57,13 +62,35 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void AfterMouseLeave(Control sender)
+        {
+            UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
+        public override void AfterVisualStateChanged(Control sender)
+        {
+            if (sender.VisualState != VisualControlState.Pressed)
+                UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
+        public override void AfterLostFocus(Control sender)
+        {
+            UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
         public override void AfterMouseLeftButtonDown(Control sender, MouseEventArgs e)
         {
+            OnClickElement(sender);
+            SubscribeClickRepeated(sender);
         }
 
         /// <inheritdoc/>
         public override void AfterMouseLeftButtonUp(Control sender, MouseEventArgs e)
         {
+            UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
@@ -72,19 +99,15 @@ namespace Alternet.UI
             var mouseLocation = Mouse.GetPosition(sender);
             var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
 
-            if (hitTests.IsCorner)
+            if (!hitTests.IsNone)
             {
-                interior.RaiseCornerClick(sender);
-            }
-        }
+                interior.RaiseElementClick(sender, hitTests);
 
-        /// <inheritdoc/>
-        public override void AfterVisualStateChanged(Control sender)
-        {
-            if (sender.VisualState == VisualControlState.Pressed)
-                SubscribeClickRepeated(sender);
-            else
-                UnsubscribeClickRepeated();
+                if (hitTests.IsCorner)
+                {
+                    interior.RaiseCornerClick(sender);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -94,20 +117,11 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
-        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        private void OnClickElement(Control sender)
         {
-            if (control is null)
-                return;
+            var mouseLocation = Mouse.GetPosition(sender);
 
-            if (control.VisualState != VisualControlState.Pressed)
-                return;
-
-            if (TimerUtils.LastClickLessThanRepeatInterval(control))
-                return;
-
-            var mouseLocation = Mouse.GetPosition(control);
-
-            var hitTests = interior.HitTests(control.ScaleFactor, mouseLocation);
+            var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
 
             if (!hitTests.IsScrollBar)
                 return;
@@ -141,7 +155,20 @@ namespace Alternet.UI
             scrollArgs.ScrollOrientation = hitTests.Orientation;
             scrollArgs.Type = evType;
 
-            control.RaiseScroll(scrollArgs);
+            interior.RaiseScroll(sender, scrollArgs);
+
+            if (SendScrollToControl)
+                sender.RaiseScroll(scrollArgs);
+        }
+
+        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        {
+            if (control is null)
+                return;
+
+            if (TimerUtils.LastClickLessThanRepeatInterval(control))
+                return;
+            OnClickElement(control);
         }
 
         private void UnsubscribeClickRepeated()

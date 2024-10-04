@@ -952,7 +952,7 @@ namespace Alternet.Drawing
 
             Coord[] values = { x, y, width, height };
 
-            return StringUtils.ToString<Coord>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<Coord>(names, values);
         }
 
         /// <summary>

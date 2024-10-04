@@ -318,7 +318,7 @@ namespace Alternet.Drawing
             string[] names = { PropNameStrings.Default.X, PropNameStrings.Default.Y };
             int[] values = { x, y };
 
-            return StringUtils.ToString<int>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<int>(names, values);
         }
     }
 }

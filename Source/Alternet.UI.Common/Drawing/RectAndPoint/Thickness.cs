@@ -379,7 +379,7 @@ namespace Alternet.UI
 
             Coord[] values = { left, top, right, bottom };
 
-            return StringUtils.ToString<Coord>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<Coord>(names, values);
         }
 
         /// <summary>

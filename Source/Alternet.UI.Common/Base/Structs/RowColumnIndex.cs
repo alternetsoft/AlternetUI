@@ -154,7 +154,7 @@ namespace Alternet.UI
             string[] names = { PropNameStrings.Default.Row, PropNameStrings.Default.Column };
             int[] values = { Row, Column };
 
-            return StringUtils.ToString<int>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<int>(names, values);
         }
     }
 }

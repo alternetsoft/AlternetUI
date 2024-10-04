@@ -435,7 +435,7 @@ namespace Alternet.Drawing
             string[] names = { PropNameStrings.Default.X, PropNameStrings.Default.Y };
             Coord[] values = { x, y };
 
-            return StringUtils.ToString<Coord>(names, values);
+            return StringUtils.ToStringWithOrWithoutNames<Coord>(names, values);
         }
 
         /// <summary>

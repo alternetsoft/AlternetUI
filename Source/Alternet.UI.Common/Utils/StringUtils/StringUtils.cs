@@ -298,25 +298,45 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="names">Names.</param>
         /// <param name="values">Values.</param>
+        /// <typeparam name="T">Type of values array.</typeparam>
         /// <returns></returns>
-        public static string ToString<T>(string[] names, T[] values)
+        public static string ToString<T>(string[]? names, T[] values)
         {
             var result = new StringBuilder();
             result.Append('{');
 
-            for (int i = 0; i < names.Length; i++)
+            for (int i = 0; i < values.Length; i++)
             {
-                var name = names[i];
+                var name = names?[i];
                 var value = values[i]?.ToString();
-                var item = $"{name}={value}";
-
                 if (i > 0)
                     result.Append(", ");
-                result.Append(item);
+                if(name is null)
+                {
+                    if(value is not null)
+                        result.Append(value);
+                }
+                else
+                    result.Append($"{name}={value}");
             }
 
             result.Append('}');
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Combines name and value pairs to string. If <see cref="BaseObject.UseNamesInToString"/>
+        /// is <c>false</c>, names are ignored and only values are returned.
+        /// </summary>
+        /// <typeparam name="T">Type of values array.</typeparam>
+        /// <param name="names">Names.</param>
+        /// <param name="values">Values.</param>
+        /// <returns></returns>
+        public static string ToStringWithOrWithoutNames<T>(string[] names, T[] values)
+        {
+            if (BaseObject.UseNamesInToString)
+                return ToString<T>(names, values);
+            return ToString<T>(null, values);
         }
 
         /// <summary>

@@ -41,9 +41,19 @@ namespace Alternet.Drawing
         private InteriorNotification? notification;
 
         /// <summary>
+        /// Occurs when the interior element is clicked.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<HitTestsResult>>? ElementClick;
+
+        /// <summary>
         /// Occurs when the corner which is below vertical scrollbar is clicked.
         /// </summary>
         public event EventHandler? CornerClick;
+
+        /// <summary>
+        /// Occurs when any of the attached scrollbars change their position.
+        /// </summary>
+        public event EventHandler<ScrollEventArgs>? Scroll;
 
         /// <summary>
         /// Enumerates possible hit test return values.
@@ -210,7 +220,7 @@ namespace Alternet.Drawing
                 metrics = value;
                 if (VertScrollBar is not null)
                     VertScrollBar.Metrics = value;
-                if(HorzScrollBar is not null)
+                if (HorzScrollBar is not null)
                     HorzScrollBar.Metrics = value;
             }
         }
@@ -359,7 +369,7 @@ namespace Alternet.Drawing
             if (HasBorder)
             {
                 var borderSettings = Border!.Border;
-                if(borderSettings is not null)
+                if (borderSettings is not null)
                 {
                     result[HitTestResult.TopBorder] = borderSettings.GetTopRectangle(Bounds);
                     result[HitTestResult.BottomBorder] = borderSettings.GetBottomRectangle(Bounds);
@@ -425,6 +435,26 @@ namespace Alternet.Drawing
 
             result[HitTestResult.ClientRect] = clientRect;
             return result;
+        }
+
+        /// <summary>
+        /// Raises <see cref="Scroll"/> event.
+        /// </summary>
+        /// <param name="sender">Value to pass as a sender to the event.</param>
+        /// <param name="e">Event arguments.</param>
+        public void RaiseScroll(object sender, ScrollEventArgs e)
+        {
+            Scroll?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises <see cref="ElementClick"/> event.
+        /// </summary>
+        /// <param name="sender">Value to pass as a sender to the event.</param>
+        /// <param name="hitTest">Hit test information.</param>
+        public void RaiseElementClick(object sender, HitTestsResult hitTest)
+        {
+            ElementClick?.Invoke(sender, new(hitTest));
         }
 
         /// <summary>
@@ -540,6 +570,11 @@ namespace Alternet.Drawing
             /// Gets whether hit test is on the corner which is below vertical scrollbar.
             /// </summary>
             public bool IsCorner => Interior == InteriorDrawable.HitTestResult.Corner;
+
+            /// <summary>
+            /// Gets whether hit test is outside of anything.
+            /// </summary>
+            public bool IsNone => Interior == InteriorDrawable.HitTestResult.None;
 
             /// <summary>
             /// Gets horizontal or vertical orientation depending on <see cref="IsVertScrollBar"/>
