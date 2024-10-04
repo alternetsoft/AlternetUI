@@ -302,6 +302,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets this <see cref="GenericImage"/> as <see cref="Image"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image AsImage
+        {
+            get
+            {
+                return new Bitmap(this);
+            }
+        }
+
+        /// <summary>
         /// Gets number of pixels in this image (Width * Height).
         /// </summary>
         public virtual int PixelCount => Size.PixelCount;
