@@ -1470,6 +1470,18 @@ namespace Alternet.UI
         public virtual VisualControlState? VisualStateOverride { get; set; }
 
         /// <summary>
+        /// Gets or sets override value for the <see cref="VisualStates"/>
+        /// property.
+        /// </summary>
+        /// <remarks>
+        /// When <see cref="VisualStatesOverride"/> is specified, its value
+        /// used instead of dynamic state calculation when <see cref="VisualStates"/>
+        /// returns its value.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual VisualControlStates? VisualStatesOverride { get; set; }
+
+        /// <summary>
         /// Gets current <see cref="VisualControlState"/>.
         /// </summary>
         [Browsable(false)]
@@ -1480,15 +1492,42 @@ namespace Alternet.UI
                 if (VisualStateOverride is not null)
                     return VisualStateOverride.Value;
 
-                if (!Enabled)
+                var state = VisualStates;
+
+                if (state.HasFlag(VisualControlStates.Disabled))
                     return VisualControlState.Disabled;
-                if (IsMouseLeftButtonDown)
+                if (state.HasFlag(VisualControlStates.Pressed))
                     return VisualControlState.Pressed;
-                if (IsMouseOver)
+                if (state.HasFlag(VisualControlStates.Hovered))
                     return VisualControlState.Hovered;
-                if (Focused)
+                if (state.HasFlag(VisualControlStates.Focused))
                     return VisualControlState.Focused;
                 return VisualControlState.Normal;
+            }
+        }
+
+        /// <summary>
+        /// Gets visual control states as flags enumeration.
+        /// </summary>
+        [Browsable(false)]
+        public virtual VisualControlStates VisualStates
+        {
+            get
+            {
+                if (VisualStatesOverride is not null)
+                    return VisualStatesOverride.Value;
+
+                VisualControlStates result = 0;
+
+                if (!Enabled)
+                    result |= VisualControlStates.Disabled;
+                if (IsMouseLeftButtonDown)
+                    result |= VisualControlStates.Pressed;
+                if (IsMouseOver)
+                    result |= VisualControlStates.Hovered;
+                if (Focused)
+                    result |= VisualControlStates.Focused;
+                return result;
             }
         }
 
