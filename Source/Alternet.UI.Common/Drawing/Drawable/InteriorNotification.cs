@@ -25,6 +25,11 @@ namespace Alternet.UI
             this.interior = interior;
         }
 
+        /// <summary>
+        /// Gets or sets whether to send scroll events to the attached control. Default is <c>true</c>.
+        /// </summary>
+        public virtual bool SendScrollToControl { get; set; } = true;
+
         /// <inheritdoc/>
         public override void AfterMouseMove(Control sender, MouseEventArgs e)
         {
@@ -72,9 +77,14 @@ namespace Alternet.UI
             var mouseLocation = Mouse.GetPosition(sender);
             var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
 
-            if (hitTests.IsCorner)
+            if (!hitTests.IsNone)
             {
-                interior.RaiseCornerClick(sender);
+                interior.RaiseElementClick(sender, hitTests);
+
+                if (hitTests.IsCorner)
+                {
+                    interior.RaiseCornerClick(sender);
+                }
             }
         }
 
@@ -141,7 +151,10 @@ namespace Alternet.UI
             scrollArgs.ScrollOrientation = hitTests.Orientation;
             scrollArgs.Type = evType;
 
-            control.RaiseScroll(scrollArgs);
+            interior.RaiseScroll(control, scrollArgs);
+
+            if(SendScrollToControl)
+                control.RaiseScroll(scrollArgs);
         }
 
         private void UnsubscribeClickRepeated()
