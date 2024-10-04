@@ -45,6 +45,7 @@ public partial class MainPage : ContentPage
             editor.Editor.RunAfterGotFocus = Alternet.UI.GenericControlAction.ShowKeyboardIfUnknown;
 
             editor.Editor.Selection.Options |= SelectionOptions.DisableSelectionByMouse;
+            Alternet.UI.BaseObject.UseNamesInToString = false;
         }
         else
         {
@@ -74,6 +75,12 @@ public partial class MainPage : ContentPage
         Alternet.UI.PlessMouse.LastMousePositionChanged += PlessMouse_LastMousePositionChanged;
 
         editor.Interior.CornerClick += Interior_CornerClick;
+        editor.Interior.Scroll += Interior_Scroll;
+    }
+
+    private void Interior_Scroll(object? sender, Alternet.UI.ScrollEventArgs e)
+    {
+        entry1.Text = $"{Alternet.UI.LogUtils.GenNewId()} {e}";
     }
 
     private void Interior_CornerClick(object? sender, EventArgs e)
@@ -192,6 +199,15 @@ public partial class MainPage : ContentPage
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];
 
+    private void LogToTitle(string? s)
+    {
+        if (s is null)
+            return;
+
+        if (Window is not null)
+            Window.Title = $"{counter++} {s}";
+    }
+
     private void App_LogMessage(object? sender, Alternet.UI.LogMessageEventArgs e)
     {
         try
@@ -199,13 +215,7 @@ public partial class MainPage : ContentPage
             if (!LogToWindowTitle)
                 return;
 
-            var s = e.Message;
-
-            if (s is null)
-                return;
-
-            if (Window is not null)
-                Window.Title = $"{counter++} {s}" ?? string.Empty;
+            LogToTitle(e.Message);
         }
         catch
         {
