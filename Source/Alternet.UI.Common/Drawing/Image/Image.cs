@@ -359,7 +359,7 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Image(GenericImage image) => new Bitmap(image);
+        public static explicit operator Image(GenericImage image) => image.AsImage;
 
         /// <summary>
         /// Converts the specified <see cref='GenericImage'/> to a <see cref='Image'/>.

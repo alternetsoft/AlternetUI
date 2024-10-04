@@ -27,7 +27,7 @@ namespace Alternet.UI
     /// <para>
     /// Because a <see cref="PageSetupDialog"/> needs page settings to display, you need to set
     /// the <see cref="BasePrintDialog.Document"/>, <see cref="PrinterSettings"/>, or
-    /// <see cref="PageSettings"/> property before calling <see cref="CommonDialog.ShowModal()"/>.
+    /// <see cref="PageSettings"/> property before showing the dialog.
     /// </para>
     /// </remarks>
     public class PageSetupDialog : BasePrintDialog

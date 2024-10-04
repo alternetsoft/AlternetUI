@@ -33,6 +33,11 @@ namespace Alternet.UI.Native
             set => fontInfo = value;
         }
 
+        public void ShowAsync(Alternet.UI.Window? owner, Action<bool>? onClose)
+        {
+            ColorDialog.DefaultShowAsync(owner, onClose, ShowModal);
+        }
+
         public Alternet.UI.ModalResult ShowModal(Alternet.UI.Window? owner)
         {
             CheckDisposed();

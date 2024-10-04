@@ -639,6 +639,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Runs generic action.
+        /// </summary>
+        /// <param name="action">Action to run.</param>
+        public virtual void RunKnownAction(GenericControlAction action)
+        {
+            if (action == GenericControlAction.None)
+                return;
+
+            switch (action)
+            {
+                case GenericControlAction.ShowKeyboard:
+                    Keyboard.ShowKeyboard(this);
+                    break;
+                case GenericControlAction.HideKeyboard:
+                    Keyboard.HideKeyboard(this);
+                    break;
+                case GenericControlAction.ShowKeyboardIfNoHardware:
+                    if(Keyboard.IsKeyboardPresent is false)
+                        Keyboard.ShowKeyboard(this);
+                    break;
+                case GenericControlAction.ShowKeyboardIfUnknown:
+                    if (Keyboard.IsKeyboardPresent is not true)
+                        Keyboard.ShowKeyboard(this);
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Calls appropriate mouse events using specified <see cref="TouchEventArgs"/>.
         /// </summary>
         /// <param name="e">Touch event arguments.</param>

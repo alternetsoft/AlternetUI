@@ -15,5 +15,10 @@ namespace Alternet.UI.Native
         {
             return ShowModal(GetNativeWindow(owner));
         }
+
+        public void ShowAsync(Alternet.UI.Window? owner, Action<bool>? onClose)
+        {
+            ColorDialog.DefaultShowAsync(owner, onClose, ShowModal);
+        }
     }
 }

@@ -57,23 +57,6 @@ namespace Alternet.UI
         public IDialogHandler Handler => handler ??= CreateHandler();
 
         /// <summary>
-        /// Runs a common dialog window with a default owner.
-        /// </summary>
-        /// <returns>
-        /// <see cref="ModalResult.Accepted"/> if the user clicks OK in the dialog window;
-        /// otherwise, <see cref="ModalResult.Canceled"/>.
-        /// </returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated. Use ShowAsync method instead of it.")]
-#endif
-        public ModalResult ShowModal()
-        {
-#pragma warning disable
-            return ShowModal(null);
-#pragma warning restore
-        }
-
-        /// <summary>
         /// Runs a common dialog window with a default owner asynchroniously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
@@ -87,7 +70,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs a common dialog window with the specified owner asynchroniously.
+        /// Runs a common dialog window with a default owner asynchroniously.
+        /// </summary>
+        /// <param name="onClose">Action to call after dialog is closed.</param>
+        /// <remarks>
+        /// On some platforms dialogs are shown synchroniously and application waits
+        /// until dialog is closed.
+        /// </remarks>
+        public void ShowAsync(Action<bool>? onClose)
+        {
+            ShowAsync(null, (dialog, result) =>
+            {
+                onClose?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Runs a common dialog window asynchroniously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
         /// <param name="owner">A window that will own the dialog.</param>
@@ -95,13 +94,12 @@ namespace Alternet.UI
         /// On some platforms dialogs are shown synchroniously and application waits
         /// until dialog is closed.
         /// </remarks>
-        public virtual void ShowAsync(Window? owner, Action<CommonDialog, bool>? onClose)
+        public void ShowAsync(Window? owner, Action<bool>? onClose)
         {
-#pragma warning disable
-            var result = ShowModal(owner);
-#pragma warning restore
-            var resultAsBool = result == ModalResult.Accepted;
-            onClose?.Invoke(this, resultAsBool);
+            ShowAsync(owner, (dialog, result) =>
+            {
+                onClose?.Invoke(result);
+            });
         }
 
         /// <summary>
@@ -112,7 +110,7 @@ namespace Alternet.UI
         /// On some platforms dialogs are shown synchroniously and application waits
         /// until dialog is closed.
         /// </remarks>
-        public void ShowAsync(Action onAccepted)
+        public void ShowAsync(Action? onAccepted)
         {
             ShowAsync(null, onAccepted);
         }
@@ -126,7 +124,7 @@ namespace Alternet.UI
         /// On some platforms dialogs are shown synchroniously and application waits
         /// until dialog is closed.
         /// </remarks>
-        public void ShowAsync(Window? owner, Action onAccepted)
+        public void ShowAsync(Window? owner, Action? onAccepted)
         {
             ShowAsync(owner, (dialog, result) =>
             {
@@ -136,7 +134,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="ShowModal()"/>. Added for compatibility.
+        /// Same as <see cref="ShowModal"/>. Added for compatibility.
         /// </summary>
         /// <returns></returns>
 #if ObsoleteModalDialogs
@@ -147,6 +145,32 @@ namespace Alternet.UI
 #pragma warning disable
             return EnumUtils.Convert(ShowModal(null));
 #pragma warning restore
+        }
+
+        /// <summary>
+        /// Runs a common dialog window with the specified owner asynchroniously.
+        /// </summary>
+        /// <param name="onClose">Action to call after dialog is closed.</param>
+        /// <param name="owner">A window that will own the dialog.</param>
+        /// <remarks>
+        /// On some platforms dialogs are shown synchroniously and application waits
+        /// until dialog is closed.
+        /// </remarks>
+        public virtual void ShowAsync(Window? owner, Action<CommonDialog, bool>? onClose)
+        {
+            if (!IsValidShowDialog())
+            {
+                onClose?.Invoke(this, false);
+                return;
+            }
+
+            CheckDisposed();
+
+            Handler.ShowAsync(owner, (result) =>
+            {
+                var coercedResult = CoerceDialogResult(result);
+                onClose?.Invoke(this, coercedResult);
+            });
         }
 
         /// <summary>
@@ -162,7 +186,7 @@ namespace Alternet.UI
 #if ObsoleteModalDialogs
         [Obsolete("Method is deprecated. Use ShowAsync method instead of it.")]
 #endif
-        public ModalResult ShowModal(Window? owner)
+        public ModalResult ShowModal(Window? owner = null)
         {
             if (!IsValidShowDialog())
                 return ModalResult.Canceled;

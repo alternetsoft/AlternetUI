@@ -42,6 +42,7 @@ public partial class MainPage : ContentPage
         if (!Alternet.UI.App.IsDesktopDevice)
         {
             editor.Interior.HasBorder = false;
+            editor.Editor.RunAfterGotFocus = Alternet.UI.GenericControlAction.ShowKeyboardIfUnknown;
         }
         else
         {

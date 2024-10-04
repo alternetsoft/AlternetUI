@@ -14,6 +14,7 @@
         </StackLayout>
 
         <StackLayout Margin="0,20" Grid.Row="1">
+            <Entry WidthRequest="150" Text="some text"/>
             <Button Text="Action 1" x:Name="button1" WidthRequest="50">
                 <FlyoutBase.ContextFlyout>
                     <MenuFlyout>

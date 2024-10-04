@@ -1493,6 +1493,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="GenericControlAction"/> which is executed when the control
+        /// received focus.
+        /// </summary>
+        [Browsable(false)]
+        public virtual GenericControlAction RunAfterGotFocus { get; set; } = GenericControlAction.None;
+
+        /// <summary>
+        /// Gets or sets <see cref="GenericControlAction"/> which is executed when the control
+        /// lost focus.
+        /// </summary>
+        [Browsable(false)]
+        public virtual GenericControlAction RunAfterLostFocus { get; set; } = GenericControlAction.None;
+
+        /// <summary>
+        /// Gets or sets whether to convert touch events to mouse events and to pass
+        /// them to the appropriate mouse event handlers. Default is <c>true</c>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool TouchEventsAsMouse { get; set; } = true;
+
+        /// <summary>
         /// Gets whether user paint is supported for this control.
         /// </summary>
         [Browsable(false)]
