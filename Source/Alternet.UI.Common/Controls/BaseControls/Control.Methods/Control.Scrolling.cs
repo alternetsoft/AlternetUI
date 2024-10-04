@@ -77,6 +77,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="Scroll"/> event and <see cref="OnScroll"/> method
+        /// with the specified parameters.
+        /// </summary>
+        /// <param name="orientation">Scroll bar orientation.</param>
+        /// <param name="eventType">Type of the scroll event.</param>
+        public void RaiseScroll(
+            ScrollBarOrientation orientation,
+            ScrollEventType eventType)
+        {
+            ScrollEventArgs scrollArgs = new();
+            scrollArgs.ScrollOrientation = orientation;
+            scrollArgs.Type = eventType;
+            RaiseScroll(scrollArgs);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls page down.
+        /// </summary>
+        public void RaiseScrollPageDown()
+        {
+            RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.LargeIncrement);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls page up.
+        /// </summary>
+        public void RaiseScrollPageUp()
+        {
+            RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.LargeDecrement);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls page left.
+        /// </summary>
+        public void RaiseScrollPageRight()
+        {
+            RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.LargeIncrement);
+        }
+
+        /// <summary>
+        /// Raises scroll event which scrolls page right.
+        /// </summary>
+        public void RaiseScrollPageLeft()
+        {
+            RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.LargeDecrement);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Scroll"/> event and <see cref="OnScroll"/> method.
         /// </summary>
         /// <param name="e">A <see cref="ScrollEventArgs"/> that contains the event

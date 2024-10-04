@@ -33,7 +33,6 @@ public partial class MainPage : ContentPage
 
         InitEdit();
         editor.Editor.Lexer = parserCs;
-        editor.Editor.NavigateOptions |= Alternet.Editor.TextSource.NavigateOptions.BeyondEof;
 
         LoadFile(NewFileNameNoExt + ".cs");
 
