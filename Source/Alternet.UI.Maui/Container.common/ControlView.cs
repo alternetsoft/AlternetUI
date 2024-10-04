@@ -25,6 +25,7 @@ namespace Alternet.UI
     public partial class ControlView : SKCanvasView
     {
         private SwipeGestureRecognizer? swipeGesture;
+        private PanGestureRecognizer? panGesture;
         private InteriorDrawable? interior;
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
@@ -48,6 +49,11 @@ namespace Alternet.UI
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
         }
+
+        /// <summary>
+        /// Gets swipe gesture created after call to <see cref="RequireSwipeGesture"/>.
+        /// </summary>
+        public SwipeGestureRecognizer? SwipeGesture => swipeGesture;
 
         /// <summary>
         /// Gets control interior element (border and scrollbars).
@@ -135,9 +141,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Registers to receive pan gestures.
+        /// </summary>
+        public virtual void RequirePanGesture()
+        {
+            if (panGesture is not null)
+                return;
+
+            panGesture = new();
+            panGesture.PanUpdated += (sender, e) =>
+            {
+                OnPanGesture(e);
+            };
+
+            GestureRecognizers.Add(panGesture);
+        }
+
+        /// <summary>
+        /// Registers to receive double tap gestures.
+        /// </summary>
+        public virtual void RequireDoubleTapGesture()
+        {
+            TapGestureRecognizer tapGestureRecognizer = new()
+            {
+                Buttons = ButtonsMask.Primary,
+                NumberOfTapsRequired = 2,
+            };
+
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+                OnDoubleTapGesture(e);
+            };
+
+            GestureRecognizers.Add(tapGestureRecognizer);
+        }
+
+        /// <summary>
         /// Registers to receive swipe gestures.
         /// </summary>
-        /// <param name="direction"></param>
+        /// <param name="direction">Swipe directions to subscribe.</param>
         public virtual void RequireSwipeGesture(SwipeDirection direction
             = SwipeDirection.Down | SwipeDirection.Right | SwipeDirection.Left | SwipeDirection.Up)
         {
@@ -264,6 +306,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">Event arguments.</param>
         protected virtual void OnSwipeDown(SwipedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raised when pan gesture is recognized.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnPanGesture(PanUpdatedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raised when double tap gesture is recognized.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnDoubleTapGesture(TappedEventArgs e)
         {
         }
 
