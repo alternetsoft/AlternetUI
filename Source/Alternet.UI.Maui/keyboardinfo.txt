@@ -1,0 +1,14 @@
+https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.inputpane.hiding?view=winrt-26100
+https://learn.microsoft.com/en-us/windows/apps/design/input/keyboard-interactions
+https://learn.microsoft.com/en-us/windows/apps/design/input/keyboard-events#the-touch-keyboard
+https://learn.microsoft.com/en-us/windows/apps/design/input/respond-to-the-presence-of-the-touch-keyboard
+https://github.com/Shakibaenur/KeyBoardStateChecker/blob/master/app/src/main/java/com/shakibaenur/keyboardstate/keyBoardState/KeyboardStateEvent.kt
+https://medium.com/@shakibaenur/android-keyboard-state-listener-e00ef523fc29
+
+Android: Entire Activity has also key events, we can use it for getting overall state of keys
+
+On open/Close keyboard:
+- For iOS and MacCatalyst, you can use NSNotificationCenter to register a listener for DidHideNotification
+ and DidShowNotification, please check the Remarks section to see the usage.
+- https://learn.microsoft.com/en-us/windows/apps/design/input/keyboard-events
+- https://learn.microsoft.com/ru-ru/dotnet/api/android.views.viewtreeobserver.addongloballayoutlistener?view=xamarin-android-sdk-13
