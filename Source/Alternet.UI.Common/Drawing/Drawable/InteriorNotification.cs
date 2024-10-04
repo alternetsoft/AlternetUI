@@ -62,13 +62,34 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void AfterMouseLeave(Control sender)
+        {
+            UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
+        public override void AfterVisualStateChanged(Control sender)
+        {
+            if (sender.VisualState != VisualControlState.Pressed)
+                UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
+        public override void AfterLostFocus(Control sender)
+        {
+            UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
         public override void AfterMouseLeftButtonDown(Control sender, MouseEventArgs e)
         {
+            SubscribeClickRepeated(sender);
         }
 
         /// <inheritdoc/>
         public override void AfterMouseLeftButtonUp(Control sender, MouseEventArgs e)
         {
+            UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
@@ -89,15 +110,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void AfterVisualStateChanged(Control sender)
-        {
-            if (sender.VisualState == VisualControlState.Pressed)
-                SubscribeClickRepeated(sender);
-            else
-                UnsubscribeClickRepeated();
-        }
-
-        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             UnsubscribeClickRepeated();
@@ -107,9 +119,6 @@ namespace Alternet.UI
         private void OnClickRepeatTimerEvent(object sender, EventArgs e)
         {
             if (control is null)
-                return;
-
-            if (control.VisualState != VisualControlState.Pressed)
                 return;
 
             if (TimerUtils.LastClickLessThanRepeatInterval(control))

@@ -80,7 +80,10 @@ public partial class MainPage : ContentPage
 
     private void Interior_Scroll(object? sender, Alternet.UI.ScrollEventArgs e)
     {
-        entry1.Text = $"{Alternet.UI.LogUtils.GenNewId()} {e}";
+        Alternet.UI.DebugUtils.DebugCallIf(false, () =>
+        {
+            entry1.Text = $"{Alternet.UI.LogUtils.GenNewId()} {e}";
+        });
     }
 
     private void Interior_CornerClick(object? sender, EventArgs e)
