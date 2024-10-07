@@ -16,6 +16,11 @@ using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 
+#if ANDROID
+using WindowSoftInputModeAdjust
+    = Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific.WindowSoftInputModeAdjust;
+#endif
+
 /*
     Do not change namespace of the MauiUtils as it is used in App static constructor and other places
     in order to determine device platform and get other MAUI related settings.
@@ -130,6 +135,26 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         public static bool IsMacCatalyst() => DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
+
+        /// <summary>
+        /// Sets soft input mode for the window.
+        /// </summary>
+        /// <param name="window">Window to apply the setting.</param>
+        /// <param name="isResize">Whether to resize the window when soft keyboard is shown.</param>
+        public static void SetWindowSoftInputModeAdjust(
+            Microsoft.Maui.Controls.Window? window,
+            bool isResize = true)
+        {
+            if (window is null)
+                return;
+
+#if ANDROID
+            WindowSoftInputModeAdjust value = isResize
+                ? WindowSoftInputModeAdjust.Resize : WindowSoftInputModeAdjust.Pan;
+            Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific
+                .Application.SetWindowSoftInputModeAdjust(window, value);
+#endif
+        }
 
         /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
