@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -498,6 +499,34 @@ namespace Alternet.UI
                 interior.HorzPosition = control.HorzScrollBarInfo;
                 interior.Draw(control, graphics);
             }
+
+#if ANDROID
+            var platformView = GetPlatformView();
+            if(platformView != null)
+            {
+                var visibleRect = AndroidUtils.GetWindowVisibleDisplayFrame(platformView);
+
+                var visibleHeightDips
+                    = Alternet.Drawing.GraphicsFactory.PixelToDip(visibleRect.Height, control.ScaleFactor);
+
+                visibleHeightDips = Math.Min(visibleHeightDips, control.Height);
+
+                graphics.DrawHorzLine(
+                    Alternet.Drawing.Color.Red.AsBrush,
+                    (0, visibleHeightDips),
+                    control.Width,
+                    1);
+
+                Debug.WriteLine($"==============");
+                Debug.WriteLine($"DrawingRect: {AndroidUtils.GetDrawingRect(platformView)}");
+                Debug.WriteLine($"VisibleRect: {AndroidUtils.GetWindowVisibleDisplayFrame(platformView)}");
+                Debug.WriteLine($"LocationInWindow: {AndroidUtils.GetLocationInWindow(platformView)}");
+                Debug.WriteLine($"LocationOnScreen: {AndroidUtils.GetLocationOnScreen(platformView)}");
+                Debug.WriteLine($"Window.Top: {AndroidUtils.GetDecorView(platformView)?.Top}");
+                Debug.WriteLine(
+                    $"DecorView.VisibleRect: {AndroidUtils.GetDecorViewVisibleDisplayFrame(platformView)}");
+            }
+#endif
 
             dc.Flush();
             dc.Restore();
