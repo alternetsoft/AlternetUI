@@ -37,6 +37,7 @@ namespace Alternet.UI
             platformView.DragStarting -= HandleWinPlatformDragStarting;
             platformView.Drop -= HandleWinPlatformDrop;
             platformView.DropCompleted -= HandleWinPlatformDropCompleted;
+            platformView.Holding -= HandleWinPlatformHolding;
         }
 
         /// <inheritdoc/>
@@ -50,6 +51,10 @@ namespace Alternet.UI
 
             platformView.AllowFocusOnInteraction = true;
             platformView.IsTabStop = true;
+
+            /*
+            platformView.IsHoldingEnabled = true;
+            */
 
             platformView.PointerEntered += HandleWinPlatformPointerEntered;
             platformView.PointerExited += HandleWinPlatformPointerExited;
@@ -67,6 +72,30 @@ namespace Alternet.UI
             platformView.DragStarting += HandleWinPlatformDragStarting;
             platformView.Drop += HandleWinPlatformDrop;
             platformView.DropCompleted += HandleWinPlatformDropCompleted;
+            platformView.Holding += HandleWinPlatformHolding;
+        }
+
+        /// <summary>
+        /// Handles platform event.
+        /// </summary>
+        /// <param name="sender">Platform view.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleWinPlatformHolding(
+            object sender,
+            Microsoft.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        {
+            /*
+            We do not raise long tap event here as it doesn't work for mouse clicks
+            and not it is raised via calculating time between MouseDown/Up events.
+
+            var platformView = GetPlatformView();
+            if (platformView is null)
+                return;
+
+            LongTapEventArgs eventArgs = MauiWindowsUtils.Convert(platformView, e);
+            RaiseLongTap(eventArgs);
+            e.Handled = eventArgs.Handled;
+            */
         }
 
         /// <summary>

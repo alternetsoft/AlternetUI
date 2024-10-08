@@ -21,7 +21,7 @@ namespace Alternet.UI
     /// <summary>
     /// Adds additional functionality to the <see cref="SKCanvasView"/> control.
     /// </summary>
-    public partial class PlatformView : SKCanvasView
+    public partial class PlatformView : SKCanvasView, View.IOnLongClickListener
     {
         public Action<PlatformView, bool>? NotifyFocusChanged;
 
@@ -126,6 +126,11 @@ namespace Alternet.UI
             base.DispatchPointerCaptureChanged(hasCapture);
         }
 
+        bool IOnLongClickListener.OnLongClick(View? v)
+        {
+            return true;
+        }
+
         protected override void OnFocusChanged(
             bool gainFocus,
             [GeneratedEnum] FocusSearchDirection direction,
@@ -140,6 +145,7 @@ namespace Alternet.UI
             Focusable = true;
             FocusableInTouchMode = true;
             Clickable = true;
+            LongClickable = true;
 
             /*
             KeyboardNavigationCluster = true;

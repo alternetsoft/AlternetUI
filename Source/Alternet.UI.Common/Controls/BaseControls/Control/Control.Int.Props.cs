@@ -28,19 +28,6 @@ namespace Alternet.UI
             }
         }
 
-        internal CaretInfo? CaretInfo
-        {
-            get => caretInfo;
-
-            set
-            {
-                if (caretInfo == value)
-                    return;
-                caretInfo = value;
-                InvalidateCaret();
-            }
-        }
-
         internal bool ProcessUIUpdates
         {
             get

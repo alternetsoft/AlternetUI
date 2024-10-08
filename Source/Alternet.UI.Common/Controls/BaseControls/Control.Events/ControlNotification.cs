@@ -10,6 +10,11 @@ namespace Alternet.UI
     public class ControlNotification : DisposableObject, IControlNotification
     {
         /// <inheritdoc/>
+        public virtual void AfterLongTap(Control sender, LongTapEventArgs e)
+        {
+        }
+
+        /// <inheritdoc/>
         public virtual void AfterSetScrollBarInfo(
             Control sender,
             bool isVertical,

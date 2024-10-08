@@ -64,7 +64,7 @@ namespace Alternet.UI
         private IFlagsAndAttributes? flagsAndAttributes;
         private IIntFlagsAndAttributes? intFlagsAndAttributes;
         private MouseEventArgs? dragEventArgs;
-        private PointD dragEventMousePos;
+        private PointD lastMouseDownPos;
         private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
@@ -257,6 +257,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets mouse position when mouse down event was received.
+        /// </summary>
+        [Browsable(false)]
+        public PointD LastMouseDownPos => lastMouseDownPos;
+
+        /// <summary>
+        /// Gets or sets whether <see cref="LongTap"/> event is raised.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanLongTap { get; set; }
+
+        /// <summary>
         /// Gets or sets border for all visual states of the control.
         /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
@@ -434,6 +446,24 @@ namespace Alternet.UI
                 }
 
                 RaiseTextChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets internally painted caret information. This is used on some platforms
+        /// where native caret is not available.
+        /// </summary>
+        [Browsable(false)]
+        public virtual CaretInfo? CaretInfo
+        {
+            get => caretInfo;
+
+            set
+            {
+                if (caretInfo == value)
+                    return;
+                caretInfo = value;
+                InvalidateCaret();
             }
         }
 

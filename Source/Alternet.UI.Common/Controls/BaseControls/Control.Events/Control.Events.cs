@@ -228,6 +228,11 @@ namespace Alternet.UI
         public event EventHandler? IsMouseOverChanged;
 
         /// <summary>
+        /// Occurs when long tap gesture is recognised.
+        /// </summary>
+        public event EventHandler<LongTapEventArgs>? LongTap;
+
+        /// <summary>
         /// Occurs when the control is clicked.
         /// </summary>
         [Category("Action")]

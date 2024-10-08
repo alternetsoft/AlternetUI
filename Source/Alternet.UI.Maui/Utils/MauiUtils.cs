@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
@@ -182,6 +183,26 @@ namespace Alternet.UI
 
                 return GenericDeviceType.Unknown;
             }
+        }
+
+        /// <summary>
+        /// Converts <see cref="SKTouchEventArgs"/> to <see cref="TouchEventArgs"/>.
+        /// </summary>
+        /// <param name="e">Value to convert.</param>
+        /// <returns></returns>
+        public static TouchEventArgs Convert(SKTouchEventArgs e)
+        {
+            TouchEventArgs result = new();
+
+            result.Id = e.Id;
+            result.ActionType = (TouchAction)e.ActionType;
+            result.DeviceType = (TouchDeviceType)e.DeviceType;
+            result.Location = GraphicsFactory.PixelToDip(((PointD)e.Location).ToPoint());
+            result.InContact = e.InContact;
+            result.WheelDelta = e.WheelDelta;
+            result.Pressure = e.Pressure;
+            result.MouseButton = e.MouseButton.ToAlternet();
+            return result;
         }
 
         /// <summary>

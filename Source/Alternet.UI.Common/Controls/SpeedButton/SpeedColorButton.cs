@@ -21,6 +21,7 @@ namespace Alternet.UI
         private ColorDialog? colorDialog;
         private PopupColorListBox? popupWindow;
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
+        private ClickActionKind longTapAction = ClickActionKind.None;
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
 
@@ -275,6 +276,25 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets action to call on long tap event.
+        /// </summary>
+        internal virtual ClickActionKind LongTapAction
+        {
+            get
+            {
+                return longTapAction;
+            }
+
+            set
+            {
+                if (longTapAction == value)
+                    return;
+                longTapAction = value;
+                CanLongTap = longTapAction != ClickActionKind.None;
+            }
+        }
+
         internal new Image? Image
         {
             get => base.Image;
@@ -287,42 +307,72 @@ namespace Alternet.UI
             set => base.DisabledImage = value;
         }
 
+        /// <summary>
+        /// Shows color popup or dialog (depends on the value of <see cref="ActionKind"/> property).
+        /// Called when control is clicked.
+        /// </summary>
+        public virtual void ShowColorSelector(ClickActionKind? kind = null)
+        {
+            switch (kind ?? ActionKind)
+            {
+                case ClickActionKind.ShowPopup:
+                    ShowColorPopup();
+                    break;
+                case ClickActionKind.ShowDialog:
+                    ShowColorDialog();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Shows color dialog.
+        /// </summary>
+        public virtual void ShowColorDialog()
+        {
+            if (!Enabled)
+                return;
+
+            if (Value is not null)
+                ColorDialog.Color = Value;
+
+            ColorDialog.ShowAsync((dlg, dlgResult) =>
+            {
+                if (IsDisposed)
+                    return;
+                if (dlgResult)
+                    Value = ColorDialog.Color;
+            });
+        }
+
+        /// <summary>
+        /// Shows color popup.
+        /// </summary>
+        public virtual void ShowColorPopup()
+        {
+            if (!Enabled)
+                return;
+
+            PopupWindow.MainControl.Value = Value;
+            PopupWindow.ShowPopup(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnLongTap(LongTapEventArgs e)
+        {
+            if (!Enabled)
+                return;
+            App.AddIdleTask(() =>
+            {
+                if(!IsDisposed)
+                    ShowColorSelector(LongTapAction);
+            });
+        }
+
         /// <inheritdoc/>
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
-            if (!Enabled)
-                return;
-
-            switch (ActionKind)
-            {
-                case ClickActionKind.ShowPopup:
-                    FnShowPopup();
-                    break;
-                case ClickActionKind.ShowDialog:
-                    FnShowDialog();
-                    break;
-            }
-
-            void FnShowDialog()
-            {
-                if (Value is not null)
-                    ColorDialog.Color = Value;
-
-                ColorDialog.ShowAsync((dlg, dlgResult) =>
-                {
-                    if (IsDisposed)
-                        return;
-                    if(dlgResult)
-                        Value = ColorDialog.Color;
-                });
-            }
-
-            void FnShowPopup()
-            {
-                PopupWindow.MainControl.Value = Value;
-                PopupWindow.ShowPopup(this);
-            }
+            ShowColorSelector();
         }
 
         /// <summary>

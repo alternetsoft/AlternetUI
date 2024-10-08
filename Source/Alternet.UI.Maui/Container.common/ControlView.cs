@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -236,7 +237,9 @@ namespace Alternet.UI
         /// <param name="s">Message text.</param>
         public virtual void Log(object? s)
         {
-            Alternet.UI.App.Log(s);
+            if (s is null)
+                return;
+            Debug.WriteLine(s);
         }
 
         /// <summary>
@@ -412,7 +415,7 @@ namespace Alternet.UI
             if (control is null)
                 return;
 
-            TouchEventArgs args = MauiTouchUtils.Convert(e);
+            TouchEventArgs args = MauiUtils.Convert(e);
 
 #if ANDROID
             if(args.ActionType == TouchAction.WheelChanged)
@@ -498,6 +501,37 @@ namespace Alternet.UI
                 interior.HorzPosition = control.HorzScrollBarInfo;
                 interior.Draw(control, graphics);
             }
+
+#if ANDROID
+            DebugUtils.DebugCallIf(false, () =>
+            {
+                var platformView = GetPlatformView();
+                if (platformView != null)
+                {
+                    var visibleRect = AndroidUtils.GetWindowVisibleDisplayFrame(platformView);
+
+                    var visibleHeightDips = Alternet.Drawing.GraphicsFactory.PixelToDip(
+                        visibleRect.Height,
+                        control.ScaleFactor);
+
+                    visibleHeightDips = Math.Min(visibleHeightDips, control.Height);
+
+                    graphics.DrawHorzLine(
+                        Alternet.Drawing.Color.Red.AsBrush,
+                        (0, visibleHeightDips),
+                        control.Width,
+                        1);
+
+                    Log($"==============");
+                    Log($"DrawingRect: {AndroidUtils.GetDrawingRect(platformView)}");
+                    Log($"VisibleRect: {AndroidUtils.GetWindowVisibleDisplayFrame(platformView)}");
+                    Log($"LocationInWindow: {AndroidUtils.GetLocationInWindow(platformView)}");
+                    Log($"LocationOnScreen: {AndroidUtils.GetLocationOnScreen(platformView)}");
+                    Log($"Window.Top: {AndroidUtils.GetDecorView(platformView)?.Top}");
+                    Log($"Decor.VisibleRect: {AndroidUtils.GetDecorViewVisibleDisplayFrame(platformView)}");
+                }
+            });
+#endif
 
             dc.Flush();
             dc.Restore();

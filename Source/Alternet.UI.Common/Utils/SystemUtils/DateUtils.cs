@@ -31,6 +31,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts milliseconds to ticks.
+        /// </summary>
+        /// <param name="msec">Value to convert.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long TicksFromMilliseconds(long msec)
+        {
+            return msec * TimeSpan.TicksPerMillisecond;
+        }
+
+        /// <summary>
+        /// Converts ticks to milliseconds.
+        /// </summary>
+        /// <param name="ticks">Value to convert.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long TicksToMilliseconds(long ticks)
+        {
+            return ticks / TimeSpan.TicksPerMillisecond;
+        }
+
+        /// <summary>
         /// Gets current time in milliseconds.
         /// </summary>
         /// <returns></returns>

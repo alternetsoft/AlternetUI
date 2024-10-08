@@ -136,14 +136,14 @@ namespace Alternet.UI
         {
             if (gameOver)
             {
-                if (MessageBox.Show(
-                    "The game is over. Do you want to start a new game?",
+                RichToolTip.Show(
                     "Game Over",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxDefaultButton.Yes) == DialogResult.Yes)
-                {
-                    InitializeGame();
-                }
+                    "The game is over. Starting a new game!",
+                    (Control?)this.ParentWindow ?? this,
+                    RichToolTipKind.None,
+                    MessageBoxIcon.Information);
+
+                InitializeGame();
 
                 return;
             }

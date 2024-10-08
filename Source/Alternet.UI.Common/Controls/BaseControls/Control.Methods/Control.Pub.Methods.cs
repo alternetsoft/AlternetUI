@@ -449,6 +449,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Invalidates internally painted caret.
+        /// </summary>
+        public virtual void InvalidateCaret()
+        {
+            if (caretInfo is null || !caretInfo.Visible)
+                return;
+            RefreshRectsUnion(caretInfo.Region);
+        }
+
+        /// <summary>
         /// Calculates bounds of the specified rectangles collection and
         /// repaints combined rectangle. Coordinates are in pixels.
         /// </summary>
@@ -687,7 +697,8 @@ namespace Alternet.UI
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
                                 e.Location,
-                                out _);
+                                out _,
+                                e.DeviceType);
                             break;
                         case TouchAction.Moved:
                             Control.BubbleMouseMove(
@@ -702,7 +713,8 @@ namespace Alternet.UI
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
                                 e.Location,
-                                out _);
+                                out _,
+                                e.DeviceType);
                             break;
                         case TouchAction.Cancelled:
                             break;

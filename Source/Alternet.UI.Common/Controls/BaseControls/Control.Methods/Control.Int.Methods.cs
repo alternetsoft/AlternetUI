@@ -200,13 +200,6 @@ namespace Alternet.UI
             return preferredSize;
         }
 
-        internal virtual void InvalidateCaret()
-        {
-            if (caretInfo is null || !caretInfo.Visible)
-                return;
-            RefreshRectsUnion(caretInfo.Region);
-        }
-
         /// <summary>
         /// Contains location and size calculated by the align method.
         /// </summary>

@@ -13,6 +13,20 @@ namespace Alternet.UI
     /// </summary>
     public class PlessCaretHandler : DisposableObject, ICaretHandler
     {
+        /// <summary>
+        /// Gets or sets svg image which is used as overlay image over the caret.
+        /// This is used for example when editor is in the
+        /// selection state on the mobile platform. If <c>null</c>,
+        /// <see cref="KnownSvgImages.ImgCircleFilled"/> is used.
+        /// </summary>
+        public static SvgImage? DefaultOverlayImage;
+
+        /// <summary>
+        /// Gets or sets color which is used to paint caret overlay image. If <c>null</c>,
+        /// caret color us used.
+        /// </summary>
+        public static LightDarkColor? DefaultOverlayColor;
+
         private static int blinkTime = 530;
         private static LightDarkColor? color;
 

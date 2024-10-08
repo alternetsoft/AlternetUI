@@ -87,11 +87,7 @@ namespace ControlsSample
 
         private void HideToolTipButton_Click(object? sender, EventArgs e)
         {
-            // RichToolTip.Show assigns RichToolTip.Default,
-            // so we can use this variable for hiding the tooltip.
-            var toolTip = RichToolTip.Default;
-            RichToolTip.Default = null;
-            toolTip?.Dispose();
+            RichToolTip.HideDefault();
         }
 
         public RichToolTipKind ToolTipKind { get; set; } = RichToolTipKind.None;

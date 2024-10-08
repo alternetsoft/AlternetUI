@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.636.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.637.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -88,7 +88,9 @@
     <Type Name="Alternet.Drawing.IBaseDrawable" />
     <Type Name="Alternet.Drawing.ImageDrawable" />
     <Type Name="Alternet.Drawing.InteriorDrawable">
+      <Event Name="ElementClick" />
       <Event Name="CornerClick" />
+      <Event Name="Scroll" />
     </Type>
     <Type Name="Alternet.Drawing.RectangleDrawable" />
     <Type Name="Alternet.Drawing.ScrollBarDrawable" />
@@ -315,6 +317,7 @@
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.CaretInfo" />
     <Type Name="Alternet.UI.ICaretHandler" />
     <Type Name="Alternet.UI.PlessCaretHandler">
       <Event Name="Disposed" />
@@ -417,7 +420,6 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.BaseCancelEventArgs" />
-    <Type Name="Alternet.UI.DragStartEventArgs" />
     <Type Name="Alternet.UI.LogMessageEventArgs" />
     <Type Name="Alternet.UI.UrlEventHandler" />
     <Type Name="Alternet.UI.UrlEventArgs" />
@@ -425,6 +427,9 @@
     <Type Name="Alternet.UI.DpiChangedEventHandler" />
     <Type Name="Alternet.UI.DpiChangedEventArgs" />
     <Type Name="Alternet.UI.DragEventArgs" />
+    <Type Name="Alternet.UI.DragStartEventArgs" />
+    <Type Name="Alternet.UI.QueryContinueDragEventHandler" />
+    <Type Name="Alternet.UI.QueryContinueDragEventArgs" />
     <Type Name="Alternet.UI.DrawItemEventArgs" />
     <Type Name="Alternet.UI.ElapsedEventHandler" />
     <Type Name="Alternet.UI.ElapsedEventArgs" />
@@ -443,8 +448,6 @@
     <Type Name="Alternet.UI.HelpEventArgs" />
     <Type Name="Alternet.UI.ObjectPropertyChangedEventArgs" />
     <Type Name="Alternet.UI.PaintEventArgs" />
-    <Type Name="Alternet.UI.QueryContinueDragEventHandler" />
-    <Type Name="Alternet.UI.QueryContinueDragEventArgs" />
     <Type Name="Alternet.UI.QueryEncodingEventArgs" />
     <Type Name="Alternet.UI.ScrollEventHandler" />
     <Type Name="Alternet.UI.ScrollEventArgs" />
@@ -487,6 +490,7 @@
     <Type Name="Alternet.UI.MessageBox" />
     <Type Name="Alternet.UI.MessageBoxInfo" />
     <Type Name="Alternet.UI.IMouseHandler" />
+    <Type Name="Alternet.UI.LongTapEventArgs" />
     <Type Name="Alternet.UI.Mouse" />
     <Type Name="Alternet.UI.MouseEventHandler" />
     <Type Name="Alternet.UI.MouseEventArgs" />
@@ -587,6 +591,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -654,6 +659,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -745,6 +751,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -811,6 +818,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -877,6 +885,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -943,6 +952,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1009,6 +1019,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1076,6 +1087,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1142,6 +1154,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1208,6 +1221,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1366,6 +1380,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1432,6 +1447,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1498,6 +1514,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1565,6 +1582,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1635,6 +1653,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1702,6 +1721,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1768,6 +1788,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1834,6 +1855,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1900,6 +1922,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -1966,6 +1989,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2032,6 +2056,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2098,6 +2123,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2164,6 +2190,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2230,6 +2257,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2296,6 +2324,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2362,6 +2391,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2429,6 +2459,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2496,6 +2527,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2563,6 +2595,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2629,6 +2662,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2695,6 +2729,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2761,6 +2796,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2827,6 +2863,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2893,6 +2930,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -2959,6 +2997,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3025,6 +3064,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3096,6 +3136,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3162,6 +3203,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3229,6 +3271,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3317,6 +3360,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3383,6 +3427,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3451,6 +3496,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3517,6 +3563,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3585,6 +3632,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3652,6 +3700,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3722,6 +3771,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3801,6 +3851,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3867,6 +3918,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3933,6 +3985,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -3999,6 +4052,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4065,6 +4119,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4133,6 +4188,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4200,6 +4256,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4267,6 +4324,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4334,6 +4392,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4404,6 +4463,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4490,6 +4550,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4560,6 +4621,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4630,6 +4692,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4703,6 +4766,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4788,6 +4852,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4873,6 +4938,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -4945,6 +5011,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5016,6 +5083,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5086,6 +5154,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5157,6 +5226,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5227,6 +5297,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5300,6 +5371,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5385,6 +5457,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5455,6 +5528,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5525,6 +5599,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5610,6 +5685,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5685,6 +5761,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5759,6 +5836,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5827,6 +5905,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5896,6 +5975,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -5962,6 +6042,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6036,6 +6117,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6122,6 +6204,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6192,6 +6275,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6259,6 +6343,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6332,6 +6417,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6412,6 +6498,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6478,6 +6565,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6563,6 +6651,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6648,6 +6737,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6733,6 +6823,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6800,6 +6891,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6866,6 +6958,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6932,6 +7025,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -6998,6 +7092,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7064,6 +7159,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7130,6 +7226,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7221,6 +7318,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7302,6 +7400,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7393,6 +7492,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7463,6 +7563,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7532,6 +7633,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7600,6 +7702,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7672,6 +7775,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7742,6 +7846,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7817,6 +7922,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7883,6 +7989,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -7952,6 +8059,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8018,6 +8126,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8085,6 +8194,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8163,6 +8273,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8232,6 +8343,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8298,6 +8410,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8365,6 +8478,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8440,6 +8554,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8514,6 +8629,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8588,6 +8704,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8654,6 +8771,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8720,6 +8838,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8806,6 +8925,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8884,6 +9004,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -8981,6 +9102,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9057,6 +9179,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9144,6 +9267,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9229,6 +9353,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9314,6 +9439,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9400,6 +9526,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9488,6 +9615,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9606,6 +9734,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9949,6 +10078,7 @@
       <Event Name="VisualStateChanged" />
       <Event Name="ToolTipChanged" />
       <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
       <Event Name="Click" />
       <Event Name="ParentChanged" />
       <Event Name="Paint" />
@@ -9987,6 +10117,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.BaseObject+GenericStaticOptions" />
     <Type Name="Alternet.UI.UixmlLoader+Flags" />
     <Type Name="Alternet.UI.KnownShortcuts+FindReplaceControlKeys" />
     <Type Name="Alternet.UI.KnownShortcuts+RichEditKeys" />
