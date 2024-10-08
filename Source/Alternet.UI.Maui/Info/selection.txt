@@ -1,0 +1,6 @@
+Selection on ios:
+
+To select text, do any of the following:
+Select a word: Double-tap with one finger.
+Select a paragraph: Triple-tap with one finger.
+Select a block of text: Double-tap and hold the first word in the block, then move the grab points to select text.
