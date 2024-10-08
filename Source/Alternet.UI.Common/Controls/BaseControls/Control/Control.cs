@@ -450,6 +450,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets internally painted caret information. This is used on some platforms
+        /// where native caret is not available.
+        /// </summary>
+        [Browsable(false)]
+        public virtual CaretInfo? CaretInfo
+        {
+            get => caretInfo;
+
+            set
+            {
+                if (caretInfo == value)
+                    return;
+                caretInfo = value;
+                InvalidateCaret();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the cursor that the control should normally display.
         /// </summary>
         /// <remarks>

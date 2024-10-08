@@ -376,8 +376,7 @@ namespace Alternet.UI
             if (!caretInfo.Visible)
                 return;
 
-            var caretColor = PlessCaretHandler.CaretColor.Get(IsDarkBackground);
-            e.Graphics.FillRectangle(caretColor.AsBrush, PixelToDip(caretInfo.Rect));
+            caretInfo.Paint(this, e);
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 using Alternet.Editor;
+using Alternet.Drawing;
 
 namespace EditorMAUI;
 
@@ -83,6 +84,13 @@ public partial class MainPage : ContentPage
     private void Editor_LongTap(object? sender, Alternet.UI.LongTapEventArgs e)
     {
         LogToEntry("LongTap", e, true);
+        var caret = editor.Editor.CaretInfo;
+        if(caret is not null)
+        {
+            caret.OverlayColor = LightDarkColors.Blue;
+            caret.TopAndBottomOverlayVisible = true;
+            editor.Editor.InvalidateCaret();
+        }
     }
 
     private void Interior_Scroll(object? sender, Alternet.UI.ScrollEventArgs e)

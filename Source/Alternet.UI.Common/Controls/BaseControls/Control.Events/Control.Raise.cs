@@ -272,7 +272,7 @@ namespace Alternet.UI
 
             if (CaretInfo is not null)
             {
-                CaretInfo.ControlFocused = true;
+                CaretInfo.ContainerFocused = true;
                 InvalidateCaret();
             }
 
@@ -305,7 +305,7 @@ namespace Alternet.UI
 
             if (CaretInfo is not null)
             {
-                CaretInfo.ControlFocused = false;
+                CaretInfo.ContainerFocused = false;
                 Invalidate();
             }
 
