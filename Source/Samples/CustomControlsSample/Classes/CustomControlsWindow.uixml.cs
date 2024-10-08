@@ -81,6 +81,15 @@ namespace CustomControlsSample
             this.SetSizeToContent();
             Slider_ValueChanged(null, EventArgs.Empty);
             knobControl.ValueChanged += Slider_ValueChanged;
+
+            // Logs LongTap event.
+            knobControl.CanLongTap = true;
+            knobControl.LongTap += TicTacToe_LongTap;
+        }
+
+        private void TicTacToe_LongTap(object sender, LongTapEventArgs e)
+        {
+            App.Log("Fancy slider: LongTap");
         }
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
