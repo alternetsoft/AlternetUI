@@ -311,10 +311,46 @@ namespace Alternet.Drawing
         public readonly Coord MaxWidthHeight => Math.Max(width, height);
 
         /// <summary>
-        /// Gets the center point of this <see cref="RectD"/>.
+        /// Gets or sets the center point of this <see cref="RectD"/>.
         /// </summary>
         [Browsable(false)]
-        public readonly PointD Center => Location + (Size / 2);
+        public PointD Center
+        {
+            readonly get
+            {
+                return Location + (Size / 2);
+            }
+
+            set
+            {
+                x = value.X - (width / 2);
+                y = value.Y - (height / 2);
+            }
+        }
+
+        /// <summary>
+        /// Gets center point on the top border of the rectangle.
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointD TopLineCenter
+        {
+            get
+            {
+                return (x + (width / 2), y);
+            }
+        }
+
+        /// <summary>
+        /// Gets center point on the bottom border of the rectangle.
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointD BottomLineCenter
+        {
+            get
+            {
+                return (x + (width / 2), Bottom);
+            }
+        }
 
         /// <summary>
         /// Converts the specified <see cref="RectD"/> to a

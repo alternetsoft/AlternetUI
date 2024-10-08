@@ -27,6 +27,7 @@ namespace Alternet.Drawing
         /// Represents a <see cref="RectI"/> structure with its properties left uninitialized.
         /// </summary>
         public static readonly RectI Empty;
+
 #pragma warning disable
         [FieldOffset(0)] private int x;
         [FieldOffset(4)] private int y;
@@ -89,6 +90,30 @@ namespace Alternet.Drawing
             set
             {
                 size = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets center point on the top border of the rectangle.
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointI TopLineCenter
+        {
+            get
+            {
+                return (x + (width / 2), y);
+            }
+        }
+
+        /// <summary>
+        /// Gets center point on the bottom border of the rectangle.
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointI BottomLineCenter
+        {
+            get
+            {
+                return (x + (width / 2), Bottom);
             }
         }
 
@@ -229,6 +254,24 @@ namespace Alternet.Drawing
         /// </summary>
         [Browsable(false)]
         public readonly bool SizeIsEmpty => (width <= 0) || (height <= 0);
+
+        /// <summary>
+        /// Gets or sets the center point of this <see cref="RectI"/>.
+        /// </summary>
+        [Browsable(false)]
+        public PointI Center
+        {
+            readonly get
+            {
+                return Location + (Size / 2);
+            }
+
+            set
+            {
+                x = value.X - (width / 2);
+                y = value.Y - (height / 2);
+            }
+        }
 
         /// <summary>
         /// Implicit operator convertion from tuple with four <see cref="int"/> values
