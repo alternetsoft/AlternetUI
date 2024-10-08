@@ -1,3 +1,21 @@
+# 0.9.637 (2024 October 8)
+
+- Control.CaretInfo. Allows to customize internally painted caret.
+- Control.LongTap event and related methods.
+- MAUI: Fixed scrollbar movement on Android.
+- MAUI: Fixed scrollbar touch events handling.
+- MAUI: pan and double tap gestures support in ControlView.
+- Timer.TickAction property.
+- Control: VisualStatesOverride, VisualStates.
+- Control: RaiseScroll overload, RaiseScrollPageDown, RaiseScrollPageUp, RaiseScrollPageLeft, RaiseScrollPageRight.
+- BaseObject: StaticOptions, UseNamesInToString.
+- InteriorDrawable: ElementClick, Scroll events.
+- InteriorNotification.SendScrollToControl.
+- MAUI: RequireSwipeGesture, OnSwipeRight, OnSwipeLeft, OnSwipeUp, OnSwipeDown, OnSwipeGesture in ControlView.
+- DateUtils: Ticks to/from milliseconds.
+- KnownSvgImages: ImgCircleFilled, ImgDiamondFilled.
+- RectD, RectI: TopLineCenter, BottomLineCenter, set method for Center property.
+
 # 0.9.636 (2024 October 4)
 
 - MenuItem: Opened, Closed, Highlighted events.
