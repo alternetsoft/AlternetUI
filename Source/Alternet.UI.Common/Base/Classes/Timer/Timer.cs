@@ -94,6 +94,11 @@ namespace Alternet.UI
         public event ElapsedEventHandler? Elapsed;
 
         /// <summary>
+        /// Gets or sets action which is called when timer interval has elapsed.
+        /// </summary>
+        public Action? TickAction { get; set; }
+
+        /// <summary>
         /// Gets native timer.
         /// </summary>
         public virtual ITimerHandler Handler
@@ -260,6 +265,7 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void OnTick(EventArgs e)
         {
+            TickAction?.Invoke();
             Elapsed?.Invoke(this, new());
             Tick?.Invoke(this, e);
         }
