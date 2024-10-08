@@ -137,6 +137,16 @@ namespace Alternet.UI
             GetImageUrl("alternet-circle-exclamation");
 
         /// <summary>
+        /// Gets or sets url used to load "Circle Filled" svg image.
+        /// </summary>
+        public static string UrlImageCircleFilled { get; set; } = GetImageUrl("alternet-circle-filled");
+
+        /// <summary>
+        /// Gets or sets url used to load "Diamond Filled" svg image.
+        /// </summary>
+        public static string UrlImageDiamondFilled { get; set; } = GetImageUrl("alternet-diamond-filled");
+
+        /// <summary>
         /// Gets or sets url used to load "plus" svg image used in "Add" toolbar buttons.
         /// </summary>
         public static string UrlImagePlus { get; set; } = GetImageUrl("alternet-plus");
