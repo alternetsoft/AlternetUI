@@ -1082,6 +1082,8 @@ namespace Alternet.UI
             if (IsDisposed)
                 return;
 
+            RichToolTip.HideDefault();
+
             Visible = false;
 
             base.Dispose(disposing);
