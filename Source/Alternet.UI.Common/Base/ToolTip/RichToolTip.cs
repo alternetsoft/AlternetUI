@@ -136,6 +136,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides tooltip assigned to the <see cref="Default"/> property.
+        /// </summary>
+        public static void HideDefault()
+        {
+            try
+            {
+                var toolTip = RichToolTip.Default;
+                RichToolTip.Default = null;
+                toolTip?.Dispose();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Shows tooltip on the screen.
         /// </summary>
         /// <param name="title">Tooltip title.</param>
