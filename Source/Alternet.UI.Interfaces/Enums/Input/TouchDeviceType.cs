@@ -25,5 +25,20 @@ namespace Alternet.UI
         /// A pen on the screen was being used when the event was raised.
         /// </summary>
         Pen,
+
+        /// <summary>
+        /// Touchpad device was being used when the event was raised.
+        /// </summary>
+        Touchpad,
+
+        /// <summary>
+        /// Other device was being used when the event was raised.
+        /// </summary>
+        Other,
+
+        /// <summary>
+        /// Unkonown device was being used when the event was raised.
+        /// </summary>
+        Unknown,
     }
 }

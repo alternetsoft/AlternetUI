@@ -66,7 +66,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets current target control for the event. Same as <see cref="CurrentTarget"/>.
+        /// Gets or sets device type which raised the event.
+        /// </summary>
+        public TouchDeviceType DeviceType { get; set; } = TouchDeviceType.Mouse;
+
+        /// <summary>
+        /// Gets or sets current target control for the event. Same as <see cref="CurrentTarget"/>.
         /// </summary>
         public object Source
         {
@@ -75,7 +80,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets current target control for the event. Same as <see cref="Source"/>.
+        /// Gets or sets current target control for the event. Same as <see cref="Source"/>.
         /// </summary>
         public object CurrentTarget
         {
@@ -84,7 +89,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets original target control for the event.
+        /// Gets or sets original target control for the event.
         /// </summary>
         public object OriginalTarget
         {
@@ -93,12 +98,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets timestamp of the event.
+        /// Gets or sets timestamp of the event.
         /// </summary>
         public long Timestamp { get; set; }
 
         /// <summary>
-        ///     Read-only access to the button being described.
+        /// Gets or sets changed button.
         /// </summary>
         public MouseButton ChangedButton
         {
@@ -187,12 +192,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a signed count of the number of detents the mouse wheel has rotated,
-        /// multiplied by the WHEEL_DELTA constant. A detent is one notch of the
-        /// mouse wheel.</summary>
+        /// Gets or sets a signed count of the number of detents the mouse wheel has rotated.</summary>
         /// <returns>
-        /// A signed count of the number of detents the mouse wheel has rotated,
-        /// multiplied by the WHEEL_DELTA constant.
+        /// A signed count of the number of detents the mouse wheel has rotated.
         /// </returns>
         public int Delta
         {
@@ -256,11 +258,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the location of the mouse during the generating mouse event.
+        /// Gets or sets the location of the mouse during the generating mouse event.
         /// </summary>
         /// <returns>A <see cref="PointD" /> that contains mouse
         /// coordinates, in dips, relative to the upper-left corner of the control.</returns>
-        public PointD Location => location;
+        public PointD Location
+        {
+            get
+            {
+                return location;
+            }
+
+            set
+            {
+                location = value;
+            }
+        }
 
         /// <summary>
         /// Gets string representation of this object.

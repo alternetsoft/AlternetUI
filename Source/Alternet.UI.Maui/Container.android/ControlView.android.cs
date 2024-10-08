@@ -32,10 +32,11 @@ namespace Alternet.UI
             platformView.NotifyKeyUp = null;
             platformView.NotifyKeyLongPress = null;
             platformView.NotifyFocusChanged = null;
-            platformView.KeyPress -= HandleKeyPress;
-            platformView.UnhandledKeyEvent -= HandleUnhandledKeyEvent;
-            platformView.CapturedPointer -= HandleCapturedPointer;
-            platformView.GenericMotion -= HandleGenericMotion;
+            platformView.KeyPress -= HandleAndroidPlatformKeyPress;
+            platformView.UnhandledKeyEvent -= HandleAndroidPlatformUnhandledKeyEvent;
+            platformView.CapturedPointer -= HandleAndroidPlatformCapturedPointer;
+            platformView.GenericMotion -= HandleAndroidPlatformGenericMotion;
+            platformView.LongClick -= HandleAndroidPlatformLongClick;
         }
 
         /// <inheritdoc/>
@@ -47,18 +48,43 @@ namespace Alternet.UI
             if (platformView is null)
                 return;
 
-            platformView.NotifyKeyMultiple = HandleKeyMultiple;
-            platformView.NotifyKeyDown = HandleKeyDown;
-            platformView.NotifyKeyUp = HandleKeyUp;
-            platformView.NotifyKeyLongPress = HandleKeyLongPress;
-            platformView.NotifyFocusChanged = HandleFocusChanged;
-            platformView.KeyPress += HandleKeyPress;
-            platformView.UnhandledKeyEvent += HandleUnhandledKeyEvent;
-            platformView.CapturedPointer += HandleCapturedPointer;
-            platformView.GenericMotion += HandleGenericMotion;
+            platformView.NotifyKeyMultiple = HandleAndroidPlatformKeyMultiple;
+            platformView.NotifyKeyDown = HandleAndroidPlatformKeyDown;
+            platformView.NotifyKeyUp = HandleAndroidPlatformKeyUp;
+            platformView.NotifyKeyLongPress = HandleAndroidPlatformKeyLongPress;
+            platformView.NotifyFocusChanged = HandleAndroidPlatformFocusChanged;
+            platformView.KeyPress += HandleAndroidPlatformKeyPress;
+            platformView.UnhandledKeyEvent += HandleAndroidPlatformUnhandledKeyEvent;
+            platformView.CapturedPointer += HandleAndroidPlatformCapturedPointer;
+            platformView.GenericMotion += HandleAndroidPlatformGenericMotion;
+            platformView.LongClick += HandleAndroidPlatformLongClick;
         }
 
-        protected virtual void HandleGenericMotion(
+        protected virtual void HandleAndroidPlatformLongClick(
+            object? sender,
+            Android.Views.View.LongClickEventArgs e)
+        {
+            /*
+
+            Long tap events are not called from here as they are handlerd by PlessMouse.StartLongTapTimer.
+
+            if (Control is null)
+                return;
+
+            var position = PlessMouse.LastMousePosition;
+            if (position.Control != Control || position.Position is null)
+                return;
+
+            LongTapEventArgs args = new(
+                TouchAction.Released,
+                TouchDeviceType.Touch,
+                position.Position.Value);
+
+            RaiseLongTap(args);
+            */
+        }
+
+        protected virtual void HandleAndroidPlatformGenericMotion(
             object? sender,
             Android.Views.View.GenericMotionEventArgs e)
         {
@@ -111,25 +137,25 @@ namespace Alternet.UI
             }
         }
 
-        protected virtual void HandleCapturedPointer(
+        protected virtual void HandleAndroidPlatformCapturedPointer(
             object? sender,
             Android.Views.View.CapturedPointerEventArgs e)
         {
         }
 
-        protected virtual void HandleUnhandledKeyEvent(
+        protected virtual void HandleAndroidPlatformUnhandledKeyEvent(
             object? sender,
             Android.Views.View.UnhandledKeyEventEventArgs e)
         {
             e.Handled = false;
         }
 
-        protected virtual void HandleKeyPress(object? sender, Android.Views.View.KeyEventArgs e)
+        protected virtual void HandleAndroidPlatformKeyPress(object? sender, Android.Views.View.KeyEventArgs e)
         {
             e.Handled = false;
         }
 
-        protected virtual void HandleFocusChanged(PlatformView sender, bool gainFocus)
+        protected virtual void HandleAndroidPlatformFocusChanged(PlatformView sender, bool gainFocus)
         {
             if (gainFocus)
                 Control?.RaiseGotFocus();
@@ -144,7 +170,7 @@ namespace Alternet.UI
         /// <param name="keyCode">Key code.</param>
         /// <param name="e">Event parameters.</param>
         /// <returns></returns>
-        protected virtual bool HandleKeyLongPress(
+        protected virtual bool HandleAndroidPlatformKeyLongPress(
             PlatformView sender,
             Keycode keyCode,
             KeyEvent? e)
@@ -159,7 +185,7 @@ namespace Alternet.UI
         /// <param name="keyCode">Key code.</param>
         /// <param name="e">Event parameters.</param>
         /// <returns></returns>
-        protected virtual bool HandleKeyUp(
+        protected virtual bool HandleAndroidPlatformKeyUp(
             PlatformView sender,
             Keycode keyCode,
             KeyEvent? e)
@@ -174,7 +200,7 @@ namespace Alternet.UI
         /// <param name="keyCode">Key code.</param>
         /// <param name="e">Event parameters.</param>
         /// <returns></returns>
-        protected virtual bool HandleKeyDown(
+        protected virtual bool HandleAndroidPlatformKeyDown(
             PlatformView sender,
             Keycode keyCode,
             KeyEvent? e)
@@ -190,7 +216,7 @@ namespace Alternet.UI
         /// <param name="repeatCount">Key repeat count.</param>
         /// <param name="e">Event parameters.</param>
         /// <returns></returns>
-        protected virtual bool HandleKeyMultiple(
+        protected virtual bool HandleAndroidPlatformKeyMultiple(
             PlatformView sender,
             Keycode keyCode,
             int repeatCount,

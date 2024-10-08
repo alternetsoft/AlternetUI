@@ -687,7 +687,8 @@ namespace Alternet.UI
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
                                 e.Location,
-                                out _);
+                                out _,
+                                e.DeviceType);
                             break;
                         case TouchAction.Moved:
                             Control.BubbleMouseMove(
@@ -702,7 +703,8 @@ namespace Alternet.UI
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
                                 e.Location,
-                                out _);
+                                out _,
+                                e.DeviceType);
                             break;
                         case TouchAction.Cancelled:
                             break;

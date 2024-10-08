@@ -75,13 +75,26 @@ public partial class MainPage : ContentPage
 
         editor.Interior.CornerClick += Interior_CornerClick;
         editor.Interior.Scroll += Interior_Scroll;
+        editor.Editor.LongTap += Editor_LongTap;
+
+        editor.Editor.CanLongTap = true;
+    }
+
+    private void Editor_LongTap(object? sender, Alternet.UI.LongTapEventArgs e)
+    {
+        LogToEntry("LongTap", e, true);
     }
 
     private void Interior_Scroll(object? sender, Alternet.UI.ScrollEventArgs e)
     {
-        Alternet.UI.DebugUtils.DebugCallIf(false, () =>
+        LogToEntry("Scroll", e, false);
+    }
+
+    private void LogToEntry(string prefix, object obj, bool condition)
+    {
+        Alternet.UI.DebugUtils.DebugCallIf(condition, () =>
         {
-            entry1.Text = $"{Alternet.UI.LogUtils.GenNewId()} {e}";
+            entry1.Text = $"({Alternet.UI.LogUtils.GenNewId()}){prefix}: {obj}";
         });
     }
 

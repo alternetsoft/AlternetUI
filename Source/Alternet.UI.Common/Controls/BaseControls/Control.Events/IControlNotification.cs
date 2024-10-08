@@ -12,6 +12,11 @@ namespace Alternet.UI
     public interface IControlNotification : IDisposable
     {
         /// <summary>
+        /// Called after the <see cref="Control.LongTap" /> event is raised.
+        /// </summary>
+        void AfterLongTap(Control sender, LongTapEventArgs e);
+
+        /// <summary>
         /// Called after the <see cref="Control.SetScrollBarInfo(bool, ScrollBarInfo)" />
         /// method is called.
         /// </summary>

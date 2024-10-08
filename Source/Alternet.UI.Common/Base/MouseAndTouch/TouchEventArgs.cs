@@ -155,7 +155,33 @@ namespace Alternet.UI
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{{ActionType={ActionType}, DeviceType={DeviceType}, Handled={Handled}, Id={Id}, InContact={InContact}, Location={Location}, MouseButton={MouseButton}, WheelDelta={WheelDelta}, Pressure={Pressure}}}";
+            string[] names =
+            {
+                nameof(ActionType),
+                nameof(DeviceType),
+                nameof(Location),
+                nameof(Handled),
+                nameof(MouseButton),
+                nameof(WheelDelta),
+                nameof(InContact),
+                nameof(Pressure),
+                nameof(Id),
+            };
+
+            object[] values =
+            {
+                ActionType,
+                DeviceType,
+                Location,
+                Handled,
+                MouseButton,
+                WheelDelta,
+                InContact,
+                Pressure,
+                Id,
+            };
+
+            return StringUtils.ToStringWithOrWithoutNames(names, values);
         }
     }
 }

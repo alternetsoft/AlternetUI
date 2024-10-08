@@ -79,7 +79,7 @@ namespace Alternet.UI
             if (dragEventArgs is not null)
             {
                 var mousePos = Mouse.GetPosition(this);
-                var args = new DragStartEventArgs(dragEventMousePos, mousePos, dragEventArgs, e);
+                var args = new DragStartEventArgs(lastMouseDownPos, mousePos, dragEventArgs, e);
                 RaiseDragStart(args);
                 if (args.DragStarted || args.Cancel)
                     dragEventArgs = null;
@@ -140,6 +140,7 @@ namespace Alternet.UI
             var nn2 = GlobalNotifications;
 
             HoveredControl = this;
+            PlessMouse.CancelLongTapTimer();
 
             MouseUp?.Invoke(this, e);
             dragEventArgs = null;
@@ -225,8 +226,10 @@ namespace Alternet.UI
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
+                PlessMouse.StartLongTapTimer(this);
+
                 dragEventArgs = e;
-                dragEventMousePos = Mouse.GetPosition(this);
+                lastMouseDownPos = Mouse.GetPosition(this);
             }
 
             MouseDown?.Invoke(this, e);
@@ -560,6 +563,7 @@ namespace Alternet.UI
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
+            PlessMouse.CancelLongTapTimer();
             IsMouseOver = true;
             HoveredControl = this;
             RaiseIsMouseOverChanged();
@@ -633,6 +637,7 @@ namespace Alternet.UI
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
+            PlessMouse.CancelLongTapTimer();
             IsMouseOver = false;
             if (HoveredControl == this)
                 HoveredControl = null;
@@ -1185,6 +1190,37 @@ namespace Alternet.UI
         {
             var currentTarget = UI.Control.GetMouseTargetControl(this);
             currentTarget?.RaiseMouseLeave();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="LongTap"/> event and calls
+        /// <see cref="OnLongTap"/> method.
+        /// </summary>
+        public void RaiseLongTap(LongTapEventArgs e)
+        {
+            OnLongTap(e);
+            LongTap?.Invoke(this, e);
+            RaiseNotifications((n) => n.AfterLongTap(this, e));
+        }
+
+        /// <summary>
+        /// Calls the specified action for all the registered notifications.
+        /// </summary>
+        /// <param name="action">Action to call.</param>
+        public virtual void RaiseNotifications(Action<IControlNotification> action)
+        {
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
+
+            foreach (var n in nn)
+            {
+                action(n);
+            }
+
+            foreach (var n in nn2)
+            {
+                action(n);
+            }
         }
     }
 }

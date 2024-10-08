@@ -64,7 +64,7 @@ namespace Alternet.UI
         private IFlagsAndAttributes? flagsAndAttributes;
         private IIntFlagsAndAttributes? intFlagsAndAttributes;
         private MouseEventArgs? dragEventArgs;
-        private PointD dragEventMousePos;
+        private PointD lastMouseDownPos;
         private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
@@ -255,6 +255,18 @@ namespace Alternet.UI
             get;
             protected set;
         }
+
+        /// <summary>
+        /// Gets mouse position when mouse down event was received.
+        /// </summary>
+        [Browsable(false)]
+        public PointD LastMouseDownPos => lastMouseDownPos;
+
+        /// <summary>
+        /// Gets or sets whether <see cref="LongTap"/> event is raised.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanLongTap { get; set; }
 
         /// <summary>
         /// Gets or sets border for all visual states of the control.

@@ -12,9 +12,24 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Bubbles long tap event with the specified argument.
+        /// </summary>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
+        /// <param name="e"></param>
+        public static void BubbleLongTap(
+            Control? originalTarget,
+            LongTapEventArgs e)
+        {
+            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            if (currentTarget == null)
+                return;
+            currentTarget.RaiseLongTap(e);
+        }
+
+        /// <summary>
         /// Bubbles mouse move event with the specified parameters.
         /// </summary>
-        /// <param name="originalTarget">Control on which mouse event is originally fired.</param>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
         /// <param name="timestamp">Event time.</param>
         /// <param name="position">Mouse position.</param>
         /// <param name="handled">Result of the event procesing.</param>
@@ -42,7 +57,7 @@ namespace Alternet.UI
         /// <summary>
         /// Bubbles mouse wheel event with the specified parameters.
         /// </summary>
-        /// <param name="originalTarget">Control on which mouse event is originally fired.</param>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
         /// <param name="timestamp">Event time.</param>
         /// <param name="delta">Mouse wheel delta value.</param>
         /// <param name="position">Mouse position.</param>
@@ -79,17 +94,19 @@ namespace Alternet.UI
         /// <summary>
         /// Bubbles mouse down event with the specified parameters.
         /// </summary>
-        /// <param name="originalTarget">Control on which mouse event is originally fired.</param>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
         /// <param name="timestamp">Event time.</param>
         /// <param name="changedButton">Pressed button.</param>
         /// <param name="position">Mouse position.</param>
+        /// <param name="deviceType">Device which raised the event.</param>
         /// <param name="handled">Result of the event procesing.</param>
         public static void BubbleMouseDown(
             Control? originalTarget,
             long timestamp,
             MouseButton changedButton,
             PointD? position,
-            out bool handled)
+            out bool handled,
+            TouchDeviceType deviceType = TouchDeviceType.Mouse)
         {
             PlessMouse.SetButtonPressed(changedButton);
 
@@ -106,6 +123,7 @@ namespace Alternet.UI
                 changedButton,
                 timestamp,
                 position.Value);
+            eventArgs.DeviceType = deviceType;
 
             currentTarget.RaiseMouseDown(eventArgs);
         }
@@ -113,7 +131,7 @@ namespace Alternet.UI
         /// <summary>
         /// Bubbles mouse double-click event with the specified parameters.
         /// </summary>
-        /// <param name="originalTarget">Control on which mouse event is originally fired.</param>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
         /// <param name="timestamp">Event time.</param>
         /// <param name="changedButton">Pressed button.</param>
         /// <param name="position">Mouse position.</param>
@@ -145,9 +163,10 @@ namespace Alternet.UI
         /// <summary>
         /// Bubbles mouse up event with the specified parameters.
         /// </summary>
-        /// <param name="originalTarget">Control on which mouse event is originally fired.</param>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
         /// <param name="timestamp">Event time.</param>
         /// <param name="changedButton">Pressed button.</param>
+        /// <param name="deviceType">Device which raised the event.</param>
         /// <param name="position">Mouse position.</param>
         /// <param name="handled">Result of the event procesing.</param>
         public static void BubbleMouseUp(
@@ -155,7 +174,8 @@ namespace Alternet.UI
             long timestamp,
             MouseButton changedButton,
             PointD? position,
-            out bool handled)
+            out bool handled,
+            TouchDeviceType deviceType = TouchDeviceType.Mouse)
         {
             PlessMouse.SetButtonPressed(changedButton, false);
 
@@ -173,6 +193,8 @@ namespace Alternet.UI
                     changedButton,
                     timestamp,
                     position.Value);
+            eventArgs.DeviceType = deviceType;
+
             currentTarget.RaiseMouseUp(eventArgs);
         }
 

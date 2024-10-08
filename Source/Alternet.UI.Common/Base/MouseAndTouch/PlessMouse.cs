@@ -14,6 +14,15 @@ namespace Alternet.UI
     public static class PlessMouse
     {
         /// <summary>
+        /// Gets or sets long tap interval in milliseconds.
+        /// </summary>
+        /// <remarks>
+        /// Long tap event is raised, when time after mouse down event is
+        /// greater than this value.
+        /// </remarks>
+        public static int LongTapInterval = 1500;
+
+        /// <summary>
         /// Gets or sets whether to draw test mouse pointer inside the control.
         /// </summary>
         public static bool ShowTestMouseInControl = false;
@@ -31,6 +40,9 @@ namespace Alternet.UI
         private static readonly bool[] Buttons = new bool[(int)MouseButton.Unknown + 1];
 
         private static (PointD? Position, Control? Control) lastMousePosition;
+
+        private static Timer? longTapTimer;
+        private static WeakReference<Control>? longTapControl;
 
         /// <summary>
         /// Occurs when <see cref="LastMousePosition"/> property is changed.
@@ -102,6 +114,72 @@ namespace Alternet.UI
             {
                 dc.FillRectangle(TestMouseColor.AsBrush, GetTestMouseRect(control));
             }
+        }
+
+        /// <summary>
+        /// Stops long tap timer if it was started.
+        /// </summary>
+        public static void CancelLongTapTimer()
+        {
+            longTapTimer?.Stop();
+            longTapControl = null;
+        }
+
+        /// <summary>
+        /// Starts long tap timer.
+        /// </summary>
+        /// <param name="control">Control where tap event is started.</param>
+        public static void StartLongTapTimer(Control control)
+        {
+            if (!control.CanLongTap)
+                return;
+
+            if (longTapTimer is null)
+            {
+                longTapTimer = new();
+                longTapTimer.AutoReset = false;
+
+                longTapTimer.TickAction = () =>
+                {
+                    if (longTapControl is null)
+                        return;
+                    if (longTapControl.TryGetTarget(out var target))
+                    {
+                        longTapControl = null;
+
+                        if (LastMousePosition.Control != target || LastMousePosition.Position is null)
+                            return;
+
+                        var distanceIsLess = DrawingUtils.DistanceIsLess(
+                            target.LastMouseDownPos,
+                            LastMousePosition.Position.Value,
+                            DragStartEventArgs.MinDragStartDistance);
+
+                        if (!distanceIsLess)
+                            return;
+
+                        LongTapEventArgs e = new(TouchDeviceType.Unknown, LastMousePosition.Position.Value);
+                        if (target.IsDisposed)
+                            return;
+                        try
+                        {
+                            target.RaiseLongTap(e);
+                        }
+                        catch (Exception exception)
+                        {
+                            if (DebugUtils.IsDebugDefined)
+                                throw exception;
+                        }
+                    }
+
+                    longTapControl = null;
+                };
+            }
+
+            longTapTimer.Stop();
+            longTapTimer.Interval = LongTapInterval;
+            longTapControl = new(control);
+            longTapTimer.Start();
         }
 
         /// <summary>

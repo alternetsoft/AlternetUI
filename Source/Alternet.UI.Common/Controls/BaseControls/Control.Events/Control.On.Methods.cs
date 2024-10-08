@@ -14,7 +14,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public virtual void OnCellChanged(EventArgs e)
+        protected virtual void OnCellChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="LongTap" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnLongTap(LongTapEventArgs e)
         {
         }
 
