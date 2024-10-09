@@ -46,6 +46,11 @@ namespace ControlsSample
         {
         };
 
+        private readonly ControlTemplate controlTemplate = new()
+        {
+            Visible = false,
+        };
+
         private readonly InteriorDrawable interiorDrawable;
 
         static CustomDrawTestPage()
@@ -54,6 +59,8 @@ namespace ControlsSample
 
         public CustomDrawTestPage()
         {
+            controlTemplate.Parent = this;
+            controlTemplate.SetSizeToContent(WindowSizeToContentMode.WidthAndHeight);
             interiorDrawable = CreateInteriorDrawable(false);
 
             Size = (900, 700);
@@ -86,6 +93,7 @@ namespace ControlsSample
                     });
             }
 
+            panel.AddAction("Draw Control Template", DrawControlTemplate);
 
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
         }
@@ -163,6 +171,24 @@ namespace ControlsSample
             });
         }
 
+        public void DrawControlTemplate()
+        {
+            customDrawControl.SetPaintAction(DrawTemplate);
+
+            void DrawTemplate(Control container, Graphics canvas, RectD rect)
+            {
+                RectD clipRect = (0, 0, controlTemplate.Width, controlTemplate.Height);
+
+                PaintEventArgs e = new(canvas, clipRect);
+
+                TransformMatrix transform = new();
+                transform.Translate(100, 50);
+                e.Graphics.PushTransform(transform);
+                controlTemplate.RaisePaintRecursive(e);
+                e.Graphics.Pop();
+            }
+        }
+
         public void DrawNativeCheckbox()
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
@@ -211,6 +237,24 @@ namespace ControlsSample
         private void HorzScrollBar_ValueChanged(object? sender, EventArgs e)
         {
             DrawScrollBar(currentTheme);
+        }
+
+        internal class ControlTemplate : Control
+        {
+            public ControlTemplate()
+            {
+                Layout = LayoutStyle.Horizontal;
+                GenericLabel label1 = new("This text has ");
+                GenericLabel label2 = new("bold");
+                GenericLabel label3 = new(" fragment");
+                label2.IsBold = true;
+                DoInsideLayout(() =>
+                {
+                    label1.Parent = this;
+                    label2.Parent = this;
+                    label3.Parent = this;
+                });
+            }
         }
     }
 }
