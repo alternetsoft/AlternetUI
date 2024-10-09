@@ -10,29 +10,47 @@ namespace Alternet.UI
     /// <summary>
     /// Implements object unique id.
     /// </summary>
-    public readonly struct ObjectUniqueId : IEquatable<ObjectUniqueId>
+    public struct ObjectUniqueId : IEquatable<ObjectUniqueId>
     {
-        private readonly Guid guid;
+        private Guid guid;
+        private bool allocated;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectUniqueId"/> struct.
         /// </summary>
         public ObjectUniqueId()
         {
-            guid = Guid.NewGuid();
+        }
+
+        private Guid SafeGuid
+        {
+            get
+            {
+                if (!allocated)
+                {
+                    allocated = true;
+                    guid = Guid.NewGuid();
+                }
+
+                return guid;
+            }
         }
 
         /// <summary>
         /// Tests whether two <see cref='ObjectUniqueId'/> objects are not equal.
         /// </summary>
         public static bool operator !=(ObjectUniqueId left, ObjectUniqueId right)
-            => left.guid != right.guid;
+        {
+            return left.SafeGuid != right.SafeGuid;
+        }
 
         /// <summary>
         /// Tests whether two <see cref='ObjectUniqueId'/> objects are equal.
         /// </summary>
-        public static bool operator ==(ObjectUniqueId left, ObjectUniqueId right) =>
-            left.guid == right.guid;
+        public static bool operator ==(ObjectUniqueId left, ObjectUniqueId right)
+        {
+            return left.SafeGuid == right.SafeGuid;
+        }
 
         /// <summary>
         /// Indicates whether the current object is equal to another object.
@@ -57,7 +75,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return guid.GetHashCode();
+            return SafeGuid.GetHashCode();
         }
 
         /// <summary>
@@ -66,7 +84,7 @@ namespace Alternet.UI
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return $"A{guid:N}";
+            return $"A{SafeGuid:N}";
         }
     }
 }
