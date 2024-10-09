@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public partial class Control
@@ -736,13 +738,13 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePaint(PaintEventArgs e)
         {
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
-
             OnPaint(e);
             Paint?.Invoke(this, e);
             PaintCaret(e);
             PlessMouse.DrawTestMouseRect(this, e.Graphics);
+
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
 
             foreach (var n in nn)
             {
@@ -752,6 +754,41 @@ namespace Alternet.UI
             foreach (var n in nn2)
             {
                 n.AfterPaint(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Raises paint event for this control and for all its children.
+        /// This method is used for template painting. Childs are painted only if
+        /// they are descendants of the <see cref="UserControl"/>.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void RaisePaintRecursive(PaintEventArgs e)
+        {
+            RaisePaint(e);
+
+            if (!HasChildren)
+                return;
+
+            var myChildren = Children;
+            var dc = e.Graphics;
+            var clipRect = e.ClipRectangle;
+
+            foreach (var child in myChildren)
+            {
+                TransformMatrix transform = new();
+                transform.Translate(child.Left, child.Top);
+                dc.PushTransform(transform);
+                e.ClipRectangle = (0, 0, child.Width, child.Height);
+                try
+                {
+                    child.RaisePaintRecursive(e);
+                }
+                finally
+                {
+                    dc.Pop();
+                    e.ClipRectangle = clipRect;
+                }
             }
         }
 
