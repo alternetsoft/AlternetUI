@@ -117,7 +117,7 @@ namespace Alternet.UI
             {
                 if (SelectedItem is ListControlItem item)
                     return item.Value as Color;
-                return SelectedItem as Color;
+                return null;
             }
 
             set
@@ -148,11 +148,11 @@ namespace Alternet.UI
         /// <param name="defaultValue">Default value.</param>
         /// <returns></returns>
         public static Color GetItemValueOrDefault(
-            ListControl control,
+            IListControl control,
             int itemIndex,
             Color defaultValue)
         {
-            object? item = control.GetItem(itemIndex);
+            object? item = control.GetItemAsObject(itemIndex);
 
             if (item is ListControlItem item1)
                 item = item1.Value;

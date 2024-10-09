@@ -105,9 +105,9 @@ namespace ControlsSample
             MouseEventArgs e)
         {
             var result = listBox.HitTest(Mouse.GetPosition(listBox));
-            var item = (result == null ? "<none>" : listBox.GetItem(result.Value));
+            var item = (result == null ? "<none>" : listBox.GetItem(result.Value)?.ToString());
 
-            item ??= result;
+            item ??= result?.ToString();
 
             App.Log($"HitTest result: Item: '{item}'");
         }

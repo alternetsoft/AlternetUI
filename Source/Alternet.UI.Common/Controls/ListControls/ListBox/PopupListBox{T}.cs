@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="T">Type of the listbox control</typeparam>
     public partial class PopupListBox<T> : PopupWindow<T>
-        where T : ListBox, new()
+        where T : VirtualListBox, new()
     {
         private int? resultIndex;
 
@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// Gets selected item when popup window is closed.
         /// </summary>
         /// <remarks>
-        /// Use this property instead of <see cref="ListBox.SelectedItem"/> after popup is closed.
+        /// Use this property instead of <see cref="CustomListBox{T}.SelectedItem"/> after popup is closed.
         /// In cases when <see cref="PopupResult"/> is <see cref="ModalResult.Accepted"/>
         /// it contains selected item.
         /// </remarks>
@@ -69,10 +69,11 @@ namespace Alternet.UI
         /// Gets index of the selected item when popup window is closed.
         /// </summary>
         /// <remarks>
-        /// Use this property instead of <see cref="ListBox.SelectedIndex"/> after popup is closed.
+        /// Use this property instead of <see cref="CustomListBox{T}.SelectedIndex"/>
+        /// after popup is closed.
         /// In cases when <see cref="PopupResult"/> is <see cref="ModalResult.Accepted"/>
         /// it contains selected item index. This item index is more correct than
-        /// <see cref="ListBox.SelectedIndex"/>.
+        /// <see cref="CustomListBox{T}.SelectedIndex"/>.
         /// </remarks>
         [Browsable(false)]
         public int? ResultIndex

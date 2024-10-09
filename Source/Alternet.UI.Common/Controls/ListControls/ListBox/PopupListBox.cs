@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="ListBox"/> control.
     /// </summary>
-    public class PopupListBox : PopupListBox<ListBox>
+    public class PopupListBox : PopupListBox<VirtualListBox>
     {
     }
 }

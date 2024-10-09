@@ -86,12 +86,12 @@ namespace ControlsSample
                 sample.Init();
                 sample.RefreshRequested += OnRefreshRequested;
 
-                actionsListBox.Add(sample.Title,
+                actionsListBox.Add(new ListControlItem(sample.Title,
                 () =>
                 {
                     currentSample = sample;
                     Draw(sample.DrawSample);
-                });
+                }));
             }
 
             Idle += SkiaSharpExamplesWindow_Idle;

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="ListBox"/> descendant with advanced formatting for the items.
     /// Please use <see cref="ListControlItem"/> with this control.
     /// </summary>
-    public class VirtualListBox : ListBox
+    public class VirtualListBox : CustomListBox<ListControlItem>, IListControl
     {
         /// <summary>
         /// Gets or sets default minimal item height.
@@ -1267,6 +1267,11 @@ namespace Alternet.UI
             CheckedIndices = GetValidIndexes(indexes);
         }
 
+        void IListControl.Add(ListControlItem item)
+        {
+            Items.Add(item);
+        }
+
         /// <summary>
         /// Checks or clears the check state for the specified item.
         /// </summary>
@@ -1368,6 +1373,11 @@ namespace Alternet.UI
         {
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
+        }
+
+        object? IListControl.GetItemAsObject(int index)
+        {
+            return GetItem(index);
         }
 
         /// <summary>

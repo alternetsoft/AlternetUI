@@ -123,7 +123,7 @@ namespace ControlsSample
 
         private void FontListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            var s = fontListBox.SelectedItemAs<string?>() ?? Control.DefaultFont.Name;
+            var s = fontListBox.SelectedItem?.ToString() ?? Control.DefaultFont.Name;
 
             SkiaSampleControl.SampleFont = SkiaSampleControl.SampleFont.WithName(s);
             control.Font = SkiaSampleControl.SampleFont;

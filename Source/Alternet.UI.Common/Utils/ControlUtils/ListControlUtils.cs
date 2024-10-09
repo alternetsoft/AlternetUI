@@ -21,11 +21,13 @@ namespace Alternet.UI
         /// If its <c>null</c>, name of the default font is used.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
         public static void AddFontNames(
-            ListControl control,
+            IListControl control,
             bool select = true,
             string? defaultName = null)
         {
-            control.Items.AddRange(FontFamily.FamiliesNamesAscending);
+            var families = FontFamily.FamiliesNamesAscending;
+            foreach(var family in families)
+                control.Add(new ListControlItem(family));
             defaultName ??= Control.DefaultFont.Name;
             if (select)
             {
@@ -79,7 +81,7 @@ namespace Alternet.UI
         /// <param name="cats">Array of categories to add colors from. Optional. If not specified,
         /// standard and web colors will be added.</param>
         public static void AddColors(
-            ListControl control,
+            IListControl control,
             bool select = true,
             Color? defaultValue = null,
             KnownColorCategory[]? cats = null)
@@ -97,7 +99,7 @@ namespace Alternet.UI
             foreach (var item in colors)
             {
                 ListControlItem controlItem = new(item.NameLocalized, item);
-                control.Items.Add(controlItem);
+                control.Add(controlItem);
             }
 
             if (select && defaultValue is not null)

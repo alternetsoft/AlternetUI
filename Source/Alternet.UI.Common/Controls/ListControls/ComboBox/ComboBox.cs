@@ -48,7 +48,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ComboBox : ListControl
+    public partial class ComboBox : ListControl, IListControl
     {
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
@@ -599,6 +599,16 @@ namespace Alternet.UI
                     color.AsBrush,
                     (e.ClipRectangle.X + 2, e.ClipRectangle.Y));
             }
+        }
+
+        void IListControl.Add(ListControlItem item)
+        {
+            Items.Add(item);
+        }
+
+        object? IListControl.GetItemAsObject(int index)
+        {
+            return GetItem(index);
         }
 
         /// <summary>
