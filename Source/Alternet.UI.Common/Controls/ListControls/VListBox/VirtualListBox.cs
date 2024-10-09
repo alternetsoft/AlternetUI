@@ -8,8 +8,8 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="ListBox"/> descendant with advanced formatting for the items.
-    /// Please use <see cref="ListControlItem"/> with this control.
+    /// Advanced list box control with ability to customize item painting. Works fine with
+    /// large number of the items. You can add <see cref="ListControlItem"/> items to this control.
     /// </summary>
     public class VirtualListBox : CustomListBox<ListControlItem>, IListControl
     {
