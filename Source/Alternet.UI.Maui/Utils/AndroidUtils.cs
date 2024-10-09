@@ -1,11 +1,16 @@
 namespace Alternet.UI;
 
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Platform;
+
 using Alternet.Drawing;
 
 #if ANDROID
 using Android.Graphics;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
+using Android.Views;
 
 public static class AndroidUtils
 {
@@ -75,6 +80,11 @@ public static class AndroidUtils
             return contextWrapper.BaseContext?.GetActivity();
 
         return null;
+    }
+
+    public static void UpdateWindowSoftInputModeAdjust(Android.App.Activity? activity, SoftInput inputMode)
+    {
+        activity?.Window?.SetSoftInputMode(inputMode);
     }
 }
 

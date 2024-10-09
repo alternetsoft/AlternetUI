@@ -17,10 +17,32 @@ namespace Alternet.UI
     public static class MacUtils
     {
         /// <summary>
-        /// Notification name.
+        /// Notification name for "NSApplication.DidChangeScreenParametersNotification".
         /// </summary>
+        // https://developer.apple.com/documentation/appkit/nsapplication
         public const string NSApplicationDidChangeScreenParametersNotification
             = "NSApplicationDidChangeScreenParametersNotification";
+
+        /*
+        KeyboardAutoManagerScroll.cs in MAUI source - scroll when keyboard shows/hides
+
+        https://developer.apple.com/documentation/uikit/uiresponder
+
+        keyboardDidShowNotification
+        A notification that posts immediately after displaying the keyboard.
+
+        keyboardWillHideNotification
+        A notification that posts immediately prior to dismissing the keyboard.
+
+        keyboardDidHideNotification
+        A notification that posts immediately after dismissing the keyboard.
+
+        https://www.hackingwithswift.com/read/19/7/fixing-the-keyboard-notificationcenter
+        */
+
+        static MacUtils()
+        {
+        }
 
         /// <summary>
         /// Adds observer for the specified notification.

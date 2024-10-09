@@ -974,6 +974,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyUp(KeyEventArgs e)
         {
+            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: false);
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1076,6 +1078,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyDown(KeyEventArgs e)
         {
+            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
