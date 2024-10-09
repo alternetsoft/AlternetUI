@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,46 +12,65 @@ namespace Alternet.UI
     /// <summary>
     /// Implements object unique id.
     /// </summary>
-    public struct ObjectUniqueId : IEquatable<ObjectUniqueId>
+    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    public readonly struct ObjectUniqueId : IEquatable<ObjectUniqueId>
     {
-        private Guid guid;
-        private bool allocated;
+        private static ulong globalCounter;
+
+        [FieldOffset(0)]
+        private readonly State state;
+
+        [FieldOffset(1)]
+        private readonly Guid guid;
+
+        [FieldOffset(1)]
+        private readonly ulong id;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectUniqueId"/> struct.
         /// </summary>
         public ObjectUniqueId()
         {
+            if(globalCounter == long.MaxValue)
+            {
+                state = State.Guid;
+                guid = Guid.NewGuid();
+            }
+            else
+            {
+                state = State.Long;
+                id = globalCounter++;
+            }
         }
 
-        private Guid SafeGuid
+        private enum State : byte
         {
-            get
-            {
-                if (!allocated)
-                {
-                    allocated = true;
-                    guid = Guid.NewGuid();
-                }
+            Long,
 
-                return guid;
-            }
+            Guid,
         }
 
         /// <summary>
         /// Tests whether two <see cref='ObjectUniqueId'/> objects are not equal.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(ObjectUniqueId left, ObjectUniqueId right)
         {
-            return left.SafeGuid != right.SafeGuid;
+            return !(left == right);
         }
 
         /// <summary>
         /// Tests whether two <see cref='ObjectUniqueId'/> objects are equal.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ObjectUniqueId left, ObjectUniqueId right)
         {
-            return left.SafeGuid == right.SafeGuid;
+            if (left.state != right.state)
+                return false;
+
+            if(left.state == State.Guid)
+                return left.guid == right.guid;
+            return left.id == right.id;
         }
 
         /// <summary>
@@ -67,6 +88,7 @@ namespace Alternet.UI
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other; otherwise,
         /// <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(ObjectUniqueId other) => this == other;
 
         /// <summary>
@@ -75,7 +97,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return SafeGuid.GetHashCode();
+            if (state == State.Guid)
+                return guid.GetHashCode();
+            return id.GetHashCode();
         }
 
         /// <summary>
@@ -84,7 +108,9 @@ namespace Alternet.UI
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return $"A{SafeGuid:N}";
+            if(state == State.Guid)
+                return $"A{guid:N}";
+            return id.ToString();
         }
     }
 }
