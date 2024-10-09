@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// methods enable
     /// you to add a large number of items to the ListBox without the control
     /// being repainted each time an item is added to the list.
-    /// The <see cref="ListControl.Items"/>, <see cref="SelectedItems"/>, and
+    /// The <see cref="ListControl{T}.Items"/>, <see cref="SelectedItems"/>, and
     /// <see cref="SelectedIndices"/> properties provide access to the three
     /// collections that are used by the <see cref="ListBox"/>.
     /// </remarks>

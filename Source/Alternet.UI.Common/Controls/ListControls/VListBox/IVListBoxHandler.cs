@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="VirtualListBox.IsSelected(int)"/>
         bool IsSelected(int line);
 
-        /// <inheritdoc cref="VirtualListBox.IsVisible(int)"/>
+        /// <inheritdoc cref="VirtualListBox.IsItemVisible(int)"/>
         bool IsVisible(int line);
 
         /// <summary>

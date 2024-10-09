@@ -460,7 +460,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether <see cref="ListControl.SelectedItem"/> has bold font.
+        /// Gets or sets whether <see cref="ListControl{T}.SelectedItem"/> has bold font.
         /// </summary>
         public virtual bool SelectedItemIsBold
         {
@@ -764,7 +764,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <returns></returns>
-        public virtual bool IsVisible(int index)
+        public virtual bool IsItemVisible(int index)
         {
             return Handler.IsVisible(index);
         }
