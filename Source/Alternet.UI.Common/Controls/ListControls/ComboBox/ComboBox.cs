@@ -21,7 +21,7 @@ namespace Alternet.UI
     /// <para>
     /// To add or remove objects in the list at run time, use methods of the
     /// <see cref="Collection{Object}" /> class
-    /// (through the <see cref="ListControl.Items"/> property of the
+    /// (through the <see cref="ListControl{T}.Items"/> property of the
     /// <see cref="ComboBox" />).
     /// The list then displays the default string value for each object.
     /// You can add individual objects with the
@@ -48,7 +48,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ComboBox : ListControl
+    public partial class ComboBox : ListControl, IListControl
     {
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
@@ -170,7 +170,7 @@ namespace Alternet.UI
         /// Setting the <see cref="Text"/> property to an empty string ("")
         /// sets the <see cref="SelectedIndex"/> to <c>null</c>.
         /// Setting the <see cref="Text"/> property to a value that is in the
-        /// <see cref="ListControl.Items"/> collection sets the
+        /// <see cref="ListControl{T}.Items"/> collection sets the
         /// <see cref="SelectedIndex"/> to the index of that item.
         /// Setting the <see cref="Text"/> property to a value that is not in
         /// the collection leaves the <see cref="SelectedIndex"/> unchanged.
@@ -599,6 +599,16 @@ namespace Alternet.UI
                     color.AsBrush,
                     (e.ClipRectangle.X + 2, e.ClipRectangle.Y));
             }
+        }
+
+        void IListControl.Add(ListControlItem item)
+        {
+            Items.Add(item);
+        }
+
+        object? IListControl.GetItemAsObject(int index)
+        {
+            return GetItem(index);
         }
 
         /// <summary>

@@ -8,10 +8,10 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="ListBox"/> descendant with advanced formatting for the items.
-    /// Please use <see cref="ListControlItem"/> with this control.
+    /// Advanced list box control with ability to customize item painting. Works fine with
+    /// large number of the items. You can add <see cref="ListControlItem"/> items to this control.
     /// </summary>
-    public class VirtualListBox : ListBox
+    public class VirtualListBox : CustomListBox<ListControlItem>, IListControl
     {
         /// <summary>
         /// Gets or sets default minimal item height.
@@ -460,7 +460,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether <see cref="ListControl.SelectedItem"/> has bold font.
+        /// Gets or sets whether <see cref="ListControl{T}.SelectedItem"/> has bold font.
         /// </summary>
         public virtual bool SelectedItemIsBold
         {
@@ -764,7 +764,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <returns></returns>
-        public virtual bool IsVisible(int index)
+        public virtual bool IsItemVisible(int index)
         {
             return Handler.IsVisible(index);
         }
@@ -1267,6 +1267,11 @@ namespace Alternet.UI
             CheckedIndices = GetValidIndexes(indexes);
         }
 
+        void IListControl.Add(ListControlItem item)
+        {
+            Items.Add(item);
+        }
+
         /// <summary>
         /// Checks or clears the check state for the specified item.
         /// </summary>
@@ -1368,6 +1373,11 @@ namespace Alternet.UI
         {
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
+        }
+
+        object? IListControl.GetItemAsObject(int index)
+        {
+            return GetItem(index);
         }
 
         /// <summary>

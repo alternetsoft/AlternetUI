@@ -9,6 +9,31 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Raises the <see cref="PreviewKeyDown" /> event
+        /// and <see cref="OnPreviewKeyDown"/> method.
+        /// </summary>
+        public void RaisePreviewKeyDown(Key key, ModifierKeys modifiers, ref bool isInputKey)
+        {
+            if(PreviewKeyDown is not null)
+            {
+                PreviewKeyDownEventArgs e = new(this, key, modifiers);
+                PreviewKeyDown(this, e);
+                isInputKey = e.IsInputKey;
+            }
+
+            OnPreviewKeyDown(key, modifiers, ref isInputKey);
+
+            var b = isInputKey;
+
+            RaiseNotifications((n) =>
+            {
+                n.AfterPreviewKeyDown(this, key, modifiers, ref b);
+            });
+
+            isInputKey = b;
+        }
+
+        /// <summary>
         /// Raises the <see cref="CellChanged" /> event and <see cref="OnCellChanged"/> method.
         /// </summary>
         public void RaiseCellChanged()
@@ -974,6 +999,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyUp(KeyEventArgs e)
         {
+            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: false);
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1076,8 +1103,10 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyDown(KeyEventArgs e)
         {
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
+            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
+
+            bool isInputKey = false;
+            RaisePreviewKeyDown(e.Key, e.ModifierKeys, ref isInputKey);
 
             KeyDown?.Invoke(this, e);
             OnKeyDown(e);
@@ -1085,6 +1114,9 @@ namespace Alternet.UI
             if (!e.Handled)
                 KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
 #endif
+
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
 
             foreach (var n in nn)
             {
@@ -1094,6 +1126,12 @@ namespace Alternet.UI
             foreach (var n in nn2)
             {
                 n.AfterKeyDown(this, e);
+            }
+
+            if (isInputKey)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 

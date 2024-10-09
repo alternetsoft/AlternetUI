@@ -127,6 +127,33 @@ namespace ControlsSample
             tabStopCheckBox.CheckedChanged += Button_Changed;
             showTextCheckBox.CheckedChanged += Button_Changed;
             exactFitCheckBox.CheckedChanged += Button_Changed;
+
+            button.PreviewKeyDown += Button_PreviewKeyDown;
+            button.KeyDown += Button_KeyDown;
+        }
+
+        private void Button_KeyDown(object? sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Tab:
+                case Keys.Down:
+                case Keys.Up:
+                    App.Log("Up or Down or Tab is pressed");
+                    break;
+            }
+        }
+
+        private void Button_PreviewKeyDown(object? sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Tab:
+                case Keys.Down:
+                case Keys.Up:
+                    e.IsInputKey = true;
+                    break;
+            }
         }
 
         private void ImageMarginsButton_Click(object? sender, EventArgs e)

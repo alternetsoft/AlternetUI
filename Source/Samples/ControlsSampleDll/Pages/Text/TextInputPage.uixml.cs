@@ -11,6 +11,8 @@ namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
+        public static bool ConsumeTabKey = false;
+
         public static string MinLengthEditLabel = "Min Length";
         public static string MaxLengthEditLabel = "Max Length";
         public static string TextBoxEmptyTextHint = "Sample Hint";
@@ -67,6 +69,33 @@ namespace ControlsSample
             maxLengthEdit.TextBox.IsRequired = true;
 
             Idle += TextInputPage_Idle;
+
+            textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+            textBox.KeyDown += TextBox_KeyDown;
+        }
+
+        private void TextBox_KeyDown(object? sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Tab:
+                    App.Log("Tab pressed while TextBox is focused.");
+                    break;
+            }
+        }
+
+        private void TextBox_PreviewKeyDown(object? sender, PreviewKeyDownEventArgs e)
+        {
+            // if ConsumeTabKey = true, TAB key will not focus next control.
+            if (ConsumeTabKey)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Tab:
+                        e.IsInputKey = true;
+                        break;
+                }
+            }
         }
 
         private void TextBox_KeyPress(object? sender, KeyPressEventArgs e)

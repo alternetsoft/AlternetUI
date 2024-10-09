@@ -737,7 +737,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override KeyStates GetKeyStatesFromSystem(Key key)
         {
-            return KeyStates.None;
+            return PlessKeyboard.GetKeyStatesFromMemory(key);
         }
 
         /// <inheritdoc/>

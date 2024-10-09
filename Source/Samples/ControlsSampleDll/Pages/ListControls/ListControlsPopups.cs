@@ -130,7 +130,7 @@ namespace ControlsSample
 
         internal void LogPopupListBoxEvent(string eventName)
         {
-            var selectedItem = popupListBox.MainControl.SelectedItem ?? GenericStrings.NoneInsideLessGreater;
+            var selectedItem = popupListBox.MainControl.SelectedItem?.ToString() ?? GenericStrings.NoneInsideLessGreater;
             App.Log($"Popup: {eventName}. {GenericStrings.SelectedItem}: {selectedItem}");
         }
 
@@ -170,10 +170,14 @@ namespace ControlsSample
                 LogPopupListBoxEvent("Click");
         }
 
-        private void AddDefaultItems(ListControl control)
+        private void AddDefaultItems(VirtualListBox control)
         {
-            GenericStrings.AddTenRows(ActionUtils.ToAction<string>(control.Add));
-            control.Add(GenericStrings.ThisIsLongItemWhichOccupiesMoreSpaceThanOtherItems);
+            GenericStrings.AddTenRows((s) =>
+            {
+                control.Add(new ListControlItem(s));
+            });
+            control.Add(new ListControlItem(
+                GenericStrings.ThisIsLongItemWhichOccupiesMoreSpaceThanOtherItems));
         }
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)

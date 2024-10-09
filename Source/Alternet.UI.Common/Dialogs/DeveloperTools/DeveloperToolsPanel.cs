@@ -112,7 +112,7 @@ namespace Alternet.UI
 
                     void AddControl(Type type)
                     {
-                        typesListBox.Add(type.Name, type);
+                        ListControlItem item = new(type.Name, type);
                     }
 
                     AddControl(typeof(Control));

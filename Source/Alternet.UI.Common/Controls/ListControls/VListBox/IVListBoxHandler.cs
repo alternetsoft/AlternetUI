@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="VirtualListBox.IsSelected(int)"/>
         bool IsSelected(int line);
 
-        /// <inheritdoc cref="VirtualListBox.IsVisible(int)"/>
+        /// <inheritdoc cref="VirtualListBox.IsItemVisible(int)"/>
         bool IsVisible(int line);
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Alternet.UI
         void SetSelection(int selection);
 
         /// <summary>
-        /// Sets selected items bacckground color.
+        /// Sets selected items background color.
         /// </summary>
         /// <returns></returns>
         void SetSelectionBackground(Color color);

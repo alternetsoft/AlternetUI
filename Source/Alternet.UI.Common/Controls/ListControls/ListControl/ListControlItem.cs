@@ -9,9 +9,9 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Custom item for <see cref="ListBox"/>, <see cref="ComboBox"/> or other
-    /// <see cref="ListControl"/> descendants. This class has <see cref="Text"/>,
-    /// <see cref="Value"/> and other item properties.
+    /// Custom item for <see cref="ListBox"/>, <see cref="ComboBox"/> and other
+    /// list controls. This class has <see cref="Text"/>,
+    /// <see cref="Value"/> and other properties which allow to customize look of the item.
     /// </summary>
     public partial class ListControlItem : BaseControlItem
     {
@@ -248,7 +248,7 @@ namespace Alternet.UI
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
         /// <summary>
-        /// Gets or sets text which is displayed in the <see cref="ListControl"/>.
+        /// Gets or sets text which is displayed when item is painted.
         /// </summary>
         public virtual string Text { get; set; }
 

@@ -210,6 +210,13 @@ namespace Alternet.UI
         public event KeyPressEventHandler? KeyPress;
 
         /// <summary>
+        /// Occurs before the <see cref="Control.KeyDown" /> event when a key is pressed
+        /// while focus is on this control.
+        /// </summary>
+        [Category("Key")]
+        public event PreviewKeyDownEventHandler? PreviewKeyDown;
+
+        /// <summary>
         /// Occurs when the <see cref="VisualState"/> property value changes.
         /// </summary>
         [Category("Property Changed")]

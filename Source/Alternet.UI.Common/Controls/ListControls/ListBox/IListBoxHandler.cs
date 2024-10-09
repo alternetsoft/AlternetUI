@@ -13,13 +13,13 @@ namespace Alternet.UI
     /// </summary>
     public interface IListBoxHandler : IControlHandler
     {
-        /// <inheritdoc cref="ListBox.HasBorder"/>
+        /// <inheritdoc cref="CustomListBox{T}.HasBorder"/>
         bool HasBorder { get; set; }
 
-        /// <inheritdoc cref="ListBox.EnsureVisible"/>
+        /// <inheritdoc cref="CustomListBox{T}.EnsureVisible"/>
         void EnsureVisible(int itemIndex);
 
-        /// <inheritdoc cref="ListBox.HitTest"/>
+        /// <inheritdoc cref="CustomListBox{T}.HitTest"/>
         int? HitTest(PointD position);
     }
 }

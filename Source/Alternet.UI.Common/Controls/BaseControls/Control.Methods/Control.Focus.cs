@@ -28,6 +28,7 @@ namespace Alternet.UI
                     return;
                 focusedControl = value;
                 FocusedControlChanged?.Invoke(focusedControl, EventArgs.Empty);
+                PlessKeyboard.ResetKeysStatesInMemory();
             }
         }
 

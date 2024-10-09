@@ -311,5 +311,14 @@ namespace Alternet.UI
         public virtual void AfterVisualStateChanged(Control sender)
         {
         }
+
+        /// <inheritdoc/>
+        public virtual void AfterPreviewKeyDown(
+            Control sender,
+            Key key,
+            ModifierKeys modifiers,
+            ref bool isInputKey)
+        {
+        }
     }
 }

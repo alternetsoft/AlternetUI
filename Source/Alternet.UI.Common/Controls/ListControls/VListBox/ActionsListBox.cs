@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void AddActionSpacer()
         {
-            Add(string.Empty);
+            Add(new ListControlItem(string.Empty));
         }
 
         /// <summary>

@@ -280,10 +280,11 @@ namespace Alternet.UI
             EditPropertyWithListEditor(control, nameof(TreeView.Items));
 
         /// <summary>
-        /// Edits <see cref="ListControl.Items"/> with list editor.
+        /// Edits <see cref="ListControl{T}.Items"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
-        public static void EditItemsWithListEditor(ListControl control) =>
-            EditPropertyWithListEditor(control, nameof(ListControl.Items));
+        public static void EditItemsWithListEditor<T>(ListControl<T> control)
+            where T : class, new()
+            => EditPropertyWithListEditor(control, nameof(ListControl.Items));
     }
 }

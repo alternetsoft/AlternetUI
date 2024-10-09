@@ -15,13 +15,13 @@ namespace Alternet.UI
     /// The <see cref="CheckListBox"/> control enables you to display a list of
     /// items to the user that the user can check by clicking.
     /// A <see cref="CheckListBox"/> control can provide single or
-    /// multiple selections using the <see cref="ListBox.SelectionMode"/> property.
+    /// multiple selections using the <see cref="CustomListBox{T}.SelectionMode"/> property.
     /// The <see cref="Control.BeginUpdate"/> and <see cref="Control.EndUpdate"/>
     /// methods enable
     /// you to add a large number of items to the CheckListBox without the control
     /// being repainted each time an item is added to the list.
-    /// The <see cref="ListControl.Items"/>, <see cref="ListBox.SelectedItems"/>,
-    /// <see cref="ListBox.SelectedIndices"/>, and <see cref="CheckedIndices"/>
+    /// The <see cref="ListControl{T}.Items"/>, <see cref="CustomListBox{T}.SelectedItems"/>,
+    /// <see cref="CustomListBox{T}.SelectedIndices"/>, and <see cref="CheckedIndices"/>
     /// properties provide access to the
     /// collections that are used by the <see cref="CheckListBox"/>.
     /// </remarks>

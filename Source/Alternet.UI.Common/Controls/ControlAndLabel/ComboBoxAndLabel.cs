@@ -73,7 +73,7 @@ namespace Alternet.UI
             set => ComboBox.SelectedIndex = value;
         }
 
-        /// <inheritdoc cref="ListControl.Items"/>
+        /// <inheritdoc cref="ListControl{T}.Items"/>
         [Content]
         public virtual IListControlItems<object> Items
         {

@@ -19,6 +19,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the <see cref="Control.PreviewKeyDown" /> event is raised.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnPreviewKeyDown(Key key, ModifierKeys modifiers, ref bool isInputKey)
+        {
+        }
+
+        /// <summary>
         /// Called when the <see cref="LongTap" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
