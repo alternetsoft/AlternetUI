@@ -12,6 +12,11 @@ namespace Alternet.UI
     public interface IControlNotification : IDisposable
     {
         /// <summary>
+        /// Called after the <see cref="Control.PreviewKeyDown" /> event is raised.
+        /// </summary>
+        void AfterPreviewKeyDown(Control sender, PreviewKeyDownEventArgs e);
+
+        /// <summary>
         /// Called after the <see cref="Control.LongTap" /> event is raised.
         /// </summary>
         void AfterLongTap(Control sender, LongTapEventArgs e);

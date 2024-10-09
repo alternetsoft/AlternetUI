@@ -5,6 +5,13 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents the method that will handle the preview key down events.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">A <see cref="PreviewKeyDownEventArgs" /> that contains the event data.</param>
+    public delegate void PreviewKeyDownEventHandler(object? sender, PreviewKeyDownEventArgs e);
+
+    /// <summary>
     /// Provides data for the key preview events.
     /// </summary>
     public class PreviewKeyDownEventArgs : CustomKeyEventArgs

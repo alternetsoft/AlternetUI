@@ -9,6 +9,19 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Raises the <see cref="PreviewKeyDown" /> event
+        /// and <see cref="OnPreviewKeyDown"/> method.
+        /// </summary>
+        /// <param name="e">A <see cref="PreviewKeyDownEventArgs" /> that contains
+        /// the event data.</param>
+        public void RaisePreviewKeyDown(PreviewKeyDownEventArgs e)
+        {
+            PreviewKeyDown?.Invoke(this, e);
+            OnPreviewKeyDown(e);
+            RaiseNotifications((n) => n.AfterPreviewKeyDown(this, e));
+        }
+
+        /// <summary>
         /// Raises the <see cref="CellChanged" /> event and <see cref="OnCellChanged"/> method.
         /// </summary>
         public void RaiseCellChanged()
