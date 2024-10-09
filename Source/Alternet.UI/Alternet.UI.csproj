@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
     <PackageReference Include="SkiaSharp" Version="2.88.8" />
     <PackageReference Include="SkiaSharp.Extended" Version="2.0.0" />
     <PackageReference Include="SkiaSharp.Extended.Iconify" Version="1.60.0" />
@@ -33,12 +33,12 @@
     <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="2.88.8" />
     <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.8" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="System.IO.Packaging" Version="8.0.0" />
+    <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
@@ -79,25 +79,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props"
-          Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets"
-          Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml"
-          Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True" PackagePath="build" />
 
     <None Include="build\Alternet.UI.props" Visible="false" Pack="True" PackagePath="build" />
     <None Include="build\Alternet.UI.targets" Visible="false" Pack="True" PackagePath="build" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll"
-          Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
 
-    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll"
-          Pack="True" PackagePath="lib\netstandard2.0" />
-    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll"
-          Pack="True" PackagePath="lib\netstandard2.0" />
+    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Pack="True" PackagePath="lib\netstandard2.0" />
+    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Pack="True" PackagePath="lib\netstandard2.0" />
 
   </ItemGroup>
 
@@ -108,8 +102,7 @@
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
-	<ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj"
-                      PrivateAssets="All">
+	<ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
@@ -125,8 +118,7 @@
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
     <ItemGroup>
       <!-- Filter out unnecessary files -->
-      <_ReferenceCopyLocalPaths
-        Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
+      <_ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
     </ItemGroup>
 
     <!-- Print batches for debug purposes -->
@@ -134,8 +126,7 @@
 
     <ItemGroup>
       <!-- Add file to package with consideration of sub folder. If empty, the root folder is chosen. -->
-      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)"
-                            TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)" />
+      <BuildOutputInPackage Include="@(_ReferenceCopyLocalPaths)" TargetPath="%(_ReferenceCopyLocalPaths.DestinationSubDirectory)" />
     </ItemGroup>
   </Target>
 
