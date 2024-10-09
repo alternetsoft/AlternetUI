@@ -1,0 +1,44 @@
+
+What is wrong with ControlView when main page not AppShell?
+
+===============
+
+VirtualKeyboard enums mapping and use in show input dialogs
+
+Finish InputNumber dialog
+
+Macos: scroll thumb
+
+MacOs: lost focus must hide caret // Can use elementFocusedNotification?
+
+Popup menu
+https://learn.microsoft.com/en-us/dotnet/maui/user-interface/context-menu?view=net-maui-8.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

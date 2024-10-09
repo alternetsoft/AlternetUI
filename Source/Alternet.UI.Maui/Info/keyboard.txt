@@ -12,3 +12,6 @@ On open/Close keyboard:
  and DidShowNotification, please check the Remarks section to see the usage.
 - https://learn.microsoft.com/en-us/windows/apps/design/input/keyboard-events
 - https://learn.microsoft.com/ru-ru/dotnet/api/android.views.viewtreeobserver.addongloballayoutlistener?view=xamarin-android-sdk-13
+
+GetKeyStatesFromSystem macos
+https://learn.microsoft.com/ru-ru/dotnet/api/appkit.nsevent.addglobalmonitorforeventsmatchingmask?view=xamarin-mac-sdk-14
