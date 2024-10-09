@@ -26,6 +26,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Constructs an instance of the <see cref="PreviewKeyDownEventArgs"/> class
+        /// using properties of <see cref="KeyEventArgs"/>.
+        /// </summary>
+        public PreviewKeyDownEventArgs(KeyEventArgs e)
+            : this(e.CurrentTarget, e.Key, e.ModifierKeys)
+        {
+        }
+
+        /// <summary>
         /// Constructs an instance of the <see cref="PreviewKeyDownEventArgs"/> class.
         /// </summary>
         /// <param name="key">

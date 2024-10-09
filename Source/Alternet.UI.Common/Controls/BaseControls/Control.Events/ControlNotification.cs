@@ -313,7 +313,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterPreviewKeyDown(Control sender, PreviewKeyDownEventArgs e)
+        public virtual void AfterPreviewKeyDown(
+            Control sender,
+            Key key,
+            ModifierKeys modifiers,
+            ref bool isInputKey)
         {
         }
     }

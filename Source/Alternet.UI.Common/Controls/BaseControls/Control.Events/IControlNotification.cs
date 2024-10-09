@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the <see cref="Control.PreviewKeyDown" /> event is raised.
         /// </summary>
-        void AfterPreviewKeyDown(Control sender, PreviewKeyDownEventArgs e);
+        void AfterPreviewKeyDown(Control sender, Key key, ModifierKeys modifiers, ref bool isInputKey);
 
         /// <summary>
         /// Called after the <see cref="Control.LongTap" /> event is raised.
