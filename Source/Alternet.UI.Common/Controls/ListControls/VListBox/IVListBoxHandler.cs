@@ -111,7 +111,7 @@ namespace Alternet.UI
         void SetSelection(int selection);
 
         /// <summary>
-        /// Sets selected items bacckground color.
+        /// Sets selected items background color.
         /// </summary>
         /// <returns></returns>
         void SetSelectionBackground(Color color);
