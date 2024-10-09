@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="SharpCompress" Version="0.38.0" />
-    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="8.0.0" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
