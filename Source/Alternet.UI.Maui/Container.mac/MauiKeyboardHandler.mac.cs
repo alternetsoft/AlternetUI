@@ -10,6 +10,7 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 
 #if IOS || MACCATALYST
 
+using Foundation;
 using UIKit;
 
 namespace Alternet.UI
@@ -23,6 +24,10 @@ namespace Alternet.UI
         /// Gets or sets default <see cref="IKeyboardHandler"/> implementation.
         /// </summary>
         public static MauiKeyboardHandler Default = new();
+
+        static MauiKeyboardHandler()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MauiKeyboardHandler"/> class.
