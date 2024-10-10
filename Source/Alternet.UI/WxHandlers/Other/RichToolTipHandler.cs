@@ -49,10 +49,10 @@ namespace Alternet.UI
             Native.WxOtherFactory.RichToolTipSetIcon2(Handle, style);
         }
 
-        public void Show(Control control, RectI? rect = null)
+        public void Show(Control control, RectI? rect = null, bool adjustPos = true)
         {
             var wxWidget = WxApplicationHandler.WxWidget(control);
-            Native.WxOtherFactory.RichToolTipShowFor(Handle, wxWidget, rect ?? RectI.Empty);
+            Native.WxOtherFactory.RichToolTipShowFor(Handle, wxWidget, rect ?? RectI.Empty, adjustPos);
         }
 
         public void SetTitleFont(Font? font)

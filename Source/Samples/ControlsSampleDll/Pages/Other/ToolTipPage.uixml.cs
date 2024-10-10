@@ -89,10 +89,21 @@ namespace ControlsSample
             toolTip.SetIcon(largeImage);
             RichToolTip.Default = toolTip;
 
+            ShowToolTip(toolTip);
+        }
+
+        private void ShowToolTip(RichToolTip toolTip)
+        {
             if (dontHideCheckBox.IsChecked)
                 toolTip.SetTimeout(0);
 
-            toolTip.Show(tooltipPreview);
+            if (atCenterCheckBox.IsChecked)
+                toolTip.Show(tooltipPreview);
+            else
+            {
+                // Shows at the top-left corner of the tooltipPreview control.
+                toolTip.ShowAtLocation(tooltipPreview, (0, 0), adjustPosCheckBox.IsChecked);
+            }
         }
 
         private void LoadLargeImage()
@@ -135,18 +146,7 @@ namespace ControlsSample
 
                 RichToolTip.Default = toolTip;
 
-                if (dontHideCheckBox.IsChecked)
-                    toolTip.SetTimeout(0);
-
-                if(atCenterCheckBox.IsChecked)
-                    toolTip.Show(tooltipPreview);
-                else
-                {
-                    RectI rect = (0, 0, 2, 2);
-                    // (width/2, height/2) is added to the position.  
-                    // position is relative to the tooltipPreview control.
-                    toolTip.Show(tooltipPreview, rect);
-                }
+                ShowToolTip(toolTip);
             }
             else
             {
@@ -156,7 +156,8 @@ namespace ControlsSample
                     tooltipPreview,
                     ToolTipKind,
                     ToolTipIcon,
-                    dontHideCheckBox.IsChecked ? 0 : null);
+                    dontHideCheckBox.IsChecked ? 0 : null,
+                    adjustPosCheckBox.IsChecked);
             }
         }
 
@@ -170,7 +171,7 @@ namespace ControlsSample
             RichToolTip.HideDefault();
         }
 
-        public RichToolTipKind ToolTipKind { get; set; } = RichToolTipKind.None;
+        public RichToolTipKind ToolTipKind { get; set; } = RichToolTipKind.Top;
 
         public MessageBoxIcon ToolTipIcon { get; set; } = MessageBoxIcon.Warning;
     }

@@ -57,7 +57,14 @@ public:
 
     wxWindow* GetParent() const { return m_win; }
 
+    void SetAdjustPos(bool adjustPos)
+    {
+        m_adjustPos = adjustPos;
+    }
+
 protected:
+    bool m_adjustPos = true;
+
     virtual wxWindow* OnCreateLine(const wxString& line)
     {
         auto control = new wxStaticText(m_win, wxID_ANY,
@@ -95,6 +102,11 @@ class wxAlternetRichToolTipPopup :
     public wxCustomBackgroundWindow<wxPopupTransientWindow>
 {
 public:
+    void SetAdjustPos(bool adjustPos)
+    {
+        m_adjustPos = adjustPos;
+    }
+
     wxAlternetRichToolTipPopup(wxWindow* parent,
         const wxString& title,
         const wxString& message,
@@ -322,7 +334,10 @@ public:
 
         // We want our anchor point to coincide with this position so offset
         // the position of the top left corner passed to Move() accordingly.
-        pos -= m_anchorPos;
+        if (m_adjustPos)
+        {
+            pos -= m_anchorPos;
+        }
 
         Move(pos, wxSIZE_NO_ADJUSTMENTS);
     }
@@ -686,6 +701,8 @@ private:
     // If true, delay showing the tooltip.
     bool m_delayShow;
 
+    bool m_adjustPos = true;
+
     wxDECLARE_NO_COPY_CLASS(wxAlternetRichToolTipPopup);
 };
 
@@ -773,6 +790,8 @@ void wxAlternetRichToolTipImpl::ShowFor(wxWindow* win, const wxRect* rect)
     );
 
     popup->SetBackgroundColours(m_colStart, m_colEnd);
+
+    popup->SetAdjustPos(m_adjustPos);
 
     popup->SetPosition(rect);
     // show or start the timer to delay showing the popup

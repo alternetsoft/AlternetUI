@@ -166,12 +166,12 @@ ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTitleFont_(void* handle, Font*
     #endif
 }
 
-ALTERNET_UI_API void WxOtherFactory_RichToolTipShowFor_(void* handle, void* window, RectI rect)
+ALTERNET_UI_API void WxOtherFactory_RichToolTipShowFor_(void* handle, void* window, RectI rect, c_bool adjustPos)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        WxOtherFactory::RichToolTipShowFor(handle, window, rect);
+        WxOtherFactory::RichToolTipShowFor(handle, window, rect, adjustPos);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

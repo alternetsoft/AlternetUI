@@ -47,7 +47,8 @@ namespace Alternet.UI
         /// Shows tooltip on the screen.
         /// </summary>
         /// <param name="control">Control which bounds are used as base position of the tooltip.</param>
-        /// <param name="rect">Tooltip size and relative position</param>
-        void Show(Control control, RectI? rect = null);
+        /// <param name="rect">Tooltip size and relative position.</param>
+        /// <param name="adjustPos">Whether to adjust position depending on the tip kind.</param>
+        void Show(Control control, RectI? rect = null, bool adjustPos = true);
     }
 }

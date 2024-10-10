@@ -37,6 +37,11 @@ public:
 
     virtual void ShowFor(wxWindow* win, const wxRect* rect = NULL) wxOVERRIDE;
 
+	void SetAdjustPos(bool adjustPos)
+	{
+		m_adjustPos = adjustPos;
+	}
+
 protected:
     wxString m_title,
         m_message;
@@ -52,6 +57,8 @@ private:
     wxTipKind m_tipKind;
 
     wxFont m_titleFont;
+
+	bool m_adjustPos = true;
 };
 
 // =====================================
@@ -79,10 +86,10 @@ public:
 	wxRichToolTip2(const wxString& title, const wxString& message)
 	{
 		// m_impl = new wxRichToolTipGenericImpl(title, message);
-		if (AlternetRichTooltip)
+		/*if (AlternetRichTooltip)*/
 			m_impl = new wxAlternetRichToolTipImpl(title, message);
-		else
-			m_impl = wxRichToolTipImpl::Create(title, message);
+		/*else
+			m_impl = wxRichToolTipImpl::Create(title, message);*/
 	}
 
 	void SetForegroundColour(const wxColour& col)
@@ -97,6 +104,11 @@ public:
 		auto impl = GetAlternetImpl();
 		if (impl != nullptr)
 			impl->SetTitleForegroundColour(col);
+	}
+
+	void SetAdjustPos(bool adjustPos)
+	{
+		m_impl->SetAdjustPos(adjustPos);
 	}
 
 	void SetBackgroundColour(const wxColour& col, const wxColour& colEnd = wxColour())
@@ -143,7 +155,7 @@ public:
 	}
 
 private:
-	wxRichToolTipImpl* m_impl;
+	wxAlternetRichToolTipImpl* m_impl;
 
 	wxDECLARE_NO_COPY_CLASS(wxRichToolTip2);
 };
