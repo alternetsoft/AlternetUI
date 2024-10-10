@@ -11,14 +11,24 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to show a tool tip with more customizations than a standard tooltip.
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
-    /// specify title, image, tip kind and some other options.
+    /// specify title, image, tip kind and other options.
     /// </summary>
-    public class RichToolTip : DisposableObject
+    public class RichToolTip : BaseComponent
     {
         private static bool useGeneric = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RichToolTip"/> class.
+        /// Initializes a new instance of the <see cref="RichToolTip"/> class
+        /// with empty title and message text.
+        /// </summary>
+        public RichToolTip()
+            : this(null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RichToolTip"/> class
+        /// with the specified title and message text.
         /// </summary>
         /// <param name="title">Tooltip title.</param>
         /// <param name="message">Tooltip message.</param>
@@ -159,12 +169,20 @@ namespace Alternet.UI
         /// <param name="icon">Tooltip standard icon.</param>
         /// <param name="control">Control for which tooltip is shown.</param>
         /// <param name="kind">Tooltip kind.</param>
+        /// <param name="timeoutMilliseconds">
+        /// Timeout in milliseconds after which tooltip will be hidden. Optional. If not specified,
+        /// default timeout value is used. If 0 is specified, tooltip will not be hidden after timeout.
+        /// </param>
+        /// <param name="adjustPos">Whether to adjust position depending on the tip kind.
+        /// Optional. Default is <c>true</c>.</param>
         public static void Show(
             string? title,
             string? message,
             Control control,
             RichToolTipKind? kind = null,
-            MessageBoxIcon? icon = null)
+            MessageBoxIcon? icon = null,
+            uint? timeoutMilliseconds = null,
+            bool adjustPos = true)
         {
             Default = new(title, message);
             if (kind is not null)
@@ -179,7 +197,12 @@ namespace Alternet.UI
                 Default.SetIcon(icon.Value);
             }
 
-            Default.Show(control);
+            if(timeoutMilliseconds is not null)
+            {
+                Default.SetTimeout(timeoutMilliseconds.Value);
+            }
+
+            Default.Show(control, null, adjustPos);
         }
 
         /// <summary>
@@ -232,6 +255,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets timeout after which the tooltip should disappear, in milliseconds.
+        /// If 0 is specified, tooltip will not be hidden automatically.
         /// Optionally specify a show delay.
         /// </summary>
         /// <remarks>
@@ -281,12 +305,45 @@ namespace Alternet.UI
 
         /// <summary>
         /// Shows the tooltip for the given control and optionally a specified area.
+        /// This is lowest level method. Area coordinates are in pixels and are relative to
+        /// the <paramref name="control"/> location.
         /// </summary>
         /// <param name="control">Control for which tooltip is shown.</param>
-        /// <param name="rect">Area of the tooltip.</param>
-        public virtual void Show(Control control, RectI? rect = null)
+        /// <param name="rect">Area of the tooltip in pixels.
+        /// Shows tooltip at the center of the rectangle. Optional. If not specified, tooltip
+        /// is shown at the center of the control.</param>
+        /// <param name="adjustPos">Whether to adjust position depending on the tip kind.
+        /// Optional. Default is <c>true</c>.</param>
+        /// <remarks>
+        /// Size of the <paramref name="rect"/> affects tooltip location as (rect.width/2, rect.height/2)
+        /// is added to the tooltip location.
+        /// </remarks>
+        public virtual void Show(Control control, RectI? rect = null, bool adjustPos = true)
         {
-            Handler.Show(control, rect);
+            Handler.Show(control, rect, adjustPos);
+        }
+
+        /// <summary>
+        /// Shows the tooltip for the given control and optionally a specified location.
+        /// Location coordinates are in device-independent units and are relative to
+        /// the <paramref name="control"/> location.
+        /// </summary>
+        /// <param name="control">Control for which tooltip is shown.</param>
+        /// <param name="location">Location where tooltip will be shown.</param>
+        /// <param name="adjustPos">Whether to adjust position depending on the tip kind.
+        /// Optional. Default is <c>true</c>.</param>
+        public virtual void ShowAtLocation(Control control, PointD? location = null, bool adjustPos = true)
+        {
+            if(location is null)
+            {
+                Show(control, null, adjustPos);
+            }
+            else
+            {
+                var pxLocation = GraphicsFactory.PixelFromDip(location.Value, control.ScaleFactor);
+                var area = (pxLocation.X - 1, pxLocation.Y - 1, 2, 2);
+                Show(control, area, adjustPos);
+            }
         }
 
         /// <summary>

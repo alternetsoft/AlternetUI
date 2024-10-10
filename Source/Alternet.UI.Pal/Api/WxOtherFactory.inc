@@ -15,7 +15,7 @@ static void RichToolTipSetIcon2(void* handle, int icon);
 static void RichToolTipSetTimeout(void* handle, uint32_t milliseconds, uint32_t millisecondsShowdelay);
 static void RichToolTipSetTipKind(void* handle, int tipKind);
 static void RichToolTipSetTitleFont(void* handle, Font* font);
-static void RichToolTipShowFor(void* handle, void* window, const RectI& rect);
+static void RichToolTipShowFor(void* handle, void* window, const RectI& rect, bool adjustPos);
 static void* CreateToolTip(const string& tip);
 static void DeleteToolTip(void* handle);
 static string ToolTipGetTip(void* handle);

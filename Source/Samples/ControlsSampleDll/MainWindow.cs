@@ -183,7 +183,25 @@ namespace ControlsSample
         Control CreateListViewPage() => new ListViewPage();
         Control CreateTabControlPage() => new TabControlPage();
         Control CreateNumericInputPage() => new NumericInputPage();
-        Control CreateNotifyIconPage() => new NotifyIconPage();
+        
+        Control CreateNotifyIconPage()
+        {
+            NameValue<Func<Control>>? nameValue;
+
+            if (NotifyIcon.IsAvailable)
+                nameValue = new("Notify Icon", () => new NotifyIconPage());
+            else
+                nameValue = null;
+
+            NameValue<Func<Control>>?[] pages =
+            {
+                new("Rich ToolTip", () => new ToolTipPage()),
+                nameValue,
+            };
+
+            return CreateCustomPage(pages);
+        }
+
         Control CreateWebBrowserPage() => new WebBrowserPage();
         Control CreateAllSamplesPage() => new AllSamplesPage();
         Control CreateInternalSamplesPage() => new InternalSamplesPage();

@@ -91,9 +91,9 @@ namespace Alternet.UI.Native
             NativeApi.WxOtherFactory_RichToolTipSetTitleFont_(handle, font?.NativePointer ?? IntPtr.Zero);
         }
         
-        public static void RichToolTipShowFor(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.RectI rect)
+        public static void RichToolTipShowFor(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.RectI rect, bool adjustPos)
         {
-            NativeApi.WxOtherFactory_RichToolTipShowFor_(handle, window, rect);
+            NativeApi.WxOtherFactory_RichToolTipShowFor_(handle, window, rect, adjustPos);
         }
         
         public static System.IntPtr CreateToolTip(string tip)
@@ -773,7 +773,7 @@ namespace Alternet.UI.Native
             public static extern void WxOtherFactory_RichToolTipSetTitleFont_(System.IntPtr handle, IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipShowFor_(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.RectI rect);
+            public static extern void WxOtherFactory_RichToolTipShowFor_(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.RectI rect, bool adjustPos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateToolTip_(string tip);

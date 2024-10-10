@@ -1570,6 +1570,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates <see cref="ImageSet"/> of the specified <paramref name="size"/>
+        /// filled with this color.
+        /// </summary>
+        /// <param name="size">Size of the created image.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ImageSet AsImageSet(SizeI size)
+        {
+            return (ImageSet)(Image)AsImage(size);
+        }
+
+        /// <summary>
         /// Gets this color as <see cref="Pen"/> with the specified width.
         /// </summary>
         /// <param name="width">Width of the pen.</param>

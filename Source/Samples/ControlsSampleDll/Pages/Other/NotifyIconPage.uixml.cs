@@ -16,83 +16,11 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            notifyPanel.Visible = NotifyIcon.IsAvailable;
-
-            if (notifyPanel.Visible)
-            {
                 notifyIcon = new NotifyIcon { Icon = Image, Text = notifyIconTextTextBox.Text };
                 notifyIcon.Click += NotifyIcon_Click;
                 notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
                 notifyIcon.Menu = new ExampleContextMenu();
-            }
-
-            ControlSet.New(
-                iconTextLabel,
-                tooltipTitleLabel,
-                tooltipMessageLabel,
-                tooltipIconLabel,
-                tooltipKindLabel)
-                .SuggestedWidthToMax();
-
-            tooltipKindComboBox.BindEnumProp(this, nameof(ToolTipKind));
-            tooltipIconComboBox.BindEnumProp(this, nameof(ToolTipIcon));
-
-            showToolTipButton.Click += ShowToolTipButton_Click;
-            hideToolTipButton.Click += HideToolTipButton_Click;
-            resetTitleButton.Click += ResetTitleButton_Click;
-            showSimpleButton.Click += ShowSimpleButton_Click;
-
-            GetColumnGroup(3, true).SuggestedWidthToMax();
-
-            toolTipLabel.Click += ToolTipLabel_Click;
         }
-
-        private void ToolTipLabel_Click(object? sender, EventArgs e)
-        {
-            App.Log("ToolTipLabel_Click");
-            tooltipPreview.BackgroundColor = Color.White;
-            toolTipLabel.Text = string.Empty;
-            toolTipLabel.BackgroundColor = Color.White;
-        }
-
-        private void ResetTitleButton_Click(object? sender, EventArgs e)
-        {
-            tooltipTitleTextBox.Text = string.Empty;
-        }
-
-        internal void LogColors()
-        {
-            LogUtils.LogColor("Info", SystemColors.Info);
-            LogUtils.LogColor("SystemSettings.Info", new(SystemSettings.GetColor(KnownSystemColor.Info)));
-            LogUtils.LogColor("InfoText", SystemColors.InfoText);
-            LogUtils.LogColor("SystemSettings.InfoText", new(SystemSettings.GetColor(KnownSystemColor.InfoText)));
-            LogUtils.LogColor("BkColor", RealBackgroundColor);
-            LogUtils.LogColor("FgColor", RealForegroundColor);
-        }
-
-        private void ShowToolTipButton_Click(object? sender, EventArgs e)
-        {
-            RichToolTip.Show(
-                tooltipTitleTextBox.Text,
-                tooltipMessageTextBox.Text,
-                tooltipPreview,
-                ToolTipKind,
-                ToolTipIcon);
-        }
-
-        private void ShowSimpleButton_Click(object? sender, EventArgs e)
-        {
-            RichToolTip.ShowSimple(tooltipMessageTextBox.Text, tooltipPreview);
-        }
-
-        private void HideToolTipButton_Click(object? sender, EventArgs e)
-        {
-            RichToolTip.HideDefault();
-        }
-
-        public RichToolTipKind ToolTipKind { get; set; } = RichToolTipKind.None;
-
-        public MessageBoxIcon ToolTipIcon { get; set; } = MessageBoxIcon.Warning;
 
         private void NotifyIcon_DoubleClick(object? sender, EventArgs e)
         {

@@ -1608,6 +1608,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the outer top margin of a control.
+        /// </summary>
+        public Coord MarginTop
+        {
+            get => Margin.Top;
+            set => Margin = Margin.WithTop(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the outer bottom margin of a control.
+        /// </summary>
+        public Coord MarginBottom
+        {
+            get => Margin.Bottom;
+            set => Margin = Margin.WithBottom(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the outer right margin of a control.
+        /// </summary>
+        public Coord MarginRight
+        {
+            get => Margin.Right;
+            set => Margin = Margin.WithRight(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the outer left margin of a control.
+        /// </summary>
+        public Coord MarginLeft
+        {
+            get => Margin.Left;
+            set => Margin = Margin.WithLeft(value);
+        }
+
+        /// <summary>
         /// Gets or sets the outer margin of a control.
         /// </summary>
         /// <value>Provides margin values for the control. The default value is a
@@ -1620,6 +1656,7 @@ namespace Alternet.UI
         /// type conversion so that you can specify an asymmetric <see cref="Margin"/>
         /// in UIXML attribute syntax also.
         /// </remarks>
+        [Browsable(false)]
         public virtual Thickness Margin
         {
             get
@@ -1664,6 +1701,7 @@ namespace Alternet.UI
         /// type conversion so that you can specify an asymmetric <see cref="Padding"/>
         /// in UIXML attribute syntax also.
         /// </remarks>
+        [Browsable(false)]
         public virtual Thickness Padding
         {
             get
@@ -1685,6 +1723,42 @@ namespace Alternet.UI
                 PaddingChanged?.Invoke(this, EventArgs.Empty);
                 PerformLayout();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the top padding inside a control.
+        /// </summary>
+        public Coord PaddingTop
+        {
+            get => Padding.Top;
+            set => Padding = Padding.WithTop(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the bottom padding inside a control.
+        /// </summary>
+        public Coord PaddingBottom
+        {
+            get => Padding.Bottom;
+            set => Padding = Padding.WithBottom(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the right padding inside a control.
+        /// </summary>
+        public Coord PaddingRight
+        {
+            get => Padding.Right;
+            set => Padding = Padding.WithRight(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the left padding inside a control.
+        /// </summary>
+        public Coord PaddingLeft
+        {
+            get => Padding.Left;
+            set => Padding = Padding.WithLeft(value);
         }
 
         /// <summary>

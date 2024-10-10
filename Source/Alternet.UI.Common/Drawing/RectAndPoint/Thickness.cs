@@ -383,6 +383,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a copy of this object with changed <see cref="Top"/> property.
+        /// </summary>
+        /// <param name="value">Property value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Thickness WithTop(Coord value)
+        {
+            return new(left, value, right, bottom);
+        }
+
+        /// <summary>
+        /// Gets a copy of this object with changed <see cref="Bottom"/> property.
+        /// </summary>
+        /// <param name="value">Property value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Thickness WithBottom(Coord value)
+        {
+            return new(left, top, right, value);
+        }
+
+        /// <summary>
+        /// Gets a copy of this object with changed <see cref="Right"/> property.
+        /// </summary>
+        /// <param name="value">Property value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Thickness WithRight(Coord value)
+        {
+            return new(left, top, value, bottom);
+        }
+
+        /// <summary>
+        /// Gets a copy of this object with changed <see cref="Left"/> property.
+        /// </summary>
+        /// <param name="value">Property value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Thickness WithLeft(Coord value)
+        {
+            return new(value, top, right, bottom);
+        }
+
+        /// <summary>
         /// Apply minimal limits to all the fields of the
         /// <see cref="Thickness"/> instance.
         /// </summary>
