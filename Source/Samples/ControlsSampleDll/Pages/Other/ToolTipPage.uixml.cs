@@ -41,6 +41,28 @@ namespace ControlsSample
             .SuggestedWidthToMax();
 
             toolTipLabel.Click += ToolTipLabel_Click;
+
+            var popup = new ContextMenuStrip();
+
+            tooltipPreview.ContextMenuStrip = popup;
+
+            popup.Add("Log Information", Log);
+            popup.Add("Show popup on bottom-right", ShowPopupBottomRight);
+        }
+
+        private void ShowPopupBottomRight()
+        {
+            RichToolTip toolTip = new(
+                "Title",
+                "This is message text first line." + Environment.NewLine + "This is second line.");
+            toolTip.SetTipKind(RichToolTipKind.None)
+            .SetIcon(MessageBoxIcon.Information)
+            .SetAsDefault()
+            .SetLocationDecrement(true, true)
+            .ShowAtLocation(
+                tooltipPreview,
+                (tooltipPreview.Width, tooltipPreview.Height),
+                false);
         }
 
         private void ToolTipLabel_Click(object? sender, EventArgs e)
@@ -69,8 +91,15 @@ namespace ControlsSample
                 textBox.Text = string.Empty;
         }
 
-        internal void LogColors()
+        internal void Log()
         {
+            var toolTip = RichToolTip.Default;
+
+            if (toolTip is not null)
+            {
+                App.LogNameValue("ToolTip window size (px)", toolTip.Handler.SizeInPixels);
+            }
+
             LogUtils.LogColor("Info", SystemColors.Info);
             LogUtils.LogColor("SystemSettings.Info", new(SystemSettings.GetColor(KnownSystemColor.Info)));
             LogUtils.LogColor("InfoText", SystemColors.InfoText);

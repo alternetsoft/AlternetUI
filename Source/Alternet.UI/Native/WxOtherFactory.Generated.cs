@@ -96,6 +96,16 @@ namespace Alternet.UI.Native
             NativeApi.WxOtherFactory_RichToolTipShowFor_(handle, window, rect, adjustPos);
         }
         
+        public static Alternet.Drawing.SizeI RichToolTipGetSize(System.IntPtr handle)
+        {
+            return NativeApi.WxOtherFactory_RichToolTipGetSize_(handle);
+        }
+        
+        public static void RichToolTipSetLocationDecrement(System.IntPtr handle, bool decrementX, bool decrementY)
+        {
+            NativeApi.WxOtherFactory_RichToolTipSetLocationDecrement_(handle, decrementX, decrementY);
+        }
+        
         public static System.IntPtr CreateToolTip(string tip)
         {
             return NativeApi.WxOtherFactory_CreateToolTip_(tip);
@@ -774,6 +784,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_RichToolTipShowFor_(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.RectI rect, bool adjustPos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.SizeI WxOtherFactory_RichToolTipGetSize_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WxOtherFactory_RichToolTipSetLocationDecrement_(System.IntPtr handle, bool decrementX, bool decrementY);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateToolTip_(string tip);

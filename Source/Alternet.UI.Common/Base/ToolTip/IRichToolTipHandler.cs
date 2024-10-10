@@ -13,6 +13,14 @@ namespace Alternet.UI
     /// </summary>
     public interface IRichToolTipHandler : IDisposable
     {
+        /// <summary>
+        /// Gets tooltip window size in pixels.
+        /// </summary>
+        SizeI SizeInPixels { get; }
+
+        /// <inheritdoc cref="RichToolTip.SetLocationDecrement"/>
+        void SetLocationDecrement(bool decrementX, bool decrementY);
+
         /// <inheritdoc cref="RichToolTip.SetBackgroundColor"/>
         void SetBackgroundColor(Color color, Color endColor);
 

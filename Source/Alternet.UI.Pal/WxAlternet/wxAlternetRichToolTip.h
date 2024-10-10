@@ -23,6 +23,17 @@ public:
         m_delay = 0;
     }
 
+	void SetLocationDecrement(bool decrementX, bool decrementY)
+	{
+		m_decrementX = decrementX;
+		m_decrementY = decrementY;
+	}
+
+	wxSize GetSize()
+	{
+		return m_size;
+	}
+
     void SetForegroundColour(const wxColour& col);
     void SetTitleForegroundColour(const wxColour& col);
 
@@ -47,6 +58,10 @@ protected:
         m_message;
 
 private:
+	wxSize m_size;
+	bool m_decrementX;
+	bool m_decrementY;
+
     wxBitmapBundle m_icon;
 
     wxColour m_colStart,m_colEnd, m_fgColor, m_titlefgColor;
@@ -90,6 +105,16 @@ public:
 			m_impl = new wxAlternetRichToolTipImpl(title, message);
 		/*else
 			m_impl = wxRichToolTipImpl::Create(title, message);*/
+	}
+
+	void SetLocationDecrement(bool decrementX, bool decrementY)
+	{
+		m_impl->SetLocationDecrement(decrementX, decrementY);
+	}
+
+	wxSize GetSize()
+	{
+		return m_impl->GetSize();
 	}
 
 	void SetForegroundColour(const wxColour& col)

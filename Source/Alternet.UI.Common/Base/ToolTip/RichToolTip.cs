@@ -146,7 +146,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Hides tooltip assigned to the <see cref="Default"/> property.
+        /// Hides and disposes tooltip assigned to the <see cref="Default"/> property.
         /// </summary>
         public static void HideDefault()
         {
@@ -206,16 +206,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets whether to decrement location on size of the tooltip window.
+        /// </summary>
+        /// <param name="decrementX">Whether to decrement horizontal position.</param>
+        /// <param name="decrementY">Whether to decrement vertical position.</param>
+        /// <returns></returns>
+        public virtual RichToolTip SetLocationDecrement(bool decrementX, bool decrementY)
+        {
+            Handler.SetLocationDecrement(decrementX, decrementY);
+            return this;
+        }
+
+        /// <summary>
         /// Sets the background color: if two colors are specified, the background
         /// is drawn using a gradient from top to bottom, otherwise a single solid
         /// color is used.
         /// </summary>
         /// <param name="color">Background color.</param>
         /// <param name="endColor">Second background color.</param>
-        public virtual void SetBackgroundColor(Color? color, Color? endColor = null)
+        public virtual RichToolTip SetBackgroundColor(Color? color, Color? endColor = null)
         {
             if (color is null)
-                return;
+                return this;
 
             Color color2;
             if (endColor is null)
@@ -223,6 +235,8 @@ namespace Alternet.UI
             else
                 color2 = endColor;
             Handler.SetBackgroundColor(color, color2);
+
+            return this;
         }
 
         /// <summary>
@@ -232,11 +246,12 @@ namespace Alternet.UI
         /// <remarks>
         /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
         /// </remarks>
-        public virtual void SetForegroundColor(Color? color)
+        public virtual RichToolTip SetForegroundColor(Color? color)
         {
             if (color is null)
-                return;
+                return this;
             Handler.SetForegroundColor(color);
+            return this;
         }
 
         /// <summary>
@@ -246,11 +261,12 @@ namespace Alternet.UI
         /// <remarks>
         /// This is implemnented only for generic tooltips (when <see cref="UseGeneric"/> is true).
         /// </remarks>
-        public virtual void SetTitleForegroundColor(Color? color)
+        public virtual RichToolTip SetTitleForegroundColor(Color? color)
         {
             if (color is null)
-                return;
+                return this;
             Handler.SetTitleForegroundColor(color);
+            return this;
         }
 
         /// <summary>
@@ -266,18 +282,30 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="milliseconds">Timeout value.</param>
         /// <param name="millisecondsShowdelay">Show delay value.</param>
-        public virtual void SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
+        public virtual RichToolTip SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
         {
             Handler.SetTimeout(milliseconds, millisecondsShowdelay);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets this tooltip as default tooltip (changes <see cref="Default"/> property).
+        /// </summary>
+        /// <returns></returns>
+        public virtual RichToolTip SetAsDefault()
+        {
+            RichToolTip.Default = this;
+            return this;
         }
 
         /// <summary>
         /// Sets the small icon to show in the tooltip.
         /// </summary>
         /// <param name="bitmap">Icon of the tooltip.</param>
-        public virtual void SetIcon(ImageSet? bitmap)
+        public virtual RichToolTip SetIcon(ImageSet? bitmap)
         {
             Handler.SetIcon(bitmap);
+            return this;
         }
 
         /// <summary>
@@ -288,9 +316,10 @@ namespace Alternet.UI
         /// or colour appropriate for the current platform.
         /// </remarks>
         /// <param name="font">Font of the title.</param>
-        public virtual void SetTitleFont(Font? font)
+        public virtual RichToolTip SetTitleFont(Font? font)
         {
             Handler.SetTitleFont(font);
+            return this;
         }
 
         /// <summary>
@@ -298,9 +327,10 @@ namespace Alternet.UI
         /// automatically, as if <see cref="RichToolTipKind.Auto"/> was used.
         /// </summary>
         /// <param name="tipKind">Tip kind.</param>
-        public virtual void SetTipKind(RichToolTipKind tipKind)
+        public virtual RichToolTip SetTipKind(RichToolTipKind tipKind)
         {
             Handler.SetTipKind(tipKind);
+            return this;
         }
 
         /// <summary>
@@ -318,9 +348,10 @@ namespace Alternet.UI
         /// Size of the <paramref name="rect"/> affects tooltip location as (rect.width/2, rect.height/2)
         /// is added to the tooltip location.
         /// </remarks>
-        public virtual void Show(Control control, RectI? rect = null, bool adjustPos = true)
+        public virtual RichToolTip Show(Control control, RectI? rect = null, bool adjustPos = true)
         {
             Handler.Show(control, rect, adjustPos);
+            return this;
         }
 
         /// <summary>
@@ -332,7 +363,10 @@ namespace Alternet.UI
         /// <param name="location">Location where tooltip will be shown.</param>
         /// <param name="adjustPos">Whether to adjust position depending on the tip kind.
         /// Optional. Default is <c>true</c>.</param>
-        public virtual void ShowAtLocation(Control control, PointD? location = null, bool adjustPos = true)
+        public virtual RichToolTip ShowAtLocation(
+            Control control,
+            PointD? location = null,
+            bool adjustPos = true)
         {
             if(location is null)
             {
@@ -344,6 +378,8 @@ namespace Alternet.UI
                 var area = (pxLocation.X - 1, pxLocation.Y - 1, 2, 2);
                 Show(control, area, adjustPos);
             }
+
+            return this;
         }
 
         /// <summary>
@@ -351,11 +387,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="icon">One of the standard information/warning/error icons
         /// (the question icon doesn't make sense for a tooltip)</param>
-        public virtual void SetIcon(MessageBoxIcon icon)
+        public virtual RichToolTip SetIcon(MessageBoxIcon icon)
         {
             if(IgnoreImages)
                 icon = MessageBoxIcon.None;
             Handler.SetIcon(icon);
+            return this;
         }
 
         /// <inheritdoc/>
