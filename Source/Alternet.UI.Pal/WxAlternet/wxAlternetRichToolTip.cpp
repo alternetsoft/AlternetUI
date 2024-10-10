@@ -107,20 +107,28 @@ public:
     {
         auto noTitle = title == wxEmptyString;
         auto hasTitle = !noTitle;
+        auto hasIcon = icon.IsOk();
+        auto hasText = message != wxEmptyString;
 
         Create(parent, wxFRAME_SHAPED);
         if (Alternet::UI::Window::fontOverride.IsOk())
             SetFont(Alternet::UI::Window::fontOverride);
 
+        /*
         // Move to the display where it will be shown,
         // so below calculations are based on the correct DPI.
         Move(GetTipPoint(), wxSIZE_ALLOW_MINUS_ONE);
+        */
 
         wxBoxSizer* const sizerTitle = new wxBoxSizer(wxHORIZONTAL);
-        if (hasTitle && icon.IsOk())
+        if (hasIcon)
         {
-            sizerTitle->Add(new wxStaticBitmap(this, wxID_ANY, icon),
-                wxSizerFlags().Centre().Border(wxRIGHT));
+            auto iconSizerFlags = wxSizerFlags().Centre();
+
+            if (hasTitle)
+                iconSizerFlags = iconSizerFlags.Border(wxRIGHT);
+
+            sizerTitle->Add(new wxStaticBitmap(this, wxID_ANY, icon), iconSizerFlags);
         }
 
         wxBoxSizer* const sizerTop = new wxBoxSizer(wxVERTICAL);
@@ -136,21 +144,31 @@ public:
                 labelTitle->SetForegroundColour(titlefgColor);
 
             sizerTitle->Add(labelTitle, wxSizerFlags().Centre());
+        }
 
-            auto& sizerBorderFlags = wxSizerFlags().DoubleBorder(wxLEFT | wxRIGHT | wxTOP);
+        if (hasTitle || hasIcon)
+        {
+            if(hasText)
+            {
+                auto& sizerBorderFlags = wxSizerFlags().DoubleBorder(wxLEFT | wxRIGHT | wxTOP);
+                sizerTop->Add(sizerTitle, sizerBorderFlags);
 
-            sizerTop->Add(sizerTitle, sizerBorderFlags);
-
-            // Use a spacer as we don't want to have a double border between the
-            // elements, just a simple one will do.
-            sizerTop->AddSpacer(wxSizerFlags::GetDefaultBorder());
+                // Use a spacer as we don't want to have a double border between the
+                // elements, just a simple one will do.
+                sizerTop->AddSpacer(wxSizerFlags::GetDefaultBorder());
+            }
+            else
+            {
+                auto& sizerBorderFlags = wxSizerFlags().Border(wxLEFT | wxRIGHT | wxTOP | wxBOTTOM);
+                sizerTop->Add(sizerTitle, sizerBorderFlags);
+            }
         }
 
         wxAlternetTextSizerWrapper wrapper(this, fgColor);
         wxSizer* sizerText = wrapper.CreateSizer(message, -1 /* No wrapping */);
 
 #ifdef HAVE_MSW_THEME
-        if (hasTitle && icon.IsOk() && UseTooltipTheme())
+        if (hasTitle && hasIcon && UseTooltipTheme())
         {
             // Themed tooltips under MSW align the text with the title, not
             // with the icon, so use a helper horizontal sizer in this case.
@@ -297,7 +315,10 @@ public:
         if (!rect || rect->IsEmpty())
             pos = GetTipPoint();
         else
-            pos = GetParent()->ClientToScreen(wxPoint(rect->x + rect->width / 2, rect->y + rect->height / 2));
+        {
+            pos = wxPoint(rect->x + rect->width / 2, rect->y + rect->height / 2);
+            pos = GetParent()->ClientToScreen(pos);
+        }
 
         // We want our anchor point to coincide with this position so offset
         // the position of the top left corner passed to Move() accordingly.

@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// Enables or disables tooltips globally.
         /// </summary>
         /// <remarks>
-        /// May not be supported on all platforms (eg. wxCocoa).
+        /// May not be supported on all platforms.
         /// </remarks>
         /// <param name="flag">Enables or disables tooltips.</param>
         /// <returns><c>true</c> if operation is successful; <c>false</c> otherwise.</returns>

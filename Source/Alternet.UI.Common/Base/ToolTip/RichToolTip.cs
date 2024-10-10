@@ -11,14 +11,24 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to show a tool tip with more customizations than a standard tooltip.
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
-    /// specify title, image, tip kind and some other options.
+    /// specify title, image, tip kind and other options.
     /// </summary>
-    public class RichToolTip : DisposableObject
+    public class RichToolTip : BaseComponent
     {
         private static bool useGeneric = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RichToolTip"/> class.
+        /// Initializes a new instance of the <see cref="RichToolTip"/> class
+        /// with empty title and message text.
+        /// </summary>
+        public RichToolTip()
+            : this(null, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RichToolTip"/> class
+        /// with the specified title and message text.
         /// </summary>
         /// <param name="title">Tooltip title.</param>
         /// <param name="message">Tooltip message.</param>
@@ -159,12 +169,17 @@ namespace Alternet.UI
         /// <param name="icon">Tooltip standard icon.</param>
         /// <param name="control">Control for which tooltip is shown.</param>
         /// <param name="kind">Tooltip kind.</param>
+        /// <param name="timeoutMilliseconds">
+        /// Timeout in milliseconds after which tooltip will be hidden. Optional. If not specified,
+        /// default timeout value is used. If 0 is specified, tooltip will not be hidden after timeout.
+        /// </param>
         public static void Show(
             string? title,
             string? message,
             Control control,
             RichToolTipKind? kind = null,
-            MessageBoxIcon? icon = null)
+            MessageBoxIcon? icon = null,
+            uint? timeoutMilliseconds = null)
         {
             Default = new(title, message);
             if (kind is not null)
@@ -177,6 +192,11 @@ namespace Alternet.UI
                 if (string.IsNullOrEmpty(title))
                     icon = MessageBoxIcon.None;
                 Default.SetIcon(icon.Value);
+            }
+
+            if(timeoutMilliseconds is not null)
+            {
+                Default.SetTimeout(timeoutMilliseconds.Value);
             }
 
             Default.Show(control);
@@ -232,6 +252,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets timeout after which the tooltip should disappear, in milliseconds.
+        /// If 0 is specified, tooltip will not be hidden automatically.
         /// Optionally specify a show delay.
         /// </summary>
         /// <remarks>
@@ -283,7 +304,9 @@ namespace Alternet.UI
         /// Shows the tooltip for the given control and optionally a specified area.
         /// </summary>
         /// <param name="control">Control for which tooltip is shown.</param>
-        /// <param name="rect">Area of the tooltip.</param>
+        /// <param name="rect">Area of the tooltip in pixels.
+        /// Shows tooltip at the center of the rectangle. Optional. If not specified, tooltip
+        /// is shown at the center of the control.</param>
         public virtual void Show(Control control, RectI? rect = null)
         {
             Handler.Show(control, rect);
