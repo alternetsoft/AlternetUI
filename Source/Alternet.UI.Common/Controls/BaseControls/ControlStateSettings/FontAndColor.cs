@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFontAndColor.BackgroundColor"/>
         /// </summary>
-        public Color? BackgroundColor
+        public virtual Color? BackgroundColor
         {
             get
             {
@@ -119,7 +119,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFontAndColor.ForegroundColor"/>
         /// </summary>
-        public Color? ForegroundColor
+        public virtual Color? ForegroundColor
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFontAndColor.Font"/>
         /// </summary>
-        public Font? Font
+        public virtual Font? Font
         {
             get
             {
@@ -185,10 +185,28 @@ namespace Alternet.UI
             action?.Invoke();
         }
 
+        /// <inheritdoc/>
+        public IReadOnlyFontAndColor WithFont(Font? font)
+        {
+            return new FontAndColor(ForegroundColor, BackgroundColor, font);
+        }
+
+        /// <inheritdoc/>
+        public IReadOnlyFontAndColor WithForeColor(Color? color)
+        {
+            return new FontAndColor(color, BackgroundColor, Font);
+        }
+
+        /// <inheritdoc/>
+        public IReadOnlyFontAndColor WithBackColor(Color? color)
+        {
+            return new FontAndColor(ForegroundColor, color, Font);
+        }
+
         /// <summary>
         /// Allows to get font and color defaults for the control.
         /// </summary>
-        public class ControlDefaultFontAndColor : IReadOnlyFontAndColor
+        public class ControlDefaultFontAndColor : FontAndColor, IReadOnlyFontAndColor
         {
             private readonly IControl control;
 
@@ -202,19 +220,19 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public Color? BackgroundColor => control.GetDefaultAttributesBgColor();
+            public override Color? BackgroundColor => control.GetDefaultAttributesBgColor();
 
             /// <inheritdoc/>
-            public Color? ForegroundColor => control.GetDefaultAttributesFgColor();
+            public override Color? ForegroundColor => control.GetDefaultAttributesFgColor();
 
             /// <inheritdoc/>
-            public Font? Font => control.GetDefaultAttributesFont();
+            public override Font? Font => control.GetDefaultAttributesFont();
         }
 
         /// <summary>
         /// Allows to get font and color default for the specified <see cref="ControlTypeId"/>.
         /// </summary>
-        public class ControlStaticDefaultFontAndColor : IReadOnlyFontAndColor
+        public class ControlStaticDefaultFontAndColor : FontAndColor, IReadOnlyFontAndColor
         {
             private readonly ControlTypeId controlType;
             private readonly ControlRenderSizeVariant renderSize;
@@ -233,15 +251,15 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public Color? BackgroundColor =>
+            public override Color? BackgroundColor =>
                 Control.GetClassDefaultAttributesBgColor(controlType, renderSize);
 
             /// <inheritdoc/>
-            public Color? ForegroundColor =>
+            public override Color? ForegroundColor =>
                 Control.GetClassDefaultAttributesFgColor(controlType, renderSize);
 
             /// <inheritdoc/>
-            public Font? Font =>
+            public override Font? Font =>
                 Control.GetClassDefaultAttributesFont(controlType, renderSize);
         }
     }

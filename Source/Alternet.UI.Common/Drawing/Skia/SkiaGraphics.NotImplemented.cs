@@ -164,7 +164,7 @@ namespace Alternet.Drawing
             int indexAccel = -1)
         {
             DebugFontAssert(font);
-            throw new NotImplementedException();
+            return RectD.MinusOne;
         }
 
         /// <inheritdoc/>

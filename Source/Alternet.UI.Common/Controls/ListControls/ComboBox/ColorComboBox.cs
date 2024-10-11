@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default painter for the <see cref="ColorComboBox"/> items.
         /// </summary>
-        public static IComboBoxItemPainter Painter = new DefaultItemPainter();
+        public static IComboBoxItemPainter Painter = new DefaultColorItemPainter();
 
         /// <summary>
         /// Gets or sets default method that initializes items in <see cref="ColorComboBox"/>.
@@ -302,22 +302,10 @@ namespace Alternet.UI
         /// <summary>
         /// Default item painter for the <see cref="ColorComboBox"/> items.
         /// </summary>
-        public class DefaultItemPainter : IComboBoxItemPainter
+        public class DefaultColorItemPainter : DefaultItemPainter, IComboBoxItemPainter
         {
             /// <inheritdoc/>
-            public virtual Coord GetHeight(ComboBox sender, int index, Coord defaultHeight)
-            {
-                return -1;
-            }
-
-            /// <inheritdoc/>
-            public virtual Coord GetWidth(ComboBox sender, int index, Coord defaultWidth)
-            {
-                return -1;
-            }
-
-            /// <inheritdoc/>
-            public virtual void Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
+            public override void Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
             {
                 if (e.IsPaintingBackground)
                 {
@@ -325,16 +313,7 @@ namespace Alternet.UI
                     return;
                 }
 
-                object? item;
-
-                if (e.IsPaintingControl)
-                {
-                    item = sender.SelectedItem;
-                }
-                else
-                {
-                    item = sender.Items[e.ItemIndex];
-                }
+                object? item = e.Item;
 
                 if (item is ListControlItem item1)
                     item = item1.Value;

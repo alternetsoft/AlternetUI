@@ -37,7 +37,7 @@ namespace Alternet.UI
         public bool IsPaintingControl { get; set; }
 
         /// <summary>
-        /// Get whether item index is not found.
+        /// Gets whether item index is not found.
         /// </summary>
         public bool IsIndexNotFound { get; set; }
 
@@ -51,7 +51,32 @@ namespace Alternet.UI
         /// </summary>
         public bool IsPaintingBackground { get; set; }
 
-        internal ComboBox ComboBox { get; set; }
+        /// <summary>
+        /// Gets item which is painted.
+        /// </summary>
+        public virtual object? Item
+        {
+            get
+            {
+                object? result;
+
+                if (IsPaintingControl)
+                {
+                    result = ComboBox.SelectedItem;
+                }
+                else
+                {
+                    result = ComboBox.Items[ItemIndex];
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="ComboBox"/> control for which this object is used.
+        /// </summary>
+        public ComboBox ComboBox { get; set; }
 
         /// <summary>
         /// Default drawing method.

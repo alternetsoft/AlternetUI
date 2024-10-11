@@ -663,5 +663,28 @@ namespace Alternet.UI
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
         }
+
+        /// <summary>
+        /// Default item painter for the ownerdraw <see cref="ComboBox"/> items.
+        /// </summary>
+        public class DefaultItemPainter : IComboBoxItemPainter
+        {
+            /// <inheritdoc/>
+            public virtual Coord GetHeight(ComboBox sender, int index, Coord defaultHeight)
+            {
+                return -1;
+            }
+
+            /// <inheritdoc/>
+            public virtual Coord GetWidth(ComboBox sender, int index, Coord defaultWidth)
+            {
+                return -1;
+            }
+
+            /// <inheritdoc/>
+            public virtual void Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
+            {
+            }
+        }
     }
 }

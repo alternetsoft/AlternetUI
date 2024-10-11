@@ -10,6 +10,11 @@ namespace Alternet.UI
 {
     internal class RichToolTipHandler : DisposableObject<IntPtr>, IRichToolTipHandler
     {
+        public SizeI SizeInPixels
+        {
+            get => Native.WxOtherFactory.RichToolTipGetSize(Handle);
+        }
+
         public RichToolTipHandler(string title, string message)
             : base(Native.WxOtherFactory.CreateRichToolTip(title, message), true)
         {
@@ -89,6 +94,11 @@ namespace Alternet.UI
         protected override void DisposeUnmanaged()
         {
             Native.WxOtherFactory.DeleteRichToolTip(Handle);
+        }
+
+        public void SetLocationDecrement(bool decrementX, bool decrementY)
+        {
+            Native.WxOtherFactory.RichToolTipSetLocationDecrement(Handle, decrementX, decrementY);
         }
     }
 }

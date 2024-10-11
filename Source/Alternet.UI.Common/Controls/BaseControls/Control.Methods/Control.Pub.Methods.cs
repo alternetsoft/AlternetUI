@@ -1104,11 +1104,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets 'ParentBackColor' property for all child controls.
+        /// </summary>
+        /// <param name="value">New property value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenUseParentBackColor(bool value = true, bool recursive = false)
+        {
+            ForEachChild((control) => control.ParentBackColor = value, recursive);
+        }
+
+        /// <summary>
+        /// Sets 'ParentForeColor' property for all child controls.
+        /// </summary>
+        /// <param name="value">New property value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenUseParentForeColor(bool value = true, bool recursive = false)
+        {
+            ForEachChild((control) => control.ParentForeColor = value, recursive);
+        }
+
+        /// <summary>
+        /// Sets 'ParentFont' property for all child controls.
+        /// </summary>
+        /// <param name="value">New property value</param>
+        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        public virtual void SetChildrenUseParentFont(bool value = true, bool recursive = false)
+        {
+            ForEachChild((control) => control.ParentFont = value, recursive);
+        }
+
+        /// <summary>
         /// Changes size of the control to fit the size of its content.
         /// </summary>
         /// <param name="mode">Specifies how a control will size itself to fit the size of
         /// its content.</param>
-        public virtual void SetSizeToContent(WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
+        public virtual void SetSizeToContent(
+            WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
         {
             if (mode == WindowSizeToContentMode.None)
                 return;
@@ -1485,7 +1516,7 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to apply to all children recurively.</param>
         public virtual void SetChildrenFont(Font? font, bool recursive = false)
         {
-            GetChildren(recursive).Font(font);
+            ForEachChild((control) => control.Font = font, recursive);
         }
 
         /// <summary>
@@ -1495,7 +1526,7 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to apply to all children recurively.</param>
         public virtual void SetChildrenBackgroundColor(Color? color, bool recursive = false)
         {
-            GetChildren(recursive).BackgroundColor(color);
+            ForEachChild((control) => control.BackgroundColor = color, recursive);
         }
 
         /// <summary>
@@ -1515,7 +1546,7 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to apply to all children recurively.</param>
         public virtual void SetChildrenForegroundColor(Color? color, bool recursive = false)
         {
-            GetChildren(recursive).ForegroundColor(color);
+            ForEachChild((control) => control.ForegroundColor = color, recursive);
         }
 
         /// <summary>

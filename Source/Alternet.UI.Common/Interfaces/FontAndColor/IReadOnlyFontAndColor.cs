@@ -26,5 +26,23 @@ namespace Alternet.UI
         /// Gets font.
         /// </summary>
         Font? Font { get; }
+
+        /// <summary>
+        /// Gets this object with changed font.
+        /// </summary>
+        /// <returns></returns>
+        IReadOnlyFontAndColor WithFont(Font? font);
+
+        /// <summary>
+        /// Gets this object with changed foreground color.
+        /// </summary>
+        /// <returns></returns>
+        IReadOnlyFontAndColor WithForeColor(Color? color);
+
+        /// <summary>
+        /// Gets this object with changed background color.
+        /// </summary>
+        /// <returns></returns>
+        IReadOnlyFontAndColor WithBackColor(Color? color);
     }
 }

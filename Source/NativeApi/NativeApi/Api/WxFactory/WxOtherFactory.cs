@@ -69,6 +69,11 @@ namespace NativeApi.Api
         // Show the tooltip for the given window and optionally a specified area.
         public static void RichToolTipShowFor(IntPtr handle, IntPtr window, RectI rect, bool adjustPos) { }
 
+        public static SizeI RichToolTipGetSize(IntPtr handle) => default;
+
+        public static void RichToolTipSetLocationDecrement(
+            IntPtr handle, bool decrementX, bool decrementY) { }
+
         // =================== ToolTip
 
         public static IntPtr CreateToolTip(string tip) => default;

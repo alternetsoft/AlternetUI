@@ -296,10 +296,7 @@ namespace Alternet.UI
 
         public Graphics CreateMemoryCanvas(Coord scaleFactor)
         {
-            SKBitmap bitmap = new();
-            SKCanvas canvas = new(bitmap);
-            canvas.Scale((float)scaleFactor);
-            return new SkiaGraphics(canvas);
+            return SkiaUtils.CreateMeasureCanvas(scaleFactor);
         }
 
         public IGenericImageHandler CreateGenericImageHandler(int width, int height, SKColor[] data)

@@ -177,6 +177,28 @@ ALTERNET_UI_API void WxOtherFactory_RichToolTipShowFor_(void* handle, void* wind
     #endif
 }
 
+ALTERNET_UI_API SizeI_C WxOtherFactory_RichToolTipGetSize_(void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<SizeI_C>([&](){
+    #endif
+        return WxOtherFactory::RichToolTipGetSize(handle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void WxOtherFactory_RichToolTipSetLocationDecrement_(void* handle, c_bool decrementX, c_bool decrementY)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        WxOtherFactory::RichToolTipSetLocationDecrement(handle, decrementX, decrementY);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void* WxOtherFactory_CreateToolTip_(const char16_t* tip)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

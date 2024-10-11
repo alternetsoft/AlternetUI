@@ -365,6 +365,18 @@ namespace Alternet::UI
 	{
 	}
 
+	SizeI WxOtherFactory::RichToolTipGetSize(void* handle)
+	{
+		auto tooltip = (wxRichToolTip2*)handle;
+		return tooltip->GetSize();
+	}
+
+	void WxOtherFactory::RichToolTipSetLocationDecrement(void* handle, bool decrementX, bool decrementY)
+	{
+		auto tooltip = (wxRichToolTip2*)handle;
+		tooltip->SetLocationDecrement(decrementX, decrementY);
+	}
+
 	void WxOtherFactory::RichToolTipShowFor(
 		void* handle,
 		void* window,

@@ -320,7 +320,7 @@ public:
         }
     }
 
-    void SetPosition(const wxRect* rect)
+    void SetPosition(const wxRect* rect, bool decrementX, bool decrementY)
     {
         wxPoint pos;
 
@@ -338,6 +338,19 @@ public:
         {
             pos -= m_anchorPos;
         }
+
+        auto size = GetSize();
+
+        if (decrementX)
+        {
+            pos.x -= size.x;
+        }
+        
+        if (decrementY)
+        {
+            pos.y -= size.y;
+        }
+
 
         Move(pos, wxSIZE_NO_ADJUSTMENTS);
     }
@@ -793,7 +806,10 @@ void wxAlternetRichToolTipImpl::ShowFor(wxWindow* win, const wxRect* rect)
 
     popup->SetAdjustPos(m_adjustPos);
 
-    popup->SetPosition(rect);
+    popup->SetPosition(rect, m_decrementX, m_decrementY);
+
+    m_size = popup->GetSize();
+
     // show or start the timer to delay showing the popup
     popup->SetTimeoutAndShow(m_timeout, m_delay);
 }

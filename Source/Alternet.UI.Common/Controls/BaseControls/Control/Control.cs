@@ -241,8 +241,13 @@ namespace Alternet.UI
         {
             get
             {
-                var measureCanvas = GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
-                return measureCanvas;
+                if(GraphicsFactory.MeasureCanvasOverride is null)
+                {
+                    var measureCanvas = GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
+                    return measureCanvas;
+                }
+
+                return GraphicsFactory.MeasureCanvasOverride;
             }
         }
 
@@ -1726,6 +1731,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets bounds in pixels.
+        /// </summary>
+        public virtual RectI BoundsInPixels
+        {
+            get
+            {
+                return Bounds.PixelFromDip(ScaleFactor);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the top padding inside a control.
         /// </summary>
         public Coord PaddingTop
@@ -2355,7 +2371,7 @@ namespace Alternet.UI
                     foreach (var child in Children)
                     {
                         if (child.ParentFont)
-                            child.Font = value;
+                            child.Font = value?.WithBold(child.IsBold);
                     }
                 });
             }

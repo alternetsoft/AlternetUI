@@ -145,6 +145,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates measure canvas for the specified scaling factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scaling factor.</param>
+        /// <returns></returns>
+        public static Graphics CreateMeasureCanvas(Coord scaleFactor)
+        {
+            SKBitmap bitmap = new();
+            SKCanvas canvas = new(bitmap);
+            canvas.Scale((float)scaleFactor);
+            return new SkiaGraphics(canvas);
+        }
+
+        /// <summary>
         /// Gets whether or not specified bitmap is ok.
         /// </summary>
         /// <param name="bitmap">Bitmap to check.</param>
