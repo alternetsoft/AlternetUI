@@ -978,6 +978,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns font with same parameters, but with different bold style.
+        /// </summary>
+        /// <param name="isBold">Whether returned font is bold or not.</param>
+        /// <returns></returns>
+        public virtual Font WithBold(bool isBold)
+        {
+            if (isBold)
+                return AsBold;
+            var style = ChangeFontStyle(Style, FontStyle.Bold, false);
+            return WithStyle(style);
+        }
+
+        /// <summary>
         /// Returns font with same name and size, but with different <see cref="FontStyle"/>.
         /// </summary>
         /// <param name="style">New font style.</param>
