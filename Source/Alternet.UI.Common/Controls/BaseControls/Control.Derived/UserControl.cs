@@ -164,7 +164,9 @@ namespace Alternet.UI
                 return overrideValue;
 
             var result = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
-            return result?.Backgrounds?.GetObjectOrNull(state);
+            var brush = result?.Backgrounds?.GetObjectOrNull(state);
+            brush ??= BackgroundColor?.AsBrush;
+            return brush;
         }
 
         /// <summary>
