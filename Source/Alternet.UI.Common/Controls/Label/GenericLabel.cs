@@ -329,7 +329,7 @@ namespace Alternet.UI
             Font? font = null)
         {
             var state = VisualState;
-            var paddedRect = (
+            RectD paddedRect = (
                 rect.Location + Padding.LeftTop,
                 rect.Size - Padding.Size);
 
@@ -339,15 +339,32 @@ namespace Alternet.UI
             if (labelImage is null && labelText == string.Empty)
                 return;
 
-            dc.DrawLabel(
+            var labelFont = font ?? GetLabelFont(state);
+            var labelForeColor = foreColor ?? GetLabelForeColor(state);
+            var labelBackColor = backColor ?? GetLabelBackColor(state);
+            var mnemonicCharIndex = GetMnemonicCharIndex();
+
+            /*var isSimple = TextAlignment == 0 && labelImage is null && mnemonicCharIndex < 0;*/
+
+            var result = dc.DrawLabel(
                 labelText,
-                font ?? GetLabelFont(state),
-                foreColor ?? GetLabelForeColor(state),
-                backColor ?? GetLabelBackColor(state),
+                labelFont,
+                labelForeColor,
+                labelBackColor,
                 labelImage,
                 paddedRect,
                 TextAlignment,
-                GetMnemonicCharIndex());
+                mnemonicCharIndex);
+
+            if(result == RectD.MinusOne)
+            {
+                dc.DrawText(
+                    labelText,
+                    paddedRect.Location,
+                    labelFont,
+                    labelForeColor,
+                    labelBackColor);
+            }
         }
 
         /// <summary>
