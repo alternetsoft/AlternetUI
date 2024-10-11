@@ -1191,7 +1191,13 @@ namespace Alternet::UI
         auto& oldFont = _dc->GetFont();
         _dc->SetFont(font->GetWxFont());
 
-        auto wRect = fromDip(rect, window);
+        Rect rectTranslated(rect.X, rect.Y, rect.Width, rect.Height);
+
+#ifndef __WXMSW__
+        rectTranslated.X += _currentTranslation.x;
+        rectTranslated.Y += _currentTranslation.y;
+#endif
+        auto wRect = fromDip(rectTranslated, window);
         wxRect rectBounding;
         wxBitmap bitmap = wxNullBitmap;
 
@@ -1227,7 +1233,7 @@ namespace Alternet::UI
         return rectBounding;
     }
 
-    void DrawingContext::DrawText(const string& text, const Point& location, Font* font,
+    void DrawingContext::DrawText(const string& text, const PointD& location, Font* font,
         const Color& foreColor, const Color& backColor)
     {
         bool useBackColor = !backColor.IsEmpty();
@@ -1253,7 +1259,7 @@ namespace Alternet::UI
         auto& oldFont = _dc->GetFont();
         _dc->SetFont(font->GetWxFont());
 
-        Point locationTranslated = location;
+        PointD locationTranslated = location;
 
 #ifndef __WXMSW__
         locationTranslated.X += _currentTranslation.x;

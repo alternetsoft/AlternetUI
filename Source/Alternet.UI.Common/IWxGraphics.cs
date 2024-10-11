@@ -12,6 +12,7 @@ namespace Alternet.Drawing
     /// Extends <see cref="IGraphics"/> with additional functionality implemented
     /// on WxWidgets platform.
     /// </summary>
+    [Obsolete("Depends on WxWdigets")]
     public interface IWxGraphics : IGraphics
     {
         /// <summary>

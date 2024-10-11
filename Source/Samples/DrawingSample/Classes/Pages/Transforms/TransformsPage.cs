@@ -1,5 +1,8 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
+
+using ControlsSample;
+
 using System;
 
 namespace DrawingSample
@@ -148,12 +151,26 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
-            //dc.DrawText(
-            //    "AlterNET UI",
-            //    canvasTestFont,
-            //    Brushes.Blue,
-            //    innerFrame.InflatedBy(-10, -10),
-            //    new TextFormat { HorizontalAlignment = TextHorizontalAlignment.Center, VerticalAlignment = TextVerticalAlignment.Bottom });
+            ((IWxGraphics)dc).DrawText(
+                "AlterNET UI",
+                Font.Default.Larger(),
+                Brushes.Blue,
+                innerFrame.InflatedBy(-10, -10),
+                new TextFormat { HorizontalAlignment = TextHorizontalAlignment.Center, VerticalAlignment = TextVerticalAlignment.Bottom });
+
+            dc.DrawText("This is sample text",
+                innerFrame.InflatedBy(-150, -150).Location,
+                Font.Default,
+                Color.DarkOliveGreen,
+                Color.LightGoldenrodYellow);
+
+            dc.DrawLabel(
+                "This is sample label",
+                Font.Default,
+                Color.LightSkyBlue,
+                Color.Olive,
+                NotifyIconPage.Image,
+                innerFrame.InflatedBy(-250, -250));                
 
             dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
         }
