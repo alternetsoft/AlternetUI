@@ -9,6 +9,8 @@ using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace ControlsSample
 {
     public partial class CustomDrawTestPage : Window
@@ -46,10 +48,7 @@ namespace ControlsSample
         {
         };
 
-        private readonly ControlTemplate controlTemplate = new()
-        {
-            Visible = false,
-        };
+        private readonly TemplateControl controlTemplate = new();
 
         private readonly InteriorDrawable interiorDrawable;
 
@@ -59,8 +58,14 @@ namespace ControlsSample
 
         public CustomDrawTestPage()
         {
+            controlTemplate = TemplateUtils.CreateTemplateWithBoldText(
+                "This text has ",
+                "bold",
+                " fragment",
+                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Font.Default.WithSize(25)));
+
             controlTemplate.Parent = this;
-            controlTemplate.SetSizeToContent(WindowSizeToContentMode.WidthAndHeight);
+            controlTemplate.SetSizeToContent();
             interiorDrawable = CreateInteriorDrawable(false);
 
             Size = (900, 700);
@@ -94,6 +99,7 @@ namespace ControlsSample
             }
 
             panel.AddAction("Draw Control Template", DrawControlTemplate);
+            panel.AddAction("ToolTip with Control Template", ShowTemplateToolTip);
 
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
         }
@@ -171,21 +177,23 @@ namespace ControlsSample
             });
         }
 
+        public void ShowTemplateToolTip()
+        {
+            TemplateUtils.CreateAndShowTemplateToolTip(
+                customDrawControl,
+                (250, 50),
+                controlTemplate);
+        }
+
         public void DrawControlTemplate()
         {
             customDrawControl.SetPaintAction(DrawTemplate);
 
             void DrawTemplate(Control container, Graphics canvas, RectD rect)
             {
-                RectD clipRect = (0, 0, controlTemplate.Width, controlTemplate.Height);
-
-                PaintEventArgs e = new(canvas, clipRect);
-
-                TransformMatrix transform = new();
-                transform.Translate(100, 50);
-                e.Graphics.PushTransform(transform);
-                controlTemplate.RaisePaintRecursive(e);
-                e.Graphics.Pop();
+                controlTemplate.HasBorder = true;
+                TemplateUtils.DrawControlTemplate(controlTemplate, canvas, (100, 250));
+                controlTemplate.HasBorder = false;
             }
         }
 
@@ -237,24 +245,6 @@ namespace ControlsSample
         private void HorzScrollBar_ValueChanged(object? sender, EventArgs e)
         {
             DrawScrollBar(currentTheme);
-        }
-
-        internal class ControlTemplate : Control
-        {
-            public ControlTemplate()
-            {
-                Layout = LayoutStyle.Horizontal;
-                GenericLabel label1 = new("This text has ");
-                GenericLabel label2 = new("bold");
-                GenericLabel label3 = new(" fragment");
-                label2.IsBold = true;
-                DoInsideLayout(() =>
-                {
-                    label1.Parent = this;
-                    label2.Parent = this;
-                    label3.Parent = this;
-                });
-            }
         }
     }
 }

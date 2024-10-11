@@ -22,13 +22,21 @@ namespace ControlsSample
 
             addItemButton.KeyDown += AddItemButton_KeyDown;
             KeyDown += ComboBoxPage_KeyDown;
+
+            comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged1;
         }
 
-        private void ComboBoxPage_KeyDown(object sender, KeyEventArgs e)
+        private void ComboBox_SelectedItemChanged1(object? sender, EventArgs e)
+        {
+            var prefix = "ComboBox.SelectedItemChanged";
+            App.LogReplace($"{prefix}: {comboBox.SelectedItem}", prefix);
+        }
+
+        private void ComboBoxPage_KeyDown(object? sender, KeyEventArgs e)
         {
         }
 
-        private void AddItemButton_KeyDown(object sender, KeyEventArgs e)
+        private void AddItemButton_KeyDown(object? sender, KeyEventArgs e)
         {
             if ((e.Key == Key.Up || e.Key == Key.Down) && supressUpDown)
                 e.Handled = true;
