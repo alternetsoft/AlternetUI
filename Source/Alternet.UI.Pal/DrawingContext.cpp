@@ -733,7 +733,7 @@ namespace Alternet::UI
         matrix.Set(m, t);
 
         _currentTransform = matrix;
-        _currentTranslation = wxPoint((int)t.m_x, (int)t.m_y);
+        /*_currentTranslation = wxPoint((int)t.m_x, (int)t.m_y);*/
         _nonIdentityTransformSet = !_currentTransform.IsIdentity();
 
         // Setting transform on DC and GC at the same time doesn't work.
@@ -1194,8 +1194,8 @@ namespace Alternet::UI
         Rect rectTranslated(rect.X, rect.Y, rect.Width, rect.Height);
 
 #ifndef __WXMSW__
-        rectTranslated.X += _currentTranslation.x;
-        rectTranslated.Y += _currentTranslation.y;
+        /*rectTranslated.X += _currentTranslation.x;
+        rectTranslated.Y += _currentTranslation.y;*/
 #endif
         auto wRect = fromDip(rectTranslated, window);
         wxRect rectBounding;
@@ -1262,8 +1262,8 @@ namespace Alternet::UI
         PointD locationTranslated = location;
 
 #ifndef __WXMSW__
-        locationTranslated.X += _currentTranslation.x;
-        locationTranslated.Y += _currentTranslation.y;
+        /*locationTranslated.X += _currentTranslation.x;
+        locationTranslated.Y += _currentTranslation.y;*/
 #endif
 
         auto point = fromDip(locationTranslated, window);
@@ -1290,15 +1290,14 @@ namespace Alternet::UI
         Font* font,
         Brush* brush)
     {
-        //if (NeedToUseDC())
-        //    UseDC();
-        //else
-        //    UseGC();
+        UseDC();
+/*
 #if __WXMSW__
         UseDC();
 #else
         _dc->ResetTransformMatrix();
 #endif
+*/
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtPoint(
             text,
@@ -1317,15 +1316,13 @@ namespace Alternet::UI
         TextTrimming trimming,
         TextWrapping wrapping)
     {
-        //if (NeedToUseDC())
-        //    UseDC();
-        //else
-        //    UseGC();
+        UseDC();
+/*
 #if __WXMSW__
         UseDC();
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
             text,
@@ -1352,7 +1349,7 @@ namespace Alternet::UI
     {
         wxPoint translation;
 #ifndef __WXMSW__
-        translation = _currentTranslation;
+        /*translation = _currentTranslation;*/
 #endif
         return new TextPainter(_dc, _graphicsContext, /*NeedToUseDC()*/true, translation);
     }
@@ -1360,15 +1357,15 @@ namespace Alternet::UI
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth,
         TextWrapping wrapping)
     {
-        //if (NeedToUseDC())
-        //    UseDC();
-        //else
-        //    UseGC();
-#if __WXMSW__
+        if (NeedToUseDC())
+            UseDC();
+        else
+            UseGC();
+/*#if __WXMSW__
         UseDC();
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font,
             maximumWidth, wrapping);
@@ -1376,10 +1373,10 @@ namespace Alternet::UI
 
     Size DrawingContext::GetTextExtentSimple(const string& text, Font* font, void* control)
     {
-#if __WXMSW__
+/*#if __WXMSW__
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         auto wxf = font->GetWxFont();
 
@@ -1421,10 +1418,10 @@ namespace Alternet::UI
 
     Rect DrawingContext::GetTextExtent(const string& text, Font* font, void* control)
     {
-#if __WXMSW__
+/*#if __WXMSW__
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         auto wxf = font->GetWxFont();
 

@@ -45,7 +45,7 @@ namespace Alternet::UI
         /*std::stack<wxAffineMatrix2D> _transformStack;*/
 
         wxAffineMatrix2D _currentTransform;
-        wxPoint _currentTranslation;
+        /*wxPoint _currentTranslation;*/
 
         InterpolationMode _interpolationMode = InterpolationMode::HighQuality;
 
