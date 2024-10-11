@@ -126,11 +126,9 @@ public:
         if (Alternet::UI::Window::fontOverride.IsOk())
             SetFont(Alternet::UI::Window::fontOverride);
 
-        /*
         // Move to the display where it will be shown,
         // so below calculations are based on the correct DPI.
         Move(GetTipPoint(), wxSIZE_ALLOW_MINUS_ONE);
-        */
 
         wxBoxSizer* const sizerTitle = new wxBoxSizer(wxHORIZONTAL);
         if (hasIcon)
