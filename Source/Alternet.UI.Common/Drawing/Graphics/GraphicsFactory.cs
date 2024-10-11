@@ -133,6 +133,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets global override for measure canvas.
+        /// </summary>
+        public static Graphics? MeasureCanvasOverride { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="ImageBitsFormat"/> for the opaque images.
         /// </summary>
         public static ImageBitsFormat NativeBitsFormat
