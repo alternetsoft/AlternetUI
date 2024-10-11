@@ -1212,7 +1212,11 @@ namespace Alternet::UI
     {
         bool useBackColor = !backColor.IsEmpty();
 
+#if __WXMSW__
         UseDC();
+#else
+        _dc->ResetTransformMatrix();
+#endif
         
         auto window = DrawingContext::GetWindow(_dc);
 
