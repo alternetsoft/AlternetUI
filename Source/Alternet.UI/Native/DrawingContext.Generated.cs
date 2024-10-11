@@ -42,24 +42,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public TransformMatrix Transform
-        {
-            get
-            {
-                CheckDisposed();
-                var _nnn = NativeApi.DrawingContext_GetTransform_(NativePointer);
-                var _mmm = NativeObject.GetFromNativePointer<TransformMatrix>(_nnn, p => new TransformMatrix(p))!;
-                ReleaseNativeObjectPointer(_nnn);
-                return _mmm;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.DrawingContext_SetTransform_(NativePointer, value.NativePointer);
-            }
-        }
-        
         public Region? Clip
         {
             get
@@ -372,16 +354,10 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawImagePortionAtPixelRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
         }
         
-        public void Push()
+        public void SetTransformValues(double m11, double m12, double m21, double m22, double dx, double dy)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_Push_(NativePointer);
-        }
-        
-        public void Pop()
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_Pop_(NativePointer);
+            NativeApi.DrawingContext_SetTransformValues_(NativePointer, m11, m12, m21, m22, dx, dy);
         }
         
         public void DrawLine(Pen pen, Alternet.Drawing.PointD a, Alternet.Drawing.PointD b)
@@ -503,12 +479,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr DrawingContext_GetWxWidgetDC_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr DrawingContext_GetTransform_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_SetTransform_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_GetClip_(IntPtr obj);
@@ -658,10 +628,7 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawImagePortionAtPixelRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectI destinationRect, Alternet.Drawing.RectI sourceRect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_Push_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_Pop_(IntPtr obj);
+            public static extern void DrawingContext_SetTransformValues_(IntPtr obj, double m11, double m12, double m21, double m22, double dx, double dy);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawLine_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD a, Alternet.Drawing.PointD b);

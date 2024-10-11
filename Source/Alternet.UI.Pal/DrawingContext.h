@@ -32,7 +32,7 @@ namespace Alternet::UI
         static wxWindow* GetWindow(wxDC* dc);
 
     private:
-        void SetTransformCore(const wxAffineMatrix2D& value);
+        /*void SetTransformCore(const wxAffineMatrix2D& value);*/
         void ApplyTransform(bool useDC);
 
         void UseDC();
@@ -42,7 +42,7 @@ namespace Alternet::UI
 
         static wxInterpolationQuality GetInterpolationQuality(InterpolationMode mode);
 
-        std::stack<wxAffineMatrix2D> _transformStack;
+        /*std::stack<wxAffineMatrix2D> _transformStack;*/
 
         wxAffineMatrix2D _currentTransform;
         wxPoint _currentTranslation;

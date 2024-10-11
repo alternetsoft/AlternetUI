@@ -697,7 +697,7 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::Push()
+    /*void DrawingContext::Push()
     {
         _transformStack.push(_dc->GetTransformMatrix());
     }
@@ -709,9 +709,9 @@ namespace Alternet::UI
 
         SetTransformCore(_transformStack.top());
         _transformStack.pop();
-    }
+    }*/
 
-    TransformMatrix* DrawingContext::GetTransform()
+    /*TransformMatrix* DrawingContext::GetTransform()
     {
         auto result = new TransformMatrix(_currentTransform);
         result->AddRef();
@@ -721,9 +721,29 @@ namespace Alternet::UI
     void DrawingContext::SetTransform(TransformMatrix* value)
     {
         SetTransformCore(value->GetMatrix());
+    }*/
+
+    void DrawingContext::SetTransformValues(
+        double m11, double m12, double m21, double m22, double dx, double dy)
+    {
+        wxMatrix2D m(m11, m12, m21, m22);
+        wxPoint2DDouble t(dx, dy);
+
+        wxAffineMatrix2D matrix;
+        matrix.Set(m, t);
+
+        _currentTransform = matrix;
+        _currentTranslation = wxPoint((int)t.m_x, (int)t.m_y);
+        _nonIdentityTransformSet = !_currentTransform.IsIdentity();
+
+        // Setting transform on DC and GC at the same time doesn't work.
+        // So apply them before every operation on by one if needed.
+
+        _dc->ResetTransformMatrix();
+        _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
     }
 
-    void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
+    /*void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
     {
         _currentTransform = value;
 
@@ -739,7 +759,7 @@ namespace Alternet::UI
 
         _dc->ResetTransformMatrix();
         _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
-    }
+    }*/
 
     void DrawingContext::ApplyTransform(bool useDC)
     {
@@ -1233,7 +1253,14 @@ namespace Alternet::UI
         auto& oldFont = _dc->GetFont();
         _dc->SetFont(font->GetWxFont());
 
-        auto point = fromDip(location, window);
+        Point locationTranslated = location;
+
+#ifndef __WXMSW__
+        locationTranslated.X += _currentTranslation.x;
+        locationTranslated.Y += _currentTranslation.y;
+#endif
+
+        auto point = fromDip(locationTranslated, window);
 
         if (useBackColor)
         {

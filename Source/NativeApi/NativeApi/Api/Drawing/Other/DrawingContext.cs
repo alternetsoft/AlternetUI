@@ -163,11 +163,19 @@ namespace NativeApi.Api
             RectI sourceRect)
         { }
 
-        public void Push() => throw new Exception();
+        /*public void Push() => throw new Exception();
 
         public void Pop() => throw new Exception();
 
-        public TransformMatrix Transform { get; set; }
+        public TransformMatrix Transform { get; set; }*/
+
+        public void SetTransformValues(
+            double m11,
+            double m12,
+            double m21,
+            double m22,
+            double dx,
+            double dy) => throw new Exception();
 
         public void DrawLine(Pen pen, PointD a, PointD b) => throw new Exception();
 

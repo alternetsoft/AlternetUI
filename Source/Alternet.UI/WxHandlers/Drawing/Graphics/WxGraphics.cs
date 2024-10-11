@@ -717,9 +717,7 @@ namespace Alternet.Drawing
 
         protected override void SetHandlerTransform(TransformMatrix matrix)
         {
-            var native = new UI.Native.TransformMatrix();
-            native.Initialize(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.DX, matrix.DY);
-            dc.Transform = native;
+            dc.SetTransformValues(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.DX, matrix.DY);
         }
     }
 }
