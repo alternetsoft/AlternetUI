@@ -35,33 +35,111 @@ namespace Alternet.Drawing
 
     /// <summary>
     /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform.
-    /// This class cannot be inherited.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Pack = 1)]
-    public partial class TransformMatrix
+    public partial struct TransformMatrix : IEquatable<TransformMatrix>
     {
         /// <summary>
-        /// Gets identity matrix.
+        /// Gets or sets the scaling in the x-direction. This is the same as <see cref="ScaleX"/>.
+        /// This is the value in the first row and first column of the matrix.
         /// </summary>
-        public static readonly TransformMatrix Default = new();
+        [FieldOffset(FieldOffsetM11)]
+        public Coord M11;
 
-        [FieldOffset(0)]
-        private Coord m11;
+        /// <summary>
+        /// Gets or sets the skew in the y-direction.
+        /// This is the value in the first row and second column of the matrix.
+        /// This is the same as <see cref="SkewY"/>.
+        /// </summary>
+        [FieldOffset(FieldOffsetM12)]
+        public Coord M12;
 
-        [FieldOffset(sizeof(Coord))]
-        private Coord m12;
+        /// <summary>
+        /// Gets or sets the skew in the x-direction.
+        /// This is the value in the second row and first column of the matrix.
+        /// This is the same as <see cref="SkewX"/>.
+        /// </summary>
+        [FieldOffset(FieldOffsetM21)]
+        public Coord M21;
 
-        [FieldOffset(sizeof(Coord) * 2)]
-        private Coord m21;
+        /// <summary>
+        /// Gets or sets the scaling in the y-direction.
+        /// This is the value in the second row and second column of the matrix.
+        /// This is the same as <see cref="ScaleY"/>.
+        /// </summary>
+        [FieldOffset(FieldOffsetM22)]
+        public Coord M22;
 
-        [FieldOffset(sizeof(Coord) * 3)]
-        private Coord m22;
+        /// <summary>
+        /// Get or sets the translation in the x-direction (the dx value, or the element
+        /// in the third row and first column) of the matrix. This is the same as <see cref="TransX"/>.
+        /// </summary>
+        [FieldOffset(FieldOffsetDX)]
+        public Coord DX;
 
-        [FieldOffset(sizeof(Coord) * 4)]
-        private Coord dx;
+        /// <summary>
+        /// Get or sets the translation in the y-direction (the dy value, or the
+        /// element in the third row and second column) of the matrix.
+        /// This is the same as <see cref="TransY"/>.
+        /// </summary>
+        [FieldOffset(FieldOffsetDY)]
+        public Coord DY;
 
-        [FieldOffset(sizeof(Coord) * 5)]
-        private Coord dy;
+        /* Alternative field names */
+
+        /// <summary>
+        /// Gets or sets the scaling in the x-direction. This is the same as <see cref="M11"/>.
+        /// This is the value in the first row and first column of the matrix.
+        /// </summary>
+        [FieldOffset(FieldOffsetM11)]
+        public Coord ScaleX;
+
+        /// <summary>
+        /// Gets or sets the skew in the x-direction. This is the same as <see cref="M21"/>.
+        /// This is the value in the second row and first column in the matrix.
+        /// </summary>
+        [FieldOffset(FieldOffsetM21)]
+        public Coord SkewX;
+
+        /// <summary>
+        /// Get or sets the translation in the x-direction.
+        /// This is the same as <see cref="DX"/>.
+        /// This is the value in the third row and first column in the matrix.
+        /// </summary>
+        [FieldOffset(FieldOffsetDX)]
+        public Coord TransX;
+
+        /// <summary>
+        /// Gets or sets the skew in the y-direction.
+        /// This is the value in the first row and second column in the matrix.
+        /// This is the same as <see cref="M12"/>.
+        /// </summary>
+        [FieldOffset(FieldOffsetM12)]
+        public Coord SkewY;
+
+        /// <summary>
+        /// Gets or sets the scaling in the y-direction.
+        /// This is the same as <see cref="M22"/>.
+        /// This is the value in the second row and second column in the matrix.
+        /// </summary>
+        [FieldOffset(FieldOffsetM22)]
+        public Coord ScaleY;
+
+        /// <summary>
+        /// Get or sets the translation in the y-direction.
+        /// This is the same as <see cref="DY"/>.
+        /// This is the value in the third row and second column in the matrix.
+        /// </summary>
+        [FieldOffset(FieldOffsetDY)]
+        public Coord TransY;
+
+        private const int SizeOf = sizeof(Coord);
+        private const int FieldOffsetM11 = 0;
+        private const int FieldOffsetM12 = SizeOf;
+        private const int FieldOffsetM21 = SizeOf * 2;
+        private const int FieldOffsetM22 = SizeOf * 3;
+        private const int FieldOffsetDX = SizeOf * 4;
+        private const int FieldOffsetDY = SizeOf * 5;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
@@ -91,12 +169,22 @@ namespace Alternet.Drawing
             Coord dx,
             Coord dy)
         {
-            this.m11 = m11;
-            this.m12 = m12;
-            this.m21 = m21;
-            this.m22 = m22;
-            this.dx = dx;
-            this.dy = dy;
+            this.M11 = m11;
+            this.M12 = m12;
+            this.M21 = m21;
+            this.M22 = m22;
+            this.DX = dx;
+            this.DY = dy;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransformMatrix"/> class
+        /// using data from the specified matrix.
+        /// </summary>
+        /// <param name="matrix"></param>
+        public TransformMatrix(TransformMatrix matrix)
+        {
+            Assign(matrix);
         }
 
         /// <summary>
@@ -112,227 +200,15 @@ namespace Alternet.Drawing
         /// </remarks>
         public Coord[] Elements
         {
-            get => new[] { m11, m12, m21, m22, dx, dy };
+            readonly get => new[] { M11, M12, M21, M22, DX, DY };
             set
             {
-                m11 = value[0];
-                m12 = value[1];
-                m21 = value[2];
-                m22 = value[3];
-                dx = value[4];
-                dy = value[5];
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the scaling in the x-direction. This is the same as <see cref="ScaleX"/>.
-        /// This is the value in the first row and first column of the matrix.
-        /// </summary>
-        public Coord M11
-        {
-            get
-            {
-                return m11;
-            }
-
-            set
-            {
-                m11 = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the skew in the y-direction.
-        /// This is the value in the first row and second column of the matrix.
-        /// This is the same as <see cref="SkewY"/>.
-        /// </summary>
-        public Coord M12
-        {
-            get
-            {
-                return m12;
-            }
-
-            set
-            {
-                m12 = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the skew in the x-direction.
-        /// This is the value in the second row and first column of the matrix.
-        /// This is the same as <see cref="SkewX"/>.
-        /// </summary>
-        public Coord M21
-        {
-            get
-            {
-                return m21;
-            }
-
-            set
-            {
-                m21 = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the scaling in the y-direction.
-        /// This is the value in the second row and second column of the matrix.
-        /// This is the same as <see cref="ScaleY"/>.
-        /// </summary>
-        public Coord M22
-        {
-            get
-            {
-                return m22;
-            }
-
-            set
-            {
-                m22 = value;
-            }
-        }
-
-        /// <summary>
-        /// Get or sets the translation in the x-direction (the dx value, or the element
-        /// in the third row and first column) of the matrix. This is the same as <see cref="TransX"/>.
-        /// </summary>
-        public Coord DX
-        {
-            get
-            {
-                return dx;
-            }
-
-            set
-            {
-                dx = value;
-            }
-        }
-
-        /// <summary>
-        /// Get or sets the translation in the y-direction (the dy value, or the
-        /// element in the third row and second column) of the matrix.
-        /// This is the same as <see cref="TransY"/>.
-        /// </summary>
-        public Coord DY
-        {
-            get
-            {
-                return dy;
-            }
-
-            set
-            {
-                dy = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the scaling in the x-direction. This is the same as <see cref="M11"/>.
-        /// This is the value in the first row and first column of the matrix.
-        /// </summary>
-        public Coord ScaleX
-        {
-            get
-            {
-                return m11;
-            }
-
-            set
-            {
-                m11 = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the skew in the x-direction. This is the same as <see cref="M21"/>.
-        /// This is the value in the second row and first column in the matrix.
-        /// </summary>
-        public Coord SkewX
-        {
-            get
-            {
-                return m21;
-            }
-
-            set
-            {
-                m21 = value;
-            }
-        }
-
-        /// <summary>
-        /// Get or sets the translation in the x-direction.
-        /// This is the same as <see cref="DX"/>.
-        /// This is the value in the third row and first column in the matrix.
-        /// </summary>
-        public Coord TransX
-        {
-            get
-            {
-                return dx;
-            }
-
-            set
-            {
-                dx = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the skew in the y-direction.
-        /// This is the value in the first row and second column in the matrix.
-        /// This is the same as <see cref="M12"/>.
-        /// </summary>
-        public Coord SkewY
-        {
-            get
-            {
-                return m12;
-            }
-
-            set
-            {
-                m12 = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the scaling in the y-direction.
-        /// This is the same as <see cref="M22"/>.
-        /// This is the value in the second row and second column in the matrix.
-        /// </summary>
-        public Coord ScaleY
-        {
-            get
-            {
-                return m22;
-            }
-
-            set
-            {
-                m22 = value;
-            }
-        }
-
-        /// <summary>
-        /// Get or sets the translation in the y-direction.
-        /// This is the same as <see cref="DY"/>.
-        /// This is the value in the third row and second column in the matrix.
-        /// </summary>
-        public Coord TransY
-        {
-            get
-            {
-                return dy;
-            }
-
-            set
-            {
-                dy = value;
+                M11 = value[0];
+                M12 = value[1];
+                M21 = value[2];
+                M22 = value[3];
+                DX = value[4];
+                DY = value[5];
             }
         }
 
@@ -343,13 +219,13 @@ namespace Alternet.Drawing
         /// <value>This property is <see langword="true"/> if this
         /// <see cref="TransformMatrix"/> is identity; otherwise,
         /// <see langword="false"/>.</value>
-        public bool IsIdentity
+        public readonly bool IsIdentity
         {
             get
             {
-                return m11 == 1d && m12 == 0d &&
-                       m21 == 0d && m22 == 1d &&
-                       dx == 0d && dy == 0d;
+                return M11 == 1d && M12 == 0d &&
+                       M21 == 0d && M22 == 1d &&
+                       DX == 0d && DY == 0d;
             }
         }
 
@@ -357,11 +233,11 @@ namespace Alternet.Drawing
         /// Gets the determinant of this matrix.
         /// </summary>
         [Browsable(false)]
-        public Coord Determinant
+        public readonly Coord Determinant
         {
             get
             {
-                return (m11 * m22) - (m12 * m21);
+                return (M11 * M22) - (M12 * M21);
             }
         }
 
@@ -394,6 +270,28 @@ namespace Alternet.Drawing
                 0,
                 1);
             return result;
+        }
+
+        /// <summary>
+        /// Tests whether <see cref="TransformMatrix"/> and <see cref="TransformMatrix"/>
+        /// structures are different.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator !=(TransformMatrix left, TransformMatrix right) => !(left == right);
+
+        /// <summary>
+        /// Tests whether two specified <see cref="TransformMatrix"/> structures are equivalent.
+        /// </summary>
+        /// <param name="left">The <see cref="TransformMatrix"/> that is to the left
+        /// of the equality operator.</param>
+        /// <param name="right">The <see cref="TransformMatrix"/> that is to the right
+        /// of the equality operator.</param>
+        /// <returns><c>true</c> if the two <see cref="TransformMatrix"/> structures
+        /// are equal; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator ==(TransformMatrix left, TransformMatrix right)
+        {
+            return left.Equals(right);
         }
 
         /// <summary>
@@ -441,12 +339,12 @@ namespace Alternet.Drawing
         /// </summary>
         public void Reset()
         {
-            m11 = 1d;
-            m12 = 0d;
-            m21 = 0d;
-            m22 = 1d;
-            dx = 0d;
-            dy = 0d;
+            M11 = 1d;
+            M12 = 0d;
+            M21 = 0d;
+            M22 = 1d;
+            DX = 0d;
+            DY = 0d;
         }
 
         /// <summary>
@@ -465,22 +363,22 @@ namespace Alternet.Drawing
             | t.m_tx  t.m_ty  1 |   | m_tx  m_ty   1 |
             */
 
-            var matrixDX = matrix.dx;
-            var matrixDY = matrix.dy;
-            var matrixM11 = matrix.m11;
-            var matrixM12 = matrix.m12;
-            var matrixM21 = matrix.m21;
-            var matrixM22 = matrix.m22;
+            var matrixDX = matrix.DX;
+            var matrixDY = matrix.DY;
+            var matrixM11 = matrix.M11;
+            var matrixM12 = matrix.M12;
+            var matrixM21 = matrix.M21;
+            var matrixM22 = matrix.M22;
 
-            dx += (matrixDX * m11) + (matrixDY * m21);
-            dy += (matrixDX * m12) + (matrixDY * m22);
-            var e11 = (matrixM11 * m11) + (matrixM12 * m21);
-            var e12 = (matrixM11 * m12) + (matrixM12 * m22);
-            var e21 = (matrixM21 * m11) + (matrixM22 * m21);
-            m22 = (matrixM21 * m12) + (matrixM22 * m22);
-            m11 = e11;
-            m12 = e12;
-            m21 = e21;
+            DX += (matrixDX * M11) + (matrixDY * M21);
+            DY += (matrixDX * M12) + (matrixDY * M22);
+            var e11 = (matrixM11 * M11) + (matrixM12 * M21);
+            var e12 = (matrixM11 * M12) + (matrixM12 * M22);
+            var e21 = (matrixM21 * M11) + (matrixM22 * M21);
+            M22 = (matrixM21 * M12) + (matrixM22 * M22);
+            M11 = e11;
+            M12 = e12;
+            M21 = e21;
         }
 
         /// <summary>
@@ -500,8 +398,8 @@ namespace Alternet.Drawing
             | dx  dy   1 |   | m_tx  m_ty   1 |
             */
 
-            dx += (m11 * offsetX) + (m21 * offsetY);
-            dy += (m12 * offsetX) + (m22 * offsetY);
+            DX += (M11 * offsetX) + (M21 * offsetY);
+            DY += (M12 * offsetX) + (M22 * offsetY);
         }
 
         /// <summary>
@@ -521,10 +419,10 @@ namespace Alternet.Drawing
             // |   0      0      1 |   | m_tx  m_ty   1 |
             */
 
-            m11 *= scaleX;
-            m12 *= scaleX;
-            m21 *= scaleY;
-            m22 *= scaleY;
+            M11 *= scaleX;
+            M12 *= scaleX;
+            M21 *= scaleY;
+            M22 *= scaleY;
         }
 
         /// <summary>
@@ -556,12 +454,12 @@ namespace Alternet.Drawing
             var c = Math.Cos(angleRadians);
             var s = Math.Sin(angleRadians);
 
-            var e11 = (c * m11) + (s * m21);
-            var e12 = (c * m12) + (s * m22);
-            m21 = (c * m21) - (s * m11);
-            m22 = (c * m22) - (s * m12);
-            m11 = e11;
-            m12 = e12;
+            var e11 = (c * M11) + (s * M21);
+            var e12 = (c * M12) + (s * M22);
+            M21 = (c * M21) - (s * M11);
+            M22 = (c * M22) - (s * M12);
+            M11 = e11;
+            M12 = e12;
         }
 
         /// <summary>
@@ -582,14 +480,14 @@ namespace Alternet.Drawing
             if (det == 0)
                 return false;
 
-            var ex = ((m21 * dy) - (m22 * dx)) / det;
-            dy = ((-m11 * dy) + (m12 * dx)) / det;
-            dx = ex;
-            var e11 = m22 / det;
-            m12 = -m12 / det;
-            m21 = -m21 / det;
-            m22 = m11 / det;
-            m11 = e11;
+            var ex = ((M21 * DY) - (M22 * DX)) / det;
+            DY = ((-M11 * DY) + (M12 * DX)) / det;
+            DX = ex;
+            var e11 = M22 / det;
+            M12 = -M12 / det;
+            M21 = -M21 / det;
+            M22 = M11 / det;
+            M11 = e11;
 
             return true;
         }
@@ -599,7 +497,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="src">A <see cref="PointD"/> to transform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public PointD TransformPoint(PointD src)
+        public readonly PointD TransformPoint(PointD src)
         {
             /*
             applies that matrix to the point
@@ -611,10 +509,33 @@ namespace Alternet.Drawing
             if (IsIdentity)
                 return src;
 
-            var x = (src.X * m11) + (src.Y * m21) + DX;
-            var y = (src.X * m12) + (src.Y * m22) + DY;
+            var x = (src.X * M11) + (src.Y * M21) + DX;
+            var y = (src.X * M12) + (src.Y * M22) + DY;
 
             return new(x, y);
+        }
+
+        /// <summary>
+        /// Creates a copy of this matrix.
+        /// </summary>
+        /// <returns></returns>
+        public readonly TransformMatrix Clone()
+        {
+            return new(this);
+        }
+
+        /// <summary>
+        /// Assigns matrix values with data from the specified matrix;
+        /// </summary>
+        /// <param name="matrix"></param>
+        public void Assign(TransformMatrix matrix)
+        {
+            M11 = matrix.M11;
+            M12 = matrix.M12;
+            M21 = matrix.M21;
+            M22 = matrix.M22;
+            DX = matrix.DX;
+            DY = matrix.DY;
         }
 
         /// <summary>
@@ -622,7 +543,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="src">A <see cref="SizeD"/> to transform.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD TransformSize(SizeD src)
+        public readonly SizeD TransformSize(SizeD src)
         {
             /*
             applies the matrix except for translations
@@ -634,32 +555,41 @@ namespace Alternet.Drawing
             if (IsIdentity)
                 return src;
 
-            var width = (src.Width * m11) + (src.Height * m21);
-            var height = (src.Width * m12) + (src.Height * m22);
+            var width = (src.Width * M11) + (src.Height * M21);
+            var height = (src.Width * M12) + (src.Height * M22);
 
             return new(width, height);
         }
 
-        /// <inheritdoc/>
-        public override bool Equals(object? obj)
+        /// <summary>
+        /// Gets whether this matrix equals another matrix.
+        /// </summary>
+        /// <param name="matrix">Other matix.</param>
+        /// <returns></returns>
+        public readonly bool Equals(TransformMatrix matrix)
         {
-            if (obj is not TransformMatrix matrix)
-                return false;
-
             var result =
-                m11 == matrix.m11 &&
-                m12 == matrix.m12 &&
-                m21 == matrix.m21 &&
-                m22 == matrix.m22 &&
-                dx == matrix.dx &&
-                dy == matrix.dy;
+                M11 == matrix.M11 &&
+                M12 == matrix.M12 &&
+                M21 == matrix.M21 &&
+                M22 == matrix.M22 &&
+                DX == matrix.DX &&
+                DY == matrix.DY;
             return result;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public readonly override bool Equals(object? obj)
         {
-            return HashCode.Combine(m11, m12, m21, m22, dx, dy);
+            if (obj is not TransformMatrix matrix)
+                return false;
+            return Equals(matrix);
+        }
+
+        /// <inheritdoc/>
+        public readonly override int GetHashCode()
+        {
+            return HashCode.Combine(M11, M12, M21, M22, DX, DY);
         }
     }
 }
