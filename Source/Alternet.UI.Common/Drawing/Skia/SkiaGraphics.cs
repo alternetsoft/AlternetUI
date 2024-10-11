@@ -49,7 +49,7 @@ namespace Alternet.Drawing
         /// Gets or sets original scale factor applied to the canvas before the first
         /// drawing is performed.
         /// </summary>
-        public float OriginalScaleFactor { get; set; }
+        public float OriginalScaleFactor { get; set; } = 1f;
 
         /// <summary>
         /// Gets or sets <see cref="SKBitmap"/> where drawing will be performed.
@@ -86,35 +86,6 @@ namespace Alternet.Drawing
                     canvas = SkiaUtils.CreateNullCanvas();
                 else
                     canvas = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override TransformMatrix Transform
-        {
-            get
-            {
-                var m = canvas.TotalMatrix;
-                var result = (TransformMatrix)m;
-                return result;
-            }
-
-            set
-            {
-                SKMatrix matrix = (SKMatrix)value;
-                canvas.SetMatrix(matrix);
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool HasTransform
-        {
-            get
-            {
-                var m = canvas.TotalMatrix;
-                if (m.IsIdentity)
-                    return false;
-                return true;
             }
         }
 
@@ -486,6 +457,15 @@ namespace Alternet.Drawing
             {
                 canvas.Restore();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void SetHandlerTransform(TransformMatrix matrix)
+        {
+            SKMatrix native = (SKMatrix)matrix;
+            canvas.SetMatrix(native);
+            if (OriginalScaleFactor != 1f)
+                canvas.Scale(OriginalScaleFactor);
         }
     }
 }

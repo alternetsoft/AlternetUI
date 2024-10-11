@@ -28,41 +28,6 @@ namespace Alternet.Drawing
         public override bool IsOk => dc.IsOk;
 
         /// <inheritdoc/>
-        public override TransformMatrix Transform
-        {
-            get
-            {
-                var matrix = dc.Transform;
-                return new TransformMatrix(
-                    matrix.M11,
-                    matrix.M12,
-                    matrix.M21,
-                    matrix.M22,
-                    matrix.DX,
-                    matrix.DY);
-            }
-
-            set
-            {
-                var matrix = new UI.Native.TransformMatrix();
-                matrix.Initialize(value.M11, value.M12, value.M21, value.M22, value.DX, value.DY);
-                dc.Transform = matrix;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool HasTransform
-        {
-            get
-            {
-                var matrix = dc.Transform;
-                if (matrix.IsIdentity)
-                    return false;
-                return true;
-            }
-        }
-
-        /// <inheritdoc/>
         public override bool HasClip
         {
             get
@@ -748,6 +713,13 @@ namespace Alternet.Drawing
 
             ToDip(ref rectangle, unit);
             FillRectangle(brush, rectangle);
+        }
+
+        protected override void SetHandlerTransform(TransformMatrix matrix)
+        {
+            var native = new UI.Native.TransformMatrix();
+            native.Initialize(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.DX, matrix.DY);
+            dc.Transform = native;
         }
     }
 }

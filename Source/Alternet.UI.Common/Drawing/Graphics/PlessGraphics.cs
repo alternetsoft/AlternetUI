@@ -25,20 +25,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool HasTransform => false;
-
-        /// <inheritdoc/>
         public override bool HasClip => Clip is not null;
-
-        /// <inheritdoc/>
-        public override TransformMatrix Transform
-        {
-            get => TransformMatrix.Default;
-
-            set
-            {
-            }
-        }
 
         /// <inheritdoc/>
         public override Region? Clip
@@ -340,6 +327,11 @@ namespace Alternet.Drawing
             GraphicsUnit unit = GraphicsUnit.Dip)
         {
             return default;
+        }
+
+        /// <inheritdoc/>
+        protected override void SetHandlerTransform(TransformMatrix matrix)
+        {
         }
     }
 }

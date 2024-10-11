@@ -13,6 +13,7 @@ namespace Alternet.Drawing
     public abstract class Graphics : DisposableObject, IGraphics, IDisposable
     {
         private Stack<TransformMatrix>? stack;
+        private TransformMatrix transform = new();
 
         /// <summary>
         /// Returns true if the object is ok to use.
@@ -28,13 +29,35 @@ namespace Alternet.Drawing
         /// Gets or sets a copy of the geometric world transformation for this
         /// <see cref="Graphics"/>.
         /// </summary>
-        public abstract TransformMatrix Transform { get; set; }
+        public TransformMatrix Transform
+        {
+            get
+            {
+                return transform;
+            }
+
+            set
+            {
+                if (transform == value)
+                    return;
+
+                transform = value;
+
+                SetHandlerTransform(value);
+            }
+        }
 
         /// <summary>
         /// Gets whether <see cref="Transform"/> is assigned with transform matrix
-        /// which is not <see cref="TransformMatrix.Default"/>.
+        /// which is not the identity matrix.
         /// </summary>
-        public abstract bool HasTransform { get; }
+        public bool HasTransform
+        {
+            get
+            {
+                return !transform.IsIdentity;
+            }
+        }
 
         /// <summary>
         /// Gets used scale factor.
@@ -1357,5 +1380,11 @@ namespace Alternet.Drawing
                     graphicsType);
             }
         }
+
+        /// <summary>
+        /// Sets transform matrix of the handler.
+        /// </summary>
+        /// <param name="matrix">New transform value.</param>
+        protected abstract void SetHandlerTransform(TransformMatrix matrix);
     }
 }
