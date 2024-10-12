@@ -328,13 +328,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws the text rotated by angle degrees (positive angles are counterclockwise;
-        /// the full angle is 360 degrees) with the specified font, background and
+        /// Draws the rotated text with the specified font, background and
         /// foreground colors.
         /// </summary>
         /// <param name="location">Location used to draw the text. Specified in dips.</param>
         /// <param name="text">Text to draw.</param>
-        /// <param name="angle">Text angle.</param>
+        /// <param name="angle">Text angle in degrees. Positive angles are counterclockwise;
+        /// the full angle is 360 degrees.</param>
         /// <param name="font">Font used to draw the text.</param>
         /// <param name="foreColor">Foreground color of the text.</param>
         /// <param name="backColor">Background color of the text. If parameter is equal
@@ -1218,6 +1218,32 @@ namespace Alternet.Drawing
             var currentTransform = Transform;
             currentTransform.Multiply(transform);
             Transform = currentTransform;
+        }
+
+        /// <summary>
+        /// Calls the specified action inside temprorary clipped rectangle, so painting outside
+        /// this rectangle is ignored.
+        /// </summary>
+        /// <param name="isClipped">Whether to clip rectangle. Optional. Default is <c>true</c>.</param>
+        /// <param name="rect">Rectangle region to set as clip object.</param>
+        /// <param name="action">Action to call.</param>
+        public virtual void DoInsideClipped(RectD rect, Action action, bool isClipped = true)
+        {
+            if (isClipped)
+            {
+                try
+                {
+                    PushClip();
+                    Clip = new Region(rect);
+                    action();
+                }
+                finally
+                {
+                    PopClip();
+                }
+            }
+            else
+                action();
         }
 
         /// <summary>
