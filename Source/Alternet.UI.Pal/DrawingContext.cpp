@@ -194,8 +194,7 @@ namespace Alternet::UI
         return _dc->GetHandle();
     }
 
-    DrawingContext::DrawingContext(wxDC* dc,
-        optional<std::function<void()>> onUseDC /*= nullopt*/) : _dc(dc), _onUseDC(onUseDC)
+    DrawingContext::DrawingContext(wxDC* dc) : _dc(dc)
     {
         assert(_dc);
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
@@ -780,17 +779,11 @@ namespace Alternet::UI
 
     void DrawingContext::UseDC()
     {
-        if (_onUseDC != nullopt)
-            _onUseDC.value()();
-
         ApplyTransform(/*useDC:*/true);
     }
 
     void DrawingContext::UseGC()
     {
-        if (_onUseDC != nullopt)
-            _onUseDC.value()();
-
         ApplyTransform(/*useDC:*/false);
     }
 
