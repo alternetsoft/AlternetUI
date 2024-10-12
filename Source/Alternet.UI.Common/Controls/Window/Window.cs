@@ -1012,6 +1012,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets relative location of this window on the specified display.
+        /// </summary>
+        /// <param name="relativePosition">New location of the window in pixels. This value is relative
+        /// to the top-left corner of the display's client area.</param>
+        /// <param name="display">Display which client area is used as a container for the window.</param>
+        public virtual void SetLocationOnDisplay(PointI relativePosition, Display? display = null)
+        {
+            display = Display.SafeDisplay(display);
+            var clientArea = display.ClientArea;
+            var position = clientArea.Location;
+            position.Offset(relativePosition);
+            LocationInPixels = position;
+        }
+
+        /// <summary>
+        /// Aligns window location inside the specified display's client area using given
+        /// horizontal and vertical alignment.
+        /// </summary>
+        /// <param name="horz">Horizontal alignment of the window inside display's client area.</param>
+        /// <param name="vert">Vertical alignment of the window inside display's client area.</param>
+        /// <param name="display">Display which client area is used as a container for the window.</param>
+        public virtual void SetLocationOnDisplay(
+            HorizontalAlignment horz,
+            VerticalAlignment vert,
+            Display? display = null)
+        {
+            display = Display.SafeDisplay(display);
+            var clientArea = display.ClientArea;
+
+            var newBounds = AlignUtils.AlignRectInRect(BoundsInPixels, clientArea, horz, vert);
+            BoundsInPixels = newBounds.ToRect();
+        }
+
+        /// <summary>
         /// Raised by the handler when it is going to be closed.
         /// </summary>
         /// <param name="e">Event arguments.</param>
