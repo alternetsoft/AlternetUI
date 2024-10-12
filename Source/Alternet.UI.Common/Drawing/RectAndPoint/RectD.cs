@@ -802,6 +802,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Inflates this <see cref='RectD'/> vertically by the specified amount.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void InflateVert(Coord dx, Coord dy)
+        {
+            y -= dy;
+            height += 2 * dy;
+        }
+
+        /// <summary>
+        /// Inflates this <see cref='RectD'/> horizontally by the specified amount.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void InflateHorz(Coord dx)
+        {
+            x -= dx;
+            width += 2 * dx;
+        }
+
+        /// <summary>
         /// Creates a <see cref='RectD'/> that is inflated by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
