@@ -26,7 +26,7 @@ namespace DrawingSample
                     horizontalAlignmentComboBox,
                     verticalAlignmentComboBox,
                     trimmingComboBox,
-                    wrappingComboBox);
+                    wrappingComboBox).Enabled(false);
                 labels.Margin(new(0, 5, 10, 5)).VerticalAlignment(VerticalAlignment.Center);
                 comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
                 var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
