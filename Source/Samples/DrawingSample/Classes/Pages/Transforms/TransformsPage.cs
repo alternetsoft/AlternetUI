@@ -151,12 +151,11 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
-            ((IWxGraphics)dc).DrawText(
+            dc.DrawText(
                 "AlterNET UI",
                 Font.Default.Larger(),
                 Brushes.Blue,
-                innerFrame.InflatedBy(-10, -10),
-                new TextFormat { HorizontalAlignment = TextHorizontalAlignment.Center, VerticalAlignment = TextVerticalAlignment.Bottom });
+                innerFrame.Location.OffsetBy(150, 10));
 
             dc.DrawText("This is sample text",
                 innerFrame.InflatedBy(-150, -150).Location,

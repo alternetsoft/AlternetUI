@@ -194,14 +194,14 @@ namespace DrawingSample
 
             var textFormat = GetTextFormat();
 
-            double x = 20;
-            double y = 20;
+            Coord x = 20;
+            Coord y = 20;
             foreach (var paragraph in paragraphs)
             {
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointD(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                double textHeight;
+                Coord textHeight;
 
                 if (TextHeightSet)
                 {

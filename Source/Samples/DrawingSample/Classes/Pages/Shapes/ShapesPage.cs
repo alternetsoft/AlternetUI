@@ -133,17 +133,21 @@ namespace DrawingSample
                 var cellNameRect = cellRect.InflatedBy(-2, -2);
                 cellNameRect.Height -= 4;
 
-                var nameTextSize = ((IWxGraphics)dc).MeasureText(
+                var cellName = DrawingUtils.WrapTextToMultipleLines(
                     cell.Name,
-                    Control.DefaultFont,
                     cellNameRect.Width,
-                    textFormat);
+                    Control.DefaultFont,
+                    dc.ScaleFactor);
+
+                var nameTextSize = dc.MeasureText(cellName, Control.DefaultFont);
                 bool nameVisible = nameTextSize.Width <= cellNameRect.Width;
 
                 var cellContentFrameRect = cellNameRect.InflatedBy(-5, -5);
                 if (nameVisible)
-                    cellContentFrameRect.Height -=
-                        dc.MeasureText(cell.Name, Control.DefaultFont).Height;
+                {
+                    cellContentFrameRect.Top += nameTextSize.Height;
+                    cellContentFrameRect.Height -= nameTextSize.Height;
+                }
 
                 if (cellContentFrameRect.Width <= 0 || cellContentFrameRect.Height <= 0)
                     continue;
@@ -162,12 +166,13 @@ namespace DrawingSample
 
                 if (nameVisible)
                 {
-                    ((IWxGraphics)dc).DrawText(
-                        cell.Name,
+                    dc.DrawLabel(
+                        cellName,
                         Control.DefaultFont,
-                        Brushes.Black,
-                        cellNameRect,
-                        textFormat);
+                        Color.Black,
+                        Color.Empty,
+                        null,
+                        cellNameRect);
                 }
 
                 if ((i + 1) % ColumnCount == 0)

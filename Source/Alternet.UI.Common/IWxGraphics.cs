@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     [Obsolete("Depends on WxWdigets")]
     public interface IWxGraphics : IGraphics
     {
-        /// <summary>
+        /*/// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/> and
         /// maximum width.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Alternet.Drawing
         /// in device-independent units, of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        SizeD MeasureText(string text, Font font, Coord maximumWidth);
+        SizeD MeasureText(string text, Font font, Coord maximumWidth);*/
 
         /// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/>,
