@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a drawing surface managed by WxWidgets library.
     /// </summary>
-    internal partial class WxGraphics : Graphics, IWxGraphics
+    internal partial class WxGraphics : Graphics
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;
@@ -607,7 +607,17 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
-            DrawText(text, font, brush, bounds, TextFormat.Default);
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            dc.DrawTextAtRect(
+                text,
+                bounds,
+                (UI.Native.Font)font.Handler,
+                (UI.Native.Brush)brush.Handler,
+                TextFormat.DefaultHorizontalAlignment,
+                TextFormat.DefaultVerticalAlignment,
+                TextFormat.DefaultTrimming,
+                TextFormat.DefaultWrapping);
         }
 
         /// <inheritdoc/>
