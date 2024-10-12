@@ -13,6 +13,7 @@ namespace Alternet.Drawing
     public abstract class Graphics : DisposableObject, IGraphics, IDisposable
     {
         private Stack<TransformMatrix>? stack;
+        private Stack<Region?>? clipStack;
         private TransformMatrix transform = new();
 
         /// <summary>
@@ -355,29 +356,6 @@ namespace Alternet.Drawing
             Color backColor,
             Coord angle,
             GraphicsUnit unit = GraphicsUnit.Dip);
-
-        /*/// <summary>
-        /// Gets the dimensions of the string using the specified font.
-        /// </summary>
-        /// <param name="text">The text string to measure.</param>
-        /// <param name="font">The Font used to get text dimensions.</param>
-        /// <param name="control">The control used to get scaling factor. Optional.</param>
-        /// <param name="descent">Dimension from the baseline of the font to
-        /// the bottom of the descender (the size of the tail below the baseline).</param>
-        /// <param name="externalLeading">Any extra vertical space added to the
-        /// font by the font designer (inter-line interval).</param>
-        /// <returns><see cref="SizeD"/> with the total calculated width and height
-        /// of the text.</returns>
-        /// <remarks>
-        /// This function only works with single-line strings.
-        /// It works faster than MeasureText methods.
-        /// </remarks>
-        public abstract SizeD GetTextExtent(
-            string text,
-            Font font,
-            out Coord? descent,
-            out Coord? externalLeading,
-            IControl? control = null);*/
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -1091,13 +1069,13 @@ namespace Alternet.Drawing
         /// Draws multiple text strings at the specified location with the specified
         /// <see cref="Brush"/> and <see cref="Font"/> objects.
         /// </summary>
-        /// <param name="text">Strings  to draw.</param>
+        /// <param name="text">Strings to draw.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
         /// the drawn text.</param>
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
-        public virtual void DrawText(string[] text, Font font, Brush brush, PointD origin)
+        public virtual void DrawText(IEnumerable<string> text, Font font, Brush brush, PointD origin)
         {
             foreach(var s in text)
             {
@@ -1243,6 +1221,39 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws formatted text.
+        /// </summary>
+        /// <param name="text">Formatted text.</param>
+        /// <param name="rect">Bounding rectangle.</param>
+        public void DrawFormattedText(FormattedText text, RectD rect)
+        {
+            text.Draw(this, rect);
+        }
+
+        /// <summary>
+        /// Pops a stored clip region state from the stack and sets the current clip region
+        /// to that state.
+        /// </summary>
+        public void PopClip()
+        {
+            clipStack ??= new();
+            Clip = clipStack.Pop();
+        }
+
+        /// <summary>
+        /// Pushes the current state of the clip region on a stack.
+        /// </summary>
+        public void PushClip()
+        {
+            clipStack ??= new();
+
+            if(HasClip)
+                clipStack.Push(Clip);
+            else
+                clipStack.Push(null);
+        }
+
+        /// <summary>
         /// Pushes the current state of the transformation matrix on a stack.
         /// </summary>
         public void Push()
@@ -1266,6 +1277,31 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor);
+
+        /// <summary>
+        /// Draws multiple text strings at the specified location with the specified
+        /// <see cref="Brush"/> and <see cref="Font"/> objects.
+        /// </summary>
+        /// <param name="text">Strings  to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
+        /// corner of the drawn text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
+        public virtual void DrawText(
+            IEnumerable<string> text,
+            PointD origin,
+            Font font,
+            Color foreColor,
+            Color backColor)
+        {
+            foreach (var s in text)
+            {
+                DrawText(s, origin, font, foreColor, backColor);
+                origin.Y += MeasureText(s, font).Height;
+            }
+        }
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors,
