@@ -19,10 +19,11 @@ namespace DrawingSample
 
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
+        private bool shortText;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
         private int textWidthLimit = 450;
-        private int textHeightValue = 40;
+        private int textHeightValue = 50;
 
         private bool textWidthLimitEnabled = true;
         private bool textHeightSet = false;
@@ -46,6 +47,8 @@ namespace DrawingSample
         }
 
         public override string Name => "Text";
+
+        public FormattedText WrappedText => formattedText;
 
         public double FontSize
         {
@@ -188,6 +191,27 @@ namespace DrawingSample
             }
         }
 
+        public bool ShortText
+        {
+            get
+            {
+                return shortText;
+            }
+
+            set
+            {
+                shortText = value;
+                InvalidateParagraphs();
+            }
+        }
+
+        public string GetText()
+        {
+            if (ShortText)
+                return "Your cat is hungry";
+            return LoremIpsum;
+        }
+
         public override void Draw(Graphics dc, RectD bounds)
         {
             paragraphs ??= CreateParagraphs().ToArray();
@@ -205,7 +229,7 @@ namespace DrawingSample
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
                 formattedText.ScaleFactor = dc.ScaleFactor;
-                formattedText.Text = LoremIpsum;
+                formattedText.Text = GetText();
                 formattedText.Font = paragraph.Font;
                 formattedText.ForegroundColor = color;
                 formattedText.MaxWidth = TextWidthLimitEnabled ? TextWidthLimit : null;
@@ -213,12 +237,18 @@ namespace DrawingSample
                 formattedText.Assign(textFormat);
 
                 var formattedTextHeight = formattedText.RestrictedSize.Height;
+                var formattedTextWidth = formattedText.RestrictedSize.Width;
 
                 var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
                 var textHeight = TextHeightSet ? TextHeightValue : formattedTextHeight;
                 RectD rect = (x, y, width, textHeight);
 
                 formattedText.Draw(dc, rect);
+
+                dc.FillRectangleBorder(Brushes.LightGray, rect);
+                dc.FillRectangleBorder(
+                    Brushes.LightGreen,
+                    formattedText.GetBlockRect(dc.ScaleFactor, rect));
 
                 /*if (TextHeightSet)
                 {
@@ -322,7 +352,7 @@ namespace DrawingSample
             return (FontStyle & style) != 0;
         }
 
-        private void InvalidateParagraphs()
+        public void InvalidateParagraphs()
         {
             if (paragraphs != null)
             {

@@ -382,6 +382,9 @@
     <UIXml Include="..\DrawingSample\Classes\**\*.uixml">
       <Link>Links\DrawingSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </UIXml>
+    <None Include="..\DrawingSample\Classes\**\*.uixml">
+      <Link>Links\DrawingSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

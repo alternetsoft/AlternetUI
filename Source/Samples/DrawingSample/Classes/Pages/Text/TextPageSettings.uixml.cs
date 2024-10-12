@@ -39,6 +39,35 @@ namespace DrawingSample
         {
             DataContext = page;
 
+            AddProperty(
+                page.WrappedText,
+                nameof(FormattedText.BlockHorizontalAlignment),
+                "Block Horz");
+
+            AddProperty(
+                page.WrappedText,
+                nameof(FormattedText.BlockVerticalAlignment),
+                "Block Vert");
+
+            void AddProperty(object obj, string name, string? label = null)
+            {
+                var prop = propertyGrid.CreateProperty(label, name, obj, name);
+                propertyGrid.Add(prop);
+            }
+
+            propertyGrid.ApplyFlags = PropertyGridApplyFlags.SetValueAndReloadAll;
+
+            propertyGrid.FitColumns();
+            propertyGrid.PropertyChanged += (s, e) =>
+            {
+                page.InvalidateParagraphs();
+            };
+
+            toggleTextButton.Click += (s, e) =>
+            {
+                page.ShortText = !page.ShortText;
+            };
+
             customFontFamilyComboBox.Items.AddRange(FontFamily.FamiliesNames);
             wrappingComboBox.AddEnumValues<TextWrapping>();
             trimmingComboBox.AddEnumValues<TextTrimming>();
@@ -48,13 +77,15 @@ namespace DrawingSample
             horizontalAlignmentComboBox.SelectedItem = page.HorizontalAlignment;
             horizontalAlignmentComboBox.SelectedItemChanged += (s, e) =>
             {
-                page.HorizontalAlignment = horizontalAlignmentComboBox.SelectedItemAs<TextHorizontalAlignment>();
+                page.HorizontalAlignment = 
+                    horizontalAlignmentComboBox.SelectedItemAs<TextHorizontalAlignment>();
             };
 
             verticalAlignmentComboBox.SelectedItem = page.VerticalAlignment;
             verticalAlignmentComboBox.SelectedItemChanged += (s, e) =>
             {
-                page.VerticalAlignment = verticalAlignmentComboBox.SelectedItemAs<TextVerticalAlignment>();
+                page.VerticalAlignment
+                    = verticalAlignmentComboBox.SelectedItemAs<TextVerticalAlignment>();
             };
 
             wrappingComboBox.SelectedItem = page.Wrapping;

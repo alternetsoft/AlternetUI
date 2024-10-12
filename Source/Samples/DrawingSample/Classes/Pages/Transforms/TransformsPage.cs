@@ -17,8 +17,6 @@ namespace DrawingSample
 
         private static readonly Pen outerCirclePen = new(Color.DarkRed, 3);
 
-        /*private static readonly Font canvasTestFont = new(FontFamily.GenericMonospace, 10);*/
-
         private int translationX;
 
         private int translationY;
@@ -151,9 +149,17 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
+            dc.DrawRotatedText(
+                        "Rotated Text",
+                        innerFrame.Location.OffsetBy(450, 290),
+                        Font.Default.Scaled(3),
+                        Color.Red,
+                        Color.YellowGreen,
+                        250);
+
             dc.DrawText(
                 "AlterNET UI",
-                Font.Default.Larger(),
+                Font.Default.Scaled(1.5),
                 Brushes.Blue,
                 innerFrame.Location.OffsetBy(150, 10));
 
@@ -169,7 +175,7 @@ namespace DrawingSample
                 Color.LightSkyBlue,
                 Color.Olive,
                 NotifyIconPage.Image,
-                innerFrame.InflatedBy(-250, -250));                
+                innerFrame.InflatedBy(-250, -250));
 
             dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
         }
