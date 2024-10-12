@@ -76,75 +76,6 @@ namespace Alternet.Drawing
             get => dc;
         }
 
-        public SizeD GetTextExtent(
-            string text,
-            Font font,
-            out Coord? descent,
-            out Coord? externalLeading,
-            IControl? control = null)
-        {
-            var dc = (UI.Native.DrawingContext)NativeObject;
-
-            var result = dc.GetTextExtent(
-                text,
-                (UI.Native.Font)font.Handler,
-                WxApplicationHandler.WxWidget(control));
-            descent = result.X;
-            externalLeading = result.Y;
-            return result.Size;
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(
-            string text,
-            Font font,
-            IControl? control)
-        {
-            var dc = (UI.Native.DrawingContext)NativeObject;
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.Handler,
-                WxApplicationHandler.WxWidget(control));
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public override void DrawRotatedText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Coord angle,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor);
-
-            if(unit == GraphicsUnit.Pixel)
-            {
-                dc.DrawRotatedTextI(
-                    text,
-                    location.ToPoint(),
-                    (UI.Native.Font)font.Handler,
-                    foreColor,
-                    backColor,
-                    angle);
-                return;
-            }
-
-            ToDip(ref location, unit);
-
-            dc.DrawRotatedText(
-                text,
-                location,
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor,
-                angle);
-        }
-
         /// <inheritdoc/>
         public override bool Blit(
             PointD destPt,
@@ -243,16 +174,6 @@ namespace Alternet.Drawing
                 (UI.Native.Brush)brush.Handler,
                 rectangle,
                 cornerRadius);
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(string text, Font font)
-        {
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.Handler,
-                default);
-            return result;
         }
 
         /// <inheritdoc/>
@@ -601,83 +522,6 @@ namespace Alternet.Drawing
                 (UI.Native.Image)image.Handler,
                 destinationRect,
                 sourceRect);
-        }
-
-
-        /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            dc.DrawTextAtRect(
-                text,
-                bounds,
-                (UI.Native.Font)font.Handler,
-                (UI.Native.Brush)brush.Handler,
-                TextFormat.DefaultHorizontalAlignment,
-                TextFormat.DefaultVerticalAlignment,
-                TextFormat.DefaultTrimming,
-                TextFormat.DefaultWrapping);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            PointD origin)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            dc.DrawTextAtPoint(
-                text,
-                origin,
-                (UI.Native.Font)font.Handler,
-                (UI.Native.Brush)brush.Handler);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor);
-            dc.DrawText(
-                text,
-                location,
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor);
-        }
-
-        /// <inheritdoc/>
-        public override RectD DrawLabel(
-            string text,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Image? image,
-            RectD rect,
-            GenericAlignment alignment = GenericAlignment.TopLeft,
-            int indexAccel = -1)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor, nameof(foreColor));
-            return dc.DrawLabel(
-                text,
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor,
-                (UI.Native.Image?)image?.Handler,
-                rect,
-                (int)alignment,
-                indexAccel);
         }
 
         /// <inheritdoc/>
