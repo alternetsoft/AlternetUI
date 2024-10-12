@@ -902,6 +902,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns a unscaled version of this font.
+        /// </summary>
+        /// <param name="scaleFactor">Font size scaling factor.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// The font size is divided by the given <paramref name="scaleFactor"/>.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public virtual Font Unscaled(FontSize scaleFactor)
+        {
+            return Get(Name, SizeInPoints / scaleFactor, Style);
+        }
+
+        /// <summary>
         /// Returns a smaller version of this font.
         /// </summary>
         /// <remarks>
@@ -924,7 +938,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual Font Larger()
         {
-            return Scaled(1.2);
+            return Scaled(SmallerLargerSizeScaleFactor);
         }
 
         /// <summary>
@@ -942,6 +956,15 @@ namespace Alternet.Drawing
             return Get(this.Name, SizeInPoints * scaleFactor, this.Style);
         }
 
+        /// <summary>
+        /// Creates font with the specified parameters.
+        /// </summary>
+        /// <param name="familyName">A string representation of the font family
+        /// for the new font.</param>
+        /// <param name="emSize">The em-size, in points, of the new font.</param>
+        /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Font Get(string familyName, FontSize emSize, FontStyle style = FontStyle.Regular)
         {
             return new(familyName, emSize, style);
