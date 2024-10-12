@@ -1,34 +1,34 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Used to describe how a control is positioned or stretched
+    /// Used to describe how an element is positioned or stretched
     /// vertically within a parent's layout slot.
     /// </summary>
     public enum VerticalAlignment
     {
         /// <summary>
-        /// Align control towards the top of a parent's layout slot.
+        /// Align element towards the top of a parent's layout slot.
         /// </summary>
         Top = 0,
 
         /// <summary>
-        /// Center control vertically.
+        /// Center element vertically.
         /// </summary>
         Center = 1,
 
         /// <summary>
-        /// Align control towards the bottom of a parent's layout slot.
+        /// Align element towards the bottom of a parent's layout slot.
         /// </summary>
         Bottom = 2,
 
         /// <summary>
-        /// Stretch control vertically within a parent's layout slot.
+        /// Stretch element vertically within a parent's layout slot.
         /// </summary>
         Stretch = 3,
 
         /// <summary>
-        /// Stretch control vertically within a remaining empty space
-        /// which is not occupied by other sibling controls.
+        /// Stretch element vertically within a remaining empty space
+        /// which is not occupied by other sibling elements.
         /// </summary>
         Fill = 4,
     }
