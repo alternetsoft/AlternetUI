@@ -309,6 +309,7 @@ namespace Alternet.Drawing
         /// the <see cref="Graphics"/> and
         /// related resources created by the <see cref="FromImage"/> method.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics FromImage(Image image)
         {
             DebugImageAssert(image);
@@ -319,6 +320,7 @@ namespace Alternet.Drawing
         /// Creates <see cref="Graphics"/> that can be used to paint on the screen.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics FromScreen()
         {
             return GraphicsFactory.Handler.CreateGraphicsFromScreen();
@@ -942,6 +944,7 @@ namespace Alternet.Drawing
         /// <param name="y1">Y coordinate of the first point.</param>
         /// <param name="x2">X coordinate of the second point.</param>
         /// <param name="y2">Y coordinate of the second point.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawLine(Pen pen, Coord x1, Coord y1, Coord x2, Coord y2) =>
             DrawLine(pen, new(x1, y1), new(x2, y2));
 
@@ -978,6 +981,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="PointD"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImageUnscaled(Image image, PointD origin)
             => DrawImage(image, origin);
 
@@ -1107,9 +1111,22 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="text"></param>
         /// <param name="origin"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(string text, PointD origin)
         {
             DrawText(text, Font.Default, Brush.Default, origin);
+        }
+
+        /// <summary>
+        /// Creates translation matrix and calls <see cref="PushTransform"/> with it.
+        /// </summary>
+        /// <param name="offsetX">The X value of the translation matrix.</param>
+        /// <param name="offsetY">The Y value of the translation matrix.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void PushAndTranslate(Coord offsetX, Coord offsetY)
+        {
+            var transform = TransformMatrix.CreateTranslation(offsetX, offsetY);
+            PushTransform(transform);
         }
 
         /// <summary>
@@ -1205,7 +1222,7 @@ namespace Alternet.Drawing
         /// Pops a stored state from the stack and sets the current transformation matrix
         /// to that state.
         /// </summary>
-        public virtual void Pop()
+        public void Pop()
         {
             stack ??= new();
             Transform = stack.Pop();
