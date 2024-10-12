@@ -690,6 +690,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns new rectangle with location of this rectangle and the specified size.
+        /// </summary>
+        /// <param name="newSize">New size.</param>
+        /// <returns>Rectangle object with the new size.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithSize(SizeI newSize)
+        {
+            return new(x, y, newSize.Width, newSize.Height);
+        }
+
+        /// <summary>
+        /// Returns new rectangle with size of this rectangle and the specified location.
+        /// </summary>
+        /// <param name="newLocation">New location.</param>
+        /// <returns>Rectangle object with the new location.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithLocation(PointI newLocation)
+        {
+            return new(newLocation.X, newLocation.Y, width, height);
+        }
+
+        /// <summary>
         /// Returns new rectangle with size and y-coordinate of this rectangle and the specified x-coordinate.
         /// </summary>
         /// <param name="ax">New X position.</param>
