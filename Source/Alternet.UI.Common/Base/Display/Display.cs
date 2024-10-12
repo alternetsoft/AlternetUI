@@ -484,6 +484,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the specified display if it is not null; otherwise returns
+        /// display of the <see cref="App.SafeWindow"/>.
+        /// </summary>
+        /// <param name="display">Display to return if it is not null.</param>
+        /// <returns></returns>
+        public static Display SafeDisplay(Display? display)
+        {
+            if (display is null)
+            {
+                var mainWindow = App.SafeWindow;
+
+                if (mainWindow is null)
+                    display = Display.Primary;
+                else
+                    display = new Display(mainWindow);
+            }
+
+            return display;
+        }
+
+        /// <summary>
         /// Returns the index of the display on which the given point lies,
         /// or -1 if the point is not on any connected display.
         /// </summary>
