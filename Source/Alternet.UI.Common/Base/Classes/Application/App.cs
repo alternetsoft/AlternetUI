@@ -481,6 +481,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="Window.ActiveWindow"/> or <see cref="MainWindow"/> or
+        /// <see cref="FirstWindow()"/>. The first not null value of these is returned.
+        /// </summary>
+        public static Window? SafeWindow
+        {
+            get
+            {
+                return Window.ActiveWindow ?? MainWindow ?? FirstWindow();
+            }
+        }
+
+        /// <summary>
         /// Gets whether execution is inside the <see cref="Run"/> method.
         /// </summary>
         public static bool IsRunning { get; protected set; }
