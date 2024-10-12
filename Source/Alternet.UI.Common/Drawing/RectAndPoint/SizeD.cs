@@ -566,12 +566,12 @@ namespace Alternet.Drawing
 
             if (maxWidth is not null)
             {
-                result.Width = Math.Max(result.Width, maxWidth.Value);
+                result.Width = Math.Min(result.Width, maxWidth.Value);
             }
 
             if (maxHeight is not null)
             {
-                result.Height = Math.Max(result.Height, maxHeight.Value);
+                result.Height = Math.Min(result.Height, maxHeight.Value);
             }
 
             return result;
