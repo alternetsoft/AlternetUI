@@ -68,23 +68,19 @@ namespace Alternet.UI
         /// </summary>
         public const string MacCommandKeyTitle = "\u2318";
 
-        private static IComparer<object>? comparerObjectUsingToString;
-
         /// <summary>
-        /// Gets or sets values that split one string to many when
-        /// log operations are performed (or in other situations).
+        /// Gets or sets values that split one string to many.
         /// </summary>
-        /// <remarks>
-        /// An example of such split values is <see cref="Environment.NewLine"/>
-        /// which is assigned to <see cref="StringSplitToArrayChars"/> by default.
-        /// </remarks>
-        public static string[] StringSplitToArrayChars { get; set; } =
+        public static string[] StringSplitToArrayChars =
         {
             Environment.NewLine,
             "\r\n",
             "\n\r",
             "\n",
+            "\r",
         };
+
+        private static IComparer<object>? comparerObjectUsingToString;
 
         /// <summary>
         /// Returns <see cref="IComparer{T}"/> which converts objects to strings using
@@ -630,6 +626,19 @@ namespace Alternet.UI
             var isOk = float.TryParse(s, style, provider, out var value);
             result = value;
             return isOk;
+        }
+
+        /// <summary>
+        /// Splits one string to many using <see cref="StringSplitToArrayChars"/> as separators.
+        /// </summary>
+        /// <param name="str">String to split.</param>
+        /// <param name="removeEmptyLines">Whether to remove empty lines from the result.</param>
+        /// <returns></returns>
+        public static string[] Split(string str, bool removeEmptyLines = false)
+        {
+            return str.Split(
+                StringSplitToArrayChars,
+                removeEmptyLines ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
         }
 
         /// <summary>
