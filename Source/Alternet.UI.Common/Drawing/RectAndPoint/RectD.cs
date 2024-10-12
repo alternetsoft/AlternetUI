@@ -730,11 +730,43 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets horizontal or vertical coordinate of the center point
+        /// depending on <paramref name="isVert"/> parameter value.
+        /// </summary>
+        /// <param name="isVert">Defines whether to return horizontal or vertical coordinate
+        /// of the center point.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Coord GetCenter(bool isVert)
+        {
+            if (isVert)
+                return Center.Y;
+            else
+                return Center.X;
+        }
+
+        /// <summary>
+        /// Sets horizontal or vertical coordinate of the center point
+        /// depending on <paramref name="isVert"/> parameter value.
+        /// </summary>
+        /// <param name="isVert">Defines whether to set horizontal or vertical coordinate
+        /// of the center point.</param>
+        /// <param name="value">New value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetCenter(bool isVert, Coord value)
+        {
+            if (isVert)
+                Center = (Center.X, value);
+            else
+                Center = (value, Center.Y);
+        }
+
+        /// <summary>
         /// Sets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
         /// <param name="vert">Defines whether to set <see cref="X"/> or <see cref="Y"/>.</param>
-        /// <param name="value">New location value.</param>
+        /// <param name="value">New value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetLocation(bool vert, Coord value)
         {
@@ -742,6 +774,35 @@ namespace Alternet.Drawing
                 y = value;
             else
                 x = value;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Right"/> or <see cref="Bottom"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to get <see cref="Right"/> or <see cref="Bottom"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Coord GetFarLocation(bool vert)
+        {
+            if (vert)
+                return Bottom;
+            else
+                return Right;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Right"/> or <see cref="Bottom"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to set <see cref="Right"/> or <see cref="Bottom"/>.</param>
+        /// <param name="value">New value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetFarLocation(bool vert, Coord value)
+        {
+            if (vert)
+                Bottom = value;
+            else
+                Right = value;
         }
 
         /// <summary>
