@@ -473,16 +473,74 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Performs word wrapping of the text.
+        /// Calculates total size of the text strings.
+        /// </summary>
+        /// <param name="text">Collection of the strings.</param>
+        /// <param name="font">Font.</param>
+        /// <param name="scaleFactor">Scale factor. Optional.
+        /// If not specified, default scale factor is used.</param>
+        /// <returns></returns>
+        public static SizeD MeasureText(IEnumerable<string> text, Font font, Coord? scaleFactor)
+        {
+            Coord width = 0;
+            Coord height = 0;
+
+            var canvas = GraphicsFactory.GetOrCreateMemoryCanvas(scaleFactor);
+
+            foreach(var s in text)
+            {
+                var size = canvas.GetTextExtent(s, font);
+                width = Math.Max(width, size.Width);
+                height += size.Height;
+            }
+
+            return (width, height);
+        }
+
+        /// <summary>
+        /// Performs word wrapping of the multiple text lines which can contain new line characters.
         /// </summary>
         /// <param name="text">Text to wrap.</param>
-        /// <param name="pixels">Width of the text in device-independent units.</param>
+        /// <param name="maxWidth">Max width of the text in device-independent units.</param>
         /// <param name="font">Text font.</param>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns></returns>
         public static List<string> WrapTextToList(
             string text,
-            Coord pixels,
+            Coord? maxWidth,
+            Font font,
+            Coord? scaleFactor = null)
+        {
+            List<string> result = new();
+
+            var splitted = StringUtils.Split(text, false);
+
+            if(maxWidth is null)
+            {
+                result.AddRange(splitted);
+                return result;
+            }
+
+            foreach(var s in splitted)
+            {
+                var wrappedLine = WrapTextLineToList(s, maxWidth.Value, font, scaleFactor);
+                result.AddRange(wrappedLine);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Performs word wrapping of the single text line which doesn't contain new line characters.
+        /// </summary>
+        /// <param name="text">Text to wrap.</param>
+        /// <param name="maxWidth">Max width of the text in device-independent units.</param>
+        /// <param name="font">Text font.</param>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <returns></returns>
+        public static List<string> WrapTextLineToList(
+            string text,
+            Coord maxWidth,
             Font font,
             Coord? scaleFactor = null)
         {
@@ -496,15 +554,17 @@ namespace Alternet.UI
 
             string[] originalLines = text.Split(' ');
 
-            StringBuilder actualLine = new StringBuilder();
+            StringBuilder actualLine = new();
             Coord actualWidth = 0;
 
             foreach (var item in originalLines)
             {
-                Coord w = canvas.MeasureText(item, font).Width + spaceWidth;
+                var measureResult = canvas.MeasureText(item, font);
+                measureResult.Width += spaceWidth;
+                var w = measureResult.Width;
                 actualWidth += w;
 
-                if (actualWidth > pixels)
+                if (actualWidth > maxWidth)
                 {
                     wrappedLines.Add(actualLine.ToString());
                     actualLine.Clear();
