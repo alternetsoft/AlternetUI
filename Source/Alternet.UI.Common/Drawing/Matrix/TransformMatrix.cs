@@ -301,6 +301,7 @@ namespace Alternet.Drawing
         /// this <see cref="TransformMatrix"/>.</param>
         /// <param name="offsetY">The y value by which to translate
         /// this <see cref="TransformMatrix"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TransformMatrix CreateTranslation(Coord offsetX, Coord offsetY)
         {
             var matrix = new TransformMatrix();
@@ -315,6 +316,7 @@ namespace Alternet.Drawing
         /// this <see cref="TransformMatrix"/> in the x-axis direction.</param>
         /// <param name="scaleY">The value by which to scale
         /// this <see cref="TransformMatrix"/> in the y-axis direction.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TransformMatrix CreateScale(Coord scaleX, Coord scaleY)
         {
             var matrix = new TransformMatrix();
@@ -327,6 +329,7 @@ namespace Alternet.Drawing
         /// angle about the origin.
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TransformMatrix CreateRotation(Coord angle)
         {
             var matrix = new TransformMatrix();
@@ -559,6 +562,15 @@ namespace Alternet.Drawing
             var height = (src.Width * M12) + (src.Height * M22);
 
             return new(width, height);
+        }
+
+        /// <summary>
+        /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a rectangle.
+        /// </summary>
+        /// <param name="rect">A <see cref="RectD"/> to transform.</param>
+        public readonly RectD TransformRect(RectD rect)
+        {
+            return new(TransformPoint(rect.Location), TransformSize(rect.Size));
         }
 
         /// <summary>
