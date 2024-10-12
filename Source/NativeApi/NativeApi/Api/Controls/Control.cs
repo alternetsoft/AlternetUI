@@ -113,6 +113,7 @@ namespace NativeApi.Api
         public SizeD Size { get; set; }
         public PointD Location { get; set; }
         public RectD Bounds { get; set; }
+        public RectI BoundsI { get; set; }
         public RectD EventBounds { get; }
 
         public SizeD ClientSize { get; set; }

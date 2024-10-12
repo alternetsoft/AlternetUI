@@ -20,6 +20,8 @@ namespace Alternet.UI
         {
         }
 
+        public RectI BoundsI { get => NativeControl.BoundsI; set => NativeControl.BoundsI = value; }
+
         public SizeI EventOldDpi
         {
             get

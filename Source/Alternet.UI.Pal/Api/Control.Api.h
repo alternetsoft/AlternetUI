@@ -583,6 +583,28 @@ ALTERNET_UI_API void Control_SetBounds_(Control* obj, RectD value)
     #endif
 }
 
+ALTERNET_UI_API RectI_C Control_GetBoundsI_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<RectI_C>([&](){
+    #endif
+        return obj->GetBoundsI();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetBoundsI_(Control* obj, RectI value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetBoundsI(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API RectD_C Control_GetEventBounds_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

@@ -13,12 +13,14 @@ namespace Alternet.UI
     /// </summary>
     public class PlessControlHandler : BaseControlHandler, IControlHandler
     {
+#pragma warning disable
         private bool enabled = true;
         private string? toolTip;
         private bool canSelect = true;
         private bool tabStop = true;
         private bool acceptsFocusRecursively = true;
         private Cursor? cursor;
+#pragma warning restore
 
         /// <inheritdoc cref="Control.VertScrollBarInfo"/>
         ScrollBarInfo IControlHandler.VertScrollBarInfo { get; set; }
@@ -91,7 +93,21 @@ namespace Alternet.UI
 
         bool IControlHandler.IsScrollable { get; set; }
 
-        RectD IControlHandler.Bounds { get; set; }
+        /// <inheritdoc/>
+        public RectD Bounds { get; set; }
+
+        RectI IControlHandler.BoundsI
+        {
+            get
+            {
+                return GraphicsFactory.PixelFromDip(Bounds, GetPixelScaleFactor());
+            }
+
+            set
+            {
+                Bounds = GraphicsFactory.PixelToDip(value, GetPixelScaleFactor());
+            }
+        }
 
         RectD IControlHandler.EventBounds { get; }
 
@@ -250,7 +266,8 @@ namespace Alternet.UI
             return Control.Parent?.Handler.GetNativeControl() ?? AssemblyUtils.Default;
         }
 
-        Coord IControlHandler.GetPixelScaleFactor()
+        /// <inheritdoc/>
+        public Coord GetPixelScaleFactor()
         {
             return Control.Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
         }
@@ -376,7 +393,8 @@ namespace Alternet.UI
             this.acceptsFocusRecursively = acceptsFocusRecursively;
         }
 
-        void IControlHandler.SetToolTip(string? value)
+        /// <inheritdoc/>
+        public void SetToolTip(string? value)
         {
             toolTip = value;
         }

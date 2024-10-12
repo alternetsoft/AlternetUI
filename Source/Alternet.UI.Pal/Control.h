@@ -20,7 +20,7 @@ namespace Alternet::UI
 
     // wxDummyPanel ===========================================
 
-    class wxDummyPanel : public wxPanel 
+    class wxDummyPanel : public wxPanel
     {
     public:        
         wxDummyPanel(wxWindow* parent,

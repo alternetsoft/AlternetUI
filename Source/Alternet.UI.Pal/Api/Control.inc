@@ -117,6 +117,10 @@ RectD GetBounds();
 void SetBounds(const RectD& value);
 
 
+RectI GetBoundsI();
+void SetBoundsI(const RectI& value);
+
+
 RectD GetEventBounds();
 
 
