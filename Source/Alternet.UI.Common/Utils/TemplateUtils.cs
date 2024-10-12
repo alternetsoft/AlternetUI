@@ -13,6 +13,15 @@ namespace Alternet.UI
     /// </summary>
     public static class TemplateUtils
     {
+        /// <summary>
+        /// Creates and shows tooltip with contents filled from the template data.
+        /// </summary>
+        /// <param name="tooltipParent">Toolip parent control.</param>
+        /// <param name="location">Tooltip location in coordinates of parent control.</param>
+        /// <param name="template">Template with tooltip data.</param>
+        /// <param name="backColor">Background color. Optional. If not specified, background color
+        /// of the template control is used.</param>
+        /// <returns></returns>
         public static RichToolTip CreateAndShowTemplateToolTip(
             Control tooltipParent,
             PointD location,
@@ -29,6 +38,15 @@ namespace Alternet.UI
             return toolTip;
         }
 
+        /// <summary>
+        /// Creates tooltip with contents filled from the template data.
+        /// </summary>
+        /// <param name="tooltipParent">Toolip parent control.</param>
+        /// <param name="location">Tooltip location in coordinates of parent control.</param>
+        /// <param name="template">Template with tooltip data.</param>
+        /// <param name="backColor">Background color. Optional. If not specified, background color
+        /// of the template control is used.</param>
+        /// <returns></returns>
         public static RichToolTip CreateTemplateToolTip(
             Control tooltipParent,
             PointD location,
@@ -46,18 +64,39 @@ namespace Alternet.UI
             return toolTip;
         }
 
+        /// <summary>
+        /// Gets template contents as <see cref="ImageSet"/>.
+        /// </summary>
+        /// <param name="template">Template control</param>
+        /// <param name="backColor">Background color. Optional. If not specified, background color
+        /// of the template control is used.</param>
+        /// <returns></returns>
         public static ImageSet GetTemplateAsImageSet(TemplateControl template, Color? backColor)
         {
             ImageSet imageSet = new(GetTemplateAsImage(template, backColor));
             return imageSet;
         }
 
+        /// <summary>
+        /// Gets template contents as <see cref="Image"/>.
+        /// </summary>
+        /// <param name="template">Template control</param>
+        /// <param name="backColor">Background color. Optional. If not specified, background color
+        /// of the template control is used.</param>
+        /// <returns></returns>
         public static Image GetTemplateAsImage(TemplateControl template, Color? backColor)
         {
             var result = (Image)GetTemplateAsSKBitmap(template, backColor);
             return result;
         }
 
+        /// <summary>
+        /// Gets template contents as <see cref="SKBitmap"/>.
+        /// </summary>
+        /// <param name="template">Template control</param>
+        /// <param name="backColor">Background color. Optional. If not specified, background color
+        /// of the template control is used.</param>
+        /// <returns></returns>
         public static SKBitmap GetTemplateAsSKBitmap(TemplateControl template, Color? backColor)
         {
             try
@@ -87,6 +126,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Draws control template on the specified canvas.
+        /// </summary>
+        /// <param name="control">Control template.</param>
+        /// <param name="canvas">Canvas where to draw the template.</param>
+        /// <param name="translate">Value on which to translate the top-left
+        /// corner of the control.</param>
         public static void DrawControlTemplate(
             TemplateControl control,
             Graphics canvas,
@@ -98,9 +144,7 @@ namespace Alternet.UI
 
             if (translate is not null)
             {
-                TransformMatrix transform = new();
-                transform.Translate(translate.Value.X, translate.Value.Y);
-                canvas.PushTransform(transform);
+                canvas.PushAndTranslate(translate.Value.X, translate.Value.Y);
             }
 
             control.RaisePaintRecursive(e);
@@ -111,6 +155,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Creates template with text which has a middle part with bold font.
+        /// </summary>
+        /// <param name="prefix">First part of the text.</param>
+        /// <param name="boldText">Middle part of the text with bold attribute.</param>
+        /// <param name="suffix">Last part of the text.</param>
+        /// <param name="fontAndColor">Default font and color attributes of the text.</param>
+        /// <param name="hasBorder">Whether to draw default border around the text.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// After template is created any part of it's text can be changed including
+        /// it's font and color attributes using template properties.
+        /// </remarks>
         public static TemplateWithBoldText CreateTemplateWithBoldText(
             string prefix,
             string boldText,
@@ -130,6 +187,9 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Template control with text which has a middle part with bold font.
+        /// </summary>
         public class TemplateWithBoldText : TemplateControl
         {
             private readonly Border border = new()
@@ -146,6 +206,13 @@ namespace Alternet.UI
                 IsBold = true,
             };
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TemplateWithBoldText"/> class.
+            /// </summary>
+            /// <param name="prefix">First part of the text.</param>
+            /// <param name="boldText">Middle part of the text with bold attribute.</param>
+            /// <param name="suffix">Last part of the text.</param>
+            /// <param name="hasBorder">Whether to draw default border around the text.</param>
             public TemplateWithBoldText(string prefix, string boldText, string suffix, bool hasBorder)
             {
                 HasBorder = hasBorder;
@@ -167,10 +234,19 @@ namespace Alternet.UI
                 SetChildrenUseParentFont(true, true);
             }
 
+            /// <summary>
+            /// Gets control which contains first part of the text.
+            /// </summary>
             public GenericLabel PrefixLabel => prefixLabel;
 
+            /// <summary>
+            /// Gets control which contains last part of the text.
+            /// </summary>
             public GenericLabel SuffixLabel => suffixLabel;
 
+            /// <summary>
+            /// Gets control which contains middle part of the text.
+            /// </summary>
             public GenericLabel BoldLabel => boldLabel;
         }
     }
