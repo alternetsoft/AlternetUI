@@ -27,5 +27,25 @@ namespace Alternet.UI
         /// as specified by the 'Owner' property.
         /// </summary>
         CenterOwner,
+
+        /// <summary>
+        /// The startup location of a window is the center of the main window.
+        /// </summary>
+        CenterMainWindow,
+
+        /// <summary>
+        /// The startup location of a window is the center of the active window.
+        /// </summary>
+        CenterActiveWindow,
+
+        /// <summary>
+        /// The startup location of a window is the top-right corner on the current display.
+        /// </summary>
+        ScreenTopRight,
+
+        /// <summary>
+        /// The startup location of a window is the bottom-right corner on the current display.
+        /// </summary>
+        ScreenBottomRight,
     }
 }
