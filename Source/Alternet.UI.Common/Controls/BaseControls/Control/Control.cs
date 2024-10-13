@@ -510,7 +510,7 @@ namespace Alternet.UI
         /// Gets unique id of this control.
         /// </summary>
         [Browsable(false)]
-        public virtual ObjectUniqueId UniqueId
+        public ObjectUniqueId UniqueId
         {
             get
             {
