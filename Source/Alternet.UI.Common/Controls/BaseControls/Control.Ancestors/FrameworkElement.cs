@@ -81,12 +81,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     DataContext Property
+        /// Gets or sets data context.
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Localizability(LocalizationCategory.NeverLocalize)]
-        public object? DataContext
+        public virtual object? DataContext
         {
             get { return GetValue(DataContextProperty); }
             set { SetValue(DataContextProperty, value); }
