@@ -11,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a custom drawing surface.
     /// </summary>
-    public abstract class Graphics : DisposableObject, IGraphics, IDisposable
+    public abstract partial class Graphics : DisposableObject, IGraphics, IDisposable
     {
         private Stack<TransformMatrix>? stack;
         private Stack<Region?>? clipStack;
@@ -1065,117 +1065,6 @@ namespace Alternet.Drawing
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
         public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
-
-        /// <summary>
-        /// Draws multiple text strings at the specified location with the specified
-        /// <see cref="Brush"/> and <see cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">Strings to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
-        /// the drawn text.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the drawn text.</param>
-        /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
-        public virtual void DrawText(
-            IEnumerable text,
-            Font font,
-            Brush brush,
-            PointD origin,
-            Coord lineDistance = 0)
-        {
-            foreach(var obj in text)
-            {
-                var s = obj.ToString();
-                DrawText(s, font, brush, origin);
-                origin.Y += MeasureText(s, font).Height + lineDistance;
-            }
-        }
-
-        /// <summary>
-        /// Draws multiple text strings at the location with the specified
-        /// font, foreground and background colors.
-        /// </summary>
-        /// <param name="text">Strings to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the drawn text.</param>
-        /// <param name="foreColor">Foreground color of the text.</param>
-        /// <param name="backColor">Background color of the text. If parameter is equal
-        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
-        /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
-        public virtual void DrawText(
-            IEnumerable text,
-            PointD origin,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Coord lineDistance = 0)
-        {
-            foreach (var obj in text)
-            {
-                var s = obj.ToString();
-                DrawText(s, origin, font, foreColor, backColor);
-                origin.Y += MeasureText(s, font).Height + lineDistance;
-            }
-        }
-
-        /// <summary>
-        /// Draws multiple text strings at the location with the specified
-        /// font, horizontal alignment, foreground and background colors.
-        /// </summary>
-        /// <param name="maxWidth">
-        /// Maximal width which is used when alignment is applied.
-        /// When -1 is specified, it is calculated.
-        /// </param>
-        /// <param name="horz">Horizontal alignment.</param>
-        /// <param name="text">Strings to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the drawn text.</param>
-        /// <param name="foreColor">Foreground color of the text.</param>
-        /// <param name="backColor">Background color of the text. If parameter is equal
-        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
-        /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
-        public virtual void DrawText(
-            IEnumerable text,
-            PointD origin,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            HorizontalAlignment horz,
-            Coord maxWidth = -1,
-            Coord lineDistance = 0)
-        {
-            if(maxWidth < 0)
-            {
-                maxWidth = 0;
-
-                foreach (var obj in text)
-                {
-                    var s = obj.ToString();
-                    var measure = MeasureText(s, font);
-                    maxWidth = Math.Max(maxWidth, measure.Width);
-                }
-            }
-
-            foreach (var obj in text)
-            {
-                var s = obj.ToString();
-                var measure = MeasureText(s, font);
-                var alignedOrigin = origin;
-                if(horz != HorizontalAlignment.Left && maxWidth > 0)
-                {
-                    RectD rect = (origin, measure);
-                    RectD maxRect = (origin.X, origin.Y, maxWidth, measure.Height);
-                    var alignedRect = AlignUtils.AlignRectInRect(rect, maxRect, horz, null);
-                    alignedOrigin.X = alignedRect.X;
-                }
-
-                DrawText(s, alignedOrigin, font, foreColor, backColor);
-                origin.Y += measure.Height + lineDistance;
-            }
-        }
 
         /// <summary>
         /// Draws text with <see cref="Control.DefaultFont"/> and <see cref="Brush.Default"/>.

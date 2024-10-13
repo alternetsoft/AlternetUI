@@ -104,7 +104,7 @@ namespace DrawingSample
             var s2 = "You can select the path segment type";
             var s3 = "to draw in the combo box in the panel to the right.";
 
-            dc.DrawText(
+            dc.DrawStyledTextLines(
                 new string[] { s1, s2, s3 },
                 Control.DefaultFont,
                 Brushes.Black,

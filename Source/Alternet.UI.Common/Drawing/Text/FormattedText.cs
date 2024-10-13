@@ -297,7 +297,7 @@ namespace Alternet.Drawing
                 bounds,
                 () =>
                 {
-                    dc.DrawText(
+                    dc.DrawStyledTextLines(
                         wrappedText,
                         blockRect.Location,
                         SafeFont,
