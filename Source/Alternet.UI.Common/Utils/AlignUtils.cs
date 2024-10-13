@@ -12,6 +12,24 @@ namespace Alternet.UI
     public static class AlignUtils
     {
         /// <summary>
+        /// Converts <see cref="TextHorizontalAlignment"/> to <see cref="HorizontalAlignment"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static HorizontalAlignment Convert(TextHorizontalAlignment value)
+        {
+            switch (value)
+            {
+                case TextHorizontalAlignment.Center:
+                    return HorizontalAlignment.Center;
+                case TextHorizontalAlignment.Right:
+                    return HorizontalAlignment.Right;
+                default:
+                    return HorizontalAlignment.Left;
+            }
+        }
+
+        /// <summary>
         /// Aligns the specified rectangle in the container using horizontal and vertical
         /// alignment options.
         /// </summary>
