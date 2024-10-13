@@ -149,33 +149,38 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
-            dc.DrawRotatedText(
-                        "Rotated Text",
-                        innerFrame.Location.OffsetBy(450, 290),
-                        Font.Default.Scaled(3),
-                        Color.Red,
-                        Color.YellowGreen,
-                        250);
+            var drawTexts = false;
 
-            dc.DrawText(
-                "AlterNET UI",
-                Font.Default.Scaled(1.5),
-                Brushes.Blue,
-                innerFrame.Location.OffsetBy(150, 10));
+            if (drawTexts)
+            {
+                dc.DrawRotatedText(
+                            "Rotated Text",
+                            innerFrame.Location.OffsetBy(450, 290),
+                            Font.Default.Scaled(3),
+                            Color.Red,
+                            Color.YellowGreen,
+                            250);
 
-            dc.DrawText("This is sample text",
-                innerFrame.InflatedBy(-150, -150).Location,
-                Font.Default,
-                Color.DarkOliveGreen,
-                Color.LightGoldenrodYellow);
+                dc.DrawText(
+                    "AlterNET UI",
+                    Font.Default.Scaled(1.5),
+                    Brushes.Blue,
+                    innerFrame.Location.OffsetBy(150, 10));
 
-            dc.DrawLabel(
-                "This is sample label",
-                Font.Default,
-                Color.LightSkyBlue,
-                Color.Olive,
-                NotifyIconPage.Image,
-                innerFrame.InflatedBy(-250, -250));
+                dc.DrawText("This is sample text",
+                    innerFrame.InflatedBy(-150, -150).Location,
+                    Font.Default,
+                    Color.DarkOliveGreen,
+                    Color.LightGoldenrodYellow);
+
+                dc.DrawLabel(
+                    "This is sample label",
+                    Font.Default,
+                    Color.LightSkyBlue,
+                    Color.Olive,
+                    NotifyIconPage.Image,
+                    innerFrame.InflatedBy(-250, -250));
+            }
 
             dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
         }
