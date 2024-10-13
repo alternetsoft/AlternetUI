@@ -331,6 +331,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Increments <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
+        /// parameter value.
+        /// </summary>
+        /// <param name="vert">Defines whether to increment <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <param name="value">Value to add to the location.</param>
+        public void IncLocation(bool vert, Coord value)
+        {
+            var oldLocation = GetLocation(vert);
+            SetLocation(vert, oldLocation + value);
+        }
+
+        /// <summary>
         /// Sets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
