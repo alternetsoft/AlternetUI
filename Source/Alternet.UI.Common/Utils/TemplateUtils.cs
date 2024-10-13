@@ -51,7 +51,7 @@ namespace Alternet.UI
             Control tooltipParent,
             PointD location,
             TemplateControl template,
-            Color? backColor)
+            Color? backColor = null)
         {
             backColor ??= template.BackgroundColor;
 
@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// <param name="backColor">Background color. Optional. If not specified, background color
         /// of the template control is used.</param>
         /// <returns></returns>
-        public static ImageSet GetTemplateAsImageSet(TemplateControl template, Color? backColor)
+        public static ImageSet GetTemplateAsImageSet(TemplateControl template, Color? backColor = null)
         {
             ImageSet imageSet = new(GetTemplateAsImage(template, backColor));
             return imageSet;
@@ -84,7 +84,7 @@ namespace Alternet.UI
         /// <param name="backColor">Background color. Optional. If not specified, background color
         /// of the template control is used.</param>
         /// <returns></returns>
-        public static Image GetTemplateAsImage(TemplateControl template, Color? backColor)
+        public static Image GetTemplateAsImage(TemplateControl template, Color? backColor = null)
         {
             var result = (Image)GetTemplateAsSKBitmap(template, backColor);
             return result;
@@ -97,7 +97,7 @@ namespace Alternet.UI
         /// <param name="backColor">Background color. Optional. If not specified, background color
         /// of the template control is used.</param>
         /// <returns></returns>
-        public static SKBitmap GetTemplateAsSKBitmap(TemplateControl template, Color? backColor)
+        public static SKBitmap GetTemplateAsSKBitmap(TemplateControl template, Color? backColor = null)
         {
             try
             {
@@ -138,6 +138,9 @@ namespace Alternet.UI
             Graphics canvas,
             PointD? translate = null)
         {
+            control.PerformLayout();
+            control.SetSizeToContent();
+
             RectD clipRect = (0, 0, control.Width, control.Height);
 
             PaintEventArgs e = new(canvas, clipRect);
@@ -227,11 +230,11 @@ namespace Alternet.UI
                     prefixLabel.Parent = border;
                     boldLabel.Parent = border;
                     suffixLabel.Parent = border;
-                });
 
-                SetChildrenUseParentBackColor(true, true);
-                SetChildrenUseParentForeColor(true, true);
-                SetChildrenUseParentFont(true, true);
+                    SetChildrenUseParentBackColor(true, true);
+                    SetChildrenUseParentForeColor(true, true);
+                    SetChildrenUseParentFont(true, true);
+                });
             }
 
             /// <summary>

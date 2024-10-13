@@ -571,7 +571,13 @@ namespace Alternet.Drawing
 
         protected override void SetHandlerTransform(TransformMatrix matrix)
         {
-            dc.SetTransformValues(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.DX, matrix.DY);
+            dc.SetTransformValues(
+                matrix.M11,
+                matrix.M12,
+                matrix.M21,
+                matrix.M22,
+                GraphicsFactory.PixelFromDip(matrix.DX, ScaleFactor),
+                GraphicsFactory.PixelFromDip(matrix.DY, ScaleFactor));
         }
     }
 }

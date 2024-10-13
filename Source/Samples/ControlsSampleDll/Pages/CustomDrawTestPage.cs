@@ -49,6 +49,7 @@ namespace ControlsSample
         };
 
         private readonly TemplateControl controlTemplate = new();
+        private readonly TemplateControl hintTemplate = new();
 
         private readonly InteriorDrawable interiorDrawable;
 
@@ -62,10 +63,18 @@ namespace ControlsSample
                 "This text has ",
                 "bold",
                 " fragment",
-                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Font.Default.WithSize(25)));
+                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
+
+            hintTemplate = TemplateUtils.CreateTemplateWithBoldText(
+                "This hint has ",
+                "bold",
+                " fragment",
+                new FontAndColor(Color.Navy, Color.LightGoldenrodYellow, Font.Default.WithSize(25)));
 
             controlTemplate.Parent = this;
             controlTemplate.SetSizeToContent();
+            hintTemplate.Parent = this;
+            hintTemplate.SetSizeToContent();
             interiorDrawable = CreateInteriorDrawable(false);
 
             Size = (900, 700);
@@ -182,7 +191,7 @@ namespace ControlsSample
             TemplateUtils.CreateAndShowTemplateToolTip(
                 customDrawControl,
                 (250, 50),
-                controlTemplate);
+                hintTemplate);
         }
 
         public void DrawControlTemplate()
@@ -192,8 +201,11 @@ namespace ControlsSample
             void DrawTemplate(Control container, Graphics canvas, RectD rect)
             {
                 controlTemplate.HasBorder = true;
-                TemplateUtils.DrawControlTemplate(controlTemplate, canvas, (100, 250));
+                TemplateUtils.DrawControlTemplate(controlTemplate, canvas, (100, 250)); 
                 controlTemplate.HasBorder = false;
+
+                var font = controlTemplate.Font ?? Control.DefaultFont;
+                canvas.DrawText("Hello", font, Brushes.Green, (15, 15));
             }
         }
 
