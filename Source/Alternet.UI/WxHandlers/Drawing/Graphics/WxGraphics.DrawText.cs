@@ -49,10 +49,12 @@ namespace Alternet.Drawing
             DebugFontAssert(font);
             DebugColorAssert(foreColor);
 
+            font = TransformFontForDrawText(font);
             location = TransformPointForDrawText(location);
 
             ToPixels(ref location, unit);
 
+            font = TransformFontForDrawText(font);
             dc.DrawRotatedTextI(
                 text,
                 location.ToPoint(),
@@ -92,6 +94,7 @@ namespace Alternet.Drawing
             DebugTextAssert(text);
             DebugFontAssert(font);
             DebugColorAssert(foreColor);
+            font = TransformFontForDrawText(font);
             dc.DrawText(
                 text,
                 TransformPointForDrawText(location),
@@ -114,6 +117,9 @@ namespace Alternet.Drawing
             DebugTextAssert(text);
             DebugFontAssert(font);
             DebugColorAssert(foreColor, nameof(foreColor));
+
+            font = TransformFontForDrawText(font);
+
             return dc.DrawLabel(
                 text,
                 (UI.Native.Font)font.Handler,
@@ -125,16 +131,30 @@ namespace Alternet.Drawing
                 indexAccel);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool GetNoTransformForDrawText()
+        {
+            return App.IsWindowsOS || !HasTransform || WxGlobals.NoTransformForDrawText;
+        }
+
         private PointD TransformPointForDrawText(PointD value)
         {
-            if(App.IsWindowsOS || !HasTransform)
+            if(GetNoTransformForDrawText())
                 return value;
             return Transform.TransformPoint(value);
         }
 
+        private Font TransformFontForDrawText(Font value)
+        {
+            if (GetNoTransformForDrawText())
+                return value;
+            var scaledSize = Transform.TransformSize(value.Size);
+            return value.WithSize(scaledSize.Height);
+        }
+
         private SizeD TransformSizeForDrawText(SizeD value)
         {
-            if (App.IsWindowsOS || !HasTransform)
+            if (GetNoTransformForDrawText())
                 return value;
             return Transform.TransformSize(value);
         }
