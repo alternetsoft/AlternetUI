@@ -15,6 +15,7 @@ namespace Alternet.Drawing
         private Coord? maxWidth;
         private Coord? maxHeight;
         private Font? font;
+        private IEnumerable<Graphics.StyledText>? styledText;
         private List<string>? wrappedText;
         private Coord? scaleFactor;
         private SizeD? textSize;
@@ -145,12 +146,24 @@ namespace Alternet.Drawing
         /// Gets wrapped text. Each line of the wrapped text has width less than <see cref="MaxWidth"/>
         /// and doesn't have new line characters.
         /// </summary>
-        public virtual IEnumerable<string>? WrappedText
+        public virtual List<string>? WrappedText
         {
             get
             {
                 Prepare();
                 return wrappedText;
+            }
+        }
+
+        /// <summary>
+        /// Gets styled text items created from <see cref="WrappedText"/>.
+        /// </summary>
+        public virtual IEnumerable<Graphics.StyledText>? StyledText
+        {
+            get
+            {
+                Prepare();
+                return styledText;
             }
         }
 
@@ -249,8 +262,9 @@ namespace Alternet.Drawing
         public override void Changed()
         {
             base.Changed();
-            wrappedText = null;
+            styledText = null;
             textSize = null;
+            wrappedText = null;
         }
 
         /// <summary>
@@ -264,7 +278,7 @@ namespace Alternet.Drawing
             ScaleFactor = ScaleFactor;
             Prepare();
 
-            if (wrappedText is null)
+            if (styledText is null)
                 return container;
 
             RectD blockRect = (container.Location, RestrictedSize);
@@ -287,7 +301,7 @@ namespace Alternet.Drawing
             ScaleFactor = dc.ScaleFactor;
             Prepare();
 
-            if (wrappedText is null)
+            if (styledText is null)
                 return;
 
             var blockRect = GetBlockRect(dc.ScaleFactor, bounds);
@@ -297,8 +311,8 @@ namespace Alternet.Drawing
                 bounds,
                 () =>
                 {
-                    dc.DrawStyledTextLines(
-                        wrappedText,
+                    dc.DrawStyledText(
+                        styledText,
                         blockRect.Location,
                         SafeFont,
                         ForegroundColor ?? Color.Black,
@@ -308,13 +322,6 @@ namespace Alternet.Drawing
                         LineDistance);
                 },
                 IsClipped);
-
-            /*
-                    private TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
-                    private TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
-                    private TextTrimming trimming = TextTrimming.None;
-                    private TextWrapping wrapping = TextWrapping.Character;
-            */
         }
 
         /// <summary>
@@ -322,7 +329,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual void Prepare()
         {
-            if (wrappedText is not null)
+            if (styledText is not null)
                 return;
 
             wrappedText = DrawingUtils.WrapTextToList(
@@ -330,6 +337,8 @@ namespace Alternet.Drawing
                         MaxWidth,
                         SafeFont,
                         ScaleFactor);
+
+            styledText = Graphics.StyledText.CreateCollection(wrappedText);
 
             textSize = DrawingUtils.MeasureText(wrappedText, SafeFont, ScaleFactor, LineDistance);
         }

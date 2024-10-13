@@ -228,14 +228,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.DrawText(string, Font, Brush, PointD)"/>
         void DrawText(string text, Font font, Brush brush, PointD origin);
 
-        /// <inheritdoc cref="Graphics.DrawStyledTextLines(IEnumerable, Font, Brush, PointD, Coord)"/>
-        void DrawStyledTextLines(
-            IEnumerable text,
-            Font font,
-            Brush brush,
-            PointD origin,
-            Coord lineDistance = 0);
-
         /// <inheritdoc cref="Graphics.DrawText(string, PointD)"/>
         void DrawText(string text, PointD origin);
 

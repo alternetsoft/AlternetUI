@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Alternet.UI;
@@ -19,14 +20,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws multiple text strings at the location with the specified
+        /// Draws multiple styled text items at the location with the specified
         /// font, horizontal alignment, foreground and background colors.
         /// </summary>
         /// <param name="maxWidth">
         /// Maximal width which is used when alignment is applied.
         /// When -1 is specified, it is calculated.
         /// </param>
-        /// <param name="horz">Horizontal alignment.</param>
+        /// <param name="alignment">Horizontal alignment.</param>
         /// <param name="text">Strings to draw.</param>
         /// <param name="font">Default <see cref="Font"/> that is used to draw the text.</param>
         /// <param name="foreColor">Default foreground color of the text.</param>
@@ -35,13 +36,13 @@ namespace Alternet.Drawing
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
         /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
-        public virtual void DrawStyledTextLines(
-            IEnumerable text,
+        public virtual void DrawStyledText(
+            IEnumerable<StyledText> text,
             PointD origin,
             Font font,
             Color foreColor,
             Color backColor,
-            HorizontalAlignment horz,
+            HorizontalAlignment alignment,
             Coord maxWidth = -1,
             Coord lineDistance = 0)
         {
@@ -60,11 +61,11 @@ namespace Alternet.Drawing
             {
                 var measure = MeasureStyledText(obj, font);
                 var alignedOrigin = origin;
-                if (horz != HorizontalAlignment.Left && maxWidth > 0)
+                if (alignment != HorizontalAlignment.Left && maxWidth > 0)
                 {
                     RectD rect = (origin, measure);
                     RectD maxRect = (origin.X, origin.Y, maxWidth, measure.Height);
-                    var alignedRect = AlignUtils.AlignRectInRect(rect, maxRect, horz, null);
+                    var alignedRect = AlignUtils.AlignRectInRect(rect, maxRect, alignment, null);
                     alignedOrigin.X = alignedRect.X;
                 }
 
@@ -74,54 +75,60 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws multiple text strings at the specified location with the specified
+        /// Draws multiple styled text items at the location with the specified
         /// <see cref="Brush"/> and <see cref="Font"/> objects.
         /// </summary>
-        /// <param name="text">Strings to draw.</param>
+        /// <param name="text">Items to draw.</param>
         /// <param name="font">Default <see cref="Font"/> that is used to draw the text.</param>
         /// <param name="brush">Default <see cref="Brush"/> that determines the default
         /// color and texture of the drawn text.</param>
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the drawn text.</param>
-        /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
-        public virtual void DrawStyledTextLines(
-            IEnumerable text,
+        /// corner of the text.</param>
+        /// <param name="distance">Distance between items. Optional. Default is 0.</param>
+        /// <param name="isVertical">Whether to draw items vertically or horizontally.</param>
+        public virtual void DrawStyledText(
+            IEnumerable<StyledText> text,
             Font font,
             Brush brush,
             PointD origin,
-            Coord lineDistance = 0)
+            Coord distance = 0,
+            bool isVertical = true)
         {
             foreach (var obj in text)
             {
                 DrawStyledText(obj, font, brush, origin);
-                origin.Y += MeasureStyledText(obj, font).Height + lineDistance;
+                var textSize = MeasureStyledText(obj, font).GetSize(isVertical);
+                origin.IncLocation(isVertical, textSize + distance);
             }
         }
 
         /// <summary>
-        /// Draws multiple text strings at the location with the specified
+        /// Draws multiple styled text items at the location with the specified
         /// font, foreground and background colors.
         /// </summary>
-        /// <param name="text">Strings to draw.</param>
+        /// <param name="text">Items to draw.</param>
         /// <param name="font">Default <see cref="Font"/> that is used to draw the text.</param>
         /// <param name="foreColor">Default foreground color of the text.</param>
         /// <param name="backColor">Default background color of the text. If parameter is equal
         /// to <see cref="Color.Empty"/>, default background is transparent. </param>
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
-        /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
-        public virtual void DrawStyledTextLines(
-            IEnumerable text,
+        /// <param name="distance">Distance between items. Optional. Default is 0.</param>
+        /// <param name="isVertical">Whether to draw items vertically or horizontally.</param>
+        public virtual void DrawStyledText(
+            IEnumerable<StyledText> text,
             PointD origin,
             Font font,
             Color foreColor,
             Color backColor,
-            Coord lineDistance = 0)
+            Coord distance = 0,
+            bool isVertical = true)
         {
             foreach (var obj in text)
             {
                 DrawStyledText(obj, origin, font, foreColor, backColor);
-                origin.Y += MeasureStyledText(obj, font).Height + lineDistance;
+                var textSize = MeasureStyledText(obj, font).GetSize(isVertical);
+                origin.IncLocation(isVertical, textSize + distance);
             }
         }
 
@@ -134,18 +141,10 @@ namespace Alternet.Drawing
         /// color and texture of the drawn text.</param>
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
-        public virtual void DrawStyledText(object styledText, Font font, Brush brush, PointD origin)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawStyledText(StyledText styledText, Font font, Brush brush, PointD origin)
         {
-            if (TypeUtils.IsString(styledText))
-            {
-                var s = styledText.ToString();
-                DrawText(s, font, brush, origin);
-            }
-            else
-            {
-                var styledObj = styledText as IStyledText;
-                styledObj?.Draw(this, origin, font, brush);
-            }
+            ((IStyledText)styledText).Draw(this, origin, font, brush);
         }
 
         /// <summary>
@@ -154,20 +153,11 @@ namespace Alternet.Drawing
         /// <param name="styledText">Styled text object.</param>
         /// <param name="font">Default <see cref="Font"/> that is used to draw the text.</param>
         /// <returns></returns>
-        public virtual SizeD MeasureStyledText(object styledText, Font font)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeD MeasureStyledText(StyledText styledText, Font font)
         {
-            if (TypeUtils.IsString(styledText))
-            {
-                var s = styledText.ToString();
-                var measure = MeasureText(s, font);
-                return measure;
-            }
-            else
-            {
-                var styledObj = styledText as IStyledText;
-                var measure = styledObj?.Measure(this, font) ?? SizeD.Empty;
-                return measure;
-            }
+            var measure = ((IStyledText)styledText).Measure(this, font);
+            return measure;
         }
 
         /// <summary>
@@ -180,23 +170,15 @@ namespace Alternet.Drawing
         /// <param name="font">Default <see cref="Font"/> that is used to draw the text.</param>
         /// <param name="location"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the drawn text.</param>
-        public virtual void DrawStyledText(
-            object styledText,
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawStyledText(
+            StyledText styledText,
             PointD location,
             Font font,
             Color foreColor,
             Color backColor)
         {
-            if (TypeUtils.IsString(styledText))
-            {
-                var s = styledText.ToString();
-                DrawText(s, location, font, foreColor, backColor);
-            }
-            else
-            {
-                var styledObj = styledText as IStyledText;
-                styledObj?.Draw(this, location, font, foreColor, backColor);
-            }
+            ((IStyledText)styledText).Draw(this, location, font, foreColor, backColor);
         }
 
         /// <summary>
@@ -205,9 +187,78 @@ namespace Alternet.Drawing
         public class StyledText : BaseObject
         {
             /// <summary>
+            /// Conversion from <see cref="string"/> to <see cref="StyledText"/>.
+            /// </summary>
+            /// <param name="value">Value to convert.</param>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static implicit operator StyledText(string value)
+            {
+                return Create(value);
+            }
+
+            /// <summary>
+            /// Conversion from array of <see cref="string"/> to <see cref="StyledText"/>.
+            /// </summary>
+            /// <param name="value">Value to convert.</param>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static implicit operator StyledText(string[] value)
+            {
+                return Create(value);
+            }
+
+            /// <summary>
+            /// Creates styled text from the collection of strings.
+            /// </summary>
+            /// <param name="strings">The collection of strings.</param>
+            /// <returns></returns>
+            public static IEnumerable<StyledText> CreateCollection(IEnumerable<string> strings)
+            {
+                List<StyledText> items = new();
+
+                foreach(var s in strings)
+                {
+                    items.Add(s);
+                }
+
+                return items;
+            }
+
+            /// <summary>
+            /// Create styled text container with the strings.
+            /// </summary>
+            /// <param name="strings">Strings collection.</param>
+            /// <param name="distance">Distance between items.</param>
+            /// <param name="isVertical">Whether items are aligned vertically or horizontally.</param>
+            /// <returns></returns>
+            public static StyledText Create(
+                IEnumerable<string> strings,
+                Coord distance = 0,
+                bool isVertical = true)
+            {
+                var items = CreateCollection(strings);
+                return Create(items, distance, isVertical);
+            }
+
+            /// <summary>
+            /// Create styled text container wiht the items.
+            /// </summary>
+            /// <param name="items">Items collection.</param>
+            /// <param name="distance">Distance between items.</param>
+            /// <param name="isVertical">Whether items are aligned vertically or horizontally.</param>
+            /// <returns></returns>
+            public static StyledText Create(
+                            IEnumerable<StyledText> items,
+                            Coord distance = 0,
+                            bool isVertical = true)
+            {
+                return new StyledTextContainer(items, distance, isVertical);
+            }
+
+            /// <summary>
             /// Creates an empty styled text.
             /// </summary>
             /// <returns></returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create()
             {
                 return new SimpleStyledText();
@@ -218,6 +269,7 @@ namespace Alternet.Drawing
             /// </summary>
             /// <param name="s">Text string without line separators.</param>
             /// <returns></returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create(string s)
             {
                 return new SimpleStyledText(s);
@@ -231,6 +283,7 @@ namespace Alternet.Drawing
             /// <param name="brush"><see cref="Brush"/> that determines the
             /// color and texture of the text. If this is null, default brush is used.</param>
             /// <returns></returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create(string s, FontStyle fontStyle, Brush? brush)
             {
                 return new StyledTextWithFontAndColor(s, fontStyle, brush);
@@ -244,6 +297,7 @@ namespace Alternet.Drawing
             /// <param name="brush"><see cref="Brush"/> that determines the
             /// color and texture of the text. If this is null, default brush is used.</param>
             /// <returns></returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create(string s, Font? font, Brush? brush)
             {
                 return new StyledTextWithFontAndColor(s, font, brush);
@@ -262,6 +316,7 @@ namespace Alternet.Drawing
             /// If this is null, default background color is used.
             /// </param>
             /// <returns></returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create(
                 string s,
                 Font? font,
@@ -284,6 +339,7 @@ namespace Alternet.Drawing
             /// If this is null, default background color is used.
             /// </param>
             /// <returns></returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create(
                 string s,
                 FontStyle fontStyle,
@@ -291,6 +347,73 @@ namespace Alternet.Drawing
                 Color? backColor)
             {
                 return new StyledTextWithFontAndColor(s, fontStyle, foreColor, backColor);
+            }
+        }
+
+        internal class StyledTextContainer : StyledText, IStyledText
+        {
+            private readonly bool isVertical;
+            private readonly IEnumerable<StyledText> items;
+            private readonly Coord distance;
+
+            public StyledTextContainer(
+                IEnumerable<StyledText> items,
+                Coord distance = 0,
+                bool isVertical = true)
+            {
+                this.isVertical = isVertical;
+                this.items = items;
+                this.distance = distance;
+            }
+
+            public void Draw(Graphics dc, PointD location, Font font, Color foreColor, Color backColor)
+            {
+                dc.DrawStyledText(
+                    items,
+                    location,
+                    font,
+                    foreColor,
+                    backColor,
+                    distance,
+                    isVertical);
+            }
+
+            public void Draw(Graphics dc, PointD location, Font font, Brush brush)
+            {
+                dc.DrawStyledText(
+                    items,
+                    font,
+                    brush,
+                    location,
+                    distance,
+                    isVertical);
+            }
+
+            public SizeD Measure(Graphics dc, Font font)
+            {
+                Coord width = 0;
+                Coord height = 0;
+
+                if (isVertical)
+                {
+                    foreach (var s in items)
+                    {
+                        var size = dc.MeasureStyledText(s, font);
+                        width = Math.Max(width, size.Width);
+                        height += size.Height + distance;
+                    }
+                }
+                else
+                {
+                    foreach (var s in items)
+                    {
+                        var size = dc.MeasureStyledText(s, font);
+                        height = Math.Max(height, size.Height);
+                        width += size.Width + distance;
+                    }
+                }
+
+                return (width, height);
             }
         }
 
