@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,23 +49,13 @@ namespace Alternet.Drawing
             DebugFontAssert(font);
             DebugColorAssert(foreColor);
 
-            if (unit == GraphicsUnit.Pixel)
-            {
-                dc.DrawRotatedTextI(
-                    text,
-                    location.ToPoint(),
-                    (UI.Native.Font)font.Handler,
-                    foreColor,
-                    backColor,
-                    angle);
-                return;
-            }
+            location = TransformPointForDrawText(location);
 
-            ToDip(ref location, unit);
+            ToPixels(ref location, unit);
 
-            dc.DrawRotatedText(
+            dc.DrawRotatedTextI(
                 text,
-                location,
+                location.ToPoint(),
                 (UI.Native.Font)font.Handler,
                 foreColor,
                 backColor,
@@ -103,7 +94,7 @@ namespace Alternet.Drawing
             DebugColorAssert(foreColor);
             dc.DrawText(
                 text,
-                location,
+                TransformPointForDrawText(location),
                 (UI.Native.Font)font.Handler,
                 foreColor,
                 backColor);
@@ -129,9 +120,29 @@ namespace Alternet.Drawing
                 foreColor,
                 backColor,
                 (UI.Native.Image?)image?.Handler,
-                rect,
+                TransformRectForDrawText(rect),
                 (int)alignment,
                 indexAccel);
+        }
+
+        private PointD TransformPointForDrawText(PointD value)
+        {
+            if(App.IsWindowsOS || !HasTransform)
+                return value;
+            return Transform.TransformPoint(value);
+        }
+
+        private SizeD TransformSizeForDrawText(SizeD value)
+        {
+            if (App.IsWindowsOS || !HasTransform)
+                return value;
+            return Transform.TransformSize(value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private RectD TransformRectForDrawText(RectD value)
+        {
+            return (TransformPointForDrawText(value.Location), TransformSizeForDrawText(value.Size));
         }
     }
 }

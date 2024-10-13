@@ -1489,6 +1489,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts point to pixels.
+        /// </summary>
+        /// <param name="point">Point.</param>
+        /// <param name="unit">The unit of measure for the point.</param>
+        public virtual void ToPixels(ref PointD point, GraphicsUnit unit)
+        {
+            if (unit != GraphicsUnit.Pixel)
+            {
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                point = GraphicsUnitConverter.ConvertPoint(
+                    unit,
+                    GraphicsUnit.Pixel,
+                    dpi,
+                    point,
+                    graphicsType);
+            }
+        }
+
+        /// <summary>
         /// Converts <see cref="SizeD"/> to device-independent units.
         /// </summary>
         /// <param name="size">Size.</param>
