@@ -18,6 +18,7 @@ namespace Alternet.Drawing
         private List<string>? wrappedText;
         private Coord? scaleFactor;
         private SizeD? textSize;
+        private Coord lineDistance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormattedText"/> class.
@@ -41,6 +42,25 @@ namespace Alternet.Drawing
                 if (scaleFactor == value)
                     return;
                 scaleFactor = value;
+                Changed();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets distance between lines of text.
+        /// </summary>
+        public virtual Coord LineDistance
+        {
+            get
+            {
+                return lineDistance;
+            }
+
+            set
+            {
+                if (lineDistance == value)
+                    return;
+                lineDistance = value;
                 Changed();
             }
         }
@@ -146,6 +166,39 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <inheritdoc/>
+        public override TextVerticalAlignment VerticalAlignment
+        {
+            get
+            {
+                switch (BlockVerticalAlignment)
+                {
+                    case UI.VerticalAlignment.Center:
+                        return TextVerticalAlignment.Center;
+                    case UI.VerticalAlignment.Bottom:
+                        return TextVerticalAlignment.Bottom;
+                    default:
+                        return TextVerticalAlignment.Top;
+                }
+            }
+
+            set
+            {
+                switch (value)
+                {
+                    default:
+                        BlockVerticalAlignment = UI.VerticalAlignment.Top;
+                        break;
+                    case TextVerticalAlignment.Center:
+                        BlockVerticalAlignment = UI.VerticalAlignment.Center;
+                        break;
+                    case TextVerticalAlignment.Bottom:
+                        BlockVerticalAlignment = UI.VerticalAlignment.Bottom;
+                        break;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets real size of the text in device-independent units.
         /// <see cref="MaxWidth"/> and <see cref="MaxHeight"/> are not applied to the result.
@@ -238,6 +291,7 @@ namespace Alternet.Drawing
                 return;
 
             var blockRect = GetBlockRect(dc.ScaleFactor, bounds);
+            var halign = AlignUtils.Convert(HorizontalAlignment);
 
             dc.DoInsideClipped(
                 bounds,
@@ -248,7 +302,10 @@ namespace Alternet.Drawing
                         blockRect.Location,
                         SafeFont,
                         ForegroundColor ?? Color.Black,
-                        BackgroundColor ?? Color.Empty);
+                        BackgroundColor ?? Color.Empty,
+                        halign,
+                        blockRect.Width,
+                        LineDistance);
                 },
                 IsClipped);
 
@@ -274,7 +331,7 @@ namespace Alternet.Drawing
                         SafeFont,
                         ScaleFactor);
 
-            textSize = DrawingUtils.MeasureText(wrappedText, SafeFont, ScaleFactor);
+            textSize = DrawingUtils.MeasureText(wrappedText, SafeFont, ScaleFactor, LineDistance);
         }
     }
 }

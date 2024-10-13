@@ -15,7 +15,13 @@ namespace DrawingSample
         private static readonly Brush fontInfoBrush = Brushes.Black;
         private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, DashStyle.Dash);
 
-        private readonly FormattedText formattedText = new();
+        private readonly FormattedText formattedText = new()
+        {
+            HorizontalAlignment = TextHorizontalAlignment.Left,
+            VerticalAlignment = TextVerticalAlignment.Top,
+            Trimming = TextTrimming.Pixel,
+            Wrapping = TextWrapping.Word,
+        };
 
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
@@ -27,14 +33,6 @@ namespace DrawingSample
 
         private bool textWidthLimitEnabled = true;
         private bool textHeightSet = false;
-
-        private TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
-
-        private TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
-
-        private TextTrimming trimming = TextTrimming.Pixel;
-
-        private TextWrapping wrapping = TextWrapping.Word;
 
         private static readonly Font fontInfoFont;
         private static double fontSize;
@@ -143,40 +141,40 @@ namespace DrawingSample
 
         public TextHorizontalAlignment HorizontalAlignment
         {
-            get => horizontalAlignment;
+            get => formattedText.HorizontalAlignment;
             set
             {
-                horizontalAlignment = value;
+                formattedText.HorizontalAlignment = value;
                 Invalidate();
             }
         }
 
         public TextVerticalAlignment VerticalAlignment
         {
-            get => verticalAlignment;
+            get => formattedText.VerticalAlignment;
             set
             {
-                verticalAlignment = value;
+                formattedText.VerticalAlignment = value;
                 Invalidate();
             }
         }
 
         public TextTrimming Trimming
         {
-            get => trimming;
+            get => formattedText.Trimming;
             set
             {
-                trimming = value;
+                formattedText.Trimming = value;
                 Invalidate();
             }
         }
 
         public TextWrapping Wrapping
         {
-            get => wrapping;
+            get => formattedText.Wrapping;
             set
             {
-                wrapping = value;
+                formattedText.Wrapping = value;
                 Invalidate();
             }
         }

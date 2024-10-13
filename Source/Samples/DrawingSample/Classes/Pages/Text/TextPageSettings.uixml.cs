@@ -26,10 +26,17 @@ namespace DrawingSample
                     horizontalAlignmentComboBox,
                     verticalAlignmentComboBox,
                     trimmingComboBox,
+                    wrappingComboBox);
+
+                Group(
+                    trimmingComboBox,
                     wrappingComboBox).Enabled(false);
+
                 labels.Margin(new(0, 5, 10, 5)).VerticalAlignment(VerticalAlignment.Center);
                 comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
                 var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
+
+                propertyGrid.Visible = DebugUtils.IsDebugDefined;
 
                 propGrid.Setup(gridControls);
             });
@@ -39,15 +46,23 @@ namespace DrawingSample
         {
             DataContext = page;
 
-            AddProperty(
-                page.WrappedText,
-                nameof(FormattedText.BlockHorizontalAlignment),
-                "Block Horz");
+            if (DebugUtils.IsDebugDefined)
+            {
+                AddProperty(
+                    page.WrappedText,
+                    nameof(FormattedText.BlockHorizontalAlignment),
+                    "Block Horz");
 
-            AddProperty(
-                page.WrappedText,
-                nameof(FormattedText.BlockVerticalAlignment),
-                "Block Vert");
+                AddProperty(
+                    page.WrappedText,
+                    nameof(FormattedText.BlockVerticalAlignment),
+                    "Block Vert");
+
+                AddProperty(
+                    page.WrappedText,
+                    nameof(FormattedText.LineDistance),
+                    "Line Distance");
+            }
 
             void AddProperty(object obj, string name, string? label = null)
             {
