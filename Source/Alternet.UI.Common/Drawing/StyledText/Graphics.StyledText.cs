@@ -211,13 +211,13 @@ namespace Alternet.Drawing
             /// </summary>
             /// <param name="strings">The collection of strings.</param>
             /// <returns></returns>
-            public static IEnumerable<StyledText> CreateCollection(IEnumerable<string> strings)
+            public static IEnumerable<StyledText> CreateCollection(IEnumerable strings)
             {
                 List<StyledText> items = new();
 
                 foreach(var s in strings)
                 {
-                    items.Add(s);
+                    items.Add(StyledText.Create(s));
                 }
 
                 return items;
@@ -231,7 +231,7 @@ namespace Alternet.Drawing
             /// <param name="isVertical">Whether items are aligned vertically or horizontally.</param>
             /// <returns></returns>
             public static StyledText Create(
-                IEnumerable<string> strings,
+                IEnumerable strings,
                 Coord distance = 0,
                 bool isVertical = true)
             {
@@ -270,7 +270,7 @@ namespace Alternet.Drawing
             /// <param name="s">Text string without line separators.</param>
             /// <returns></returns>
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public static StyledText Create(string s)
+            public static StyledText Create(object s)
             {
                 return new SimpleStyledText(s);
             }
@@ -284,7 +284,7 @@ namespace Alternet.Drawing
             /// color and texture of the text. If this is null, default brush is used.</param>
             /// <returns></returns>
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public static StyledText Create(string s, FontStyle fontStyle, Brush? brush)
+            public static StyledText Create(object s, FontStyle fontStyle, Brush? brush)
             {
                 return new StyledTextWithFontAndColor(s, fontStyle, brush);
             }
@@ -298,7 +298,7 @@ namespace Alternet.Drawing
             /// color and texture of the text. If this is null, default brush is used.</param>
             /// <returns></returns>
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public static StyledText Create(string s, Font? font, Brush? brush)
+            public static StyledText Create(object s, Font? font, Brush? brush)
             {
                 return new StyledTextWithFontAndColor(s, font, brush);
             }
@@ -318,7 +318,7 @@ namespace Alternet.Drawing
             /// <returns></returns>
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create(
-                string s,
+                object s,
                 Font? font,
                 Color? foreColor,
                 Color? backColor)
@@ -341,7 +341,7 @@ namespace Alternet.Drawing
             /// <returns></returns>
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static StyledText Create(
-                string s,
+                object s,
                 FontStyle fontStyle,
                 Color? foreColor,
                 Color? backColor)
@@ -419,12 +419,12 @@ namespace Alternet.Drawing
 
         internal class SimpleStyledText : StyledText, IStyledText
         {
-            private string text;
+            private object text;
             private SizeD? measure;
             private Coord scaleFactor;
             private ObjectUniqueId defaultFont;
 
-            public SimpleStyledText(string text)
+            public SimpleStyledText(object text)
             {
                 this.text = text;
             }
@@ -434,7 +434,7 @@ namespace Alternet.Drawing
                 text = string.Empty;
             }
 
-            public virtual string Text
+            public virtual object Text
             {
                 get
                 {
@@ -458,7 +458,7 @@ namespace Alternet.Drawing
                 Color backColor)
             {
                 dc.DrawText(
-                    Text,
+                    Text.ToString(),
                     location,
                     SafeFont(font),
                     SafeForeColor(foreColor),
@@ -467,7 +467,7 @@ namespace Alternet.Drawing
 
             public virtual void Draw(Graphics dc, PointD location, Font font, Brush foreBrush)
             {
-                dc.DrawText(Text, SafeFont(font), SafeForeBrush(foreBrush), location);
+                dc.DrawText(Text.ToString(), SafeFont(font), SafeForeBrush(foreBrush), location);
             }
 
             public virtual SizeD Measure(Graphics dc, Font font)
@@ -479,7 +479,7 @@ namespace Alternet.Drawing
                 if (measure is null || defaultFont != fontId || scaleFactor != newScaleFactor)
                 {
                     defaultFont = fontId;
-                    measure = dc.MeasureText(Text, font);
+                    measure = dc.MeasureText(Text.ToString(), font);
                     scaleFactor = newScaleFactor;
                 }
 
@@ -525,12 +525,12 @@ namespace Alternet.Drawing
             {
             }
 
-            public StyledTextWithFontAndColor(string s)
+            public StyledTextWithFontAndColor(object s)
                 : base(s)
             {
             }
 
-            public StyledTextWithFontAndColor(string s, FontStyle? fontStyle, Brush? foreBrush)
+            public StyledTextWithFontAndColor(object s, FontStyle? fontStyle, Brush? foreBrush)
                 : base(s)
             {
                 this.fontStyle = fontStyle;
@@ -538,7 +538,7 @@ namespace Alternet.Drawing
             }
 
             public StyledTextWithFontAndColor(
-                string s,
+                object s,
                 FontStyle? fontStyle,
                 Color? foreColor,
                 Color? backColor)
@@ -549,14 +549,14 @@ namespace Alternet.Drawing
                 backgroundColor = backColor;
             }
 
-            public StyledTextWithFontAndColor(string s, Font? font, Brush? foreBrush)
+            public StyledTextWithFontAndColor(object s, Font? font, Brush? foreBrush)
                 : base(s)
             {
                 this.font = font;
                 foregroundBrush = foreBrush;
             }
 
-            public StyledTextWithFontAndColor(string s, Font? font, Color? foreColor, Color? backColor)
+            public StyledTextWithFontAndColor(object s, Font? font, Color? foreColor, Color? backColor)
                 : base(s)
             {
                 this.font = font;
