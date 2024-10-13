@@ -41,6 +41,7 @@ namespace Alternet.Drawing
         private SKPaint? strokeAndFillPaint;
         private SKPaint? strokePaint;
         private SKPaint? fillPaint;
+        private ObjectUniqueId? uniqueId;
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
@@ -1121,6 +1122,18 @@ namespace Alternet.Drawing
         public virtual bool Equals(string name, FontSize sizeInPoints, FontStyle style)
         {
             return Name == name && SizeInPoints == sizeInPoints && Style == style;
+        }
+
+        /// <summary>
+        /// Gets unique id of this object.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId UniqueId
+        {
+            get
+            {
+                return uniqueId ??= new();
+            }
         }
 
         /// <summary>
