@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -480,7 +481,12 @@ namespace Alternet.UI
         /// <param name="scaleFactor">Scale factor. Optional.
         /// If not specified, default scale factor is used.</param>
         /// <returns></returns>
-        public static SizeD MeasureText(IEnumerable<string> text, Font font, Coord? scaleFactor)
+        /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
+        public static SizeD MeasureText(
+            IEnumerable text,
+            Font font,
+            Coord? scaleFactor,
+            Coord lineDistance = 0)
         {
             Coord width = 0;
             Coord height = 0;
@@ -489,9 +495,9 @@ namespace Alternet.UI
 
             foreach(var s in text)
             {
-                var size = canvas.GetTextExtent(s, font);
+                var size = canvas.GetTextExtent(s.ToString(), font);
                 width = Math.Max(width, size.Width);
-                height += size.Height;
+                height += size.Height + lineDistance;
             }
 
             return (width, height);
