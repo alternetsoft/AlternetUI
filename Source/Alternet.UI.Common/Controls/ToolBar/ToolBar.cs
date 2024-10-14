@@ -775,16 +775,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds <see cref="PictureBox"/> to the control with contents created
+        /// from the the specified template.
+        /// </summary>
+        /// <param name="template">Template which is used to get picture pixels.</param>
+        /// <param name="needDisabled">Whether to get pixels
+        /// for disabled state of the template.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <returns></returns>
+        public virtual ObjectUniqueId AddPicture(
+            TemplateControl template,
+            bool needDisabled = false,
+            string? toolTip = default)
+        {
+            template.Enabled = true;
+            ImageSet? image = TemplateUtils.GetTemplateAsImageSet(template);
+            ImageSet? imageDisabled = null;
+
+            if (needDisabled)
+            {
+                template.Enabled = false;
+
+                try
+                {
+                    imageDisabled = TemplateUtils.GetTemplateAsImageSet(template);
+                }
+                finally
+                {
+                    template.Enabled = true;
+                }
+            }
+
+            var result = AddPicture(image, imageDisabled, toolTip, false);
+            return result;
+        }
+
+        /// <summary>
         /// Adds <see cref="PictureBox"/> to the control.
         /// </summary>
         /// <param name="image">Normal image.</param>
         /// <param name="imageDisabled">Disable image.</param>
         /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="setSuggestedSize">Whether to set suggested size of the item's control.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddPicture(
             ImageSet? image = null,
             ImageSet? imageDisabled = null,
-            string? toolTip = default)
+            string? toolTip = default,
+            bool setSuggestedSize = true)
         {
             PictureBox picture = new()
             {
@@ -795,7 +833,10 @@ namespace Alternet.UI
                 VerticalAlignment = UI.VerticalAlignment.Center,
             };
 
-            picture.SuggestedSize = GetItemSuggestedSize(picture);
+            if (setSuggestedSize)
+            {
+                picture.SuggestedSize = GetItemSuggestedSize(picture);
+            }
 
             if (imageDisabled is not null)
             {
