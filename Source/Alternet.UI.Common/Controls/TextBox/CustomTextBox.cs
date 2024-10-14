@@ -482,12 +482,11 @@ namespace Alternet.UI
 
                 pictureBox.HideToolTip();
 
-                /*RichToolTip.Show(
+                ToolTipFactory.ShowToolTip(
+                    pictureBox,
                     ErrorMessages.Default.ErrorTitle,
                     pictureBox.ToolTip,
-                    pictureBox,
-                    RichToolTipKind.None,
-                    MessageBoxIcon.Error);*/
+                    MessageBoxIcon.Error);
             }
         }
 

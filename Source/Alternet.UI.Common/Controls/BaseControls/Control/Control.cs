@@ -75,7 +75,7 @@ namespace Alternet.UI
         private SizeD suggestedSize = DefaultControlSize;
         private Thickness margin;
         private Thickness padding;
-        private string title = string.Empty;
+        private object? title;
         private IControlHandler? handler;
         private ControlStateSettings? stateObjects;
         private Font? font;
@@ -331,7 +331,8 @@ namespace Alternet.UI
         public virtual bool IgnoreLayout { get; set; }
 
         /// <summary>
-        /// Gets or sets the title of the control.
+        /// Gets or sets the title of the control as object.
+        /// There is also <see cref="Title"/> property.
         /// </summary>
         /// <value>The title of the control.</value>
         /// <remarks>
@@ -339,7 +340,11 @@ namespace Alternet.UI
         /// For example if control is a child of the <see cref="TabControl"/>, <see cref="Title"/>
         /// is displayed as a tab text.
         /// </remarks>
-        public virtual string Title
+        /// <remarks>
+        /// <see cref="TitleAsObject"/> and <see cref="Title"/> are stored in the same field.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual object? TitleAsObject
         {
             get
             {
@@ -350,9 +355,36 @@ namespace Alternet.UI
             {
                 if (title == value)
                     return;
-
+                if (title?.Equals(value) ?? false)
+                    return;
                 title = value;
                 RaiseTitleChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of the control as string.
+        /// There is also <see cref="TitleAsObject"/> property.
+        /// </summary>
+        /// <value>The title of the control.</value>
+        /// <remarks>
+        /// It's up to control and its parent to decide on how this property will be used.
+        /// For example if control is a child of the <see cref="TabControl"/>, <see cref="Title"/>
+        /// is displayed as a tab text.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="TitleAsObject"/> and <see cref="Title"/> are stored in the same field.
+        /// </remarks>
+        public virtual string Title
+        {
+            get
+            {
+                return TitleAsObject?.ToString() ?? string.Empty;
+            }
+
+            set
+            {
+                TitleAsObject = value;
             }
         }
 
@@ -1842,6 +1874,12 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public bool InUpdates => updateCount > 0;
+
+        /// <summary>
+        /// Gets or sets tooltip provider.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IToolTipProvider? ToolTipProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum size the window can be resized to.

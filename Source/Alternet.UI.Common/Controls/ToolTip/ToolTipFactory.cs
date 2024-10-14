@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -87,6 +89,30 @@ namespace Alternet.UI
         public static bool SetMaxWidth(int width)
         {
             return Handler.SetMaxWidth(width);
+        }
+
+        /// <summary>
+        /// Gets tooltip using <see cref="IToolTipProvider"/>
+        /// specified in the control or in one of its parents.
+        /// </summary>
+        public static IRichToolTip? GetToolTip(Control? control)
+        {
+            return control?.GetToolTipProvider()?.Get(control);
+        }
+
+        /// <summary>
+        /// Shows tooltip with the specified parameters using <see cref="IToolTipProvider"/>
+        /// specified in the control or in one of its parents.
+        /// </summary>
+        public static IRichToolTip? ShowToolTip(
+            Control? control,
+            object? title,
+            string? message,
+            MessageBoxIcon? icon = null,
+            uint? timeoutMilliseconds = null,
+            PointD? location = null)
+        {
+            return GetToolTip(control)?.ShowToolTip(title, message, icon, timeoutMilliseconds, location);
         }
     }
 }
