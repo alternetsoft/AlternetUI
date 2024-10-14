@@ -10,7 +10,7 @@ namespace ControlsSample
 {
     internal class TextMemoPage : Control
     {
-        private const string LoremIpsum =
+        public const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +
             "Suspendisse tincidunt orci vitae arcu congue commodo. " +
             "Proin fermentum rhoncus dictum.\n";

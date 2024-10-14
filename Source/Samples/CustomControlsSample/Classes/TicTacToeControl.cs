@@ -136,15 +136,8 @@ namespace Alternet.UI
         {
             if (gameOver)
             {
-                RichToolTip.Show(
-                    "Game Over",
-                    "The game is over. Starting a new game!",
-                    (Control?)this.ParentWindow ?? this,
-                    RichToolTipKind.None,
-                    MessageBoxIcon.Information);
-
+                App.Alert("The game is over. Starting a new game!");
                 InitializeGame();
-
                 return;
             }
 

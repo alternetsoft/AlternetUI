@@ -14,57 +14,6 @@ namespace Alternet.UI
     public static class TemplateUtils
     {
         /// <summary>
-        /// Creates and shows tooltip with contents filled from the template data.
-        /// </summary>
-        /// <param name="tooltipParent">Toolip parent control.</param>
-        /// <param name="location">Tooltip location in coordinates of parent control.</param>
-        /// <param name="template">Template with tooltip data.</param>
-        /// <param name="backColor">Background color. Optional. If not specified, background color
-        /// of the template control is used.</param>
-        /// <returns></returns>
-        public static RichToolTip CreateAndShowTemplateToolTip(
-            Control tooltipParent,
-            PointD location,
-            TemplateControl template,
-            Color? backColor = null)
-        {
-            var toolTip = CreateTemplateToolTip(
-                tooltipParent,
-                location,
-                template,
-                backColor);
-            RichToolTip.Default = toolTip;
-            toolTip.ShowAtLocation(tooltipParent, location, false);
-            return toolTip;
-        }
-
-        /// <summary>
-        /// Creates tooltip with contents filled from the template data.
-        /// </summary>
-        /// <param name="tooltipParent">Toolip parent control.</param>
-        /// <param name="location">Tooltip location in coordinates of parent control.</param>
-        /// <param name="template">Template with tooltip data.</param>
-        /// <param name="backColor">Background color. Optional. If not specified, background color
-        /// of the template control is used.</param>
-        /// <returns></returns>
-        public static RichToolTip CreateTemplateToolTip(
-            Control tooltipParent,
-            PointD location,
-            TemplateControl template,
-            Color? backColor = null)
-        {
-            backColor ??= template.BackgroundColor;
-
-            ImageSet imageSet = GetTemplateAsImageSet(template, backColor);
-            RichToolTip toolTip = new();
-            toolTip.SetTipKind(RichToolTipKind.None);
-            if (backColor is not null)
-                toolTip.SetBackgroundColor(backColor);
-            toolTip.SetIcon(imageSet);
-            return toolTip;
-        }
-
-        /// <summary>
         /// Gets template contents as <see cref="ImageSet"/>.
         /// </summary>
         /// <param name="template">Template control</param>

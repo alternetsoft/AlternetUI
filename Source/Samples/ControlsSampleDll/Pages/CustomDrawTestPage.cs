@@ -188,10 +188,13 @@ namespace ControlsSample
 
         public void ShowTemplateToolTip()
         {
-            TemplateUtils.CreateAndShowTemplateToolTip(
+            /*
+            TemplateUtils.ShowToolTip(
                 customDrawControl,
+                toolTip,
                 (250, 50),
                 hintTemplate);
+            */
         }
 
         public void DrawControlTemplate()

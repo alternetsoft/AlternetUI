@@ -6,23 +6,33 @@ namespace ControlsSample
 {
     internal partial class ToolTipPage : Control
     {
+        private readonly RichToolTip toolTip = new();
+
         private ImageSet? customImage;
         private ImageSet? largeImage;
+        private TemplateControl controlTemplate;
 
         public ToolTipPage()
         {
             InitializeComponent();
+
+            controlTemplate = TemplateUtils.CreateTemplateWithBoldText(
+                "This text has ",
+                "bold",
+                " fragment",
+                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
+
+            controlTemplate.Parent = this;
+            controlTemplate.SetSizeToContent();
 
             tabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
 
             Group(
                 tooltipTitleLabel,
                 tooltipMessageLabel,
-                tooltipIconLabel,
-                tooltipKindLabel)
+                tooltipIconLabel)
             .SuggestedWidthToMax();
 
-            tooltipKindComboBox.BindEnumProp(this, nameof(ToolTipKind));
             tooltipIconComboBox.BindEnumProp(this, nameof(ToolTipIcon));
 
             showToolTipButton.Click += ShowToolTipButton_Click;
@@ -44,25 +54,21 @@ namespace ControlsSample
 
             var popup = new ContextMenuStrip();
 
-            tooltipPreview.ContextMenuStrip = popup;
+            tooltipPreview.VerticalAlignment = VerticalAlignment.Fill;
+            tooltipPreview.Layout = LayoutStyle.Vertical;
+            toolTip.VerticalAlignment = VerticalAlignment.Fill;
+            toolTip.BackgroundColor = SystemColors.Window;
+            toolTip.Parent = tooltipPreview;
+            toolTip.ShowDebugRectangleAtCenter = false;
+            toolTip.ContextMenuStrip = popup;
+
+            showTemplateButton.Click += (s, e) =>
+            {
+                toolTip.SetToolTipFromTemplate(controlTemplate);
+                ShowToolTip();
+            };
 
             popup.Add("Log Information", Log);
-            popup.Add("Show popup on bottom-right", ShowPopupBottomRight);
-        }
-
-        private void ShowPopupBottomRight()
-        {
-            RichToolTip toolTip = new(
-                "Title",
-                "This is message text first line." + Environment.NewLine + "This is second line.");
-            toolTip.SetTipKind(RichToolTipKind.None)
-            .SetIcon(MessageBoxIcon.Information)
-            .SetAsDefault()
-            .SetLocationDecrement(true, true)
-            .ShowAtLocation(
-                tooltipPreview,
-                (tooltipPreview.Width, tooltipPreview.Height),
-                false);
         }
 
         private void ToolTipLabel_Click(object? sender, EventArgs e)
@@ -93,13 +99,6 @@ namespace ControlsSample
 
         internal void Log()
         {
-            var toolTip = RichToolTip.Default;
-
-            if (toolTip is not null)
-            {
-                App.LogNameValue("ToolTip window size (px)", toolTip.Handler.SizeInPixels);
-            }
-
             LogUtils.LogColor("Info", SystemColors.Info);
             LogUtils.LogColor("SystemSettings.Info", new(SystemSettings.GetColor(KnownSystemColor.Info)));
             LogUtils.LogColor("InfoText", SystemColors.InfoText);
@@ -111,28 +110,17 @@ namespace ControlsSample
         private void ShowImageButton_Click(object? sender, EventArgs e)
         {
             LoadLargeImage();
-
-            RichToolTip toolTip = new();
-            toolTip.SetTipKind(RichToolTipKind.None);
-            toolTip.SetBackgroundColor(Color.Black);
-            toolTip.SetIcon(largeImage);
-            RichToolTip.Default = toolTip;
-
-            ShowToolTip(toolTip);
+            toolTip.OnlyImage(largeImage, Color.Black);
+            ShowToolTip();
         }
 
-        private void ShowToolTip(RichToolTip toolTip)
+        private void ShowToolTip()
         {
+            HideToolTip();
             if (dontHideCheckBox.IsChecked)
                 toolTip.SetTimeout(0);
 
-            if (atCenterCheckBox.IsChecked)
-                toolTip.Show(tooltipPreview);
-            else
-            {
-                // Shows at the top-left corner of the tooltipPreview control.
-                toolTip.ShowAtLocation(tooltipPreview, (0, 0), adjustPosCheckBox.IsChecked);
-            }
+            toolTip.ShowToolTip();
         }
 
         private void LoadLargeImage()
@@ -140,7 +128,7 @@ namespace ControlsSample
             if (largeImage is null)
             {
                 var stream = typeof(ToolTipPage).Assembly.GetManifestResourceStream(
-                    "ControlsSampleDll.Resources.panda2.jpg");
+                    "ControlsSampleDll.Resources.EmployeePhoto.jpg");
                 if (stream is null)
                     largeImage = (ImageSet)(Image)Color.Blue.AsImage(250);
                 else
@@ -150,54 +138,50 @@ namespace ControlsSample
 
         private void ShowToolTipButton_Click(object? sender, EventArgs e)
         {
-            if (customImageCheckBox.IsChecked || !atCenterCheckBox.IsChecked)
+            if (customImageCheckBox.IsChecked)
             {
-                RichToolTip toolTip = new(tooltipTitleTextBox.Text, tooltipMessageTextBox.Text);
-                toolTip.SetTipKind(ToolTipKind);
-
-                if (customImageCheckBox.IsChecked)
+                if (!largeImageCheckBox.IsChecked)
                 {
-                    if (!largeImageCheckBox.IsChecked)
-                    {
-                        customImage ??= (ImageSet)NotifyIconPage.Image;
-                        toolTip.SetIcon(customImage);
-                    }
-                    else
-                    {
-                        LoadLargeImage();
-                        toolTip.SetIcon(largeImage);
-                    }
+                    toolTip.SetToolTip(
+                        tooltipTitleTextBox.Text,
+                        tooltipMessageTextBox.Text,
+                        ToolTipIcon,
+                        dontHideCheckBox.IsChecked ? 0 : null);
+                    customImage ??= (ImageSet)NotifyIconPage.Image;
+                    toolTip.SetIcon(customImage);
                 }
                 else
                 {
-                    toolTip.SetIcon(ToolTipIcon);
+                    LoadLargeImage();
+                    toolTip.SetToolTip(
+                        null,
+                        tooltipMessageTextBox.Text,
+                        ToolTipIcon,
+                        dontHideCheckBox.IsChecked ? 0 : null);
+                    toolTip.SetIcon(largeImage);
                 }
-
-                RichToolTip.Default = toolTip;
-
-                ShowToolTip(toolTip);
             }
             else
             {
-                RichToolTip.Show(
+                toolTip.SetToolTip(
                     tooltipTitleTextBox.Text,
                     tooltipMessageTextBox.Text,
-                    tooltipPreview,
-                    ToolTipKind,
                     ToolTipIcon,
-                    dontHideCheckBox.IsChecked ? 0 : null,
-                    adjustPosCheckBox.IsChecked);
+                    dontHideCheckBox.IsChecked ? 0 : null);
             }
+
+            ShowToolTip();
         }
 
         private void ShowSimpleButton_Click(object? sender, EventArgs e)
         {
-            RichToolTip.ShowSimple(tooltipMessageTextBox.Text, tooltipPreview);
+            toolTip.SetToolTip(tooltipMessageTextBox.Text);
+            ShowToolTip();
         }
 
         private void HideToolTipButton_Click(object? sender, EventArgs e)
         {
-            RichToolTip.HideDefault();
+            toolTip.HideToolTip();
         }
 
         public RichToolTipKind ToolTipKind { get; set; } = RichToolTipKind.Top;
