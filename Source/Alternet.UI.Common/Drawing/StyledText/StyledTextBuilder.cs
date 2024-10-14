@@ -7,7 +7,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Allows to build sequence of <see cref="Graphics.StyledText"/> objects.
+    /// Allows to build sequence of <see cref="StyledText"/> objects.
     /// </summary>
     internal abstract class StyledTextBuilder : BaseObject
     {
@@ -17,12 +17,12 @@ namespace Alternet.Drawing
 
         public virtual StyledTextBuilder Text(object text)
         {
-            return Add(Graphics.StyledText.Create(text));
+            return Add(StyledText.Create(text));
         }
 
         public virtual StyledTextBuilder Text(string[] value)
         {
-            return Add(Graphics.StyledText.Create(value));
+            return Add(StyledText.Create(value));
         }
 
         public virtual StyledTextBuilder Text(
@@ -30,25 +30,25 @@ namespace Alternet.Drawing
             Coord distance = 0,
             bool isVertical = true)
         {
-            return Add(Graphics.StyledText.Create(strings, distance, isVertical));
+            return Add(StyledText.Create(strings, distance, isVertical));
         }
 
         public virtual StyledTextBuilder Block(
-                IEnumerable<Graphics.StyledText> items,
+                IEnumerable<StyledText> items,
                 Coord distance = 0,
                 bool isVertical = true)
         {
-            return Add(Graphics.StyledText.Create(items, distance, isVertical));
+            return Add(StyledText.Create(items, distance, isVertical));
         }
 
         public virtual StyledTextBuilder Text(object s, FontStyle fontStyle, Brush? brush)
         {
-            return Add(Graphics.StyledText.Create(s, fontStyle, brush));
+            return Add(StyledText.Create(s, fontStyle, brush));
         }
 
         public virtual StyledTextBuilder Text(object s, Font? font, Brush? brush)
         {
-            return Add(Graphics.StyledText.Create(s, font, brush));
+            return Add(StyledText.Create(s, font, brush));
         }
 
         public virtual StyledTextBuilder Text(
@@ -57,7 +57,7 @@ namespace Alternet.Drawing
             Color? foreColor,
             Color? backColor)
         {
-            return Add(Graphics.StyledText.Create(s, font, foreColor, backColor));
+            return Add(StyledText.Create(s, font, foreColor, backColor));
         }
 
         public virtual StyledTextBuilder Text(
@@ -66,10 +66,10 @@ namespace Alternet.Drawing
             Color? foreColor,
             Color? backColor)
         {
-            return Add(Graphics.StyledText.Create(s, fontStyle, foreColor, backColor));
+            return Add(StyledText.Create(s, fontStyle, foreColor, backColor));
         }
 
-        public abstract StyledTextBuilder Add(Graphics.StyledText item);
+        public abstract StyledTextBuilder Add(StyledText item);
 
         public abstract StyledTextBuilder Image(Image image);
 
@@ -87,7 +87,7 @@ namespace Alternet.Drawing
                 public abstract StyledTextBuilder BeginStyle(Style style);
         */
 
-        public abstract Graphics.StyledText ToStyledText();
+        public abstract StyledText ToStyledText();
 
         public abstract StyledTextBuilder Url(object title, object url);
 

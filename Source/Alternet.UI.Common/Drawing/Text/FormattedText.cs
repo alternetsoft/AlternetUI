@@ -15,7 +15,7 @@ namespace Alternet.Drawing
         private Coord? maxWidth;
         private Coord? maxHeight;
         private Font? font;
-        private IEnumerable<Graphics.StyledText>? styledText;
+        private IEnumerable<StyledText>? styledText;
         private List<string>? wrappedText;
         private Coord? scaleFactor;
         private SizeD? textSize;
@@ -158,7 +158,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets styled text items created from <see cref="WrappedText"/>.
         /// </summary>
-        public virtual IEnumerable<Graphics.StyledText>? StyledText
+        public virtual IEnumerable<StyledText>? StyledText
         {
             get
             {
@@ -338,7 +338,7 @@ namespace Alternet.Drawing
                         SafeFont,
                         ScaleFactor);
 
-            styledText = Graphics.StyledText.CreateCollection(wrappedText);
+            styledText = Drawing.StyledText.CreateCollection(wrappedText);
 
             textSize = DrawingUtils.MeasureText(wrappedText, SafeFont, ScaleFactor, LineDistance);
         }
