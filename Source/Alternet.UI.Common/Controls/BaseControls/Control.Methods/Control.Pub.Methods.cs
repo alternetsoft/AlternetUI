@@ -1335,6 +1335,8 @@ namespace Alternet.UI
         {
             if (IsLayoutSuspended || IsDisposed || inLayout)
                 return;
+            if (!Visible)
+                layoutParent = false;
 
             inLayout = true;
             try

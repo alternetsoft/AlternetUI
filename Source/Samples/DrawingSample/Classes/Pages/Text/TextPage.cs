@@ -14,23 +14,25 @@ namespace DrawingSample
 
         private static readonly Brush fontInfoBrush = Brushes.Black;
         private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, DashStyle.Dash);
+
+        private readonly FormattedText formattedText = new()
+        {
+            HorizontalAlignment = TextHorizontalAlignment.Left,
+            VerticalAlignment = TextVerticalAlignment.Top,
+            Trimming = TextTrimming.Pixel,
+            Wrapping = TextWrapping.Word,
+        };
+
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
+        private bool shortText;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
         private int textWidthLimit = 450;
-        private int textHeightValue = 40;
+        private int textHeightValue = 50;
 
         private bool textWidthLimitEnabled = true;
         private bool textHeightSet = false;
-
-        private TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
-
-        private TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
-
-        private TextTrimming trimming = TextTrimming.Pixel;
-
-        private TextWrapping wrapping = TextWrapping.Character;
 
         private static readonly Font fontInfoFont;
         private static double fontSize;
@@ -43,6 +45,8 @@ namespace DrawingSample
         }
 
         public override string Name => "Text";
+
+        public FormattedText WrappedText => formattedText;
 
         public double FontSize
         {
@@ -137,40 +141,40 @@ namespace DrawingSample
 
         public TextHorizontalAlignment HorizontalAlignment
         {
-            get => horizontalAlignment;
+            get => formattedText.HorizontalAlignment;
             set
             {
-                horizontalAlignment = value;
+                formattedText.HorizontalAlignment = value;
                 Invalidate();
             }
         }
 
         public TextVerticalAlignment VerticalAlignment
         {
-            get => verticalAlignment;
+            get => formattedText.VerticalAlignment;
             set
             {
-                verticalAlignment = value;
+                formattedText.VerticalAlignment = value;
                 Invalidate();
             }
         }
 
         public TextTrimming Trimming
         {
-            get => trimming;
+            get => formattedText.Trimming;
             set
             {
-                trimming = value;
+                formattedText.Trimming = value;
                 Invalidate();
             }
         }
 
         public TextWrapping Wrapping
         {
-            get => wrapping;
+            get => formattedText.Wrapping;
             set
             {
-                wrapping = value;
+                formattedText.Wrapping = value;
                 Invalidate();
             }
         }
@@ -185,6 +189,27 @@ namespace DrawingSample
             }
         }
 
+        public bool ShortText
+        {
+            get
+            {
+                return shortText;
+            }
+
+            set
+            {
+                shortText = value;
+                InvalidateParagraphs();
+            }
+        }
+
+        public string GetText()
+        {
+            if (ShortText)
+                return "Your cat is hungry";
+            return LoremIpsum;
+        }
+
         public override void Draw(Graphics dc, RectD bounds)
         {
             paragraphs ??= CreateParagraphs().ToArray();
@@ -194,16 +219,36 @@ namespace DrawingSample
 
             var textFormat = GetTextFormat();
 
-            double x = 20;
-            double y = 20;
+            Coord x = 20;
+            Coord y = 20;
             foreach (var paragraph in paragraphs)
             {
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointD(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                double textHeight;
+                formattedText.ScaleFactor = dc.ScaleFactor;
+                formattedText.Text = GetText();
+                formattedText.Font = paragraph.Font;
+                formattedText.ForegroundColor = color;
+                formattedText.MaxWidth = TextWidthLimitEnabled ? TextWidthLimit : null;
+                formattedText.MaxHeight = textHeightSet ? textHeightValue : null;
+                formattedText.Assign(textFormat);
 
-                if (TextHeightSet)
+                var formattedTextHeight = formattedText.RestrictedSize.Height;
+                var formattedTextWidth = formattedText.RestrictedSize.Width;
+
+                var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
+                var textHeight = TextHeightSet ? TextHeightValue : formattedTextHeight;
+                RectD rect = (x, y, width, textHeight);
+
+                formattedText.Draw(dc, rect);
+
+                dc.FillRectangleBorder(Brushes.LightGray, rect);
+                dc.FillRectangleBorder(
+                    Brushes.LightGreen,
+                    formattedText.GetBlockRect(dc.ScaleFactor, rect));
+
+                /*if (TextHeightSet)
                 {
                     textHeight = TextHeightValue;
                 }
@@ -248,7 +293,7 @@ namespace DrawingSample
                         paragraph.Font,
                         color.AsBrush,
                         new PointD(x, y));
-                }
+                }*/
 
                 y += textHeight + 20;
 
@@ -305,7 +350,7 @@ namespace DrawingSample
             return (FontStyle & style) != 0;
         }
 
-        private void InvalidateParagraphs()
+        public void InvalidateParagraphs()
         {
             if (paragraphs != null)
             {
@@ -325,12 +370,12 @@ namespace DrawingSample
         private IEnumerable<Paragraph> CreateParagraphs()
         {
             Paragraph CreateGenericFontParagraph(GenericFontFamily genericFamily) =>
-                new(
+                new(this,
                     new Font(new FontFamily(genericFamily), FontSize, FontStyle),
                     "Generic " + genericFamily.ToString());
 
             Paragraph CreateCustomFontParagraph(FontFamily family) =>
-                new(
+                new(this,
                     new Font(family, FontSize, FontStyle),
                     "Custom");
 
@@ -342,12 +387,15 @@ namespace DrawingSample
 
         private class Paragraph : IDisposable
         {
-            public Paragraph(Font font, string genericFamilyName)
+            public Paragraph(TextPage owner, Font font, string genericFamilyName)
             {
+                Owner = owner;
                 Font = font;
                 GenericFamilyName = genericFamilyName;
                 FontInfo = $"{GenericFamilyName}: {Font.Name}, {Font.SizeInPoints}pt";
             }
+
+            public TextPage Owner { get; }
 
             public Font Font { get; }
 
@@ -357,6 +405,7 @@ namespace DrawingSample
 
             public void Dispose()
             {
+                Owner.formattedText.Font = null;
                 Font.Dispose();
             }
         }

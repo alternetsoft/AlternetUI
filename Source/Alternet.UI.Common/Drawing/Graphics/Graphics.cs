@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -10,9 +11,11 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a custom drawing surface.
     /// </summary>
-    public abstract class Graphics : DisposableObject, IGraphics, IDisposable
+    public abstract partial class Graphics : DisposableObject, IGraphics, IDisposable
     {
         private Stack<TransformMatrix>? stack;
+        private Stack<Region?>? clipStack;
+        private TransformMatrix transform = new();
 
         /// <summary>
         /// Returns true if the object is ok to use.
@@ -28,13 +31,35 @@ namespace Alternet.Drawing
         /// Gets or sets a copy of the geometric world transformation for this
         /// <see cref="Graphics"/>.
         /// </summary>
-        public abstract TransformMatrix Transform { get; set; }
+        public TransformMatrix Transform
+        {
+            get
+            {
+                return transform;
+            }
+
+            set
+            {
+                if (transform == value)
+                    return;
+
+                transform = value;
+
+                SetHandlerTransform(value);
+            }
+        }
 
         /// <summary>
         /// Gets whether <see cref="Transform"/> is assigned with transform matrix
-        /// which is not <see cref="TransformMatrix.Default"/>.
+        /// which is not the identity matrix.
         /// </summary>
-        public abstract bool HasTransform { get; }
+        public bool HasTransform
+        {
+            get
+            {
+                return !transform.IsIdentity;
+            }
+        }
 
         /// <summary>
         /// Gets used scale factor.
@@ -286,6 +311,7 @@ namespace Alternet.Drawing
         /// the <see cref="Graphics"/> and
         /// related resources created by the <see cref="FromImage"/> method.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics FromImage(Image image)
         {
             DebugImageAssert(image);
@@ -296,19 +322,20 @@ namespace Alternet.Drawing
         /// Creates <see cref="Graphics"/> that can be used to paint on the screen.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics FromScreen()
         {
             return GraphicsFactory.Handler.CreateGraphicsFromScreen();
         }
 
         /// <summary>
-        /// Draws the text rotated by angle degrees (positive angles are counterclockwise;
-        /// the full angle is 360 degrees) with the specified font, background and
+        /// Draws the rotated text with the specified font, background and
         /// foreground colors.
         /// </summary>
         /// <param name="location">Location used to draw the text. Specified in dips.</param>
         /// <param name="text">Text to draw.</param>
-        /// <param name="angle">Text angle.</param>
+        /// <param name="angle">Text angle in degrees. Positive angles are counterclockwise;
+        /// the full angle is 360 degrees.</param>
         /// <param name="font">Font used to draw the text.</param>
         /// <param name="foreColor">Foreground color of the text.</param>
         /// <param name="backColor">Background color of the text. If parameter is equal
@@ -330,29 +357,6 @@ namespace Alternet.Drawing
             Color backColor,
             Coord angle,
             GraphicsUnit unit = GraphicsUnit.Dip);
-
-        /*/// <summary>
-        /// Gets the dimensions of the string using the specified font.
-        /// </summary>
-        /// <param name="text">The text string to measure.</param>
-        /// <param name="font">The Font used to get text dimensions.</param>
-        /// <param name="control">The control used to get scaling factor. Optional.</param>
-        /// <param name="descent">Dimension from the baseline of the font to
-        /// the bottom of the descender (the size of the tail below the baseline).</param>
-        /// <param name="externalLeading">Any extra vertical space added to the
-        /// font by the font designer (inter-line interval).</param>
-        /// <returns><see cref="SizeD"/> with the total calculated width and height
-        /// of the text.</returns>
-        /// <remarks>
-        /// This function only works with single-line strings.
-        /// It works faster than MeasureText methods.
-        /// </remarks>
-        public abstract SizeD GetTextExtent(
-            string text,
-            Font font,
-            out Coord? descent,
-            out Coord? externalLeading,
-            IControl? control = null);*/
 
         /// <summary>
         /// Gets the dimensions of the string using the specified font.
@@ -532,6 +536,33 @@ namespace Alternet.Drawing
         /// It works faster than MeasureText methods.
         /// </remarks>
         public abstract SizeD GetTextExtent(string text, Font font);
+
+        /// <summary>
+        /// Draws point at the center of the specified rectangle.
+        /// </summary>
+        /// <param name="brush">Brush used to fill the rectangle.</param>
+        /// <param name="container">Rectangle to use as a container for the point.</param>
+        /// <param name="size">Size of the retangle which is painted at the center.</param>
+        public void FillRectangleAtCenter(Brush brush, RectD container, SizeD size)
+        {
+            RectD rect = ((0, 0), size);
+            var alignedRect = AlignUtils.AlignRectInRect(
+                rect,
+                container,
+                HorizontalAlignment.Center,
+                VerticalAlignment.Center);
+            FillRectangle(brush, alignedRect);
+        }
+
+        /// <summary>
+        /// Draws point at the center of the specified rectangle.
+        /// </summary>
+        /// <param name="color">Color of the point.</param>
+        /// <param name="container">Rectangle to use as a container for the point.</param>
+        public void DrawPointAtCenter(Color color, RectD container)
+        {
+            FillRectangle(color.AsBrush, container.Center.AsRect(1));
+        }
 
         /// <summary>
         /// Calls <see cref="FillRectangle(Brush, RectD)"/> and than <see cref="DrawRectangle"/>.
@@ -919,6 +950,7 @@ namespace Alternet.Drawing
         /// <param name="y1">Y coordinate of the first point.</param>
         /// <param name="x2">X coordinate of the second point.</param>
         /// <param name="y2">Y coordinate of the second point.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawLine(Pen pen, Coord x1, Coord y1, Coord x2, Coord y2) =>
             DrawLine(pen, new(x1, y1), new(x2, y2));
 
@@ -955,6 +987,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="origin"><see cref="PointD"/> structure that represents the
         /// upper-left corner of the drawn image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImageUnscaled(Image image, PointD origin)
             => DrawImage(image, origin);
 
@@ -1061,32 +1094,26 @@ namespace Alternet.Drawing
         public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
 
         /// <summary>
-        /// Draws multiple text strings at the specified location with the specified
-        /// <see cref="Brush"/> and <see cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">Strings  to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
-        /// the drawn text.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the drawn text.</param>
-        public virtual void DrawText(string[] text, Font font, Brush brush, PointD origin)
-        {
-            foreach(var s in text)
-            {
-                DrawText(s, font, brush, origin);
-                origin.Y += MeasureText(s, font).Height;
-            }
-        }
-
-        /// <summary>
         /// Draws text with <see cref="Control.DefaultFont"/> and <see cref="Brush.Default"/>.
         /// </summary>
         /// <param name="text"></param>
         /// <param name="origin"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(string text, PointD origin)
         {
             DrawText(text, Font.Default, Brush.Default, origin);
+        }
+
+        /// <summary>
+        /// Creates translation matrix and calls <see cref="PushTransform"/> with it.
+        /// </summary>
+        /// <param name="offsetX">The X value of the translation matrix.</param>
+        /// <param name="offsetY">The Y value of the translation matrix.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void PushAndTranslate(Coord offsetX, Coord offsetY)
+        {
+            var transform = TransformMatrix.CreateTranslation(offsetX, offsetY);
+            PushTransform(transform);
         }
 
         /// <summary>
@@ -1182,7 +1209,7 @@ namespace Alternet.Drawing
         /// Pops a stored state from the stack and sets the current transformation matrix
         /// to that state.
         /// </summary>
-        public virtual void Pop()
+        public void Pop()
         {
             stack ??= new();
             Transform = stack.Pop();
@@ -1200,6 +1227,65 @@ namespace Alternet.Drawing
             var currentTransform = Transform;
             currentTransform.Multiply(transform);
             Transform = currentTransform;
+        }
+
+        /// <summary>
+        /// Calls the specified action inside temprorary clipped rectangle, so painting outside
+        /// this rectangle is ignored.
+        /// </summary>
+        /// <param name="isClipped">Whether to clip rectangle. Optional. Default is <c>true</c>.</param>
+        /// <param name="rect">Rectangle region to set as clip object.</param>
+        /// <param name="action">Action to call.</param>
+        public virtual void DoInsideClipped(RectD rect, Action action, bool isClipped = true)
+        {
+            if (isClipped)
+            {
+                try
+                {
+                    PushClip();
+                    Clip = new Region(rect);
+                    action();
+                }
+                finally
+                {
+                    PopClip();
+                }
+            }
+            else
+                action();
+        }
+
+        /// <summary>
+        /// Draws formatted text.
+        /// </summary>
+        /// <param name="text">Formatted text.</param>
+        /// <param name="rect">Bounding rectangle.</param>
+        public void DrawFormattedText(FormattedText text, RectD rect)
+        {
+            text.Draw(this, rect);
+        }
+
+        /// <summary>
+        /// Pops a stored clip region state from the stack and sets the current clip region
+        /// to that state.
+        /// </summary>
+        public void PopClip()
+        {
+            clipStack ??= new();
+            Clip = clipStack.Pop();
+        }
+
+        /// <summary>
+        /// Pushes the current state of the clip region on a stack.
+        /// </summary>
+        public void PushClip()
+        {
+            clipStack ??= new();
+
+            if(HasClip)
+                clipStack.Push(Clip);
+            else
+                clipStack.Push(null);
         }
 
         /// <summary>
@@ -1319,6 +1405,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts point to pixels.
+        /// </summary>
+        /// <param name="point">Point.</param>
+        /// <param name="unit">The unit of measure for the point.</param>
+        public virtual void ToPixels(ref PointD point, GraphicsUnit unit)
+        {
+            if (unit != GraphicsUnit.Pixel)
+            {
+                var dpi = GetDPI();
+                var graphicsType = GraphicsUnitConverter.GraphicsType.Undefined;
+                point = GraphicsUnitConverter.ConvertPoint(
+                    unit,
+                    GraphicsUnit.Pixel,
+                    dpi,
+                    point,
+                    graphicsType);
+            }
+        }
+
+        /// <summary>
         /// Converts <see cref="SizeD"/> to device-independent units.
         /// </summary>
         /// <param name="size">Size.</param>
@@ -1357,5 +1463,11 @@ namespace Alternet.Drawing
                     graphicsType);
             }
         }
+
+        /// <summary>
+        /// Sets transform matrix of the handler.
+        /// </summary>
+        /// <param name="matrix">New transform value.</param>
+        protected abstract void SetHandlerTransform(TransformMatrix matrix);
     }
 }

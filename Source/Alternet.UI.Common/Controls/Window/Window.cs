@@ -1012,6 +1012,92 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets relative location of this window on the specified display.
+        /// </summary>
+        /// <param name="relativePosition">New location of the window in pixels. This value is relative
+        /// to the top-left corner of the display's client area.</param>
+        /// <param name="display">Display which client area is used as a container for the window.</param>
+        public virtual void SetLocationOnDisplay(PointI relativePosition, Display? display = null)
+        {
+            display = Display.SafeDisplay(display);
+            var clientArea = display.ClientArea;
+            var position = clientArea.Location;
+            position.Offset(relativePosition);
+            LocationInPixels = position;
+        }
+
+        /// <summary>
+        /// Aligns control location inside the specified rectangle using given
+        /// horizontal and vertical alignment.
+        /// </summary>
+        /// <param name="horz">Horizontal alignment of the control inside container.</param>
+        /// <param name="vert">Vertical alignment of the window inside container.</param>
+        /// <param name="shrinkSize">Whether to shrink size of the control
+        /// to fit in the rectangle. Optional. Default is <c>true</c>.</param>
+        /// <param name="containerRect">Container rectangle.</param>
+        public virtual void SetLocationInRectI(
+            HorizontalAlignment? horz,
+            VerticalAlignment? vert,
+            RectI containerRect,
+            bool shrinkSize = true)
+        {
+            var newBounds = AlignUtils.AlignRectInRect(
+                BoundsInPixels,
+                containerRect,
+                horz,
+                vert,
+                shrinkSize);
+            BoundsInPixels = newBounds.ToRect();
+        }
+
+        /// <summary>
+        /// Aligns control location inside the specified rectangle using given
+        /// horizontal and vertical alignment.
+        /// </summary>
+        /// <param name="horz">Horizontal alignment of the control inside container.</param>
+        /// <param name="vert">Vertical alignment of the window inside container.</param>
+        /// <param name="shrinkSize">Whether to shrink size of the control
+        /// to fit in the rectangle. Optional. Default is <c>true</c>.</param>
+        /// <param name="window">Window which bounds are used as a container rectangle.</param>
+        public virtual void SetLocationInWindow(
+            HorizontalAlignment? horz,
+            VerticalAlignment? vert,
+            Control? window,
+            bool shrinkSize = true)
+        {
+            if (window is null)
+                SetLocationOnDisplay(horz, vert, null, shrinkSize);
+            else
+            {
+                SetLocationInRectI(
+                            horz,
+                            vert,
+                            window.BoundsInPixels,
+                            shrinkSize);
+            }
+        }
+
+        /// <summary>
+        /// Aligns window location inside the specified display's client area using given
+        /// horizontal and vertical alignment.
+        /// </summary>
+        /// <param name="horz">Horizontal alignment of the window inside display's client area.</param>
+        /// <param name="vert">Vertical alignment of the window inside display's client area.</param>
+        /// <param name="display">Display which client area is used as a container for the window.</param>
+        /// <param name="shrinkSize">Whether to shrink size of the window
+        /// to fit in the display client area. Optional. Default is <c>true</c>.</param>
+        public virtual void SetLocationOnDisplay(
+            HorizontalAlignment? horz,
+            VerticalAlignment? vert,
+            Display? display = null,
+            bool shrinkSize = true)
+        {
+            display = Display.SafeDisplay(display);
+            var clientArea = display.ClientArea;
+            SetLocationInRectI(horz, vert, clientArea, shrinkSize);
+        }
+
+        /// <summary>
         /// Raised by the handler when it is going to be closed.
         /// </summary>
         /// <param name="e">Event arguments.</param>
@@ -1081,8 +1167,6 @@ namespace Alternet.UI
         {
             if (IsDisposed)
                 return;
-
-            RichToolTip.HideDefault();
 
             Visible = false;
 
@@ -1322,37 +1406,71 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ApplyStartLocation(Control? owner)
         {
-            RectD displayRect = new Display(this).ClientAreaDip;
-            RectD parentRect = RectD.Empty;
-            bool center = true;
-
-            if (StartLocation == WindowStartLocation.CenterScreen)
+            switch (StartLocation)
             {
-                parentRect = displayRect;
+                case WindowStartLocation.Default:
+                case WindowStartLocation.Manual:
+                    SetLocationOnDisplay(null, null);
+                    break;
+                case WindowStartLocation.ScreenTopRight:
+                    SetLocationOnDisplay(HorizontalAlignment.Right, VerticalAlignment.Top);
+                    break;
+                case WindowStartLocation.ScreenBottomRight:
+                    SetLocationOnDisplay(HorizontalAlignment.Right, VerticalAlignment.Bottom);
+                    break;
+                case WindowStartLocation.CenterScreen:
+                    SetLocationOnDisplay(HorizontalAlignment.Center, VerticalAlignment.Center);
+                    break;
+                case WindowStartLocation.CenterOwner:
+                    SetLocationInWindow(HorizontalAlignment.Center, VerticalAlignment.Center, owner);
+                    break;
+                case WindowStartLocation.CenterActiveWindow:
+                    SetLocationInWindow(
+                        HorizontalAlignment.Center,
+                        VerticalAlignment.Center,
+                        ActiveWindow);
+                    break;
+                case WindowStartLocation.CenterMainWindow:
+                    SetLocationInWindow(
+                        HorizontalAlignment.Center,
+                        VerticalAlignment.Center,
+                        App.MainWindow);
+                    break;
             }
-            else
-            if (StartLocation == WindowStartLocation.CenterOwner)
-            {
-                if (owner is null)
-                    parentRect = displayRect;
-                else
-                    parentRect = new(owner.ClientToScreen((0, 0)), owner.ClientSize);
-            }
-            else
-                center = false;
 
-            var bounds = Bounds;
+            /*
+                        RectD displayRect = new Display(this).ClientAreaDip;
+                        RectD parentRect = RectD.Empty;
+                        bool center = true;
 
-            var newWidth = Math.Min(bounds.Width, displayRect.Width);
-            var newHeight = Math.Min(bounds.Height, displayRect.Height);
+                        if (StartLocation == WindowStartLocation.CenterScreen)
+                        {
+                            parentRect = displayRect;
+                        }
+                        else
+                        if (StartLocation == WindowStartLocation.CenterOwner)
+                        {
+                            if (owner is null)
+                                parentRect = displayRect;
+                            else
+                                parentRect = new(owner.ClientToScreen((0, 0)), owner.ClientSize);
+                        }
+                        else
+                            center = false;
 
-            bounds.Width = newWidth;
-            bounds.Height = newHeight;
+                        var bounds = Bounds;
 
-            if (center)
-                bounds = bounds.CenterIn(parentRect);
+                        var newWidth = Math.Min(bounds.Width, displayRect.Width);
+                        var newHeight = Math.Min(bounds.Height, displayRect.Height);
 
-            Bounds = bounds;
+                        bounds.Width = newWidth;
+                        bounds.Height = newHeight;
+
+                        if (center)
+                            bounds = bounds.CenterIn(parentRect);
+
+                        Bounds = bounds;
+            */
         }
 
         /// <summary>

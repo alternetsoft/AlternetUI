@@ -194,8 +194,7 @@ namespace Alternet::UI
         return _dc->GetHandle();
     }
 
-    DrawingContext::DrawingContext(wxDC* dc,
-        optional<std::function<void()>> onUseDC /*= nullopt*/) : _dc(dc), _onUseDC(onUseDC)
+    DrawingContext::DrawingContext(wxDC* dc) : _dc(dc)
     {
         assert(_dc);
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
@@ -697,7 +696,7 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::Push()
+    /*void DrawingContext::Push()
     {
         _transformStack.push(_dc->GetTransformMatrix());
     }
@@ -709,9 +708,9 @@ namespace Alternet::UI
 
         SetTransformCore(_transformStack.top());
         _transformStack.pop();
-    }
+    }*/
 
-    TransformMatrix* DrawingContext::GetTransform()
+    /*TransformMatrix* DrawingContext::GetTransform()
     {
         auto result = new TransformMatrix(_currentTransform);
         result->AddRef();
@@ -721,9 +720,29 @@ namespace Alternet::UI
     void DrawingContext::SetTransform(TransformMatrix* value)
     {
         SetTransformCore(value->GetMatrix());
+    }*/
+
+    void DrawingContext::SetTransformValues(
+        double m11, double m12, double m21, double m22, double dx, double dy)
+    {
+        wxMatrix2D m(m11, m12, m21, m22);
+        wxPoint2DDouble t(dx, dy);
+
+        wxAffineMatrix2D matrix;
+        matrix.Set(m, t);
+
+        _currentTransform = matrix;
+        /*_currentTranslation = wxPoint((int)t.m_x, (int)t.m_y);*/
+        _nonIdentityTransformSet = !_currentTransform.IsIdentity();
+
+        // Setting transform on DC and GC at the same time doesn't work.
+        // So apply them before every operation on by one if needed.
+
+        _dc->ResetTransformMatrix();
+        _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
     }
 
-    void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
+    /*void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
     {
         _currentTransform = value;
 
@@ -739,7 +758,7 @@ namespace Alternet::UI
 
         _dc->ResetTransformMatrix();
         _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
-    }
+    }*/
 
     void DrawingContext::ApplyTransform(bool useDC)
     {
@@ -760,17 +779,11 @@ namespace Alternet::UI
 
     void DrawingContext::UseDC()
     {
-        if (_onUseDC != nullopt)
-            _onUseDC.value()();
-
         ApplyTransform(/*useDC:*/true);
     }
 
     void DrawingContext::UseGC()
     {
-        if (_onUseDC != nullopt)
-            _onUseDC.value()();
-
         ApplyTransform(/*useDC:*/false);
     }
 
@@ -1171,7 +1184,13 @@ namespace Alternet::UI
         auto& oldFont = _dc->GetFont();
         _dc->SetFont(font->GetWxFont());
 
-        auto wRect = fromDip(rect, window);
+        Rect rectTranslated(rect.X, rect.Y, rect.Width, rect.Height);
+
+#ifndef __WXMSW__
+        /*rectTranslated.X += _currentTranslation.x;
+        rectTranslated.Y += _currentTranslation.y;*/
+#endif
+        auto wRect = fromDip(rectTranslated, window);
         wxRect rectBounding;
         wxBitmap bitmap = wxNullBitmap;
 
@@ -1207,7 +1226,7 @@ namespace Alternet::UI
         return rectBounding;
     }
 
-    void DrawingContext::DrawText(const string& text, const Point& location, Font* font,
+    void DrawingContext::DrawText(const string& text, const PointD& location, Font* font,
         const Color& foreColor, const Color& backColor)
     {
         bool useBackColor = !backColor.IsEmpty();
@@ -1233,7 +1252,14 @@ namespace Alternet::UI
         auto& oldFont = _dc->GetFont();
         _dc->SetFont(font->GetWxFont());
 
-        auto point = fromDip(location, window);
+        PointD locationTranslated = location;
+
+#ifndef __WXMSW__
+        /*locationTranslated.X += _currentTranslation.x;
+        locationTranslated.Y += _currentTranslation.y;*/
+#endif
+
+        auto point = fromDip(locationTranslated, window);
 
         if (useBackColor)
         {
@@ -1257,15 +1283,14 @@ namespace Alternet::UI
         Font* font,
         Brush* brush)
     {
-        //if (NeedToUseDC())
-        //    UseDC();
-        //else
-        //    UseGC();
+        UseDC();
+/*
 #if __WXMSW__
         UseDC();
 #else
         _dc->ResetTransformMatrix();
 #endif
+*/
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtPoint(
             text,
@@ -1284,15 +1309,13 @@ namespace Alternet::UI
         TextTrimming trimming,
         TextWrapping wrapping)
     {
-        //if (NeedToUseDC())
-        //    UseDC();
-        //else
-        //    UseGC();
+        UseDC();
+/*
 #if __WXMSW__
         UseDC();
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
             text,
@@ -1319,7 +1342,7 @@ namespace Alternet::UI
     {
         wxPoint translation;
 #ifndef __WXMSW__
-        translation = _currentTranslation;
+        /*translation = _currentTranslation;*/
 #endif
         return new TextPainter(_dc, _graphicsContext, /*NeedToUseDC()*/true, translation);
     }
@@ -1327,15 +1350,15 @@ namespace Alternet::UI
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth,
         TextWrapping wrapping)
     {
-        //if (NeedToUseDC())
-        //    UseDC();
-        //else
-        //    UseGC();
-#if __WXMSW__
+        if (NeedToUseDC())
+            UseDC();
+        else
+            UseGC();
+/*#if __WXMSW__
         UseDC();
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font,
             maximumWidth, wrapping);
@@ -1343,10 +1366,10 @@ namespace Alternet::UI
 
     Size DrawingContext::GetTextExtentSimple(const string& text, Font* font, void* control)
     {
-#if __WXMSW__
+/*#if __WXMSW__
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         auto wxf = font->GetWxFont();
 
@@ -1388,10 +1411,10 @@ namespace Alternet::UI
 
     Rect DrawingContext::GetTextExtent(const string& text, Font* font, void* control)
     {
-#if __WXMSW__
+/*#if __WXMSW__
 #else
         _dc->ResetTransformMatrix();
-#endif
+#endif*/
 
         auto wxf = font->GetWxFont();
 

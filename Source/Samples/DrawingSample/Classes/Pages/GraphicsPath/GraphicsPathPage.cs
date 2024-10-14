@@ -100,15 +100,15 @@ namespace DrawingSample
 
         private void DrawDemoForeground(Graphics dc, RectD bounds)
         {
-            var s1 = "Click and drag here to draw.";
+            var s1 = "Click and drag to draw.";
             var s2 = "You can select the path segment type";
             var s3 = "to draw in the combo box in the panel to the right.";
 
-            dc.DrawText(
-                new string[] { s1, s2, s3 },
+            dc.DrawStyledText(
+                [s1, s2, s3],
                 Control.DefaultFont,
                 Brushes.Black,
-                bounds.Location);
+                bounds.Location.OffsetBy(10, 10));
 
             using var path = new GraphicsPath(dc) { FillMode = PathFillMode };
 

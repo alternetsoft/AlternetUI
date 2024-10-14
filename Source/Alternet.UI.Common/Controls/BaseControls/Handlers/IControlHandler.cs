@@ -165,6 +165,9 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.Bounds"/>
         RectD Bounds { get; set; }
 
+        /// <inheritdoc cref="Control.BoundsInPixels"/>
+        RectI BoundsI { get; set; }
+
         /// <inheritdoc cref="Control.Visible"/>
         bool Visible { get; set; }
 

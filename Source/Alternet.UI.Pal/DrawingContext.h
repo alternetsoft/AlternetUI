@@ -21,7 +21,7 @@ namespace Alternet::UI
     {
 #include "Api/DrawingContext.inc"
     public:                                
-        DrawingContext(wxDC* dc, optional<std::function<void()>> onUseDC = nullopt);
+        DrawingContext(wxDC* dc);
 
         wxGraphicsContext* GetGraphicsContext();     
         wxDC* GetDC();
@@ -32,7 +32,6 @@ namespace Alternet::UI
         static wxWindow* GetWindow(wxDC* dc);
 
     private:
-        void SetTransformCore(const wxAffineMatrix2D& value);
         void ApplyTransform(bool useDC);
 
         void UseDC();
@@ -42,10 +41,7 @@ namespace Alternet::UI
 
         static wxInterpolationQuality GetInterpolationQuality(InterpolationMode mode);
 
-        std::stack<wxAffineMatrix2D> _transformStack;
-
         wxAffineMatrix2D _currentTransform;
-        wxPoint _currentTranslation;
 
         InterpolationMode _interpolationMode = InterpolationMode::HighQuality;
 
@@ -65,7 +61,5 @@ namespace Alternet::UI
 
         bool _doNotDeleteDC = false;
         bool _isPrinterDC = false;
-
-        optional<std::function<void()>> _onUseDC;
     };
 }

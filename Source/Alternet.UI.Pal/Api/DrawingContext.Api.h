@@ -3,7 +3,6 @@
 #pragma once
 
 #include "DrawingContext.h"
-#include "TransformMatrix.h"
 #include "Region.h"
 #include "Image.h"
 #include "Font.h"
@@ -32,28 +31,6 @@ ALTERNET_UI_API void* DrawingContext_GetWxWidgetDC_(DrawingContext* obj)
     return MarshalExceptions<void*>([&](){
     #endif
         return obj->GetWxWidgetDC();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API TransformMatrix* DrawingContext_GetTransform_(DrawingContext* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<TransformMatrix*>([&](){
-    #endif
-        return obj->GetTransform();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_SetTransform_(DrawingContext* obj, TransformMatrix* value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetTransform(value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -598,23 +575,12 @@ ALTERNET_UI_API void DrawingContext_DrawImagePortionAtPixelRect_(DrawingContext*
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_Push_(DrawingContext* obj)
+ALTERNET_UI_API void DrawingContext_SetTransformValues_(DrawingContext* obj, double m11, double m12, double m21, double m22, double dx, double dy)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->Push();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_Pop_(DrawingContext* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->Pop();
+        obj->SetTransformValues(m11, m12, m21, m22, dx, dy);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

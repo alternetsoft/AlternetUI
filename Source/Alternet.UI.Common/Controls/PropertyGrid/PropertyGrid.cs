@@ -2184,7 +2184,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prop">Item to add.</param>
         /// <param name="parent">Parent item or null.</param>
-        public virtual void Add(IPropertyGridItem prop, IPropertyGridItem? parent = null)
+        public virtual void Add(IPropertyGridItem? prop, IPropertyGridItem? parent = null)
         {
             if (prop == null)
                 return;

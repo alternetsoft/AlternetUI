@@ -12,6 +12,7 @@ namespace Alternet.Drawing
     /// Extends <see cref="IGraphics"/> with additional functionality implemented
     /// on WxWidgets platform.
     /// </summary>
+    [Obsolete("Depends on WxWdigets")]
     public interface IWxGraphics : IGraphics
     {
         /// <summary>
@@ -49,7 +50,7 @@ namespace Alternet.Drawing
             Coord maximumWidth,
             TextFormat format);
 
-        /// <summary>
+        /*/// <summary>
         /// Draws text using the specified drawing parameters and text format.
         /// </summary>
         /// <param name="text">Text string,</param>
@@ -62,6 +63,6 @@ namespace Alternet.Drawing
             Font font,
             Brush brush,
             RectD bounds,
-            TextFormat format);
+            TextFormat format);*/
     }
 }

@@ -8,6 +8,9 @@ namespace WindowPropertiesSample
 {
     public partial class WindowPropertiesWindow : Window
     {
+        private static RectD Position1 = (250, 250, 450, 450);
+        private static RectD Position2 = (50, 50, 500, 500);
+
         private readonly IconSet Icon1;
         private readonly IconSet Icon2;
         private readonly SetBoundsProperties setBoundsProperties;

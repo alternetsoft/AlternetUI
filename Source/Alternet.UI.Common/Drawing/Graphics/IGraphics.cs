@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -226,9 +227,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc cref="Graphics.DrawText(string, Font, Brush, PointD)"/>
         void DrawText(string text, Font font, Brush brush, PointD origin);
-
-        /// <inheritdoc cref="Graphics.DrawText(string[], Font, Brush, PointD)"/>
-        void DrawText(string[] text, Font font, Brush brush, PointD origin);
 
         /// <inheritdoc cref="Graphics.DrawText(string, PointD)"/>
         void DrawText(string text, PointD origin);

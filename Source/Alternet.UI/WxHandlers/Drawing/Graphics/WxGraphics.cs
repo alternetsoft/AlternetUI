@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Defines a drawing surface managed by WxWidgets library.
     /// </summary>
-    internal partial class WxGraphics : Graphics, IWxGraphics
+    internal partial class WxGraphics : Graphics
     {
         private readonly bool dispose;
         private UI.Native.DrawingContext dc;
@@ -26,41 +26,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override bool IsOk => dc.IsOk;
-
-        /// <inheritdoc/>
-        public override TransformMatrix Transform
-        {
-            get
-            {
-                var matrix = dc.Transform;
-                return new TransformMatrix(
-                    matrix.M11,
-                    matrix.M12,
-                    matrix.M21,
-                    matrix.M22,
-                    matrix.DX,
-                    matrix.DY);
-            }
-
-            set
-            {
-                var matrix = new UI.Native.TransformMatrix();
-                matrix.Initialize(value.M11, value.M12, value.M21, value.M22, value.DX, value.DY);
-                dc.Transform = matrix;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool HasTransform
-        {
-            get
-            {
-                var matrix = dc.Transform;
-                if (matrix.IsIdentity)
-                    return false;
-                return true;
-            }
-        }
 
         /// <inheritdoc/>
         public override bool HasClip
@@ -109,75 +74,6 @@ namespace Alternet.Drawing
         public override object NativeObject
         {
             get => dc;
-        }
-
-        public SizeD GetTextExtent(
-            string text,
-            Font font,
-            out Coord? descent,
-            out Coord? externalLeading,
-            IControl? control = null)
-        {
-            var dc = (UI.Native.DrawingContext)NativeObject;
-
-            var result = dc.GetTextExtent(
-                text,
-                (UI.Native.Font)font.Handler,
-                WxApplicationHandler.WxWidget(control));
-            descent = result.X;
-            externalLeading = result.Y;
-            return result.Size;
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(
-            string text,
-            Font font,
-            IControl? control)
-        {
-            var dc = (UI.Native.DrawingContext)NativeObject;
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.Handler,
-                WxApplicationHandler.WxWidget(control));
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public override void DrawRotatedText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Coord angle,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor);
-
-            if(unit == GraphicsUnit.Pixel)
-            {
-                dc.DrawRotatedTextI(
-                    text,
-                    location.ToPoint(),
-                    (UI.Native.Font)font.Handler,
-                    foreColor,
-                    backColor,
-                    angle);
-                return;
-            }
-
-            ToDip(ref location, unit);
-
-            dc.DrawRotatedText(
-                text,
-                location,
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor,
-                angle);
         }
 
         /// <inheritdoc/>
@@ -278,16 +174,6 @@ namespace Alternet.Drawing
                 (UI.Native.Brush)brush.Handler,
                 rectangle,
                 cornerRadius);
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetTextExtent(string text, Font font)
-        {
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.Handler,
-                default);
-            return result;
         }
 
         /// <inheritdoc/>
@@ -638,73 +524,6 @@ namespace Alternet.Drawing
                 sourceRect);
         }
 
-
-        /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
-        {
-            DrawText(text, font, brush, bounds, TextFormat.Default);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawText(
-            string text,
-            Font font,
-            Brush brush,
-            PointD origin)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            dc.DrawTextAtPoint(
-                text,
-                origin,
-                (UI.Native.Font)font.Handler,
-                (UI.Native.Brush)brush.Handler);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor);
-            dc.DrawText(
-                text,
-                location,
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor);
-        }
-
-        /// <inheritdoc/>
-        public override RectD DrawLabel(
-            string text,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Image? image,
-            RectD rect,
-            GenericAlignment alignment = GenericAlignment.TopLeft,
-            int indexAccel = -1)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor, nameof(foreColor));
-            return dc.DrawLabel(
-                text,
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor,
-                (UI.Native.Image?)image?.Handler,
-                rect,
-                (int)alignment,
-                indexAccel);
-        }
-
         /// <inheritdoc/>
         public override SizeI GetDPI()
         {
@@ -748,6 +567,17 @@ namespace Alternet.Drawing
 
             ToDip(ref rectangle, unit);
             FillRectangle(brush, rectangle);
+        }
+
+        protected override void SetHandlerTransform(TransformMatrix matrix)
+        {
+            dc.SetTransformValues(
+                matrix.M11,
+                matrix.M12,
+                matrix.M21,
+                matrix.M22,
+                GraphicsFactory.PixelFromDip(matrix.DX, ScaleFactor),
+                GraphicsFactory.PixelFromDip(matrix.DY, ScaleFactor));
         }
     }
 }

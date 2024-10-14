@@ -7,10 +7,6 @@ bool GetIsOk();
 void* GetWxWidgetDC();
 
 
-TransformMatrix* GetTransform();
-void SetTransform(TransformMatrix* value);
-
-
 Region* GetClip();
 void SetClip(Region* value);
 
@@ -63,8 +59,7 @@ void DrawImageAtPoint(Image* image, const PointD& origin, bool useMask);
 void DrawImageAtRect(Image* image, const RectD& destinationRect, bool useMask);
 void DrawImagePortionAtRect(Image* image, const RectD& destinationRect, const RectD& sourceRect);
 void DrawImagePortionAtPixelRect(Image* image, const RectI& destinationRect, const RectI& sourceRect);
-void Push();
-void Pop();
+void SetTransformValues(double m11, double m12, double m21, double m22, double dx, double dy);
 void DrawLine(Pen* pen, const PointD& a, const PointD& b);
 void DrawLines(Pen* pen, PointD* points, int pointsCount);
 void DrawArc(Pen* pen, const PointD& center, double radius, double startAngle, double sweepAngle);

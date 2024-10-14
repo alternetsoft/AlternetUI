@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with rich tooltip.
     /// </summary>
-    public interface IRichToolTipHandler : IDisposable
+    public interface IRichToolTipHandler : IDisposableObject
     {
         /// <summary>
         /// Gets tooltip window size in pixels.
@@ -48,7 +48,10 @@ namespace Alternet.UI
         /// <inheritdoc cref="RichToolTip.SetTitleFont"/>
         void SetTitleFont(Font? font);
 
-        /// <inheritdoc cref="RichToolTip.SetTipKind"/>
+        /// <summary>
+        /// Sets tip kind of the tooltip.
+        /// </summary>
+        /// <param name="tipKind">Value to set.</param>
         void SetTipKind(RichToolTipKind tipKind);
 
         /// <summary>

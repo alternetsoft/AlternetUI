@@ -555,6 +555,29 @@ namespace Alternet.Drawing
         public readonly PointD ToPointF() => (PointD)this;
 
         /// <summary>
+        /// Get this object with applied min and max constraints.
+        /// </summary>
+        /// <param name="maxWidth">Maximal width.</param>
+        /// <param name="maxHeight">Maximal height.</param>
+        /// <returns></returns>
+        public readonly SizeD Shrink(Coord? maxWidth, Coord? maxHeight)
+        {
+            var result = this;
+
+            if (maxWidth is not null)
+            {
+                result.Width = Math.Min(result.Width, maxWidth.Value);
+            }
+
+            if (maxHeight is not null)
+            {
+                result.Height = Math.Min(result.Height, maxHeight.Value);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Converts a <see cref="SizeD"/> structure to a
         /// <see cref="SizeI"/> structure.
         /// </summary>

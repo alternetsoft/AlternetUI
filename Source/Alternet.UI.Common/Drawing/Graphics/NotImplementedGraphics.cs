@@ -24,24 +24,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool HasTransform => throw new NotImplementedException();
-
-        /// <inheritdoc/>
         public override bool HasClip => throw new NotImplementedException();
-
-        /// <inheritdoc/>
-        public override TransformMatrix Transform
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         /// <inheritdoc/>
         public override Region? Clip
@@ -406,6 +389,12 @@ namespace Alternet.Drawing
             bool useMask = false,
             PointD? srcPtMask = null,
             GraphicsUnit unit = GraphicsUnit.Dip)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        protected override void SetHandlerTransform(TransformMatrix matrix)
         {
             throw new NotImplementedException();
         }

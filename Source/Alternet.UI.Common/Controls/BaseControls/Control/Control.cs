@@ -455,6 +455,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets property of the <see cref="FrameworkElement.DataContext"/>
+        /// to use in the control. Only some controls are affected by this property.
+        /// </summary>
+        [Browsable(false)]
+        public new virtual object? DataContextProperty { get; set; }
+
+        /// <summary>
         /// Gets internally painted caret information. This is used on some platforms
         /// where native caret is not available.
         /// </summary>
@@ -503,7 +510,7 @@ namespace Alternet.UI
         /// Gets unique id of this control.
         /// </summary>
         [Browsable(false)]
-        public virtual ObjectUniqueId UniqueId
+        public ObjectUniqueId UniqueId
         {
             get
             {
@@ -1731,13 +1738,62 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets bounds in pixels.
+        /// Gets or sets bounds in pixels. You should not normally use this property
+        /// unless this control is a top level window.
         /// </summary>
+        [Browsable(false)]
         public virtual RectI BoundsInPixels
         {
             get
             {
-                return Bounds.PixelFromDip(ScaleFactor);
+                return Handler.BoundsI;
+            }
+
+            set
+            {
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
+                if (BoundsInPixels == value)
+                    return;
+                Handler.BoundsI = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets control's location in pixels. You should not normally use this property
+        /// unless this control is a top level window.
+        /// </summary>
+        [Browsable(false)]
+        public virtual PointI LocationInPixels
+        {
+            get
+            {
+                return BoundsInPixels.Location;
+            }
+
+            set
+            {
+                BoundsInPixels = BoundsInPixels.WithLocation(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets control's size in pixels. You should not normally use this property
+        /// unless this control is a top level window.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SizeI SizeInPixels
+        {
+            get
+            {
+                return BoundsInPixels.Size;
+            }
+
+            set
+            {
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
+                BoundsInPixels = BoundsInPixels.WithSize(value);
             }
         }
 

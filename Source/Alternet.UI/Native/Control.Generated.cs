@@ -447,6 +447,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.RectI BoundsI
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetBoundsI_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetBoundsI_(NativePointer, value);
+            }
+        }
+        
         public Alternet.Drawing.RectD EventBounds
         {
             get
@@ -1474,6 +1489,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetBounds_(IntPtr obj, Alternet.Drawing.RectD value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectI Control_GetBoundsI_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetBoundsI_(IntPtr obj, Alternet.Drawing.RectI value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD Control_GetEventBounds_(IntPtr obj);

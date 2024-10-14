@@ -1669,6 +1669,18 @@ namespace Alternet::UI
         _bounds.Set(value);
     }
 
+    RectI Control::GetBoundsI()
+    {
+        auto wxWindow = GetWxWindow();
+        return wxWindow->GetRect();
+    }
+
+    void Control::SetBoundsI(const RectI& value)
+    {
+        auto wxWindow = GetWxWindow();
+        wxWindow->SetSize(value);
+    }
+
     void Control::SetBoundsEx(const Rect& value, int flags)
     {
         auto wxWindow = GetWxWindow();

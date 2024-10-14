@@ -2,32 +2,32 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Used to describe how an element is positioned or stretched
-    /// vertically within a parent's layout slot.
+    /// within a parent's layout slot.
     /// </summary>
-    public enum VerticalAlignment
+    public enum CoordAlignment
     {
         /// <summary>
-        /// Align element towards the top of a parent's layout slot.
+        /// Align element towards the beginning of a parent's layout slot.
         /// </summary>
-        Top = 0,
+        Near = 0,
 
         /// <summary>
-        /// Center element vertically.
+        /// Center element.
         /// </summary>
         Center = 1,
 
         /// <summary>
-        /// Align element towards the bottom of a parent's layout slot.
+        /// Align element towards the end of a parent's layout slot.
         /// </summary>
-        Bottom = 2,
+        Far = 2,
 
         /// <summary>
-        /// Stretch element vertically within a parent's layout slot.
+        /// Stretch element within a parent's layout slot.
         /// </summary>
         Stretch = 3,
 
         /// <summary>
-        /// Stretch element vertically within a remaining empty space
+        /// Stretch element within a remaining empty space
         /// which is not occupied by other sibling elements.
         /// </summary>
         Fill = 4,

@@ -489,7 +489,7 @@ namespace Alternet.UI
 
             graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
-            control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
+            control.RaisePaintRecursive(new PaintEventArgs(graphics, control.Bounds));
 
             graphics.UseUnscaledDrawImage = false;
 

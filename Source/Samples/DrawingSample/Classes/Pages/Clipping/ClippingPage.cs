@@ -81,17 +81,11 @@ namespace DrawingSample
 
             dc.Pop();
 
-            ((IWxGraphics)dc).DrawText(
+            dc.DrawText(
                 "Click and drag the mouse to add or subtract rectangles to/from the clip region.",
                 Control.DefaultFont,
                 Brushes.Black,
-                bounds.OffsetBy(0, 20),
-                new TextFormat
-                {
-                    HorizontalAlignment = TextHorizontalAlignment.Center,
-                    VerticalAlignment = TextVerticalAlignment.Top,
-                    Wrapping = TextWrapping.Word
-                });
+                bounds.OffsetBy(0, 20).Location);
         }
 
         public void ResetClipAreaParts()

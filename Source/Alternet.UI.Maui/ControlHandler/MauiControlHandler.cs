@@ -53,7 +53,7 @@ namespace Alternet.UI
             }
         }
 
-        public ControlView? Container
+        public virtual ControlView? Container
         {
             get => container;
 
@@ -152,11 +152,24 @@ namespace Alternet.UI
 
         public Action? SystemColorsChanged { get; set; }
 
-        public SizeI EventOldDpi { get; }
+        public virtual SizeI EventOldDpi { get; }
 
-        public SizeI EventNewDpi { get; }
+        public virtual SizeI EventNewDpi { get; }
 
         public Action? DpiChanged { get; set; }
+
+        public virtual RectI BoundsI
+        {
+            get
+            {
+                return GraphicsFactory.PixelFromDip(Bounds, GetPixelScaleFactor());
+            }
+
+            set
+            {
+                Bounds = GraphicsFactory.PixelToDip(value, GetPixelScaleFactor());
+            }
+        }
 
         public virtual void BeginInit()
         {

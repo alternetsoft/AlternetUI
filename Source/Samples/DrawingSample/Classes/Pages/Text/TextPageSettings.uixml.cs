@@ -27,9 +27,16 @@ namespace DrawingSample
                     verticalAlignmentComboBox,
                     trimmingComboBox,
                     wrappingComboBox);
+
+                Group(
+                    trimmingComboBox,
+                    wrappingComboBox).Enabled(false);
+
                 labels.Margin(new(0, 5, 10, 5)).VerticalAlignment(VerticalAlignment.Center);
                 comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
                 var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
+
+                propertyGrid.Visible = DebugUtils.IsDebugDefined;
 
                 propGrid.Setup(gridControls);
             });
@@ -38,6 +45,43 @@ namespace DrawingSample
         public void Initialize(TextPage page)
         {
             DataContext = page;
+
+            if (DebugUtils.IsDebugDefined)
+            {
+                AddProperty(
+                    page.WrappedText,
+                    nameof(FormattedText.BlockHorizontalAlignment),
+                    "Block Horz");
+
+                AddProperty(
+                    page.WrappedText,
+                    nameof(FormattedText.BlockVerticalAlignment),
+                    "Block Vert");
+
+                AddProperty(
+                    page.WrappedText,
+                    nameof(FormattedText.LineDistance),
+                    "Line Distance");
+            }
+
+            void AddProperty(object obj, string name, string? label = null)
+            {
+                var prop = propertyGrid.CreateProperty(label, name, obj, name);
+                propertyGrid.Add(prop);
+            }
+
+            propertyGrid.ApplyFlags = PropertyGridApplyFlags.SetValueAndReloadAll;
+
+            propertyGrid.FitColumns();
+            propertyGrid.PropertyChanged += (s, e) =>
+            {
+                page.InvalidateParagraphs();
+            };
+
+            toggleTextButton.Click += (s, e) =>
+            {
+                page.ShortText = !page.ShortText;
+            };
 
             customFontFamilyComboBox.Items.AddRange(FontFamily.FamiliesNames);
             wrappingComboBox.AddEnumValues<TextWrapping>();
@@ -48,13 +92,15 @@ namespace DrawingSample
             horizontalAlignmentComboBox.SelectedItem = page.HorizontalAlignment;
             horizontalAlignmentComboBox.SelectedItemChanged += (s, e) =>
             {
-                page.HorizontalAlignment = horizontalAlignmentComboBox.SelectedItemAs<TextHorizontalAlignment>();
+                page.HorizontalAlignment = 
+                    horizontalAlignmentComboBox.SelectedItemAs<TextHorizontalAlignment>();
             };
 
             verticalAlignmentComboBox.SelectedItem = page.VerticalAlignment;
             verticalAlignmentComboBox.SelectedItemChanged += (s, e) =>
             {
-                page.VerticalAlignment = verticalAlignmentComboBox.SelectedItemAs<TextVerticalAlignment>();
+                page.VerticalAlignment
+                    = verticalAlignmentComboBox.SelectedItemAs<TextVerticalAlignment>();
             };
 
             wrappingComboBox.SelectedItem = page.Wrapping;

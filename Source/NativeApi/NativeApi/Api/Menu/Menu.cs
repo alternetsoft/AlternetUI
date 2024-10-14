@@ -1,4 +1,5 @@
-﻿using Alternet.Drawing;
+﻿#pragma warning disable
+using Alternet.Drawing;
 using System;
 
 namespace NativeApi.Api

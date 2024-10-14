@@ -457,6 +457,8 @@ namespace Alternet::UI
 
             auto window = DrawingContext::GetWindow(_dc);
 
+            auto translatedRect = Rect(bounds.GetLocation(), bounds.GetSize());
+
             if (_useDC)
             {
                 auto& oldTextForeground = _dc->GetTextForeground();
@@ -476,8 +478,11 @@ namespace Alternet::UI
                         wrapping,
                         trimming);
 
-                    auto rect = fromDip(Rect(bounds.GetLocation(), bounds.GetSize()), window);
-                    rect.Offset(_translation);
+#ifndef __WXMSW__
+                    translatedRect.X += _translation.x;
+                    translatedRect.Y += _translation.y;
+#endif
+                    auto rect = fromDip(translatedRect, window);
 
                     if (trimming == TextTrimming::Pixel)
                         _dc->SetClippingRegion(rect);
@@ -489,9 +494,8 @@ namespace Alternet::UI
                 }
                 else
                 {
-                    auto point = fromDip(bounds.GetLocation(), window);
-                    point += _translation;
-                    _dc->DrawText(wxStr(text), point);
+                    auto rect = fromDip(translatedRect, window);
+                    _dc->DrawText(wxStr(text), rect.GetPosition());
                 }
 
                 _dc->SetTextForeground(oldTextForeground);

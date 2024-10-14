@@ -1,5 +1,8 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
+
+using ControlsSample;
+
 using System;
 
 namespace DrawingSample
@@ -13,8 +16,6 @@ namespace DrawingSample
         private static readonly Pen canvasFramePen = new(Color.MistyRose, 3);
 
         private static readonly Pen outerCirclePen = new(Color.DarkRed, 3);
-
-        /*private static readonly Font canvasTestFont = new(FontFamily.GenericMonospace, 10);*/
 
         private int translationX;
 
@@ -148,12 +149,38 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
-            //dc.DrawText(
-            //    "AlterNET UI",
-            //    canvasTestFont,
-            //    Brushes.Blue,
-            //    innerFrame.InflatedBy(-10, -10),
-            //    new TextFormat { HorizontalAlignment = TextHorizontalAlignment.Center, VerticalAlignment = TextVerticalAlignment.Bottom });
+            var drawTexts = false;
+
+            if (drawTexts)
+            {
+                dc.DrawRotatedText(
+                            "Rotated Text",
+                            innerFrame.Location.OffsetBy(450, 290),
+                            Font.Default.Scaled(3),
+                            Color.Red,
+                            Color.YellowGreen,
+                            250);
+
+                dc.DrawText(
+                    "AlterNET UI",
+                    Font.Default.Scaled(1.5),
+                    Brushes.Blue,
+                    innerFrame.Location.OffsetBy(150, 10));
+
+                dc.DrawText("This is sample text",
+                    innerFrame.InflatedBy(-150, -150).Location,
+                    Font.Default,
+                    Color.DarkOliveGreen,
+                    Color.LightGoldenrodYellow);
+
+                dc.DrawLabel(
+                    "This is sample label",
+                    Font.Default,
+                    Color.LightSkyBlue,
+                    Color.Olive,
+                    NotifyIconPage.Image,
+                    innerFrame.InflatedBy(-250, -250));
+            }
 
             dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
         }
