@@ -52,13 +52,17 @@ namespace Alternet.UI
             {
                 backColor ??= template.BackgroundColor;
 
-                GraphicsFactory.MeasureCanvasOverride = SkiaUtils.CreateMeasureCanvas(1);
+                GraphicsFactory.MeasureCanvasOverride
+                    = SkiaUtils.CreateMeasureCanvas(template.ScaleFactor);
 
-                template.SetSizeToContent(WindowSizeToContentMode.WidthAndHeight);
+                template.SetSizeToContent();
 
-                var bounds = template.Bounds;
-                SKBitmap bitmap = new((int)bounds.Width, (int)bounds.Height, false);
-                var canvas = new SkiaGraphics(bitmap);
+                var canvas = SkiaUtils.CreateBitmapCanvas(
+                    template.Bounds.Size,
+                    template.ScaleFactor,
+                    true);
+
+                GraphicsFactory.MeasureCanvasOverride = canvas;
 
                 if (backColor is not null)
                 {
@@ -67,7 +71,7 @@ namespace Alternet.UI
 
                 DrawControlTemplate(template, canvas);
 
-                return bitmap;
+                return canvas.Bitmap ?? new SKBitmap();
             }
             finally
             {
@@ -87,7 +91,6 @@ namespace Alternet.UI
             Graphics canvas,
             PointD? translate = null)
         {
-            control.PerformLayout();
             control.SetSizeToContent();
 
             RectD clipRect = (0, 0, control.Width, control.Height);

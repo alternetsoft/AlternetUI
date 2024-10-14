@@ -48,8 +48,12 @@ namespace ControlsSample
         {
         };
 
+        private readonly ToolBar toolbar = new()
+        {
+        };
+
         private readonly TemplateControl controlTemplate = new();
-        private readonly TemplateControl hintTemplate = new();
+        private readonly TemplateControl toolTemplate = new();
 
         private readonly InteriorDrawable interiorDrawable;
 
@@ -65,16 +69,16 @@ namespace ControlsSample
                 " fragment",
                 new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
 
-            hintTemplate = TemplateUtils.CreateTemplateWithBoldText(
-                "This hint has ",
+            toolTemplate = TemplateUtils.CreateTemplateWithBoldText(
+                "This tool has ",
                 "bold",
-                " fragment",
-                new FontAndColor(Color.Navy, Color.LightGoldenrodYellow, Font.Default.WithSize(25)));
+                " fragment ",
+                new FontAndColor(Color.Brown, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
+            toolTemplate.HasBorder = true;
+            toolTemplate.BorderColor = Color.Red;
 
             controlTemplate.Parent = this;
-            controlTemplate.SetSizeToContent();
-            hintTemplate.Parent = this;
-            hintTemplate.SetSizeToContent();
+            toolTemplate.Parent = this;
             interiorDrawable = CreateInteriorDrawable(false);
 
             Size = (900, 700);
@@ -89,6 +93,24 @@ namespace ControlsSample
             panel.Parent = mainPanel;
 
             customDrawControl.Parent = panel.FillPanel;
+            customDrawControl.Layout = LayoutStyle.Vertical;
+
+            toolbar.VerticalAlignment = VerticalAlignment.Bottom;
+            toolbar.Parent = customDrawControl;
+            toolbar.AddSpeedBtn(KnownButton.Yes, (s, e) =>
+            {
+                if (toolbar.ItemSize != 64)
+                    toolbar.ItemSize = 64;
+                else
+                    toolbar.ItemSize = 32;
+            });
+            toolbar.AddSpeedBtn(KnownButton.No);
+            toolbar.AddText("From Template: ");
+
+            toolbar.AddPicture(
+                toolTemplate,
+                false,
+                "This is a picture on toolbar created from template");
 
             /* panel.AddAction("Draw Native ComboBox", DrawNativeComboBox); */
             panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
@@ -108,7 +130,6 @@ namespace ControlsSample
             }
 
             panel.AddAction("Draw Control Template", DrawControlTemplate);
-            panel.AddAction("ToolTip with Control Template", ShowTemplateToolTip);
 
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
         }
@@ -184,17 +205,6 @@ namespace ControlsSample
                 var image = new Bitmap();
                 canvas.DrawImage(image, PointD.Empty);
             });
-        }
-
-        public void ShowTemplateToolTip()
-        {
-            /*
-            TemplateUtils.ShowToolTip(
-                customDrawControl,
-                toolTip,
-                (250, 50),
-                hintTemplate);
-            */
         }
 
         public void DrawControlTemplate()

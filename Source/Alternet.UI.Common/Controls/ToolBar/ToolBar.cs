@@ -37,7 +37,7 @@ namespace Alternet.UI
         public ToolBar()
         {
             Layout = LayoutStyle.Horizontal;
-            itemSize = Math.Max(DefaultSize, 24);
+            itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
             IsGraphicControl = true;
         }
 
@@ -91,6 +91,12 @@ namespace Alternet.UI
         /// Gets or sets default item size in dips.
         /// </summary>
         public static Coord DefaultSize { get; set; } = 24;
+
+        /// <summary>
+        /// Gets or sets default minimal item size in dips. You should not normally set this value
+        /// to lower than 24.
+        /// </summary>
+        public static Coord DefaultMinItemSize { get; set; } = 24;
 
         /// <summary>
         /// Gets or sets default spacer item size.
@@ -223,20 +229,20 @@ namespace Alternet.UI
 
             set
             {
-                if (itemSize < 24)
-                    itemSize = 24;
+                if (value < DefaultMinItemSize)
+                    value = DefaultMinItemSize;
                 if (itemSize == value)
                     return;
                 itemSize = value;
 
-                SuspendLayout();
-                foreach (var item in Children)
+                DoInsideLayout(() =>
                 {
-                    if (item is SpeedButton || item is PictureBox)
-                        item.SuggestedSize = GetItemSuggestedSize(item);
-                }
-
-                ResumeLayout();
+                    foreach (var item in Children)
+                    {
+                        if (item is SpeedButton || item is PictureBox)
+                            item.SuggestedSize = GetItemSuggestedSize(item);
+                    }
+                });
             }
         }
 
@@ -775,16 +781,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds <see cref="PictureBox"/> to the control with contents created
+        /// from the the specified template.
+        /// </summary>
+        /// <param name="template">Template which is used to get picture pixels.</param>
+        /// <param name="needDisabled">Whether to get pixels
+        /// for disabled state of the template.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <returns></returns>
+        public virtual ObjectUniqueId AddPicture(
+            TemplateControl template,
+            bool needDisabled = false,
+            string? toolTip = default)
+        {
+            template.Enabled = true;
+            ImageSet? image = TemplateUtils.GetTemplateAsImageSet(template);
+            ImageSet? imageDisabled = null;
+
+            if (needDisabled)
+            {
+                template.Enabled = false;
+
+                try
+                {
+                    imageDisabled = TemplateUtils.GetTemplateAsImageSet(template);
+                }
+                finally
+                {
+                    template.Enabled = true;
+                }
+            }
+
+            var result = AddPicture(image, imageDisabled, toolTip, true);
+            return result;
+        }
+
+        /// <summary>
         /// Adds <see cref="PictureBox"/> to the control.
         /// </summary>
         /// <param name="image">Normal image.</param>
         /// <param name="imageDisabled">Disable image.</param>
         /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="ignoreSuggestedSize">Whether to ignore suggested
+        /// size of the item's control.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddPicture(
             ImageSet? image = null,
             ImageSet? imageDisabled = null,
-            string? toolTip = default)
+            string? toolTip = default,
+            bool ignoreSuggestedSize = false)
         {
             PictureBox picture = new()
             {
@@ -795,7 +840,14 @@ namespace Alternet.UI
                 VerticalAlignment = UI.VerticalAlignment.Center,
             };
 
-            picture.SuggestedSize = GetItemSuggestedSize(picture);
+            if (ignoreSuggestedSize)
+            {
+                picture.IgnoreSuggestedSize = true;
+            }
+            else
+            {
+                picture.SuggestedSize = GetItemSuggestedSize(picture);
+            }
 
             if (imageDisabled is not null)
             {
@@ -1464,7 +1516,10 @@ namespace Alternet.UI
         private SizeD GetItemSuggestedSize(Control control)
         {
             if (control is PictureBox)
+            {
                 return itemSize;
+            }
+
             if (TextVisible)
                 return (Coord.NaN, itemSize);
             return itemSize;
