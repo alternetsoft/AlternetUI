@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -13,6 +14,69 @@ namespace Alternet.Drawing
     /// </summary>
     public class DrawableElement : ImmutableObject, IDrawableElement
     {
+        private DrawableElementStyle? style;
+        private DrawableElement? parent;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawableElement"/> class.
+        /// </summary>
+        public DrawableElement()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawableElement"/> class.
+        /// </summary>
+        /// <param name="style">The style of this object.</param>
+        public DrawableElement(DrawableElementStyle? style)
+        {
+            this.style = style;
+        }
+
+        /// <summary>
+        /// Gets real attributes of this object.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DrawableElementStyle RealStyle
+        {
+            get
+            {
+                return Style ?? Parent?.RealStyle ?? DrawableElementStyle.Default;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets style attributes of this objecy.
+        /// </summary>
+        public virtual DrawableElementStyle? Style
+        {
+            get
+            {
+                return style;
+            }
+
+            set
+            {
+                SetProperty(ref style, value, nameof(Style));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets attributes of the styled text.
+        /// </summary>
+        public virtual DrawableElement? Parent
+        {
+            get
+            {
+                return parent;
+            }
+
+            set
+            {
+                SetProperty(ref parent, value, nameof(Parent));
+            }
+        }
+
         /// <summary>
         /// Conversion from <see cref="string"/> to <see cref="DrawableElement"/>.
         /// </summary>
@@ -57,8 +121,9 @@ namespace Alternet.Drawing
             CoordAlignment alignment = CoordAlignment.Near,
             bool isVertical = true)
         {
-            var items = CreateCollection(strings);
-            return CreateStack(items, alignment, distance, isVertical);
+            var result = CreateStack(null, alignment, distance, isVertical);
+            var items = CreateCollection(strings, result);
+            return result;
         }
 
         /// <summary>
@@ -75,8 +140,9 @@ namespace Alternet.Drawing
             CoordAlignment alignment = CoordAlignment.Near,
             bool isVertical = true)
         {
-            var items = CreateCollection(strings);
-            return CreateStack(items, alignment, distance, isVertical);
+            var result = CreateStack(null, alignment, distance, isVertical);
+            var items = CreateCollection(strings, result);
+            return result;
         }
 
         /// <summary>
@@ -109,7 +175,7 @@ namespace Alternet.Drawing
         /// <param name="alignment">Other side alignment.</param>
         /// <returns></returns>
         public static DrawableStackElement CreateStack(
-            IEnumerable<IDrawableElement> items,
+            IEnumerable<IDrawableElement>? items,
             CoordAlignment alignment = CoordAlignment.Near,
             Coord distance = 0,
             bool isVertical = true)
@@ -122,25 +188,29 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="strings">The collection of strings.</param>
         /// <returns></returns>
-        public static IEnumerable<IDrawableElement> CreateCollection(IEnumerable strings)
+        public static IEnumerable<IDrawableElement> CreateCollection(
+            IEnumerable strings,
+            DrawableElement? parent)
         {
             List<IDrawableElement> items = new();
 
             foreach (var s in strings)
             {
-                items.Add(new DrawableTextElement(s));
+                var item = new DrawableTextElement(s);
+                item.Parent = parent;
+                items.Add(item);
             }
 
             return items;
         }
 
         /// <inheritdoc/>
-        public virtual void Draw(Graphics dc, PointD location)
+        public virtual void Draw(Graphics dc, RectD container)
         {
         }
 
         /// <inheritdoc/>
-        public virtual SizeD Measure(Graphics dc)
+        public virtual SizeD Measure(Graphics dc, SizeD availableSize)
         {
             return SizeD.Empty;
         }

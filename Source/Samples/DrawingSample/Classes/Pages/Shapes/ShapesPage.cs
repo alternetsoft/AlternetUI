@@ -137,7 +137,7 @@ namespace DrawingSample
                     cell.Name,
                     cellNameRect.Width,
                     Control.DefaultFont,
-                    dc.ScaleFactor);
+                    dc);
 
                 var nameTextSize = dc.MeasureText(cellName, Control.DefaultFont);
                 bool nameVisible = nameTextSize.Width <= cellNameRect.Width;

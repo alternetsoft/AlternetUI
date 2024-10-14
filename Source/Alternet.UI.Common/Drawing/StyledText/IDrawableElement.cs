@@ -15,14 +15,13 @@ namespace Alternet.Drawing
         /// Draws element.
         /// </summary>
         /// <param name="dc">Canvas where element is painted.</param>
-        /// <param name="location"></param>
-        void Draw(Graphics dc, PointD location);
+        void Draw(Graphics dc, RectD container);
 
         /// <summary>
         /// Gets width and height of the element.
         /// </summary>
         /// <param name="dc">Canvas where element is painted.</param>
         /// <returns></returns>
-        SizeD Measure(Graphics dc);
+        SizeD Measure(Graphics dc, SizeD availableSize);
     }
 }

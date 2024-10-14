@@ -226,7 +226,6 @@ namespace DrawingSample
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointD(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                formattedText.ScaleFactor = dc.ScaleFactor;
                 formattedText.Text = GetText();
                 formattedText.Font = paragraph.Font;
                 formattedText.ForegroundColor = color;
@@ -234,8 +233,9 @@ namespace DrawingSample
                 formattedText.MaxHeight = textHeightSet ? textHeightValue : null;
                 formattedText.Assign(textFormat);
 
-                var formattedTextHeight = formattedText.RestrictedSize.Height;
-                var formattedTextWidth = formattedText.RestrictedSize.Width;
+                var formattedTextSize = formattedText.Measure(dc, Coord.MaxValue);
+                var formattedTextHeight = formattedTextSize.Height;
+                var formattedTextWidth = formattedTextSize.Width;
 
                 var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
                 var textHeight = TextHeightSet ? TextHeightValue : formattedTextHeight;
@@ -244,56 +244,12 @@ namespace DrawingSample
                 formattedText.Draw(dc, rect);
 
                 dc.FillRectangleBorder(Brushes.LightGray, rect);
+
+                /*
                 dc.FillRectangleBorder(
                     Brushes.LightGreen,
                     formattedText.GetBlockRect(dc.ScaleFactor, rect));
-
-                /*if (TextHeightSet)
-                {
-                    textHeight = TextHeightValue;
-                }
-                else
-                {
-                    if (TextWidthLimitEnabled)
-                    {
-                        textHeight = ((IWxGraphics)dc).MeasureText(
-                            LoremIpsum,
-                            paragraph.Font,
-                            TextWidthLimit,
-                            GetTextFormat()).Height;
-                    }
-                    else
-                        textHeight = dc.MeasureText(LoremIpsum, paragraph.Font).Height;
-                }
-
-                if (TextWidthLimitEnabled)
-                {
-                    ((IWxGraphics)dc).DrawText(
-                        LoremIpsum,
-                        paragraph.Font,
-                        color.AsBrush,
-                        new RectD(x, y, TextWidthLimit, textHeight),
-                        textFormat);
-                }
-                else
-                if (TextHeightSet)
-                {
-                    var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
-                    ((IWxGraphics)dc).DrawText(
-                        LoremIpsum,
-                        paragraph.Font,
-                        color.AsBrush,
-                        new RectD(x, y, width, textHeight),
-                        textFormat);
-                }
-                else
-                {
-                    dc.DrawText(
-                        LoremIpsum,
-                        paragraph.Font,
-                        color.AsBrush,
-                        new PointD(x, y));
-                }*/
+                */
 
                 y += textHeight + 20;
 

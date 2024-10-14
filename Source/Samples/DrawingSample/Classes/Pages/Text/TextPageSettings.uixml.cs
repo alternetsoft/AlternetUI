@@ -60,7 +60,7 @@ namespace DrawingSample
 
                 AddProperty(
                     page.WrappedText,
-                    nameof(FormattedText.LineDistance),
+                    nameof(FormattedText.Distance),
                     "Line Distance");
             }
 

@@ -8,14 +8,20 @@ namespace Alternet.Drawing
 {
     public class DrawableStackElement : DrawableElement, IDrawableElement
     {
-        private readonly IEnumerable<IDrawableElement> items;
-
+        private IEnumerable<IDrawableElement>? items;
         private Coord distance;
         private CoordAlignment alignment;
         private bool isVertical;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawableStackElement"/> class.
+        /// </summary>
+        public DrawableStackElement()
+        {
+        }
+
         public DrawableStackElement(
-            IEnumerable<IDrawableElement> items,
+            IEnumerable<IDrawableElement>? items,
             CoordAlignment alignment = CoordAlignment.Near,
             Coord distance = 0,
             bool isVertical = true)
@@ -24,6 +30,22 @@ namespace Alternet.Drawing
             this.distance = distance;
             this.alignment = alignment;
             this.isVertical = isVertical;
+        }
+
+        /// <summary>
+        /// Gets or sets items.
+        /// </summary>
+        public virtual IEnumerable<IDrawableElement>? Items
+        {
+            get
+            {
+                return items;
+            }
+
+            set
+            {
+                SetProperty(ref items, value, nameof(Items));
+            }
         }
 
         public virtual bool IsVertical
@@ -65,42 +87,46 @@ namespace Alternet.Drawing
             }
         }
 
-        public override void Draw(Graphics dc, PointD origin)
+        /// <inheritdoc/>
+        public override void Draw(Graphics dc, RectD container)
         {
+            if (items is null)
+                return;
+
             var thisSide = IsVertical;
             var otherSide = !thisSide;
 
-            var size = Measure(dc);
+            var size = Measure(dc, container.Size);
             var thisSize = size.GetSize(thisSide);
             var otherSize = size.GetSize(otherSide);
+            var origin = container.Location;
 
             foreach (var obj in items)
             {
-                var measure = obj.Measure(dc);
-                var alignedOrigin = origin;
-                if (alignment != CoordAlignment.Near && otherSize > 0)
-                {
-                    RectD rect = (origin, measure);
-                    RectD container = rect;
-                    container.SetSize(otherSide, otherSize);
+                var measure = obj.Measure(dc, container.Size);
 
-                    var alignedRect = AlignUtils.AlignRectInRect(
-                        otherSide,
-                        rect,
-                        container,
-                        alignment);
+                RectD itemRect = (origin, measure);
+                RectD itemContainer = itemRect;
+                itemContainer.SetSize(otherSide, otherSize);
 
-                    alignedOrigin.SetLocation(otherSide, alignedRect.GetLocation(otherSide));
-                }
+                var alignedItemRect = AlignUtils.AlignRectInRect(
+                    otherSide,
+                    itemRect,
+                    itemContainer,
+                    alignment);
 
-                obj.Draw(dc, alignedOrigin);
+                obj.Draw(dc, alignedItemRect);
 
                 origin.IncLocation(thisSide, measure.GetSize(thisSide) + distance);
             }
         }
 
-        public override SizeD Measure(Graphics dc)
+        /// <inheritdoc/>
+        public override SizeD Measure(Graphics dc, SizeD availableSize)
         {
+            if (items is null)
+                return SizeD.Empty;
+
             Coord width = 0;
             Coord height = 0;
 
@@ -108,7 +134,7 @@ namespace Alternet.Drawing
             {
                 foreach (var s in items)
                 {
-                    var size = s.Measure(dc);
+                    var size = s.Measure(dc, availableSize);
                     width = Math.Max(width, size.Width);
                     height += size.Height + distance;
                 }
@@ -117,7 +143,7 @@ namespace Alternet.Drawing
             {
                 foreach (var s in items)
                 {
-                    var size = s.Measure(dc);
+                    var size = s.Measure(dc, availableSize);
                     height = Math.Max(height, size.Height);
                     width += size.Width + distance;
                 }

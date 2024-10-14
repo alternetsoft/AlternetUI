@@ -143,7 +143,7 @@ namespace Alternet.UI
                 s,
                 maxTextWidth.Value,
                 Font ?? Control.DefaultFont,
-                ScaleFactor);
+                MeasureCanvas);
             return result;
         }
 

@@ -105,7 +105,7 @@ namespace DrawingSample
             var s3 = "to draw in the combo box in the panel to the right.";
 
             var drawable = DrawableElement.CreateStringsStack([s1, s2, s3], 0, CoordAlignment.Near);
-            drawable.Draw(dc, bounds.Location.OffsetBy(10, 10));
+            drawable.Draw(dc, bounds.WithMargin(10));
 
             using var path = new GraphicsPath(dc) { FillMode = PathFillMode };
 

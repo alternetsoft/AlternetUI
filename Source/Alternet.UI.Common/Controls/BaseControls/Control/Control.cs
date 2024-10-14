@@ -94,7 +94,6 @@ namespace Alternet.UI
         private int updateCount = 0;
         private ControlFlags stateFlags;
         private Cursor? cursor;
-        private ObjectUniqueId? uniqueId;
         private DockStyle dock;
         private LayoutStyle? layout;
         private RectD reportedBounds = RectD.MinusOne;
@@ -539,18 +538,6 @@ namespace Alternet.UI
                     return;
                 cursor = value;
                 Handler.SetCursor(value);
-            }
-        }
-
-        /// <summary>
-        /// Gets unique id of this control.
-        /// </summary>
-        [Browsable(false)]
-        public ObjectUniqueId UniqueId
-        {
-            get
-            {
-                return uniqueId ??= new();
             }
         }
 

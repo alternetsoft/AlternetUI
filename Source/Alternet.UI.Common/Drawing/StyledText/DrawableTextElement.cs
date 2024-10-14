@@ -14,13 +14,7 @@ namespace Alternet.Drawing
     /// </summary>
     public class DrawableTextElement : DrawableElement, IDrawableElement
     {
-        private DrawableElementStyle? style;
         private object? text;
-
-        private SizeD? measuredSize;
-        private Coord measuredScaleFactor;
-        private ObjectUniqueId measuredFontId;
-        private string? measuredText;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawableTextElement"/> class.
@@ -46,37 +40,9 @@ namespace Alternet.Drawing
         /// <param name="text">The text.</param>
         /// <param name="style">The style of the text.</param>
         public DrawableTextElement(object? text, DrawableElementStyle? style)
+            : base(style)
         {
             this.text = text;
-            this.style = style;
-        }
-
-        /// <summary>
-        /// Gets real attributes of this object.
-        /// </summary>
-        [Browsable(false)]
-        public virtual DrawableElementStyle RealStyle
-        {
-            get
-            {
-                return Style ?? DrawableElementStyle.Default;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets attributes of the styled text.
-        /// </summary>
-        public virtual DrawableElementStyle? Style
-        {
-            get
-            {
-                return style;
-            }
-
-            set
-            {
-                SetProperty(ref style, value, nameof(Style));
-            }
         }
 
         /// <summary>
@@ -96,7 +62,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Draw(Graphics dc, PointD location)
+        public override void Draw(Graphics dc, RectD container)
         {
             var realText = Text?.ToString();
             if (realText is null || realText.Length == 0)
@@ -110,17 +76,22 @@ namespace Alternet.Drawing
             {
                 var realForeBrush = realStyle.RealForeBrush
                     ?? DrawableElementStyle.DefaultForegroundColor.AsBrush;
-                dc.DrawText(realText, realFont, realForeBrush, location);
+                dc.DrawText(realText, realFont, realForeBrush, container.Location);
             }
             else
             {
                 var realBackColor = realStyle.RealBackColor;
-                dc.DrawText(realText, location, realFont, realForeColor, realBackColor ?? Color.Empty);
+                dc.DrawText(
+                    realText,
+                    container.Location,
+                    realFont,
+                    realForeColor,
+                    realBackColor ?? Color.Empty);
             }
         }
 
         /// <inheritdoc/>
-        public override SizeD Measure(Graphics dc)
+        public override SizeD Measure(Graphics dc, SizeD availableSize)
         {
             var realText = Text?.ToString();
             if (realText is null || realText.Length == 0)
@@ -131,26 +102,8 @@ namespace Alternet.Drawing
             var realFontId = realFont.UniqueId;
             var newScaleFactor = dc.ScaleFactor;
 
-            var valid =
-                measuredSize is not null
-                && measuredScaleFactor == newScaleFactor
-                && measuredFontId == realFontId
-                && measuredText == realText;
-
-            if (valid)
-                return measuredSize!.Value;
-
-            measuredFontId = realFontId;
-            measuredScaleFactor = newScaleFactor;
-            measuredSize = dc.MeasureText(realText, realFont);
-            measuredText = realText;
-            return measuredSize.Value;
-        }
-
-        /// <inheritdoc/>
-        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            measuredSize = null;
+            var measuredSize = dc.MeasureText(realText, realFont);
+            return measuredSize;
         }
     }
 }
