@@ -538,6 +538,33 @@ namespace Alternet.Drawing
         public abstract SizeD GetTextExtent(string text, Font font);
 
         /// <summary>
+        /// Draws point at the center of the specified rectangle.
+        /// </summary>
+        /// <param name="brush">Brush used to fill the rectangle.</param>
+        /// <param name="container">Rectangle to use as a container for the point.</param>
+        /// <param name="size">Size of the retangle which is painted at the center.</param>
+        public void FillRectangleAtCenter(Brush brush, RectD container, SizeD size)
+        {
+            RectD rect = ((0, 0), size);
+            var alignedRect = AlignUtils.AlignRectInRect(
+                rect,
+                container,
+                HorizontalAlignment.Center,
+                VerticalAlignment.Center);
+            FillRectangle(brush, alignedRect);
+        }
+
+        /// <summary>
+        /// Draws point at the center of the specified rectangle.
+        /// </summary>
+        /// <param name="color">Color of the point.</param>
+        /// <param name="container">Rectangle to use as a container for the point.</param>
+        public void DrawPointAtCenter(Color color, RectD container)
+        {
+            FillRectangle(color.AsBrush, container.Center.AsRect(1));
+        }
+
+        /// <summary>
         /// Calls <see cref="FillRectangle(Brush, RectD)"/> and than <see cref="DrawRectangle"/>.
         /// </summary>
         /// <param name="pen"></param>
