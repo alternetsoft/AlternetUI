@@ -1322,6 +1322,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets tooltip provider from <see cref="ToolTipProvider"/> property.
+        /// If is empty, gets tooltip provider from the parent control (and so on recursively).
+        /// If parent's tooltip provider is empty, gets it from the application
+        /// (<see cref="App.ToolTipProvider"/>).
+        /// </summary>
+        /// <returns></returns>
+        public virtual IToolTipProvider? GetToolTipProvider()
+        {
+            var result = ToolTipProvider ?? Parent?.GetToolTipProvider() ?? App.ToolTipProvider;
+            return result;
+        }
+
+        /// <summary>
         /// Forces the control to apply layout logic to child controls.
         /// </summary>
         /// <remarks>

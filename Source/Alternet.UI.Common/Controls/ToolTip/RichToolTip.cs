@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
     /// specify title, image and other options.
     /// </summary>
-    public class RichToolTip : UserControl, IToolTipProvider
+    public class RichToolTip : UserControl, IRichToolTip, IToolTipProvider
     {
         private IRichToolTipHandler? tooltip;
 
@@ -89,12 +89,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows simple tooltip on the screen.
+        /// Sets simple tooltip contents.
         /// </summary>
         /// <param name="message">Tooltip message.</param>
         /// <param name="systemColors">If <c>true</c>, sets tooltip colors
         /// to <see cref="FontAndColor.SystemColorInfo"/>.</param>
-        public virtual IToolTipProvider SetToolTip(string message, bool systemColors = true)
+        public virtual IRichToolTip SetToolTip(string message, bool systemColors = true)
         {
             HideToolTip();
             Text = message;
@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// <summary>
         /// Hides tooltip.
         /// </summary>
-        public new virtual IToolTipProvider HideToolTip()
+        public new virtual IRichToolTip HideToolTip()
         {
             try
             {
@@ -127,7 +127,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows tooltip on the screen.
+        /// Sets tooltip contents.
         /// </summary>
         /// <param name="title">Tooltip title.</param>
         /// <param name="message">Tooltip message.</param>
@@ -136,19 +136,19 @@ namespace Alternet.UI
         /// Timeout in milliseconds after which tooltip will be hidden. Optional. If not specified,
         /// default timeout value is used. If 0 is specified, tooltip will not be hidden after timeout.
         /// </param>
-        public virtual IToolTipProvider SetToolTip(
-            string? title,
+        public virtual IRichToolTip SetToolTip(
+            object? title,
             string? message,
             MessageBoxIcon? icon = null,
             uint? timeoutMilliseconds = null)
         {
             HideToolTip();
-            Title = title ?? string.Empty;
+            TitleAsObject = title ?? string.Empty;
             Text = message ?? string.Empty;
 
             if (icon is not null)
             {
-                if (string.IsNullOrEmpty(title))
+                if (string.IsNullOrEmpty(Title))
                     icon = MessageBoxIcon.None;
                 SetIcon(icon.Value);
             }
@@ -168,7 +168,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Background color.</param>
         /// <param name="endColor">Second background color.</param>
-        public virtual IToolTipProvider SetBackgroundColor(Color? color, Color? endColor = null)
+        public virtual IRichToolTip SetBackgroundColor(Color? color, Color? endColor = null)
         {
             if (color is null)
                 return this;
@@ -187,7 +187,7 @@ namespace Alternet.UI
         /// Sets foreground color of the tooltip message.
         /// </summary>
         /// <param name="color">Foreground color of the message.</param>
-        public virtual IToolTipProvider SetForegroundColor(Color? color)
+        public virtual IRichToolTip SetForegroundColor(Color? color)
         {
             if (color is null)
                 return this;
@@ -199,7 +199,7 @@ namespace Alternet.UI
         /// Sets foreground color of the tooltip title.
         /// </summary>
         /// <param name="color">Foreground color of the title.</param>
-        public virtual IToolTipProvider SetTitleForegroundColor(Color? color)
+        public virtual IRichToolTip SetTitleForegroundColor(Color? color)
         {
             if (color is null)
                 return this;
@@ -220,7 +220,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="milliseconds">Timeout value.</param>
         /// <param name="millisecondsShowdelay">Show delay value.</param>
-        public virtual IToolTipProvider SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
+        public virtual IRichToolTip SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
         {
             ToolTipHandler.SetTimeout(milliseconds, millisecondsShowdelay);
             return this;
@@ -230,7 +230,7 @@ namespace Alternet.UI
         /// Sets the small icon to show in the tooltip.
         /// </summary>
         /// <param name="bitmap">Icon of the tooltip.</param>
-        public virtual IToolTipProvider SetIcon(ImageSet? bitmap)
+        public virtual IRichToolTip SetIcon(ImageSet? bitmap)
         {
             ToolTipHandler.SetIcon(bitmap);
             return this;
@@ -244,7 +244,7 @@ namespace Alternet.UI
         /// or colour appropriate for the current platform.
         /// </remarks>
         /// <param name="font">Font of the title.</param>
-        public virtual IToolTipProvider SetTitleFont(Font? font)
+        public virtual IRichToolTip SetTitleFont(Font? font)
         {
             ToolTipHandler.SetTitleFont(font);
             return this;
@@ -257,7 +257,7 @@ namespace Alternet.UI
         /// <param name="backColor">Background color. Optional. If not specified, background color
         /// of the template control is used.</param>
         /// <returns></returns>
-        public virtual IToolTipProvider SetToolTipFromTemplate(
+        public virtual IRichToolTip SetToolTipFromTemplate(
             TemplateControl template,
             Color? backColor = null)
         {
@@ -273,7 +273,7 @@ namespace Alternet.UI
         /// Sets text to an empty string.
         /// </summary>
         /// <returns></returns>
-        public virtual IToolTipProvider ResetText()
+        public virtual IRichToolTip ResetText()
         {
             Text = string.Empty;
             return this;
@@ -283,7 +283,7 @@ namespace Alternet.UI
         /// Sets title to an empty string.
         /// </summary>
         /// <returns></returns>
-        public virtual IToolTipProvider ResetTitle()
+        public virtual IRichToolTip ResetTitle()
         {
             Title = string.Empty;
             return this;
@@ -295,7 +295,7 @@ namespace Alternet.UI
         /// <param name="image">Image to show.</param>
         /// <param name="backColor">Background color of the tooltip.</param>
         /// <returns></returns>
-        public virtual IToolTipProvider OnlyImage(ImageSet? image, Color? backColor = null)
+        public virtual IRichToolTip OnlyImage(ImageSet? image, Color? backColor = null)
         {
             HideToolTip().ResetTitle().ResetText();
 
@@ -319,7 +319,7 @@ namespace Alternet.UI
         /// Location coordinates are in device-independent units.
         /// </summary>
         /// <param name="location">Location where tooltip will be shown.</param>
-        public virtual IToolTipProvider ShowToolTip(PointD? location = null)
+        public virtual IRichToolTip ShowToolTip(PointD? location = null)
         {
             location ??= (0, 0);
             var pxLocation = PixelFromDip(location.Value);
@@ -347,9 +347,66 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="icon">One of the standard information/warning/error icons
         /// (the question icon doesn't make sense for a tooltip)</param>
-        public virtual IToolTipProvider SetIcon(MessageBoxIcon icon)
+        public virtual IRichToolTip SetIcon(MessageBoxIcon icon)
         {
             ToolTipHandler.SetIcon(icon);
+            return this;
+        }
+
+        /// <summary>
+        /// Shows simple tooltip on the screen.
+        /// </summary>
+        /// <param name="message">Tooltip message.</param>
+        /// <param name="systemColors">If <c>true</c>, sets tooltip colors
+        /// to <see cref="FontAndColor.SystemColorInfo"/>.</param>
+        /// <param name="location">Location where tooltip will be shown.</param>
+        public IRichToolTip ShowToolTip(
+            string message,
+            bool systemColors = true,
+            PointD? location = null)
+        {
+            return SetToolTip(message, systemColors).ShowToolTip(location);
+        }
+
+        /// <summary>
+        /// Shows tooltip on the screen.
+        /// </summary>
+        /// <param name="title">Tooltip title.</param>
+        /// <param name="message">Tooltip message.</param>
+        /// <param name="icon">Tooltip standard icon.</param>
+        /// <param name="timeoutMilliseconds">
+        /// Timeout in milliseconds after which tooltip will be hidden. Optional. If not specified,
+        /// default timeout value is used. If 0 is specified, tooltip will not be hidden after timeout.
+        /// </param>
+        /// <param name="location">Location where tooltip will be shown.</param>
+        public virtual IRichToolTip ShowToolTip(
+            object? title,
+            string? message,
+            MessageBoxIcon? icon = null,
+            uint? timeoutMilliseconds = null,
+            PointD? location = null)
+        {
+            return SetToolTip(title, message, icon, timeoutMilliseconds).ShowToolTip(location);
+        }
+
+        /// <summary>
+        /// Shows tooltip with contents filled from the template data.
+        /// </summary>
+        /// <param name="template">Template with tooltip data.</param>
+        /// <param name="backColor">Background color. Optional. If not specified, background color
+        /// of the template control is used.</param>
+        /// <returns></returns>
+        /// <param name="location">Location where tooltip will be shown.</param>
+        public virtual IRichToolTip ShowToolTipFromTemplate(
+            TemplateControl template,
+            Color? backColor = null,
+            PointD? location = null)
+        {
+            return SetToolTipFromTemplate(template, backColor).ShowToolTip(location);
+        }
+
+        IRichToolTip? IToolTipProvider.Get(object? sender)
+        {
             return this;
         }
 

@@ -43,8 +43,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public Graphics DrawingContext
         {
-            get => canvas;
-            set => canvas = value;
+            get => Graphics;
+            set => Graphics = value;
         }
 
         /// <summary>
@@ -59,13 +59,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public RectD Bounds
         {
-            get => rect;
-            set => rect = value;
+            get => ClipRectangle;
+            set => ClipRectangle = value;
         }
 
         /// <summary>Gets the rectangle in which to paint.</summary>
         /// <returns>The <see cref="RectD" /> in which to paint.</returns>
-        public RectD ClipRectangle
+        public virtual RectD ClipRectangle
         {
             get => rect;
             set => rect = value;
@@ -79,7 +79,7 @@ namespace Alternet.UI
         /// The <see cref="Graphics" /> object provides methods for drawing objects
         /// on the display or other device.
         /// </returns>
-        public Graphics Graphics
+        public virtual Graphics Graphics
         {
             get => canvas;
             set => canvas = value;

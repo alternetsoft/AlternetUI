@@ -34,6 +34,8 @@ namespace ControlsSample
 
         private readonly ValueEditorByte twoDigitsEdit = new("Two digits", 15);
 
+        private readonly RichToolTip toolTip;
+
         public TextNumbersPage()
         {
             Margin = 10;
@@ -51,6 +53,11 @@ namespace ControlsSample
                 .Action<ValueEditorCustom>(BindTextChanged).LabelSuggestedWidthToMax();
 
             label.Parent = this;
+            RichToolTip toolTip = new();
+            toolTip.VerticalAlignment = VerticalAlignment.Fill;
+            toolTip.Margin = 10;
+            toolTip.Parent = this;
+            ToolTipProvider = toolTip;
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)

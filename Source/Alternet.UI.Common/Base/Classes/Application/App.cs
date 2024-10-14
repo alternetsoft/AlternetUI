@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -394,6 +395,12 @@ namespace Alternet.UI
                 logFilePath = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets root tooltip provider.
+        /// </summary>
+        [Browsable(false)]
+        public static IToolTipProvider? ToolTipProvider { get; set; }
 
         /// <summary>
         /// Gets or sets whether to write all log messages to file.
