@@ -47,19 +47,27 @@ namespace Alternet.UI
         private static Control? hoveredControl;
         private static List<IControlNotification>? globalNotifications;
 
+        private bool enabled = true;
+        private bool isMouseLeftButtonDown;
+        private bool parentBackgroundColor;
+        private bool parentForegroundColor;
+        private bool parentFont;
+        private bool ignoreSuggestedWidth;
+        private bool ignoreSuggestedHeight;
+        private bool inLayout;
+        private bool visible = true;
+
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
-        private bool enabled = true;
         private int handlerTextChanging;
         private int rowIndex;
         private int columnIndex;
         private int columnSpan = 1;
         private int rowSpan = 1;
-        private bool isMouseLeftButtonDown;
         private int layoutSuspendCount;
         private IFlagsAndAttributes? flagsAndAttributes;
         private IIntFlagsAndAttributes? intFlagsAndAttributes;
@@ -68,13 +76,8 @@ namespace Alternet.UI
         private IComponentDesigner? designer;
         private Color? backgroundColor;
         private Color? foregroundColor;
-        private bool parentBackgroundColor;
-        private bool parentForegroundColor;
-        private bool parentFont;
         private ControlCollection? children;
         private SizeD suggestedSize = DefaultControlSize;
-        private bool ignoreSuggestedWidth;
-        private bool ignoreSuggestedHeight;
         private Thickness margin;
         private Thickness padding;
         private object? title;
@@ -82,26 +85,25 @@ namespace Alternet.UI
         private ControlStateSettings? stateObjects;
         private Font? font;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
-        private bool inLayout;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
         private ControlExtendedProps? extendedProps = null;
         private Thickness? minMargin;
         private Thickness? minPadding;
         private Thickness? minChildMargin;
-        private bool visible = true;
         private Control? parent;
         private int updateCount = 0;
         private ControlFlags stateFlags;
         private Cursor? cursor;
-        private string? toolTip;
         private ObjectUniqueId? uniqueId;
-        private string? text;
         private DockStyle dock;
         private LayoutStyle? layout;
         private RectD reportedBounds = RectD.MinusOne;
         private Coord? scaleFactor;
         private SizeD? dpi;
         private List<IControlNotification>? notifications;
+
+        private string? toolTip;
+        private string? text;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
