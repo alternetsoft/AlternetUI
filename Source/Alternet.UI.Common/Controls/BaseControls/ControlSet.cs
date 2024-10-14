@@ -523,6 +523,62 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Control.MarginTop"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet MarginTop(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.MarginTop = value;
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.MarginBottom"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet MarginBottom(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.MarginBottom = value;
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.MarginLeft"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet MarginLeft(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.MarginLeft = value;
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.MarginRight"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet MarginRight(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.MarginRight = value;
+            });
+        }
+
+        /// <summary>
         /// Sets <see cref="ControlAndLabel.LabelSuggestedWidth"/> property for all
         /// the controls in the set.
         /// </summary>
@@ -536,6 +592,62 @@ namespace Alternet.UI
                     if (item is IControlAndLabel control)
                         control.Label.SuggestedWidth = value;
                 }
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.PaddingTop"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet PaddingTop(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.PaddingTop = value;
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.PaddingBottom"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet PaddingBottom(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.PaddingBottom = value;
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.PaddingLeft"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet PaddingLeft(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.PaddingLeft = value;
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="Control.PaddingRight"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The margin value.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet PaddingRight(Coord value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.PaddingRight = value;
             });
         }
 
