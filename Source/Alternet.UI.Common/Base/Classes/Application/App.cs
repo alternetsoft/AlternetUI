@@ -758,7 +758,7 @@ namespace Alternet.UI
         public static void Alert(object? message = null)
         {
             MessageBox.Show(
-                FirstWindow(),
+                App.SafeWindow,
                 message,
                 CommonStrings.Default.WindowTitleApplicationAlert,
                 MessageBoxButtons.OK,
