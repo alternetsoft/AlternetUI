@@ -577,6 +577,13 @@ namespace Alternet.Drawing
             return result;
         }
 
+        public readonly SizeD Shrink(bool vert, Coord maxSize)
+        {
+            var result = this;
+            result.SetSize(vert, Math.Min(result.GetSize(vert), maxSize));
+            return result;
+        }
+
         /// <summary>
         /// Converts a <see cref="SizeD"/> structure to a
         /// <see cref="SizeI"/> structure.

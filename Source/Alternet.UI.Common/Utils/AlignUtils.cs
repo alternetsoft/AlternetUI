@@ -29,6 +29,37 @@ namespace Alternet.UI
             }
         }
 
+        public static RectD AlignRectInRect(
+            bool vert,
+            RectD rect,
+            RectD container,
+            CoordAlignment alignment,
+            bool shrinkSize = true)
+        {
+            if (shrinkSize)
+                rect.Size = rect.Size.Shrink(vert, container.GetSize(vert));
+
+            switch (alignment)
+            {
+                case CoordAlignment.Near:
+                    rect.SetLocation(vert, container.GetLocation(vert));
+                    break;
+                case CoordAlignment.Center:
+                    rect.SetCenter(vert, container.GetCenter(vert));
+                    break;
+                case CoordAlignment.Far:
+                    rect.SetFarLocation(vert, container.GetFarLocation(vert));
+                    break;
+                case CoordAlignment.Stretch:
+                case CoordAlignment.Fill:
+                    rect.SetLocation(vert, container.GetLocation(vert));
+                    rect.SetSize(vert, container.GetSize(vert));
+                    break;
+            }
+
+            return rect;
+        }
+
         /// <summary>
         /// Aligns the specified rectangle in the container using horizontal and vertical
         /// alignment options.
@@ -47,38 +78,17 @@ namespace Alternet.UI
             VerticalAlignment? vert,
             bool shrinkSize = true)
         {
-            if(shrinkSize)
+            if (shrinkSize)
                 rect.Size = rect.Size.Shrink(container.Width, container.Height);
 
             if(horz is not null)
             {
-                AlignCoord(false, (CoordAlignment)horz.Value);
+                AlignRectInRect(false, rect, container, (CoordAlignment)horz, false);
             }
 
             if (vert is not null)
             {
-                AlignCoord(true, (CoordAlignment)vert.Value);
-            }
-
-            void AlignCoord(bool vert, CoordAlignment alignment)
-            {
-                switch (alignment)
-                {
-                    case CoordAlignment.Near:
-                        rect.SetLocation(vert, container.GetLocation(vert));
-                        break;
-                    case CoordAlignment.Center:
-                        rect.SetCenter(vert, container.GetCenter(vert));
-                        break;
-                    case CoordAlignment.Far:
-                        rect.SetFarLocation(vert, container.GetFarLocation(vert));
-                        break;
-                    case CoordAlignment.Stretch:
-                    case CoordAlignment.Fill:
-                        rect.SetLocation(vert, container.GetLocation(vert));
-                        rect.SetSize(vert, container.GetSize(vert));
-                        break;
-                }
+                AlignRectInRect(true, rect, container, (CoordAlignment)vert, false);
             }
 
             return rect;

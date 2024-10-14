@@ -15,7 +15,7 @@ namespace Alternet.Drawing
         private Coord? maxWidth;
         private Coord? maxHeight;
         private Font? font;
-        private IEnumerable<StyledText>? styledText;
+        private DrawableStackElement? drawable;
         private List<string>? wrappedText;
         private Coord? scaleFactor;
         private SizeD? textSize;
@@ -156,14 +156,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets styled text items created from <see cref="WrappedText"/>.
+        /// Gets drawable element created from <see cref="WrappedText"/>.
         /// </summary>
-        public virtual IEnumerable<StyledText>? StyledText
+        public virtual DrawableElement? DrawableElement
         {
             get
             {
                 Prepare();
-                return styledText;
+                return drawable;
             }
         }
 
@@ -262,7 +262,7 @@ namespace Alternet.Drawing
         public override void Changed()
         {
             base.Changed();
-            styledText = null;
+            drawable = null;
             textSize = null;
             wrappedText = null;
         }
@@ -278,7 +278,7 @@ namespace Alternet.Drawing
             ScaleFactor = ScaleFactor;
             Prepare();
 
-            if (styledText is null)
+            if (drawable is null)
                 return container;
 
             RectD blockRect = (container.Location, RestrictedSize);
@@ -301,7 +301,7 @@ namespace Alternet.Drawing
             ScaleFactor = dc.ScaleFactor;
             Prepare();
 
-            if (styledText is null)
+            if (drawable is null)
                 return;
 
             var blockRect = GetBlockRect(dc.ScaleFactor, bounds);
@@ -311,6 +311,12 @@ namespace Alternet.Drawing
                 bounds,
                 () =>
                 {
+                    drawable.Alignment = (CoordAlignment)halign;
+                    drawable.Distance = LineDistance;
+                    drawable.IsVertical = true;
+                    drawable.Draw(dc, blockRect.Location);
+
+                    /*
                     dc.DrawStyledText(
                         styledText,
                         blockRect.Location,
@@ -320,6 +326,7 @@ namespace Alternet.Drawing
                         halign,
                         blockRect.Width,
                         LineDistance);
+                    */
                 },
                 IsClipped);
         }
@@ -329,7 +336,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual void Prepare()
         {
-            if (styledText is not null)
+            if (drawable is not null)
                 return;
 
             wrappedText = DrawingUtils.WrapTextToList(
@@ -338,7 +345,7 @@ namespace Alternet.Drawing
                         SafeFont,
                         ScaleFactor);
 
-            styledText = Drawing.StyledText.CreateCollection(wrappedText);
+            drawable = DrawableElement.CreateStringsStack(wrappedText);
 
             textSize = DrawingUtils.MeasureText(wrappedText, SafeFont, ScaleFactor, LineDistance);
         }
