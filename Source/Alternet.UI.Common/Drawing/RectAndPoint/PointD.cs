@@ -331,6 +331,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets this point as a rectangle with the specified size.
+        /// </summary>
+        [Browsable(false)]
+        public readonly RectD AsRect(SizeD size)
+        {
+            return (this, size);
+        }
+
+        /// <summary>
         /// Increments <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
