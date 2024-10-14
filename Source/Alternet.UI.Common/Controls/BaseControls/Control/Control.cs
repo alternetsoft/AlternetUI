@@ -73,6 +73,8 @@ namespace Alternet.UI
         private bool parentFont;
         private ControlCollection? children;
         private SizeD suggestedSize = DefaultControlSize;
+        private bool ignoreSuggestedWidth;
+        private bool ignoreSuggestedHeight;
         private Thickness margin;
         private Thickness padding;
         private object? title;
@@ -1434,7 +1436,15 @@ namespace Alternet.UI
         {
             get
             {
-                return suggestedSize;
+                SizeD result = DefaultControlSize;
+
+                if (!IgnoreSuggestedWidth)
+                    result.Width = suggestedSize.Width;
+
+                if (!IgnoreSuggestedHeight)
+                    result.Height = suggestedSize.Height;
+
+                return result;
             }
 
             set
@@ -1443,6 +1453,65 @@ namespace Alternet.UI
                     return;
 
                 suggestedSize = value;
+
+                if (IgnoreSuggestedHeight && IgnoreSuggestedWidth)
+                    return;
+
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Sets whether to ignore suggested size.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IgnoreSuggestedSize
+        {
+            set
+            {
+                if (ignoreSuggestedHeight != value || ignoreSuggestedWidth != value)
+                {
+                    ignoreSuggestedHeight = value;
+                    ignoreSuggestedWidth = value;
+                    PerformLayout();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to ignore suggested height.
+        /// </summary>
+        public virtual bool IgnoreSuggestedHeight
+        {
+            get
+            {
+                return ignoreSuggestedHeight;
+            }
+
+            set
+            {
+                if (ignoreSuggestedHeight == value)
+                    return;
+                ignoreSuggestedHeight = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to ignore suggested width.
+        /// </summary>
+        public virtual bool IgnoreSuggestedWidth
+        {
+            get
+            {
+                return ignoreSuggestedWidth;
+            }
+
+            set
+            {
+                if (ignoreSuggestedWidth == value)
+                    return;
+                ignoreSuggestedWidth = value;
                 PerformLayout();
             }
         }
@@ -1463,7 +1532,7 @@ namespace Alternet.UI
         /// </remarks>
         public Coord SuggestedWidth
         {
-            get => suggestedSize.Width;
+            get => SuggestedSize.Width;
 
             set
             {
@@ -1487,7 +1556,7 @@ namespace Alternet.UI
         /// </remarks>
         public Coord SuggestedHeight
         {
-            get => suggestedSize.Height;
+            get => SuggestedSize.Height;
 
             set
             {

@@ -72,7 +72,7 @@ namespace ControlsSample
             toolTemplate = TemplateUtils.CreateTemplateWithBoldText(
                 "This tool has ",
                 "bold",
-                " fragment",
+                " fragment ",
                 new FontAndColor(Color.Brown, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
             toolTemplate.HasBorder = true;
             toolTemplate.BorderColor = Color.Red;
@@ -97,10 +97,15 @@ namespace ControlsSample
 
             toolbar.VerticalAlignment = VerticalAlignment.Bottom;
             toolbar.Parent = customDrawControl;
-            toolbar.AddSpeedBtn(KnownButton.Yes);
+            toolbar.AddSpeedBtn(KnownButton.Yes, (s, e) =>
+            {
+                if (toolbar.ItemSize != 64)
+                    toolbar.ItemSize = 64;
+                else
+                    toolbar.ItemSize = 32;
+            });
             toolbar.AddSpeedBtn(KnownButton.No);
             toolbar.AddText("From Template: ");
-            toolbar.MinHeight = 100;
 
             toolbar.AddPicture(
                 toolTemplate,
