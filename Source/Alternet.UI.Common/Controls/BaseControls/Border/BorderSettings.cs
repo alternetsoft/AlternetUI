@@ -27,7 +27,7 @@ namespace Alternet.UI
         public static readonly BorderSettings Temp = new();
 
         /// <summary>
-        /// Gets or sets size of the design corners used in <see cref="DrawDesignCorners"/>.
+        /// Gets or sets size of the design corners.
         /// </summary>
         public static Coord DesignCornerSize = 5;
 
@@ -297,6 +297,16 @@ namespace Alternet.UI
         /// <param name="args">Event arguments.</param>
         public static void DrawDesignCorners(object? sender, PaintEventArgs args)
         {
+            if (sender is not BorderSettings border)
+                return;
+            DrawDesignCorners(args.Graphics, args.ClipRectangle, border);
+        }
+
+        /// <summary>
+        /// Draws design corners used to indicate element bounds.
+        /// </summary>
+        public static void DrawDesignCorners(Graphics dc, RectD rect, BorderSettings border)
+        {
             void DrawHorizontal(Graphics dc, Brush brush, RectD rect)
             {
                 var rect1 = rect;
@@ -319,10 +329,6 @@ namespace Alternet.UI
                 dc.FillRectangle(brush, rect2);
             }
 
-            if (sender is not BorderSettings border)
-                return;
-            var dc = args.Graphics;
-            var rect = args.ClipRectangle;
             var defaultColor = DefaultCommonBorderColor;
 
             if (border.Top.Width > 0)
