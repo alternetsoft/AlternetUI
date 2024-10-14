@@ -149,12 +149,40 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scaling factor.</param>
         /// <returns></returns>
-        public static Graphics CreateMeasureCanvas(Coord scaleFactor)
+        public static SkiaGraphics CreateMeasureCanvas(Coord scaleFactor)
         {
-            SKBitmap bitmap = new();
-            SKCanvas canvas = new(bitmap);
-            canvas.Scale((float)scaleFactor);
-            return new SkiaGraphics(canvas);
+            return CreateBitmapCanvas(SizeD.Empty, scaleFactor, true);
+        }
+
+        /// <summary>
+        /// Creates canvas on the bitmap with the specified size and scaling factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scaling factor.</param>
+        /// <param name="size">Size of the bitmap.</param>
+        /// <param name="isTransparent">Whether canvas is transparent.</param>
+        /// <returns></returns>
+        public static SkiaGraphics CreateBitmapCanvas(
+            SizeD size,
+            Coord scaleFactor,
+            bool isTransparent = true)
+        {
+            var boundsInPixels = GraphicsFactory.PixelFromDip(size);
+
+            SKBitmap bitmap;
+
+            if (size == SizeD.Empty)
+            {
+                bitmap = new();
+            }
+            else
+            {
+                bitmap = new(boundsInPixels.Width, boundsInPixels.Height, !isTransparent);
+            }
+
+            var result = new SkiaGraphics(bitmap);
+            result.OriginalScaleFactor = (float)scaleFactor;
+            result.Canvas.Scale((float)scaleFactor);
+            return result;
         }
 
         /// <summary>

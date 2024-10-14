@@ -462,10 +462,19 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void SetHandlerTransform(TransformMatrix matrix)
         {
+            var scaleFactor = OriginalScaleFactor;
             SKMatrix native = (SKMatrix)matrix;
-            canvas.SetMatrix(native);
-            if (OriginalScaleFactor != 1f)
-                canvas.Scale(OriginalScaleFactor);
+
+            if (OriginalScaleFactor == 1f)
+            {
+                canvas.SetMatrix(native);
+            }
+            else
+            {
+                var scaleMatrix = SKMatrix.CreateScale(scaleFactor, scaleFactor);
+                var result = scaleMatrix.PreConcat(native);
+                canvas.SetMatrix(result);
+            }
         }
     }
 }

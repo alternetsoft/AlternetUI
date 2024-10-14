@@ -80,12 +80,18 @@ namespace Alternet.Drawing
         public abstract StyledTextBuilder PopStyle();
 
         /*
+                public abstract StyledTextBuilder UrlStyle(Style style);
+
                 public abstract StyledTextBuilder Style(Style style);
 
                 public abstract StyledTextBuilder BeginStyle(Style style);
         */
 
         public abstract Graphics.StyledText ToStyledText();
+
+        public abstract StyledTextBuilder Url(object title, object url);
+
+        public abstract StyledTextBuilder Url(object title, Action clickAction);
 
         public abstract StyledTextBuilder EndStyle();
 
