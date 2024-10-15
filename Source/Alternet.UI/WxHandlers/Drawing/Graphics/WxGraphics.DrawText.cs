@@ -22,20 +22,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetTextExtent(
-            string text,
-            Font font,
-            IControl? control)
-        {
-            var dc = (UI.Native.DrawingContext)NativeObject;
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.Handler,
-                WxApplicationHandler.WxWidget(control));
-            return result;
-        }
-
-        /// <inheritdoc/>
         public override void DrawRotatedText(
             string text,
             PointD location,

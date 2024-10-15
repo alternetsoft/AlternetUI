@@ -359,23 +359,6 @@ namespace Alternet.Drawing
             GraphicsUnit unit = GraphicsUnit.Dip);
 
         /// <summary>
-        /// Gets the dimensions of the string using the specified font.
-        /// </summary>
-        /// <param name="text">The text string to measure.</param>
-        /// <param name="font">The Font used to get text dimensions.</param>
-        /// <param name="control">The control used to get scaling factor. Can be null.</param>
-        /// <returns><see cref="SizeD"/> with the total calculated width and height
-        /// of the text.</returns>
-        /// <remarks>
-        /// This function only works with single-line strings.
-        /// It works faster than MeasureText methods.
-        /// </remarks>
-        public abstract SizeD GetTextExtent(
-            string text,
-            Font font,
-            IControl? control);
-
-        /// <summary>
         /// Copy from a source <see cref="Graphics"/> to this graphics.
         /// With this method you can specify the destination coordinates and the
         /// size of area to copy which will be the same for both the source and target.

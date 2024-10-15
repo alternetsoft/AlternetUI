@@ -186,8 +186,10 @@ namespace PropertyGridSample
                 {
                     UpdatePropertyGrid();
                 }
-                catch
+                catch(Exception exception)
                 {
+                    if (DebugUtils.IsDebugDefined)
+                        throw exception;
                 }
             }
         }

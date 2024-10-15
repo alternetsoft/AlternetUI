@@ -790,36 +790,56 @@ namespace Alternet.UI
         /// they are descendants of the <see cref="UserControl"/>.
         /// </summary>
         /// <param name="e">Event arguments.</param>
-        public virtual void RaisePaintRecursive(PaintEventArgs e)
+        /// <param name="overrideVisible">Override for visible property.</param>
+        /// <param name="onlyChilds">If true will paint only childs and not the control itself.</param>
+        public virtual void RaisePaintRecursive(
+            PaintEventArgs e,
+            bool? overrideVisible,
+            bool onlyChilds = false,
+            bool? overrideChildVisible = null)
         {
-            if (!Visible)
+            /*if (Name == "controlPanel" || Name == "controlPanelBorder")
+            {
+            }
+            */
+
+            visible = overrideVisible ?? Visible;
+            if (!visible)
                 return;
-            if (HasGenericPaint())
-                RaisePaint(e);
+            if (!onlyChilds)
+            {
+                if (HasGenericPaint())
+                    RaisePaint(e);
+            }
 
             if (!HasChildren)
                 return;
 
-            var myChildren = Children;
+            var myChildren = AllChildrenInLayout;
             var dc = e.Graphics;
-            var clipRect = e.ClipRectangle;
+            //var clipRect = e.ClipRectangle;
 
             foreach (var child in myChildren)
             {
-                if (!child.Visible)
-                    return;
+                var childVisible = overrideChildVisible ?? child.Visible;
+
+                if (!childVisible)
+                    continue;
+                if (child is not GenericControl)
+                    continue;
+
                 TransformMatrix transform = new();
                 transform.Translate(child.Left, child.Top);
                 dc.PushTransform(transform);
-                e.ClipRectangle = (0, 0, child.Width, child.Height);
+                //e.ClipRectangle = (0, 0, child.Width, child.Height);
                 try
                 {
-                    child.RaisePaintRecursive(e);
+                    child.RaisePaintRecursive(e, overrideVisible);
                 }
                 finally
                 {
                     dc.Pop();
-                    e.ClipRectangle = clipRect;
+                    //e.ClipRectangle = clipRect;
                 }
             }
         }

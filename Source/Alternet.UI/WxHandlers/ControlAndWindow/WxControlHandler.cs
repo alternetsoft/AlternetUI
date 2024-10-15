@@ -806,6 +806,8 @@ namespace Alternet.UI
 
         public void OnChildInserted(AbstractControl childControl)
         {
+            if (childControl is GenericControl)
+                return;
             var child = (UI.Control.RequireHandler(childControl) as WxControlHandler)?.NativeControl;
             if (child == null)
                 return;
@@ -816,6 +818,8 @@ namespace Alternet.UI
 
         public void OnChildRemoved(AbstractControl childControl)
         {
+            if (childControl is GenericControl)
+                return;
             var child = (UI.Control.RequireHandler(childControl) as WxControlHandler)?.nativeControl;
             if (child != null)
                 nativeControl?.RemoveChild(child);

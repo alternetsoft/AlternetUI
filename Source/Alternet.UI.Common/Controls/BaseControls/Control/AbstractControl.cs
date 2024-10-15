@@ -1278,7 +1278,7 @@ namespace Alternet.UI
         /// Gets or sets the parent container of the control.
         /// </summary>
         [Browsable(false)]
-        public virtual AbstractControl? AbstractParent
+        public virtual AbstractControl? Parent
         {
             get => parent;
             set
@@ -1289,19 +1289,6 @@ namespace Alternet.UI
                 value?.Children.Add(this);
                 RaiseParentChanged();
                 stateFlags |= ControlFlags.ParentAssigned;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the parent container of the control.
-        /// </summary>
-        [Browsable(false)]
-        public Control? Parent
-        {
-            get => AbstractParent as Control;
-            set
-            {
-                AbstractParent = value;
             }
         }
 
@@ -2136,7 +2123,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SystemColors.ControlText;
+                return SystemColors.Control;
             }
         }
 
@@ -2172,7 +2159,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SystemColors.Control;
+                return SystemColors.ControlText;
             }
         }
 
@@ -2919,10 +2906,10 @@ namespace Alternet.UI
 
         IControl? IControl.Parent
         {
-            get => AbstractParent;
+            get => Parent;
             set
             {
-                AbstractParent = value as AbstractControl;
+                Parent = value as AbstractControl;
             }
         }
 

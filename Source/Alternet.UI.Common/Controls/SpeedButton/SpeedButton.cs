@@ -59,14 +59,14 @@ namespace Alternet.UI
             Alignment = HVAlignment.Center,
         };
 
-        private readonly AbstractControl spacer = new UnboundPanel()
+        private readonly AbstractControl spacer = new GenericControl()
         {
             SuggestedSize = DefaultImageLabelDistance,
             Visible = false,
             Alignment = HVAlignment.Center,
         };
 
-        private readonly GenericLabel label = new()
+        private readonly GenericTextControl label = new()
         {
             Visible = false,
             Alignment = HVAlignment.Center,
@@ -588,7 +588,7 @@ namespace Alternet.UI
         /// Gets inner <see cref="GenericLabel"/> control.
         /// </summary>
         [Browsable(false)]
-        internal GenericLabel Label => label;
+        internal GenericTextControl Label => label;
 
         /// <summary>
         /// Initializes default colors and styles for the <see cref="SpeedButton"/>
@@ -726,7 +726,9 @@ namespace Alternet.UI
                     foreColor ??= theme?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
                 }
 
-                Label.DrawDefaultText(dc, Label.Bounds, foreColor);
+                Label.ForegroundColor = foreColor;
+                Label.VisualStateOverride = VisualState;
+                RaisePaintRecursive(new(dc, rect), true, true, true);
             }
         }
 

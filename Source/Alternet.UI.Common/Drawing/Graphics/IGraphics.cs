@@ -42,12 +42,6 @@ namespace Alternet.Drawing
             Coord angle,
             GraphicsUnit unit = GraphicsUnit.Dip);
 
-        /// <inheritdoc cref="Graphics.GetTextExtent(string, Font, IControl)"/>
-        SizeD GetTextExtent(
-            string text,
-            Font font,
-            IControl? control);
-
         /// <inheritdoc cref="Graphics.Blit"/>
         bool Blit(
             PointD destPt,

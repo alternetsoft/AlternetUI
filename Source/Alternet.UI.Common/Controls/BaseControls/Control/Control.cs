@@ -751,11 +751,14 @@ namespace Alternet.UI
         {
             if (!UserPaint)
                 return;
-
             using var dc = Handler.OpenPaintDrawingContext();
 
             var paintArgs = new PaintEventArgs(dc, ClientRectangle);
-            RaisePaintRecursive(paintArgs);
+            RaisePaint(paintArgs);
+            /*
+            if(this is UserControl)
+                RaisePaintRecursive(paintArgs, true, true);
+            */
         }
 
         /// <summary>
@@ -791,7 +794,12 @@ namespace Alternet.UI
                     if (!HasChildren)
                         return;
                     for (var i = 0; i < Children.Count; i++)
-                        handler.OnChildInserted(Children[i]);
+                    {
+                        var child = Children[i];
+                        if (child is GenericControl)
+                            continue;
+                        handler.OnChildInserted(child);
+                    }
                 }
             }
         }

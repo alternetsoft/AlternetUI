@@ -713,7 +713,7 @@ namespace Alternet.UI
         public virtual ControlSet Parent(AbstractControl? value)
         {
             foreach (var item in items)
-                item.AbstractParent = value;
+                item.Parent = value;
             return this;
         }
     }

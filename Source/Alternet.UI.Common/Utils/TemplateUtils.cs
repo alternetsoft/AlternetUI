@@ -102,7 +102,7 @@ namespace Alternet.UI
                 canvas.PushAndTranslate(translate.Value.X, translate.Value.Y);
             }
 
-            control.RaisePaintRecursive(e);
+            control.RaisePaintRecursive(e, true);
 
             if (translate is not null)
             {

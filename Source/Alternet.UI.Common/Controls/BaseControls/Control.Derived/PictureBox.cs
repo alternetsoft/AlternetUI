@@ -465,7 +465,7 @@ namespace Alternet.UI
                 return new SizeD();
 
             using var dc = CreateDrawingContext();
-            var result = dc.GetTextExtent(text, Font ?? UI.AbstractControl.DefaultFont, this);
+            var result = dc.GetTextExtent(text, Font ?? UI.AbstractControl.DefaultFont);
             return result;
         }
     }

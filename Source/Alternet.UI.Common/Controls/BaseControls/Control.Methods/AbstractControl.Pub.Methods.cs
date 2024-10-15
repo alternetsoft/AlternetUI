@@ -1966,7 +1966,7 @@ namespace Alternet.UI
         /// Calls <see cref="LocationChanged"/> and <see cref="SizeChanged"/> events
         /// if <see cref="Bounds"/> property was changed.
         /// </summary>
-        public virtual void ReportBoundsChanged()
+        public virtual bool ReportBoundsChanged()
         {
             var newBounds = Bounds;
 
@@ -1982,6 +1982,8 @@ namespace Alternet.UI
                 RaiseSizeChanged();
 
             PerformLayout();
+
+            return locationChanged || sizeChanged;
         }
 
         /// <summary>

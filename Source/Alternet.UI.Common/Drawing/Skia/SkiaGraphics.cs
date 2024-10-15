@@ -118,15 +118,6 @@ namespace Alternet.Drawing
         internal SKPaint InterpolationModePaint => SkiaUtils.InterpolationModePaints[InterpolationMode];
 
         /// <inheritdoc/>
-        public override SizeD GetTextExtent(
-            string text,
-            Font font,
-            IControl? control)
-        {
-            return GetTextExtent(text, font);
-        }
-
-        /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
             return canvas.GetTextExtent(text, font);

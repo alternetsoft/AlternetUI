@@ -355,8 +355,7 @@ namespace Alternet.UI
             {
                 result = MeasureCanvas.GetTextExtent(
                     text,
-                    GetLabelFont(VisualControlState.Normal),
-                    this);
+                    GetLabelFont(VisualControlState.Normal));
             }
 
             var image = GetImage();

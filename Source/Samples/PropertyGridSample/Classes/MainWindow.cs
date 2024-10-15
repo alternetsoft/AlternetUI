@@ -20,11 +20,15 @@ namespace PropertyGridSample
 
         private readonly Panel controlPanel = new()
         {
+            UserPaint = true,
+            Name = "contrrolPanel",
         };
 
         private readonly Panel parentParent = new()
         {
             Padding = (5, 15, 5, 15),
+            UserPaint = true,
+            Name = "parentParent",
         };
 
         private readonly Border controlPanelBorder = new()
@@ -33,6 +37,7 @@ namespace PropertyGridSample
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Top,
             Padding = 0,
+            Name = "controlPanelBorder",
         };
 
         private readonly ContextMenuStrip propGridContextMenu = new();

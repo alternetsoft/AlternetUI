@@ -32,8 +32,7 @@ namespace Alternet.UI
             {
                 result = MeasureCanvas.GetTextExtent(
                     text,
-                    GetLabelFont(VisualControlState.Normal),
-                    this);
+                    GetLabelFont(VisualControlState.Normal));
             }
 
             if (!Coord.IsNaN(specifiedWidth))
@@ -70,18 +69,19 @@ namespace Alternet.UI
             var labelForeColor = GetLabelForeColor(state);
             var labelBackColor = GetLabelBackColor(state);
 
-            dc.DoInsideClipped(
+            dc.DrawText(
+                labelText,
+                paddedRect.Location,
+                labelFont,
+                labelForeColor,
+                labelBackColor);
+
+            /*dc.DoInsideClipped(
                 paddedRect,
                 () =>
                 {
-                    dc.DrawText(
-                        labelText,
-                        paddedRect.Location,
-                        labelFont,
-                        labelForeColor,
-                        labelBackColor);
                 },
-                IsClipped);
+                IsClipped);*/
         }
     }
 }

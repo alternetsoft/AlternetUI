@@ -36,14 +36,46 @@ namespace Alternet.UI
         public override bool IsHandleCreated => true;
 
         /// <inheritdoc/>
-        protected override bool HasGenericPaint()
+        public override bool ReportBoundsChanged()
         {
-            return true;
+            var result = base.ReportBoundsChanged();
+            /*if (result)
+                Invalidate();*/
+            return result;
+        }
+
+        /// <summary>
+        /// Invalidates the control and causes a paint message to be sent to
+        /// the control.
+        /// </summary>
+        public override void Invalidate()
+        {
+            Parent?.Invalidate();
+        }
+
+        /// <summary>
+        /// Causes the control to redraw the invalidated regions.
+        /// </summary>
+        public override void Update()
+        {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            /*Invalidate();*/
         }
 
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override bool HasGenericPaint()
+        {
+            return true;
         }
     }
 }
