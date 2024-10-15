@@ -247,7 +247,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateRightPanel()
+        protected override Control CreateRightPanel()
         {
             return new SideBarPanel();
         }

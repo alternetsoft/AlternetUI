@@ -13,11 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class SplittedPanel : LayoutPanel
     {
-        private readonly AbstractControl rightPanel;
-        private readonly AbstractControl leftPanel;
-        private readonly AbstractControl topPanel;
-        private readonly AbstractControl bottomPanel;
-        private readonly AbstractControl fillPanel;
+        private readonly Control rightPanel;
+        private readonly Control leftPanel;
+        private readonly Control topPanel;
+        private readonly Control bottomPanel;
+        private readonly Control fillPanel;
 
         private readonly Splitter leftSplitter = new()
         {
@@ -98,37 +98,37 @@ namespace Alternet.UI
         /// Gets right sub-panel.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl RightPanel => rightPanel;
+        public Control RightPanel => rightPanel;
 
         /// <summary>
         /// Gets left sub-panel.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl LeftPanel => leftPanel;
+        public Control LeftPanel => leftPanel;
 
         /// <summary>
         /// Gets top sub-panel.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl TopPanel => topPanel;
+        public Control TopPanel => topPanel;
 
         /// <summary>
         /// Gets bottom sub-panel.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl BottomPanel => bottomPanel;
+        public Control BottomPanel => bottomPanel;
 
         /// <summary>
         /// Gets center sub-panel. Same as <see cref="CenterPanel"/>.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl FillPanel => fillPanel;
+        public Control FillPanel => fillPanel;
 
         /// <summary>
         /// Gets center sub-panel. Same as <see cref="FillPanel"/>.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl CenterPanel => fillPanel;
+        public Control CenterPanel => fillPanel;
 
         /// <summary>
         /// Gets left splitter.
@@ -308,31 +308,31 @@ namespace Alternet.UI
         /// Creates right panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual AbstractControl CreateRightPanel() => CreateAnyPanel();
+        protected virtual Control CreateRightPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates left panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual AbstractControl CreateLeftPanel() => CreateAnyPanel();
+        protected virtual Control CreateLeftPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates top panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual AbstractControl CreateTopPanel() => CreateAnyPanel();
+        protected virtual Control CreateTopPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates bottom panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual AbstractControl CreateBottomPanel() => CreateAnyPanel();
+        protected virtual Control CreateBottomPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates center panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual AbstractControl CreateCenterPanel() => CreateAnyPanel();
+        protected virtual Control CreateCenterPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates panel.
@@ -341,7 +341,7 @@ namespace Alternet.UI
         /// <remarks>
         /// By default used in all create panel methods.
         /// </remarks>
-        protected virtual AbstractControl CreateAnyPanel()
+        protected virtual Control CreateAnyPanel()
         {
             var result = new Panel();
             return result;

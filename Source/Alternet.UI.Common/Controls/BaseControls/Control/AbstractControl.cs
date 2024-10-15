@@ -117,16 +117,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractControl"/> class.
-        /// </summary>
-        /// <param name="parent">Parent of the control.</param>
-        public AbstractControl(AbstractControl parent)
-            : this()
-        {
-            Parent = parent;
-        }
-
-        /// <summary>
         /// Gets the default foreground color of the control.
         /// </summary>
         /// <returns>
@@ -1287,7 +1277,7 @@ namespace Alternet.UI
         /// Gets or sets the parent container of the control.
         /// </summary>
         [Browsable(false)]
-        public virtual AbstractControl? Parent
+        public virtual AbstractControl? AbstractParent
         {
             get => parent;
             set
@@ -1298,6 +1288,19 @@ namespace Alternet.UI
                 value?.Children.Add(this);
                 RaiseParentChanged();
                 stateFlags |= ControlFlags.ParentAssigned;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the parent container of the control.
+        /// </summary>
+        [Browsable(false)]
+        public Control? Parent
+        {
+            get => AbstractParent as Control;
+            set
+            {
+                AbstractParent = value;
             }
         }
 
@@ -2891,8 +2894,11 @@ namespace Alternet.UI
 
         IControl? IControl.Parent
         {
-            get => Parent;
-            set => Parent = value as AbstractControl;
+            get => AbstractParent;
+            set
+            {
+                AbstractParent = value as AbstractControl;
+            }
         }
 
         IWindow? IControl.ParentWindow => ParentWindow;
