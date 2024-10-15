@@ -792,7 +792,9 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public virtual void RaisePaintRecursive(PaintEventArgs e)
         {
-            if(HasGenericPaint())
+            if (!Visible)
+                return;
+            if (HasGenericPaint())
                 RaisePaint(e);
 
             if (!HasChildren)
@@ -804,6 +806,8 @@ namespace Alternet.UI
 
             foreach (var child in myChildren)
             {
+                if (!child.Visible)
+                    return;
                 TransformMatrix transform = new();
                 transform.Translate(child.Left, child.Top);
                 dc.PushTransform(transform);

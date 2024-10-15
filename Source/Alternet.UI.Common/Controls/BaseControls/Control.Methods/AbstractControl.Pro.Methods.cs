@@ -284,7 +284,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool HasGenericPaint()
         {
-            return false;
+            return true;
         }
 
         /// <summary>

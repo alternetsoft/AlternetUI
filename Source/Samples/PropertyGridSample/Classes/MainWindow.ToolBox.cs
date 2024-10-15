@@ -92,6 +92,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(ColorListBox));
                 LimitedTypes.Add(typeof(VirtualListBox));
                 LimitedTypes.Add(typeof(UserControl));
+                LimitedTypes.Add(typeof(GenericTextControl));
 
                 LimitedTypes.AddRange(LimitedTypesStatic);
 

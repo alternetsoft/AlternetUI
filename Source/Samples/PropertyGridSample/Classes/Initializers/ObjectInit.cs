@@ -149,6 +149,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
             Actions.Add(typeof(GenericLabel), InitGenericLabel);
             Actions.Add(typeof(Label), InitLabel);
+            Actions.Add(typeof(GenericTextControl), InitGenericTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
             Actions.Add(typeof(Button), InitButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
@@ -368,7 +369,7 @@ namespace PropertyGridSample
 
         public static void InitStackPanel(object control)
         {
-            var parent = control as AbstractControl;
+            var parent = control as Control;
             parent!.SuggestedHeight = 250;
             //parent.BackgroundColor = Color.Cornsilk;
 

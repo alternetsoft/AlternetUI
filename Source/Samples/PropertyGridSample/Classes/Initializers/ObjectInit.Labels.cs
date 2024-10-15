@@ -41,6 +41,14 @@ namespace PropertyGridSample
             SetBackgrounds(label);
         }
 
+        public static void InitGenericTextControl(object control)
+        {
+            if (control is not GenericTextControl label)
+                return;
+            label.Text = "This is text";
+            label.HorizontalAlignment = HorizontalAlignment.Left;
+        }
+
         public static void InitLabel(object control)
         {
             if (control is not Label label)
