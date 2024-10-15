@@ -28,19 +28,6 @@ namespace Alternet.UI
             }
         }
 
-        internal bool ProcessUIUpdates
-        {
-            get
-            {
-                return Handler.ProcessUIUpdates;
-            }
-
-            set
-            {
-                Handler.ProcessUIUpdates = value;
-            }
-        }
-
         internal Thickness MinMargin
         {
             get

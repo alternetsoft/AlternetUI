@@ -91,7 +91,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.IsFocused;
+                return false;
             }
         }
 
@@ -112,14 +112,11 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.TabStop;
+                return false;
             }
 
             set
             {
-                if (TabStop == value)
-                    return;
-                UpdateFocusFlags(CanSelect, value);
             }
         }
 
@@ -133,14 +130,11 @@ namespace Alternet.UI
         {
             get
             {
-                return !Handler.CanSelect;
+                return true;
             }
 
             set
             {
-                if (IsGraphicControl == value)
-                    return;
-                UpdateFocusFlags(!value, !value);
             }
         }
 
@@ -157,14 +151,11 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.CanSelect;
+                return false;
             }
 
             set
             {
-                if (CanSelect == value)
-                    return;
-                UpdateFocusFlags(value, TabStop);
             }
         }
 
@@ -191,7 +182,7 @@ namespace Alternet.UI
         /// control successfully received input focus.</remarks>
         public virtual bool SetFocus()
         {
-            return Handler.SetFocus();
+            return false;
         }
 
         /// <summary>
@@ -229,12 +220,13 @@ namespace Alternet.UI
         /// <see langword="false"/>.</param>
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
-            Handler.FocusNextControl(forward, nested);
         }
 
-        private void UpdateFocusFlags(bool canSelect, bool tabStop)
+        /// <summary>
+        /// Updates focus related flags.
+        /// </summary>
+        protected virtual void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
-            Handler.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
         }
     }
 }

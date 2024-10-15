@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public SplittedTreeAndCards(Control parent)
+        public SplittedTreeAndCards(PlatformControl parent)
             : this()
         {
             Parent = parent;

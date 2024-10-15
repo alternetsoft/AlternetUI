@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="GroupBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public GroupBox(Control parent)
+        public GroupBox(PlatformControl parent)
             : this()
         {
             Parent = parent;

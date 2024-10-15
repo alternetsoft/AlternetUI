@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ListBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ListBox(Control parent)
+        public ListBox(PlatformControl parent)
             : this()
         {
             Parent = parent;

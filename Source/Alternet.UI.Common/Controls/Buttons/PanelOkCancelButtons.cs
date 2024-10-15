@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PanelOkCancelButtons"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PanelOkCancelButtons(Control parent)
+        public PanelOkCancelButtons(PlatformControl parent)
             : this()
         {
             Parent = parent;

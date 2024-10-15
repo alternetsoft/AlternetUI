@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PanelWebBrowser(Control parent)
+        public PanelWebBrowser(PlatformControl parent)
             : this()
         {
             Parent = parent;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal class UnboundControl : Control
+    internal class UnboundControl : PlatformControl
     {
         public static bool UseUnboundControls = true;
 

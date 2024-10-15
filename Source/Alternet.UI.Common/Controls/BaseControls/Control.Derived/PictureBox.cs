@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PictureBox(Control parent)
+        public PictureBox(PlatformControl parent)
             : this()
         {
             Parent = parent;

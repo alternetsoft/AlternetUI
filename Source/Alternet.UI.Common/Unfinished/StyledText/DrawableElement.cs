@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+using Alternet.Base.Collections;
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -16,6 +17,8 @@ namespace Alternet.Drawing
     {
         private DrawableElementStyle? style;
         private DrawableElement? parent;
+        private RectD bounds;
+        private bool isClipped = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawableElement"/> class.
@@ -42,6 +45,38 @@ namespace Alternet.Drawing
             get
             {
                 return Style ?? Parent?.RealStyle ?? DrawableElementStyle.Default;
+            }
+        }
+
+        /// <summary>
+        /// Gets bounds.
+        /// </summary>
+        public RectD Bounds
+        {
+            get
+            {
+                return bounds;
+            }
+
+            private set
+            {
+                SetProperty(ref bounds, value, nameof(Bounds));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether element is clipped when painted.
+        /// </summary>
+        public virtual bool IsClipped
+        {
+            get
+            {
+                return isClipped;
+            }
+
+            set
+            {
+                SetProperty(ref isClipped, value, nameof(IsClipped));
             }
         }
 
@@ -123,6 +158,7 @@ namespace Alternet.Drawing
         {
             var result = CreateStack(null, alignment, distance, isVertical);
             var items = CreateCollection(strings, result);
+            result.Items = items;
             return result;
         }
 
@@ -142,6 +178,7 @@ namespace Alternet.Drawing
         {
             var result = CreateStack(null, alignment, distance, isVertical);
             var items = CreateCollection(strings, result);
+            result.Items = items;
             return result;
         }
 
@@ -187,6 +224,7 @@ namespace Alternet.Drawing
         /// Creates collection of drawable elements from the collection of strings.
         /// </summary>
         /// <param name="strings">The collection of strings.</param>
+        /// <param name="parent">Parent of the elements.</param>
         /// <returns></returns>
         public static IEnumerable<IDrawableElement> CreateCollection(
             IEnumerable strings,

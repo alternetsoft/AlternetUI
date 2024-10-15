@@ -24,12 +24,12 @@ namespace Alternet.UI
     [DesignerCategory("Code")]
     [DefaultProperty("Text")]
     [DefaultEvent("Click")]
-    public partial class Control
+    public abstract partial class Control
         : FrameworkElement, ISupportInitialize, IDisposable, IFocusable,
         IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo
     {
         /// <summary>
-        /// Gets or sets min element size.
+        /// Gets or sets min element size in device-independent units.
         /// </summary>
         public static Coord MinElementSize = 32;
 
@@ -61,9 +61,13 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private SizeD minimumSize;
+        private SizeD maximumSize;
+        private FontStyle fontStyle;
+        private Coord? scaleFactor;
+        private SizeD? dpi;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
-        private int handlerTextChanging;
         private int rowIndex;
         private int columnIndex;
         private int columnSpan = 1;
@@ -81,7 +85,6 @@ namespace Alternet.UI
         private Thickness margin;
         private Thickness padding;
         private object? title;
-        private IControlHandler? handler;
         private ControlStateSettings? stateObjects;
         private Font? font;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
@@ -97,9 +100,8 @@ namespace Alternet.UI
         private DockStyle dock;
         private LayoutStyle? layout;
         private RectD reportedBounds = RectD.MinusOne;
-        private Coord? scaleFactor;
-        private SizeD? dpi;
         private List<IControlNotification>? notifications;
+        private RectD bounds;
 
         private string? toolTip;
         private string? text;
@@ -219,8 +221,6 @@ namespace Alternet.UI
             }
         }
 
-        object IControl.NativeControl => Handler.GetNativeControl();
-
         /// <summary>
         /// Gets scale factor used in device-independent units to/from
         /// pixels conversions.
@@ -231,7 +231,7 @@ namespace Alternet.UI
         {
             get
             {
-                return scaleFactor ??= Handler.GetPixelScaleFactor();
+                return scaleFactor ??= RequestScaleFactor();
             }
         }
 
@@ -294,6 +294,9 @@ namespace Alternet.UI
                 stateObjects.Borders = value;
             }
         }
+
+        /// <inheritdoc/>
+        public virtual object NativeControl => this;
 
         /// <summary>
         /// Gets or sets layout style of the child controls.
@@ -470,22 +473,14 @@ namespace Alternet.UI
                 value ??= string.Empty;
 
                 var forced = StateFlags.HasFlag(ControlFlags.ForceTextChange);
-                if (forced)
-                    StateFlags &= ~ControlFlags.ForceTextChange;
 
                 if (!forced && text == value)
                     return;
                 text = value;
 
-                if (handlerTextChanging == 0)
-                {
-                    var coercedText = CoerceTextForHandler(value);
-
-                    if (forced || Handler.Text != coercedText)
-                        Handler.Text = coercedText;
-                }
-
                 RaiseTextChanged();
+
+                StateFlags &= ~ControlFlags.ForceTextChange;
             }
         }
 
@@ -537,7 +532,6 @@ namespace Alternet.UI
                 if (cursor == value)
                     return;
                 cursor = value;
-                Handler.SetCursor(value);
             }
         }
 
@@ -737,15 +731,14 @@ namespace Alternet.UI
             {
                 if (IsDummy)
                     return SizeD.Empty;
-                return Handler.ClientSize;
+                return Size;
             }
 
             set
             {
                 if (ClientSize == value)
                     return;
-                Handler.ClientSize = value;
-                PerformLayout();
+                Size = value;
             }
         }
 
@@ -825,7 +818,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.IsMouseCaptured;
+                return false;
             }
         }
 
@@ -989,7 +982,6 @@ namespace Alternet.UI
                 toolTip = value;
                 OnToolTipChanged(EventArgs.Empty);
                 ToolTipChanged?.Invoke(this, EventArgs.Empty);
-                Handler.SetToolTip(GetRealToolTip());
             }
         }
 
@@ -1000,14 +992,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual RectD Bounds
         {
-            get => Handler.Bounds;
+            get => bounds;
             set
             {
                 value.Width = Math.Max(0, value.Width);
                 value.Height = Math.Max(0, value.Height);
                 if (Bounds == value)
                     return;
-                Handler.Bounds = value;
+                bounds = value;
+                ReportBoundsChanged();
             }
         }
 
@@ -1107,15 +1100,7 @@ namespace Alternet.UI
                     return;
 
                 visible = value;
-                OnVisibleChanged(EventArgs.Empty);
-                VisibleChanged?.Invoke(this, EventArgs.Empty);
-                Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
-                Handler.Visible = value;
-                Parent?.PerformLayout();
-                if (visible)
-                    AfterShow?.Invoke(this, EventArgs.Empty);
-                else
-                    AfterHide?.Invoke(this, EventArgs.Empty);
+                RaiseVisibleChanged();
             }
         }
 
@@ -1236,8 +1221,7 @@ namespace Alternet.UI
         {
             get
             {
-                return (handler is not null) && handler.IsNativeControlCreated
-                    && Handler.IsHandleCreated;
+                return true;
             }
         }
 
@@ -1563,12 +1547,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool UserPaint
         {
-            get => Handler.UserPaint;
+            get => true;
+
             set
             {
-                if (value && !CanUserPaint)
-                    return;
-                Handler.UserPaint = value;
             }
         }
 
@@ -1836,7 +1818,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BoundsI;
+                return Bounds.PixelFromDip(ScaleFactor);
             }
 
             set
@@ -1845,7 +1827,7 @@ namespace Alternet.UI
                 value.Height = Math.Max(0, value.Height);
                 if (BoundsInPixels == value)
                     return;
-                Handler.BoundsI = value;
+                Bounds = value.PixelToDip(ScaleFactor);
             }
         }
 
@@ -1947,14 +1929,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.MinimumSize;
+                return minimumSize;
             }
 
             set
             {
                 if (MinimumSize == value)
                     return;
-                Handler.MinimumSize = value;
+                minimumSize = value;
                 PerformLayout();
             }
         }
@@ -1967,14 +1949,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.MaximumSize;
+                return maximumSize;
             }
 
             set
             {
                 if (MaximumSize == value)
                     return;
-                Handler.MaximumSize = value;
+                maximumSize = value;
                 PerformLayout();
             }
         }
@@ -2083,18 +2065,7 @@ namespace Alternet.UI
                 if (backgroundColor == value)
                     return;
                 backgroundColor = value;
-
-                if (backgroundColor is null)
-                    ResetBackgroundColor(ResetColorType.Auto);
-                else
-                    Handler.BackgroundColor = backgroundColor;
-                Refresh();
-
-                foreach (var child in Children)
-                {
-                    if (child.ParentBackColor)
-                        child.BackgroundColor = value;
-                }
+                RaiseBackgroundColorChanged();
             }
         }
 
@@ -2167,7 +2138,27 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BackgroundColor;
+                return SystemColors.ControlText;
+            }
+        }
+
+        /// <summary>
+        /// Gets real font value.
+        /// </summary>
+        /// <remarks>
+        /// Returns font even if <see cref="Font"/> property is <c>null</c>.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual Font? RealFont
+        {
+            get
+            {
+                var result = Font ?? Control.DefaultFont;
+
+                if (fontStyle == 0)
+                    return result;
+
+                return result.WithStyle(fontStyle);
             }
         }
 
@@ -2183,7 +2174,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.ForegroundColor;
+                return SystemColors.Control;
             }
         }
 
@@ -2247,11 +2238,7 @@ namespace Alternet.UI
                 if (foregroundColor == value && value != null)
                     return;
                 foregroundColor = value;
-
-                if (foregroundColor is null)
-                    ResetForegroundColor(ResetColorType.Auto);
-                else
-                    Handler.ForegroundColor = foregroundColor;
+                InternalSetColor(false, value);
                 Refresh();
 
                 foreach (var child in Children)
@@ -2300,7 +2287,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Thickness IntrinsicLayoutPadding
         {
-            get => Handler.IntrinsicLayoutPadding;
+            get
+            {
+                return Thickness.Empty;
+            }
         }
 
         /// <summary>
@@ -2308,7 +2298,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Thickness IntrinsicPreferredSizePadding
-            => Handler.IntrinsicPreferredSizePadding;
+        {
+            get
+            {
+                return Thickness.Empty;
+            }
+        }
 
         /// <summary>
         /// Gets or sets column index which is used in <see cref="GetColumnGroup"/> and
@@ -2502,60 +2497,68 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the font of the text displayed by the control.
         /// </summary>
-        /// <value>The <see cref="Font"/> to apply to the text displayed by
-        /// the control. The default is the value of <c>null</c>.</value>
+        /// <value>
+        /// The <see cref="Font"/> to apply to the text displayed by
+        /// the control. The default is the value of <c>null</c>.
+        /// </value>
+        /// <remarks>
+        /// If <see cref="Font"/> is not specified, <see cref="Control.DefaultFont"/> is used.
+        /// </remarks>
         public virtual Font? Font
         {
-            get => font;
+            get
+            {
+                return font;
+            }
+
             set
             {
                 if (font == value)
                     return;
 
-                PerformLayoutAndInvalidate(() =>
-                {
-                    font = value;
-                    OnFontChanged(EventArgs.Empty);
-                    FontChanged?.Invoke(this, EventArgs.Empty);
+                font = value;
 
-                    Handler.Font = value;
-
-                    foreach (var child in Children)
-                    {
-                        if (child.ParentFont)
-                            child.Font = value?.WithBold(child.IsBold);
-                    }
-                });
+                RaiseFontChanged();
             }
         }
 
         /// <summary>
-        /// Gets real font value.
+        /// Gets whether control's font is not specified.
         /// </summary>
-        /// <remarks>
-        /// Returns font even if <see cref="Font"/> property is <c>null</c>.
-        /// </remarks>
         [Browsable(false)]
-        public virtual Font? RealFont => Handler.Font;
+        public bool HasDefaultFont
+        {
+            get
+            {
+                return font is null;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets whether control's font is bold.
+        /// Gets or sets whether font style override is bold.
         /// </summary>
         public virtual bool IsBold
         {
             get
             {
-                return Handler.IsBold;
+                return fontStyle.HasFlag(FontStyle.Bold);
             }
 
             set
             {
-                if (IsBold == value)
+                var oldValue = IsBold;
+
+                if (value)
+                    fontStyle |= FontStyle.Bold;
+                else
+                    fontStyle &= ~FontStyle.Bold;
+
+                var newValue = IsBold;
+
+                if (newValue == oldValue)
                     return;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    Handler.IsBold = value;
-                });
+
+                RaiseFontChanged();
             }
         }
 
@@ -2771,28 +2774,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool AllowDrop
         {
-            get => Handler.AllowDrop;
-            set => Handler.AllowDrop = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the background style of the control.
-        /// </summary>
-        /// <remarks><see cref="ControlBackgroundStyle.Transparent"/> style is not possible
-        /// to set as it is not supported on all platforms.</remarks>
-        [Browsable(false)]
-        public virtual ControlBackgroundStyle BackgroundStyle
-        {
-            get
-            {
-                return Handler.BackgroundStyle;
-            }
+            get => false;
 
             set
             {
-                if (value == ControlBackgroundStyle.Transparent)
-                    return;
-                Handler.BackgroundStyle = value;
             }
         }
 
@@ -2818,7 +2803,7 @@ namespace Alternet.UI
                     return RectD.Empty;
 
                 var padding = Padding;
-                var intrinsicPadding = Handler.IntrinsicLayoutPadding;
+                var intrinsicPadding = IntrinsicLayoutPadding;
 
                 return new RectD(
                     new PointD(
@@ -2829,63 +2814,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="IControlHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public virtual IControlHandler Handler
-        {
-            get
-            {
-                EnsureHandlerCreated();
-                return handler ?? throw new InvalidOperationException();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the language direction for this control.
-        /// </summary>
-        /// <remarks>
-        /// Note that <see cref="LangDirection.Default"/> is returned if layout direction
-        /// is not supported.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual LangDirection LangDirection
-        {
-            get
-            {
-                return Handler.LangDirection;
-            }
-
-            set
-            {
-                if (value == LangDirection.Default)
-                    return;
-                Handler.LangDirection = value;
-            }
-        }
-
-        /// <summary>
         /// Returns control identifier.
         /// </summary>
         [Browsable(false)]
         public virtual ControlTypeId ControlKind => ControlTypeId.Control;
-
-        /// <summary>
-        /// Gets or sets whether <see cref="Idle"/> event is fired.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool ProcessIdle
-        {
-            get
-            {
-                return Handler.ProcessIdle;
-            }
-
-            set
-            {
-                Handler.ProcessIdle = value;
-            }
-        }
 
         /// <summary>
         /// Gets absolute position of the control. Returned value is <see cref="Location"/>

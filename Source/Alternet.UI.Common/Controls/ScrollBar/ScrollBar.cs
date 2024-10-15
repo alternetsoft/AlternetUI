@@ -34,7 +34,7 @@ namespace Alternet.UI
     /// the view, object and page size according to the size of the window and the size of the data.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ScrollBar : Control
+    public partial class ScrollBar : PlatformControl
     {
         private static MetricsInfo? defaultMetrics;
 
@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ScrollBar(Control parent)
+        public ScrollBar(PlatformControl parent)
             : this()
         {
             Parent = parent;

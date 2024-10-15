@@ -32,19 +32,19 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class ProgressBar : Control
+    public partial class ProgressBar : PlatformControl
     {
         private bool isIndeterminate;
         private int minimum;
         private int maximum = 100;
         private ProgressBarOrientation orientation;
-        private int value;
+        private int val;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ProgressBar(Control parent)
+        public ProgressBar(PlatformControl parent)
             : this()
         {
             Parent = parent;
@@ -138,15 +138,15 @@ namespace Alternet.UI
         {
             get
             {
-                return value;
+                return val;
             }
 
             set
             {
                 value = CoerceValue(value);
-                if (this.value == value)
+                if (this.val == value)
                     return;
-                this.value = value;
+                this.val = value;
                 RaiseValueChanged(EventArgs.Empty);
             }
         }

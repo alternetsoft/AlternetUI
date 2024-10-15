@@ -263,7 +263,7 @@ namespace Alternet.UI
 
         object IControlHandler.GetNativeControl()
         {
-            return Control.Parent?.Handler.GetNativeControl() ?? AssemblyUtils.Default;
+            return Control.Parent?.NativeControl ?? AssemblyUtils.Default;
         }
 
         /// <inheritdoc/>

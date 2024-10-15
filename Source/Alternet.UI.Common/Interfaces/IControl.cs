@@ -290,10 +290,6 @@ namespace Alternet.UI
         /// about to enter the idle state. This is the same as <see cref="App.Idle"/>
         /// but on the control level.
         /// </summary>
-        /// <remarks>
-        /// Use <see cref="ProcessIdle"/> property to specify whether <see cref="Idle"/>
-        /// event is fired.
-        /// </remarks>
         event EventHandler? Idle;
 
         /// <summary>
@@ -1039,14 +1035,6 @@ namespace Alternet.UI
         Font? Font { get; set; }
 
         /// <summary>
-        /// Gets real font value.
-        /// </summary>
-        /// <remarks>
-        /// Returns font even if <see cref="Font"/> property is <c>null</c>.
-        /// </remarks>
-        Font? RealFont { get; }
-
-        /// <summary>
         /// Gets or sets whether control's font is bold.
         /// </summary>
         bool IsBold { get; set; }
@@ -1093,13 +1081,6 @@ namespace Alternet.UI
         bool AllowDrop { get; set; }
 
         /// <summary>
-        /// Gets or sets the background style of the control.
-        /// </summary>
-        /// <remarks><see cref="ControlBackgroundStyle.Transparent"/> style is not possible
-        /// to set as it is not supported on all platforms.</remarks>
-        ControlBackgroundStyle BackgroundStyle { get; set; }
-
-        /// <summary>
         /// Gets a rectangle which describes the client area inside of the
         /// <see cref="Control"/>,
         /// in device-independent units.
@@ -1112,15 +1093,6 @@ namespace Alternet.UI
         /// for positioning (layout) of its child controls, in device-independent units.
         /// </summary>
         RectD ChildrenLayoutBounds { get; }
-
-        /// <summary>
-        /// Gets or sets the language direction for this control.
-        /// </summary>
-        /// <remarks>
-        /// Note that <see cref="LangDirection.Default"/> is returned if layout direction
-        /// is not supported.
-        /// </remarks>
-        LangDirection LangDirection { get; set; }
 
         /// <summary>
         /// Gets or sets the site of the control.
@@ -1138,11 +1110,6 @@ namespace Alternet.UI
         /// Returns control identifier.
         /// </summary>
         ControlTypeId ControlKind { get; }
-
-        /// <summary>
-        /// Gets or sets whether <see cref="Idle"/> event is fired.
-        /// </summary>
-        bool ProcessIdle { get; set; }
 
         /// <summary>
         /// Converts device-independent units to pixels.
@@ -1223,32 +1190,10 @@ namespace Alternet.UI
         SizeD GetDPI();
 
         /// <summary>
-        /// Raises the window to the top of the window hierarchy (Z-order).
-        /// This function only works for top level windows.
-        /// </summary>
-        /// <remarks>
-        /// Notice that this function only requests the window manager to raise this window
-        /// to the top of Z-order. Depending on its configuration, the window manager may
-        /// raise the window, not do it at all or indicate that a window requested to be
-        /// raised in some other way, e.g.by flashing its icon if it is minimized.
-        /// </remarks>
-        void Raise();
-
-        /// <summary>
         /// Sets <see cref="Title"/> property.
         /// </summary>
         /// <param name="title">New title</param>
         void SetTitle(string? title);
-
-        /// <summary>
-        /// Centers the window.
-        /// </summary>
-        /// <param name="direction">Specifies the direction for the centering.</param>
-        /// <remarks>
-        /// If the window is a top level one (i.e. doesn't have a parent), it will be
-        /// centered relative to the screen anyhow.
-        /// </remarks>
-        void CenterOnParent(GenericOrientation direction);
 
         /// <summary>
         /// Brings the control to the front of the z-order.
@@ -1259,12 +1204,6 @@ namespace Alternet.UI
         /// Sends the control to the back of the z-order.
         /// </summary>
         void SendToBack();
-
-        /// <summary>
-        /// Lowers the window to the bottom of the window hierarchy (Z-order).
-        /// This function only works for top level windows.
-        /// </summary>
-        void Lower();
 
         /// <summary>
         /// Gets the background brush for specified state of the control.
@@ -1757,14 +1696,6 @@ namespace Alternet.UI
         bool SetFocusIfPossible();
 
         /// <summary>
-        /// Saves screenshot of this control.
-        /// </summary>
-        /// <param name="fileName">Name of the file to which screenshot
-        /// will be saved.</param>
-        /// <remarks>This function works only on Windows.</remarks>
-        void SaveScreenshot(string fileName);
-
-        /// <summary>
         /// Resets <see cref="SuggestedHeight"/> property.
         /// </summary>
         void ResetSuggestedHeight();
@@ -1862,8 +1793,8 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>true</c> if background transparency is supported.</returns>
         /// <remarks>
-        /// If this function returns <c>false</c>, setting <see cref="BackgroundStyle"/> with
-        /// <see cref="ControlBackgroundStyle.Transparent"/> is not going to work. If it
+        /// If this function returns <c>false</c>, setting transparent background
+        /// is not going to work. If it
         /// returns <c>true</c>, setting transparent style should normally succeed.
         /// </remarks>
         /// <remarks>
@@ -1909,20 +1840,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s"></param>
         void Log(object? s);
-
-        /// <summary>
-        /// Gets the update rectangle region bounding box in client coords. This method
-        /// can be used in paint events. Returns rectangle in pixels.
-        /// </summary>
-        /// <returns></returns>
-        RectI GetUpdateClientRectI();
-
-        /// <summary>
-        /// Gets the update rectangle region bounding box in client coords. This method
-        /// can be used in paint events. Returns rectangle in dips (1/96 inch).
-        /// </summary>
-        /// <returns></returns>
-        RectD GetUpdateClientRect();
 
         /// <summary>
         /// Sets image for the specified control state.

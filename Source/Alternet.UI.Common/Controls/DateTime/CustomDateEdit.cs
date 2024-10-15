@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for date editors.
     /// </summary>
-    public abstract class CustomDateEdit : Control
+    public abstract class CustomDateEdit : PlatformControl
     {
         /// <summary>Specifies the maximum date value of the
         /// <see cref="DateTimePicker"/> and other date editors.
@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CustomDateEdit"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CustomDateEdit(Control parent)
+        public CustomDateEdit(PlatformControl parent)
             : this()
         {
             Parent = parent;

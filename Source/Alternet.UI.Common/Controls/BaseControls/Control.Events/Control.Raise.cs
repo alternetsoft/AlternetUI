@@ -11,6 +11,25 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
+        /// Raises the <see cref="FontChanged" /> event
+        /// and <see cref="OnFontChanged"/> method.
+        /// </summary>
+        public void RaiseFontChanged()
+        {
+            PerformLayoutAndInvalidate(() =>
+            {
+                OnFontChanged(EventArgs.Empty);
+                FontChanged?.Invoke(this, EventArgs.Empty);
+
+                foreach (var child in Children)
+                {
+                    if (child.ParentFont)
+                        child.Font = Font?.WithStyle(child.fontStyle);
+                }
+            });
+        }
+
+        /// <summary>
         /// Raises the <see cref="PreviewKeyDown" /> event
         /// and <see cref="OnPreviewKeyDown"/> method.
         /// </summary>
@@ -465,17 +484,13 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="HandleCreated" /> event and <see cref="OnHandleCreated"/> method.
         /// </summary>
-        public void RaiseHandleCreated()
+        public virtual void RaiseHandleCreated()
         {
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
-
-            if (BackgroundColor is not null)
-                Handler.BackgroundColor = BackgroundColor;
-            if (ForegroundColor is not null)
-                Handler.ForegroundColor = ForegroundColor;
             OnHandleCreated(EventArgs.Empty);
             HandleCreated?.Invoke(this, EventArgs.Empty);
+
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
 
             foreach (var n in nn)
             {
@@ -656,6 +671,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called after background color changed.
+        /// </summary>
+        public virtual void RaiseBackgroundColorChanged()
+        {
+            Refresh();
+
+            foreach (var child in Children)
+            {
+                if (child.ParentBackColor)
+                    child.BackgroundColor = BackgroundColor;
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="MouseLeave" /> event
         /// and <see cref="OnMouseLeave"/> method.
         /// </summary>
@@ -688,14 +717,13 @@ namespace Alternet.UI
         /// Raises the <see cref="ChildInserted" /> event
         /// and <see cref="OnChildInserted"/> method.
         /// </summary>
-        public void RaiseChildInserted(int index, Control childControl)
+        public virtual void RaiseChildInserted(int index, Control childControl)
         {
+            OnChildInserted(index, childControl);
+            ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
-
-            OnChildInserted(index, childControl);
-            Handler.OnChildInserted(childControl);
-            ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
 
             foreach (var n in nn)
             {
@@ -712,14 +740,13 @@ namespace Alternet.UI
         /// Raises the <see cref="ChildRemoved" /> event
         /// and <see cref="OnChildRemoved"/> method.
         /// </summary>
-        public void RaiseChildRemoved(Control childControl)
+        public virtual void RaiseChildRemoved(Control childControl)
         {
+            OnChildRemoved(childControl);
+            ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
-
-            OnChildRemoved(childControl);
-            Handler.OnChildRemoved(childControl);
-            ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
 
             foreach (var n in nn)
             {
@@ -978,6 +1005,22 @@ namespace Alternet.UI
             {
                 n.AfterHandlerSizeChanged(this);
             }
+        }
+
+        /// <summary>
+        /// Raises <see cref="VisibleChanged"/> event and <see cref="OnVisibleChanged"/>
+        /// method.
+        /// </summary>
+        public virtual void RaiseVisibleChanged()
+        {
+            OnVisibleChanged(EventArgs.Empty);
+            VisibleChanged?.Invoke(this, EventArgs.Empty);
+            Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
+            Parent?.PerformLayout();
+            if (visible)
+                AfterShow?.Invoke(this, EventArgs.Empty);
+            else
+                AfterHide?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -1296,6 +1339,20 @@ namespace Alternet.UI
             {
                 action(n);
             }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="EnabledChanged"/> event and calls
+        /// <see cref="OnEnabledChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void RaiseEnabledChanged(EventArgs e)
+        {
+            RaiseVisualStateChanged();
+            OnEnabledChanged(e);
+            EnabledChanged?.Invoke(this, e);
+            Parent?.OnChildPropertyChanged(this, nameof(Enabled));
         }
     }
 }

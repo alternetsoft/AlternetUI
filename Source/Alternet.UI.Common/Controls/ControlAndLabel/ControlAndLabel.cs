@@ -16,7 +16,8 @@ namespace Alternet.UI
     /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel"/>
     /// in order to implement your own custom labeled control.</remarks>
     [ControlCategory("Hidden")]
-    public abstract partial class ControlAndLabel : Control, IControlAndLabel, INotifyDataErrorInfo
+    public abstract partial class ControlAndLabel
+        : PlatformControl, IControlAndLabel, INotifyDataErrorInfo
     {
         /// <summary>
         /// Gets or sets default distance between control and label.
@@ -41,7 +42,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ControlAndLabel(Control parent)
+        public ControlAndLabel(PlatformControl parent)
             : this()
         {
             Parent = parent;

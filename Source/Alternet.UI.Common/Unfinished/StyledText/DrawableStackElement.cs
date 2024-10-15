@@ -6,6 +6,9 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
+    /// <summary>
+    /// Implements horizontal or vertical stack of drawable elements.
+    /// </summary>
     public class DrawableStackElement : DrawableElement, IDrawableElement
     {
         private IEnumerable<IDrawableElement>? items;
@@ -20,6 +23,10 @@ namespace Alternet.Drawing
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawableStackElement"/> class
+        /// with the specified parameters.
+        /// </summary>
         public DrawableStackElement(
             IEnumerable<IDrawableElement>? items,
             CoordAlignment alignment = CoordAlignment.Near,
@@ -48,6 +55,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether stack is vertical.
+        /// </summary>
         public virtual bool IsVertical
         {
             get
@@ -61,6 +71,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets or sets opposite coordinate alignment (horizontal if IsVertical is true).
+        /// </summary>
         public virtual CoordAlignment Alignment
         {
             get
@@ -74,6 +87,9 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Gets or sets distance between elements.
+        /// </summary>
         public virtual Coord Distance
         {
             get
@@ -97,7 +113,6 @@ namespace Alternet.Drawing
             var otherSide = !thisSide;
 
             var size = Measure(dc, container.Size);
-            var thisSize = size.GetSize(thisSide);
             var otherSize = size.GetSize(otherSide);
             var origin = container.Location;
 

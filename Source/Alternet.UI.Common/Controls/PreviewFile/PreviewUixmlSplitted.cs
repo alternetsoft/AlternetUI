@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewUixmlSplitted"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PreviewUixmlSplitted(Control parent)
+        public PreviewUixmlSplitted(PlatformControl parent)
             : this()
         {
             Parent = parent;

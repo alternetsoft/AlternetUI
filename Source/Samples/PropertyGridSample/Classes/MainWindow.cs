@@ -18,7 +18,7 @@ namespace PropertyGridSample
 
         internal readonly SplittedControlsPanel panel = new();
 
-        private readonly Control controlPanel = new()
+        private readonly Panel controlPanel = new()
         {
         };
 

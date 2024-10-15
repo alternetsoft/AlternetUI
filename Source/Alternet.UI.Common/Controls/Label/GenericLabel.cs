@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public GenericLabel(Control parent)
+        public GenericLabel(PlatformControl parent)
             : this()
         {
             Parent = parent;

@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="TextBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public TextBox(Control parent)
+        public TextBox(PlatformControl parent)
             : this()
         {
             Parent = parent;

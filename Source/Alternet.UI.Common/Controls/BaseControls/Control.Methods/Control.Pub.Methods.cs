@@ -177,18 +177,6 @@ namespace Alternet.UI
             AllPlatformDefaults.PlatformCurrent.Controls[controlId];
 
         /// <summary>
-        /// Raises the window to the top of the window hierarchy (Z-order).
-        /// This function only works for top level windows.
-        /// </summary>
-        /// <remarks>
-        /// Notice that this function only requests the window manager to raise this window
-        /// to the top of Z-order. Depending on its configuration, the window manager may
-        /// raise the window, not do it at all or indicate that a window requested to be
-        /// raised in some other way, e.g.by flashing its icon if it is minimized.
-        /// </remarks>
-        public virtual void Raise() => Handler.Raise();
-
-        /// <summary>
         /// Called by the child control when its property is changed.
         /// </summary>
         /// <param name="child">Child control.</param>
@@ -237,19 +225,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Centers the window.
-        /// </summary>
-        /// <param name="direction">Specifies the direction for the centering.</param>
-        /// <remarks>
-        /// If the window is a top level one (i.e. doesn't have a parent), it will be
-        /// centered relative to the screen anyhow.
-        /// </remarks>
-        public virtual void CenterOnParent(GenericOrientation direction)
-        {
-            Handler.CenterOnParent(direction);
-        }
-
-        /// <summary>
         /// Sets the index of the child control in the <see cref="Children"/>.
         /// </summary>
         /// <param name="child">The item to search for.</param>
@@ -273,12 +248,6 @@ namespace Alternet.UI
         /// Sends the control to the back of the z-order.
         /// </summary>
         public void SendToBack() => Parent?.SetChildIndex(this, -1);
-
-        /// <summary>
-        /// Lowers the window to the bottom of the window hierarchy (Z-order).
-        /// This function only works for top level windows.
-        /// </summary>
-        public virtual void Lower() => Handler.Lower();
 
         /// <summary>
         /// Gets the background brush for specified state of the control.
@@ -338,8 +307,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual void HideToolTip()
         {
-            Handler.UnsetToolTip();
-            Handler.SetToolTip(GetRealToolTip());
         }
 
         /// <summary>
@@ -434,7 +401,7 @@ namespace Alternet.UI
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
         public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
         {
-            Handler.RefreshRect(rect, eraseBackground);
+            Refresh();
         }
 
         /// <summary>
@@ -479,7 +446,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual void HandleNeeded()
         {
-            Handler.HandleNeeded();
         }
 
         /// <summary>
@@ -637,7 +603,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CaptureMouse()
         {
-            Handler.CaptureMouse();
         }
 
         /// <summary>
@@ -645,7 +610,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ReleaseMouseCapture()
         {
-            Handler.ReleaseMouseCapture();
         }
 
         /// <summary>
@@ -771,16 +735,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// Creates <see cref="ControlSet"/> with the specified controls.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public virtual ControlSet Group(params Control[] controls) => new(controls);
+        public virtual ControlSet Group(params Control[] controls)
+        {
+            return new(controls);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public virtual ControlSet Group(IReadOnlyList<Control> controls) => new(controls);
+        public virtual ControlSet Group(IReadOnlyList<Control> controls)
+        {
+            return new(controls);
+        }
 
         /// <summary>
         /// Gets <see cref="ControlSet"/> with all controls which are members of the
@@ -996,7 +966,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Graphics CreateDrawingContext()
         {
-            return Handler.CreateDrawingContext();
+            return new PlessGraphics();
         }
 
         /// <summary>
@@ -1070,7 +1040,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Invalidate()
         {
-            Handler.Invalidate();
         }
 
         /// <summary>
@@ -1078,7 +1047,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Update()
         {
-            Handler.Update();
         }
 
         /// <summary>
@@ -1134,6 +1102,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Forces the re-creation of the handler for the control.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="RecreateHandler"/> method is called whenever
+        /// re-execution of handler creation logic is needed.
+        /// For example, this may happen when visual theme changes.
+        /// </remarks>
+        public virtual void RecreateHandler()
+        {
+            Invalidate();
+        }
+
+        /// <summary>
         /// Changes size of the control to fit the size of its content.
         /// </summary>
         /// <param name="mode">Specifies how a control will size itself to fit the size of
@@ -1174,7 +1155,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public virtual PointD ScreenToClient(PointD point)
         {
-            return Handler.ScreenToClient(point);
+            return PlessUtils.ScreenToClient(point, this);
         }
 
         /// <summary>
@@ -1186,7 +1167,7 @@ namespace Alternet.UI
         /// <returns>The converted cooridnates.</returns>
         public virtual PointD ClientToScreen(PointD point)
         {
-            return Handler.ClientToScreen(point);
+            return PlessUtils.ClientToScreen(point, this);
         }
 
         /// <summary>
@@ -1280,7 +1261,6 @@ namespace Alternet.UI
         public virtual int BeginUpdate()
         {
             updateCount++;
-            Handler.BeginUpdate();
             return updateCount;
         }
 
@@ -1291,7 +1271,6 @@ namespace Alternet.UI
         public virtual int EndUpdate()
         {
             updateCount--;
-            Handler.EndUpdate();
             return updateCount;
         }
 
@@ -1316,9 +1295,9 @@ namespace Alternet.UI
         /// Gets native handler of the control. You should not use this property.
         /// </summary>
         /// <returns></returns>
-        public IntPtr GetHandle()
+        public virtual IntPtr GetHandle()
         {
-            return Handler.GetHandle();
+            return IntPtr.Zero;
         }
 
         /// <summary>
@@ -1380,7 +1359,6 @@ namespace Alternet.UI
         public virtual void BeginInit()
         {
             SuspendLayout();
-            Handler.BeginInit();
         }
 
         /// <summary>
@@ -1395,7 +1373,6 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void EndInit()
         {
-            Handler.EndInit();
             ResumeLayout();
         }
 
@@ -1404,25 +1381,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"></param>
         public void SetEnabled(bool value) => Enabled = value;
-
-        /// <summary>
-        /// Saves screenshot of this control.
-        /// </summary>
-        /// <param name="fileName">Name of the file to which screenshot
-        /// will be saved.</param>
-        /// <remarks>This function works only on Windows.</remarks>
-        public virtual void SaveScreenshot(string fileName)
-        {
-            ScreenShotCounter++;
-            try
-            {
-                Handler.SaveScreenshot(fileName);
-            }
-            finally
-            {
-                ScreenShotCounter--;
-            }
-        }
 
         /// <summary>
         /// Gets children as <see cref="ControlSet"/>.
@@ -1591,7 +1549,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
-            return Handler.DoDragDrop(data, allowedEffects);
+            return DragDropEffects.None;
         }
 
         /// <summary>
@@ -1599,7 +1557,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RecreateWindow()
         {
-            Handler.RecreateWindow();
+            Invalidate();
         }
 
         /// <summary>
@@ -1625,8 +1583,8 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>true</c> if background transparency is supported.</returns>
         /// <remarks>
-        /// If this function returns <c>false</c>, setting <see cref="BackgroundStyle"/> with
-        /// <see cref="ControlBackgroundStyle.Transparent"/> is not going to work. If it
+        /// If this function returns <c>false</c>, setting the transparent background style
+        /// is not going to work. If it
         /// returns <c>true</c>, setting transparent style should normally succeed.
         /// </remarks>
         /// <remarks>
@@ -1636,7 +1594,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool IsTransparentBackgroundSupported()
         {
-            return Handler.IsTransparentBackgroundSupported();
+            return true;
         }
 
         /// <summary>
@@ -1842,28 +1800,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the update rectangle region bounding box in client coords. This method
-        /// can be used in paint events. Returns rectangle in pixels.
-        /// </summary>
-        /// <returns></returns>
-        public virtual RectI GetUpdateClientRectI()
-        {
-            return Handler.GetUpdateClientRectI();
-        }
-
-        /// <summary>
-        /// Gets the update rectangle region bounding box in client coords. This method
-        /// can be used in paint events. Returns rectangle in device-independent units.
-        /// </summary>
-        /// <returns></returns>
-        public virtual RectD GetUpdateClientRect()
-        {
-            var resultI = GetUpdateClientRectI();
-            var resultD = PixelToDip(resultI);
-            return resultD;
-        }
-
-        /// <summary>
         /// Converts <see cref="RectI"/> to device-independent units.
         /// </summary>
         /// <param name="value"><see cref="RectI"/> in pixels.</param>
@@ -1995,8 +1931,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color? GetDefaultAttributesBgColor()
         {
-            CheckDisposed();
-            return Handler.GetDefaultAttributesBgColor();
+            return SystemColors.Control;
         }
 
         /// <summary>
@@ -2005,8 +1940,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color? GetDefaultAttributesFgColor()
         {
-            CheckDisposed();
-            return Handler.GetDefaultAttributesFgColor();
+            return SystemColors.ControlText;
         }
 
         /// <summary>
@@ -2015,8 +1949,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Font? GetDefaultAttributesFont()
         {
-            CheckDisposed();
-            return Handler.GetDefaultAttributesFont();
+            return null;
         }
 
         /// <summary>
@@ -2036,10 +1969,6 @@ namespace Alternet.UI
         public virtual void ReportBoundsChanged()
         {
             var newBounds = Bounds;
-
-            if(Handler.EventBounds != Bounds)
-            {
-            }
 
             var locationChanged = reportedBounds.Location != newBounds.Location;
             var sizeChanged = reportedBounds.Size != newBounds.Size;

@@ -16,7 +16,7 @@ namespace Alternet.UI
         private SplittedTreeAndCards? pageContainer;
         private readonly LogListBox? eventsControl;
         private readonly LayoutPanel splitterPanel;
-        private readonly Control panel;
+        private readonly Panel panel;
         private readonly Splitter splitter = new();
 
         static CustomDemoWindow()

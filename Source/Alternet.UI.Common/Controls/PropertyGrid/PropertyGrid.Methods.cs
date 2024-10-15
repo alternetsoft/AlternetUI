@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class PropertyGrid
+    public partial class PropertyGrid : PlatformControl
     {
         /// <summary>
         /// Adds simple action for the specified <typeparamref name="T"/>.

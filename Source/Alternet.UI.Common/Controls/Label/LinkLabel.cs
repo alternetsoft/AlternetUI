@@ -10,13 +10,13 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public partial class LinkLabel : Control
+    public partial class LinkLabel : PlatformControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public LinkLabel(Control parent)
+        public LinkLabel(PlatformControl parent)
             : this()
         {
             Parent = parent;

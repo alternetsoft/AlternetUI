@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents control that displays a selected color and allows to change it.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class ColorPicker : Control
+    public partial class ColorPicker : PlatformControl
     {
         private Color color = Color.Black;
 
@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ColorPicker"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ColorPicker(Control parent)
+        public ColorPicker(PlatformControl parent)
             : this()
         {
             Parent = parent;

@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements the basic functionality common to button controls.
     /// </summary>
-    public abstract class ButtonBase : Control
+    public abstract class ButtonBase : PlatformControl
     {
         private Action? clickAction;
 
@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ButtonBase"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ButtonBase(Control parent)
+        public ButtonBase(PlatformControl parent)
             : this()
         {
             Parent = parent;

@@ -806,7 +806,7 @@ namespace Alternet.UI
 
         public void OnChildInserted(Control childControl)
         {
-            var child = (childControl.Handler as WxControlHandler)?.NativeControl;
+            var child = (PlatformControl.RequireHandler(childControl) as WxControlHandler)?.NativeControl;
             if (child == null)
                 return;
             if (child.ParentRefCounted != null)
@@ -816,7 +816,7 @@ namespace Alternet.UI
 
         public void OnChildRemoved(Control childControl)
         {
-            var child = (childControl.Handler as WxControlHandler)?.nativeControl;
+            var child = (PlatformControl.RequireHandler(childControl) as WxControlHandler)?.nativeControl;
             if (child != null)
                 nativeControl?.RemoveChild(child);
         }
@@ -836,7 +836,7 @@ namespace Alternet.UI
 
             if (parent is not null)
             {
-                (parent.Handler as WxControlHandler)?.OnChildInserted(Control);
+                (PlatformControl.RequireHandler(parent) as WxControlHandler)?.OnChildInserted(Control);
                 parent.PerformLayout();
             }
 

@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ColorListBox(Control parent)
+        public ColorListBox(PlatformControl parent)
             : this()
         {
             Parent = parent;

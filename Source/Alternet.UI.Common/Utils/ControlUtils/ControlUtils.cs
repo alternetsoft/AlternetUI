@@ -20,7 +20,7 @@ namespace Alternet.UI
         {
             get
             {
-                return empty ??= new();
+                return empty ??= new PlatformControl();
             }
         }
 

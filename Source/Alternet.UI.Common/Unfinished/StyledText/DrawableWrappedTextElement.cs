@@ -12,7 +12,6 @@ namespace Alternet.Drawing
     public class DrawableWrappedTextElement : DrawableStackElement
     {
         private object? text;
-        private bool isClipped = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawableWrappedTextElement"/> class.
@@ -41,19 +40,6 @@ namespace Alternet.Drawing
         {
             this.text = text;
             Style = style;
-        }
-
-        public virtual bool IsClipped
-        {
-            get
-            {
-                return isClipped;
-            }
-
-            set
-            {
-                SetProperty(ref isClipped, value, nameof(IsClipped));
-            }
         }
 
         /// <summary>

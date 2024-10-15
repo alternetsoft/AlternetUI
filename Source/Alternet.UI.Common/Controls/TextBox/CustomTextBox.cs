@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// </summary>
     [ControlCategory("Hidden")]
     public abstract class CustomTextBox
-        : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions,
+        : PlatformControl, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions,
         INotifyDataErrorInfo
     {
         private int oldErrorCount;
@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CustomTextBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CustomTextBox(Control parent)
+        public CustomTextBox(PlatformControl parent)
             : this()
         {
             Parent = parent;

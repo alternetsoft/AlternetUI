@@ -55,7 +55,7 @@ namespace Alternet.UI
             get
             {
                 var oldControl = control;
-                control ??= action?.Invoke() ?? new Control();
+                control ??= action?.Invoke() ?? new PlatformControl();
                 if(oldControl != control)
                     RaisePropertyChanged(nameof(Control));
                 return control;

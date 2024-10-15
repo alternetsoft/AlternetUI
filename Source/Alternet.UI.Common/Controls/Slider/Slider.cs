@@ -29,7 +29,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class Slider : Control
+    public partial class Slider : PlatformControl
     {
         private int maximum = 10;
         private int minimum = 0;
@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Slider"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Slider(Control parent)
+        public Slider(PlatformControl parent)
             : this()
         {
             Parent = parent;

@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Border(Control parent)
+        public Border(PlatformControl parent)
             : this()
         {
             Parent = parent;

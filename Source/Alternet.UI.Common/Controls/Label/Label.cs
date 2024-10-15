@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public partial class Label : Control
+    public partial class Label : PlatformControl
     {
         private Coord? maxTextWidth;
 
@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Label"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Label(Control parent)
+        public Label(PlatformControl parent)
             : this()
         {
             Parent = parent;

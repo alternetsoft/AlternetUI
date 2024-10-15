@@ -11,56 +11,10 @@ namespace Alternet.UI
     public partial class Control
     {
         /// <summary>
-        /// Ensures that the control <see cref="Handler"/> is created,
-        /// creating and attaching it if necessary.
+        /// Disconnects the current control handler from the control.
         /// </summary>
-        protected internal void EnsureHandlerCreated()
+        protected internal virtual void DetachHandler()
         {
-            if (handler == null)
-            {
-                CreateAndAttachHandler();
-            }
-
-            void CreateAndAttachHandler()
-            {
-                if (GetRequiredHandlerType() == HandlerType.Native)
-                    handler = CreateHandler();
-                else
-                    handler = ControlFactory.Handler.CreateControlHandler(this);
-
-                handler.Attach(this);
-
-                handler.Visible = Visible;
-                handler.SetEnabled(Enabled);
-                ApplyChildren();
-
-                OnHandlerAttached(EventArgs.Empty);
-
-                BindHandlerEvents();
-
-                void ApplyChildren()
-                {
-                    if (!HasChildren)
-                        return;
-                    for (var i = 0; i < Children.Count; i++)
-                        handler.OnChildInserted(Children[i]);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Disconnects the current control <see cref="Handler"/> from
-        /// the control.
-        /// This method calls <see cref="IControlHandler.Detach"/>.
-        /// </summary>
-        protected internal void DetachHandler()
-        {
-            if (handler == null)
-                throw new InvalidOperationException();
-            OnHandlerDetaching(EventArgs.Empty);
-            UnbindHandlerEvents();
-            handler.Detach();
-            handler = null;
         }
 
         /// <summary>
@@ -86,6 +40,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Requests scale factor from the parent or other available sources.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Coord RequestScaleFactor()
+        {
+            return Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
+        }
+
+        /// <summary>
         /// Returns a preferred size of control with an added padding.
         /// </summary>
         protected SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
@@ -100,7 +63,7 @@ namespace Alternet.UI
         protected virtual SizeD GetPaddedPreferredSize(SizeD preferredSize)
         {
             var padding = Padding;
-            var intrinsicPadding = Handler.IntrinsicPreferredSizePadding;
+            var intrinsicPadding = IntrinsicPreferredSizePadding;
             return preferredSize + padding.Size + intrinsicPadding.Size;
         }
 
@@ -124,91 +87,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Unbinds events from the handler.
-        /// </summary>
-        protected virtual void UnbindHandlerEvents()
-        {
-            Handler.TextChanged = null;
-            Handler.HandleCreated = null;
-            Handler.HandleDestroyed = null;
-            Handler.Activated = null;
-            Handler.Deactivated = null;
-            Handler.Idle = null;
-            Handler.Paint = null;
-            Handler.VisibleChanged = null;
-            Handler.MouseEnter = null;
-            Handler.MouseLeave = null;
-            Handler.MouseCaptureLost = null;
-            Handler.DragLeave = null;
-            Handler.GotFocus = null;
-            Handler.LostFocus = null;
-            Handler.SizeChanged = null;
-            Handler.LocationChanged = null;
-            Handler.VerticalScrollBarValueChanged = null;
-            Handler.HorizontalScrollBarValueChanged = null;
-            Handler.DragOver = null;
-            Handler.DragEnter = null;
-            Handler.DragDrop = null;
-            Handler.SystemColorsChanged = null;
-            Handler.DpiChanged = null;
-        }
-
-        /// <summary>
-        /// Binds events to the handler.
-        /// </summary>
-        protected virtual void BindHandlerEvents()
-        {
-            Handler.MouseEnter = RaiseMouseEnterOnTarget;
-            Handler.MouseLeave = RaiseMouseLeaveOnTarget;
-            Handler.HandleCreated = RaiseHandleCreated;
-            Handler.HandleDestroyed = RaiseHandleDestroyed;
-            Handler.Activated = RaiseActivated;
-            Handler.Deactivated = RaiseDeactivated;
-            Handler.Paint = OnHandlerPaint;
-            Handler.VisibleChanged = OnHandlerVisibleChanged;
-            Handler.MouseCaptureLost = RaiseMouseCaptureLost;
-            Handler.GotFocus = RaiseGotFocus;
-            Handler.LostFocus = RaiseLostFocus;
-            Handler.Idle = RaiseIdle;
-            Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
-            Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
-            Handler.DragLeave = RaiseDragLeave;
-            Handler.SizeChanged = RaiseHandlerSizeChanged;
-            Handler.LocationChanged = RaiseHandlerLocationChanged;
-            Handler.DragOver = RaiseDragOver;
-            Handler.DragEnter = RaiseDragEnter;
-            Handler.DragDrop = RaiseDragDrop;
-            Handler.TextChanged = OnHandlerTextChanged;
-            Handler.SystemColorsChanged = RaiseSystemColorsChanged;
-            Handler.DpiChanged = OnHandlerDpiChanged;
-        }
-
-        /// <summary>
         /// Called to modify text before it is assigned to the handler.
         /// </summary>
         /// <param name="s">New text.</param>
         protected virtual string CoerceTextForHandler(string s)
         {
             return s;
-        }
-
-        /// <summary>
-        /// Called when handler's text property is changed.
-        /// </summary>
-        protected virtual void OnHandlerTextChanged()
-        {
-            if (handlerTextChanging > 0)
-                return;
-
-            handlerTextChanging++;
-            try
-            {
-                Text = Handler.Text;
-            }
-            finally
-            {
-                handlerTextChanging--;
-            }
         }
 
         /// <summary>
@@ -331,28 +215,11 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SizeD GetNativeControlSize(SizeD availableSize)
         {
-            if (IsDummy)
-                return SizeD.Empty;
-            var s = Handler.GetPreferredSize(availableSize);
+            var s = SizeD.Empty;
             s += Padding.Size;
             return new SizeD(
                 Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
                 Coord.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
-        }
-
-        /// <summary>
-        /// Creates a handler for the control.
-        /// </summary>
-        /// <remarks>
-        /// You typically should not call the <see cref="CreateHandler"/>
-        /// method directly.
-        /// The preferred method is to call the
-        /// <see cref="EnsureHandlerCreated"/> method, which forces a handler
-        /// to be created for the control.
-        /// </remarks>
-        protected virtual IControlHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateControlHandler(this);
         }
 
         /// <summary>
@@ -377,6 +244,38 @@ namespace Alternet.UI
                 return;
 
             caretInfo.Paint(this, e);
+        }
+
+        /// <summary>
+        /// Sets internal color.
+        /// </summary>
+        protected virtual void InternalSetColor(bool isBackground, Color? color)
+        {
+            if (isBackground)
+            {
+                backgroundColor = color;
+            }
+            else
+            {
+                foregroundColor = color;
+            }
+        }
+
+        /// <summary>
+        /// Resets color.
+        /// </summary>
+        protected virtual void ResetColor(bool isBackground, ResetColorType method = ResetColorType.Auto)
+        {
+            if (method == ResetColorType.Auto)
+                InternalSetColor(isBackground, null);
+            else
+            {
+                var colors = ColorUtils.GetResetColors(method, this);
+                var color = isBackground ? colors?.BackgroundColor : colors?.ForegroundColor;
+                InternalSetColor(isBackground, color);
+            }
+
+            Refresh();
         }
 
         /// <summary>

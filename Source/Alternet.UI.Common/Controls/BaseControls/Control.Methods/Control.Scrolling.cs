@@ -21,20 +21,25 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsScrollable
         {
-            get => Handler.IsScrollable;
+            get
+            {
+                return false;
+            }
 
-            set => Handler.IsScrollable = value;
+            set
+            {
+            }
         }
 
         /// <summary>
         /// Gets or sets horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public ScrollBarInfo HorzScrollBarInfo
+        public virtual ScrollBarInfo HorzScrollBarInfo
         {
             get
             {
-                return Handler.HorzScrollBarInfo;
+                return GetScrollBarInfo(false);
             }
 
             set
@@ -47,11 +52,11 @@ namespace Alternet.UI
         /// Gets or sets vertical scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public ScrollBarInfo VertScrollBarInfo
+        public virtual ScrollBarInfo VertScrollBarInfo
         {
             get
             {
-                return Handler.VertScrollBarInfo;
+                return GetScrollBarInfo(true);
             }
 
             set
@@ -67,12 +72,11 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BindScrollEvents;
+                return true;
             }
 
             set
             {
-                Handler.BindScrollEvents = value;
             }
         }
 
@@ -183,13 +187,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets vertical or horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
-        /// <param name="isVertical">Whether to get position for the vertical or horizontal scrollbar.</param>
+        /// <param name="isVertical">Whether to get position for the vertical
+        /// or horizontal scrollbar.</param>
         /// <returns></returns>
-        public ScrollBarInfo GetScrollBarInfo(bool isVertical)
+        public virtual ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
-            if(isVertical)
-                return Handler.VertScrollBarInfo;
-            return Handler.HorzScrollBarInfo;
+            return ScrollBarInfo.Default;
         }
 
         /// <summary>
@@ -198,17 +201,8 @@ namespace Alternet.UI
         /// <param name="isVertical">Whether to set position for the vertical or
         /// horizontal scrollbar.</param>
         /// <param name="value">Scrollbar position.</param>
-        public void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        public virtual void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
-            if (isVertical)
-            {
-                Handler.VertScrollBarInfo = value;
-            }
-            else
-            {
-                Handler.HorzScrollBarInfo = value;
-            }
-
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 

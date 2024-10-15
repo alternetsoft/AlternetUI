@@ -825,41 +825,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
-        /*/// <summary>
-        /// Gets the toolbar that is displayed in the window.
-        /// </summary>
-        /// <value>
-        /// A <see cref="ToolBar"/> that represents the toolbar to display in the window.
-        /// </value>
-        /// <remarks>
-        /// You can use this property to switch between complete toolbar sets at run time.
-        /// </remarks>
-        [Browsable(false)]
-        internal virtual object? ToolBar
-        {
-            get => toolbar;
-
-            set
-            {
-                if (toolbar == value)
-                    return;
-
-                var oldValue = toolbar;
-                toolbar = value;
-
-                if (GetWindowKind() == WindowKind.Dialog)
-                    return;
-
-                (oldValue as Control)?.SetParentInternal(null);
-                (toolbar as Control)?.SetParentInternal(this);
-
-                OnToolBarChanged(EventArgs.Empty);
-                ToolBarChanged?.Invoke(this, EventArgs.Empty);
-                Handler.SetToolBar(value);
-                PerformLayout();
-            }
-        }*/
-
         /// <inheritdoc />
         internal override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {
@@ -917,6 +882,18 @@ namespace Alternet.UI
                 Control.DefaultFont = font;
             }
         }
+
+        /// <summary>
+        /// Raises the window to the top of the window hierarchy (Z-order).
+        /// This function only works for top level windows.
+        /// </summary>
+        /// <remarks>
+        /// Notice that this function only requests the window manager to raise this window
+        /// to the top of Z-order. Depending on its configuration, the window manager may
+        /// raise the window, not do it at all or indicate that a window requested to be
+        /// raised in some other way, e.g.by flashing its icon if it is minimized.
+        /// </remarks>
+        public virtual void Raise() => Handler.Raise();
 
         /// <summary>
         /// Shows window and focuses it.
@@ -1125,6 +1102,12 @@ namespace Alternet.UI
         public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
 
         /// <summary>
+        /// Lowers the window to the bottom of the window hierarchy (Z-order).
+        /// This function only works for top level windows.
+        /// </summary>
+        public virtual void Lower() => Handler.Lower();
+
+        /// <summary>
         /// Recreates all native controls in all windows.
         /// </summary>
         public virtual void RecreateAllHandlers()
@@ -1142,10 +1125,14 @@ namespace Alternet.UI
             GetAllChildren(this, children);
 
             foreach (var child in children)
-                child.DetachHandler();
+            {
+                (child as PlatformControl)?.DetachHandler();
+            }
 
             foreach (var child in children.AsEnumerable().Reverse())
-                child.EnsureHandlerCreated();
+            {
+                (child as PlatformControl)?.EnsureHandlerCreated();
+            }
         }
 
         internal static Window? GetParentWindow(object dp)

@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Splitter"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Splitter(Control parent)
+        public Splitter(PlatformControl parent)
             : this()
         {
             Parent = parent;

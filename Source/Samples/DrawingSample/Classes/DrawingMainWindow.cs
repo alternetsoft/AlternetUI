@@ -45,7 +45,7 @@ namespace DrawingSample
 
         private Control CreateTabPage(DrawingPage page)
         {
-            var tabPage = new Control();
+            var tabPage = new Panel();
             var grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(270) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });

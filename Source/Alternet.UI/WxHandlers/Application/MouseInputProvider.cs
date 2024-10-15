@@ -71,7 +71,7 @@ namespace Alternet.UI
 
             var hoveredControl = Control.GetHoveredControl();
 
-            var nativeHoveredHandler = hoveredControl?.Handler as WxControlHandler;
+            var nativeHoveredHandler = PlatformControl.RequireHandler(hoveredControl) as WxControlHandler;
 
             if(nativeHoveredHandler is not null)
             {

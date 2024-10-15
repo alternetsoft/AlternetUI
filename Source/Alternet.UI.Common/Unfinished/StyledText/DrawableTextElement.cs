@@ -99,8 +99,6 @@ namespace Alternet.Drawing
 
             var realStyle = RealStyle;
             var realFont = realStyle.RealFont;
-            var realFontId = realFont.UniqueId;
-            var newScaleFactor = dc.ScaleFactor;
 
             var measuredSize = dc.MeasureText(realText, realFont);
             return measuredSize;

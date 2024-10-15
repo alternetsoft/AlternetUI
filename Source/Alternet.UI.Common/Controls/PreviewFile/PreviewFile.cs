@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewFile"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PreviewFile(Control parent)
+        public PreviewFile(PlatformControl parent)
             : this()
         {
             Parent = parent;

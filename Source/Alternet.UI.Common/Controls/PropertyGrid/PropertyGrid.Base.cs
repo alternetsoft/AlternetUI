@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public partial class PropertyGrid : Control
+    public partial class PropertyGrid : PlatformControl
     {
         /// <summary>
         /// Dictionary used to get type related information.

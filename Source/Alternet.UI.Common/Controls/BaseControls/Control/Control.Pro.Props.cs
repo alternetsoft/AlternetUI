@@ -22,22 +22,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets border style of the control.
-        /// </summary>
-        protected virtual ControlBorderStyle BorderStyle
-        {
-            get
-            {
-                return Handler.BorderStyle;
-            }
-
-            set
-            {
-                Handler.BorderStyle = value;
-            }
-        }
-
-        /// <summary>
         /// Gets whether this control is dummy control.
         /// </summary>
         protected virtual bool IsDummy => false;

@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="HeaderLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public HeaderLabel(Control parent)
+        public HeaderLabel(PlatformControl parent)
             : this()
         {
             Parent = parent;

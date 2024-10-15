@@ -163,22 +163,6 @@ namespace Alternet.UI
             return SystemSettings.Handler.GetClassDefaultAttributesFont(controlType, renderSize);
         }
 
-        /// <summary>
-        /// Forces the re-creation of the handler for the control.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="RecreateHandler"/> method is called whenever
-        /// re-execution of handler creation logic is needed.
-        /// For example, this may happen when visual theme changes.
-        /// </remarks>
-        internal void RecreateHandler()
-        {
-            if (handler != null)
-                DetachHandler();
-
-            Invalidate();
-        }
-
         internal void RaiseProcessException(ThrowExceptionEventArgs e)
         {
             OnProcessException(e);

@@ -11,13 +11,13 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for all container controls.
     /// </summary>
-    public class ContainerControl : Control
+    public class ContainerControl : PlatformControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ContainerControl(Control parent)
+        public ContainerControl(PlatformControl parent)
             : this()
         {
             Parent = parent;
