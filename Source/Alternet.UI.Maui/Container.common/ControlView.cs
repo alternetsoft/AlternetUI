@@ -29,7 +29,7 @@ namespace Alternet.UI
         private PanGestureRecognizer? panGesture;
         private InteriorDrawable? interior;
         private SkiaGraphics? graphics;
-        private Alternet.UI.AbstractControl? control;
+        private Alternet.UI.Control? control;
 
         static ControlView()
         {
@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets attached <see cref="Alternet.UI.AbstractControl"/>.
         /// </summary>
-        public virtual Alternet.UI.AbstractControl? Control
+        public virtual Alternet.UI.Control? Control
         {
             get => control;
 
@@ -122,7 +122,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static ControlView? GetContainer(AbstractControl? control)
         {
-            if (control?.Handler is MauiControlHandler handler)
+            if ((control as Control)?.Handler is MauiControlHandler handler)
                 return handler.Container;
             return null;
         }

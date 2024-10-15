@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="T">Type of the owned control.</typeparam>
     public partial class ControlView<T> : ControlView
-        where T : AbstractControl, new()
+        where T : Control, new()
     {
         private readonly T ownedControl;
 

@@ -792,7 +792,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public virtual void RaisePaintRecursive(PaintEventArgs e)
         {
-            RaisePaint(e);
+            if(HasGenericPaint())
+                RaisePaint(e);
 
             if (!HasChildren)
                 return;

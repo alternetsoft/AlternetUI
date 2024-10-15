@@ -279,6 +279,61 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this control can paint itself internally without using platform control.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool HasGenericPaint()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Color"/> which is used to draw background of the label text.
+        /// </summary>
+        /// <returns>By default returns <see cref="Color.Empty"/> which means do not
+        /// draw background under the label text. In this case control's background
+        /// is used.</returns>
+        protected virtual Color GetLabelBackColor(VisualControlState state)
+        {
+            var color = StateObjects?.Colors?.GetObjectOrNull(state)?.BackgroundColor;
+
+            return color ?? TextBackColor ?? Color.Empty;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Font"/> which is used to draw label's text.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Font GetLabelFont(VisualControlState state)
+        {
+            var font = StateObjects?.Colors?.GetObjectOrNull(state)?.Font;
+
+            var result = font ?? Font ?? UI.AbstractControl.DefaultFont;
+            if (IsBold)
+                result = result.AsBold;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Color"/> which is used to draw label's text.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Color GetLabelForeColor(VisualControlState state)
+        {
+            var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+
+            if (color is null)
+            {
+                if (Enabled)
+                    color = ForeColor;
+                else
+                    color = SystemColors.GrayText;
+            }
+
+            return color;
+        }
+
+        /// <summary>
         /// Sets visible field value. This is internal method and should not be called
         /// directly.
         /// </summary>

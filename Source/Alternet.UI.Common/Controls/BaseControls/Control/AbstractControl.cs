@@ -61,6 +61,7 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private Color? textBackColor;
         private SizeD minimumSize;
         private SizeD maximumSize;
         private FontStyle fontStyle;
@@ -2857,6 +2858,30 @@ namespace Alternet.UI
             get
             {
                 return GetErrors(null).Cast<object>().Any();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets background color of the text.
+        /// </summary>
+        /// <remarks>
+        /// By default is <c>null</c>. It means how additional background is painted
+        /// under the text. It's up to control how this property is used.
+        /// </remarks>
+        [DefaultValue(null)]
+        public virtual Color? TextBackColor
+        {
+            get
+            {
+                return textBackColor;
+            }
+
+            set
+            {
+                if (textBackColor == value)
+                    return;
+                textBackColor = value;
+                Invalidate();
             }
         }
 

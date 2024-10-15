@@ -754,7 +754,8 @@ namespace Alternet.UI
 
             using var dc = Handler.OpenPaintDrawingContext();
 
-            RaisePaint(new PaintEventArgs(dc, ClientRectangle));
+            var paintArgs = new PaintEventArgs(dc, ClientRectangle);
+            RaisePaintRecursive(paintArgs);
         }
 
         /// <summary>

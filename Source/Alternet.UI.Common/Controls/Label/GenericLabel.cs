@@ -13,7 +13,6 @@ namespace Alternet.UI
     /// </summary>
     public partial class GenericLabel : GraphicControl
     {
-        private Color? textBackColor;
         private bool imageVisible = true;
         private int? mnemonicCharIndex = null;
         private GenericAlignment alignment = GenericAlignment.TopLeft;
@@ -128,30 +127,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets background color of the text.
-        /// </summary>
-        /// <remarks>
-        /// By default is <c>null</c>. It means now additional background is painted
-        /// under the text.
-        /// </remarks>
-        [DefaultValue(null)]
-        public virtual Color? TextBackColor
-        {
-            get
-            {
-                return textBackColor;
-            }
-
-            set
-            {
-                if (textBackColor == value)
-                    return;
-                textBackColor = value;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets alignment of the text.
         /// </summary>
         public GenericAlignment TextAlignment
@@ -251,24 +226,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        [DefaultValue("")]
-        public override string Text
-        {
-            get
-            {
-                return base.Text;
-            }
-
-            set
-            {
-                if (Text == value)
-                    return;
-                base.Text = value;
-                PerformLayoutAndInvalidate();
-            }
-        }
-
         /// <summary>
         /// Gets or sets a value indicating whether to draw image.
         /// </summary>
@@ -343,8 +300,6 @@ namespace Alternet.UI
             var labelForeColor = foreColor ?? GetLabelForeColor(state);
             var labelBackColor = backColor ?? GetLabelBackColor(state);
             var mnemonicCharIndex = GetMnemonicCharIndex();
-
-            /*var isSimple = TextAlignment == 0 && labelImage is null && mnemonicCharIndex < 0;*/
 
             var result = dc.DrawLabel(
                 labelText,
@@ -430,52 +385,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="Font"/> which is used to draw labels text.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual Font GetLabelFont(VisualControlState state)
-        {
-            var font = StateObjects?.Colors?.GetObjectOrNull(state)?.Font;
-
-            var result = font ?? Font ?? UI.AbstractControl.DefaultFont;
-            if (IsBold)
-                result = result.AsBold;
-            return result;
-        }
-
-        /// <summary>
-        /// Gets <see cref="Color"/> which is used to draw background of the label text.
-        /// </summary>
-        /// <returns>By default returns <see cref="Color.Empty"/> which means do not
-        /// draw background under the label text. In this case control's background
-        /// is used.</returns>
-        protected virtual Color GetLabelBackColor(VisualControlState state)
-        {
-            var color = StateObjects?.Colors?.GetObjectOrNull(state)?.BackgroundColor;
-
-            return color ?? TextBackColor ?? Color.Empty;
-        }
-
-        /// <summary>
-        /// Gets <see cref="Color"/> which is used to draw label text.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual Color GetLabelForeColor(VisualControlState state)
-        {
-            var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
-
-            if(color is null)
-            {
-                if (Enabled)
-                    color = ForeColor;
-                else
-                    color = SystemColors.GrayText;
-            }
-
-            return color;
-        }
-
-        /// <summary>
         /// Gets formatted text with <see cref="TextSuffix"/> and <see cref="TextPrefix"/>.
         /// </summary>
         /// <returns></returns>
@@ -492,6 +401,13 @@ namespace Alternet.UI
             if (textFormat is not null)
                 result = string.Format(textFormat, result);
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            PerformLayoutAndInvalidate();
         }
 
         /// <summary>

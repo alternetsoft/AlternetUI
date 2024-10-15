@@ -63,8 +63,7 @@ namespace Alternet.UI
                 return mainPage;
             else
             {
-                var handler = control.Handler as MauiControlHandler;
-                var container = handler?.Container;
+                var container = ControlView.GetContainer(control);
                 var window = container?.Window;
                 var page = window?.Page;
                 return page ?? mainPage;
@@ -97,14 +96,15 @@ namespace Alternet.UI
         {
             PointD absolutePos;
 
-            if (control.Handler is not MauiControlHandler handler
-                || handler.Container is null)
+            var container = ControlView.GetContainer(control);
+
+            if (container is null)
             {
                 absolutePos = PointD.MinValue;
             }
             else
             {
-                absolutePos = handler.Container.GetAbsolutePosition();
+                absolutePos = container.GetAbsolutePosition();
             }
 
             var x = absolutePos.X + position.X;
