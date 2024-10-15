@@ -43,7 +43,7 @@ namespace PropertyGridSample
 
         private static int newItemIndex = 0;
 
-        static void SetBackgrounds(Control control)
+        static void SetBackgrounds(AbstractControl control)
         {
             control.Backgrounds = new()
             {
@@ -261,9 +261,9 @@ namespace PropertyGridSample
 
             Actions.Add(typeof(Panel), InitPanel);
 
-            Actions.Add(typeof(Control), (c) =>
+            Actions.Add(typeof(AbstractControl), (c) =>
             {
-                Control control = (c as Control)!;
+                AbstractControl control = (c as AbstractControl)!;
                 control.SuggestedSize = defaultListHeight;
             });
 
@@ -288,7 +288,7 @@ namespace PropertyGridSample
 
         private static ControlStateImages? buttonImages;
 
-        public static ControlStateImages GetButtonImages(Control control) =>
+        public static ControlStateImages GetButtonImages(AbstractControl control) =>
             buttonImages ??= LoadButtonImages();
 
         private static ControlStateImages LoadButtonImages()
@@ -368,7 +368,7 @@ namespace PropertyGridSample
 
         public static void InitStackPanel(object control)
         {
-            var parent = control as Control;
+            var parent = control as AbstractControl;
             parent!.SuggestedHeight = 250;
             //parent.BackgroundColor = Color.Cornsilk;
 

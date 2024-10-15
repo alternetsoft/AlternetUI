@@ -95,7 +95,7 @@ namespace Alternet.UI
         /// Gets tooltip using <see cref="IToolTipProvider"/>
         /// specified in the control or in one of its parents.
         /// </summary>
-        public static IRichToolTip? GetToolTip(Control? control)
+        public static IRichToolTip? GetToolTip(AbstractControl? control)
         {
             return control?.GetToolTipProvider()?.Get(control);
         }
@@ -105,7 +105,7 @@ namespace Alternet.UI
         /// specified in the control or in one of its parents.
         /// </summary>
         public static IRichToolTip? ShowToolTip(
-            Control? control,
+            AbstractControl? control,
             object? title,
             string? message,
             MessageBoxIcon? icon = null,

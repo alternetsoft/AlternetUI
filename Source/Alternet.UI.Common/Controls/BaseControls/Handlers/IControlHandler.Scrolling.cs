@@ -6,13 +6,13 @@ namespace Alternet.UI
 {
     public partial interface IControlHandler
     {
-        /// <inheritdoc cref="Control.VertScrollBarInfo"/>
+        /// <inheritdoc cref="AbstractControl.VertScrollBarInfo"/>
         ScrollBarInfo VertScrollBarInfo { get; set; }
 
-        /// <inheritdoc cref="Control.HorzScrollBarInfo"/>
+        /// <inheritdoc cref="AbstractControl.HorzScrollBarInfo"/>
         ScrollBarInfo HorzScrollBarInfo { get; set; }
 
-        /// <inheritdoc cref="Control.BindScrollEvents"/>
+        /// <inheritdoc cref="AbstractControl.BindScrollEvents"/>
         bool BindScrollEvents { get; set; }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// </summary>
         Action? HorizontalScrollBarValueChanged { get; set; }
 
-        /// <inheritdoc cref="Control.IsScrollable"/>
+        /// <inheritdoc cref="AbstractControl.IsScrollable"/>
         bool IsScrollable { get; set; }
 
         /// <summary>

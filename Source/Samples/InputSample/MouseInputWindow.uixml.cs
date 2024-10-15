@@ -109,7 +109,7 @@ namespace InputSample
 
             var prefix = $"{ objectName }.{ eventName}";
 
-            App.LogReplace($"{prefix} [{FormatPoint(Mouse.GetPosition(element as Control))}]", prefix);
+            App.LogReplace($"{prefix} [{FormatPoint(Mouse.GetPosition(element as AbstractControl))}]", prefix);
         }
 
         private void LogMouseButton(
@@ -118,7 +118,7 @@ namespace InputSample
             string eventName,
             object? element) =>
             App.Log(
-                $"{objectName}.{eventName} [{e.ChangedButton}, {FormatPoint(Mouse.GetPosition(element as Control))}]");
+                $"{objectName}.{eventName} [{e.ChangedButton}, {FormatPoint(Mouse.GetPosition(element as AbstractControl))}]");
 
         private void LogMouseWheel(
             MouseEventArgs e,
@@ -126,16 +126,16 @@ namespace InputSample
             string eventName,
             object? element) =>
             App.Log(
-                $"{objectName}.{eventName} [{e.Delta}, {FormatPoint(Mouse.GetPosition(element as Control))}]");
+                $"{objectName}.{eventName} [{e.Delta}, {FormatPoint(Mouse.GetPosition(element as AbstractControl))}]");
 
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) =>
-            LogMouseMove(e, "HelloButton", "Move", (Control)sender);
+            LogMouseMove(e, "HelloButton", "Move", (AbstractControl)sender);
 
         private void HelloButton_MouseDown(object sender, MouseEventArgs e) =>
-            LogMouseButton(e, "HelloButton", "Down", (Control)sender);
+            LogMouseButton(e, "HelloButton", "Down", (AbstractControl)sender);
         
         private void HelloButton_MouseUp(object sender, MouseEventArgs e) =>
-            LogMouseButton(e, "HelloButton", "Up", (Control)sender);
+            LogMouseButton(e, "HelloButton", "Up", (AbstractControl)sender);
 
         static string FormatPoint(PointD pt) => FormatPoint(new PointI((int)pt.X, (int)pt.Y));
         static string FormatPoint(PointI pt) => $"{pt.X}, {pt.Y}";

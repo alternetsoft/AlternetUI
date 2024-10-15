@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Control.GlobalOnLayout"/> event.
+    /// Provides data for the <see cref="AbstractControl.GlobalOnLayout"/> event.
     /// </summary>
     public class DefaultLayoutEventArgs : HandledEventArgs
     {
@@ -20,10 +20,10 @@ namespace Alternet.UI
         /// <param name="bounds">Rectangle in which layout is performed.</param>
         /// <param name="children">List of controls to layout.</param>
         public DefaultLayoutEventArgs(
-            Control container,
+            AbstractControl container,
             LayoutStyle layout,
             RectD bounds,
-            IReadOnlyList<Control> children)
+            IReadOnlyList<AbstractControl> children)
         {
             Container = container;
             Layout = layout;
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <summary>
         /// Container control which childs need to be processed.
         /// </summary>
-        public Control Container { get; }
+        public AbstractControl Container { get; }
 
         /// <summary>
         /// Layout style to use.
@@ -49,6 +49,6 @@ namespace Alternet.UI
         /// <summary>
         /// List of controls to layout.
         /// </summary>
-        public IReadOnlyList<Control> Children { get; set; }
+        public IReadOnlyList<AbstractControl> Children { get; set; }
     }
 }

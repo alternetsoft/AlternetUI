@@ -221,7 +221,7 @@ namespace Alternet.UI
 
             EndInit();
 
-            Control CreateMessageGrid()
+            AbstractControl CreateMessageGrid()
             {
                 var messageGrid = new VerticalStackPanel();
 
@@ -282,7 +282,7 @@ namespace Alternet.UI
                 return messageGrid;
             }
 
-            Control CreateButtonsGrid()
+            AbstractControl CreateButtonsGrid()
             {
                 var buttonsGrid = new HorizontalStackPanel();
                 buttonsGrid.Padding = 10;

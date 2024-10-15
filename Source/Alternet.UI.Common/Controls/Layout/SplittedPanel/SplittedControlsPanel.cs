@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="SplittedControlsPanel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public SplittedControlsPanel(PlatformControl parent)
+        public SplittedControlsPanel(Control parent)
             : this()
         {
             Parent = parent;
@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
-        public Control ActionsControl
+        public AbstractControl ActionsControl
         {
             get
             {
@@ -247,7 +247,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override Control CreateRightPanel()
+        protected override AbstractControl CreateRightPanel()
         {
             return new SideBarPanel();
         }

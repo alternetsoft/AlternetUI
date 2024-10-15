@@ -189,7 +189,7 @@ namespace Alternet.UI
             Fn("Log public objects from Alternet.UI.Port", () =>
             {
                 var items = AssemblyUtils.EnumPublicObjectsForNamespace(
-                    typeof(Control).Assembly,
+                    typeof(AbstractControl).Assembly,
                     "Alternet.UI.Port");
                 App.Log("Public objects from Alternet.UI.Port added to log file");
                 LogRangeToFile(items);
@@ -453,8 +453,8 @@ namespace Alternet.UI
             var canvas1 = GraphicsFactory.GetOrCreateMemoryCanvas(1);
             var canvas2 = GraphicsFactory.GetOrCreateMemoryCanvas(2);
 
-            var textWidth1 = canvas1.MeasureText("Hello", Control.DefaultFont);
-            var textWidth2 = canvas2.MeasureText("Hello", Control.DefaultFont);
+            var textWidth1 = canvas1.MeasureText("Hello", AbstractControl.DefaultFont);
+            var textWidth2 = canvas2.MeasureText("Hello", AbstractControl.DefaultFont);
             App.LogNameValue("Hello width with ScaleFactor 1/2", $"{textWidth1}/{textWidth2}");
 
             App.LogEndSection();
@@ -530,10 +530,10 @@ namespace Alternet.UI
         /// <summary>
         /// Logs control related global information (metrics, fonts, etc.).
         /// </summary>
-        internal static void LogControlInfo(Control control)
+        internal static void LogControlInfo(AbstractControl control)
         {
             App.LogNameValue("Toolbar images", ToolBarUtils.GetDefaultImageSize(control));
-            App.LogNameValue("Control.DefaultFont", Control.DefaultFont.ToInfoString());
+            App.LogNameValue("Control.DefaultFont", AbstractControl.DefaultFont.ToInfoString());
             App.LogNameValue("Font.Default", Font.Default.ToInfoString());
             App.LogNameValue("Splitter.MinSashSize", AllPlatformDefaults.PlatformCurrent.MinSplitterSashSize);
             App.LogNameValue("Control.DPI", control.GetDPI());
@@ -621,7 +621,7 @@ namespace Alternet.UI
             App.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
             App.Log($"AppearanceName = {SystemSettings.AppearanceName}");
 
-            var defaultColors = Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
+            var defaultColors = AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
             LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
             LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
 

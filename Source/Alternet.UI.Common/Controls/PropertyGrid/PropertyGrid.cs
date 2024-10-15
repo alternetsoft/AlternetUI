@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// arbitrary per-property attributes.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class PropertyGrid : PlatformControl, IPropertyGrid
+    public partial class PropertyGrid : Control, IPropertyGrid
     {
         internal const string PropEditClassCheckBox = "CheckBox";
         internal const string PropEditClassChoice = "Choice";
@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PropertyGrid"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PropertyGrid(PlatformControl parent)
+        public PropertyGrid(Control parent)
             : this()
         {
             Parent = parent;
@@ -223,8 +223,8 @@ namespace Alternet.UI
         public ICollection<string> IgnorePropNames => ignorePropNames;
 
         /// <inheritdoc/>
-        public override IReadOnlyList<Control> AllChildrenInLayout
-            => Array.Empty<Control>();
+        public override IReadOnlyList<AbstractControl> AllChildrenInLayout
+            => Array.Empty<AbstractControl>();
 
         /// <summary>
         /// Gets or sets whether boolean properties will be shown as checkboxes.

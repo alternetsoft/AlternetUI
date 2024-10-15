@@ -26,7 +26,7 @@ namespace DrawingSample
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
         private bool shortText;
-        private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
+        private string customFontFamilyName = AbstractControl.DefaultFont.FontFamily.Name;
 
         private int textWidthLimit = 450;
         private int textHeightValue = 50;
@@ -39,7 +39,7 @@ namespace DrawingSample
 
         static TextPage()
         {
-            var defaultSize = Control.DefaultFont.SizeInPoints;
+            var defaultSize = AbstractControl.DefaultFont.SizeInPoints;
             fontInfoFont = new(FontFamily.GenericMonospace, defaultSize);
             fontSize = defaultSize;
         }
@@ -275,7 +275,7 @@ namespace DrawingSample
             return Color.FromArgb(color.A, result);
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new TextPageSettings();
             control.Initialize(this);

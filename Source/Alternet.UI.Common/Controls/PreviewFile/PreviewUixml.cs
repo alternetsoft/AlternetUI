@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewUixml"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PreviewUixml(PlatformControl parent)
+        public PreviewUixml(Control parent)
             : this()
         {
             Parent = parent;
@@ -83,7 +83,7 @@ namespace Alternet.UI
             }
         }
 
-        Control IFilePreview.Control { get => this; }
+        AbstractControl IFilePreview.Control { get => this; }
 
         /// <summary>
         /// Gets whether specified file is supported in this preview control.

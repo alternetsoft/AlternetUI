@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Occurs when hovered control is changed. Control is hovered when mouse pointer is over it.
@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Occurs inside <see cref="GetPreferredSize(SizeD)"/> method.
         /// </summary>
         /// <remarks>
-        /// If default <see cref="Control.GetPreferredSize(SizeD)"/> call is not needed,
+        /// If default <see cref="AbstractControl.GetPreferredSize(SizeD)"/> call is not needed,
         /// set <see cref="HandledEventArgs.Handled"/>
         /// property to <c>true</c>.
         /// </remarks>
@@ -198,7 +198,7 @@ namespace Alternet.UI
         public event EventHandler? LostFocus;
 
         /// <summary>
-        /// Occurs when the <see cref="Control.Text" /> property value changes.
+        /// Occurs when the <see cref="AbstractControl.Text" /> property value changes.
         /// </summary>
         [Category("Property Changed")]
         public event EventHandler? TextChanged;
@@ -210,7 +210,7 @@ namespace Alternet.UI
         public event KeyPressEventHandler? KeyPress;
 
         /// <summary>
-        /// Occurs before the <see cref="Control.KeyDown" /> event when a key is pressed
+        /// Occurs before the <see cref="AbstractControl.KeyDown" /> event when a key is pressed
         /// while focus is on this control.
         /// </summary>
         [Category("Key")]
@@ -341,19 +341,19 @@ namespace Alternet.UI
         /// Occurs when the child control is removed from this control.
         /// </summary>
         [Category("Behavior")]
-        public event EventHandler<BaseEventArgs<Control>>? ChildRemoved;
+        public event EventHandler<BaseEventArgs<AbstractControl>>? ChildRemoved;
 
         /// <summary>
         /// Occurs when the child control's <see cref="Visible"/> property is changed.
         /// </summary>
         [Category("Behavior")]
-        public event EventHandler<BaseEventArgs<Control>>? ChildVisibleChanged;
+        public event EventHandler<BaseEventArgs<AbstractControl>>? ChildVisibleChanged;
 
         /// <summary>
         /// Occurs when the child control is added to this control.
         /// </summary>
         [Category("Behavior")]
-        public event EventHandler<BaseEventArgs<Control>>? ChildInserted;
+        public event EventHandler<BaseEventArgs<AbstractControl>>? ChildInserted;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.

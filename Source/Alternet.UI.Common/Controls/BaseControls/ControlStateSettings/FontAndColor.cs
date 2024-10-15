@@ -252,15 +252,15 @@ namespace Alternet.UI
 
             /// <inheritdoc/>
             public override Color? BackgroundColor =>
-                Control.GetClassDefaultAttributesBgColor(controlType, renderSize);
+                AbstractControl.GetClassDefaultAttributesBgColor(controlType, renderSize);
 
             /// <inheritdoc/>
             public override Color? ForegroundColor =>
-                Control.GetClassDefaultAttributesFgColor(controlType, renderSize);
+                AbstractControl.GetClassDefaultAttributesFgColor(controlType, renderSize);
 
             /// <inheritdoc/>
             public override Font? Font =>
-                Control.GetClassDefaultAttributesFont(controlType, renderSize);
+                AbstractControl.GetClassDefaultAttributesFont(controlType, renderSize);
         }
     }
 }

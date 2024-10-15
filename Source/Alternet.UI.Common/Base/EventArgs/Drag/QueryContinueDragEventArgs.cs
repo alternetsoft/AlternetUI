@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the method that will handle the <see cref="Control.QueryContinueDrag" /> event.</summary>
+    /// Represents the method that will handle the <see cref="AbstractControl.QueryContinueDrag" /> event.</summary>
     /// <param name="sender">The source of an event.</param>
     /// <param name="e">A <see cref="QueryContinueDragEventArgs" />
     /// that contains the event data.</param>
     public delegate void QueryContinueDragEventHandler(object? sender, QueryContinueDragEventArgs e);
 
     /// <summary>
-    /// Provides data for the <see cref="Control.QueryContinueDrag" /> event.</summary>
+    /// Provides data for the <see cref="AbstractControl.QueryContinueDrag" /> event.</summary>
     public class QueryContinueDragEventArgs : EventArgs
     {
         private readonly int keyState;

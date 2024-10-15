@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control for which to get the parent page.</param>
         /// <returns></returns>
-        public static Microsoft.Maui.Controls.Page? GetParentPage(Control? control)
+        public static Microsoft.Maui.Controls.Page? GetParentPage(AbstractControl? control)
         {
             var mainPage = Microsoft.Maui.Controls.Application.Current?.MainPage;
 
@@ -77,7 +77,7 @@ namespace Alternet.UI
         /// <param name="position">Point in screen coordinates.</param>
         /// <param name="control">Control.</param>
         /// <returns></returns>
-        public static PointD ScreenToClient(PointD position, Control control)
+        public static PointD ScreenToClient(PointD position, AbstractControl control)
         {
             var topLeft = ClientToScreen(PointD.Empty, control);
 
@@ -93,7 +93,7 @@ namespace Alternet.UI
         /// <param name="position">Point in client coordinates.</param>
         /// <param name="control">Control.</param>
         /// <returns></returns>
-        public static PointD ClientToScreen(PointD position, Control control)
+        public static PointD ClientToScreen(PointD position, AbstractControl control)
         {
             PointD absolutePos;
 
@@ -143,9 +143,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Control? GetFocusedControl()
+        public virtual AbstractControl? GetFocusedControl()
         {
-            return Control.FocusedControl;
+            return AbstractControl.FocusedControl;
         }
 
         /// <inheritdoc/>
@@ -244,7 +244,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual ICaretHandler CreateCaretHandler(Control control, int width, int height)
+        public virtual ICaretHandler CreateCaretHandler(AbstractControl control, int width, int height)
         {
             if(WindowsCaretHandler.UseIfPossible)
                 return new WindowsCaretHandler(control, width, height);

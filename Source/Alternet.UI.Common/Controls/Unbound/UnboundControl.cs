@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal class UnboundControl : PlatformControl
+    internal class UnboundControl : Control
     {
         public static bool UseUnboundControls = true;
 
-        public static IControlHandler CreateUnboundControlHandler(Control control)
+        public static IControlHandler CreateUnboundControlHandler(AbstractControl control)
         {
             if(UseUnboundControls)
                 return new PlessControlHandler();

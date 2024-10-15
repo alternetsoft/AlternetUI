@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// In the <see cref="InitDefaults"/> event handler you can implement custom control
-        /// initialization. Use <see cref="Control.GetDefaults"/> to get
+        /// initialization. Use <see cref="AbstractControl.GetDefaults"/> to get
         /// defaults for the specific control on the current platform.
         /// </remarks>
         public event EventHandler? InitDefaults;

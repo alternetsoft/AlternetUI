@@ -46,7 +46,7 @@ namespace Alternet.UI
             Application.Context.GetSystemService(Context.InputMethodService) as InputMethodManager;
 
         public virtual Alternet.UI.KeyEventArgs ToKeyEventArgs(
-                    Control control,
+                    AbstractControl control,
                     KeyStates keyStates,
                     Keycode keyCode,
                     KeyEvent e)
@@ -741,7 +741,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool HideKeyboard(Control? control)
+        public override bool HideKeyboard(AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)
@@ -763,7 +763,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool IsSoftKeyboardShowing(Control? control)
+        public override bool IsSoftKeyboardShowing(AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)
@@ -778,7 +778,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool ShowKeyboard(Control? control)
+        public override bool ShowKeyboard(AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)

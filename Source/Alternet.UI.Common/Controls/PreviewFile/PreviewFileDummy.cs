@@ -8,6 +8,6 @@ namespace Alternet.UI
     {
         public string? FileName { get; set; }
 
-        public Control Control => this;
+        public AbstractControl Control => this;
     }
 }

@@ -222,7 +222,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                var result = Font ?? Parent?.Font ?? Control.DefaultFont;
+                var result = Font ?? Parent?.Font ?? AbstractControl.DefaultFont;
                 var realFontStyle = RealFontStyle;
 
                 if (realFontStyle is null)

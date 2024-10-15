@@ -11,13 +11,13 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for all container controls.
     /// </summary>
-    public class ContainerControl : PlatformControl
+    public class ContainerControl : Control
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ContainerControl(PlatformControl parent)
+        public ContainerControl(Control parent)
             : this()
         {
             Parent = parent;
@@ -31,7 +31,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="TabControl"/> and adds it to the <see cref="Control.Children"/>.
+        /// Creates new <see cref="TabControl"/> and adds it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual TabControl AddTabControl()
         {
@@ -43,7 +43,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="VerticalStackPanel"/> and adds it to the <see cref="Control.Children"/>.
+        /// Creates new <see cref="VerticalStackPanel"/> and adds it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual VerticalStackPanel AddVerticalStackPanel()
         {
@@ -55,7 +55,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="StackPanel"/> and adds it to the <see cref="Control.Children"/>.
+        /// Creates new <see cref="StackPanel"/> and adds it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual StackPanel AddStackPanel(bool isVertical = true)
         {
@@ -75,7 +75,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="Button"/> and adds it to the <see cref="Control.Children"/>.
+        /// Creates new <see cref="Button"/> and adds it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual Button AddButton(string text, Action? action = null)
         {
@@ -96,7 +96,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="CheckBox"/> and adds it to the <see cref="Control.Children"/>.
+        /// Creates new <see cref="CheckBox"/> and adds it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual CheckBox AddCheckBox(string text, Action? action = null)
         {
@@ -123,7 +123,7 @@ namespace Alternet.UI
         /// <returns><see cref="ControlSet"/> with list of created buttons.</returns>
         public virtual ControlSet AddButtons(params (string, Action?)[] buttons)
         {
-            List<Control> result = new();
+            List<AbstractControl> result = new();
 
             this.DoInsideLayout(() =>
             {
@@ -139,7 +139,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates new <see cref="HorizontalStackPanel"/> and adds
-        /// it to the <see cref="Control.Children"/>.
+        /// it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual HorizontalStackPanel AddHorizontalStackPanel()
         {
@@ -151,7 +151,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="GroupBox"/> and adds it to the <see cref="Control.Children"/>.
+        /// Creates new <see cref="GroupBox"/> and adds it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual GroupBox AddGroupBox(string? title = default)
         {
@@ -167,7 +167,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates new <see cref="GroupBox"/> with vertical layout and adds
-        /// it to the <see cref="Control.Children"/>.
+        /// it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual GroupBox AddVerticalGroupBox(string? title = default)
         {
@@ -184,7 +184,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates new <see cref="GroupBox"/> with horizontal layout and adds
-        /// it to the <see cref="Control.Children"/>.
+        /// it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual GroupBox AddHorizontalGroupBox(string? title = default)
         {
@@ -206,7 +206,7 @@ namespace Alternet.UI
         /// <returns><see cref="ControlSet"/> with list of created labels.</returns>
         public virtual ControlSet AddLabels(params string[] text)
         {
-            List<Control> result = new();
+            List<AbstractControl> result = new();
 
             this.DoInsideLayout(() =>
             {
@@ -221,7 +221,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="Label"/> and adds it to the <see cref="Control.Children"/>.
+        /// Creates new <see cref="Label"/> and adds it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual Label AddLabel(string text)
         {

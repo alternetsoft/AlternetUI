@@ -30,7 +30,7 @@ namespace Alternet.UI
             ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl;
             ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl2;
 
-            Control.FocusedControlChanged += (s, e) =>
+            AbstractControl.FocusedControlChanged += (s, e) =>
             {
                 if (LogFocusedControl)
                     App.LogReplace($"FocusedControl: {FocusedControl?.GetType()}", "FocusedControl:");
@@ -111,7 +111,7 @@ namespace Alternet.UI
             pageContainer?.SetDebugColors();
         }
 
-        public void AddPage(string title, Func<Control> action)
+        public void AddPage(string title, Func<AbstractControl> action)
         {
             if (DebugUtils.DebugLoading)
             {
@@ -180,7 +180,7 @@ namespace Alternet.UI
             App.Log($"Size changed: {Size}, {this.State}");
         }
 
-        protected Control CreateCustomPage(NameValue<Func<Control>>?[] pages)
+        protected AbstractControl CreateCustomPage(NameValue<Func<AbstractControl>>?[] pages)
         {
             TabControl result = new()
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Called when the <see cref="CellChanged" /> event is raised.
@@ -19,7 +19,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the <see cref="Control.PreviewKeyDown" /> event is raised.
+        /// Called when the <see cref="AbstractControl.PreviewKeyDown" /> event is raised.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnPreviewKeyDown(Key key, ModifierKeys modifiers, ref bool isInputKey)
@@ -83,20 +83,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when a <see cref="Control"/> is inserted into
-        /// the <see cref="Control.Children"/>.
+        /// Called when a <see cref="AbstractControl"/> is inserted into
+        /// the <see cref="AbstractControl.Children"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildInserted(int index, Control childControl)
+        protected virtual void OnChildInserted(int index, AbstractControl childControl)
         {
         }
 
         /// <summary>
-        /// Called when a <see cref="Control"/> is removed from the
-        /// <see cref="Control.Children"/> collections.
+        /// Called when a <see cref="AbstractControl"/> is removed from the
+        /// <see cref="AbstractControl.Children"/> collections.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildRemoved(Control childControl)
+        protected virtual void OnChildRemoved(AbstractControl childControl)
         {
         }
 

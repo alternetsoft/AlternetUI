@@ -7,12 +7,12 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
-        /// Represents a collection of <see cref="Control" /> objects.
+        /// Represents a collection of <see cref="AbstractControl" /> objects.
         /// </summary>
-        public class ControlCollection : Collection<Control>
+        public class ControlCollection : Collection<AbstractControl>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="ControlCollection"/> class.

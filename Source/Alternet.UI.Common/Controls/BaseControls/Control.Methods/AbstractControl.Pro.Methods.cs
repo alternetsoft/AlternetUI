@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Disconnects the current control handler from the control.
@@ -19,7 +19,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the size of the control specified in its
-        /// <see cref="Control.SuggestedWidth"/> and <see cref="Control.SuggestedHeight"/>
+        /// <see cref="AbstractControl.SuggestedWidth"/> and <see cref="AbstractControl.SuggestedHeight"/>
         /// properties or calculates preferred size from its children.
         /// </summary>
         protected virtual SizeD GetSpecifiedOrChildrenPreferredSize(SizeD availableSize)
@@ -192,7 +192,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         /// <remarks>
-        /// This method returns <see cref="LayoutStyle.Basic"/> in <see cref="Control"/>.
+        /// This method returns <see cref="LayoutStyle.Basic"/> in <see cref="AbstractControl"/>.
         /// </remarks>
         protected virtual LayoutStyle GetDefaultLayout()
         {
@@ -203,7 +203,7 @@ namespace Alternet.UI
         /// Gets whether child control ignores layout.
         /// </summary>
         /// <param name="control"></param>
-        protected virtual bool ChildIgnoresLayout(Control control)
+        protected virtual bool ChildIgnoresLayout(AbstractControl control)
         {
             return !control.Visible || control.IgnoreLayout;
         }

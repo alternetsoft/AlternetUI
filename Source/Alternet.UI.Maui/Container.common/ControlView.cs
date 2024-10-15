@@ -21,7 +21,7 @@ using SkiaSharp.Views.Maui.Controls;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="Alternet.UI.Control"/> container using <see cref="SKCanvasView"/>.
+    /// Implements <see cref="Alternet.UI.AbstractControl"/> container using <see cref="SKCanvasView"/>.
     /// </summary>
     public partial class ControlView : SKCanvasView
     {
@@ -29,7 +29,7 @@ namespace Alternet.UI
         private PanGestureRecognizer? panGesture;
         private InteriorDrawable? interior;
         private SkiaGraphics? graphics;
-        private Alternet.UI.Control? control;
+        private Alternet.UI.AbstractControl? control;
 
         static ControlView()
         {
@@ -81,9 +81,9 @@ namespace Alternet.UI
         public virtual bool UseUnscaledDrawImage { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets attached <see cref="Alternet.UI.Control"/>.
+        /// Gets or sets attached <see cref="Alternet.UI.AbstractControl"/>.
         /// </summary>
-        public virtual Alternet.UI.Control? Control
+        public virtual Alternet.UI.AbstractControl? Control
         {
             get => control;
 
@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to get container from.</param>
         /// <returns></returns>
-        public static ControlView? GetContainer(Control? control)
+        public static ControlView? GetContainer(AbstractControl? control)
         {
             if (control?.Handler is MauiControlHandler handler)
                 return handler.Container;
@@ -132,7 +132,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to get <see cref="PlatformView"/> from.</param>
         /// <returns></returns>
-        public static PlatformView? GetPlatformView(Control? control)
+        public static PlatformView? GetPlatformView(AbstractControl? control)
         {
             var container = GetContainer(control);
             if (container is null)

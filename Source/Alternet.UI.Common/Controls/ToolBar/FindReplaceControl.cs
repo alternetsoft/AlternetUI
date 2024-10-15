@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public FindReplaceControl(PlatformControl parent)
+        public FindReplaceControl(Control parent)
             : this()
         {
             Parent = parent;
@@ -965,7 +965,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">Event arguments.</param>
         /// <remarks>
-        /// You can use this method in the <see cref="Control.KeyDown"/> event handlers.
+        /// You can use this method in the <see cref="AbstractControl.KeyDown"/> event handlers.
         /// <see cref="WantKeys"/> specifies whether <see cref="HandleKeys"/>
         /// is called automatically.
         /// </remarks>

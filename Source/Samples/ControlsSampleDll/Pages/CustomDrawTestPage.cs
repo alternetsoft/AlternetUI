@@ -151,7 +151,7 @@ namespace ControlsSample
         public static void PaintInteriorDrawable(
             InteriorDrawable drawable,
             ScrollBar.KnownTheme theme,
-            Control control,
+            AbstractControl control,
             Graphics canvas,
             RectD rect,
             ScrollBar.AltPositionInfo position)
@@ -211,13 +211,13 @@ namespace ControlsSample
         {
             customDrawControl.SetPaintAction(DrawTemplate);
 
-            void DrawTemplate(Control container, Graphics canvas, RectD rect)
+            void DrawTemplate(AbstractControl container, Graphics canvas, RectD rect)
             {
                 controlTemplate.HasBorder = true;
                 TemplateUtils.DrawControlTemplate(controlTemplate, canvas, (100, 250)); 
                 controlTemplate.HasBorder = false;
 
-                var font = controlTemplate.Font ?? Control.DefaultFont;
+                var font = controlTemplate.Font ?? AbstractControl.DefaultFont;
                 canvas.DrawText("Hello", font, Brushes.Green, (15, 15));
             }
         }

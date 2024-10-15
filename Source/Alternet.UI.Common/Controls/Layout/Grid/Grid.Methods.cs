@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The control on which to set the column index.</param>
         /// <param name="value">The 0-based column index to set.</param>
-        public static void SetColumn(Control control, int value)
+        public static void SetColumn(AbstractControl control, int value)
         {
             if (control is not null)
                 control.ColumnIndex = value;
@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// <param name="control">The control on which to set the column index.</param>
         /// <param name="row">The 0-based row index to set.</param>
         /// <param name="col">The 0-based column index to set.</param>
-        public static void SetRowColumn(Control control, int row, int col)
+        public static void SetRowColumn(AbstractControl control, int row, int col)
         {
             control?.SetRowColumn(row, col);
         }
@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The control for which to get the column index.</param>
         /// <remarks>The 0-based column index.</remarks>
-        public static int GetColumn(Control control)
+        public static int GetColumn(AbstractControl control)
         {
             return control?.ColumnIndex ?? 0;
         }
@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The control on which to set the row index.</param>
         /// <param name="value">The 0-based row index to set.</param>
-        public static void SetRow(Control control, int value)
+        public static void SetRow(AbstractControl control, int value)
         {
             if (control is not null)
                 control.RowIndex = value;
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The control for which to get the row index.</param>
         /// <remarks>The 0-based row index.</remarks>
-        public static int GetRow(Control control)
+        public static int GetRow(AbstractControl control)
         {
             return control?.RowIndex ?? 0;
         }
@@ -115,7 +115,7 @@ namespace Alternet.UI
         /// <param name="control">The control for which to get the row span.</param>
         /// <returns>The total number of rows that child content spans within a
         /// <see cref="Grid"/>.</returns>
-        public static int GetRowSpan(Control control)
+        public static int GetRowSpan(AbstractControl control)
         {
             return control?.RowSpan ?? 1;
         }
@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// <param name="control">The control for which to set the row span.</param>
         /// <param name="value">The total number of rows that child content spans within
         /// a <see cref="Grid"/>.</param>
-        public static void SetRowSpan(Control control, int value)
+        public static void SetRowSpan(AbstractControl control, int value)
         {
             if (control is not null)
                 control.RowSpan = value;
@@ -140,7 +140,7 @@ namespace Alternet.UI
         /// <param name="control">The control for which to get the column span.</param>
         /// <returns>The total number of columns that child content spans within a
         /// <see cref="Grid"/>.</returns>
-        public static int GetColumnSpan(Control control)
+        public static int GetColumnSpan(AbstractControl control)
         {
             return control?.ColumnSpan ?? 1;
         }
@@ -152,7 +152,7 @@ namespace Alternet.UI
         /// <param name="control">The control for which to set the column span.</param>
         /// <param name="value">The total number of columns that child content spans
         /// within a <see cref="Grid"/>.</param>
-        public static void SetColumnSpan(Control control, int value)
+        public static void SetColumnSpan(AbstractControl control, int value)
         {
             if (control is not null)
                 control.ColumnSpan = value;
@@ -164,10 +164,10 @@ namespace Alternet.UI
         /// <param name="controls">Grid controls.</param>
         /// <remarks>
         /// Dimensions for all rows and columns are set to <see cref="GridLength.Auto"/>.
-        /// <see cref="Control.SetRowColumn"/> is called for the each control with row and column
+        /// <see cref="AbstractControl.SetRowColumn"/> is called for the each control with row and column
         /// indexes equal to position in the <paramref name="controls"/> array.
         /// </remarks>
-        public void Setup(Control[,] controls)
+        public void Setup(AbstractControl[,] controls)
         {
             var rowCount = controls.GetLength(0);
             var colCount = controls.GetLength(1);

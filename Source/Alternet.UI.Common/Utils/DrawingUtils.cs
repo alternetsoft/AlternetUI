@@ -21,13 +21,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Specifies the control which parent's background
         /// is changed</param>
-        public static void SetDebugBackgroundToParents(Control? control)
+        public static void SetDebugBackgroundToParents(AbstractControl? control)
         {
-            static Control? SetParentBackground(Control? control, Brush brush)
+            static AbstractControl? SetParentBackground(AbstractControl? control, Brush brush)
             {
                 if (control == null)
                     return null;
-                Control? parent = control?.Parent;
+                AbstractControl? parent = control?.Parent;
                 if (parent != null)
                     parent.Background = brush;
                 return parent;
@@ -41,7 +41,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="IControlPainterHandler.GetCheckBoxSize"/>
         public static SizeD GetCheckBoxSize(
-            Control control,
+            AbstractControl control,
             CheckState checkState,
             VisualControlState controlState)
         {
@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="IControlPainterHandler.DrawCheckBox"/>
         public static void DrawCheckBox(
             this Graphics canvas,
-            Control control,
+            AbstractControl control,
             RectD rect,
             CheckState checkState,
             VisualControlState controlState)
@@ -79,7 +79,7 @@ namespace Alternet.UI
             Brush? brush,
             BorderSettings? border,
             bool hasBorder = true,
-            Control? control = null)
+            AbstractControl? control = null)
         {
             if (brush is null && border is null)
                 return;
@@ -123,7 +123,7 @@ namespace Alternet.UI
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
         /// <param name="border">Border settings.</param>
-        public static void DrawBorder(Control? control, Graphics dc, RectD rect, BorderSettings? border)
+        public static void DrawBorder(AbstractControl? control, Graphics dc, RectD rect, BorderSettings? border)
         {
             if (border is null)
                 return;

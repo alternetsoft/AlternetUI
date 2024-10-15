@@ -10,311 +10,311 @@ namespace Alternet.UI
     public class ControlNotification : DisposableObject, IControlNotification
     {
         /// <inheritdoc/>
-        public virtual void AfterLongTap(Control sender, LongTapEventArgs e)
+        public virtual void AfterLongTap(AbstractControl sender, LongTapEventArgs e)
         {
         }
 
         /// <inheritdoc/>
         public virtual void AfterSetScrollBarInfo(
-            Control sender,
+            AbstractControl sender,
             bool isVertical,
             ScrollBarInfo value)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterScroll(Control sender, ScrollEventArgs e)
+        public virtual void AfterScroll(AbstractControl sender, ScrollEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterActivated(Control sender)
+        public virtual void AfterActivated(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterCellChanged(Control sender)
+        public virtual void AfterCellChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterChildInserted(Control sender, int index, Control childControl)
+        public virtual void AfterChildInserted(AbstractControl sender, int index, AbstractControl childControl)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterChildRemoved(Control sender, Control childControl)
+        public virtual void AfterChildRemoved(AbstractControl sender, AbstractControl childControl)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterClick(Control sender)
+        public virtual void AfterClick(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDeactivated(Control sender)
+        public virtual void AfterDeactivated(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDpiChanged(Control sender, DpiChangedEventArgs e)
+        public virtual void AfterDpiChanged(AbstractControl sender, DpiChangedEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDragDrop(Control sender, DragEventArgs e)
+        public virtual void AfterDragDrop(AbstractControl sender, DragEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDragEnter(Control sender, DragEventArgs e)
+        public virtual void AfterDragEnter(AbstractControl sender, DragEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDragLeave(Control sender)
+        public virtual void AfterDragLeave(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDragOver(Control sender, DragEventArgs e)
+        public virtual void AfterDragOver(AbstractControl sender, DragEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDragStart(Control sender, DragStartEventArgs e)
+        public virtual void AfterDragStart(AbstractControl sender, DragStartEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterEnabledChanged(Control sender)
+        public virtual void AfterEnabledChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterFontChanged(Control sender)
+        public virtual void AfterFontChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterGotFocus(Control sender)
+        public virtual void AfterGotFocus(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandleCreated(Control sender)
+        public virtual void AfterHandleCreated(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandleDestroyed(Control sender)
+        public virtual void AfterHandleDestroyed(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerAttached(Control sender)
+        public virtual void AfterHandlerAttached(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerDetaching(Control sender)
+        public virtual void AfterHandlerDetaching(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerLocationChanged(Control sender)
+        public virtual void AfterHandlerLocationChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerSizeChanged(Control sender)
+        public virtual void AfterHandlerSizeChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHelpRequested(Control sender, HelpEventArgs e)
+        public virtual void AfterHelpRequested(AbstractControl sender, HelpEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterIdle(Control sender)
+        public virtual void AfterIdle(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterIsMouseOverChanged(Control sender)
+        public virtual void AfterIsMouseOverChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterKeyDown(Control sender, KeyEventArgs e)
+        public virtual void AfterKeyDown(AbstractControl sender, KeyEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterKeyPress(Control sender, KeyPressEventArgs e)
+        public virtual void AfterKeyPress(AbstractControl sender, KeyPressEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterKeyUp(Control sender, KeyEventArgs e)
+        public virtual void AfterKeyUp(AbstractControl sender, KeyEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterLocationChanged(Control sender)
+        public virtual void AfterLocationChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterLostFocus(Control sender)
+        public virtual void AfterLostFocus(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMarginChanged(Control sender)
+        public virtual void AfterMarginChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseCaptureLost(Control sender)
+        public virtual void AfterMouseCaptureLost(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseDoubleClick(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseDoubleClick(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseDown(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseDown(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseEnter(Control sender)
+        public virtual void AfterMouseEnter(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseLeave(Control sender)
+        public virtual void AfterMouseLeave(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseLeftButtonDown(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseLeftButtonDown(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseLeftButtonUp(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseLeftButtonUp(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseMove(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseMove(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseRightButtonDown(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseRightButtonDown(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseRightButtonUp(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseRightButtonUp(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseUp(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseUp(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseWheel(Control sender, MouseEventArgs e)
+        public virtual void AfterMouseWheel(AbstractControl sender, MouseEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterPaddingChanged(Control sender)
+        public virtual void AfterPaddingChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterPaint(Control sender, PaintEventArgs e)
+        public virtual void AfterPaint(AbstractControl sender, PaintEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterPaintBackground(Control sender, PaintEventArgs e)
+        public virtual void AfterPaintBackground(AbstractControl sender, PaintEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterParentChanged(Control sender)
+        public virtual void AfterParentChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterProcessException(Control sender, ThrowExceptionEventArgs e)
+        public virtual void AfterProcessException(AbstractControl sender, ThrowExceptionEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterQueryContinueDrag(Control sender, QueryContinueDragEventArgs e)
+        public virtual void AfterQueryContinueDrag(AbstractControl sender, QueryContinueDragEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterResize(Control sender)
+        public virtual void AfterResize(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterSizeChanged(Control sender)
+        public virtual void AfterSizeChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterSystemColorsChanged(Control sender)
+        public virtual void AfterSystemColorsChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterTextChanged(Control sender)
+        public virtual void AfterTextChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterTitleChanged(Control sender)
+        public virtual void AfterTitleChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterToolTipChanged(Control sender)
+        public virtual void AfterToolTipChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterTouch(Control sender, TouchEventArgs e)
+        public virtual void AfterTouch(AbstractControl sender, TouchEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterVisibleChanged(Control sender)
+        public virtual void AfterVisibleChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterVisualStateChanged(Control sender)
+        public virtual void AfterVisualStateChanged(AbstractControl sender)
         {
         }
 
         /// <inheritdoc/>
         public virtual void AfterPreviewKeyDown(
-            Control sender,
+            AbstractControl sender,
             Key key,
             ModifierKeys modifiers,
             ref bool isInputKey)

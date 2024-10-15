@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="HexEditorUInt32"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public HexEditorUInt32(PlatformControl parent)
+        public HexEditorUInt32(Control parent)
             : this()
         {
             Parent = parent;

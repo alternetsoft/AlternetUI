@@ -12,7 +12,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Provides resizing of docked elements. You can dock some control to an edge of a
-    /// container using <see cref="Control.Dock"/> property,
+    /// container using <see cref="AbstractControl.Dock"/> property,
     /// and then dock the splitter to the same edge.
     /// The splitter resizes the control that is previous in the docking order.
     /// </summary>
@@ -38,7 +38,7 @@ namespace Alternet.UI
         private Coord minSize = 25;
         private Coord minExtra = 25;
         private PointD anchor = PointD.Empty;
-        private Control? splitTarget;
+        private AbstractControl? splitTarget;
         private Coord splitSize = -1;
         private Coord splitterThickness = DefaultWidth;
         private Coord initTargetSize;
@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Splitter"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Splitter(PlatformControl parent)
+        public Splitter(Control parent)
             : this()
         {
             Parent = parent;
@@ -551,7 +551,7 @@ namespace Alternet.UI
                 Coord dockWidth = 0, dockHeight = 0;
                 for (int i = 0; i < count; i++)
                 {
-                    Control ctl = children[i];
+                    AbstractControl ctl = children[i];
                     if (ctl != target)
                     {
                         switch (ctl.Dock)
@@ -593,7 +593,7 @@ namespace Alternet.UI
         /// is docked right, the target is the control that is just to the right
         /// of the splitter.
         /// </summary>
-        private Control? FindTarget()
+        private AbstractControl? FindTarget()
         {
             return NextSibling;
         }
@@ -701,7 +701,7 @@ namespace Alternet.UI
         {
             public Coord DockWidth = -1;
             public Coord DockHeight = -1;
-            public Control? Target;
+            public AbstractControl? Target;
         }
     }
 }

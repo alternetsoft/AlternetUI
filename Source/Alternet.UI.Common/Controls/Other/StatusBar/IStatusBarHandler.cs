@@ -20,7 +20,7 @@ namespace Alternet.UI
         bool SizingGripVisible { get; set; }
 
         /// <inheritdoc cref="StatusBar.AttachedTo"/>
-        Control? AttachedTo { get; }
+        AbstractControl? AttachedTo { get; }
 
         /// <inheritdoc cref="StatusBar.TextEllipsize"/>
         TextEllipsizeType TextEllipsize { get; set; }

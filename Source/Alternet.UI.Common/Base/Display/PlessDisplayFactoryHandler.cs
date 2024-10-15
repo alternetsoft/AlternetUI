@@ -37,7 +37,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual int GetFromControl(Control control)
+        public virtual int GetFromControl(AbstractControl control)
         {
             return 0;
         }

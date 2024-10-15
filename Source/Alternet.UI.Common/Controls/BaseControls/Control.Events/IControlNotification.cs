@@ -12,164 +12,164 @@ namespace Alternet.UI
     public interface IControlNotification : IDisposable
     {
         /// <summary>
-        /// Called after the <see cref="Control.PreviewKeyDown" /> event is raised.
+        /// Called after the <see cref="AbstractControl.PreviewKeyDown" /> event is raised.
         /// </summary>
-        void AfterPreviewKeyDown(Control sender, Key key, ModifierKeys modifiers, ref bool isInputKey);
+        void AfterPreviewKeyDown(AbstractControl sender, Key key, ModifierKeys modifiers, ref bool isInputKey);
 
         /// <summary>
-        /// Called after the <see cref="Control.LongTap" /> event is raised.
+        /// Called after the <see cref="AbstractControl.LongTap" /> event is raised.
         /// </summary>
-        void AfterLongTap(Control sender, LongTapEventArgs e);
+        void AfterLongTap(AbstractControl sender, LongTapEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.SetScrollBarInfo(bool, ScrollBarInfo)" />
+        /// Called after the <see cref="AbstractControl.SetScrollBarInfo(bool, ScrollBarInfo)" />
         /// method is called.
         /// </summary>
-        void AfterSetScrollBarInfo(Control sender, bool isVertical, ScrollBarInfo value);
+        void AfterSetScrollBarInfo(AbstractControl sender, bool isVertical, ScrollBarInfo value);
 
         /// <summary>
-        /// Called after the <see cref="Control.Scroll" /> event is raised.
+        /// Called after the <see cref="AbstractControl.Scroll" /> event is raised.
         /// </summary>
-        void AfterScroll(Control sender, ScrollEventArgs e);
+        void AfterScroll(AbstractControl sender, ScrollEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.CellChanged" /> event is raised.
+        /// Called after the <see cref="AbstractControl.CellChanged" /> event is raised.
         /// </summary>
-        void AfterCellChanged(Control sender);
+        void AfterCellChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.SystemColorsChanged" /> event is raised.
+        /// Called after the <see cref="AbstractControl.SystemColorsChanged" /> event is raised.
         /// </summary>
-        void AfterSystemColorsChanged(Control sender);
+        void AfterSystemColorsChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.SizeChanged" /> event.
+        /// Called after the <see cref="AbstractControl.SizeChanged" /> event.
         /// </summary>
-        void AfterSizeChanged(Control sender);
+        void AfterSizeChanged(AbstractControl sender);
 
         /// <summary>
         /// Called when when the application finishes processing events and is
         /// about to enter the idle state.
         /// </summary>
-        void AfterIdle(Control sender);
+        void AfterIdle(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.Resize" /> event is raised.
+        /// Called after the <see cref="AbstractControl.Resize" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterResize(Control sender);
+        void AfterResize(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.LocationChanged" /> event is raised.
+        /// Called after the <see cref="AbstractControl.LocationChanged" /> event is raised.
         /// </summary>
-        void AfterLocationChanged(Control sender);
+        void AfterLocationChanged(AbstractControl sender);
 
         /// <summary>
         /// Called after a child control is inserted into
-        /// the <see cref="Control.Children"/> of the <paramref name="sender"/>.
+        /// the <see cref="AbstractControl.Children"/> of the <paramref name="sender"/>.
         /// </summary>
-        void AfterChildInserted(Control sender, int index, Control childControl);
+        void AfterChildInserted(AbstractControl sender, int index, AbstractControl childControl);
 
         /// <summary>
-        /// Called after a <see cref="Control"/> is removed from the
-        /// <see cref="Control.Children"/> collection of the <paramref name="sender"/>.
+        /// Called after a <see cref="AbstractControl"/> is removed from the
+        /// <see cref="AbstractControl.Children"/> collection of the <paramref name="sender"/>.
         /// </summary>
-        void AfterChildRemoved(Control sender, Control childControl);
+        void AfterChildRemoved(AbstractControl sender, AbstractControl childControl);
 
         /// <summary>
         /// Called after the conrol's handle is created.
         /// </summary>
-        void AfterHandleCreated(Control sender);
+        void AfterHandleCreated(AbstractControl sender);
 
         /// <summary>
         /// Called after the native conrol size is changed.
         /// </summary>
-        void AfterHandlerSizeChanged(Control sender);
+        void AfterHandlerSizeChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.Activated" /> event is raised.
+        /// Called after the <see cref="AbstractControl.Activated" /> event is raised.
         /// </summary>
-        void AfterActivated(Control sender);
+        void AfterActivated(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.Deactivated" /> event is raised.
+        /// Called after the <see cref="AbstractControl.Deactivated" /> event is raised.
         /// </summary>
-        void AfterDeactivated(Control sender);
+        void AfterDeactivated(AbstractControl sender);
 
         /// <summary>
         /// Called after the native conrol location is changed.
         /// </summary>
-        void AfterHandlerLocationChanged(Control sender);
+        void AfterHandlerLocationChanged(AbstractControl sender);
 
         /// <summary>
         /// Called after the conrol's handle is destroyed.
         /// </summary>
-        void AfterHandleDestroyed(Control sender);
+        void AfterHandleDestroyed(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.KeyPress" /> event is raised.
+        /// Called after the <see cref="AbstractControl.KeyPress" /> event is raised.
         /// </summary>
-        void AfterKeyPress(Control sender, KeyPressEventArgs e);
+        void AfterKeyPress(AbstractControl sender, KeyPressEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.TextChanged" /> event is raised.
+        /// Called after the <see cref="AbstractControl.TextChanged" /> event is raised.
         /// </summary>
-        void AfterTextChanged(Control sender);
+        void AfterTextChanged(AbstractControl sender);
 
         /// <summary>
         /// Called after the control is clicked.
         /// </summary>
-        void AfterClick(Control sender);
+        void AfterClick(AbstractControl sender);
 
         /// <summary>
-        /// Called after the value of the <see cref="Control.Visible"/> property changes.
+        /// Called after the value of the <see cref="AbstractControl.Visible"/> property changes.
         /// </summary>
-        void AfterVisibleChanged(Control sender);
+        void AfterVisibleChanged(AbstractControl sender);
 
         /// <summary>
         /// Called after the control loses mouse capture.
         /// </summary>
-        void AfterMouseCaptureLost(Control sender);
+        void AfterMouseCaptureLost(AbstractControl sender);
 
         /// <summary>
         /// Called after the mouse pointer enters the control.
         /// </summary>
-        void AfterMouseEnter(Control sender);
+        void AfterMouseEnter(AbstractControl sender);
 
         /// <summary>
         /// Called after the left mouse button was pressed.
         /// </summary>
-        void AfterMouseLeftButtonDown(Control sender, MouseEventArgs e);
+        void AfterMouseLeftButtonDown(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
         /// Called after the left mouse button was released.
         /// </summary>
-        void AfterMouseLeftButtonUp(Control sender, MouseEventArgs e);
+        void AfterMouseLeftButtonUp(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
-        /// Called when <see cref="Control.IsMouseOver"/> property is changed.
+        /// Called when <see cref="AbstractControl.IsMouseOver"/> property is changed.
         /// </summary>
-        void AfterIsMouseOverChanged(Control sender);
+        void AfterIsMouseOverChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the value of the <see cref="Control.Title"/> property changes.
+        /// Called after the value of the <see cref="AbstractControl.Title"/> property changes.
         /// </summary>
-        void AfterTitleChanged(Control sender);
+        void AfterTitleChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called when <see cref="Control.VisualStateChanged"/> property is changed.
+        /// Called when <see cref="AbstractControl.VisualStateChanged"/> property is changed.
         /// </summary>
-        void AfterVisualStateChanged(Control sender);
+        void AfterVisualStateChanged(AbstractControl sender);
 
         /// <summary>
         /// Called after the mouse pointer leaves the control.
         /// </summary>
-        void AfterMouseLeave(Control sender);
+        void AfterMouseLeave(AbstractControl sender);
 
         /// <summary>
         /// Called before the current control handler is detached.
         /// </summary>
-        void AfterHandlerDetaching(Control sender);
+        void AfterHandlerDetaching(AbstractControl sender);
 
         /// <summary>
         /// Paints the background of the control.
@@ -180,104 +180,104 @@ namespace Alternet.UI
         /// <remarks>
         /// Currently this method is provided for the compatibility and is not called.
         /// </remarks>
-        void AfterPaintBackground(Control sender, PaintEventArgs e);
+        void AfterPaintBackground(AbstractControl sender, PaintEventArgs e);
 
         /// <summary>
         /// Called after the right mouse button was pressed.
         /// </summary>
-        void AfterMouseRightButtonDown(Control sender, MouseEventArgs e);
+        void AfterMouseRightButtonDown(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.KeyDown" /> event is raised.
+        /// Called after the <see cref="AbstractControl.KeyDown" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
         /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
-        void AfterKeyDown(Control sender, KeyEventArgs e);
+        void AfterKeyDown(AbstractControl sender, KeyEventArgs e);
 
         /// <summary>
-        /// Called after the value of the <see cref="Control.Margin"/> property changes.
+        /// Called after the value of the <see cref="AbstractControl.Margin"/> property changes.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterMarginChanged(Control sender);
+        void AfterMarginChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the value of the <see cref="Control.Font"/> property changes.
+        /// Called after the value of the <see cref="AbstractControl.Font"/> property changes.
         /// </summary>
-        void AfterFontChanged(Control sender);
+        void AfterFontChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the value of the <see cref="Control.Padding"/> property changes.
+        /// Called after the value of the <see cref="AbstractControl.Padding"/> property changes.
         /// </summary>
-        void AfterPaddingChanged(Control sender);
+        void AfterPaddingChanged(AbstractControl sender);
 
         /// <summary>
         /// Called after a new control handler is attached.
         /// </summary>
-        void AfterHandlerAttached(Control sender);
+        void AfterHandlerAttached(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.DragDrop" /> event is raised.
+        /// Called after the <see cref="AbstractControl.DragDrop" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
         /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
-        void AfterDragDrop(Control sender, DragEventArgs e);
+        void AfterDragDrop(AbstractControl sender, DragEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.DragStart" /> event is raised.
+        /// Called after the <see cref="AbstractControl.DragStart" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
         /// <param name="e">An <see cref="DragStartEventArgs" /> that contains the event data.</param>
-        void AfterDragStart(Control sender, DragStartEventArgs e);
+        void AfterDragStart(AbstractControl sender, DragStartEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.DpiChanged" /> event is raised.
+        /// Called after the <see cref="AbstractControl.DpiChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="DpiChangedEventArgs" /> that contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterDpiChanged(Control sender, DpiChangedEventArgs e);
+        void AfterDpiChanged(AbstractControl sender, DpiChangedEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.DragOver" /> event is raised.
+        /// Called after the <see cref="AbstractControl.DragOver" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
         /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
-        void AfterDragOver(Control sender, DragEventArgs e);
+        void AfterDragOver(AbstractControl sender, DragEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.DragEnter" /> event is raised.
+        /// Called after the <see cref="AbstractControl.DragEnter" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
         /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
-        void AfterDragEnter(Control sender, DragEventArgs e);
+        void AfterDragEnter(AbstractControl sender, DragEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.DragLeave" /> event is raised.
+        /// Called after the <see cref="AbstractControl.DragLeave" /> event is raised.
         /// </summary>
-        void AfterDragLeave(Control sender);
+        void AfterDragLeave(AbstractControl sender);
 
         /// <summary>
         /// This method is invoked when the control gets focus.
         /// </summary>
-        void AfterGotFocus(Control sender);
+        void AfterGotFocus(AbstractControl sender);
 
         /// <summary>
         /// This method is invoked when the control lost focus.
         /// </summary>
-        void AfterLostFocus(Control sender);
+        void AfterLostFocus(AbstractControl sender);
 
         /// <summary>
         /// Called after the mouse button was double-clicked.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterMouseDoubleClick(Control sender, MouseEventArgs e);
+        void AfterMouseDoubleClick(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
-        /// Called after the <see cref="Control.MouseWheel" /> event is raised.
+        /// Called after the <see cref="AbstractControl.MouseWheel" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterMouseWheel(Control sender, MouseEventArgs e);
+        void AfterMouseWheel(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
         /// Called when an exception need to be processed.
@@ -285,75 +285,75 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="ThrowExceptionEventArgs"/> that contains
         /// the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterProcessException(Control sender, ThrowExceptionEventArgs e);
+        void AfterProcessException(AbstractControl sender, ThrowExceptionEventArgs e);
 
         /// <summary>
         /// Called after the mouse is moved.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterMouseMove(Control sender, MouseEventArgs e);
+        void AfterMouseMove(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
         /// Called after the mouse button was released.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
-        void AfterMouseUp(Control sender, MouseEventArgs e);
+        void AfterMouseUp(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
-        /// Raises the <see cref="Control.ToolTipChanged"/> event.
+        /// Raises the <see cref="AbstractControl.ToolTipChanged"/> event.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterToolTipChanged(Control sender);
+        void AfterToolTipChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called when <see cref="Control.Parent"/> property is changed.
+        /// Called when <see cref="AbstractControl.Parent"/> property is changed.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterParentChanged(Control sender);
+        void AfterParentChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the enabled of the <see cref="Control.Enabled"/> property changes.
+        /// Called after the enabled of the <see cref="AbstractControl.Enabled"/> property changes.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterEnabledChanged(Control sender);
+        void AfterEnabledChanged(AbstractControl sender);
 
         /// <summary>
-        /// Called after the <see cref="Control.HelpRequested" /> event is raised.</summary>
+        /// Called after the <see cref="AbstractControl.HelpRequested" /> event is raised.</summary>
         /// <param name="e">A <see cref="HelpEventArgs" /> that
         /// contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterHelpRequested(Control sender, HelpEventArgs e);
+        void AfterHelpRequested(AbstractControl sender, HelpEventArgs e);
 
         /// <summary>
-        /// Called when <see cref="Control.Touch"/> event is raised.</summary>
+        /// Called when <see cref="AbstractControl.Touch"/> event is raised.</summary>
         /// <param name="e">A <see cref="TouchEventArgs" /> that
         /// contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterTouch(Control sender, TouchEventArgs e);
+        void AfterTouch(AbstractControl sender, TouchEventArgs e);
 
         /// <summary>
         /// Called after the right mouse button was released.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterMouseRightButtonUp(Control sender, MouseEventArgs e);
+        void AfterMouseRightButtonUp(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
         /// Called after the mouse button was pressed.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterMouseDown(Control sender, MouseEventArgs e);
+        void AfterMouseDown(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
-        /// Called after the control is redrawn. See <see cref="Control.Paint"/> for details.
+        /// Called after the control is redrawn. See <see cref="AbstractControl.Paint"/> for details.
         /// </summary>
         /// <param name="e">An <see cref="PaintEventArgs"/> that contains the
         /// event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterPaint(Control sender, PaintEventArgs e);
+        void AfterPaint(AbstractControl sender, PaintEventArgs e);
 
         /// <summary>
         /// Occurs during a drag-and-drop operation and enables the drag source
@@ -361,13 +361,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">Event arguments.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterQueryContinueDrag(Control sender, QueryContinueDragEventArgs e);
+        void AfterQueryContinueDrag(AbstractControl sender, QueryContinueDragEventArgs e);
 
         /// <summary>
-        /// Called when <see cref="Control.KeyUp"/> event is raised.
+        /// Called when <see cref="AbstractControl.KeyUp"/> event is raised.
         /// </summary>
         /// <param name="e">Event arguments.</param>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterKeyUp(Control sender, KeyEventArgs e);
+        void AfterKeyUp(AbstractControl sender, KeyEventArgs e);
     }
 }

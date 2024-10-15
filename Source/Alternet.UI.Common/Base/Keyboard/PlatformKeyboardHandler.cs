@@ -36,19 +36,19 @@ namespace Alternet.UI
         public abstract KeyStates GetKeyStatesFromSystem(Key key);
 
         /// <inheritdoc/>
-        public virtual bool HideKeyboard(Control? control)
+        public virtual bool HideKeyboard(AbstractControl? control)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public virtual bool IsSoftKeyboardShowing(Control? control)
+        public virtual bool IsSoftKeyboardShowing(AbstractControl? control)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public virtual bool ShowKeyboard(Control? control)
+        public virtual bool ShowKeyboard(AbstractControl? control)
         {
             return false;
         }

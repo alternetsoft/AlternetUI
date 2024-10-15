@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Enumerates known handler types.
@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static AlignedPosition AlignHorizontal(
                     RectD layoutBounds,
-                    Control childControl,
+                    AbstractControl childControl,
                     SizeD childPreferredSize,
                     HorizontalAlignment alignment)
         {
@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static AlignedPosition AlignVertical(
             RectD layoutBounds,
-            Control control,
+            AbstractControl control,
             SizeD childPreferredSize,
             VerticalAlignment alignment)
         {
@@ -106,9 +106,9 @@ namespace Alternet.UI
         }
 
         internal static void PerformDefaultLayout(
-            Control container,
+            AbstractControl container,
             RectD childrenLayoutBounds,
-            IReadOnlyList<Control> childs)
+            IReadOnlyList<AbstractControl> childs)
         {
             foreach (var control in childs)
             {
@@ -135,7 +135,7 @@ namespace Alternet.UI
             }
         }
 
-        internal static SizeD GetPreferredSizeDefaultLayout(Control container, SizeD availableSize)
+        internal static SizeD GetPreferredSizeDefaultLayout(AbstractControl container, SizeD availableSize)
         {
             if (container.HasChildren)
                 return container.GetSpecifiedOrChildrenPreferredSize(availableSize);
@@ -169,7 +169,7 @@ namespace Alternet.UI
             ProcessException?.Invoke(this, e);
         }
 
-        internal void SetParentInternal(Control? value)
+        internal void SetParentInternal(AbstractControl? value)
         {
             parent = value;
             LogicalParent = value;

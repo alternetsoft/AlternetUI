@@ -50,7 +50,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">Control in which this object is painted.</param>
         /// <param name="dc">Drawing context.</param>
-        public virtual void DefaultDrawBackAndBorder(Control control, Graphics dc)
+        public virtual void DefaultDrawBackAndBorder(AbstractControl control, Graphics dc)
         {
             if (!Visible)
                 return;
@@ -63,7 +63,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Draw(Control control, Graphics dc)
+        public override void Draw(AbstractControl control, Graphics dc)
         {
             if (!Visible || Bounds.SizeIsEmpty)
                 return;

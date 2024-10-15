@@ -19,7 +19,7 @@ namespace Alternet.UI
     /// 'Deselected' events of a <see cref="TabControl" /> control.</summary>
     public class TabControlEventArgs : BaseEventArgs
     {
-        private readonly Control tabPage;
+        private readonly AbstractControl tabPage;
         private readonly int tabPageIndex;
         private readonly TabControlAction action;
 
@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// <param name="tabPageIndex">The zero-based index
         /// of <paramref name="tabPage" /> in the tab pages collection.</param>
         /// <param name="action">One of the <see cref="TabControlAction" /> values.</param>
-        public TabControlEventArgs(Control tabPage, int tabPageIndex, TabControlAction action)
+        public TabControlEventArgs(AbstractControl tabPage, int tabPageIndex, TabControlAction action)
         {
             this.tabPage = tabPage;
             this.tabPageIndex = tabPageIndex;
@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// Gets the tab page the event is occurring for.
         /// </summary>
         /// <returns>The tab page the event is occurring for.</returns>
-        public Control TabPage => tabPage;
+        public AbstractControl TabPage => tabPage;
 
         /// <summary>
         /// Gets the zero-based index of the tab page

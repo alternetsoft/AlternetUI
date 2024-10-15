@@ -26,7 +26,7 @@ namespace Alternet.UI
             get
             {
                 return sampleFont ??=
-                    Control.DefaultFont.Scaled(2)
+                    AbstractControl.DefaultFont.Scaled(2)
                     .WithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
             }
 
@@ -47,7 +47,7 @@ namespace Alternet.UI
                 
             image ??= Bitmap.Empty;
 
-            var font = Font ?? Control.DefaultFont;
+            var font = Font ?? AbstractControl.DefaultFont;
 
             dc.DrawText(
                 $"{S1}",

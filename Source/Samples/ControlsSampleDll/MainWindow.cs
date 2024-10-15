@@ -40,13 +40,13 @@ namespace ControlsSample
             }
         }
 
-        Control CreateListControlsPage()
+        AbstractControl CreateListControlsPage()
         {
-            NameValue<Func<Control>>? popupNameValue;
+            NameValue<Func<AbstractControl>>? popupNameValue;
 
             popupNameValue = new("Popup", () => new ListControlsPopups());
 
-            NameValue<Func<Control>>?[] pages =
+            NameValue<Func<AbstractControl>>?[] pages =
             {
                 new("List", () => new ListBoxPage()),
                 new("Checks", () => new CheckListBoxPage()),
@@ -60,9 +60,9 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateButtonsPage()
+        AbstractControl CreateButtonsPage()
         {
-            NameValue<Func<Control>>[] pages =
+            NameValue<Func<AbstractControl>>[] pages =
             {
                 new("Button", () => new ButtonPage()),
                 new("Check", () => new CheckBoxesPage()),
@@ -72,9 +72,9 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateSliderAndProgressPage()
+        AbstractControl CreateSliderAndProgressPage()
         {
-            NameValue<Func<Control>>[] pages =
+            NameValue<Func<AbstractControl>>[] pages =
             {
                 new("Slider", () => new SliderPage()),
                 new("Progress", () => new ProgressBarPage()),
@@ -83,20 +83,20 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateDialogsPage()
+        AbstractControl CreateDialogsPage()
         {
             return Window.CreateAs<CommonDialogsWindow>(WindowKind.Control);
         }
 
-        Control CreateOtherPage()
+        AbstractControl CreateOtherPage()
         {
-            NameValue<Func<Control>>[] pagesDebug =
+            NameValue<Func<AbstractControl>>[] pagesDebug =
             {
                 new("Internal", CreateInternalSamplesPage),
                 new("External", CreateAllSamplesPage),
             };
 
-            NameValue<Func<Control>>[] pagesRelease =
+            NameValue<Func<AbstractControl>>[] pagesRelease =
             {
                 new("Internal", CreateInternalSamplesPage),
             };
@@ -106,9 +106,9 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateTextInputPage()
+        AbstractControl CreateTextInputPage()
         {
-            NameValue<Func<Control>>[] pages =
+            NameValue<Func<AbstractControl>>[] pages =
             {
                 new("Text", () => new TextInputPage()),
 
@@ -136,9 +136,9 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateLayoutPage()
+        AbstractControl CreateLayoutPage()
         {
-            NameValue<Func<Control>>[] pages =
+            NameValue<Func<AbstractControl>>[] pages =
             {
                 new("Splitter", () => new LayoutPanelPage()),
                 new("Grid", () => new GridPage()),
@@ -148,9 +148,9 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateDateTimePage()
+        AbstractControl CreateDateTimePage()
         {
-            NameValue<Func<Control>>[] pages =
+            NameValue<Func<AbstractControl>>[] pages =
             {
                 new("DateTime", () => new DateTimePage()),
                 new("Calendar", () => new CalendarPage()),
@@ -160,16 +160,16 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateMultimediaPage()
+        AbstractControl CreateMultimediaPage()
         {
-            NameValue<Func<Control>>? animationNameValue;
+            NameValue<Func<AbstractControl>>? animationNameValue;
 
             if (!App.IsLinuxOS)
                 animationNameValue = new("Animation", () => new AnimationPage());
             else
                 animationNameValue = null;
 
-            NameValue<Func<Control>>?[] pages =
+            NameValue<Func<AbstractControl>>?[] pages =
             {
                 new("System Sounds", () => new SystemSoundsPage()),
                 new("Sound Player", () => new SoundPlayerPage()),
@@ -179,21 +179,21 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateTreeViewPage() => new TreeViewPage();
-        Control CreateListViewPage() => new ListViewPage();
-        Control CreateTabControlPage() => new TabControlPage();
-        Control CreateNumericInputPage() => new NumericInputPage();
+        AbstractControl CreateTreeViewPage() => new TreeViewPage();
+        AbstractControl CreateListViewPage() => new ListViewPage();
+        AbstractControl CreateTabControlPage() => new TabControlPage();
+        AbstractControl CreateNumericInputPage() => new NumericInputPage();
         
-        Control CreateNotifyIconPage()
+        AbstractControl CreateNotifyIconPage()
         {
-            NameValue<Func<Control>>? nameValue;
+            NameValue<Func<AbstractControl>>? nameValue;
 
             if (NotifyIcon.IsAvailable)
                 nameValue = new("Notify Icon", () => new NotifyIconPage());
             else
                 nameValue = null;
 
-            NameValue<Func<Control>>?[] pages =
+            NameValue<Func<AbstractControl>>?[] pages =
             {
                 new("Rich ToolTip", () => new ToolTipPage()),
                 nameValue,
@@ -202,10 +202,10 @@ namespace ControlsSample
             return CreateCustomPage(pages);
         }
 
-        Control CreateWebBrowserPage() => new WebBrowserPage();
-        Control CreateAllSamplesPage() => new AllSamplesPage();
-        Control CreateInternalSamplesPage() => new InternalSamplesPage();
-        Control CreateWelcomePage() => new WelcomePage();
+        AbstractControl CreateWebBrowserPage() => new WebBrowserPage();
+        AbstractControl CreateAllSamplesPage() => new AllSamplesPage();
+        AbstractControl CreateInternalSamplesPage() => new InternalSamplesPage();
+        AbstractControl CreateWelcomePage() => new WelcomePage();
 
         private void LinkLabel_LinkClicked(
             object? sender,

@@ -7,20 +7,20 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods and properties which are <see cref="Control"/> related.
+    /// Contains static methods and properties which are <see cref="AbstractControl"/> related.
     /// </summary>
     public static class ControlUtils
     {
-        private static Control? empty;
+        private static AbstractControl? empty;
 
         /// <summary>
         /// Gets an empty control for the debug purposes.
         /// </summary>
-        public static Control Empty
+        public static AbstractControl Empty
         {
             get
             {
-                return empty ??= new PlatformControl();
+                return empty ??= new Control();
             }
         }
 

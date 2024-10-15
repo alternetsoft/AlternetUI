@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ScrollViewer"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ScrollViewer(PlatformControl parent)
+        public ScrollViewer(Control parent)
             : this()
         {
             Parent = parent;

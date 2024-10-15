@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control for which <see cref="Display"/> is created.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Display(Control control)
+        public Display(AbstractControl control)
             : this(GetFromControl(control))
         {
         }
@@ -517,7 +517,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control for which index of display is returned.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetFromControl(Control control)
+        public static int GetFromControl(AbstractControl control)
         {
             return Factory.GetFromControl(control);
         }

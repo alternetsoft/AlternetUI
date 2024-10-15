@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="GraphicControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public GraphicControl(PlatformControl parent)
+        public GraphicControl(Control parent)
             : this()
         {
             Parent = parent;

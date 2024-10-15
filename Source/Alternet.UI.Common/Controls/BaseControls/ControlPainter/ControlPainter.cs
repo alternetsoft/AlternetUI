@@ -23,7 +23,7 @@ namespace Alternet.Drawing
             set => handler = value;
         }
 
-        internal static void LogPartSize(Control control)
+        internal static void LogPartSize(AbstractControl control)
         {
             App.Log($"CheckMarkSize: {Handler.GetCheckMarkSize(control)}");
             App.Log($"CheckBoxSize(0): {Handler.GetCheckBoxSize(control)}");

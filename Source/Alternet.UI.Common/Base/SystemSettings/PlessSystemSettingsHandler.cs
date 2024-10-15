@@ -99,7 +99,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual int GetMetric(SystemSettingsMetric index, Control? control)
+        public virtual int GetMetric(SystemSettingsMetric index, AbstractControl? control)
         {
             return GetMetric(index);
         }

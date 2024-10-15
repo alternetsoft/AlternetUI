@@ -91,7 +91,7 @@ namespace DrawingSample
             DrawShapesGrid(dc, bounds, actions);
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new ShapesPageSettings();
             control.Initialize(this);
@@ -136,10 +136,10 @@ namespace DrawingSample
                 var cellName = DrawingUtils.WrapTextToMultipleLines(
                     cell.Name,
                     cellNameRect.Width,
-                    Control.DefaultFont,
+                    AbstractControl.DefaultFont,
                     dc);
 
-                var nameTextSize = dc.MeasureText(cellName, Control.DefaultFont);
+                var nameTextSize = dc.MeasureText(cellName, AbstractControl.DefaultFont);
                 bool nameVisible = nameTextSize.Width <= cellNameRect.Width;
 
                 var cellContentFrameRect = cellNameRect.InflatedBy(-5, -5);
@@ -168,7 +168,7 @@ namespace DrawingSample
                 {
                     dc.DrawLabel(
                         cellName,
-                        Control.DefaultFont,
+                        AbstractControl.DefaultFont,
                         Color.Black,
                         Color.Empty,
                         null,

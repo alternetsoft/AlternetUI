@@ -68,7 +68,7 @@ namespace ControlsSample
 
         private IEnumerable<Slider> GetAllSliders()
         {
-            return new Control[] { horizontalSlidersPanel, verticalSlidersGrid }
+            return new AbstractControl[] { horizontalSlidersPanel, verticalSlidersGrid }
                 .SelectMany(x => x.Children.OfType<Slider>());
         }
     }

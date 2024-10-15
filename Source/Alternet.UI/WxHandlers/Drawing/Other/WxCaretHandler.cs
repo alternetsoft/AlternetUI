@@ -10,14 +10,14 @@ namespace Alternet.UI
 {
     internal class WxCaretHandler : DisposableObject<IntPtr>, ICaretHandler
     {
-        private readonly Control? control;
+        private readonly AbstractControl? control;
 
         public WxCaretHandler()
             : base(UI.Native.WxOtherFactory.CreateCaret(), true)
         {
         }
 
-        public WxCaretHandler(Control control, int width, int height)
+        public WxCaretHandler(AbstractControl control, int width, int height)
             : base(UI.Native.WxOtherFactory.CreateCaret2(
                 WxApplicationHandler.WxWidget(control),
                 width,
@@ -86,7 +86,7 @@ namespace Alternet.UI
             }
         }
 
-        public Control? Control
+        public AbstractControl? Control
         {
             get => control;
         }

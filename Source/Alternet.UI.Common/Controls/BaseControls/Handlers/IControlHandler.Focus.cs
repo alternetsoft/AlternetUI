@@ -18,13 +18,13 @@ namespace Alternet.UI
         /// </summary>
         Action? LostFocus { get; set; }
 
-        /// <inheritdoc cref="Control.TabStop"/>
+        /// <inheritdoc cref="AbstractControl.TabStop"/>
         bool TabStop { get; }
 
-        /// <inheritdoc cref="Control.CanSelect"/>
+        /// <inheritdoc cref="AbstractControl.CanSelect"/>
         bool CanSelect { get; }
 
-        /// <inheritdoc cref="Control.Focused"/>
+        /// <inheritdoc cref="AbstractControl.Focused"/>
         bool IsFocused { get; }
 
         /// <summary>
@@ -35,10 +35,10 @@ namespace Alternet.UI
         /// <param name="acceptsFocusRecursively">Whether or not this control accepts focus recursively.</param>
         void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively);
 
-        /// <inheritdoc cref="Control.FocusNextControl"/>
+        /// <inheritdoc cref="AbstractControl.FocusNextControl"/>
         void FocusNextControl(bool forward = true, bool nested = true);
 
-        /// <inheritdoc cref="Control.SetFocus"/>
+        /// <inheritdoc cref="AbstractControl.SetFocus"/>
         bool SetFocus();
     }
 }

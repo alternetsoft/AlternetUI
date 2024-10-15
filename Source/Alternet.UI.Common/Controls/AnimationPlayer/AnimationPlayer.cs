@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// support all of them.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class AnimationPlayer : PlatformControl
+    public partial class AnimationPlayer : Control
     {
         /// <summary>
         /// Gets or sets type of the default driver used inside the <see cref="AnimationPlayer"/>.
@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public AnimationPlayer(PlatformControl parent)
+        public AnimationPlayer(Control parent)
             : this()
         {
             Parent = parent;

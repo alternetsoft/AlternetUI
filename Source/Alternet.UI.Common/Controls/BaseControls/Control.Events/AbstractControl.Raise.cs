@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Raises the <see cref="FontChanged" /> event
@@ -717,10 +717,10 @@ namespace Alternet.UI
         /// Raises the <see cref="ChildInserted" /> event
         /// and <see cref="OnChildInserted"/> method.
         /// </summary>
-        public virtual void RaiseChildInserted(int index, Control childControl)
+        public virtual void RaiseChildInserted(int index, AbstractControl childControl)
         {
             OnChildInserted(index, childControl);
-            ChildInserted?.Invoke(this, new BaseEventArgs<Control>(childControl));
+            ChildInserted?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -740,10 +740,10 @@ namespace Alternet.UI
         /// Raises the <see cref="ChildRemoved" /> event
         /// and <see cref="OnChildRemoved"/> method.
         /// </summary>
-        public virtual void RaiseChildRemoved(Control childControl)
+        public virtual void RaiseChildRemoved(AbstractControl childControl)
         {
             OnChildRemoved(childControl);
-            ChildRemoved?.Invoke(this, new BaseEventArgs<Control>(childControl));
+            ChildRemoved?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -1015,7 +1015,7 @@ namespace Alternet.UI
         {
             OnVisibleChanged(EventArgs.Empty);
             VisibleChanged?.Invoke(this, EventArgs.Empty);
-            Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<Control>(this));
+            Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
             Parent?.PerformLayout();
             if (visible)
                 AfterShow?.Invoke(this, EventArgs.Empty);
@@ -1297,7 +1297,7 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseEnterOnTarget()
         {
-            var currentTarget = UI.Control.GetMouseTargetControl(this);
+            var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
             currentTarget?.RaiseMouseEnter();
         }
 
@@ -1306,7 +1306,7 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseLeaveOnTarget()
         {
-            var currentTarget = UI.Control.GetMouseTargetControl(this);
+            var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
             currentTarget?.RaiseMouseLeave();
         }
 

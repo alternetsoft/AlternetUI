@@ -8,20 +8,20 @@ namespace PaintSample
 {
     public class PaintSampleDocument : DisposableObject
     {
-        private readonly Control control;
+        private readonly AbstractControl control;
 
         private Image? bitmap;
 
         private Action<Graphics>? previewAction;
 
-        public PaintSampleDocument(Control control)
+        public PaintSampleDocument(AbstractControl control)
         {
             this.control = control;
             Bitmap = CreateBitmap(control);
             Dirty = false;
         }
 
-        public PaintSampleDocument(Control control, string fileName)
+        public PaintSampleDocument(AbstractControl control, string fileName)
         {
             this.control = control;
             Bitmap = LoadBitmap(fileName);
@@ -29,7 +29,7 @@ namespace PaintSample
             Dirty = false;
         }
 
-        public Control Control => control;
+        public AbstractControl Control => control;
 
         public void Save(string fileName)
         {
@@ -107,7 +107,7 @@ namespace PaintSample
             OnChanged();
         }
 
-        public void Paint(Control control, Graphics drawingContext)
+        public void Paint(AbstractControl control, Graphics drawingContext)
         {
             drawingContext.FillRectangle(Brushes.White, Bitmap.BoundsDip(control));
             drawingContext.DrawImage(Bitmap, PointD.Empty);
@@ -119,7 +119,7 @@ namespace PaintSample
             SafeDispose(ref bitmap);
         }
 
-        private Image CreateBitmap(Control control)
+        private Image CreateBitmap(AbstractControl control)
         {
             var pixelSize = control.PixelFromDip(new SizeD(600, 600));
             return Image.Create(pixelSize.Width, pixelSize.Height, BackgroundColor);

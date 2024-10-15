@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     internal class WxDisplayFactoryHandler : DisposableObject, IDisplayFactoryHandler
     {
-        public int GetFromControl(Control control)
+        public int GetFromControl(AbstractControl control)
         {
             return UI.Native.WxOtherFactory.DisplayGetFromWindow(WxApplicationHandler.WxWidget(control));
         }

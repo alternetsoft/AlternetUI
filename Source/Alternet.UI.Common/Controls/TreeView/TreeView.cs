@@ -52,7 +52,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public partial class TreeView : PlatformControl
+    public partial class TreeView : Control
     {
         /// <summary>
         /// The set of flags that are closest to the defaults for the native control under Linux.
@@ -82,7 +82,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="TreeView"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public TreeView(PlatformControl parent)
+        public TreeView(Control parent)
             : this()
         {
             Parent = parent;

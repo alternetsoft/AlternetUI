@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Bubbles long tap event with the specified argument.
@@ -17,10 +17,10 @@ namespace Alternet.UI
         /// <param name="originalTarget">Control on which event is originally fired.</param>
         /// <param name="e"></param>
         public static void BubbleLongTap(
-            Control? originalTarget,
+            AbstractControl? originalTarget,
             LongTapEventArgs e)
         {
-            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
             if (currentTarget == null)
                 return;
             currentTarget.RaiseLongTap(e);
@@ -34,13 +34,13 @@ namespace Alternet.UI
         /// <param name="position">Mouse position.</param>
         /// <param name="handled">Result of the event procesing.</param>
         public static void BubbleMouseMove(
-            Control? originalTarget,
+            AbstractControl? originalTarget,
             long timestamp,
             PointD? position,
             out bool handled)
         {
             handled = false;
-            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
             if (currentTarget == null)
                 return;
 
@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// <param name="position">Mouse position.</param>
         /// <param name="handled">Result of the event procesing.</param>
         public static void BubbleMouseWheel(
-            Control? originalTarget,
+            AbstractControl? originalTarget,
             long timestamp,
             int delta,
             PointD? position,
@@ -75,7 +75,7 @@ namespace Alternet.UI
                 return;
             mouseWheelTimestamp = timestamp;
 
-            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
             if (currentTarget == null)
                 return;
 
@@ -101,7 +101,7 @@ namespace Alternet.UI
         /// <param name="deviceType">Device which raised the event.</param>
         /// <param name="handled">Result of the event procesing.</param>
         public static void BubbleMouseDown(
-            Control? originalTarget,
+            AbstractControl? originalTarget,
             long timestamp,
             MouseButton changedButton,
             PointD? position,
@@ -111,7 +111,7 @@ namespace Alternet.UI
             PlessMouse.SetButtonPressed(changedButton);
 
             handled = false;
-            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
             if (currentTarget == null)
                 return;
 
@@ -137,14 +137,14 @@ namespace Alternet.UI
         /// <param name="position">Mouse position.</param>
         /// <param name="handled">Result of the event procesing.</param>
         public static void BubbleMouseDoubleClick(
-            Control? originalTarget,
+            AbstractControl? originalTarget,
             long timestamp,
             MouseButton changedButton,
             PointD? position,
             out bool handled)
         {
             handled = false;
-            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
             if (currentTarget == null)
                 return;
 
@@ -170,7 +170,7 @@ namespace Alternet.UI
         /// <param name="position">Mouse position.</param>
         /// <param name="handled">Result of the event procesing.</param>
         public static void BubbleMouseUp(
-            Control? originalTarget,
+            AbstractControl? originalTarget,
             long timestamp,
             MouseButton changedButton,
             PointD? position,
@@ -180,7 +180,7 @@ namespace Alternet.UI
             PlessMouse.SetButtonPressed(changedButton, false);
 
             handled = false;
-            var currentTarget = Control.GetMouseTargetControl(originalTarget);
+            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
             if (currentTarget == null)
                 return;
 
@@ -216,7 +216,7 @@ namespace Alternet.UI
             out bool handled,
             KeyStates keyStates = KeyStates.Down)
         {
-            var control = Control.GetFocusedControl();
+            var control = AbstractControl.GetFocusedControl();
             if (control is null)
             {
                 handled = false;
@@ -246,7 +246,7 @@ namespace Alternet.UI
             out bool handled,
             KeyStates keyStates = KeyStates.None)
         {
-            var control = Control.GetFocusedControl();
+            var control = AbstractControl.GetFocusedControl();
             if (control is null)
             {
                 handled = false;
@@ -266,7 +266,7 @@ namespace Alternet.UI
         /// <param name="handled">Result of the key procesing.</param>
         public static void BubbleTextInput(char keyChar, out bool handled)
         {
-            var control = Control.GetFocusedControl();
+            var control = AbstractControl.GetFocusedControl();
             if (control is null)
             {
                 handled = false;
@@ -284,7 +284,7 @@ namespace Alternet.UI
         /// <typeparam name="T">Type of the event arguments.</typeparam>
         /// <param name="e">Event arguments.</param>
         /// <param name="action">Action to call.</param>
-        public virtual void BubbleKeyAction<T>(T e, Action<Control, T> action)
+        public virtual void BubbleKeyAction<T>(T e, Action<AbstractControl, T> action)
             where T : HandledEventArgs
         {
             var control = this;

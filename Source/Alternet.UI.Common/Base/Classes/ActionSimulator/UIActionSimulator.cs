@@ -167,7 +167,7 @@ namespace Alternet.UI
         /// <param name="offset">Additional offset for the mouse movement.
         /// Value is in dips (1/96 inch)</param>
         /// <returns></returns>
-        public virtual bool SendMouseMove(Control control, PointD? offset = default)
+        public virtual bool SendMouseMove(AbstractControl control, PointD? offset = default)
         {
             var screenLocationDip = control.ClientToScreen((0, 0));
             if(offset is not null)
@@ -355,14 +355,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="SendMouseMove(Control,PointD?)"/> but checks for
+        /// Same as <see cref="SendMouseMove(AbstractControl,PointD?)"/> but checks for
         /// the <paramref name="condition"/>
         /// before sending action. This method sets <paramref name="condition"/> to
         /// the result of the send action operation.
         /// </summary>
         public bool SendMouseMoveIf(
             ref bool condition,
-            Control control,
+            AbstractControl control,
             PointD? offset = default)
         {
             if (!condition)

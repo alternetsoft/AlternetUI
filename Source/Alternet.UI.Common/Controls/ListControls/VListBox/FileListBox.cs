@@ -73,7 +73,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="FileListBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public FileListBox(PlatformControl parent)
+        public FileListBox(Control parent)
             : this()
         {
             Parent = parent;

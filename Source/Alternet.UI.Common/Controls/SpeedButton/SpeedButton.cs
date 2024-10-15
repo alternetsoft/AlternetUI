@@ -59,7 +59,7 @@ namespace Alternet.UI
             Alignment = HVAlignment.Center,
         };
 
-        private readonly Control spacer = new UnboundPanel()
+        private readonly AbstractControl spacer = new UnboundPanel()
         {
             SuggestedSize = DefaultImageLabelDistance,
             Visible = false,
@@ -94,7 +94,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="SpeedButton"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public SpeedButton(PlatformControl parent)
+        public SpeedButton(Control parent)
             : this()
         {
             Parent = parent;
@@ -123,7 +123,7 @@ namespace Alternet.UI
         public enum KnownTheme
         {
             /// <summary>
-            /// An empty theme. Settings from <see cref="Control.StateObjects"/> are used.
+            /// An empty theme. Settings from <see cref="AbstractControl.StateObjects"/> are used.
             /// </summary>
             None,
 
@@ -252,7 +252,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether <see cref="Control.ToolTip"/> will be hidden
+        /// Gets or sets whether <see cref="AbstractControl.ToolTip"/> will be hidden
         /// when control is clicked. Default is <c>true</c>.
         /// </summary>
         public virtual bool HideToolTipOnClick { get; set; } = true;
@@ -329,7 +329,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<Control> AllChildrenInLayout
+        public override IReadOnlyList<AbstractControl> AllChildrenInLayout
         {
             get
             {
@@ -341,14 +341,14 @@ namespace Alternet.UI
                     if (img)
                         return Children;
                     else
-                        return new Control[] { Label };
+                        return new AbstractControl[] { Label };
                 }
                 else
                 {
                     if (img)
-                        return new Control[] { PictureBox };
+                        return new AbstractControl[] { PictureBox };
                     else
-                        return Array.Empty<Control>();
+                        return Array.Empty<AbstractControl>();
                 }
             }
         }
@@ -697,7 +697,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <remarks>
         /// This method updates Svg default fill colors using
-        /// <see cref="Control.GetSvgColor"/>.
+        /// <see cref="AbstractControl.GetSvgColor"/>.
         /// If you need to load Svg without updating its colors, use
         /// <see cref="ImageSet.FromSvgUrl(string, int, int, Color?)"/> without
         /// defining the last parameter.

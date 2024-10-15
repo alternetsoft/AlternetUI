@@ -15,7 +15,7 @@ namespace PropertyGridSample
             VerticalAlignment = VerticalAlignment.Stretch;
             HorizontalAlignment = HorizontalAlignment.Stretch;
 
-            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
 
             SuggestedSize = new(300, 400);
             var homePage = @"https://www.alternet-ui.com/";

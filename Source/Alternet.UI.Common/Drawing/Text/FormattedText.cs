@@ -183,7 +183,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets font in a safe way. If <see cref="Font"/> is not specified, returns default font.
         /// </summary>
-        public virtual Font SafeFont => Font ?? Control.DefaultFont;
+        public virtual Font SafeFont => Font ?? AbstractControl.DefaultFont;
 
         /// <inheritdoc/>
         public override void Changed()

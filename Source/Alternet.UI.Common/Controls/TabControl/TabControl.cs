@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="TabControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public TabControl(PlatformControl parent)
+        public TabControl(Control parent)
             : this()
         {
             Parent = parent;
@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the size of the tab has changed.
         /// </summary>
-        public event EventHandler<BaseEventArgs<Control>>? TabSizeChanged;
+        public event EventHandler<BaseEventArgs<AbstractControl>>? TabSizeChanged;
 
         /// <summary>
         /// Occurs when the <see cref="SelectedIndex" /> property has changed.
@@ -95,7 +95,7 @@ namespace Alternet.UI
         /// <value>A <see cref="Collection{Control}"/> that contains pages
         /// in this <see cref="TabControl"/>.</value>
         [Content]
-        public Collection<Control> Pages
+        public Collection<AbstractControl> Pages
         {
             get
             {
@@ -166,7 +166,7 @@ namespace Alternet.UI
         /// Gets selected tab page.
         /// </summary>
         [Browsable(false)]
-        public virtual Control? SelectedControl
+        public virtual AbstractControl? SelectedControl
         {
             get
             {
@@ -186,7 +186,7 @@ namespace Alternet.UI
         [Category("Appearance")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public virtual Control? SelectedPage
+        public virtual AbstractControl? SelectedPage
         {
             get
             {
@@ -513,7 +513,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(NameValue<Control> page)
+        public virtual int Add(NameValue<AbstractControl> page)
         {
             return Add(page.Name, page.Value);
         }
@@ -525,7 +525,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(NameValue<Func<Control>> page)
+        public virtual int Add(NameValue<Func<AbstractControl>> page)
         {
             return Add(page.Name, page.Value);
         }
@@ -534,7 +534,7 @@ namespace Alternet.UI
         /// Adds new pages.
         /// </summary>
         /// <param name="pages">Collection of pages.</param>
-        public virtual void AddRange(IEnumerable<NameValue<Control>> pages)
+        public virtual void AddRange(IEnumerable<NameValue<AbstractControl>> pages)
         {
             foreach(var page in pages)
                 Add(page);
@@ -544,7 +544,7 @@ namespace Alternet.UI
         /// Adds new pages.
         /// </summary>
         /// <param name="pages">Collection of pages.</param>
-        public virtual void AddRange(IEnumerable<NameValue<Func<Control>>?> pages)
+        public virtual void AddRange(IEnumerable<NameValue<Func<AbstractControl>>?> pages)
         {
             foreach (var page in pages)
             {
@@ -583,7 +583,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(Control control)
+        public virtual int Add(AbstractControl control)
         {
             return Add(control.Title, control);
         }
@@ -596,7 +596,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Insert(int? index, Control control)
+        public virtual int Insert(int? index, AbstractControl control)
         {
             return Insert(index, control.Title, control);
         }
@@ -610,7 +610,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Insert(int? index, string title, Control? control = null)
+        public virtual int Insert(int? index, string title, AbstractControl? control = null)
         {
             addSuspended++;
 
@@ -644,7 +644,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string title, Func<Control> fnCreate)
+        public virtual int Add(string title, Func<AbstractControl> fnCreate)
         {
             addSuspended++;
 
@@ -671,7 +671,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string title, Control? control = null)
+        public virtual int Add(string title, AbstractControl? control = null)
         {
             return Insert(Header.Tabs.Count, title, control);
         }
@@ -749,7 +749,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public virtual int? GetTabIndex(Control? control)
+        public virtual int? GetTabIndex(AbstractControl? control)
         {
             if (control is null)
                 return null;
@@ -773,7 +773,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to remove</param>
         /// <returns></returns>
-        public virtual bool Remove(Control control)
+        public virtual bool Remove(AbstractControl control)
         {
             var index = GetTabIndex(control);
             return RemoveAt(index);
@@ -814,7 +814,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public virtual Control? GetControlAt(int? index)
+        public virtual AbstractControl? GetControlAt(int? index)
         {
             var headerTab = Header.GetTab(index);
             if (headerTab is null)
@@ -834,7 +834,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override void OnChildPropertyChanged(
-            Control child,
+            AbstractControl child,
             string propName,
             bool directChild = true)
         {
@@ -880,7 +880,7 @@ namespace Alternet.UI
                 TabAlignment);
         }
 
-        private void CardPanelHeader_ButtonSizeChanged(object? sender, BaseEventArgs<Control> e)
+        private void CardPanelHeader_ButtonSizeChanged(object? sender, BaseEventArgs<AbstractControl> e)
         {
             TabSizeChanged?.Invoke(this, e);
             Invalidate();
@@ -903,12 +903,12 @@ namespace Alternet.UI
             GrowMinSize(MinSizeGrowMode);
         }
 
-        private void Pages_ItemRemoved(object? sender, int index, Control item)
+        private void Pages_ItemRemoved(object? sender, int index, AbstractControl item)
         {
             Remove(item);
         }
 
-        private void Pages_ItemInserted(object? sender, int index, Control item)
+        private void Pages_ItemInserted(object? sender, int index, AbstractControl item)
         {
             if (addSuspended > 0)
                 return;
@@ -939,7 +939,7 @@ namespace Alternet.UI
         {
             /// <inheritdoc/>
             public override void OnChildPropertyChanged(
-                Control child,
+                AbstractControl child,
                 string propName,
                 bool directChild = true)
             {

@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewInBrowser"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PreviewInBrowser(PlatformControl parent)
+        public PreviewInBrowser(Control parent)
             : this()
         {
             Parent = parent;
@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFilePreview.Control"/>
         /// </summary>
-        public Control Control { get => this; }
+        public AbstractControl Control { get => this; }
 
         /// <summary>
         /// Gets whether specified file is supported in this preview control.

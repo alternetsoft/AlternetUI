@@ -15,15 +15,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlSet"/> without items.
         /// </summary>
-        public static readonly ControlSet Empty = new(Array.Empty<Control>());
+        public static readonly ControlSet Empty = new(Array.Empty<AbstractControl>());
 
-        private readonly IReadOnlyList<Control> items;
+        private readonly IReadOnlyList<AbstractControl> items;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public ControlSet(params Control[] controls)
+        public ControlSet(params AbstractControl[] controls)
         {
             items = controls;
         }
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public ControlSet(IReadOnlyList<Control> controls)
+        public ControlSet(IReadOnlyList<AbstractControl> controls)
         {
             items = controls;
         }
@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets all controls which will be affected by the group operations.
         /// </summary>
-        public IReadOnlyList<Control> Items => items;
+        public IReadOnlyList<AbstractControl> Items => items;
 
         /// <summary>
         /// Gets the maximum width among all controls in the set.
@@ -119,30 +119,30 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index of the element
         /// to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        public Control this[int index] => items[index];
+        public AbstractControl this[int index] => items[index];
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public static ControlSet New(params Control[] controls) => new(controls);
+        public static ControlSet New(params AbstractControl[] controls) => new(controls);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public static ControlSet New(IReadOnlyList<Control> controls) => new(controls);
+        public static ControlSet New(IReadOnlyList<AbstractControl> controls) => new(controls);
 
         /// <summary>
         /// Creates two dimensional array 'Control[,]' from the specified columns with controls.
         /// </summary>
         /// <param name="columns">Columns with the controls</param>
-        public static Control[,] GridFromColumns(params ControlSet[] columns)
+        public static AbstractControl[,] GridFromColumns(params ControlSet[] columns)
         {
             var colCount = columns.Length;
             var rowCount = columns[0].Items.Count;
 
-            var result = new Control[rowCount, colCount];
+            var result = new AbstractControl[rowCount, colCount];
 
             for (int i = 0; i < rowCount; i++)
             {
@@ -186,7 +186,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.IsBold"/> for all the controls in the set.
+        /// Sets <see cref="AbstractControl.IsBold"/> for all the controls in the set.
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -224,7 +224,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="Control.SuspendLayout()"/> for all parents of the controls in the set.
+        /// Calls <see cref="AbstractControl.SuspendLayout()"/> for all parents of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet SuspendLayout()
@@ -238,7 +238,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="Control.SuspendLayout()"/> for all parents of the controls in the set.
+        /// Calls <see cref="AbstractControl.SuspendLayout()"/> for all parents of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet ResumeLayout()
@@ -272,7 +272,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Visible"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.Visible"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">New property value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -286,7 +286,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Enabled"/> property for the specified control in the set.
+        /// Sets <see cref="AbstractControl.Enabled"/> property for the specified control in the set.
         /// </summary>
         /// <param name="value">New 'Enabled' property value.</param>
         /// <param name="index">Index of the control.</param>
@@ -298,7 +298,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Enabled"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.Enabled"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">New 'Enabled' property value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -316,9 +316,9 @@ namespace Alternet.UI
         /// <param name="action">Action to execute.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Action<T>(Action<T> action)
-            where T : Control
+            where T : AbstractControl
         {
-            if (typeof(T) == typeof(Control))
+            if (typeof(T) == typeof(AbstractControl))
             {
                 foreach (var item in items)
                     action((T)item);
@@ -421,7 +421,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Margin"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.Margin"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">An oouter margin of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -435,7 +435,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Padding"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.Padding"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">A padding of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -449,7 +449,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Size"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.Size"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">size of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -463,7 +463,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.MinimumSize"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.MinimumSize"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum size of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -477,7 +477,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.MinWidth"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.MinWidth"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum width of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -491,7 +491,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.MinHeight"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.MinHeight"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Minimum height of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -505,7 +505,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Margin"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.Margin"/> property for all the controls in the set.
         /// </summary>
         /// <param name="left">The margin for the left side.</param>
         /// <param name="top">The margin for the top side.</param>
@@ -523,7 +523,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.MarginTop"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.MarginTop"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -537,7 +537,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.MarginBottom"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.MarginBottom"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -551,7 +551,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.MarginLeft"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.MarginLeft"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -565,7 +565,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.MarginRight"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.MarginRight"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -596,7 +596,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.PaddingTop"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.PaddingTop"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -610,7 +610,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.PaddingBottom"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.PaddingBottom"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -624,7 +624,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.PaddingLeft"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.PaddingLeft"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -638,7 +638,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.PaddingRight"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.PaddingRight"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -706,11 +706,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.Parent"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.Parent"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Parent control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Parent(Control? value)
+        public virtual ControlSet Parent(AbstractControl? value)
         {
             foreach (var item in items)
                 item.Parent = value;

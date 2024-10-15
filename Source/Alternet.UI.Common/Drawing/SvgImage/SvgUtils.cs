@@ -16,17 +16,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
         /// from the specified <see cref="Stream"/> which contains svg data. Images are loaded
-        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
+        /// for the normal and disabled states using <see cref="AbstractControl.GetSvgColor"/>.
         /// </summary>
         /// <param name="stream">Stream with svg data.</param>
         /// <param name="size">Image size in pixels.</param>
-        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
+        /// <param name="control">Control which <see cref="AbstractControl.GetSvgColor"/>
         /// method is called to get color information.</param>
         /// <returns></returns>
         public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
             Stream stream,
             SizeI size,
-            Control control)
+            AbstractControl control)
         {
             var image = ImageSet.FromSvgStream(
                 stream,

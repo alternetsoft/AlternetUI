@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// in order to implement your own custom labeled control.</remarks>
     [ControlCategory("Hidden")]
     public abstract partial class ControlAndLabel
-        : PlatformControl, IControlAndLabel, INotifyDataErrorInfo
+        : Control, IControlAndLabel, INotifyDataErrorInfo
     {
         /// <summary>
         /// Gets or sets default distance between control and label.
@@ -28,21 +28,21 @@ namespace Alternet.UI
         /// Gets or sets function that creates default labels for the <see cref="ControlAndLabel"/>
         /// controls.
         /// </summary>
-        public static Func<Control> CreateDefaultLabel = () => new Label();
+        public static Func<AbstractControl> CreateDefaultLabel = () => new Label();
 
         private readonly PictureBox errorPicture = new()
         {
             Margin = new Thickness(DefaultControlLabelDistance, 0, 0, 0),
         };
 
-        private readonly Control label;
-        private readonly Control mainControl;
+        private readonly AbstractControl label;
+        private readonly AbstractControl mainControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ControlAndLabel(PlatformControl parent)
+        public ControlAndLabel(Control parent)
             : this()
         {
             Parent = parent;
@@ -67,7 +67,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="Control.SuggestedWidth"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
         /// </summary>
         public virtual Coord LabelSuggestedWidth
         {
@@ -76,7 +76,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="Control.SuggestedWidth"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
         /// </summary>
         public virtual Coord InnerSuggestedWidth
         {
@@ -85,7 +85,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="Control.SuggestedHeight"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property of the main child control.
         /// </summary>
         public virtual Coord InnerSuggestedHeight
         {
@@ -94,7 +94,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="Control.SuggestedSize"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property of the main child control.
         /// </summary>
         public virtual SizeD InnerSuggestedSize
         {
@@ -106,7 +106,7 @@ namespace Alternet.UI
         /// Gets attached <see cref="Label"/> control.
         /// </summary>
         [Browsable(false)]
-        public Control Label => label;
+        public AbstractControl Label => label;
 
         /// <summary>
         /// Gets or sets visibility of the attached <see cref="Label"/> control.
@@ -147,7 +147,7 @@ namespace Alternet.UI
         /// Gets main child control.
         /// </summary>
         [Browsable(false)]
-        public Control MainControl => mainControl;
+        public AbstractControl MainControl => mainControl;
 
         /// <inheritdoc/>
         public override bool HasErrors
@@ -155,9 +155,9 @@ namespace Alternet.UI
             get => (MainControl as INotifyDataErrorInfo)?.HasErrors ?? false;
         }
 
-        Control IControlAndLabel.Label => Label;
+        AbstractControl IControlAndLabel.Label => Label;
 
-        Control IControlAndLabel.MainControl => MainControl;
+        AbstractControl IControlAndLabel.MainControl => MainControl;
 
         [Browsable(false)]
         internal new LayoutStyle? Layout
@@ -178,7 +178,7 @@ namespace Alternet.UI
         /// <remarks>
         /// For example, main control for the <see cref="TextBoxAndLabel"/> is <see cref="TextBox"/>.
         /// </remarks>
-        protected abstract Control CreateControl();
+        protected abstract AbstractControl CreateControl();
 
         /// <summary>
         /// Creates label control.
@@ -186,6 +186,6 @@ namespace Alternet.UI
         /// <remarks>
         /// By default <see cref="Label"/> is created.
         /// </remarks>
-        protected virtual Control CreateLabel() => CreateDefaultLabel();
+        protected virtual AbstractControl CreateLabel() => CreateDefaultLabel();
     }
 }

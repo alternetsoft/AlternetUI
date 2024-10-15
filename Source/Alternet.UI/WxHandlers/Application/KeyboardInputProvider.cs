@@ -27,7 +27,7 @@ namespace Alternet.UI
         {
             if (e.Data.keyChar == 0)
                 return;
-            Control.BubbleTextInput(e.Data.keyChar, out var handled);
+            AbstractControl.BubbleTextInput(e.Data.keyChar, out var handled);
             e.Handled = handled;
         }
 
@@ -35,7 +35,7 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            Control.BubbleKeyDown(
+            AbstractControl.BubbleKeyDown(
                 (Key)e.Data.key,
                 Keyboard.Modifiers,
                 Keyboard.IsRepeatToRepeatCount(e.Data.isRepeat),
@@ -47,7 +47,7 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            Control.BubbleKeyUp(
+            AbstractControl.BubbleKeyUp(
                 (Key)e.Data.key,
                 Keyboard.Modifiers,
                 Keyboard.IsRepeatToRepeatCount(e.Data.isRepeat),

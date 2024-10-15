@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Panel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Panel(PlatformControl parent)
+        public Panel(Control parent)
             : this()
         {
             Parent = parent;

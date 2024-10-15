@@ -36,7 +36,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">Control in which this object is painted.</param>
         /// <param name="dc">Drawing context.</param>
-        void Draw(Control control, Graphics dc);
+        void Draw(AbstractControl control, Graphics dc);
 
         /// <summary>
         /// Sets whether this object is visible.

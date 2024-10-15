@@ -8,7 +8,7 @@ namespace Alternet.UI
         private readonly Action?[] events = new Action?[(int)WxEventIdentifiers.Max + 1];
         private readonly Native.Mouse nativeMouse;
 
-        private Control? targetControl;
+        private AbstractControl? targetControl;
         private long timestamp;
         private int delta;
 
@@ -64,14 +64,14 @@ namespace Alternet.UI
             nativeMouse.MouseChanged -= NativeMouse_MouseChanged;
         }
 
-        private static Control? GetTargetControl(IntPtr targetControlPointer, bool setHoveredControl)
+        private static AbstractControl? GetTargetControl(IntPtr targetControlPointer, bool setHoveredControl)
         {
             if (targetControlPointer == IntPtr.Zero)
                 return null;
 
-            var hoveredControl = Control.GetHoveredControl();
+            var hoveredControl = AbstractControl.GetHoveredControl();
 
-            var nativeHoveredHandler = PlatformControl.RequireHandler(hoveredControl) as WxControlHandler;
+            var nativeHoveredHandler = Control.RequireHandler(hoveredControl) as WxControlHandler;
 
             if(nativeHoveredHandler is not null)
             {
@@ -87,34 +87,34 @@ namespace Alternet.UI
 
             var result = WxControlHandler.NativeControlToHandler(c)?.Control;
             if(setHoveredControl && result is not null)
-                Control.HoveredControl = result;
+                AbstractControl.HoveredControl = result;
 
             return result;
         }
 
         private void ReportMouseDoubleClick(MouseButton button)
         {
-            Control.BubbleMouseDoubleClick(targetControl, timestamp, button, null, out _);
+            AbstractControl.BubbleMouseDoubleClick(targetControl, timestamp, button, null, out _);
         }
 
         private void ReportMouseWheel()
         {
-            Control.BubbleMouseWheel(targetControl, timestamp, delta, null, out _);
+            AbstractControl.BubbleMouseWheel(targetControl, timestamp, delta, null, out _);
         }
 
         private void ReportMouseUp(MouseButton button)
         {
-            Control.BubbleMouseUp(targetControl, timestamp, button, null, out _);
+            AbstractControl.BubbleMouseUp(targetControl, timestamp, button, null, out _);
         }
 
         private void ReportMouseDown(MouseButton button)
         {
-            Control.BubbleMouseDown(targetControl, timestamp, button, null, out _);
+            AbstractControl.BubbleMouseDown(targetControl, timestamp, button, null, out _);
         }
 
         private void ReportMouseMove()
         {
-            Control.BubbleMouseMove(targetControl, timestamp, null, out _);
+            AbstractControl.BubbleMouseMove(targetControl, timestamp, null, out _);
         }
      }
 }

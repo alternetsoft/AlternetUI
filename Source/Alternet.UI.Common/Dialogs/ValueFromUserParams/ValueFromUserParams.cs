@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets dialog parent.
         /// </summary>
-        public Control? Parent;
+        public AbstractControl? Parent;
 
         /// <summary>
         /// Gets or sets default value for the input text.

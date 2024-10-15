@@ -24,7 +24,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public partial class ListView : PlatformControl
+    public partial class ListView : Control
     {
         private HashSet<long>? selectedIndices = null;
 
@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ListView"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ListView(PlatformControl parent)
+        public ListView(Control parent)
             : this()
         {
             Parent = parent;

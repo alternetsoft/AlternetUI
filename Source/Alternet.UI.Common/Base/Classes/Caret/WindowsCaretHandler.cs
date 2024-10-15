@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// <param name="control"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public WindowsCaretHandler(Control control, int width, int height)
+        public WindowsCaretHandler(AbstractControl control, int width, int height)
             : base(control, width, height)
         {
         }

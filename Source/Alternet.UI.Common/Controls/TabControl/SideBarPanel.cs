@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="SideBarPanel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public SideBarPanel(PlatformControl parent)
+        public SideBarPanel(Control parent)
             : this()
         {
             Parent = parent;

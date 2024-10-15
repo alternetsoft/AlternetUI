@@ -181,7 +181,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IControlHandler CreateControlHandler(Control control);
+        IControlHandler CreateControlHandler(AbstractControl control);
 
         /// <summary>
         /// Creates <see cref="ICheckListBoxHandler"/> interface provider.

@@ -80,7 +80,7 @@ namespace Alternet.Drawing
         /// <param name="control">Control which background color is checked to get whether
         /// it is dark.</param>
         /// <returns></returns>
-        public static Color GetDefaultBorderColor(Control? control)
+        public static Color GetDefaultBorderColor(AbstractControl? control)
         {
             if (control is null)
                 return BorderSettings.DefaultCommonBorderColor;
@@ -159,7 +159,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static IReadOnlyFontAndColor GetResetColors(
             ResetColorType method,
-            Control? control = null,
+            AbstractControl? control = null,
             ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
         {
             switch (method)
@@ -173,11 +173,11 @@ namespace Alternet.Drawing
                 case ResetColorType.DefaultAttributes:
                     return control?.GetDefaultFontAndColor() ?? FontAndColor.Null;
                 case ResetColorType.DefaultAttributesTextBox:
-                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.TextBox, renderSize);
+                    return AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.TextBox, renderSize);
                 case ResetColorType.DefaultAttributesListBox:
-                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.ListBox, renderSize);
+                    return AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.ListBox, renderSize);
                 case ResetColorType.DefaultAttributesButton:
-                    return Control.GetStaticDefaultFontAndColor(ControlTypeId.Button, renderSize);
+                    return AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.Button, renderSize);
                 case ResetColorType.ColorMenu:
                     return FontAndColor.SystemColorMenu;
                 case ResetColorType.ColorActiveCaption:

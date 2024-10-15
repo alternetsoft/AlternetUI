@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Control.DragStart"/> event.
+    /// Provides data for the <see cref="AbstractControl.DragStart"/> event.
     /// </summary>
     public class DragStartEventArgs : BaseCancelEventArgs
     {
@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// <param name="mouseClientLocation">The client coordinates of the mouse pointer
         /// in device-independent units.</param>
         /// <param name="mouseDownLocation">Coordinates of the mouse pointer in the moment when
-        /// <see cref="Control.MouseDown"/> event was fired.</param>
+        /// <see cref="AbstractControl.MouseDown"/> event was fired.</param>
         /// <param name="mouseDownArgs"></param>
         /// <param name="mouseMoveArgs"></param>
         public DragStartEventArgs(
@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Distance calculated between current mouse pointer cordinates
         /// and coordinates in the moment when
-        /// <see cref="Control.MouseDown"/> event was fired. If distance is greater
+        /// <see cref="AbstractControl.MouseDown"/> event was fired. If distance is greater
         /// than <see cref="MinDragStartDistance"/>, drag operation can be started.
         /// </remarks>
         public static Coord MinDragStartDistance { get; set; } = 7;
@@ -62,7 +62,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets coordinates of the mouse pointer in the moment when
-        /// <see cref="Control.MouseDown"/> event was fired.
+        /// <see cref="AbstractControl.MouseDown"/> event was fired.
         /// </summary>
         /// <remarks>
         /// Coordinates of the mouse pointer are in device-independent units.
@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Set this property <c>true</c> if you want to start drag operation.
-        /// See <see cref="Control.DragStart"/> for the details.
+        /// See <see cref="AbstractControl.DragStart"/> for the details.
         /// </remarks>
         public bool DragStarted { get; set; }
 

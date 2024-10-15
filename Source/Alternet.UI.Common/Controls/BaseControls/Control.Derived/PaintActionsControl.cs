@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public class PaintActionsControl : UserControl
     {
-        private List<Action<Control, Graphics, RectD>>? paintActions;
+        private List<Action<AbstractControl, Graphics, RectD>>? paintActions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaintActionsControl"/> class.
@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets list of custom paint actions.
         /// </summary>
-        public IList<Action<Control, Graphics, RectD>> PaintActions
+        public IList<Action<AbstractControl, Graphics, RectD>> PaintActions
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// Clears <see cref="PaintActions"/> and adds single paint action there.
         /// </summary>
         /// <param name="action">Custom paint action.</param>
-        public void SetPaintAction(Action<Control, Graphics, RectD> action)
+        public void SetPaintAction(Action<AbstractControl, Graphics, RectD> action)
         {
             PaintActions.Clear();
             PaintActions.Add(action);

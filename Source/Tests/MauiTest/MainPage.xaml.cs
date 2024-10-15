@@ -63,12 +63,12 @@ public partial class MainPage : ContentPage
 
         skiaContainer.HandlerChanged += SkiaContainer_HandlerChanged;
 
-        Alternet.UI.Control.FocusedControlChanged += Control_FocusedControlChanged;
+        Alternet.UI.AbstractControl.FocusedControlChanged += Control_FocusedControlChanged;
     }
 
     private void Control_FocusedControlChanged(object? sender, EventArgs e)
     {
-        var name = Alternet.UI.Control.FocusedControl?.Name ?? "null";
+        var name = Alternet.UI.AbstractControl.FocusedControl?.Name ?? "null";
         Log($"FocusedControlChanged: {name}");
     }
 

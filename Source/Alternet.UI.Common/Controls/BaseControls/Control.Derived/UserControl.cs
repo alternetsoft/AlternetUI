@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Parent class for all owner draw controls.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class UserControl : PlatformControl
+    public partial class UserControl : Control
     {
         private bool hasBorder = true; // !! to border settings
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="UserControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public UserControl(PlatformControl parent)
+        public UserControl(Control parent)
             : this()
         {
             Parent = parent;
@@ -136,7 +136,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="Control.StateObjects"/> colors and backgrounds for the state specified
+        /// Sets <see cref="AbstractControl.StateObjects"/> colors and backgrounds for the state specified
         /// in the <paramref name="state"/> parameter to the
         /// colors from <paramref name="fontAndColor"/>.
         /// </summary>

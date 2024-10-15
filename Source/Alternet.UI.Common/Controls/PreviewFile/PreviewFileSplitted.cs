@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PreviewFileSplitted(PlatformControl parent)
+        public PreviewFileSplitted(Control parent)
             : this()
         {
             Parent = parent;
@@ -100,7 +100,7 @@ namespace Alternet.UI
             }
         }
 
-        Control IFilePreview.Control => this;
+        AbstractControl IFilePreview.Control => this;
 
         /// <summary>
         /// Moves second preview panel to the right side bar.

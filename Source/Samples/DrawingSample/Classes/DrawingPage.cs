@@ -6,10 +6,10 @@ namespace DrawingSample
 {
     internal abstract class DrawingPage
     {
-        private Control? settingsControl;
-        private Control? canvas;
+        private AbstractControl? settingsControl;
+        private AbstractControl? canvas;
 
-        public Control? Canvas
+        public AbstractControl? Canvas
         {
             get => canvas;
 
@@ -31,17 +31,17 @@ namespace DrawingSample
             }
         }
 
-        protected virtual void OnCanvasChanged(Control? oldValue, Control? value)
+        protected virtual void OnCanvasChanged(AbstractControl? oldValue, AbstractControl? value)
         {
         }
 
-        public Control SettingsControl => settingsControl ??= CreateSettingsControl();
+        public AbstractControl SettingsControl => settingsControl ??= CreateSettingsControl();
 
         public abstract string Name { get; }
 
         public abstract void Draw(Graphics dc, RectD bounds);
 
-        protected abstract Control CreateSettingsControl();
+        protected abstract AbstractControl CreateSettingsControl();
 
         public virtual void OnActivated()
         {

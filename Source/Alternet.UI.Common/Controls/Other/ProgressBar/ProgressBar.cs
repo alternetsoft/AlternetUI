@@ -32,7 +32,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class ProgressBar : PlatformControl
+    public partial class ProgressBar : Control
     {
         private bool isIndeterminate;
         private int minimum;
@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ProgressBar(PlatformControl parent)
+        public ProgressBar(Control parent)
             : this()
         {
             Parent = parent;

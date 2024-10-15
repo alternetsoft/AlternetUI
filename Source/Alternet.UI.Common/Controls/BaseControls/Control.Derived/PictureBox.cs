@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PictureBox(PlatformControl parent)
+        public PictureBox(Control parent)
             : this()
         {
             Parent = parent;
@@ -136,7 +136,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="Control.Background"/>
+        /// <inheritdoc cref="AbstractControl.Background"/>
         [Browsable(true)]
         public override Brush? Background
         {
@@ -382,7 +382,7 @@ namespace Alternet.UI
                 dc.DrawText(
                     Text ?? string.Empty,
                     origin,
-                    Font ?? UI.Control.DefaultFont,
+                    Font ?? UI.AbstractControl.DefaultFont,
                     color ?? ForeColor,
                     Color.Empty);
             }
@@ -465,7 +465,7 @@ namespace Alternet.UI
                 return new SizeD();
 
             using var dc = CreateDrawingContext();
-            var result = dc.GetTextExtent(text, Font ?? UI.Control.DefaultFont, this);
+            var result = dc.GetTextExtent(text, Font ?? UI.AbstractControl.DefaultFont, this);
             return result;
         }
     }

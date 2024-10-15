@@ -14,11 +14,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets label control.
         /// </summary>
-        Control Label { get; }
+        AbstractControl Label { get; }
 
         /// <summary>
         /// Gets main control.
         /// </summary>
-        Control MainControl { get; }
+        AbstractControl MainControl { get; }
     }
 }

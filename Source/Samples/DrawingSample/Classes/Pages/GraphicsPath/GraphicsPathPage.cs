@@ -45,7 +45,7 @@ namespace DrawingSample
             DrawDemoForeground(dc, bounds);
         }
 
-        protected override void OnCanvasChanged(Control? oldValue, Control? value)
+        protected override void OnCanvasChanged(AbstractControl? oldValue, AbstractControl? value)
         {
             if (oldValue != null)
             {
@@ -62,7 +62,7 @@ namespace DrawingSample
             }
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new GraphicsPathPageSettings();
             control.Initialize(this);

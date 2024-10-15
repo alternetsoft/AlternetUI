@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Calendar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Calendar(PlatformControl parent)
+        public Calendar(Control parent)
             : this()
         {
             Parent = parent;

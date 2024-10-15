@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class NumericUpDown : PlatformControl
+    public partial class NumericUpDown : Control
     {
         private int minimum = 0;
         private int maximum = 100;
@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public NumericUpDown(PlatformControl parent)
+        public NumericUpDown(Control parent)
             : this()
         {
             Parent = parent;

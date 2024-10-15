@@ -7,11 +7,11 @@ namespace DrawingSample.RandomArt
 {
     internal class RandomArtController : IDisposable
     {
-        private readonly Control canvas;
+        private readonly AbstractControl canvas;
         private readonly Model model;
         private readonly ToolSettings toolSettings = new();
 
-        public RandomArtController(Model model, Control canvas, PathSegmentType pathSegmentType)
+        public RandomArtController(Model model, AbstractControl canvas, PathSegmentType pathSegmentType)
         {
             PathSegmentType = pathSegmentType;
 

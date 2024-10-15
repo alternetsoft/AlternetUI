@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public partial class Label : PlatformControl
+    public partial class Label : Control
     {
         private Coord? maxTextWidth;
 
@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Label"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Label(PlatformControl parent)
+        public Label(Control parent)
             : this()
         {
             Parent = parent;
@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// Gets or sets maximal width of text in the control.
         /// </summary>
         /// <remarks>
-        /// Wraps <see cref="Control.Text"/> so that each of its lines becomes at most width
+        /// Wraps <see cref="AbstractControl.Text"/> so that each of its lines becomes at most width
         /// dips wide if possible (the lines are broken at words boundaries so it
         /// might not be the case if words are too long).
         /// </remarks>
@@ -110,7 +110,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Wraps <see cref="Control.Text"/> so that each of its lines becomes at most width
+        /// Wraps <see cref="AbstractControl.Text"/> so that each of its lines becomes at most width
         /// dips wide if possible (the lines are broken at words boundaries so it
         /// might not be the case if words are too long).
         /// </summary>
@@ -142,7 +142,7 @@ namespace Alternet.UI
             var result = DrawingUtils.WrapTextToMultipleLines(
                 s,
                 maxTextWidth.Value,
-                Font ?? Control.DefaultFont,
+                Font ?? AbstractControl.DefaultFont,
                 MeasureCanvas);
             return result;
         }

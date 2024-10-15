@@ -41,6 +41,6 @@ namespace Alternet.UI
         /// <summary>
         /// Control to which this caret is attached.
         /// </summary>
-        Control? Control { get; }
+        AbstractControl? Control { get; }
     }
 }

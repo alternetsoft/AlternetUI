@@ -168,7 +168,7 @@ namespace PropertyGridSample
             var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
-            control.Font = Control.DefaultFont.Scaled(2);
+            control.Font = AbstractControl.DefaultFont.Scaled(2);
         }
 
         void TestGenericToolBarForegroundColor()

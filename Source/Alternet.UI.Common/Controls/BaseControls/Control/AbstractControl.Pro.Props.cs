@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in

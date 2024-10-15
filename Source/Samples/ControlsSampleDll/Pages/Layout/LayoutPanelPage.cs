@@ -31,7 +31,7 @@ namespace ControlsSample
 
             btnPanel.Parent = this;
 
-            static Control Create(params string[] items)
+            static AbstractControl Create(params string[] items)
             {
                 ListBox listBox = new()
                 {

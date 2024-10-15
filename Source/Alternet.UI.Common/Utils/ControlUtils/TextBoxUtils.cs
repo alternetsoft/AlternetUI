@@ -23,7 +23,7 @@ namespace Alternet.UI
         public static void ShowDialogGoToLine(
             int lines,
             int line,
-            Control? owner,
+            AbstractControl? owner,
             Action<int> onApply)
         {
             var lastLineNumber = lines;
@@ -68,7 +68,7 @@ namespace Alternet.UI
             {
                 Title = CommonStrings.Default.WindowTitleGoToLine,
                 Message = prompt,
-                Parent = textBox as Control,
+                Parent = textBox as AbstractControl,
                 MinValue = 1,
                 MaxValue = lastLineNumber,
                 DefaultValue = richTextBox.InsertionPointLineNumber + 1,
@@ -105,24 +105,24 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="container">Specifies container control in which
         /// operation is performed</param>
-        public static void AdjustTextBoxesHeight(Control container)
+        public static void AdjustTextBoxesHeight(AbstractControl container)
         {
             if (container == null || !AllPlatformDefaults.PlatformCurrent.AdjustTextBoxesHeight)
                 return;
 
-            Control? comboBox = null;
-            Control? textBox = null;
+            AbstractControl? comboBox = null;
+            AbstractControl? textBox = null;
 
             FindTextEditors(container);
             if (comboBox == null)
                 return;
             AdjustTextBoxesHeightInternal(container, comboBox, textBox);
 
-            void FindTextEditors(Control container)
+            void FindTextEditors(AbstractControl container)
             {
                 if (comboBox != null && textBox != null)
                     return;
-                foreach (Control control in container.Children)
+                foreach (AbstractControl control in container.Children)
                 {
                     if (control is TextBox box)
                         textBox = box;
@@ -159,9 +159,9 @@ namespace Alternet.UI
         }
 
         internal static void AdjustTextBoxesHeightInternal(
-            Control container,
-            Control comboBox,
-            Control? textBox)
+            AbstractControl container,
+            AbstractControl comboBox,
+            AbstractControl? textBox)
         {
             var comboBoxHeight = comboBox.Bounds.Height;
             Coord textBoxHeight = 0;
@@ -177,14 +177,14 @@ namespace Alternet.UI
             if (maxHeight <= 0)
                 return;
 
-            var editors = new List<Control>();
+            var editors = new List<AbstractControl>();
             AddTextEditors(container);
 
-            void AddTextEditors(Control container)
+            void AddTextEditors(AbstractControl container)
             {
                 if (!container.HasChildren)
                     return;
-                foreach (Control control in container.Children)
+                foreach (AbstractControl control in container.Children)
                 {
                     if (control is TextBox || control is ComboBox)
                     {
@@ -200,7 +200,7 @@ namespace Alternet.UI
                 return;
             container.DoInsideLayout(() =>
             {
-                foreach (Control control in editors)
+                foreach (AbstractControl control in editors)
                     control.SuggestedHeight = maxHeight;
             });
         }

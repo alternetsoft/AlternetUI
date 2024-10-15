@@ -48,7 +48,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                     typeSystem.FindType(typeof(Alternet.UI.Port.IUixmlPortXamlIlXmlNamespaceInfoProvider)),
                 //DeferredContentPropertyAttributes = {typeSystem.GetType("Alternet.UI.Metadata.TemplateContentAttribute")},
                 DeferredContentExecutorCustomizationDefaultTypeParameter
-                = typeSystem.FindType(typeof(Alternet.UI.Control)),
+                = typeSystem.FindType(typeof(Alternet.UI.AbstractControl)),
                 
                 DeferredContentExecutorCustomizationTypeParameterDeferredContentAttributePropertyNames
                 = new List<string>

@@ -28,7 +28,7 @@ namespace Alternet.UI
             var families = FontFamily.FamiliesNamesAscending;
             foreach(var family in families)
                 control.Add(new ListControlItem(family));
-            defaultName ??= Control.DefaultFont.Name;
+            defaultName ??= AbstractControl.DefaultFont.Name;
             if (select)
             {
                 var found = control.FindStringExact(defaultName);
@@ -125,7 +125,7 @@ namespace Alternet.UI
             var fontSizes = new List<Coord>();
             fontSizes.AddRange(
                 new double[] { 8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96 });
-            var fontSize = defaultSize ?? Control.DefaultFont.SizeInPoints;
+            var fontSize = defaultSize ?? AbstractControl.DefaultFont.SizeInPoints;
 
             void AddAdditionalSize(Coord value)
             {

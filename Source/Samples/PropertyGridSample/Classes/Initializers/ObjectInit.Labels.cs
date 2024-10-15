@@ -33,7 +33,7 @@ namespace PropertyGridSample
             label.Borders.SetAll(border);
             label.Borders.SetObject(doubleBorder, VisualControlState.Hovered);
 
-            var colors = new FontAndColor(Color.Black, null, Control.DefaultFont.AsBold);
+            var colors = new FontAndColor(Color.Black, null, AbstractControl.DefaultFont.AsBold);
 
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();

@@ -202,7 +202,7 @@ namespace DrawingSample
                 shape.Draw(dc);
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new BrushesAndPensPageSettings();
             control.Initialize(this);

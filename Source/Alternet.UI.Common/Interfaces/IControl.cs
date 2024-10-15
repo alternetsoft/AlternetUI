@@ -137,7 +137,7 @@ namespace Alternet.UI
         event EventHandler? LostFocus;
 
         /// <summary>
-        /// Occurs when the <see cref="Control.Text" /> property value changes.
+        /// Occurs when the <see cref="AbstractControl.Text" /> property value changes.
         /// </summary>
         event EventHandler? TextChanged;
 
@@ -486,7 +486,7 @@ namespace Alternet.UI
         ICustomAttributes<string, object> CustomAttr { get; }
 
         /// <summary>
-        /// Gets or sets size of the <see cref="Control"/>'s client area, in
+        /// Gets or sets size of the <see cref="AbstractControl"/>'s client area, in
         /// device-independent units.
         /// </summary>
         SizeD ClientSize { get; set; }
@@ -496,10 +496,10 @@ namespace Alternet.UI
         /// </summary>
         ControlFlags StateFlags { get; }
 
-        /// <inheritdoc cref="Control.VertScrollBarInfo"/>
+        /// <inheritdoc cref="AbstractControl.VertScrollBarInfo"/>
         ScrollBarInfo VertScrollBarInfo { get; set; }
 
-        /// <inheritdoc cref="Control.HorzScrollBarInfo"/>
+        /// <inheritdoc cref="AbstractControl.HorzScrollBarInfo"/>
         ScrollBarInfo HorzScrollBarInfo { get; set; }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a value indicating whether the mouse pointer is over the
-        /// <see cref="Control"/>.
+        /// <see cref="AbstractControl"/>.
         /// </summary>
         bool IsMouseOver { get; }
 
@@ -591,7 +591,7 @@ namespace Alternet.UI
         string? ToolTip { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Control"/> bounds relative to the parent,
+        /// Gets or sets the <see cref="AbstractControl"/> bounds relative to the parent,
         /// in device-independent units.
         /// </summary>
         RectD Bounds { get; set; }
@@ -836,7 +836,7 @@ namespace Alternet.UI
         /// a <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
         /// <remarks>
         /// The padding is the amount of space between the content of a
-        /// <see cref="Control"/> and its border.
+        /// <see cref="AbstractControl"/> and its border.
         /// Padding is set as a <see cref="Thickness"/> structure rather than as
         /// a number so that the padding can be set asymmetrically.
         /// The <see cref="Thickness"/> structure itself supports string
@@ -1082,14 +1082,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a rectangle which describes the client area inside of the
-        /// <see cref="Control"/>,
+        /// <see cref="AbstractControl"/>,
         /// in device-independent units.
         /// </summary>
         RectD ClientRectangle { get; }
 
         /// <summary>
         /// Gets a rectangle which describes an area inside of the
-        /// <see cref="Control"/> available
+        /// <see cref="AbstractControl"/> available
         /// for positioning (layout) of its child controls, in device-independent units.
         /// </summary>
         RectD ChildrenLayoutBounds { get; }
@@ -1098,7 +1098,7 @@ namespace Alternet.UI
         /// Gets or sets the site of the control.
         /// </summary>
         /// <returns>The <see cref="System.ComponentModel.ISite" /> associated
-        /// with the <see cref="Control" />, if any.</returns>
+        /// with the <see cref="AbstractControl" />, if any.</returns>
         ISite? Site { get; set; }
 
         /// <summary>
@@ -1833,7 +1833,7 @@ namespace Alternet.UI
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
         void ForEachChild<T>(Action<T> action)
-            where T : Control;
+            where T : AbstractControl;
 
         /// <summary>
         /// Same as <see cref="App.Log"/>.

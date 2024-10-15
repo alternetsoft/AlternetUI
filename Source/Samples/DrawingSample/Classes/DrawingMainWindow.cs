@@ -7,7 +7,7 @@ namespace DrawingSample
     public partial class DrawingMainWindow : Window
     {
         private readonly TabControl tabControl = new();
-        private Control? selectedPage;
+        private AbstractControl? selectedPage;
 
         public DrawingMainWindow()
         {
@@ -43,7 +43,7 @@ namespace DrawingSample
             drawingPages.First().OnActivated();
         }
 
-        private Control CreateTabPage(DrawingPage page)
+        private AbstractControl CreateTabPage(DrawingPage page)
         {
             var tabPage = new Panel();
             var grid = new Grid();

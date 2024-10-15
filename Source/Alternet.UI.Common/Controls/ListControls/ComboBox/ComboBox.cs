@@ -34,8 +34,8 @@ namespace Alternet.UI
     /// In addition to display and selection functionality, the
     /// <see cref="ComboBox" /> also provides features that enable you to
     /// efficiently add items to the <see cref="ComboBox" /> and to find text
-    /// within the items of the list. With the <see cref="Control.BeginUpdate"/>
-    /// and <see cref="Control.EndUpdate"/> methods, you can add a large number
+    /// within the items of the list. With the <see cref="AbstractControl.BeginUpdate"/>
+    /// and <see cref="AbstractControl.EndUpdate"/> methods, you can add a large number
     /// of items to the <see cref="ComboBox" /> without the control
     /// being repainted each time an item is added to the list.
     /// </para>
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ComboBox(PlatformControl parent)
+        public ComboBox(Control parent)
             : this()
         {
             Parent = parent;
@@ -559,7 +559,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var font = Font ?? Control.DefaultFont;
+            var font = Font ?? AbstractControl.DefaultFont;
             Color color;
             color = ForegroundColor ?? SystemColors.WindowText;
 

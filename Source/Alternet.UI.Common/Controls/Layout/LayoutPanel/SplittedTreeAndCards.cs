@@ -23,13 +23,13 @@ namespace Alternet.UI
         private readonly Splitter splitter = new();
 
         private TreeKind kind = TreeKind.TreeView;
-        private Control? leftControl;
+        private AbstractControl? leftControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public SplittedTreeAndCards(PlatformControl parent)
+        public SplittedTreeAndCards(Control parent)
             : this()
         {
             Parent = parent;
@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets left control.
         /// </summary>
-        public Control? LeftControl
+        public AbstractControl? LeftControl
         {
             get
             {
@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Item title.</param>
         /// <param name="action">Card control create action.</param>
-        public void Add(string title, Func<Control> action)
+        public void Add(string title, Func<AbstractControl> action)
         {
             var index = cardPanel.Add(title, action);
 
@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// Creates used <see cref="TreeView"/> control.
         /// </summary>
         /// <returns></returns>
-        protected virtual Control CreateTreeView()
+        protected virtual AbstractControl CreateTreeView()
         {
             TreeView treeView = new()
             {
@@ -200,7 +200,7 @@ namespace Alternet.UI
         /// Creates used <see cref="VirtualListBox"/> control.
         /// </summary>
         /// <returns></returns>
-        protected virtual Control CreateListBox()
+        protected virtual AbstractControl CreateListBox()
         {
             VirtualListBox listBox = new()
             {

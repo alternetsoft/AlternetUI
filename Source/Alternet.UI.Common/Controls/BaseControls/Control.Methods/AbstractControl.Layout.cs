@@ -8,10 +8,10 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         internal static SizeD GetPreferredSizeHorizontalStackPanel(
-            Control container,
+            AbstractControl container,
             SizeD availableSize)
         {
             var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
@@ -38,7 +38,7 @@ namespace Alternet.UI
         }
 
         internal static SizeD GetPreferredSizeStackPanel(
-            Control container,
+            AbstractControl container,
             SizeD availableSize,
             bool isVertical)
         {
@@ -49,7 +49,7 @@ namespace Alternet.UI
         }
 
         internal static SizeD GetPreferredSizeVerticalStackPanel(
-            Control container,
+            AbstractControl container,
             SizeD availableSize)
         {
             var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
@@ -74,15 +74,15 @@ namespace Alternet.UI
         }
 
         internal static void LayoutHorizontalStackPanel(
-            Control container,
+            AbstractControl container,
             RectD childrenLayoutBounds,
-            IReadOnlyList<Control> controls)
+            IReadOnlyList<AbstractControl> controls)
         {
             Coord x = 0;
             Coord w = 0;
 
-            Stack<Control> rightControls = new();
-            List<(Control Control, Coord Top, SizeD Size)>? centerControls = null;
+            Stack<AbstractControl> rightControls = new();
+            List<(AbstractControl Control, Coord Top, SizeD Size)>? centerControls = null;
 
             foreach (var control in controls)
             {
@@ -121,7 +121,7 @@ namespace Alternet.UI
                 }
             }
 
-            void DoAlignControl(Control control)
+            void DoAlignControl(AbstractControl control)
             {
                 var margin = control.Margin;
                 var horizontalMargin = margin.Horizontal;
@@ -173,10 +173,10 @@ namespace Alternet.UI
         }
 
         internal static void LayoutStackPanel(
-            Control container,
+            AbstractControl container,
             bool isVertical,
             RectD space,
-            IReadOnlyList<Control> items)
+            IReadOnlyList<AbstractControl> items)
         {
             if (isVertical)
                 LayoutVerticalStackPanel(container, space, items);
@@ -185,9 +185,9 @@ namespace Alternet.UI
         }
 
         internal static void LayoutVerticalStackPanel(
-            Control container,
+            AbstractControl container,
             RectD lBounds,
-            IReadOnlyList<Control> items)
+            IReadOnlyList<AbstractControl> items)
         {
             Coord stretchedSize = 0;
 
@@ -238,7 +238,7 @@ namespace Alternet.UI
                 }
             }
 
-            void DoAlignControl(Control control)
+            void DoAlignControl(AbstractControl control)
             {
                 var stretch = control.VerticalAlignment == UI.VerticalAlignment.Fill;
 
@@ -284,9 +284,9 @@ namespace Alternet.UI
         // On return, 'bounds' has an empty space left after docking the controls to sides
         // of the container (fill controls are not counted).
         internal static int LayoutDockedChildren(
-            Control parent,
+            AbstractControl parent,
             ref RectD bounds,
-            IReadOnlyList<Control> children)
+            IReadOnlyList<AbstractControl> children)
         {
             var result = 0;
 
@@ -296,7 +296,7 @@ namespace Alternet.UI
             // lowest Z-order is closest to edge
             for (int i = children.Count - 1; i >= 0; i--)
             {
-                Control child = children[i];
+                AbstractControl child = children[i];
                 DockStyle dock = child.Dock;
 
                 if (dock == DockStyle.None)

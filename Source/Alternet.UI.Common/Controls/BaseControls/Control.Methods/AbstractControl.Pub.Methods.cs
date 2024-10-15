@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Adds <see cref="IControlNotification"/> object to the global list of notifications.
@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to check.</param>
         /// <returns></returns>
-        public static Control? GetMouseTargetControl(Control? control)
+        public static AbstractControl? GetMouseTargetControl(AbstractControl? control)
         {
             var result = control;
 
@@ -60,17 +60,17 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This is a default implementation which is called from
-        /// <see cref="Control.OnLayout"/>.
+        /// <see cref="AbstractControl.OnLayout"/>.
         /// </remarks>
         /// <param name="container">Container control which childs will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
         /// <param name="space">Rectangle in which layout is performed.</param>
         /// <param name="items">List of controls to layout.</param>
         public static void DefaultOnLayout(
-            Control container,
+            AbstractControl container,
             LayoutStyle layout,
             RectD space,
-            IReadOnlyList<Control> items)
+            IReadOnlyList<AbstractControl> items)
         {
             var number = LayoutDockedChildren(
                 container,
@@ -81,7 +81,7 @@ namespace Alternet.UI
             {
                 if (number == 0 || number == items.Count)
                     return;
-                var newItems = new List<Control>();
+                var newItems = new List<AbstractControl>();
                 foreach (var item in items)
                 {
                     if (item.Dock == DockStyle.None)
@@ -95,7 +95,7 @@ namespace Alternet.UI
             {
                 case LayoutStyle.Basic:
                     UpdateItems();
-                    UI.Control.PerformDefaultLayout(container, space, items);
+                    UI.AbstractControl.PerformDefaultLayout(container, space, items);
                     break;
                 case LayoutStyle.Vertical:
                     UpdateItems();
@@ -118,12 +118,12 @@ namespace Alternet.UI
         /// a rectangle, in device-independent units.</returns>
         /// <remarks>
         /// This is a default implementation which is called from
-        /// <see cref="Control.GetPreferredSize(SizeD)"/>.
+        /// <see cref="AbstractControl.GetPreferredSize(SizeD)"/>.
         /// </remarks>
         /// <param name="container">Container control which childs will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
         public static SizeD DefaultGetPreferredSize(
-            Control container,
+            AbstractControl container,
             SizeD availableSize,
             LayoutStyle layout)
         {
@@ -134,11 +134,11 @@ namespace Alternet.UI
                 default:
                     return GetPreferredSizeDefaultLayout(container, availableSize);
                 case LayoutStyle.Basic:
-                    return Control.GetPreferredSizeDefaultLayout(container, availableSize);
+                    return AbstractControl.GetPreferredSizeDefaultLayout(container, availableSize);
                 case LayoutStyle.Vertical:
-                    return Control.GetPreferredSizeVerticalStackPanel(container, availableSize);
+                    return AbstractControl.GetPreferredSizeVerticalStackPanel(container, availableSize);
                 case LayoutStyle.Horizontal:
-                    return Control.GetPreferredSizeHorizontalStackPanel(container, availableSize);
+                    return AbstractControl.GetPreferredSizeHorizontalStackPanel(container, availableSize);
             }
         }
 
@@ -158,7 +158,7 @@ namespace Alternet.UI
         /// Returns the currently hovered control, or <see langword="null"/> if
         /// no control is under the mouse.
         /// </summary>
-        public static Control? GetHoveredControl()
+        public static AbstractControl? GetHoveredControl()
         {
             return HoveredControl;
         }
@@ -188,11 +188,11 @@ namespace Alternet.UI
         /// in the parent control to notify about property change.
         /// </remarks>
         /// <remarks>
-        /// By default in <see cref="Control"/> it is called for <see cref="Title"/>,
+        /// By default in <see cref="AbstractControl"/> it is called for <see cref="Title"/>,
         /// <see cref="Enabled"/> and some other properties.
         /// </remarks>
         public virtual void OnChildPropertyChanged(
-            Control child,
+            AbstractControl child,
             string propName,
             bool directChild = true)
         {
@@ -233,7 +233,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If <paramref name="newIndex"/> = -1, moves to the end of the collection.
         /// </remarks>
-        public virtual void SetChildIndex(Control child, int newIndex)
+        public virtual void SetChildIndex(AbstractControl child, int newIndex)
         {
             Children.SetItemIndex(child, newIndex);
             PerformLayout(false);
@@ -358,7 +358,7 @@ namespace Alternet.UI
         /// all <see cref="Button"/> or <see cref="CheckBox"/> child controls.
         /// </remarks>
         public virtual IEnumerable<T> ChildrenOfType<T>()
-            where T : Control
+            where T : AbstractControl
         {
             if (HasChildren)
                 return Children.OfType<T>();
@@ -656,7 +656,7 @@ namespace Alternet.UI
                             RaiseMouseEnter();
                             break;
                         case TouchAction.Pressed:
-                            Control.BubbleMouseDown(
+                            AbstractControl.BubbleMouseDown(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
@@ -665,14 +665,14 @@ namespace Alternet.UI
                                 e.DeviceType);
                             break;
                         case TouchAction.Moved:
-                            Control.BubbleMouseMove(
+                            AbstractControl.BubbleMouseMove(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.Location,
                                 out _);
                             break;
                         case TouchAction.Released:
-                            Control.BubbleMouseUp(
+                            AbstractControl.BubbleMouseUp(
                                 this,
                                 DateTime.Now.Ticks,
                                 e.MouseButton,
@@ -686,7 +686,7 @@ namespace Alternet.UI
                             RaiseMouseLeave();
                             break;
                         case TouchAction.WheelChanged:
-                            Control.BubbleMouseWheel(
+                            AbstractControl.BubbleMouseWheel(
                                         this,
                                         DateTime.Now.Ticks,
                                         e.WheelDelta,
@@ -725,7 +725,7 @@ namespace Alternet.UI
         /// to get.</param>
         /// <returns>The child control at the specified index in the
         /// <see cref="Children"/> list.</returns>
-        public virtual Control? GetChildOrNull(int index = 0)
+        public virtual AbstractControl? GetChildOrNull(int index = 0)
         {
             if (!HasChildren)
                 return null;
@@ -738,7 +738,7 @@ namespace Alternet.UI
         /// Creates <see cref="ControlSet"/> with the specified controls.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public virtual ControlSet Group(params Control[] controls)
+        public virtual ControlSet Group(params AbstractControl[] controls)
         {
             return new(controls);
         }
@@ -747,7 +747,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public virtual ControlSet Group(IReadOnlyList<Control> controls)
+        public virtual ControlSet Group(IReadOnlyList<AbstractControl> controls)
         {
             return new(controls);
         }
@@ -762,7 +762,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<AbstractControl> result = new();
             foreach (var control in Children)
             {
                 if (control.MemberOfGroup(groupIndex))
@@ -784,7 +784,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<AbstractControl> result = new();
             foreach (var control in Children)
             {
                 result.Add(control);
@@ -817,7 +817,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<AbstractControl> result = new();
             foreach (var control in Children)
             {
                 if (control.ColumnIndex == columnIndex)
@@ -842,7 +842,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return ControlSet.Empty;
-            List<Control> result = new();
+            List<AbstractControl> result = new();
             foreach (var control in Children)
             {
                 if (control.RowIndex == rowIndex)
@@ -892,11 +892,11 @@ namespace Alternet.UI
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
         /// <seealso cref="GetVisibleChildOrNull"/>
-        public virtual IReadOnlyList<Control> GetVisibleChildren()
+        public virtual IReadOnlyList<AbstractControl> GetVisibleChildren()
         {
             if (HasChildren)
             {
-                List<Control> result = new();
+                List<AbstractControl> result = new();
                 foreach (var item in Children)
                 {
                     if (item.Visible)
@@ -906,7 +906,7 @@ namespace Alternet.UI
                 return result;
             }
 
-            return Array.Empty<Control>();
+            return Array.Empty<AbstractControl>();
         }
 
         /// <summary>
@@ -918,10 +918,10 @@ namespace Alternet.UI
         /// <returns>The child control at the specified index in the
         /// visible child controls list.</returns>
         /// <seealso cref="GetVisibleChildren"/>
-        public virtual Control? GetVisibleChildOrNull(int index = 0)
+        public virtual AbstractControl? GetVisibleChildOrNull(int index = 0)
         {
             var childs = GetVisibleChildren();
-            foreach (Control control in childs)
+            foreach (AbstractControl control in childs)
             {
                 if (!control.Visible)
                     continue;
@@ -1278,7 +1278,7 @@ namespace Alternet.UI
         /// Gets child with the specified id.
         /// </summary>
         /// <param name="id">Child control id.</param>
-        public virtual Control? FindChild(ObjectUniqueId? id)
+        public virtual AbstractControl? FindChild(ObjectUniqueId? id)
         {
             if (id is null)
                 return null;
@@ -1471,7 +1471,7 @@ namespace Alternet.UI
             else
                 result = ControlSet.Empty;
 
-            var limitedResult = new List<Control>();
+            var limitedResult = new List<AbstractControl>();
 
             foreach (var item in result.Items)
             {
@@ -1675,7 +1675,7 @@ namespace Alternet.UI
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
         public virtual void ForEachChild<T>(Action<T> action)
-            where T : Control
+            where T : AbstractControl
         {
             if (!HasChildren)
                 return;
@@ -1692,7 +1692,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="action">Specifies action which will be called for the each child.</param>
         /// <param name="recursive">Whether to call action for all child controls recursively.</param>
-        public virtual void ForEachChild(Action<Control> action, bool recursive = false)
+        public virtual void ForEachChild(Action<AbstractControl> action, bool recursive = false)
         {
             if (!HasChildren)
                 return;
@@ -1709,7 +1709,7 @@ namespace Alternet.UI
         /// Gets whether one of this control's parents equals <paramref name="testParent"/>.
         /// </summary>
         /// <param name="testParent">Control to test as an indirect parent.</param>
-        public virtual bool HasIndirectParent(Control? testParent)
+        public virtual bool HasIndirectParent(AbstractControl? testParent)
         {
             var p = Parent;
             while (true)
@@ -1852,7 +1852,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the <see cref="Control.Font" /> property to its default value.</summary>
+        /// Resets the <see cref="AbstractControl.Font" /> property to its default value.</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual void ResetFont()
         {
@@ -1860,7 +1860,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the <see cref="Control.Cursor" /> property to its default value.</summary>
+        /// Resets the <see cref="AbstractControl.Cursor" /> property to its default value.</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual void ResetCursor()
         {
@@ -1868,7 +1868,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the <see cref="Control.BackColor" /> property to its default value.
+        /// Resets the <see cref="AbstractControl.BackColor" /> property to its default value.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual void ResetBackColor()

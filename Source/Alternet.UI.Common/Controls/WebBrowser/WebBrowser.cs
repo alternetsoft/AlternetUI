@@ -41,7 +41,7 @@ namespace Alternet.UI
     [DefaultProperty("Name")]
     [DefaultEvent("Enter")]
     [ControlCategory("Common")]
-    public partial class WebBrowser : PlatformControl, IWebBrowser
+    public partial class WebBrowser : Control, IWebBrowser
     {
         private static IWebBrowserFactoryHandler? factory;
 
@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public WebBrowser(PlatformControl parent)
+        public WebBrowser(Control parent)
             : this()
         {
             Parent = parent;
@@ -949,7 +949,7 @@ namespace Alternet.UI
                 var screenshotFilename = s + @"\screenshot.bmp";
                 if (args.Length == 0)
                     return string.Empty;
-                PlatformControl? control = args[0] as PlatformControl;
+                Control? control = args[0] as Control;
                 control?.SaveScreenshot(screenshotFilename);
                 return screenshotFilename;
             }

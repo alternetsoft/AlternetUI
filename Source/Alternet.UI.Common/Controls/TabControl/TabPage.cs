@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Page title.</param>
         /// <param name="parent">Parent of the control.</param>
-        public TabPage(Control parent, string? title = null)
+        public TabPage(AbstractControl parent, string? title = null)
             : this(title)
         {
             if (parent is TabControl tabControl)

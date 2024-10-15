@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public VirtualListBox(PlatformControl parent)
+        public VirtualListBox(Control parent)
             : this()
         {
             Parent = parent;
@@ -663,7 +663,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Font GetItemFont(int itemIndex = -1)
         {
-            var result = Font ?? UI.Control.DefaultFont;
+            var result = Font ?? UI.AbstractControl.DefaultFont;
             if (IsBold)
                 result = result.AsBold;
 

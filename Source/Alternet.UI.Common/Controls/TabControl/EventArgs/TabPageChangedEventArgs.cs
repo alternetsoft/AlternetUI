@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="TabPageChangedEventArgs"/> class.
         /// </summary>
-        public TabPageChangedEventArgs(Control? oldValue, Control? newValue)
+        public TabPageChangedEventArgs(AbstractControl? oldValue, AbstractControl? newValue)
         {
             OldValue = oldValue;
             NewValue = newValue;
@@ -33,11 +33,11 @@ namespace Alternet.UI
         /// <summary>
         /// Old selected tab page.
         /// </summary>
-        public Control? OldValue { get; set; }
+        public AbstractControl? OldValue { get; set; }
 
         /// <summary>
         /// New selected tab page.
         /// </summary>
-        public Control? NewValue { get; set; }
+        public AbstractControl? NewValue { get; set; }
     }
 }

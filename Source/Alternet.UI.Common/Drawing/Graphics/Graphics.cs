@@ -1094,7 +1094,7 @@ namespace Alternet.Drawing
         public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
 
         /// <summary>
-        /// Draws text with <see cref="Control.DefaultFont"/> and <see cref="Brush.Default"/>.
+        /// Draws text with <see cref="AbstractControl.DefaultFont"/> and <see cref="Brush.Default"/>.
         /// </summary>
         /// <param name="text"></param>
         /// <param name="origin"></param>

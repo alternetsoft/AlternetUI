@@ -17,7 +17,7 @@ namespace ControlsSample
             growButton.Click += GrowButton_Click;
             shrinkButton.Click += ShrinkButton_Click;
 
-            List<Control> gridControls = new();
+            List<AbstractControl> gridControls = new();
 
             void CreateControls(int minRow, int maxRow, int minColumn, int maxColumn)
             {

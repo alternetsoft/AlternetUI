@@ -62,7 +62,7 @@ namespace Alternet.UI
         /// Gets control to which this status bar is attached.
         /// </summary>
         [Browsable(false)]
-        public virtual Control? AttachedTo
+        public virtual AbstractControl? AttachedTo
         {
             get => Handler.AttachedTo;
         }
@@ -102,7 +102,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="Control.InUpdates"/>
+        /// <inheritdoc cref="AbstractControl.InUpdates"/>
         public bool InUpdates => updateCount > 0;
 
         /// <summary>
@@ -116,13 +116,13 @@ namespace Alternet.UI
         public IStatusBarHandler Handler
             => handler ??= ControlFactory.Handler.CreateStatusBarHandler(this);
 
-        /// <inheritdoc cref="Control.BeginUpdate"/>
+        /// <inheritdoc cref="AbstractControl.BeginUpdate"/>
         public virtual void BeginUpdate()
         {
             updateCount++;
         }
 
-        /// <inheritdoc cref="Control.EndUpdate"/>
+        /// <inheritdoc cref="AbstractControl.EndUpdate"/>
         public virtual void EndUpdate()
         {
             updateCount--;

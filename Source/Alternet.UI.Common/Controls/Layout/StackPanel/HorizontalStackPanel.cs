@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="HorizontalStackPanel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public HorizontalStackPanel(PlatformControl parent)
+        public HorizontalStackPanel(Control parent)
             : this()
         {
             Parent = parent;

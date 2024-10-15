@@ -22,10 +22,10 @@ namespace Alternet.UI
         private Cursor? cursor;
 #pragma warning restore
 
-        /// <inheritdoc cref="Control.VertScrollBarInfo"/>
+        /// <inheritdoc cref="AbstractControl.VertScrollBarInfo"/>
         ScrollBarInfo IControlHandler.VertScrollBarInfo { get; set; }
 
-        /// <inheritdoc cref="Control.HorzScrollBarInfo"/>
+        /// <inheritdoc cref="AbstractControl.HorzScrollBarInfo"/>
         ScrollBarInfo IControlHandler.HorzScrollBarInfo { get; set; }
 
         Action<DragEventArgs>? IControlHandler.DragDrop { get; set; }
@@ -150,7 +150,7 @@ namespace Alternet.UI
                 if (IsBold == value)
                     return;
                 if (Font is null)
-                    Font = Control.DefaultFont.AsBold;
+                    Font = AbstractControl.DefaultFont.AsBold;
                 else
                     Font = Font.AsBold;
             }
@@ -253,7 +253,7 @@ namespace Alternet.UI
 
         Font? IControlHandler.GetDefaultAttributesFont()
         {
-            return Control.Parent?.GetDefaultAttributesFont() ?? Control.DefaultFont;
+            return Control.Parent?.GetDefaultAttributesFont() ?? AbstractControl.DefaultFont;
         }
 
         nint IControlHandler.GetHandle()
@@ -311,11 +311,11 @@ namespace Alternet.UI
         {
         }
 
-        void IControlHandler.OnChildInserted(Control childControl)
+        void IControlHandler.OnChildInserted(AbstractControl childControl)
         {
         }
 
-        void IControlHandler.OnChildRemoved(Control childControl)
+        void IControlHandler.OnChildRemoved(AbstractControl childControl)
         {
         }
 

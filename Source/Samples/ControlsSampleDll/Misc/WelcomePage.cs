@@ -18,7 +18,7 @@ namespace ControlsSample
             var docsHomePage = @"https://docs.alternet-ui.com/";
             var docsUrl = $"{docsHomePage}introduction/getting-started.html";
 
-            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
 
             richText.Parent = this;
             var r = richText;

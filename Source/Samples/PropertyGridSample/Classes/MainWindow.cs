@@ -71,7 +71,7 @@ namespace PropertyGridSample
             knownColorsChoices.RemoveValue<PropertyGridKnownColors>(PropertyGridKnownColors.Black);
 
             // Sample localization of the property label
-            var prm = PropertyGrid.GetNewItemParams(typeof(Control), "Name");
+            var prm = PropertyGrid.GetNewItemParams(typeof(AbstractControl), "Name");
             if(prm is not null)
                 prm.Label = "(name)";
         }
@@ -358,7 +358,7 @@ namespace PropertyGridSample
 
                 var type = item.InstanceType;
 
-                if (item.Instance is Control control)
+                if (item.Instance is AbstractControl control)
                 {
                     parentParent.DoInsideLayout(() =>
                     {

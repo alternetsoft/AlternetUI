@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
-        private static Control? focusedControl;
+        private static AbstractControl? focusedControl;
 
         /// <summary>
         /// Gets or sets focused control for internal purposes. Use <see cref="GetFocusedControl"/>
@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Do not change this property, this is done by the library.
         /// </remarks>
-        public static Control? FocusedControl
+        public static AbstractControl? FocusedControl
         {
             get => focusedControl;
 
@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// Returns the currently focused control, or <see langword="null"/> if
         /// no control is focused.
         /// </summary>
-        public static Control? GetFocusedControl()
+        public static AbstractControl? GetFocusedControl()
         {
             if (FocusedControl?.Focused ?? false)
                 return FocusedControl;

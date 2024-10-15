@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first child of the first window or an empty control.
         /// </summary>
-        public static Control FirstWindowChildOrEmpty =>
+        public static AbstractControl FirstWindowChildOrEmpty =>
             App.FirstWindow()?.FirstChild ?? ControlUtils.Empty;
 
         /// <summary>

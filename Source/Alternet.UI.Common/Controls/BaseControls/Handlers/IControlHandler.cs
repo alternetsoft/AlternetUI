@@ -14,12 +14,12 @@ namespace Alternet.UI
     public partial interface IControlHandler : IDisposableObject
     {
         /// <summary>
-        /// Gets old dpi. Available only in the <see cref="Control.DpiChanged"/> event handler.
+        /// Gets old dpi. Available only in the <see cref="AbstractControl.DpiChanged"/> event handler.
         /// </summary>
         SizeI EventOldDpi { get; }
 
         /// <summary>
-        /// Gets new dpi. Available only in the <see cref="Control.DpiChanged"/> event handler.
+        /// Gets new dpi. Available only in the <see cref="AbstractControl.DpiChanged"/> event handler.
         /// </summary>
         SizeI EventNewDpi { get; }
 
@@ -123,7 +123,7 @@ namespace Alternet.UI
         /// </summary>
         Action? HandleDestroyed { get; set; }
 
-        /// <inheritdoc cref="Control.Text"/>
+        /// <inheritdoc cref="AbstractControl.Text"/>
         string Text { get; set; }
 
         /// <inheritdoc cref="UserControl.WantChars"/>
@@ -134,16 +134,16 @@ namespace Alternet.UI
         /// </summary>
         RectD EventBounds { get; }
 
-        /// <inheritdoc cref="Control.LangDirection"/>
+        /// <inheritdoc cref="AbstractControl.LangDirection"/>
         LangDirection LangDirection { get; set; }
 
-        /// <inheritdoc cref="Control.BorderStyle"/>
+        /// <inheritdoc cref="AbstractControl.BorderStyle"/>
         ControlBorderStyle BorderStyle { get; set; }
 
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
-        Control Control { get; }
+        AbstractControl Control { get; }
 
         /// <summary>
         /// Gets a value indicating whether handler is attached
@@ -156,70 +156,70 @@ namespace Alternet.UI
         /// </summary>
         bool IsNativeControlCreated { get; }
 
-        /// <inheritdoc cref="Control.IntrinsicLayoutPadding"/>
+        /// <inheritdoc cref="AbstractControl.IntrinsicLayoutPadding"/>
         Thickness IntrinsicLayoutPadding { get; }
 
-        /// <inheritdoc cref="Control.IntrinsicPreferredSizePadding"/>
+        /// <inheritdoc cref="AbstractControl.IntrinsicPreferredSizePadding"/>
         Thickness IntrinsicPreferredSizePadding { get; }
 
-        /// <inheritdoc cref="Control.Bounds"/>
+        /// <inheritdoc cref="AbstractControl.Bounds"/>
         RectD Bounds { get; set; }
 
-        /// <inheritdoc cref="Control.BoundsInPixels"/>
+        /// <inheritdoc cref="AbstractControl.BoundsInPixels"/>
         RectI BoundsI { get; set; }
 
-        /// <inheritdoc cref="Control.Visible"/>
+        /// <inheritdoc cref="AbstractControl.Visible"/>
         bool Visible { get; set; }
 
-        /// <inheritdoc cref="Control.UserPaint"/>
+        /// <inheritdoc cref="AbstractControl.UserPaint"/>
         bool UserPaint { get; set; }
 
-        /// <inheritdoc cref="Control.MinimumSize"/>
+        /// <inheritdoc cref="AbstractControl.MinimumSize"/>
         SizeD MinimumSize { get; set; }
 
-        /// <inheritdoc cref="Control.MaximumSize"/>
+        /// <inheritdoc cref="AbstractControl.MaximumSize"/>
         SizeD MaximumSize { get; set; }
 
-        /// <inheritdoc cref="Control.BackgroundColor"/>
+        /// <inheritdoc cref="AbstractControl.BackgroundColor"/>
         Color BackgroundColor { get; set; }
 
-        /// <inheritdoc cref="Control.ForegroundColor"/>
+        /// <inheritdoc cref="AbstractControl.ForegroundColor"/>
         Color ForegroundColor { get; set; }
 
-        /// <inheritdoc cref="Control.Font"/>
+        /// <inheritdoc cref="AbstractControl.Font"/>
         Font? Font { get; set; }
 
-        /// <inheritdoc cref="Control.IsBold"/>
+        /// <inheritdoc cref="AbstractControl.IsBold"/>
         bool IsBold { get; set; }
 
-        /// <inheritdoc cref="Control.AllowDrop"/>
+        /// <inheritdoc cref="AbstractControl.AllowDrop"/>
         bool AllowDrop { get; set; }
 
-        /// <inheritdoc cref="Control.BackgroundStyle"/>
+        /// <inheritdoc cref="AbstractControl.BackgroundStyle"/>
         ControlBackgroundStyle BackgroundStyle { get; set; }
 
-        /// <inheritdoc cref="Control.ProcessIdle"/>
+        /// <inheritdoc cref="AbstractControl.ProcessIdle"/>
         bool ProcessIdle { get; set; }
 
-        /// <inheritdoc cref="Control.ClientSize"/>
+        /// <inheritdoc cref="AbstractControl.ClientSize"/>
         SizeD ClientSize { get; set; }
 
-        /// <inheritdoc cref="Control.ProcessUIUpdates"/>
+        /// <inheritdoc cref="AbstractControl.ProcessUIUpdates"/>
         bool ProcessUIUpdates { get; set; }
 
-        /// <inheritdoc cref="Control.IsMouseCaptured"/>
+        /// <inheritdoc cref="AbstractControl.IsMouseCaptured"/>
         bool IsMouseCaptured { get; }
 
-        /// <inheritdoc cref="Control.IsHandleCreated"/>
+        /// <inheritdoc cref="AbstractControl.IsHandleCreated"/>
         bool IsHandleCreated { get; }
 
-        /// <inheritdoc cref="Control.Raise"/>
+        /// <inheritdoc cref="AbstractControl.Raise"/>
         void Raise();
 
-        /// <inheritdoc cref="Control.CenterOnParent"/>
+        /// <inheritdoc cref="AbstractControl.CenterOnParent"/>
         void CenterOnParent(GenericOrientation direction);
 
-        /// <inheritdoc cref="Control.SetCursor"/>
+        /// <inheritdoc cref="AbstractControl.SetCursor"/>
         void SetCursor(Cursor? value);
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Alternet.UI
         /// <param name="value">Tooltip text.</param>
         void SetToolTip(string? value);
 
-        /// <inheritdoc cref="Control.Lower"/>
+        /// <inheritdoc cref="AbstractControl.Lower"/>
         void Lower();
 
         /// <summary>
@@ -236,49 +236,49 @@ namespace Alternet.UI
         /// </summary>
         void UnsetToolTip();
 
-        /// <inheritdoc cref="Control.RefreshRect"/>
+        /// <inheritdoc cref="AbstractControl.RefreshRect"/>
         void RefreshRect(RectD rect, bool eraseBackground = true);
 
-        /// <inheritdoc cref="Control.HandleNeeded"/>
+        /// <inheritdoc cref="AbstractControl.HandleNeeded"/>
         void HandleNeeded();
 
-        /// <inheritdoc cref="Control.CaptureMouse"/>
+        /// <inheritdoc cref="AbstractControl.CaptureMouse"/>
         void CaptureMouse();
 
-        /// <inheritdoc cref="Control.ReleaseMouseCapture"/>
+        /// <inheritdoc cref="AbstractControl.ReleaseMouseCapture"/>
         void ReleaseMouseCapture();
 
-        /// <inheritdoc cref="Control.CreateDrawingContext"/>
+        /// <inheritdoc cref="AbstractControl.CreateDrawingContext"/>
         Graphics CreateDrawingContext();
 
-        /// <inheritdoc cref="Control.ScreenToClient"/>
+        /// <inheritdoc cref="AbstractControl.ScreenToClient"/>
         PointD ScreenToClient(PointD point);
 
-        /// <inheritdoc cref="Control.ClientToScreen"/>
+        /// <inheritdoc cref="AbstractControl.ClientToScreen"/>
         PointD ClientToScreen(PointD point);
 
-        /// <inheritdoc cref="Control.DoDragDrop"/>
+        /// <inheritdoc cref="AbstractControl.DoDragDrop"/>
         DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects);
 
-        /// <inheritdoc cref="Control.RecreateWindow"/>
+        /// <inheritdoc cref="AbstractControl.RecreateWindow"/>
         void RecreateWindow();
 
-        /// <inheritdoc cref="Control.BeginUpdate"/>
+        /// <inheritdoc cref="AbstractControl.BeginUpdate"/>
         void BeginUpdate();
 
-        /// <inheritdoc cref="Control.EndUpdate"/>
+        /// <inheritdoc cref="AbstractControl.EndUpdate"/>
         void EndUpdate();
 
-        /// <inheritdoc cref="Control.BeginInit"/>
+        /// <inheritdoc cref="AbstractControl.BeginInit"/>
         void BeginInit();
 
-        /// <inheritdoc cref="Control.EndInit"/>
+        /// <inheritdoc cref="AbstractControl.EndInit"/>
         void EndInit();
 
-        /// <inheritdoc cref="Control.SaveScreenshot"/>
+        /// <inheritdoc cref="AbstractControl.SaveScreenshot"/>
         void SaveScreenshot(string fileName);
 
-        /// <inheritdoc cref="Control.IsTransparentBackgroundSupported"/>
+        /// <inheritdoc cref="AbstractControl.IsTransparentBackgroundSupported"/>
         bool IsTransparentBackgroundSupported();
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Alternet.UI
         /// <returns></returns>
         Coord GetPixelScaleFactor();
 
-        /// <inheritdoc cref="Control.GetUpdateClientRectI"/>
+        /// <inheritdoc cref="AbstractControl.GetUpdateClientRectI"/>
         RectI GetUpdateClientRectI();
 
         /// <summary>
@@ -300,28 +300,28 @@ namespace Alternet.UI
         /// </summary>
         void ResetForegroundColor();
 
-        /// <inheritdoc cref="Control.SetEnabled"/>
+        /// <inheritdoc cref="AbstractControl.SetEnabled"/>
         void SetEnabled(bool value);
 
-        /// <inheritdoc cref="Control.GetDefaultAttributesBgColor"/>
+        /// <inheritdoc cref="AbstractControl.GetDefaultAttributesBgColor"/>
         Color GetDefaultAttributesBgColor();
 
-        /// <inheritdoc cref="Control.GetDefaultAttributesFgColor"/>
+        /// <inheritdoc cref="AbstractControl.GetDefaultAttributesFgColor"/>
         Color GetDefaultAttributesFgColor();
 
-        /// <inheritdoc cref="Control.GetDefaultAttributesFont"/>
+        /// <inheritdoc cref="AbstractControl.GetDefaultAttributesFont"/>
         Font? GetDefaultAttributesFont();
 
-        /// <inheritdoc cref="Control.Update"/>
+        /// <inheritdoc cref="AbstractControl.Update"/>
         void Update();
 
-        /// <inheritdoc cref="Control.Invalidate()"/>
+        /// <inheritdoc cref="AbstractControl.Invalidate()"/>
         void Invalidate();
 
-        /// <inheritdoc cref="Control.GetHandle"/>
+        /// <inheritdoc cref="AbstractControl.GetHandle"/>
         IntPtr GetHandle();
 
-        /// <inheritdoc cref="Control.GetPreferredSize(SizeD)"/>
+        /// <inheritdoc cref="AbstractControl.GetPreferredSize(SizeD)"/>
         SizeD GetPreferredSize(SizeD availableSize);
 
         /// <summary>
@@ -336,18 +336,18 @@ namespace Alternet.UI
         /// <returns></returns>
         object GetNativeControl();
 
-        /// <inheritdoc cref="Control.OnChildInserted"/>
-        void OnChildInserted(Control childControl);
+        /// <inheritdoc cref="AbstractControl.OnChildInserted"/>
+        void OnChildInserted(AbstractControl childControl);
 
-        /// <inheritdoc cref="Control.OnChildRemoved"/>
-        void OnChildRemoved(Control childControl);
+        /// <inheritdoc cref="AbstractControl.OnChildRemoved"/>
+        void OnChildRemoved(AbstractControl childControl);
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
         /// </summary>
         /// <param name="control">The <see cref="Control"/> to attach this
         /// handler to.</param>
-        void Attach(Control control);
+        void Attach(AbstractControl control);
 
         /// <summary>
         /// Detaches this handler from the <see cref="Control"/> it is attached to.

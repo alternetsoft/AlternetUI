@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <param name="position">Point in screen coordinates.</param>
         /// <param name="control">Control.</param>
         /// <returns></returns>
-        public static PointD ScreenToClient(PointD position, Control control)
+        public static PointD ScreenToClient(PointD position, AbstractControl control)
         {
             var topLeft = ClientToScreen(PointD.Empty, control);
             var result = position - topLeft;
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <param name="position">Point in client coordinates.</param>
         /// <param name="control">Control.</param>
         /// <returns></returns>
-        public static PointD ClientToScreen(PointD position, Control control)
+        public static PointD ClientToScreen(PointD position, AbstractControl control)
         {
             PointD absolutePos = control.AbsolutePosition;
             var result = absolutePos + position;

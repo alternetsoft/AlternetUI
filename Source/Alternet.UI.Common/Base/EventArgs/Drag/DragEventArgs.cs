@@ -4,8 +4,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Control.DragDrop"/>, <see cref="Control.DragEnter"/>,
-    /// or <see cref="Control.DragOver"/> events.
+    /// Provides data for the <see cref="AbstractControl.DragDrop"/>, <see cref="AbstractControl.DragEnter"/>,
+    /// or <see cref="AbstractControl.DragOver"/> events.
     /// </summary>
     public class DragEventArgs : BaseEventArgs
     {

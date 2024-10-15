@@ -106,7 +106,7 @@ namespace ControlsSample
 
         internal static void TextBox_ErrorsChanged(object? sender, DataErrorsChangedEventArgs e)
         {
-            if (sender is not Control control)
+            if (sender is not AbstractControl control)
                 return;
 
             App.LogSection(() =>
@@ -179,7 +179,7 @@ namespace ControlsSample
             textBox ??= sender as TextBox;
             if (textBox is null)
                 return;
-            var name = (sender as Control)?.Name;
+            var name = (sender as AbstractControl)?.Name;
             var value = textBox.Text;
             string prefix;
             if (name is null)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public partial class Control
+    public partial class AbstractControl
     {
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.

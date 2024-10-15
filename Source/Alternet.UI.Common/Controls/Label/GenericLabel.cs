@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public GenericLabel(PlatformControl parent)
+        public GenericLabel(Control parent)
             : this()
         {
             Parent = parent;
@@ -437,7 +437,7 @@ namespace Alternet.UI
         {
             var font = StateObjects?.Colors?.GetObjectOrNull(state)?.Font;
 
-            var result = font ?? Font ?? UI.Control.DefaultFont;
+            var result = font ?? Font ?? UI.AbstractControl.DefaultFont;
             if (IsBold)
                 result = result.AsBold;
             return result;

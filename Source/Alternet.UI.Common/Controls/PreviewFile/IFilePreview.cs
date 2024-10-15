@@ -20,6 +20,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets preview control.
         /// </summary>
-        Control Control { get; }
+        AbstractControl Control { get; }
     }
 }

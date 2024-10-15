@@ -65,7 +65,7 @@ namespace ControlsTest
 
         private void LogSizeEvent(object? sender, string evName)
         {
-            var control = sender as Control;
+            var control = sender as AbstractControl;
             var name = control?.Name ?? control?.GetType().Name;
             Application.LogIf($"{evName}: {name}, Bounds: {control!.Bounds}", false);
         }
@@ -77,7 +77,7 @@ namespace ControlsTest
 
         private int AddWebBrowserPage(string title, WebBrowserBackend backend)
         {
-            Control Fn()
+            AbstractControl Fn()
             {
                 PanelWebBrowser.UseBackend = backend;
 

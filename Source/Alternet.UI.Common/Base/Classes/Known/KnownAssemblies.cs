@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets 'Alternet.UI.Common' assembly.
         /// </summary>
-        public static readonly Assembly LibraryCommon = typeof(Control).Assembly;
+        public static readonly Assembly LibraryCommon = typeof(AbstractControl).Assembly;
 
         /// <summary>
         /// Gets 'Alternet.UI.Interfaces' assembly.

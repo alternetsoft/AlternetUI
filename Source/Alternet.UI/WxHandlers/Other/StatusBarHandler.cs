@@ -13,14 +13,14 @@ namespace Alternet.UI
         private readonly StatusBar control;
         private bool sizingGripVisible = true;
         private TextEllipsizeType textEllipsize = TextEllipsizeType.End;
-        private Control? attachedTo;
+        private AbstractControl? attachedTo;
 
         public StatusBarHandler(StatusBar control)
         {
             this.control = control;
         }
 
-        public Control? AttachedTo
+        public AbstractControl? AttachedTo
         {
             get
             {

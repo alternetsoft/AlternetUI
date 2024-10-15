@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ComboBoxAndLabel(PlatformControl parent)
+        public ComboBoxAndLabel(Control parent)
             : this()
         {
             Parent = parent;
@@ -82,7 +82,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override Control CreateControl() => new ComboBox();
+        protected override AbstractControl CreateControl() => new ComboBox();
 
         /// <inheritdoc/>
         protected override void BindHandlerEvents()

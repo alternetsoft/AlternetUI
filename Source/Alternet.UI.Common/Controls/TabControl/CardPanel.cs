@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CardPanel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CardPanel(PlatformControl parent)
+        public CardPanel(Control parent)
             : this()
         {
             Parent = parent;
@@ -149,7 +149,7 @@ namespace Alternet.UI
         /// to <paramref name="control"/>.
         /// </summary>
         /// <param name="control">Control.</param>
-        public virtual CardPanelItem? Find(Control? control)
+        public virtual CardPanelItem? Find(AbstractControl? control)
         {
             if (control is null)
                 return null;
@@ -250,7 +250,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string? title, Control control)
+        public virtual int Add(string? title, AbstractControl control)
         {
             var result = new CardPanelItem(title, control);
             Cards.Add(result);
@@ -265,7 +265,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string? title, Func<Control> fnCreate)
+        public virtual int Add(string? title, Func<AbstractControl> fnCreate)
         {
             var result = new CardPanelItem(title, fnCreate);
             Cards.Add(result);

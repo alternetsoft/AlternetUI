@@ -113,7 +113,7 @@ namespace PropertyGridSample
 
             static void ButtonClick(object? sender, EventArgs e)
             {
-                if (sender is not Control button)
+                if (sender is not AbstractControl button)
                     return;
                 App.Log($"Button click: {button.ToolTip}");
             }

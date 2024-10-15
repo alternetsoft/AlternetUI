@@ -733,8 +733,8 @@ namespace Alternet.UI
                 if (GetWindowKind() == WindowKind.Dialog)
                     return;
 
-                (oldValue as Control)?.SetParentInternal(null);
-                (menu as Control)?.SetParentInternal(this);
+                (oldValue as AbstractControl)?.SetParentInternal(null);
+                (menu as AbstractControl)?.SetParentInternal(this);
 
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
@@ -879,7 +879,7 @@ namespace Alternet.UI
                 FontInfo info = Font.Default;
                 info.SizeInPoints += incFont;
                 Font font = info;
-                Control.DefaultFont = font;
+                AbstractControl.DefaultFont = font;
             }
         }
 
@@ -1039,7 +1039,7 @@ namespace Alternet.UI
         public virtual void SetLocationInWindow(
             HorizontalAlignment? horz,
             VerticalAlignment? vert,
-            Control? window,
+            AbstractControl? window,
             bool shrinkSize = true)
         {
             if (window is null)
@@ -1112,7 +1112,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RecreateAllHandlers()
         {
-            void GetAllChildren(Control control, List<Control> result)
+            void GetAllChildren(AbstractControl control, List<AbstractControl> result)
             {
                 foreach (var child in control.Children)
                     GetAllChildren(child, result);
@@ -1121,17 +1121,17 @@ namespace Alternet.UI
                     result.Add(control);
             }
 
-            var children = new List<Control>();
+            var children = new List<AbstractControl>();
             GetAllChildren(this, children);
 
             foreach (var child in children)
             {
-                (child as PlatformControl)?.DetachHandler();
+                (child as Control)?.DetachHandler();
             }
 
             foreach (var child in children.AsEnumerable().Reverse())
             {
-                (child as PlatformControl)?.EnsureHandlerCreated();
+                (child as Control)?.EnsureHandlerCreated();
             }
         }
 
@@ -1140,7 +1140,7 @@ namespace Alternet.UI
             if (dp is Window w)
                 return w;
 
-            if (dp is not Control c)
+            if (dp is not AbstractControl c)
                 return null;
 
             if (c.Parent == null)
@@ -1173,11 +1173,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Applies <see cref="StartLocation"/> to the window position
-        /// if <see cref="Control.StateFlags"/> has no
+        /// if <see cref="AbstractControl.StateFlags"/> has no
         /// <see cref="ControlFlags.StartLocationApplied"/> flag.
         /// </summary>
         /// <param name="owner"></param>
-        protected virtual void ApplyStartLocationOnce(Control? owner)
+        protected virtual void ApplyStartLocationOnce(AbstractControl? owner)
         {
             if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
             {
@@ -1391,7 +1391,7 @@ namespace Alternet.UI
         /// <summary>
         /// Applies <see cref="Window.StartLocation"/> to the location of the window.
         /// </summary>
-        protected virtual void ApplyStartLocation(Control? owner)
+        protected virtual void ApplyStartLocation(AbstractControl? owner)
         {
             switch (StartLocation)
             {
@@ -1568,8 +1568,8 @@ namespace Alternet.UI
 
             Bounds = GetDefaultBounds();
 
-            if (Control.DefaultFont != Font.Default)
-                Font = Control.DefaultFont;
+            if (AbstractControl.DefaultFont != Font.Default)
+                Font = AbstractControl.DefaultFont;
         }
     }
 }

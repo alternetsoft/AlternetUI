@@ -240,7 +240,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public Control? GetFocusedControl()
+        public AbstractControl? GetFocusedControl()
         {
             var focusedNativeControl = Native.Control.GetFocusedControl();
             if (focusedNativeControl == null)
@@ -292,7 +292,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ICaretHandler CreateCaretHandler(Control control, int width, int height)
+        public ICaretHandler CreateCaretHandler(AbstractControl control, int width, int height)
         {
             if (UsePlessCaret)
                 return new PlessCaretHandler(control, width, height);

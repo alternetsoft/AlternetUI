@@ -83,7 +83,7 @@ namespace Alternet.UI
                     long timestamp = DateUtils.GetNowInMilliseconds();
                     var locationInView = recognizer.LocationInView(sender);
                     PointD position = locationInView.ToSKPoint();
-                    Control.BubbleMouseMove(
+                    AbstractControl.BubbleMouseMove(
                                 Control,
                                 timestamp,
                                 position,

@@ -24,13 +24,13 @@ namespace Alternet.UI
         private static SortedList<string, Type>? allControlDescendants;
 
         /// <summary>
-        /// Gets or sets list of all <see cref="Control"/> descendants.
+        /// Gets or sets list of all <see cref="AbstractControl"/> descendants.
         /// </summary>
         public static SortedList<string, Type> AllControlDescendants
         {
             get
             {
-                allControlDescendants ??= GetSortedTypeDescendantsWithFullNames(typeof(Control));
+                allControlDescendants ??= GetSortedTypeDescendantsWithFullNames(typeof(AbstractControl));
                 return allControlDescendants;
             }
 
@@ -41,14 +41,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets list of events for all <see cref="Control"/>
+        /// Gets or sets list of events for all <see cref="AbstractControl"/>
         /// descendants.
         /// </summary>
         public static SortedList<string, EventInfo> AllControlEvents
         {
             get
             {
-                allControlEvents ??= AssemblyUtils.GetAllDescendantsEvents(typeof(Control));
+                allControlEvents ??= AssemblyUtils.GetAllDescendantsEvents(typeof(AbstractControl));
                 return allControlEvents;
             }
 
@@ -80,7 +80,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets whether specified string is name of the event declared in
-        /// any descendant of the <see cref="Control"/>.
+        /// any descendant of the <see cref="AbstractControl"/>.
         /// </summary>
         /// <param name="name">Property or event name.</param>
         /// <returns></returns>

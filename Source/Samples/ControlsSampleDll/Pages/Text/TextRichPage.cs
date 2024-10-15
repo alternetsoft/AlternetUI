@@ -62,7 +62,7 @@ namespace ControlsSample
         {
             var richEdit = richPanel.TextBox;
 
-            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
 
             var taTextColorRed = richEdit.CreateTextAttr();
             taTextColorRed.SetTextColor(Color.Red);
@@ -191,7 +191,7 @@ namespace ControlsSample
 
         public void InitRichEdit2()
         {
-            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
 
             var r = richPanel.TextBox;
 

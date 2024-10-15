@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         /// <param name="controlState">Control part state.</param>
         /// <returns></returns>
         SizeD GetCheckBoxSize(
-            Control control,
+            AbstractControl control,
             CheckState checkState = CheckState.Unchecked,
             VisualControlState controlState = VisualControlState.Normal);
 
@@ -31,14 +31,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        SizeD GetCheckMarkSize(Control control);
+        SizeD GetCheckMarkSize(AbstractControl control);
 
         /// <summary>
         /// Returns the default size of a expander in dips.
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        SizeD GetExpanderSize(Control control);
+        SizeD GetExpanderSize(AbstractControl control);
 
         /// <summary>
         /// Returns the default height of a header button in dips, either a fixed platform
@@ -46,14 +46,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        Coord GetHeaderButtonHeight(Control control);
+        Coord GetHeaderButtonHeight(AbstractControl control);
 
         /// <summary>
         /// Returns the margin on left and right sides of header button's label in dips.
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <returns></returns>
-        Coord GetHeaderButtonMargin(Control control);
+        Coord GetHeaderButtonMargin(AbstractControl control);
 
         /// <summary>
         /// Returns the default size of a collapse button in dips.
@@ -61,7 +61,7 @@ namespace Alternet.Drawing
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <param name="dc">Drawing context.</param>
         /// <returns></returns>
-        SizeD GetCollapseButtonSize(Control control, Graphics dc);
+        SizeD GetCollapseButtonSize(AbstractControl control, Graphics dc);
 
         /// <summary>
         /// Draws checkbox.
@@ -72,7 +72,7 @@ namespace Alternet.Drawing
         /// <param name="canvas"><see cref="Graphics"/> used for painting the checkbox.</param>
         /// <param name="rect">Rectangle where checkbox is painted.</param>
         void DrawCheckBox(
-            Control control,
+            AbstractControl control,
             Graphics canvas,
             RectD rect,
             CheckState checkState,

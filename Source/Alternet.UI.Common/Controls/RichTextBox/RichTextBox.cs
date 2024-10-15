@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements rich text editor functionality.
     /// </summary>
     [ControlCategory("Common")]
-    public partial class RichTextBox : PlatformControl, IReadOnlyStrings, IRichTextBox
+    public partial class RichTextBox : Control, IReadOnlyStrings, IRichTextBox
     {
         private bool hasBorder = true;
         private StringSearch? search;
@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="RichTextBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public RichTextBox(PlatformControl parent)
+        public RichTextBox(Control parent)
             : this()
         {
             Parent = parent;

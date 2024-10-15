@@ -204,7 +204,7 @@ namespace Alternet.UI
         /// <param name="control"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool ToggleKeyboardVisibility(Control? control)
+        public static bool ToggleKeyboardVisibility(AbstractControl? control)
         {
             var visible = IsSoftKeyboardShowing(control);
             if (visible)
@@ -215,21 +215,21 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="IKeyboardHandler.HideKeyboard"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HideKeyboard(Control? control)
+        public static bool HideKeyboard(AbstractControl? control)
         {
             return Handler.HideKeyboard(control);
         }
 
         /// <inheritdoc cref="IKeyboardHandler.ShowKeyboard"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool ShowKeyboard(Control? control)
+        public static bool ShowKeyboard(AbstractControl? control)
         {
             return Handler.ShowKeyboard(control);
         }
 
         /// <inheritdoc cref="IKeyboardHandler.IsSoftKeyboardShowing"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsSoftKeyboardShowing(Control? control)
+        public static bool IsSoftKeyboardShowing(AbstractControl? control)
         {
             return Handler.IsSoftKeyboardShowing(control);
         }

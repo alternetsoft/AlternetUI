@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ValueEditorUInt16"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ValueEditorUInt16(PlatformControl parent)
+        public ValueEditorUInt16(Control parent)
             : this()
         {
             Parent = parent;
