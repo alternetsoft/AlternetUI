@@ -789,20 +789,12 @@ namespace Alternet.UI
         /// This method is used for template painting. Childs are painted only if
         /// they are descendants of the <see cref="UserControl"/>.
         /// </summary>
-        /// <param name="e">Event arguments.</param>
-        /// <param name="overrideVisible">Override for visible property.</param>
-        /// <param name="onlyChilds">If true will paint only childs and not the control itself.</param>
         public virtual void RaisePaintRecursive(
             PaintEventArgs e,
             bool? overrideVisible,
             bool onlyChilds = false,
             bool? overrideChildVisible = null)
         {
-            /*if (Name == "controlPanel" || Name == "controlPanelBorder")
-            {
-            }
-            */
-
             visible = overrideVisible ?? Visible;
             if (!visible)
                 return;

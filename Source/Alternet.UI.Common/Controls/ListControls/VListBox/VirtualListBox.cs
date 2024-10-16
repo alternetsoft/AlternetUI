@@ -318,11 +318,6 @@ namespace Alternet.UI
             Items.Add(item);
         }
 
-        object? IListControl.GetItemAsObject(int index)
-        {
-            return GetItem(index);
-        }
-
         internal void ToggleItemCheckState(PointD location)
         {
             var itemIndex = HitTestCheckBox(location);

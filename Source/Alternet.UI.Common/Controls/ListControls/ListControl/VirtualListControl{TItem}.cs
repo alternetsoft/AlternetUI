@@ -12,8 +12,9 @@ namespace Alternet.UI
     /// Advanced list control with ability to customize item painting.
     /// </summary>
     /// <typeparam name="TItem">Type of the item.</typeparam>
-    public abstract class VirtualListControl<TItem> : CustomListBox<TItem>
-            where TItem : class, new()
+    public abstract class VirtualListControl<TItem>
+        : CustomListBox<TItem>, IListControlItemContainer, IListControlItemDefaults
+        where TItem : class, new()
     {
         /// <summary>
         /// Gets or sets default minimal item height.
@@ -66,8 +67,7 @@ namespace Alternet.UI
         private bool checkBoxesVisible;
         private bool checkBoxThreeState;
 
-        private GenericAlignment itemAlignment
-            = GenericAlignment.CenterVertical | GenericAlignment.Left;
+        private GenericAlignment itemAlignment = ListControlItem.DefaultItemAlignment;
 
         static VirtualListControl()
         {
@@ -145,6 +145,11 @@ namespace Alternet.UI
 #pragma warning restore
                 return sortedCopy;
             }
+        }
+
+        IListControlItemDefaults IListControlItemContainer.Defaults
+        {
+            get => this;
         }
 
         /// <summary>
@@ -358,7 +363,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets minimal height of the items. Default is 24 dip.
+        /// Gets minimal height of the items. Default is <see cref="DefaultMinItemHeight"/>.
         /// </summary>
         public virtual Coord MinItemHeight
         {
@@ -539,21 +544,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Font GetItemFont(int itemIndex = -1)
         {
-            var result = Font ?? UI.AbstractControl.DefaultFont;
-            if (IsBold)
-                result = result.AsBold;
-
-            var item = SafeItem(itemIndex);
-            if (item is not null)
-            {
-                var itemFont = item.Font;
-                if (itemFont is not null)
-                    result = itemFont;
-                if (item.FontStyle is not null)
-                    result = result.WithStyle(item.FontStyle.Value);
-            }
-
-            return result;
+            return ListControlItem.GetFont(SafeItem(itemIndex), this);
         }
 
         /// <summary>
@@ -908,16 +899,23 @@ namespace Alternet.UI
         public abstract bool IsSelected(int index);
 
         /// <summary>
+        /// Gets item as object.
+        /// </summary>
+        /// <param name="index">Index of the item.</param>
+        /// <returns></returns>
+        public object? GetItemAsObject(int index)
+        {
+            return GetItem(index);
+        }
+
+        /// <summary>
         /// Gets item alignment.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
         /// <returns></returns>
         public virtual GenericAlignment GetItemAlignment(int itemIndex)
         {
-            var item = SafeItem(itemIndex);
-            if (item is null)
-                return ItemAlignment;
-            return item.Alignment;
+            return ListControlItem.GetAlignment(SafeItem(itemIndex), this);
         }
 
         /// <summary>
@@ -942,32 +940,7 @@ namespace Alternet.UI
         public virtual (Image? Normal, Image? Disabled, Image? Selected)
             GetItemImages(int itemIndex, Color? svgColor)
         {
-            var item = SafeItem(itemIndex);
-            if (item is null)
-                return (null, null, null);
-
-            var svgImage = item.SvgImage;
-
-            if (svgImage is not null)
-            {
-                var imageSize = item.SvgImageSize ?? SvgImageSize
-                    ?? ToolBarUtils.GetDefaultImageSize(this);
-                var imageHeight = imageSize.Height;
-                item.Image ??= svgImage.AsNormalImage(imageHeight, IsDarkBackground);
-                item.DisabledImage ??= svgImage.AsDisabledImage(imageHeight, IsDarkBackground);
-
-                if (svgColor is not null)
-                    item.SelectedImage ??= svgImage.ImageWithColor(imageHeight, svgColor);
-            }
-
-            var image = item.Image;
-            var disabledImage = item.DisabledImage ?? item.Image;
-            var selectedImage = item.SelectedImage ?? item.Image;
-
-            return (
-                image,
-                disabledImage,
-                selectedImage);
+            return ListControlItem.GetItemImages(SafeItem(itemIndex), this, svgColor);
         }
 
         /// <summary>
@@ -1002,14 +975,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool GetItemShowCheckBox(ListControlItem item)
         {
-            var showCheckBox = CheckBoxVisible;
-            if (showCheckBox)
-            {
-                if (item.CheckBoxVisible is not null)
-                    showCheckBox = item.CheckBoxVisible.Value;
-            }
-
-            return showCheckBox;
+            return item.GetShowCheckBox(this);
         }
 
         /// <summary>
@@ -1034,15 +1000,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetSelectedItemTextColor(int itemIndex)
         {
-            if (selectionVisible)
-            {
-                if (Enabled)
-                    return SelectedItemTextColor ?? DefaultSelectedItemTextColor;
-                else
-                    return GetDisabledItemTextColor(itemIndex);
-            }
-            else
-                return GetItemTextColor(itemIndex);
+            return ListControlItem.GetSelectedTextColor(SafeItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1052,13 +1010,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetItemTextColor(int itemIndex)
         {
-            if (Enabled)
-            {
-                var itemColor = SafeItem(itemIndex)?.ForegroundColor;
-                return itemColor ?? ForegroundColor ?? ItemTextColor ?? DefaultItemTextColor;
-            }
-            else
-                return GetDisabledItemTextColor(itemIndex);
+            return ListControlItem.GetItemTextColor(SafeItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1068,8 +1020,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetSelectedItemBackColor(int itemIndex)
         {
-            if (Enabled && selectionVisible)
-                return selectedItemBackColor ?? DefaultSelectedItemBackColor;
+            if (Enabled && SelectionVisible)
+                return SelectedItemBackColor ?? DefaultSelectedItemBackColor;
             else
                 return RealBackgroundColor;
         }
@@ -1080,7 +1032,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetDisabledItemTextColor(int itemIndex)
         {
-            return DisabledItemTextColor ?? DefaultDisabledItemTextColor;
+            return ListControlItem.GetDisabledTextColor(SafeItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1123,7 +1075,7 @@ namespace Alternet.UI
                 e.ItemAlignment);
         }
 
-        internal ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
+        internal ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
         {
             var item = SafeItem(itemIndex);
             if (item is null)
@@ -1141,12 +1093,12 @@ namespace Alternet.UI
         {
         }
 
-        private ItemCheckBoxInfo? GetCheckBoxInfo(ListControlItem item, RectD rect)
+        private ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(ListControlItem item, RectD rect)
         {
             var showCheckBox = GetItemShowCheckBox(item);
             if (!showCheckBox)
                 return null;
-            ItemCheckBoxInfo result = new();
+            ListControlItem.ItemCheckBoxInfo result = new();
             result.PartState = Enabled
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetItemCheckState(item);
@@ -1155,15 +1107,6 @@ namespace Alternet.UI
             result.CheckRect = checkRect;
             result.TextRect = textRect;
             return result;
-        }
-
-        internal class ItemCheckBoxInfo
-        {
-            public VisualControlState PartState;
-            public SizeD CheckSize;
-            public RectD CheckRect;
-            public RectD TextRect;
-            public CheckState CheckState;
         }
     }
 }

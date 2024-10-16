@@ -2134,7 +2134,7 @@ namespace Alternet.UI
         /// Returns font even if <see cref="Font"/> property is <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public virtual Font? RealFont
+        public virtual Font RealFont
         {
             get
             {

@@ -41,7 +41,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if the current system there is explicitly recognized as
+        /// Return true if the current system theme is explicitly recognized as
         /// being a dark theme or if the default window background is dark.
         /// </summary>
         /// <remarks>

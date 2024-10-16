@@ -70,6 +70,10 @@ namespace PropertyGridSample
             item.CheckState = CheckState.Checked;
             item.Text = "Underlined item";
 
+            item = listBox.RequiredItem(firstIndex + 4);
+            item.Font = Control.DefaultFont.Scaled(1.5);
+            item.Text = "Custom Font";
+
             item = listBox.RequiredItem(firstIndex + 5);
             item.Text = "Custom border";
             item.Alignment = GenericAlignment.Center;

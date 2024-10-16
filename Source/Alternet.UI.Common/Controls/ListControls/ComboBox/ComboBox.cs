@@ -48,7 +48,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ComboBox : ListControl, IListControl
+    public partial class ComboBox : ListControl, IListControl, IListControlItemContainer
     {
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
@@ -73,6 +73,7 @@ namespace Alternet.UI
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
+        private ListControlItemDefaults? itemDefaults;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
@@ -403,6 +404,14 @@ namespace Alternet.UI
             }
         }
 
+        IListControlItemDefaults IListControlItemContainer.Defaults
+        {
+            get
+            {
+                return itemDefaults ??= new ListControlItemDefaults();
+            }
+        }
+
         /// <summary>
         /// Gets or sets whether item is owner drawn.
         /// </summary>
@@ -662,6 +671,16 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
+        }
+
+        bool IListControlItemContainer.IsCurrent(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IListControlItemContainer.IsSelected(int index)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
