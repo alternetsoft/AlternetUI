@@ -116,7 +116,16 @@ namespace Alternet.UI
             Color foreColor,
             Color backColor)
         {
-            DrawInternal(dc, rect, font, foreColor, backColor);
+            var size = DrawInternal(dc, rect, font);
+            var textRect = rect.WithSize(size.Width, size.Height);
+
+            var alignedItemRect = AlignUtils.AlignRectInRect(
+                true,
+                textRect,
+                rect,
+                (CoordAlignment)TextVerticalAlignment);
+
+            DrawInternal(dc, alignedItemRect, font, foreColor, backColor);
         }
 
         private SizeD DrawInternal(
