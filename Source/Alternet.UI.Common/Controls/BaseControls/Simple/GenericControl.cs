@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -10,13 +12,16 @@ namespace Alternet.UI
     /// </summary>
     public class GenericControl : AbstractControl
     {
-        private bool isClipped = true;
+        private bool isClipped = false;
+
+        /// <inheritdoc/>
+        public override bool IsHandleCreated => true;
 
         /// <summary>
         /// Gets or sets whether control contents is clipped and is not painted outside it's bounds.
         /// </summary>
         [Browsable(true)]
-        public virtual bool IsClipped
+        internal virtual bool IsClipped
         {
             get
             {
@@ -33,14 +38,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool IsHandleCreated => true;
-
-        /// <inheritdoc/>
         public override bool ReportBoundsChanged()
         {
             var result = base.ReportBoundsChanged();
-            /*if (result)
-                Invalidate();*/
             return result;
         }
 
@@ -50,7 +50,6 @@ namespace Alternet.UI
         /// </summary>
         public override void Invalidate()
         {
-            Parent?.Invalidate();
         }
 
         /// <summary>
@@ -60,16 +59,31 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Default painting method of the <see cref="GenericControl"/>
+        /// and its descendants.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void DefaultPaint(PaintEventArgs e)
+        {
+        }
+
         /// <inheritdoc/>
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
-            /*Invalidate();*/
         }
 
         /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
+        protected sealed override void OnPaint(PaintEventArgs e)
         {
+            e.Graphics.DoInsideClipped(
+                e.ClipRectangle,
+                () =>
+                {
+                    DefaultPaint(e);
+                },
+                IsClipped);
         }
 
         /// <inheritdoc/>

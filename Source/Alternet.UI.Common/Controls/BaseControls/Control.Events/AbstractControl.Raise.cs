@@ -817,7 +817,6 @@ namespace Alternet.UI
 
             var myChildren = AllChildrenInLayout;
             var dc = e.Graphics;
-            //var clipRect = e.ClipRectangle;
 
             foreach (var child in myChildren)
             {
@@ -831,7 +830,6 @@ namespace Alternet.UI
                 TransformMatrix transform = new();
                 transform.Translate(child.Left, child.Top);
                 dc.PushTransform(transform);
-                //e.ClipRectangle = (0, 0, child.Width, child.Height);
                 try
                 {
                     child.RaisePaintRecursive(e, overrideVisible);
@@ -839,7 +837,6 @@ namespace Alternet.UI
                 finally
                 {
                     dc.Pop();
-                    //e.ClipRectangle = clipRect;
                 }
             }
         }

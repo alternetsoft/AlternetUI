@@ -45,14 +45,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnTextChanged(EventArgs e)
-        {
-            base.OnTextChanged(e);
-            PerformLayoutAndInvalidate();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
+        public override void DefaultPaint(PaintEventArgs e)
         {
             var rect = ClientRectangle;
             var dc = e.Graphics;
@@ -75,13 +68,13 @@ namespace Alternet.UI
                 labelFont,
                 labelForeColor,
                 labelBackColor);
+        }
 
-            /*dc.DoInsideClipped(
-                paddedRect,
-                () =>
-                {
-                },
-                IsClipped);*/
+        /// <inheritdoc/>
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            PerformLayoutAndInvalidate();
         }
     }
 }
