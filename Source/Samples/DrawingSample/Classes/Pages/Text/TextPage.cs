@@ -16,6 +16,7 @@ namespace DrawingSample
         private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, DashStyle.Dash);
 
         internal readonly GenericWrappedTextControl wrappedControl = new();
+        internal readonly GenericControl wrappedDocument = new();
 
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
@@ -36,6 +37,11 @@ namespace DrawingSample
             var defaultSize = AbstractControl.DefaultFont.SizeInPoints;
             fontInfoFont = new(FontFamily.GenericMonospace, defaultSize);
             fontSize = defaultSize;
+        }
+
+        public TextPage()
+        {
+            wrappedControl.Parent = wrappedDocument;
         }
 
         public override string Name => "Text";
@@ -226,18 +232,6 @@ namespace DrawingSample
 
         protected override void OnCanvasChanged(AbstractControl? oldValue, AbstractControl? value)
         {
-            if(value is not null)
-            {
-                value.Layout = LayoutStyle.Vertical;
-                value.Padding = 20;
-            }
-            
-            if(oldValue is not null)
-            {
-                oldValue.Padding = 0;
-            }
-
-            wrappedControl.Parent = value;
         }
 
         public override void Draw(Graphics dc, RectD bounds)
@@ -252,10 +246,14 @@ namespace DrawingSample
 
             bool first = true;
 
+            wrappedDocument.ScaleFactorOverride = dc.ScaleFactor;
+            wrappedDocument.Size = bounds.Size;
+
             wrappedControl.Text = GetText();
             wrappedControl.VerticalAlignment = Alternet.UI.VerticalAlignment.Top;
             wrappedControl.HorizontalAlignment = Alternet.UI.HorizontalAlignment.Left;
             wrappedControl.IsClipped = false;
+            wrappedControl.PerformLayout();
 
             foreach (var paragraph in paragraphs)
             {
@@ -265,6 +263,7 @@ namespace DrawingSample
                 UpdateWrappedControl(false);
                 wrappedControl.Font = paragraph.Font;
                 wrappedControl.ForegroundColor = color;
+                wrappedControl.MaximumSize = bounds.DeflatedWithPadding(20).Size;
                 wrappedControl.PerformLayout();
 
                 RectD rect = ((x, y), wrappedControl.Size);

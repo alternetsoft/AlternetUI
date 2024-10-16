@@ -159,12 +159,13 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseParentChanged()
         {
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
-
+            ResetScaleFactor();
             Designer?.RaiseParentChanged(this);
             ParentChanged?.Invoke(this, EventArgs.Empty);
             OnParentChanged(EventArgs.Empty);
+
+            var nn = Notifications;
+            var nn2 = GlobalNotifications;
 
             foreach (var n in nn)
             {
