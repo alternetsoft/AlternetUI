@@ -252,8 +252,6 @@ namespace DrawingSample
 
             bool first = true;
 
-            UpdateWrappedControl(false);
-
             wrappedControl.Text = GetText();
             wrappedControl.VerticalAlignment = Alternet.UI.VerticalAlignment.Top;
             wrappedControl.HorizontalAlignment = Alternet.UI.HorizontalAlignment.Left;
@@ -264,25 +262,20 @@ namespace DrawingSample
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointD(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
+                UpdateWrappedControl(false);
                 wrappedControl.Font = paragraph.Font;
                 wrappedControl.ForegroundColor = color;
                 wrappedControl.PerformLayout();
 
-                var textSize = wrappedControl.MeasureText(dc, paragraph.Font, wrappedControl.Size);
-                var preferredSized = wrappedControl.GetPreferredSize();
                 RectD rect = ((x, y), wrappedControl.Size);
-                RectD textRect = ((x, y), textSize);
-
-                dc.FillRectangleBorder(Brushes.Red, textRect, 2);
-
-                dc.FillRectangleBorder(Brushes.Green, wrappedControl.Bounds, 2);
+                dc.FillRectangleBorder(Color.Green.AsBrush, wrappedControl.Bounds.WithLocation(x,y), 1);
 
                 if (first)
                 {
                     first = false;
                 }
 
-                TemplateUtils.RaisePaintRecursive(wrappedControl, dc, (x, y));
+                TemplateUtils.RaisePaintClipped(wrappedControl, dc, (x, y));
 
                 y += wrappedControl.Height + 20;
 

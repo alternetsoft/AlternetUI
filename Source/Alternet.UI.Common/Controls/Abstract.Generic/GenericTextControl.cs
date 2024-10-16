@@ -32,29 +32,60 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        /// <summary>
+        /// Default method for calculating preferred size.
+        /// </summary>
+        public virtual SizeD GetDefaultPreferredSize(
+            SizeD availableSize,
+            bool withPadding,
+            Func<SizeD, SizeD> func)
         {
-            var specifiedSize = SuggestedSize;
+            var suggested = SuggestedSize;
+            var isNanSuggestedWidth = suggested.IsNanWidth;
+            var isNanSuggestedHeight = suggested.IsNanHeight;
 
-            if (specifiedSize.IsNanWidth)
-            {
-                specifiedSize.Width = availableSize.Width;
-            }
+            var conteinerSize = suggested;
 
-            if (specifiedSize.IsNanHeight)
-            {
-                specifiedSize.Height = availableSize.Height;
-            }
+            if (isNanSuggestedWidth)
+                conteinerSize.Width = availableSize.Width;
+
+            if (isNanSuggestedHeight)
+                conteinerSize.Height = availableSize.Height;
 
             var paddingSize = Padding.Size;
 
-            SizeD result = MeasureText(
-                MeasureCanvas,
-                GetLabelFont(VisualControlState.Normal),
-                specifiedSize - paddingSize);
+            if (withPadding)
+                conteinerSize -= paddingSize;
 
-            return result + paddingSize;
+            var measured = func(conteinerSize);
+
+            if (!isNanSuggestedWidth)
+                measured.Width = suggested.Width;
+
+            if (!isNanSuggestedHeight)
+                measured.Height = suggested.Height;
+
+            if (withPadding)
+                measured += paddingSize;
+
+            return measured;
+        }
+
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            var result = GetDefaultPreferredSize(
+                        availableSize,
+                        withPadding: true,
+                        (size) =>
+                        {
+                            var measured = MeasureText(
+                                MeasureCanvas,
+                                GetLabelFont(VisualControlState.Normal),
+                                size);
+                            return measured;
+                        });
+            return result;
         }
 
         /// <summary>
