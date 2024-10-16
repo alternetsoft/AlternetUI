@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <param name="bounds">Bounds of the item.</param>
         /// <param name="itemIndex">Index of the tem.</param>
         public ListBoxItemPaintEventArgs(
-            VirtualListBox control,
+            VirtualListControl<ListControlItem> control,
             Graphics graphics,
             RectD bounds,
             int itemIndex)
@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item is current.
         /// </summary>
-        public virtual bool IsCurrent => ListBox.Handler.IsCurrent(ItemIndex);
+        public virtual bool IsCurrent => ListBox.IsCurrent(ItemIndex);
 
         /// <summary>
         /// Gets font of the item.
@@ -98,7 +98,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control which item is painted.
         /// </summary>
-        public virtual VirtualListBox ListBox { get; set; }
+        public virtual VirtualListControl<ListControlItem> ListBox { get; set; }
 
         /// <summary>
         /// Gets text color.

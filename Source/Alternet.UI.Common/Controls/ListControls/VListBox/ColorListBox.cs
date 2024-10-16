@@ -258,9 +258,9 @@ namespace Alternet.UI
         public class DefaultItemPainter : IListBoxItemPainter
         {
             /// <inheritdoc/>
-            public virtual SizeD GetSize(VirtualListBox sender, int index)
+            public virtual SizeD GetSize(object sender, int index)
             {
-                return sender.DefaultMeasureItemSize(index);
+                return (sender as ColorListBox)?.DefaultMeasureItemSize(index) ?? SizeD.MinusOne;
             }
 
             /// <summary>
@@ -269,7 +269,9 @@ namespace Alternet.UI
             /// <param name="sender">Control.</param>
             /// <param name="e">Parameters.</param>
             /// <returns></returns>
-            public virtual Color GetImageColor(VirtualListBox sender, ListBoxItemPaintEventArgs e)
+            public virtual Color GetImageColor(
+                ColorListBox sender,
+                ListBoxItemPaintEventArgs e)
             {
                 var itemColor = GetItemValueOrDefault(sender, e.ItemIndex, Color.White);
                 var colorListBox = sender as ColorListBox;
@@ -287,14 +289,21 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public virtual void Paint(VirtualListBox sender, ListBoxItemPaintEventArgs e)
+            public virtual void Paint(object sender, ListBoxItemPaintEventArgs e)
             {
-                var itemColor = GetImageColor(sender, e);
-                if (sender.TextVisible)
+                if (sender is not ColorListBox colorListBox)
                 {
-                    var (colorRect, itemRect) = sender.GetItemImageRect(e.ClipRectangle);
+                    if (sender is VirtualListControl<ListControlItem> listControl)
+                        listControl.DefaultDrawItem(e);
+                    return;
+                }
+
+                var itemColor = GetImageColor(colorListBox, e);
+                if (colorListBox.TextVisible)
+                {
+                    var (colorRect, itemRect) = colorListBox.GetItemImageRect(e.ClipRectangle);
                     e.ClipRectangle = itemRect;
-                    sender.DefaultDrawItem(e);
+                    colorListBox.DefaultDrawItem(e);
                     ColorComboBox.PaintColorImage(e.Graphics, colorRect, itemColor);
                 }
                 else
@@ -304,7 +313,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public virtual bool PaintBackground(VirtualListBox sender, ListBoxItemPaintEventArgs e)
+            public virtual bool PaintBackground(object sender, ListBoxItemPaintEventArgs e)
             {
                 return false;
             }

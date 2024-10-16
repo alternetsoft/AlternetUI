@@ -27,9 +27,9 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// You can create an event handler for this event to determine when the
-        /// selected index in the <see cref="ListBox"/> has been changed.
+        /// selected index in the control has been changed.
         /// This can be useful when you need to display information in other
-        /// controls based on the current selection in the <see cref="ListBox"/>.
+        /// controls based on the current selection in the control.
         /// <para>
         /// You can use the event handler for this event to load the information in
         /// the other controls. If the <see cref="SelectionMode"/> property
@@ -50,7 +50,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a collection that contains the zero-based indexes of all
-        /// currently selected items in the <see cref="ListBox"/>.
+        /// currently selected items in the control.
         /// </summary>
         /// <value>
         /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
@@ -59,23 +59,23 @@ namespace Alternet.UI
         /// <see cref="IReadOnlyList{T}"/> is returned.
         /// </value>
         /// <remarks>
-        /// For a multiple-selection <see cref="ListBox"/>, this property
+        /// For a multiple-selection control, this property
         /// returns a collection containing the indexes to all items that are selected
-        /// in the <see cref="ListBox"/>. For a single-selection
-        /// <see cref="ListBox"/>, this property returns a collection containing a
+        /// in the control. For a single-selection
+        /// control, this property returns a collection containing a
         /// single element containing the index of the only selected item in the
-        /// <see cref="ListBox"/>.
+        /// control.
         /// <para>
-        /// The <see cref="ListBox"/> class provides a number of ways to
+        /// There are a number of ways to
         /// reference selected items. Instead of using the <see cref="SelectedIndices"/>
         /// property to obtain the index position of the currently selected item
-        /// in a single-selection <see cref="ListBox"/>, you
+        /// in a single-selection control, you
         /// can use the <see cref="SelectedIndex"/> property. If you want to obtain
-        /// the item that is currently selected in the <see cref="ListBox"/>,
+        /// the item that is currently selected in the control,
         /// instead of the index position of the item, use the
         /// <see cref="SelectedItem"/> property. In addition,
         /// you can use the <see cref="SelectedItems"/> property if you want to
-        /// obtain all the selected items in a multiple-selection <see cref="ListBox"/>.
+        /// obtain all the selected items in a multiple-selection control.
         /// </para>
         /// </remarks>
         /// <seealso cref="SelectedIndicesDescending"/>
@@ -115,7 +115,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a collection that contains the zero-based indexes of all
         /// currently selected
-        /// items in the <see cref="ListBox"/>.
+        /// items in the control.
         /// </summary>
         /// <remarks>
         /// Indexes are returned in the descending order (maximal index is
@@ -141,28 +141,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the zero-based index of the currently selected item in a
-        /// <see cref="ListBox"/>.
+        /// Gets or sets the zero-based index of the currently selected item in the control.
         /// </summary>
         /// <value>A zero-based index of the currently selected item.
         /// A value of <c>null</c> is returned if no item is selected.</value>
         /// <remarks>
-        /// For a standard <see cref="ListBox"/>, you can use this property to
+        /// For a single selection mode, you can use this property to
         /// determine the index of the item that is selected
-        /// in the <see cref="ListBox"/>. If the <see cref="SelectionMode"/>
-        /// property of the <see cref="ListBox"/> is set to either
+        /// in the control. If the <see cref="SelectionMode"/>
+        /// property of the control is set to either
         /// <see cref="ListBoxSelectionMode.Multiple"/> (which indicates a
-        /// multiple-selection <see cref="ListBox"/>) and multiple items
+        /// multiple-selection control) and multiple items
         /// are selected in the list, this property can return the index to
         /// any selected item.
         /// <para>
         /// To retrieve a collection containing the indexes of all selected items
-        /// in a multiple-selection <see cref="ListBox"/>,
+        /// in a multiple-selection control,
         /// use the <see cref="SelectedIndices"/> property. If you want to obtain
-        /// the item that is currently selected in the <see cref="ListBox"/>,
+        /// the item that is currently selected in the control,
         /// use the <see cref="SelectedItem"/> property. In addition, you can use
         /// the <see cref="SelectedItems"/> property to obtain
-        /// all the selected items in a multiple-selection <see cref="ListBox"/>.
+        /// all the selected items in a multiple-selection control.
         /// </para>
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The assigned value is
@@ -229,24 +228,24 @@ namespace Alternet.UI
         /// <value>An object that represents the current selection in the control,
         /// or <c>null</c> if no item is selected.</value>
         /// <remarks>
-        /// For a standard <see cref="ListBox"/>, you can use this property to
+        /// When single selection mode is used, you can use this property to
         /// determine the index of the item that is selected
-        /// in the <see cref="ListBox"/>. If the <see cref="SelectionMode"/>
-        /// property of the <see cref="ListBox"/> is set to either
+        /// in the control. If the <see cref="SelectionMode"/>
+        /// property of the control is set to either
         /// <see cref="ListBoxSelectionMode.Multiple"/> (which indicates a
-        /// multiple-selection <see cref="ListBox"/>) and multiple items
+        /// multiple-selection control) and multiple items
         /// are selected in the list, this property can return the index to
         /// any selected item.
         /// <para>
         /// To retrieve a collection containing all selected items in a
-        /// multiple-selection <see cref="ListBox"/>, use the
+        /// multiple-selection control, use the
         /// <see cref="SelectedItems"/> property.
         /// If you want to obtain the index position of the currently selected
-        /// item in the <see cref="ListBox"/>, use the
+        /// item in the control, use the
         /// <see cref="SelectedIndex"/> property.
         /// In addition, you can use the <see cref="SelectedIndices"/> property to
         /// obtain all the selected indexes in a multiple-selection
-        /// <see cref="ListBox"/>.
+        /// control.
         /// </para>
         /// </remarks>
         [Browsable(false)]
@@ -287,29 +286,29 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a collection containing the currently selected items in the
-        /// <see cref="ListBox"/>.
+        /// control.
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{T}"/> containing the currently
         /// selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection <see cref="ListBox"/>, this property
+        /// For a multiple-selection control, this property
         /// returns a collection containing the indexes to all items that are selected
-        /// in the <see cref="ListBox"/>. For a single-selection
-        /// <see cref="ListBox"/>, this property returns a collection containing a
+        /// in the control. For a single-selection
+        /// control, this property returns a collection containing a
         /// single element containing the index of the only selected item in the
-        /// <see cref="ListBox"/>.
+        /// control.
         /// <para>
-        /// The <see cref="ListBox"/> class provides a number of ways to
+        /// There are a number of ways to
         /// reference selected items. Instead of using the <see cref="SelectedIndices"/>
         /// property to obtain the index position of the currently selected item
-        /// in a single-selection <see cref="ListBox"/>, you
+        /// in a single-selection control, you
         /// can use the <see cref="SelectedIndex"/> property. If you want to obtain
-        /// the item that is currently selected in the <see cref="ListBox"/>,
+        /// the item that is currently selected in the control,
         /// instead of the index position of the item, use the
         /// <see cref="SelectedItem"/> property.
         /// In addition, you can use the <see cref="SelectedIndices"/> property
         /// to obtain all the selected indexes in a multiple-selection
-        /// <see cref="ListBox"/>.
+        /// control.
         /// </para>
         /// </remarks>
         [Browsable(false)]
@@ -325,13 +324,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the method in which items are selected in the
-        /// <see cref="ListBox"/>.
+        /// control.
         /// </summary>
         /// <value>One of the <see cref="ListBoxSelectionMode"/> values.
         /// The default is <see cref="ListBoxSelectionMode.Single"/>.</value>
         /// <remarks>
         /// The <see cref="SelectionMode"/> property enables you to determine
-        /// how many items in the <see cref="ListBox"/>
+        /// how many items in the control
         /// a user can select at one time.
         /// </remarks>
         public virtual ListBoxSelectionMode SelectionMode
@@ -376,7 +375,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Removes selected items from the <see cref="ListBox"/>.
+        /// Removes selected items from the control.
         /// </summary>
         public virtual void RemoveSelectedItems()
         {
@@ -407,7 +406,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets only valid indexes from the list of indexes in
-        /// the <see cref="ListBox"/>.
+        /// the control.
         /// </summary>
         public IReadOnlyList<int> GetValidIndexes(params int[] indexes)
         {
@@ -446,7 +445,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Selects items with specified indexes in the <see cref="ListBox"/>.
+        /// Selects items with specified indexes in the control.
         /// </summary>
         public virtual void SelectItems(params int[] indexes)
         {
@@ -454,7 +453,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Checks whether index is valid in the <see cref="ListBox"/>.
+        /// Checks whether index is valid in the control.
         /// </summary>
         public virtual bool IsValidIndex(int index)
         {
@@ -470,16 +469,16 @@ namespace Alternet.UI
 
         /// <summary>
         /// Selects or clears the selection for the specified item in a
-        /// <see cref="ListBox"/>.
+        /// control.
         /// </summary>
         /// <param name="index">The zero-based index of the item in a
-        /// <see cref="ListBox"/> to select or clear the selection for.</param>
+        /// control to select or clear the selection for.</param>
         /// <param name="value"><c>true</c> to select the specified item;
         /// otherwise, false.</param>
         /// <remarks>
         /// You can use this property to set the selection of items in a
-        /// multiple-selection <see cref="ListBox"/>.
-        /// To select an item in a single-selection <see cref="ListBox"/>, use
+        /// multiple-selection control.
+        /// To select an item in a single-selection control, use
         /// the <see cref="SelectedIndex"/> property.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The specified index
