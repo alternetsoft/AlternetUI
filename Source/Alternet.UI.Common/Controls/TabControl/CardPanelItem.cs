@@ -12,16 +12,16 @@ namespace Alternet.UI
     /// </summary>
     public class CardPanelItem : BaseControlItem
     {
-        private readonly Func<Control>? action;
-        private Control? control;
+        private readonly Func<AbstractControl>? action;
+        private AbstractControl? control;
 
-        internal CardPanelItem(string? title, Control control)
+        internal CardPanelItem(string? title, AbstractControl control)
         {
             Title = title;
             this.control = control;
         }
 
-        internal CardPanelItem(string? title, Func<Control> action)
+        internal CardPanelItem(string? title, Func<AbstractControl> action)
         {
             Title = title;
             this.action = action;
@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// Child control.
         /// </summary>
         [Browsable(false)]
-        public Control Control
+        public AbstractControl Control
         {
             get
             {

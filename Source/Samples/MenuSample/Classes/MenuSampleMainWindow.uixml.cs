@@ -82,7 +82,7 @@ namespace MenuSample
             contextMenuBorder.BorderColor = Color.Red;
             contextMenuBorder.BorderWidth = new Thickness(2, 2, 2, 2);
 
-            contextMenuLabel.Font = Control.DefaultFont.AsBold;
+            contextMenuLabel.Font = AbstractControl.DefaultFont.AsBold;
             contextMenuBorder.PerformLayout();
 
             mainPanel.TabAlignment = TabAlignment.Left;
@@ -157,7 +157,7 @@ namespace MenuSample
             GetStatusBar()?.Panels.Clear();
         }
 
-        internal void SetDebugBackground(Control control)
+        internal void SetDebugBackground(AbstractControl control)
         {
             if (!IsDebugBackground)
                 return;
@@ -372,14 +372,14 @@ namespace MenuSample
 
         private void ToolbarItem_Click(object? sender, EventArgs e)
         {
-            if (sender is not Control button)
+            if (sender is not AbstractControl button)
                 return;
             LogEvent("Toolbar item clicked: " + button.ToolTip);
         }
 
         private void ToggleToolbarItem_Click(object? sender, EventArgs e)
         {
-            if (sender is not Control button)
+            if (sender is not AbstractControl button)
                 return;
             toolbar.ToggleToolSticky(button.UniqueId);
             var sticky = toolbar.GetToolSticky(button.UniqueId);

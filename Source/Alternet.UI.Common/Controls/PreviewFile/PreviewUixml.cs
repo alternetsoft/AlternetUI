@@ -83,7 +83,7 @@ namespace Alternet.UI
             }
         }
 
-        Control IFilePreview.Control { get => this; }
+        AbstractControl IFilePreview.Control { get => this; }
 
         /// <summary>
         /// Gets whether specified file is supported in this preview control.

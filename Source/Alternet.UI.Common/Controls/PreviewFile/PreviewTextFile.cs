@@ -95,7 +95,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFilePreview.Control"/>
         /// </summary>
-        Control IFilePreview.Control => this;
+        AbstractControl IFilePreview.Control => this;
 
         /// <summary>
         /// <inheritdoc cref="IFilePreview.FileName"/>

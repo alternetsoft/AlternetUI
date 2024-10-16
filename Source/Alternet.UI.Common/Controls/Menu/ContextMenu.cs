@@ -106,7 +106,7 @@ namespace Alternet.UI
         /// <summary>
         /// Displays the menu at the specified position.
         /// </summary>
-        /// <param name="control">A <see cref="Control"/> that specifies the control with which
+        /// <param name="control">A <see cref="AbstractControl"/> that specifies the control with which
         /// this shortcut menu is associated.</param>
         /// <param name="position">
         /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.

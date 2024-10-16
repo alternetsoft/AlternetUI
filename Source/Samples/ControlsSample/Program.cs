@@ -98,7 +98,7 @@ namespace ControlsSample
             LogSimple("InitSamples Done.");
 
             if (testBadFont)
-                Control.DefaultFont = new Font("abrakadabra", 12);
+                AbstractControl.DefaultFont = new Font("abrakadabra", 12);
 
             var window = new MainWindow();
 

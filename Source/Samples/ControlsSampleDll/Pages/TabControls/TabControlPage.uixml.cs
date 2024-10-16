@@ -57,7 +57,7 @@ namespace ControlsSample
             }
         }
 
-        private void TabControl_TabSizeChanged(object? sender, BaseEventArgs<Control> e)
+        private void TabControl_TabSizeChanged(object? sender, BaseEventArgs<AbstractControl> e)
         {
             App.DebugLogIf($"TabSizeChanged: {e.Value.Text}, {PixelFromDip(e.Value.Size)}, {e.Value.GetDPI()}", false);
         }

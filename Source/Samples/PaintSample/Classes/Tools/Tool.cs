@@ -5,9 +5,9 @@ namespace PaintSample
 {
     public abstract class Tool
     {
-        private Control? canvas;
+        private AbstractControl? canvas;
 
-        private Control? optionsControl;
+        private AbstractControl? optionsControl;
         private readonly Func<PaintSampleDocument> getDocument;
 
         protected Tool(Func<PaintSampleDocument> getDocument, ISelectedColors selectedColors, UndoService undoService)
@@ -17,7 +17,7 @@ namespace PaintSample
             UndoService = undoService;
         }
 
-        public Control? OptionsControl => optionsControl ??= CreateOptionsControl();
+        public AbstractControl? OptionsControl => optionsControl ??= CreateOptionsControl();
 
         public abstract string Name { get; }
 
@@ -27,9 +27,9 @@ namespace PaintSample
 
         protected UndoService UndoService { get; }
 
-        protected Control Canvas { get => canvas ?? throw new InvalidOperationException(); private set => canvas = value; }
+        protected AbstractControl Canvas { get => canvas ?? throw new InvalidOperationException(); private set => canvas = value; }
 
-        public void Activate(Control canvas)
+        public void Activate(AbstractControl canvas)
         {
             if (this.canvas != null)
                 throw new InvalidOperationException();
@@ -56,7 +56,7 @@ namespace PaintSample
             canvas = null;
         }
 
-        protected virtual Control? CreateOptionsControl() => null;
+        protected virtual AbstractControl? CreateOptionsControl() => null;
 
         protected virtual void OnKeyDown(KeyEventArgs e)
         {

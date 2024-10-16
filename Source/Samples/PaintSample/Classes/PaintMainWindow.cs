@@ -625,7 +625,7 @@ namespace PaintSample
 
             var s = "Hello text";
 
-            var font = Control.DefaultFont.Scaled(5);
+            var font = AbstractControl.DefaultFont.Scaled(5);
             var measure = dc.MeasureText(s, font);
 
             var size = dc.GetTextExtent(s, font);

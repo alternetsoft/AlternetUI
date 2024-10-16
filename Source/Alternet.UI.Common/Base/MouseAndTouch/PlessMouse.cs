@@ -39,10 +39,10 @@ namespace Alternet.UI
 
         private static readonly bool[] Buttons = new bool[(int)MouseButton.Unknown + 1];
 
-        private static (PointD? Position, Control? Control) lastMousePosition;
+        private static (PointD? Position, AbstractControl? Control) lastMousePosition;
 
         private static Timer? longTapTimer;
-        private static WeakReference<Control>? longTapControl;
+        private static WeakReference<AbstractControl>? longTapControl;
 
         /// <summary>
         /// Occurs when <see cref="LastMousePosition"/> property is changed.
@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets last mouse position passed to mouse event handlers.
         /// </summary>
-        public static (PointD? Position, Control? Control) LastMousePosition
+        public static (PointD? Position, AbstractControl? Control) LastMousePosition
         {
             get
             {
@@ -70,7 +70,7 @@ namespace Alternet.UI
 
                 if (ShowTestMouseInControl)
                 {
-                    Control.HoveredControl?.Refresh();
+                    AbstractControl.HoveredControl?.Refresh();
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control.</param>
         /// <returns></returns>
-        public static RectD GetTestMouseRect(Control control)
+        public static RectD GetTestMouseRect(AbstractControl control)
         {
             var mouseLocation = Mouse.GetPosition(control);
             return (mouseLocation, PlessMouse.TestMouseSize);
@@ -89,11 +89,11 @@ namespace Alternet.UI
         /// <summary>
         /// Updates <see cref="LastMousePosition"/>
         /// </summary>
-        /// <param name="position">Mouse position. If <c>null</c>, <see cref="Mouse.GetPosition(Control)"/>
+        /// <param name="position">Mouse position. If <c>null</c>, <see cref="Mouse.GetPosition(AbstractControl)"/>
         /// is used to get mouse position.</param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public static PointD UpdateMousePosition(PointD? position, Control control)
+        public static PointD UpdateMousePosition(PointD? position, AbstractControl control)
         {
             position ??= Mouse.GetPosition(control);
             PlessMouse.LastMousePosition = (position, control);
@@ -105,9 +105,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control.</param>
         /// <param name="dc">Drawing context.</param>
-        public static void DrawTestMouseRect(Control control, Graphics dc)
+        public static void DrawTestMouseRect(AbstractControl control, Graphics dc)
         {
-            if (control != Control.HoveredControl)
+            if (control != AbstractControl.HoveredControl)
                 return;
 
             if (control.UserPaint && ShowTestMouseInControl)
@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// Starts long tap timer.
         /// </summary>
         /// <param name="control">Control where tap event is started.</param>
-        public static void StartLongTapTimer(Control control)
+        public static void StartLongTapTimer(AbstractControl control)
         {
             if (!control.CanLongTap)
                 return;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Connects <see cref="Control"/> and visual designer.
+    /// Connects <see cref="AbstractControl"/> and visual designer.
     /// </summary>
     public interface IComponentDesigner
     {

@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// Gets or sets maximal width of text in the control.
         /// </summary>
         /// <remarks>
-        /// Wraps <see cref="Control.Text"/> so that each of its lines becomes at most width
+        /// Wraps <see cref="AbstractControl.Text"/> so that each of its lines becomes at most width
         /// dips wide if possible (the lines are broken at words boundaries so it
         /// might not be the case if words are too long).
         /// </remarks>
@@ -110,7 +110,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Wraps <see cref="Control.Text"/> so that each of its lines becomes at most width
+        /// Wraps <see cref="AbstractControl.Text"/> so that each of its lines becomes at most width
         /// dips wide if possible (the lines are broken at words boundaries so it
         /// might not be the case if words are too long).
         /// </summary>
@@ -142,8 +142,8 @@ namespace Alternet.UI
             var result = DrawingUtils.WrapTextToMultipleLines(
                 s,
                 maxTextWidth.Value,
-                Font ?? Control.DefaultFont,
-                ScaleFactor);
+                Font ?? AbstractControl.DefaultFont,
+                MeasureCanvas);
             return result;
         }
 

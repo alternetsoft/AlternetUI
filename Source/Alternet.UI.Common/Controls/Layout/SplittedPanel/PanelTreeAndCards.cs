@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string title, Func<Control> fnCreate)
+        public virtual int Add(string title, Func<AbstractControl> fnCreate)
         {
             var index = cardPanel.Add(title, fnCreate);
             var item = LeftTreeView.Add(title);
@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string title, Control control)
+        public virtual int Add(string title, AbstractControl control)
         {
             var index = cardPanel.Add(title, control);
             var item = LeftTreeView.Add(title);

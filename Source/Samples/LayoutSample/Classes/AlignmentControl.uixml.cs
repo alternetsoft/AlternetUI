@@ -14,9 +14,9 @@ namespace LayoutSample
             horizontalAlignmentComboBox.Items.AddRange(Enum.GetValues(typeof(HorizontalAlignment)).Cast<object>());
         }
 
-        Control? control;
+        AbstractControl? control;
 
-        public Control? Control
+        public AbstractControl? Control
         {
             get
             {

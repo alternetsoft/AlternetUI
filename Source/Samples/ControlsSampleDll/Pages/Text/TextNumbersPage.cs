@@ -34,8 +34,6 @@ namespace ControlsSample
 
         private readonly ValueEditorByte twoDigitsEdit = new("Two digits", 15);
 
-        private readonly RichToolTip toolTip;
-
         public TextNumbersPage()
         {
             Margin = 10;

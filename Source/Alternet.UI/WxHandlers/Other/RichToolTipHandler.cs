@@ -54,7 +54,7 @@ namespace Alternet.UI
             Native.WxOtherFactory.RichToolTipSetIcon2(Handle, style);
         }
 
-        public void Show(Control control, RectI? rect = null, bool adjustPos = true)
+        public void Show(AbstractControl control, RectI? rect = null, bool adjustPos = true)
         {
             var wxWidget = WxApplicationHandler.WxWidget(control);
             Native.WxOtherFactory.RichToolTipShowFor(Handle, wxWidget, rect ?? RectI.Empty, adjustPos);

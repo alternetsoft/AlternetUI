@@ -13,8 +13,8 @@ namespace Alternet.UI
     /// </summary>
     public interface IDisplayFactoryHandler : IDisposable
     {
-        /// <inheritdoc cref="Display.GetFromControl(Control)"/>
-        int GetFromControl(Control control);
+        /// <inheritdoc cref="Display.GetFromControl(AbstractControl)"/>
+        int GetFromControl(AbstractControl control);
 
         /// <summary>
         /// Creates <see cref="IDisplayHandler"/> interface provider for the default display.

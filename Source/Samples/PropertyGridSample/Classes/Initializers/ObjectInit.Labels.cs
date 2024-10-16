@@ -33,12 +33,20 @@ namespace PropertyGridSample
             label.Borders.SetAll(border);
             label.Borders.SetObject(doubleBorder, VisualControlState.Hovered);
 
-            var colors = new FontAndColor(Color.Black, null, Control.DefaultFont.AsBold);
+            var colors = new FontAndColor(Color.Black, null, AbstractControl.DefaultFont.AsBold);
 
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();
             label.StateObjects.Colors.SetObject(colors, VisualControlState.Hovered);
             SetBackgrounds(label);
+        }
+
+        public static void InitGenericTextControl(object control)
+        {
+            if (control is not GenericTextControl label)
+                return;
+            label.Text = "This is text";
+            label.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
         public static void InitLabel(object control)

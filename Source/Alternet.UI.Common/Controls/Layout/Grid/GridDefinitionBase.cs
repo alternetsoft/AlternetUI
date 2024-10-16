@@ -183,7 +183,7 @@ namespace Alternet.UI
         /// elements belonging to a certain scope can easily access SharedSizeState collection. As well
         /// as been norified about enter / exit a scope.
         /// </remarks>
-        internal static void OnIsSharedSizeScopePropertyChanged(Control control, bool newValue)
+        internal static void OnIsSharedSizeScopePropertyChanged(AbstractControl control, bool newValue)
         {
             // yezo todo
             ////  is it possible to optimize here something like this:
@@ -513,12 +513,12 @@ namespace Alternet.UI
             // }
         }
 
-        static Dictionary<Control, SharedSizeScope> privateSharedSizeScopes = new Dictionary<Control, SharedSizeScope>();
+        static Dictionary<AbstractControl, SharedSizeScope> privateSharedSizeScopes = new Dictionary<AbstractControl, SharedSizeScope>();
 
         /// <summary>
         /// Private getter of shared state collection dynamic property.
         /// </summary>
-        private static SharedSizeScope GetPrivateSharedSizeScope(Control control)
+        private static SharedSizeScope GetPrivateSharedSizeScope(AbstractControl control)
         {
             return privateSharedSizeScopes.TryGetValue(control, out var value) ? value : null;
         }
@@ -526,7 +526,7 @@ namespace Alternet.UI
         /// <summary>
         /// Private getter of shared state collection dynamic property.
         /// </summary>
-        private void SetPrivateSharedSizeScope(Control control, SharedSizeScope value)
+        private void SetPrivateSharedSizeScope(AbstractControl control, SharedSizeScope value)
         {
             privateSharedSizeScopes[control] = value;
             OnPrivateSharedSizeScopePropertyChanged(value);
@@ -679,7 +679,7 @@ namespace Alternet.UI
             /// <summary>
             /// Makes sure that one and only one layout updated handler is registered for this shared state.
             /// </summary>
-            internal void EnsureDeferredValidation(Control layoutUpdatedHost)
+            internal void EnsureDeferredValidation(AbstractControl layoutUpdatedHost)
             {
                 if (_layoutUpdatedHost == null)
                 {
@@ -838,7 +838,7 @@ namespace Alternet.UI
             private readonly string _sharedSizeGroupId;         //  Id of the shared size group this object is servicing
             private readonly List<GridDefinitionBase> _registry;    //  registry of participating definitions
             private readonly EventHandler _layoutUpdated;       //  instance event handler for layout updated event
-            private Control _layoutUpdatedHost;               //  UIElement for which layout updated event handler is registered
+            private AbstractControl _layoutUpdatedHost;               //  UIElement for which layout updated event handler is registered
             private bool _broadcastInvalidation;                //  "true" when broadcasting of invalidation is needed
             private bool _userSizeValid;                        //  "true" when _userSize is up to date
             private GridLength _userSize;                       //  shared state

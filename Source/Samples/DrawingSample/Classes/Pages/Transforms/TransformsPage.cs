@@ -94,7 +94,7 @@ namespace DrawingSample
             dc.Pop();
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new TransformsPageSettings();
             control.Initialize(this);

@@ -7,7 +7,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods and properties which are <see cref="Control"/> related.
+    /// Contains static methods and properties which are <see cref="AbstractControl"/> related.
     /// </summary>
     public static class ControlUtils
     {
@@ -20,8 +20,21 @@ namespace Alternet.UI
         {
             get
             {
-                return empty ??= new();
+                return empty ??= new Control();
             }
+        }
+
+        /// <summary>
+        /// Gets control for measure purposes in a safe way. Do not change
+        /// any properties of the returned control.
+        /// </summary>
+        /// <param name="obj">The object which is returrned if it is a control.</param>
+        /// <returns></returns>
+        public static AbstractControl SafeControl(object? obj)
+        {
+            if (obj is AbstractControl control)
+                return control;
+            return App.SafeWindow ?? Empty;
         }
 
         /// <summary>

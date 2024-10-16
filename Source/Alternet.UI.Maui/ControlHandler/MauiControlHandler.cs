@@ -268,11 +268,11 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void OnChildInserted(Control childControl)
+        public virtual void OnChildInserted(AbstractControl childControl)
         {
         }
 
-        public virtual void OnChildRemoved(Control childControl)
+        public virtual void OnChildRemoved(AbstractControl childControl)
         {
         }
 

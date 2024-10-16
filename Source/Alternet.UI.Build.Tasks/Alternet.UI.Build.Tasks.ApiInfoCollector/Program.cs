@@ -25,7 +25,7 @@ namespace Alternet.UI.Build.Tasks.ApiInfoCollector
                 if (string.Compare(asmFileName, "Alternet.UI.Common.dll") == 0)
                 {
                     asmPath = Path.Combine(PathUtils.GetAppFolder(), asmFileName);
-                    asm = typeof(Alternet.UI.Control).Assembly;
+                    asm = typeof(Alternet.UI.AbstractControl).Assembly;
                 }
                 else
                     asm = Assembly.LoadFrom(asmPath);

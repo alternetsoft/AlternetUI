@@ -62,7 +62,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when the <see cref="Value" /> property is changed, either
-        /// by a <see cref="Control.Scroll" /> event or programmatically.
+        /// by a <see cref="AbstractControl.Scroll" /> event or programmatically.
         /// </summary>
         [Category("Action")]
         public event EventHandler? ValueChanged;
@@ -193,7 +193,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="Control.IsBold"/>
+        /// <inheritdoc cref="AbstractControl.IsBold"/>
         [Browsable(false)]
         public new bool IsBold
         {
@@ -201,7 +201,7 @@ namespace Alternet.UI
             set => base.IsBold = value;
         }
 
-        /// <inheritdoc cref="Control.Font"/>
+        /// <inheritdoc cref="AbstractControl.Font"/>
         [Browsable(false)]
         public new Font? Font
         {
@@ -209,7 +209,7 @@ namespace Alternet.UI
             set => base.Font = value;
         }
 
-        /// <inheritdoc cref="Control.BackgroundColor"/>
+        /// <inheritdoc cref="AbstractControl.BackgroundColor"/>
         [Browsable(false)]
         public new Color? BackgroundColor
         {
@@ -217,7 +217,7 @@ namespace Alternet.UI
             set => base.BackgroundColor = value;
         }
 
-        /// <inheritdoc cref="Control.ForegroundColor"/>
+        /// <inheritdoc cref="AbstractControl.ForegroundColor"/>
         [Browsable(false)]
         public new Color? ForegroundColor
         {
@@ -225,7 +225,7 @@ namespace Alternet.UI
             set => base.ForegroundColor = value;
         }
 
-        /// <inheritdoc cref="Control.Padding"/>
+        /// <inheritdoc cref="AbstractControl.Padding"/>
         [Browsable(false)]
         public new Thickness Padding
         {

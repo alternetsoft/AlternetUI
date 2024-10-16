@@ -51,7 +51,7 @@ namespace Alternet.Drawing
         /// Gets the default brush.
         /// </summary>
         /// <value>
-        /// Default brush is <see cref="SolidBrush"/> with Black color.
+        /// Default brush is <see cref="SolidBrush"/> with black color.
         /// </value>
         public static Brush Default => defaultBrush ??= Brushes.Black;
 

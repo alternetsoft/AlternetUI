@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
-        public Control ActionsControl
+        public AbstractControl ActionsControl
         {
             get
             {

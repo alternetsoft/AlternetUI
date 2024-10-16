@@ -258,12 +258,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetTextExtent(string text, Font font, IControl? control)
-        {
-            return default;
-        }
-
-        /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
             return default;

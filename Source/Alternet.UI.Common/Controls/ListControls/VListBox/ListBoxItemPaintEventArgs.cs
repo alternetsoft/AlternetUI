@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <param name="bounds">Bounds of the item.</param>
         /// <param name="itemIndex">Index of the tem.</param>
         public ListBoxItemPaintEventArgs(
-            VirtualListBox control,
+            IListControlItemContainer control,
             Graphics graphics,
             RectD bounds,
             int itemIndex)
@@ -42,12 +42,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item is selected.
         /// </summary>
-        public virtual bool IsSelected => ListBox.IsSelected(ItemIndex);
+        public virtual bool IsSelected { get; set; }
 
         /// <summary>
         /// Gets whether item is current.
         /// </summary>
-        public virtual bool IsCurrent => ListBox.Handler.IsCurrent(ItemIndex);
+        public virtual bool IsCurrent { get; set; }
 
         /// <summary>
         /// Gets font of the item.
@@ -56,10 +56,19 @@ namespace Alternet.UI
         {
             get
             {
-                var itemFont = ListBox.GetItemFont(ItemIndex);
-                if (ListBox.SelectedItemIsBold && IsCurrent)
-                    itemFont = itemFont.AsBold;
+                var itemFont = ListControlItem.GetFont(Item, ListBox);
                 return itemFont;
+            }
+        }
+
+        /// <summary>
+        /// Gets an item.
+        /// </summary>
+        public virtual ListControlItem? Item
+        {
+            get
+            {
+                return ListBox.SafeItem(ItemIndex);
             }
         }
 
@@ -77,28 +86,54 @@ namespace Alternet.UI
         /// <summary>
         /// Gets text of the item.
         /// </summary>
-        public virtual string ItemText => ListBox.GetItemText(ItemIndex);
+        public virtual string ItemText
+        {
+            get
+            {
+                return ListBox.GetItemText(ItemIndex);
+            }
+        }
 
         /// <summary>
         /// Gets minimal height of the item.
         /// </summary>
-        public virtual Coord ItemMinHeight => ListBox.GetItemMinHeight(ItemIndex);
+        public virtual Coord ItemMinHeight
+        {
+            get
+            {
+                var result = ListControlItem.GetMinHeight(Item, ListBox);
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets alignment of the item.
         /// </summary>
-        public GenericAlignment ItemAlignment => ListBox.GetItemAlignment(ItemIndex);
+        public virtual GenericAlignment ItemAlignment
+        {
+            get
+            {
+                var result = ListControlItem.GetAlignment(Item, ListBox);
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets normal and disabled images of the item.
         /// </summary>
         public virtual (Image? Normal, Image? Disabled, Image? Selected) ItemImages
-            => ListBox.GetItemImages(ItemIndex, ListBox.GetSelectedItemTextColor(ItemIndex));
+        {
+            get
+            {
+                var color = ListControlItem.GetSelectedTextColor(Item, ListBox);
+                return ListControlItem.GetItemImages(Item, ListBox, color);
+            }
+        }
 
         /// <summary>
         /// Gets control which item is painted.
         /// </summary>
-        public virtual VirtualListBox ListBox { get; set; }
+        public virtual IListControlItemContainer ListBox { get; set; }
 
         /// <summary>
         /// Gets text color.
@@ -110,11 +145,11 @@ namespace Alternet.UI
             Color textColor;
             if (isSelected)
             {
-                textColor = ListBox.GetSelectedItemTextColor(ItemIndex);
+                textColor = ListControlItem.GetSelectedTextColor(Item, ListBox);
             }
             else
             {
-                textColor = ListBox.GetItemTextColor(ItemIndex);
+                textColor = ListControlItem.GetItemTextColor(Item, ListBox);
             }
 
             return textColor;

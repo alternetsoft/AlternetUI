@@ -53,7 +53,7 @@ namespace Alternet.UI
             ShowNoFile();
         }
 
-        Control IFilePreview.Control { get => this; }
+        AbstractControl IFilePreview.Control { get => this; }
 
         /// <summary>
         /// Gets list of registered preview controls. One of these
@@ -202,7 +202,7 @@ namespace Alternet.UI
         /// </summary>
         public class PreviewFileRegisterItem
         {
-            private Control? control;
+            private AbstractControl? control;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="PreviewFileRegisterItem"/> class.
@@ -230,7 +230,7 @@ namespace Alternet.UI
             /// <summary>
             /// Gets preview control.
             /// </summary>
-            public virtual Control Control
+            public virtual AbstractControl Control
             {
                 get
                 {

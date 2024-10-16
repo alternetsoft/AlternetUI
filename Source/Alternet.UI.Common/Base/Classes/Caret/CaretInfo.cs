@@ -374,7 +374,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Control where caret is painted.</param>
         /// <param name="e">Paint arguments.</param>
-        public virtual void Paint(Control sender, PaintEventArgs e)
+        public virtual void Paint(AbstractControl sender, PaintEventArgs e)
         {
             var isDark = sender.IsDarkBackground;
             var dc = e.Graphics;

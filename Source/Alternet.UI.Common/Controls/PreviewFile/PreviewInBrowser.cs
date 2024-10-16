@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFilePreview.Control"/>
         /// </summary>
-        public Control Control { get => this; }
+        public AbstractControl Control { get => this; }
 
         /// <summary>
         /// Gets whether specified file is supported in this preview control.

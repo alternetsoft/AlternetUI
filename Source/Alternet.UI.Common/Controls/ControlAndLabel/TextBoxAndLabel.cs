@@ -65,7 +65,7 @@ namespace Alternet.UI
         public virtual bool IsValidMail => ValidationUtils.IsValidMailAddress(Text);
 
         /// <summary>
-        /// Gets or sets <see cref="Control.Text"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.Text"/> property of the main child control.
         /// </summary>
         [Browsable(true)]
         public override string Text
@@ -94,7 +94,7 @@ namespace Alternet.UI
         public virtual bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
         /// <inheritdoc/>
-        protected override Control CreateControl() => new TextBox();
+        protected override AbstractControl CreateControl() => new TextBox();
 
         /// <summary>
         /// Initializes main child control.

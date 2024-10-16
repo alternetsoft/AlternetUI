@@ -19,7 +19,7 @@ namespace PaintSample
 
         public override string Name => "Airbrush";
 
-        protected override Control? CreateOptionsControl()
+        protected override AbstractControl? CreateOptionsControl()
         {
             var control = new AirbrushToolOptionsControl
             {

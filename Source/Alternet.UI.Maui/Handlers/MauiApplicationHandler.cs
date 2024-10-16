@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control for which to get the parent page.</param>
         /// <returns></returns>
-        public static Microsoft.Maui.Controls.Page? GetParentPage(Control? control)
+        public static Microsoft.Maui.Controls.Page? GetParentPage(AbstractControl? control)
         {
             var mainPage = Microsoft.Maui.Controls.Application.Current?.MainPage;
 
@@ -63,8 +63,7 @@ namespace Alternet.UI
                 return mainPage;
             else
             {
-                var handler = control.Handler as MauiControlHandler;
-                var container = handler?.Container;
+                var container = ControlView.GetContainer(control);
                 var window = container?.Window;
                 var page = window?.Page;
                 return page ?? mainPage;
@@ -77,7 +76,7 @@ namespace Alternet.UI
         /// <param name="position">Point in screen coordinates.</param>
         /// <param name="control">Control.</param>
         /// <returns></returns>
-        public static PointD ScreenToClient(PointD position, Control control)
+        public static PointD ScreenToClient(PointD position, AbstractControl control)
         {
             var topLeft = ClientToScreen(PointD.Empty, control);
 
@@ -93,18 +92,19 @@ namespace Alternet.UI
         /// <param name="position">Point in client coordinates.</param>
         /// <param name="control">Control.</param>
         /// <returns></returns>
-        public static PointD ClientToScreen(PointD position, Control control)
+        public static PointD ClientToScreen(PointD position, AbstractControl control)
         {
             PointD absolutePos;
 
-            if (control.Handler is not MauiControlHandler handler
-                || handler.Container is null)
+            var container = ControlView.GetContainer(control);
+
+            if (container is null)
             {
                 absolutePos = PointD.MinValue;
             }
             else
             {
-                absolutePos = handler.Container.GetAbsolutePosition();
+                absolutePos = container.GetAbsolutePosition();
             }
 
             var x = absolutePos.X + position.X;
@@ -143,9 +143,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Control? GetFocusedControl()
+        public virtual AbstractControl? GetFocusedControl()
         {
-            return Control.FocusedControl;
+            return AbstractControl.FocusedControl;
         }
 
         /// <inheritdoc/>
@@ -244,7 +244,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual ICaretHandler CreateCaretHandler(Control control, int width, int height)
+        public virtual ICaretHandler CreateCaretHandler(AbstractControl control, int width, int height)
         {
             if(WindowsCaretHandler.UseIfPossible)
                 return new WindowsCaretHandler(control, width, height);

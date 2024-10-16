@@ -142,7 +142,7 @@ namespace Alternet.UI
         /// Gets or sets default image size.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="ToolBarUtils.GetDefaultImageSize(Control)"/> is used.
+        /// If this property is null, <see cref="ToolBarUtils.GetDefaultImageSize(AbstractControl)"/> is used.
         /// </remarks>
         public static int? DefaultImageSize { get; set; }
 
@@ -150,7 +150,7 @@ namespace Alternet.UI
         /// Gets or sets default color of the SVG images in the normal state.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="Control.GetSvgColor(KnownSvgColor)"/> is used with
+        /// If this property is null, <see cref="AbstractControl.GetSvgColor(KnownSvgColor)"/> is used with
         /// <see cref="KnownSvgColor.Normal"/> parameter.
         /// </remarks>
         public static Color? DefaultNormalImageColor { get; set; }
@@ -159,7 +159,7 @@ namespace Alternet.UI
         /// Gets or sets default color of the SVG images in the disabled state.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="Control.GetSvgColor(KnownSvgColor)"/> is used with
+        /// If this property is null, <see cref="AbstractControl.GetSvgColor(KnownSvgColor)"/> is used with
         /// <see cref="KnownSvgColor.Disabled"/> parameter.
         /// </remarks>
         public static Color? DefaultDisabledImageColor { get; set; }
@@ -870,7 +870,7 @@ namespace Alternet.UI
         /// to the toolbar.
         /// </remarks>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId AddControl(Control control)
+        public virtual ObjectUniqueId AddControl(AbstractControl control)
         {
             control.Parent = this;
             UpdateItemProps(control, ItemKind.Control);
@@ -1170,7 +1170,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void DeleteAll(bool dispose = false)
         {
-            Stack<Control> controls = new();
+            Stack<AbstractControl> controls = new();
             controls.PushRange(Children);
             SuspendLayout();
             try
@@ -1309,7 +1309,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <returns></returns>
-        public virtual Control? GetToolControl(ObjectUniqueId id)
+        public virtual AbstractControl? GetToolControl(ObjectUniqueId id)
         {
             var result = FindChild(id);
             return result;
@@ -1422,9 +1422,9 @@ namespace Alternet.UI
         /// <param name="itemKind">Item kind.</param>
         /// <remarks>
         /// This method is called when new item is added, it updates
-        /// <see cref="Control.BackgroundColor"/> and other properties.
+        /// <see cref="AbstractControl.BackgroundColor"/> and other properties.
         /// </remarks>
-        protected virtual void UpdateItemProps(Control control, ItemKind itemKind)
+        protected virtual void UpdateItemProps(AbstractControl control, ItemKind itemKind)
         {
             if (itemKind == ItemKind.Control)
                 return;
@@ -1438,7 +1438,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to check</param>
         /// <returns></returns>
-        protected virtual bool NeedUpdateBackColor(Control control) => NeedUpdateForeColor(control);
+        protected virtual bool NeedUpdateBackColor(AbstractControl control) => NeedUpdateForeColor(control);
 
         /// <summary>
         /// Gets whether child control foreground color need to be updated when
@@ -1446,7 +1446,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to check</param>
         /// <returns></returns>
-        protected virtual bool NeedUpdateForeColor(Control control)
+        protected virtual bool NeedUpdateForeColor(AbstractControl control)
         {
             Type[] types =
             {
@@ -1513,7 +1513,7 @@ namespace Alternet.UI
             return speedButton;
         }
 
-        private SizeD GetItemSuggestedSize(Control control)
+        private SizeD GetItemSuggestedSize(AbstractControl control)
         {
             if (control is PictureBox)
             {

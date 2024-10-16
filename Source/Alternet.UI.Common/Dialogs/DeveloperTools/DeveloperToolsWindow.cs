@@ -82,7 +82,7 @@ namespace Alternet.UI
 
         private void Designer_ControlCreated(object? sender, EventArgs e)
         {
-            if (sender is not Control control)
+            if (sender is not AbstractControl control)
                 return;
             if (IgnoreControl(control))
                 return;
@@ -100,7 +100,7 @@ namespace Alternet.UI
             }
         }
 
-        private bool IgnoreControl(Control control)
+        private bool IgnoreControl(AbstractControl control)
         {
             if (control.ParentWindow is DeveloperToolsWindow)
                 return true;
@@ -109,7 +109,7 @@ namespace Alternet.UI
 
         private void Designer_ControlGotFocus(object? sender, EventArgs e)
         {
-            if (sender is not Control control)
+            if (sender is not AbstractControl control)
                 return;
             if (control.Parent is null || IgnoreControl(control))
                 return;
@@ -123,7 +123,7 @@ namespace Alternet.UI
                 LogFocusedControl(control);
         }
 
-        private void LogFocusedControl(Control control)
+        private void LogFocusedControl(AbstractControl control)
         {
             var defaultColors = control.GetDefaultFontAndColor();
 

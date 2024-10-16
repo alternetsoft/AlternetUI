@@ -9,16 +9,12 @@ namespace Alternet.Drawing
     /// <summary>
     /// Implements formatted text container.
     /// </summary>
-    public class FormattedText : TextFormat
+    public class FormattedText : TextFormat, IDrawableElement
     {
         private string text = string.Empty;
         private Coord? maxWidth;
         private Coord? maxHeight;
         private Font? font;
-        private IEnumerable<Graphics.StyledText>? styledText;
-        private List<string>? wrappedText;
-        private Coord? scaleFactor;
-        private SizeD? textSize;
         private Coord lineDistance;
 
         /// <summary>
@@ -29,28 +25,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets scale factor.
-        /// </summary>
-        public virtual Coord? ScaleFactor
-        {
-            get
-            {
-                return scaleFactor;
-            }
-
-            set
-            {
-                if (scaleFactor == value)
-                    return;
-                scaleFactor = value;
-                Changed();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets distance between lines of text.
         /// </summary>
-        public virtual Coord LineDistance
+        public virtual Coord Distance
         {
             get
             {
@@ -142,43 +119,6 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>
-        /// Gets wrapped text. Each line of the wrapped text has width less than <see cref="MaxWidth"/>
-        /// and doesn't have new line characters.
-        /// </summary>
-        public virtual List<string>? WrappedText
-        {
-            get
-            {
-                Prepare();
-                return wrappedText;
-            }
-        }
-
-        /// <summary>
-        /// Gets styled text items created from <see cref="WrappedText"/>.
-        /// </summary>
-        public virtual IEnumerable<Graphics.StyledText>? StyledText
-        {
-            get
-            {
-                Prepare();
-                return styledText;
-            }
-        }
-
-        /// <summary>
-        /// Gets size of the text with applied min and max constraints in device-independent units.
-        /// </summary>
-        public virtual SizeD RestrictedSize
-        {
-            get
-            {
-                var result = RealSize.Shrink(MaxWidth, MaxHeight);
-                return result;
-            }
-        }
-
         /// <inheritdoc/>
         public override TextVerticalAlignment VerticalAlignment
         {
@@ -213,19 +153,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets real size of the text in device-independent units.
-        /// <see cref="MaxWidth"/> and <see cref="MaxHeight"/> are not applied to the result.
-        /// </summary>
-        public virtual SizeD RealSize
-        {
-            get
-            {
-                Prepare();
-                return textSize ?? 0;
-            }
-        }
-
-        /// <summary>
         /// Gets of sets horizontal alignment of the whole text block.
         /// </summary>
         public virtual HorizontalAlignment BlockHorizontalAlignment { get; set; }
@@ -256,39 +183,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets font in a safe way. If <see cref="Font"/> is not specified, returns default font.
         /// </summary>
-        public virtual Font SafeFont => Font ?? Control.DefaultFont;
+        public virtual Font SafeFont => Font ?? AbstractControl.DefaultFont;
 
         /// <inheritdoc/>
         public override void Changed()
         {
             base.Changed();
-            styledText = null;
-            textSize = null;
-            wrappedText = null;
-        }
-
-        /// <summary>
-        /// Gets aligned bounding recrangle of the text.
-        /// </summary>
-        /// <param name="scaleFactor">Scale factor.</param>
-        /// <param name="container">Container rectangle.</param>
-        /// <returns></returns>
-        public virtual RectD GetBlockRect(Coord scaleFactor, RectD container)
-        {
-            ScaleFactor = ScaleFactor;
-            Prepare();
-
-            if (styledText is null)
-                return container;
-
-            RectD blockRect = (container.Location, RestrictedSize);
-            blockRect = AlignUtils.AlignRectInRect(
-                blockRect,
-                container,
-                BlockHorizontalAlignment,
-                BlockVerticalAlignment);
-
-            return blockRect;
         }
 
         /// <summary>
@@ -298,49 +198,34 @@ namespace Alternet.Drawing
         /// <param name="bounds">Bounding rectangle.</param>
         public virtual void Draw(Graphics dc, RectD bounds)
         {
-            ScaleFactor = dc.ScaleFactor;
-            Prepare();
-
-            if (styledText is null)
-                return;
-
-            var blockRect = GetBlockRect(dc.ScaleFactor, bounds);
-            var halign = AlignUtils.Convert(HorizontalAlignment);
-
-            dc.DoInsideClipped(
-                bounds,
-                () =>
-                {
-                    dc.DrawStyledText(
-                        styledText,
-                        blockRect.Location,
-                        SafeFont,
-                        ForegroundColor ?? Color.Black,
-                        BackgroundColor ?? Color.Empty,
-                        halign,
-                        blockRect.Width,
-                        LineDistance);
-                },
-                IsClipped);
+            var drawable = CreateElement(bounds.Size);
+            drawable.Draw(dc, bounds);
         }
 
-        /// <summary>
-        /// Prepares object for painting. You should not call this normally.
-        /// </summary>
-        public virtual void Prepare()
+        /// <inheritdoc/>
+        public SizeD Measure(Graphics dc, SizeD availableSize)
         {
-            if (styledText is not null)
-                return;
+            var drawable = CreateElement(availableSize);
+            var result = drawable.Measure(dc, availableSize);
+            return result;
+        }
 
-            wrappedText = DrawingUtils.WrapTextToList(
-                        text,
-                        MaxWidth,
-                        SafeFont,
-                        ScaleFactor);
+        private DrawableWrappedTextElement CreateElement(SizeD availableSize)
+        {
+            availableSize.Width = MathUtils.ApplyMinMax(availableSize.Width, 0, MaxWidth);
+            availableSize.Height = MathUtils.ApplyMinMax(availableSize.Height, 0, MaxHeight);
 
-            styledText = Graphics.StyledText.CreateCollection(wrappedText);
-
-            textSize = DrawingUtils.MeasureText(wrappedText, SafeFont, ScaleFactor, LineDistance);
+            var drawable = new DrawableWrappedTextElement(text);
+            drawable.Alignment = (CoordAlignment)AlignUtils.Convert(HorizontalAlignment);
+            drawable.Distance = Distance;
+            drawable.IsVertical = true;
+            drawable.BlockHorizontalAlignment = BlockHorizontalAlignment;
+            drawable.BlockVerticalAlignment = BlockVerticalAlignment;
+            drawable.Style = new DrawableElementStyle();
+            drawable.Style.Font = SafeFont;
+            drawable.Style.BackgroundColor = BackgroundColor;
+            drawable.Style.ForegroundColor = ForegroundColor;
+            return drawable;
         }
     }
 }

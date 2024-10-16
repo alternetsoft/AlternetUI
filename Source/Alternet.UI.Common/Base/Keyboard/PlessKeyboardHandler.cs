@@ -27,19 +27,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool HideKeyboard(Control? control)
+        public bool HideKeyboard(AbstractControl? control)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public bool IsSoftKeyboardShowing(Control? control)
+        public bool IsSoftKeyboardShowing(AbstractControl? control)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public bool ShowKeyboard(Control? control)
+        public bool ShowKeyboard(AbstractControl? control)
         {
             return false;
         }

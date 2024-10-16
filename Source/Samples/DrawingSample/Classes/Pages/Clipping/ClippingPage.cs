@@ -83,7 +83,7 @@ namespace DrawingSample
 
             dc.DrawText(
                 "Click and drag the mouse to add or subtract rectangles to/from the clip region.",
-                Control.DefaultFont,
+                AbstractControl.DefaultFont,
                 Brushes.Black,
                 bounds.OffsetBy(0, 20).Location);
         }
@@ -94,7 +94,7 @@ namespace DrawingSample
             Canvas?.Invalidate();
         }
 
-        protected override void OnCanvasChanged(Control? oldValue, Control? value)
+        protected override void OnCanvasChanged(AbstractControl? oldValue, AbstractControl? value)
         {
             if (oldValue != null)
             {
@@ -111,7 +111,7 @@ namespace DrawingSample
             }
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new ClippingPageSettings();
             control.Initialize(this);

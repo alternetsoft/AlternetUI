@@ -467,7 +467,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Draw(Control control, Graphics dc)
+        public override void Draw(AbstractControl control, Graphics dc)
         {
             if (!Visible)
                 return;

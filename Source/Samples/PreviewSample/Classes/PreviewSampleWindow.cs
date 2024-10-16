@@ -197,7 +197,7 @@ namespace PreviewSample
             VerticalAlignment = VerticalAlignment.Stretch;
             HorizontalAlignment = HorizontalAlignment.Stretch;
 
-            var baseFontSize = (int)Control.DefaultFont.SizeInPoints;
+            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
 
             r.SetDefaultStyle(r.CreateTextAttr());
 

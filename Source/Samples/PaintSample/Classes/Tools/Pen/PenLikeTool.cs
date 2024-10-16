@@ -19,7 +19,7 @@ namespace PaintSample
         
         public abstract Color PenColor { get; }
 
-        protected override Control? CreateOptionsControl()
+        protected override AbstractControl? CreateOptionsControl()
         {
             var control = new PenLikeToolOptionsControl
             {

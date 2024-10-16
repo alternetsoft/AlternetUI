@@ -41,7 +41,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if the current system there is explicitly recognized as
+        /// Return true if the current system theme is explicitly recognized as
         /// being a dark theme or if the default window background is dark.
         /// </summary>
         /// <remarks>
@@ -93,7 +93,7 @@ namespace Alternet.UI
         /// one should still be given, as for example it might determine which displays
         /// cursor width is requested with <see cref="SystemSettingsMetric.CursorX"/>.
         /// </remarks>
-        public static int GetMetric(SystemSettingsMetric index, Control? control)
+        public static int GetMetric(SystemSettingsMetric index, AbstractControl? control)
         {
             return Handler.GetMetric(index, control);
         }

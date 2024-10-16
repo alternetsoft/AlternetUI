@@ -8,7 +8,7 @@ namespace Alternet.UI.Native
 {
     internal partial class FontDialog : Alternet.UI.IFontDialogHandler
     {
-        private Alternet.Drawing.FontInfo fontInfo = Alternet.UI.Control.DefaultFont;
+        private Alternet.Drawing.FontInfo fontInfo = Alternet.UI.AbstractControl.DefaultFont;
 
         FontDialogRestrictSelection Alternet.UI.IFontDialogHandler.RestrictSelection
         {

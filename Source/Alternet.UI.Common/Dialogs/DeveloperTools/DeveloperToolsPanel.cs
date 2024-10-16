@@ -108,20 +108,20 @@ namespace Alternet.UI
                         HasBorder = false,
                     };
 
-                    IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(Control));
+                    IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(AbstractControl));
 
                     void AddControl(Type type)
                     {
                         ListControlItem item = new(type.Name, type);
                     }
 
-                    AddControl(typeof(Control));
+                    AddControl(typeof(AbstractControl));
                     AddControl(typeof(FrameworkElement));
                     AddControl(typeof(UIElement));
 
                     foreach (var type in result)
                     {
-                        if (type.Assembly != typeof(Control).Assembly)
+                        if (type.Assembly != typeof(AbstractControl).Assembly)
                             continue;
                         if (!AssemblyUtils.HasOwnEvents(type))
                             continue;
@@ -179,12 +179,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Outputs all <see cref="Control"/> descendants to the debug console.
+        /// Outputs all <see cref="AbstractControl"/> descendants to the debug console.
         /// </summary>
         public static void ControlsToConsole()
         {
             EnumerableUtils.ForEach<Type>(
-                AssemblyUtils.GetTypeDescendants(typeof(Control)),
+                AssemblyUtils.GetTypeDescendants(typeof(AbstractControl)),
                 (t) => Debug.WriteLine(t.Name));
         }
 

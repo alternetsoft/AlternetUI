@@ -24,7 +24,7 @@ namespace ControlsSample
 
         private IEnumerable<ProgressBar> GetAllProgressBars()
         {
-            return new Control[]
+            return new AbstractControl[]
             {
                 verticalProgressBarsGrid,
                 horizontalProgressBarsPanel

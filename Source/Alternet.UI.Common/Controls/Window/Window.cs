@@ -733,8 +733,8 @@ namespace Alternet.UI
                 if (GetWindowKind() == WindowKind.Dialog)
                     return;
 
-                (oldValue as Control)?.SetParentInternal(null);
-                (menu as Control)?.SetParentInternal(this);
+                (oldValue as AbstractControl)?.SetParentInternal(null);
+                (menu as AbstractControl)?.SetParentInternal(this);
 
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
@@ -825,41 +825,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
-        /*/// <summary>
-        /// Gets the toolbar that is displayed in the window.
-        /// </summary>
-        /// <value>
-        /// A <see cref="ToolBar"/> that represents the toolbar to display in the window.
-        /// </value>
-        /// <remarks>
-        /// You can use this property to switch between complete toolbar sets at run time.
-        /// </remarks>
-        [Browsable(false)]
-        internal virtual object? ToolBar
-        {
-            get => toolbar;
-
-            set
-            {
-                if (toolbar == value)
-                    return;
-
-                var oldValue = toolbar;
-                toolbar = value;
-
-                if (GetWindowKind() == WindowKind.Dialog)
-                    return;
-
-                (oldValue as Control)?.SetParentInternal(null);
-                (toolbar as Control)?.SetParentInternal(this);
-
-                OnToolBarChanged(EventArgs.Empty);
-                ToolBarChanged?.Invoke(this, EventArgs.Empty);
-                Handler.SetToolBar(value);
-                PerformLayout();
-            }
-        }*/
-
         /// <inheritdoc />
         internal override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {
@@ -914,9 +879,21 @@ namespace Alternet.UI
                 FontInfo info = Font.Default;
                 info.SizeInPoints += incFont;
                 Font font = info;
-                Control.DefaultFont = font;
+                AbstractControl.DefaultFont = font;
             }
         }
+
+        /// <summary>
+        /// Raises the window to the top of the window hierarchy (Z-order).
+        /// This function only works for top level windows.
+        /// </summary>
+        /// <remarks>
+        /// Notice that this function only requests the window manager to raise this window
+        /// to the top of Z-order. Depending on its configuration, the window manager may
+        /// raise the window, not do it at all or indicate that a window requested to be
+        /// raised in some other way, e.g.by flashing its icon if it is minimized.
+        /// </remarks>
+        public virtual void Raise() => Handler.Raise();
 
         /// <summary>
         /// Shows window and focuses it.
@@ -1062,7 +1039,7 @@ namespace Alternet.UI
         public virtual void SetLocationInWindow(
             HorizontalAlignment? horz,
             VerticalAlignment? vert,
-            Control? window,
+            AbstractControl? window,
             bool shrinkSize = true)
         {
             if (window is null)
@@ -1125,11 +1102,17 @@ namespace Alternet.UI
         public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
 
         /// <summary>
+        /// Lowers the window to the bottom of the window hierarchy (Z-order).
+        /// This function only works for top level windows.
+        /// </summary>
+        public virtual void Lower() => Handler.Lower();
+
+        /// <summary>
         /// Recreates all native controls in all windows.
         /// </summary>
         public virtual void RecreateAllHandlers()
         {
-            void GetAllChildren(Control control, List<Control> result)
+            void GetAllChildren(AbstractControl control, List<AbstractControl> result)
             {
                 foreach (var child in control.Children)
                     GetAllChildren(child, result);
@@ -1138,14 +1121,18 @@ namespace Alternet.UI
                     result.Add(control);
             }
 
-            var children = new List<Control>();
+            var children = new List<AbstractControl>();
             GetAllChildren(this, children);
 
             foreach (var child in children)
-                child.DetachHandler();
+            {
+                (child as Control)?.DetachHandler();
+            }
 
             foreach (var child in children.AsEnumerable().Reverse())
-                child.EnsureHandlerCreated();
+            {
+                (child as Control)?.EnsureHandlerCreated();
+            }
         }
 
         internal static Window? GetParentWindow(object dp)
@@ -1153,7 +1140,7 @@ namespace Alternet.UI
             if (dp is Window w)
                 return w;
 
-            if (dp is not Control c)
+            if (dp is not AbstractControl c)
                 return null;
 
             if (c.Parent == null)
@@ -1186,11 +1173,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Applies <see cref="StartLocation"/> to the window position
-        /// if <see cref="Control.StateFlags"/> has no
+        /// if <see cref="AbstractControl.StateFlags"/> has no
         /// <see cref="ControlFlags.StartLocationApplied"/> flag.
         /// </summary>
         /// <param name="owner"></param>
-        protected virtual void ApplyStartLocationOnce(Control? owner)
+        protected virtual void ApplyStartLocationOnce(AbstractControl? owner)
         {
             if (!StateFlags.HasFlag(ControlFlags.StartLocationApplied))
             {
@@ -1404,7 +1391,7 @@ namespace Alternet.UI
         /// <summary>
         /// Applies <see cref="Window.StartLocation"/> to the location of the window.
         /// </summary>
-        protected virtual void ApplyStartLocation(Control? owner)
+        protected virtual void ApplyStartLocation(AbstractControl? owner)
         {
             switch (StartLocation)
             {
@@ -1581,8 +1568,8 @@ namespace Alternet.UI
 
             Bounds = GetDefaultBounds();
 
-            if (Control.DefaultFont != Font.Default)
-                Font = Control.DefaultFont;
+            if (AbstractControl.DefaultFont != Font.Default)
+                Font = AbstractControl.DefaultFont;
         }
     }
 }

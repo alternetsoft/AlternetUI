@@ -18,7 +18,9 @@ namespace Alternet.UI
         /// </summary>
         SizeI SizeInPixels { get; }
 
-        /// <inheritdoc cref="RichToolTip.SetLocationDecrement"/>
+        /// <summary>
+        /// Sets location decrement for the tooltip.
+        /// </summary>
         void SetLocationDecrement(bool decrementX, bool decrementY);
 
         /// <inheritdoc cref="RichToolTip.SetBackgroundColor"/>
@@ -60,6 +62,6 @@ namespace Alternet.UI
         /// <param name="control">Control which bounds are used as base position of the tooltip.</param>
         /// <param name="rect">Tooltip size and relative position.</param>
         /// <param name="adjustPos">Whether to adjust position depending on the tip kind.</param>
-        void Show(Control control, RectI? rect = null, bool adjustPos = true);
+        void Show(AbstractControl control, RectI? rect = null, bool adjustPos = true);
     }
 }

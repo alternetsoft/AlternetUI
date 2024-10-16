@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender"><see cref="VirtualListBox"/> control.</param>
         /// <param name="e">Paint arguments</param>
-        void Paint(VirtualListBox sender, ListBoxItemPaintEventArgs e);
+        void Paint(object sender, ListBoxItemPaintEventArgs e);
 
         /// <summary>
         /// Called by owner drawn <see cref="VirtualListBox"/> control for the background
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="sender"><see cref="VirtualListBox"/> control.</param>
         /// <param name="e">Paint arguments</param>
-        bool PaintBackground(VirtualListBox sender, ListBoxItemPaintEventArgs e);
+        bool PaintBackground(object sender, ListBoxItemPaintEventArgs e);
 
         /// <summary>
         /// Called by owner drawn <see cref="VirtualListBox"/> control in order
@@ -41,6 +41,6 @@ namespace Alternet.UI
         /// <param name="sender"><see cref="VirtualListBox"/> control.</param>
         /// <param name="index">Index of the item.</param>
         /// <returns></returns>
-        SizeD GetSize(VirtualListBox sender, int index);
+        SizeD GetSize(object sender, int index);
     }
 }

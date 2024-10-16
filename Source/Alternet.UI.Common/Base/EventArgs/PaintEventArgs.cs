@@ -6,7 +6,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Control.Paint"/> or other paint events.
+    /// Provides data for the <see cref="AbstractControl.Paint"/> or other paint events.
     /// </summary>
     /// <remarks>
     /// A <see cref="PaintEventArgs"/> specifies the <see cref="Graphics"/> to use

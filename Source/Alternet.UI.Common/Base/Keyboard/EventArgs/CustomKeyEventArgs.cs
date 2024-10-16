@@ -55,7 +55,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the modifier flags for a <see cref="Control.KeyDown" /> event.
+        /// Gets the modifier flags for a <see cref="AbstractControl.KeyDown" /> event.
         /// The flags indicate which combination of CTRL, SHIFT, and ALT keys was pressed.
         /// </summary>
         /// <returns>A <see cref="Keys" /> value representing one or more modifier flags.</returns>
@@ -79,7 +79,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the keyboard code for a <see cref="Control.KeyDown"/> event.
+        /// Gets the keyboard code for a <see cref="AbstractControl.KeyDown"/> event.
         /// Contains key code for the key that was pressed
         /// without modifier flags.
         /// </summary>
@@ -100,13 +100,13 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets the keyboard value for a <see cref="Control.KeyDown" /> event.</summary>
+        /// <summary>Gets the keyboard value for a <see cref="AbstractControl.KeyDown" /> event.</summary>
         /// <returns>The integer representation of the
         /// <see cref="KeyCode" /> property.</returns>
         public virtual int KeyValue => (int)(KeyData & Keys.KeyCode);
 
         /// <summary>
-        /// Gets the key data for a <see cref="Control.KeyDown"/> event.
+        /// Gets the key data for a <see cref="AbstractControl.KeyDown"/> event.
         /// Contains key code for the key that was pressed, combined
         /// with modifier flags that indicate which combination
         /// of CTRL, SHIFT, and ALT keys was pressed at the same time.

@@ -13,7 +13,7 @@ namespace Alternet.UI
     {
         private readonly InteriorDrawable interior;
 
-        private Control? control;
+        private AbstractControl? control;
         private bool subscribedClickRepeated;
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Alternet.UI
         public virtual bool SendScrollToControl { get; set; } = true;
 
         /// <inheritdoc/>
-        public override void AfterMouseMove(Control sender, MouseEventArgs e)
+        public override void AfterMouseMove(AbstractControl sender, MouseEventArgs e)
         {
             DebugUtils.DebugCallIf(false, () =>
             {
@@ -42,7 +42,7 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override void AfterSetScrollBarInfo(
-            Control sender,
+            AbstractControl sender,
             bool isVertical,
             ScrollBarInfo value)
         {
@@ -57,44 +57,44 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void AfterScroll(Control sender, ScrollEventArgs e)
+        public override void AfterScroll(AbstractControl sender, ScrollEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public override void AfterMouseLeave(Control sender)
+        public override void AfterMouseLeave(AbstractControl sender)
         {
             UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
-        public override void AfterVisualStateChanged(Control sender)
+        public override void AfterVisualStateChanged(AbstractControl sender)
         {
             if (sender.VisualState != VisualControlState.Pressed)
                 UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
-        public override void AfterLostFocus(Control sender)
+        public override void AfterLostFocus(AbstractControl sender)
         {
             UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
-        public override void AfterMouseLeftButtonDown(Control sender, MouseEventArgs e)
+        public override void AfterMouseLeftButtonDown(AbstractControl sender, MouseEventArgs e)
         {
             OnClickElement(sender);
             SubscribeClickRepeated(sender);
         }
 
         /// <inheritdoc/>
-        public override void AfterMouseLeftButtonUp(Control sender, MouseEventArgs e)
+        public override void AfterMouseLeftButtonUp(AbstractControl sender, MouseEventArgs e)
         {
             UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
-        public override void AfterClick(Control sender)
+        public override void AfterClick(AbstractControl sender)
         {
             var mouseLocation = Mouse.GetPosition(sender);
             var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
@@ -117,7 +117,7 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
-        private void OnClickElement(Control sender)
+        private void OnClickElement(AbstractControl sender)
         {
             var mouseLocation = Mouse.GetPosition(sender);
 
@@ -181,7 +181,7 @@ namespace Alternet.UI
             }
         }
 
-        private void SubscribeClickRepeated(Control control)
+        private void SubscribeClickRepeated(AbstractControl control)
         {
             if (!subscribedClickRepeated)
             {

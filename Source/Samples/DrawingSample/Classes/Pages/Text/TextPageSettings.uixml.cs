@@ -49,18 +49,18 @@ namespace DrawingSample
             if (DebugUtils.IsDebugDefined)
             {
                 AddProperty(
-                    page.WrappedText,
-                    nameof(FormattedText.BlockHorizontalAlignment),
+                    page.wrappedControl,
+                    nameof(AbstractControl.HorizontalAlignment),
                     "Block Horz");
 
                 AddProperty(
-                    page.WrappedText,
-                    nameof(FormattedText.BlockVerticalAlignment),
+                    page.wrappedControl,
+                    nameof(AbstractControl.VerticalAlignment),
                     "Block Vert");
 
                 AddProperty(
-                    page.WrappedText,
-                    nameof(FormattedText.LineDistance),
+                    page.wrappedControl,
+                    nameof(GenericWrappedTextControl.LineDistance),
                     "Line Distance");
             }
 

@@ -30,7 +30,7 @@ namespace Alternet.UI
         internal static void LogCheckConstraintsForControl(Type type)
         {
             LogConstraintHasConstructorNoParams(type);
-            LogConstraintHasConstructorWithParams(type, [typeof(Control)]);
+            LogConstraintHasConstructorWithParams(type, [typeof(AbstractControl)]);
         }
 
         internal static void LogCheckConstraints()

@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// <param name="press">Information about the pressed key.</param>
         /// <returns></returns>
         public virtual Alternet.UI.KeyEventArgs? ToKeyEventArgs(
-            Control? control,
+            AbstractControl? control,
             UIPress press,
             KeyStates keyStates)
         {
@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// <param name="press">Information about the pressed key.</param>
         /// <returns></returns>
         public virtual Alternet.UI.KeyPressEventArgs[]? ToKeyPressEventArgs(
-            Control? control,
+            AbstractControl? control,
             UIPress press)
         {
             if (press.Key is null || control is null)
@@ -345,7 +345,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool HideKeyboard(Control? control)
+        public override bool HideKeyboard(AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)
@@ -357,7 +357,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool IsSoftKeyboardShowing(Control? control)
+        public override bool IsSoftKeyboardShowing(AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)
@@ -368,7 +368,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool ShowKeyboard(Control? control)
+        public override bool ShowKeyboard(AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)

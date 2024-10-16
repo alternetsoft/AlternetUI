@@ -8,14 +8,14 @@ namespace DrawingSample
     internal sealed class ImagesPage : DrawingPage
     {
         private readonly Image image;
-        private readonly Control control;
+        private readonly AbstractControl control;
         private readonly Pen dashPen = new(Color.Black, 2, DashStyle.Dash);
 
         private RectD magnifiedRect;
 
         private InterpolationMode interpolationMode = InterpolationMode.None;
 
-        public ImagesPage(Control control)
+        public ImagesPage(AbstractControl control)
         {
             this.control = control;
 
@@ -45,7 +45,7 @@ namespace DrawingSample
 
         public override void Draw(Graphics dc, RectD bounds)
         {
-            var font = Control.DefaultFont;
+            var font = AbstractControl.DefaultFont;
             var textHeight = dc.MeasureText("M", font).Height;
 
             double spacing = 10;
@@ -76,7 +76,7 @@ namespace DrawingSample
             dc.InterpolationMode = oldInterpolationMode;
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new ImagesPageSettings();
             control.Initialize(this);

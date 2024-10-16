@@ -560,12 +560,12 @@ namespace Alternet.Drawing
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
+        /// <see cref="AbstractControl.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used
         /// to load the image.</param>
-        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// <param name="control">Control which <see cref="AbstractControl.GetDPI"/> method
         /// is used to get DPI.</param>
         /// <returns><see cref="Image"/> instance loaded from Svg data for use
         /// on the toolbars.</returns>
@@ -947,13 +947,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the size of the image in device-independent units.
         /// </summary>
-        public virtual SizeD SizeDip(Control control)
+        public virtual SizeD SizeDip(AbstractControl control)
             => control.PixelToDip(PixelSize);
 
         /// <summary>
         /// Gets image rect as (0, 0, SizeDip(control).Width, SizeDip(control).Height).
         /// </summary>
-        public virtual RectD BoundsDip(Control control)
+        public virtual RectD BoundsDip(AbstractControl control)
         {
             var size = SizeDip(control);
             return (0, 0, size.Width, size.Height);

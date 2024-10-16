@@ -9,9 +9,9 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// Currently only default layout method is implemeted.
-    /// Use <see cref="Control.Dock"/> to specify child controls dock style.
+    /// Use <see cref="AbstractControl.Dock"/> to specify child controls dock style.
     /// If it dock style is not specified, controls are positioned absolutely using
-    /// <see cref="Control.Bounds"/>.
+    /// <see cref="AbstractControl.Bounds"/>.
     /// </remarks>
     [ControlCategory("Containers")]
     public partial class LayoutPanel : ContainerControl
@@ -43,49 +43,49 @@ namespace Alternet.UI
             set => base.Layout = value;
         }
 
-        internal static void SetAnchor(Control control, AnchorStyles value)
+        internal static void SetAnchor(AbstractControl control, AnchorStyles value)
         {
             if (control == null)
                 return;
             control.ExtendedProps.Anchor = value;
         }
 
-        internal static AnchorStyles GetAnchor(Control control)
+        internal static AnchorStyles GetAnchor(AbstractControl control)
         {
             if (control == null || !control.HasExtendedProps)
                 return AnchorStyles.LeftTop;
             return control.ExtendedProps.Anchor;
         }
 
-        internal static void SetDistanceRight(Control control, Coord value)
+        internal static void SetDistanceRight(AbstractControl control, Coord value)
         {
             if (control == null)
                 return;
             control.ExtendedProps.DistanceRight = value;
         }
 
-        internal static Coord GetDistanceRight(Control control)
+        internal static Coord GetDistanceRight(AbstractControl control)
         {
             if (control == null || !control.HasExtendedProps)
                 return 0;
             return control.ExtendedProps.DistanceRight;
         }
 
-        internal static void SetDistanceBottom(Control control, Coord value)
+        internal static void SetDistanceBottom(AbstractControl control, Coord value)
         {
             if (control == null)
                 return;
             control.ExtendedProps.DistanceBottom = value;
         }
 
-        internal static Coord GetDistanceBottom(Control control)
+        internal static Coord GetDistanceBottom(AbstractControl control)
         {
             if (control == null || !control.HasExtendedProps)
                 return 0;
             return control.ExtendedProps.DistanceBottom;
         }
 
-        internal static void SetAutoSizeMode(Control control, AutoSizeMode value)
+        internal static void SetAutoSizeMode(AbstractControl control, AutoSizeMode value)
         {
             if (control == null)
                 return;
@@ -99,7 +99,7 @@ namespace Alternet.UI
         /// <param name="control">Control instance for which property
         /// value is set.</param>
         /// <param name="value">New value for the AutoSize property</param>
-        internal static void SetAutoSize(Control control, bool value)
+        internal static void SetAutoSize(AbstractControl control, bool value)
         {
             if (control == null)
                 return;
@@ -113,14 +113,14 @@ namespace Alternet.UI
         /// <param name="control">Control instance for which property
         /// value is returned.</param>
         /// <returns>true if auto sizing is enabled; otherwise, false.</returns>
-        internal static bool GetAutoSize(Control control)
+        internal static bool GetAutoSize(AbstractControl control)
         {
             if (control == null || !control.HasExtendedProps)
                 return true;
             return control.ExtendedProps.AutoSize;
         }
 
-        internal static AutoSizeMode GetAutoSizeMode(Control control)
+        internal static AutoSizeMode GetAutoSizeMode(AbstractControl control)
         {
             if (control == null || !control.HasExtendedProps)
                 return AutoSizeMode.GrowOnly;

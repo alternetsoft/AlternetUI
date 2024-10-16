@@ -21,13 +21,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Specifies the control which parent's background
         /// is changed</param>
-        public static void SetDebugBackgroundToParents(Control? control)
+        public static void SetDebugBackgroundToParents(AbstractControl? control)
         {
-            static Control? SetParentBackground(Control? control, Brush brush)
+            static AbstractControl? SetParentBackground(AbstractControl? control, Brush brush)
             {
                 if (control == null)
                     return null;
-                Control? parent = control?.Parent;
+                AbstractControl? parent = control?.Parent;
                 if (parent != null)
                     parent.Background = brush;
                 return parent;
@@ -41,7 +41,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="IControlPainterHandler.GetCheckBoxSize"/>
         public static SizeD GetCheckBoxSize(
-            Control control,
+            AbstractControl control,
             CheckState checkState,
             VisualControlState controlState)
         {
@@ -51,7 +51,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="IControlPainterHandler.DrawCheckBox"/>
         public static void DrawCheckBox(
             this Graphics canvas,
-            Control control,
+            AbstractControl control,
             RectD rect,
             CheckState checkState,
             VisualControlState controlState)
@@ -79,7 +79,7 @@ namespace Alternet.UI
             Brush? brush,
             BorderSettings? border,
             bool hasBorder = true,
-            Control? control = null)
+            AbstractControl? control = null)
         {
             if (brush is null && border is null)
                 return;
@@ -123,7 +123,11 @@ namespace Alternet.UI
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
         /// <param name="border">Border settings.</param>
-        public static void DrawBorder(Control? control, Graphics dc, RectD rect, BorderSettings? border)
+        public static void DrawBorder(
+            AbstractControl? control,
+            Graphics dc,
+            RectD rect,
+            BorderSettings? border)
         {
             if (border is null)
                 return;
@@ -447,15 +451,15 @@ namespace Alternet.UI
         /// <param name="text">Text to wrap.</param>
         /// <param name="maxWidth">Width of the text in device-independent units.</param>
         /// <param name="font">Text font.</param>
-        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="canvas">Drawing context.</param>
         /// <returns></returns>
         public static string WrapTextToMultipleLines(
             string text,
             Coord maxWidth,
             Font font,
-            Coord? scaleFactor = null)
+            Graphics canvas)
         {
-            var list = WrapTextToList(text, maxWidth, font, scaleFactor);
+            var list = WrapTextToList(text, maxWidth, font, canvas);
             if (list.Count == 0)
                 return string.Empty;
             if (list.Count == 1)
@@ -478,20 +482,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Collection of the strings.</param>
         /// <param name="font">Font.</param>
-        /// <param name="scaleFactor">Scale factor. Optional.
-        /// If not specified, default scale factor is used.</param>
+        /// <param name="canvas">Drawing context.</param>
         /// <returns></returns>
         /// <param name="lineDistance">Distance between lines of text. Optional. Default is 0.</param>
         public static SizeD MeasureText(
             IEnumerable text,
             Font font,
-            Coord? scaleFactor,
+            Graphics canvas,
             Coord lineDistance = 0)
         {
             Coord width = 0;
             Coord height = 0;
-
-            var canvas = GraphicsFactory.GetOrCreateMemoryCanvas(scaleFactor);
 
             foreach(var s in text)
             {
@@ -509,13 +510,13 @@ namespace Alternet.UI
         /// <param name="text">Text to wrap.</param>
         /// <param name="maxWidth">Max width of the text in device-independent units.</param>
         /// <param name="font">Text font.</param>
-        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="canvas">Graphics context.</param>
         /// <returns></returns>
         public static List<string> WrapTextToList(
             string text,
             Coord? maxWidth,
             Font font,
-            Coord? scaleFactor = null)
+            Graphics canvas)
         {
             List<string> result = new();
 
@@ -529,7 +530,7 @@ namespace Alternet.UI
 
             foreach(var s in splitted)
             {
-                var wrappedLine = WrapTextLineToList(s, maxWidth.Value, font, scaleFactor);
+                var wrappedLine = WrapTextLineToList(s, maxWidth.Value, font, canvas);
                 result.AddRange(wrappedLine);
             }
 
@@ -542,20 +543,19 @@ namespace Alternet.UI
         /// <param name="text">Text to wrap.</param>
         /// <param name="maxWidth">Max width of the text in device-independent units.</param>
         /// <param name="font">Text font.</param>
-        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="canvas">Graphics context.</param>
         /// <returns></returns>
         public static List<string> WrapTextLineToList(
             string text,
             Coord maxWidth,
             Font font,
-            Coord? scaleFactor = null)
+            Graphics canvas)
         {
             List<string> wrappedLines = new();
 
             if (string.IsNullOrEmpty(text))
                 return wrappedLines;
 
-            var canvas = GraphicsFactory.GetOrCreateMemoryCanvas(scaleFactor);
             var spaceWidth = canvas.MeasureText(StringUtils.OneSpace, font).Width;
 
             string[] originalLines = text.Split(' ');

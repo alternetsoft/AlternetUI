@@ -69,7 +69,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">Control in which this object is painted.</param>
         /// <param name="dc">Drawing context.</param>
-        public virtual void DefaultDrawImage(Control control, Graphics dc)
+        public virtual void DefaultDrawImage(AbstractControl control, Graphics dc)
         {
             if (!Visible)
                 return;
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Draw(Control control, Graphics dc)
+        public override void Draw(AbstractControl control, Graphics dc)
         {
             DefaultDrawImage(control, dc);
         }

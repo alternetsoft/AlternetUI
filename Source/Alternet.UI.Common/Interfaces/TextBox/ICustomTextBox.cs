@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="CustomTextBox.MinLength"/>
         int MinLength { get; set; }
 
-        /// <inheritdoc cref="Control.Text"/>
+        /// <inheritdoc cref="AbstractControl.Text"/>
         string Text { get; set; }
 
         /// <inheritdoc cref="CustomTextBox.GetNumberOfLines"/>

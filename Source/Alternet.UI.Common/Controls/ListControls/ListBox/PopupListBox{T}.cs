@@ -117,13 +117,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void BindEvents(Control? control)
+        protected override void BindEvents(AbstractControl? control)
         {
             base.BindEvents(control);
         }
 
         /// <inheritdoc/>
-        protected override void UnbindEvents(Control? control)
+        protected override void UnbindEvents(AbstractControl? control)
         {
             base.UnbindEvents(control);
         }

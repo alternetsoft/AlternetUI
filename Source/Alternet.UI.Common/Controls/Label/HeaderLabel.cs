@@ -19,9 +19,9 @@ namespace Alternet.UI
         /// Result of this function must support at least <see cref="ITextProperty"/>
         /// interface.
         /// </remarks>
-        public static Func<Control> CreateInnerControl = CreateDefaultInnerControl;
+        public static Func<AbstractControl> CreateInnerControl = CreateDefaultInnerControl;
 
-        private readonly Control control;
+        private readonly AbstractControl control;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HeaderLabel"/> class.
@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates default inner label.
         /// </summary>
-        public static Control CreateDefaultInnerControl()
+        public static AbstractControl CreateDefaultInnerControl()
         {
             var panel = new CardPanelHeader
             {

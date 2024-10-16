@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// (also known as radio buttons),
     /// each group of buttons is mutually exclusive, setting one option value per group.
     /// You can add controls to the <see cref="GroupBox"/> by using the Add
-    /// method of the <see cref="Control.Children"/> property.
+    /// method of the <see cref="AbstractControl.Children"/> property.
     /// </remarks>
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
@@ -50,7 +50,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
         /// <summary>
-        /// Gets or sets title. Same as <see cref="Control.Title"/> property.
+        /// Gets or sets title. Same as <see cref="AbstractControl.Title"/> property.
         /// </summary>
         [Browsable(false)]
         public new string Text

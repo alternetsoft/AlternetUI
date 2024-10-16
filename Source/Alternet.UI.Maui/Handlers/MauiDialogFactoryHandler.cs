@@ -54,7 +54,7 @@ namespace Alternet.UI
             long value,
             long min,
             long max,
-            Control? parent)
+            AbstractControl? parent)
         {
             /*
                 var page = MauiApplicationHandler.GetParentPage(this);

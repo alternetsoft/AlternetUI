@@ -211,7 +211,7 @@ namespace ControlsSample
 
             void ApplyFont()
             {
-                var defaultFont = Control.DefaultFont;
+                var defaultFont = AbstractControl.DefaultFont;
 
                 FontStyle fontStyle = boldCheckBox.IsChecked ? FontStyle.Bold : FontStyle.Regular;
 

@@ -8,7 +8,7 @@ namespace ControlsSample
     public partial class CommonDialogsWindow : Window
     {
         private const string CustomTitle = @"Custom Title";
-        private FontInfo fontInfo = Control.DefaultFont;
+        private FontInfo fontInfo = AbstractControl.DefaultFont;
 
         public CommonDialogsWindow(WindowKind kind)
             : base(kind)

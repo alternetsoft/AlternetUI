@@ -16,9 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controls\BaseControls\Interfaces\**" />
-    <EmbeddedResource Remove="Controls\BaseControls\Interfaces\**" />
-    <None Remove="Controls\BaseControls\Interfaces\**" />
     <None Remove="Resources\ColorSvg\*.svg" />
     <None Remove="Resources\Png\*.png" />
     <None Remove="Resources\Svg\*.svg" />

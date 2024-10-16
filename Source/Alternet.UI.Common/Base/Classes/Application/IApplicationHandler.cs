@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// Gets currently focused control.
         /// </summary>
         /// <returns></returns>
-        Control? GetFocusedControl();
+        AbstractControl? GetFocusedControl();
 
         /// <inheritdoc cref="App.Run"/>
         void Run(Window window);
@@ -175,7 +175,7 @@ namespace Alternet.UI
         /// Creates <see cref="ICaretHandler"/> implementation specific to the platform.
         /// </summary>
         /// <returns></returns>
-        ICaretHandler CreateCaretHandler(Control control, int width, int height);
+        ICaretHandler CreateCaretHandler(AbstractControl control, int width, int height);
 
         /// <summary>
         /// Sets log debug flag of the used C++ libraries.

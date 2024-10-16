@@ -154,11 +154,11 @@ namespace Alternet.UI.Integration
             PInvoke.User32.UpdateWindow(hwnd);
         }
 
-        private Control LoadControlFromUixml(IDictionary<string, object> parameters)
+        private AbstractControl LoadControlFromUixml(IDictionary<string, object> parameters)
         {
             // Load bytes to avoid locking the file.
             // var appAssembly = Assembly.Load(File.ReadAllBytes((string)parameters["AssemblyPath"]));
-            Control control;
+            AbstractControl control;
 
             using var stream = new MemoryStream(Encoding.Default.GetBytes((string)parameters["Uixml"]));
 
@@ -167,14 +167,14 @@ namespace Alternet.UI.Integration
             if (convertedStream is null)
                 return new Window();
 
-            control = (Control)new UixmlLoader().LoadExisting(convertedStream, new Window());
+            control = (AbstractControl)new UixmlLoader().LoadExisting(convertedStream, new Window());
 
             //control = (Control)new UixmlLoader().Load(stream, appAssembly);
 
             return control;
         }
 
-        private Window GetUixmlControlWindow(Control control)
+        private Window GetUixmlControlWindow(AbstractControl control)
         {
             Window window;
             if (control is Window w)

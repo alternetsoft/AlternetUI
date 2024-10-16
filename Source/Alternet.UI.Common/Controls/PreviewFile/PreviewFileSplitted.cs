@@ -100,7 +100,7 @@ namespace Alternet.UI
             }
         }
 
-        Control IFilePreview.Control => this;
+        AbstractControl IFilePreview.Control => this;
 
         /// <summary>
         /// Moves second preview panel to the right side bar.

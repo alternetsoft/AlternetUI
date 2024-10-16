@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// of <see cref="TabControl" /> or other control.</summary>
     public class TabControlCancelEventArgs : BaseCancelEventArgs
     {
-        private readonly Control tabPage;
+        private readonly AbstractControl tabPage;
         private readonly int tabPageIndex;
         private readonly TabControlAction action;
 
@@ -34,7 +34,7 @@ namespace Alternet.UI
         ///   <see langword="false" />.</param>
         /// <param name="action">One of the <see cref="TabControlAction" /> values.</param>
         public TabControlCancelEventArgs(
-            Control tabPage,
+            AbstractControl tabPage,
             int tabPageIndex,
             bool cancel,
             TabControlAction action)
@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Gets the tab page the event is occurring for.
         /// </summary>
         /// <returns>The tab page the event is occurring for.</returns>
-        public Control TabPage => tabPage;
+        public AbstractControl TabPage => tabPage;
 
         /// <summary>
         /// Gets the zero-based index of the tab page

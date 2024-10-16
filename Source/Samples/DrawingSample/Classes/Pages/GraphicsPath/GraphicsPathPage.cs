@@ -45,7 +45,7 @@ namespace DrawingSample
             DrawDemoForeground(dc, bounds);
         }
 
-        protected override void OnCanvasChanged(Control? oldValue, Control? value)
+        protected override void OnCanvasChanged(AbstractControl? oldValue, AbstractControl? value)
         {
             if (oldValue != null)
             {
@@ -62,7 +62,7 @@ namespace DrawingSample
             }
         }
 
-        protected override Control CreateSettingsControl()
+        protected override AbstractControl CreateSettingsControl()
         {
             var control = new GraphicsPathPageSettings();
             control.Initialize(this);
@@ -104,11 +104,8 @@ namespace DrawingSample
             var s2 = "You can select the path segment type";
             var s3 = "to draw in the combo box in the panel to the right.";
 
-            dc.DrawStyledText(
-                [s1, s2, s3],
-                Control.DefaultFont,
-                Brushes.Black,
-                bounds.Location.OffsetBy(10, 10));
+            var drawable = DrawableElement.CreateStringsStack([s1, s2, s3], 0, CoordAlignment.Near);
+            drawable.Draw(dc, bounds.WithMargin(10));
 
             using var path = new GraphicsPath(dc) { FillMode = PathFillMode };
 

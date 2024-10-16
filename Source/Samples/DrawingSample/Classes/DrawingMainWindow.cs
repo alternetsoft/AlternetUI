@@ -7,7 +7,7 @@ namespace DrawingSample
     public partial class DrawingMainWindow : Window
     {
         private readonly TabControl tabControl = new();
-        private Control? selectedPage;
+        private AbstractControl? selectedPage;
 
         public DrawingMainWindow()
         {
@@ -43,9 +43,9 @@ namespace DrawingSample
             drawingPages.First().OnActivated();
         }
 
-        private Control CreateTabPage(DrawingPage page)
+        private AbstractControl CreateTabPage(DrawingPage page)
         {
-            var tabPage = new Control();
+            var tabPage = new Panel();
             var grid = new Grid();
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(270) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });

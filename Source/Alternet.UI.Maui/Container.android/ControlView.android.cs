@@ -117,7 +117,7 @@ namespace Alternet.UI
                     break;
                 case MotionEventActions.HoverMove:
                     long timestamp = DateUtils.GetNowInMilliseconds();
-                    Control.BubbleMouseMove(
+                    AbstractControl.BubbleMouseMove(
                                 Control,
                                 timestamp,
                                 GetEventPoint(e.Event),

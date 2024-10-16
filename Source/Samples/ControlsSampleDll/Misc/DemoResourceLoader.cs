@@ -18,7 +18,7 @@ namespace ControlsSample
         }
 
         internal static ControlStateImages LoadButtonImages(
-            Control? control,
+            AbstractControl? control,
             string? url = null,
             SizeI? size = null)
         {

@@ -34,8 +34,8 @@ namespace Alternet.UI
     /// In addition to display and selection functionality, the
     /// <see cref="ComboBox" /> also provides features that enable you to
     /// efficiently add items to the <see cref="ComboBox" /> and to find text
-    /// within the items of the list. With the <see cref="Control.BeginUpdate"/>
-    /// and <see cref="Control.EndUpdate"/> methods, you can add a large number
+    /// within the items of the list. With the <see cref="AbstractControl.BeginUpdate"/>
+    /// and <see cref="AbstractControl.EndUpdate"/> methods, you can add a large number
     /// of items to the <see cref="ComboBox" /> without the control
     /// being repainted each time an item is added to the list.
     /// </para>
@@ -48,7 +48,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ComboBox : ListControl, IListControl
+    public partial class ComboBox : ListControl, IListControl, IListControlItemContainer
     {
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
@@ -73,6 +73,7 @@ namespace Alternet.UI
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
+        private ListControlItemDefaults? itemDefaults;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
@@ -131,6 +132,25 @@ namespace Alternet.UI
             /// Specifies whether to draw item.
             /// </summary>
             Item = 2,
+        }
+
+        /// <summary>
+        /// Gets or sets defaults which are used when items are painted in the popup listbox
+        /// in the case when item is <see cref="ListControlItem"/> and owner draw mode is turned on.
+        /// </summary>
+        [Browsable(false)]
+        public ListControlItemDefaults OwnerDrawItemDefaults
+        {
+            get
+            {
+                itemDefaults ??= new ListControlItemDefaults();
+                return itemDefaults;
+            }
+
+            set
+            {
+                itemDefaults = value;
+            }
         }
 
         /// <summary>
@@ -403,6 +423,14 @@ namespace Alternet.UI
             }
         }
 
+        IListControlItemDefaults IListControlItemContainer.Defaults
+        {
+            get
+            {
+                return OwnerDrawItemDefaults;
+            }
+        }
+
         /// <summary>
         /// Gets or sets whether item is owner drawn.
         /// </summary>
@@ -553,13 +581,42 @@ namespace Alternet.UI
         /// <param name="e">Paint arguments.</param>
         public virtual void DefaultItemPaint(ComboBoxItemPaintEventArgs e)
         {
-            if (e.IsPaintingBackground || ShouldPaintHintText())
+            if (ShouldPaintHintText())
             {
                 e.DefaultPaint();
                 return;
             }
 
-            var font = Font ?? Control.DefaultFont;
+            var item = e.Item as ListControlItem;
+            if (item is not null && !e.IsPaintingControl)
+            {
+                ListBoxItemPaintEventArgs listEventArgs = new(
+                    this,
+                    e.Graphics,
+                    e.ClipRectangle,
+                    e.ItemIndex);
+                listEventArgs.IsSelected = e.IsSelected;
+                listEventArgs.IsCurrent = e.IsSelected;
+
+                if (e.IsPaintingBackground)
+                {
+                    item.DrawBackground(this, listEventArgs);
+                }
+                else
+                {
+                    item.DrawForeground(this, listEventArgs);
+                }
+
+                return;
+            }
+
+            if (e.IsPaintingBackground)
+            {
+                e.DefaultPaint();
+                return;
+            }
+
+            var font = Font ?? AbstractControl.DefaultFont;
             Color color;
             color = ForegroundColor ?? SystemColors.WindowText;
 
@@ -672,7 +729,11 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual Coord GetHeight(ComboBox sender, int index, Coord defaultHeight)
             {
-                return -1;
+                var item = sender.SafeItem(index);
+
+                if(item is null)
+                    return -1;
+                return ListControlItem.GetMinHeight(item, sender);
             }
 
             /// <inheritdoc/>
@@ -684,6 +745,7 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual void Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
             {
+                sender.DefaultItemPaint(e);
             }
         }
     }

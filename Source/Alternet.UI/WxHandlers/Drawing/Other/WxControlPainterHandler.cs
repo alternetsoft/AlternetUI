@@ -266,7 +266,7 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public SizeD GetCheckBoxSize(
-            Control control,
+            AbstractControl control,
             CheckState checkState,
             VisualControlState controlState)
         {
@@ -276,7 +276,7 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public void DrawCheckBox(
-            Control control,
+            AbstractControl control,
             Graphics canvas,
             RectD rect,
             CheckState checkState,
@@ -342,7 +342,7 @@ namespace Alternet.Drawing
         /// and <see cref="DrawFlags.Current"/>.
         /// </remarks>
         public int DrawHeaderButton(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0,
@@ -379,7 +379,7 @@ namespace Alternet.Drawing
         /// and <see cref="DrawFlags.Current"/>.
         /// </remarks>
         public int DrawHeaderButtonContents(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0,
@@ -404,7 +404,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle in which control is painted.</param>
         /// <param name="flags">Drawing flags.</param>
         public void DrawTreeItemButton(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -426,7 +426,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle in which control is painted.</param>
         /// <param name="flags">Drawing flags.</param>
         public void DrawSplitterBorder(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -451,7 +451,7 @@ namespace Alternet.Drawing
         /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
         /// </remarks>
         public void DrawComboBoxDropButton(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -476,7 +476,7 @@ namespace Alternet.Drawing
         /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
         /// </remarks>
         public void DrawDropArrow(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -502,7 +502,7 @@ namespace Alternet.Drawing
         /// and <see cref="DrawFlags.Current"/>.
         /// </remarks>
         public void DrawCheckBox(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -527,7 +527,7 @@ namespace Alternet.Drawing
         /// <see cref="DrawFlags.Disabled"/>.
         /// </remarks>
         public void DrawCheckMark(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -553,7 +553,7 @@ namespace Alternet.Drawing
         /// and <see cref="DrawFlags.Current"/>.
         /// </remarks>
         public void DrawPushButton(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -579,7 +579,7 @@ namespace Alternet.Drawing
         /// and <see cref="DrawFlags.Current"/>.
         /// </remarks>
         public void DrawCollapseButton(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -608,7 +608,7 @@ namespace Alternet.Drawing
         /// and <see cref="DrawFlags.Current"/> (item is the current item, e.g. dotted border).
         /// </remarks>
         public void DrawItemSelectionRect(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -632,7 +632,7 @@ namespace Alternet.Drawing
         /// Only <see cref="DrawFlags.Selected"/> makes sense in flags here.
         /// </remarks>
         public void DrawFocusRect(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -653,7 +653,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle in which control is painted.</param>
         /// <param name="flags">Drawing flags.</param>
         public void DrawChoice(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -674,7 +674,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle in which control is painted.</param>
         /// <param name="flags">Drawing flags.</param>
         public void DrawComboBox(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -695,7 +695,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle in which control is painted.</param>
         /// <param name="flags">Drawing flags.</param>
         public void DrawTextCtrl(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -716,7 +716,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle in which control is painted.</param>
         /// <param name="flags">Drawing flags.</param>
         public void DrawRadioBitmap(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0)
@@ -742,7 +742,7 @@ namespace Alternet.Drawing
         /// <see cref="DrawFlags.Special"/> flag must be used for drawing vertical gauges.
         /// </remarks>
         public void DrawGauge(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             int value,
@@ -770,7 +770,7 @@ namespace Alternet.Drawing
         /// <param name="align">Text alignment.</param>
         /// <param name="ellipsizeMode">Text ellipsize mode.</param>
         public void DrawItemText(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             string text,
             RectD rect,
@@ -800,7 +800,7 @@ namespace Alternet.Drawing
         /// size of the checkbox itself is returned, without any margins that are
         /// included by default.
         /// </remarks>
-        public SizeD GetCheckBoxSize(Control control, DrawFlags flags = 0)
+        public SizeD GetCheckBoxSize(AbstractControl control, DrawFlags flags = 0)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckBoxSize(
                 default,
@@ -810,7 +810,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public SizeD GetCheckMarkSize(Control control)
+        public SizeD GetCheckMarkSize(AbstractControl control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckMarkSize(
                 default,
@@ -819,7 +819,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public SizeD GetExpanderSize(Control control)
+        public SizeD GetExpanderSize(AbstractControl control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetExpanderSize(
                 default,
@@ -828,7 +828,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public double GetHeaderButtonHeight(Control control)
+        public double GetHeaderButtonHeight(AbstractControl control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonHeight(
                 default,
@@ -837,7 +837,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public double GetHeaderButtonMargin(Control control)
+        public double GetHeaderButtonMargin(AbstractControl control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonMargin(
                 default,
@@ -846,7 +846,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public SizeD GetCollapseButtonSize(Control control, Graphics dc)
+        public SizeD GetCollapseButtonSize(AbstractControl control, Graphics dc)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
                 default,
@@ -866,7 +866,7 @@ namespace Alternet.Drawing
         /// <param name="orientation">Defines whether the sash should be vertical or
         /// horizontal and how the position should be interpreted</param>
         public void DrawSplitterSash(
-            Control control,
+            AbstractControl control,
             Graphics dc,
             SizeD size,
             double position,
@@ -902,7 +902,7 @@ namespace Alternet.Drawing
         /// <param name="prm">Item parameters.</param>
         public int DrawItem(
             ControlPartKind kind,
-            Control control,
+            AbstractControl control,
             Graphics dc,
             RectD rect,
             DrawFlags flags = 0,

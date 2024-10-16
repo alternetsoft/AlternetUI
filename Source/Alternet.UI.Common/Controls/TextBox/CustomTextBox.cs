@@ -61,14 +61,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default <see cref="Color"/> that can be used
         /// as a background color for the <see cref="TextBox"/> in cases when
-        /// application needs to report user an error in <see cref="Control.Text"/> property.
+        /// application needs to report user an error in <see cref="AbstractControl.Text"/> property.
         /// </summary>
         public static Color DefaultErrorBackgroundColor { get; set; } = Color.Red;
 
         /// <summary>
         /// Gets or sets default <see cref="Color"/> that can be used
         /// as a foreground color for the <see cref="TextBox"/> in cases when
-        /// application needs to report user an error in <see cref="Control.Text"/> property.
+        /// application needs to report user an error in <see cref="AbstractControl.Text"/> property.
         /// </summary>
         public static Color DefaultErrorForegroundColor { get; set; } = Color.White;
 
@@ -138,12 +138,12 @@ namespace Alternet.UI
         public virtual IObjectToString? Converter { get; set; }
 
         /// <summary>
-        /// Gets or sets default value for the <see cref="Control.Text"/> property.
+        /// Gets or sets default value for the <see cref="AbstractControl.Text"/> property.
         /// </summary>
         public virtual string? DefaultText { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="Type"/> of the <see cref="Control.Text"/> property.
+        /// Gets or sets <see cref="Type"/> of the <see cref="AbstractControl.Text"/> property.
         /// </summary>
         /// <remarks>
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
@@ -210,7 +210,7 @@ namespace Alternet.UI
         public virtual string? ValidatorErrorText { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether empty string is allowed in <see cref="Control.Text"/>.
+        /// Gets or sets a value indicating whether empty string is allowed in <see cref="AbstractControl.Text"/>.
         /// </summary>
         /// <remarks>
         /// Default value is <c>true</c>. <see cref="TextBox"/> behavior is not affected
@@ -220,7 +220,7 @@ namespace Alternet.UI
         public virtual bool AllowEmptyText { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether <see cref="Control.Text"/> is required to be not empty.
+        /// Gets or sets a value indicating whether <see cref="AbstractControl.Text"/> is required to be not empty.
         /// This is an opposite of <see cref="AllowEmptyText"/> property.
         /// </summary>
         /// <remarks>
@@ -242,7 +242,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets data value in cases when <see cref="Control.Text"/> property is empty.
+        /// Gets or sets data value in cases when <see cref="AbstractControl.Text"/> property is empty.
         /// </summary>
         /// <remarks>
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
@@ -282,22 +282,22 @@ namespace Alternet.UI
         public ResetColorType? ResetErrorForegroundMethod { get; set; }
 
         /// <summary>
-        /// Gets whether <see cref="Control.Text"/> is null or empty.
+        /// Gets whether <see cref="AbstractControl.Text"/> is null or empty.
         /// </summary>
         [Browsable(false)]
         public bool IsNullOrEmpty => string.IsNullOrEmpty(Text);
 
         /// <summary>
-        /// Gets whether <see cref="Control.Text"/> is null or white space.
+        /// Gets whether <see cref="AbstractControl.Text"/> is null or white space.
         /// </summary>
         [Browsable(false)]
         public bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
         /// <summary>
-        /// Gets or sets <see cref="Control.Text"/> property value as <see cref="object"/> of a number type.
+        /// Gets or sets <see cref="AbstractControl.Text"/> property value as <see cref="object"/> of a number type.
         /// </summary>
         /// <remarks>
-        /// If <see cref="Control.Text"/> property doesn't contain a number value, <c>null</c> is returned.
+        /// If <see cref="AbstractControl.Text"/> property doesn't contain a number value, <c>null</c> is returned.
         /// </remarks>
         [Browsable(false)]
         public virtual object? TextAsNumber
@@ -584,7 +584,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Reports an error if <see cref="Control.Text"/> property is empty
+        /// Reports an error if <see cref="AbstractControl.Text"/> property is empty
         /// and it is not allowed (<see cref="CustomTextBox.AllowEmptyText"/> is <c>false</c>).
         /// </summary>
         public virtual bool ReportErrorEmptyText(Action<string>? errorEnumerator = null)
@@ -698,7 +698,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Reports an error if length of the <see cref="Control.Text"/> property value
+        /// Reports an error if length of the <see cref="AbstractControl.Text"/> property value
         /// is less than <see cref="MinLength"/> or greater than <see cref="MaxLength"/>.
         /// </summary>
         /// <returns><c>true</c> if validation error was reported; <c>false</c> if
@@ -758,7 +758,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs default validation of the <see cref="Control.Text"/> property.
+        /// Runs default validation of the <see cref="AbstractControl.Text"/> property.
         /// </summary>
         /// <remarks>
         /// Validation errors are reported using <see cref="ReportValidatorError"/>.
@@ -916,7 +916,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Converts <paramref name="value"/> to <see cref="string"/> and assigns
-        /// <see cref="Control.Text"/>
+        /// <see cref="AbstractControl.Text"/>
         /// property with the converted value.
         /// </summary>
         /// <param name="value">Value.</param>

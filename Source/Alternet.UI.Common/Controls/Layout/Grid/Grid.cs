@@ -131,7 +131,7 @@ namespace Alternet.UI
 
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
-                        Control child = children[i];
+                        AbstractControl child = children[i];
                         if (child != null)
                         {
                             var s = child.GetPreferredSize(availableSize);
@@ -415,7 +415,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override void OnChildInserted(int index, Control childControl)
+        protected override void OnChildInserted(int index, AbstractControl childControl)
         {
             base.OnChildInserted(index, childControl);
             OnChildrenChanged();
@@ -424,7 +424,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override void OnChildRemoved(Control childControl)
+        protected override void OnChildRemoved(AbstractControl childControl)
         {
             base.OnChildRemoved(childControl);
             OnChildrenChanged();
@@ -508,7 +508,7 @@ namespace Alternet.UI
             }
         }
 
-        void SetControlBounds(Control control, RectD bounds)
+        void SetControlBounds(AbstractControl control, RectD bounds)
         {
             var preferredSize = control.GetPreferredSize(bounds.Size);
 
@@ -2758,7 +2758,7 @@ namespace Alternet.UI
             grid.SetFlags(newValue, Flags.ShowGridLinesPropertyValue);
         }
 
-        private static void OnCellAttachedPropertyChanged(Control child)
+        private static void OnCellAttachedPropertyChanged(AbstractControl child)
         {
             if (child != null)
             {
@@ -3720,7 +3720,7 @@ namespace Alternet.UI
             private Object _currentChild;
             private GridColumnCollection.Enumerator _enumerator0;
             private GridRowCollection.Enumerator _enumerator1;
-            private Collection<Control> _enumerator2Collection;
+            private Collection<AbstractControl> _enumerator2Collection;
             private int _enumerator2Index;
             private int _enumerator2Count;
         }

@@ -110,9 +110,9 @@ namespace Alternet.UI
         /// <summary>
         /// Returns suggested toolbar image size in pixels depending on the given DPI value.
         /// </summary>
-        /// <param name="control">Control's <see cref="Control.GetDPI"/> method
+        /// <param name="control">Control's <see cref="AbstractControl.GetDPI"/> method
         /// is used to get DPI settings.</param>
-        public static SizeI GetDefaultImageSize(Control? control = null)
+        public static SizeI GetDefaultImageSize(AbstractControl? control = null)
         {
             control ??= App.FirstWindow();
             SizeD? dpi;
@@ -137,18 +137,18 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
         /// from the specified url which contains svg data. Images are loaded
-        /// for the normal and disabled states using <see cref="Control.GetSvgColor"/>.
+        /// for the normal and disabled states using <see cref="AbstractControl.GetSvgColor"/>.
         /// </summary>
         /// <param name="size">Image size in pixels. If it is not specified,
-        /// <see cref="ToolBarUtils.GetDefaultImageSize(Control)"/> is used to get image size.</param>
-        /// <param name="control">Control which <see cref="Control.GetSvgColor"/>
+        /// <see cref="ToolBarUtils.GetDefaultImageSize(AbstractControl)"/> is used to get image size.</param>
+        /// <param name="control">Control which <see cref="AbstractControl.GetSvgColor"/>
         /// method is called to get color information.</param>
         /// <returns></returns>
         /// <param name="url">"embres" or "file" url with svg image data.</param>
         /// <returns></returns>
         public static (ImageSet Normal, ImageSet Disabled) GetNormalAndDisabledSvg(
             string url,
-            Control control,
+            AbstractControl control,
             SizeI? size = null)
         {
             size ??= ToolBarUtils.GetDefaultImageSize(control);
@@ -168,18 +168,18 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="Control.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
+        /// <see cref="AbstractControl.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used
         /// to load the image.</param>
-        /// <param name="control">Control which <see cref="Control.GetDPI"/> method
+        /// <param name="control">Control which <see cref="AbstractControl.GetDPI"/> method
         /// is used to get DPI.</param>
         /// <returns><see cref="ImageSet"/> instance loaded from Svg data for use
         /// on the toolbars.</returns>
         /// <param name="color">Svg fill color. Optional.
         /// If provided, svg fill color is changed to the specified value.</param>
-        public static ImageSet FromSvgUrlForToolbar(string url, Control control, Color? color = null)
+        public static ImageSet FromSvgUrlForToolbar(string url, AbstractControl control, Color? color = null)
         {
             var imageSize = ToolBarUtils.GetDefaultImageSize(control);
             var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);

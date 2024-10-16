@@ -222,7 +222,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateControlHandler(Control control)
+        public IControlHandler CreateControlHandler(AbstractControl control)
         {
             return new WxControlHandler();
         }

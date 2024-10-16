@@ -31,7 +31,7 @@ namespace Alternet.UI
         private static LightDarkColor? color;
 
         private readonly CaretInfo info = new();
-        private Control? control;
+        private AbstractControl? control;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlessCaretHandler"/> class.
@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PlessCaretHandler"/> class.
         /// </summary>
-        public PlessCaretHandler(Control control, int width, int height)
+        public PlessCaretHandler(AbstractControl control, int width, int height)
         {
             info.Size = (width, height);
             if(control is not null)
@@ -92,7 +92,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Control? Control
+        public virtual AbstractControl? Control
         {
             get => control;
         }

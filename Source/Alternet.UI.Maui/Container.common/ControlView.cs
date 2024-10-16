@@ -21,7 +21,7 @@ using SkiaSharp.Views.Maui.Controls;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="Alternet.UI.Control"/> container using <see cref="SKCanvasView"/>.
+    /// Implements <see cref="Alternet.UI.AbstractControl"/> container using <see cref="SKCanvasView"/>.
     /// </summary>
     public partial class ControlView : SKCanvasView
     {
@@ -81,7 +81,7 @@ namespace Alternet.UI
         public virtual bool UseUnscaledDrawImage { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets attached <see cref="Alternet.UI.Control"/>.
+        /// Gets or sets attached <see cref="Alternet.UI.AbstractControl"/>.
         /// </summary>
         public virtual Alternet.UI.Control? Control
         {
@@ -120,9 +120,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to get container from.</param>
         /// <returns></returns>
-        public static ControlView? GetContainer(Control? control)
+        public static ControlView? GetContainer(AbstractControl? control)
         {
-            if (control?.Handler is MauiControlHandler handler)
+            if ((control as Control)?.Handler is MauiControlHandler handler)
                 return handler.Container;
             return null;
         }
@@ -132,7 +132,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to get <see cref="PlatformView"/> from.</param>
         /// <returns></returns>
-        public static PlatformView? GetPlatformView(Control? control)
+        public static PlatformView? GetPlatformView(AbstractControl? control)
         {
             var container = GetContainer(control);
             if (container is null)
@@ -489,7 +489,7 @@ namespace Alternet.UI
 
             graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
-            control.RaisePaintRecursive(new PaintEventArgs(graphics, control.Bounds));
+            control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
 
             graphics.UseUnscaledDrawImage = false;
 

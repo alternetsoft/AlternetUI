@@ -307,7 +307,7 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public override void Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
             {
-                if (e.IsPaintingBackground)
+                if (e.IsPaintingBackground || sender.ShouldPaintHintText())
                 {
                     e.DefaultPaint();
                     return;

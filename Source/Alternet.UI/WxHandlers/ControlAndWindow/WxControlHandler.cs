@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides base functionality for implementing a specific <see cref="Control"/> behavior
+    /// Provides base functionality for implementing a specific <see cref="AbstractControl"/> behavior
     /// and appearance.
     /// </summary>
     internal class WxControlHandler : BaseControlHandler, IControlHandler
@@ -784,7 +784,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Detaches this handler from the <see cref="Control"/> it is attached to.
+        /// Detaches this handler from the <see cref="AbstractControl"/> it is attached to.
         /// </summary>
         public override void Detach()
         {
@@ -804,9 +804,11 @@ namespace Alternet.UI
             return result;
         }
 
-        public void OnChildInserted(Control childControl)
+        public void OnChildInserted(AbstractControl childControl)
         {
-            var child = (childControl.Handler as WxControlHandler)?.NativeControl;
+            if (childControl is GenericControl)
+                return;
+            var child = (UI.Control.RequireHandler(childControl) as WxControlHandler)?.NativeControl;
             if (child == null)
                 return;
             if (child.ParentRefCounted != null)
@@ -814,9 +816,11 @@ namespace Alternet.UI
             nativeControl?.AddChild(child);
         }
 
-        public void OnChildRemoved(Control childControl)
+        public void OnChildRemoved(AbstractControl childControl)
         {
-            var child = (childControl.Handler as WxControlHandler)?.nativeControl;
+            if (childControl is GenericControl)
+                return;
+            var child = (UI.Control.RequireHandler(childControl) as WxControlHandler)?.nativeControl;
             if (child != null)
                 nativeControl?.RemoveChild(child);
         }
@@ -836,7 +840,7 @@ namespace Alternet.UI
 
             if (parent is not null)
             {
-                (parent.Handler as WxControlHandler)?.OnChildInserted(Control);
+                (UI.Control.RequireHandler(parent) as WxControlHandler)?.OnChildInserted(Control);
                 parent.PerformLayout();
             }
 

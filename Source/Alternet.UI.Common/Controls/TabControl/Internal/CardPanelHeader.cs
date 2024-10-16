@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when size of any button is changed.
         /// </summary>
-        public event EventHandler<BaseEventArgs<Control>>? ButtonSizeChanged;
+        public event EventHandler<BaseEventArgs<AbstractControl>>? ButtonSizeChanged;
 
         /// <summary>
         /// Occurs before the tab is clicked.
@@ -668,7 +668,7 @@ namespace Alternet.UI
         /// Gets item with the specified control.
         /// </summary>
         /// <param name="control">Control attached to the item.</param>
-        public int? IndexOfCardControl(Control? control)
+        public int? IndexOfCardControl(AbstractControl? control)
         {
             if (control is null)
                 return null;
@@ -690,7 +690,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created item index.
         /// </returns>
-        public virtual int Insert(int? index, string text, Control? cardControl = null)
+        public virtual int Insert(int? index, string text, AbstractControl? cardControl = null)
         {
             var button = CreateHeaderButton();
 
@@ -760,7 +760,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created item index.
         /// </returns>
-        public virtual int Add(string text, Control? cardControl = null)
+        public virtual int Add(string text, AbstractControl? cardControl = null)
         {
             return Insert(null, text, cardControl);
         }
@@ -790,7 +790,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets parent control of the cards.
         /// </summary>
-        public virtual Control? GetCardsParent()
+        public virtual AbstractControl? GetCardsParent()
         {
             foreach (var tab in tabs)
             {
@@ -822,8 +822,8 @@ namespace Alternet.UI
 
         private void Button_SizeChanged(object? sender, EventArgs e)
         {
-            if(sender is Control control)
-                ButtonSizeChanged?.Invoke(this, new BaseEventArgs<Control>(control));
+            if(sender is AbstractControl control)
+                ButtonSizeChanged?.Invoke(this, new BaseEventArgs<AbstractControl>(control));
         }
 
         private IReadOnlyFontAndColor GetColors(bool isActive)
@@ -916,7 +916,7 @@ namespace Alternet.UI
 
         private void Item_Click(object? sender, EventArgs e)
         {
-            if (sender is not Control control)
+            if (sender is not AbstractControl control)
                 return;
 
             if(BeforeTabClick is not null)

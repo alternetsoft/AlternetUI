@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Affected control.</param>
         /// <param name="e">Mouse button event arguments.</param>
-        public ControlMouseButtonEventArgs(Control control, MouseEventArgs e)
+        public ControlMouseButtonEventArgs(AbstractControl control, MouseEventArgs e)
         {
             Control = control;
             MouseButtonEventArgs = e;
@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets affected control.
         /// </summary>
-        public Control Control { get; }
+        public AbstractControl Control { get; }
 
         /// <summary>
         /// Gets mouse button event arguments.

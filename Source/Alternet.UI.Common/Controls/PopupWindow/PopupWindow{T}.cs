@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="T">Type of the main control.</typeparam>
     public partial class PopupWindow<T> : DialogWindow
-        where T : Control, new()
+        where T : AbstractControl, new()
     {
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ToolBar bottomToolBar = new();
@@ -70,7 +70,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether popups are shown using <see cref="DialogWindow.ShowModal()"/>
-        /// (true) or <see cref="Control.Show"/> (false).
+        /// (true) or <see cref="AbstractControl.Show"/> (false).
         /// </summary>
         /// <remarks>
         /// Under Linux popups are always shown as modal dialogs.
@@ -133,7 +133,7 @@ namespace Alternet.UI
         /// Gets main panel (parent of the main control).
         /// </summary>
         [Browsable(false)]
-        public Control MainPanel => mainPanel;
+        public AbstractControl MainPanel => mainPanel;
 
         /// <summary>
         /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
@@ -187,9 +187,9 @@ namespace Alternet.UI
         /// Gets or sets owner of the popup window.
         /// </summary>
         /// <remarks>Usually owner of the popup window is a control under which popup is
-        /// shown using <see cref="ShowPopup(Control)"/> method.</remarks>
+        /// shown using <see cref="ShowPopup(AbstractControl)"/> method.</remarks>
         [Browsable(false)]
-        public Control? PopupOwner { get; set; }
+        public AbstractControl? PopupOwner { get; set; }
 
         /// <summary>
         /// Gets or sets whether to focus <see cref="PopupOwner"/> control when popup is closed.
@@ -334,7 +334,7 @@ namespace Alternet.UI
         /// Shows popup under bottom left corner of the specified control.
         /// </summary>
         /// <param name="control">Control.</param>
-        public virtual void ShowPopup(Control control)
+        public virtual void ShowPopup(AbstractControl control)
         {
             PopupOwner = control;
 
@@ -521,7 +521,7 @@ namespace Alternet.UI
         /// Override to bind events to the main control of the popup window.
         /// </summary>
         /// <param name="control">Control which events are binded.</param>
-        protected virtual void BindEvents(Control? control)
+        protected virtual void BindEvents(AbstractControl? control)
         {
             if (control is null)
                 return;
@@ -533,7 +533,7 @@ namespace Alternet.UI
         /// Override to unbind events to the main control of the popup window.
         /// </summary>
         /// <param name="control">Control which events are unbinded.</param>
-        protected virtual void UnbindEvents(Control? control)
+        protected virtual void UnbindEvents(AbstractControl? control)
         {
             if (control is null)
                 return;

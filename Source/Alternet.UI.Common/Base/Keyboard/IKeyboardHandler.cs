@@ -33,21 +33,21 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        bool HideKeyboard(Control? control);
+        bool HideKeyboard(AbstractControl? control);
 
         /// <summary>
         /// Shows on-screen keyboard for the specified control.
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        bool ShowKeyboard(Control? control);
+        bool ShowKeyboard(AbstractControl? control);
 
         /// <summary>
         /// Gets whether on-screen keyboard is shown for the specified control.
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        bool IsSoftKeyboardShowing(Control? control);
+        bool IsSoftKeyboardShowing(AbstractControl? control);
 
         /// <summary>
         /// Checks whether key is valid for the current platform.

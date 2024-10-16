@@ -53,7 +53,7 @@ namespace Alternet.UI
             return new PlessContextMenuHandler();
         }
 
-        IControlHandler IControlFactoryHandler.CreateControlHandler(Control control)
+        IControlHandler IControlFactoryHandler.CreateControlHandler(AbstractControl control)
         {
             return new MauiControlHandler();
         }

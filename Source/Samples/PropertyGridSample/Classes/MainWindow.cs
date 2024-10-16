@@ -18,13 +18,17 @@ namespace PropertyGridSample
 
         internal readonly SplittedControlsPanel panel = new();
 
-        private readonly Control controlPanel = new()
+        private readonly Panel controlPanel = new()
         {
+            UserPaint = true,
+            Name = "contrrolPanel",
         };
 
         private readonly Panel parentParent = new()
         {
             Padding = (5, 15, 5, 15),
+            UserPaint = true,
+            Name = "parentParent",
         };
 
         private readonly Border controlPanelBorder = new()
@@ -33,6 +37,7 @@ namespace PropertyGridSample
             HorizontalAlignment = HorizontalAlignment.Left,
             VerticalAlignment = VerticalAlignment.Top,
             Padding = 0,
+            Name = "controlPanelBorder",
         };
 
         private readonly ContextMenuStrip propGridContextMenu = new();
@@ -71,7 +76,7 @@ namespace PropertyGridSample
             knownColorsChoices.RemoveValue<PropertyGridKnownColors>(PropertyGridKnownColors.Black);
 
             // Sample localization of the property label
-            var prm = PropertyGrid.GetNewItemParams(typeof(Control), "Name");
+            var prm = PropertyGrid.GetNewItemParams(typeof(AbstractControl), "Name");
             if(prm is not null)
                 prm.Label = "(name)";
         }
@@ -358,7 +363,7 @@ namespace PropertyGridSample
 
                 var type = item.InstanceType;
 
-                if (item.Instance is Control control)
+                if (item.Instance is AbstractControl control)
                 {
                     parentParent.DoInsideLayout(() =>
                     {

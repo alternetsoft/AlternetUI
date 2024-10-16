@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         /// <returns></returns>
         public virtual Alternet.UI.KeyPressEventArgs Convert(
-            Control control,
+            AbstractControl control,
             CharacterReceivedRoutedEventArgs e)
         {
             Alternet.UI.KeyPressEventArgs result = new(control, e.Character);
@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// <param name="control">Target control.</param>
         /// <param name="e">Event arguments.</param>
         /// <returns></returns>
-        public virtual Alternet.UI.KeyEventArgs Convert(Control control, KeyRoutedEventArgs e)
+        public virtual Alternet.UI.KeyEventArgs Convert(AbstractControl control, KeyRoutedEventArgs e)
         {
             var alternetKey = Convert(e.Key);
 
@@ -334,19 +334,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool HideKeyboard(Control? control)
+        public override bool HideKeyboard(AbstractControl? control)
         {
             return HideKeyboard();
         }
 
         /// <inheritdoc/>
-        public override bool IsSoftKeyboardShowing(Control? control)
+        public override bool IsSoftKeyboardShowing(AbstractControl? control)
         {
             return IsSoftKeyboardShowing();
         }
 
         /// <inheritdoc/>
-        public override bool ShowKeyboard(Control? control)
+        public override bool ShowKeyboard(AbstractControl? control)
         {
             return ShowKeyboard();
         }

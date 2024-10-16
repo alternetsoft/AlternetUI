@@ -56,7 +56,7 @@ namespace PrintingSample
                 TextToDraw,
                 drawTextBounds.Width,
                 font,
-                dc.ScaleFactor);
+                dc);
 
             dc.DrawText(
                 wrappedText,

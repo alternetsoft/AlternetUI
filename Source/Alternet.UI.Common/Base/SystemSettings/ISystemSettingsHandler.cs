@@ -65,8 +65,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="SystemSettings.GetColor"/>
         ColorStruct? GetColor(KnownSystemColor index);
 
-        /// <inheritdoc cref="SystemSettings.GetMetric(SystemSettingsMetric, Control)"/>
-        int GetMetric(SystemSettingsMetric index, Control? control);
+        /// <inheritdoc cref="SystemSettings.GetMetric(SystemSettingsMetric, AbstractControl)"/>
+        int GetMetric(SystemSettingsMetric index, AbstractControl? control);
 
         /// <summary>
         /// Gets library version.
