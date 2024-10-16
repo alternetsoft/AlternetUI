@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets default trimming style of the text;
         /// </summary>
-        public const TextTrimming DefaultTrimming = TextTrimming.None;
+        public const TextTrimming DefaultTrimming = TextTrimming.Pixel;
 
         /// <summary>
         /// Gets default wrapping style of the text;

@@ -15,7 +15,11 @@ namespace DrawingSample
         private static readonly Brush fontInfoBrush = Brushes.Black;
         private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, DashStyle.Dash);
 
-        internal readonly GenericWrappedTextControl wrappedControl = new();
+        internal readonly GenericWrappedTextControl wrappedControl = new()
+        {
+            Padding = 15,
+        };
+
         internal readonly GenericControl wrappedDocument = new();
 
         private Paragraph[]? paragraphs;
@@ -263,7 +267,6 @@ namespace DrawingSample
                 UpdateWrappedControl(false);
                 wrappedControl.Font = paragraph.Font;
                 wrappedControl.ForegroundColor = color;
-                wrappedControl.MaximumSize = bounds.DeflatedWithPadding(20).Size;
                 wrappedControl.PerformLayout();
 
                 RectD rect = ((x, y), wrappedControl.Size);

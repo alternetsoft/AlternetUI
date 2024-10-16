@@ -913,6 +913,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a <see cref='RectD'/> with the specified size.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithSize(SizeD size)
+        {
+            return (Location, size);
+        }
+
+        /// <summary>
         /// Returns new <see cref="RectD"/> value with ceiling of location and size.
         /// Uses <see cref="Math.Ceiling(Coord)"/> on values.
         /// </summary>

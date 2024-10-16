@@ -228,7 +228,10 @@ namespace Alternet.UI
 
                 scaleFactor ??= RequestScaleFactor();
 
-                return scaleFactor ?? Display.Primary.ScaleFactor;
+                if(scaleFactor is null)
+                    return Display.Primary.ScaleFactor;
+
+                return scaleFactor.Value;
             }
         }
 

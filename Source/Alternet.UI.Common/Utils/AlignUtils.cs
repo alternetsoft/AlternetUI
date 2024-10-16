@@ -29,6 +29,24 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Converts <see cref="TextVerticalAlignment"/> to <see cref="VerticalAlignment"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static VerticalAlignment Convert(TextVerticalAlignment value)
+        {
+            switch (value)
+            {
+                case TextVerticalAlignment.Center:
+                    return VerticalAlignment.Center;
+                case TextVerticalAlignment.Bottom:
+                    return VerticalAlignment.Bottom;
+                default:
+                    return VerticalAlignment.Top;
+            }
+        }
+
         public static RectD AlignRectInRect(
             bool vert,
             RectD rect,
@@ -83,12 +101,12 @@ namespace Alternet.UI
 
             if(horz is not null)
             {
-                AlignRectInRect(false, rect, container, (CoordAlignment)horz, false);
+                rect = AlignRectInRect(false, rect, container, (CoordAlignment)horz, false);
             }
 
             if (vert is not null)
             {
-                AlignRectInRect(true, rect, container, (CoordAlignment)vert, false);
+                rect = AlignRectInRect(true, rect, container, (CoordAlignment)vert, false);
             }
 
             return rect;
