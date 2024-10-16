@@ -581,7 +581,36 @@ namespace Alternet.UI
         /// <param name="e">Paint arguments.</param>
         public virtual void DefaultItemPaint(ComboBoxItemPaintEventArgs e)
         {
-            if (e.IsPaintingBackground || ShouldPaintHintText())
+            if (ShouldPaintHintText())
+            {
+                e.DefaultPaint();
+                return;
+            }
+
+            var item = e.Item as ListControlItem;
+            if (item is not null && !e.IsPaintingControl)
+            {
+                ListBoxItemPaintEventArgs listEventArgs = new(
+                    this,
+                    e.Graphics,
+                    e.ClipRectangle,
+                    e.ItemIndex);
+                listEventArgs.IsSelected = e.IsSelected;
+                listEventArgs.IsCurrent = e.IsSelected;
+
+                if (e.IsPaintingBackground)
+                {
+                    item.DrawBackground(this, listEventArgs);
+                }
+                else
+                {
+                    item.DrawForeground(this, listEventArgs);
+                }
+
+                return;
+            }
+
+            if (e.IsPaintingBackground)
             {
                 e.DefaultPaint();
                 return;
@@ -700,7 +729,11 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual Coord GetHeight(ComboBox sender, int index, Coord defaultHeight)
             {
-                return -1;
+                var item = sender.SafeItem(index);
+
+                if(item is null)
+                    return -1;
+                return ListControlItem.GetMinHeight(item, sender);
             }
 
             /// <inheritdoc/>
@@ -712,6 +745,7 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual void Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
             {
+                sender.DefaultItemPaint(e);
             }
         }
     }

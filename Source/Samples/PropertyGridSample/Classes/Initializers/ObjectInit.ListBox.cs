@@ -9,44 +9,40 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
-        public static void InitVListBox(object control)
+        public static void AddDefaultOwnerDrawItems(
+            Control control,
+            Action<ListControlItem> addAction,
+            bool addLong = true)
         {
             string ResPrefix2 = $"{UrlResPrefix}ToolBarPng.Large.";
             string CalendarUrl = $"{ResPrefix2}Calendar32.png";
             string PencilUrl = $"{ResPrefix2}Pencil32.png";
             string PhotoUrl = $"{ResPrefix2}Photo32.png";
 
-            if (control is not VirtualListBox listBox)
-                return;
+            var imageSize = 24; /* image sizes are always in pixels */
 
-            listBox.HScrollBarVisible = true;
-
-            for (int i = 0; i < 150; i++)
-            {
-                ListControlItem newItem = new($"Item {i}");
-                listBox.Add(newItem);
-            }
-
-            var firstIndex = 2;
-
-            var item = listBox.RequiredItem(0);
+            ListControlItem item = new();
             item.Alignment = GenericAlignment.Center;
             item.Text = string.Empty;
             item.Image = new Bitmap(PhotoUrl);
+            addAction(item);
 
-            var imageSize = 24; /* image sizes are always in pixels */
-            item = listBox.RequiredItem(firstIndex);
+            item = new();
             item.Text = "Bold item at right";
             item.Alignment = GenericAlignment.CenterRight;
             item.FontStyle = FontStyle.Bold;
-            item.MinHeight = listBox.PixelToDip(imageSize);
-            item.Image = KnownSvgImages.ImgBold.AsNormalImage(imageSize, listBox.IsDarkBackground);
+            item.MinHeight = control.PixelToDip(imageSize);
+            item.Image = KnownSvgImages.ImgBold.AsNormalImage(imageSize, control.IsDarkBackground);
             item.SelectedImage =
-                KnownSvgImages.ImgBold.AsImageSet(imageSize, KnownSvgColor.HighlightText, listBox.IsDarkBackground)?.AsImage();
+                KnownSvgImages.ImgBold.AsImageSet(
+                    imageSize,
+                    KnownSvgColor.HighlightText,
+                    control.IsDarkBackground)?.AsImage();
             item.DisabledImage =
-                KnownSvgImages.ImgBold.AsDisabledImage(imageSize, listBox.IsDarkBackground);
+                KnownSvgImages.ImgBold.AsDisabledImage(imageSize, control.IsDarkBackground);
+            addAction(item);
 
-            item = listBox.RequiredItem(firstIndex + 1);
+            item = new();
             item.Alignment = GenericAlignment.Center;
             item.Image = new Bitmap(CalendarUrl);
             item.CheckState = CheckState.Indeterminate;
@@ -54,8 +50,9 @@ namespace PropertyGridSample
             item.ForegroundColor = Color.Green;
             item.BackgroundColor = Color.Lavender;
             item.Text = "Green item at center";
+            addAction(item);
 
-            item = listBox.RequiredItem(firstIndex + 2);
+            item = new();
             item.Text = "Custom height/align";
             item.CheckBoxVisible = false;
             item.MinHeight = 60;
@@ -64,17 +61,20 @@ namespace PropertyGridSample
             item.DisabledImage = item!.Image.ToGrayScale();
             item.ForegroundColor = Color.Indigo;
             item.BackgroundColor = Color.LightSkyBlue;
+            addAction(item);
 
-            item = listBox.RequiredItem(firstIndex + 3);
+            item = new();
             item.FontStyle = FontStyle.Underline;
             item.CheckState = CheckState.Checked;
             item.Text = "Underlined item";
+            addAction(item);
 
-            item = listBox.RequiredItem(firstIndex + 4);
+            item = new();
             item.Font = Control.DefaultFont.Scaled(1.5);
             item.Text = "Custom Font";
+            addAction(item);
 
-            item = listBox.RequiredItem(firstIndex + 5);
+            item = new();
             item.Text = "Custom border";
             item.Alignment = GenericAlignment.Center;
             item.CheckBoxVisible = false;
@@ -82,10 +82,33 @@ namespace PropertyGridSample
             item.Border.Color = Color.Red;
             item.Border.UniformCornerRadius = 50;
             item.Border.UniformRadiusIsPercent = true;
+            addAction(item);
 
-            item = listBox.RequiredItem(firstIndex + 6);
-            item.Text = LoremIpsum.Replace(StringUtils.OneNewLine, StringUtils.OneSpace);
+            if (addLong)
+            {
+                item = new();
+                item.Text = LoremIpsum.Replace(StringUtils.OneNewLine, StringUtils.OneSpace);
+                addAction(item);
+            }
 
+            for (int i = 0; i < 150; i++)
+            {
+                ListControlItem newItem = new($"Item {i}");
+                addAction(newItem);
+            }
+        }
+
+        public static void InitVListBox(object control)
+        {
+            if (control is not VirtualListBox listBox)
+                return;
+
+            AddDefaultOwnerDrawItems(listBox, (s) =>
+            {
+                listBox.Add(s);
+            });
+
+            listBox.HScrollBarVisible = true;
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;
 

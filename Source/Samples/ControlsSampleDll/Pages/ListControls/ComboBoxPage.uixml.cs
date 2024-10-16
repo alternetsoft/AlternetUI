@@ -8,15 +8,14 @@ namespace ControlsSample
         private readonly bool ignoreEvents = false;
         private const bool supressUpDown = false;
         private int newItemIndex = 0;
+        private IComboBoxItemPainter painter = new ComboBox.DefaultItemPainter();
 
         public ComboBoxPage()
         {
             ignoreEvents = true;
             InitializeComponent();
 
-            comboBox.Items.Add("One");
-            comboBox.Items.Add("Two");
-            comboBox.Items.Add("Three");
+            LoadDefaultItems();
             comboBox.SelectedIndex = 1;
             ignoreEvents = false;
 
@@ -24,6 +23,27 @@ namespace ControlsSample
             KeyDown += ComboBoxPage_KeyDown;
 
             comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged1;
+        }
+
+        private void LoadDefaultItems(bool ownerDraw = false)
+        {
+            comboBox.RemoveAll();
+            if (ownerDraw)
+            {
+                PropertyGridSample.ObjectInit.
+                    AddDefaultOwnerDrawItems(comboBox, (s) =>
+                    {
+                        comboBox.Add(s);
+                    }, false);
+            }
+            else
+            {
+                comboBox.Items.Add("One");
+                comboBox.Items.Add("Two");
+                comboBox.Items.Add("Three");
+            }
+
+            comboBox.SelectedIndex = 1;
         }
 
         private void ComboBox_SelectedItemChanged1(object? sender, EventArgs e)
@@ -102,6 +122,7 @@ namespace ControlsSample
 
         private void OwnerDrawCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            LoadDefaultItems(ownerDrawCheckBox.IsChecked);
             if (ownerDrawCheckBox.IsChecked)
             {
                 comboBox.ItemPainter = this;
@@ -185,6 +206,12 @@ namespace ControlsSample
 
         void IComboBoxItemPainter.Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
         {
+            if (!e.IsPaintingControl)
+            {
+                painter.Paint(sender, e);
+                return;
+            }
+
             e.DefaultPaint();
             if(e.IsPaintingControl)
                 e.Graphics.FillRectangle(Color.Red.AsBrush, (e.ClipRectangle.Location, (5, 5)));
