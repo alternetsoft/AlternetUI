@@ -109,7 +109,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets alignment of the item.
         /// </summary>
-        public GenericAlignment ItemAlignment
+        public virtual GenericAlignment ItemAlignment
         {
             get
             {

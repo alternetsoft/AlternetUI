@@ -459,7 +459,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets selected item text color.
+        /// Gets or sets selected item back color.
         /// </summary>
         public virtual Color? SelectedItemBackColor
         {
@@ -675,50 +675,11 @@ namespace Alternet.UI
         /// <param name="e">Draw parameters.</param>
         public virtual void DefaultDrawItemBackground(ListBoxItemPaintEventArgs e)
         {
-            var rect = e.ClipRectangle;
-            var dc = e.Graphics;
-
-            var isSelected = e.IsSelected;
-            var isCurrent = e.IsCurrent;
-
-            var item = SafeItem(e.ItemIndex);
-
-            var hideSelection = item?.HideSelection ?? false;
-            var hideFocusRect = item?.HideFocusRect ?? false;
-
-            if (Enabled)
-            {
-                dc.FillBorderRectangle(
-                    rect,
-                    item?.BackgroundColor?.AsBrush,
-                    item?.Border,
-                    true,
-                    this);
-
-                if (isSelected && selectionVisible)
-                {
-                    if (!hideSelection)
-                    {
-                        dc.FillBorderRectangle(
-                            rect,
-                            GetSelectedItemBackColor(e.ItemIndex).AsBrush,
-                            selectionBorder,
-                            true,
-                            this);
-                    }
-                }
-
-                if (isCurrent && Focused && currentItemBorderVisible && !hideFocusRect)
-                {
-                    var border = CurrentItemBorder ?? DefaultCurrentItemBorder;
-                    DrawingUtils.DrawBorder(this, e.Graphics, rect, border);
-                }
-            }
+            var item = e.Item;
+            if (item is null)
+                ListControlItem.DefaultDrawBackground(this, e);
             else
-            {
-                var border = item?.Border?.ToGrayScale();
-                DrawingUtils.DrawBorder(this, e.Graphics, rect, border);
-            }
+                item.DrawBackground(this, e);
         }
 
         /// <summary>
@@ -892,10 +853,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Coord GetItemMinHeight(int itemIndex)
         {
-            var item = SafeItem(itemIndex);
-            if (item is null)
-                return MinItemHeight;
-            return Math.Max(item.MinHeight, MinItemHeight);
+            return ListControlItem.GetMinHeight(SafeItem(itemIndex), this);
         }
 
         /// <summary>
@@ -980,38 +938,10 @@ namespace Alternet.UI
         public virtual void DefaultDrawItem(ListBoxItemPaintEventArgs e)
         {
             var item = SafeItem(e.ItemIndex);
-
-            if (item is not null)
-            {
-                var info = item.GetCheckBoxInfo(this, e.ClipRectangle);
-                if (info is not null)
-                {
-                    e.Graphics.DrawCheckBox(this, info.CheckRect, info.CheckState, info.PartState);
-                    e.ClipRectangle = info.TextRect;
-                }
-            }
-
-            var isSelected = e.IsSelected;
-            var hideSelection = item?.HideSelection ?? false;
-            if (hideSelection)
-                isSelected = false;
-
-            var (normalImage, disabledImage, selectedImage) = e.ItemImages;
-            var image = Enabled ? (isSelected ? selectedImage : normalImage) : disabledImage;
-
-            var s = textVisible ? e.ItemText.Trim() : string.Empty;
-
-            if (image is not null && s != string.Empty)
-                s = $" {s}";
-
-            e.Graphics.DrawLabel(
-                s,
-                e.ItemFont,
-                e.GetTextColor(isSelected),
-                Color.Empty,
-                image,
-                e.ClipRectangle,
-                e.ItemAlignment);
+            if (item is null)
+                ListControlItem.DefaultDrawForeground(this, e);
+            else
+                item.DrawForeground(this, e);
         }
 
         internal ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)

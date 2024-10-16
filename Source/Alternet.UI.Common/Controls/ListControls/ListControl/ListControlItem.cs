@@ -433,6 +433,137 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets selected item back color.
+        /// </summary>
+        /// <returns></returns>
+        public static Color GetSelectedItemBackColor(
+            ListControlItem? item,
+            IListControlItemContainer? container)
+        {
+            var control = container as Control;
+            if (control is null)
+                return VirtualListBox.DefaultSelectedItemBackColor;
+
+            var defaults = container!.Defaults;
+
+            if (control.Enabled && defaults.SelectionVisible)
+                return defaults.SelectedItemBackColor ?? VirtualListBox.DefaultSelectedItemBackColor;
+            else
+                return control.RealBackgroundColor;
+        }
+
+        /// <summary>
+        /// Draws default background for the item.
+        /// </summary>
+        public static void DefaultDrawBackground(
+            IListControlItemContainer? container,
+            ListBoxItemPaintEventArgs e)
+        {
+            var item = e.Item;
+
+            var control = container as Control;
+            var focused = control?.Focused ?? false;
+            var rect = e.ClipRectangle;
+            var dc = e.Graphics;
+
+            var isSelected = e.IsSelected;
+            var isCurrent = e.IsCurrent;
+
+            var hideSelection = item?.HideSelection ?? false;
+            var hideFocusRect = item?.HideFocusRect ?? false;
+
+            if (IsContainerEnabled(container))
+            {
+                dc.FillBorderRectangle(
+                    rect,
+                    item?.BackgroundColor?.AsBrush,
+                    item?.Border,
+                    true,
+                    control);
+
+                var selectionVisible = container?.Defaults.SelectionVisible ?? true;
+
+                if (isSelected && selectionVisible)
+                {
+                    if (!hideSelection)
+                    {
+                        var selectionBorder = container?.Defaults.SelectionBorder;
+
+                        dc.FillBorderRectangle(
+                            rect,
+                            GetSelectedItemBackColor(item, container).AsBrush,
+                            selectionBorder,
+                            true,
+                            control);
+                    }
+                }
+
+                var currentItemBorderVisible = container?.Defaults.CurrentItemBorderVisible ?? true;
+
+                if (isCurrent && focused && currentItemBorderVisible && !hideFocusRect)
+                {
+                    var border = container?.Defaults.CurrentItemBorder
+                        ?? VirtualListBox.DefaultCurrentItemBorder;
+                    DrawingUtils.DrawBorder(control, e.Graphics, rect, border);
+                }
+            }
+            else
+            {
+                var border = item?.Border?.ToGrayScale();
+                DrawingUtils.DrawBorder(control, e.Graphics, rect, border);
+            }
+        }
+
+        /// <summary>
+        /// Default method which draws item foreground.
+        /// </summary>
+        public static void DefaultDrawForeground(
+            IListControlItemContainer? container,
+            ListBoxItemPaintEventArgs e)
+        {
+            var item = e.Item;
+
+            if (item is not null)
+            {
+                var info = item.GetCheckBoxInfo(container, e.ClipRectangle);
+                if (info is not null)
+                {
+                    e.Graphics.DrawCheckBox(
+                        ControlUtils.SafeControl(container),
+                        info.CheckRect,
+                        info.CheckState,
+                        info.PartState);
+                    e.ClipRectangle = info.TextRect;
+                }
+            }
+
+            var isSelected = e.IsSelected;
+            var hideSelection = item?.HideSelection ?? false;
+            if (hideSelection)
+                isSelected = false;
+
+            var (normalImage, disabledImage, selectedImage) = e.ItemImages;
+            var image = IsContainerEnabled(container)
+                ? (isSelected ? selectedImage : normalImage) : disabledImage;
+
+            var textVisible = container?.Defaults.TextVisible ?? true;
+
+            var s = textVisible ? e.ItemText.Trim() : string.Empty;
+
+            if (image is not null && s != string.Empty)
+                s = $" {s}";
+
+            e.Graphics.DrawLabel(
+                s,
+                e.ItemFont,
+                e.GetTextColor(isSelected),
+                Color.Empty,
+                image,
+                e.ClipRectangle,
+                e.ItemAlignment);
+        }
+
+        /// <summary>
         /// Gets selected item text color when item is inside the spedified container.
         /// </summary>
         /// <returns></returns>
@@ -532,6 +663,26 @@ namespace Alternet.UI
             }
 
             return showCheckBox;
+        }
+
+        /// <summary>
+        /// Draws item background;
+        /// </summary>
+        public virtual void DrawBackground(
+            IListControlItemContainer? container,
+            ListBoxItemPaintEventArgs e)
+        {
+            DefaultDrawBackground(container, e);
+        }
+
+        /// <summary>
+        /// Draws item foreground.
+        /// </summary>
+        public virtual void DrawForeground(
+            IListControlItemContainer? container,
+            ListBoxItemPaintEventArgs e)
+        {
+            ListControlItem.DefaultDrawForeground(container, e);
         }
 
         /// <summary>

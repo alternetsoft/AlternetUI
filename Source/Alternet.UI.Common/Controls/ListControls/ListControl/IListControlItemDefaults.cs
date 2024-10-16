@@ -12,6 +12,31 @@ namespace Alternet.UI
     public interface IListControlItemDefaults
     {
         /// <summary>
+        /// Gets or sets selected item back color.
+        /// </summary>
+        Color? SelectedItemBackColor { get;  set; }
+
+        /// <summary>
+        /// Gets or sets whether current item border is visible.
+        /// </summary>
+        bool CurrentItemBorderVisible { get; set; }
+
+        /// <summary>
+        /// Gets or sets current item border.
+        /// </summary>
+        BorderSettings? CurrentItemBorder { get; set; }
+
+        /// <summary>
+        /// Gets or sets current selection border.
+        /// </summary>
+        BorderSettings? SelectionBorder { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether item text is displayed.
+        /// </summary>
+        public bool TextVisible { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether checkbox will
         /// allow three check states rather than two.
         /// </summary>
@@ -20,10 +45,10 @@ namespace Alternet.UI
         /// three check states; otherwise, <see langword="false" />. The default value
         /// is <see langword="false"/>.
         /// </returns>
-        bool CheckBoxThreeState { get; }
+        bool CheckBoxThreeState { get; set; }
 
         /// <summary>
-        /// Gets default size of the svg images.
+        /// Gets or sets default size of the svg images.
         /// </summary>
         /// <remarks>
         /// Each item has <see cref="ListControlItem.SvgImageSize"/> property where
@@ -31,50 +56,50 @@ namespace Alternet.UI
         /// default toolbar image size is used. Currently only rectangular svg images
         /// are supported.
         /// </remarks>
-        SizeI? SvgImageSize { get; }
+        SizeI? SvgImageSize { get; set; }
 
         /// <summary>
-        /// Gets whether selected item has bold font.
+        /// Gets or sets whether selected item has bold font.
         /// </summary>
-        bool SelectedItemIsBold { get; }
+        bool SelectedItemIsBold { get; set; }
 
         /// <summary>
-        /// Gets minimal item height.
+        /// Gets or sets minimal item height.
         /// </summary>
-        Coord MinItemHeight { get; }
+        Coord MinItemHeight { get; set; }
 
         /// <summary>
-        /// Gets item text color.
+        /// Gets or sets item text color.
         /// </summary>
-        Color? ItemTextColor { get; }
+        Color? ItemTextColor { get; set; }
 
         /// <summary>
-        /// Gets default alignment of the items.
+        /// Gets or sets default alignment of the items.
         /// </summary>
         /// <remarks>
         /// In order to set individual item alignment, item must be <see cref="ListControlItem"/>
         /// descendant, it has <see cref="ListControlItem.Alignment"/> property.
         /// </remarks>
-        GenericAlignment ItemAlignment { get; }
+        GenericAlignment ItemAlignment { get; set; }
 
         /// <summary>
-        /// Gets selected item text color.
+        /// Gets or sets selected item text color.
         /// </summary>
-        Color? SelectedItemTextColor { get; }
+        Color? SelectedItemTextColor { get; set; }
 
         /// <summary>
-        /// Gets disabled item text color.
+        /// Gets or sets disabled item text color.
         /// </summary>
-        Color? DisabledItemTextColor { get; }
+        Color? DisabledItemTextColor { get; set; }
 
         /// <summary>
-        /// Gets whether selection background is visible.
+        /// Gets or sets whether selection background is visible.
         /// </summary>
-        bool SelectionVisible { get; }
+        bool SelectionVisible { get; set; }
 
         /// <summary>
-        /// Gets whether to show checkboxes in the items.
+        /// Gets or sets whether to show checkboxes in the items.
         /// </summary>
-        bool CheckBoxVisible { get; }
+        bool CheckBoxVisible { get; set; }
     }
 }

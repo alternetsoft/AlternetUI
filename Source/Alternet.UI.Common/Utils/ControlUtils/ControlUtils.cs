@@ -11,17 +11,30 @@ namespace Alternet.UI
     /// </summary>
     public static class ControlUtils
     {
-        private static AbstractControl? empty;
+        private static Control? empty;
 
         /// <summary>
         /// Gets an empty control for the debug purposes.
         /// </summary>
-        public static AbstractControl Empty
+        public static Control Empty
         {
             get
             {
                 return empty ??= new Control();
             }
+        }
+
+        /// <summary>
+        /// Gets control for measure purposes in a safe way. Do not change
+        /// any properties of the returned control.
+        /// </summary>
+        /// <param name="obj">The object which is returrned if it is a control.</param>
+        /// <returns></returns>
+        public static AbstractControl SafeControl(object? obj)
+        {
+            if (obj is AbstractControl control)
+                return control;
+            return App.SafeWindow ?? Empty;
         }
 
         /// <summary>

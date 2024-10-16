@@ -123,7 +123,11 @@ namespace Alternet.UI
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
         /// <param name="border">Border settings.</param>
-        public static void DrawBorder(AbstractControl? control, Graphics dc, RectD rect, BorderSettings? border)
+        public static void DrawBorder(
+            AbstractControl? control,
+            Graphics dc,
+            RectD rect,
+            BorderSettings? border)
         {
             if (border is null)
                 return;

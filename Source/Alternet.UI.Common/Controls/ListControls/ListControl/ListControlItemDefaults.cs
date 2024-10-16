@@ -42,5 +42,20 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public bool CheckBoxThreeState { get; set; } = false;
+
+        /// <inheritdoc/>
+        public virtual bool TextVisible { get; set; } = true;
+
+        /// <inheritdoc/>
+        public virtual Color? SelectedItemBackColor { get; set; }
+
+        /// <inheritdoc/>
+        public virtual bool CurrentItemBorderVisible { get; set; } = true;
+
+        /// <inheritdoc/>
+        public virtual BorderSettings? CurrentItemBorder { get; set; }
+
+        /// <inheritdoc/>
+        public virtual BorderSettings? SelectionBorder { get; set; }
     }
 }
