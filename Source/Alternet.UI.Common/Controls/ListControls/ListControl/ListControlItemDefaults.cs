@@ -13,31 +13,31 @@ namespace Alternet.UI
     public class ListControlItemDefaults : IListControlItemDefaults
     {
         /// <inheritdoc/>
-        public SizeI? SvgImageSize { get; set; }
+        public virtual SizeI? SvgImageSize { get; set; }
 
         /// <inheritdoc/>
-        public bool SelectedItemIsBold { get; set; } = false;
+        public virtual bool SelectedItemIsBold { get; set; } = false;
 
         /// <inheritdoc/>
-        public Coord MinItemHeight { get; set; } = VirtualListBox.DefaultMinItemHeight;
+        public virtual Coord MinItemHeight { get; set; } = VirtualListBox.DefaultMinItemHeight;
 
         /// <inheritdoc/>
-        public Color? ItemTextColor { get; set; }
+        public virtual Color? ItemTextColor { get; set; }
 
         /// <inheritdoc/>
-        public GenericAlignment ItemAlignment { get; set; }
+        public virtual GenericAlignment ItemAlignment { get; set; }
             = ListControlItem.DefaultItemAlignment;
 
         /// <inheritdoc/>
-        public Color? SelectedItemTextColor { get; set; }
+        public virtual Color? SelectedItemTextColor { get; set; }
 
         /// <inheritdoc/>
-        public Color? DisabledItemTextColor { get; set; }
+        public virtual Color? DisabledItemTextColor { get; set; }
 
         /// <inheritdoc/>
-        public bool SelectionVisible { get; set; } = true;
+        public virtual bool SelectionVisible { get; set; } = true;
 
         /// <inheritdoc/>
-        public bool CheckBoxVisible { get; set; } = false;
+        public virtual bool CheckBoxVisible { get; set; } = false;
     }
 }

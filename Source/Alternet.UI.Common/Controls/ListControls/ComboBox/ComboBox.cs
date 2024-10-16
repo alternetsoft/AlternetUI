@@ -135,6 +135,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets defaults which are used when items are painted in the popup listbox
+        /// in the case when item is <see cref="ListControlItem"/> and owner draw mode is turned on.
+        /// </summary>
+        [Browsable(false)]
+        public ListControlItemDefaults OwnerDrawItemDefaults
+        {
+            get
+            {
+                itemDefaults ??= new ListControlItemDefaults();
+                return itemDefaults;
+            }
+
+            set
+            {
+                itemDefaults = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the starting index of text selected in the combo box.
         /// </summary>
         /// <value>The zero-based index of the first character in the string
@@ -408,7 +427,7 @@ namespace Alternet.UI
         {
             get
             {
-                return itemDefaults ??= new ListControlItemDefaults();
+                return OwnerDrawItemDefaults;
             }
         }
 
