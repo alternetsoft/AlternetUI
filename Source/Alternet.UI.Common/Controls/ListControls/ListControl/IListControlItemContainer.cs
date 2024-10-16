@@ -29,19 +29,5 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Item index from which to get the contents to display.</param>
         string GetItemText(int index);
-
-        /// <summary>
-        /// Gets whether item with the specified index is current.
-        /// </summary>
-        /// <param name="index">Item index.</param>
-        /// <returns></returns>
-        bool IsCurrent(int index);
-
-        /// <summary>
-        /// Gets whether item with the specified index is selected.
-        /// </summary>
-        /// <param name="index">Item index.</param>
-        /// <returns></returns>
-        bool IsSelected(int index);
     }
 }

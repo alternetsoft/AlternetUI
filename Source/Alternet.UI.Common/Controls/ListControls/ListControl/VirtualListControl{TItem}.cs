@@ -840,39 +840,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets suggested rectangles of the item's image and text.
-        /// </summary>
-        /// <param name="rect">Item rectangle.</param>
-        /// <param name="imageSize">Image size. Optional. If not specified, calculated
-        /// using height of the item.</param>
-        /// <returns></returns>
-        public virtual (RectD ImageRect, RectD TextRect) GetItemImageRect(
-            RectD rect, SizeD? imageSize = null)
-        {
-            Thickness textMargin = Thickness.Empty;
-
-            var offset = ComboBox.DefaultImageVerticalOffset;
-
-            var size = rect.Height - textMargin.Vertical - (offset * 2);
-
-            if (imageSize is null || imageSize.Value.Height > size)
-                imageSize = (size, size);
-
-            PointD imageLocation = (
-                rect.X + textMargin.Left,
-                rect.Y + textMargin.Top + offset);
-
-            var imageRect = new RectD(imageLocation, imageSize.Value);
-            var centeredImageRect = imageRect.CenterIn(rect, false, true);
-
-            var itemRect = rect;
-            itemRect.X += centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
-            itemRect.Width -= centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
-
-            return (centeredImageRect, itemRect);
-        }
-
-        /// <summary>
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
@@ -944,19 +911,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether three state checkbox is allowed in the item.
-        /// </summary>
-        /// <param name="item">Item.</param>
-        /// <returns></returns>
-        public virtual bool GetItemAllowThreeState(ListControlItem item)
-        {
-            bool allowThreeState = CheckBoxThreeState;
-            if (allowThreeState && item.CheckBoxThreeState is not null)
-                allowThreeState = item.CheckBoxThreeState.Value;
-            return allowThreeState;
-        }
-
-        /// <summary>
         /// Gets whether user can set the checkbox of the item to
         /// the third state by clicking.
         /// </summary>
@@ -976,21 +930,6 @@ namespace Alternet.UI
         public virtual bool GetItemShowCheckBox(ListControlItem item)
         {
             return item.GetShowCheckBox(this);
-        }
-
-        /// <summary>
-        /// Gets <see cref="CheckState"/> of the item using <see cref="GetItemAllowThreeState"/>
-        /// and <see cref="ListControlItem.CheckState"/>.
-        /// </summary>
-        /// <param name="item">Item.</param>
-        /// <returns></returns>
-        public virtual CheckState GetItemCheckState(ListControlItem item)
-        {
-            var allowThreeState = GetItemAllowThreeState(item);
-            var checkState = item.CheckState;
-            if (!allowThreeState && checkState == CheckState.Indeterminate)
-                checkState = CheckState.Unchecked;
-            return checkState;
         }
 
         /// <summary>
@@ -1044,7 +983,7 @@ namespace Alternet.UI
 
             if (item is not null)
             {
-                var info = GetCheckBoxInfo(item, e.ClipRectangle);
+                var info = item.GetCheckBoxInfo(this, e.ClipRectangle);
                 if (info is not null)
                 {
                     e.Graphics.DrawCheckBox(this, info.CheckRect, info.CheckState, info.PartState);
@@ -1080,7 +1019,7 @@ namespace Alternet.UI
             var item = SafeItem(itemIndex);
             if (item is null)
                 return null;
-            return GetCheckBoxInfo(item, rect);
+            return item.GetCheckBoxInfo(this, rect);
         }
 
         /// <summary>
@@ -1091,22 +1030,6 @@ namespace Alternet.UI
         /// <remarks>See <see cref="CheckedChanged"/> for details.</remarks>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-        }
-
-        private ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(ListControlItem item, RectD rect)
-        {
-            var showCheckBox = GetItemShowCheckBox(item);
-            if (!showCheckBox)
-                return null;
-            ListControlItem.ItemCheckBoxInfo result = new();
-            result.PartState = Enabled
-                ? VisualControlState.Normal : VisualControlState.Disabled;
-            result.CheckState = GetItemCheckState(item);
-            result.CheckSize = DrawingUtils.GetCheckBoxSize(this, result.CheckState, result.PartState);
-            var (checkRect, textRect) = GetItemImageRect(rect, result.CheckSize);
-            result.CheckRect = checkRect;
-            result.TextRect = textRect;
-            return result;
         }
     }
 }

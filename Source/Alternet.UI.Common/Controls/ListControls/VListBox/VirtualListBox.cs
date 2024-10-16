@@ -233,8 +233,8 @@ namespace Alternet.UI
             var item = SafeItem(itemIndex);
             if (item is null)
                 return;
-            var checkState = GetItemCheckState(item);
-            var allowThreeState = GetItemAllowThreeState(item);
+            var checkState = item.GetCheckState(this);
+            var allowThreeState = item.GetAllowThreeState(this);
             var allowAllStatesForUser = GetItemCheckBoxAllowAllStatesForUser(item);
 
             allowThreeState = allowThreeState && allowAllStatesForUser;
@@ -378,6 +378,8 @@ namespace Alternet.UI
                         itemPaintArgs.Graphics = dc;
                         itemPaintArgs.ClipRectangle = rectRow;
                         itemPaintArgs.ItemIndex = line;
+                        itemPaintArgs.IsCurrent = IsCurrent(line);
+                        itemPaintArgs.IsSelected = IsSelected(line);
                     }
 
                     matrix.Reset();

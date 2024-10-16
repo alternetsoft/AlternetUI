@@ -301,7 +301,7 @@ namespace Alternet.UI
                 var itemColor = GetImageColor(colorListBox, e);
                 if (colorListBox.TextVisible)
                 {
-                    var (colorRect, itemRect) = colorListBox.GetItemImageRect(e.ClipRectangle);
+                    var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClipRectangle);
                     e.ClipRectangle = itemRect;
                     colorListBox.DefaultDrawItem(e);
                     ColorComboBox.PaintColorImage(e.Graphics, colorRect, itemColor);

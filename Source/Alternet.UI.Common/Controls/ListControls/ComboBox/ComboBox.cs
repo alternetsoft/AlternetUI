@@ -692,16 +692,6 @@ namespace Alternet.UI
         {
         }
 
-        bool IListControlItemContainer.IsCurrent(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IListControlItemContainer.IsSelected(int index)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Default item painter for the ownerdraw <see cref="ComboBox"/> items.
         /// </summary>

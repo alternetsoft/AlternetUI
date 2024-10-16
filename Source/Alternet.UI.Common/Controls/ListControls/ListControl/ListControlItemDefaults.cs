@@ -39,5 +39,8 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual bool CheckBoxVisible { get; set; } = false;
+
+        /// <inheritdoc/>
+        public bool CheckBoxThreeState { get; set; } = false;
     }
 }

@@ -455,6 +455,63 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets suggested rectangles of the item's image and text.
+        /// </summary>
+        /// <param name="rect">Item rectangle.</param>
+        /// <param name="imageSize">Image size. Optional. If not specified, calculated
+        /// using height of the item.</param>
+        /// <returns></returns>
+        public static (RectD ImageRect, RectD TextRect) GetItemImageRect(
+            RectD rect, SizeD? imageSize = null)
+        {
+            Thickness textMargin = Thickness.Empty;
+
+            var offset = ComboBox.DefaultImageVerticalOffset;
+
+            var size = rect.Height - textMargin.Vertical - (offset * 2);
+
+            if (imageSize is null || imageSize.Value.Height > size)
+                imageSize = (size, size);
+
+            PointD imageLocation = (
+                rect.X + textMargin.Left,
+                rect.Y + textMargin.Top + offset);
+
+            var imageRect = new RectD(imageLocation, imageSize.Value);
+            var centeredImageRect = imageRect.CenterIn(rect, false, true);
+
+            var itemRect = rect;
+            itemRect.X += centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
+            itemRect.Width -= centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
+
+            return (centeredImageRect, itemRect);
+        }
+
+        /// <summary>
+        /// Gets <see cref="UI.CheckState"/> of the item using <see cref="GetAllowThreeState"/>
+        /// and <see cref="ListControlItem.CheckState"/>.
+        /// </summary>
+        public virtual CheckState GetCheckState(IListControlItemContainer? container)
+        {
+            var allowThreeState = GetAllowThreeState(container);
+            var checkState = CheckState;
+            if (!allowThreeState && checkState == CheckState.Indeterminate)
+                checkState = CheckState.Unchecked;
+            return checkState;
+        }
+
+        /// <summary>
+        /// Gets whether three state checkbox is allowed in the item.
+        /// </summary>
+        public virtual bool GetAllowThreeState(IListControlItemContainer? container)
+        {
+            bool allowThreeState = container?.Defaults.CheckBoxThreeState ?? false;
+            if (allowThreeState && CheckBoxThreeState is not null)
+                allowThreeState = CheckBoxThreeState.Value;
+            return allowThreeState;
+        }
+
+        /// <summary>
         /// Gets item text color when item is inside the spedified container.
         /// </summary>
         public virtual Color GetTextColor(IListControlItemContainer? container)
@@ -509,6 +566,27 @@ namespace Alternet.UI
         public override string? ToString()
         {
             return Text ?? base.ToString();
+        }
+
+        internal virtual ItemCheckBoxInfo? GetCheckBoxInfo(
+            IListControlItemContainer? container,
+            RectD rect)
+        {
+            var showCheckBox = GetShowCheckBox(container);
+            if (!showCheckBox)
+                return null;
+            ListControlItem.ItemCheckBoxInfo result = new();
+            result.PartState = IsContainerEnabled(container)
+                ? VisualControlState.Normal : VisualControlState.Disabled;
+            result.CheckState = GetCheckState(container);
+            result.CheckSize = DrawingUtils.GetCheckBoxSize(
+                container as Control ?? App.SafeWindow ?? ControlUtils.Empty,
+                result.CheckState,
+                result.PartState);
+            var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize);
+            result.CheckRect = checkRect;
+            result.TextRect = textRect;
+            return result;
         }
 
         internal class ItemCheckBoxInfo

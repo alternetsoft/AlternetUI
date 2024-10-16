@@ -42,12 +42,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item is selected.
         /// </summary>
-        public virtual bool IsSelected => ListBox.IsSelected(ItemIndex);
+        public virtual bool IsSelected { get; set; }
 
         /// <summary>
         /// Gets whether item is current.
         /// </summary>
-        public virtual bool IsCurrent => ListBox.IsCurrent(ItemIndex);
+        public virtual bool IsCurrent { get; set; }
 
         /// <summary>
         /// Gets font of the item.

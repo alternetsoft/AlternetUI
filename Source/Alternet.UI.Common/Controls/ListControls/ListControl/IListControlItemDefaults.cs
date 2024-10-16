@@ -12,6 +12,17 @@ namespace Alternet.UI
     public interface IListControlItemDefaults
     {
         /// <summary>
+        /// Gets or sets a value indicating whether checkbox will
+        /// allow three check states rather than two.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the checkbox is able to display
+        /// three check states; otherwise, <see langword="false" />. The default value
+        /// is <see langword="false"/>.
+        /// </returns>
+        bool CheckBoxThreeState { get; }
+
+        /// <summary>
         /// Gets default size of the svg images.
         /// </summary>
         /// <remarks>
