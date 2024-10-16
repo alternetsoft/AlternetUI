@@ -46,18 +46,8 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnSizeChanged(EventArgs e)
+        public override void DefaultPaint(Graphics dc, RectD bounds)
         {
-            base.OnSizeChanged(e);
-            Invalidate();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            var dc = e.Graphics;
-            var bounds = DrawClientRectangle;
-
             var brush = this.Background;
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
@@ -67,8 +57,15 @@ namespace Alternet.UI
 
             foreach(var paintAction in paintActions)
             {
-                paintAction(this, e.Graphics, e.ClipRectangle);
+                paintAction(this, dc, bounds);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            Invalidate();
         }
     }
 }

@@ -236,7 +236,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
+        protected sealed override void OnPaint(PaintEventArgs e)
         {
             DefaultPaint(e.Graphics, e.ClipRectangle);
         }

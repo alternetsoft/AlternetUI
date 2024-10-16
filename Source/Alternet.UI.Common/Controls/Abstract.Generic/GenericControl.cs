@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// Gets or sets whether control contents is clipped and is not painted outside it's bounds.
         /// </summary>
         [Browsable(true)]
-        internal virtual bool IsClipped
+        public virtual bool IsClipped
         {
             get
             {

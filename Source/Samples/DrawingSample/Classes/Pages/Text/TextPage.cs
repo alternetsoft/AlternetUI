@@ -15,13 +15,7 @@ namespace DrawingSample
         private static readonly Brush fontInfoBrush = Brushes.Black;
         private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, DashStyle.Dash);
 
-        private readonly FormattedText formattedText = new()
-        {
-            HorizontalAlignment = TextHorizontalAlignment.Left,
-            VerticalAlignment = TextVerticalAlignment.Top,
-            Trimming = TextTrimming.Pixel,
-            Wrapping = TextWrapping.Word,
-        };
+        internal readonly GenericWrappedTextControl wrappedControl = new();
 
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
@@ -45,8 +39,6 @@ namespace DrawingSample
         }
 
         public override string Name => "Text";
-
-        public FormattedText WrappedText => formattedText;
 
         public double FontSize
         {
@@ -98,7 +90,7 @@ namespace DrawingSample
             set
             {
                 textWidthLimit = value;
-                Invalidate();
+                UpdateWrappedControl();
             }
         }
 
@@ -108,7 +100,7 @@ namespace DrawingSample
             set
             {
                 textHeightValue = value;
-                Invalidate();
+                UpdateWrappedControl();
             }
         }
 
@@ -125,7 +117,7 @@ namespace DrawingSample
             set
             {
                 textWidthLimitEnabled = value;
-                Invalidate();
+                UpdateWrappedControl();
             }
         }
 
@@ -135,47 +127,69 @@ namespace DrawingSample
             set
             {
                 textHeightSet = value;
-                Invalidate();
+                UpdateWrappedControl();
             }
+        }
+
+        private void UpdateWrappedControl(bool invalidate = true)
+        {
+            wrappedControl.PerformLayoutAndInvalidate(() =>
+            {
+                if (TextWidthLimitEnabled)
+                    wrappedControl.SuggestedWidth = textWidthLimit;
+                else
+                    wrappedControl.ResetSuggestedWidth();
+
+                if (textHeightSet)
+                    wrappedControl.SuggestedHeight = textHeightValue;
+                else
+                    wrappedControl.ResetSuggestedHeight();
+            });
+            
+            Invalidate();
         }
 
         public TextHorizontalAlignment HorizontalAlignment
         {
-            get => formattedText.HorizontalAlignment;
+            get
+            {
+                return wrappedControl.TextHorizontalAlignment;
+            }
+
             set
             {
-                formattedText.HorizontalAlignment = value;
-                Invalidate();
+                wrappedControl.TextHorizontalAlignment = value;
+                UpdateWrappedControl();
             }
         }
 
         public TextVerticalAlignment VerticalAlignment
         {
-            get => formattedText.VerticalAlignment;
+            get => wrappedControl.TextVerticalAlignment;
             set
             {
-                formattedText.VerticalAlignment = value;
-                Invalidate();
+                wrappedControl.TextVerticalAlignment = value;
+                UpdateWrappedControl();
             }
         }
 
         public TextTrimming Trimming
         {
-            get => formattedText.Trimming;
+            get => wrappedControl.TextTrimming;
             set
             {
-                formattedText.Trimming = value;
-                Invalidate();
+                wrappedControl.TextTrimming = value;
+                UpdateWrappedControl();
             }
         }
 
         public TextWrapping Wrapping
         {
-            get => formattedText.Wrapping;
+            get => wrappedControl.TextWrapping;
             set
             {
-                formattedText.Wrapping = value;
-                Invalidate();
+                wrappedControl.TextWrapping = value;
+                UpdateWrappedControl();
             }
         }
 
@@ -210,6 +224,22 @@ namespace DrawingSample
             return LoremIpsum;
         }
 
+        protected override void OnCanvasChanged(AbstractControl? oldValue, AbstractControl? value)
+        {
+            if(value is not null)
+            {
+                value.Layout = LayoutStyle.Vertical;
+                value.Padding = 20;
+            }
+            
+            if(oldValue is not null)
+            {
+                oldValue.Padding = 0;
+            }
+
+            wrappedControl.Parent = value;
+        }
+
         public override void Draw(Graphics dc, RectD bounds)
         {
             paragraphs ??= CreateParagraphs().ToArray();
@@ -217,47 +247,53 @@ namespace DrawingSample
             var color = Color.MidnightBlue;
             float lighten = 10;
 
-            var textFormat = GetTextFormat();
-
             Coord x = 20;
             Coord y = 20;
+
+            bool first = true;
+
+            UpdateWrappedControl(false);
+
+            wrappedControl.Text = GetText();
+            wrappedControl.VerticalAlignment = Alternet.UI.VerticalAlignment.Top;
+            wrappedControl.HorizontalAlignment = Alternet.UI.HorizontalAlignment.Left;
+            wrappedControl.IsClipped = false;
+
             foreach (var paragraph in paragraphs)
             {
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointD(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                formattedText.Text = GetText();
-                formattedText.Font = paragraph.Font;
-                formattedText.ForegroundColor = color;
-                formattedText.MaxWidth = TextWidthLimitEnabled ? TextWidthLimit : null;
-                formattedText.MaxHeight = textHeightSet ? textHeightValue : null;
-                formattedText.Assign(textFormat);
+                wrappedControl.Font = paragraph.Font;
+                wrappedControl.ForegroundColor = color;
+                wrappedControl.PerformLayout();
 
-                var formattedTextSize = formattedText.Measure(dc, Coord.MaxValue);
-                var formattedTextHeight = formattedTextSize.Height;
-                var formattedTextWidth = formattedTextSize.Width;
+                var textSize = wrappedControl.MeasureText(dc, paragraph.Font, wrappedControl.Size);
+                var preferredSized = wrappedControl.GetPreferredSize();
+                RectD rect = ((x, y), wrappedControl.Size);
+                RectD textRect = ((x, y), textSize);
 
-                var width = TextWidthLimitEnabled ? TextWidthLimit : bounds.Width;
-                var textHeight = TextHeightSet ? TextHeightValue : formattedTextHeight;
-                RectD rect = (x, y, width, textHeight);
+                dc.FillRectangleBorder(Brushes.Red, textRect, 2);
 
-                formattedText.Draw(dc, rect);
+                dc.FillRectangleBorder(Brushes.Green, wrappedControl.Bounds, 2);
 
-                dc.FillRectangleBorder(Brushes.LightGray, rect);
+                if (first)
+                {
+                    first = false;
+                }
 
-                /*
-                dc.FillRectangleBorder(
-                    Brushes.LightGreen,
-                    formattedText.GetBlockRect(dc.ScaleFactor, rect));
-                */
+                TemplateUtils.RaisePaintRecursive(wrappedControl, dc, (x, y));
 
-                y += textHeight + 20;
+                y += wrappedControl.Height + 20;
 
                 color = Lighten(color, lighten);
             }
 
             if (TextWidthLimitEnabled)
-                dc.DrawLine(textWidthLimitPen, new PointD(TextWidthLimit + x, bounds.Top), new PointD(TextWidthLimit + x, bounds.Bottom));
+                dc.DrawLine(
+                    textWidthLimitPen,
+                    new PointD(TextWidthLimit + x, bounds.Top),
+                    new PointD(TextWidthLimit + x, bounds.Bottom));
         }
 
         //The amount of lightness (specified in percent) that should be added to the color.
@@ -361,7 +397,7 @@ namespace DrawingSample
 
             public void Dispose()
             {
-                Owner.formattedText.Font = null;
+                Owner.wrappedControl.Font = null;
                 Font.Dispose();
             }
         }

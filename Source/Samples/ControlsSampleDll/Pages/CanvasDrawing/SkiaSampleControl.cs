@@ -34,13 +34,11 @@ namespace Alternet.UI
             {
                 sampleFont = value;
             }
-        } 
+        }
 
-        protected override void OnPaint(PaintEventArgs e)
+        public override void DefaultPaint(Graphics dc, RectD rect)
         {
-            var dc = e.Graphics;
-
-            dc.FillRectangle(Color.LightGoldenrodYellow.AsBrush, e.ClipRectangle);
+            dc.FillRectangle(Color.LightGoldenrodYellow.AsBrush, rect);
 
             var svgImage = KnownSvgImages.ImgAngleDown;
             var image = svgImage.ImageWithColor(64, Color.Red);
@@ -76,7 +74,7 @@ namespace Alternet.UI
             dc.SetPixel(160, 0, Color.Red);
             dc.SetPixel(50, 150, Color.Red);
 
-            dc.DrawRectangle(Color.Red.AsPen, e.ClipRectangle);
+            dc.DrawRectangle(Color.Red.AsPen, rect);
 
             dc.DrawImage(image, (50, 150));
         }

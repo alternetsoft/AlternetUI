@@ -20,14 +20,13 @@ namespace Alternet.UI
         /// </summary>
         public static void RaisePaintRecursive(
             AbstractControl? control,
-            PaintEventArgs e,
+            Graphics dc,
             PointD origin)
         {
-            var dc = e.Graphics;
             dc.PushAndTranslate(origin.X, origin.Y);
             try
             {
-                RaisePaintRecursive(control, e);
+                RaisePaintRecursive(control, dc);
             }
             finally
             {
@@ -42,7 +41,7 @@ namespace Alternet.UI
         /// </summary>
         public static void RaisePaintForChildren(
             AbstractControl? control,
-            PaintEventArgs e)
+            Graphics dc)
         {
             if (control is null || !control.HasChildren)
                 return;
@@ -54,7 +53,7 @@ namespace Alternet.UI
             {
                 if (!child.Visible)
                     continue;
-                RaisePaintRecursive(child, e, child.Location);
+                RaisePaintRecursive(child, dc, child.Location);
             }
         }
 
@@ -65,15 +64,18 @@ namespace Alternet.UI
         /// </summary>
         public static void RaisePaintRecursive(
             AbstractControl? control,
-            PaintEventArgs e)
+            Graphics dc)
         {
             if (control is null)
                 return;
 
             if (control.UserPaint)
+            {
+                PaintEventArgs e = new(dc, (PointD.Empty, control.Size));
                 control.RaisePaint(e);
+            }
 
-            RaisePaintForChildren(control, e);
+            RaisePaintForChildren(control, dc);
         }
 
         /// <summary>
@@ -155,22 +157,7 @@ namespace Alternet.UI
             PointD? translate = null)
         {
             control.SetSizeToContent();
-
-            RectD clipRect = (0, 0, control.Width, control.Height);
-
-            PaintEventArgs e = new(canvas, clipRect);
-
-            if (translate is not null)
-            {
-                canvas.PushAndTranslate(translate.Value.X, translate.Value.Y);
-            }
-
-            RaisePaintRecursive(control, e);
-
-            if (translate is not null)
-            {
-                canvas.Pop();
-            }
+            RaisePaintRecursive(control, canvas, translate ?? PointD.Empty);
         }
 
         /// <summary>

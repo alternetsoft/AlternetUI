@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
@@ -19,29 +20,56 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets text for painting.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string TextForPaint
+        {
+            get
+            {
+                return Text;
+            }
+        }
+
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            var specifiedWidth = SuggestedWidth;
-            var specifiedHeight = SuggestedHeight;
+            var specifiedSize = SuggestedSize;
 
-            SizeD result = 0;
-
-            var text = Text;
-            if (!string.IsNullOrEmpty(text))
+            if (specifiedSize.IsNanWidth)
             {
-                result = MeasureCanvas.GetTextExtent(
-                    text,
-                    GetLabelFont(VisualControlState.Normal));
+                specifiedSize.Width = availableSize.Width;
             }
 
-            if (!Coord.IsNaN(specifiedWidth))
-                result.Width = Math.Max(result.Width, specifiedWidth);
+            if (specifiedSize.IsNanHeight)
+            {
+                specifiedSize.Height = availableSize.Height;
+            }
 
-            if (!Coord.IsNaN(specifiedHeight))
-                result.Height = Math.Max(result.Height, specifiedHeight);
+            var paddingSize = Padding.Size;
 
-            return result + Padding.Size;
+            SizeD result = MeasureText(
+                MeasureCanvas,
+                GetLabelFont(VisualControlState.Normal),
+                specifiedSize - paddingSize);
+
+            return result + paddingSize;
+        }
+
+        /// <summary>
+        /// Measures text size.
+        /// </summary>
+        /// <param name="dc">Graphics context.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="availableSize">Available size.</param>
+        public virtual SizeD MeasureText(Graphics dc, Font font, SizeD availableSize)
+        {
+            var text = TextForPaint;
+            if (string.IsNullOrEmpty(text))
+                return SizeD.Empty;
+            var result = MeasureCanvas.GetTextExtent(text, font);
+            return result;
         }
 
         /// <inheritdoc/>
@@ -54,20 +82,38 @@ namespace Alternet.UI
                 rect.Location + Padding.LeftTop,
                 rect.Size - Padding.Size);
 
-            var labelText = Text;
-            if (labelText == string.Empty)
-                return;
-
             var labelFont = GetLabelFont(state);
             var labelForeColor = GetLabelForeColor(state);
             var labelBackColor = GetLabelBackColor(state);
 
-            dc.DrawText(
-                labelText,
-                paddedRect.Location,
+            DrawText(
+                dc,
+                paddedRect,
                 labelFont,
                 labelForeColor,
                 labelBackColor);
+        }
+
+        /// <summary>
+        /// Paints text on the canvas.
+        /// </summary>
+        /// <param name="dc">Graphics context.</param>
+        /// <param name="rect">Bounding rectangle used to draw the text.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
+        public virtual void DrawText(
+            Graphics dc,
+            RectD rect,
+            Font font,
+            Color foreColor,
+            Color backColor)
+        {
+            var labelText = TextForPaint;
+            if (labelText == string.Empty)
+                return;
+            dc.DrawText(labelText, rect.Location, font, foreColor, backColor);
         }
 
         /// <inheritdoc/>

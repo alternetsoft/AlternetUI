@@ -55,16 +55,8 @@ namespace PropertyGridSample
             }
         }
 
-        protected override void OnSizeChanged(EventArgs e)
+        public override void DefaultPaint(Graphics dc, RectD bounds)
         {
-            base.OnSizeChanged(e);
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            var dc = e.Graphics;
-            var bounds = DrawClientRectangle;
-
             var brush = this.Background;
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
@@ -75,6 +67,11 @@ namespace PropertyGridSample
                 dc,
                 bounds,
                 Flags);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
         }
     }
 }

@@ -33,10 +33,8 @@ namespace Alternet.UI
             }
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        public override void DefaultPaint(Graphics dc, RectD bounds)
         {
-            var bounds = e.ClipRectangle;
-            var dc = e.Graphics;
             var brush = GetBackgroundBrush();
             if (brush != null)
                 dc.FillRectangle(brush, bounds);

@@ -727,7 +727,7 @@ namespace Alternet.UI
                 }
 
                 Label.ForegroundColor = foreColor;
-                TemplateUtils.RaisePaintRecursive(Label, new(dc, rect), Label.Location);
+                TemplateUtils.RaisePaintRecursive(Label, dc, Label.Location);
             }
         }
 
