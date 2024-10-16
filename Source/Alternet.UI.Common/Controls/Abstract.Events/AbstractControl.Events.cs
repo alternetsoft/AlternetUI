@@ -405,7 +405,7 @@ namespace Alternet.UI
         /// but on the control level.
         /// </summary>
         /// <remarks>
-        /// Use <see cref="ProcessIdle"/> property to specify whether <see cref="Idle"/>
+        /// Use <see cref="Control.ProcessIdle"/> property to specify whether <see cref="Idle"/>
         /// event is fired.
         /// </remarks>
         [Category("Behavior")]

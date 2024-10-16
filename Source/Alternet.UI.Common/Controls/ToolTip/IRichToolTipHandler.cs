@@ -18,7 +18,9 @@ namespace Alternet.UI
         /// </summary>
         SizeI SizeInPixels { get; }
 
-        /// <inheritdoc cref="RichToolTip.SetLocationDecrement"/>
+        /// <summary>
+        /// Sets location decrement for the tooltip.
+        /// </summary>
         void SetLocationDecrement(bool decrementX, bool decrementY);
 
         /// <inheritdoc cref="RichToolTip.SetBackgroundColor"/>

@@ -134,10 +134,10 @@ namespace Alternet.UI
         /// </summary>
         RectD EventBounds { get; }
 
-        /// <inheritdoc cref="AbstractControl.LangDirection"/>
+        /// <inheritdoc cref="Control.LangDirection"/>
         LangDirection LangDirection { get; set; }
 
-        /// <inheritdoc cref="AbstractControl.BorderStyle"/>
+        /// <inheritdoc cref="Control.BorderStyle"/>
         ControlBorderStyle BorderStyle { get; set; }
 
         /// <summary>
@@ -195,16 +195,16 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.AllowDrop"/>
         bool AllowDrop { get; set; }
 
-        /// <inheritdoc cref="AbstractControl.BackgroundStyle"/>
+        /// <inheritdoc cref="Control.BackgroundStyle"/>
         ControlBackgroundStyle BackgroundStyle { get; set; }
 
-        /// <inheritdoc cref="AbstractControl.ProcessIdle"/>
+        /// <inheritdoc cref="Control.ProcessIdle"/>
         bool ProcessIdle { get; set; }
 
         /// <inheritdoc cref="AbstractControl.ClientSize"/>
         SizeD ClientSize { get; set; }
 
-        /// <inheritdoc cref="AbstractControl.ProcessUIUpdates"/>
+        /// <inheritdoc cref="Control.ProcessUIUpdates"/>
         bool ProcessUIUpdates { get; set; }
 
         /// <inheritdoc cref="AbstractControl.IsMouseCaptured"/>
@@ -213,10 +213,10 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.IsHandleCreated"/>
         bool IsHandleCreated { get; }
 
-        /// <inheritdoc cref="AbstractControl.Raise"/>
+        /// <inheritdoc cref="Window.Raise"/>
         void Raise();
 
-        /// <inheritdoc cref="AbstractControl.CenterOnParent"/>
+        /// <inheritdoc cref="Control.CenterOnParent"/>
         void CenterOnParent(GenericOrientation direction);
 
         /// <inheritdoc cref="AbstractControl.SetCursor"/>
@@ -228,7 +228,7 @@ namespace Alternet.UI
         /// <param name="value">Tooltip text.</param>
         void SetToolTip(string? value);
 
-        /// <inheritdoc cref="AbstractControl.Lower"/>
+        /// <inheritdoc cref="Window.Lower"/>
         void Lower();
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.EndInit"/>
         void EndInit();
 
-        /// <inheritdoc cref="AbstractControl.SaveScreenshot"/>
+        /// <inheritdoc cref="Control.SaveScreenshot"/>
         void SaveScreenshot(string fileName);
 
         /// <inheritdoc cref="AbstractControl.IsTransparentBackgroundSupported"/>
@@ -287,7 +287,7 @@ namespace Alternet.UI
         /// <returns></returns>
         Coord GetPixelScaleFactor();
 
-        /// <inheritdoc cref="AbstractControl.GetUpdateClientRectI"/>
+        /// <inheritdoc cref="Control.GetUpdateClientRectI"/>
         RectI GetUpdateClientRectI();
 
         /// <summary>

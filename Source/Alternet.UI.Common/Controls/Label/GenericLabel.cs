@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
         /// </summary>
-        /// <param name="text">Value of the <see cref="Text"/> property.</param>
+        /// <param name="text">Value of the text property.</param>
         public GenericLabel(string? text)
             : this()
         {
@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// Gets or sets text prefix.
         /// </summary>
         /// <remarks>
-        /// Value of this property is shown at the beginning of <see cref="Text"/>
+        /// Value of this property is shown at the beginning of the text
         /// when control is painted.
         /// </remarks>
         public virtual string? TextPrefix
@@ -107,7 +107,7 @@ namespace Alternet.UI
         /// Gets or sets text suffix.
         /// </summary>
         /// <remarks>
-        /// Value of this property is shown at the end of <see cref="Text"/>
+        /// Value of this property is shown at the end of the text
         /// when control is painted.
         /// </remarks>
         public virtual string? TextSuffix
