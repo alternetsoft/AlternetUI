@@ -1095,8 +1095,15 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void PushAndTranslate(Coord offsetX, Coord offsetY)
         {
-            var transform = TransformMatrix.CreateTranslation(offsetX, offsetY);
-            PushTransform(transform);
+            if(offsetX == 0 && offsetY == 0)
+            {
+                Push();
+            }
+            else
+            {
+                var transform = TransformMatrix.CreateTranslation(offsetX, offsetY);
+                PushTransform(transform);
+            }
         }
 
         /// <summary>

@@ -236,12 +236,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override bool HasGenericPaint()
-        {
-            return true;
-        }
-
-        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             DefaultPaint(e.Graphics, e.ClipRectangle);

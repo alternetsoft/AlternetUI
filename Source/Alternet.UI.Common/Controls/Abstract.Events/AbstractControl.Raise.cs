@@ -785,55 +785,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises paint event for this control and for all its children.
-        /// This method is used for template painting. Childs are painted only if
-        /// they are descendants of the <see cref="UserControl"/>.
-        /// </summary>
-        public virtual void RaisePaintRecursive(
-            PaintEventArgs e,
-            bool? overrideVisible,
-            bool onlyChilds = false,
-            bool? overrideChildVisible = null)
-        {
-            visible = overrideVisible ?? Visible;
-            if (!visible)
-                return;
-            if (!onlyChilds)
-            {
-                if (HasGenericPaint())
-                    RaisePaint(e);
-            }
-
-            if (!HasChildren)
-                return;
-
-            var myChildren = AllChildrenInLayout;
-            var dc = e.Graphics;
-
-            foreach (var child in myChildren)
-            {
-                var childVisible = overrideChildVisible ?? child.Visible;
-
-                if (!childVisible)
-                    continue;
-                if (child is not GenericControl)
-                    continue;
-
-                TransformMatrix transform = new();
-                transform.Translate(child.Left, child.Top);
-                dc.PushTransform(transform);
-                try
-                {
-                    child.RaisePaintRecursive(e, overrideVisible);
-                }
-                finally
-                {
-                    dc.Pop();
-                }
-            }
-        }
-
-        /// <summary>
         /// Raises the <see cref="LocationChanged"/> event.
         /// </summary>
         public void RaiseLocationChanged()

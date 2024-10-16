@@ -85,11 +85,5 @@ namespace Alternet.UI
                 },
                 IsClipped);
         }
-
-        /// <inheritdoc/>
-        protected override bool HasGenericPaint()
-        {
-            return true;
-        }
     }
 }

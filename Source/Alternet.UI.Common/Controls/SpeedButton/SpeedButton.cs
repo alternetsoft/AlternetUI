@@ -727,8 +727,7 @@ namespace Alternet.UI
                 }
 
                 Label.ForegroundColor = foreColor;
-                Label.VisualStateOverride = VisualState;
-                RaisePaintRecursive(new(dc, rect), true, true, true);
+                TemplateUtils.RaisePaintRecursive(Label, new(dc, rect), Label.Location);
             }
         }
 

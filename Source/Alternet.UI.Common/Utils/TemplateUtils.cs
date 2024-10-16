@@ -14,6 +14,69 @@ namespace Alternet.UI
     public static class TemplateUtils
     {
         /// <summary>
+        /// Raises paint event for the control and for all its children at the specified point.
+        /// This method is used for template painting. Controls are painted only if
+        /// <see cref="AbstractControl.UserPaint"/> is <c>true</c>.
+        /// </summary>
+        public static void RaisePaintRecursive(
+            AbstractControl? control,
+            PaintEventArgs e,
+            PointD origin)
+        {
+            var dc = e.Graphics;
+            dc.PushAndTranslate(origin.X, origin.Y);
+            try
+            {
+                RaisePaintRecursive(control, e);
+            }
+            finally
+            {
+                dc.Pop();
+            }
+        }
+
+        /// <summary>
+        /// Raises paint event for all children of the specified control and not the control itself.
+        /// This method is used for template painting. Controls are painted only if
+        /// <see cref="AbstractControl.UserPaint"/> is <c>true</c>.
+        /// </summary>
+        public static void RaisePaintForChildren(
+            AbstractControl? control,
+            PaintEventArgs e)
+        {
+            if (control is null || !control.HasChildren)
+                return;
+
+            // We need Children here, not AllChildrenInLayout
+            var children = control.Children;
+
+            foreach (var child in children)
+            {
+                if (!child.Visible)
+                    continue;
+                RaisePaintRecursive(child, e, child.Location);
+            }
+        }
+
+        /// <summary>
+        /// Raises paint event for the control and for all its children.
+        /// This method is used for template painting. Controls are painted only if
+        /// <see cref="AbstractControl.UserPaint"/> is <c>true</c>.
+        /// </summary>
+        public static void RaisePaintRecursive(
+            AbstractControl? control,
+            PaintEventArgs e)
+        {
+            if (control is null)
+                return;
+
+            if (control.UserPaint)
+                control.RaisePaint(e);
+
+            RaisePaintForChildren(control, e);
+        }
+
+        /// <summary>
         /// Gets template contents as <see cref="ImageSet"/>.
         /// </summary>
         /// <param name="template">Template control</param>
@@ -102,7 +165,7 @@ namespace Alternet.UI
                 canvas.PushAndTranslate(translate.Value.X, translate.Value.Y);
             }
 
-            control.RaisePaintRecursive(e, true);
+            RaisePaintRecursive(control, e);
 
             if (translate is not null)
             {

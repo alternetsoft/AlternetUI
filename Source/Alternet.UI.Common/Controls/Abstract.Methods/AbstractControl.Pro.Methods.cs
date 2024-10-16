@@ -279,15 +279,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether this control can paint itself internally without using platform control.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual bool HasGenericPaint()
-        {
-            return UserPaint;
-        }
-
-        /// <summary>
         /// Gets <see cref="Color"/> which is used to draw background of the label text.
         /// </summary>
         /// <returns>By default returns <see cref="Color.Empty"/> which means do not
