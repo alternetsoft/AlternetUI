@@ -116,7 +116,16 @@ namespace Alternet.UI
             Color foreColor,
             Color backColor)
         {
-            DrawInternal(dc, rect, font, foreColor, backColor);
+            var size = DrawInternal(dc, rect, font);
+            var textRect = rect.WithSize(size.Width, size.Height);
+
+            var alignedItemRect = AlignUtils.AlignRectInRect(
+                true,
+                textRect,
+                rect,
+                (CoordAlignment)TextVerticalAlignment);
+
+            DrawInternal(dc, alignedItemRect, font, foreColor, backColor);
         }
 
         private SizeD DrawInternal(
@@ -135,7 +144,6 @@ namespace Alternet.UI
             foreach (var s in wrappedText)
             {
                 var measure = dc.MeasureText(s, font);
-                totalMeasure += measure;
 
                 if (foreColor is not null)
                 {
@@ -154,8 +162,11 @@ namespace Alternet.UI
                     dc.DrawText(s, alignedItemRect.Location, font, foreColor, backColor ?? Color.Empty);
                 }
 
-                origin.Y += measure.Height + textDistance;
-                totalMeasure.Height += textDistance;
+                var increment = measure.Height + textDistance;
+                origin.Y += increment;
+                totalMeasure.Height += increment;
+
+                totalMeasure.Width = Math.Max(totalMeasure.Width, measure.Width);
             }
 
             return totalMeasure;

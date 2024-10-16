@@ -48,6 +48,7 @@ namespace DrawingSample
 
             if (DebugUtils.IsDebugDefined)
             {
+                /*
                 AddProperty(
                     page.wrappedControl,
                     nameof(AbstractControl.HorizontalAlignment),
@@ -57,6 +58,7 @@ namespace DrawingSample
                     page.wrappedControl,
                     nameof(AbstractControl.VerticalAlignment),
                     "Block Vert");
+                */
 
                 AddProperty(
                     page.wrappedControl,

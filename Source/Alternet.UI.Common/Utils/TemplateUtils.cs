@@ -13,6 +13,24 @@ namespace Alternet.UI
     /// </summary>
     public static class TemplateUtils
     {
+        public static void RaisePaintClipped(
+            AbstractControl? control,
+            Graphics dc,
+            PointD origin,
+            bool isClipped = true)
+        {
+            if (control is null)
+                return;
+
+            dc.DoInsideClipped(
+                (origin, control.Size),
+                () =>
+                {
+                    RaisePaintRecursive(control, dc, origin);
+                },
+                isClipped);
+        }
+
         /// <summary>
         /// Raises paint event for the control and for all its children at the specified point.
         /// This method is used for template painting. Controls are painted only if

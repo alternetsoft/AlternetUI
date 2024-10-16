@@ -1246,16 +1246,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws formatted text.
-        /// </summary>
-        /// <param name="text">Formatted text.</param>
-        /// <param name="rect">Bounding rectangle.</param>
-        public void DrawFormattedText(FormattedText text, RectD rect)
-        {
-            text.Draw(this, rect);
-        }
-
-        /// <summary>
         /// Pops a stored clip region state from the stack and sets the current clip region
         /// to that state.
         /// </summary>
