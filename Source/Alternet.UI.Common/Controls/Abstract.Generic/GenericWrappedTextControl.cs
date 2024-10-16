@@ -117,13 +117,15 @@ namespace Alternet.UI
             Color backColor)
         {
             var size = DrawInternal(dc, rect, font);
-            var textRect = rect.WithSize(size.Width, size.Height);
+            var textRect = rect.WithHeight(size.Height);
+
+            var vertAlignment = AlignUtils.Convert(TextVerticalAlignment);
 
             var alignedItemRect = AlignUtils.AlignRectInRect(
-                true,
                 textRect,
                 rect,
-                (CoordAlignment)TextVerticalAlignment);
+                null,
+                vertAlignment);
 
             DrawInternal(dc, alignedItemRect, font, foreColor, backColor);
         }
@@ -160,6 +162,7 @@ namespace Alternet.UI
                         (CoordAlignment)alignment);
 
                     dc.DrawText(s, alignedItemRect.Location, font, foreColor, backColor ?? Color.Empty);
+                    dc.FillRectangleBorder(Brushes.Red, alignedItemRect);
                 }
 
                 var increment = measure.Height + textDistance;

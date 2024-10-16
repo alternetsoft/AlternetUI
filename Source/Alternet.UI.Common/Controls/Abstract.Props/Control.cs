@@ -839,7 +839,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override Coord RequestScaleFactor()
+        protected override Coord? RequestScaleFactor()
         {
             return Handler.GetPixelScaleFactor();
         }

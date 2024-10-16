@@ -14,6 +14,13 @@ namespace Alternet.UI
     {
         private bool isClipped = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControl"/> class.
+        /// </summary>
+        public GenericControl()
+        {
+        }
+
         /// <inheritdoc/>
         public override bool IsHandleCreated => true;
 

@@ -41,6 +41,7 @@ namespace Alternet.UI
             Func<SizeD, SizeD> func)
         {
             var suggested = SuggestedSize;
+
             var isNanSuggestedWidth = suggested.IsNanWidth;
             var isNanSuggestedHeight = suggested.IsNanHeight;
 
@@ -54,19 +55,19 @@ namespace Alternet.UI
 
             var paddingSize = Padding.Size;
 
-            if (withPadding)
-                conteinerSize -= paddingSize;
+            conteinerSize -= paddingSize;
 
             var measured = func(conteinerSize);
 
             if (!isNanSuggestedWidth)
                 measured.Width = suggested.Width;
+            else
+                measured.Width += paddingSize.Width;
 
             if (!isNanSuggestedHeight)
                 measured.Height = suggested.Height;
-
-            if (withPadding)
-                measured += paddingSize;
+            else
+                measured.Height += paddingSize.Height;
 
             return measured;
         }

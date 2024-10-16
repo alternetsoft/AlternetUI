@@ -62,8 +62,23 @@ namespace DrawingSample
 
                 AddProperty(
                     page.wrappedControl,
-                    nameof(GenericWrappedTextControl.LineDistance),
-                    "Line Distance");
+                    nameof(GenericWrappedTextControl.PaddingTop));
+
+                AddProperty(
+                    page.wrappedControl,
+                    nameof(GenericWrappedTextControl.PaddingBottom));
+
+                AddProperty(
+                    page.wrappedControl,
+                    nameof(GenericWrappedTextControl.PaddingLeft));
+
+                AddProperty(
+                    page.wrappedControl,
+                    nameof(GenericWrappedTextControl.PaddingRight));
+
+                AddProperty(
+                    page.wrappedControl,
+                    nameof(GenericWrappedTextControl.LineDistance));
             }
 
             void AddProperty(object obj, string name, string? label = null)

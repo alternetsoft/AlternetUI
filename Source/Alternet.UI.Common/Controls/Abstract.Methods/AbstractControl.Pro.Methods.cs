@@ -43,9 +43,9 @@ namespace Alternet.UI
         /// Requests scale factor from the parent or other available sources.
         /// </summary>
         /// <returns></returns>
-        protected virtual Coord RequestScaleFactor()
+        protected virtual Coord? RequestScaleFactor()
         {
-            return Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
+            return Parent?.ScaleFactor;
         }
 
         /// <summary>

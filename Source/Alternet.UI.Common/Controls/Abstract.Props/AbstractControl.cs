@@ -61,6 +61,7 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private Coord? scaleFactorOverride;
         private Color? textBackColor;
         private SizeD minimumSize;
         private SizeD maximumSize;
@@ -222,7 +223,32 @@ namespace Alternet.UI
         {
             get
             {
-                return scaleFactor ??= RequestScaleFactor();
+                if (ScaleFactorOverride is not null)
+                    return ScaleFactorOverride.Value;
+
+                scaleFactor ??= RequestScaleFactor();
+
+                if(scaleFactor is null)
+                    return Display.Primary.ScaleFactor;
+
+                return scaleFactor.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets an override value
+        /// </summary>
+        [Browsable(false)]
+        public virtual Coord? ScaleFactorOverride
+        {
+            get
+            {
+                return scaleFactorOverride;
+            }
+
+            set
+            {
+                scaleFactorOverride = value;
             }
         }
 
