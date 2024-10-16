@@ -841,7 +841,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
         /// <returns></returns>
-        public virtual GenericAlignment GetItemAlignment(int itemIndex)
+        public GenericAlignment GetItemAlignment(int itemIndex)
         {
             return ListControlItem.GetAlignment(SafeItem(itemIndex), this);
         }
@@ -851,7 +851,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
         /// <returns></returns>
-        public virtual Coord GetItemMinHeight(int itemIndex)
+        public Coord GetItemMinHeight(int itemIndex)
         {
             return ListControlItem.GetMinHeight(SafeItem(itemIndex), this);
         }
@@ -862,7 +862,7 @@ namespace Alternet.UI
         /// <param name="itemIndex">Index of the item.</param>
         /// <param name="svgColor">Color of the svg image when item is selected.</param>
         /// <returns></returns>
-        public virtual (Image? Normal, Image? Disabled, Image? Selected)
+        public (Image? Normal, Image? Disabled, Image? Selected)
             GetItemImages(int itemIndex, Color? svgColor)
         {
             return ListControlItem.GetItemImages(SafeItem(itemIndex), this, svgColor);
@@ -885,7 +885,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">Item.</param>
         /// <returns></returns>
-        public virtual bool GetItemShowCheckBox(ListControlItem item)
+        public bool GetItemShowCheckBox(ListControlItem item)
         {
             return item.GetShowCheckBox(this);
         }
@@ -895,7 +895,7 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetSelectedItemTextColor(int itemIndex)
+        public Color GetSelectedItemTextColor(int itemIndex)
         {
             return ListControlItem.GetSelectedTextColor(SafeItem(itemIndex), this);
         }
@@ -905,7 +905,7 @@ namespace Alternet.UI
         /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetItemTextColor(int itemIndex)
+        public Color GetItemTextColor(int itemIndex)
         {
             return ListControlItem.GetItemTextColor(SafeItem(itemIndex), this);
         }
@@ -915,19 +915,16 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemBackColor"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetSelectedItemBackColor(int itemIndex)
+        public Color GetSelectedItemBackColor(int itemIndex)
         {
-            if (Enabled && SelectionVisible)
-                return SelectedItemBackColor ?? DefaultSelectedItemBackColor;
-            else
-                return RealBackgroundColor;
+            return ListControlItem.GetSelectedItemBackColor(SafeItem(itemIndex), this);
         }
 
         /// <summary>
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public virtual Color GetDisabledItemTextColor(int itemIndex)
+        public Color GetDisabledItemTextColor(int itemIndex)
         {
             return ListControlItem.GetDisabledTextColor(SafeItem(itemIndex), this);
         }
