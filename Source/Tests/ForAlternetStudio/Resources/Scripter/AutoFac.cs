@@ -14,7 +14,7 @@ public class SMSService : IMobileServive
 {
     public void Execute()
     {
-        ScriptGlobalClass.MainForm.Text += " - SMS service";
+        ScriptGlobalClass.MainForm.Text += " - SMS";
     }
 }
 
@@ -27,7 +27,7 @@ public class EmailService : IMailService
 {
     public void Execute()
     {
-        ScriptGlobalClass.MainForm.Text += "- Email service";
+        ScriptGlobalClass.MainForm.Text += "- Email";
     }
 }
 

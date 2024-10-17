@@ -26,8 +26,6 @@ namespace ObjectReference
     public partial class MainForm : Form
     {
         private const string LanguageDescription = "Choose programming language";
-        private bool scriptRunning;
-        private IDisposable scriptObject;
         private IScriptEdit edit;
 
         public MainForm()
@@ -109,32 +107,16 @@ namespace ObjectReference
                 }
             }
 
-            scriptObject = scriptRun.Run() as IDisposable;
-            scriptRunning = true;
-            btRun.Text = "Stop Script";
-        }
-
-        private void StopScript()
-        {
-            if (scriptObject != null)
-                scriptObject.Dispose();
-            scriptObject = null;
-            scriptRunning = false;
-            btRun.Text = "Run Script";
-            btNETFromScript.Text = "Test Button";
+            scriptRun.Run();
         }
 
         private void NETFromScriptButton_Click(object sender, EventArgs e)
         {
-            StopScript();
         }
 
         private void RunButton_Click(object sender, EventArgs e)
         {
-            if (!scriptRunning)
                 StartScript();
-            else
-                StopScript();
         }
 
         private void GetSourceParametersForCSharp(out string sourceFileSubPath, out ScriptLanguage language)
