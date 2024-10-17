@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Implements light and dark color pair.
     /// </summary>
-    public readonly struct LightDarkColor : IEquatable<LightDarkColor>
+    public partial class LightDarkColor : IEquatable<LightDarkColor>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LightDarkColor"/> class.
@@ -38,12 +38,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets light color.
         /// </summary>
-        public Color Light { get; }
+        public virtual Color Light { get; set; }
 
         /// <summary>
         /// Gets dark color.
         /// </summary>
-        public Color Dark { get; }
+        public virtual Color Dark { get; set; }
 
         /// <summary>
         /// Conversion operator from <see cref="Color"/> to <see cref="LightDarkColor"/>.
@@ -89,8 +89,8 @@ namespace Alternet.Drawing
             if (left is null || right is null)
                 return false;
 
-            return left.Value.Dark == right.Value.Dark
-                && left.Value.Light == right.Value.Light;
+            return left.Dark == right.Dark
+                && left.Light == right.Light;
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Alternet.Drawing
         /// <param name="isDark">Whether to get dark or light color.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Color Get(bool isDark)
+        public virtual Color Get(bool isDark)
         {
             Color result;
 
