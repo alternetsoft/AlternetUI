@@ -30,6 +30,11 @@ namespace Alternet.Drawing
         public const TextWrapping DefaultWrapping = TextWrapping.Character;
 
         /// <summary>
+        /// Gets default text format.
+        /// </summary>
+        public static readonly TextFormat Default = CreateImmutable();
+
+        /// <summary>
         /// Gets or sets horizontal alignment of the text.
         /// Default is <see cref="TextHorizontalAlignment.Left"/>.
         /// </summary>
@@ -246,6 +251,47 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates new text format which is a clone of this object but with new horizontal
+        /// alignment specified in the <paramref name="horizontalAlignment"/>.
+        /// </summary>
+        /// <param name="horizontalAlignment">Horizontal text alignment property
+        /// of the created text format.</param>
+        /// <returns></returns>
+        public virtual TextFormat WithAlignment(TextHorizontalAlignment horizontalAlignment)
+        {
+            var result = Clone();
+            result.HorizontalAlignment = horizontalAlignment;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new text format which is a clone of this object but with new suggested width
+        /// specified in the <paramref name="suggestedWidth"/>.
+        /// </summary>
+        /// <param name="suggestedWidth">Suggested text width property
+        /// of the created text format.</param>
+        /// <returns></returns>
+        public virtual TextFormat WithSuggestedWidth(Coord suggestedWidth)
+        {
+            var result = Clone();
+            result.SuggestedWidth = suggestedWidth;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates new text format which is a clone of this object but with new maximal width
+        /// specified in the <paramref name="maxWidth"/>.
+        /// </summary>
+        /// <param name="maxWidth">Maximal text width property of the created text format.</param>
+        /// <returns></returns>
+        public virtual TextFormat WithMaxWidth(Coord maxWidth)
+        {
+            var result = Clone();
+            result.MaxWidth = maxWidth;
+            return result;
+        }
+
+        /// <summary>
         /// Creates clone of this object.
         /// </summary>
         /// <returns></returns>
@@ -253,6 +299,13 @@ namespace Alternet.Drawing
         {
             TextFormat result = new();
             result.Assign(this);
+            return result;
+        }
+
+        private static TextFormat CreateImmutable()
+        {
+            TextFormat result = new();
+            result.SetImmutable();
             return result;
         }
 
