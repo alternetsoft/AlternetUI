@@ -7,7 +7,7 @@ namespace Alternet.Drawing
     /// display manipulations (such
     /// as ellipsis insertion). This class cannot be inherited.
     /// </summary>
-    public class TextFormat : ImmutableObject
+    public class TextFormat : ObjectWithRecord<TextFormat.Record>
     {
         /// <summary>
         /// Gets default horizontal alignment of the text;
@@ -29,11 +29,6 @@ namespace Alternet.Drawing
         /// </summary>
         public const TextWrapping DefaultWrapping = TextWrapping.Character;
 
-        private TextHorizontalAlignment horizontalAlignment = DefaultHorizontalAlignment;
-        private TextVerticalAlignment verticalAlignment = DefaultVerticalAlignment;
-        private TextTrimming trimming = DefaultTrimming;
-        private TextWrapping wrapping = DefaultWrapping;
-
         /// <summary>
         /// Gets or sets horizontal alignment of the text.
         /// Default is <see cref="TextHorizontalAlignment.Left"/>.
@@ -46,15 +41,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                return horizontalAlignment;
+                return record.HorizontalAlignment;
             }
 
             set
             {
-                if (horizontalAlignment == value)
-                    return;
-                horizontalAlignment = value;
-                Changed();
+                record.HorizontalAlignment = GetNewFieldValue(record.HorizontalAlignment, value);
             }
         }
 
@@ -69,15 +61,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                return verticalAlignment;
+                return record.VerticalAlignment;
             }
 
             set
             {
-                if (verticalAlignment == value)
-                    return;
-                verticalAlignment = value;
-                Changed();
+                record.VerticalAlignment = GetNewFieldValue(record.VerticalAlignment, value);
             }
         }
 
@@ -93,15 +82,144 @@ namespace Alternet.Drawing
         {
             get
             {
-                return trimming;
+                return record.Trimming;
             }
 
             set
             {
-                if (trimming == value)
-                    return;
-                trimming = value;
-                Changed();
+                record.Trimming = GetNewFieldValue(record.Trimming, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets distance between lines of the text. Default is 0.
+        /// </summary>
+        public virtual Coord Distance
+        {
+            get
+            {
+                return record.Distance;
+            }
+
+            set
+            {
+                record.Distance = GetNewFieldValue(record.Distance, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the top padding of the text.
+        /// </summary>
+        public Coord PaddingTop
+        {
+            get => Padding.Top;
+            set => Padding = Padding.WithTop(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the bottom padding of the text.
+        /// </summary>
+        public Coord PaddingBottom
+        {
+            get => Padding.Bottom;
+            set => Padding = Padding.WithBottom(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the right padding of the text.
+        /// </summary>
+        public Coord PaddingRight
+        {
+            get => Padding.Right;
+            set => Padding = Padding.WithRight(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the left padding of the text.
+        /// </summary>
+        public Coord PaddingLeft
+        {
+            get => Padding.Left;
+            set => Padding = Padding.WithLeft(value);
+        }
+
+        /// <summary>
+        /// Gets or sets padding of the text.
+        /// </summary>
+        public virtual Thickness Padding
+        {
+            get
+            {
+                return record.Padding;
+            }
+
+            set
+            {
+                record.Padding = GetNewFieldValue(record.Padding, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets suggested height of the text.
+        /// </summary>
+        public Coord? SuggestedWidth
+        {
+            get
+            {
+                return record.SuggestedWidth;
+            }
+
+            set
+            {
+                record.SuggestedWidth = GetNewFieldValue(record.SuggestedWidth, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets suggested width of the text.
+        /// </summary>
+        public Coord? SuggestedHeight
+        {
+            get
+            {
+                return record.SuggestedHeight;
+            }
+
+            set
+            {
+                record.SuggestedHeight = GetNewFieldValue(record.SuggestedHeight, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets maximal height of the text.
+        /// </summary>
+        public Coord? MaxWidth
+        {
+            get
+            {
+                return record.MaxWidth;
+            }
+
+            set
+            {
+                record.MaxWidth = GetNewFieldValue(record.MaxWidth, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets maximal width of the text.
+        /// </summary>
+        public Coord? MaxHeight
+        {
+            get
+            {
+                return record.MaxHeight;
+            }
+
+            set
+            {
+                record.MaxHeight = GetNewFieldValue(record.MaxHeight, value);
             }
         }
 
@@ -118,23 +236,13 @@ namespace Alternet.Drawing
         {
             get
             {
-                return wrapping;
+                return record.Wrapping;
             }
 
             set
             {
-                if (wrapping == value)
-                    return;
-                wrapping = value;
-                Changed();
+                record.Wrapping = GetNewFieldValue(record.Wrapping, value);
             }
-        }
-
-        /// <summary>
-        /// Called to reset internal structures when properties are changed.
-        /// </summary>
-        public virtual void Changed()
-        {
         }
 
         /// <summary>
@@ -149,16 +257,46 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Assigns this object with properties of other <see cref="TextFormat"/>.
+        /// Contains all properties of the <see cref="TextFormat"/>.
         /// </summary>
-        /// <param name="value">Source of the property values to assign.</param>
-        public virtual void Assign(TextFormat value)
+        public struct Record
         {
-            horizontalAlignment = value.horizontalAlignment;
-            verticalAlignment = value.verticalAlignment;
-            trimming = value.trimming;
-            wrapping = value.wrapping;
-            Changed();
+            /// <see cref="TextFormat.SuggestedWidth"/>
+            public Coord? SuggestedWidth;
+
+            /// <see cref="TextFormat.SuggestedHeight"/>
+            public Coord? SuggestedHeight;
+
+            /// <see cref="TextFormat.MaxWidth"/>
+            public Coord? MaxWidth;
+
+            /// <see cref="TextFormat.MaxHeight"/>
+            public Coord? MaxHeight;
+
+            /// <see cref="TextFormat.HorizontalAlignment"/>
+            public TextHorizontalAlignment HorizontalAlignment = DefaultHorizontalAlignment;
+
+            /// <see cref="TextFormat.VerticalAlignment"/>
+            public TextVerticalAlignment VerticalAlignment = DefaultVerticalAlignment;
+
+            /// <see cref="TextFormat.Trimming"/>
+            public TextTrimming Trimming = DefaultTrimming;
+
+            /// <see cref="TextFormat.Wrapping"/>
+            public TextWrapping Wrapping = DefaultWrapping;
+
+            /// <see cref="TextFormat.Distance"/>
+            public Coord Distance;
+
+            /// <see cref="TextFormat.Padding"/>
+            public Thickness Padding;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Record"/> struct.
+            /// </summary>
+            public Record()
+            {
+            }
         }
     }
 }
