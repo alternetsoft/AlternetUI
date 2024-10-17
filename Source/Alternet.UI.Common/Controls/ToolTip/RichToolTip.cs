@@ -94,10 +94,10 @@ namespace Alternet.UI
         /// <param name="message">Tooltip message.</param>
         /// <param name="systemColors">If <c>true</c>, sets tooltip colors
         /// to <see cref="FontAndColor.SystemColorInfo"/>.</param>
-        public virtual IRichToolTip SetToolTip(string message, bool systemColors = true)
+        public virtual IRichToolTip SetToolTip(object message, bool systemColors = true)
         {
             HideToolTip();
-            Text = message;
+            Text = message?.ToString() ?? string.Empty;
             Title = string.Empty;
 
             if (systemColors)
@@ -138,13 +138,13 @@ namespace Alternet.UI
         /// </param>
         public virtual IRichToolTip SetToolTip(
             object? title,
-            string? message,
+            object? message,
             MessageBoxIcon? icon = null,
             uint? timeoutMilliseconds = null)
         {
             HideToolTip();
             TitleAsObject = title ?? string.Empty;
-            Text = message ?? string.Empty;
+            Text = message?.ToString() ?? string.Empty;
 
             if (icon is not null)
             {
@@ -361,7 +361,7 @@ namespace Alternet.UI
         /// to <see cref="FontAndColor.SystemColorInfo"/>.</param>
         /// <param name="location">Location where tooltip will be shown.</param>
         public IRichToolTip ShowToolTip(
-            string message,
+            object message,
             bool systemColors = true,
             PointD? location = null)
         {
@@ -381,7 +381,7 @@ namespace Alternet.UI
         /// <param name="location">Location where tooltip will be shown.</param>
         public virtual IRichToolTip ShowToolTip(
             object? title,
-            string? message,
+            object? message,
             MessageBoxIcon? icon = null,
             uint? timeoutMilliseconds = null,
             PointD? location = null)
