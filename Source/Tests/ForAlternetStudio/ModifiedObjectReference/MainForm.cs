@@ -81,15 +81,23 @@ namespace ObjectReference
         private void AddScriptItem()
         {
             ScriptGlobalItem item = new ScriptGlobalItem("RunButton", typeof(System.Windows.Forms.Button), btNETFromScript);
+            ScriptGlobalItem item2 = new ScriptGlobalItem("MainForm", typeof(System.Windows.Forms.Form), this);
             scriptRun.GlobalItems.Clear();
             scriptRun.GlobalItems.Add(item);
+            scriptRun.GlobalItems.Add(item2);
             RegisterScriptCodeForEditor();
         }
 
         private void StartScript()
         {
             scriptRun.ScriptSource.FromScriptCode(edit.Text);
+
+            scriptRun.ScriptSource.SearchPaths.Add(Application.StartupPath);
+
             scriptRun.ScriptSource.WithDefaultReferences();
+            scriptRun.ScriptSource.References.Add("netstandard");
+            scriptRun.ScriptSource.References.Add("Microsoft.Bcl.AsyncInterfaces");
+            scriptRun.ScriptSource.References.Add("Autofac");
             scriptRun.AssemblyKind = ScriptAssemblyKind.DynamicLibrary;
 
             if (!scriptRun.Compiled)
@@ -131,7 +139,7 @@ namespace ObjectReference
 
         private void GetSourceParametersForCSharp(out string sourceFileSubPath, out ScriptLanguage language)
         {
-            sourceFileSubPath = "ObjectReference.cs";
+            sourceFileSubPath = "AutoFac.cs";
             language = ScriptLanguage.CSharp;
         }
 
