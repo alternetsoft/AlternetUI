@@ -26,9 +26,20 @@ namespace Alternet.UI
 
             set
             {
+                if (Immutable)
+                    return;
                 record = value;
                 RaisePropertyChanged();
             }
+        }
+
+        /// <summary>
+        /// Conversion operator from <see cref="ObjectWithRecord{T}"/> to it's record.
+        /// </summary>
+        /// <param name="value"></param>
+        public static implicit operator T(ObjectWithRecord<T> value)
+        {
+            return value.AsRecord;
         }
 
         /// <summary>
@@ -37,6 +48,8 @@ namespace Alternet.UI
         /// <param name="value">Source of the property values to assign.</param>
         public virtual void Assign(ObjectWithRecord<T> value)
         {
+            if (Immutable)
+                return;
             record = value.record;
             RaisePropertyChanged();
         }

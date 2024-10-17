@@ -30,6 +30,21 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
+        /// Gets A6 paper size in device-independent units.
+        /// </summary>
+        public static SizeD A6InDips => PaperSizes.SizeInches.A6.InchesToDips();
+
+        /// <summary>
+        /// Gets A5 paper size in device-independent units.
+        /// </summary>
+        public static SizeD A5InDips => PaperSizes.SizeInches.A5.InchesToDips();
+
+        /// <summary>
+        /// Gets A4 paper size in device-independent units.
+        /// </summary>
+        public static SizeD A4InDips => PaperSizes.SizeInches.A4.InchesToDips();
+
+        /// <summary>
         /// Gets or sets paper sizes (inches).
         /// </summary>
         public static PaperSizes SizeInches

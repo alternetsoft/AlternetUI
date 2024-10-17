@@ -29,10 +29,12 @@ namespace Alternet.Drawing
         /// </summary>
         public const TextWrapping DefaultWrapping = TextWrapping.Character;
 
+        private static readonly TextFormat.Record defaultRecord = new();
+
         /// <summary>
         /// Gets default text format.
         /// </summary>
-        public static readonly TextFormat Default = CreateImmutable();
+        public static TextFormat.Record DefaultRecord => defaultRecord;
 
         /// <summary>
         /// Gets or sets horizontal alignment of the text.
@@ -251,6 +253,34 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a copy of default object.
+        /// </summary>
+        /// <returns></returns>
+        public static TextFormat Default() => new();
+
+        /// <summary>
+        /// Sets horizontal alignment specified in the <paramref name="horizontalAlignment"/> parameter.
+        /// </summary>
+        /// <param name="horizontalAlignment">New horizontal text alignment.</param>
+        /// <returns></returns>
+        public TextFormat Alignment(TextHorizontalAlignment horizontalAlignment)
+        {
+            HorizontalAlignment = horizontalAlignment;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets vertical alignment specified in the <paramref name="verticalAlignment"/> parameter.
+        /// </summary>
+        /// <param name="verticalAlignment">New vertical text alignment.</param>
+        /// <returns></returns>
+        public TextFormat Alignment(TextVerticalAlignment verticalAlignment)
+        {
+            VerticalAlignment = verticalAlignment;
+            return this;
+        }
+
+        /// <summary>
         /// Creates new text format which is a clone of this object but with new horizontal
         /// alignment specified in the <paramref name="horizontalAlignment"/>.
         /// </summary>
@@ -276,6 +306,28 @@ namespace Alternet.Drawing
             var result = Clone();
             result.SuggestedWidth = suggestedWidth;
             return result;
+        }
+
+        /// <summary>
+        /// Sets suggested width.
+        /// </summary>
+        /// <param name="suggestedWidth">New suggested text width.</param>
+        /// <returns></returns>
+        public virtual TextFormat SuggestWidth(Coord suggestedWidth)
+        {
+            SuggestedWidth = suggestedWidth;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets maximal width.
+        /// </summary>
+        /// <param name="maxWidth">New maximal text width.</param>
+        /// <returns></returns>
+        public virtual TextFormat MaximalWidth(Coord maxWidth)
+        {
+            MaxWidth = maxWidth;
+            return this;
         }
 
         /// <summary>

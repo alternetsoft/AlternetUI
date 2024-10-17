@@ -1,0 +1,123 @@
+Imports System
+Imports System.Drawing
+Imports System.Threading
+Imports System.Windows.Forms
+
+Public Class Script
+    Private Shared Sub PaintLine(ByVal graph As Graphics, ByVal brush As Brush, ByVal Y As Integer, ByVal len As Integer)
+        graph.DrawLine(New Pen(brush, 1), New Point(0, Y), New Point(len, Y))
+    End Sub
+
+    Private Shared Sub VisualSwap(ByVal graph As Graphics, ByVal Y1 As Integer, ByVal Y2 As Integer, ByVal len1 As Integer, ByVal len2 As Integer)
+        PaintLine(graph, SystemBrushes.Control, Y1, len1)
+        PaintLine(graph, SystemBrushes.Control, Y2, len2)
+        PaintLine(graph, Brushes.Red, Y1, len2)
+        PaintLine(graph, Brushes.Red, Y2, len1)
+    End Sub
+
+    Public Shared Sub BubbleSort(ByVal ct As CancellationToken)
+        Dim temp As Integer = 0
+        Dim MyStep As Integer = 3
+        Dim YPos1 As Integer = 0
+        Dim YPos2 As Integer = 0
+        Dim len1 As Integer = 0
+        Dim len2 As Integer = 0
+        Dim graph As Graphics = ScriptGlobalClass.pnBubbleSort.CreateGraphics()
+
+        For i As Integer = ScriptGlobalClass.bubbleArray.Count - 1 To 0 Step -1
+
+            For j As Integer = 0 To ScriptGlobalClass.bubbleArray.Count - 2
+                If ct.IsCancellationRequested Then ct.ThrowIfCancellationRequested()
+
+                If CInt(ScriptGlobalClass.bubbleArray(j)) > CInt(ScriptGlobalClass.bubbleArray(j + 1)) Then
+                    YPos1 = MyStep * (j + 1)
+                    YPos2 = MyStep * (j + 2)
+                    len1 = CInt(ScriptGlobalClass.bubbleArray(j))
+                    len2 = CInt(ScriptGlobalClass.bubbleArray(j + 1))
+                    temp = CInt(ScriptGlobalClass.bubbleArray(j))
+                    ScriptGlobalClass.bubbleArray(j) = ScriptGlobalClass.bubbleArray(j + 1)
+                    ScriptGlobalClass.bubbleArray(j + 1) = temp
+                    VisualSwap(graph, YPos1, YPos2, len1, len2)
+                End If
+            Next
+        Next
+
+        graph.Dispose()
+    End Sub
+
+    Public Shared Sub SelectionSort(ByVal ct As CancellationToken)
+        Dim temp As Integer = 0
+        Dim MyStep As Integer = 3
+        Dim YPos1 As Integer = 0
+        Dim YPos2 As Integer = 0
+        Dim len1 As Integer = 0
+        Dim len2 As Integer = 0
+        Dim graph As Graphics = ScriptGlobalClass.pnSelectionSort.CreateGraphics()
+
+        For i As Integer = ScriptGlobalClass.selArray.Count - 1 To 0 Step -1
+
+            For j As Integer = ScriptGlobalClass.selArray.Count - 1 To 0 Step -1
+
+                If CInt(ScriptGlobalClass.selArray(i)) > CInt(ScriptGlobalClass.selArray(j)) Then
+                    If ct.IsCancellationRequested Then ct.ThrowIfCancellationRequested()
+                    YPos1 = MyStep * (i + 1)
+                    YPos2 = MyStep * (j + 1)
+                    len1 = CInt(ScriptGlobalClass.selArray(i))
+                    len2 = CInt(ScriptGlobalClass.selArray(j))
+                    temp = CInt(ScriptGlobalClass.selArray(i))
+                    ScriptGlobalClass.selArray(i) = ScriptGlobalClass.selArray(j)
+                    ScriptGlobalClass.selArray(j) = temp
+                    VisualSwap(graph, YPos1, YPos2, len1, len2)
+                End If
+            Next
+        Next
+
+        graph.Dispose()
+    End Sub
+
+    Public Shared Sub DoQuickSort(ByVal graph As Graphics, ByVal iLo As Integer, ByVal iHi As Integer, ByVal ct As CancellationToken)
+        Dim temp As Integer = 0
+        Dim MyStep As Integer = 3
+        Dim lo As Integer = iLo
+        Dim hi As Integer = iHi
+        Dim YPos1 As Integer = 0
+        Dim YPos2 As Integer = 0
+        Dim len1 As Integer = 0
+        Dim len2 As Integer = 0
+        Dim mid As Integer = CInt(ScriptGlobalClass.quickArray(CInt(((lo + hi) / 2))))
+
+        Do
+            If ct.IsCancellationRequested Then ct.ThrowIfCancellationRequested()
+
+            While CInt(ScriptGlobalClass.quickArray(lo)) < mid
+                lo = lo + 1
+            End While
+
+            While CInt(ScriptGlobalClass.quickArray(hi)) > mid
+                hi = hi - 1
+            End While
+
+            If lo <= hi Then
+                YPos1 = MyStep * (lo + 1)
+                YPos2 = MyStep * (hi + 1)
+                len1 = CInt(ScriptGlobalClass.quickArray(lo))
+                len2 = CInt(ScriptGlobalClass.quickArray(hi))
+                temp = CInt(ScriptGlobalClass.quickArray(lo))
+                ScriptGlobalClass.quickArray(lo) = ScriptGlobalClass.quickArray(hi)
+                ScriptGlobalClass.quickArray(hi) = temp
+                lo = lo + 1
+                hi = hi - 1
+                VisualSwap(graph, YPos1, YPos2, len1, len2)
+            End If
+        Loop While Not (lo > hi)
+
+        If hi > iLo Then DoQuickSort(graph, iLo, hi, ct)
+        If lo < iHi Then DoQuickSort(graph, lo, iHi, ct)
+    End Sub
+
+    Public Shared Sub QuickSort(ByVal ct As CancellationToken)
+        Dim graph As Graphics = ScriptGlobalClass.pnQuickSort.CreateGraphics()
+        DoQuickSort(graph, 0, ScriptGlobalClass.quickArray.Count - 1, ct)
+        graph.Dispose()
+    End Sub
+End Class

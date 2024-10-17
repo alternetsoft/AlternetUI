@@ -99,6 +99,10 @@ namespace DrawingSample
             }
         }
 
+        private readonly TextFormat LabelTextFormat = TextFormat.Default()
+                .Alignment(TextHorizontalAlignment.Center)
+                .MaximalWidth(PaperSizes.A6InDips.Width);
+
         private void DrawDemoForeground(Graphics dc, RectD bounds)
         {
             var s = "Click and drag to draw. " +
@@ -107,10 +111,7 @@ namespace DrawingSample
             var hMargin = bounds.Width / 4;
             var txtRect = bounds.WithMargin((hMargin, 10, hMargin, 10));
 
-            dc.DrawText(s, Control.DefaultFont, Brushes.Black, txtRect,
-                TextFormat.Default
-                .WithAlignment(TextHorizontalAlignment.Center)
-                .WithMaxWidth(PaperSizes.SizeInches.A6.InchesToDips().Width));
+            dc.DrawText(s, Control.DefaultFont, Brushes.Black, txtRect, LabelTextFormat);
 
             /*var drawable = DrawableElement.CreateStringsStack([s1, s2, s3], 0, CoordAlignment.Near);
             drawable.Draw(dc, bounds.WithMargin(10));*/
