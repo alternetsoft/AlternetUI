@@ -1,0 +1,28 @@
+CREATE PROCEDURE sp_services
+AS
+
+CREATE TABLE #services (ident SMALLINT identity, fld NVARCHAR(200))
+
+--get output of command in temporary table
+INSERT INTO #services (fld)
+EXEC master..xp_cmdshell 'sc query state= all' --remove 'state= all' for displaying only running services
+
+--keep only needed records (service code, service displayed name, state
+DELETE FROM #services
+WHERE ISNULL(fld, '') NOT LIKE 'SERVICE_NAME%'
+AND ISNULL(fld, '') NOT LIKE 'DISPLAY_NAME%'
+AND ISNULL(fld, '') NOT LIKE '%STATE%'
+
+--remove labels
+UPDATE #services
+SET fld = LTRIM(RIGHT(fld, LEN(fld) - CHARINDEX(':', fld, 1)))
+
+--display services, names and state
+SELECT tbl1.fld AS srv_code, tbl2.fld AS srv_name, tbl3.fld AS state
+FROM #services tbl1, #services tbl2, #services tbl3
+WHERE tbl2.ident = tbl1.ident+1
+AND tbl3.ident = tbl1.ident + 3
+
+DROP TABLE #services
+
+--EOF--

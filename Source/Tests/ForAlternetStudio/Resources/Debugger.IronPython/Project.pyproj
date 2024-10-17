@@ -1,0 +1,45 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>927c5ec1-6b05-4866-a6df-06c2e181934a</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>Script.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>PyprojTest</Name>
+    <RootNamespace>PyprojTest</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Script.py" />
+  </ItemGroup>
+  <ItemGroup>
+      <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <Name>mscorlib</Name>
+      <Private>False</Private>
+    </Reference>
+      <Reference Include="System.Windows.Forms">
+      </Reference>
+  </ItemGroup>
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

@@ -1,0 +1,25 @@
+{
+  "name": "ConsoleApp1",
+  "language": "TypeScript",
+  "hostAssemblies": [
+    {
+      "alias": "core",
+      "name": null,
+      "names": [
+        "mscorlib",
+        "System",
+        "System.Core",
+        "System.Windows.Forms",
+        "System.Drawing",
+      ],
+      "options": "GlobalMembers"
+    }
+  ],
+  "hostAssembliesSearchPaths": [ ],
+  "typeDefinitionsSearchPaths": [
+    ".\\"
+  ],
+  "files": [
+    "app.ts"
+  ]
+}

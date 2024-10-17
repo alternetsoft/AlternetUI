@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TestLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:TestLibrary.MyClass">
+            <summary>
+            This is just a test class.
+            </summary>
+        </member>
+        <member name="P:TestLibrary.MyClass.MyProperty">
+            <summary>
+            This is just a test property
+            </summary>
+        </member>
+        <member name="M:TestLibrary.MyClass.GetCurrentTime">
+            <summary>
+            Gets the current time
+            </summary>
+        </member>
+        <member name="M:TestLibrary.MyClass.FirstMethod(System.Int32,System.Int32)">
+            <summary>
+            This is just a test method.
+            </summary>
+            <param name="firstParam">This is a first integer parameter.</param>
+            <param name="secondParam">This is a second integer parameter.</param>
+            <returns>The sum of two parameters.</returns>
+        </member>
+        <member name="M:TestLibrary.MyClass.SecondMethod(System.Boolean)">
+            <summary>
+            This is a second method.
+            </summary>
+            <param name="booleanParam">Just a boolean value.</param>
+        </member>
+    </members>
+</doc>

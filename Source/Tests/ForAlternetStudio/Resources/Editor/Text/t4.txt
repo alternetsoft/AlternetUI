@@ -1,0 +1,60 @@
+<#@ template language="C#" #>
+<#@ assembly name=".\T4Project.exe" #>
+<#@ assembly name=".\System.Core.dll" #>
+<#@ assembly name=".\System.Windows.Forms.dll" #>
+<#@ import namespace="T4Project" #>
+<#@ parameter name="This" type="T4Project.Template" #>
+<#@ parameter name="Project" type="T4Project.Project" #>
+
+<asp:FormView ID="<#= Project.Name #>FormView" runat="server" DataSourceID="<#= Project.Name #>ObjectDataSource">
+    <EditItemTemplate>
+	<#
+		foreach(ProjectItem item in Project.Items)
+		{
+	#>
+	<div id="<#= item.Name #>Label">
+		<#= item.Label #>
+	</div>
+	<div id="<#= item.Name #>Value">
+	    <asp:TextBox ID="<#= item.Name #>TextBox" runat="server" Text='<%# Bind("<#= item.Name #>") %>' />
+	</div>
+	<#
+		}
+	#>
+        <asp:LinkButton ID="UpdateButton" runat="server" CausesValidation="True" CommandName="Update" Text="Update" />
+        &nbsp;<asp:LinkButton ID="UpdateCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+	</EditItemTemplate>
+    <InsertItemTemplate>
+	<# 
+		foreach(ProjectItem item in Project.Items){
+	#>
+	<div id="<#= item.Name #>Label">
+		<#= item.Label #>
+	</div>
+	<div id="<#=item.Name #>Value">
+	    <asp:TextBox ID="<#= item.Name #>TextBox" runat="server" Text='<%# Bind("<#= item.Name #>") %>' />
+	</div>
+	<#
+		} 
+	#>      
+		<asp:LinkButton ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Insert" />
+        &nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+	</InsertItemTemplate>
+    <ItemTemplate>
+	<#
+		foreach(ProjectItem item in Project.Items){
+	#>
+	<div id="<#= item.Name #>Label">
+		<#= item.Label #>
+	</div>
+	<div id="<#=item.Name #>Value">
+	    <asp:TextBox ID="<#= item.Name #>TextBox" runat="server" Text='<%# Bind("<#= item.Name #>") %>' />
+	</div>
+	<#
+		}
+	#>
+        <asp:LinkButton ID="EditButton" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit" />
+        &nbsp;<asp:LinkButton ID="DeleteButton" runat="server" CausesValidation="False" CommandName="Delete" Text="Delete" />
+        &nbsp;<asp:LinkButton ID="NewButton" runat="server" CausesValidation="False" CommandName="New" Text="New" />
+	</ItemTemplate>
+</asp:FormView>

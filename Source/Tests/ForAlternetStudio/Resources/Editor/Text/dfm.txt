@@ -1,0 +1,97 @@
+inherited SyntaxEdForm1: TSyntaxEdForm1
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnlButtons: TPanel
+    inherited btnOK: TButton
+      Visible = False
+    end
+    inherited btnCancel: TButton
+      Cancel = False
+      Caption = 'Close'
+      ModalResult = 0
+      OnClick = btnCancelClick
+    end
+    inherited btnApply: TButton
+      Visible = False
+    end
+  end
+  object SyntaxParser1: TSyntaxParser
+    SyntaxScheme.Name = 'INI files'
+    SyntaxScheme.SyntaxBlocks = <
+      item
+        Name = 'Default'
+        FIText = 0
+        FIDirective = 1
+        UseComments = True
+        UseSingleLineComments = True
+        UseFullLineComments = True
+        UseStrings = True
+        UseSingleLineStrings = True
+        BlockDelimiters = <>
+        SingleLineCommentDelimiters = <
+          item
+            FontID = 2
+            LeftDelimiter = '='
+          end>
+        FullLineCommentDelimiters = <
+          item
+            FontID = 4
+            LeftDelimiter = ';'
+          end>
+        SingleLineStringDelimiters = <
+          item
+            FontID = 3
+            LeftDelimiter = '['
+            RightDelimiter = ']'
+          end>
+      end>
+    SyntaxScheme.FontTable = <
+      item
+        FontID = 0
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -13
+        Font.Name = 'Courier New'
+        Font.Style = []
+      end
+      item
+        FontID = 1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Courier New'
+        Font.Style = [fsItalic]
+      end
+      item
+        FontID = 2
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Courier New'
+        Font.Style = []
+      end
+      item
+        FontID = 3
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Courier New'
+        Font.Style = [fsBold]
+      end
+      item
+        FontID = 4
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Courier New'
+        Font.Style = [fsItalic]
+      end>
+    DefaultFont.Charset = DEFAULT_CHARSET
+    DefaultFont.Color = clWindowText
+    DefaultFont.Height = -13
+    DefaultFont.Name = 'Courier New'
+    DefaultFont.Style = []
+    Left = 80
+    Top = 80
+  end
+end

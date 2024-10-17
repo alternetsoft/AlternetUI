@@ -1,0 +1,69 @@
+'USEUNIT Db
+'USEUNIT DBTables
+'USEUNIT Menus
+'USEUNIT ExtCtrls
+'USEUNIT DBCtrls
+'USEUNIT DBGrids
+'USEUNIT ComCtrls
+'USEUNIT Buttons
+'USEUNIT StdCtrls
+'USEUNIT About
+'USEUNIT Filter1
+
+Dim  OrdersFilterAmount
+
+'-------------------------------------------------------------------
+
+Sub rgDataSetClick(Sender)
+	st = ""
+	If (CustomerSource.Dataset.Filtered) Then st = CustomerSource.Dataset.Filter
+	Select Case (rgDataset.ItemIndex)
+		Case 0:  CustomerSource.Dataset = SQLCustomer
+		Case 1:  CustomerSource.Dataset = Customer
+	End Select
+	If st <> "" Then
+		CustomerSource.Dataset.Filter = st
+		CustomerSource.Dataset.Filtered = True
+	End If
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub SpeedButton1Click(Sender)
+	fmFilterFrm.Show
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub cbFilterOrdersClick(Sender)
+	SQLOrders.Filtered = cbFilterOrders.Checked
+	If (cbFilterOrders.Checked) Then  Edit1Change(Null)
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub About1Click(Sender)
+	Formabout.ShowModal
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub Edit1Change(Sender)
+	If (cbFilterOrders.checked) And ( Edit1.Text <> "") Then
+		OrdersFilterAmount = StrToFloat(fmCustView.Edit1.Text)
+		SQLOrders.Filter = "AmountPaid >=" + fmCustView.Edit1.Text
+		SQLOrders.Refresh
+	End If
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub DBGrid1Enter(Sender)
+	DBNavigator1.DataSource = DBGrid1.DataSource
+End Sub
+
+'-------------------------------------------------------------------
+
+Sub DBGrid2Enter(Sender)
+	DBNavigator1.DataSource = DBGrid2.DataSource
+End Sub

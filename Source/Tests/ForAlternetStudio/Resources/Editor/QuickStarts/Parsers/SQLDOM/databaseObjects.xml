@@ -1,0 +1,12 @@
+<Data>
+  <tables>
+    <table name="suppliers">
+      <field name="supplier_id"/>
+      <field name="supplier_name"/>
+    </table>
+    <table name="orders">
+      <field name="supplier_id"/>
+      <field name="order_date"/>
+    </table>
+  </tables>
+</Data>

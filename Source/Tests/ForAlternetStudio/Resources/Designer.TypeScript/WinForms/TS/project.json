@@ -1,0 +1,28 @@
+{
+  "name": "Debugger.TypeScript.Sample",
+  "language": "TypeScript",
+  "hostAssemblies": [
+    {
+      "alias": "core",
+      "name": null,
+      "names": [
+        "mscorlib",
+        "System",
+        "System.Core",
+        "System.Windows.Forms",
+        "System.Drawing",
+        "System.Data",
+        "System.Xml"
+      ],
+      "options": "GlobalMembers"
+    }
+  ],
+  "hostAssembliesSearchPaths": [ ],
+  "typeDefinitionsSearchPaths": [
+    ".\\"
+  ],
+  "files": [
+    "MyForm.Designer.ts",
+    "MyForm.ts"
+  ]
+}

@@ -1,0 +1,14 @@
+BEGIN
+
+SELECT suppliers.supplier_id, suppliers.supplier_name, orders.order_date
+	FROM suppliers
+	LEFT JOIN orders
+	ON suppliers.supplier_id = orders.supplier_id;
+
+BEGIN    
+    UPDATE bk SET name = 'AlterNet Forever' 
+        FROM Book bk 
+        WHERE name = 'AlterNet Sometimes' 
+END  
+
+END

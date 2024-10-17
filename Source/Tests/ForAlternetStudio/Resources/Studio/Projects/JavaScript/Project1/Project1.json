@@ -1,0 +1,21 @@
+{
+  "name": "Project1",
+  "language": "JavaScript",
+  "hostAssemblies": [
+    {
+      "alias": "core",
+      "name": null,
+      "names": [
+        "mscorlib",
+        "System",
+        "System.Core",
+      ],
+      "options": "GlobalMembers"
+    }
+  ],
+  "hostAssembliesSearchPaths": [ ],
+  "typeDefinitionsSearchPaths": [
+    ".\\"
+  ],
+  "files": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Debugger.JavaScript.Sample",
+  "language": "JavaScript",
+    
+  "hostAssemblies": [
+    {
+      "alias": "core",
+      "name": null,
+      "names": [
+        "mscorlib",
+        "System",
+        "System.Core",
+        "System.Windows.Forms",
+        "System.Drawing",
+      ],
+      "options": "GlobalMembers"
+    },
+    {
+      "alias": "_TestLibrary",
+      "name": "TestLibrary",
+      "options": "GlobalMembers"
+    }
+  ],
+
+
+  "hostAssembliesSearchPaths": ["..\\..\\lib\\"],
+    
+  "typeDefinitionsSearchPaths": ["..\\..\\lib\\"],
+
+  "files": [
+        "Second.js",
+        "Main.js",
+  ]
+}

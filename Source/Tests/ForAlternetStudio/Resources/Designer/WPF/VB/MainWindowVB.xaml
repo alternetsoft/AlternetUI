@@ -1,0 +1,7 @@
+<Window x:Class="MainWindowVB" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="MainWindowVB" Height="350" Width="525">
+  <Grid>
+    <Label RenderTransformOrigin="0.001,-2.695" Content="Hello, World!" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,35,0,0" />
+    <Image Source="1.png" Height="100" Width="100" />
+    <Button Width="137" Height="20" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="63,0,0,38" Content="Close" x:Name="CloseButton" Click="CloseButton_Click" />
+  </Grid>
+</Window>

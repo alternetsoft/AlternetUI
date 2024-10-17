@@ -1,0 +1,24 @@
+[connect default]
+;If we want to disable unknown connect values, we set Access to NoAccess
+Access=NoAccess
+
+[sql default]
+;If we want to disable unknown sql values, we set Sql to an invalid query.
+Sql=" "
+
+[connect CustomerDatabase]
+Access=ReadWrite
+Connect="DSN=AdvWorks"
+
+[sql CustomerById]
+Sql="SELECT * FROM Customers WHERE CustomerID = ?"
+
+[connect AuthorDatabase]
+Access=ReadOnly
+Connect="DSN=MyLibraryInfo;UID=MyUserID;PWD=MyPassword"
+
+[userlist AuthorDatabase]
+Administrator=ReadWrite
+
+[sql AuthorById]
+Sql="SELECT * FROM Authors WHERE au_id = ?"

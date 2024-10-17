@@ -1,0 +1,16 @@
+#!/usr/bin/env Rscript
+
+sayHello <- function(){
+   print('hello')
+}
+
+sayHello()
+
+# Create a data frame
+dataframe1 <- data.frame (
+  Name = c("Juan", "Alcaraz", "Simantha"),
+  Age = c(22, 15, 19),
+  Vote = c(TRUE, FALSE, TRUE))
+
+# write dataframe1 into file1 csv file
+#write.csv(dataframe1, "file1.csv")

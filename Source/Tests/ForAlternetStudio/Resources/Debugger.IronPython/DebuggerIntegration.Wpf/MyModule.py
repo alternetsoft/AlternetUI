@@ -1,0 +1,2 @@
+def GetString():
+	return "abc"

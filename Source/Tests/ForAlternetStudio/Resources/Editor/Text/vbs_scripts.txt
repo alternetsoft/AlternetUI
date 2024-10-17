@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Transitions Example</title>
+<script LANGUAGE="VBScript">
+dim curtrans
+dim numtrans
+dim speed
+curtrans = 0
+numtrans = 23
+Speed=2.0
+
+Sub Window_onLoad()
+    mytext.style.visibility = "hidden"
+    call TImage1()
+End Sub
+
+'   ************************************************
+'   When the transition is completed, start the next
+'   transition.
+'   ************************************************
+
+Sub AB_OnFilterChange()
+    call TImage1()
+End Sub
+
+Sub TImage1()
+'   ************************************************
+'   Update the text display
+'   ************************************************
+    if curtrans = 0 then
+        a0.style.color = "olive"
+        if document.anchors(numtrans).style.color = "olive" then
+            document.anchors(numtrans).style.color = "black"
+        end if
+    else
+        document.anchors(curtrans-1).style.color = "black"
+        document.anchors(curtrans).style.color = "olive"
+    end if
+
+
+'   ************************************************
+'   Do the transition
+'   ************************************************
+    call AB.filters.item(0).Apply()
+    AB.filters.item(0).Transition = curtrans
+
+    If (curtrans mod 2) = 0 then
+        Image2.style.visibility = "hidden"
+        mytext.style.visibility = ""
+    else
+        Image2.style.visibility = ""
+        mytext.style.visibility = "hidden"
+    end if
+
+    AB.filters(0).play(Speed)
+
+    curtrans = curtrans + 1
+    if curtrans > numtrans then
+        curtrans = 0
+    end if
+End Sub
+
+</script>
+</head>
+
+<BODY bgColor=#ffffff leftMargin=40 link=#500000 vLink=#505050>
+
+<div ID="AB" STYLE="POSITION:ABSOLUTE; WIDTH:400; HEIGHT:290; Left:45%; Top:15%;background-color:black;
+     FILTER:revealTrans(Duration=3.0, Transition=1)">
+
+    <div ID="MYtext" STYLE="POSITION:ABSOLUTE;WIDTH:400;HEIGHT:290;TOP:0;LEFT:0;background-color:white;font-family:verdana;color:silver;font-size:20pt">
+    Transitions let you smoothly go from one image to another.You can blend images from one to another using a variety of patterns and wipes. You can fade in and out as well as switch between two images.
+    </div>
+
+    <img ID="Image2" STYLE="POSITION:ABSOLUTE;Width:400;height:290;TOP:0;LEFT:0" SRC="../images/clouds.jpg" WIDTH="400" HEIGHT="290">
+
+</div>
+
+
+</body>
+</html>
