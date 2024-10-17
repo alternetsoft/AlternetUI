@@ -61,24 +61,24 @@ namespace DrawingSample
                 */
 
                 AddProperty(
-                    page.wrappedControl,
-                    nameof(GenericWrappedTextControl.PaddingTop));
+                    page.textFormat,
+                    nameof(TextFormat.PaddingTop));
 
                 AddProperty(
-                    page.wrappedControl,
-                    nameof(GenericWrappedTextControl.PaddingBottom));
+                    page.textFormat,
+                    nameof(TextFormat.PaddingBottom));
 
                 AddProperty(
-                    page.wrappedControl,
-                    nameof(GenericWrappedTextControl.PaddingLeft));
+                    page.textFormat,
+                    nameof(TextFormat.PaddingLeft));
 
                 AddProperty(
-                    page.wrappedControl,
-                    nameof(GenericWrappedTextControl.PaddingRight));
+                    page.textFormat,
+                    nameof(TextFormat.PaddingRight));
 
                 AddProperty(
-                    page.wrappedControl,
-                    nameof(GenericWrappedTextControl.LineDistance));
+                    page.textFormat,
+                    nameof(TextFormat.Distance));
             }
 
             void AddProperty(object obj, string name, string? label = null)

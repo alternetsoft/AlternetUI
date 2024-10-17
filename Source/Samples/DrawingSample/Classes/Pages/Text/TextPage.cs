@@ -15,13 +15,6 @@ namespace DrawingSample
         private static readonly Brush fontInfoBrush = Brushes.Black;
         private static readonly Pen textWidthLimitPen = new(Color.Gray, 1, DashStyle.Dash);
 
-        internal readonly GenericWrappedTextControl wrappedControl = new()
-        {
-            Padding = 15,
-        };
-
-        internal readonly GenericControl wrappedDocument = new();
-
         private Paragraph[]? paragraphs;
         private FontStyle fontStyle;
         private bool shortText;
@@ -36,6 +29,11 @@ namespace DrawingSample
         private static readonly Font fontInfoFont;
         private static double fontSize;
 
+        internal TextFormat textFormat = new()
+        {
+            Padding = 0,
+        };
+
         static TextPage()
         {
             var defaultSize = AbstractControl.DefaultFont.SizeInPoints;
@@ -45,7 +43,7 @@ namespace DrawingSample
 
         public TextPage()
         {
-            wrappedControl.Parent = wrappedDocument;
+            /*wrappedControl.Parent = wrappedDocument;*/
         }
 
         public override string Name => "Text";
@@ -143,19 +141,6 @@ namespace DrawingSample
 
         private void UpdateWrappedControl(bool invalidate = true)
         {
-            wrappedControl.PerformLayoutAndInvalidate(() =>
-            {
-                if (TextWidthLimitEnabled)
-                    wrappedControl.SuggestedWidth = textWidthLimit;
-                else
-                    wrappedControl.ResetSuggestedWidth();
-
-                if (textHeightSet)
-                    wrappedControl.SuggestedHeight = textHeightValue;
-                else
-                    wrappedControl.ResetSuggestedHeight();
-            });
-            
             Invalidate();
         }
 
@@ -163,42 +148,42 @@ namespace DrawingSample
         {
             get
             {
-                return wrappedControl.TextHorizontalAlignment;
+                return textFormat.HorizontalAlignment;
             }
 
             set
             {
-                wrappedControl.TextHorizontalAlignment = value;
+                textFormat.HorizontalAlignment = value;
                 UpdateWrappedControl();
             }
         }
 
         public TextVerticalAlignment VerticalAlignment
         {
-            get => wrappedControl.TextVerticalAlignment;
+            get => textFormat.VerticalAlignment;
             set
             {
-                wrappedControl.TextVerticalAlignment = value;
+                textFormat.VerticalAlignment = value;
                 UpdateWrappedControl();
             }
         }
 
         public TextTrimming Trimming
         {
-            get => wrappedControl.TextTrimming;
+            get => textFormat.Trimming;
             set
             {
-                wrappedControl.TextTrimming = value;
+                textFormat.Trimming = value;
                 UpdateWrappedControl();
             }
         }
 
         public TextWrapping Wrapping
         {
-            get => wrappedControl.TextWrapping;
+            get => textFormat.Wrapping;
             set
             {
-                wrappedControl.TextWrapping = value;
+                textFormat.Wrapping = value;
                 UpdateWrappedControl();
             }
         }
@@ -248,6 +233,7 @@ namespace DrawingSample
             Coord x = 20;
             Coord y = 20;
 
+            /*
             bool first = true;
 
             wrappedDocument.ScaleFactorOverride = dc.ScaleFactor;
@@ -258,6 +244,7 @@ namespace DrawingSample
             wrappedControl.HorizontalAlignment = Alternet.UI.HorizontalAlignment.Left;
             wrappedControl.IsClipped = false;
             wrappedControl.PerformLayout();
+            */
 
             foreach (var paragraph in paragraphs)
             {
@@ -265,21 +252,57 @@ namespace DrawingSample
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
                 UpdateWrappedControl(false);
+
+                /*
                 wrappedControl.Font = paragraph.Font;
                 wrappedControl.ForegroundColor = color;
                 wrappedControl.PerformLayout();
+                */
 
-                RectD rect = ((x, y), wrappedControl.Size);
+                /*RectD rect = ((x, y), wrappedControl.Size);
                 dc.FillRectangleBorder(Color.Green.AsBrush, wrappedControl.Bounds.WithLocation(x,y), 1);
 
                 if (first)
                 {
                     first = false;
                 }
-
+                
                 TemplateUtils.RaisePaintClipped(wrappedControl, dc, (x, y));
+                */
 
-                y += wrappedControl.Height + 20;
+                RectD blockRect;
+
+                RectD rect = (
+                    x,
+                    y,
+                    bounds.Width,
+                    bounds.Height);
+
+                if (textHeightSet)
+                {
+                    textFormat.SuggestedHeight = textHeightValue;
+                }
+                else
+                {
+                    textFormat.SuggestedHeight = null;
+                    rect.Height = 0;
+                }
+
+                if (textWidthLimitEnabled)
+                {
+                    textFormat.SuggestedWidth = textWidthLimit;
+                }
+                else
+                {
+                    textFormat.SuggestedWidth = null;
+                    rect.Width = 0;
+                }
+
+                blockRect = dc.DrawText(GetText(), paragraph.Font, color.AsBrush, rect, textFormat);
+
+                dc.FillRectangleBorder(Color.Green.AsBrush, blockRect, 1);
+ 
+                y += blockRect.Height + 20;
 
                 color = Lighten(color, lighten);
             }
@@ -392,7 +415,6 @@ namespace DrawingSample
 
             public void Dispose()
             {
-                Owner.wrappedControl.Font = null;
                 Font.Dispose();
             }
         }

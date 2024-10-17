@@ -13,9 +13,12 @@ namespace Alternet.Drawing
     /// </summary>
     public abstract partial class Graphics : DisposableObject, IGraphics, IDisposable
     {
+        private const Coord HalfOfMaxValue = Coord.MaxValue / 2;
+
         private Stack<TransformMatrix>? stack;
         private Stack<Region?>? clipStack;
         private TransformMatrix transform = new();
+        private GraphicsDocument? document;
 
         /// <summary>
         /// Returns true if the object is ok to use.
@@ -118,6 +121,20 @@ namespace Alternet.Drawing
         /// Gets native drawing context.
         /// </summary>
         public abstract object NativeObject { get; }
+
+        private GraphicsDocument SafeDocument
+        {
+            get
+            {
+                if (document is null)
+                {
+                    document = new();
+                    document.ScaleFactorOverride = ScaleFactor;
+                }
+
+                return document;
+            }
+        }
 
         /// <summary>
         /// Checks whether <see cref="Brush"/> parameter is ok.
@@ -1442,6 +1459,51 @@ namespace Alternet.Drawing
                     rect,
                     graphicsType);
             }
+        }
+
+        /// <summary>
+        /// Draws the specified text string at the specified location with the specified
+        /// <see cref="Brush"/> and <see cref="Font"/> objects.
+        /// </summary>
+        /// <param name="text">String to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
+        /// the drawn text.</param>
+        /// <param name="rect"><see cref="RectD"/> structure that specifies the bounds
+        /// of the text.</param>
+        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
+        /// such as alignment and trimming, that are applied to the drawn text.</param>
+        /// <remarks>
+        /// You can pass 0 as width of the <paramref name="rect"/>. In this case wrapping
+        /// will not be performed, only line breaks will be applied.
+        /// </remarks>
+        /// <remarks>
+        /// You can pass 0 as height of the <paramref name="rect"/>.
+        /// </remarks>
+        public virtual RectD DrawText(string text, Font font, Brush brush, RectD rect, TextFormat format)
+        {
+            var document = SafeDocument;
+            var wrappedText = document.WrappedText;
+
+            if (rect.HasEmptyWidth)
+                rect.Width = HalfOfMaxValue;
+
+            if (rect.HasEmptyHeight)
+                rect.Height = HalfOfMaxValue;
+
+            document.Size = rect.Size;
+
+            wrappedText.DoInsideLayout(() =>
+            {
+                wrappedText.SetFormat(format.AsRecord);
+                wrappedText.Text = text;
+                wrappedText.Font = font;
+                wrappedText.ForegroundColor = brush.AsColor;
+            });
+
+            TemplateUtils.RaisePaintClipped(wrappedText, this, rect.Location);
+            var result = wrappedText.Bounds.WithLocation(rect.Location);
+            return result;
         }
 
         /// <summary>

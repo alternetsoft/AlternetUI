@@ -12,11 +12,16 @@ namespace Alternet.UI
     /// </summary>
     public class GenericWrappedTextControl : GenericTextControl
     {
-        private TextHorizontalAlignment textHorizontalAlignment = TextFormat.DefaultHorizontalAlignment;
-        private TextVerticalAlignment textVerticalAlignment = TextFormat.DefaultVerticalAlignment;
-        private Coord textDistance = 0;
-        private TextTrimming textTrimming = TextFormat.DefaultTrimming;
-        private TextWrapping textWrapping = TextFormat.DefaultWrapping;
+        private TextFormat.Record textFormat;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericWrappedTextControl"/> class
+        /// with the specified parent.
+        /// </summary>
+        public GenericWrappedTextControl(AbstractControl? parent)
+        {
+            Parent = parent;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericWrappedTextControl"/> class.
@@ -28,18 +33,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets distance between lines of text.
         /// </summary>
-        public Coord LineDistance
+        public virtual Coord LineDistance
         {
             get
             {
-                return textDistance;
+                return textFormat.Distance;
             }
 
             set
             {
-                if (textDistance == value)
+                if (textFormat.Distance == value)
                     return;
-                textDistance = value;
+                textFormat.Distance = value;
                 PerformLayoutAndInvalidate();
             }
         }
@@ -47,12 +52,12 @@ namespace Alternet.UI
         /// <see cref="TextFormat.VerticalAlignment"/>.
         public TextVerticalAlignment TextVerticalAlignment
         {
-            get => textVerticalAlignment;
+            get => textFormat.VerticalAlignment;
             set
             {
-                if (textVerticalAlignment == value)
+                if (textFormat.VerticalAlignment == value)
                     return;
-                textVerticalAlignment = value;
+                textFormat.VerticalAlignment = value;
                 PerformLayoutAndInvalidate();
             }
         }
@@ -60,12 +65,12 @@ namespace Alternet.UI
         /// <see cref="TextFormat.Trimming"/>.
         public virtual TextTrimming TextTrimming
         {
-            get => textTrimming;
+            get => textFormat.Trimming;
             set
             {
-                if (textTrimming == value)
+                if (textFormat.Trimming == value)
                     return;
-                textTrimming = value;
+                textFormat.Trimming = value;
                 PerformLayoutAndInvalidate();
             }
         }
@@ -73,12 +78,12 @@ namespace Alternet.UI
         /// <see cref="TextFormat.Wrapping"/>.
         public virtual TextWrapping TextWrapping
         {
-            get => textWrapping;
+            get => textFormat.Wrapping;
             set
             {
-                if (textWrapping == value)
+                if (textFormat.Wrapping == value)
                     return;
-                textWrapping = value;
+                textFormat.Wrapping = value;
                 PerformLayoutAndInvalidate();
             }
         }
@@ -90,16 +95,40 @@ namespace Alternet.UI
         {
             get
             {
-                return textHorizontalAlignment;
+                return textFormat.HorizontalAlignment;
             }
 
             set
             {
-                if (textHorizontalAlignment == value)
+                if (textFormat.HorizontalAlignment == value)
                     return;
-                textHorizontalAlignment = value;
+                textFormat.HorizontalAlignment = value;
                 PerformLayoutAndInvalidate();
             }
+        }
+
+        /// <summary>
+        /// Gets text formatting record.
+        /// </summary>
+        /// <returns></returns>
+        public virtual TextFormat.Record GetFormat()
+        {
+            return textFormat;
+        }
+
+        /// <summary>
+        /// Sets text formatting record.
+        /// </summary>
+        public virtual void SetFormat(TextFormat.Record value)
+        {
+            textFormat = value;
+            PerformLayoutAndInvalidate(() =>
+            {
+                MaxHeight = value.MaxHeight;
+                MaxWidth = value.MaxWidth;
+                SetSuggestedSize(value.SuggestedWidth, value.SuggestedHeight);
+                Padding = value.Padding;
+            });
         }
 
         /// <inheritdoc/>
@@ -162,10 +191,9 @@ namespace Alternet.UI
                         (CoordAlignment)alignment);
 
                     dc.DrawText(s, alignedItemRect.Location, font, foreColor, backColor ?? Color.Empty);
-                    dc.FillRectangleBorder(Brushes.Red, alignedItemRect);
                 }
 
-                var increment = measure.Height + textDistance;
+                var increment = measure.Height + LineDistance;
                 origin.Y += increment;
                 totalMeasure.Height += increment;
 
