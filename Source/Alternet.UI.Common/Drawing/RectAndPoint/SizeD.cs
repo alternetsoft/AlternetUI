@@ -589,6 +589,26 @@ namespace Alternet.Drawing
             return result;
         }
 
+        public readonly SizeD InchesToDips()
+        {
+            var result = GraphicsUnitConverter.ConvertSize(
+                GraphicsUnit.Inch,
+                GraphicsUnit.Dip,
+                0,
+                this);
+            return result;
+        }
+
+        public readonly SizeD MillimetersToDips()
+        {
+            var result = GraphicsUnitConverter.ConvertSize(
+                GraphicsUnit.Millimeter,
+                GraphicsUnit.Dip,
+                0,
+                this);
+            return result;
+        }
+
         public readonly SizeD Shrink(bool vert, Coord maxSize)
         {
             var result = this;
