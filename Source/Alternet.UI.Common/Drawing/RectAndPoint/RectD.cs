@@ -102,6 +102,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether height is less or equal 0.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool HasEmptyHeight => height <= 0;
+
+        /// <summary>
+        /// Gets whether width is less or equal 0.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool HasEmptyWidth => width <= 0;
+
+        /// <summary>
         /// Gets or sets the size of this <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
@@ -942,6 +954,15 @@ namespace Alternet.Drawing
             r.x = x;
             r.y = y;
             return r;
+        }
+
+        /// <summary>
+        /// Creates a <see cref='RectD'/> with the specified location.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithLocation(PointD location)
+        {
+            return (location, Size);
         }
 
         /// <summary>
