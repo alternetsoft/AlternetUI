@@ -10,10 +10,25 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Implements light and dark color pair.
+    /// Etxtends <see cref="Color"/> with additional features.
+    /// Implements light and dark color pair, one of them
+    /// is used when argb of the <see cref="LightDarkColor"/> is requested. Returned argb
+    /// depends on the value specified in <see cref="DefaultIsDark"/> and a result
+    /// of <see cref="SystemSettings.AppearanceIsDark"/>.
     /// </summary>
-    public partial class LightDarkColor : IEquatable<LightDarkColor>
+    public class LightDarkColor : Color
     {
+        /// <summary>
+        /// Gets or sets whether dark or light color is returned
+        /// when argb of the color is requested. When this is null (default),
+        /// <see cref="SystemSettings.AppearanceIsDark"/> is used in order to determine
+        /// which argb to return.
+        /// </summary>
+        public static bool? DefaultIsDark;
+
+        private readonly Color light;
+        private readonly Color dark;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LightDarkColor"/> class.
         /// </summary>
@@ -21,119 +36,29 @@ namespace Alternet.Drawing
         /// <param name="dark">Dark color.</param>
         public LightDarkColor(Color light, Color dark)
         {
-            Light = light;
-            Dark = dark;
+            this.light = light;
+            this.dark = dark;
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class.
-        /// </summary>
-        /// <param name="color">Light and dark color.</param>
-        public LightDarkColor(Color color)
-        {
-            Light = color;
-            Dark = color;
-        }
-
-        /// <summary>
-        /// Gets light color.
-        /// </summary>
-        public virtual Color Light { get; set; }
 
         /// <summary>
         /// Gets dark color.
         /// </summary>
-        public virtual Color Dark { get; set; }
+        public Color Dark => dark;
 
         /// <summary>
-        /// Conversion operator from <see cref="Color"/> to <see cref="LightDarkColor"/>.
-        /// This operator creates <see cref="LightDarkColor"/> with the same values for
-        /// the dark and light colors filled from the specified <see cref="Color"/>.
+        /// Gets light color.
         /// </summary>
-        /// <param name="value"></param>
-        public static implicit operator LightDarkColor?(Color? value)
+        public Color Light => light;
+
+        /// <inheritdoc/>
+        protected override void RequireArgb(ref ColorStruct val)
         {
-            if (value is null)
-                return null;
-            return new(value);
-        }
+            var appearanceIsDark = DefaultIsDark ?? SystemSettings.AppearanceIsDark;
 
-        /// <summary>
-        /// Tests whether two specified <see cref="LightDarkColor"/> structures are different.
-        /// </summary>
-        /// <param name="left">The <see cref="LightDarkColor"/> that is to the left
-        /// of the inequality operator.</param>
-        /// <param name="right">The <see cref="LightDarkColor"/> that is to the right
-        /// of the inequality operator.</param>
-        /// <returns><c>true</c> if the two <see cref="Color"/> structures
-        /// are different; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(LightDarkColor? left, LightDarkColor? right)
-        {
-            return !(left == right);
-        }
-
-        /// <summary>
-        /// Tests whether two specified <see cref="LightDarkColor"/> structures are equivalent.
-        /// </summary>
-        /// <param name="left">The <see cref="LightDarkColor"/> that is to the left
-        /// of the equality operator.</param>
-        /// <param name="right">The <see cref="LightDarkColor"/> that is to the right
-        /// of the equality operator.</param>
-        /// <returns><c>true</c> if the two <see cref="LightDarkColor"/> structures
-        /// are equal; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(LightDarkColor? left, LightDarkColor? right)
-        {
-            if (left is null && right is null)
-                return true;
-
-            if (left is null || right is null)
-                return false;
-
-            return left.Dark == right.Dark
-                && left.Light == right.Light;
-        }
-
-        /// <summary>
-        /// Gets dark or light color depending on the <paramref name="isDark"/>
-        /// parameter value.
-        /// </summary>
-        /// <param name="isDark">Whether to get dark or light color.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual Color Get(bool isDark)
-        {
-            Color result;
-
-            if (isDark)
-            {
-                result = Dark;
-            }
+            if (appearanceIsDark)
+                val = dark.AsStruct;
             else
-            {
-                result = Light;
-            }
-
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return obj is LightDarkColor color && Equals(color);
-        }
-
-        /// <inheritdoc/>
-        public bool Equals(LightDarkColor other)
-        {
-            return this == other;
-        }
-
-        /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(
-                Dark?.GetHashCode(),
-                Light?.GetHashCode());
+                val = light.AsStruct;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default border color.
         /// </summary>
-        public static LightDarkColor? DefaultColor;
+        public static Color? DefaultColor;
 
         /// <summary>
         /// Default border color.

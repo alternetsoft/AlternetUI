@@ -336,7 +336,7 @@ namespace Alternet.UI
             if(DebugUtils.IsDebugDefined && ShowDebugRectangleAtCenter)
             {
                 dc.FillRectangleAtCenter(
-                    LightDarkColors.Red.Get(IsDarkBackground).AsBrush,
+                    LightDarkColors.Red.AsBrush,
                     ClientRectangle,
                     3);
             }

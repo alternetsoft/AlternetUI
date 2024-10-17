@@ -29,41 +29,37 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default selected item text color.
         /// </summary>
-        public static LightDarkColor DefaultSelectedItemTextColor
-            = new(SystemColors.HighlightText);
+        public static Color DefaultSelectedItemTextColor = SystemColors.HighlightText;
 
         /// <summary>
         /// Gets or sets default selected item background color.
         /// </summary>
-        public static LightDarkColor DefaultSelectedItemBackColor
-            = new(SystemColors.Highlight);
+        public static Color DefaultSelectedItemBackColor = SystemColors.Highlight;
 
         /// <summary>
         /// Gets or sets default disabled item text color.
         /// </summary>
-        public static LightDarkColor DefaultDisabledItemTextColor
-            = new(SystemColors.GrayText);
+        public static Color DefaultDisabledItemTextColor = SystemColors.GrayText;
 
         /// <summary>
         /// Gets or sets default item text color.
         /// </summary>
-        public static LightDarkColor DefaultItemTextColor
-            = new(SystemColors.WindowText);
+        public static Color DefaultItemTextColor = SystemColors.WindowText;
 
         /// <summary>
         /// Gets or sets default border color for the current item.
         /// This is used when <see cref="DefaultCurrentItemBorder"/>
         /// is created.
         /// </summary>
-        public static LightDarkColor DefaultCurrentItemBorderColor
-            = new(light: Color.Black, dark: Color.Gray);
+        public static Color DefaultCurrentItemBorderColor
+            = Color.LightDark(light: Color.Black, dark: Color.Gray);
 
         private static BorderSettings? defaultCurrentItemBorder;
 
-        private LightDarkColor? selectedItemTextColor;
-        private LightDarkColor? itemTextColor;
-        private LightDarkColor? selectedItemBackColor;
-        private LightDarkColor? disabledItemTextColor;
+        private Color? selectedItemTextColor;
+        private Color? itemTextColor;
+        private Color? selectedItemBackColor;
+        private Color? disabledItemTextColor;
 
         private Thickness itemMargin = DefaultItemMargin;
         private IListBoxItemPainter? painter;
@@ -100,8 +96,7 @@ namespace Alternet.UI
                 if (defaultCurrentItemBorder is null)
                 {
                     defaultCurrentItemBorder = new();
-                    defaultCurrentItemBorder.Color
-                        = DefaultCurrentItemBorderColor.Get(SystemSettings.AppearanceIsDark); // !!!
+                    defaultCurrentItemBorder.Color = DefaultCurrentItemBorderColor;
                 }
 
                 return defaultCurrentItemBorder;
@@ -419,7 +414,7 @@ namespace Alternet.UI
         /// Gets or sets disabled item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? DisabledItemTextColor
+        public virtual Color? DisabledItemTextColor
         {
             get
             {
@@ -478,7 +473,7 @@ namespace Alternet.UI
         /// Gets or sets selected item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? SelectedItemTextColor
+        public virtual Color? SelectedItemTextColor
         {
             get
             {
@@ -498,7 +493,7 @@ namespace Alternet.UI
         /// Gets or sets selected item back color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? SelectedItemBackColor
+        public virtual Color? SelectedItemBackColor
         {
             get
             {
@@ -518,7 +513,7 @@ namespace Alternet.UI
         /// Gets or sets item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? ItemTextColor
+        public virtual Color? ItemTextColor
         {
             get
             {
@@ -901,7 +896,7 @@ namespace Alternet.UI
         /// <param name="svgColor">Color of the svg image when item is selected.</param>
         /// <returns></returns>
         public (Image? Normal, Image? Disabled, Image? Selected)
-            GetItemImages(int itemIndex, LightDarkColor? svgColor)
+            GetItemImages(int itemIndex, Color? svgColor)
         {
             return ListControlItem.GetItemImages(SafeItem(itemIndex), this, svgColor);
         }
@@ -933,7 +928,7 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetSelectedItemTextColor(int itemIndex)
+        public Color? GetSelectedItemTextColor(int itemIndex)
         {
             return ListControlItem.GetSelectedTextColor(SafeItem(itemIndex), this);
         }
@@ -943,7 +938,7 @@ namespace Alternet.UI
         /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetItemTextColor(int itemIndex)
+        public Color? GetItemTextColor(int itemIndex)
         {
             return ListControlItem.GetItemTextColor(SafeItem(itemIndex), this);
         }
@@ -953,7 +948,7 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemBackColor"/>.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetSelectedItemBackColor(int itemIndex)
+        public Color? GetSelectedItemBackColor(int itemIndex)
         {
             return ListControlItem.GetSelectedItemBackColor(SafeItem(itemIndex), this);
         }
@@ -962,7 +957,7 @@ namespace Alternet.UI
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetDisabledItemTextColor(int itemIndex)
+        public Color? GetDisabledItemTextColor(int itemIndex)
         {
             return ListControlItem.GetDisabledTextColor(SafeItem(itemIndex), this);
         }

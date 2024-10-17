@@ -22,17 +22,17 @@ namespace Alternet.UI
         public virtual Coord MinItemHeight { get; set; } = VirtualListBox.DefaultMinItemHeight;
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? ItemTextColor { get; set; }
+        public virtual Color? ItemTextColor { get; set; }
 
         /// <inheritdoc/>
         public virtual GenericAlignment ItemAlignment { get; set; }
             = ListControlItem.DefaultItemAlignment;
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? SelectedItemTextColor { get; set; }
+        public virtual Color? SelectedItemTextColor { get; set; }
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? DisabledItemTextColor { get; set; }
+        public virtual Color? DisabledItemTextColor { get; set; }
 
         /// <inheritdoc/>
         public virtual bool SelectionVisible { get; set; } = true;
@@ -47,7 +47,7 @@ namespace Alternet.UI
         public virtual bool TextVisible { get; set; } = true;
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? SelectedItemBackColor { get; set; }
+        public virtual Color? SelectedItemBackColor { get; set; }
 
         /// <inheritdoc/>
         public virtual bool CurrentItemBorderVisible { get; set; } = true;

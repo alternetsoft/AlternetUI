@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets foreground color of the item.
         /// </summary>
-        public virtual LightDarkColor? TextColor
+        public virtual Color? TextColor
         {
             get
             {
@@ -140,9 +140,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isSelected">Whether to get text color for the selected state.</param>
         /// <returns></returns>
-        public virtual LightDarkColor? GetTextColor(bool isSelected)
+        public virtual Color? GetTextColor(bool isSelected)
         {
-            LightDarkColor? textColor;
+            Color? textColor;
             if (isSelected)
             {
                 textColor = ListControlItem.GetSelectedTextColor(Item, ListBox);

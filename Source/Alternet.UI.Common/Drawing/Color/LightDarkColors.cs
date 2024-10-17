@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Contains static members related to <see cref="LightDarkColor"/>.
+    /// Contains static members related to colors which have different
+    /// argb in dark and light themes.
     /// </summary>
     public static class LightDarkColors
     {
@@ -22,7 +23,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return red ??= new(light: (192, 10, 22), dark: (244, 75, 86));
+                return red ??= Color.LightDark(light: (192, 10, 22), dark: (244, 75, 86));
             }
 
             set => red = value;
@@ -35,7 +36,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return green ??= new(light: (30, 124, 30), dark: (138, 226, 138));
+                return green ??= Color.LightDark(light: (30, 124, 30), dark: (138, 226, 138));
             }
 
             set => green = value;
@@ -48,7 +49,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return blue ??= new(light: (0, 90, 181), dark: (85, 170, 255));
+                return blue ??= Color.LightDark(light: (0, 90, 181), dark: (85, 170, 255));
             }
 
             set => blue = value;
