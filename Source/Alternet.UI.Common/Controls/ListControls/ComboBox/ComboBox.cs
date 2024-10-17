@@ -448,6 +448,8 @@ namespace Alternet.UI
             }
         }
 
+        AbstractControl? IListControlItemContainer.Control => this;
+
         internal OwnerDrawFlags OwnerDrawStyle
         {
             get

@@ -15,6 +15,7 @@ namespace Alternet.UI
     {
         private static ISystemSettingsHandler? handler;
         private static bool validColors = false;
+        private static bool? appearanceIsDark;
 
         /// <summary>
         /// Gets or sets <see cref="ISystemSettingsHandler"/> provider used to work
@@ -50,7 +51,15 @@ namespace Alternet.UI
         /// </remarks>
         public static bool AppearanceIsDark
         {
-            get => Handler.GetAppearanceIsDark();
+            get
+            {
+                return appearanceIsDark ?? Handler.GetAppearanceIsDark();
+            }
+
+            set
+            {
+                appearanceIsDark = value;
+            }
         }
 
         /// <summary>

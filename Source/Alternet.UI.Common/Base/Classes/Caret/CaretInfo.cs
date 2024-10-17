@@ -20,8 +20,8 @@ namespace Alternet.UI
         private bool focused;
         private bool topOverlayVisible;
         private bool bottomOverlayVisible;
-        private LightDarkColor? overlayColor;
-        private LightDarkColor? color;
+        private Color? overlayColor;
+        private Color? color;
         private int overlaySize;
         private SvgImage? overlayImage;
 
@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// Get or sets overlay image color. If <c>null</c>,
         /// <see cref="PlessCaretHandler.DefaultOverlayColor"/> will be used.
         /// </summary>
-        public virtual LightDarkColor? OverlayColor
+        public virtual Color? OverlayColor
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// Gets or sets caret color. If <c>null</c>, <see cref="PlessCaretHandler.CaretColor"/>
         /// will be used.
         /// </summary>
-        public virtual LightDarkColor? Color
+        public virtual Color? Color
         {
             get
             {
@@ -376,18 +376,15 @@ namespace Alternet.UI
         /// <param name="e">Paint arguments.</param>
         public virtual void Paint(AbstractControl sender, PaintEventArgs e)
         {
-            var isDark = sender.IsDarkBackground;
             var dc = e.Graphics;
 
-            var caretColors = Color ?? PlessCaretHandler.CaretColor;
-            var caretColor = caretColors.Get(isDark);
+            var caretColor = Color ?? PlessCaretHandler.CaretColor;
             dc.FillRectangle(caretColor.AsBrush, sender.PixelToDip(Rect));
 
             if (TopOrBottomOverlayVisible)
             {
-                var overlayColors = OverlayColor ?? PlessCaretHandler.DefaultOverlayColor
+                var overlayColor = OverlayColor ?? PlessCaretHandler.DefaultOverlayColor
                     ?? PlessCaretHandler.CaretColor;
-                var overlayColor = overlayColors.Get(isDark);
                 var overlaySvg = SafeOverlayImage;
                 var overlayImage = overlaySvg.ImageWithColor(BottomOverlayRect.Width, overlayColor);
 

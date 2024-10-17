@@ -13,6 +13,11 @@ namespace Alternet.UI
     public interface IListControlItemContainer
     {
         /// <summary>
+        /// Gets control used by the container.
+        /// </summary>
+        AbstractControl? Control { get; }
+
+        /// <summary>
         /// Gets defaults used when item is painted.
         /// </summary>
         IListControlItemDefaults Defaults { get; }

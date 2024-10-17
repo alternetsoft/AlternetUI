@@ -496,12 +496,12 @@ namespace Alternet.UI
         internal override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
 
         /// <summary>
-        /// Gets default interior border color as <see cref="LightDarkColor"/>.
+        /// Gets default interior border color as light/dark color pair.
         /// </summary>
         /// <returns></returns>
-        public static LightDarkColor GetDefaultInteriorBorderColor()
+        public static Color GetDefaultInteriorBorderColor()
         {
-            return new(
+            return Color.LightDark(
                 light: ColorUtils.GetTabControlInteriorBorderColor(false),
                 dark: ColorUtils.GetTabControlInteriorBorderColor(true));
         }

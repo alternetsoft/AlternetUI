@@ -589,6 +589,10 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Returns this size (in inches) converted to device-independent units.
+        /// </summary>
+        /// <returns></returns>
         public readonly SizeD InchesToDips()
         {
             var result = GraphicsUnitConverter.ConvertSize(
@@ -599,6 +603,10 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Returns this size (in millimeters) converted to device-independent units.
+        /// </summary>
+        /// <returns></returns>
         public readonly SizeD MillimetersToDips()
         {
             var result = GraphicsUnitConverter.ConvertSize(
@@ -609,6 +617,12 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Shrinks the specified size coordinate.
+        /// </summary>
+        /// <param name="vert">Whether to shrink vertical or horizontal size.</param>
+        /// <param name="maxSize">Maximal possible value.</param>
+        /// <returns></returns>
         public readonly SizeD Shrink(bool vert, Coord maxSize)
         {
             var result = this;

@@ -1307,6 +1307,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates <see cref="LightDarkColor"/> with the specified two colors used
+        /// in light and dark themes.
+        /// </summary>
+        /// <param name="light">Color used when light theme is on.</param>
+        /// <param name="dark">Color used when dark theme is on.</param>
+        /// <returns></returns>
+        public static LightDarkColor LightDark(Color light, Color dark)
+        {
+            return new LightDarkColor(light, dark);
+        }
+
+        /// <summary>
         /// Converts <see cref="HSVValue"/> to RGB color.
         /// </summary>
         /// <param name="hsv"></param>
@@ -1928,6 +1940,21 @@ namespace Alternet.Drawing
              => KnownColorTable.ColorKindTable[(int)knownColor] ==
                  KnownColorTable.KnownColorKindSystem;
 
+        /// <summary>
+        /// This method is called each time before argb value of the color
+        /// is returned to the caller.
+        /// </summary>
+        /// <remarks>
+        /// You can override this method in order to provide alternative mechanism
+        /// for loading and preparing argb values of the color.
+        /// </remarks>
+        /// <param name="val">This output parameter must be set if argb of the color is changed.</param>
+        protected virtual void RequireArgb(ref ColorStruct val)
+        {
+            if (state.HasFlag(StateFlags.KnownColorValid))
+                val = KnownColorTable.KnownColorToArgb(knownColor);
+        }
+
         private static void CheckByte(int value, string name)
         {
             static void ThrowOutOfByteRange(int v, string n) =>
@@ -1950,8 +1977,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void RequireArgb()
         {
-            if (state.HasFlag(StateFlags.KnownColorValid))
-                color = KnownColorTable.KnownColorToArgb(knownColor);
+            RequireArgb(ref color);
         }
 
         /// <summary>

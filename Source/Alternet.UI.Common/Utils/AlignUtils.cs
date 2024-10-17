@@ -47,6 +47,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Aligns vertical or horizontal coordinates of the specified rectangle
+        /// in the container using the alignment options.
+        /// </summary>
+        /// <param name="rect">Rectangle to align.</param>
+        /// <param name="alignment">Alignment to apply.</param>
+        /// <param name="container">Container rectangle.</param>
+        /// <param name="vert">Whether to align vertical or horizontal coordinate.</param>
+        /// <param name="shrinkSize">Whether to shrink size of the rectangle
+        /// to fit in the container. Optional. Default is <c>true</c>.
+        /// Only width (when <paramref name="vert"/> is false) or height
+        /// (when <paramref name="vert"/> is true) is shrinked.
+        /// </param>
+        /// <returns></returns>
         public static RectD AlignRectInRect(
             bool vert,
             RectD rect,
