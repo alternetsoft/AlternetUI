@@ -1347,6 +1347,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets new suggested size value using nullable width and height values.
+        /// </summary>
+        public virtual void SetSuggestedSize(Coord? newSuggestedWidth, Coord? newSuggestedHeight)
+        {
+            var suggestedWidth = newSuggestedWidth is null
+            ? Coord.NaN : newSuggestedWidth.Value;
+
+            var suggestedHeight = newSuggestedHeight is null
+            ? Coord.NaN : newSuggestedHeight.Value;
+
+            SuggestedSize = (suggestedWidth, suggestedHeight);
+        }
+
+        /// <summary>
         /// Starts the initialization process for this control.
         /// </summary>
         /// <remarks>

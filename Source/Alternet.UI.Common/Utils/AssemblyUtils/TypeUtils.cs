@@ -16,9 +16,9 @@ namespace Alternet.UI
         /// <param name="s">Object to test.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsString(object s)
+        public static bool IsString(object? s)
         {
-            return s.GetType() == typeof(string);
+            return s?.GetType() == typeof(string);
         }
     }
 }
