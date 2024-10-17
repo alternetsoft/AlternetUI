@@ -913,7 +913,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref='RectD'/> with the specified size.
+        /// Creates a <see cref='RectD'/> with the specified size and the location of this rectangle.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly RectD WithSize(Coord width, Coord height)
@@ -925,12 +925,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref='RectD'/> with the specified size.
+        /// Creates a <see cref='RectD'/> with the specified size and the location of this rectangle.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly RectD WithSize(SizeD size)
         {
-            return (Location, size);
+            return new(Location, size);
+        }
+
+        /// <summary>
+        /// Creates a <see cref='RectD'/> with an empty size and the location of this rectangle.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithEmptySize()
+        {
+            return new(Location, SizeD.Empty);
         }
 
         /// <summary>
