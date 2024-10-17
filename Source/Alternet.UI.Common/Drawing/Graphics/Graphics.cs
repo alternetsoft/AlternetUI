@@ -1480,8 +1480,13 @@ namespace Alternet.Drawing
         /// <remarks>
         /// You can pass 0 as height of the <paramref name="rect"/>.
         /// </remarks>
-        public virtual RectD DrawText(string text, Font font, Brush brush, RectD rect, TextFormat format)
+        public virtual RectD DrawText(object? text, Font font, Brush brush, RectD rect, TextFormat format)
         {
+            string s = text?.ToString() ?? string.Empty;
+
+            if (s.Length == 0)
+                return rect.WithEmptySize();
+
             var document = SafeDocument;
             var wrappedText = document.WrappedText;
 
@@ -1496,7 +1501,7 @@ namespace Alternet.Drawing
             wrappedText.DoInsideLayout(() =>
             {
                 wrappedText.SetFormat(format.AsRecord);
-                wrappedText.Text = text;
+                wrappedText.Text = s!;
                 wrappedText.Font = font;
                 wrappedText.ForegroundColor = brush.AsColor;
             });

@@ -1,4 +1,5 @@
 ﻿using Alternet.Drawing;
+using Alternet.Drawing.Printing;
 using Alternet.UI;
 using System;
 using System.Linq;
@@ -100,9 +101,16 @@ namespace DrawingSample
 
         private void DrawDemoForeground(Graphics dc, RectD bounds)
         {
-            var s1 = "Click and drag to draw.";
-            var s2 = "You can select the path segment type";
-            var s3 = "to draw in the combo box in the panel to the right.";
+            var s = "Click and drag to draw. " +
+                "Select the path segment type to draw in the combo box in the panel to the right.";
+
+            var hMargin = bounds.Width / 4;
+            var txtRect = bounds.WithMargin((hMargin, 10, hMargin, 10));
+
+            dc.DrawText(s, Control.DefaultFont, Brushes.Black, txtRect,
+                TextFormat.Default
+                .WithAlignment(TextHorizontalAlignment.Center)
+                .WithMaxWidth(PaperSizes.SizeInches.A6.InchesToDips().Width));
 
             /*var drawable = DrawableElement.CreateStringsStack([s1, s2, s3], 0, CoordAlignment.Near);
             drawable.Draw(dc, bounds.WithMargin(10));*/
