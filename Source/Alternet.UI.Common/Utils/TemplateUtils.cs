@@ -13,6 +13,15 @@ namespace Alternet.UI
     /// </summary>
     public static class TemplateUtils
     {
+        /// <summary>
+        /// Calls <see cref="RaisePaintRecursive(AbstractControl?, Graphics, PointD)"/>
+        /// inside changed clip rectangle.
+        /// </summary>
+        /// <param name="control">Control template.</param>
+        /// <param name="dc">Canvas where to draw the template.</param>
+        /// <param name="origin">Value on which to translate the top-left
+        /// corner of the control.</param>
+        /// <param name="isClipped">Whether to clip painting.</param>
         public static void RaisePaintClipped(
             AbstractControl? control,
             Graphics dc,
