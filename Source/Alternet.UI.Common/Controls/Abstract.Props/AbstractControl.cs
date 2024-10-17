@@ -2039,6 +2039,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this is control has handler to the platform control.
+        /// </summary>
+        public virtual bool IsPlatformControl => false;
+
+        /// <summary>
         /// Gets or sets the maximum height the window can be resized to.
         /// </summary>
         public virtual Coord? MaxHeight
