@@ -220,7 +220,7 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual Color? ForegroundColor { get; set; }
+        public virtual LightDarkColor? ForegroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets background color of the item.
@@ -230,7 +230,7 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual Color? BackgroundColor { get; set; }
+        public virtual LightDarkColor? BackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets border of the item.
@@ -282,7 +282,9 @@ namespace Alternet.UI
         {
             Font result;
 
-            if (container is Control control)
+            var control = container?.Control;
+
+            if (control is not null)
                 result = control.RealFont;
             else
                 result = Control.DefaultFont;
@@ -301,7 +303,7 @@ namespace Alternet.UI
             GetItemImages(
             ListControlItem? item,
             IListControlItemContainer? container,
-            Color? svgColor)
+            LightDarkColor? svgColor)
         {
             if (item is null)
                 return (null, null, null);
@@ -310,16 +312,16 @@ namespace Alternet.UI
 
             if (svgImage is not null)
             {
-                var isDark = IsContainerDarkBackground(container);
+                var isDark = IsContainerDark(container);
 
                 var imageSize = item.SvgImageSize ?? container?.Defaults.SvgImageSize
-                    ?? ToolBarUtils.GetDefaultImageSize(container as Control);
+                    ?? ToolBarUtils.GetDefaultImageSize(container?.Control);
                 var imageHeight = imageSize.Height;
                 item.Image ??= svgImage.AsNormalImage(imageHeight, isDark);
                 item.DisabledImage ??= svgImage.AsDisabledImage(imageHeight, isDark);
 
                 if (svgColor is not null)
-                    item.SelectedImage ??= svgImage.ImageWithColor(imageHeight, svgColor);
+                    item.SelectedImage ??= svgImage.ImageWithColor(imageHeight, svgColor?.Get(isDark));
             }
 
             var image = item.Image;
@@ -365,11 +367,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether container is enabled.
+        /// Gets whether container is using dark color theme.
         /// </summary>
-        public static bool IsContainerDarkBackground(IListControlItemContainer? container)
+        public static bool IsContainerDark(IListControlItemContainer? container)
         {
-            if (container is Control control)
+            var control = container?.Control;
+
+            if (control is not null)
                 return control.IsDarkBackground;
             else
                 return SystemSettings.AppearanceIsDark;
@@ -380,10 +384,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static Color? GetContainerForegroundColor(IListControlItemContainer? container)
+        public static LightDarkColor? GetContainerForegroundColor(IListControlItemContainer? container)
         {
-            if (container is Control control)
-                return control.ForegroundColor;
+            var control = container?.Control;
+            if (control is not null)
+                return (LightDarkColor?)control.ForegroundColor;
             return null;
         }
 
@@ -391,7 +396,7 @@ namespace Alternet.UI
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public static Color GetDisabledTextColor(
+        public static LightDarkColor? GetDisabledTextColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
@@ -402,14 +407,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item text color when item is inside the spedified container.
         /// </summary>
-        public static Color GetItemTextColor(
+        public static LightDarkColor? GetItemTextColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
             if (IsContainerEnabled(container))
             {
-                var itemColor = item?.ForegroundColor ?? GetContainerForegroundColor(container)
-                    ?? container?.Defaults.ItemTextColor ?? VirtualListBox.DefaultItemTextColor;
+                LightDarkColor? itemColor
+                    = item?.ForegroundColor ?? GetContainerForegroundColor(container)
+                    ?? container?.Defaults.ItemTextColor
+                    ?? VirtualListBox.DefaultItemTextColor;
                 return itemColor;
             }
             else
@@ -436,20 +443,25 @@ namespace Alternet.UI
         /// Gets selected item back color.
         /// </summary>
         /// <returns></returns>
-        public static Color GetSelectedItemBackColor(
+        public static LightDarkColor? GetSelectedItemBackColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
-            var control = container as Control;
+            var control = container?.Control;
             if (control is null)
                 return VirtualListBox.DefaultSelectedItemBackColor;
 
             var defaults = container!.Defaults;
 
             if (control.Enabled && defaults.SelectionVisible)
-                return defaults.SelectedItemBackColor ?? VirtualListBox.DefaultSelectedItemBackColor;
+            {
+                return defaults.SelectedItemBackColor
+                    ?? VirtualListBox.DefaultSelectedItemBackColor;
+            }
             else
-                return control.RealBackgroundColor;
+            {
+                return (LightDarkColor?)control.RealBackgroundColor;
+            }
         }
 
         /// <summary>
@@ -459,9 +471,10 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
         {
+            bool isDark = IsContainerDark(container);
             var item = e.Item;
 
-            var control = container as Control;
+            var control = container?.Control;
             var focused = control?.Focused ?? false;
             var rect = e.ClipRectangle;
             var dc = e.Graphics;
@@ -476,7 +489,7 @@ namespace Alternet.UI
             {
                 dc.FillBorderRectangle(
                     rect,
-                    item?.BackgroundColor?.AsBrush,
+                    item?.BackgroundColor?.Get(isDark).AsBrush,
                     item?.Border,
                     true,
                     control);
@@ -491,7 +504,7 @@ namespace Alternet.UI
 
                         dc.FillBorderRectangle(
                             rect,
-                            GetSelectedItemBackColor(item, container).AsBrush,
+                            GetSelectedItemBackColor(item, container)?.Get(isDark)?.AsBrush,
                             selectionBorder,
                             true,
                             control);
@@ -521,6 +534,7 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
         {
+            bool isDark = IsContainerDark(container);
             var item = e.Item;
 
             if (item is not null)
@@ -556,7 +570,7 @@ namespace Alternet.UI
             e.Graphics.DrawLabel(
                 s,
                 e.ItemFont,
-                e.GetTextColor(isSelected),
+                e.GetTextColor(isSelected)?.Get(isDark) ?? SystemColors.WindowText,
                 Color.Empty,
                 image,
                 e.ClipRectangle,
@@ -567,7 +581,7 @@ namespace Alternet.UI
         /// Gets selected item text color when item is inside the spedified container.
         /// </summary>
         /// <returns></returns>
-        public static Color GetSelectedTextColor(
+        public static LightDarkColor? GetSelectedTextColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
@@ -645,7 +659,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item text color when item is inside the spedified container.
         /// </summary>
-        public virtual Color GetTextColor(IListControlItemContainer? container)
+        public virtual LightDarkColor? GetTextColor(IListControlItemContainer? container)
         {
             return GetItemTextColor(this, container);
         }
@@ -694,7 +708,9 @@ namespace Alternet.UI
             var result = Font;
             if (result is null)
             {
-                if (container is Control control)
+                var control = container?.Control;
+
+                if (control is not null)
                 {
                     result = control.Font ?? UI.AbstractControl.DefaultFont;
                     if (control.IsBold)
@@ -731,7 +747,7 @@ namespace Alternet.UI
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);
             result.CheckSize = DrawingUtils.GetCheckBoxSize(
-                container as Control ?? App.SafeWindow ?? ControlUtils.Empty,
+                container?.Control ?? App.SafeWindow ?? ControlUtils.Empty,
                 result.CheckState,
                 result.PartState);
             var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize);

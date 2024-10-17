@@ -5,12 +5,14 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
     /// Implements light and dark color pair.
     /// </summary>
-    public class LightDarkColor
+    public readonly struct LightDarkColor : IEquatable<LightDarkColor>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LightDarkColor"/> class.
@@ -36,12 +38,60 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets light color.
         /// </summary>
-        public virtual Color Light { get; set; }
+        public Color Light { get; }
 
         /// <summary>
         /// Gets dark color.
         /// </summary>
-        public virtual Color Dark { get; set; }
+        public Color Dark { get; }
+
+        /// <summary>
+        /// Conversion operator from <see cref="Color"/> to <see cref="LightDarkColor"/>.
+        /// This operator creates <see cref="LightDarkColor"/> with the same values for
+        /// the dark and light colors filled from the specified <see cref="Color"/>.
+        /// </summary>
+        /// <param name="value"></param>
+        public static implicit operator LightDarkColor?(Color? value)
+        {
+            if (value is null)
+                return null;
+            return new(value);
+        }
+
+        /// <summary>
+        /// Tests whether two specified <see cref="LightDarkColor"/> structures are different.
+        /// </summary>
+        /// <param name="left">The <see cref="LightDarkColor"/> that is to the left
+        /// of the inequality operator.</param>
+        /// <param name="right">The <see cref="LightDarkColor"/> that is to the right
+        /// of the inequality operator.</param>
+        /// <returns><c>true</c> if the two <see cref="Color"/> structures
+        /// are different; otherwise, <c>false</c>.</returns>
+        public static bool operator !=(LightDarkColor? left, LightDarkColor? right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Tests whether two specified <see cref="LightDarkColor"/> structures are equivalent.
+        /// </summary>
+        /// <param name="left">The <see cref="LightDarkColor"/> that is to the left
+        /// of the equality operator.</param>
+        /// <param name="right">The <see cref="LightDarkColor"/> that is to the right
+        /// of the equality operator.</param>
+        /// <returns><c>true</c> if the two <see cref="LightDarkColor"/> structures
+        /// are equal; otherwise, <c>false</c>.</returns>
+        public static bool operator ==(LightDarkColor? left, LightDarkColor? right)
+        {
+            if (left is null && right is null)
+                return true;
+
+            if (left is null || right is null)
+                return false;
+
+            return left.Value.Dark == right.Value.Dark
+                && left.Value.Light == right.Value.Light;
+        }
 
         /// <summary>
         /// Gets dark or light color depending on the <paramref name="isDark"/>
@@ -50,6 +100,40 @@ namespace Alternet.Drawing
         /// <param name="isDark">Whether to get dark or light color.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Color Get(bool isDark) => isDark ? Dark : Light;
+        public Color Get(bool isDark)
+        {
+            Color result;
+
+            if (isDark)
+            {
+                result = Dark;
+            }
+            else
+            {
+                result = Light;
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            return obj is LightDarkColor color && Equals(color);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(LightDarkColor other)
+        {
+            return this == other;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(
+                Dark?.GetHashCode(),
+                Light?.GetHashCode());
+        }
     }
 }
