@@ -16,6 +16,11 @@ namespace Alternet.UI
     /// </summary>
     public class ThreadExceptionWindow : DialogWindow
     {
+        /// <summary>
+        /// Gets or sets default error image size in device-independent units.
+        /// </summary>
+        public static int DefaultErrorImageSize = 32;
+
         private Exception? exception;
         private bool canContinue = true;
         private TextBox? messageTextBox;
@@ -228,12 +233,15 @@ namespace Alternet.UI
                 var firstSection = new HorizontalStackPanel();
                 firstSection.Parent = messageGrid;
 
+                var imageSizeInPixels = this.PixelFromDip(DefaultErrorImageSize);
+
                 var errorImagePictureBox = new PictureBox
                 {
                     VerticalAlignment = UI.VerticalAlignment.Top,
                     HorizontalAlignment = UI.HorizontalAlignment.Left,
                     Margin = new Thickness(0, 0, 10, 0),
-                    ImageSet = KnownColorSvgImages.ImgError.AsImageSet(64),
+                    ImageSet = MessageBoxSvg
+                    .GetImage(MessageBoxIcon.Error)?.AsImageSet(imageSizeInPixels),
                 };
                 errorImagePictureBox.Parent = firstSection;
 
