@@ -9,6 +9,13 @@ namespace Alternet.UI
     /// </summary>
     public static class TimerUtils
     {
+        /// <summary>
+        /// Gets or sets default tooltip timeout interval (in msec).
+        /// </summary>
+        // On Windows some multiple of double-click time is used but we currently have constant
+        // constant value by default.
+        public static int DefaultToolTipTimeout = 5000;
+
         private static int clickRepeatInterval = 20;
         private static Timer? clickRepeatTimer;
 
