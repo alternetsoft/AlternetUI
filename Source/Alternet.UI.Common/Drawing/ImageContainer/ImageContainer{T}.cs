@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -70,6 +71,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="imageIndex">Index of image to remove.</param>
         /// <returns></returns>
+        /// <returns>True on success; False on failure.</returns>
         public virtual bool Remove(int imageIndex)
         {
             if (imageIndex < 0 || imageIndex >= Images.Count)
@@ -79,9 +81,43 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Adds image from the specified assembly and relative path to the resource.
+        /// </summary>
+        /// <param name="asm">Assembly to load image from.</param>
+        /// <param name="name">Image name or relative path.
+        /// Slash characters will be changed to '.'.
+        /// Example: "ToolBarPng/Large\Calendar32.png" -> "ToolBarPng.Large.Calendar32.png".
+        /// </param>
+        /// <returns></returns>
+        public virtual bool AddFromAssemblyUrl(Assembly asm, string? name = null)
+        {
+            string url = AssemblyUtils.GetImageUrlInAssembly(asm, name);
+            return AddFromUrl(url);
+        }
+
+        /// <summary>
+        /// Adds image from the specified resource url.
+        /// See <see cref="Image.FromUrl"/> for the url format example.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used to load the image.</param>
+        /// <returns>True on success; False on failure.</returns>
+        public virtual bool AddFromUrl(string? url)
+        {
+            if (IsReadOnly || url is null)
+                return false;
+
+            var image = Image.FromUrlOrNull(url);
+            if (image is null || !image.IsOk)
+                return false;
+            Images.Add(image);
+            return true;
+        }
+
+        /// <summary>
         /// Adds image.
         /// </summary>
         /// <param name="image">Image to add.</param>
+        /// <returns>True on success; False on failure.</returns>
         public virtual bool Add(Image? image)
         {
             if (IsReadOnly || image is null)
@@ -140,7 +176,7 @@ namespace Alternet.Drawing
             if (suspendImagesEvents > 0)
                 return;
             if (!Handler.Add(item))
-                App.LogError("Error adding image to container");
+                App.DebugLogError("Error adding image to container");
             RaiseChanged();
         }
 
@@ -155,7 +191,7 @@ namespace Alternet.Drawing
             if (suspendImagesEvents > 0)
                 return;
             if (!Handler.Remove(index))
-                App.LogError("Error removing image from container");
+                App.DebugLogError("Error removing image from container");
             RaiseChanged();
         }
     }
