@@ -37,19 +37,29 @@ namespace Alternet.UI
         ImageSet? ToolTipImage { get; }
 
         /// <summary>
+        /// Gets tooltip background color.
+        /// </summary>
+        public Color? ToolTipBackgroundColor { get; }
+
+        /// <summary>
+        /// Gets tooltip foreground color.
+        /// </summary>
+        public Color? ToolTipForegroundColor { get; }
+
+        /// <summary>
+        /// Gets tooltip border.
+        /// </summary>
+        public BorderSettings? ToolTipBorder { get; }
+
+        /// <summary>
         /// Gets Tooltip icon.
         /// </summary>
         MessageBoxIcon? ToolTipIcon { get; }
 
         /// <summary>
-        /// Gets end color of the tooltip background for the linear gradient painting.
+        /// Gets tooltip background brush.
         /// </summary>
-        Color? BackgroundEndColor { get; }
-
-        /// <summary>
-        /// Gets end color of the tooltip background for the linear gradient painting.
-        /// </summary>
-        Color? BackgroundStartColor { get; }
+        Brush? ToolTipBackgroundBrush { get; }
 
         /// <summary>
         /// Sets tooltip properties so it will be a simple tooltip.
@@ -115,13 +125,16 @@ namespace Alternet.UI
             PointD? location = null);
 
         /// <summary>
-        /// Sets the background color: if two colors are specified, the background
-        /// is painted using a gradient from top to bottom, otherwise a single solid
-        /// color is used.
+        /// Sets tool tip background color.
         /// </summary>
         /// <param name="color">Background color.</param>
-        /// <param name="endColor">Second background color.</param>
-        IRichToolTip SetBackgroundColor(Color? color, Color? endColor = null);
+        IRichToolTip SetToolTipBackgroundColor(Color? color);
+
+        /// <summary>
+        /// Sets the background brush.
+        /// </summary>
+        /// <param name="brush">Background brush.</param>
+        IRichToolTip SetToolTipBackgroundBrush(Brush? brush);
 
         /// <summary>
         /// Sets foreground color of the message text.
@@ -129,7 +142,7 @@ namespace Alternet.UI
         /// <param name="color">The foreground color of the message text. If null is specified,
         /// default value is used.</param>
         /// <returns></returns>
-        IRichToolTip SetForegroundColor(Color? color);
+        IRichToolTip SetToolTipForegroundColor(Color? color);
 
         /// <summary>
         /// Sets foreground color of the title.
