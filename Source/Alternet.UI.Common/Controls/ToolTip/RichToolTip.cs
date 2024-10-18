@@ -19,6 +19,13 @@ namespace Alternet.UI
     /// </summary>
     public class RichToolTip : UserControl, IRichToolTip, IToolTipProvider
     {
+        /// <summary>
+        /// Gets or sets default value for the tooltip minimal image size (in device-independent units).
+        /// This is used for svg image size when standard <see cref="MessageBoxIcon"/>
+        /// images are shown.
+        /// </summary>
+        public static Coord DefaultMinImageSize = 16;
+
         private IRichToolTipHandler? tooltip;
 
         /// <summary>
