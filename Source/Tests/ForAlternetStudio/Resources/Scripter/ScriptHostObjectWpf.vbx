@@ -1,3 +1,0 @@
-Imports System.Windows
-
-LabelExpression.Content = "Expression : X+Y = " + (X + Y).ToString()

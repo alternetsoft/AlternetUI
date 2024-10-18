@@ -49,10 +49,34 @@ namespace Alternet.UI
         /// </summary>
         public bool ShowDebugRectangleAtCenter { get; set; }
 
+        /// <inheritdoc/>
+        public Color? TitleForegroundColor { get; private set; }
+
+        /// <inheritdoc/>
+        public Font? TitleFont { get; private set; }
+
+        /// <inheritdoc/>
+        public int TimeoutInMilliseconds { get; private set; }
+
+        /// <inheritdoc/>
+        public int ShowDelayInMilliseconds { get; private set; }
+
+        /// <inheritdoc/>
+        public MessageBoxIcon? ToolTipIcon { get; private set; }
+
+        /// <inheritdoc/>
+        public Color? BackgroundEndColor { get; private set; }
+
+        /// <inheritdoc/>
+        public Color? BackgroundStartColor { get; private set; }
+
+        /// <inheritdoc/>
+        public ImageSet? ToolTipImage { get; private set; }
+
         /// <summary>
         /// Gets <see cref="IRichToolTipHandler"/> provider used to work with tooltip.
         /// </summary>
-        private IRichToolTipHandler ToolTipHandler
+        private IRichToolTipHandler? ToolTipHandler
         {
             get
             {
@@ -170,6 +194,9 @@ namespace Alternet.UI
         /// <param name="endColor">Second background color.</param>
         public virtual IRichToolTip SetBackgroundColor(Color? color, Color? endColor = null)
         {
+            BackgroundEndColor = endColor;
+            BackgroundStartColor = color;
+
             if (color is null)
                 return this;
 
@@ -178,7 +205,7 @@ namespace Alternet.UI
                 color2 = Color.Empty;
             else
                 color2 = endColor;
-            ToolTipHandler.SetBackgroundColor(color, color2);
+            ToolTipHandler?.SetBackgroundColor(color, color2);
 
             return this;
         }
@@ -189,9 +216,10 @@ namespace Alternet.UI
         /// <param name="color">Foreground color of the message.</param>
         public virtual IRichToolTip SetForegroundColor(Color? color)
         {
+            ForegroundColor = color;
             if (color is null)
                 return this;
-            ToolTipHandler.SetForegroundColor(color);
+            ToolTipHandler?.SetForegroundColor(color);
             return this;
         }
 
@@ -201,9 +229,10 @@ namespace Alternet.UI
         /// <param name="color">Foreground color of the title.</param>
         public virtual IRichToolTip SetTitleForegroundColor(Color? color)
         {
+            TitleForegroundColor = color;
             if (color is null)
                 return this;
-            ToolTipHandler.SetTitleForegroundColor(color);
+            ToolTipHandler?.SetTitleForegroundColor(color);
             return this;
         }
 
@@ -222,7 +251,8 @@ namespace Alternet.UI
         /// <param name="millisecondsShowdelay">Show delay value.</param>
         public virtual IRichToolTip SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
         {
-            ToolTipHandler.SetTimeout(milliseconds, millisecondsShowdelay);
+            TimeoutInMilliseconds = (int)milliseconds;
+            ToolTipHandler?.SetTimeout(milliseconds, millisecondsShowdelay);
             return this;
         }
 
@@ -232,7 +262,8 @@ namespace Alternet.UI
         /// <param name="bitmap">Icon of the tooltip.</param>
         public virtual IRichToolTip SetIcon(ImageSet? bitmap)
         {
-            ToolTipHandler.SetIcon(bitmap);
+            ToolTipImage = bitmap;
+            ToolTipHandler?.SetIcon(bitmap);
             return this;
         }
 
@@ -246,7 +277,8 @@ namespace Alternet.UI
         /// <param name="font">Font of the title.</param>
         public virtual IRichToolTip SetTitleFont(Font? font)
         {
-            ToolTipHandler.SetTitleFont(font);
+            TitleFont = font;
+            ToolTipHandler?.SetTitleFont(font);
             return this;
         }
 
@@ -324,7 +356,7 @@ namespace Alternet.UI
             location ??= (0, 0);
             var pxLocation = PixelFromDip(location.Value);
             var area = (pxLocation.X - 1, pxLocation.Y - 1, 2, 2);
-            ToolTipHandler.Show(this, area, false);
+            ToolTipHandler?.Show(this, area, false);
             return this;
         }
 
@@ -349,7 +381,8 @@ namespace Alternet.UI
         /// (the question icon doesn't make sense for a tooltip)</param>
         public virtual IRichToolTip SetIcon(MessageBoxIcon icon)
         {
-            ToolTipHandler.SetIcon(icon);
+            ToolTipIcon = icon;
+            ToolTipHandler?.SetIcon(icon);
             return this;
         }
 

@@ -771,18 +771,7 @@ namespace Alternet.UI
             PaintCaret(e);
             PlessMouse.DrawTestMouseRect(this, e.Graphics);
 
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
-
-            foreach (var n in nn)
-            {
-                n.AfterPaint(this, e);
-            }
-
-            foreach (var n in nn2)
-            {
-                n.AfterPaint(this, e);
-            }
+            RaiseNotifications((n) => n.AfterPaint(this, e));
         }
 
         /// <summary>

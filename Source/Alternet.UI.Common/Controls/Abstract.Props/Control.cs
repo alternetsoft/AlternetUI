@@ -264,6 +264,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool IsPlatformControl => true;
+
+        /// <inheritdoc/>
         public override Thickness IntrinsicLayoutPadding
         {
             get => Handler.IntrinsicLayoutPadding;

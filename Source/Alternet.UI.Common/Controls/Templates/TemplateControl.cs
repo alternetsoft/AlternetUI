@@ -5,7 +5,7 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Parent class for all template controls.
+    /// Root control for the templates.
     /// </summary>
     public class TemplateControl : Border
     {
@@ -16,6 +16,17 @@ namespace Alternet.UI
         {
             Visible = false;
             HasBorder = false;
+        }
+
+        /// <inheritdoc/>
+        public override AbstractControl? Parent
+        {
+            get => base.Parent;
+
+            set
+            {
+                base.Parent = value;
+            }
         }
     }
 }

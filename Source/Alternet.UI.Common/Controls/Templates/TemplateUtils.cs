@@ -50,14 +50,16 @@ namespace Alternet.UI
             Graphics dc,
             PointD origin)
         {
-            dc.PushAndTranslate(origin.X, origin.Y);
+            if(origin != PointD.Empty)
+                dc.PushAndTranslate(origin.X, origin.Y);
             try
             {
                 RaisePaintRecursive(control, dc);
             }
             finally
             {
-                dc.Pop();
+                if (origin != PointD.Empty)
+                    dc.Pop();
             }
         }
 
@@ -200,14 +202,44 @@ namespace Alternet.UI
         /// After template is created any part of it's text can be changed including
         /// it's font and color attributes using template properties.
         /// </remarks>
-        public static TemplateWithBoldText CreateTemplateWithBoldText(
+        public static TemplateWithBoldText<GenericLabel> CreateTemplateWithBoldText(
             string prefix,
             string boldText,
             string suffix,
             IReadOnlyFontAndColor? fontAndColor = null,
             bool hasBorder = false)
         {
-            var result = new TemplateWithBoldText(prefix, boldText, suffix, hasBorder);
+            return CreateTemplateWithBoldText<GenericLabel>(
+                        prefix,
+                        boldText,
+                        suffix,
+                        fontAndColor,
+                        hasBorder);
+        }
+
+        /// <summary>
+        /// Creates template with text which has a middle part with bold font.
+        /// </summary>
+        /// <param name="prefix">First part of the text.</param>
+        /// <param name="boldText">Middle part of the text with bold attribute.</param>
+        /// <param name="suffix">Last part of the text.</param>
+        /// <param name="fontAndColor">Default font and color attributes of the text.</param>
+        /// <param name="hasBorder">Whether to draw default border around the text.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// After template is created any part of it's text can be changed including
+        /// it's font and color attributes using template properties.
+        /// </remarks>
+        /// <typeparam name="TLabel">Type of the label controls.</typeparam>
+        public static TemplateWithBoldText<TLabel> CreateTemplateWithBoldText<TLabel>(
+            string prefix,
+            string boldText,
+            string suffix,
+            IReadOnlyFontAndColor? fontAndColor = null,
+            bool hasBorder = false)
+            where TLabel : AbstractControl, new()
+        {
+            var result = new TemplateWithBoldText<TLabel>(prefix, boldText, suffix, hasBorder);
 
             if(fontAndColor is not null)
             {
@@ -220,9 +252,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Template control with text which has a middle part with bold font.
+        /// Sample template control with text which has a middle part with bold font.
         /// </summary>
-        public class TemplateWithBoldText : TemplateControl
+        public class TemplateWithBoldText<TLabel> : TemplateControl
+            where TLabel : AbstractControl, new()
         {
             private readonly Border border = new()
             {
@@ -230,16 +263,16 @@ namespace Alternet.UI
                 HasBorder = false,
             };
 
-            private readonly GenericLabel prefixLabel = new();
-            private readonly GenericLabel suffixLabel = new();
+            private readonly TLabel prefixLabel = new();
+            private readonly TLabel suffixLabel = new();
 
-            private readonly GenericLabel boldLabel = new()
+            private readonly TLabel boldLabel = new()
             {
                 IsBold = true,
             };
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="TemplateWithBoldText"/> class.
+            /// Initializes a new instance of the <see cref="TemplateWithBoldText{T}"/> class.
             /// </summary>
             /// <param name="prefix">First part of the text.</param>
             /// <param name="boldText">Middle part of the text with bold attribute.</param>
@@ -269,17 +302,17 @@ namespace Alternet.UI
             /// <summary>
             /// Gets control which contains first part of the text.
             /// </summary>
-            public GenericLabel PrefixLabel => prefixLabel;
+            public AbstractControl PrefixLabel => prefixLabel;
 
             /// <summary>
             /// Gets control which contains last part of the text.
             /// </summary>
-            public GenericLabel SuffixLabel => suffixLabel;
+            public AbstractControl SuffixLabel => suffixLabel;
 
             /// <summary>
             /// Gets control which contains middle part of the text.
             /// </summary>
-            public GenericLabel BoldLabel => boldLabel;
+            public AbstractControl BoldLabel => boldLabel;
         }
     }
 }
