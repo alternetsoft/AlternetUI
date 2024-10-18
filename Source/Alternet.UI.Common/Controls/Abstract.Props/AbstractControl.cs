@@ -398,7 +398,7 @@ namespace Alternet.UI
         /// <remarks>
         /// <see cref="TitleAsObject"/> and <see cref="Title"/> are stored in the same field.
         /// </remarks>
-        public virtual string Title
+        public string Title
         {
             get
             {
@@ -2039,8 +2039,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="ForegroundColor"/>, <see cref="BackgroundColor"/>
+        /// and <see cref="Font"/> as single <see cref="IReadOnlyFontAndColor"/> object.
+        /// </summary>
+        public IReadOnlyFontAndColor AsFontAndColor
+        {
+            get
+            {
+                var allNull = BackgroundColor is null && ForegroundColor is null && Font is null;
+                if (allNull)
+                    return UI.FontAndColor.Null;
+                return new FontAndColor(ForegroundColor, BackgroundColor, Font);
+            }
+
+            set
+            {
+                BackgroundColor = value?.BackgroundColor;
+                ForegroundColor = value?.ForegroundColor;
+                Font = value?.Font;
+            }
+        }
+
+        /// <summary>
         /// Gets whether <see cref="ScaleFactor"/> is greater than 1.
         /// </summary>
+        [Browsable(false)]
         public virtual bool HasScaleFactor
         {
             get
