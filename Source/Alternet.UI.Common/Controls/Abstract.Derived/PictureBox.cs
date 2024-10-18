@@ -311,6 +311,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets image from <see cref="MessageBoxSvg"/> using the specified
+        /// <see cref="MessageBoxIcon"/>.
+        /// </summary>
+        /// <param name="icon">Icon index to set.</param>
+        /// <param name="size">Svg image size.</param>
+        public virtual void SetIcon(MessageBoxIcon icon, int size)
+        {
+            DoInsideLayout(() =>
+            {
+                if(StateObjects != null)
+                    StateObjects.Images = null;
+                var svg = MessageBoxSvg.GetImage(icon);
+                var iconImage = svg?.AsNormal(size, IsDarkBackground);
+                ImageSet = iconImage;
+            });
+        }
+
+        /// <summary>
         /// Raises the <see cref="ImageChanged"/> event and calls
         /// <see cref="OnImageChanged(EventArgs)"/>.
         /// </summary>
