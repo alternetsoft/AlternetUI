@@ -12,6 +12,46 @@ namespace Alternet.UI
     public interface IRichToolTip
     {
         /// <summary>
+        /// Gets foreground color of the tooltip title.
+        /// </summary>
+        Color? TitleForegroundColor { get; }
+
+        /// <summary>
+        /// Gets font of the tooltip title.
+        /// </summary>
+        Font? TitleFont { get; }
+
+        /// <summary>
+        /// Gets tooltip show timeout in milliseconds.
+        /// </summary>
+        int TimeoutInMilliseconds { get; }
+
+        /// <summary>
+        /// Gets tooltip show delay in milliseconds.
+        /// </summary>
+        int ShowDelayInMilliseconds { get; }
+
+        /// <summary>
+        /// Gets Tooltip image.
+        /// </summary>
+        ImageSet? ToolTipImage { get; }
+
+        /// <summary>
+        /// Gets Tooltip icon.
+        /// </summary>
+        MessageBoxIcon? ToolTipIcon { get; }
+
+        /// <summary>
+        /// Gets end color of the tooltip background for the linear gradient painting.
+        /// </summary>
+        Color? BackgroundEndColor { get; }
+
+        /// <summary>
+        /// Gets end color of the tooltip background for the linear gradient painting.
+        /// </summary>
+        Color? BackgroundStartColor { get; }
+
+        /// <summary>
         /// Sets tooltip properties so it will be a simple tooltip.
         /// </summary>
         /// <param name="message">Tooltip message. Text in this parameter can have line breaks.</param>
