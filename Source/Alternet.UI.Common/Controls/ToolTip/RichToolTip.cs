@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// This is used for svg image size when standard <see cref="MessageBoxIcon"/>
         /// images are shown.
         /// </summary>
-        public static Coord DefaultMinImageSize = 16;
+        public static Coord DefaultMinImageSize = 24;
 
         private IRichToolTipHandler? tooltip;
 
@@ -38,19 +38,19 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default background color of the tooltip.
         /// </summary>
-        public static Color DefaultBackgroundColor { get; set; }
+        public static Color DefaultToolTipBackgroundColor { get; set; }
             = Color.LightDark(light: (249, 249, 249), dark: (44, 44, 44));
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static Color DefaultForegroundColor { get; set; }
+        public static Color DefaultToolTipForegroundColor { get; set; }
             = Color.LightDark(light: Color.Black, dark: Color.White);
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static Color DefaultTitleForegroundColor { get; set; }
+        public static Color DefaultToolTipTitleForegroundColor { get; set; }
             = Color.LightDark(light: (0, 51, 153), dark: (156, 220, 254));
 
         /// <summary>
@@ -68,10 +68,10 @@ namespace Alternet.UI
         public Color? ToolTipForegroundColor { get; private set; }
 
         /// <inheritdoc/>
-        public Color? TitleForegroundColor { get; private set; }
+        public Color? ToolTipTitleForegroundColor { get; private set; }
 
         /// <inheritdoc/>
-        public Font? TitleFont { get; private set; }
+        public Font? ToolTipTitleFont { get; private set; }
 
         /// <inheritdoc/>
         public int TimeoutInMilliseconds { get; private set; }
@@ -115,14 +115,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual IRichToolTip ResetToolTipColors()
         {
-            TitleForegroundColor = DefaultTitleForegroundColor;
+            ToolTipTitleForegroundColor = DefaultToolTipTitleForegroundColor;
             ToolTipBackgroundBrush = null;
-            ToolTipBackgroundColor = DefaultBackgroundColor;
-            ToolTipForegroundColor = DefaultForegroundColor;
+            ToolTipBackgroundColor = DefaultToolTipBackgroundColor;
+            ToolTipForegroundColor = DefaultToolTipForegroundColor;
 
             ToolTipHandler?.SetBackgroundColor(ToolTipBackgroundColor, Color.Empty);
             ToolTipHandler?.SetForegroundColor(ToolTipForegroundColor);
-            ToolTipHandler?.SetTitleForegroundColor(TitleForegroundColor);
+            ToolTipHandler?.SetTitleForegroundColor(ToolTipTitleForegroundColor);
             return this;
         }
 
@@ -248,7 +248,7 @@ namespace Alternet.UI
         {
             if (color is null)
                 return this;
-            TitleForegroundColor = color;
+            ToolTipTitleForegroundColor = color;
             ToolTipHandler?.SetTitleForegroundColor(color);
             return this;
         }
@@ -294,7 +294,7 @@ namespace Alternet.UI
         /// <param name="font">Font of the title.</param>
         public virtual IRichToolTip SetTitleFont(Font? font)
         {
-            TitleFont = font;
+            ToolTipTitleFont = font;
             ToolTipHandler?.SetTitleFont(font);
             return this;
         }

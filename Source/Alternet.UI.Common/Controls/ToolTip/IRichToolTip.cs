@@ -14,12 +14,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets foreground color of the tooltip title.
         /// </summary>
-        Color? TitleForegroundColor { get; }
+        Color? ToolTipTitleForegroundColor { get; }
 
         /// <summary>
         /// Gets font of the tooltip title.
         /// </summary>
-        Font? TitleFont { get; }
+        Font? ToolTipTitleFont { get; }
 
         /// <summary>
         /// Gets tooltip show timeout in milliseconds.

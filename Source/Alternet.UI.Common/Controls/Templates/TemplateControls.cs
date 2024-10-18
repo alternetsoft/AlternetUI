@@ -40,11 +40,16 @@ namespace Alternet.UI
                     border.Parent = this;
                     grid.Parent = border;
 
+                    pictureBox.Margin = (5, 10, 5, 5);
+                    pictureBox.VerticalAlignment = VerticalAlignment.Center;
                     pictureBox.Parent = grid;
 
+                    titleLabel.Margin = 5;
+                    titleLabel.VerticalAlignment = VerticalAlignment.Center;
                     titleLabel.RowColumn = (0, 1);
                     titleLabel.Parent = grid;
 
+                    messageLabel.Margin = 5;
                     messageLabel.RowColumn = (1, 1);
                     messageLabel.Parent = grid;
 

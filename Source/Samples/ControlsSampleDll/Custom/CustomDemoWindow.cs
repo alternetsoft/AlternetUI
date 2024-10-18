@@ -84,6 +84,8 @@ namespace Alternet.UI
             {
                 LogUtils.LogToFile("CustomDemoWindow constructor done");
             }
+
+            StartLocation = WindowStartLocation.CenterScreen;
         }
 
         public static bool FormLoadFromResName(string resName, object obj, UixmlLoader.Flags flags)

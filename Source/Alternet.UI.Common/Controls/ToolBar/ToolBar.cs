@@ -21,6 +21,10 @@ namespace Alternet.UI
         private bool imageVisible = true;
         private ImageToText imageToText = ImageToText.Horizontal;
 
+        static ToolBar()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolBar"/> class.
         /// </summary>
@@ -142,7 +146,8 @@ namespace Alternet.UI
         /// Gets or sets default image size.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="ToolBarUtils.GetDefaultImageSize(AbstractControl)"/> is used.
+        /// If this property is null,
+        /// <see cref="ToolBarUtils.GetDefaultImageSize(AbstractControl)"/> is used.
         /// </remarks>
         public static int? DefaultImageSize { get; set; }
 
@@ -150,7 +155,8 @@ namespace Alternet.UI
         /// Gets or sets default color of the SVG images in the normal state.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="AbstractControl.GetSvgColor(KnownSvgColor)"/> is used with
+        /// If this property is null,
+        /// <see cref="AbstractControl.GetSvgColor(KnownSvgColor)"/> is used with
         /// <see cref="KnownSvgColor.Normal"/> parameter.
         /// </remarks>
         public static Color? DefaultNormalImageColor { get; set; }
@@ -159,7 +165,8 @@ namespace Alternet.UI
         /// Gets or sets default color of the SVG images in the disabled state.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="AbstractControl.GetSvgColor(KnownSvgColor)"/> is used with
+        /// If this property is null,
+        /// <see cref="AbstractControl.GetSvgColor(KnownSvgColor)"/> is used with
         /// <see cref="KnownSvgColor.Disabled"/> parameter.
         /// </remarks>
         public static Color? DefaultDisabledImageColor { get; set; }
@@ -171,7 +178,7 @@ namespace Alternet.UI
         /// If this property is null, <see cref="DefaultNormalImageColor"/> is used.
         /// </remarks>
         [Browsable(false)]
-        public Color? NormalImageColor { get; set; }
+        public virtual Color? NormalImageColor { get; set; }
 
         /// <summary>
         /// Gets or sets color of the SVG images in the disabled state.
@@ -180,7 +187,7 @@ namespace Alternet.UI
         /// If this property is null, <see cref="DefaultDisabledImageColor"/> is used.
         /// </remarks>
         [Browsable(false)]
-        public Color? DisabledImageColor { get; set; }
+        public virtual Color? DisabledImageColor { get; set; }
 
         /// <summary>
         /// Gets or sets image size.
@@ -191,7 +198,7 @@ namespace Alternet.UI
         /// <see cref="DefaultImageSize"/> is used.
         /// </remarks>
         [Browsable(false)]
-        public int? ImageSize { get; set; }
+        public virtual int? ImageSize { get; set; }
 
         /// <summary>
         /// Gets or sets a value which specifies display modes for
