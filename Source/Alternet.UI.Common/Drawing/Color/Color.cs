@@ -1940,6 +1940,11 @@ namespace Alternet.Drawing
              => KnownColorTable.ColorKindTable[(int)knownColor] ==
                  KnownColorTable.KnownColorKindSystem;
 
+        internal static LightDarkColor LightDark(Color lightDark)
+        {
+            return new LightDarkColor(lightDark, lightDark);
+        }
+
         /// <summary>
         /// This method is called each time before argb value of the color
         /// is returned to the caller.
