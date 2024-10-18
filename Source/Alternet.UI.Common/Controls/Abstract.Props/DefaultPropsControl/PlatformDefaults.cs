@@ -18,26 +18,6 @@ namespace Alternet.UI
         public ModifierKeys TextBoxUrlClickModifiers { get; set; }
 
         /// <summary>
-        /// Gets or sets default background color of the <see cref="RichToolTip"/>.
-        /// </summary>
-        public Color? RichToolTipBackgroundColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets default background end color of the <see cref="RichToolTip"/>.
-        /// </summary>
-        public Color? RichToolTipBackgroundColorEnd { get; set; }
-
-        /// <summary>
-        /// Gets or sets default foreground color of the <see cref="RichToolTip"/>.
-        /// </summary>
-        public Color? RichToolTipForegroundColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets default title foreground color of the <see cref="RichToolTip"/>.
-        /// </summary>
-        public Color? RichToolTipTitleForegroundColor { get; set; }
-
-        /// <summary>
         /// Gets or sets whether to adjust height of <see cref="TextBox"/> controls
         /// to height of the <see cref="ComboBox"/> control.
         /// </summary>

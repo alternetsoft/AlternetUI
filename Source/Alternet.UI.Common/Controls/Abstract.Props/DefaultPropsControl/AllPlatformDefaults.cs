@@ -75,19 +75,6 @@ namespace Alternet.UI
                 platform.Controls.CheckBox.MinMargin = minMargin;
                 platform.AdjustTextBoxesHeight = true;
                 platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
-
-                if (SystemSettings.AppearanceIsDark)
-                {
-                    platform.RichToolTipBackgroundColor = new(39, 39, 39);
-                    platform.RichToolTipForegroundColor = Color.White;
-                    platform.RichToolTipTitleForegroundColor = new(156, 220, 254);
-                }
-                else
-                {
-                    platform.RichToolTipBackgroundColor = Color.White;
-                    platform.RichToolTipForegroundColor = Color.Black;
-                    platform.RichToolTipTitleForegroundColor = Color.Navy;
-                }
             }
 
             void InitWindows()
