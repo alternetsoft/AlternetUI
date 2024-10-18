@@ -130,10 +130,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets text of the attached <see cref="Label"/> control.
         /// </summary>
-        public override string Title
+        public override object? TitleAsObject
         {
             get => Label.Text;
-            set => Label.Text = value;
+            set => Label.Text = value?.ToString() ?? string.Empty;
         }
 
         /// <summary>

@@ -368,16 +368,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override string Title
+        public override object? TitleAsObject
         {
-            get => base.Title;
+            get => base.TitleAsObject;
 
             set
             {
-                if (Title == value)
+                if (TitleAsObject == value)
                     return;
-                base.Title = value;
-                Handler.Title = value;
+                base.TitleAsObject = value;
+                Handler.Title = value?.ToString() ?? string.Empty;
             }
         }
 
