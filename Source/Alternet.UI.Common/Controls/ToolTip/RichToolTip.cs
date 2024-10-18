@@ -8,6 +8,10 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
+    /*
+      Default title could be bold or DefaultFont.MakeLarger().
+    */
+
     /// <summary>
     /// Allows to show a tool tip with more customizations than a standard tooltip.
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
@@ -27,22 +31,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default background color of the tooltip.
         /// </summary>
-        public static Color? DefaultBackgroundColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets default foreground color of the tooltip.
-        /// </summary>
-        public static Color? DefaultForegroundColor { get; set; }
-
-        /// <summary>
-        /// Gets or sets default foreground color of the tooltip.
-        /// </summary>
-        public static Color? DefaultTitleForegroundColor { get; set; }
+        public static Color DefaultBackgroundColor { get; set; }
+            = Color.LightDark(light: (249, 249, 249), dark: (44, 44, 44));
 
         /// <summary>
         /// Gets or sets default background end color of the tooltip.
         /// </summary>
         public static Color? DefaultBackgroundColorEnd { get; set; }
+
+        /// <summary>
+        /// Gets or sets default foreground color of the tooltip.
+        /// </summary>
+        public static Color DefaultForegroundColor { get; set; }
+            = Color.LightDark(light: Color.Black, dark: Color.White);
+
+        /// <summary>
+        /// Gets or sets default foreground color of the tooltip.
+        /// </summary>
+        public static Color DefaultTitleForegroundColor { get; set; }
+            = Color.LightDark(light: (0, 51, 153), dark: (156, 220, 254));
 
         /// <summary>
         /// Gets or sets whether to draw point at center under the debug environment.
@@ -89,27 +96,26 @@ namespace Alternet.UI
                         Title ?? string.Empty,
                         Text ?? string.Empty,
                         true);
-
-                    var platform = AllPlatformDefaults.PlatformCurrent;
-
-                    var backgroundColor
-                        = DefaultBackgroundColor ?? platform.RichToolTipBackgroundColor;
-                    var backgroundColorEnd
-                        = DefaultBackgroundColorEnd ?? platform.RichToolTipBackgroundColorEnd;
-                    var foregroundColor = DefaultForegroundColor ?? platform.RichToolTipForegroundColor;
-                    var titleForegroundColor = DefaultTitleForegroundColor
-                        ?? platform.RichToolTipTitleForegroundColor;
-
-                    if (backgroundColor is not null)
-                        SetBackgroundColor(backgroundColor, backgroundColorEnd);
-                    if (foregroundColor is not null)
-                        SetForegroundColor(foregroundColor);
-                    if (titleForegroundColor is not null)
-                        SetTitleForegroundColor(titleForegroundColor);
                     tooltip.SetTipKind(RichToolTipKind.None);
                     return tooltip;
                 }
             }
+        }
+
+        /// <summary>
+        /// Resets all tooltip color properties to the default values.
+        /// </summary>
+        public virtual IRichToolTip ResetToolTipColors()
+        {
+            var backgroundColor = DefaultBackgroundColor;
+            var backgroundColorEnd = DefaultBackgroundColorEnd;
+            var foregroundColor = DefaultForegroundColor;
+            var titleForegroundColor = DefaultTitleForegroundColor;
+
+            ToolTipHandler?.SetBackgroundColor(backgroundColor, backgroundColorEnd ?? Color.Empty);
+            ToolTipHandler?.SetForegroundColor(foregroundColor);
+            ToolTipHandler?.SetTitleForegroundColor(titleForegroundColor);
+            return this;
         }
 
         /// <summary>
@@ -121,6 +127,7 @@ namespace Alternet.UI
         public virtual IRichToolTip SetToolTip(object message, bool systemColors = true)
         {
             HideToolTip();
+            ResetToolTipColors();
             Text = message?.ToString() ?? string.Empty;
             Title = string.Empty;
 
@@ -167,6 +174,7 @@ namespace Alternet.UI
             uint? timeoutMilliseconds = null)
         {
             HideToolTip();
+            ResetToolTipColors();
             TitleAsObject = title ?? string.Empty;
             Text = message?.ToString() ?? string.Empty;
 
@@ -294,10 +302,13 @@ namespace Alternet.UI
             Color? backColor = null)
         {
             HideToolTip();
+            ResetToolTipColors();
             backColor ??= template.BackgroundColor;
 
             var image = TemplateUtils.GetTemplateAsImage(template, backColor);
-            OnlyImage((ImageSet)image, backColor);
+            OnlyImage((ImageSet)image);
+            if (backColor is not null)
+                SetBackgroundColor(backColor);
             return this;
         }
 
@@ -325,17 +336,10 @@ namespace Alternet.UI
         /// Sets tooltip to show only the specified image.
         /// </summary>
         /// <param name="image">Image to show.</param>
-        /// <param name="backColor">Background color of the tooltip.</param>
         /// <returns></returns>
-        public virtual IRichToolTip OnlyImage(ImageSet? image, Color? backColor = null)
+        public virtual IRichToolTip OnlyImage(ImageSet? image)
         {
             HideToolTip().ResetTitle().ResetText();
-
-            if(backColor is not null)
-            {
-                SetBackgroundColor(backColor);
-            }
-
             SetIcon(image);
             return this;
         }

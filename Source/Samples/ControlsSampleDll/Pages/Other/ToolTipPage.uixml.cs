@@ -110,17 +110,32 @@ namespace ControlsSample
         private void ShowImageButton_Click(object? sender, EventArgs e)
         {
             LoadLargeImage();
-            toolTip.OnlyImage(largeImage, Color.Black);
+            toolTip.OnlyImage(largeImage).SetBackgroundColor(SystemColors.Window);
             ShowToolTip();
         }
 
         private void ShowToolTip()
         {
-            HideToolTip();
-            if (dontHideCheckBox.IsChecked)
-                toolTip.SetTimeout(0);
+            void PrivateShow()
+            {
+                if (dontHideCheckBox.IsChecked)
+                    toolTip.SetTimeout(0);
 
-            toolTip.ShowToolTip();
+                toolTip.ShowToolTip();
+            }
+
+            if (otherSchemeCheckBox.IsChecked)
+            {
+                bool isDark = this.IsDarkBackground;
+
+                LightDarkColor.DoInsideTempIsDarkOverride(!isDark, () =>
+                {
+                    toolTip.ResetToolTipColors();
+                    PrivateShow();
+                });
+            }
+            else
+                PrivateShow();
         }
 
         private void LoadLargeImage()
