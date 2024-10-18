@@ -26,17 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Animation\*" />
-    <EmbeddedResource Include="Resources\Backgrounds\*" />
-    <EmbeddedResource Include="Resources\ButtonImages\*" />
-    <EmbeddedResource Include="Resources\*" />
-    <EmbeddedResource Include="Resources\ExplorerUISample\*" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Large\*" />
-    <EmbeddedResource Include="Resources\ImageListIcons\Small\*" />
-    <EmbeddedResource Include="Resources\NinePatchImages\*" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Large\*" />
-    <EmbeddedResource Include="Resources\ToolBarPng\Small\*" />
-    <EmbeddedResource Include="Resources\ToolIcons\*" />
+    <EmbeddedResource Include="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
