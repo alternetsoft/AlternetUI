@@ -2039,6 +2039,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="ScaleFactor"/> is greater than 1.
+        /// </summary>
+        public virtual bool HasScaleFactor
+        {
+            get
+            {
+                return ScaleFactor > SizeD.One.Width;
+            }
+        }
+
+        /// <summary>
         /// Gets whether this is control has handler to the platform control.
         /// </summary>
         public virtual bool IsPlatformControl => false;

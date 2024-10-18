@@ -109,7 +109,7 @@ namespace Alternet.UI
         /// "embres" protocol.
         /// </summary>
         /// <param name="asm">Assembly to load image from.</param>
-        /// <param name="name">Image name of relative path.
+        /// <param name="name">Image name or relative path.
         /// Slash characters will be changed to '.'.
         /// Example: "ToolBarPng/Large\Calendar32.png" -> "ToolBarPng.Large.Calendar32.png".
         /// </param>

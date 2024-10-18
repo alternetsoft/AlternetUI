@@ -421,7 +421,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class
-        /// from the specified url.
+        /// from the specified url. Raises exceptions on errors.
         /// </summary>
         /// <param name="url">The file or embedded resource url used
         /// to load the image.
@@ -435,6 +435,9 @@ namespace Alternet.Drawing
         /// </code>
         /// </example>
         /// <param name="bitmapType">Type of the bitmap. Optional.</param>
+        /// <remarks>
+        /// Use <see cref="FromUrlOrNull"/> to load without exceptions.
+        /// </remarks>
         public static Image FromUrl(string url, BitmapType bitmapType = BitmapType.Any)
         {
             using var stream = ResourceLoader.StreamFromUrl(url);
@@ -512,6 +515,39 @@ namespace Alternet.Drawing
         public static Image FromStream(Stream stream)
         {
             return new Bitmap(stream);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified url. Returns null if error occurs during image load.
+        /// No exceptions are raised.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used
+        /// to load the image.
+        /// </param>
+        /// <example>
+        /// <code>
+        /// var ImageSize = 16;
+        /// var ResPrefix = $"embres:ControlsTest.Resources.Png._{ImageSize}.";
+        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png";
+        /// button1.Image = Bitmap.FromUrlOrNull(url);
+        /// </code>
+        /// </example>
+        /// <remarks>
+        /// If DEBUG is defined, exception info is logged.
+        /// </remarks>
+        public static Image? FromUrlOrNull(string url)
+        {
+            try
+            {
+                var result = Image.FromUrl(url);
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogUtils.LogExceptionIfDebug(e);
+                return null;
+            }
         }
 
         /// <summary>

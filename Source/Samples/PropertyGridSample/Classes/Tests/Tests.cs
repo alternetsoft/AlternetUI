@@ -23,39 +23,148 @@ namespace PropertyGridSample
         {
         }
 
+        void LoadPngFromResource(TreeView? control)
+        {
+            if (control is null)
+                return;
+
+            const string highDpiSuffix = "_HighDpi";
+
+            string[] resNames =
+            [
+                "ClassAlpha",
+                "ConstantAlpha",
+                "DelegateAlpha",
+                "EventAlpha",
+                "FieldAlpha",
+                "GenericParameterAlpha",
+                "InterfaceAlpha",
+                "KeywordAlpha",
+                "LocalOrParameterAlpha",
+                "MethodAlpha",
+                "NamespaceAlpha",
+                "PropertyAlpha",
+                "StructAlpha",
+            ];
+
+            string pathPrefix = "Resources.CodeComletionSymbols.";
+
+            int size = control.HasScaleFactor ? 32 : 16;
+
+            ImageList imgList = new();
+            imgList.ImageSize = size;
+
+            control.RemoveAll();
+            control.ImageList = imgList;
+            int index = 0;
+
+            foreach (var s in resNames)
+            {
+                var resNameHighDpi = $"{pathPrefix}{s}{highDpiSuffix}.png";
+                var resName = $"{pathPrefix}{s}.png";
+                var selectedName = HasScaleFactor ? resNameHighDpi : resName;
+
+                if (!imgList.AddFromAssemblyUrl(typeof(ObjectInit).Assembly, selectedName))
+                    continue;
+                
+                TreeViewItem item = new(Path.GetFileName(selectedName), index);
+                control.Add(item);
+                index++;
+            }
+        }
+
+        void LoadAllPngInFolder(TreeView? control)
+        {
+            if (control is null)
+                return;
+
+            var dialog = SelectDirectoryDialog.Default;
+
+            dialog.ShowAsync(() =>
+            {
+                int size = 16;
+                if (control.HasScaleFactor)
+                    size = 32;
+
+                ImageList imgList = new();
+                imgList.ImageSize = size;
+
+                control.RemoveAll();
+                control.ImageList = imgList;
+                int index = 0;
+
+                var folder = dialog.DirectoryName;
+                var files = Directory.GetFiles(folder, "*.png");
+
+                Array.Sort(files);
+
+                foreach (var file in files)
+                {
+                    var image = new Bitmap(file);
+                    if (image.Size != (size, size))
+                        continue;
+                    if (!imgList.Add(image))
+                        continue;
+
+                    TreeViewItem item = new(Path.GetFileName(file), index);
+                    control.Add(item);
+                    index++;
+                }
+            });
+        }
+
+        void LoadAllSvgInFolder(TreeView? control)
+        {
+            if (control is null)
+                return;
+
+            var dialog = SelectDirectoryDialog.Default;
+
+            dialog.ShowAsync(() =>
+            {
+                int size = 32;
+                ImageList imgList = new();
+                imgList.ImageSize = size;
+
+                control.RemoveAll();
+                control.ImageList = imgList;
+                int index = 0;
+
+                var folder = dialog.DirectoryName;
+                var files = Directory.GetFiles(folder, "*.svg");
+
+                Array.Sort(files);
+
+                foreach (var file in files)
+                {
+                    var svg = new MonoSvgImage(file);
+                    imgList.AddSvg(svg, control.IsDarkBackground);
+
+                    TreeViewItem item = new(Path.GetFileName(file), index);
+                    control.Add(item);
+                    index++;
+                }
+            });
+        }
+
         [Conditional("DEBUG")]
         void InitSimpleTestActions()
         {
+
+            PropertyGrid.AddSimpleAction<TreeView>("Load png from resources", () =>
+            {
+                LoadPngFromResource(GetSelectedControl<TreeView>());
+            });
+
+            PropertyGrid.AddSimpleAction<TreeView>("Load all small *.png in folder...", () =>
+            {
+                LoadAllPngInFolder(GetSelectedControl<TreeView>());
+            });
+
             PropertyGrid.AddSimpleAction<TreeView>("Load all *.svg in folder...", () =>
             {
                 var control = GetSelectedControl<TreeView>();
-                if (control is null)
-                    return;
-
-                var dialog = SelectDirectoryDialog.Default;
-
-                dialog.ShowAsync(() =>
-                {
-                    int size = 32;
-                    ImageList imgList = new();
-                    imgList.ImageSize = size;
-
-                    control.RemoveAll();
-                    control.ImageList = imgList;
-                    int index = 0;
-
-                    var folder = dialog.DirectoryName;
-                    var files = Directory.GetFiles(folder, "*.svg");
-                    foreach(var file in files)
-                    {
-                        var svg = new MonoSvgImage(file);
-                        imgList.AddSvg(svg, control.IsDarkBackground);
-
-                        TreeViewItem item = new(Path.GetFileName(file), index);
-                        control.Add(item);
-                        index++;
-                    }
-                });
+                LoadAllSvgInFolder(control);
             });
 
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
