@@ -617,7 +617,7 @@ namespace Alternet.UI
         internal static void LogSystemSettings()
         {
             App.LogBeginSection();
-            App.Log($"IsDark = {SystemSettings.AppearanceIsDark}");
+            App.Log($"AppearanceIsDark = {SystemSettings.AppearanceIsDark}");
             App.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
             App.Log($"AppearanceName = {SystemSettings.AppearanceName}");
 

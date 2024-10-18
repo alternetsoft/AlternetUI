@@ -209,11 +209,8 @@ namespace Alternet.UI
         /// Configures tooltip to show only the specified image.
         /// </summary>
         /// <param name="image">Tooltip image.</param>
-        /// <param name="backColor">Background color of the tooltip. Optional.</param>
         /// <returns></returns>
-        IRichToolTip OnlyImage(
-            ImageSet? image,
-            Color? backColor);
+        IRichToolTip OnlyImage(ImageSet? image);
 
         /// <summary>
         /// Shows previously configured tooltip at the specified location in client coordinates

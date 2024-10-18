@@ -15,7 +15,8 @@ namespace Alternet.UI
     {
         private static ISystemSettingsHandler? handler;
         private static bool validColors = false;
-        private static bool? appearanceIsDark;
+        private static bool? appearanceIsDarkOverride;
+        private static bool? isUsingDarkBackgroundOverride;
 
         /// <summary>
         /// Gets or sets <see cref="ISystemSettingsHandler"/> provider used to work
@@ -42,6 +43,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets an override for <see cref="IsUsingDarkBackground"/>.
+        /// </summary>
+        public static bool? IsUsingDarkBackgroundOverride
+        {
+            get
+            {
+                return isUsingDarkBackgroundOverride;
+            }
+
+            set
+            {
+                isUsingDarkBackgroundOverride = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an override for <see cref="AppearanceIsDark"/>.
+        /// </summary>
+        public static bool? AppearanceIsDarkOverride
+        {
+            get
+            {
+                return appearanceIsDarkOverride;
+            }
+
+            set
+            {
+                appearanceIsDarkOverride = value;
+            }
+        }
+
+        /// <summary>
         /// Return true if the current system theme is explicitly recognized as
         /// being a dark theme or if the default window background is dark.
         /// </summary>
@@ -53,12 +86,7 @@ namespace Alternet.UI
         {
             get
             {
-                return appearanceIsDark ?? Handler.GetAppearanceIsDark();
-            }
-
-            set
-            {
-                appearanceIsDark = value;
+                return appearanceIsDarkOverride ?? Handler.GetAppearanceIsDark();
             }
         }
 
@@ -69,7 +97,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsUsingDarkBackground
         {
-            get => Handler.IsUsingDarkBackground();
+            get => isUsingDarkBackgroundOverride ?? Handler.IsUsingDarkBackground();
         }
 
         /// <summary>
@@ -223,5 +251,26 @@ namespace Alternet.UI
         /// <param name="font">System font id.</param>
         /// <returns></returns>
         public static Font GetFont(SystemSettingsFont font) => SystemFonts.GetFont(font);
+
+        /// <summary>
+        /// Calls the specified action inside the block which temporary changes
+        /// value of the <see cref="AppearanceIsDarkOverride"/> property.
+        /// </summary>
+        /// <param name="tempAppearanceIsDark">Temporary value for the
+        /// <see cref="AppearanceIsDarkOverride"/> property.</param>
+        /// <param name="action">Action to call.</param>
+        public static void DoInsideTempAppearanceIsDark(bool? tempAppearanceIsDark, Action? action)
+        {
+            var savedOverride = AppearanceIsDarkOverride;
+            try
+            {
+                AppearanceIsDarkOverride = tempAppearanceIsDark;
+                action?.Invoke();
+            }
+            finally
+            {
+                AppearanceIsDarkOverride = savedOverride;
+            }
+        }
     }
 }
