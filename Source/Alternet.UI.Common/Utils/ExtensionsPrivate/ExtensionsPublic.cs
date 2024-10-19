@@ -15,7 +15,7 @@ namespace Alternet.UI.Extensions
     /// <summary>
     /// Contains extension methods for the different classes.
     /// </summary>
-    public static partial class ExtensionsPrivate
+    public static partial class ExtensionsPublic
     {
         /// <summary>
         /// Gets whether property name is specified in the <see cref="PropertyChangedEventArgs"/>.

@@ -8,7 +8,7 @@ using SkiaSharp;
 
 namespace Alternet.UI.Extensions
 {
-    public static partial class ExtensionsPrivate
+    public static partial class ExtensionsPublic
     {
         /// <summary>
         /// Converts array of <see cref="PointD"/> to array of <see cref="SKPoint"/>.

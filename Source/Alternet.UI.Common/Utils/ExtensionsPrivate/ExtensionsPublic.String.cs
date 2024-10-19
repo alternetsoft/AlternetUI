@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Alternet.UI.Extensions
 {
-    public static partial class ExtensionsPrivate
+    public static partial class ExtensionsPublic
     {
         /// <summary>
         /// Checks whether string has the specified prefix (position of the <paramref name="prefix"/>
