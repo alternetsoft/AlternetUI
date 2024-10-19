@@ -6,18 +6,24 @@ namespace Alternet.UI
     public enum ListViewColumnWidthMode
     {
         /// <summary>
-        /// Fixed column width, using the Width property value.
+        /// Fixed column width, using the Width property value of the column.
         /// </summary>
         Fixed,
 
         /// <summary>
-        /// Adjust the width of the longest item in the column.
+        /// Adjust the width to the longest item in the column.
         /// </summary>
         AutoSize,
 
         /// <summary>
-        /// Autosize to the width of the column heading
+        /// Autosize column to the width of the column header text.
         /// </summary>
         AutoSizeHeader,
+
+        /// <summary>
+        /// Fixed column width in percents of the owner control's width, using
+        /// the Width property value of the column.
+        /// </summary>
+        FixedInPercent,
     }
 }

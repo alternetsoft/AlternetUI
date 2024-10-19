@@ -150,7 +150,7 @@ namespace Alternet.UI
             double width,
             ListViewColumnWidthMode widthMode)
         {
-            NativeControl.SetColumnWidth(columnIndex, width, widthMode);
+            NativeControl.SetColumnWidth(columnIndex, width, CoerceWidthMode(widthMode));
         }
 
         public void SetColumnTitle(long columnIndex, string title)
@@ -418,16 +418,24 @@ namespace Alternet.UI
             UpdateItemIndices(index);
         }
 
+        private ListViewColumnWidthMode CoerceWidthMode(ListViewColumnWidthMode value)
+        {
+            if (value == ListViewColumnWidthMode.FixedInPercent)
+                value = ListViewColumnWidthMode.Fixed;
+            return value;
+        }
+
         private void ApplyColumns()
         {
             for (int i = 0; i < Control.Columns.Count; i++)
             {
                 var col = Control.Columns[i];
+
                 NativeControl.InsertColumnAt(
                     i,
                     col.Title,
                     col.Width,
-                    col.WidthMode);
+                    CoerceWidthMode(col.WidthMode));
             }
         }
 
@@ -439,7 +447,7 @@ namespace Alternet.UI
                     index,
                     item.Title,
                     item.Width,
-                    item.WidthMode);
+                    CoerceWidthMode(item.WidthMode));
 
                 ApplyColumnsChangeToItems();
             }

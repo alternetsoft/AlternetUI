@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -23,6 +25,8 @@ namespace Alternet.UI
         private ListView? listView;
         private string title = string.Empty;
         private int? index;
+        private Coord? minAutoWidth = -10;
+        private Coord? maxAutoWidth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListViewColumn"/> class with default values.
@@ -42,6 +46,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates known column events.
+        /// </summary>
+        public enum ColumnEventType
+        {
+            /// <summary>
+            /// No event.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Column title is changed.
+            /// </summary>
+            TitleChanged,
+
+            /// <summary>
+            /// Column width is changed.
+            /// </summary>
+            WidthChanged,
+
+            /// <summary>
+            /// Column changed, which included width and title changed.
+            /// </summary>
+            AllChanged,
+        }
+
+        /// <summary>
         /// Gets or sets the title text displayed in the column header.
         /// </summary>
         /// <value>The text displayed in the column header.</value>
@@ -53,7 +83,7 @@ namespace Alternet.UI
                 if (title == value)
                     return;
                 title = value;
-                ApplyTitle();
+                RaiseChanged(ColumnEventType.TitleChanged);
             }
         }
 
@@ -74,7 +104,7 @@ namespace Alternet.UI
             internal set
             {
                 index = value;
-                ApplyAll();
+                RaiseChanged(ColumnEventType.AllChanged);
             }
         }
 
@@ -95,7 +125,7 @@ namespace Alternet.UI
             internal set
             {
                 listView = value;
-                ApplyAll();
+                RaiseChanged(ColumnEventType.AllChanged);
             }
         }
 
@@ -114,7 +144,71 @@ namespace Alternet.UI
                 if (width == value)
                     return;
                 width = value;
-                ApplyWidth();
+                RaiseChanged(ColumnEventType.WidthChanged);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the minimal auto-width of the column, in device-independent units.
+        /// This property is used when column width is specified in percents of the container's width.
+        /// If it is negative, minimal width is calculated from title's width plus the absolute
+        /// of the specified value.
+        /// </summary>
+        public virtual Coord? MinAutoWidth
+        {
+            get => minAutoWidth;
+            set
+            {
+                if (minAutoWidth == value)
+                    return;
+                minAutoWidth = value;
+                if(WidthMode == ListViewColumnWidthMode.FixedInPercent)
+                    RaiseChanged(ColumnEventType.WidthChanged);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximal auto-width of the column, in device-independent units.
+        /// This property is used when column width is specified in percents of the container's width.
+        /// If it equals 0, it is not used.
+        /// </summary>
+        public virtual Coord? MaxAutoWidth
+        {
+            get => maxAutoWidth;
+            set
+            {
+                if (maxAutoWidth == value)
+                    return;
+                maxAutoWidth = value;
+                if (WidthMode == ListViewColumnWidthMode.FixedInPercent)
+                    RaiseChanged(ColumnEventType.WidthChanged);
+            }
+        }
+
+        /// <summary>
+        /// Gets size of the title's text string in device-independent
+        /// units if column is attached to the container.
+        /// </summary>
+        public virtual SizeD? TitleSize
+        {
+            get
+            {
+                if (ListView is null)
+                    return null;
+                var result = ListView.MeasureCanvas.MeasureText(Title, ListView.RealFont);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether column is attached to the container and it's column index is specified.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsAttached
+        {
+            get
+            {
+                return listView != null && index != null;
             }
         }
 
@@ -131,8 +225,45 @@ namespace Alternet.UI
                 if (widthMode == value)
                     return;
                 widthMode = value;
-                ApplyWidth();
+                RaiseChanged(ColumnEventType.WidthChanged);
             }
+        }
+
+        /// <summary>
+        /// Converts column width in percents (0..100) of the owner control's width to
+        /// real width in device-independent units.
+        /// If <see cref="ListView"/> is not assigned returns null.
+        /// </summary>
+        /// <param name="widthInPercent">The column width in percents of the owner control's width.</param>
+        /// <param name="minWidth">Minimal possible width of the column. If negative value
+        /// is specified, minimal possible width is calculated from the width of the
+        /// column title's text plus absolute value of the <paramref name="minWidth"/>.</param>
+        /// <param name="maxWidth">Maximal possible width of the column.</param>
+        public virtual Coord? WidthInPercentToDips(
+            int widthInPercent, Coord? minWidth = null, Coord? maxWidth = null)
+        {
+            if (!IsAttached || ListView!.IsDisposed)
+                return null;
+
+            if (widthInPercent <= 0)
+                widthInPercent = 0;
+
+            var width = ListView.ClientSize.Width;
+            var columnWidth = (width / 100) * widthInPercent;
+
+            if(minWidth < 0)
+            {
+                var titleWidth = TitleSize?.Width;
+
+                if (titleWidth is not null)
+                    minWidth = titleWidth.Value - minWidth;
+                else
+                    minWidth = 0;
+            }
+
+            var adjustedWidth = MathUtils.ApplyMinMax(columnWidth, minWidth, maxWidth);
+
+            return adjustedWidth;
         }
 
         /// <summary>
@@ -156,18 +287,17 @@ namespace Alternet.UI
             bool applyWidth = (widthMode != item.WidthMode) || (width != item.Width);
             bool applyTitle = title != item.Title;
 
-            if (applyTitle)
-            {
-                title = item.Title;
-                ApplyTitle();
-            }
+            title = item.Title;
+            widthMode = item.WidthMode;
+            width = item.Width;
 
+            if (applyTitle && applyWidth)
+                RaiseChanged(ColumnEventType.AllChanged);
+            else
+            if(applyTitle)
+                RaiseChanged(ColumnEventType.TitleChanged);
             if (applyWidth)
-            {
-                widthMode = item.WidthMode;
-                width = item.Width;
-                ApplyWidth();
-            }
+                RaiseChanged(ColumnEventType.WidthChanged);
         }
 
         /// <inheritdoc cref="ListControlItem.ToString"/>
@@ -191,36 +321,19 @@ namespace Alternet.UI
             {
                 listView = control;
                 index = newIndex;
-                ApplyAll();
+                RaiseChanged(ColumnEventType.AllChanged);
             }
         }
 
-        internal void ApplyWidth()
+        /// <summary>
+        /// Notifies container about the column changes.
+        /// </summary>
+        /// <param name="eventType">Type of the event.</param>
+        public virtual void RaiseChanged(ColumnEventType eventType)
         {
-            if (TryGetColumnIndex(out var listView, out var columnIndex))
-                listView.Handler.SetColumnWidth(columnIndex.Value, Width, WidthMode);
-        }
-
-        internal void ApplyTitle()
-        {
-            if (TryGetColumnIndex(out var listView, out var columnIndex))
-                listView.Handler.SetColumnTitle(columnIndex.Value, Title);
-        }
-
-        internal void ApplyAll()
-        {
-            ApplyTitle();
-            ApplyWidth();
-        }
-
-        private bool TryGetColumnIndex(
-            [NotNullWhen(true)] out ListView? listView,
-            [NotNullWhen(true)] out int? columnIndex)
-        {
-            listView = ListView;
-            columnIndex = Index;
-
-            return listView != null && columnIndex != null;
+            if (!IsAttached)
+                return;
+            listView!.HandleColumnChanged(this, eventType);
         }
     }
 }

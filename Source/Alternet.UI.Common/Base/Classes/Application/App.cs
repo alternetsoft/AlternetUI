@@ -1099,6 +1099,9 @@ namespace Alternet.UI
         {
             while (true)
             {
+                if (App.Terminating)
+                    return;
+
                 if (IdleTasks.TryDequeue(out var task))
                     task.Action(task.Data);
                 else
@@ -1375,6 +1378,9 @@ namespace Alternet.UI
         /// </summary>
         public static void DoEvents()
         {
+            if (App.Terminating)
+                return;
+
             Current?.ProcessPendingEvents();
         }
 
@@ -1383,6 +1389,9 @@ namespace Alternet.UI
         /// </summary>
         public static void RaiseIdle()
         {
+            if (App.Terminating)
+                return;
+
             if (HasForms)
             {
                 ProcessLogQueue(true);

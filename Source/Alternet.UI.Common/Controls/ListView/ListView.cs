@@ -146,7 +146,7 @@ namespace Alternet.UI
         /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item
         /// in the list view control.</value>
         [Browsable(false)]
-        public ListViewItem? TopItem { get => Handler.TopItem; }
+        public virtual ListViewItem? TopItem { get => Handler.TopItem; }
 
         /// <summary>
         /// Gets or sets the grid line display mode for this list view.
@@ -349,7 +349,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public IReadOnlyList<ListViewItem> SelectedItems
+        public virtual IReadOnlyList<ListViewItem> SelectedItems
         {
             get
             {
@@ -398,7 +398,7 @@ namespace Alternet.UI
         /// <see cref="ListView"/> control.</value>
         /// <remarks>Using the <see cref="Collection{ListViewItem}"/> returned by this
         /// property, you can add items, remove items, and obtain a count of items.</remarks>
-        public Collection<ListViewItem> Items { get; } =
+        public virtual Collection<ListViewItem> Items { get; } =
             new Collection<ListViewItem> { ThrowOnNullAdd = true };
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A collection that represents the columns that appear when the
         /// <see cref="View"/> property is set to <see cref="ListViewView.Details"/>.</value>
-        public Collection<ListViewColumn> Columns { get; } =
+        public virtual Collection<ListViewColumn> Columns { get; } =
             new Collection<ListViewColumn> { ThrowOnNullAdd = true };
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace Alternet.UI
         /// is returned.
         /// </value>
         [Browsable(false)]
-        public IReadOnlyList<long> SelectedIndicesDescending
+        public virtual IReadOnlyList<long> SelectedIndicesDescending
         {
             get
             {
@@ -632,7 +632,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes selected items from the <see cref="ListView"/>.
         /// </summary>
-        public void RemoveSelectedItems()
+        public virtual void RemoveSelectedItems()
         {
             RemoveItems(SelectedIndicesDescending);
         }
@@ -640,7 +640,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes items from the <see cref="ListView"/>.
         /// </summary>
-        public void RemoveItems(IReadOnlyList<long> items)
+        public virtual void RemoveItems(IReadOnlyList<long> items)
         {
             if (items == null || items.Count == 0)
                 return;
@@ -674,7 +674,7 @@ namespace Alternet.UI
         /// and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
-        public ListViewHitTestInfo HitTest(PointD point) => Handler.HitTest(point);
+        public virtual ListViewHitTestInfo HitTest(PointD point) => Handler.HitTest(point);
 
         /// <summary>
         /// Initiates the editing of the list view item label.
@@ -682,7 +682,7 @@ namespace Alternet.UI
         /// <param name="itemIndex">The zero-based index of the item within the
         /// <see cref="ListView.Items"/> collection
         /// whose label you want to edit.</param>
-        public void BeginLabelEdit(long itemIndex) => Handler.BeginLabelEdit(itemIndex);
+        public virtual void BeginLabelEdit(long itemIndex) => Handler.BeginLabelEdit(itemIndex);
 
         /// <summary>
         /// Retrieves the bounding rectangle for an item within the control.
@@ -696,26 +696,29 @@ namespace Alternet.UI
         /// <returns>A <see cref="RectD"/> that represents the bounding rectangle
         /// for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
-        public RectD GetItemBounds(
+        public virtual RectD GetItemBounds(
             long itemIndex,
             ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
             Handler.GetItemBounds(itemIndex, portion);
 
-        ///// <summary>
-        ///// Gets or sets the custom sorting comparer for the control.
-        ///// </summary>
-        // public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
+        /// <summary>
+        /// Gets whether there are columns with the specified width mode.
+        /// </summary>
+        public virtual bool HasSuchColumns(ListViewColumnWidthMode mode)
+        {
+            foreach (var column in Columns)
+            {
+                if (column.WidthMode == mode)
+                    return true;
+            }
 
-        ///// <summary>
-        ///// Gets or sets the sort mode for items in the control.
-        ///// </summary>
-        ///// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
-        // public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
+            return false;
+        }
 
         /// <summary>
         /// Removes all items and columns from the control.
         /// </summary>
-        public void Clear() => Handler.Clear();
+        public virtual void Clear() => Handler.Clear();
 
         /// <summary>
         /// Raises the <see cref="ColumnClick"/> event.
@@ -753,7 +756,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The specified index was
         /// outside the range of valid values.</exception>
-        public void SetSelected(long index, bool value)
+        public virtual void SetSelected(long index, bool value)
         {
             if (index < 0 || index >= Items.Count)
                 throw new ArgumentOutOfRangeException(nameof(value));
@@ -791,19 +794,19 @@ namespace Alternet.UI
         /// <summary>
         /// Updates columns width and title.
         /// </summary>
-        public void UpdateColumns()
+        public virtual void UpdateColumns()
         {
             DoInsideUpdate(() =>
             {
                 foreach (var column in Columns)
-                    column.ApplyAll();
+                    column.RaiseChanged(ListViewColumn.ColumnEventType.AllChanged);
             });
         }
 
         /// <summary>
         /// Removed all items from the control.
         /// </summary>
-        public void RemoveAll()
+        public virtual void RemoveAll()
         {
             BeginUpdate();
             try
@@ -818,6 +821,59 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Handles column change events. This method is called when
+        /// column's width, title or other properties are changed.
+        /// </summary>
+        public virtual void HandleColumnChanged(
+            ListViewColumn column,
+            ListViewColumn.ColumnEventType eventType)
+        {
+            var index = column.Index;
+
+            if (index is null || index < 0)
+                return;
+
+            var setWidth = false;
+            var setTitle = false;
+
+            switch (eventType)
+            {
+                case ListViewColumn.ColumnEventType.TitleChanged:
+                    setTitle = true;
+                    break;
+                case ListViewColumn.ColumnEventType.WidthChanged:
+                    setWidth = true;
+                    break;
+                case ListViewColumn.ColumnEventType.AllChanged:
+                    setWidth = true;
+                    setTitle = true;
+                    break;
+            }
+
+            if (setTitle)
+            {
+                Handler.SetColumnTitle(index.Value, column.Title);
+            }
+
+            if (setWidth)
+            {
+                var widthMode = column.WidthMode;
+                var width = column.Width;
+
+                if(widthMode == ListViewColumnWidthMode.FixedInPercent)
+                {
+                    var calculatedWidth = column.WidthInPercentToDips((int)width, column.MinAutoWidth);
+                    if (calculatedWidth is null)
+                        return;
+                    widthMode = ListViewColumnWidthMode.Fixed;
+                    width = calculatedWidth.Value;
+                }
+
+                Handler.SetColumnWidth(index.Value, width, widthMode);
+            }
+        }
+
+        /// <summary>
         /// Unselects all items in the <see cref="ListView"/>.
         /// </summary>
         /// <remarks>
@@ -825,7 +881,7 @@ namespace Alternet.UI
         /// property to <c>null</c>.
         /// You can use this method to quickly unselect all items in the list.
         /// </remarks>
-        public void ClearSelected()
+        public virtual void ClearSelected()
         {
             ClearSelectedCore();
             RaiseSelectionChanged(EventArgs.Empty);
@@ -870,6 +926,36 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnAfterLabelEdit(ListViewItemLabelEditEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+
+            if (HasSuchColumns(ListViewColumnWidthMode.FixedInPercent))
+            {
+                App.AddIdleTask(() =>
+                {
+                    try
+                    {
+                        if (IsDisposed || App.Terminating)
+                            return;
+
+                        foreach (var column in Columns)
+                        {
+                            if (column.WidthMode != ListViewColumnWidthMode.FixedInPercent)
+                                continue;
+                            column.RaiseChanged(ListViewColumn.ColumnEventType.WidthChanged);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        if(DebugUtils.IsDebugDefined)
+                            throw exception;
+                    }
+                });
+            }
         }
 
         /// <summary>
