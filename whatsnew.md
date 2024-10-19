@@ -1,3 +1,85 @@
+# 0.9.638 (2024 October 19)
+
+- Improved ComboBox owner draw methods. So now it can paint ListContolItem in the popup. Added ComboBox.DefaultItemPainter.
+- ObjectUniqueId: Optimized. Now it uses UInt64 counter for the ids. And only after UInt64.MaxValue is reached starts to use guid.
+- Updated used nuget packages due to security warnings from Microsoft.
+- LightDarkColor is now derived from Color and Color now has virtual method which allows to implement complex color theme strategies in the applications.
+- IFontAndColor: WithFont, WithForeColor, WithBackColor.
+- GenericLabel: Fixed painting on SkiaGraphics.
+- New classes: AlignUtils, ObjectWithRecord, MessageBoxSvgs.
+- App.SafeWindow, Display.SafeDisplay, ToolBar.DefaultMinItemSize, Color.AsImageSet, Image.FromUrlOrNull, Grid.RowColumnCount, PictureBox.SetIcon.
+- Window: SetLocationInRectI, SetLocationInWindow, SetLocationOnDisplay.
+- WindowStartLocation: new enum members CenterMainWindow, CenterActiveWindow, ScreenTopRight, ScreenBottomRight.
+- Added Spacer generic control. It can be used to occupy space. This is only for layout. Library doesn't create platform control for Spacer so it is much faster to use it comparing to Panel or other platform controls.
+- ImmutableObject: Did not raise property change events.
+- PaperSizes: A6InDips, A5InDips, A4InDips.
+- SystemSettings: IsUsingDarkBackgroundOverride, AppearanceIsDarkOverride, DoInsideTempAppearanceIsDark.
+- ImageList: AddFromAssemblyUrl, AddFromUrl.
+
+## Control templates
+
+- Added control templates painting. Related classes: TemplateControl, TemplateUtils, TemplateControls.
+- ToolBar.AddPicture with TemplateControl param.
+
+## Point, rectangle, size and thickness
+
+- RectD: InflateVert, InflateHorz, GetCenter, SetCenter, GetFarLocation, SetFarLocation, HasEmptyHeight, HasEmptyWidth, WithLocation, WithEmptySize.
+- RectI: WithSize, WithLocation.
+- PointD: AsRect, IncLocation.
+- SizeD: Shrink, InchesToDips, MillimetersToDips.
+- Thickness: WithTop, WithBottom, WithLeft, WithRight.
+ 
+## TransformMatrix 
+
+- Properties are now fields.
+- Speed optimizations.
+- TransformMatrix is now struct.
+- Operators: == and !=.
+- New constructor and methods: Equals, Assign, Clone, TransformRect.
+
+## Graphics
+
+- Graphics: Returned DrawText with TextFormat parameter. It is completely rewritten and now is not specific to WxWidgets as implemented inside Alternet.UI using C#.
+- Graphics: speed up of Transform, HasTransform
+- Fixed Graphics.DrawText bug on Linux when transform is set.
+- GraphicsFactory: MeasureCanvasOverride.
+- Graphics: DoInsideClipped, PushAndTranslate, DrawFormattedText, PopClip, PushClip and more DrawText overloads.
+- DrawingUtils: new methods MeasureText, WrapTextLineToList, WrapTextToList.
+- Graphics: FillRectangleAtCenter, DrawPointAtCenter. 
+- Font: WithBold, Unscaled, UniqueId.
+- Font: Larger now uses SmallerLargerSizeScaleFactor.
+- TextFormat: DefaultRecord, Default(), Alignment(value), SuggestWidth(value). Added chained calls for methods.
+
+## Control
+
+- Separated platform control from abstract control. So now we have AbstractControl, GenericControl which are not binded to the os control.
+- New properties: MarginTop, MarginBottom, MarginRight, MarginLeft, PaddingTop, PaddingBottom, PaddingLeft, PaddingRight, BoundsInPixels.
+- UserControl: BackgroundColor is now used in background painting (previously only brush).
+- Control: SetChildrenUseParentBackColor, SetChildrenUseParentForeColor, SetChildrenUseParentFont.
+- Fixed: Control.IsBold was not taken into account if UseParentFont = true
+- Control.PreviewKeyDown event (like in WinForms) and related methods.
+- New properties: IsPlatformControl, LocationInPixels, SizeInPixels, BoundsInPixels, TitleAsObject, ToolTipProvider, IgnoreSuggestedWidth, IgnoreSuggestedSize, HasScaleFactor.
+- Control.PerformLayout speed optimization.
+- ControlSet: Margin* and Padding* methods.
+
+## RichToolTip
+
+- Now it is derived from Control and shows tooltips inside itself.
+- Now it is possible to show tooltip with image without title and message text.
+- Improved RichToolTip demo.
+- Chained calls now possible for it's methods (they return RichToolTip instance).
+- Fixed exception occured when custom colors were specified.
+- Specified default tooltip colors as in Windows 11 for light and dark themes.
+
+## Samples
+
+- DrawingSample: Text and Transform pages improved.
+- Added control templates usage sample in CustomDrawTestPage.
+- Used new DrawText with TextFormat in GraphicsPath demo page.
+- Added sample: png loading from resource to ImageList.
+
+---
+
 # 0.9.637 (2024 October 8)
 
 - Window: Fix exception on close if tooltip is shown.
