@@ -16,12 +16,18 @@ namespace Alternet.UI
     public partial class ListControlItem : BaseControlItem
     {
         /// <summary>
+        /// Gets visual state index used for the selected items.
+        /// </summary>
+        public const VisualControlState SelectedItemVisualState = VisualControlState.Pressed;
+
+        /// <summary>
         /// Gets default item alignment
         /// </summary>
         public static readonly GenericAlignment DefaultItemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
         private SvgImage? svgImage;
+        private EnumArray<VisualControlState, LightDarkImage?> imageData = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class.
@@ -119,7 +125,39 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual Image? Image { get; set; }
+        public virtual Image? Image
+        {
+            get => GetImage(VisualControlState.Normal);
+            set => SetImage(VisualControlState.Normal, value);
+        }
+
+        /// <summary>
+        /// Gets or sets disabled <see cref="Image"/> associated with the item.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual Image? DisabledImage
+        {
+            get => GetImage(VisualControlState.Disabled);
+            set => SetImage(VisualControlState.Disabled, value);
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Image"/> associated with the item when it is selected.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual Image? SelectedImage
+        {
+            get => GetImage(SelectedItemVisualState);
+            set => SetImage(SelectedItemVisualState, value);
+        }
 
         /// <summary>
         /// Gets or sets <see cref="SvgImage"/> associated with the item.
@@ -153,26 +191,6 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public virtual SizeI? SvgImageSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets disabled <see cref="Image"/> associated with the item.
-        /// </summary>
-        /// <remarks>
-        /// It is up to control to decide whether and how this property is used.
-        /// When this property is changed, you need to repaint the item.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Image? DisabledImage { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="Image"/> associated with the item when it is selected.
-        /// </summary>
-        /// <remarks>
-        /// It is up to control to decide whether and how this property is used.
-        /// When this property is changed, you need to repaint the item.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Image? SelectedImage { get; set; }
 
         /// <summary>
         /// Gets or sets minimal item height.
@@ -309,24 +327,64 @@ namespace Alternet.UI
                 return (null, null, null);
 
             var svgImage = item.SvgImage;
+            var isDark = IsContainerDark(container);
 
             if (svgImage is not null)
             {
-                var isDark = IsContainerDark(container);
-
                 var imageSize = item.SvgImageSize ?? container?.Defaults.SvgImageSize
                     ?? ToolBarUtils.GetDefaultImageSize(container?.Control);
                 var imageHeight = imageSize.Height;
-                item.Image ??= svgImage.AsNormalImage(imageHeight, isDark);
-                item.DisabledImage ??= svgImage.AsDisabledImage(imageHeight, isDark);
+
+                /* ============================= */
+
+                if(!item.HasImage(VisualControlState.Normal, isDark))
+                {
+                    item.SetImage(
+                        VisualControlState.Normal,
+                        svgImage.AsNormalImage(imageHeight, isDark),
+                        isDark);
+                }
+
+                if (!item.HasImage(VisualControlState.Disabled, isDark))
+                {
+                    item.SetImage(
+                        VisualControlState.Disabled,
+                        svgImage.AsDisabledImage(imageHeight, isDark),
+                        isDark);
+                }
 
                 if (svgColor is not null)
-                    item.SelectedImage ??= svgImage.ImageWithColor(imageHeight, svgColor);
+                {
+                    if (!item.HasImage(SelectedItemVisualState, isDark))
+                    {
+                        item.SetImage(
+                            SelectedItemVisualState,
+                            svgImage.ImageWithColor(imageHeight, svgColor),
+                            isDark);
+                    }
+                }
+
+                /* ============================= */
             }
 
-            var image = item.Image;
-            var disabledImage = item.DisabledImage ?? item.Image;
-            var selectedImage = item.SelectedImage ?? item.Image;
+            Image? image = null;
+            Image? disabledImage = null;
+            Image? selectedImage = null;
+
+            SetResult(isDark);
+
+            if (isDark)
+                SetResult(false);
+
+            void SetResult(bool isDark)
+            {
+                image ??= item.GetImage(VisualControlState.Normal, isDark);
+                disabledImage ??= item.GetImage(VisualControlState.Disabled, isDark);
+                selectedImage ??= item.GetImage(SelectedItemVisualState, isDark);
+            }
+
+            disabledImage ??= image;
+            selectedImage ??= image;
 
             return (
                 image,
@@ -339,7 +397,8 @@ namespace Alternet.UI
         /// </summary>
         public static Coord GetMinHeight(ListControlItem? item, IListControlItemContainer? container)
         {
-            var containerMinHeight = container?.Defaults.MinItemHeight ?? VirtualListBox.DefaultMinItemHeight;
+            var containerMinHeight
+                = container?.Defaults.MinItemHeight ?? VirtualListBox.DefaultMinItemHeight;
             if (item is null)
                 return containerMinHeight;
             return Math.Max(item.MinHeight, containerMinHeight);
@@ -700,6 +759,45 @@ namespace Alternet.UI
             ListBoxItemPaintEventArgs e)
         {
             ListControlItem.DefaultDrawForeground(container, e);
+        }
+
+        /// <summary>
+        /// Gets image for the specified item state and light/dark theme flag.
+        /// </summary>
+        /// <param name="state">Item state.</param>
+        /// <param name="isDark">Light/dark theme flag</param>
+        /// <returns></returns>
+        public virtual Image? GetImage(VisualControlState state, bool? isDark = null)
+        {
+            isDark ??= LightDarkColor.IsUsingDarkColor;
+            var result = imageData[state]?.GetImage(isDark.Value);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets whether item has image for the specified item state and light/dark theme flag.
+        /// </summary>
+        /// <param name="state">Item state.</param>
+        /// <param name="isDark">Light/dark theme flag</param>
+        /// <returns></returns>
+        public virtual bool HasImage(VisualControlState state, bool? isDark = null)
+        {
+            return GetImage(state, isDark) != null;
+        }
+
+        /// <summary>
+        /// Sets image for the specified color theme light/dark theme flag.
+        /// </summary>
+        /// <param name="state">Visual state (normal, disabled, selected)
+        /// for which image is set.</param>
+        /// <param name="image">New image value.</param>
+        /// <param name="isDark">Whether theme is dark.</param>
+        public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
+        {
+            isDark ??= LightDarkColor.IsUsingDarkColor;
+
+            imageData[state] ??= new();
+            imageData[state]!.SetImage(isDark.Value, image);
         }
 
         /// <summary>

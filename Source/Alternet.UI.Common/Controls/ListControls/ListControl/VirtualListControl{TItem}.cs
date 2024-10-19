@@ -958,6 +958,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets colors used in the control to the dark theme.
+        /// </summary>
+        public void SetColorThemeToDark()
+        {
+            BackgroundColor = (44, 44, 44);
+            ForegroundColor = (255, 255, 255);
+
+            SelectedItemTextColor = (255, 255, 255);
+            SelectedItemBackColor = (214, 117, 64);
+            CurrentItemBorder ??= new();
+            CurrentItemBorder.SetColor(Color.White);
+            ItemTextColor = (255, 255, 255);
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the default theme.
+        /// </summary>
+        public virtual void SetColorThemeToDefault()
+        {
+            BackgroundColor = null;
+            ForegroundColor = null;
+
+            SelectedItemTextColor = null;
+            SelectedItemBackColor = null;
+            CurrentItemBorder?.SetColor(VirtualListBox.DefaultCurrentItemBorderColor);
+            ItemTextColor = null;
+        }
+
+        /// <summary>
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>

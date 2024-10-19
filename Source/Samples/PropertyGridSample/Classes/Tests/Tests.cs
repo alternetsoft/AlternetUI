@@ -297,18 +297,12 @@ namespace PropertyGridSample
 
             AddControlAction<VirtualListBox>("Set dark theme", (c) =>
             {
-                SetDarkColorTheme();
+                c.SetColorThemeToDark();
+            });
 
-                void SetDarkColorTheme()
-                {
-                    c.BackgroundColor = (44, 44, 44);
-                    c.ForegroundColor = (255, 255, 255);
-
-                    c.SelectedItemTextColor = (255, 255, 255);
-                    c.SelectedItemBackColor = (56, 56, 56);
-                    c.CurrentItemBorder?.SetColor((173, 187, 197));
-                    c.ItemTextColor = (255, 255, 255);
-                }
+            AddControlAction<VirtualListBox>("Reset theme", (c) =>
+            {
+                c.SetColorThemeToDefault();
             });
 
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
