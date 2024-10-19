@@ -149,15 +149,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets <see cref="Graphics"/> for the <see cref="Image"/> on which
-        /// you can paint.
+        /// you can paint. If <see cref="Image"/> is null returns dummy canvas.
         /// </summary>
         [Browsable(false)]
         public virtual Graphics Canvas
         {
             get
             {
-                return Image?.GetDrawingContext()
-                    ?? GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
+                return Image?.GetDrawingContext() ?? MeasureCanvas;
             }
         }
 

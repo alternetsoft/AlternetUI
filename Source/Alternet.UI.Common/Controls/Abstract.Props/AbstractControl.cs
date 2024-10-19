@@ -61,6 +61,7 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+        private Graphics? measureCanvas;
         private Coord? scaleFactorOverride;
         private Color? textBackColor;
         private SizeD minimumSize;
@@ -261,13 +262,14 @@ namespace Alternet.UI
         {
             get
             {
-                if(GraphicsFactory.MeasureCanvasOverride is null)
+                Graphics? result = null;
+
+                if(Graphics.RequireMeasure(ScaleFactor, ref result))
                 {
-                    var measureCanvas = GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
-                    return measureCanvas;
+                    measureCanvas = result;
                 }
 
-                return GraphicsFactory.MeasureCanvasOverride;
+                return result;
             }
         }
 

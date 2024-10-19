@@ -266,6 +266,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns></returns>
+        /// <remarks>
+        /// Use <see cref="Graphics.RequireMeasure"/> to get measurement canvas.
+        /// </remarks>
         public static Graphics GetOrCreateMemoryCanvas(Coord? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
