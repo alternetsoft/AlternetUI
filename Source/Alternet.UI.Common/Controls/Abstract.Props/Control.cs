@@ -898,7 +898,7 @@ namespace Alternet.UI
             Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
             Handler.DragLeave = RaiseDragLeave;
             Handler.SizeChanged = RaiseHandlerSizeChanged;
-            Handler.LocationChanged = RaiseHandlerLocationChanged;
+            Handler.LocationChanged = RaiseContainerLocationChanged;
             Handler.DragOver = RaiseDragOver;
             Handler.DragEnter = RaiseDragEnter;
             Handler.DragDrop = RaiseDragDrop;
