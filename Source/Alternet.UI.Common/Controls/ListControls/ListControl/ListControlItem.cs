@@ -371,12 +371,17 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsContainerDark(IListControlItemContainer? container)
         {
-            var control = container?.Control;
+            if(LightDarkColor.IsDarkOverride is null)
+            {
+                var control = container?.Control;
 
-            if (control is not null)
-                return control.IsDarkBackground;
-            else
-                return SystemSettings.AppearanceIsDark;
+                if (control is not null)
+                    return control.IsDarkBackground;
+                else
+                    return SystemSettings.AppearanceIsDark;
+            }
+
+            return LightDarkColor.IsDarkOverride.Value;
         }
 
         /// <summary>
