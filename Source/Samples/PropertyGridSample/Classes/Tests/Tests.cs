@@ -295,6 +295,22 @@ namespace PropertyGridSample
             AddControlAction<TreeView>("Load all small *.png in folder...", LoadAllPngInFolder);
             AddControlAction<TreeView>("Load all *.svg in folder...", LoadAllSvgInFolder);
 
+            AddControlAction<VirtualListBox>("Set dark theme", (c) =>
+            {
+                SetDarkColorTheme();
+
+                void SetDarkColorTheme()
+                {
+                    c.BackgroundColor = (44, 44, 44);
+                    c.ForegroundColor = (255, 255, 255);
+
+                    c.SelectedItemTextColor = (255, 255, 255);
+                    c.SelectedItemBackColor = (56, 56, 56);
+                    c.CurrentItemBorder?.SetColor((173, 187, 197));
+                    c.ItemTextColor = (255, 255, 255);
+                }
+            });
+
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
         }
 

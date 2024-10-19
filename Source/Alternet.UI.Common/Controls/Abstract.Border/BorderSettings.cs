@@ -440,6 +440,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as using <see cref="Color"/> property.
+        /// </summary>
+        /// <param name="value">New uniform border color.</param>
+        public void SetColor(Color value)
+        {
+            Color = value;
+        }
+
+        /// <summary>
         /// Sets colors of the individual border edges.
         /// </summary>
         /// <param name="leftColor">Color of the left edge.</param>

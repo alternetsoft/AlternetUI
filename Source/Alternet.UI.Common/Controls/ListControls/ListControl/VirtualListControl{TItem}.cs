@@ -29,33 +29,33 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default selected item text color.
         /// </summary>
-        public static Color DefaultSelectedItemTextColor
-            = SystemColors.HighlightText;
+        public static LightDarkColor DefaultSelectedItemTextColor
+            = Color.LightDark(SystemColors.HighlightText);
 
         /// <summary>
         /// Gets or sets default selected item background color.
         /// </summary>
-        public static Color DefaultSelectedItemBackColor
-            = SystemColors.Highlight;
+        public static LightDarkColor DefaultSelectedItemBackColor
+            = Color.LightDark(SystemColors.Highlight);
 
         /// <summary>
         /// Gets or sets default disabled item text color.
         /// </summary>
-        public static Color DefaultDisabledItemTextColor
-            = SystemColors.GrayText;
+        public static LightDarkColor DefaultDisabledItemTextColor
+            = Color.LightDark(SystemColors.GrayText);
 
         /// <summary>
         /// Gets or sets default item text color.
         /// </summary>
-        public static Color DefaultItemTextColor
-            = SystemColors.WindowText;
+        public static LightDarkColor DefaultItemTextColor
+            = Color.LightDark(SystemColors.WindowText);
 
         /// <summary>
         /// Gets or sets default border color for the current item.
         /// This is used when <see cref="DefaultCurrentItemBorder"/>
         /// is created.
         /// </summary>
-        public static Color DefaultCurrentItemBorderColor
+        public static LightDarkColor DefaultCurrentItemBorderColor
             = Color.LightDark(light: Color.Black, dark: Color.Gray);
 
         private static BorderSettings? defaultCurrentItemBorder;
