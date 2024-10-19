@@ -19,6 +19,13 @@ namespace Alternet.UI
     /// </summary>
     public class RichToolTip : UserControl, IRichToolTip, IToolTipProvider
     {
+        /// <summary>
+        /// Gets or sets default value for the tooltip minimal image size (in device-independent units).
+        /// This is used for svg image size when standard <see cref="MessageBoxIcon"/>
+        /// images are shown.
+        /// </summary>
+        public static Coord DefaultMinImageSize = 24;
+
         private IRichToolTipHandler? tooltip;
 
         /// <summary>
@@ -31,24 +38,19 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default background color of the tooltip.
         /// </summary>
-        public static Color DefaultBackgroundColor { get; set; }
+        public static Color DefaultToolTipBackgroundColor { get; set; }
             = Color.LightDark(light: (249, 249, 249), dark: (44, 44, 44));
-
-        /// <summary>
-        /// Gets or sets default background end color of the tooltip.
-        /// </summary>
-        public static Color? DefaultBackgroundColorEnd { get; set; }
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static Color DefaultForegroundColor { get; set; }
+        public static Color DefaultToolTipForegroundColor { get; set; }
             = Color.LightDark(light: Color.Black, dark: Color.White);
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static Color DefaultTitleForegroundColor { get; set; }
+        public static Color DefaultToolTipTitleForegroundColor { get; set; }
             = Color.LightDark(light: (0, 51, 153), dark: (156, 220, 254));
 
         /// <summary>
@@ -57,10 +59,19 @@ namespace Alternet.UI
         public bool ShowDebugRectangleAtCenter { get; set; }
 
         /// <inheritdoc/>
-        public Color? TitleForegroundColor { get; private set; }
+        public BorderSettings? ToolTipBorder { get; private set; }
 
         /// <inheritdoc/>
-        public Font? TitleFont { get; private set; }
+        public Color? ToolTipBackgroundColor { get; private set; }
+
+        /// <inheritdoc/>
+        public Color? ToolTipForegroundColor { get; private set; }
+
+        /// <inheritdoc/>
+        public Color? ToolTipTitleForegroundColor { get; private set; }
+
+        /// <inheritdoc/>
+        public Font? ToolTipTitleFont { get; private set; }
 
         /// <inheritdoc/>
         public int TimeoutInMilliseconds { get; private set; }
@@ -72,10 +83,7 @@ namespace Alternet.UI
         public MessageBoxIcon? ToolTipIcon { get; private set; }
 
         /// <inheritdoc/>
-        public Color? BackgroundEndColor { get; private set; }
-
-        /// <inheritdoc/>
-        public Color? BackgroundStartColor { get; private set; }
+        public Brush? ToolTipBackgroundBrush { get; private set; }
 
         /// <inheritdoc/>
         public ImageSet? ToolTipImage { get; private set; }
@@ -107,14 +115,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual IRichToolTip ResetToolTipColors()
         {
-            var backgroundColor = DefaultBackgroundColor;
-            var backgroundColorEnd = DefaultBackgroundColorEnd;
-            var foregroundColor = DefaultForegroundColor;
-            var titleForegroundColor = DefaultTitleForegroundColor;
+            ToolTipTitleForegroundColor = DefaultToolTipTitleForegroundColor;
+            ToolTipBackgroundBrush = null;
+            ToolTipBackgroundColor = DefaultToolTipBackgroundColor;
+            ToolTipForegroundColor = DefaultToolTipForegroundColor;
 
-            ToolTipHandler?.SetBackgroundColor(backgroundColor, backgroundColorEnd ?? Color.Empty);
-            ToolTipHandler?.SetForegroundColor(foregroundColor);
-            ToolTipHandler?.SetTitleForegroundColor(titleForegroundColor);
+            ToolTipHandler?.SetBackgroundColor(ToolTipBackgroundColor, Color.Empty);
+            ToolTipHandler?.SetForegroundColor(ToolTipForegroundColor);
+            ToolTipHandler?.SetTitleForegroundColor(ToolTipTitleForegroundColor);
             return this;
         }
 
@@ -134,8 +142,8 @@ namespace Alternet.UI
             if (systemColors)
             {
                 var colors = FontAndColor.SystemColorInfo;
-                SetBackgroundColor(colors.BackgroundColor);
-                SetForegroundColor(colors.ForegroundColor);
+                SetToolTipBackgroundColor(colors.BackgroundColor);
+                SetToolTipForegroundColor(colors.ForegroundColor);
             }
 
             return this;
@@ -194,27 +202,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the background color: if two colors are specified, the background
-        /// is drawn using a gradient from top to bottom, otherwise a single solid
-        /// color is used.
+        /// Sets tooltip background brush.
+        /// </summary>
+        /// <param name="brush">Background brush.</param>
+        public virtual IRichToolTip SetToolTipBackgroundBrush(Brush? brush)
+        {
+            if (brush is null)
+                return this;
+            ToolTipBackgroundBrush = brush;
+            ToolTipHandler?.SetBackgroundColor(brush.AsColor, Color.Empty);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets tooltip background color.
         /// </summary>
         /// <param name="color">Background color.</param>
-        /// <param name="endColor">Second background color.</param>
-        public virtual IRichToolTip SetBackgroundColor(Color? color, Color? endColor = null)
+        public virtual IRichToolTip SetToolTipBackgroundColor(Color? color)
         {
-            BackgroundEndColor = endColor;
-            BackgroundStartColor = color;
-
             if (color is null)
                 return this;
-
-            Color color2;
-            if (endColor is null)
-                color2 = Color.Empty;
-            else
-                color2 = endColor;
-            ToolTipHandler?.SetBackgroundColor(color, color2);
-
+            ToolTipBackgroundColor = color;
+            ToolTipHandler?.SetBackgroundColor(color, Color.Empty);
             return this;
         }
 
@@ -222,11 +231,11 @@ namespace Alternet.UI
         /// Sets foreground color of the tooltip message.
         /// </summary>
         /// <param name="color">Foreground color of the message.</param>
-        public virtual IRichToolTip SetForegroundColor(Color? color)
+        public virtual IRichToolTip SetToolTipForegroundColor(Color? color)
         {
-            ForegroundColor = color;
             if (color is null)
                 return this;
+            ToolTipForegroundColor = color;
             ToolTipHandler?.SetForegroundColor(color);
             return this;
         }
@@ -237,9 +246,9 @@ namespace Alternet.UI
         /// <param name="color">Foreground color of the title.</param>
         public virtual IRichToolTip SetTitleForegroundColor(Color? color)
         {
-            TitleForegroundColor = color;
             if (color is null)
                 return this;
+            ToolTipTitleForegroundColor = color;
             ToolTipHandler?.SetTitleForegroundColor(color);
             return this;
         }
@@ -285,7 +294,7 @@ namespace Alternet.UI
         /// <param name="font">Font of the title.</param>
         public virtual IRichToolTip SetTitleFont(Font? font)
         {
-            TitleFont = font;
+            ToolTipTitleFont = font;
             ToolTipHandler?.SetTitleFont(font);
             return this;
         }
@@ -308,7 +317,7 @@ namespace Alternet.UI
             var image = TemplateUtils.GetTemplateAsImage(template, backColor);
             OnlyImage((ImageSet)image);
             if (backColor is not null)
-                SetBackgroundColor(backColor);
+                SetToolTipBackgroundColor(backColor);
             return this;
         }
 

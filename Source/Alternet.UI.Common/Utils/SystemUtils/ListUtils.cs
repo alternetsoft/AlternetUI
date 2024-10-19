@@ -24,6 +24,9 @@ namespace Alternet.UI
         /// </remarks>
         public static void SetCount<T>(IList<T> list, int newCount, Func<T> createItem)
         {
+            if (newCount < 0)
+                newCount = 0;
+
             for (int i = list.Count - 1; i >= newCount; i--)
                 list.RemoveAt(i);
 

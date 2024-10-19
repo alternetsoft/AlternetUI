@@ -202,7 +202,7 @@ namespace Alternet.UI
         /// After template is created any part of it's text can be changed including
         /// it's font and color attributes using template properties.
         /// </remarks>
-        public static TemplateWithBoldText<GenericLabel> CreateTemplateWithBoldText(
+        public static TemplateControls.BoldText<GenericLabel> CreateTemplateWithBoldText(
             string prefix,
             string boldText,
             string suffix,
@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// it's font and color attributes using template properties.
         /// </remarks>
         /// <typeparam name="TLabel">Type of the label controls.</typeparam>
-        public static TemplateWithBoldText<TLabel> CreateTemplateWithBoldText<TLabel>(
+        public static TemplateControls.BoldText<TLabel> CreateTemplateWithBoldText<TLabel>(
             string prefix,
             string boldText,
             string suffix,
@@ -239,80 +239,10 @@ namespace Alternet.UI
             bool hasBorder = false)
             where TLabel : AbstractControl, new()
         {
-            var result = new TemplateWithBoldText<TLabel>(prefix, boldText, suffix, hasBorder);
-
+            var result = new TemplateControls.BoldText<TLabel>(prefix, boldText, suffix, hasBorder);
             if(fontAndColor is not null)
-            {
-                result.BackgroundColor = fontAndColor.BackgroundColor;
-                result.ForegroundColor = fontAndColor.ForegroundColor;
-                result.Font = fontAndColor.Font;
-            }
-
+                result.AsFontAndColor = fontAndColor;
             return result;
-        }
-
-        /// <summary>
-        /// Sample template control with text which has a middle part with bold font.
-        /// </summary>
-        public class TemplateWithBoldText<TLabel> : TemplateControl
-            where TLabel : AbstractControl, new()
-        {
-            private readonly Border border = new()
-            {
-                Layout = LayoutStyle.Horizontal,
-                HasBorder = false,
-            };
-
-            private readonly TLabel prefixLabel = new();
-            private readonly TLabel suffixLabel = new();
-
-            private readonly TLabel boldLabel = new()
-            {
-                IsBold = true,
-            };
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="TemplateWithBoldText{T}"/> class.
-            /// </summary>
-            /// <param name="prefix">First part of the text.</param>
-            /// <param name="boldText">Middle part of the text with bold attribute.</param>
-            /// <param name="suffix">Last part of the text.</param>
-            /// <param name="hasBorder">Whether to draw default border around the text.</param>
-            public TemplateWithBoldText(string prefix, string boldText, string suffix, bool hasBorder)
-            {
-                HasBorder = hasBorder;
-
-                prefixLabel.Text = prefix;
-                boldLabel.Text = boldText;
-                suffixLabel.Text = suffix;
-
-                DoInsideLayout(() =>
-                {
-                    border.Parent = this;
-                    prefixLabel.Parent = border;
-                    boldLabel.Parent = border;
-                    suffixLabel.Parent = border;
-
-                    SetChildrenUseParentBackColor(true, true);
-                    SetChildrenUseParentForeColor(true, true);
-                    SetChildrenUseParentFont(true, true);
-                });
-            }
-
-            /// <summary>
-            /// Gets control which contains first part of the text.
-            /// </summary>
-            public AbstractControl PrefixLabel => prefixLabel;
-
-            /// <summary>
-            /// Gets control which contains last part of the text.
-            /// </summary>
-            public AbstractControl SuffixLabel => suffixLabel;
-
-            /// <summary>
-            /// Gets control which contains middle part of the text.
-            /// </summary>
-            public AbstractControl BoldLabel => boldLabel;
         }
     }
 }

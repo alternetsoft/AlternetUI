@@ -14,6 +14,8 @@ namespace PropertyGridSample
 {
     public partial class MainWindow
     {
+        private static bool alreadyRegistered;
+
         public Collection<string> ItemsString { get; set; } = NewCollection<string>();
         public Collection<object> ItemsObject { get; set; } = NewCollection<object>();
         public Brush BrushValue { get; set; } = Brush.Default;
@@ -147,28 +149,20 @@ namespace PropertyGridSample
             });
         }
 
-        [Conditional("DEBUG")]
-        void InitSimpleTestActions()
+        void AddControlAction<T>(string title, Action<T> action)
+            where T : AbstractControl
         {
-
-            PropertyGrid.AddSimpleAction<TreeView>("Load png from resources", () =>
+            PropertyGrid.AddSimpleAction<T>(title, () =>
             {
-                LoadPngFromResource(GetSelectedControl<TreeView>());
+                var selectedControl = GetSelectedControl<T>();
+                if (selectedControl is null)
+                    return;
+                action(selectedControl);
             });
+        }
 
-            PropertyGrid.AddSimpleAction<TreeView>("Load all small *.png in folder...", () =>
-            {
-                LoadAllPngInFolder(GetSelectedControl<TreeView>());
-            });
-
-            PropertyGrid.AddSimpleAction<TreeView>("Load all *.svg in folder...", () =>
-            {
-                var control = GetSelectedControl<TreeView>();
-                LoadAllSvgInFolder(control);
-            });
-
-            PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
-
+        void InitToolBarActions()
+        {
             PropertyGrid.AddSimpleAction<ToolBar>("Test Visible", TestGenericToolBarVisible);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Enabled", TestGenericToolBarEnabled);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Delete", TestGenericToolBarDelete);
@@ -186,7 +180,10 @@ namespace PropertyGridSample
             PropertyGrid.AddSimpleAction<ToolBar>("Add OK button", TestGenericToolBarAddOk);
             PropertyGrid.AddSimpleAction<ToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
             PropertyGrid.AddSimpleAction<ToolBar>("ReInit", TestGenericToolBarReInit);
+        }
 
+        void InitTextBoxActions()
+        {
             PropertyGrid.AddSimpleAction<TextBox>("SelectionStart++", () =>
             {
                 var control = GetSelectedControl<TextBox>();
@@ -233,6 +230,72 @@ namespace PropertyGridSample
 
                 DialogFactory.GetTextFromUserAsync(prm);
             });
+        }
+
+        void SetToolTipImage(PictureBox control)
+        {
+            var template = new TemplateControls.RichToolTip<GenericLabel>();
+
+            template.DoInsideLayout(() =>
+            {
+                template.Parent = control;
+
+                try
+                {
+                    template.BackgroundColor = RichToolTip.DefaultToolTipBackgroundColor;
+                    template.ForegroundColor = RichToolTip.DefaultToolTipForegroundColor;
+
+                    template.TitleLabel.Text = "This is title";
+                    template.TitleLabel.ParentForeColor = false;
+                    template.TitleLabel.ParentFont = false;
+                    template.TitleLabel.Font = template.RealFont.Scaled(1.5);
+                    template.TitleLabel.ForegroundColor = RichToolTip.DefaultToolTipTitleForegroundColor;
+
+                    template.MessageLabel.Text = "This is message text";
+
+                    var sizeInPixels
+                    = GraphicsFactory.PixelFromDip(RichToolTip.DefaultMinImageSize, control.ScaleFactor);
+
+                    template.PictureBox
+                    .SetIcon(MessageBoxIcon.Warning, sizeInPixels);
+
+                    var image = TemplateUtils.GetTemplateAsImage(template);
+                    control.ImageSet = null;
+                    control.Image = image;
+
+                    control.SuggestedSize = image.Size.PixelToDip(control.ScaleFactor);
+                }
+                finally
+                {
+                    template.Parent = null;
+                }
+            });
+
+        }
+
+        void SetMessageBoxIconError(PictureBox control)
+        {
+            control.SetIcon(MessageBoxIcon.Error, 64);
+        }
+
+        [Conditional("DEBUG")]
+        void InitSimpleTestActions()
+        {
+            if (alreadyRegistered)
+                return;
+            alreadyRegistered = true;
+
+            InitToolBarActions();
+            InitTextBoxActions();
+
+            AddControlAction<PictureBox>("Set MessageBoxIcon.Error", SetMessageBoxIconError);
+            AddControlAction<PictureBox>("Set ToolTip image", SetToolTipImage);
+
+            AddControlAction<TreeView>("Load png from resources", LoadPngFromResource);
+            AddControlAction<TreeView>("Load all small *.png in folder...", LoadAllPngInFolder);
+            AddControlAction<TreeView>("Load all *.svg in folder...", LoadAllSvgInFolder);
+
+            PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
         }
 
         void TestMemoFindReplace(bool replace)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,31 @@ namespace Alternet.UI
     public partial class Grid
     {
         /// <summary>
+        /// Gets or sets <see cref="RowCount"/> and <see cref="ColumnCount"/>
+        /// in the single property call.
+        /// </summary>
+        [Browsable(false)]
+        public virtual RowColumnIndex RowColumnCount
+        {
+            get
+            {
+                return (RowCount, ColumnCount);
+            }
+
+            set
+            {
+                RowCount = value.Row;
+                ColumnCount = value.Column;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets count of <see cref="RowDefinitions"/>.
         /// </summary>
         /// <remarks>
         /// If row count grows, <see cref="RowDefinition.CreateAuto"/> is used to add new rows.
         /// </remarks>
-        public int RowCount
+        public virtual int RowCount
         {
             get
             {
@@ -24,8 +44,6 @@ namespace Alternet.UI
 
             set
             {
-                if (value < 0)
-                    throw new ArgumentException(nameof(RowCount));
                 ListUtils.SetCount(RowDefinitions, value, RowDefinition.CreateAuto);
             }
         }
@@ -36,7 +54,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If column count grows, <see cref="ColumnDefinition.CreateAuto"/> is used to add new rows.
         /// </remarks>
-        public int ColumnCount
+        public virtual int ColumnCount
         {
             get
             {
@@ -45,8 +63,6 @@ namespace Alternet.UI
 
             set
             {
-                if (value < 0)
-                    throw new ArgumentException(nameof(ColumnCount));
                 ListUtils.SetCount(ColumnDefinitions, value, ColumnDefinition.CreateAuto);
             }
         }

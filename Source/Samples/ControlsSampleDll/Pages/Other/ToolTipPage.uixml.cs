@@ -10,7 +10,7 @@ namespace ControlsSample
 
         private ImageSet? customImage;
         private ImageSet? largeImage;
-        private TemplateControl controlTemplate;
+        private readonly TemplateControl controlTemplate;
 
         public ToolTipPage()
         {
@@ -110,7 +110,7 @@ namespace ControlsSample
         private void ShowImageButton_Click(object? sender, EventArgs e)
         {
             LoadLargeImage();
-            toolTip.OnlyImage(largeImage).SetBackgroundColor(SystemColors.Window);
+            toolTip.OnlyImage(largeImage).SetToolTipBackgroundColor(SystemColors.Window);
             ShowToolTip();
         }
 

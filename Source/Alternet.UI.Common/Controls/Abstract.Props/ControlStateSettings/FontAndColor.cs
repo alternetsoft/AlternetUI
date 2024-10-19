@@ -12,8 +12,19 @@ namespace Alternet.UI
     /// implementation. Also contains static properties to get system colors
     /// as <see cref="IReadOnlyFontAndColor"/>.
     /// </summary>
-    public class FontAndColor : IFontAndColor
+    public partial class FontAndColor : IFontAndColor
     {
+        /// <summary>
+        /// Gets <see cref="IReadOnlyFontAndColor"/> instance with
+        /// <see cref="Color.Empty"/> colors and null font.
+        /// </summary>
+        public static readonly IReadOnlyFontAndColor Empty = new FontAndColor(Color.Empty, Color.Empty);
+
+        /// <summary>
+        /// Gets <see cref="IReadOnlyFontAndColor"/> with all properties set to null.
+        /// </summary>
+        public static readonly IReadOnlyFontAndColor Null = new FontAndColor();
+
         private Color? backgroundColor;
         private Color? foregroundColor;
         private Font? font;
@@ -39,17 +50,6 @@ namespace Alternet.UI
         public FontAndColor()
         {
         }
-
-        /// <summary>
-        /// Has <see cref="Color.Empty"/> for the background color and
-        /// <see cref="Color.Empty"/> for the foreground color.
-        /// </summary>
-        public static IReadOnlyFontAndColor Empty => new FontAndColor(Color.Empty, Color.Empty);
-
-        /// <summary>
-        /// Has <c>null</c> for the background and foreground colors.
-        /// </summary>
-        public static IReadOnlyFontAndColor Null => new FontAndColor();
 
         /// <summary>
         /// Has <see cref="SystemColors.Menu"/> for the background color and

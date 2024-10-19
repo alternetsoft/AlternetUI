@@ -23,7 +23,9 @@ namespace Alternet.UI
         /// </summary>
         void SetLocationDecrement(bool decrementX, bool decrementY);
 
-        /// <inheritdoc cref="RichToolTip.SetBackgroundColor"/>
+        /// <summary>
+        /// Sets background colors.
+        /// </summary>
         void SetBackgroundColor(Color color, Color endColor);
 
         /// <summary>
