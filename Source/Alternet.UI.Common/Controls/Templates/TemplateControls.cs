@@ -37,19 +37,22 @@ namespace Alternet.UI
             {
                 DoInsideLayout(() =>
                 {
+                    VerticalAlignment = VerticalAlignment.Top;
+                    HorizontalAlignment = HorizontalAlignment.Left;
+
                     border.Parent = this;
                     grid.Parent = border;
 
-                    pictureBox.Margin = (5, 10, 5, 5);
+                    pictureBox.Margin = RichToolTip.DefaultImageMarginWithText;
                     pictureBox.VerticalAlignment = VerticalAlignment.Center;
                     pictureBox.Parent = grid;
 
-                    titleLabel.Margin = 5;
+                    titleLabel.Margin = RichToolTip.DefaultTitleMargin;
                     titleLabel.VerticalAlignment = VerticalAlignment.Center;
                     titleLabel.RowColumn = (0, 1);
                     titleLabel.Parent = grid;
 
-                    messageLabel.Margin = 5;
+                    messageLabel.Margin = RichToolTip.DefaultMessageMargin;
                     messageLabel.RowColumn = (1, 1);
                     messageLabel.Parent = grid;
 

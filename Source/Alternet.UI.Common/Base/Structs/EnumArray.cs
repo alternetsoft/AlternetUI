@@ -54,7 +54,7 @@ namespace Alternet.UI
         public TValue this[TKey index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
+            readonly get
             {
                 return Data[System.Convert.ToInt32(index)];
             }
@@ -74,7 +74,7 @@ namespace Alternet.UI
         public TValue this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
+            readonly get
             {
                 return Data[index];
             }
@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// Creates clone of this object.
         /// </summary>
         /// <returns></returns>
-        public EnumArray<TKey, TValue> Clone()
+        public readonly EnumArray<TKey, TValue> Clone()
         {
             EnumArray<TKey, TValue> result = new();
             result.Assign(this);

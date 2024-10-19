@@ -61,6 +61,7 @@ namespace ControlsSample
             toolTip.Parent = tooltipPreview;
             toolTip.ShowDebugRectangleAtCenter = false;
             toolTip.ContextMenuStrip = popup;
+            toolTip.Padding = 10;
 
             showTemplateButton.Click += (s, e) =>
             {

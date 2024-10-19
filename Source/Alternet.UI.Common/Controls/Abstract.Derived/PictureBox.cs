@@ -315,8 +315,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="icon">Icon index to set.</param>
         /// <param name="size">Svg image size.</param>
-        public virtual void SetIcon(MessageBoxIcon icon, int size)
+        public virtual bool SetIcon(MessageBoxIcon icon, int size)
         {
+            bool hasImage = false;
+
             DoInsideLayout(() =>
             {
                 if(StateObjects != null)
@@ -324,7 +326,10 @@ namespace Alternet.UI
                 var svg = MessageBoxSvg.GetImage(icon);
                 var iconImage = svg?.AsNormal(size, IsDarkBackground);
                 ImageSet = iconImage;
+                hasImage = iconImage != null;
             });
+
+            return hasImage;
         }
 
         /// <summary>

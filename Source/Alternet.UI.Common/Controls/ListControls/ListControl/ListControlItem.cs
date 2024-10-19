@@ -476,7 +476,6 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
         {
-            bool isDark = IsContainerDark(container);
             var item = e.Item;
 
             var control = container?.Control;
@@ -539,7 +538,6 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
         {
-            bool isDark = IsContainerDark(container);
             var item = e.Item;
 
             if (item is not null)

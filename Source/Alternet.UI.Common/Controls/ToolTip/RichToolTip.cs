@@ -19,6 +19,16 @@ namespace Alternet.UI
     /// </summary>
     public class RichToolTip : UserControl, IRichToolTip, IToolTipProvider
     {
+        public static Thickness DefaultImageMarginWithoutText = 5;
+
+        public static Thickness DefaultImageMarginWithText = (5, 10, 5, 5);
+
+        public static Thickness DefaultMessageMargin = 5;
+
+        public static Thickness DefaultTitleMargin = 5;
+
+        public static int ImageToTextDistance = 5;
+
         /// <summary>
         /// Gets or sets default value for the tooltip minimal image size (in device-independent units).
         /// This is used for svg image size when standard <see cref="MessageBoxIcon"/>
@@ -26,13 +36,16 @@ namespace Alternet.UI
         /// </summary>
         public static Coord DefaultMinImageSize = 24;
 
-        private IRichToolTipHandler? tooltip;
+        private readonly TemplateControls.RichToolTip<GenericLabel> template = new();
+
+        /*private IRichToolTipHandler? tooltip;*/
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
         /// </summary>
         public RichToolTip()
         {
+            template.Parent = this;
         }
 
         /// <summary>
@@ -88,7 +101,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public ImageSet? ToolTipImage { get; private set; }
 
-        /// <summary>
+        /*/// <summary>
         /// Gets <see cref="IRichToolTipHandler"/> provider used to work with tooltip.
         /// </summary>
         private IRichToolTipHandler? ToolTipHandler
@@ -108,7 +121,7 @@ namespace Alternet.UI
                     return tooltip;
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// Resets all tooltip color properties to the default values.
@@ -120,9 +133,9 @@ namespace Alternet.UI
             ToolTipBackgroundColor = DefaultToolTipBackgroundColor;
             ToolTipForegroundColor = DefaultToolTipForegroundColor;
 
-            ToolTipHandler?.SetBackgroundColor(ToolTipBackgroundColor, Color.Empty);
-            ToolTipHandler?.SetForegroundColor(ToolTipForegroundColor);
-            ToolTipHandler?.SetTitleForegroundColor(ToolTipTitleForegroundColor);
+            SetToolTipBackgroundColor(ToolTipBackgroundColor);
+            SetToolTipForegroundColor(ToolTipForegroundColor);
+            SetTitleForegroundColor(ToolTipTitleForegroundColor);
             return this;
         }
 
@@ -156,7 +169,8 @@ namespace Alternet.UI
         {
             try
             {
-                SafeDisposeObject(ref tooltip);
+                /*SafeDisposeObject(ref tooltip);*/
+                template.Hide();
                 return this;
             }
             catch
@@ -210,7 +224,7 @@ namespace Alternet.UI
             if (brush is null)
                 return this;
             ToolTipBackgroundBrush = brush;
-            ToolTipHandler?.SetBackgroundColor(brush.AsColor, Color.Empty);
+            SetToolTipBackgroundColor(brush.AsColor);
             return this;
         }
 
@@ -223,7 +237,6 @@ namespace Alternet.UI
             if (color is null)
                 return this;
             ToolTipBackgroundColor = color;
-            ToolTipHandler?.SetBackgroundColor(color, Color.Empty);
             return this;
         }
 
@@ -236,7 +249,6 @@ namespace Alternet.UI
             if (color is null)
                 return this;
             ToolTipForegroundColor = color;
-            ToolTipHandler?.SetForegroundColor(color);
             return this;
         }
 
@@ -249,7 +261,6 @@ namespace Alternet.UI
             if (color is null)
                 return this;
             ToolTipTitleForegroundColor = color;
-            ToolTipHandler?.SetTitleForegroundColor(color);
             return this;
         }
 
@@ -268,8 +279,9 @@ namespace Alternet.UI
         /// <param name="millisecondsShowdelay">Show delay value.</param>
         public virtual IRichToolTip SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
         {
+            HideToolTip();
             TimeoutInMilliseconds = (int)milliseconds;
-            ToolTipHandler?.SetTimeout(milliseconds, millisecondsShowdelay);
+            ShowDelayInMilliseconds = (int)millisecondsShowdelay;
             return this;
         }
 
@@ -280,7 +292,6 @@ namespace Alternet.UI
         public virtual IRichToolTip SetIcon(ImageSet? bitmap)
         {
             ToolTipImage = bitmap;
-            ToolTipHandler?.SetIcon(bitmap);
             return this;
         }
 
@@ -295,7 +306,6 @@ namespace Alternet.UI
         public virtual IRichToolTip SetTitleFont(Font? font)
         {
             ToolTipTitleFont = font;
-            ToolTipHandler?.SetTitleFont(font);
             return this;
         }
 
@@ -360,7 +370,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows the tooltip at the specified location.
+        /// Shows the tooltip at the specified location inside the.
         /// Location coordinates are in device-independent units.
         /// </summary>
         /// <param name="location">Location where tooltip will be shown.</param>
@@ -369,7 +379,51 @@ namespace Alternet.UI
             location ??= (0, 0);
             var pxLocation = PixelFromDip(location.Value);
             var area = (pxLocation.X - 1, pxLocation.Y - 1, 2, 2);
-            ToolTipHandler?.Show(this, area, false);
+
+            template.DoInsideLayout(() =>
+            {
+                template.HasBorder = true;
+                template.BackgroundColor = RichToolTip.DefaultToolTipBackgroundColor;
+                template.ForegroundColor = RichToolTip.DefaultToolTipForegroundColor;
+                template.TitleLabel.Text = Title;
+                template.TitleLabel.ParentForeColor = false;
+                template.TitleLabel.ParentFont = false;
+                template.TitleLabel.Font = template.RealFont.Scaled(1.5);
+                template.TitleLabel.ForegroundColor = RichToolTip.DefaultToolTipTitleForegroundColor;
+                template.MessageLabel.Text = Text;
+
+                template.TitleLabel.Visible = !string.IsNullOrEmpty(Title);
+                template.MessageLabel.Visible = !string.IsNullOrEmpty(Text);
+
+                var sizeInPixels
+                = GraphicsFactory.PixelFromDip(RichToolTip.DefaultMinImageSize, ScaleFactor);
+
+                var titleVisible = template.TitleLabel.Visible;
+                var showImage = titleVisible;
+
+                if (titleVisible)
+                {
+                    template.PictureBox.Margin = DefaultImageMarginWithText;
+                }
+                else
+                {
+                    template.PictureBox.Margin = DefaultImageMarginWithoutText;
+                }
+
+                if (ToolTipImage != null)
+                {
+                    template.PictureBox.Visible = true;
+                    template.PictureBox.ImageSet = ToolTipImage;
+                }
+                else
+                {
+                    var hasIcon
+                        = template.PictureBox.SetIcon(ToolTipIcon ?? MessageBoxIcon.None, sizeInPixels);
+                    template.PictureBox.Visible = hasIcon && showImage;
+                }
+            });
+
+            template.Show();
             return this;
         }
 
@@ -395,7 +449,6 @@ namespace Alternet.UI
         public virtual IRichToolTip SetIcon(MessageBoxIcon icon)
         {
             ToolTipIcon = icon;
-            ToolTipHandler?.SetIcon(icon);
             return this;
         }
 
