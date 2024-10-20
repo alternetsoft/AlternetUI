@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// Gets or sets whether item is shown in bold font.
         /// </summary>
         [Browsable(false)]
-        public bool IsBold
+        public virtual bool IsBold
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// Gets or sets background color of the item.
         /// </summary>
         [Browsable(false)]
-        public Color? BackgroundColor
+        public virtual Color? BackgroundColor
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Alternet.UI
         /// Gets or sets text color of the item.
         /// </summary>
         [Browsable(false)]
-        public Color? TextColor
+        public virtual Color? TextColor
         {
             get
             {
@@ -201,7 +201,7 @@ namespace Alternet.UI
         /// Gets or sets the text of the item.
         /// </summary>
         /// <value>The text to display for the item.</value>
-        public string Text
+        public virtual string Text
         {
             get
             {
@@ -291,7 +291,7 @@ namespace Alternet.UI
         /// These individual <see cref="TreeViewItem"/> settings will override
         /// the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>
-        public int? ImageIndex
+        public virtual int? ImageIndex
         {
             get => imageIndex;
             set
@@ -315,7 +315,7 @@ namespace Alternet.UI
         /// <see cref="TreeView.AfterCollapse"/> events.
         /// </remarks>
         [Browsable(false)]
-        public bool IsExpanded { get; set; }
+        public virtual bool IsExpanded { get; set; }
 
         /// <summary>
         /// Gets the collection of child <see cref="TreeViewItem"/> of the
@@ -328,7 +328,7 @@ namespace Alternet.UI
         /// <see cref="Items"/> property that can contain its own item collection.
         /// </remarks>
         [Browsable(false)]
-        public Collection<TreeViewItem> Items
+        public virtual Collection<TreeViewItem> Items
         {
             get
             {
@@ -376,7 +376,7 @@ namespace Alternet.UI
         /// If item has no siblings, <see cref="Parent"/> is returned.
         /// </summary>
         [Browsable(false)]
-        public TreeViewItem? NextOrPrevSibling
+        public virtual TreeViewItem? NextOrPrevSibling
         {
             get
             {
@@ -406,7 +406,7 @@ namespace Alternet.UI
         /// Gets or sets item handle
         /// </summary>
         [Browsable(false)]
-        public object? Handle
+        public virtual object? Handle
         {
             get
             {
@@ -426,7 +426,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initiates the editing of the tree item label.
         /// </summary>
-        public void BeginLabelEdit() => TreeView?.Handler.BeginLabelEdit(this);
+        public virtual void BeginLabelEdit() => TreeView?.Handler.BeginLabelEdit(this);
 
         /// <summary>
         /// Ends the editing of the tree item label.
@@ -434,7 +434,7 @@ namespace Alternet.UI
         /// <param name="cancel"><see langword="true"/> if the editing of the
         /// tree item label text was canceled without
         /// being saved; otherwise, <see langword="false"/>.</param>
-        public void EndLabelEdit(bool cancel) =>
+        public virtual void EndLabelEdit(bool cancel) =>
             TreeView?.Handler.EndLabelEdit(this, cancel);
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace Alternet.UI
         /// <see cref="TreeViewItem"/> and all the child tree items assigned
         /// to the <see cref="Items"/> collection.
         /// </remarks>
-        public void ExpandAll() => TreeView?.Handler.ExpandAllChildren(this);
+        public virtual void ExpandAll() => TreeView?.Handler.ExpandAllChildren(this);
 
         /// <summary>
         /// Collapses this <see cref="TreeViewItem"/> and all the child tree items.
@@ -455,7 +455,7 @@ namespace Alternet.UI
         /// <see cref="TreeViewItem"/> and all the child tree items assigned to
         /// the <see cref="Items"/> collection.
         /// </remarks>
-        public void CollapseAll() =>
+        public virtual void CollapseAll() =>
             TreeView?.Handler.CollapseAllChildren(this);
 
         /// <summary>
@@ -472,12 +472,12 @@ namespace Alternet.UI
         /// the user can see and interact with the
         /// selected item.
         /// </remarks>
-        public void EnsureVisible() => TreeView?.Handler.EnsureVisible(this);
+        public virtual void EnsureVisible() => TreeView?.Handler.EnsureVisible(this);
 
         /// <summary>
         /// Scrolls the item into view.
         /// </summary>
-        public void ScrollIntoView() => TreeView?.Handler.ScrollIntoView(this);
+        public virtual void ScrollIntoView() => TreeView?.Handler.ScrollIntoView(this);
 
         /// <summary>
         /// Removes the current tree item from the tree view control.
@@ -488,7 +488,7 @@ namespace Alternet.UI
         /// assigned to the <see cref="TreeViewItem"/>, are removed from the
         /// <see cref="TreeView"/>.
         /// </remarks>
-        public void Remove()
+        public virtual void Remove()
         {
             if (Parent == null)
                 TreeView?.Items.Remove(this);
@@ -504,7 +504,7 @@ namespace Alternet.UI
         /// <see cref="TreeViewItem"/>, while leaving the child items expanded
         /// state unchanged.
         /// </remarks>
-        public void Expand()
+        public virtual void Expand()
         {
             IsExpanded = true;
         }
@@ -513,7 +513,7 @@ namespace Alternet.UI
         /// Creates copy of this <see cref="TreeViewItem"/>.
         /// </summary>
         /// <param name="subItems">if <c>true</c>, <see cref="Items"/> are also cloned.</param>
-        public TreeViewItem Clone(bool subItems = true)
+        public virtual TreeViewItem Clone(bool subItems = true)
         {
             var result = new TreeViewItem();
             result.Assign(this, subItems);
@@ -525,7 +525,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">Source of the properties to assign.</param>
         /// <param name="subItems">if <c>true</c>, <see cref="Items"/> are also assigned.</param>
-        public void Assign(TreeViewItem item, bool subItems = true)
+        public virtual void Assign(TreeViewItem item, bool subItems = true)
         {
             Tag = item.Tag;
             Text = item.Text;
@@ -548,7 +548,7 @@ namespace Alternet.UI
         /// <see cref="TreeViewItem"/>, while leaving the child items
         /// expanded state unchanged.
         /// </remarks>
-        public void Collapse()
+        public virtual void Collapse()
         {
             IsExpanded = false;
         }
@@ -560,7 +560,7 @@ namespace Alternet.UI
         /// The tree item is toggled to the state opposite its current state,
         /// either expanded or collapsed.
         /// </remarks>
-        public void Toggle()
+        public virtual void Toggle()
         {
             IsExpanded = !IsExpanded;
         }
