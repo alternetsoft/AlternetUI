@@ -1,0 +1,15 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.SpeedButtonWindow"
+        Title="SpeedButton Example" Size="800,600">
+
+  <VerticalStackPanel Name="mainPanel">
+    <LogListBox SuggestedHeight="200" Name="logListBox" Margin="10"/>
+    <Control Layout="Horizontal" MinChildMargin="5" Name="buttonPanel" Padding="5">
+      <!-- <CreateUixmlDeclaration> -->
+      <SpeedButton Name="button1" Click="Button_Click" HorizontalAlignment="Right"
+                   ToolTip = "Some hint" Shortcut="Ctrl+O" Text="Ok" TextVisible="true"/>
+      <!-- </CreateUixmlDeclaration> -->
+    </Control>
+  </VerticalStackPanel>
+</Window>

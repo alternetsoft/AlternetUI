@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.ListBoxWindow"
+        Title="Examples.ListBox">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <ListBox Margin="8" Name="listBox" SelectionChanged="ListBox_SelectionChanged"/>
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

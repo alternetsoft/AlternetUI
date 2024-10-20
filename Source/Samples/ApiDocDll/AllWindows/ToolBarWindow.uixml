@@ -1,0 +1,6 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.ToolBarWindow"
+        Title="Example GenericToolBar" Size="800,600">
+    
+</Window>

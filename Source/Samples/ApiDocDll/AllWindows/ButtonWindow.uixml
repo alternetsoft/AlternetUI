@@ -1,0 +1,13 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.ButtonWindow">
+  <StackPanel Orientation="Vertical" MinChildMargin="10">
+    <!-- <CreateUixmlDeclaration> -->
+    <Button Name="executeButton" Text="Execute" Click="ExecuteButton_Click" Margin="10"/>
+    <!-- </CreateUixmlDeclaration> -->
+
+    <Button Text="Execute on center" Click="ExecuteButton_Click" Name="executeButton2"
+            HorizontalAlignment="Center"/>
+
+  </StackPanel>
+</Window>

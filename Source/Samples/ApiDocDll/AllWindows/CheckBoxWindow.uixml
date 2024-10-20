@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.CheckBoxWindow"
+        Title="CheckBox">
+  <StackPanel Orientation="Vertical">
+    <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top" Margin="8"/>
+    <!-- <CreateUixmlDeclaration> -->
+    <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="8" CheckedChanged="AllowTextEditingCheckBox_CheckedChanged"/>
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

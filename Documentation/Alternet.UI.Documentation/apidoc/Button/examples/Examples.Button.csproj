@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <Import Project="$(MSBuildProjectDirectory)\..\..\..\Common.props"/>
-
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
-</Project>

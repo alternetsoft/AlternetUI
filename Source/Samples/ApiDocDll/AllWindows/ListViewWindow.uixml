@@ -1,0 +1,8 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.ListViewWindow"
+        Title="ListView">
+    <!-- <CreateUixmlDeclaration> -->
+    <ListView Name="listView" View="Details" Margin="8" SelectionChanged="ListView_SelectionChanged"/>
+    <!-- </CreateUixmlDeclaration> -->
+</Window>

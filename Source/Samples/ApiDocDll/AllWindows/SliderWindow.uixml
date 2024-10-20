@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.SliderWindow"
+        Title="Examples.Slider">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <Slider Name="slider" Minimum="50" Maximum="250" Value="125" Margin="8"
+            TickFrequency="15" ValueChanged="Slider_ValueChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>
