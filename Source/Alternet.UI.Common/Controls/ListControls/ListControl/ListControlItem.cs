@@ -16,11 +16,6 @@ namespace Alternet.UI
     public partial class ListControlItem : BaseControlItem
     {
         /// <summary>
-        /// Gets visual state index used for the selected items.
-        /// </summary>
-        public const VisualControlState SelectedItemVisualState = VisualControlState.Pressed;
-
-        /// <summary>
         /// Gets default item alignment
         /// </summary>
         public static readonly GenericAlignment DefaultItemAlignment
@@ -155,8 +150,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Image? SelectedImage
         {
-            get => GetImage(SelectedItemVisualState);
-            set => SetImage(SelectedItemVisualState, value);
+            get => GetImage(VisualControlState.Selected);
+            set => SetImage(VisualControlState.Selected, value);
         }
 
         /// <summary>
@@ -317,14 +312,13 @@ namespace Alternet.UI
         /// <param name="container">Container of the items.</param>
         /// <param name="svgColor">Color of the svg image when item is selected.</param>
         /// <returns></returns>
-        public static (Image? Normal, Image? Disabled, Image? Selected)
-            GetItemImages(
+        public static EnumArrayStateImages GetItemImages(
             ListControlItem? item,
             IListControlItemContainer? container,
             Color? svgColor)
         {
             if (item is null)
-                return (null, null, null);
+                return new();
 
             var svgImage = item.SvgImage;
             var isDark = IsContainerDark(container);
@@ -355,10 +349,10 @@ namespace Alternet.UI
 
                 if (svgColor is not null)
                 {
-                    if (!item.HasImage(SelectedItemVisualState, isDark))
+                    if (!item.HasImage(VisualControlState.Selected, isDark))
                     {
                         item.SetImage(
-                            SelectedItemVisualState,
+                            VisualControlState.Selected,
                             svgImage.ImageWithColor(imageHeight, svgColor),
                             isDark);
                     }
@@ -366,6 +360,8 @@ namespace Alternet.UI
 
                 /* ============================= */
             }
+
+            EnumArrayStateImages result = new();
 
             Image? image = null;
             Image? disabledImage = null;
@@ -380,16 +376,17 @@ namespace Alternet.UI
             {
                 image ??= item.GetImage(VisualControlState.Normal, isDark);
                 disabledImage ??= item.GetImage(VisualControlState.Disabled, isDark);
-                selectedImage ??= item.GetImage(SelectedItemVisualState, isDark);
+                selectedImage ??= item.GetImage(VisualControlState.Selected, isDark);
             }
 
             disabledImage ??= image;
             selectedImage ??= image;
 
-            return (
-                image,
-                disabledImage,
-                selectedImage);
+            result[VisualControlState.Normal] = image;
+            result[VisualControlState.Disabled] = disabledImage;
+            result[VisualControlState.Selected] = selectedImage;
+
+            return result;
         }
 
         /// <summary>
@@ -618,7 +615,11 @@ namespace Alternet.UI
             if (hideSelection)
                 isSelected = false;
 
-            var (normalImage, disabledImage, selectedImage) = e.ItemImages;
+            var itemImages = e.ItemImages;
+            var normalImage = itemImages[VisualControlState.Normal];
+            var disabledImage = itemImages[VisualControlState.Disabled];
+            var selectedImage = itemImages[VisualControlState.Selected];
+
             var image = IsContainerEnabled(container)
                 ? (isSelected ? selectedImage : normalImage) : disabledImage;
 

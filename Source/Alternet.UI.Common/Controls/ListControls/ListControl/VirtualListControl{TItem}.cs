@@ -639,7 +639,12 @@ namespace Alternet.UI
             if (string.IsNullOrEmpty(s))
                 s = "Wy";
 
-            var (normal, disabled, selected) = GetItemImages(itemIndex, null);
+            var itemImages = GetItemImages(itemIndex, null);
+
+            var normal = itemImages[VisualControlState.Normal];
+            var disabled = itemImages[VisualControlState.Disabled];
+            var selected = itemImages[VisualControlState.Selected];
+
             var maxHeightI =
                 MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
             var maxHeightD = PixelToDip(maxHeightI);
@@ -899,8 +904,7 @@ namespace Alternet.UI
         /// <param name="itemIndex">Index of the item.</param>
         /// <param name="svgColor">Color of the svg image when item is selected.</param>
         /// <returns></returns>
-        public (Image? Normal, Image? Disabled, Image? Selected)
-            GetItemImages(int itemIndex, Color? svgColor)
+        public EnumArrayStateImages GetItemImages(int itemIndex, Color? svgColor)
         {
             return ListControlItem.GetItemImages(SafeItem(itemIndex), this, svgColor);
         }

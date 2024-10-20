@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -18,6 +19,10 @@ namespace Alternet.UI
         /// Array with data.
         /// </summary>
         public TValue[] Data;
+
+        static EnumArray()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArray{TKey, TValue}"/> struct.
@@ -136,6 +141,18 @@ namespace Alternet.UI
             EnumArray<TKey, TValue> result = new();
             result.Assign(this);
             return result;
+        }
+
+        [Conditional("DEBUG")]
+        internal static void Test()
+        {
+            EnumArray<VisualControlState, int> data = new();
+
+            data[VisualControlState.Disabled] = 5;
+
+            var result = data[VisualControlState.Disabled];
+
+            App.Log($"EnumArray: 5 => {result}");
         }
     }
 }
