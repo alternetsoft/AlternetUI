@@ -21,8 +21,7 @@ namespace Alternet.UI
         public static readonly GenericAlignment DefaultItemAlignment
             = GenericAlignment.CenterVertical | GenericAlignment.Left;
 
-        private SvgImage? svgImage;
-        private EnumArray<VisualControlState, LightDarkImage?> imageData = new();
+        private CachedSvgImage cachedSvg = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class.
@@ -164,15 +163,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual SvgImage? SvgImage
         {
-            get => svgImage;
+            get => cachedSvg.SvgImage;
             set
             {
-                if (svgImage == value)
-                    return;
-                svgImage = value;
-                Image = null;
-                DisabledImage = null;
-                SelectedImage = null;
+                cachedSvg.SvgImage = value;
             }
         }
 
@@ -185,7 +179,11 @@ namespace Alternet.UI
         /// Currently only rectangular svg images are supported.
         /// </remarks>
         [Browsable(false)]
-        public virtual SizeI? SvgImageSize { get; set; }
+        public virtual SizeI? SvgImageSize
+        {
+            get => cachedSvg.SvgSize;
+            set => cachedSvg.SvgSize = value;
+        }
 
         /// <summary>
         /// Gets or sets minimal item height.
@@ -771,7 +769,7 @@ namespace Alternet.UI
         public virtual Image? GetImage(VisualControlState state, bool? isDark = null)
         {
             isDark ??= LightDarkColor.IsUsingDarkColor;
-            var result = imageData[state]?.GetImage(isDark.Value);
+            var result = cachedSvg.GetImage(state, isDark.Value);
             return result;
         }
 
@@ -796,9 +794,7 @@ namespace Alternet.UI
         public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
         {
             isDark ??= LightDarkColor.IsUsingDarkColor;
-
-            imageData[state] ??= new();
-            imageData[state]!.SetImage(isDark.Value, image);
+            cachedSvg.SetImage(state, image, isDark.Value);
         }
 
         /// <summary>
