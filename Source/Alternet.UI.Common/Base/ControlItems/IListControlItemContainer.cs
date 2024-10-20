@@ -34,5 +34,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Item index from which to get the contents to display.</param>
         string GetItemText(int index);
+
+        /// <summary>
+        /// Gets count of the items.
+        /// </summary>
+        /// <returns></returns>
+        int GetItemCount();
     }
 }

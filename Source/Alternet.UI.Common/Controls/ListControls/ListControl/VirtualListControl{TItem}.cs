@@ -1011,6 +1011,11 @@ namespace Alternet.UI
                 item.DrawForeground(this, e);
         }
 
+        int IListControlItemContainer.GetItemCount()
+        {
+            return Items.Count;
+        }
+
         internal ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
         {
             var item = SafeItem(itemIndex);

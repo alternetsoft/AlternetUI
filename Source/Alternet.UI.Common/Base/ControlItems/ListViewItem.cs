@@ -331,7 +331,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Appllies columns to the owner control. Do not call directly.
+        /// Applies columns to the owner control. Do not call directly.
         /// </summary>
         public virtual void ApplyColumns()
         {

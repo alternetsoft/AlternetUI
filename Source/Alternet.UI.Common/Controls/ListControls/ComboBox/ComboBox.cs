@@ -696,6 +696,11 @@ namespace Alternet.UI
             return (imageRect, itemRect);
         }
 
+        int IListControlItemContainer.GetItemCount()
+        {
+            return Items.Count;
+        }
+
         /// <summary>
         /// Gets whether hint text should be painted.
         /// </summary>
