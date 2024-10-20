@@ -19,14 +19,24 @@ namespace Alternet.UI
     /// </summary>
     public class RichToolTip : UserControl, IRichToolTip, IToolTipProvider
     {
-        public static Thickness DefaultImageMarginWithoutText = 5;
+        /// <summary>
+        /// Gets or sets default image margin in device-independent units.
+        /// </summary>
+        public static Thickness DefaultImageMargin = 5;
 
-        public static Thickness DefaultImageMarginWithText = (5, 10, 5, 5);
-
+        /// <summary>
+        /// Gets or sets default text margin in device-independent units.
+        /// </summary>
         public static Thickness DefaultMessageMargin = 5;
 
+        /// <summary>
+        /// Gets or sets default title margin in device-independent units.
+        /// </summary>
         public static Thickness DefaultTitleMargin = 5;
 
+        /// <summary>
+        /// Gets or sets default distance between image and title in device-independent units.
+        /// </summary>
         public static int ImageToTextDistance = 5;
 
         /// <summary>
@@ -149,6 +159,7 @@ namespace Alternet.UI
         {
             HideToolTip();
             ResetToolTipColors();
+            SetIcon(MessageBoxIcon.None);
             Text = message?.ToString() ?? string.Empty;
             Title = string.Empty;
 
@@ -383,13 +394,18 @@ namespace Alternet.UI
             template.DoInsideLayout(() =>
             {
                 template.HasBorder = true;
-                template.BackgroundColor = RichToolTip.DefaultToolTipBackgroundColor;
-                template.ForegroundColor = RichToolTip.DefaultToolTipForegroundColor;
+                template.BackgroundColor
+                = ToolTipBackgroundColor ?? BackgroundColor ?? RichToolTip.DefaultToolTipBackgroundColor;
+                template.ForegroundColor
+                = ToolTipForegroundColor ?? ForegroundColor ?? RichToolTip.DefaultToolTipForegroundColor;
                 template.TitleLabel.Text = Title;
                 template.TitleLabel.ParentForeColor = false;
                 template.TitleLabel.ParentFont = false;
-                template.TitleLabel.Font = template.RealFont.Scaled(1.5);
-                template.TitleLabel.ForegroundColor = RichToolTip.DefaultToolTipTitleForegroundColor;
+
+                template.TitleLabel.Font
+                    = ToolTipTitleFont ?? RealFont.Scaled(1.5);
+                template.TitleLabel.ForegroundColor
+                    = ToolTipTitleForegroundColor ?? RichToolTip.DefaultToolTipTitleForegroundColor;
                 template.MessageLabel.Text = Text;
 
                 template.TitleLabel.Visible = !string.IsNullOrEmpty(Title);
@@ -401,13 +417,11 @@ namespace Alternet.UI
                 var titleVisible = template.TitleLabel.Visible;
                 var showImage = titleVisible;
 
+                var imageMargin = DefaultImageMargin;
+
                 if (titleVisible)
                 {
-                    template.PictureBox.Margin = DefaultImageMarginWithText;
-                }
-                else
-                {
-                    template.PictureBox.Margin = DefaultImageMarginWithoutText;
+                    imageMargin = imageMargin.WithRight(imageMargin.Right + ImageToTextDistance);
                 }
 
                 if (ToolTipImage != null)
@@ -421,6 +435,18 @@ namespace Alternet.UI
                         = template.PictureBox.SetIcon(ToolTipIcon ?? MessageBoxIcon.None, sizeInPixels);
                     template.PictureBox.Visible = hasIcon && showImage;
                 }
+
+                imageMargin.Reset(!template.PictureBox.Visible);
+
+                var titleMargin = DefaultTitleMargin;
+                titleMargin.Reset(!template.TitleLabel.Visible);
+
+                var messageMargin = DefaultMessageMargin;
+                messageMargin.Reset(!template.MessageLabel.Visible);
+
+                template.PictureBox.Margin = imageMargin;
+                template.TitleLabel.Margin = titleMargin;
+                template.MessageLabel.Margin = messageMargin;
             });
 
             template.Show();
@@ -527,6 +553,7 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             HideToolTip();
+            base.DisposeManaged();
         }
     }
 }

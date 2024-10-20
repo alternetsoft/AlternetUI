@@ -43,7 +43,7 @@ namespace Alternet.UI
                     border.Parent = this;
                     grid.Parent = border;
 
-                    pictureBox.Margin = RichToolTip.DefaultImageMarginWithText;
+                    pictureBox.Margin = RichToolTip.DefaultImageMargin;
                     pictureBox.VerticalAlignment = VerticalAlignment.Center;
                     pictureBox.Parent = grid;
 
