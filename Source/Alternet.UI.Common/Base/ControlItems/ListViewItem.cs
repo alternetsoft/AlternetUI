@@ -46,7 +46,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListViewItem : BaseControlItem
     {
-        private readonly Collection<ListViewItemCell> cells = new() { ThrowOnNullAdd = true };
+        private Collection<ListViewItemCell>? cells;
         private ListView? listView;
 
         /// <summary>
@@ -55,8 +55,6 @@ namespace Alternet.UI
         /// </summary>
         public ListViewItem()
         {
-            cells.ItemInserted += Cells_ItemInserted;
-            cells.ItemRemoved += Cells_ItemRemoved;
         }
 
         /// <summary>
@@ -235,7 +233,20 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Using the <see cref="Cells"/> property, you can add column cells,
         /// remove column cells, and obtain a count of column cells.</remarks>
-        public Collection<ListViewItemCell> Cells => cells;
+        public Collection<ListViewItemCell> Cells
+        {
+            get
+            {
+                if(cells is null)
+                {
+                    cells = new() { ThrowOnNullAdd = true };
+                    cells.ItemInserted += OnCellInserted;
+                    cells.ItemRemoved += OnCellRemoved;
+                }
+
+                return cells;
+            }
+        }
 
         private long RequiredIndex
         {
@@ -334,13 +345,13 @@ namespace Alternet.UI
             Cells.SetCount(count, () => new ListViewItemCell());
         }
 
-        private void Cells_ItemInserted(object? sender, int index, ListViewItemCell item)
+        private void OnCellInserted(object? sender, int index, ListViewItemCell item)
         {
             item.ColumnIndex = index;
             item.Item = this;
         }
 
-        private void Cells_ItemRemoved(object? sender, int index, ListViewItemCell item)
+        private void OnCellRemoved(object? sender, int index, ListViewItemCell item)
         {
             item.ColumnIndex = null;
             item.Item = null;
