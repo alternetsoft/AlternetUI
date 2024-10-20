@@ -22,6 +22,6 @@ Examples of how a <xref:Alternet.UI.Label> can look on different platforms:
 ![Label on Linux](images/label-linux.png)
 ***
 
-Set <xref:Alternet.UI.Control.Text> property to specify the text displayed on the control.
+Set <xref:Alternet.UI.AbstractControl.Text> property to specify the text displayed on the control.
 A <xref:Alternet.UI.Label>, like any other <xref:Alternet.UI.Control>, can be disabled by
- setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+ setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.

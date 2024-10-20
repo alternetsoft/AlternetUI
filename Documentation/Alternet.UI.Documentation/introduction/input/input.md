@@ -89,7 +89,7 @@ This article explains the architecture of the input systems in AlteNET UI.
  The first section of the example creates the
  <xref:Alternet.UI.StackPanel> and the
  <xref:Alternet.UI.Button> and attaches the event handler for the
- <xref:Alternet.UI.Control.KeyDown>.
+ <xref:Alternet.UI.AbstractControl.KeyDown>.
 
  [!code-xml[](./snippets/Input_OvwKeyboardExampleUIXML.uixml)]
 
@@ -98,27 +98,27 @@ This article explains the architecture of the input systems in AlteNET UI.
  The second section is written in code and defines the event handler. When the
  left arrow key is pressed, and the <xref:Alternet.UI.Button> has
  keyboard focus, the handler runs and the
- <xref:Alternet.UI.Control.Background%2A> color of the
+ <xref:Alternet.UI.AbstractControl.Background%2A> color of the
  <xref:Alternet.UI.Button> is changed. If the key is pressed, but
  it is not the left arrow key, the
- <xref:Alternet.UI.Control.Background%2A> color of the
+ <xref:Alternet.UI.AbstractControl.Background%2A> color of the
  <xref:Alternet.UI.Button> is changed back to its starting color.
 
   [!code-csharp[](./snippets/Input_OvwKeyboardExampleHandlerCodeBehind.cs)]
 
 ### Mouse Input Event Example
  In the following example, the
- <xref:Alternet.UI.Control.Background%2A> color of a
+ <xref:Alternet.UI.AbstractControl.Background%2A> color of a
  <xref:Alternet.UI.Button> is changed when the mouse pointer enters
  the <xref:Alternet.UI.Button>. The
- <xref:Alternet.UI.Control.Background%2A> color is restored when the
+ <xref:Alternet.UI.AbstractControl.Background%2A> color is restored when the
  mouse leaves the <xref:Alternet.UI.Button>.
 
  The first section of the example creates the
  <xref:Alternet.UI.StackPanel> and the
  <xref:Alternet.UI.Button> control and attaches the event handlers
- for the <xref:Alternet.UI.Control.MouseEnter> and
- <xref:Alternet.UI.Control.MouseLeave> events to the
+ for the <xref:Alternet.UI.AbstractControl.MouseEnter> and
+ <xref:Alternet.UI.AbstractControl.MouseLeave> events to the
  <xref:Alternet.UI.Button>.
 
   [!code-xml[](./snippets/Input_OvwMouseExampleUIXML.uixml)]
@@ -126,11 +126,11 @@ This article explains the architecture of the input systems in AlteNET UI.
 
  The second section of the example is written in code and defines the event
  handlers. When the mouse enters the <xref:Alternet.UI.Button>, the
- <xref:Alternet.UI.Control.Background%2A> color of the
+ <xref:Alternet.UI.AbstractControl.Background%2A> color of the
  <xref:Alternet.UI.Button> is changed to
  <xref:Alternet.Drawing.Brushes.SlateGray%2A>.  When the mouse leaves the
  <xref:Alternet.UI.Button>, the
- <xref:Alternet.UI.Control.Background%2A> color of the
+ <xref:Alternet.UI.AbstractControl.Background%2A> color of the
  <xref:Alternet.UI.Button> is changed back to
  <xref:Alternet.Drawing.Brushes.AliceBlue%2A>.
 
@@ -139,27 +139,27 @@ This article explains the architecture of the input systems in AlteNET UI.
    [!code-csharp[](./snippets/Input_OvwMouseExampleLeaveHandler.cs)]
 
 ## Text Input
- The <xref:Alternet.UI.Control.KeyPress> event enables you to listen
+ The <xref:Alternet.UI.AbstractControl.KeyPress> event enables you to listen
  for text input in a device-independent manner. The keyboard is the primary
  means of text input, but speech, handwriting, and other input devices can
  generate text input also.
 
  For keyboard input, AlterNET UI first sends the appropriate
- <xref:Alternet.UI.Control.KeyDown>/<xref:Alternet.UI.Control.KeyUp>
+ <xref:Alternet.UI.AbstractControl.KeyDown>/<xref:Alternet.UI.AbstractControl.KeyUp>
  events. If those events are not handled, and the key is textual (rather than a
  control key such as directional arrows or function keys), then a
- <xref:Alternet.UI.Control.KeyPress> event is raised. There is not
+ <xref:Alternet.UI.AbstractControl.KeyPress> event is raised. There is not
  always a simple one-to-one mapping between
- <xref:Alternet.UI.Control.KeyDown>/<xref:Alternet.UI.Control.KeyUp>
- and <xref:Alternet.UI.Control.KeyPress> events because multiple
+ <xref:Alternet.UI.AbstractControl.KeyDown>/<xref:Alternet.UI.AbstractControl.KeyUp>
+ and <xref:Alternet.UI.AbstractControl.KeyPress> events because multiple
  keystrokes can generate a single character of text input, and single keystrokes
  can generate multi-character strings. This is especially true for languages
  such as Chinese, Japanese, and Korean, which use Input Method Editors (IMEs) to
  generate the thousands of possible characters in their corresponding alphabets.
 
  The following example defines a handler for the
- <xref:Alternet.UI.Control.Click> event and a handler
- for the <xref:Alternet.UI.Control.KeyDown> event.
+ <xref:Alternet.UI.AbstractControl.Click> event and a handler
+ for the <xref:Alternet.UI.AbstractControl.KeyDown> event.
 
  The first segment of code or markup creates the user interface.
 

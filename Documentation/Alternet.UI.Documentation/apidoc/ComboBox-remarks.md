@@ -11,8 +11,8 @@ The list then displays the default string value for each object. You can add ind
 You can delete items with the Remove method or clear the entire list with the Clear method.
 
 In addition to display and selection functionality, the <xref:Alternet.UI.ComboBox> also provides features that enable you to
-add items to the <xref:Alternet.UI.ComboBox> and to find text within the items of the list. With the <xref:Alternet.UI.Control.BeginUpdate>
-and <xref:Alternet.UI.Control.EndUpdate> methods, you can add a large number of items to the <xref:Alternet.UI.ComboBox> without the control
+add items to the <xref:Alternet.UI.ComboBox> and to find text within the items of the list. With the <xref:Alternet.UI.AbstractControl.BeginUpdate>
+and <xref:Alternet.UI.AbstractControl.EndUpdate> methods, you can add a large number of items to the <xref:Alternet.UI.ComboBox> without the control
 being repainted each time an item is added to the list.
 
 You can use the <xref:Alternet.UI.ComboBox.Text> property to specify the string displayed in the editing field,
@@ -30,4 +30,4 @@ Examples of how a <xref:Alternet.UI.ComboBox> can look on different platforms:
 ***
 
 Set <xref:Alternet.UI.ComboBox.Text> property to specify the text displayed on the control.
-A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.

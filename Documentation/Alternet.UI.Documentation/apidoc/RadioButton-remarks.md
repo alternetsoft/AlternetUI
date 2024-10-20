@@ -25,4 +25,4 @@ Examples of how a <xref:Alternet.UI.RadioButton> can look on different platforms
 ***
 
 Set <xref:Alternet.UI.ButtonBase.Text> property to specify the text displayed on the control.
-A <xref:Alternet.UI.RadioButton>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+A <xref:Alternet.UI.RadioButton>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.

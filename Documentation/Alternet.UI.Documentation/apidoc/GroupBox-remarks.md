@@ -9,7 +9,7 @@ The typical use for a group box is to contain a logical group of <xref:Alternet.
 If you have two group boxes, each of which contains several option buttons (also known as radio buttons),
 each group of buttons is mutually exclusive, setting one option value per group.
 You can add controls to the <xref:Alternet.UI.GroupBox> by using the Add
-method of the <xref:Alternet.UI.Control.Children> property.
+method of the <xref:Alternet.UI.AbstractControl.Children> property.
 
 Examples of how a <xref:Alternet.UI.GroupBox> can look on different platforms:
 
@@ -21,4 +21,4 @@ Examples of how a <xref:Alternet.UI.GroupBox> can look on different platforms:
 ![GroupBox on Linux](images/groupbox-linux.png)
 ***
 
-Set <xref:Alternet.UI.Control.Title> property to specify the title text displayed on the control.
+Set <xref:Alternet.UI.AbstractControl.Title> property to specify the title text displayed on the control.

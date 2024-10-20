@@ -17,4 +17,4 @@ Examples of how a <xref:Alternet.UI.NumericUpDown> can look on different platfor
 ***
 
 Set <xref:Alternet.UI.NumericUpDown.Value> property to specify the value assigned to the spin box.
-A <xref:Alternet.UI.NumericUpDown>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+A <xref:Alternet.UI.NumericUpDown>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.

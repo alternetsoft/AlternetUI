@@ -19,4 +19,4 @@ Examples of how a <xref:Alternet.UI.ListView> can look on different platforms:
 ![ListView on Linux](images/listview-linux.png)
 ***
 
-A <xref:Alternet.UI.ListView>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+A <xref:Alternet.UI.ListView>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.

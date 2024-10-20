@@ -24,4 +24,4 @@ Examples of how a <xref:Alternet.UI.Slider> can look on different platforms:
 ***
 
 Set <xref:Alternet.UI.Slider.Value> property to represent the current position of the scroll box on the slider.
-A <xref:Alternet.UI.Slider>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+A <xref:Alternet.UI.Slider>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.

@@ -2,7 +2,7 @@
 uid: Alternet.UI.Grid
 remarks: *content
 ---
-A <xref:Alternet.UI.Grid> contains a collection of <xref:Alternet.UI.Control> objects, which are in the <xref:Alternet.UI.Control.Children> property.
+A <xref:Alternet.UI.Grid> contains a collection of <xref:Alternet.UI.Control> objects, which are in the <xref:Alternet.UI.AbstractControl.Children> property.
 
 Child controls of a <xref:Alternet.UI.Grid> are drawn in the order in which they appear in UIXML or code. As a consequence, layered order (also known as z-order) can be achieved when controls share the same coordinates.
 

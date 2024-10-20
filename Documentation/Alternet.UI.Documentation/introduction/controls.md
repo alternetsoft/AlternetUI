@@ -5,11 +5,11 @@ AlterNET UI provides a set of standard controls which use native API and look an
 Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:
 
 # [Windows](#tab/screenshot-windows)
-![ListBox on Windows](../apidoc/ListBox/images/listbox-windows.png)
+![ListBox on Windows](../apidoc/images/listbox-windows.png)
 # [macOS](#tab/screenshot-macos)
-![ListBox on macOS](../apidoc/ListBox/images/listbox-macos.png)
+![ListBox on macOS](../apidoc/images/listbox-macos.png)
 # [Linux](#tab/screenshot-linux)
-![ListBox on Linux](../apidoc/ListBox/images/listbox-linux.png)
+![ListBox on Linux](../apidoc/images/listbox-linux.png)
 ***
 
 AlterNET UI provides the following core controls:

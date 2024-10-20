@@ -19,4 +19,4 @@ Examples of how a <xref:Alternet.UI.Window> can look on different platforms:
 ![Window on Linux](images/window-linux.png)
 ***
 
-Set <xref:Alternet.UI.Control.Title> property to specify the title of this window.
+Set <xref:Alternet.UI.AbstractControl.Title> property to specify the title of this window.
