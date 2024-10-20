@@ -35,5 +35,10 @@ namespace Alternet.UI
         /// Element is focused.
         /// </summary>
         Focused,
+
+        /// <summary>
+        /// Element is selected.
+        /// </summary>
+        Selected,
     }
 }
