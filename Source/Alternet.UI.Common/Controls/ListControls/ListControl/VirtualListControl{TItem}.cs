@@ -964,16 +964,16 @@ namespace Alternet.UI
         /// <summary>
         /// Sets colors used in the control to the dark theme.
         /// </summary>
-        public void SetColorThemeToDark()
+        public virtual void SetColorThemeToDark()
         {
             BackgroundColor = (44, 44, 44);
-            ForegroundColor = (255, 255, 255);
+            ForegroundColor = (204, 204, 204);
 
             SelectedItemTextColor = (255, 255, 255);
             SelectedItemBackColor = (214, 117, 64);
             CurrentItemBorder ??= new();
             CurrentItemBorder.SetColor(Color.White);
-            ItemTextColor = (255, 255, 255);
+            ItemTextColor = (204, 204, 204);
         }
 
         /// <summary>
