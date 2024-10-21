@@ -120,7 +120,7 @@
 
         <StackPanel Margin="10,0,0,0">
           <CheckBox Text="No divider" Name="noDividerCheckBox" IsTextLocalized="true"
-              CheckedChanged="NoDividerCheckBox_Changed" IsChecked="True"
+              CheckedChanged="NoDividerCheckBox_Changed" IsChecked="False"
               Margin="5,5,0,5"/>
           <CheckBox Text="Vertical" Name="verticalCheckBox" IsTextLocalized="true"
               CheckedChanged="VerticalCheckBox_Changed"
