@@ -233,7 +233,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
-        public void SetColors(Color left, Color top, Color right, Color bottom)
+        public virtual void SetColors(Color left, Color top, Color right, Color bottom)
         {
             if (Normal.SetColors(left, top, right, bottom))
                 Refresh();
@@ -250,6 +250,35 @@ namespace Alternet.UI
         public override void DefaultPaint(Graphics dc, RectD rect)
         {
             DrawDefaultBackground(dc, rect);
+        }
+
+        /// <summary>
+        /// Sets visible borders. Changes border side widths depending on the paramer values.
+        /// </summary>
+        /// <param name="left">Whether left border side is visible.</param>
+        /// <param name="top">Whether top border side is visible.</param>
+        /// <param name="right">Whether right border side is visible.</param>
+        /// <param name="bottom">Whether bottom border side is visible.</param>
+        /// <param name="width">The width assigned to the border side
+        /// when side is visible.</param>
+        public virtual void SetVisibleBorders(
+            bool left,
+            bool top,
+            bool right,
+            bool bottom,
+            Coord? width = null)
+        {
+            width ??= BorderSideSettings.DefaultBorderWidth;
+
+            Normal.Width = (GetWidth(left), GetWidth(top), GetWidth(right), GetWidth(bottom));
+            HasBorder = left || top || right || bottom;
+
+            Coord GetWidth(bool visible)
+            {
+                return visible ? width.Value : 0;
+            }
+
+            Invalidate();
         }
 
         /// <summary>

@@ -13,9 +13,14 @@ namespace Alternet.UI
     /// </summary>
     public class BorderSideSettings : ImmutableObject
     {
+        /// <summary>
+        /// Gets or sets default border width. This value is used when border is creatded.
+        /// </summary>
+        public static Coord DefaultBorderWidth = 1;
+
         private Pen? pen;
         private Brush? brush;
-        private Coord width = 1;
+        private Coord width = DefaultBorderWidth;
         private Color? color;
         private bool incStartPoint;
         private bool decLength;

@@ -25,6 +25,11 @@ namespace Alternet.UI
         public static KnownTheme DefaultUseTheme = KnownTheme.Default;
 
         /// <summary>
+        /// Gets ot sets default value of <see cref="UseThemeForSticky"/> property.
+        /// </summary>
+        public static KnownTheme DefaultUseThemeForSticky = KnownTheme.StickyBorder;
+
+        /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.Default"/>.
@@ -37,6 +42,13 @@ namespace Alternet.UI
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StaticBorder"/>.
         /// </summary>
         public static ControlColorAndStyle StaticBorderTheme;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StickyBorder"/>.
+        /// </summary>
+        public static ControlColorAndStyle StickyBorderTheme;
 
         /// <summary>
         /// Gets or sets default color and style settings
@@ -78,16 +90,24 @@ namespace Alternet.UI
         private bool textVisible = false;
         private bool imageVisible = true;
         private KnownTheme useTheme = DefaultUseTheme;
+        private KnownTheme useThemeForSticky = DefaultUseThemeForSticky;
         private ControlColorAndStyle? customTheme;
         private bool isClickRepeated;
         private bool subscribedClickRepeated;
+        private VisualControlState stickyVisualState = VisualControlState.Normal;
 
         static SpeedButton()
         {
             InitThemeLight(DefaultTheme.Light);
             InitThemeDark(DefaultTheme.Dark);
+
             StaticBorderTheme = DefaultTheme.Clone();
             StaticBorderTheme.NormalBorderAsHovered();
+
+            StickyBorderTheme = DefaultTheme.Clone();
+            StickyBorderTheme.SetBorderFromBorder(VisualControlState.Normal, VisualControlState.Hovered);
+            StickyBorderTheme.SetBorderWidth(2);
+            StickyBorderTheme.SetBorderColor(ColorUtils.GetTabControlInteriorBorderColor());
         }
 
         /// <summary>
@@ -146,6 +166,11 @@ namespace Alternet.UI
             /// Theme <see cref="StaticBorderTheme"/> is used.
             /// </summary>
             StaticBorder,
+
+            /// <summary>
+            /// Theme <see cref="StickyBorderTheme"/> is used.
+            /// </summary>
+            StickyBorder,
         }
 
         /// <summary>
@@ -290,6 +315,21 @@ namespace Alternet.UI
                     UseTheme = KnownTheme.Default;
                 else
                     UseTheme = KnownTheme.None;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets color theme when <see cref="Sticky"/> is True.
+        /// </summary>
+        public virtual KnownTheme UseThemeForSticky
+        {
+            get => useThemeForSticky;
+            set
+            {
+                if (useThemeForSticky == value)
+                    return;
+                useThemeForSticky = value;
                 Invalidate();
             }
         }
@@ -529,6 +569,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets override for <see cref="VisualState"/> when <see cref="Sticky"/> is True.
+        /// </summary>
+        public VisualControlState StickyVisualStateOverride
+        {
+            get => stickyVisualState;
+            set
+            {
+                if (stickyVisualState == value)
+                    return;
+                stickyVisualState = value;
+                Invalidate();
+            }
+        }
+
         /// <inheritdoc/>
         [Browsable(false)]
         public override VisualControlState VisualState
@@ -540,7 +595,7 @@ namespace Alternet.UI
                 {
                     if (result == VisualControlState.Normal
                         || result == VisualControlState.Focused)
-                        result = VisualControlState.Pressed;
+                        result = StickyVisualStateOverride;
                 }
 
                 return result;
@@ -734,7 +789,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override ControlColorAndStyle? GetDefaultTheme()
         {
-            switch (UseTheme)
+            var theme = UseTheme;
+
+            if (Sticky)
+                theme = UseThemeForSticky;
+
+            switch (theme)
             {
                 case KnownTheme.None:
                     return null;
@@ -742,6 +802,8 @@ namespace Alternet.UI
                     return CustomTheme ?? DefaultCustomTheme;
                 case KnownTheme.StaticBorder:
                     return StaticBorderTheme;
+                case KnownTheme.StickyBorder:
+                    return StickyBorderTheme;
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;

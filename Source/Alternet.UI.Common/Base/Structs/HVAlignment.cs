@@ -139,39 +139,38 @@ namespace Alternet.UI
         /// <returns></returns>
         public static CoordAlignment NextValue(CoordAlignment alignment)
         {
-            if (IsLastValue(alignment))
+            if (EnumUtils.IsMaxValueUseLast(alignment))
                 return CoordAlignment.Near;
             return alignment + 1;
         }
 
-        public static bool IsLastValue(VerticalAlignment alignment)
+        /// <summary>
+        /// Returns this object with changed vertical alignment.
+        /// </summary>
+        /// <param name="value">New value for the alignment.</param>
+        /// <returns></returns>
+        public HVAlignment WithVertical(CoordAlignment value)
         {
-            return alignment == EnumUtils.GetMaxValueUseLast<VerticalAlignment>();
+            return new(Horizontal, (VerticalAlignment)value);
         }
 
-        public static bool IsLastValue(HorizontalAlignment alignment)
+        /// <summary>
+        /// Returns this object with changed horizontal alignment.
+        /// </summary>
+        /// <param name="value">New value for the alignment.</param>
+        /// <returns></returns>
+        public HVAlignment WithHorizontal(CoordAlignment value)
         {
-            return alignment == EnumUtils.GetMaxValueUseLast<HorizontalAlignment>();
+            return new((HorizontalAlignment)value, Vertical);
         }
 
-        public static bool IsLastValue(CoordAlignment alignment)
-        {
-            return alignment == EnumUtils.GetMaxValueUseLast<CoordAlignment>();
-        }
-
-        public HVAlignment WithVertical(CoordAlignment vertical)
-        {
-            return new(Horizontal, (VerticalAlignment)Vertical);
-        }
-
-        public HVAlignment WithHorizontal(CoordAlignment horizontal)
-        {
-            return new((HorizontalAlignment)horizontal, Vertical);
-        }
-
+        /// <summary>
+        /// Gets next alignment value by incrementing alignments.
+        /// </summary>
+        /// <returns></returns>
         public HVAlignment NextValue()
         {
-            if (IsLastValue(Horizontal))
+            if (EnumUtils.IsMaxValueUseLast(Horizontal))
             {
                 return new(
                     HorizontalAlignment.Left,

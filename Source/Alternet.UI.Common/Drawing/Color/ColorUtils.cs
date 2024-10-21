@@ -129,6 +129,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets default interior border color of the tab control as <see cref="LightDarkColor"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static LightDarkColor GetTabControlInteriorBorderColor()
+        {
+            return Color.LightDark(
+                GetTabControlInteriorBorderColor(false),
+                GetTabControlInteriorBorderColor(true));
+        }
+
+        /// <summary>
         /// Gets default interior border color of the tab control.
         /// </summary>
         /// <returns></returns>

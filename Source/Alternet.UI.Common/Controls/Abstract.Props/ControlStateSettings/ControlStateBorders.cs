@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -31,7 +33,36 @@ namespace Alternet.UI
             result.Pressed = Pressed;
             result.Disabled = Disabled;
             result.Focused = Focused;
+            result.Selected = Selected;
             return result;
+        }
+
+        /// <summary>
+        /// Sets color to all initialized borders.
+        /// </summary>
+        /// <param name="color">New color value.</param>
+        public virtual void SetColor(Color? color)
+        {
+            Normal?.SetColor(color);
+            Hovered?.SetColor(color);
+            Pressed?.SetColor(color);
+            Disabled?.SetColor(color);
+            Focused?.SetColor(color);
+            Selected?.SetColor(color);
+        }
+
+        /// <summary>
+        /// Sets width to all initialized borders.
+        /// </summary>
+        /// <param name="width">New width value.</param>
+        public virtual void SetWidth(Thickness width)
+        {
+            Normal?.SetWidth(width);
+            Hovered?.SetWidth(width);
+            Pressed?.SetWidth(width);
+            Disabled?.SetWidth(width);
+            Focused?.SetWidth(width);
+            Selected?.SetWidth(width);
         }
     }
 }

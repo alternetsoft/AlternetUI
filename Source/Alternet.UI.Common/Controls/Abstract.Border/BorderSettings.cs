@@ -443,7 +443,7 @@ namespace Alternet.UI
         /// Same as using <see cref="Color"/> property.
         /// </summary>
         /// <param name="value">New uniform border color.</param>
-        public void SetColor(Color value)
+        public void SetColor(Color? value)
         {
             Color = value;
         }
