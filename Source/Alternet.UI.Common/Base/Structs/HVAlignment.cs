@@ -17,6 +17,12 @@ namespace Alternet.UI
             = new(HorizontalAlignment.Center, VerticalAlignment.Center);
 
         /// <summary>
+        /// Gets <see cref="HVAlignment"/> with alignment set to top-left.
+        /// </summary>
+        public static readonly HVAlignment TopLeft
+            = new(HorizontalAlignment.Left, VerticalAlignment.Top);
+
+        /// <summary>
         /// Gets horizontal alignment.
         /// </summary>
         public readonly HorizontalAlignment Horizontal;
@@ -123,6 +129,58 @@ namespace Alternet.UI
             (HorizontalAlignment Horizontal, VerticalAlignment Vertical) value)
         {
             return new(value.Horizontal, value.Vertical);
+        }
+
+        /// <summary>
+        /// Returns next alignment or <see cref="CoordAlignment.Near"/> if
+        /// <paramref name="alignment"/> is maximal.
+        /// </summary>
+        /// <param name="alignment"></param>
+        /// <returns></returns>
+        public static CoordAlignment NextValue(CoordAlignment alignment)
+        {
+            if (IsLastValue(alignment))
+                return CoordAlignment.Near;
+            return alignment + 1;
+        }
+
+        public static bool IsLastValue(VerticalAlignment alignment)
+        {
+            return alignment == EnumUtils.GetMaxValueUseLast<VerticalAlignment>();
+        }
+
+        public static bool IsLastValue(HorizontalAlignment alignment)
+        {
+            return alignment == EnumUtils.GetMaxValueUseLast<HorizontalAlignment>();
+        }
+
+        public static bool IsLastValue(CoordAlignment alignment)
+        {
+            return alignment == EnumUtils.GetMaxValueUseLast<CoordAlignment>();
+        }
+
+        public HVAlignment WithVertical(CoordAlignment vertical)
+        {
+            return new(Horizontal, (VerticalAlignment)Vertical);
+        }
+
+        public HVAlignment WithHorizontal(CoordAlignment horizontal)
+        {
+            return new((HorizontalAlignment)horizontal, Vertical);
+        }
+
+        public HVAlignment NextValue()
+        {
+            if (IsLastValue(Horizontal))
+            {
+                return new(
+                    HorizontalAlignment.Left,
+                    (VerticalAlignment)NextValue((CoordAlignment)Vertical));
+            }
+
+            return new(
+                (HorizontalAlignment)NextValue((CoordAlignment)Horizontal),
+                Vertical);
         }
     }
 }
