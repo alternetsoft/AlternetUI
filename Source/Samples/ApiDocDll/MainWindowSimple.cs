@@ -12,7 +12,7 @@ namespace ApiDoc
     {
         public static bool AddBuildNumber = false;
 
-        private readonly InternalSamplesPage samplesPage = new();
+        private readonly ApiDocSamplesPage samplesPage = new();
 
         public MainWindowSimple()
         {

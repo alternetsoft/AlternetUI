@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public class CustomInternalSamplesPage : Control
+    public class ApiDocCustomSamplesPage : Control
     {
         private readonly VirtualListBox view = new()
         {
@@ -30,7 +30,7 @@ namespace Alternet.UI
 
         private Font? groupFont;
 
-        public CustomInternalSamplesPage()
+        public ApiDocCustomSamplesPage()
         {
             view.Parent = this;
             buttonPanel.Parent = this;

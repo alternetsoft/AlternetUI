@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace ApiDoc
 {
-    public partial class InternalSamplesPage : CustomInternalSamplesPage
+    public partial class ApiDocSamplesPage : ApiDocCustomSamplesPage
     {
         public void AddSample(Type type)
         {

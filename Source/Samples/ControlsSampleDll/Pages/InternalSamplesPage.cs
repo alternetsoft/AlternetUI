@@ -28,7 +28,7 @@ namespace ControlsSample
             Add("Preview File Sample", () => new PreviewSample.PreviewSampleWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.ExplorerMainWindow());
             Add("Printing Sample", () => new PrintingSample.PrintingMainWindow());
-            Add("Menu Sample", () => new MenuSample.MenuMainWindow());
+            Add("Menu and ToolBar Sample", () => new MenuSample.MenuMainWindow());
             Add("Mouse Input", () => new InputSample.MouseInputWindow());
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
             Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
