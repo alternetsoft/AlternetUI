@@ -114,7 +114,7 @@ namespace Alternet.UI
         {
             get
             {
-                return items ??= new ListControlItems<TItem>();
+                return SafeItems();
             }
 
             set
@@ -528,10 +528,30 @@ namespace Alternet.UI
         /// <see cref="SelectedIndex"/> property to <c>null</c>.
         /// You can use this method to quickly unselect all items in the list.
         /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void ClearSelected()
         {
             SelectedItem = default;
+        }
+
+        /// <summary>
+        /// Changes the number of elements in the <see cref="Items"/>.
+        /// </summary>
+        /// <param name="newCount">New number of elements.</param>
+        /// <param name="createItem">Function which creates new item.</param>
+        /// <remarks>
+        /// If collection has more items than specified in <paramref name="newCount"/>,
+        /// these items are removed. If collection has less items, new items are created
+        /// using <paramref name="createItem"/> function.
+        /// </remarks>
+        public virtual void SetCount(int newCount, Func<TItem> createItem)
+        {
+            var safeItems = SafeItems();
+            safeItems.SetCount(newCount, createItem);
+        }
+
+        private ListControlItems<TItem> SafeItems()
+        {
+            return items ??= new ListControlItems<TItem>();
         }
     }
 }

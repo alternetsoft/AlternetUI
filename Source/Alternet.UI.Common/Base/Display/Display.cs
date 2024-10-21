@@ -63,6 +63,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether it is suggested to use large images.
+        /// </summary>
+        public static bool SuggestedLargeImages
+        {
+            get
+            {
+                return MaxScaleFactor > SizeD.One.Width;
+            }
+        }
+
+        /// <summary>
         /// Maximal scale factor value for all displays.
         /// </summary>
         public static Coord MaxScaleFactor

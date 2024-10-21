@@ -229,7 +229,7 @@ namespace Alternet.Base.Collections
         /// these items are removed. If collection has less items, new items are created
         /// using <paramref name="createItem"/> function.
         /// </remarks>
-        public void SetCount(int newCount, Func<T> createItem)
+        public virtual void SetCount(int newCount, Func<T> createItem)
         {
             ListUtils.SetCount(this, newCount, createItem);
         }

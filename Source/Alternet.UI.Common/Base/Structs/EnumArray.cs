@@ -143,6 +143,25 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Converts each item by calling <paramref name="conversion"/> function.
+        /// </summary>
+        public void ConvertAllItems<T>(Func<TValue, T, TValue> conversion, T parameter)
+        {
+            for(int i = 0; i < Data.Length; i++)
+            {
+                Data[i] = conversion(Data[i], parameter);
+            }
+        }
+
+        public void ForEachKey(Action<TKey> action)
+        {
+            for (int i = 0; i < Data.Length; i++)
+            {
+                action((TKey)Enum.ToObject(typeof(TKey), i));
+            }
+        }
+
         [Conditional("DEBUG")]
         internal static void Test()
         {
