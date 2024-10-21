@@ -18,6 +18,13 @@ namespace Alternet.UI
         private bool immutable;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ImmutableObject"/> class.
+        /// </summary>
+        public ImmutableObject()
+        {
+        }
+
+        /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;

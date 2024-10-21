@@ -70,6 +70,29 @@ namespace ControlsSample
             };
 
             popup.Add("Log Information", Log);
+            popup.Add("Next Alignment", NextAligment);
+
+            atCenterCheckBox.CheckedChanged += (s, e) =>
+            {
+                if (atCenterCheckBox.IsChecked)
+                {
+                    toolTip.ToolTipPicture.Alignment = HVAlignment.Center;
+                }
+                else
+                {
+                    toolTip.ToolTipPicture.Alignment = HVAlignment.TopLeft;
+                }
+            };
+
+            otherSchemeCheckBox.IsEnabled = false;
+            otherSchemeCheckBox.CheckedChanged += (s, e) =>
+            {
+                var isDark = otherSchemeCheckBox.IsChecked? !IsDarkBackground : IsDarkBackground;
+
+                toolTip.BackgroundColor = isDark ? (44, 44, 44) : Color.White;
+                toolTip.HideToolTip();
+                ShowToolTipButton_Click(null, EventArgs.Empty);
+            };
         }
 
         private void ToolTipLabel_Click(object? sender, EventArgs e)
@@ -96,6 +119,11 @@ namespace ControlsSample
                 textBox.Text = text;
             else
                 textBox.Text = string.Empty;
+        }
+
+        internal void NextAligment()
+        {
+            toolTip.ToolTipPicture.Alignment = toolTip.ToolTipPicture.Alignment.NextValue();
         }
 
         internal void Log()
@@ -127,16 +155,15 @@ namespace ControlsSample
 
             if (otherSchemeCheckBox.IsChecked)
             {
-                bool isDark = this.IsDarkBackground;
-
-                LightDarkColor.DoInsideTempIsDarkOverride(!isDark, () =>
+                LightDarkColor.DoInsideTempIsDarkOverride(!IsDarkBackground, () =>
                 {
-                    toolTip.ResetToolTipColors();
                     PrivateShow();
                 });
             }
             else
+            {
                 PrivateShow();
+            }
         }
 
         private void LoadLargeImage()

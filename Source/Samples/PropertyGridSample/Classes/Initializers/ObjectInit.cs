@@ -124,8 +124,28 @@ namespace PropertyGridSample
             }
         }
 
+        public static void InitRichToolTip(RichToolTip control)
+        {
+            control.ShowToolTip(
+                "This is title",
+                "This is tooltip message",
+                MessageBoxIcon.Information,
+                0);
+        }
+
+        public static void AddAction<T>(Action<T> action)
+        {
+            Actions.Add(typeof(T), (o) =>
+            {
+                if (o is T tObject)
+                    action(tObject);
+            });
+        }
+
         static ObjectInit()
         {
+            AddAction<RichToolTip>(InitRichToolTip);
+
             Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
             Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
             Actions.Add(typeof(PrintDialog), InitPrintDialog);

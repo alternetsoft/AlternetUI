@@ -315,6 +315,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public virtual object NativeControl => this;
 
         /// <summary>
@@ -2044,6 +2045,7 @@ namespace Alternet.UI
         /// Gets or sets <see cref="ForegroundColor"/>, <see cref="BackgroundColor"/>
         /// and <see cref="Font"/> as single <see cref="IReadOnlyFontAndColor"/> object.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyFontAndColor AsFontAndColor
         {
             get
@@ -2077,6 +2079,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether this is control has handler to the platform control.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsPlatformControl => false;
 
         /// <summary>
