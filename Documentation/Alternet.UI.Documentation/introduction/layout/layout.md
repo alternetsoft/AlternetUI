@@ -31,7 +31,7 @@ A <xref:Alternet.UI.Label> control is hosted within a
 corner of the first column, the allocated space for the
 containing <xref:Alternet.UI.Border> is actually much larger. The bounding
 box of any <xref:Alternet.UI.Control> can be retrieved by using the
-<xref:Alternet.UI.Control.Bounds>
+<xref:Alternet.UI.AbstractControl.Bounds>
 method. The following illustration shows the bounding box for the
 <xref:Alternet.UI.Label> control.
 
@@ -54,9 +54,9 @@ by setting the <xref:Alternet.UI.Border.BorderColor> property.
 At its simplest, the layout is a recursive system that leads to control being
 sized, positioned, and drawn. More specifically, layout describes the process of
 measuring and arranging the members of a <xref:Alternet.UI.Control>'s
-<xref:Alternet.UI.Control.Children%2A> collection. The layout is
+<xref:Alternet.UI.AbstractControl.Children%2A> collection. The layout is
 an intensive process. The larger the
-<xref:Alternet.UI.Control.Children%2A> collection, the greater the
+<xref:Alternet.UI.AbstractControl.Children%2A> collection, the greater the
 number of calculations that must be made. Complexity can also be introduced
 based on the layout behavior defined by the <xref:Alternet.UI.Control>
 control that owns the collection. A relatively simple
@@ -73,32 +73,32 @@ describes the process that occurs when the layout system is invoked.
 
 1. A child <xref:Alternet.UI.Control> generally begins the layout process by first measuring itself
    by having its core sizing properties
-   evaluated, such as <xref:Alternet.UI.Control.Width%2A>, <xref:Alternet.UI.Control.SuggestedWidth%2A>,
-   <xref:Alternet.UI.Control.SuggestedHeight%2A>, 
-   <xref:Alternet.UI.Control.Height%2A>, and
-   <xref:Alternet.UI.Control.Margin%2A>.
+   evaluated, such as <xref:Alternet.UI.AbstractControl.Width%2A>, <xref:Alternet.UI.AbstractControl.SuggestedWidth%2A>,
+   <xref:Alternet.UI.AbstractControl.SuggestedHeight%2A>, 
+   <xref:Alternet.UI.AbstractControl.Height%2A>, and
+   <xref:Alternet.UI.AbstractControl.Margin%2A>.
 
-2. After that, a custom <xref:Alternet.UI.Control.GetPreferredSize%2A> implementation may change the desired control's size.
+2. After that, a custom <xref:Alternet.UI.AbstractControl.GetPreferredSize%2A> implementation may change the desired control's size.
 
-3. Layout using <xref:Alternet.UI.Control.Dock%2A> property.
+3. Layout using <xref:Alternet.UI.AbstractControl.Dock%2A> property.
 
 4. Layout <xref:Alternet.UI.Control>-specific logic is applied, such as
-   <xref:Alternet.UI.StackPanel>'s <xref:Alternet.UI.Control.OnLayout%2A> logic and its related properties,
+   <xref:Alternet.UI.StackPanel>'s <xref:Alternet.UI.AbstractControl.OnLayout%2A> logic and its related properties,
  such as <xref:Alternet.UI.StackPanel.Orientation%2A>.
 
 5. The control bounds are set after all children have been measured and laid out.
 
 6. The process is invoked again if additional
-   <xref:Alternet.UI.Control.Children%2A> are added to the collection, or
-   the <xref:Alternet.UI.Control.PerformLayout%2A> method is called.
+   <xref:Alternet.UI.AbstractControl.Children%2A> are added to the collection, or
+   the <xref:Alternet.UI.AbstractControl.PerformLayout%2A> method is called.
 
 ## Measuring and Positioning Children
 
 The layout system typically performs two operations for each member of the
-<xref:Alternet.UI.Control.Children%2A> collection, a measure and
+<xref:Alternet.UI.AbstractControl.Children%2A> collection, a measure and
 a layout. Each child <xref:Alternet.UI.Control> provides its
-own <xref:Alternet.UI.Control.GetPreferredSize%2A> and
-<xref:Alternet.UI.Control.OnLayout%2A> methods to achieve its
+own <xref:Alternet.UI.AbstractControl.GetPreferredSize%2A> and
+<xref:Alternet.UI.AbstractControl.OnLayout%2A> methods to achieve its
 own specific layout behavior.
 
 By default, a control provides a base measure and layout logic.
@@ -106,26 +106,26 @@ It considers several base control inputs to perform its operation.
 
 First, native size properties of the <xref:Alternet.UI.Control> are
 evaluated, such as
-<xref:Alternet.UI.Control.Visible%2A>.
+<xref:Alternet.UI.AbstractControl.Visible%2A>.
 Secondly, the properties which affect the value of the control's preferred size are processed. These properties
 generally describe the sizing characteristics of the underlying
 <xref:Alternet.UI.Control>, such as its
-<xref:Alternet.UI.Control.Height%2A>,
-<xref:Alternet.UI.Control.Width%2A>,
-<xref:Alternet.UI.Control.Margin%2A>,
-<xref:Alternet.UI.Control.Padding%2A>, <xref:Alternet.UI.Control.Layout%2A>,
-<xref:Alternet.UI.Control.Dock%2A>,
-<xref:Alternet.UI.Control.HorizontalAlignment%2A>, and
-<xref:Alternet.UI.Control.VerticalAlignment%2A>. Each of these properties can
+<xref:Alternet.UI.AbstractControl.Height%2A>,
+<xref:Alternet.UI.AbstractControl.Width%2A>,
+<xref:Alternet.UI.AbstractControl.Margin%2A>,
+<xref:Alternet.UI.AbstractControl.Padding%2A>, <xref:Alternet.UI.AbstractControl.Layout%2A>,
+<xref:Alternet.UI.AbstractControl.Dock%2A>,
+<xref:Alternet.UI.AbstractControl.HorizontalAlignment%2A>, and
+<xref:Alternet.UI.AbstractControl.VerticalAlignment%2A>. Each of these properties can
 change the space that is necessary to display the control.
 
 The ultimate goal of the measurement process is for the child to determine its preferred size, which occurs during the
-<xref:Alternet.UI.Control.GetPreferredSize%2A> call.
+<xref:Alternet.UI.AbstractControl.GetPreferredSize%2A> call.
 
 During the layout process, the
 parent <xref:Alternet.UI.Control> control generates a rectangle that
 represents the bounds of the child. This value is set to the
-<xref:Alternet.UI.Control.Bounds%2A> property.
+<xref:Alternet.UI.AbstractControl.Bounds%2A> property.
 
 The layout logic evaluates the
 preferred size of the child and evaluates any
@@ -158,13 +158,13 @@ For applications that require a layout that is not possible by using any of the
 predefined controls, custom layout
 behaviors can be achieved using one of these approaches:
 
-- Set <xref:Alternet.UI.Control.Layout%2A> property.
+- Set <xref:Alternet.UI.AbstractControl.Layout%2A> property.
 
 - Inherit from <xref:Alternet.UI.Control> and override the
-<xref:Alternet.UI.Control.GetPreferredSize%2A> and
-<xref:Alternet.UI.Control.OnLayout%2A> methods.
+<xref:Alternet.UI.AbstractControl.GetPreferredSize%2A> and
+<xref:Alternet.UI.AbstractControl.OnLayout%2A> methods.
 
-- Implement <xref:Alternet.UI.Control.CustomLayout> event handler.
+- Implement <xref:Alternet.UI.AbstractControl.CustomLayout> event handler.
 
-- Implement <xref:Alternet.UI.Control.GlobalOnLayout>
- and/or <xref:Alternet.UI.Control.GlobalGetPreferredSize> event handlers.
+- Implement <xref:Alternet.UI.AbstractControl.GlobalOnLayout>
+ and/or <xref:Alternet.UI.AbstractControl.GlobalGetPreferredSize> event handlers.

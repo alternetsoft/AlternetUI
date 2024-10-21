@@ -35,6 +35,8 @@
                     Margin="0,0,0,5" IsTextLocalized="true"/>
           <Label Text="Find Text" Margin="0,0,0,5" IsTextLocalized="true"/>
           <TextBox Name="findText" Margin="0,0,0,5" IsTextLocalized="true"/>
+          <CheckBox Text="Use other color theme" Name="otherThemeCheckBox"
+                    Margin="0,0,0,5" IsTextLocalized="true" IsEnabled="false"/>
         </StackPanel>
       </StackPanel>
 </Control>

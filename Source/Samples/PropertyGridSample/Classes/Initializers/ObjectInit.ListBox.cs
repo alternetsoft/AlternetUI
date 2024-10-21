@@ -32,6 +32,9 @@ namespace PropertyGridSample
             item.Alignment = GenericAlignment.CenterRight;
             item.FontStyle = FontStyle.Bold;
             item.MinHeight = control.PixelToDip(imageSize);
+            item.SvgImage = KnownSvgImages.ImgBold;
+            item.SvgImageSize = imageSize;
+/*
             item.Image = KnownSvgImages.ImgBold.AsNormalImage(imageSize, control.IsDarkBackground);
             item.SelectedImage =
                 KnownSvgImages.ImgBold.AsImageSet(
@@ -40,13 +43,14 @@ namespace PropertyGridSample
                     control.IsDarkBackground)?.AsImage();
             item.DisabledImage =
                 KnownSvgImages.ImgBold.AsDisabledImage(imageSize, control.IsDarkBackground);
+*/
             addAction(item);
 
             item = new();
             item.Alignment = GenericAlignment.Center;
             item.Image = new Bitmap(CalendarUrl);
             item.CheckState = CheckState.Indeterminate;
-            item.DisabledImage = item!.Image.ToGrayScale();
+            item.DisabledImage = item.Image?.ToGrayScale();
             item.ForegroundColor = Color.Green;
             item.BackgroundColor = Color.Lavender;
             item.Text = "Green item at center";

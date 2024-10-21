@@ -149,15 +149,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets <see cref="Graphics"/> for the <see cref="Image"/> on which
-        /// you can paint.
+        /// you can paint. If <see cref="Image"/> is null returns dummy canvas.
         /// </summary>
         [Browsable(false)]
         public virtual Graphics Canvas
         {
             get
             {
-                return Image?.GetDrawingContext()
-                    ?? GraphicsFactory.GetOrCreateMemoryCanvas(ScaleFactor);
+                return Image?.GetDrawingContext() ?? MeasureCanvas;
             }
         }
 
@@ -316,8 +315,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="icon">Icon index to set.</param>
         /// <param name="size">Svg image size.</param>
-        public virtual void SetIcon(MessageBoxIcon icon, int size)
+        public virtual bool SetIcon(MessageBoxIcon icon, int size)
         {
+            bool hasImage = false;
+
             DoInsideLayout(() =>
             {
                 if(StateObjects != null)
@@ -325,7 +326,10 @@ namespace Alternet.UI
                 var svg = MessageBoxSvg.GetImage(icon);
                 var iconImage = svg?.AsNormal(size, IsDarkBackground);
                 ImageSet = iconImage;
+                hasImage = iconImage != null;
             });
+
+            return hasImage;
         }
 
         /// <summary>

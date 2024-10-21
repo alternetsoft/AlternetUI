@@ -53,7 +53,10 @@ namespace MenuSample
 
             InitializeComponent();
 
-            noDividerCheckBox.Enabled = false;
+            noDividerCheckBox.Enabled = true;
+            noDividerCheckBox.IsChecked = false;
+            toolbar.SetVisibleBorders(false, false, false, true);
+
             verticalCheckBox.Enabled = false;
             isRightCheckBox.Enabled = false;
             isBottomCheckBox.Enabled = false;
@@ -464,8 +467,17 @@ namespace MenuSample
 
         private void NoDividerCheckBox_Changed(object? sender, EventArgs e)
         {
-            /*if (toolbar != null)
-                toolbar.NoDivider = noDividerCheckBox.IsChecked;*/
+            if (toolbar is null)
+                return;
+
+            if (noDividerCheckBox.IsChecked)
+            {
+                toolbar.HasBorder = false;
+            }
+            else
+            {
+                toolbar.SetVisibleBorders(false, false, false, true);
+            }
         }
 
         private void VerticalCheckBox_Changed(object? sender, EventArgs e)

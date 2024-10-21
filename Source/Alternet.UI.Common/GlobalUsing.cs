@@ -1,4 +1,7 @@
-﻿namespace Alternet.UI.Internal
+﻿global using EnumArrayStateImages
+    = Alternet.UI.EnumArray<Alternet.UI.VisualControlState, Alternet.Drawing.Image?>;
+
+namespace Alternet.UI.Internal
 {
 }
 

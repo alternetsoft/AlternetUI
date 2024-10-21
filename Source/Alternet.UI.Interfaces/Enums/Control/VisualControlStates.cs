@@ -7,30 +7,35 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines visual states of the control as flags.
+    /// Defines visual states of the element as flags.
     /// Supports a bitwise combination of its member values.
     /// </summary>
     [Flags]
     public enum VisualControlStates
     {
         /// <summary>
-        /// Mouse is over the control.
+        /// Mouse is over the element.
         /// </summary>
         Hovered = 1,
 
         /// <summary>
-        /// The left mouse button was clicked on the control and not yet released.
+        /// The left mouse button was clicked on the element and not yet released.
         /// </summary>
         Pressed = 2,
 
         /// <summary>
-        /// Control is disabled.
+        /// Element is disabled.
         /// </summary>
         Disabled = 4,
 
         /// <summary>
-        /// Control is focused.
+        /// Element is focused.
         /// </summary>
         Focused = 8,
+
+        /// <summary>
+        /// Element is selected.
+        /// </summary>
+        Selected = 16,
     }
 }

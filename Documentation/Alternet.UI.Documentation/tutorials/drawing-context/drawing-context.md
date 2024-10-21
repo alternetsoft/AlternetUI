@@ -12,9 +12,9 @@ This tutorial will teach you how to create a custom <xref:Alternet.UI.Control>, 
 1. Open `MainWindow.uixml`. Add the reference to the local namespace, and add a `DrawingControl` to the window:
    [!code-xml[](examples/DrawingContextTutorial/MainWindow.uixml?highlight=5,6)]
 1. Compile and run the application. An empty window will appear. This is because `DrawingControl` does not paint itself yet.
-1. In the `DrawingControl` class, add a default constructor. In its body, set <xref:Alternet.UI.Control.UserPaint> 
+1. In the `DrawingControl` class, add a default constructor. In its body, set <xref:Alternet.UI.AbstractControl.UserPaint> 
 property to `true`. Also,
-   override the <xref:Alternet.UI.Control.OnPaint*> method:
+   override the <xref:Alternet.UI.AbstractControl.OnPaint*> method:
    [!code-csharp[](examples/DrawingContextTutorial/DrawingControl-Step2.cs?highlight=10,13-15)]
 1. In the overridden `OnPaint` method, add the following
    <xref:Alternet.Drawing.Graphics.FillRectangle*?text=Graphics.FillRectangle> call to

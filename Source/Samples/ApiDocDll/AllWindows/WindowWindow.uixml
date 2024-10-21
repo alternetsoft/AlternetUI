@@ -1,0 +1,7 @@
+<!-- <CreateUixmlDeclaration> -->
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.WindowWindow"
+        Title="Window" Name="window">
+</Window>
+<!-- </CreateUixmlDeclaration> -->

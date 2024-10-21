@@ -427,6 +427,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets all fields to 0 if <paramref name="reset"/> is True.
+        /// </summary>
+        /// <param name="reset"></param>
+        public void Reset(bool reset = true)
+        {
+            if (!reset)
+                return;
+            left = 0;
+            top = 0;
+            right = 0;
+            bottom = 0;
+        }
+
+        /// <summary>
         /// Apply minimal limits to all the fields of the
         /// <see cref="Thickness"/> instance.
         /// </summary>

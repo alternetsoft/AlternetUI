@@ -14,6 +14,7 @@ namespace Alternet.UI
         private T? pressed;
         private T? disabled;
         private T? focused;
+        private T? selected;
 
         /// <summary>
         /// Occurs when <see cref="Normal"/> property changes.
@@ -39,6 +40,11 @@ namespace Alternet.UI
         /// Occurs when <see cref="Disabled"/> property changes.
         /// </summary>
         public event EventHandler? DisabledChanged;
+
+        /// <summary>
+        /// Occurs when <see cref="Disabled"/> property changes.
+        /// </summary>
+        public event EventHandler? SelectedChanged;
 
         /// <summary>
         /// Gets or sets <see cref="IControlStateObjectChanged"/> object
@@ -72,6 +78,11 @@ namespace Alternet.UI
         public bool HasFocused => focused != null;
 
         /// <summary>
+        /// Gets whether <see cref="Selected"/> property is assigned.
+        /// </summary>
+        public bool HasSelected => selected != null;
+
+        /// <summary>
         /// Gets or sets an object for normal control state.
         /// </summary>
         public virtual T? Normal
@@ -90,6 +101,15 @@ namespace Alternet.UI
         {
             get => focused;
             set => SetProperty(ref focused, value, nameof(Focused), RaiseFocusedChanged);
+        }
+
+        /// <summary>
+        /// Gets or sets an object for selected control state.
+        /// </summary>
+        public virtual T? Selected
+        {
+            get => selected;
+            set => SetProperty(ref selected, value, nameof(Selected), RaiseSelectedChanged);
         }
 
         /// <summary>
@@ -127,7 +147,7 @@ namespace Alternet.UI
             get
             {
                 return (disabled is not null) || (hovered is not null) || (pressed is not null)
-                    || (focused is not null);
+                    || (focused is not null) || (selected is not null);
             }
         }
 
@@ -146,6 +166,19 @@ namespace Alternet.UI
         public virtual T? GetObjectOrNormal(VisualControlState state)
         {
             return GetObjectOrNull(state) ?? normal;
+        }
+
+        /// <summary>
+        /// Sets value from one state to another.
+        /// </summary>
+        /// <param name="stateToChange">The state to change.</param>
+        /// <param name="assignFromState">The state to get value from.</param>
+        public virtual void SetStateFromState(
+            VisualControlState stateToChange,
+            VisualControlState assignFromState)
+        {
+            var value = GetObjectOrNull(assignFromState);
+            SetObject(value, stateToChange);
         }
 
         /// <summary>
@@ -172,6 +205,9 @@ namespace Alternet.UI
                 case VisualControlState.Focused:
                     Focused = value;
                     return;
+                case VisualControlState.Selected:
+                    Selected = value;
+                    return;
                 default:
                     return;
             }
@@ -190,6 +226,7 @@ namespace Alternet.UI
                 Pressed = default;
                 Disabled = default;
                 Focused = default;
+                Selected = default;
             }
             else
             {
@@ -198,6 +235,7 @@ namespace Alternet.UI
                 Pressed = source.Pressed;
                 Disabled = source.Disabled;
                 Focused = source.Focused;
+                Selected = source.Selected;
             }
         }
 
@@ -250,35 +288,60 @@ namespace Alternet.UI
                 VisualControlState.Pressed => pressed,
                 VisualControlState.Disabled => disabled,
                 VisualControlState.Focused => focused,
+                VisualControlState.Selected => selected,
                 _ => normal,
             };
         }
 
-        private void RaiseNormalChanged()
+        /// <summary>
+        /// Raises <see cref="NormalChanged"/> event.
+        /// </summary>
+        public void RaiseNormalChanged()
         {
             NormalChanged?.Invoke(this, EventArgs.Empty);
             ChangedHandler?.NormalChanged(this);
         }
 
-        private void RaiseFocusedChanged()
+        /// <summary>
+        /// Raises <see cref="FocusedChanged"/> event.
+        /// </summary>
+        public void RaiseFocusedChanged()
         {
             FocusedChanged?.Invoke(this, EventArgs.Empty);
             ChangedHandler?.FocusedChanged(this);
         }
 
-        private void RaiseHoveredChanged()
+        /// <summary>
+        /// Raises <see cref="HoveredChanged"/> event.
+        /// </summary>
+        public void RaiseHoveredChanged()
         {
             HoveredChanged?.Invoke(this, EventArgs.Empty);
             ChangedHandler?.HoveredChanged(this);
         }
 
-        private void RaisePressedChanged()
+        /// <summary>
+        /// Raises <see cref="PressedChanged"/> event.
+        /// </summary>
+        public void RaisePressedChanged()
         {
             PressedChanged?.Invoke(this, EventArgs.Empty);
             ChangedHandler?.PressedChanged(this);
         }
 
-        private void RaiseDisabledChanged()
+        /// <summary>
+        /// Raises <see cref="SelectedChanged"/> event.
+        /// </summary>
+        public void RaiseSelectedChanged()
+        {
+            SelectedChanged?.Invoke(this, EventArgs.Empty);
+            ChangedHandler?.SelectedChanged(this);
+        }
+
+        /// <summary>
+        /// Raises <see cref="DisabledChanged"/> event.
+        /// </summary>
+        public void RaiseDisabledChanged()
         {
             DisabledChanged?.Invoke(this, EventArgs.Empty);
             ChangedHandler?.DisabledChanged(this);

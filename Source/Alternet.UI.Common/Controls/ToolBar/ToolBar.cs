@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Implements generic toolbar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class ToolBar : Control
+    public partial class ToolBar : Border
     {
         private Coord itemSize;
         private bool textVisible = false;
@@ -40,6 +40,7 @@ namespace Alternet.UI
         /// </summary>
         public ToolBar()
         {
+            HasBorder = false;
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
             IsGraphicControl = true;
@@ -679,64 +680,10 @@ namespace Alternet.UI
         /// </summary>
         public virtual ObjectUniqueId AddSpeedBtn(KnownButton button, EventHandler? action = null)
         {
-            var strings = CommonStrings.Default;
+            var info = KnownButtons.GetInfo(button);
 
-            switch (button)
-            {
-                case KnownButton.OK:
-                default:
-                    return AddSpeedBtn(strings.ButtonOk, KnownSvgImages.ImgOk, action);
-                case KnownButton.Cancel:
-                    return AddSpeedBtn(strings.ButtonCancel, KnownSvgImages.ImgCancel, action);
-                case KnownButton.Yes:
-                    return AddSpeedBtn(strings.ButtonYes, KnownSvgImages.ImgYes, action);
-                case KnownButton.No:
-                    return AddSpeedBtn(strings.ButtonNo, KnownSvgImages.ImgNo, action);
-                case KnownButton.Abort:
-                    return AddSpeedBtn(strings.ButtonAbort, KnownSvgImages.ImgAbort, action);
-                case KnownButton.Retry:
-                    return AddSpeedBtn(strings.ButtonRetry, KnownSvgImages.ImgRetry, action);
-                case KnownButton.Ignore:
-                    return AddSpeedBtn(strings.ButtonIgnore, KnownSvgImages.ImgIgnore, action);
-                case KnownButton.Help:
-                    return AddSpeedBtn(strings.ButtonHelp, KnownSvgImages.ImgHelp, action);
-                case KnownButton.Add:
-                    return AddSpeedBtn(strings.ButtonAdd, KnownSvgImages.ImgAdd, action);
-                case KnownButton.Remove:
-                    return AddSpeedBtn(strings.ButtonRemove, KnownSvgImages.ImgRemove, action);
-                case KnownButton.Clear:
-                    return AddSpeedBtn(strings.ButtonClear, KnownSvgImages.ImgRemoveAll, action);
-                case KnownButton.AddChild:
-                    return AddSpeedBtn(strings.ButtonAddChild, KnownSvgImages.ImgAddChild, action);
-                case KnownButton.MoreItems:
-                    return AddSpeedBtn(strings.ToolbarSeeMore, KnownSvgImages.ImgMoreActionsHorz, action);
-                case KnownButton.New:
-                    return AddSpeedBtn(strings.ButtonNew, KnownSvgImages.ImgFileNew, action);
-                case KnownButton.Open:
-                    return AddSpeedBtn(strings.ButtonOpen, KnownSvgImages.ImgFileOpen, action);
-                case KnownButton.Save:
-                    return AddSpeedBtn(strings.ButtonSave, KnownSvgImages.ImgFileSave, action);
-                case KnownButton.Undo:
-                    return AddSpeedBtn(strings.ButtonUndo, KnownSvgImages.ImgUndo, action);
-                case KnownButton.Redo:
-                    return AddSpeedBtn(strings.ButtonRedo, KnownSvgImages.ImgRedo, action);
-                case KnownButton.Bold:
-                    return AddSpeedBtn(strings.ButtonBold, KnownSvgImages.ImgBold, action);
-                case KnownButton.Italic:
-                    return AddSpeedBtn(strings.ButtonItalic, KnownSvgImages.ImgItalic, action);
-                case KnownButton.Underline:
-                    return AddSpeedBtn(strings.ButtonUnderline, KnownSvgImages.ImgUnderline, action);
-                case KnownButton.Back:
-                    return AddSpeedBtn(strings.ButtonBack, KnownSvgImages.ImgBrowserBack, action);
-                case KnownButton.Forward:
-                    return AddSpeedBtn(strings.ButtonForward, KnownSvgImages.ImgBrowserForward, action);
-                case KnownButton.ZoomIn:
-                    return AddSpeedBtn(strings.ButtonZoomIn, KnownSvgImages.ImgZoomIn, action);
-                case KnownButton.ZoomOut:
-                    return AddSpeedBtn(strings.ButtonZoomOut, KnownSvgImages.ImgZoomOut, action);
-                case KnownButton.BrowserGo:
-                    return AddSpeedBtn(strings.ButtonGo, KnownSvgImages.ImgBrowserGo, action);
-            }
+            var result = AddSpeedBtn(info?.Text?.SafeToString(), info?.SvgImage, action);
+            return result;
         }
 
         /// <summary>

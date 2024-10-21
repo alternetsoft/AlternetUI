@@ -37,6 +37,15 @@ namespace ControlsSample
 
             SetSizeToContent();
             listBox.CheckedChanged += ListBox_CheckedChanged;
+
+            otherThemeCheckBox.CheckedChanged += (s, e) =>
+            {
+                if (otherThemeCheckBox.IsChecked)
+                    LightDarkColor.IsDarkOverride = !IsDarkBackground;
+                else
+                    LightDarkColor.IsDarkOverride = null;
+                listBox.Invalidate();
+            };
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)

@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.NumericUpDownWindow"
+        Title="Examples.NumericUpDown">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <NumericUpDown Name="numericUpDown" Margin="8" Minimum="50" Maximum="200" Value="125" ValueChanged="NumericUpDown_ValueChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

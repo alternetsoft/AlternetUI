@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines visual states of the control.
+    /// Defines visual states of the element.
     /// </summary>
     public enum VisualControlState
     {
@@ -17,23 +17,28 @@ namespace Alternet.UI
         Normal,
 
         /// <summary>
-        /// Mouse is over the control.
+        /// Mouse is over the element.
         /// </summary>
         Hovered,
 
         /// <summary>
-        /// The left mouse button was clicked on the control and not yet released.
+        /// The left mouse button was clicked on the element and not yet released.
         /// </summary>
         Pressed,
 
         /// <summary>
-        /// Control is disabled.
+        /// Element is disabled.
         /// </summary>
         Disabled,
 
         /// <summary>
-        /// Control is focused.
+        /// Element is focused.
         /// </summary>
         Focused,
+
+        /// <summary>
+        /// Element is selected.
+        /// </summary>
+        Selected,
     }
 }

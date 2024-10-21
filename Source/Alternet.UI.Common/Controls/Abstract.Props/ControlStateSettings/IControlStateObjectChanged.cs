@@ -40,5 +40,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender.</param>
         void PressedChanged(object? sender);
+
+        /// <summary>
+        /// 'Selected' state properties are changed.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        void SelectedChanged(object? sender);
     }
 }

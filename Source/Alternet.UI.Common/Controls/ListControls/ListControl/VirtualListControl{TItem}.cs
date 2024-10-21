@@ -29,22 +29,26 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default selected item text color.
         /// </summary>
-        public static Color DefaultSelectedItemTextColor = SystemColors.HighlightText;
+        public static Color DefaultSelectedItemTextColor
+            = Color.LightDark(SystemColors.HighlightText);
 
         /// <summary>
         /// Gets or sets default selected item background color.
         /// </summary>
-        public static Color DefaultSelectedItemBackColor = SystemColors.Highlight;
+        public static Color DefaultSelectedItemBackColor
+            = Color.LightDark(SystemColors.Highlight);
 
         /// <summary>
         /// Gets or sets default disabled item text color.
         /// </summary>
-        public static Color DefaultDisabledItemTextColor = SystemColors.GrayText;
+        public static Color DefaultDisabledItemTextColor
+            = Color.LightDark(SystemColors.GrayText);
 
         /// <summary>
         /// Gets or sets default item text color.
         /// </summary>
-        public static Color DefaultItemTextColor = SystemColors.WindowText;
+        public static Color DefaultItemTextColor
+            = Color.LightDark(SystemColors.WindowText);
 
         /// <summary>
         /// Gets or sets default border color for the current item.
@@ -635,7 +639,12 @@ namespace Alternet.UI
             if (string.IsNullOrEmpty(s))
                 s = "Wy";
 
-            var (normal, disabled, selected) = GetItemImages(itemIndex, null);
+            var itemImages = GetItemImages(itemIndex, null);
+
+            var normal = itemImages[VisualControlState.Normal];
+            var disabled = itemImages[VisualControlState.Disabled];
+            var selected = itemImages[VisualControlState.Selected];
+
             var maxHeightI =
                 MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
             var maxHeightD = PixelToDip(maxHeightI);
@@ -895,8 +904,7 @@ namespace Alternet.UI
         /// <param name="itemIndex">Index of the item.</param>
         /// <param name="svgColor">Color of the svg image when item is selected.</param>
         /// <returns></returns>
-        public (Image? Normal, Image? Disabled, Image? Selected)
-            GetItemImages(int itemIndex, Color? svgColor)
+        public EnumArrayStateImages GetItemImages(int itemIndex, Color? svgColor)
         {
             return ListControlItem.GetItemImages(SafeItem(itemIndex), this, svgColor);
         }
@@ -954,6 +962,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets colors used in the control to the dark theme.
+        /// </summary>
+        public virtual void SetColorThemeToDark()
+        {
+            BackgroundColor = (44, 44, 44);
+            ForegroundColor = (204, 204, 204);
+
+            SelectedItemTextColor = (255, 255, 255);
+            SelectedItemBackColor = (214, 117, 64);
+            CurrentItemBorder ??= new();
+            CurrentItemBorder.SetColor(Color.White);
+            ItemTextColor = (204, 204, 204);
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the default theme.
+        /// </summary>
+        public virtual void SetColorThemeToDefault()
+        {
+            BackgroundColor = null;
+            ForegroundColor = null;
+
+            SelectedItemTextColor = null;
+            SelectedItemBackColor = null;
+            CurrentItemBorder?.SetColor(VirtualListBox.DefaultCurrentItemBorderColor);
+            ItemTextColor = null;
+        }
+
+        /// <summary>
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
@@ -972,6 +1009,11 @@ namespace Alternet.UI
                 ListControlItem.DefaultDrawForeground(this, e);
             else
                 item.DrawForeground(this, e);
+        }
+
+        int IListControlItemContainer.GetItemCount()
+        {
+            return Items.Count;
         }
 
         internal ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)

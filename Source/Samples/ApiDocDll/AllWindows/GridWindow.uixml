@@ -1,0 +1,29 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.GridWindow"
+        Title="Examples.Grid">
+    <!-- <CreateUixmlDeclaration> -->
+  <Grid Name="grid" Margin="16,16,16,246">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+
+    <Label Grid.ColumnSpan="3" Grid.Row="0" Text="2021 Products Shipped"/>
+    <Label Grid.Row="1" Grid.Column="0" Text="Quarter 1"/>
+    <Label Grid.Row="1" Grid.Column="1" Text="Quarter 2"/>
+    <Label Grid.Row="1" Grid.Column="2" Text="Quarter 3"/>
+    <Label Grid.Row="2" Grid.Column="0" Text="50000"/>
+    <Label Grid.Row="2" Grid.Column="1" Text="100000"/>
+    <Label Grid.Row="2" Grid.Column="2" Text="150000"/>
+    <Label Grid.ColumnSpan="3" Grid.Row="3" Text="Total Units: 300000"/>
+  </Grid>
+    <!-- </CreateUixmlDeclaration> -->
+</Window>

@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.ComboBoxWindow"
+        Title="ComboBox">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <ComboBox Name="comboBox" Margin="8" IsEditable="false" VerticalAlignment="Top" HorizontalAlignment="Left"
+              SelectedItemChanged="ComboBox_SelectedItemChanged" TextChanged="ComboBox_TextChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

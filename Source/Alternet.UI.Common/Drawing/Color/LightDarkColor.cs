@@ -42,6 +42,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether dark or light color is returned.
+        /// </summary>
+        public static bool IsUsingDarkColor
+        {
+            get
+            {
+                return IsDarkOverride ?? SystemSettings.IsUsingDarkBackground;
+            }
+        }
+
+        /// <summary>
         /// Gets dark color.
         /// </summary>
         public Color Dark => dark;
@@ -50,6 +61,15 @@ namespace Alternet.Drawing
         /// Gets light color.
         /// </summary>
         public Color Light => light;
+
+        /// <inheritdoc/>
+        public override string DebugString
+        {
+            get
+            {
+                return $"(IsUsingDarkColor: {IsUsingDarkColor}, Light: {Light.ARGBWeb}, Dark: {Dark.ARGBWeb})";
+            }
+        }
 
         /// <summary>
         /// Calls the specified action inside the block which temporary changes
@@ -75,9 +95,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void RequireArgb(ref ColorStruct val)
         {
-            var appearanceIsDark = IsDarkOverride ?? SystemSettings.IsUsingDarkBackground;
-
-            if (appearanceIsDark)
+            if (IsUsingDarkColor)
                 val = dark.AsStruct;
             else
                 val = light.AsStruct;

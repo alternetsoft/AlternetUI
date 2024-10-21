@@ -1,0 +1,17 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.TabControlWindow"
+        Title="Examples.TabControl">
+  <StackPanel Orientation="Vertical" Name="mainPanel">
+    <!-- <CreateUixmlDeclaration> -->
+    <TabControl SuggestedHeight="150" Name="tabControl" Margin="8">
+      <TabPage Title="Page 1"></TabPage>
+      <TabPage Title="Page 2"></TabPage>
+      <TabPage Title="Page 3"></TabPage>
+      <TabPage Title="Page 4"></TabPage>
+      <TabPage Title="Page 5"></TabPage>
+    </TabControl>
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

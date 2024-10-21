@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -71,6 +73,38 @@ namespace Alternet.UI
                 return dark;
             else
                 return Light;
+        }
+
+        /// <summary>
+        /// Sets border color to all initialized borders.
+        /// </summary>
+        /// <param name="color">New color value</param>
+        public virtual void SetBorderColor(Color? color)
+        {
+            Dark?.Borders?.SetColor(color);
+            Light?.Borders?.SetColor(color);
+        }
+
+        /// <summary>
+        /// Sets border width to all initialized borders.
+        /// </summary>
+        /// <param name="width">New border width.</param>
+        public virtual void SetBorderWidth(Thickness width)
+        {
+            Dark?.Borders?.SetWidth(width);
+            Light?.Borders?.SetWidth(width);
+        }
+
+        /// <summary>
+        /// Sets border in the <paramref name="stateToChange"/> state to be equal
+        /// to the border in the <paramref name="assignFromState"/> state.
+        /// </summary>
+        public virtual void SetBorderFromBorder(
+            VisualControlState stateToChange,
+            VisualControlState assignFromState)
+        {
+            Dark?.Borders?.SetStateFromState(stateToChange, assignFromState);
+            Light?.Borders?.SetStateFromState(stateToChange, assignFromState);
         }
 
         /// <summary>

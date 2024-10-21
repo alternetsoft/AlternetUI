@@ -229,7 +229,7 @@ namespace Alternet.UI
         /// Shows previously configured tooltip at the specified location in client coordinates
         /// of the tooltip container.
         /// </summary>
-        /// <param name="location">Location of the tooltip.</param>
+        /// <param name="location">Location of the tooltip. Optional.</param>
         /// <returns></returns>
         IRichToolTip ShowToolTip(PointD? location = null);
 
@@ -239,6 +239,6 @@ namespace Alternet.UI
         /// <param name="icon">The tooltip image specified
         /// using <see cref="MessageBoxIcon"/> enum.</param>
         /// <returns></returns>
-        IRichToolTip SetIcon(MessageBoxIcon icon);
+        IRichToolTip SetIcon(MessageBoxIcon? icon);
     }
 }

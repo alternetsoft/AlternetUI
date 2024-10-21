@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.TextBoxWindow"
+        Title="Examples.TextBox">
+  <StackPanel Orientation="Vertical" Name="mainPanel">
+    <!-- <CreateUixmlDeclaration> -->
+    <TextBox Name="textBox" Text="Text 1.1" Margin="10" TextChanged="TextBox_TextChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

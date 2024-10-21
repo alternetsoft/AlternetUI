@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -18,6 +19,10 @@ namespace Alternet.UI
         /// Array with data.
         /// </summary>
         public TValue[] Data;
+
+        static EnumArray()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumArray{TKey, TValue}"/> struct.
@@ -54,7 +59,7 @@ namespace Alternet.UI
         public TValue this[TKey index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
+            readonly get
             {
                 return Data[System.Convert.ToInt32(index)];
             }
@@ -74,7 +79,7 @@ namespace Alternet.UI
         public TValue this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
+            readonly get
             {
                 return Data[index];
             }
@@ -131,11 +136,23 @@ namespace Alternet.UI
         /// Creates clone of this object.
         /// </summary>
         /// <returns></returns>
-        public EnumArray<TKey, TValue> Clone()
+        public readonly EnumArray<TKey, TValue> Clone()
         {
             EnumArray<TKey, TValue> result = new();
             result.Assign(this);
             return result;
+        }
+
+        [Conditional("DEBUG")]
+        internal static void Test()
+        {
+            EnumArray<VisualControlState, int> data = new();
+
+            data[VisualControlState.Disabled] = 5;
+
+            var result = data[VisualControlState.Disabled];
+
+            App.Log($"EnumArray: 5 => {result}");
         }
     }
 }

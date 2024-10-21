@@ -17,6 +17,12 @@ namespace Alternet.UI
             = new(HorizontalAlignment.Center, VerticalAlignment.Center);
 
         /// <summary>
+        /// Gets <see cref="HVAlignment"/> with alignment set to top-left.
+        /// </summary>
+        public static readonly HVAlignment TopLeft
+            = new(HorizontalAlignment.Left, VerticalAlignment.Top);
+
+        /// <summary>
         /// Gets horizontal alignment.
         /// </summary>
         public readonly HorizontalAlignment Horizontal;
@@ -123,6 +129,57 @@ namespace Alternet.UI
             (HorizontalAlignment Horizontal, VerticalAlignment Vertical) value)
         {
             return new(value.Horizontal, value.Vertical);
+        }
+
+        /// <summary>
+        /// Returns next alignment or <see cref="CoordAlignment.Near"/> if
+        /// <paramref name="alignment"/> is maximal.
+        /// </summary>
+        /// <param name="alignment"></param>
+        /// <returns></returns>
+        public static CoordAlignment NextValue(CoordAlignment alignment)
+        {
+            if (EnumUtils.IsMaxValueUseLast(alignment))
+                return CoordAlignment.Near;
+            return alignment + 1;
+        }
+
+        /// <summary>
+        /// Returns this object with changed vertical alignment.
+        /// </summary>
+        /// <param name="value">New value for the alignment.</param>
+        /// <returns></returns>
+        public HVAlignment WithVertical(CoordAlignment value)
+        {
+            return new(Horizontal, (VerticalAlignment)value);
+        }
+
+        /// <summary>
+        /// Returns this object with changed horizontal alignment.
+        /// </summary>
+        /// <param name="value">New value for the alignment.</param>
+        /// <returns></returns>
+        public HVAlignment WithHorizontal(CoordAlignment value)
+        {
+            return new((HorizontalAlignment)value, Vertical);
+        }
+
+        /// <summary>
+        /// Gets next alignment value by incrementing alignments.
+        /// </summary>
+        /// <returns></returns>
+        public HVAlignment NextValue()
+        {
+            if (EnumUtils.IsMaxValueUseLast(Horizontal))
+            {
+                return new(
+                    HorizontalAlignment.Left,
+                    (VerticalAlignment)NextValue((CoordAlignment)Vertical));
+            }
+
+            return new(
+                (HorizontalAlignment)NextValue((CoordAlignment)Horizontal),
+                Vertical);
         }
     }
 }

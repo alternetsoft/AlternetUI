@@ -1,9 +1,0 @@
-<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
-        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="Alternet.UI.Documentation.Examples.Application.MainWindow"
-        Title="Examples.Application">
-  <StackPanel Orientation="Vertical" MinChildMargin="10">
-    <LogListBox SuggestedSize="300,300" Name="listBox"/>
-    <Button Name="logItemButton" Text="Add to Log"/>
-  </StackPanel>
-</Window>

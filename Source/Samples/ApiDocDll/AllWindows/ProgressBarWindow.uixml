@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.ProgressBarWindow"
+        Title="Examples.ProgressBar">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <ProgressBar Name="progressBar" Margin="8" Minimum="50" Maximum="200" Value="125" ValueChanged="ProgressBar_ValueChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

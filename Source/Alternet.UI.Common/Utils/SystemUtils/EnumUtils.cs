@@ -45,6 +45,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether the specified enum value is the largest.
+        /// This method uses last enum element to gets maximum value of the enum.
+        /// </summary>
+        /// <param name="value">Value to check.</param>
+        /// <returns></returns>
+        public static bool IsMaxValueUseLast<T>(T value)
+            where T : struct, Enum
+        {
+            return value.Equals(EnumUtils.GetMaxValueUseLast<T>());
+        }
+
+        /// <summary>
         /// Gets maximum value of the enum using last enum element.
         /// </summary>
         /// <typeparam name="T">Type of the enum.</typeparam>

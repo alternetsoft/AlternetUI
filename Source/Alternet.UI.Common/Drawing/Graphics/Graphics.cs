@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -150,6 +151,29 @@ namespace Alternet.Drawing
                 throw new Exception("Brush is null");
             if (value.IsDisposed)
                 throw new Exception("Brush was disposed");
+        }
+
+        /// <summary>
+        /// Updates <paramref name="storage"/> with measurement canvas which can be used
+        /// in order to measure text sizes.
+        /// </summary>
+        /// <param name="scaleFactor">Scaling factor.</param>
+        /// <param name="storage">Updated measurement canvas.</param>
+        /// <returns>True if <paramref name="storage"/> contains permanent canvas that
+        /// can be kept in memory; False if canvas is temporary and should not be saved.</returns>
+        public static bool RequireMeasure(Coord scaleFactor, [NotNull] ref Graphics? storage)
+        {
+            if (GraphicsFactory.MeasureCanvasOverride is null)
+            {
+                if (storage?.ScaleFactor != scaleFactor)
+                    storage = GraphicsFactory.GetOrCreateMemoryCanvas(scaleFactor);
+                return true;
+            }
+            else
+            {
+                storage = GraphicsFactory.MeasureCanvasOverride;
+                return false;
+            }
         }
 
         /// <summary>

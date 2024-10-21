@@ -362,6 +362,10 @@ namespace Alternet.UI
             PerformLayoutAndInvalidate();
         }
 
+        void IControlStateObjectChanged.SelectedChanged(object? sender)
+        {
+        }
+
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {

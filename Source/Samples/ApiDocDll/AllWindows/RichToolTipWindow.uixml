@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.RichToolTipWindow"
+        Title="RichToolTip Example">
+  <VerticalStackPanel Padding="10">
+    <Button Text="Show ToolTip 1" Click="ShowToolTip_Click" Margin="10" Name="showToolTipButton1"/>
+    <Button Text="Show ToolTip 2"  Click="ShowToolTip2_Click" Margin="10" Name="showToolTipButton2"/>
+    <Button Text="Hide ToolTip" Click="HideToolTip_Click" Margin="10" Name="hideToolTipButton"/>
+    <Label Text="ToolTip will be shown here" Name="label1" HorizontalAlignment="Center" Margin="10"/>
+    <RichToolTip Name="tooltip" VerticalAlignment="Fill"/>
+  </VerticalStackPanel>
+</Window>

@@ -121,7 +121,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets normal and disabled images of the item.
         /// </summary>
-        public virtual (Image? Normal, Image? Disabled, Image? Selected) ItemImages
+        public virtual EnumArrayStateImages ItemImages
         {
             get
             {

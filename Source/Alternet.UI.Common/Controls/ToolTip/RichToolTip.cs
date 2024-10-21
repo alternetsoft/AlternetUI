@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,19 +21,117 @@ namespace Alternet.UI
     public class RichToolTip : UserControl, IRichToolTip, IToolTipProvider
     {
         /// <summary>
+        /// Gets or sets default tooltip border color.
+        /// This is used when <see cref="DefaultToolTipBorder"/>
+        /// is created.
+        /// </summary>
+        public static Color? DefaultToolTipBorderColor;
+
+        /// <summary>
+        /// Gets or sets default image margin in device-independent units.
+        /// </summary>
+        public static Thickness DefaultImageMargin = 5;
+
+        /// <summary>
+        /// Gets or sets default text margin in device-independent units.
+        /// </summary>
+        public static Thickness DefaultMessageMargin = 5;
+
+        /// <summary>
+        /// Gets or sets default title margin in device-independent units.
+        /// </summary>
+        public static Thickness DefaultTitleMargin = 5;
+
+        /// <summary>
+        /// Gets or sets default distance between image and title in device-independent units.
+        /// </summary>
+        public static int ImageToTextDistance = 5;
+
+        /// <summary>
         /// Gets or sets default value for the tooltip minimal image size (in device-independent units).
         /// This is used for svg image size when standard <see cref="MessageBoxIcon"/>
         /// images are shown.
         /// </summary>
         public static Coord DefaultMinImageSize = 24;
 
-        private IRichToolTipHandler? tooltip;
+        private static BorderSettings? defaultToolTipBorder;
+
+        private readonly TemplateControls.RichToolTip<GenericLabel> template = new();
+        private readonly PictureBox picture = new();
+
+        private BorderSettings? toolTipBorder;
+        private Color? toolTipBackgroundColor;
+        private Color? toolTipForegroundColor;
+        private Color? toolTipTitleForegroundColor;
+        private Font? toolTipTitleFont;
+        private int timeoutInMilliseconds;
+        private int showDelayInMilliseconds;
+        private MessageBoxIcon? toolTipIcon;
+        private Brush? toolTipBackgroundBrush;
+        private ImageSet? toolTipImage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
         /// </summary>
         public RichToolTip()
         {
+            template.Parent = this;
+            picture.Visible = false;
+            picture.ImageStretch = false;
+            picture.Alignment = HVAlignment.TopLeft;
+            picture.Parent = this;
+        }
+
+        /// <summary>
+        /// Gets or sets default tooltip border.
+        /// </summary>
+        public static BorderSettings DefaultToolTipBorder
+        {
+            get
+            {
+                if (defaultToolTipBorder is null)
+                {
+                    defaultToolTipBorder = new();
+                    defaultToolTipBorder.Color = DefaultToolTipBorderColor;
+                }
+
+                return defaultToolTipBorder;
+            }
+
+            set
+            {
+                defaultToolTipBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether custom tooltip border is specified.
+        /// </summary>
+        public static bool IsCustomToolTipBorderSpecified
+        {
+            get
+            {
+                var useDefault =
+                    DefaultToolTipBorderColor is null
+                    && defaultToolTipBorder is null;
+
+                return !useDefault;
+            }
+        }
+
+        /// <summary>
+        /// Gets real default tooltip border. This property returns <see cref="BorderSettings.Default"/>
+        /// if <see cref="DefaultToolTipBorderColor"/> and <see cref="DefaultToolTipBorder"/>
+        /// are not specified.
+        /// </summary>
+        public static BorderSettings RealDefaultToolTipBorder
+        {
+            get
+            {
+                if (IsCustomToolTipBorderSpecified)
+                    return DefaultToolTipBorder;
+                return BorderSettings.Default;
+            }
         }
 
         /// <summary>
@@ -56,57 +155,186 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to draw point at center under the debug environment.
         /// </summary>
+        [Browsable(false)]
         public bool ShowDebugRectangleAtCenter { get; set; }
 
         /// <inheritdoc/>
-        public BorderSettings? ToolTipBorder { get; private set; }
-
-        /// <inheritdoc/>
-        public Color? ToolTipBackgroundColor { get; private set; }
-
-        /// <inheritdoc/>
-        public Color? ToolTipForegroundColor { get; private set; }
-
-        /// <inheritdoc/>
-        public Color? ToolTipTitleForegroundColor { get; private set; }
-
-        /// <inheritdoc/>
-        public Font? ToolTipTitleFont { get; private set; }
-
-        /// <inheritdoc/>
-        public int TimeoutInMilliseconds { get; private set; }
-
-        /// <inheritdoc/>
-        public int ShowDelayInMilliseconds { get; private set; }
-
-        /// <inheritdoc/>
-        public MessageBoxIcon? ToolTipIcon { get; private set; }
-
-        /// <inheritdoc/>
-        public Brush? ToolTipBackgroundBrush { get; private set; }
-
-        /// <inheritdoc/>
-        public ImageSet? ToolTipImage { get; private set; }
+        [Browsable(false)]
+        public virtual BorderSettings? ToolTipBorder
+        {
+            get => toolTipBorder;
+            set
+            {
+                if (toolTipBorder == value)
+                    return;
+                toolTipBorder = value;
+                HideToolTip();
+            }
+        }
 
         /// <summary>
-        /// Gets <see cref="IRichToolTipHandler"/> provider used to work with tooltip.
+        /// Gets <see cref="PictureBox"/> used to store tooltip picture.
+        /// Image is filled after tooltip show. You can use this property to perform
+        /// alignment of the tooltip inside the container.
         /// </summary>
-        private IRichToolTipHandler? ToolTipHandler
+        [Browsable(false)]
+        public PictureBox ToolTipPicture => picture;
+
+        /// <summary>
+        /// Gets template control used to layout tooltip elements.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl ToolTipTemplate => template;
+
+        /// <inheritdoc/>
+        public virtual Color? ToolTipBackgroundColor
+        {
+            get => toolTipBackgroundColor;
+            set
+            {
+                if (toolTipBackgroundColor == value)
+                    return;
+                toolTipBackgroundColor = value;
+                HideToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual Color? ToolTipForegroundColor
+        {
+            get => toolTipForegroundColor;
+            set
+            {
+                if (toolTipForegroundColor == value)
+                    return;
+                toolTipForegroundColor = value;
+                HideToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual Color? ToolTipTitleForegroundColor
+        {
+            get => toolTipTitleForegroundColor;
+            set
+            {
+                if (toolTipTitleForegroundColor == value)
+                    return;
+                toolTipTitleForegroundColor = value;
+                HideToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual Font? ToolTipTitleFont
+        {
+            get => toolTipTitleFont;
+            set
+            {
+                if (toolTipTitleFont == value)
+                    return;
+                toolTipTitleFont = value;
+                HideToolTip();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether tooltip is visible.
+        /// </summary>
+        public virtual bool ToolTipVisible
+        {
+            get => picture.Visible;
+
+            set
+            {
+                if (ToolTipVisible == value)
+                    return;
+                if (value)
+                    ShowToolTip();
+                else
+                    HideToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual int TimeoutInMilliseconds
+        {
+            get => timeoutInMilliseconds;
+            set
+            {
+                if (timeoutInMilliseconds == value)
+                    return;
+                timeoutInMilliseconds = value;
+                HideToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual int ShowDelayInMilliseconds
+        {
+            get => showDelayInMilliseconds;
+            set
+            {
+                if (showDelayInMilliseconds == value)
+                    return;
+                showDelayInMilliseconds = value;
+                HideToolTip();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets tooltip location inside in client coordinated of this control.
+        /// This value is measured in device-independent units.
+        /// </summary>
+        public virtual PointD ToolTipLocation
         {
             get
             {
-                tooltip ??= Create();
-                return tooltip;
+                return (Padding.Left, Padding.Top);
+            }
 
-                IRichToolTipHandler Create()
-                {
-                    var tooltip = ToolTipFactory.Handler.CreateRichToolTipHandler(
-                        Title ?? string.Empty,
-                        Text ?? string.Empty,
-                        true);
-                    tooltip.SetTipKind(RichToolTipKind.None);
-                    return tooltip;
-                }
+            set
+            {
+                Padding = Padding.WithLeft(value.X).WithTop(value.Y);
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual MessageBoxIcon? ToolTipIcon
+        {
+            get => toolTipIcon;
+            set
+            {
+                if (toolTipIcon == value)
+                    return;
+                toolTipIcon = value;
+                HideToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual Brush? ToolTipBackgroundBrush
+        {
+            get => toolTipBackgroundBrush;
+            set
+            {
+                if (toolTipBackgroundBrush == value)
+                    return;
+                toolTipBackgroundBrush = value;
+                HideToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual ImageSet? ToolTipImage
+        {
+            get => toolTipImage;
+            set
+            {
+                if (toolTipImage == value)
+                    return;
+                toolTipImage = value;
+                HideToolTip();
             }
         }
 
@@ -120,9 +348,9 @@ namespace Alternet.UI
             ToolTipBackgroundColor = DefaultToolTipBackgroundColor;
             ToolTipForegroundColor = DefaultToolTipForegroundColor;
 
-            ToolTipHandler?.SetBackgroundColor(ToolTipBackgroundColor, Color.Empty);
-            ToolTipHandler?.SetForegroundColor(ToolTipForegroundColor);
-            ToolTipHandler?.SetTitleForegroundColor(ToolTipTitleForegroundColor);
+            SetToolTipBackgroundColor(ToolTipBackgroundColor);
+            SetToolTipForegroundColor(ToolTipForegroundColor);
+            SetTitleForegroundColor(ToolTipTitleForegroundColor);
             return this;
         }
 
@@ -134,8 +362,8 @@ namespace Alternet.UI
         /// to <see cref="FontAndColor.SystemColorInfo"/>.</param>
         public virtual IRichToolTip SetToolTip(object message, bool systemColors = true)
         {
-            HideToolTip();
             ResetToolTipColors();
+            SetIcon(MessageBoxIcon.None);
             Text = message?.ToString() ?? string.Empty;
             Title = string.Empty;
 
@@ -156,7 +384,7 @@ namespace Alternet.UI
         {
             try
             {
-                SafeDisposeObject(ref tooltip);
+                picture.Hide();
                 return this;
             }
             catch
@@ -181,7 +409,6 @@ namespace Alternet.UI
             MessageBoxIcon? icon = null,
             uint? timeoutMilliseconds = null)
         {
-            HideToolTip();
             ResetToolTipColors();
             TitleAsObject = title ?? string.Empty;
             Text = message?.ToString() ?? string.Empty;
@@ -207,10 +434,8 @@ namespace Alternet.UI
         /// <param name="brush">Background brush.</param>
         public virtual IRichToolTip SetToolTipBackgroundBrush(Brush? brush)
         {
-            if (brush is null)
-                return this;
             ToolTipBackgroundBrush = brush;
-            ToolTipHandler?.SetBackgroundColor(brush.AsColor, Color.Empty);
+            SetToolTipBackgroundColor(brush?.AsColor);
             return this;
         }
 
@@ -220,10 +445,7 @@ namespace Alternet.UI
         /// <param name="color">Background color.</param>
         public virtual IRichToolTip SetToolTipBackgroundColor(Color? color)
         {
-            if (color is null)
-                return this;
             ToolTipBackgroundColor = color;
-            ToolTipHandler?.SetBackgroundColor(color, Color.Empty);
             return this;
         }
 
@@ -233,10 +455,7 @@ namespace Alternet.UI
         /// <param name="color">Foreground color of the message.</param>
         public virtual IRichToolTip SetToolTipForegroundColor(Color? color)
         {
-            if (color is null)
-                return this;
             ToolTipForegroundColor = color;
-            ToolTipHandler?.SetForegroundColor(color);
             return this;
         }
 
@@ -246,10 +465,7 @@ namespace Alternet.UI
         /// <param name="color">Foreground color of the title.</param>
         public virtual IRichToolTip SetTitleForegroundColor(Color? color)
         {
-            if (color is null)
-                return this;
             ToolTipTitleForegroundColor = color;
-            ToolTipHandler?.SetTitleForegroundColor(color);
             return this;
         }
 
@@ -269,7 +485,7 @@ namespace Alternet.UI
         public virtual IRichToolTip SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
         {
             TimeoutInMilliseconds = (int)milliseconds;
-            ToolTipHandler?.SetTimeout(milliseconds, millisecondsShowdelay);
+            ShowDelayInMilliseconds = (int)millisecondsShowdelay;
             return this;
         }
 
@@ -280,7 +496,7 @@ namespace Alternet.UI
         public virtual IRichToolTip SetIcon(ImageSet? bitmap)
         {
             ToolTipImage = bitmap;
-            ToolTipHandler?.SetIcon(bitmap);
+            ToolTipIcon = null;
             return this;
         }
 
@@ -295,7 +511,6 @@ namespace Alternet.UI
         public virtual IRichToolTip SetTitleFont(Font? font)
         {
             ToolTipTitleFont = font;
-            ToolTipHandler?.SetTitleFont(font);
             return this;
         }
 
@@ -310,7 +525,6 @@ namespace Alternet.UI
             TemplateControl template,
             Color? backColor = null)
         {
-            HideToolTip();
             ResetToolTipColors();
             backColor ??= template.BackgroundColor;
 
@@ -348,9 +562,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IRichToolTip OnlyImage(ImageSet? image)
         {
-            HideToolTip().ResetTitle().ResetText();
-            SetIcon(image);
-            return this;
+            return ResetTitle().ResetText().SetIcon(image);
         }
 
         /// <inheritdoc/>
@@ -360,16 +572,79 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows the tooltip at the specified location.
+        /// Shows the tooltip at the specified location inside the.
         /// Location coordinates are in device-independent units.
         /// </summary>
-        /// <param name="location">Location where tooltip will be shown.</param>
         public virtual IRichToolTip ShowToolTip(PointD? location = null)
         {
-            location ??= (0, 0);
-            var pxLocation = PixelFromDip(location.Value);
-            var area = (pxLocation.X - 1, pxLocation.Y - 1, 2, 2);
-            ToolTipHandler?.Show(this, area, false);
+            template.DoInsideLayout(() =>
+            {
+                if(location is not null)
+                    ToolTipLocation = location.Value;
+
+                template.Normal = RealDefaultToolTipBorder;
+                template.HasBorder = true;
+                template.BackgroundColor
+                = ToolTipBackgroundColor ?? RichToolTip.DefaultToolTipBackgroundColor;
+                template.RaiseBackgroundColorChanged();
+                template.ForegroundColor
+                = ToolTipForegroundColor ?? RichToolTip.DefaultToolTipForegroundColor;
+                template.TitleLabel.Text = Title;
+                template.TitleLabel.ParentForeColor = false;
+                template.TitleLabel.ParentFont = false;
+
+                template.TitleLabel.Font
+                    = ToolTipTitleFont ?? RealFont.Scaled(1.5);
+                template.TitleLabel.ForegroundColor
+                    = ToolTipTitleForegroundColor ?? RichToolTip.DefaultToolTipTitleForegroundColor;
+                template.MessageLabel.Text = Text;
+
+                template.TitleLabel.Visible = !string.IsNullOrEmpty(Title);
+                template.MessageLabel.Visible = !string.IsNullOrEmpty(Text);
+
+                var sizeInPixels
+                = GraphicsFactory.PixelFromDip(RichToolTip.DefaultMinImageSize, ScaleFactor);
+
+                var titleVisible = template.TitleLabel.Visible;
+                var showImage = titleVisible;
+
+                var imageMargin = DefaultImageMargin;
+
+                if (titleVisible)
+                {
+                    imageMargin = imageMargin.WithRight(imageMargin.Right + ImageToTextDistance);
+                }
+
+                if (ToolTipImage != null)
+                {
+                    template.PictureBox.Visible = true;
+                    template.PictureBox.ImageSet = ToolTipImage;
+                }
+                else
+                {
+                    var hasIcon
+                        = template.PictureBox.SetIcon(ToolTipIcon ?? MessageBoxIcon.None, sizeInPixels);
+                    template.PictureBox.Visible = hasIcon && showImage;
+                }
+
+                imageMargin.Reset(!template.PictureBox.Visible);
+
+                var titleMargin = DefaultTitleMargin;
+                titleMargin.Reset(!template.TitleLabel.Visible);
+
+                var messageMargin = DefaultMessageMargin;
+                messageMargin.Reset(!template.MessageLabel.Visible);
+
+                template.PictureBox.Margin = imageMargin;
+                template.TitleLabel.Margin = titleMargin;
+                template.MessageLabel.Margin = messageMargin;
+            });
+
+            var image = TemplateUtils.GetTemplateAsImage(template, template.BackgroundColor);
+            picture.BackgroundColor = template.BackgroundColor;
+            picture.Background = template.BackgroundColor?.AsBrush;
+            picture.Image = image;
+            picture.Show();
             return this;
         }
 
@@ -392,10 +667,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="icon">One of the standard information/warning/error icons
         /// (the question icon doesn't make sense for a tooltip)</param>
-        public virtual IRichToolTip SetIcon(MessageBoxIcon icon)
+        public virtual IRichToolTip SetIcon(MessageBoxIcon? icon)
         {
             ToolTipIcon = icon;
-            ToolTipHandler?.SetIcon(icon);
+            ToolTipImage = null;
             return this;
         }
 
@@ -474,6 +749,7 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             HideToolTip();
+            base.DisposeManaged();
         }
     }
 }

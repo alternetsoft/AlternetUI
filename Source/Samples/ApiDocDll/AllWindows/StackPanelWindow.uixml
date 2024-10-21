@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.StackPanelWindow"
+        Title="Examples.StackPanel">
+    <!-- <CreateUixmlDeclaration> -->
+    <StackPanel Name="stackPanel" Margin="16,16,16,254" Orientation="Vertical">
+      <Button Text="Sample button 1" Name="addItemButton" Margin="8"/>
+      <Button Text="Sample button 2" Name="removeItemButton" Margin="8"/>
+    </StackPanel>
+    <!-- </CreateUixmlDeclaration> -->
+</Window>

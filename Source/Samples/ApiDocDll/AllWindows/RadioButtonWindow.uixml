@@ -1,0 +1,13 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.RadioButtonWindow"
+        Title="Examples.RadioButton">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <RadioButton Name="radioButton1" Margin="8" Text="Option 1.1" CheckedChanged="RadioButton_CheckedChanged" />
+    <RadioButton Name="radioButton2" Margin="8" Text="Option 1.2" CheckedChanged="RadioButton_CheckedChanged" />
+    <RadioButton Name="radioButton3" Margin="8" Text="Option 1.3" CheckedChanged="RadioButton_CheckedChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

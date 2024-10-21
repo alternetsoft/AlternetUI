@@ -24,7 +24,7 @@ Typically, clicking a <xref:Alternet.UI.MenuItem> opens a submenu or causes an a
 The following example creates a <xref:Alternet.UI.MainMenu> with <xref:Alternet.UI.Menu> items inside. The
 <xref:Alternet.UI.Menu> contains <xref:Alternet.UI.MenuItem> objects that use the
 <xref:Alternet.UI.MenuItem.Command>,
-<xref:Alternet.UI.MenuItem.Text>, <xref:Alternet.UI.MenuItem.Checked> properties and the <xref:Alternet.UI.Control.Click> event.  
+<xref:Alternet.UI.MenuItem.Text>, <xref:Alternet.UI.MenuItem.Checked> properties and the <xref:Alternet.UI.AbstractControl.Click> event.  
 
 [!code-xml[](./snippets/Menu1.uixml)]
   
