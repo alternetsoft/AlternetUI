@@ -697,6 +697,15 @@ namespace Alternet.UI
             return isOk;
         }
 
+        public static string? SafeStringFormat(string? value, string? format)
+        {
+            if (value is null || format is null)
+                return value;
+
+            var result = string.Format(format, value);
+            return result;
+        }
+
         internal static TryParseNumberDelegate? GetTryParseDelegate(TypeCode typeCode)
         {
             return typeCode switch
