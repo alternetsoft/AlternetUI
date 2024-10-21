@@ -62,6 +62,15 @@ namespace Alternet.Drawing
         /// </summary>
         public Color Light => light;
 
+        /// <inheritdoc/>
+        public override string DebugString
+        {
+            get
+            {
+                return $"(IsUsingDarkColor: {IsUsingDarkColor}, Light: {Light.ARGBWeb}, Dark: {Dark.ARGBWeb})";
+            }
+        }
+
         /// <summary>
         /// Calls the specified action inside the block which temporary changes
         /// value of the <see cref="IsDarkOverride"/> property.

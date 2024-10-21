@@ -33,7 +33,7 @@ namespace Alternet.Drawing
     /// <see cref="FromArgb(int)"/> method.
     /// </para>
     /// </remarks>
-    [DebuggerDisplay("{NameAndARGBValue}")]
+    [DebuggerDisplay("{DebugString}")]
     [Serializable]
     [TypeConverter(typeof(ColorConverter))]
     public partial class Color : IEquatable<Color>
@@ -671,8 +671,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets color name and ARGB for the debug purposes.
+        /// Gets color value as text the debug purposes.
         /// </summary>
+        [Browsable(false)]
+        public virtual string DebugString
+        {
+            get
+            {
+                return NameAndARGBValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets color name and ARGB.
+        /// </summary>
+        [Browsable(false)]
         public string NameAndARGBValue
         {
             get
