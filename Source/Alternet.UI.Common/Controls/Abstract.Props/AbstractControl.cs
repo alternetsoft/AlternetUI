@@ -1322,13 +1322,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the parent window of the control).
+        /// Gets the parent window of the control.
         /// </summary>
         [Browsable(false)]
         public virtual Window? ParentWindow
         {
             get
             {
+                return Root as Window;
+
+                /*
                 var result = Parent;
                 while (true)
                 {
@@ -1338,6 +1341,42 @@ namespace Alternet.UI
                         return window;
                     result = result.Parent;
                 }
+                */
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this control has parent.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasParent
+        {
+            get
+            {
+                return Parent != null;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this control is the root control (has no parent).
+        /// </summary>
+        [Browsable(false)]
+        public bool IsRoot => Parent == null;
+
+        /// <summary>
+        /// Gets the root parent control in the chain of parent controls.
+        /// If parent control is null, returns this control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual AbstractControl Root
+        {
+            get
+            {
+                var parent = Parent;
+                if (parent is null)
+                    return this;
+                var result = parent.Root;
+                return result;
             }
         }
 
