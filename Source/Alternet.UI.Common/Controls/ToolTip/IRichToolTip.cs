@@ -14,52 +14,67 @@ namespace Alternet.UI
         /// <summary>
         /// Gets foreground color of the tooltip title.
         /// </summary>
-        Color? ToolTipTitleForegroundColor { get; }
+        Color? ToolTipTitleForegroundColor { get; set; }
 
         /// <summary>
         /// Gets font of the tooltip title.
         /// </summary>
-        Font? ToolTipTitleFont { get; }
+        Font? ToolTipTitleFont { get; set; }
 
         /// <summary>
-        /// Gets tooltip show timeout in milliseconds.
+        /// Gets tooltip show timeout in milliseconds. If null,
+        /// <see cref="TimerUtils.DefaultToolTipTimeout"/> is used.
         /// </summary>
-        int TimeoutInMilliseconds { get; }
+        int? TimeoutInMilliseconds { get; set; }
 
         /// <summary>
         /// Gets tooltip show delay in milliseconds.
         /// </summary>
-        int ShowDelayInMilliseconds { get; }
+        int ShowDelayInMilliseconds { get; set; }
 
         /// <summary>
         /// Gets Tooltip image.
         /// </summary>
-        ImageSet? ToolTipImage { get; }
+        ImageSet? ToolTipImage { get; set; }
 
         /// <summary>
         /// Gets tooltip background color.
         /// </summary>
-        public Color? ToolTipBackgroundColor { get; }
+        public Color? ToolTipBackgroundColor { get; set; }
 
         /// <summary>
         /// Gets tooltip foreground color.
         /// </summary>
-        public Color? ToolTipForegroundColor { get; }
+        public Color? ToolTipForegroundColor { get; set; }
 
         /// <summary>
         /// Gets tooltip border.
         /// </summary>
-        public BorderSettings? ToolTipBorder { get; }
+        public BorderSettings? ToolTipBorder { get; set; }
 
         /// <summary>
         /// Gets Tooltip icon.
         /// </summary>
-        MessageBoxIcon? ToolTipIcon { get; }
+        MessageBoxIcon? ToolTipIcon { get; set; }
 
         /// <summary>
         /// Gets tooltip background brush.
         /// </summary>
-        Brush? ToolTipBackgroundBrush { get; }
+        Brush? ToolTipBackgroundBrush { get; set; }
+
+        /// <summary>
+        /// Gets <see cref="RichToolTip"/> which is used as
+        /// provider for <see cref="IRichToolTip"/>. This property may return null as some other control
+        /// may be used as a provider. In this case use <see cref="AbstractToolTipControl"/>.
+        /// </summary>
+        RichToolTip? ToolTipControl { get; }
+
+        /// <summary>
+        /// Gets <see cref="AbstractControl"/> which is used as
+        /// provider for <see cref="IRichToolTip"/>. This property may return null as interface provider
+        /// may not ne derived from <see cref="AbstractControl"/>.
+        /// </summary>
+        AbstractControl? AbstractToolTipControl { get; }
 
         /// <summary>
         /// Sets tooltip properties so it will be a simple tooltip.
@@ -163,9 +178,10 @@ namespace Alternet.UI
         /// hiding the tooltip automatically entirely by passing 0 in this parameter
         /// (but doing this can result in native version not being used).
         /// </remarks>
-        /// <param name="milliseconds">Timeout value.</param>
-        /// <param name="millisecondsShowdelay">Show delay value.</param>
-        IRichToolTip SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0);
+        /// <param name="milliseconds">Timeout value. If null,
+        /// <see cref="TimerUtils.DefaultToolTipTimeout"/> will be used.</param>
+        /// <param name="millisecondsShowdelay">Show delay value. Optional. Default is 0.</param>
+        IRichToolTip SetTimeout(uint? milliseconds, uint millisecondsShowdelay = 0);
 
         /// <summary>
         /// Sets tooltip image using <see cref="ImageSet"/>.

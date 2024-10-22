@@ -10,8 +10,11 @@ namespace Alternet.UI
     /// Contains defaults used when <see cref="ListControlItem"/> is painted.
     /// Implements <see cref="IListControlItemDefaults"/>.
     /// </summary>
-    public class ListControlItemDefaults : IListControlItemDefaults
+    public class ListControlItemDefaults : BaseObject, IListControlItemDefaults
     {
+        /// <inheritdoc/>
+        public virtual bool SelectionUnderImage { get; set; } = true;
+
         /// <inheritdoc/>
         public virtual SizeI? SvgImageSize { get; set; }
 

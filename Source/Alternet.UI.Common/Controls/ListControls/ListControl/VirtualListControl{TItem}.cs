@@ -77,6 +77,7 @@ namespace Alternet.UI
         private bool selectionVisible = true;
         private bool checkBoxesVisible;
         private bool checkBoxThreeState;
+        private bool selectionUnderImage = true;
 
         private GenericAlignment itemAlignment = ListControlItem.DefaultItemAlignment;
 
@@ -372,6 +373,23 @@ namespace Alternet.UI
                 if (currentItemBorderVisible == value)
                     return;
                 currentItemBorderVisible = value;
+                Invalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual bool SelectionUnderImage
+        {
+            get
+            {
+                return selectionUnderImage;
+            }
+
+            set
+            {
+                if (selectionUnderImage == value)
+                    return;
+                selectionUnderImage = value;
                 Invalidate();
             }
         }

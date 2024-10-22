@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -10,6 +12,7 @@ namespace ControlsSample
 
         private ImageSet? customImage;
         private ImageSet? largeImage;
+        private MessageBoxIcon toolTipIcon = MessageBoxIcon.Warning;
         private readonly TemplateControl controlTemplate;
 
         public ToolTipPage()
@@ -27,13 +30,29 @@ namespace ControlsSample
 
             tabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
 
+            dontHideCheckBox.CheckedChanged += HandleCheckedChanged;
+            customImageCheckBox.CheckedChanged += HandleCheckedChanged;
+            largeImageCheckBox.CheckedChanged += HandleCheckedChanged;
+
+            void HandleCheckedChanged(object? sender, EventArgs e)
+            {
+                toolTip.HideToolTip();
+            };
+
             Group(
                 tooltipTitleLabel,
                 tooltipMessageLabel,
                 tooltipIconLabel)
             .SuggestedWidthToMax();
 
-            tooltipIconComboBox.BindEnumProp(this, nameof(ToolTipIcon));
+            tooltipIconComboBox.BindEnumProp(
+                this,
+                nameof(ToolTipIcon),
+                (item) =>
+                {
+                    var icon = (MessageBoxIcon)item;
+                    return icon == MessageBoxIcon.None || MessageBoxSvg.GetImage(icon) is not null;
+                });
 
             showToolTipButton.Click += ShowToolTipButton_Click;
             hideToolTipButton.Click += HideToolTipButton_Click;
@@ -65,8 +84,7 @@ namespace ControlsSample
 
             showTemplateButton.Click += (s, e) =>
             {
-                toolTip.SetToolTipFromTemplate(controlTemplate);
-                ShowToolTip();
+                toolTip.SetToolTipFromTemplate(controlTemplate).ShowToolTip();
             };
 
             popup.Add("Log Information", Log);
@@ -87,7 +105,7 @@ namespace ControlsSample
             otherSchemeCheckBox.IsEnabled = false;
             otherSchemeCheckBox.CheckedChanged += (s, e) =>
             {
-                var isDark = otherSchemeCheckBox.IsChecked? !IsDarkBackground : IsDarkBackground;
+                var isDark = otherSchemeCheckBox.IsChecked ? !IsDarkBackground : IsDarkBackground;
 
                 toolTip.BackgroundColor = isDark ? (44, 44, 44) : Color.White;
                 toolTip.HideToolTip();
@@ -119,6 +137,7 @@ namespace ControlsSample
                 textBox.Text = text;
             else
                 textBox.Text = string.Empty;
+            toolTip.HideToolTip();
         }
 
         internal void NextAligment()
@@ -138,51 +157,33 @@ namespace ControlsSample
 
         private void ShowImageButton_Click(object? sender, EventArgs e)
         {
-            LoadLargeImage();
-            toolTip.OnlyImage(largeImage).SetToolTipBackgroundColor(SystemColors.Window);
-            ShowToolTip();
+            LoadImages();
+            toolTip.OnlyImage(largeImage).SetToolTipBackgroundColor(Color.ForestGreen).ShowToolTip();
         }
 
-        private void ShowToolTip()
+        private void LoadImages()
         {
-            void PrivateShow()
+            ImageSet? GetImage(string resname, int backgupColorImageSize)
             {
-                if (dontHideCheckBox.IsChecked)
-                    toolTip.SetTimeout(0);
-
-                toolTip.ShowToolTip();
-            }
-
-            if (otherSchemeCheckBox.IsChecked)
-            {
-                LightDarkColor.DoInsideTempIsDarkOverride(!IsDarkBackground, () =>
-                {
-                    PrivateShow();
-                });
-            }
-            else
-            {
-                PrivateShow();
-            }
-        }
-
-        private void LoadLargeImage()
-        {
-            if (largeImage is null)
-            {
-                var stream = typeof(ToolTipPage).Assembly.GetManifestResourceStream(
-                    "ControlsSampleDll.Resources.EmployeePhoto.jpg");
+                var stream = typeof(ToolTipPage).Assembly.GetManifestResourceStream(resname);
+                ImageSet? result;
                 if (stream is null)
-                    largeImage = (ImageSet)(Image)Color.Blue.AsImage(250);
+                    result = (ImageSet)(Image)Color.Blue.AsImage(backgupColorImageSize);
                 else
-                    largeImage = new(stream);
+                    result = new(stream);
+                return result;
             }
+
+            largeImage ??= GetImage("ControlsSampleDll.Resources.EmployeePhoto.jpg", 250);
+            customImage ??= GetImage("ControlsSampleDll.Resources.icon-48x48.png", 32);
         }
 
         private void ShowToolTipButton_Click(object? sender, EventArgs e)
         {
             if (customImageCheckBox.IsChecked)
             {
+                LoadImages();
+
                 if (!largeImageCheckBox.IsChecked)
                 {
                     toolTip.SetToolTip(
@@ -190,12 +191,10 @@ namespace ControlsSample
                         tooltipMessageTextBox.Text,
                         ToolTipIcon,
                         dontHideCheckBox.IsChecked ? 0 : null);
-                    customImage ??= (ImageSet)NotifyIconPage.Image;
                     toolTip.SetIcon(customImage);
                 }
                 else
                 {
-                    LoadLargeImage();
                     toolTip.SetToolTip(
                         null,
                         tooltipMessageTextBox.Text,
@@ -214,12 +213,39 @@ namespace ControlsSample
             }
 
             ShowToolTip();
+
+            void ShowToolTip()
+            {
+                void PrivateShow()
+                {
+                    if (dontHideCheckBox.IsChecked)
+                        toolTip.SetTimeout(0);
+                    else
+                        toolTip.ResetTimeout();
+
+                    toolTip.ShowToolTip();
+                }
+
+                if (otherSchemeCheckBox.IsChecked)
+                {
+                    LightDarkColor.DoInsideTempIsDarkOverride(!IsDarkBackground, () =>
+                    {
+                        PrivateShow();
+                    });
+                }
+                else
+                {
+                    PrivateShow();
+                }
+            }
+
         }
 
         private void ShowSimpleButton_Click(object? sender, EventArgs e)
         {
-            toolTip.SetToolTip(tooltipMessageTextBox.Text);
-            ShowToolTip();
+            toolTip.SetToolTip(tooltipMessageTextBox.Text ?? "This is a simple tooltip")
+                .SetIcon(ToolTipIcon)
+                .ShowToolTip();
         }
 
         private void HideToolTipButton_Click(object? sender, EventArgs e)
@@ -227,8 +253,14 @@ namespace ControlsSample
             toolTip.HideToolTip();
         }
 
-        public RichToolTipKind ToolTipKind { get; set; } = RichToolTipKind.Top;
-
-        public MessageBoxIcon ToolTipIcon { get; set; } = MessageBoxIcon.Warning;
+        public MessageBoxIcon ToolTipIcon
+        {
+            get => toolTipIcon;
+            set
+            {
+                toolTipIcon = value;
+                toolTip.HideToolTip();
+            }
+        }
     }
 }
