@@ -179,5 +179,26 @@ namespace Alternet.Drawing
             var result = svg[messabeBoxIcon] ?? svgActions[messabeBoxIcon]?.Invoke();
             return result;
         }
+
+        /// <summary>
+        /// Removes empty message box icon indexes from the items of the specified list control.
+        /// </summary>
+        public static void RemoveEmptyMessageBoxIconIndexes<T>(ListControl<T> container)
+            where T : class, new()
+        {
+            RemoveItem(MessageBoxIcon.Information);
+            RemoveItem(MessageBoxIcon.Warning);
+            RemoveItem(MessageBoxIcon.Error);
+            RemoveItem(MessageBoxIcon.Question);
+            RemoveItem(MessageBoxIcon.Hand);
+            RemoveItem(MessageBoxIcon.Exclamation);
+            RemoveItem(MessageBoxIcon.Asterisk);
+            RemoveItem(MessageBoxIcon.Stop);
+
+            void RemoveItem(MessageBoxIcon icon)
+            {
+                container.RemoveItemWithValueIf(icon, GetImage(icon) is null);
+            }
+        }
     }
 }

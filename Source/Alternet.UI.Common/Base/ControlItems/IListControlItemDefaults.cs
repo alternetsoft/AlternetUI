@@ -101,5 +101,10 @@ namespace Alternet.UI
         /// Gets or sets whether to show checkboxes in the items.
         /// </summary>
         bool CheckBoxVisible { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to draw selection background under image.
+        /// </summary>
+        bool SelectionUnderImage { get; set; }
     }
 }

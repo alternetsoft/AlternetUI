@@ -64,11 +64,13 @@ namespace Alternet.UI
         private Color? toolTipForegroundColor;
         private Color? toolTipTitleForegroundColor;
         private Font? toolTipTitleFont;
-        private int timeoutInMilliseconds;
+        private int? timeoutInMilliseconds;
         private int showDelayInMilliseconds;
         private MessageBoxIcon? toolTipIcon;
         private Brush? toolTipBackgroundBrush;
         private ImageSet? toolTipImage;
+        private Timer? showTimer;
+        private Timer? hideTimer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
@@ -257,7 +259,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual int TimeoutInMilliseconds
+        public virtual int? TimeoutInMilliseconds
         {
             get => timeoutInMilliseconds;
             set
@@ -338,6 +340,32 @@ namespace Alternet.UI
             }
         }
 
+        RichToolTip? IRichToolTip.ToolTipControl => this;
+
+        AbstractControl? IRichToolTip.AbstractToolTipControl => this;
+
+        private Timer TimerForShow
+        {
+            get
+            {
+                return showTimer ??= new()
+                {
+                    AutoReset = false,
+                };
+            }
+        }
+
+        private Timer TimerForHide
+        {
+            get
+            {
+                return hideTimer ??= new()
+                {
+                    AutoReset = false,
+                };
+            }
+        }
+
         /// <summary>
         /// Resets all tooltip color properties to the default values.
         /// </summary>
@@ -384,6 +412,8 @@ namespace Alternet.UI
         {
             try
             {
+                showTimer?.Stop();
+                hideTimer?.Stop();
                 picture.Hide();
                 return this;
             }
@@ -413,12 +443,7 @@ namespace Alternet.UI
             TitleAsObject = title ?? string.Empty;
             Text = message?.ToString() ?? string.Empty;
 
-            if (icon is not null)
-            {
-                if (string.IsNullOrEmpty(Title))
-                    icon = MessageBoxIcon.None;
-                SetIcon(icon.Value);
-            }
+            SetIcon(icon ?? MessageBoxIcon.None);
 
             if(timeoutMilliseconds is not null)
             {
@@ -482,10 +507,22 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="milliseconds">Timeout value.</param>
         /// <param name="millisecondsShowdelay">Show delay value.</param>
-        public virtual IRichToolTip SetTimeout(uint milliseconds, uint millisecondsShowdelay = 0)
+        public virtual IRichToolTip SetTimeout(uint? milliseconds, uint millisecondsShowdelay = 0)
         {
-            TimeoutInMilliseconds = (int)milliseconds;
+            TimeoutInMilliseconds = (int?)milliseconds;
             ShowDelayInMilliseconds = (int)millisecondsShowdelay;
+            return this;
+        }
+
+        /// <summary>
+        /// Resets <see cref="TimeoutInMilliseconds"/> and <see cref="ShowDelayInMilliseconds"/>
+        /// to the default values.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IRichToolTip ResetTimeout()
+        {
+            TimeoutInMilliseconds = null;
+            ShowDelayInMilliseconds = 0;
             return this;
         }
 
@@ -496,7 +533,6 @@ namespace Alternet.UI
         public virtual IRichToolTip SetIcon(ImageSet? bitmap)
         {
             ToolTipImage = bitmap;
-            ToolTipIcon = null;
             return this;
         }
 
@@ -577,6 +613,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual IRichToolTip ShowToolTip(PointD? location = null)
         {
+            HideToolTip();
+
             template.DoInsideLayout(() =>
             {
                 if(location is not null)
@@ -606,7 +644,8 @@ namespace Alternet.UI
                 = GraphicsFactory.PixelFromDip(RichToolTip.DefaultMinImageSize, ScaleFactor);
 
                 var titleVisible = template.TitleLabel.Visible;
-                var showImage = titleVisible;
+                var messageVisible = template.MessageLabel.Visible;
+                var anyTextVisible = titleVisible || messageVisible;
 
                 var imageMargin = DefaultImageMargin;
 
@@ -624,27 +663,71 @@ namespace Alternet.UI
                 {
                     var hasIcon
                         = template.PictureBox.SetIcon(ToolTipIcon ?? MessageBoxIcon.None, sizeInPixels);
-                    template.PictureBox.Visible = hasIcon && showImage;
+                    template.PictureBox.Visible = hasIcon;
                 }
 
-                imageMargin.Reset(!template.PictureBox.Visible);
+                var imageVisible = template.PictureBox.Visible;
+                var anyVisible = imageVisible || anyTextVisible;
 
-                var titleMargin = DefaultTitleMargin;
-                titleMargin.Reset(!template.TitleLabel.Visible);
+                if (titleVisible || !anyTextVisible)
+                {
+                    template.PictureBox.RowIndex = 0;
+                }
+                else
+                {
+                    template.PictureBox.RowIndex = 1;
+                }
 
-                var messageMargin = DefaultMessageMargin;
-                messageMargin.Reset(!template.MessageLabel.Visible);
+                if (!anyVisible)
+                {
+                    template.PictureBox.SetIcon(MessageBoxIcon.Information, sizeInPixels);
+                    template.PictureBox.Visible = true;
+                    imageVisible = true;
+                }
 
-                template.PictureBox.Margin = imageMargin;
-                template.TitleLabel.Margin = titleMargin;
-                template.MessageLabel.Margin = messageMargin;
+                template.PictureBox.Margin = imageVisible ? imageMargin : 0;
+                template.TitleLabel.Margin = titleVisible ? DefaultTitleMargin : 0;
+                template.MessageLabel.Margin = messageVisible ? DefaultMessageMargin : 0;
             });
 
             var image = TemplateUtils.GetTemplateAsImage(template, template.BackgroundColor);
             picture.BackgroundColor = template.BackgroundColor;
             picture.Background = template.BackgroundColor?.AsBrush;
             picture.Image = image;
-            picture.Show();
+
+            if (showDelayInMilliseconds > 0)
+            {
+                var timer = TimerForShow;
+                timer.Stop();
+                timer.Interval = showDelayInMilliseconds;
+                timer.TickAction = ShowAction;
+                timer.Start();
+            }
+            else
+                ShowAction();
+
+            void ShowAction()
+            {
+                if (IsDisposed)
+                    return;
+                picture.Show();
+
+                var timer = TimerForHide;
+                timer.Stop();
+
+                if (timeoutInMilliseconds <= 0)
+                    return;
+
+                timer.Interval = timeoutInMilliseconds ?? TimerUtils.DefaultToolTipTimeout;
+                timer.TickAction = () =>
+                {
+                    if (IsDisposed)
+                        return;
+                    HideToolTip();
+                };
+                timer.Start();
+            }
+
             return this;
         }
 
@@ -748,6 +831,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            SafeDisposeObject(ref showTimer);
+            SafeDisposeObject(ref hideTimer);
             HideToolTip();
             base.DisposeManaged();
         }

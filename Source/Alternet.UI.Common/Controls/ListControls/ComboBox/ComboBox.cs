@@ -515,6 +515,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="instance">Object.</param>
         /// <param name="propName">Property name.</param>
+        /// <param name="addToItems">Optional function which returns whether to add
+        /// specified enum value to the items.</param>
         /// <remarks>
         /// Property must have the <see cref="Enum"/> type. Value of the binded
         /// property will be changed automatically after <see cref="SelectedItem"/>
@@ -525,7 +527,10 @@ namespace Alternet.UI
         /// elements using <see cref="PropertyGrid.GetPropChoices"/>. So, it is possible
         /// to localize labels and limit displayed enum elements.
         /// </remarks>
-        public virtual void BindEnumProp(object instance, string propName)
+        public virtual void BindEnumProp(
+            object instance,
+            string propName,
+            Func<object, bool>? addToItems = null)
         {
             var choices = PropertyGrid.GetPropChoices(instance, propName);
             if (choices is null)
@@ -533,19 +538,26 @@ namespace Alternet.UI
             IsEditable = false;
 
             var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
-            object? result = propInfo?.GetValue(instance, null);
+            if (propInfo is null)
+                return;
+            object? result = propInfo.GetValue(instance, null);
             int selectIndex = -1;
 
             for (int i = 0; i < choices.Count; i++)
             {
                 var label = choices.GetLabel(i);
                 var value = choices.GetValue(i);
-                var item = new ListControlItem(label, value);
-                var index = Add(item);
-                if (result is not null)
+                var enumValue = Enum.ToObject(propInfo.PropertyType, value);
+
+                if(addToItems?.Invoke(enumValue) ?? true)
                 {
-                    if (value == (int)result)
-                        selectIndex = index;
+                    var item = new ListControlItem(label, enumValue);
+                    var index = Add(item);
+                    if (result is not null)
+                    {
+                        if (value == (int)result)
+                            selectIndex = index;
+                    }
                 }
             }
 

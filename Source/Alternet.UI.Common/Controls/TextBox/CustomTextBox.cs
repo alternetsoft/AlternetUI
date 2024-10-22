@@ -484,7 +484,7 @@ namespace Alternet.UI
 
                 ToolTipFactory.ShowToolTip(
                     pictureBox,
-                    ErrorMessages.Default.ErrorTitle,
+                    null,
                     pictureBox.ToolTip,
                     MessageBoxIcon.Error);
             }

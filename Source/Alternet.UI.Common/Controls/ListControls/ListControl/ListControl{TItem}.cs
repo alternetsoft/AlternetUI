@@ -534,6 +534,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="RemoveItemWithValue"/>, but checks for the condition
+        /// before removing the item.
+        /// </summary>
+        public bool RemoveItemWithValueIf(object? value, bool condition)
+        {
+            if(condition)
+                return RemoveItemWithValue(value);
+            return false;
+        }
+
+        /// <summary>
+        /// Removes item with the specified value. Item is removed if it equals the specified value or
+        /// if it is <see cref="ListControlItem"/> and it's <see cref="ListControlItem.Value"/>
+        /// property equals the value.
+        /// </summary>
+        public virtual bool RemoveItemWithValue(object? value)
+        {
+            for(int i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+
+                if(ValueEquals(item))
+                {
+                    Items.RemoveAt(i);
+                    return true;
+                }
+            }
+
+            bool ValueEquals(object item)
+            {
+                if (item.Equals(value))
+                    return true;
+
+                if (item is not ListControlItem listItem)
+                    return false;
+
+                return listItem.Value?.Equals(value) ?? (value is null);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Changes the number of elements in the <see cref="Items"/>.
         /// </summary>
         /// <param name="newCount">New number of elements.</param>
