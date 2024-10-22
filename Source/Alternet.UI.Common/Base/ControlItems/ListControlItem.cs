@@ -269,7 +269,7 @@ namespace Alternet.UI
         public virtual string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets user data. This is different from <see cref="BaseControlItem.Tag"/>.
+        /// Gets or sets user data. This is different from <see cref="BaseObjectWithAttr.Tag"/>.
         /// </summary>
         public virtual object? Value { get; set; }
 

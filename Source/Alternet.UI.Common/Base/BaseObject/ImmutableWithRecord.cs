@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// and other features.
     /// </summary>
     /// <typeparam name="T">Type of record.</typeparam>
-    public class ObjectWithRecord<T> : ImmutableObject
+    public class ImmutableWithRecord<T> : ImmutableObject
         where T : struct
     {
         internal T record;
@@ -34,10 +34,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Conversion operator from <see cref="ObjectWithRecord{T}"/> to it's record.
+        /// Conversion operator from <see cref="ImmutableWithRecord{T}"/> to it's record.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator T(ObjectWithRecord<T> value)
+        public static implicit operator T(ImmutableWithRecord<T> value)
         {
             return value.AsRecord;
         }
@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// Assigns this object with properties of other object.
         /// </summary>
         /// <param name="value">Source of the property values to assign.</param>
-        public virtual void Assign(ObjectWithRecord<T> value)
+        public virtual void Assign(ImmutableWithRecord<T> value)
         {
             if (Immutable)
                 return;

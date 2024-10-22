@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides methods and properties of the <see cref="BaseControlItem"/>.
+    /// Extends <see cref="IBaseObject"/> with <see cref="UniqueId"/>
+    /// and id related features.
     /// </summary>
-    public interface IBaseControlItem : IBaseObject
+    public interface IBaseObjectWithId : IBaseObject
     {
         /// <summary>
         /// Gets unique id of this object.

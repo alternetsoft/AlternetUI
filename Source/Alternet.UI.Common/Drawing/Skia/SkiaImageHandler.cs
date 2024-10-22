@@ -291,11 +291,11 @@ namespace Alternet.UI
             {
                 using SKPaint paint = new();
                 paint.ColorFilter = SKColorFilter.CreateBlendMode(color, SKBlendMode.SrcIn);
-                canvas.DrawPicture(picture, ref matrix, paint);
+                canvas.DrawPicture(picture, in matrix, paint);
             }
             else
             {
-                canvas.DrawPicture(picture, ref matrix);
+                canvas.DrawPicture(picture, in matrix);
             }
 
             canvas.Flush();
@@ -320,7 +320,7 @@ namespace Alternet.UI
             int height,
             Color? color)
         {
-            var svg = new SkiaSharp.Extended.Svg.SKSvg();
+            var svg = new Svg.Skia.SKSvg();
             svg.Load(stream);
             var picture = svg.Picture;
 

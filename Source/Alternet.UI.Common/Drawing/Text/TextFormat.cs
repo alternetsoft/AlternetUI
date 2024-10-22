@@ -7,7 +7,7 @@ namespace Alternet.Drawing
     /// display manipulations (such
     /// as ellipsis insertion). This class cannot be inherited.
     /// </summary>
-    public class TextFormat : ObjectWithRecord<TextFormat.Record>
+    public class TextFormat : ImmutableWithRecord<TextFormat.Record>
     {
         /// <summary>
         /// Gets default horizontal alignment of the text;

@@ -697,6 +697,10 @@ namespace Alternet.UI
             return isOk;
         }
 
+        /// <summary>
+        /// Calls <see cref="string.Format(string, object)"/>
+        /// in a safe way allowing to use null parameters.
+        /// </summary>
         public static string? SafeStringFormat(string? value, string? format)
         {
             if (value is null || format is null)

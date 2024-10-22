@@ -527,7 +527,7 @@ namespace WindowPropertiesSample
                 (WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
         }
 
-        public class SetBoundsProperties : BaseChildObject<Window>
+        public class SetBoundsProperties : BaseOwnedObject<Window>
         {
             public SetBoundsProperties(Window owner)
                 : base(owner)

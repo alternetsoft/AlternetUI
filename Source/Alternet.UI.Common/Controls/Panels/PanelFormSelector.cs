@@ -7,6 +7,11 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains grouped listbox with the list of forms and "Open" button which
+    /// creates and shows them. Use <see cref="AddGroup"/> to add group and <see cref="Add"/>
+    /// to add item.
+    /// </summary>
     public class PanelFormSelector : Panel
     {
         private readonly VirtualListBox view = new()
@@ -26,23 +31,21 @@ namespace Alternet.UI
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelFormSelector"/> class.
+        /// </summary>
         public PanelFormSelector()
         {
             Padding = 10;
 
             Layout = LayoutStyle.Horizontal;
             openButton.Parent = buttonPanel;
-            openButton.Click += RunButton_Click;
+            openButton.Click += HandleOpenButtonClick;
 
             view.Parent = this;
             buttonPanel.Parent = this;
 
             AddDefaultItems();
-
-            foreach(var item in Items)
-            {
-                view.Items.Add(item);
-            }
 
             view.SelectionChanged += View_SelectionChanged;
 
@@ -51,35 +54,49 @@ namespace Alternet.UI
             View_SelectionChanged(null, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Gets collection of the items.
+        /// </summary>
+        public IListControlItems<ListControlItem> Items => ListBox.Items;
+
+        /// <summary>
+        /// Gets "Open" button.
+        /// </summary>
         public Button OpenButton => openButton;
 
+        /// <summary>
+        /// Gets listbox with the list of forms.
+        /// </summary>
         public VirtualListBox ListBox => view;
 
+        /// <summary>
+        /// Gets button panel which contains "Open" button.
+        /// </summary>
         public VerticalStackPanel ButtonPanel => buttonPanel;
 
+        /// <summary>
+        /// Gets or sets group font. Assign it before adding of the groups.
+        /// </summary>
         public virtual Font? GroupFont { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether any groups were added. This property is used
+        /// in order to determine identation of the items.
+        /// </summary>
         public virtual bool HasGroups { get; set; }
 
-        private void View_SelectionChanged(object? sender, EventArgs e)
-        {
-            if(view.SelectedItem is not ListControlItem item)
-            {
-                openButton.Enabled = false;
-                return;
-            }
-
-            openButton.Enabled = !item.HideSelection;
-        }
-
-        private readonly List<ListControlItem> Items = new();
-
+        /// <summary>
+        /// Adds item if DEBUG conditional is specified.
+        /// </summary>
         [Conditional("DEBUG")]
         public void AddIfDebug(string text, Func<Window> createForm)
         {
             Add(text, createForm);
         }
 
+        /// <summary>
+        /// Adds group.
+        /// </summary>
         public void AddGroup(string title)
         {
             HasGroups = true;
@@ -92,6 +109,9 @@ namespace Alternet.UI
             Items.Add(item);
         }
 
+        /// <summary>
+        /// Adds an item with the specified text and form create action.
+        /// </summary>
         public void Add(string text, Func<Window> createForm)
         {
             ListControlItem item = new(text);
@@ -112,11 +132,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Called from the constructor. You can override this method in order to
+        /// add default items. Use <see cref="AddGroup"/> and <see cref="Add"/> inside this method
+        /// for adding the default items.
+        /// </summary>
         protected virtual void AddDefaultItems()
         {
         }
 
-        private void RunButton_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when "Open" button is clicked.
+        /// </summary>
+        protected virtual void HandleOpenButtonClick(object? sender, EventArgs e)
         {
             if (view.SelectedItem is not ListControlItem item)
                 return;
@@ -140,6 +168,17 @@ namespace Alternet.UI
                     }
                 });
             }
+        }
+
+        private void View_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (view.SelectedItem is not ListControlItem item)
+            {
+                openButton.Enabled = false;
+                return;
+            }
+
+            openButton.Enabled = !item.HideSelection;
         }
     }
 }

@@ -154,6 +154,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Calls the specified action for the each key of the enum array (= for the each enum element).
+        /// </summary>
+        /// <param name="action"></param>
         public void ForEachKey(Action<TKey> action)
         {
             for (int i = 0; i < Data.Length; i++)

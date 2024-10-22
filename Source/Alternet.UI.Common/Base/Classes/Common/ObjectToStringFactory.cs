@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains properties and methods related to <see cref="IObjectToString"/>.
     /// </summary>
-    public class ObjectToStringFactory
+    public class ObjectToStringFactory : BaseObject
     {
         /// <summary>
         /// Gets or sets default <see cref="ObjectToStringFactory"/> implementation.

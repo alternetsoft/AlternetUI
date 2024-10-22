@@ -30,19 +30,5 @@ namespace Alternet.UI
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [Browsable(false)]
         public virtual ISite? Site { get; set; }
-
-        /// <summary>
-        /// Gets or sets an object that contains some data about the component.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="object" /> that contains data about the component.
-        /// The default is <see langword="null" />.
-        /// </returns>
-        [SRCategory("Data")]
-        [Localizable(false)]
-        [Bindable(true)]
-        [DefaultValue(null)]
-        [TypeConverter(typeof(StringConverter))]
-        public virtual object? Tag { get; set; }
     }
 }

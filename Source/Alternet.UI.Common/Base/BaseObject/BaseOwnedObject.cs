@@ -10,14 +10,14 @@ namespace Alternet.UI
     /// <summary>
     /// Base class with properties and methods common to all child objects.
     /// </summary>
-    public class BaseChildObject<T> : BaseObject
+    public class BaseOwnedObject<T> : BaseObjectWithId
     {
         private readonly T owner;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseChildObject{T}"/> class.
+        /// Initializes a new instance of the <see cref="BaseOwnedObject{T}"/> class.
         /// </summary>
-        public BaseChildObject(T owner)
+        public BaseOwnedObject(T owner)
         {
             this.owner = owner;
         }

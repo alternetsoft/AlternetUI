@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Item of the <see cref="PropertyGrid"/>.
     /// </summary>
-    public interface IPropertyGridItem : IPropInfoAndInstance, IBaseControlItem
+    public interface IPropertyGridItem : IPropInfoAndInstance, IBaseObjectWithId
     {
         /// <summary>
         /// Occurs when property value has been changed.
