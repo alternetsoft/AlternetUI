@@ -29,6 +29,9 @@ namespace Alternet.UI
         /// </summary>
         public static string Information { get; set; } = GetImageUrl("circle-info-blue");
 
-        private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
+        private static string GetImageUrl(string name)
+        {
+            return string.Format(ResTemplate, name);
+        }
     }
 }

@@ -40,7 +40,11 @@ namespace Alternet.UI
         /// </summary>
         public static ColorSvgImage ImgInformation
         {
-            get => imgInformation ??= new(KnownColorSvgUrls.Information);
+            get
+            {
+                return imgInformation ??= new(KnownColorSvgUrls.Information);
+            }
+
             set => imgInformation = value;
         }
 
@@ -55,6 +59,14 @@ namespace Alternet.UI
             var imageSet = KnownColorSvgImages.ImgError.AsImageSet(size.Value);
             var image = imageSet?.AsImage(size.Value);
             return image;
+        }
+
+        /// <summary>
+        /// Gets all images in <see cref="KnownColorSvgImages"/>.
+        /// </summary>
+        public static IEnumerable<SvgImage> GetAllImages()
+        {
+            return AssemblyUtils.GetStaticProperties<ColorSvgImage>(typeof(KnownColorSvgImages));
         }
     }
 }

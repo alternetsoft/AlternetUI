@@ -10,6 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -1101,6 +1103,32 @@ namespace Alternet.UI
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Gets all static properties of the specified type in the specifed container type.
+        /// Returned only not null properties of the exact type <typeparamref name="TProperty"/>.
+        /// </summary>
+        /// <typeparam name="TProperty">Type of the properties.</typeparam>
+        /// <returns></returns>
+        public static IEnumerable<TProperty> GetStaticProperties<TProperty>(Type containerType)
+        {
+            List<TProperty> result = new();
+
+            var props = containerType.GetProperties(
+                BindingFlags.Static | BindingFlags.Public);
+
+            foreach (var p in props)
+            {
+                if (p.PropertyType != typeof(TProperty))
+                    continue;
+
+                if (p.GetValue(null) is not TProperty value)
+                    continue;
+                result.Add(value);
+            }
+
+            return result;
         }
 
         /// <summary>
