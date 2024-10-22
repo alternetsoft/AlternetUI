@@ -86,6 +86,8 @@ namespace Alternet.UI
             }
 
             StartLocation = WindowStartLocation.CenterScreen;
+
+            ControlActivities.KeyboardZoomInOut.Initialize(this);
         }
 
         public static bool FormLoadFromResName(string resName, object obj, UixmlLoader.Flags flags)

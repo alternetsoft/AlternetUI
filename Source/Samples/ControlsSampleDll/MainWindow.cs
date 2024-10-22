@@ -9,6 +9,11 @@ namespace ControlsSample
 {
     public partial class MainWindow : CustomDemoWindow
     {
+        static MainWindow()
+        {
+            DefaultUseParentFont = true;
+        }
+
         protected override void AddPages()
         {
             try
