@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="Window.HasSystemMenu"/>
         bool HasSystemMenu { get; set; }
 
-        /// <inheritdoc cref="Window.Title"/>
+        /// <inheritdoc cref="AbstractControl.Title"/>
         string Title { get; set; }
 
         /// <summary>

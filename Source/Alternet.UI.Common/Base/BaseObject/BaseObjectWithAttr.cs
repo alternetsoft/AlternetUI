@@ -13,6 +13,7 @@ namespace Alternet.UI
     public partial class BaseObjectWithAttr : BaseObjectWithId
     {
         private IFlagsAndAttributes? flagsAndAttributes;
+        private IIntFlagsAndAttributes? intFlagsAndAttributes;
 
         /// <summary>
         /// Gets or sets the object that contains data about the item.
@@ -27,6 +28,39 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public object? Tag { get; set; }
+
+        /// <summary>
+        /// Gets flags provider which allows to
+        /// access items using integer identifiers.
+        /// You can store any custom flags here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomIntFlags IntFlags
+        {
+            get
+            {
+                return IntFlagsAndAttributes;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets flags and attributes provider which allows to
+        /// access items using integer identifiers.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IIntFlagsAndAttributes IntFlagsAndAttributes
+        {
+            get
+            {
+                return intFlagsAndAttributes ??= FlagsAndAttributesFactory.CreateIntFlagsAndAttributes();
+            }
+
+            set
+            {
+                intFlagsAndAttributes = value;
+            }
+        }
 
         /// <summary>
         /// Gets custom flags and attributes provider associated with the item.

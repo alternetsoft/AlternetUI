@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with rich tooltip.
     /// </summary>
-    public interface IRichToolTipHandler : IDisposableObject
+    internal interface IRichToolTipHandler : IDisposableObject
     {
         /// <summary>
         /// Gets tooltip window size in pixels.
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <param name="icon">Tooltip icon id.</param>
         void SetIcon(MessageBoxIcon icon);
 
-        /// <inheritdoc cref="RichToolTip.SetForegroundColor"/>
+        /// <inheritdoc cref="RichToolTip.SetToolTipForegroundColor"/>
         void SetForegroundColor(Color color);
 
         /// <inheritdoc cref="RichToolTip.SetTitleForegroundColor"/>

@@ -11,19 +11,6 @@ namespace Alternet.UI
     /// </summary>
     public interface IToolTipFactoryHandler : IDisposable
     {
-        /// <summary>
-        /// Creates <see cref="IRichToolTipHandler"/> interface provider.
-        /// </summary>
-        /// <param name="title">Tooltip title.</param>
-        /// <param name="message">Tooltip message.</param>
-        /// <param name="useGeneric">Whether or not to use generic tooltip
-        /// which is platform independent.</param>
-        /// <returns></returns>
-        IRichToolTipHandler CreateRichToolTipHandler(
-            string title,
-            string message,
-            bool useGeneric);
-
         /// <inheritdoc cref="ToolTipFactory.SetReshow"/>
         bool SetReshow(long msecs);
 

@@ -61,7 +61,9 @@ namespace Alternet.UI
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
 
+#pragma warning disable
         private Graphics? measureCanvas;
+#pragma warning restore
         private Coord? scaleFactorOverride;
         private Color? textBackColor;
         private SizeD minimumSize;
@@ -76,8 +78,6 @@ namespace Alternet.UI
         private int columnSpan = 1;
         private int rowSpan = 1;
         private int layoutSuspendCount;
-        private IFlagsAndAttributes? flagsAndAttributes;
-        private IIntFlagsAndAttributes? intFlagsAndAttributes;
         private MouseEventArgs? dragEventArgs;
         private PointD lastMouseDownPos;
         private IComponentDesigner? designer;
@@ -556,23 +556,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets custom attributes provider associated with the control.
-        /// You can store any custom data here.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="CustomFlags"/> or <see cref="FlagsAndAttributes"/>
-        /// to get custom flags provider.
-        /// </remarks>
-        [Browsable(false)]
-        public ICustomAttributes<string, object> CustomAttr
-        {
-            get
-            {
-                return FlagsAndAttributes.Attr;
-            }
-        }
-
-        /// <summary>
         /// Gets attributes provider which allows to
         /// access items using integer identifiers.
         /// You can store any custom data here.
@@ -649,74 +632,6 @@ namespace Alternet.UI
             set
             {
                 IntFlags[LocalizationManager.ShouldLocalizeTitleIdentifier] = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets flags provider which allows to
-        /// access items using integer identifiers.
-        /// You can store any custom flags here.
-        /// </summary>
-        [Browsable(false)]
-        public ICustomIntFlags IntFlags
-        {
-            get
-            {
-                return IntFlagsAndAttributes;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets flags and attributes provider which allows to
-        /// access items using integer identifiers.
-        /// You can store any custom data here.
-        /// </summary>
-        [Browsable(false)]
-        public virtual IIntFlagsAndAttributes IntFlagsAndAttributes
-        {
-            get
-            {
-                return intFlagsAndAttributes ??= FlagsAndAttributesFactory.CreateIntFlagsAndAttributes();
-            }
-
-            set
-            {
-                intFlagsAndAttributes = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets custom flags and attributes provider associated with the control.
-        /// You can store any custom data here.
-        /// </summary>
-        [Browsable(false)]
-        public virtual IFlagsAndAttributes FlagsAndAttributes
-        {
-            get
-            {
-                return flagsAndAttributes ??= FlagsAndAttributesFactory.Create();
-            }
-
-            set
-            {
-                flagsAndAttributes = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets custom flags provider associated with the control.
-        /// You can store any custom flags here.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="CustomAttr"/> or <see cref="FlagsAndAttributes"/>
-        /// to get custom attributes provider.
-        /// </remarks>
-        [Browsable(false)]
-        public ICustomFlags<string> CustomFlags
-        {
-            get
-            {
-                return FlagsAndAttributes.Flags;
             }
         }
 
