@@ -6,7 +6,8 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworks>net8.0-maccatalyst;net8.0-ios;net8.0-android</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.00</TargetFrameworks>
+    <WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
@@ -26,18 +27,18 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
-    <PackageReference Include="SkiaSharp.Views.WinUI" Version="2.88.8" />
+    <PackageReference Include="SkiaSharp.Views.WinUI" Version="3.0.0-preview.5.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Core" Version="8.0.91" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.91" />
+    <PackageReference Include="Microsoft.Maui.Core" Version="8.0.92" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.92" />
     <PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.92" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.91" />
-    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
+    <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.92" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.0.0-preview.5.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />

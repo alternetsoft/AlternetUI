@@ -4,6 +4,7 @@
 
     <TargetFrameworks>net8.0-maccatalyst;net8.0-ios;net8.0-android</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
 
 
     <!-- Uncomment to also build the tizen app. You will need to install tizen
@@ -99,19 +100,12 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
-  </ItemGroup>
-
   <PropertyGroup>
     <StudioPath>$(MSBuildThisFileDirectory)\..\..\..\..\AlternetStudio</StudioPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
+    <ProjectReference Include="..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
 
     <ProjectReference Include="$(StudioPath)\Source\Common.AlternetUI\Alternet.Common.AlternetUI.csproj" />
     <ProjectReference Include="$(StudioPath)\Source\Common\Alternet.Common.csproj" />
@@ -120,5 +114,12 @@
     <ProjectReference Include="$(StudioPath)\Source\Parsers\Alternet.Syntax.csproj" />
     <ProjectReference Include="$(StudioPath)\Source\Parsers\Advanced\Alternet.Syntax.Parsers.Advanced.csproj" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.92" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.0.0-preview.5.3" />
+  </ItemGroup>
+
 </Project>
