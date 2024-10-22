@@ -1029,6 +1029,41 @@ namespace Alternet.UI
                 item.DrawForeground(this, e);
         }
 
+        /// <summary>
+        /// Sets items from the specified collection to the control's items as fast as possible.
+        /// </summary>
+        /// <typeparam name="TItemFrom">Type of the item in the otgher collection
+        /// that will be assigned to the control's items.</typeparam>
+        /// <param name="from">The collection to be assigned to item of the control.</param>
+        /// <param name="fnAssign">Assign item action. Must assign item data.</param>
+        /// <param name="fnCreateItem">Create item action.</param>
+        public virtual void SetItemsFast<TItemFrom>(
+            IEnumerable<TItemFrom> from,
+            Action<TItem, TItemFrom> fnAssign,
+            Func<TItem> fnCreateItem)
+        {
+            var count = from.Count();
+
+            BeginUpdate();
+            try
+            {
+                SetCount(count, fnCreateItem);
+                var i = 0;
+                foreach (var itemFrom in from)
+                {
+                    var itemTo = Items[i];
+                    fnAssign(itemTo, itemFrom);
+                    i++;
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+
+            SelectedIndex = -1;
+        }
+
         int IListControlItemContainer.GetItemCount()
         {
             return Items.Count;
