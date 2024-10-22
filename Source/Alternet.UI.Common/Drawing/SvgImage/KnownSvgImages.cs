@@ -532,22 +532,7 @@ namespace Alternet.UI
         /// </summary>
         public static IEnumerable<SvgImage> GetAllImages()
         {
-            List<SvgImage> result = new();
-
-            var props = typeof(KnownSvgImages).GetProperties(
-                BindingFlags.Instance | BindingFlags.Public);
-
-            foreach (var p in props)
-            {
-                if (p.PropertyType != typeof(SvgImage))
-                    continue;
-
-                if (p.GetValue(null) is not SvgImage value)
-                    continue;
-                result.Add(value);
-            }
-
-            return result;
+            return AssemblyUtils.GetStaticProperties<SvgImage>(typeof(KnownSvgImages));
         }
 
         /// <summary>
