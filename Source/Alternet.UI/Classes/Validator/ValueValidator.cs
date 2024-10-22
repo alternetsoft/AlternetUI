@@ -19,9 +19,5 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="IValueValidator.Name"/>
         public string? Name { get; set; }
-
-        /// <inheritdoc cref="IValueValidator.Tag"/>
-        [Browsable(false)]
-        public object? Tag { get; set; }
     }
 }

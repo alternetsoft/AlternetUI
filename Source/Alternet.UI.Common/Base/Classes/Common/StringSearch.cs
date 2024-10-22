@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements different search methods in <see cref="IReadOnlyStrings"/>.
     /// </summary>
-    public class StringSearch
+    public class StringSearch : BaseObject
     {
         private readonly IReadOnlyStrings strings;
 

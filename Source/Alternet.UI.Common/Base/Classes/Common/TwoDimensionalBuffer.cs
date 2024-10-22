@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Items of this buffer can be accessed using X and Y indexes.
     /// </summary>
     /// <typeparam name="T">Type of the item.</typeparam>
-    public class TwoDimensionalBuffer<T>
+    public class TwoDimensionalBuffer<T> : BaseObject
     {
         private readonly T[] data;
 

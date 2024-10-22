@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Represents a named value.
     /// </summary>
     /// <typeparam name="T">Type of the value.</typeparam>
-    public class NameValue<T>
+    public class NameValue<T> : BaseObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NameValue{T}"/> class.

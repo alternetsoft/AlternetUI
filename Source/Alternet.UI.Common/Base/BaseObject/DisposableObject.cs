@@ -13,12 +13,11 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a mechanism for releasing managed and unmanaged resources.
     /// </summary>
-    public class DisposableObject : BaseObject, IDisposable, IDisposableObject
+    public class DisposableObject : BaseObjectWithAttr, IDisposable, IDisposableObject
     {
         private bool disposeHandle;
         private bool insideDisposing;
         private bool disposed;
-        private ObjectUniqueId? uniqueId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableObject"/> class.
@@ -59,18 +58,6 @@ namespace Alternet.UI
         /// Occurs when control is disposed.
         /// </summary>
         public event EventHandler? Disposed;
-
-        /// <summary>
-        /// Gets unique id of this object.
-        /// </summary>
-        [Browsable(false)]
-        public ObjectUniqueId UniqueId
-        {
-            get
-            {
-                return uniqueId ??= new();
-            }
-        }
 
         /// <summary>
         /// Gets whether object is disposed.

@@ -85,7 +85,7 @@ namespace ControlsSample
             }
         }
 
-        internal class TextMemoPageProperties : BaseChildObject<TextMemoPage>
+        internal class TextMemoPageProperties : BaseOwnedObject<TextMemoPage>
         {
             public TextMemoPageProperties(TextMemoPage owner) : base(owner)
             {
