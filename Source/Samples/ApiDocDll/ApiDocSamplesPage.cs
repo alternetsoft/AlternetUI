@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace ApiDoc
 {
-    public partial class ApiDocSamplesPage : ApiDocCustomSamplesPage
+    public partial class ApiDocSamplesPage : PanelFormSelector
     {
         public void AddSample(Type type)
         {
@@ -23,12 +23,8 @@ namespace ApiDoc
                 Add(title, () =>
                 {
                     var result = (Window?)Activator.CreateInstance(windowType);
-
-                    if(result is not null)
-                    {
-                        result.Title = $"{title} Sample";
-                    }
-
+                    result ??= new Window();
+                    result.Title = $"{title} Sample";
                     return result;
                 });
             }
