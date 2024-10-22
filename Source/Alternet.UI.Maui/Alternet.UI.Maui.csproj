@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Tests\**" />
+    <Compile Remove="Tests\**"/>
     <EmbeddedResource Remove="Tests\**" />
     <MauiCss Remove="Tests\**" />
     <MauiXaml Remove="Tests\**" />
