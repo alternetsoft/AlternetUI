@@ -1424,40 +1424,6 @@ namespace Alternet.UI
                         App.MainWindow);
                     break;
             }
-
-            /*
-                        RectD displayRect = new Display(this).ClientAreaDip;
-                        RectD parentRect = RectD.Empty;
-                        bool center = true;
-
-                        if (StartLocation == WindowStartLocation.CenterScreen)
-                        {
-                            parentRect = displayRect;
-                        }
-                        else
-                        if (StartLocation == WindowStartLocation.CenterOwner)
-                        {
-                            if (owner is null)
-                                parentRect = displayRect;
-                            else
-                                parentRect = new(owner.ClientToScreen((0, 0)), owner.ClientSize);
-                        }
-                        else
-                            center = false;
-
-                        var bounds = Bounds;
-
-                        var newWidth = Math.Min(bounds.Width, displayRect.Width);
-                        var newHeight = Math.Min(bounds.Height, displayRect.Height);
-
-                        bounds.Width = newWidth;
-                        bounds.Height = newHeight;
-
-                        if (center)
-                            bounds = bounds.CenterIn(parentRect);
-
-                        Bounds = bounds;
-            */
         }
 
         /// <summary>

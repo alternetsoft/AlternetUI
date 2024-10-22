@@ -115,11 +115,37 @@ namespace PropertyGridSample
             });
         }
 
-        void LoadAllSvgInFolder(TreeView? control)
+        void LoadKnownSvg(TreeView control)
         {
-            if (control is null)
-                return;
+            int size = 32;
+            ImageList imgList = new();
+            imgList.ImageSize = size;
 
+            control.RemoveAll();
+            control.ImageList = imgList;
+            int index = 0;
+
+            control.DoInsideUpdate(() =>
+            {
+                AddImages(KnownSvgImages.GetAllImages());
+                AddImages(KnownColorSvgImages.GetAllImages());
+            });
+
+            void AddImages(IEnumerable<SvgImage> images)
+            {
+                foreach (var svg in images)
+                {
+                    imgList.AddSvg(svg, control.IsDarkBackground);
+
+                    TreeViewItem item = new(svg.Url ?? "<empty url>", index);
+                    control.Add(item);
+                    index++;
+                }
+            }
+        }
+
+        void LoadAllSvgInFolder(TreeView control)
+        {
             var dialog = SelectDirectoryDialog.Default;
 
             dialog.ShowAsync(() =>
@@ -294,6 +320,7 @@ namespace PropertyGridSample
             AddControlAction<TreeView>("Load png from resources", LoadPngFromResource);
             AddControlAction<TreeView>("Load all small *.png in folder...", LoadAllPngInFolder);
             AddControlAction<TreeView>("Load all *.svg in folder...", LoadAllSvgInFolder);
+            AddControlAction<TreeView>("Load known svg", LoadKnownSvg);
 
             AddControlAction<VirtualListBox>("Set dark theme", (c) =>
             {

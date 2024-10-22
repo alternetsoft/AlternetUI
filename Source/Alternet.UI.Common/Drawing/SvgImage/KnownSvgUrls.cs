@@ -179,12 +179,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load svg image used in "Abort" buttons.
         /// </summary>
-        public static string UrlImageAbort { get; set; } = GetImageUrl("ban");
+        public static string UrlImageAbort { get; set; } = GetImageUrl("alternet-ban");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Retry" buttons.
         /// </summary>
-        public static string UrlImageRetry { get; set; } = GetImageUrl("arrows-rotate");
+        public static string UrlImageRetry { get; set; } = GetImageUrl("alternet-arrows-rotate");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Ignore" buttons.
@@ -249,7 +249,8 @@ namespace Alternet.UI
         /// Gets or sets url used to load svg image used in "Refresh" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserRefresh { get; set; } = GetImageUrl("alternet-rotate-right");
+        public static string UrlImageWebBrowserRefresh { get; set; }
+            = GetImageUrl("alternet-rotate-right");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Stop" toolbar buttons
@@ -281,7 +282,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "Gear" svg image.
         /// </summary>
-        public static string UrlImageGear { get; set; } = GetImageUrl("gear");
+        public static string UrlImageGear { get; set; } = GetImageUrl("alternet-gear");
 
         /// <summary>
         /// Gets or sets url used to load "Use regular expressions" svg image.
@@ -296,7 +297,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "Find Match Full Word" svg image.
         /// </summary>
-        public static string UrlImageFindMatchFullWord { get; set; } = GetImageUrl("alternet-match-full-word");
+        public static string UrlImageFindMatchFullWord { get; set; }
+            = GetImageUrl("alternet-match-full-word");
 
         /// <summary>
         /// Gets or sets url used to load "Arrow Down" svg image.
@@ -306,7 +308,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "Circle" svg image.
         /// </summary>
-        public static string UrlImageCircle { get; set; } = GetImageUrl("circle");
+        public static string UrlImageCircle { get; set; } = GetImageUrl("alternet-circle");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in horizontal "More Actions" toolbar buttons.
@@ -322,7 +324,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load generic folder icon.
         /// </summary>
-        public static string UrlIconFolder { get; set; } = GetImageUrl("folder");
+        public static string UrlIconFolder { get; set; } = GetImageUrl("alternet-folder");
 
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }
