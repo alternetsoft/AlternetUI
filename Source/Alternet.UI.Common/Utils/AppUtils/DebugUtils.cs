@@ -57,6 +57,26 @@ namespace Alternet.UI
                 actionToCall();
         }
 
+        public static void RegisterExceptionsLogger()
+        {
+            AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
+            {
+                Debug.WriteLine("First Chance Exception");
+                Debug.WriteLine(e.Exception.ToString());
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                Debug.WriteLine("CurrentDomain Unhandled exception");
+                Debug.WriteLine(e.ExceptionObject.ToString());
+            };
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                Debug.WriteLine("Unobserved Task Exception");
+                Debug.WriteLine(e.Exception.ToString());
+            };
+        }
+
         /// <summary>
         /// Waits until debugger is attached. Uses <paramref name="debugOptionFileName"/>
         /// file existance in order to get "wait" setting on/off.
