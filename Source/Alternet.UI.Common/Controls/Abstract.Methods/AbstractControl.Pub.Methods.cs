@@ -2096,6 +2096,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets vertical or horizontal alignment as <see cref="CoordAlignment"/>
+        /// depending on the <paramref name="isVert"/> parameter value.
+        /// </summary>
+        /// <param name="isVert">The flag which specifies whether to return
+        /// vertical or horizontal alignment.</param>
+        /// <returns></returns>
+        public CoordAlignment GetCoordAlignment(bool isVert)
+        {
+            if (isVert)
+                return (CoordAlignment)VerticalAlignment;
+            else
+                return (CoordAlignment)HorizontalAlignment;
+        }
+
+        /// <summary>
         /// Removes <see cref="IControlNotification"/> object from the list of notifications.
         /// </summary>
         /// <param name="n">Notification object to remove.</param>

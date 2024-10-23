@@ -59,7 +59,11 @@ namespace ControlsSample
         public static void Main(string[] args)
         {
             if (DebugUtils.IsDebugDefined)
+            {
+                AbstractControl.UseLayoutMethod = AbstractControl.DefaultLayoutMethod.New;
+
                 DebugUtils.DebugLoading = false;
+            }
 
             LogSimple("===============================================");
             LogSimple("Alternet.UI ControlsSample application started.");
