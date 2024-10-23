@@ -13,6 +13,10 @@ namespace Alternet.UI
     /// </summary>
     public static class KnownSvgImages
     {
+        private static SvgImage? imgDebugRun;
+        private static SvgImage? imgTrashCan;
+        private static SvgImage? imgCopy;
+        private static SvgImage? imgPaste;
         private static SvgImage? imgOk;
         private static SvgImage? imgBrowserBack;
         private static SvgImage? imgBrowserForward;
@@ -72,6 +76,42 @@ namespace Alternet.UI
         {
             get => imgCircleFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleFilled);
             set => imgCircleFilled = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Debug Run' image.
+        /// </summary>
+        public static SvgImage ImgDebugRun
+        {
+            get => imgDebugRun ??= new MonoSvgImage(KnownSvgUrls.UrlImageDebugRun);
+            set => imgDebugRun = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Copy' image.
+        /// </summary>
+        public static SvgImage ImgCopy
+        {
+            get => imgCopy ??= new MonoSvgImage(KnownSvgUrls.UrlImageCopy);
+            set => imgCopy = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Trash Can' image.
+        /// </summary>
+        public static SvgImage ImgTrashCan
+        {
+            get => imgTrashCan ??= new MonoSvgImage(KnownSvgUrls.UrlImageTrashCan);
+            set => imgTrashCan = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Paste' image.
+        /// </summary>
+        public static SvgImage ImgPaste
+        {
+            get => imgPaste ??= new MonoSvgImage(KnownSvgUrls.UrlImagePaste);
+            set => imgPaste = value;
         }
 
         /// <summary>

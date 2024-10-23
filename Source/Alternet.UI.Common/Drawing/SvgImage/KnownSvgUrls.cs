@@ -142,6 +142,26 @@ namespace Alternet.UI
         public static string UrlImageCircleFilled { get; set; } = GetImageUrl("alternet-circle-filled");
 
         /// <summary>
+        /// Gets or sets url used to load "Debug Run" svg image.
+        /// </summary>
+        public static string UrlImageDebugRun { get; set; } = GetImageUrl("alternet-debug-run");
+
+        /// <summary>
+        /// Gets or sets url used to load "Trash Can" svg image.
+        /// </summary>
+        public static string UrlImageTrashCan { get; set; } = GetImageUrl("alternet-trash-can");
+
+        /// <summary>
+        /// Gets or sets url used to load "Paste" svg image.
+        /// </summary>
+        public static string UrlImagePaste { get; set; } = GetImageUrl("alternet-paste");
+
+        /// <summary>
+        /// Gets or sets url used to load "Copy" svg image.
+        /// </summary>
+        public static string UrlImageCopy { get; set; } = GetImageUrl("alternet-copy");
+
+        /// <summary>
         /// Gets or sets url used to load "Diamond Filled" svg image.
         /// </summary>
         public static string UrlImageDiamondFilled { get; set; } = GetImageUrl("alternet-diamond-filled");
