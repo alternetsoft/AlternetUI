@@ -20,26 +20,55 @@ namespace Alternet.UI
         private EnumArray<TKey, Image?> smallImages = new();
         private EnumArray<TKey, Image?> largeImages = new();
 
+        /// <summary>
+        /// Gets small image for the specified index.
+        /// </summary>
+        /// <param name="index">The index of the image to return.</param>
+        /// <returns></returns>
         public virtual Image? GetSmallImage(TKey index)
         {
             return smallImages[index];
         }
 
+        /// <summary>
+        /// Gets large image for the specified index.
+        /// </summary>
+        /// <param name="index">The index of the image to return.</param>
+        /// <returns></returns>
         public virtual Image? GetLargeImage(TKey index)
         {
             return largeImages[index];
         }
 
+        /// <summary>
+        /// Sets large image for the specified index.
+        /// </summary>
+        /// <param name="index">The index of the image to set.</param>
+        /// <param name="image">The new image to be set at the position specified by the index.</param>
+        /// <returns></returns>
         public virtual void SetLargeImage(TKey index, Image? image)
         {
             largeImages[index] = image;
         }
 
+        /// <summary>
+        /// Sets small image for the specified index.
+        /// </summary>
+        /// <param name="index">The index of the image to set.</param>
+        /// <param name="image">The new image to be set at the position specified by the index.</param>
+        /// <returns></returns>
         public virtual void SetSmallImage(TKey index, Image? image)
         {
             smallImages[index] = image;
         }
 
+        /// <summary>
+        /// Sets small or large image for the specified index.
+        /// </summary>
+        /// <param name="isSmall">The flag specifying whether small or large image is set.</param>
+        /// <param name="index">The index of the image to set.</param>
+        /// <param name="image">The new image to be set at the position specified by the index.</param>
+        /// <returns></returns>
         public void SetImage(TKey index, Image? image, bool isSmall)
         {
             if (isSmall)
@@ -48,6 +77,12 @@ namespace Alternet.UI
                 SetLargeImage(index, image);
         }
 
+        /// <summary>
+        /// Gets small or large image for the specified index.
+        /// </summary>
+        /// <param name="isSmall">The flag specifying whether small or large image is get.</param>
+        /// <param name="index">The index of the image to set.</param>
+        /// <returns></returns>
         public Image? GetImage(TKey index, bool isSmall)
         {
             if (isSmall)
@@ -56,6 +91,13 @@ namespace Alternet.UI
                 return GetLargeImage(index);
         }
 
+        /// <summary>
+        /// Sets small or large image name for the specified index.
+        /// </summary>
+        /// <param name="isSmall">The flag specifying whether small or large image name is set.</param>
+        /// <param name="index">The index of the image which name is set.</param>
+        /// <param name="name">The new name of the image.</param>
+        /// <returns></returns>
         public virtual void SetImageName(TKey index, string? name, bool isSmall = true)
         {
             if (isSmall)
@@ -64,6 +106,12 @@ namespace Alternet.UI
                 largeImageNames[index] = name;
         }
 
+        /// <summary>
+        /// Gets small or large image name for the specified index.
+        /// </summary>
+        /// <param name="isSmall">The flag specifying whether small or large image name is get.</param>
+        /// <param name="index">The index of the image which name is returned.</param>
+        /// <returns></returns>
         public virtual string? GetImageName(TKey index, bool isSmall = true)
         {
             if (isSmall)
@@ -72,6 +120,10 @@ namespace Alternet.UI
                 return largeImageNames[index];
         }
 
+        /// <summary>
+        /// Assigns all image names from small to large images or backwards.
+        /// </summary>
+        /// <param name="fromSmallToLarge">The flag which specifies how images are assigned.</param>
         public virtual void AssignImageNames(bool fromSmallToLarge)
         {
             if (fromSmallToLarge)
@@ -80,6 +132,12 @@ namespace Alternet.UI
                 smallImageNames.Assign(largeImageNames);
         }
 
+        /// <summary>
+        /// Calls <see cref="string.Format(string, object)"/> on small or large image names.
+        /// </summary>
+        /// <param name="format">The format template.</param>
+        /// <param name="formatSmallImageNames">The flag which specifies whether to format
+        /// small or large image names.</param>
         public virtual void FormatImageNames(string format, bool formatSmallImageNames = true)
         {
             if (formatSmallImageNames)
@@ -88,12 +146,24 @@ namespace Alternet.UI
                 largeImageNames.ConvertAllItems(StringUtils.SafeStringFormat, format);
         }
 
-        public virtual void LoadFromResource(Assembly assembly, TKey imageKey, bool isSmallImage = true)
+        /// <summary>
+        /// Loads the specified image from the assemblie's resource.
+        /// </summary>
+        /// <param name="assembly">The assembly from where image is loaded.</param>
+        /// <param name="imageKey">The key of the image to load.</param>
+        /// <param name="isSmallImage">The flag which specifies whether
+        /// to load small or large image.</param>
+        /// <remarks>
+        /// Image name is used as a resource url.
+        /// </remarks>
+        public virtual bool LoadFromResource(Assembly assembly, TKey imageKey, bool isSmallImage = true)
         {
-            LoadImageFromResource(GetImageName(imageKey, isSmallImage));
+            return LoadImageFromResource(GetImageName(imageKey, isSmallImage));
 
             bool LoadImageFromResource(string? relativePath)
             {
+                if (relativePath is null)
+                    return false;
                 string url = AssemblyUtils.GetImageUrlInAssembly(assembly, relativePath);
                 var image = Image.FromUrlOrNull(url);
                 if (image is null || !image.IsOk)
@@ -103,6 +173,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Loads all small or large images from the assemblie's resource.
+        /// </summary>
+        /// <param name="assembly">The assembly from where image is loaded.</param>
+        /// <param name="loadSmallImageNames">The flag which specifies whether
+        /// to load all small or large images.</param>
+        /// <remarks>
+        /// Image names are used as a resource urls.
+        /// </remarks>
         public virtual void LoadImagesFromResource(Assembly assembly, bool loadSmallImageNames = true)
         {
             if (loadSmallImageNames)
