@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     internal class WxControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
-        public IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor)
+        public IControlHandler CreateRichTextBoxHandler(RichTextBox editor)
         {
             return new RichTextBoxHandler();
         }
@@ -31,7 +31,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control)
+        public IControlHandler CreatePropertyGridHandler(PropertyGrid control)
         {
             return new PropertyGridHandler();
         }
@@ -47,25 +47,25 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ICalendarHandler CreateCalendarHandler(Calendar control)
+        public IControlHandler CreateCalendarHandler(Calendar control)
         {
             return new CalendarHandler();
         }
 
         /// <inheritdoc/>
-        public IProgressBarHandler CreateProgressBarHandler(ProgressBar control)
+        public IControlHandler CreateProgressBarHandler(ProgressBar control)
         {
             return new ProgressBarHandler();
         }
 
         /// <inheritdoc/>
-        public IRadioButtonHandler CreateRadioButtonHandler(RadioButton control)
+        public IControlHandler CreateRadioButtonHandler(RadioButton control)
         {
             return new WxRadioButtonHandler();
         }
 
         /// <inheritdoc/>
-        public IWindowHandler CreateWindowHandler(Window window)
+        public IControlHandler CreateWindowHandler(Window window)
         {
             if (window.GetWindowKind() == WindowKind.Control)
                 return new WindowAsControlHandler();
@@ -73,44 +73,44 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IListViewHandler CreateListViewHandler(ListView control)
+        public IControlHandler CreateListViewHandler(ListView control)
         {
             return new ListViewHandler();
         }
 
         /// <inheritdoc/>
-        public IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control)
+        public IControlHandler CreateDateTimePickerHandler(DateTimePicker control)
         {
             return new DateTimePickerHandler();
         }
 
         /// <inheritdoc/>
-        public INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control)
+        public IControlHandler CreateNumericUpDownHandler(NumericUpDown control)
         {
             return new NumericUpDownHandler();
         }
 
         /// <inheritdoc/>
-        public ICheckBoxHandler CreateCheckBoxHandler(CheckBox control)
+        public IControlHandler CreateCheckBoxHandler(CheckBox control)
         {
             return new CheckBoxHandler();
         }
 
         /// <inheritdoc/>
-        public IButtonHandler CreateButtonHandler(Button control)
+        public IControlHandler CreateButtonHandler(Button control)
         {
             return new WxButtonHandler();
         }
 
         /// <inheritdoc/>
-        public ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control)
+        public IControlHandler CreateLinkLabelHandler(LinkLabel control)
         {
             Native.LinkLabel.UseGenericControl = LinkLabel.UseGenericControl;
             return new LinkLabelHandler();
         }
 
         /// <inheritdoc/>
-        public IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control)
+        public IControlHandler CreateAnimationPlayerHandler(AnimationPlayer control)
         {
             switch (AnimationPlayer.DefaultHandlerKind)
             {
@@ -126,43 +126,43 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ISliderHandler CreateSliderHandler(Slider control)
+        public IControlHandler CreateSliderHandler(Slider control)
         {
             return new SliderHandler();
         }
 
         /// <inheritdoc/>
-        public IColorPickerHandler CreateColorPickerHandler(ColorPicker control)
+        public IControlHandler CreateColorPickerHandler(ColorPicker control)
         {
             return new ColorPickerHandler();
         }
 
         /// <inheritdoc/>
-        public IGroupBoxHandler CreateGroupBoxHandler(GroupBox control)
+        public IControlHandler CreateGroupBoxHandler(GroupBox control)
         {
             return new GroupBoxHandler();
         }
 
         /// <inheritdoc/>
-        public ITextBoxHandler CreateTextBoxHandler(TextBox control)
+        public IControlHandler CreateTextBoxHandler(TextBox control)
         {
             return new TextBoxHandler();
         }
 
         /// <inheritdoc/>
-        public IComboBoxHandler CreateComboBoxHandler(ComboBox control)
+        public IControlHandler CreateComboBoxHandler(ComboBox control)
         {
             return new ComboBoxHandler();
         }
 
         /// <inheritdoc/>
-        public ILabelHandler CreateLabelHandler(Label control)
+        public IControlHandler CreateLabelHandler(Label control)
         {
             return new LabelHandler();
         }
 
         /// <inheritdoc/>
-        public IScrollBarHandler CreateScrollBarHandler(ScrollBar control)
+        public IControlHandler CreateScrollBarHandler(ScrollBar control)
         {
             return new WxScrollBarHandler();
         }
@@ -186,31 +186,31 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ITreeViewHandler CreateTreeViewHandler(TreeView control)
+        public IControlHandler CreateTreeViewHandler(TreeView control)
         {
             return new TreeViewHandler();
         }
 
         /// <inheritdoc/>
-        public IScrollViewerHandler CreateScrollViewerHandler(ScrollViewer control)
+        public IControlHandler CreateScrollViewerHandler(ScrollViewer control)
         {
             return new ScrollViewerHandler();
         }
 
         /// <inheritdoc/>
-        public IVListBoxHandler CreateVListBoxHandler(VirtualListBox control)
+        public IControlHandler CreateVListBoxHandler(VirtualListBox control)
         {
             return new VListBoxHandler();
         }
 
         /// <inheritdoc/>
-        public ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control)
+        public IControlHandler CreateCheckListBoxHandler(CheckListBox control)
         {
             return new CheckListBoxHandler();
         }
 
         /// <inheritdoc/>
-        public IListBoxHandler CreateListBoxHandler(ListBox control)
+        public IControlHandler CreateListBoxHandler(ListBox control)
         {
             return new ListBoxHandler();
         }

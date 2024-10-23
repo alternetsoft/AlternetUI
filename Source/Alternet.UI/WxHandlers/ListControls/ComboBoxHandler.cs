@@ -206,6 +206,14 @@ namespace Alternet.UI
 
             var rect = Control.PixelToDip(NativeControl.EventRect);
 
+            void DefaultPaintMethod()
+            {
+                if (drawBackground)
+                    DefaultOnDrawBackground();
+                else
+                    DefaultOnDrawItem();
+            }
+
             if (paintEventArgs is null)
             {
                 paintEventArgs = new ComboBoxItemPaintEventArgs(Control, dc, rect);
@@ -217,6 +225,7 @@ namespace Alternet.UI
             }
 
             const int ItemIndexNotFound = -1;
+            paintEventArgs.DefaultPaintAction = DefaultPaintMethod;
             paintEventArgs.IsSelected = flags.HasFlag(DrawItemFlags.PaintingSelected);
             paintEventArgs.IsPaintingControl = isPaintingControl;
             paintEventArgs.IsIndexNotFound = NativeControl.EventItem == ItemIndexNotFound;

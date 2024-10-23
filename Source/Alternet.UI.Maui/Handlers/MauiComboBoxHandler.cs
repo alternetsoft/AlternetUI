@@ -37,5 +37,13 @@ namespace Alternet.UI
         public void SelectTextRange(int start, int length)
         {
         }
+
+        public void DismissPopup()
+        {
+        }
+
+        public void ShowPopup()
+        {
+        }
     }
 }

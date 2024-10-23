@@ -19,7 +19,10 @@ namespace Alternet.UI
         /// <param name="control">Control which owns the item.</param>
         /// <param name="graphics"><see cref="Graphics"/> where drawing is performed.</param>
         /// <param name="bounds">Bounds of the item.</param>
-        public ComboBoxItemPaintEventArgs(ComboBox control, Graphics graphics, RectD bounds)
+        public ComboBoxItemPaintEventArgs(
+            ComboBox control,
+            Graphics graphics,
+            RectD bounds)
             : base(graphics, bounds)
         {
             ComboBox = control;
@@ -79,14 +82,16 @@ namespace Alternet.UI
         public ComboBox ComboBox { get; set; }
 
         /// <summary>
+        /// Gets or sets default paint action.
+        /// </summary>
+        public Action? DefaultPaintAction { get; set; }
+
+        /// <summary>
         /// Default drawing method.
         /// </summary>
         public void DefaultPaint()
         {
-            if (IsPaintingBackground)
-                ComboBox.Handler.DefaultOnDrawBackground();
-            else
-                ComboBox.Handler.DefaultOnDrawItem();
+            DefaultPaintAction?.Invoke();
         }
     }
 }

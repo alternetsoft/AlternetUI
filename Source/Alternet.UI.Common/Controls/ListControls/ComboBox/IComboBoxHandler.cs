@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to methods and properties of the native combobox control.
     /// </summary>
-    public interface IComboBoxHandler : IControlHandler
+    public interface IComboBoxHandler
     {
         /// <inheritdoc cref="ComboBox.OwnerDrawStyle"/>
         ComboBox.OwnerDrawFlags OwnerDrawStyle { get; set; }
@@ -36,16 +36,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="ComboBox.SelectAllText"/>
         void SelectAllText();
-
-        /// <summary>
-        /// Default method for the background drawing. Can be used inside paint event.
-        /// </summary>
-        void DefaultOnDrawBackground();
-
-        /// <summary>
-        /// Default method for the item drawing. Can be used inside paint event.
-        /// </summary>
-        void DefaultOnDrawItem();
 
         /// <summary>
         /// Closes popup window.

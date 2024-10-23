@@ -16,63 +16,63 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ICheckBoxHandler CreateCheckBoxHandler(CheckBox control);
+        IControlHandler CreateCheckBoxHandler(CheckBox control);
 
         /// <summary>
         /// Creates <see cref="IButtonHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IButtonHandler CreateButtonHandler(Button control);
+        IControlHandler CreateButtonHandler(Button control);
 
         /// <summary>
         /// Creates <see cref="IColorPickerHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IColorPickerHandler CreateColorPickerHandler(ColorPicker control);
+        IControlHandler CreateColorPickerHandler(ColorPicker control);
 
         /// <summary>
         /// Creates <see cref="ISliderHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ISliderHandler CreateSliderHandler(Slider control);
+        IControlHandler CreateSliderHandler(Slider control);
 
         /// <summary>
         /// Creates <see cref="IProgressBarHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IProgressBarHandler CreateProgressBarHandler(ProgressBar control);
+        IControlHandler CreateProgressBarHandler(ProgressBar control);
 
         /// <summary>
         /// Creates <see cref="IGroupBoxHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IGroupBoxHandler CreateGroupBoxHandler(GroupBox control);
+        IControlHandler CreateGroupBoxHandler(GroupBox control);
 
         /// <summary>
         /// Creates <see cref="IRadioButtonHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IRadioButtonHandler CreateRadioButtonHandler(RadioButton control);
+        IControlHandler CreateRadioButtonHandler(RadioButton control);
 
         /// <summary>
         /// Creates <see cref="ITextBoxHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ITextBoxHandler CreateTextBoxHandler(TextBox control);
+        IControlHandler CreateTextBoxHandler(TextBox control);
 
         /// <summary>
         /// Creates <see cref="IRichTextBoxHandler"/> interface provider.
         /// </summary>
         /// <param name="editor">Owner.</param>
         /// <returns></returns>
-        IRichTextBoxHandler CreateRichTextBoxHandler(RichTextBox editor);
+        IControlHandler CreateRichTextBoxHandler(RichTextBox editor);
 
         /// <summary>
         /// Creates <see cref="IPropertyGridVariant"/> interface provider.
@@ -91,7 +91,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IPropertyGridHandler CreatePropertyGridHandler(PropertyGrid control);
+        IControlHandler CreatePropertyGridHandler(PropertyGrid control);
 
         /// <summary>
         /// Creates <see cref="IWebBrowserFactoryHandler"/> interface provider.
@@ -104,21 +104,21 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IComboBoxHandler CreateComboBoxHandler(ComboBox control);
+        IControlHandler CreateComboBoxHandler(ComboBox control);
 
         /// <summary>
         /// Creates <see cref="ILabelHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ILabelHandler CreateLabelHandler(Label control);
+        IControlHandler CreateLabelHandler(Label control);
 
         /// <summary>
         /// Creates <see cref="IScrollBarHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IScrollBarHandler CreateScrollBarHandler(ScrollBar control);
+        IControlHandler CreateScrollBarHandler(ScrollBar control);
 
         /// <summary>
         /// Creates <see cref="IMenuItemHandler"/> interface provider.
@@ -146,28 +146,28 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IListBoxHandler CreateListBoxHandler(ListBox control);
+        IControlHandler CreateListBoxHandler(ListBox control);
 
         /// <summary>
         /// Creates <see cref="IWindowHandler"/> interface provider.
         /// </summary>
         /// <param name="window">Owner.</param>
         /// <returns></returns>
-        IWindowHandler CreateWindowHandler(Window window);
+        IControlHandler CreateWindowHandler(Window window);
 
         /// <summary>
         /// Creates <see cref="IScrollViewerHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IScrollViewerHandler CreateScrollViewerHandler(ScrollViewer control);
+        IControlHandler CreateScrollViewerHandler(ScrollViewer control);
 
         /// <summary>
         /// Creates <see cref="ITreeViewHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ITreeViewHandler CreateTreeViewHandler(TreeView control);
+        IControlHandler CreateTreeViewHandler(TreeView control);
 
         /// <summary>
         /// Creates <see cref="IStatusBarHandler"/> interface provider.
@@ -188,55 +188,55 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ICheckListBoxHandler CreateCheckListBoxHandler(CheckListBox control);
+        IControlHandler CreateCheckListBoxHandler(CheckListBox control);
 
         /// <summary>
         /// Creates <see cref="IVListBoxHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IVListBoxHandler CreateVListBoxHandler(VirtualListBox control);
+        IControlHandler CreateVListBoxHandler(VirtualListBox control);
 
         /// <summary>
         /// Creates <see cref="ILinkLabelHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ILinkLabelHandler CreateLinkLabelHandler(LinkLabel control);
+        IControlHandler CreateLinkLabelHandler(LinkLabel control);
 
         /// <summary>
         /// Creates <see cref="IAnimationPlayerHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IAnimationPlayerHandler CreateAnimationPlayerHandler(AnimationPlayer control);
+        IControlHandler CreateAnimationPlayerHandler(AnimationPlayer control);
 
         /// <summary>
         /// Creates <see cref="ICalendarHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        ICalendarHandler CreateCalendarHandler(Calendar control);
+        IControlHandler CreateCalendarHandler(Calendar control);
 
         /// <summary>
         /// Creates <see cref="IListViewHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IListViewHandler CreateListViewHandler(ListView control);
+        IControlHandler CreateListViewHandler(ListView control);
 
         /// <summary>
         /// Creates <see cref="IDateTimePickerHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IDateTimePickerHandler CreateDateTimePickerHandler(DateTimePicker control);
+        IControlHandler CreateDateTimePickerHandler(DateTimePicker control);
 
         /// <summary>
         /// Creates <see cref="INumericUpDownHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        INumericUpDownHandler CreateNumericUpDownHandler(NumericUpDown control);
+        IControlHandler CreateNumericUpDownHandler(NumericUpDown control);
     }
 }

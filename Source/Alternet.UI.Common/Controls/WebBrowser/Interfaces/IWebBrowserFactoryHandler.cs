@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control);
+        IControlHandler CreateWebBrowserHandler(WebBrowser control);
 
         /// <summary>
         /// Throws C++ exception with the specified id.
