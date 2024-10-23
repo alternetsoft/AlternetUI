@@ -1125,7 +1125,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawText(string text, PointD origin)
         {
-            DrawText(text, Font.Default, Brush.Default, origin);
+            DrawText(text, Control.DefaultFont, Brush.Default, origin);
         }
 
         /// <summary>

@@ -212,9 +212,10 @@ namespace Alternet.UI
             Initialized = true;
             Window.UpdateDefaultFont();
 
-#if DEBUG
-            WebBrowser.CrtSetDbgFlag(0);
-#endif
+            DebugUtils.DebugCall(() =>
+            {
+                WebBrowser.CrtSetDbgFlag(0);
+            });
         }
 
         /// <summary>

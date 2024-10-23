@@ -188,7 +188,7 @@ namespace PropertyGridSample
                 "Font name",
                 null,
                 choices,
-                choices.GetValueFromLabel(Font.Default.Name));
+                choices.GetValueFromLabel(Control.DefaultFont.Name));
             PropGrid.Add(prop);
         }
 

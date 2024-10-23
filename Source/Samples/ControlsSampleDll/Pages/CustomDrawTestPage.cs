@@ -67,13 +67,16 @@ namespace ControlsSample
                 "This text has ",
                 "bold",
                 " fragment",
-                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
+                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Control.DefaultFont.Scaled(1.5)));
 
             toolTemplate = TemplateUtils.CreateTemplateWithBoldText(
                 "This tool has ",
                 "bold",
                 " fragment ",
-                new FontAndColor(Color.Brown, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
+                new FontAndColor(
+                    Color.Brown,
+                    Color.LightGoldenrodYellow,
+                    Control.DefaultFont.Scaled(1.5)));
             toolTemplate.HasBorder = true;
             toolTemplate.BorderColor = Color.Red;
 
