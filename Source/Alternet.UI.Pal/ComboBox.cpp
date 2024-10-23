@@ -7,6 +7,16 @@ namespace Alternet::UI
         RaiseEvent(ComboBoxEvent::AfterShowPopup);
     }
 
+    void ComboBox::DismissPopup()
+    {
+        GetComboBox()->Dismiss();
+    }
+
+    void ComboBox::ShowPopup()
+    {
+        GetComboBox()->Popup();
+    }
+
     void ComboBox::OnDismiss()
     {
         RaiseEvent(ComboBoxEvent::AfterDismissPopup);

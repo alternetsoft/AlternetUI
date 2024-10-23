@@ -272,6 +272,28 @@ ALTERNET_UI_API void ComboBox_SetEventCalled_(ComboBox* obj, c_bool value)
     #endif
 }
 
+ALTERNET_UI_API void ComboBox_DismissPopup_(ComboBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DismissPopup();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void ComboBox_ShowPopup_(ComboBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ShowPopup();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API int ComboBox_DefaultOnMeasureItemWidth_(ComboBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

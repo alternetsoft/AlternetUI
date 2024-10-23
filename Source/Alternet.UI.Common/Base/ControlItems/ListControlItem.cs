@@ -393,6 +393,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Default method which measures item size.
+        /// </summary>
+        /// <param name="container">Item container.</param>
+        /// <param name="dc">Graphics context used to measure item's text.</param>
+        /// <param name="itemIndex">Index of the item.</param>
+        public static SizeD DefaultMeasureItemSize(
+            IListControlItemContainer container,
+            Graphics dc,
+            int itemIndex)
+        {
+            var item = container.SafeItem(itemIndex);
+
+            var s = container.GetItemText(itemIndex, true);
+            if (string.IsNullOrEmpty(s))
+                s = "Wy";
+
+            var itemImages = ListControlItem.GetItemImages(item, container, null);
+
+            var normal = itemImages[VisualControlState.Normal];
+            var disabled = itemImages[VisualControlState.Disabled];
+            var selected = itemImages[VisualControlState.Selected];
+
+            var maxHeightI =
+                MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
+            var maxHeightD = GraphicsFactory.PixelToDip(maxHeightI, dc.ScaleFactor);
+
+            var font = ListControlItem.GetFont(item, container).AsBold;
+            var size = dc.GetTextExtent(s, font);
+            size.Height = Math.Max(size.Height, maxHeightD);
+
+            var itemMargin = container.Defaults.ItemMargin;
+
+            size.Width += itemMargin.Horizontal;
+            size.Height += itemMargin.Vertical;
+
+            var minItemHeight = ListControlItem.GetMinHeight(item, container);
+
+            size.Height = Math.Max(size.Height, minItemHeight);
+            return size;
+        }
+
+        /// <summary>
         /// Gets item minimal height.
         /// </summary>
         public static Coord GetMinHeight(ListControlItem? item, IListControlItemContainer? container)
@@ -692,8 +734,11 @@ namespace Alternet.UI
             var centeredImageRect = imageRect.CenterIn(rect, false, true);
 
             var itemRect = rect;
-            itemRect.X += centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
-            itemRect.Width -= centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
+
+            var offsetWidth = centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
+
+            itemRect.X += offsetWidth;
+            itemRect.Width -= offsetWidth;
 
             return (centeredImageRect, itemRect);
         }

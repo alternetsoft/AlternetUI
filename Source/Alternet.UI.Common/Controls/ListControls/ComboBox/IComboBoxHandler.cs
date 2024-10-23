@@ -46,5 +46,15 @@ namespace Alternet.UI
         /// Default method for the item drawing. Can be used inside paint event.
         /// </summary>
         void DefaultOnDrawItem();
+
+        /// <summary>
+        /// Closes popup window.
+        /// </summary>
+        void DismissPopup();
+
+        /// <summary>
+        /// Shows popup window.
+        /// </summary>
+        void ShowPopup();
     }
 }
