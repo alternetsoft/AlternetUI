@@ -54,6 +54,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets text for the display purposes.
+        /// </summary>
+        public virtual string? DisplayText { get; set; }
+
+        /// <summary>
         /// Gets or sets state of the check box associated with the item.
         /// </summary>
         /// <remarks>
@@ -623,7 +628,7 @@ namespace Alternet.UI
 
             var textVisible = container?.Defaults.TextVisible ?? true;
 
-            var s = textVisible ? e.ItemText.Trim() : string.Empty;
+            var s = textVisible ? e.ItemTextForDisplay.Trim() : string.Empty;
 
             if (image is not null && s != string.Empty)
                 s = $" {s}";
