@@ -608,13 +608,15 @@ namespace Alternet.UI
         /// <see cref="DefaultMeasureItemSize"/>.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
-        public virtual SizeD MeasureItemSize(int itemIndex)
+        /// <param name="forDisplay">The flag which specifies whether to use item's text
+        /// for display purposes or the real value.</param>
+        public virtual SizeD MeasureItemSize(int itemIndex, bool forDisplay)
         {
             if (painter is null)
-                return DefaultMeasureItemSize(itemIndex);
+                return DefaultMeasureItemSize(itemIndex, forDisplay);
             var result = painter.GetSize(this, itemIndex);
             if (result == SizeD.MinusOne)
-                return DefaultMeasureItemSize(itemIndex);
+                return DefaultMeasureItemSize(itemIndex, forDisplay);
             return result;
         }
 
@@ -651,9 +653,11 @@ namespace Alternet.UI
         /// Default method which measures item size. Called from <see cref="MeasureItemSize"/>.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
-        public virtual SizeD DefaultMeasureItemSize(int itemIndex)
+        /// <param name="forDisplay">The flag which specifies whether to use text
+        /// for display purposes or the real value.</param>
+        public virtual SizeD DefaultMeasureItemSize(int itemIndex, bool forDisplay)
         {
-            var s = GetItemText(itemIndex);
+            var s = GetItemText(itemIndex, forDisplay);
             if (string.IsNullOrEmpty(s))
                 s = "Wy";
 
@@ -1027,6 +1031,41 @@ namespace Alternet.UI
                 ListControlItem.DefaultDrawForeground(this, e);
             else
                 item.DrawForeground(this, e);
+        }
+
+        /// <summary>
+        /// Sets items from the specified collection to the control's items as fast as possible.
+        /// </summary>
+        /// <typeparam name="TItemFrom">Type of the item in the otgher collection
+        /// that will be assigned to the control's items.</typeparam>
+        /// <param name="from">The collection to be assigned to item of the control.</param>
+        /// <param name="fnAssign">Assign item action. Must assign item data.</param>
+        /// <param name="fnCreateItem">Create item action.</param>
+        public virtual void SetItemsFast<TItemFrom>(
+            IEnumerable<TItemFrom> from,
+            Action<TItem, TItemFrom> fnAssign,
+            Func<TItem> fnCreateItem)
+        {
+            var count = from.Count();
+
+            BeginUpdate();
+            try
+            {
+                SetCount(count, fnCreateItem);
+                var i = 0;
+                foreach (var itemFrom in from)
+                {
+                    var itemTo = Items[i];
+                    fnAssign(itemTo, itemFrom);
+                    i++;
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+
+            SelectedIndex = -1;
         }
 
         int IListControlItemContainer.GetItemCount()

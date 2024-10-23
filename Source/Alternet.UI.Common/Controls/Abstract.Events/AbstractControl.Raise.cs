@@ -62,6 +62,8 @@ namespace Alternet.UI
             CellChanged?.Invoke(this, EventArgs.Empty);
             OnCellChanged(EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -86,6 +88,8 @@ namespace Alternet.UI
             OnIdle(EventArgs.Empty);
             Idle?.Invoke(this, EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -108,6 +112,8 @@ namespace Alternet.UI
             HoveredControl = this;
             MouseMove?.Invoke(this, e);
             OnMouseMove(e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -140,6 +146,8 @@ namespace Alternet.UI
             OnHelpRequested(e);
             HelpRequested?.Invoke(this, e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -163,6 +171,8 @@ namespace Alternet.UI
             Designer?.RaiseParentChanged(this);
             ParentChanged?.Invoke(this, EventArgs.Empty);
             OnParentChanged(EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -190,6 +200,8 @@ namespace Alternet.UI
             dragEventArgs = null;
 
             OnMouseUp(e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -224,6 +236,8 @@ namespace Alternet.UI
             MouseLeftButtonUp?.Invoke(this, e);
             OnMouseLeftButtonUp(e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -246,6 +260,8 @@ namespace Alternet.UI
         {
             MouseRightButtonUp?.Invoke(this, e);
             OnMouseRightButtonUp(e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -279,6 +295,8 @@ namespace Alternet.UI
             MouseDown?.Invoke(this, e);
 
             OnMouseDown(e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -320,6 +338,8 @@ namespace Alternet.UI
                 InvalidateCaret();
             }
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -353,6 +373,8 @@ namespace Alternet.UI
                 Invalidate();
             }
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -377,6 +399,8 @@ namespace Alternet.UI
             OnActivated(EventArgs.Empty);
             Activated?.Invoke(this, EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -400,6 +424,8 @@ namespace Alternet.UI
             OnHandlerLocationChanged(EventArgs.Empty);
             ReportBoundsChanged();
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -421,6 +447,8 @@ namespace Alternet.UI
         {
             OnDeactivated(EventArgs.Empty);
             Deactivated?.Invoke(this, EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -445,6 +473,8 @@ namespace Alternet.UI
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
             OnSystemColorsChanged(EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -468,6 +498,8 @@ namespace Alternet.UI
             QueryContinueDrag?.Invoke(this, e);
             OnQueryContinueDrag(e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -489,6 +521,8 @@ namespace Alternet.UI
         {
             OnHandleCreated(EventArgs.Empty);
             HandleCreated?.Invoke(this, EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -512,6 +546,8 @@ namespace Alternet.UI
             ResetScaleFactor();
             OnHandleDestroyed(EventArgs.Empty);
             HandleDestroyed?.Invoke(this, EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -538,6 +574,8 @@ namespace Alternet.UI
             OnMouseCaptureLost(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -558,6 +596,8 @@ namespace Alternet.UI
         {
             TextChanged?.Invoke(this, EventArgs.Empty);
             OnTextChanged(EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -583,6 +623,8 @@ namespace Alternet.UI
             SizeChanged?.Invoke(this, EventArgs.Empty);
             Resize?.Invoke(this, EventArgs.Empty);
             OnResize(EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -610,6 +652,8 @@ namespace Alternet.UI
             OnMouseEnter(EventArgs.Empty);
             MouseEnter?.Invoke(this, EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -632,6 +676,8 @@ namespace Alternet.UI
         {
             OnVisualStateChanged(EventArgs.Empty);
             VisualStateChanged?.Invoke(this, EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -656,6 +702,8 @@ namespace Alternet.UI
             OnIsMouseOverChanged(EventArgs.Empty);
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -700,6 +748,8 @@ namespace Alternet.UI
             OnMouseLeave(EventArgs.Empty);
             MouseLeave?.Invoke(this, EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -723,6 +773,8 @@ namespace Alternet.UI
             OnChildInserted(index, childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -745,6 +797,8 @@ namespace Alternet.UI
         {
             OnChildRemoved(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -782,6 +836,8 @@ namespace Alternet.UI
             OnLocationChanged(EventArgs.Empty);
             LocationChanged?.Invoke(this, EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -805,6 +861,8 @@ namespace Alternet.UI
         {
             OnDragStart(e);
             DragStart?.Invoke(this, e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -830,6 +888,8 @@ namespace Alternet.UI
             OnDragDrop(e);
             DragDrop?.Invoke(this, e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -853,6 +913,8 @@ namespace Alternet.UI
         {
             OnDragOver(e);
             DragOver?.Invoke(this, e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -879,6 +941,8 @@ namespace Alternet.UI
             OnDpiChanged(e);
             DpiChanged?.Invoke(this, e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -903,6 +967,8 @@ namespace Alternet.UI
             OnDragEnter(e);
             DragEnter?.Invoke(this, e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -924,6 +990,8 @@ namespace Alternet.UI
         {
             DragLeave?.Invoke(this, EventArgs.Empty);
             OnDragLeave(EventArgs.Empty);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -947,6 +1015,8 @@ namespace Alternet.UI
         {
             OnHandlerSizeChanged(EventArgs.Empty);
             ReportBoundsChanged();
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -990,6 +1060,8 @@ namespace Alternet.UI
             MouseLeftButtonDown?.Invoke(this, e);
             OnMouseLeftButtonDown(e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1013,6 +1085,8 @@ namespace Alternet.UI
             MouseRightButtonDown?.Invoke(this, e);
             ShowPopupMenu(ContextMenuStrip);
             OnMouseRightButtonDown(e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -1038,6 +1112,8 @@ namespace Alternet.UI
 
             KeyUp?.Invoke(this, e);
             OnKeyUp(e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -1070,6 +1146,8 @@ namespace Alternet.UI
             KeyPress?.Invoke(this, e);
             OnKeyPress(e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1094,6 +1172,8 @@ namespace Alternet.UI
             OnMouseWheel(e);
             MouseWheel?.Invoke(this, e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1117,6 +1197,8 @@ namespace Alternet.UI
             LastDoubleClickTimestamp = e.Timestamp;
             OnMouseDoubleClick(e);
             MouseDoubleClick?.Invoke(this, e);
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;
@@ -1150,6 +1232,8 @@ namespace Alternet.UI
                 KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
 #endif
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1182,6 +1266,8 @@ namespace Alternet.UI
             OnClick(EventArgs.Empty);
             Click?.Invoke(this, EventArgs.Empty);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1209,6 +1295,8 @@ namespace Alternet.UI
             if(!e.Handled && TouchEventsAsMouse)
                 TouchToMouseEvents(e);
 
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
+
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1232,6 +1320,8 @@ namespace Alternet.UI
             OnTitleChanged(EventArgs.Empty);
             TitleChanged?.Invoke(this, EventArgs.Empty);
             Parent?.OnChildPropertyChanged(this, nameof(Title));
+
+            /*RaiseNotifications((n) => n.AfterPaint(this, e));*/
 
             var nn = Notifications;
             var nn2 = GlobalNotifications;

@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿#pragma warning disable
+using SkiaSharp;
 
 namespace SkiaSharpSample.Samples
 {

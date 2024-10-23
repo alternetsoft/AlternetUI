@@ -36,7 +36,7 @@ namespace PropertyGridSample
         DateTime asDateTime = DateTime.Now;
         string asString = "hello";
         Color asColor = Color.Red;
-        Font asFont = Font.Default;
+        Font asFont = Control.DefaultFont;
         Brush asBrush = Brush.Default;
         Pen asPen = Pen.Default;
         SizeD asSize = new(26, 30);

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿#pragma warning disable
+using System.IO;
 
 using SkiaSharp;
 

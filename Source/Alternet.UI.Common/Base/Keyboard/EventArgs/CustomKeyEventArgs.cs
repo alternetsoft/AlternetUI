@@ -138,6 +138,21 @@ namespace Alternet.UI
         public virtual bool Control => modifiers.HasFlag(ModifierKeys.Control);
 
         /// <summary>
+        /// Gets whether CTRL and SHIFT keys are pressed.
+        /// </summary>
+        public bool ControlAndShift => Control && Shift;
+
+        /// <summary>
+        /// Get whether <see cref="Key"/> is plus or numpad plus character.
+        /// </summary>
+        public bool IsAnyPlusKey => Key == Key.PlusSign || Key == Key.NumPadPlus;
+
+        /// <summary>
+        /// Get whether <see cref="Key"/> is minus or numpad minus character.
+        /// </summary>
+        public bool IsAnyMinusKey => Key == Key.Minus || Key == Key.NumPadMinus;
+
+        /// <summary>
         /// Gets a value indicating whether the SHIFT key was pressed.
         /// </summary>
         /// <returns>

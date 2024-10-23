@@ -23,6 +23,14 @@ namespace ControlsSample
             KeyDown += ComboBoxPage_KeyDown;
 
             comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged1;
+            comboBox.DropDown += (_, _) =>
+            {
+                App.Log("ComboBox: DropDown event fired");
+            };
+            comboBox.DropDownClosed += (_, _) =>
+            {
+                App.Log("ComboBox: DropDownClosed event fired");
+            };
         }
 
         private void LoadDefaultItems(bool ownerDraw = false)
@@ -35,6 +43,12 @@ namespace ControlsSample
                     {
                         comboBox.Add(s);
                     }, false);
+
+                var item = comboBox.Items.Last() as ListControlItem;
+                if(item is not null)
+                {
+                    item.DisplayText = "(" + item.Text + ")";
+                }
             }
             else
             {
@@ -108,7 +122,9 @@ namespace ControlsSample
             
             var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
             var prefix = "ComboBox: TextChanged. Text:";
-            App.LogReplace($"{prefix} {text}", prefix);
+            var fromDropDown = comboBox.DroppedDown ? " (from popup)" : string.Empty;
+
+            App.LogReplace($"{prefix} {text}{fromDropDown}", prefix);
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)

@@ -10,7 +10,7 @@ namespace Alternet.UI
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
         private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
-        private readonly Font font = Font.Default;
+        private readonly Font font = Control.DefaultFont;
         private readonly Pen pointerPen1 = new((Color)"#FC4154", 3);
         private readonly Pen pointerPen2 = new((Color)"#FF827D", 1);
 

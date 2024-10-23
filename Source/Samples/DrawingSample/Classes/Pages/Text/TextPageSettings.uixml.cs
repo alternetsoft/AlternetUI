@@ -192,7 +192,7 @@ namespace DrawingSample
             customFontFamilyComboBox.SelectedItemChanged += (s, e) =>
             {
                 page.CustomFontFamilyName = customFontFamilyComboBox.SelectedItemAs<string>()
-                    ?? Font.Default.Name;
+                    ?? Control.DefaultFont.Name;
             };
 
             GetChildrenRecursive().Action<Slider>((c) => c.ClearTicks());

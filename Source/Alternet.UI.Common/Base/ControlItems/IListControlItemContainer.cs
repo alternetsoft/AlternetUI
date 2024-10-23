@@ -33,7 +33,9 @@ namespace Alternet.UI
         /// Returns the text representation of item with the specified <paramref name="index"/>.
         /// </summary>
         /// <param name="index">Item index from which to get the contents to display.</param>
-        string GetItemText(int index);
+        /// <param name="forDisplay">The flag which specifies whether to get text
+        /// for display purposes or the real value.</param>
+        string GetItemText(int index, bool forDisplay);
 
         /// <summary>
         /// Gets count of the items.

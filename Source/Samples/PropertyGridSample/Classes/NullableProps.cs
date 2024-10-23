@@ -285,7 +285,7 @@ namespace PropertyGridSample
             asDateTime = DateTime.Now;
             asString = "hello";
             asColor = Color.Red;
-            asFont = Font.Default;
+            asFont = Control.DefaultFont;
             asBrush = Brush.Default;
             asPen = Pen.Default;
             asSize = new SizeD(26, 30);

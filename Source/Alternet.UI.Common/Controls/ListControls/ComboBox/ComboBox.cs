@@ -74,6 +74,7 @@ namespace Alternet.UI
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
         private ListControlItemDefaults? itemDefaults;
+        private bool droppedDown;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
@@ -91,6 +92,18 @@ namespace Alternet.UI
         public ComboBox()
         {
         }
+
+        /// <summary>
+        /// Occurs when the drop-down portion of the <see cref="ComboBox" /> is no longer visible.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? DropDownClosed;
+
+        /// <summary>
+        /// Occurs when the drop-down portion of a <see cref="ComboBox" /> is shown.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? DropDown;
 
         /// <summary>
         /// Occurs when the <see cref="SelectedItem"/> property value changes.
@@ -139,7 +152,7 @@ namespace Alternet.UI
         /// in the case when item is <see cref="ListControlItem"/> and owner draw mode is turned on.
         /// </summary>
         [Browsable(false)]
-        public ListControlItemDefaults OwnerDrawItemDefaults
+        public virtual ListControlItemDefaults OwnerDrawItemDefaults
         {
             get
             {
@@ -150,6 +163,22 @@ namespace Alternet.UI
             set
             {
                 itemDefaults = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the combo box is displaying its drop-down portion.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the drop-down portion is displayed;
+        /// otherwise, <see langword="false" />. The default is false.</returns>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool DroppedDown
+        {
+            get
+            {
+                return droppedDown;
             }
         }
 
@@ -250,7 +279,7 @@ namespace Alternet.UI
                 if (selectedIndex == value)
                     return;
                 selectedIndex = value;
-                Text = GetItemText(SelectedItem);
+                Text = GetItemText(SelectedItem, false);
                 RaiseSelectedItemChanged();
             }
         }
@@ -402,6 +431,10 @@ namespace Alternet.UI
             {
                 var margins = Handler.TextMargins;
                 var result = PixelToDip(margins);
+                if (result.X < 1)
+                    result.X = 1;
+                if (result.Y < 1)
+                    result.Y = 1;
                 return result;
             }
         }
@@ -506,6 +539,26 @@ namespace Alternet.UI
             OnSelectedItemChanged(EventArgs.Empty);
             SelectedItemChanged?.Invoke(this, EventArgs.Empty);
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DropDown"/> event and calls <see cref="OnDropDown"/> method.
+        /// </summary>
+        public void RaiseDropDown()
+        {
+            droppedDown = true;
+            OnDropDown(EventArgs.Empty);
+            DropDown?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DropDownClosed"/> event and calls <see cref="OnDropDownClosed"/> method.
+        /// </summary>
+        public void RaiseDropDownClosed()
+        {
+            droppedDown = false;
+            OnDropDownClosed(EventArgs.Empty);
+            DropDownClosed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -630,7 +683,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var font = Font ?? AbstractControl.DefaultFont;
+            var font = RealFont;
             Color color;
             color = ForegroundColor ?? SystemColors.WindowText;
 
@@ -693,17 +746,22 @@ namespace Alternet.UI
             var offset = DefaultImageVerticalOffset;
             if (e.IsPaintingControl)
                 offset++;
+            else
+            {
+            }
 
-            var size = e.ClipRectangle.Height - (TextMargin.Y * 2) - (offset * 2);
+            var textMargin = TextMargin;
+            var size = e.ClipRectangle.Height - (textMargin.Y * 2) - (offset * 2);
             var imageRect = new RectD(
-                e.ClipRectangle.X + TextMargin.X,
-                e.ClipRectangle.Y + TextMargin.Y + offset,
+                e.ClipRectangle.X + textMargin.X,
+                e.ClipRectangle.Y + textMargin.Y + offset,
                 size,
                 size);
 
             var itemRect = e.ClipRectangle;
-            itemRect.X += imageRect.Width + DefaultImageTextDistance;
-            itemRect.Width -= imageRect.Width + DefaultImageTextDistance;
+            var horzOffset = imageRect.Right + DefaultImageTextDistance;
+            itemRect.X += horzOffset;
+            itemRect.Width -= imageRect.Right + DefaultImageTextDistance;
 
             return (imageRect, itemRect);
         }
@@ -732,10 +790,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the <see cref="DropDown"/> event is fired.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDropDown(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="DropDownClosed"/> event is fired.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDropDownClosed(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the value of the <see cref="SelectedItem"/> property changes.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
         }

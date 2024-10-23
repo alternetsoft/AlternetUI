@@ -38,7 +38,7 @@ namespace Alternet.Drawing
         public BorderDrawable? Border;
 
         private ScrollBar.MetricsInfo? metrics;
-        private InteriorNotification? notification;
+        private InteriorControlActivity? notification;
 
         /// <summary>
         /// Occurs when the interior element is clicked.
@@ -179,9 +179,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="InteriorNotification"/> attached to this object.
+        /// Gets <see cref="InteriorControlActivity"/> attached to this object.
         /// </summary>
-        public InteriorNotification Notification
+        public InteriorControlActivity Notification
         {
             get
             {

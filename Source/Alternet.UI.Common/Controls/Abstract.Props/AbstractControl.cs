@@ -29,6 +29,11 @@ namespace Alternet.UI
         IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo
     {
         /// <summary>
+        /// Gets or sets default value for <see cref="ParentFont"/> property.
+        /// </summary>
+        public static bool DefaultUseParentFont = false;
+
+        /// <summary>
         /// Gets or sets min element size in device-independent units.
         /// </summary>
         public static Coord MinElementSize = 32;
@@ -51,7 +56,7 @@ namespace Alternet.UI
         private bool isMouseLeftButtonDown;
         private bool parentBackgroundColor;
         private bool parentForegroundColor;
-        private bool parentFont;
+        private bool parentFont = DefaultUseParentFont;
         private bool ignoreSuggestedWidth;
         private bool ignoreSuggestedHeight;
         private bool inLayout;
@@ -1231,6 +1236,12 @@ namespace Alternet.UI
                     return;
                 parent?.Children.Remove(this);
                 value?.Children.Add(this);
+
+                if(ParentFont && HasParent)
+                {
+                    Font ??= Parent?.Font;
+                }
+
                 RaiseParentChanged();
                 stateFlags |= ControlFlags.ParentAssigned;
             }

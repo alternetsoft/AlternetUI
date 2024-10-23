@@ -20,7 +20,7 @@ namespace Alternet.UI
         private static WindowKind? globalWindowKindOverride;
         private static RectD defaultBounds = new(100, 100, 400, 400);
         private static int incFontSizeHighDpi = 2;
-        private static int incFontSize = 0;
+        private static int incFontSize = 1;
 
         private readonly WindowInfo info = new();
         private readonly WindowKind? windowKindOverride;
@@ -871,8 +871,8 @@ namespace Alternet.UI
             if (!App.Initialized)
                 return;
 
-            var dpi = Display.Primary.DPI;
-            var incFont = (dpi.Width > 96) ? Window.IncFontSizeHighDpi : Window.IncFontSize;
+            var dpi = Display.MaxDPI;
+            var incFont = (dpi > 96) ? Window.IncFontSizeHighDpi : Window.IncFontSize;
 
             if (incFont > 0)
             {

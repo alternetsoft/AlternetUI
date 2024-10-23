@@ -58,6 +58,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified action <see cref="IsDebugDefined"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="actionToCall">Action to call.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Conditional("DEBUG")]
+        public static void DebugCall(Action actionToCall)
+        {
+            actionToCall();
+        }
+
+        /// <summary>
+        /// Subscribes to <see cref="AppDomain"/> and <see cref="TaskScheduler"/> events
+        /// related to the exceptions handling.
+        /// </summary>
+        public static void RegisterExceptionsLogger()
+        {
+            AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
+            {
+                DebugCall(() =>
+                {
+                    Debug.WriteLine("First Chance Exception");
+                    Debug.WriteLine(e.Exception.ToString());
+                });
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                DebugCall(() =>
+                {
+                    Debug.WriteLine("CurrentDomain Unhandled exception");
+                    Debug.WriteLine(e.ExceptionObject.ToString());
+                });
+            };
+
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                DebugCall(() =>
+                {
+                    Debug.WriteLine("Unobserved Task Exception");
+                    Debug.WriteLine(e.Exception.ToString());
+                });
+            };
+        }
+
+        /// <summary>
         /// Waits until debugger is attached. Uses <paramref name="debugOptionFileName"/>
         /// file existance in order to get "wait" setting on/off.
         /// </summary>

@@ -174,6 +174,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets items from the specified collection to the control's items as fast as possible.
+        /// </summary>
+        public virtual void SetItemsFast<TItemFrom>(
+            IEnumerable<TItemFrom> from,
+            Action<ListControlItem, TItemFrom> fnAssign)
+        {
+            SetItemsFast(from, fnAssign, () => new ListControlItem());
+        }
+
+        /// <summary>
         /// Scroll by the specified number of pages which may be positive
         /// (to scroll down) or negative (to scroll up).
         /// </summary>
@@ -365,7 +375,7 @@ namespace Alternet.UI
             int lineMax = Handler.GetVisibleEnd();
             for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
             {
-                var hRow = MeasureItemSize(line).Height;
+                var hRow = MeasureItemSize(line, true).Height;
 
                 rectRow.Height = hRow;
 

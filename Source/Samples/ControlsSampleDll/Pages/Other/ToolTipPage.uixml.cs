@@ -23,7 +23,7 @@ namespace ControlsSample
                 "This text has ",
                 "bold",
                 " fragment",
-                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Font.Default.Scaled(1.5)));
+                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Control.DefaultFont.Scaled(1.5)));
 
             controlTemplate.Parent = this;
             controlTemplate.SetSizeToContent();

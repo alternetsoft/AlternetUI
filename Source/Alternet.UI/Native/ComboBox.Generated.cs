@@ -341,6 +341,14 @@ namespace Alternet.UI.Native
                 {
                     DrawItemBackground?.Invoke(); return IntPtr.Zero;
                 }
+                case NativeApi.ComboBoxEvent.AfterShowPopup:
+                {
+                    AfterShowPopup?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.ComboBoxEvent.AfterDismissPopup:
+                {
+                    AfterDismissPopup?.Invoke(); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ComboBoxEvent value: " + e);
             }
         }
@@ -350,6 +358,8 @@ namespace Alternet.UI.Native
         public Action? MeasureItemWidth;
         public Action? DrawItem;
         public Action? DrawItemBackground;
+        public Action? AfterShowPopup;
+        public Action? AfterDismissPopup;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -366,6 +376,8 @@ namespace Alternet.UI.Native
                 MeasureItemWidth,
                 DrawItem,
                 DrawItemBackground,
+                AfterShowPopup,
+                AfterDismissPopup,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

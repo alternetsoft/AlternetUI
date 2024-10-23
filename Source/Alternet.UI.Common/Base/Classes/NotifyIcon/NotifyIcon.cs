@@ -181,12 +181,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets an arbitrary <see cref="object"/> representing some type of user state.
-        /// </summary>
-        /// <value>An arbitrary <see cref="object"/> representing some type of user state.</value>
-        public object? Tag { get; set; }
-
-        /// <summary>
         /// Raises the <see cref="Click"/> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>

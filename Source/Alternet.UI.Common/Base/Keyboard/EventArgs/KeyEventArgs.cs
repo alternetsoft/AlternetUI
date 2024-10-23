@@ -120,5 +120,14 @@ namespace Alternet.UI
         /// Gets whether or not the key referenced by the event is toggled.
         /// </summary>
         public virtual bool IsToggled => keyStates == KeyStates.Toggled;
+
+        /// <summary>
+        /// Assigns True to <see cref="SuppressKeyPress"/> and <see cref="HandledEventArgs.Handled"/>.
+        /// </summary>
+        public virtual void Suppressed()
+        {
+            SuppressKeyPress = true;
+            Handled = true;
+        }
     }
 }

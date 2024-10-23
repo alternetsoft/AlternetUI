@@ -128,7 +128,7 @@ namespace Alternet.UI
             var items = control.Items;
 
             for (var i = 0; i < items.Count; i++)
-                NativeControl.InsertItem(i, Control.GetItemText(control.Items[i]));
+                NativeControl.InsertItem(i, Control.GetItemText(control.Items[i], false));
         }
 
         private void ApplySelection()
@@ -168,7 +168,7 @@ namespace Alternet.UI
 
         private void Items_ItemInserted(object? sender, int index, object item)
         {
-            NativeControl.InsertItem(index, Control.GetItemText(item));
+            NativeControl.InsertItem(index, Control.GetItemText(item, false));
         }
 
         private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -177,7 +177,7 @@ namespace Alternet.UI
             {
                 var item = e.NewItems?[0];
                 var index = e.NewStartingIndex;
-                var text = Control.GetItemText(item);
+                var text = Control.GetItemText(item, false);
                 NativeControl.SetItem(index, text);
             }
         }

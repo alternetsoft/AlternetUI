@@ -156,26 +156,26 @@ namespace DrawingSample
                 dc.DrawRotatedText(
                             "Rotated Text",
                             innerFrame.Location.OffsetBy(450, 290),
-                            Font.Default.Scaled(3),
+                            Control.DefaultFont.Scaled(3),
                             Color.Red,
                             Color.YellowGreen,
                             250);
 
                 dc.DrawText(
                     "AlterNET UI",
-                    Font.Default.Scaled(1.5),
+                    Control.DefaultFont.Scaled(1.5),
                     Brushes.Blue,
                     innerFrame.Location.OffsetBy(150, 10));
 
                 dc.DrawText("This is sample text",
                     innerFrame.InflatedBy(-150, -150).Location,
-                    Font.Default,
+                    Control.DefaultFont,
                     Color.DarkOliveGreen,
                     Color.LightGoldenrodYellow);
 
                 dc.DrawLabel(
                     "This is sample label",
-                    Font.Default,
+                    Control.DefaultFont,
                     Color.LightSkyBlue,
                     Color.Olive,
                     NotifyIconPage.Image,

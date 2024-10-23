@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
@@ -10,411 +8,146 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        internal static SizeD GetPreferredSizeHorizontalStackPanel(
+        /// <summary>
+        /// Gets or sets which layout method is used when controls are aligned.
+        /// This is for internal use only.
+        /// </summary>
+        public static DefaultLayoutMethod UseLayoutMethod = DefaultLayoutMethod.Original;
+
+        /// <summary>
+        /// Enumerates known layout methods. This is for internal use only.
+        /// </summary>
+        public enum DefaultLayoutMethod
+        {
+            /// <summary>
+            /// Original layout method.
+            /// </summary>
+            Original,
+
+            /// <summary>
+            /// New layout method.
+            /// </summary>
+            New,
+        }
+
+        internal static SizeD GetPreferredSizeWhenHorizontal(
             AbstractControl container,
             SizeD availableSize)
         {
-            var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
-            var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
-            if (!isNanHeight && !isNanWidth)
-                return container.SuggestedHeight;
-
-            var stackPanelPadding = container.Padding;
-
-            double width = 0;
-            double maxHeight = 0;
-            foreach (var control in container.AllChildrenInLayout)
-            {
-                var margin = control.Margin;
-                var preferredSize = control.GetPreferredSizeLimited(
-                    new SizeD(availableSize.Width - width, availableSize.Height));
-                width += preferredSize.Width + margin.Horizontal;
-                maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
-            }
-
-            return new SizeD(
-                isNanWidth ? width + stackPanelPadding.Horizontal : container.SuggestedWidth,
-                isNanHeight ? maxHeight + stackPanelPadding.Vertical : container.SuggestedHeight);
-        }
-
-        internal static SizeD GetPreferredSizeStackPanel(
-            AbstractControl container,
-            SizeD availableSize,
-            bool isVertical)
-        {
-            if (isVertical)
-                return GetPreferredSizeVerticalStackPanel(container, availableSize);
+            if (UseLayoutMethod == DefaultLayoutMethod.Original)
+                return OldLayout.GetPreferredSizeWhenHorizontal(container, availableSize);
             else
-                return GetPreferredSizeHorizontalStackPanel(container, availableSize);
+                return GetPreferredSizeWhenStack(container, availableSize, isVert: false);
         }
 
-        internal static SizeD GetPreferredSizeVerticalStackPanel(
+        internal static SizeD GetPreferredSizeWhenVertical(
             AbstractControl container,
             SizeD availableSize)
         {
-            var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
-            var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
-
-            var padding = container.Padding;
-
-            double maxWidth = 0;
-            double height = 0;
-            foreach (var control in container.AllChildrenInLayout)
-            {
-                var margin = control.Margin;
-                var preferredSize = control.GetPreferredSizeLimited(
-                    new SizeD(availableSize.Width, availableSize.Height - height));
-                maxWidth = Math.Max(maxWidth, preferredSize.Width + margin.Horizontal);
-                height += preferredSize.Height + margin.Vertical;
-            }
-
-            var newWidth = isNanWidth ? maxWidth + padding.Horizontal : container.SuggestedWidth;
-            var newHeight = isNanHeight ? height + padding.Vertical : container.SuggestedHeight;
-            return new SizeD(newWidth, newHeight);
+            if (UseLayoutMethod == DefaultLayoutMethod.Original)
+                return OldLayout.GetPreferredSizeWhenVertical(container, availableSize);
+            else
+                return GetPreferredSizeWhenStack(container, availableSize, isVert: true);
         }
 
-        internal static void LayoutHorizontalStackPanel(
+        internal static void LayoutWhenHorizontal(
             AbstractControl container,
             RectD childrenLayoutBounds,
             IReadOnlyList<AbstractControl> controls)
         {
-            Coord x = 0;
-            Coord w = 0;
-
-            Stack<AbstractControl> rightControls = new();
-            List<(AbstractControl Control, Coord Top, SizeD Size)>? centerControls = null;
-
-            foreach (var control in controls)
-            {
-                bool isRight = control.HorizontalAlignment == UI.HorizontalAlignment.Right;
-                if (isRight)
-                    rightControls.Push(control);
-                else
-                    DoAlignControl(control);
-            }
-
-            foreach (var control in rightControls)
-            {
-                DoAlignControl(control);
-            }
-
-            if (centerControls is not null)
-                AlignCenterControls();
-
-            void AlignCenterControls()
-            {
-                double totalWidth = 0;
-                foreach (var item in centerControls)
-                    totalWidth += item.Size.Width;
-                var offset = (childrenLayoutBounds.Width - totalWidth) / 2;
-
-                foreach (var item in centerControls)
-                {
-                    var margin = item.Control.Margin;
-                    item.Control.Bounds =
-                        new RectD(
-                            childrenLayoutBounds.Left + margin.Left + offset,
-                            item.Top,
-                            item.Size.Width,
-                            item.Size.Height);
-                    offset += item.Size.Width + margin.Horizontal;
-                }
-            }
-
-            void DoAlignControl(AbstractControl control)
-            {
-                var margin = control.Margin;
-                var horizontalMargin = margin.Horizontal;
-
-                var preferredSize = control.GetPreferredSizeLimited(
-                    new SizeD(
-                        childrenLayoutBounds.Width - x - horizontalMargin - w,
-                        childrenLayoutBounds.Height));
-                var alignedPosition =
-                    AlignVertical(
-                        childrenLayoutBounds,
-                        control,
-                        preferredSize,
-                        control.VerticalAlignment);
-
-                switch (control.HorizontalAlignment)
-                {
-                    case HorizontalAlignment.Left:
-                    case HorizontalAlignment.Fill:
-                    case HorizontalAlignment.Stretch:
-                    default:
-                        control.Bounds =
-                            new RectD(
-                                childrenLayoutBounds.Left + x + margin.Left,
-                                alignedPosition.Origin,
-                                preferredSize.Width,
-                                alignedPosition.Size);
-                        x += preferredSize.Width + horizontalMargin;
-                        break;
-                    case HorizontalAlignment.Center:
-                        centerControls ??= new();
-                        var item = (
-                            control,
-                            alignedPosition.Origin,
-                            (preferredSize.Width, alignedPosition.Size));
-                        centerControls.Add(item);
-                        break;
-                    case HorizontalAlignment.Right:
-                        control.Bounds =
-                            new RectD(
-                                childrenLayoutBounds.Right - w - margin.Right - preferredSize.Width,
-                                alignedPosition.Origin,
-                                preferredSize.Width,
-                                alignedPosition.Size);
-                        w += preferredSize.Width + horizontalMargin;
-                        break;
-                }
-            }
-        }
-
-        internal static void LayoutStackPanel(
-            AbstractControl container,
-            bool isVertical,
-            RectD space,
-            IReadOnlyList<AbstractControl> items)
-        {
-            if (isVertical)
-                LayoutVerticalStackPanel(container, space, items);
+            if (UseLayoutMethod == DefaultLayoutMethod.Original)
+                OldLayout.LayoutWhenHorizontal(container, childrenLayoutBounds, controls);
             else
-                LayoutHorizontalStackPanel(container, space, items);
+                OldLayout.LayoutWhenHorizontal(container, childrenLayoutBounds, controls);
         }
 
-        internal static void LayoutVerticalStackPanel(
+        internal static void LayoutWhenVertical(
             AbstractControl container,
             RectD lBounds,
             IReadOnlyList<AbstractControl> items)
         {
-            Coord stretchedSize = 0;
-
-            if (items.Count > 0)
-            {
-                foreach (var control in items)
-                {
-                    if (control.VerticalAlignment == UI.VerticalAlignment.Fill)
-                        continue;
-
-                    var verticalMargin = control.Margin.Vertical;
-                    var freeSize = new SizeD(
-                            lBounds.Width,
-                            lBounds.Height - stretchedSize - verticalMargin);
-                    var preferredSize = control.GetPreferredSizeLimited(freeSize);
-                    stretchedSize += preferredSize.Height + verticalMargin;
-                }
-            }
-
-            stretchedSize = lBounds.Height - stretchedSize;
-
-            Coord y = 0;
-            Coord h = 0;
-            int bottomCount = 0;
-
-            foreach (var control in items)
-            {
-                if (control.VerticalAlignment == UI.VerticalAlignment.Bottom)
-                {
-                    bottomCount++;
-                    continue;
-                }
-
-                DoAlignControl(control);
-            }
-
-            if (bottomCount > 0)
-            {
-                for (int i = items.Count - 1; i >= 0; i--)
-                {
-                    var control = items[i];
-                    if (control.VerticalAlignment != UI.VerticalAlignment.Bottom)
-                        continue;
-                    DoAlignControl(control);
-                    bottomCount--;
-                    if (bottomCount == 0)
-                        break;
-                }
-            }
-
-            void DoAlignControl(AbstractControl control)
-            {
-                var stretch = control.VerticalAlignment == UI.VerticalAlignment.Fill;
-
-                bool bottom = control.VerticalAlignment == UI.VerticalAlignment.Bottom;
-
-                var margin = control.Margin;
-                var vertMargin = margin.Vertical;
-
-                var freeSize = new SizeD(
-                    lBounds.Width,
-                    lBounds.Height - y - vertMargin - h);
-                var preferSize = control.GetPreferredSizeLimited(freeSize);
-                if (stretch)
-                    preferSize.Height = stretchedSize - vertMargin;
-                var alignedPos = AlignHorizontal(
-                    lBounds,
-                    control,
-                    preferSize,
-                    control.HorizontalAlignment);
-                if (bottom)
-                {
-                    control.Bounds =
-                        new RectD(
-                            alignedPos.Origin,
-                            lBounds.Bottom - h - margin.Bottom - preferSize.Height,
-                            alignedPos.Size,
-                            preferSize.Height);
-                    h += preferSize.Height + vertMargin;
-                }
-                else
-                {
-                    control.Bounds =
-                        new RectD(
-                            alignedPos.Origin,
-                            lBounds.Top + y + margin.Top,
-                            alignedPos.Size,
-                            preferSize.Height);
-                    y += preferSize.Height + vertMargin;
-                }
-            }
+            if (UseLayoutMethod == DefaultLayoutMethod.Original)
+                OldLayout.LayoutWhenVertical(container, lBounds, items);
+            else
+                OldLayout.LayoutWhenVertical(container, lBounds, items);
         }
 
         // On return, 'bounds' has an empty space left after docking the controls to sides
         // of the container (fill controls are not counted).
-        internal static int LayoutDockedChildren(
+        // On return, 'result' has number of controls with Dock != None.
+        internal static int LayoutWhenDocked(
             AbstractControl parent,
             ref RectD bounds,
             IReadOnlyList<AbstractControl> children)
         {
-            var result = 0;
+            if (UseLayoutMethod == DefaultLayoutMethod.Original)
+                return OldLayout.LayoutWhenDocked(parent, ref bounds, children);
+            else
+                return OldLayout.LayoutWhenDocked(parent, ref bounds, children);
+        }
 
-            var space = bounds;
+        internal static SizeD GetMinStretchedSize(
+            SizeD availableSize,
+            IReadOnlyList<AbstractControl> children)
+        {
+            SizeD result = 0;
 
-            // Deal with docking; go through in reverse, MS docs say that
-            // lowest Z-order is closest to edge
-            for (int i = children.Count - 1; i >= 0; i--)
+            foreach (var child in children)
             {
-                AbstractControl child = children[i];
-                DockStyle dock = child.Dock;
-
-                if (dock == DockStyle.None)
-                    continue;
-
-                result++;
-                SizeD child_size = child.Bounds.Size;
-                bool autoSize = false;
-
-                switch (dock)
+                if (child.VerticalAlignment == VerticalAlignment.Stretch
+                    || child.HorizontalAlignment == HorizontalAlignment.Stretch)
                 {
-                    case DockStyle.Left:
-                        LayoutLeft();
-                        break;
-                    case DockStyle.Top:
-                        LayoutTop();
-                        break;
-                    case DockStyle.Right:
-                        LayoutRight();
-                        break;
-                    case DockStyle.Bottom:
-                        LayoutBottom();
-                        break;
-                    case DockStyle.Fill:
-                        LayoutFill();
-                        break;
-                }
-
-                void LayoutLeft()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(child_size.Width, space.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Left,
-                        space.Y,
-                        child_size.Width,
-                        space.Height,
-                        BoundsSpecified.All);
-                    space.X += child_size.Width;
-                    space.Width -= child_size.Width;
-                }
-
-                void LayoutTop()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(space.Width, child_size.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Left,
-                        space.Y,
-                        space.Width,
-                        child_size.Height,
-                        BoundsSpecified.All);
-                    space.Y += child_size.Height;
-                    space.Height -= child_size.Height;
-                }
-
-                void LayoutRight()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(child_size.Width, space.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Right - child_size.Width,
-                        space.Y,
-                        child_size.Width,
-                        space.Height,
-                        BoundsSpecified.All);
-                    space.Width -= child_size.Width;
-                }
-
-                void LayoutBottom()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(space.Width, child_size.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Left,
-                        space.Bottom - child_size.Height,
-                        space.Width,
-                        child_size.Height,
-                        BoundsSpecified.All);
-                    space.Height -= child_size.Height;
-                }
-
-                void LayoutFill()
-                {
-                    child_size = new SizeD(space.Width, space.Height);
-                    if (autoSize)
-                        child_size = child.GetPreferredSizeLimited(child_size);
-                    child.SetBounds(
-                        space.Left,
-                        space.Top,
-                        child_size.Width,
-                        child_size.Height,
-                        BoundsSpecified.All);
+                    var childMargin = child.Margin;
+                    var childPreferredSize = child.GetPreferredSizeLimited(availableSize);
+                    var childPreferredSizeWithMargin = childPreferredSize + childMargin.Size;
+                    result = SizeD.Max(result, childPreferredSizeWithMargin);
                 }
             }
 
-            bounds = space;
             return result;
+        }
+
+        internal static SizeD GetPreferredSizeWhenStack(
+            AbstractControl container,
+            SizeD availableSize,
+            bool isVert)
+        {
+            var containerSuggestedSize = container.SuggestedSize;
+            if (!containerSuggestedSize.IsNanWidthOrHeight)
+                return containerSuggestedSize;
+
+            var children = container.AllChildrenInLayout;
+
+            var isNanWidth = containerSuggestedSize.IsNanWidth;
+            var isNanHeight = containerSuggestedSize.IsNanHeight;
+            var containerSize = availableSize;
+
+            SizeD result = SizeD.Empty;
+
+            foreach (var child in children)
+            {
+                var childMargin = child.Margin;
+
+                if(isVert)
+                {
+                    var preferredSize = child.GetPreferredSizeLimited(
+                        new(containerSize.Width, containerSize.Height - result.Height));
+                    result.Width = Math.Max(result.Width, preferredSize.Width + childMargin.Horizontal);
+                    result.Height += preferredSize.Height + childMargin.Vertical;
+                }
+                else
+                {
+                    var preferredSize = child.GetPreferredSizeLimited(
+                        new SizeD(containerSize.Width - result.Width, containerSize.Height));
+                    result.Width += preferredSize.Width + childMargin.Horizontal;
+                    result.Height = Math.Max(result.Height, preferredSize.Height + childMargin.Vertical);
+                }
+            }
+
+            var padding = container.Padding;
+            var newWidth = isNanWidth ? result.Width + padding.Horizontal : container.SuggestedWidth;
+            var newHeight = isNanHeight ? result.Height + padding.Vertical : container.SuggestedHeight;
+            return new(newWidth, newHeight);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace NativeApi.Api
         public event EventHandler? MeasureItemWidth;
         public event EventHandler? DrawItem;
         public event EventHandler? DrawItemBackground;
+        public event EventHandler? AfterShowPopup;
+        public event EventHandler? AfterDismissPopup;
 
         public string EmptyTextHint { get; set; }
         public bool HasBorder { get; set; }

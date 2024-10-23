@@ -427,6 +427,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="Vertical"/> or <see cref="Horizontal"/> depending on the
+        /// <paramref name="isVert"/> parameter value.
+        /// </summary>
+        /// <param name="isVert">The flag which detremines whether to return
+        /// <see cref="Vertical"/> or <see cref="Horizontal"/> property value.
+        /// </param>
+        /// <returns></returns>
+        public readonly Coord GetSize(bool isVert)
+        {
+            if (isVert)
+                return Vertical;
+            else
+                return Horizontal;
+        }
+
+        /// <summary>
         /// Sets all fields to 0 if <paramref name="reset"/> is True.
         /// </summary>
         /// <param name="reset"></param>

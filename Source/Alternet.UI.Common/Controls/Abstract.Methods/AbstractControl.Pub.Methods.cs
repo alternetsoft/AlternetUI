@@ -72,7 +72,7 @@ namespace Alternet.UI
             RectD space,
             IReadOnlyList<AbstractControl> items)
         {
-            var number = LayoutDockedChildren(
+            var number = LayoutWhenDocked(
                 container,
                 ref space,
                 items);
@@ -99,11 +99,11 @@ namespace Alternet.UI
                     break;
                 case LayoutStyle.Vertical:
                     UpdateItems();
-                    LayoutVerticalStackPanel(container, space, items);
+                    LayoutWhenVertical(container, space, items);
                     break;
                 case LayoutStyle.Horizontal:
                     UpdateItems();
-                    LayoutHorizontalStackPanel(container, space, items);
+                    LayoutWhenHorizontal(container, space, items);
                     break;
             }
         }
@@ -136,9 +136,9 @@ namespace Alternet.UI
                 case LayoutStyle.Basic:
                     return AbstractControl.GetPreferredSizeDefaultLayout(container, availableSize);
                 case LayoutStyle.Vertical:
-                    return AbstractControl.GetPreferredSizeVerticalStackPanel(container, availableSize);
+                    return AbstractControl.GetPreferredSizeWhenVertical(container, availableSize);
                 case LayoutStyle.Horizontal:
-                    return AbstractControl.GetPreferredSizeHorizontalStackPanel(container, availableSize);
+                    return AbstractControl.GetPreferredSizeWhenHorizontal(container, availableSize);
             }
         }
 
@@ -2093,6 +2093,21 @@ namespace Alternet.UI
                 return;
             notifications ??= new();
             notifications.Add(n);
+        }
+
+        /// <summary>
+        /// Gets vertical or horizontal alignment as <see cref="CoordAlignment"/>
+        /// depending on the <paramref name="isVert"/> parameter value.
+        /// </summary>
+        /// <param name="isVert">The flag which specifies whether to return
+        /// vertical or horizontal alignment.</param>
+        /// <returns></returns>
+        public CoordAlignment GetCoordAlignment(bool isVert)
+        {
+            if (isVert)
+                return (CoordAlignment)VerticalAlignment;
+            else
+                return (CoordAlignment)HorizontalAlignment;
         }
 
         /// <summary>

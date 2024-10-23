@@ -17,17 +17,25 @@ namespace Alternet.UI
         /// <param name="itemIndex">Index of the item.</param>
         /// <param name="item">Item.</param>
         /// <param name="defaultResult">Default string representation of the item.</param>
-        public GetItemTextEventArgs(int itemIndex, object? item, string defaultResult)
+        /// <param name="forDisplay">The flag which specifies whether to get text
+        /// for display purposes or the real value.</param>
+        public GetItemTextEventArgs(int itemIndex, object? item, string defaultResult, bool forDisplay)
         {
             ItemIndex = itemIndex;
             Item = item;
             Result = defaultResult;
+            ForDisplay = forDisplay;
         }
 
         /// <summary>
         /// Gets index of the item.
         /// </summary>
         public int ItemIndex { get; }
+
+        /// <summary>
+        /// Gets a flag indicating that text is required for the display purposes.
+        /// </summary>
+        public bool ForDisplay { get; }
 
         /// <summary>
         /// Gets item.
