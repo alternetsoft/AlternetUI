@@ -17,6 +17,7 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class Window : ContainerControl, IWindow
     {
+        private static List<IControlNotification>? globalWindowNotifications;
         private static WindowKind? globalWindowKindOverride;
         private static RectD defaultBounds = new(100, 100, 400, 400);
         private static int incFontSizeHighDpi = 2;
@@ -184,6 +185,20 @@ namespace Alternet.UI
         /// <value>A <see cref="Window"/> that represents the currently active window,
         /// or <see langword="null"/> if there is no active window.</value>
         public static Window? ActiveWindow => App.Handler.GetActiveWindow();
+
+        /// <summary>
+        /// Gets global collection of the attached window notification objects.
+        /// These notifications are called for the each created window.
+        /// </summary>
+        public static IEnumerable<IControlNotification> GlobalWindowNotifications
+        {
+            get
+            {
+                if (globalWindowNotifications is null)
+                    return Array.Empty<IControlNotification>();
+                return globalWindowNotifications;
+            }
+        }
 
         /// <summary>
         /// Gets or sets default location and position of the window.
@@ -863,6 +878,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds <see cref="IControlNotification"/> object to the global list of window notifications.
+        /// </summary>
+        /// <param name="n">Notification object to add.</param>
+        public static void AddGlobalWindowNotification(IControlNotification n)
+        {
+            globalWindowNotifications ??= new();
+            globalWindowNotifications.Add(n);
+        }
+
+        /// <summary>
+        /// Removes <see cref="IControlNotification"/> object from the global list of window notifications.
+        /// </summary>
+        /// <param name="n">Notification object to remove.</param>
+        public static void RemoveGlobalWindowNotification(IControlNotification n)
+        {
+            if (globalWindowNotifications is null)
+                return;
+            globalWindowNotifications.Remove(n);
+        }
+
+        /// <summary>
         /// Updates default control font after changes in <see cref="IncFontSizeHighDpi"/>
         /// or <see cref="IncFontSize"/>. You should not call this method directly.
         /// </summary>
@@ -1001,6 +1037,19 @@ namespace Alternet.UI
             var position = clientArea.Location;
             position.Offset(relativePosition);
             LocationInPixels = position;
+        }
+
+        /// <inheritdoc/>
+        public override void RaiseNotifications(Action<IControlNotification> action)
+        {
+            base.RaiseNotifications(action);
+
+            var nn = GlobalWindowNotifications;
+
+            foreach (var n in nn)
+            {
+                action(n);
+            }
         }
 
         /// <summary>
