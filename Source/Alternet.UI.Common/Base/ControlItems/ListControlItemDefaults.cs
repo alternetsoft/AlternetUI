@@ -13,6 +13,9 @@ namespace Alternet.UI
     public class ListControlItemDefaults : BaseObject, IListControlItemDefaults
     {
         /// <inheritdoc/>
+        public virtual Thickness ItemMargin { get; set; } = VirtualListBox.DefaultItemMargin;
+
+        /// <inheritdoc/>
         public virtual bool SelectionUnderImage { get; set; } = true;
 
         /// <inheritdoc/>

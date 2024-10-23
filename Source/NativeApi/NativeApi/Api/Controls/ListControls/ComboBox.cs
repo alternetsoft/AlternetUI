@@ -14,6 +14,10 @@ namespace NativeApi.Api
         public event EventHandler? AfterShowPopup;
         public event EventHandler? AfterDismissPopup;
 
+        public void DismissPopup() { }
+
+        public void ShowPopup() { }
+
         public string EmptyTextHint { get; set; }
         public bool HasBorder { get; set; }
         public int ItemsCount { get; }

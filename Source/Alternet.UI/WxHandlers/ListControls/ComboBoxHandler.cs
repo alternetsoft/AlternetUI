@@ -81,6 +81,16 @@ namespace Alternet.UI
         internal new Native.ComboBox NativeControl =>
             (Native.ComboBox)base.NativeControl!;
 
+        public void DismissPopup()
+        {
+            NativeControl.DismissPopup();
+        }
+
+        public void ShowPopup()
+        {
+            NativeControl.ShowPopup();
+        }
+
         public void DefaultOnDrawBackground() => NativeControl.DefaultOnDrawBackground();
 
         public void DefaultOnDrawItem() => NativeControl.DefaultOnDrawItem();

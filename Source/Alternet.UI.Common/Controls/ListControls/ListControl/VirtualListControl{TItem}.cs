@@ -605,18 +605,16 @@ namespace Alternet.UI
         /// <summary>
         /// Measures item size. If <see cref="ItemPainter"/> is assigned, uses
         /// <see cref="IListBoxItemPainter.GetSize"/>, otherwise calls
-        /// <see cref="DefaultMeasureItemSize"/>.
+        /// <see cref="ListControlItem.DefaultMeasureItemSize"/>.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
-        /// <param name="forDisplay">The flag which specifies whether to use item's text
-        /// for display purposes or the real value.</param>
-        public virtual SizeD MeasureItemSize(int itemIndex, bool forDisplay)
+        public virtual SizeD MeasureItemSize(int itemIndex)
         {
             if (painter is null)
-                return DefaultMeasureItemSize(itemIndex, forDisplay);
+                return ListControlItem.DefaultMeasureItemSize(this, MeasureCanvas, itemIndex);
             var result = painter.GetSize(this, itemIndex);
             if (result == SizeD.MinusOne)
-                return DefaultMeasureItemSize(itemIndex, forDisplay);
+                return ListControlItem.DefaultMeasureItemSize(this, MeasureCanvas, itemIndex);
             return result;
         }
 
@@ -647,37 +645,6 @@ namespace Alternet.UI
             }
 
             return changed;
-        }
-
-        /// <summary>
-        /// Default method which measures item size. Called from <see cref="MeasureItemSize"/>.
-        /// </summary>
-        /// <param name="itemIndex">Index of the item.</param>
-        /// <param name="forDisplay">The flag which specifies whether to use text
-        /// for display purposes or the real value.</param>
-        public virtual SizeD DefaultMeasureItemSize(int itemIndex, bool forDisplay)
-        {
-            var s = GetItemText(itemIndex, forDisplay);
-            if (string.IsNullOrEmpty(s))
-                s = "Wy";
-
-            var itemImages = GetItemImages(itemIndex, null);
-
-            var normal = itemImages[VisualControlState.Normal];
-            var disabled = itemImages[VisualControlState.Disabled];
-            var selected = itemImages[VisualControlState.Selected];
-
-            var maxHeightI =
-                MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
-            var maxHeightD = PixelToDip(maxHeightI);
-
-            var font = GetItemFont(itemIndex).AsBold;
-            var size = MeasureCanvas.GetTextExtent(s, font);
-            size.Height = Math.Max(size.Height, maxHeightD);
-            size.Width += ItemMargin.Horizontal;
-            size.Height += ItemMargin.Vertical;
-            size.Height = Math.Max(size.Height, GetItemMinHeight(itemIndex));
-            return size;
         }
 
         /// <summary>

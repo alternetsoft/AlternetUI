@@ -219,6 +219,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void DismissPopup()
+        {
+            CheckDisposed();
+            NativeApi.ComboBox_DismissPopup_(NativePointer);
+        }
+        
+        public void ShowPopup()
+        {
+            CheckDisposed();
+            NativeApi.ComboBox_ShowPopup_(NativePointer);
+        }
+        
         public int DefaultOnMeasureItemWidth()
         {
             CheckDisposed();
@@ -454,6 +466,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_SetEventCalled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_DismissPopup_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_ShowPopup_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ComboBox_DefaultOnMeasureItemWidth_(IntPtr obj);

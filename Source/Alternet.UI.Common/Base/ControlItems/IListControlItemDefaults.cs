@@ -12,6 +12,11 @@ namespace Alternet.UI
     public interface IListControlItemDefaults
     {
         /// <summary>
+        /// Gets or sets item margin.
+        /// </summary>
+        Thickness ItemMargin { get; set; }
+
+        /// <summary>
         /// Gets or sets selected item back color.
         /// </summary>
         Color? SelectedItemBackColor { get;  set; }

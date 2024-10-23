@@ -31,6 +31,22 @@ namespace ControlsSample
             {
                 App.Log("ComboBox: DropDownClosed event fired");
             };
+            comboBox.KeyDown += ComboBox_KeyDown;
+            comboBox.TextChanged += (_, _) =>
+            {
+            };
+        }
+
+        private void ComboBox_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.Control)
+            {
+                if(e.Key == Key.Enter)
+                {
+                    comboBox.DroppedDown = true;
+                    e.Suppressed();
+                }
+            }
         }
 
         private void LoadDefaultItems(bool ownerDraw = false)
@@ -245,12 +261,12 @@ namespace ControlsSample
 
         double IComboBoxItemPainter.GetHeight(ComboBox sender, int index, double defaultHeight)
         {
-            return -1;
+            return painter.GetHeight(sender, index, defaultHeight);
         }
 
         double IComboBoxItemPainter.GetWidth(ComboBox sender, int index, double defaultWidth)
         {
-            return -1;
+            return painter.GetWidth(sender, index, defaultWidth);
         }
     }
 }

@@ -180,6 +180,16 @@ namespace Alternet.UI
             {
                 return droppedDown;
             }
+
+            set
+            {
+                if (DroppedDown == value)
+                    return;
+                if (value)
+                    Handler.ShowPopup();
+                else
+                    Handler.DismissPopup();
+            }
         }
 
         /// <summary>
@@ -821,17 +831,15 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual Coord GetHeight(ComboBox sender, int index, Coord defaultHeight)
             {
-                var item = sender.SafeItem(index);
-
-                if(item is null)
-                    return -1;
-                return ListControlItem.GetMinHeight(item, sender);
+                var size = ListControlItem.DefaultMeasureItemSize(sender, sender.MeasureCanvas, index);
+                return size.Height;
             }
 
             /// <inheritdoc/>
             public virtual Coord GetWidth(ComboBox sender, int index, Coord defaultWidth)
             {
-                return -1;
+                var size = ListControlItem.DefaultMeasureItemSize(sender, sender.MeasureCanvas, index);
+                return size.Width;
             }
 
             /// <inheritdoc/>

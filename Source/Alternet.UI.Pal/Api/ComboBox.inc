@@ -55,6 +55,8 @@ void SetEventResultInt(int value);
 bool GetEventCalled();
 void SetEventCalled(bool value);
 
+void DismissPopup();
+void ShowPopup();
 int DefaultOnMeasureItemWidth();
 int DefaultOnMeasureItem();
 void DefaultOnDrawBackground();
