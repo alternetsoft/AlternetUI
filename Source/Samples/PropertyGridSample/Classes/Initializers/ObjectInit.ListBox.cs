@@ -23,7 +23,8 @@ namespace PropertyGridSample
 
             ListControlItem item = new();
             item.Alignment = GenericAlignment.Center;
-            item.Text = string.Empty;
+            item.DisplayText = string.Empty;
+            item.Text = "This is some text";
             item.Image = new Bitmap(PhotoUrl);
             addAction(item);
 
@@ -98,6 +99,10 @@ namespace PropertyGridSample
             for (int i = 0; i < 150; i++)
             {
                 ListControlItem newItem = new($"Item {i}");
+
+                if (i == 128)
+                    newItem.DisplayText = newItem.Text + ": dd";
+
                 addAction(newItem);
             }
         }

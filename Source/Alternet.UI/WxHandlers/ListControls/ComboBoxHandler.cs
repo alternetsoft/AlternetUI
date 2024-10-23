@@ -119,6 +119,8 @@ namespace Alternet.UI
             NativeControl.DrawItemBackground = NativeControl_DrawItemBackground;
             NativeControl.MeasureItemWidth = NativeControl_MeasureItemWidth;
             NativeControl.MeasureItem = NativeControl_MeasureItem;
+            NativeControl.AfterShowPopup = NativeControl_AfterShowPopup;
+            NativeControl.AfterDismissPopup = NativeControl_AfterDismissPopup;
         }
 
         protected override void OnDetach()
@@ -146,7 +148,7 @@ namespace Alternet.UI
             {
                 var item = e.NewItems?[0];
                 var index = e.NewStartingIndex;
-                var text = Control.GetItemText(item);
+                var text = Control.GetItemText(item, false);
                 NativeControl.SetItem(index, text);
             }
         }
@@ -231,6 +233,16 @@ namespace Alternet.UI
             NativeControl.EventCalled = true;
         }
 
+        private void NativeControl_AfterShowPopup()
+        {
+            Control.RaiseDropDown();
+        }
+
+        private void NativeControl_AfterDismissPopup()
+        {
+            Control.RaiseDropDownClosed();
+        }
+
         private void NativeControl_SelectedItemChanged()
         {
             ReceiveSelectedItem();
@@ -272,7 +284,7 @@ namespace Alternet.UI
             {
                 NativeControl.AddItemToInsertion(
                     insertion,
-                    Control.GetItemText(control.Items[i]));
+                    Control.GetItemText(control.Items[i], false));
             }
 
             NativeControl.CommitItemsInsertion(insertion, 0);
@@ -292,7 +304,7 @@ namespace Alternet.UI
         private void Items_ItemInserted(object? sender, int index, object item)
         {
             if (!Control.Items.RangeOpInProgress)
-                NativeControl.InsertItem(index, Control.GetItemText(item));
+                NativeControl.InsertItem(index, Control.GetItemText(item, false));
         }
 
         private void Items_ItemRemoved(object? sender, int index, object item)
@@ -310,7 +322,7 @@ namespace Alternet.UI
             {
                 NativeControl.AddItemToInsertion(
                     insertion,
-                    Control.GetItemText(item));
+                    Control.GetItemText(item, false));
             }
 
             NativeControl.CommitItemsInsertion(insertion, index);

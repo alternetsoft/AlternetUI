@@ -76,6 +76,8 @@ enum class ComboBoxEvent
     MeasureItemWidth,
     DrawItem,
     DrawItemBackground,
+    AfterShowPopup,
+    AfterDismissPopup,
 };
 typedef void* (*ComboBoxEventCallbackType)(ComboBox* obj, ComboBoxEvent event, void* param);
 static void SetEventCallback(ComboBoxEventCallbackType value) { eventCallback = value; }

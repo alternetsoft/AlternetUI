@@ -223,7 +223,7 @@ namespace Alternet.UI
         private void NativeControl_MeasureItem()
         {
             var itemIndex = NativeControl.EventItem;
-            var heightDip = Control.MeasureItemSize(itemIndex).Height;
+            var heightDip = Control.MeasureItemSize(itemIndex, true).Height;
             var height = Control.PixelFromDip(heightDip);
             NativeControl.EventHeight = height;
         }

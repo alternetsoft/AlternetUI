@@ -142,7 +142,7 @@ namespace Alternet.UI
             var items = control.Items;
 
             for (var i = 0; i < items.Count; i++)
-                NativeControl.InsertItem(i, Control.GetItemText(control.Items[i]));
+                NativeControl.InsertItem(i, Control.GetItemText(control.Items[i], false));
         }
 
         private void ApplySelection()
@@ -224,7 +224,7 @@ namespace Alternet.UI
                 NativeControl.RecreateWindow();
             }
 
-            NativeControl.InsertItem(index, Control.GetItemText(item));
+            NativeControl.InsertItem(index, Control.GetItemText(item, false));
         }
 
         private void Items_ItemRemoved(object? sender, int index, object item)

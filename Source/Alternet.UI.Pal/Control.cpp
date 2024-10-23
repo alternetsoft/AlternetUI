@@ -6,7 +6,7 @@
 
 namespace Alternet::UI
 {
-    /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
+     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     wxString Control::GetMouseEventDesc(const wxMouseEvent& ev)
     {

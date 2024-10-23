@@ -2,6 +2,36 @@
 
 namespace Alternet::UI
 {
+    void ComboBox::OnPopup()
+    {
+        RaiseEvent(ComboBoxEvent::AfterShowPopup);
+    }
+
+    void ComboBox::OnDismiss()
+    {
+        RaiseEvent(ComboBoxEvent::AfterDismissPopup);
+    }
+
+    // Called immediately after the popup is shown
+    void wxVListBoxComboPopup2::OnPopup()
+    {
+        wxVListBoxComboPopup::OnPopup();
+        if (_owner == nullptr)
+            return;
+        auto comboBox = (ComboBox*)_owner;
+        comboBox->OnPopup();
+    }
+
+    // Called when popup is dismissed
+    void wxVListBoxComboPopup2::OnDismiss()
+    {
+        wxVListBoxComboPopup::OnDismiss();
+        if (_owner == nullptr)
+            return;
+        auto comboBox = (ComboBox*)_owner;
+        comboBox->OnDismiss();
+    }
+
     void wxOwnerDrawnComboBox2::OnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags) const
     {
         ((ComboBox*)_palControl)->OnDrawBackground(dc, rect, item, flags);

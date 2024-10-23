@@ -8,9 +8,12 @@ namespace Alternet::UI
 {
     class wxVListBoxComboPopup2 : public wxVListBoxComboPopup, public wxWidgetExtender
     {
+    private:
+        Control* _owner;
     public:
-        wxVListBoxComboPopup2()
+        wxVListBoxComboPopup2(Control* owner)
         {
+            _owner = owner;
         }
 
         virtual bool Create(wxWindow* parent) wxOVERRIDE
@@ -20,6 +23,12 @@ namespace Alternet::UI
                 SetDoubleBuffered(true);
             return result;
         }
+
+        // Called immediately after the popup is shown
+        void OnPopup() override;
+
+        // Called when popup is dismissed
+        void OnDismiss() override;
     };
 
     class wxOwnerDrawnComboBox2 : public wxOwnerDrawnComboBox, public wxWidgetExtender
@@ -44,7 +53,7 @@ namespace Alternet::UI
 
         virtual void DoSetPopupControl(wxComboPopup* popup) wxOVERRIDE
         {
-            wxOwnerDrawnComboBox::DoSetPopupControl(new wxVListBoxComboPopup2());
+            wxOwnerDrawnComboBox::DoSetPopupControl(new wxVListBoxComboPopup2(_palControl));
         }
 
         virtual unsigned int GetCount() const wxOVERRIDE
@@ -189,6 +198,9 @@ namespace Alternet::UI
         wxCoord OnMeasureItem(size_t item);
         wxCoord OnMeasureItemWidth(size_t item);
         void OnDrawBackground(wxDC& dc, const wxRect& rect, int item, int flags);
+
+        void OnPopup();
+        void OnDismiss();
     protected:
         void OnWxWindowCreated() override;
         void OnBeforeDestroyWxWindow() override;

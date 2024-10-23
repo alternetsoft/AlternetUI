@@ -375,7 +375,7 @@ namespace Alternet.UI
             int lineMax = Handler.GetVisibleEnd();
             for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
             {
-                var hRow = MeasureItemSize(line).Height;
+                var hRow = MeasureItemSize(line, true).Height;
 
                 rectRow.Height = hRow;
 

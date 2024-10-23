@@ -260,7 +260,8 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual SizeD GetSize(object sender, int index)
             {
-                return (sender as ColorListBox)?.DefaultMeasureItemSize(index) ?? SizeD.MinusOne;
+                return (sender as ColorListBox)?.DefaultMeasureItemSize(index, true)
+                    ?? SizeD.MinusOne;
             }
 
             /// <summary>

@@ -608,13 +608,15 @@ namespace Alternet.UI
         /// <see cref="DefaultMeasureItemSize"/>.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
-        public virtual SizeD MeasureItemSize(int itemIndex)
+        /// <param name="forDisplay">The flag which specifies whether to use item's text
+        /// for display purposes or the real value.</param>
+        public virtual SizeD MeasureItemSize(int itemIndex, bool forDisplay)
         {
             if (painter is null)
-                return DefaultMeasureItemSize(itemIndex);
+                return DefaultMeasureItemSize(itemIndex, forDisplay);
             var result = painter.GetSize(this, itemIndex);
             if (result == SizeD.MinusOne)
-                return DefaultMeasureItemSize(itemIndex);
+                return DefaultMeasureItemSize(itemIndex, forDisplay);
             return result;
         }
 
@@ -651,9 +653,11 @@ namespace Alternet.UI
         /// Default method which measures item size. Called from <see cref="MeasureItemSize"/>.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
-        public virtual SizeD DefaultMeasureItemSize(int itemIndex)
+        /// <param name="forDisplay">The flag which specifies whether to use text
+        /// for display purposes or the real value.</param>
+        public virtual SizeD DefaultMeasureItemSize(int itemIndex, bool forDisplay)
         {
-            var s = GetItemText(itemIndex);
+            var s = GetItemText(itemIndex, forDisplay);
             if (string.IsNullOrEmpty(s))
                 s = "Wy";
 

@@ -90,7 +90,18 @@ namespace Alternet.UI
         {
             get
             {
-                return ListBox.GetItemText(ItemIndex);
+                return ListBox.GetItemText(ItemIndex, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets text of the item for display.
+        /// </summary>
+        public virtual string ItemTextForDisplay
+        {
+            get
+            {
+                return ListBox.GetItemText(ItemIndex, true);
             }
         }
 

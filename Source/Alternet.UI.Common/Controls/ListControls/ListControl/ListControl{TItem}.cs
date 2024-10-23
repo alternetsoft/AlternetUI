@@ -22,7 +22,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when controls needs to get string representation of the item for the display
-        /// or other purposes. Called from <see cref="GetItemText(int)"/>.
+        /// or other purposes. Called from <see cref="GetItemText(int, bool)"/>.
         /// </summary>
         public event EventHandler<GetItemTextEventArgs>? CustomItemText;
 
@@ -276,7 +276,7 @@ namespace Alternet.UI
             }
         }
 
-        string? IReadOnlyStrings.this[int index] => GetItemText(index);
+        string? IReadOnlyStrings.this[int index] => GetItemText(index, false);
 
         /// <summary>
         /// Gets item with the specified index.
@@ -382,16 +382,18 @@ namespace Alternet.UI
         /// Returns the text representation of item with the specified <paramref name="index"/>.
         /// </summary>
         /// <param name="index">Item index from which to get the contents to display.</param>
-        public virtual string GetItemText(int index)
+        /// <param name="forDisplay">The flag which specifies whether to get item's text
+        /// for display purposes or the real value.</param>
+        public virtual string GetItemText(int index, bool forDisplay)
         {
             TItem? s;
             s = GetItem(index);
-            var result = GetItemText(s);
+            var result = GetItemText(s, forDisplay);
 
             if(CustomItemText is null)
                 return result;
 
-            GetItemTextEventArgs e = new(index, s, result);
+            GetItemTextEventArgs e = new(index, s, result, forDisplay);
             CustomItemText(this, e);
             if (e.Handled)
                 return e.Result;
@@ -403,12 +405,21 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The object from which to get the contents to
         /// display.</param>
-        public virtual string GetItemText(TItem? item)
+        /// <param name="forDisplay">The flag which specifies whether to get text
+        /// for display purposes or the real value.</param>
+        public virtual string GetItemText(TItem? item, bool forDisplay)
         {
             if (item is null)
                 return string.Empty;
             if (item is string s)
                 return s;
+
+            if (forDisplay)
+            {
+                if (item is ListControlItem listItem && listItem.DisplayText is not null)
+                    return listItem.DisplayText;
+            }
+
             var result = Convert.ToString(item, CultureInfo.CurrentCulture) ?? string.Empty;
             return result;
         }
@@ -487,7 +498,7 @@ namespace Alternet.UI
             foreach (var index in indexes)
             {
                 if (result is null)
-                    result = GetItemText(index);
+                    result = GetItemText(index, false);
                 else
                     result += $"{separator}{Items[index]}";
             }
