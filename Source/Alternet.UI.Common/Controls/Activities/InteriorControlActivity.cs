@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements mouse handling for the <see cref="InteriorDrawable"/>.
     /// </summary>
-    public class InteriorNotification : ControlNotification
+    public class InteriorControlActivity : BaseControlActivity
     {
         private readonly InteriorDrawable interior;
 
@@ -17,10 +17,10 @@ namespace Alternet.UI
         private bool subscribedClickRepeated;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InteriorNotification"/> class.
+        /// Initializes a new instance of the <see cref="InteriorControlActivity"/> class.
         /// </summary>
         /// <param name="interior">Interior drawable.</param>
-        public InteriorNotification(InteriorDrawable interior)
+        public InteriorControlActivity(InteriorDrawable interior)
         {
             this.interior = interior;
         }

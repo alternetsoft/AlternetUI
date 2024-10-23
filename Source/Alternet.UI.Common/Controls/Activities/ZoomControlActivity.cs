@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// In order to use this activity correctly,
     /// set True to <see cref="AbstractControl.DefaultUseParentFont"/> before creating any controls.
     /// </summary>
-    public class ControlActivityZoom : BaseControlActivity
+    public class ZoomControlActivity : BaseControlActivity
     {
         /// <inheritdoc/>
         public override void Initialize(AbstractControl control)

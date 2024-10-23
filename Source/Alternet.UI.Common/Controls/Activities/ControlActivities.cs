@@ -9,12 +9,12 @@ namespace Alternet.UI
     /// </summary>
     public static class ControlActivities
     {
-        private static ControlActivityZoom? keyboardZoomInOut;
+        private static ZoomControlActivity? keyboardZoomInOut;
 
         /// <summary>
-        /// Gets or sets default <see cref="ControlActivityZoom"/>.
+        /// Gets or sets default <see cref="ZoomControlActivity"/>.
         /// </summary>
-        public static ControlActivityZoom KeyboardZoomInOut
+        public static ZoomControlActivity KeyboardZoomInOut
         {
             get
             {
