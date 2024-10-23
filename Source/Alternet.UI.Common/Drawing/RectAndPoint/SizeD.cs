@@ -154,6 +154,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Tests whether both <see cref='Width'/> and <see cref="Height"/> are not numbers
+        /// (equal to <see cref="Coord.NaN"/>).
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsNanWidthAndHeight => Coord.IsNaN(width) && Coord.IsNaN(height);
+
+        /// <summary>
+        /// Tests whether <see cref='Width'/> or <see cref="Height"/> is not a number
+        /// (equals <see cref="Coord.NaN"/>).
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsNanWidthOrHeight => Coord.IsNaN(width) || Coord.IsNaN(height);
+
+        /// <summary>
         /// Tests whether <see cref='Width'/> is not a number (equals <see cref="Coord.NaN"/>).
         /// </summary>
         [Browsable(false)]
