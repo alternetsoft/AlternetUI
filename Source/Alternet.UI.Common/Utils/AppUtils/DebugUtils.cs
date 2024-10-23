@@ -57,23 +57,48 @@ namespace Alternet.UI
                 actionToCall();
         }
 
+        /// <summary>
+        /// Calls the specified action <see cref="IsDebugDefined"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="actionToCall">Action to call.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Conditional("DEBUG")]
+        public static void DebugCall(Action actionToCall)
+        {
+            actionToCall();
+        }
+
+        /// <summary>
+        /// Subscribes to <see cref="AppDomain"/> and <see cref="TaskScheduler"/> events
+        /// related to the exceptions handling.
+        /// </summary>
         public static void RegisterExceptionsLogger()
         {
             AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
             {
-                Debug.WriteLine("First Chance Exception");
-                Debug.WriteLine(e.Exception.ToString());
+                DebugCall(() =>
+                {
+                    Debug.WriteLine("First Chance Exception");
+                    Debug.WriteLine(e.Exception.ToString());
+                });
             };
 
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
-                Debug.WriteLine("CurrentDomain Unhandled exception");
-                Debug.WriteLine(e.ExceptionObject.ToString());
+                DebugCall(() =>
+                {
+                    Debug.WriteLine("CurrentDomain Unhandled exception");
+                    Debug.WriteLine(e.ExceptionObject.ToString());
+                });
             };
+
             TaskScheduler.UnobservedTaskException += (s, e) =>
             {
-                Debug.WriteLine("Unobserved Task Exception");
-                Debug.WriteLine(e.Exception.ToString());
+                DebugCall(() =>
+                {
+                    Debug.WriteLine("Unobserved Task Exception");
+                    Debug.WriteLine(e.Exception.ToString());
+                });
             };
         }
 
