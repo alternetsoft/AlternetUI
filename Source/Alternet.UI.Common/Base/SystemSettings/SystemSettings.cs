@@ -156,6 +156,7 @@ namespace Alternet.UI
         {
             App.LogBeginSection("System Fonts");
 
+            App.Log($"Control.DefaultFont: {AbstractControl.DefaultFont.ToInfoString()}");
             App.Log($"Default font: {Font.Default.ToInfoString()}");
             App.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
 
