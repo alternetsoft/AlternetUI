@@ -148,18 +148,20 @@ namespace Alternet.UI
 
             Designer?.RaiseDisposed(this);
 
-            var children = AllChildren.ToArray();
+            var allChildren = AllChildren.ToArray();
 
+            /*
             SuspendLayout();
             if (HasChildren)
                 Children.Clear();
             ResumeLayout(performLayout: false);
+            */
 
             DetachHandler();
 
             try
             {
-                foreach (var child in children)
+                foreach (var child in allChildren)
                 {
                     child.ParentDisposed();
                 }
