@@ -37,6 +37,7 @@ namespace Alternet.UI
         private readonly TextBox urlTextBox = new()
         {
             MinWidth = 350,
+            HorizontalAlignment = HorizontalAlignment.Fill,
         };
 
         private readonly ContextMenu moreActionsMenu = new();
@@ -56,6 +57,7 @@ namespace Alternet.UI
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
         private ActionsListBox? actionsControl;
+        private WeakReference<WebBrowserSearchWindow>? searchWindow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
@@ -310,8 +312,28 @@ namespace Alternet.UI
         /// </summary>
         public void FindWithDialog()
         {
-            WebBrowserSearchWindow win = new(WebBrowser, findParams);
-            win.ShowModal(this.ParentWindow);
+            if(searchWindow is null)
+                Recreate();
+            else
+            if (searchWindow.TryGetTarget(out var target))
+            {
+                if (target.IsDisposed)
+                    Recreate();
+                else
+                    target.Show();
+            }
+            else
+                Recreate();
+
+            void Recreate()
+            {
+                WebBrowserSearchWindow win = new(WebBrowser, findParams);
+                win.TopMost = true;
+                searchWindow = new(win);
+                win.Show();
+                win.Activate();
+                win.Raise();
+            }
         }
 
         /// <summary>
@@ -326,6 +348,7 @@ namespace Alternet.UI
             buttonIdUrl = toolBar.AddControl(urlTextBox);
             buttonIdGo = toolBar.AddSpeedBtn(KnownButton.BrowserGo, GoButton_Click);
             buttonIdMoreActions = toolBar.AddSpeedBtn(null, KnownSvgImages.ImgMoreActions);
+            toolBar.SetToolAlignRight(buttonIdMoreActions);
 
             MenuItem itemSearch = new(
                 CommonStrings.Default.ButtonFind + "...",

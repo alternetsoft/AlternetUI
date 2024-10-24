@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class WebBrowserSearchWindow : DialogWindow
+    internal class WebBrowserSearchWindow : Window
     {
         private readonly CheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
-        private readonly CheckBox findEntireWordCheckBox = new(CommonStrings.Default.FindOptionMatchWholeWord);
+        private readonly CheckBox findEntireWordCheckBox
+            = new(CommonStrings.Default.FindOptionMatchWholeWord);
+
         private readonly CheckBox findMatchCaseCheckBox = new(CommonStrings.Default.FindOptionMatchCase);
-        private readonly CheckBox findHighlightResultCheckBox = new(CommonStrings.Default.FindOptionHighlight);
+
+        private readonly CheckBox findHighlightResultCheckBox
+            = new(CommonStrings.Default.FindOptionHighlight);
+
         private readonly CheckBox findBackwardsCheckBox = new(CommonStrings.Default.FindOptionBackwards);
 
         private readonly VerticalStackPanel findPanel = new()
@@ -30,8 +36,9 @@ namespace Alternet.UI
         private readonly Button findButton = new(CommonStrings.Default.ButtonFind);
         private readonly Button findClearButton = new(CommonStrings.Default.ButtonClear);
         private readonly Button closeButton = new(CommonStrings.Default.ButtonCancel);
-        private readonly WebBrowser webBrowser;
         private readonly WebBrowserFindParams findParams;
+
+        private WebBrowser? webBrowser;
 
         public WebBrowserSearchWindow(WebBrowser webBrowser, WebBrowserFindParams findParams)
         {
@@ -74,11 +81,25 @@ namespace Alternet.UI
             this.SetSizeToContent();
             this.MinimumSize = Size;
             StartLocation = WindowStartLocation.CenterScreen;
+
+            webBrowser.Root.Disposed += WebBrowser_Disposed;
+            webBrowser.Disposed += WebBrowser_Disposed;
+        }
+
+        private void WebBrowser_Disposed(object sender, EventArgs e)
+        {
+            if(webBrowser is not null)
+            {
+                webBrowser.Root.Disposed -= WebBrowser_Disposed;
+                webBrowser.Disposed -= WebBrowser_Disposed;
+                webBrowser = null;
+            }
+
+            Close();
         }
 
         private void CloseButton_Click(object? sender, EventArgs e)
         {
-            this.ModalResult = ModalResult.Canceled;
             FindParamsFromControls();
             Close();
         }
@@ -86,8 +107,9 @@ namespace Alternet.UI
         private void FindButton_Click(object? sender, EventArgs e)
         {
             FindParamsFromControls();
-            int findResult = webBrowser.Find(findTextBox.Text, findParams);
-            App.DebugLog("Find Result = " + findResult.ToString());
+            var findResult = webBrowser?.Find(findTextBox.Text, findParams);
+            if (findResult is not null)
+                App.DebugLog("Find Result = " + findResult.ToString());
         }
 
         private void FindParamsToControls()
@@ -102,7 +124,7 @@ namespace Alternet.UI
         private void FindClearButton_Click(object? sender, EventArgs e)
         {
             findTextBox.Text = string.Empty;
-            webBrowser.FindClearResult();
+            webBrowser?.FindClearResult();
         }
 
         private void FindParamsFromControls()
