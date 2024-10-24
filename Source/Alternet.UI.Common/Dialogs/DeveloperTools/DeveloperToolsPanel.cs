@@ -106,7 +106,7 @@ namespace Alternet.UI
             logListBoxToolBar.SetToolAlignRight(btnClear);
 
             var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn(
-                "More actions", KnownSvgImages.ImgMoreActions/*KnownSvgImages.ImgGear*/);
+                "More actions", KnownSvgImages.ImgMoreActions);
             logListBoxToolBar.SetToolDropDownMenu(btnLogListBoxSettings, logListBox.ContextMenu);
             logListBoxToolBar.SetToolAlignRight(btnLogListBoxSettings);
 

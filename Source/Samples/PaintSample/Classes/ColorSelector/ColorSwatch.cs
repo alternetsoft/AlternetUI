@@ -8,7 +8,7 @@ namespace PaintSample
     {
         public ColorSwatch(Color swatchColor)
         {
-            var normalBorder = Border.CreateDefault();
+            var normalBorder = Border.CreateDefaultBorder();
             normalBorder.UniformCornerRadius = 25;
             normalBorder.UniformRadiusIsPercent = true;
             normalBorder.Width = 0;

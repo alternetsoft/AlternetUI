@@ -73,13 +73,13 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Thickness BorderWidth
         {
-            get => Normal.Width;
+            get => NormalBorder.Width;
             set
             {
                 value.ApplyMin(0);
-                if (Normal.Width == value)
+                if (NormalBorder.Width == value)
                     return;
-                Normal.SetWidth(value);
+                NormalBorder.SetWidth(value);
                 UpdatePadding();
                 PerformLayout();
                 Refresh();
@@ -91,14 +91,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Normal.UniformCornerRadius;
+                return NormalBorder.UniformCornerRadius;
             }
 
             set
             {
-                if (Normal.UniformCornerRadius == value)
+                if (NormalBorder.UniformCornerRadius == value)
                     return;
-                Normal.UniformCornerRadius = value;
+                NormalBorder.UniformCornerRadius = value;
                 Refresh();
             }
         }
@@ -108,14 +108,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Normal.UniformRadiusIsPercent;
+                return NormalBorder.UniformRadiusIsPercent;
             }
 
             set
             {
-                if (Normal.UniformRadiusIsPercent == value)
+                if (NormalBorder.UniformRadiusIsPercent == value)
                     return;
-                Normal.UniformRadiusIsPercent = value;
+                NormalBorder.UniformRadiusIsPercent = value;
                 Refresh();
             }
         }
@@ -137,8 +137,8 @@ namespace Alternet.UI
         {
             get
             {
-                if (Normal.Width.IsUniform)
-                    return Normal.Width.Left;
+                if (NormalBorder.Width.IsUniform)
+                    return NormalBorder.Width.Left;
                 else
                     return null;
             }
@@ -176,26 +176,26 @@ namespace Alternet.UI
         {
             get
             {
-                return Normal.Color ?? ColorUtils.GetDefaultBorderColor(IsDarkBackground);
+                return NormalBorder.Color ?? ColorUtils.GetDefaultBorderColor(IsDarkBackground);
             }
 
             set
             {
                 if (value == null)
                 {
-                    Normal.Color = ColorUtils.GetDefaultBorderColor(IsDarkBackground);
+                    NormalBorder.Color = ColorUtils.GetDefaultBorderColor(IsDarkBackground);
                 }
                 else
-                    Normal.Color = (Color)value;
+                    NormalBorder.Color = (Color)value;
                 Refresh();
             }
         }
 
         /// <summary>
-        /// Gets or sets individual border side settings.
+        /// Gets or sets individual border side settings in the normal visual state.
         /// </summary>
         [Browsable(false)]
-        public virtual BorderSettings Normal
+        public virtual BorderSettings NormalBorder
         {
             get
             {
@@ -224,7 +224,7 @@ namespace Alternet.UI
         /// Creates border filled with default settings.
         /// </summary>
         /// <returns></returns>
-        public static BorderSettings CreateDefault(Color? color = null)
+        public static BorderSettings CreateDefaultBorder(Color? color = null)
         {
             BorderSettings result = new(BorderSettings.Default);
             if (color is not null)
@@ -233,16 +233,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
-        public virtual void SetColors(Color left, Color top, Color right, Color bottom)
+        public virtual void SetBorderColors(Color left, Color top, Color right, Color bottom)
         {
-            if (Normal.SetColors(left, top, right, bottom))
+            if (NormalBorder.SetColors(left, top, right, bottom))
                 Refresh();
         }
 
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            var width = Normal.Width;
+            var width = NormalBorder.Width;
             return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
         }
 
@@ -270,7 +270,7 @@ namespace Alternet.UI
         {
             width ??= BorderSideSettings.DefaultBorderWidth;
 
-            Normal.Width = (GetWidth(left), GetWidth(top), GetWidth(right), GetWidth(bottom));
+            NormalBorder.Width = (GetWidth(left), GetWidth(top), GetWidth(right), GetWidth(bottom));
             HasBorder = left || top || right || bottom;
 
             Coord GetWidth(bool visible)
@@ -292,7 +292,7 @@ namespace Alternet.UI
 
         private void UpdatePadding()
         {
-            Thickness result = Normal.Width;
+            Thickness result = NormalBorder.Width;
             Padding = result;
         }
 

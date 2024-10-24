@@ -120,8 +120,8 @@ namespace PropertyGridSample
 
                 propGridContextMenu.Opening += PropGridContextMenu_Opening;
 
-                controlPanelBorder.Normal.Paint += BorderSettings.DrawDesignCorners;
-                controlPanelBorder.Normal.DrawDefaultBorder = false;
+                controlPanelBorder.NormalBorder.Paint += BorderSettings.DrawDesignCorners;
+                controlPanelBorder.NormalBorder.DrawDefaultBorder = false;
 
                 panel.BindApplicationLog();
 
