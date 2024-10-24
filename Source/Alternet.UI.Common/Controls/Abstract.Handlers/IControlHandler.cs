@@ -336,6 +336,13 @@ namespace Alternet.UI
         /// <returns></returns>
         object GetNativeControl();
 
+        /// <summary>
+        /// Enables or disables receiving of the touch events.
+        /// </summary>
+        /// <param name="flag">The mask specifying what exactly events to receive.</param>
+        /// <returns></returns>
+        bool EnableTouchEvents(TouchEventsMask flag);
+
         /// <inheritdoc cref="AbstractControl.OnChildInserted"/>
         void OnChildInserted(AbstractControl childControl);
 

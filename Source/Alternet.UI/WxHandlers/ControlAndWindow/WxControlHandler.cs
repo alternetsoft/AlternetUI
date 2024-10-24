@@ -945,5 +945,10 @@ namespace Alternet.UI
                        value.PageSize,
                        value.Range);
         }
+
+        public bool EnableTouchEvents(TouchEventsMask flag)
+        {
+            return NativeControl.EnableTouchEvents((int)flag);
+        }
     }
 }
