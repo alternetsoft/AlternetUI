@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorUI", "..\..\..\..\Alt
 		{79F2529C-C711-457A-9087-325C333CDE60} = {79F2529C-C711-457A-9087-325C333CDE60}
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI", "..\..\Alternet.UI\Alternet.UI.csproj", "{75085311-A6E0-47FA-A01A-EF3DE93845EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -232,6 +234,18 @@ Global
 		{8516DA9E-FC6A-419E-B2E1-105A812DB63E}.Release|x64.Build.0 = Release|x64
 		{8516DA9E-FC6A-419E-B2E1-105A812DB63E}.Release|x86.ActiveCfg = Release|Any CPU
 		{8516DA9E-FC6A-419E-B2E1-105A812DB63E}.Release|x86.Build.0 = Release|Any CPU
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Debug|x64.ActiveCfg = Debug|x64
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Debug|x64.Build.0 = Debug|x64
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Debug|x86.ActiveCfg = Debug|x86
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Debug|x86.Build.0 = Debug|x86
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Release|x64.ActiveCfg = Release|x64
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Release|x64.Build.0 = Release|x64
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Release|x86.ActiveCfg = Release|x86
+		{75085311-A6E0-47FA-A01A-EF3DE93845EA}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
