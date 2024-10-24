@@ -361,5 +361,10 @@ namespace Alternet.UI
             SKCanvas canvas = new(bitmap);
             return new SkiaGraphics(canvas);
         }
+
+        public bool EnableTouchEvents(TouchEventsMask flag)
+        {
+            return false;
+        }
     }
 }
