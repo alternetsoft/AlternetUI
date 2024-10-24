@@ -1526,6 +1526,11 @@ namespace Alternet.UI
             if (MainWindow == window)
                 MainWindow = null;
             windows.Remove(window);
+            if (windows.Count == 0 || VisibleWindows.Count() == 0)
+            {
+                DoEvents();
+                Exit();
+            }
         }
 
         /// <summary>

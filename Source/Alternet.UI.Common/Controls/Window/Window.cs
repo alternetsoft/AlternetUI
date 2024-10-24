@@ -1022,6 +1022,8 @@ namespace Alternet.UI
         {
             OnClosed(e);
             Closed?.Invoke(this, e);
+            if (!Modal)
+                Dispose();
         }
 
         /// <summary>
