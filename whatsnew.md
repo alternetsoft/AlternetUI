@@ -1,3 +1,40 @@
+# 0.9.639 (2024 October 24)
+
+- ListViewColumn: MinAutoWidth, MaxAutoWidth, TitleSize, IsAttached, WidthInPercentToDips.
+- ToolBar is now derived from Border so it can be setup to have complex borders.
+- ComboBox: New events DropDownClosed, DropDown and related methods.
+- ComboBox: New property DroppedDown.
+- ComboBox: Fixed wrong painting of owner-drawn items in some configurations.
+- ListControlItem.DisplayText - allows to specify display text when painted in VirtualListBox or in ComboBox when OwnerDraw is on.
+- ListViewColumnWidthMode.FixedInPercent.
+- Used SkiaSharp 3 in the library as previous version had MAUI related issues introduced by the latest Visual Studio update..
+- Graphics.RequireMeasure - fast methods to get text measure canvas.
+- ToolBar.AddSpeedBtn with KnownButton parameter now uses KnownButtons to get title, image and other information.
+- RichToolTip complete reimplementation on c# inside the library.
+- VirtualListBox: Fixed used wrong svg color when color theme was changed.
+- VirtualListBox: SetColorThemeToDefault(), SetColorThemeToDark().
+- Documentation samples added to main demo (see it in Samples tab under "Documentation Samples" item).
+- Updated documentation to reflect api changes.
+- VisualControlState.Selected - new control state.
+- HVAlignment: added new methods.
+- SpeedButton: When Sticky is True, uses UseThemeForSticky property to get theme for painting.
+- Display: SuggestedLargeImages.
+- AbstractControl: HasParent, IsRoot, Root.
+- Added base classes: BaseObjectWithAttr and BaseObjectWithId. Most of other classes are derived from them.
+- Added classes: ListItemDrawable, EnumImages, KnownButtons, LightDarkImage, CachedSvgImage, PanelFormSelector.
+- AbstractControl now indirectly derived from BaseObjectWithAttr.
+- DebugUtils.RegisterExceptionsLogger - helps to debug MAUI applications.
+- Added ControlActivities.KeyboardZoomInOut.
+- Made default control font 1 point larger on low dpi. Use Control.DefaultFont instead of Font.Default in most places.
+- Stack layout bug fixes. Also added support for HorizontalLayout.Fill when Layout = Horizontal.
+- Window: GlobalWindowNotifications, AddGlobalWindowNotification, RemoveGlobalWindowNotification.
+- ControlsSample: Zoom in/out. Ctrl+Shift+Plus and Ctrl+Shift+Minus do zoom in/out of the font in the each form.
+- Added new svg images to KnownSvgImages.
+- DeveloperToolsPanel: Added toolbars.
+- Supressed WxWidgets debug message about gesture events.
+- WebBrowserSearchWindow now is not modal.
+- Fixed application did not exit in some cases when all forms were closed.
+
 # 0.9.638 (2024 October 19)
 
 - Improved ComboBox owner draw methods. So now it can paint ListContolItem in the popup. Added ComboBox.DefaultItemPainter.

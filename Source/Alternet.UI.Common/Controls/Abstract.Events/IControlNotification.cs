@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the native conrol location is changed.
         /// </summary>
-        void AfterHandlerLocationChanged(AbstractControl sender);
+        void AfterContainerLocationChanged(AbstractControl sender);
 
         /// <summary>
         /// Called after the conrol's handle is destroyed.

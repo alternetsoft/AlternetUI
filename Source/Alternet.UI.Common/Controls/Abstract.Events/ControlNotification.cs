@@ -128,7 +128,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerLocationChanged(AbstractControl sender)
+        public virtual void AfterContainerLocationChanged(AbstractControl sender)
         {
         }
 

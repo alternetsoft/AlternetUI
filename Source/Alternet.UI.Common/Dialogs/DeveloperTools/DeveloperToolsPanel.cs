@@ -91,20 +91,24 @@ namespace Alternet.UI
             logListBoxToolBar.SetVisibleBorders(false, false, false, true);
             logListBoxToolBar.Parent = logListBoxPanel;
 
-            var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn(
-                "More actions", KnownSvgImages.ImgMoreActions/*KnownSvgImages.ImgGear*/);
-            logListBoxToolBar.SetToolDropDownMenu(btnLogListBoxSettings, logListBox.ContextMenu);
-            logListBoxToolBar.SetToolAlignRight(btnLogListBoxSettings);
+            logListBoxToolBar.AddText("Output");
 
             var btnCopy = logListBoxToolBar.AddSpeedBtn(
                     "Copy selected items",
                     KnownSvgImages.ImgCopy,
                     (_, _) => logListBox.SelectedItemsToClipboard());
+            logListBoxToolBar.SetToolAlignRight(btnCopy);
 
             var btnClear = logListBoxToolBar.AddSpeedBtn(
                     "Clear items",
                     KnownSvgImages.ImgTrashCan,
                     (_, _) => logListBox.RemoveAll());
+            logListBoxToolBar.SetToolAlignRight(btnClear);
+
+            var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn(
+                "More actions", KnownSvgImages.ImgMoreActions/*KnownSvgImages.ImgGear*/);
+            logListBoxToolBar.SetToolDropDownMenu(btnLogListBoxSettings, logListBox.ContextMenu);
+            logListBoxToolBar.SetToolAlignRight(btnLogListBoxSettings);
 
             logListBox.VerticalAlignment = VerticalAlignment.Fill;
             logListBox.Parent = logListBoxPanel;
