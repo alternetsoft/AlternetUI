@@ -97,7 +97,6 @@ namespace PropertyGridSample
                 if (DebugUtils.IsDebugDefined)
                 {
                     LimitedTypes.Add(typeof(GenericTextControl));
-                    LimitedTypes.Add(typeof(RichToolTip));
                 }
 
                 LimitedTypes.AddRange(LimitedTypesStatic);

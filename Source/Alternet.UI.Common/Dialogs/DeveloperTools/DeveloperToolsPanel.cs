@@ -91,7 +91,8 @@ namespace Alternet.UI
             logListBoxToolBar.SetVisibleBorders(false, false, false, true);
             logListBoxToolBar.Parent = logListBoxPanel;
 
-            var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn("Settings", KnownSvgImages.ImgGear);
+            var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn(
+                "More actions", KnownSvgImages.ImgMoreActions/*KnownSvgImages.ImgGear*/);
             logListBoxToolBar.SetToolDropDownMenu(btnLogListBoxSettings, logListBox.ContextMenu);
             logListBoxToolBar.SetToolAlignRight(btnLogListBoxSettings);
 
