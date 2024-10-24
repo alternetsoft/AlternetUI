@@ -476,11 +476,11 @@ namespace Alternet::UI
         RemoveWxWindowControlAssociation(wxWindow);
 
         OnWxWindowDestroyed(wxWindow);
+        RaiseEvent(ControlEvent::HandleDestroyed);
         RaiseEvent(ControlEvent::Destroyed);
 
         if (IsRecreatingWxWindow())
             SetRecreatingWxWindow(false);
-        RaiseEvent(ControlEvent::HandleDestroyed);
     }
 
     void Control::OnSysColorChanged(wxSysColourChangedEvent& event)

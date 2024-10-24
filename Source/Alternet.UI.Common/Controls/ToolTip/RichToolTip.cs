@@ -620,7 +620,7 @@ namespace Alternet.UI
                 if(location is not null)
                     ToolTipLocation = location.Value;
 
-                template.Normal = RealDefaultToolTipBorder;
+                template.NormalBorder = RealDefaultToolTipBorder;
                 template.HasBorder = true;
                 template.BackgroundColor
                 = ToolTipBackgroundColor ?? RichToolTip.DefaultToolTipBackgroundColor;

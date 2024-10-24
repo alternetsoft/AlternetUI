@@ -32,6 +32,13 @@ namespace Alternet::UI
             _owner = owner;
             Create(parent, winid, pos, size, style, name);
         }
+
+        WXDLLIMPEXP_INLINE_CORE virtual void SetFocus() wxOVERRIDE
+        {
+            BaseWindowClass::SetFocus();
+        }
+
+    protected:
     };
     
     bool wxPanel2::AcceptsFocus() const
