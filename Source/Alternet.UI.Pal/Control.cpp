@@ -1039,7 +1039,13 @@ namespace Alternet::UI
             child->UpdateWxWindowParent();
         RaiseEvent(ControlEvent::HandleCreated);
 
-        EnableTouchEvents(0);
+#ifdef  __WXMSW__
+        HWND hWnd = _wxWindow->GetHWND();
+        if (hWnd)
+        {
+            EnableTouchEvents(0);
+        }
+#endif
     }
 
     bool Control::GetBindScrollEvents()
