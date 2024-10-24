@@ -758,10 +758,6 @@ namespace Alternet.UI
 
             var paintArgs = new PaintEventArgs(dc, ClientRectangle);
             RaisePaint(paintArgs);
-            /*
-            if(this is UserControl)
-                RaisePaintRecursive(paintArgs, true, true);
-            */
         }
 
         /// <summary>

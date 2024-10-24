@@ -171,6 +171,7 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+bool EnableTouchEvents(int flag);
 bool BeginRepositioningChildren();
 void EndRepositioningChildren();
 RectI GetUpdateClientRect();

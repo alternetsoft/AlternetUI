@@ -186,9 +186,9 @@ namespace Alternet.UI
                 if (DroppedDown == value)
                     return;
                 if (value)
-                    Handler.ShowPopup();
+                    PlatformControl.ShowPopup();
                 else
-                    Handler.DismissPopup();
+                    PlatformControl.DismissPopup();
             }
         }
 
@@ -197,14 +197,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The zero-based index of the first character in the string
         /// of the current text selection.</value>
-        public virtual int TextSelectionStart => Handler.TextSelectionStart;
+        public virtual int TextSelectionStart => PlatformControl.TextSelectionStart;
 
         /// <summary>
         /// Gets the number of characters selected in the editable portion
         /// of the combo box.
         /// </summary>
         /// <value>The number of characters selected in the combo box.</value>
-        public virtual int TextSelectionLength => Handler.TextSelectionLength;
+        public virtual int TextSelectionLength => PlatformControl.TextSelectionLength;
 
         /// <summary>
         /// Gets or sets a hint shown in an empty unfocused text control.
@@ -213,12 +213,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.EmptyTextHint;
+                return PlatformControl.EmptyTextHint;
             }
 
             set
             {
-                Handler.EmptyTextHint = value;
+                PlatformControl.EmptyTextHint = value;
             }
         }
 
@@ -401,12 +401,12 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool HasBorder
         {
-            get => Handler.HasBorder;
+            get => PlatformControl.HasBorder;
             set
             {
                 if (HasBorder == value)
                     return;
-                Handler.HasBorder = value;
+                PlatformControl.HasBorder = value;
             }
         }
 
@@ -439,7 +439,7 @@ namespace Alternet.UI
         {
             get
             {
-                var margins = Handler.TextMargins;
+                var margins = PlatformControl.TextMargins;
                 var result = PixelToDip(margins);
                 if (result.X < 1)
                     result.X = 1;
@@ -497,24 +497,24 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.OwnerDrawStyle;
+                return PlatformControl.OwnerDrawStyle;
             }
 
             set
             {
                 if (OwnerDrawStyle == value)
                     return;
-                Handler.OwnerDrawStyle = value;
+                PlatformControl.OwnerDrawStyle = value;
                 Invalidate();
             }
         }
 
-        internal new IComboBoxHandler Handler
+        internal IComboBoxHandler PlatformControl
         {
             get
             {
                 CheckDisposed();
-                return (IComboBoxHandler)base.Handler;
+                return (IComboBoxHandler)Handler;
             }
         }
 
@@ -533,12 +533,12 @@ namespace Alternet.UI
         /// the control and replacing information.
         /// </remarks>
         public virtual void SelectTextRange(int start, int length)
-            => Handler.SelectTextRange(start, length);
+            => PlatformControl.SelectTextRange(start, length);
 
         /// <summary>
         /// Selects all the text in the editable portion of the ComboBox.
         /// </summary>
-        public virtual void SelectAllText() => Handler.SelectAllText();
+        public virtual void SelectAllText() => PlatformControl.SelectAllText();
 
         /// <summary>
         /// Raises the <see cref="SelectedItemChanged"/> event and calls

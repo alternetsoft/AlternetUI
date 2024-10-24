@@ -1038,6 +1038,14 @@ namespace Alternet::UI
         for (auto child : _children)
             child->UpdateWxWindowParent();
         RaiseEvent(ControlEvent::HandleCreated);
+
+#ifdef  __WXMSW__
+        HWND hWnd = _wxWindow->GetHWND();
+        if (hWnd)
+        {
+            EnableTouchEvents(0);
+        }
+#endif
     }
 
     bool Control::GetBindScrollEvents()
@@ -1930,6 +1938,12 @@ namespace Alternet::UI
         info.visible = info.maximum > 0;
 
         return info;
+    }
+
+    bool Control::EnableTouchEvents(int flag)
+    {
+        auto window = GetWxWindow();
+        return window->EnableTouchEvents(flag);
     }
 
     void Control::SetScrollInfo(ScrollBarOrientation orientation, const ScrollInfo& value)

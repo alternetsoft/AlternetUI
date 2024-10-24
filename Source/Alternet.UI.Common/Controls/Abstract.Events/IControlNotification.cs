@@ -14,7 +14,11 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the <see cref="AbstractControl.PreviewKeyDown" /> event is raised.
         /// </summary>
-        void AfterPreviewKeyDown(AbstractControl sender, Key key, ModifierKeys modifiers, ref bool isInputKey);
+        void AfterPreviewKeyDown(
+            AbstractControl sender,
+            Key key,
+            ModifierKeys modifiers,
+            ref bool isInputKey);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.LongTap" /> event is raised.
@@ -312,6 +316,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
         void AfterParentChanged(AbstractControl sender);
+
+        /// <summary>
+        /// Called after control is created.
+        /// </summary>
+        /// <param name="sender">Control which sends the notification.</param>
+        void AfterCreate(AbstractControl sender);
 
         /// <summary>
         /// Called after the enabled of the <see cref="AbstractControl.Enabled"/> property changes.

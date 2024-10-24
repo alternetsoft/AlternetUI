@@ -858,6 +858,17 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     #endif
 }
 
+ALTERNET_UI_API c_bool Control_EnableTouchEvents_(Control* obj, int flag)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->EnableTouchEvents(flag);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool Control_BeginRepositioningChildren_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

@@ -33,6 +33,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual void AfterCreate(AbstractControl sender)
+        {
+        }
+
+        /// <inheritdoc/>
         public virtual void AfterCellChanged(AbstractControl sender)
         {
         }

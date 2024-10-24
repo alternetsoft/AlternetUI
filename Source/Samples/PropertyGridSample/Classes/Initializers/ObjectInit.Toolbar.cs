@@ -97,7 +97,8 @@ namespace PropertyGridSample
             var textBox = new TextBox();
             textBox.VerticalAlignment = VerticalAlignment.Center;
             textBox.Text = "text1";
-            textBox.SuggestedWidth = 100;
+            textBox.MinWidth = 100;
+            textBox.HorizontalAlignment = HorizontalAlignment.Fill;
 
             var idEdit = toolbar.AddControl(textBox);
 

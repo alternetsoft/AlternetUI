@@ -70,21 +70,44 @@ namespace Alternet.UI
             Coord x = 0;
             Coord w = 0;
 
-            Stack<AbstractControl> rightControls = new();
+            Stack<AbstractControl>? rightControls = null;
+            List<AbstractControl>? fillControls = null;
             List<(AbstractControl Control, Coord Top, SizeD Size)>? centerControls = null;
 
             foreach (var control in controls)
             {
+                bool isFill = control.HorizontalAlignment == UI.HorizontalAlignment.Fill;
+                if (isFill)
+                {
+                    fillControls ??= new();
+                    fillControls.Add(control);
+                    continue;
+                }
+
                 bool isRight = control.HorizontalAlignment == UI.HorizontalAlignment.Right;
                 if (isRight)
+                {
+                    rightControls ??= new();
                     rightControls.Push(control);
+                }
                 else
                     DoAlignControl(control);
             }
 
-            foreach (var control in rightControls)
+            if(rightControls is not null)
             {
-                DoAlignControl(control);
+                foreach (var control in rightControls)
+                {
+                    DoAlignControl(control);
+                }
+            }
+
+            if (fillControls is not null)
+            {
+                foreach (var control in fillControls)
+                {
+                    DoAlignControl(control);
+                }
             }
 
             if (centerControls is not null)
@@ -115,9 +138,11 @@ namespace Alternet.UI
                 var margin = control.Margin;
                 var horizontalMargin = margin.Horizontal;
 
+                var availableWidth = childrenLayoutBounds.Width - x - horizontalMargin - w;
+
                 var preferredSize = control.GetPreferredSizeLimited(
                     new SizeD(
-                        childrenLayoutBounds.Width - x - horizontalMargin - w,
+                        availableWidth,
                         childrenLayoutBounds.Height));
                 var alignedPosition =
                     AbstractControl.AlignVertical(
@@ -129,7 +154,6 @@ namespace Alternet.UI
                 switch (control.HorizontalAlignment)
                 {
                     case HorizontalAlignment.Left:
-                    case HorizontalAlignment.Fill:
                     case HorizontalAlignment.Stretch:
                     default:
                         control.Bounds =
@@ -139,6 +163,15 @@ namespace Alternet.UI
                                 preferredSize.Width,
                                 alignedPosition.Size);
                         x += preferredSize.Width + horizontalMargin;
+                        break;
+                    case HorizontalAlignment.Fill:
+                        control.Bounds =
+                            new RectD(
+                                childrenLayoutBounds.Left + x + margin.Left,
+                                alignedPosition.Origin,
+                                availableWidth,
+                                alignedPosition.Size);
+                        x += availableWidth + horizontalMargin;
                         break;
                     case HorizontalAlignment.Center:
                         centerControls ??= new();

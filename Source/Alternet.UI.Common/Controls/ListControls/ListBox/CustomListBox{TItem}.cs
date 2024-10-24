@@ -542,6 +542,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Runs action specified in the <see cref="ListControlItem.DoubleClickAction"/> property
+        /// of the selected item.
+        /// </summary>
+        public virtual void RunSelectedItemDoubleClickAction()
+        {
+            var item = SelectedItem as ListControlItem;
+            var action = item?.DoubleClickAction;
+            action?.Invoke();
+        }
+
+        /// <summary>
         /// Raises the <see cref="SelectionChanged"/> event and calls
         /// <see cref="OnSelectionChanged(EventArgs)"/>.
         /// </summary>
@@ -570,9 +581,7 @@ namespace Alternet.UI
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             base.OnMouseDoubleClick(e);
-            var item = SelectedItem as ListControlItem;
-            var action = item?.DoubleClickAction;
-            action?.Invoke();
+            RunSelectedItemDoubleClickAction();
         }
 
         private void ClearSelectedCore()

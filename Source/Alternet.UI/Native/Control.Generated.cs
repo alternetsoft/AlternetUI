@@ -650,6 +650,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool EnableTouchEvents(int flag)
+        {
+            CheckDisposed();
+            return NativeApi.Control_EnableTouchEvents_(NativePointer, flag);
+        }
+        
         public bool BeginRepositioningChildren()
         {
             CheckDisposed();
@@ -1564,6 +1570,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_EnableTouchEvents_(IntPtr obj, int flag);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_BeginRepositioningChildren_(IntPtr obj);

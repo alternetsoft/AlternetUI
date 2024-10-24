@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="trash-can.svg"
+   width="512"
+   height="512"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.5878906"
+     inkscape:cx="223.88192"
+     inkscape:cy="256"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+  <path
+     d="m 202.5,51.6 -19,28.4 h 145 l -19,-28.4 C 308,49.4 305.5,48 302.8,48 h -93.7 c -2.7,0 -5.2,1.3 -6.7,3.6 z m 147,-26.6 36.7,55 h 13.8 48 8 c 13.3,0 24,10.7 24,24 0,13.3 -10.7,24 -24,24 h -8 v 304 c 0,44.2 -35.8,80 -80,80 H 144 C 99.8,512 64,476.2 64,432 V 128 H 56 C 42.7,128 32,117.3 32,104 32,90.7 42.7,80 56,80 h 8 48 13.8 L 162.5,24.9 C 172.9,9.4 190.4,0 209.1,0 h 93.7 c 18.7,0 36.2,9.4 46.6,24.9 z M 112,128 v 304 c 0,17.7 14.3,32 32,32 h 224 c 17.7,0 32,-14.3 32,-32 V 128 Z m 80,64 v 208 c 0,8.8 -7.2,16 -16,16 -8.8,0 -16,-7.2 -16,-16 V 192 c 0,-8.8 7.2,-16 16,-16 8.8,0 16,7.2 16,16 z m 80,0 v 208 c 0,8.8 -7.2,16 -16,16 -8.8,0 -16,-7.2 -16,-16 V 192 c 0,-8.8 7.2,-16 16,-16 8.8,0 16,7.2 16,16 z m 80,0 v 208 c 0,8.8 -7.2,16 -16,16 -8.8,0 -16,-7.2 -16,-16 V 192 c 0,-8.8 7.2,-16 16,-16 8.8,0 16,7.2 16,16 z"
+     id="path1" />
+</svg>

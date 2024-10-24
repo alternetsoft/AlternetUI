@@ -22,15 +22,20 @@
       <!-- ==================================== -->
       <StackPanel  Grid.Row="1" Grid.Column="0"  Orientation="Horizontal">
 
-        <Button Name="BackButton" Text="&#60;" Margin="0,10,0,5" Click="BackButton_Click"/>
-        <Button Name="ForwardButton" Text="&#62;" Margin="0,10,0,5" Click="ForwardButton_Click"/>
-        <Button Name="ZoomInButton" Text="+" Margin="0,10,0,5" Click="ZoomInButton_Click" />
-        <Button Name="ZoomOutButton" Text="-" Margin="0,10,0,5" Click="ZoomOutButton_Click" />
+        <Button Name="BackButton" Text="&#60;"
+                Margin="0,10,0,5" Click="BackButton_Click"/>
+        <Button Name="ForwardButton" Text="&#62;"
+                Margin="0,10,0,5" Click="ForwardButton_Click"/>
+        <Button Name="ZoomInButton" Text="+"
+                Margin="0,10,0,5" Click="ZoomInButton_Click" />
+        <Button Name="ZoomOutButton" Text="-"
+                Margin="0,10,0,5" Click="ZoomOutButton_Click" />
         <ComboBox SuggestedWidth="300" Margin="0,10,0,5" Name="UrlTextBox"
-               KeyDown="UrlTextBox_KeyDown" IsEditable="true"
+               KeyDown="UrlTextBox_KeyDown" IsEditable="true" HorizontalAlignment="Fill"
                   SelectedItemChanged="UrlTextBox_SelectedItemChanged"
 			/>
-        <Button Name="GoButton" Text="&#x25B7;" Margin="0,10,0,5" Click="GoButton_Click" />
+        <Button Name="GoButton" Text="&#x25B7;" HorizontalAlignment="Right"
+                Margin="0,10,0,5" Click="GoButton_Click" />
       </StackPanel>
       <!-- ==================================== -->
 

@@ -97,7 +97,7 @@ namespace Alternet.UI
             WebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
         }
 
-        public IWebBrowserHandler CreateWebBrowserHandler(WebBrowser control)
+        public IControlHandler CreateWebBrowserHandler(WebBrowser control)
         {
             return new WebBrowserHandler();
         }

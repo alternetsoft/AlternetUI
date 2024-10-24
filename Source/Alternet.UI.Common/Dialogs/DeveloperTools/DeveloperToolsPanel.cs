@@ -28,6 +28,24 @@ namespace Alternet.UI
             HasBorder = false,
         };
 
+        private readonly Panel logListBoxPanel = new()
+        {
+            Layout = LayoutStyle.Vertical,
+        };
+
+        private readonly Panel actionsListBoxPanel = new()
+        {
+            Layout = LayoutStyle.Vertical,
+        };
+
+        private readonly ToolBar logListBoxToolBar = new()
+        {
+        };
+
+        private readonly ToolBar actionsListBoxToolBar = new()
+        {
+        };
+
         private readonly SplittedPanel panel = new()
         {
             TopVisible = false,
@@ -38,14 +56,17 @@ namespace Alternet.UI
 
         private readonly PropertyGrid propGrid = new()
         {
+            HasBorder = false,
         };
 
-        private readonly SideBarPanel centerNotebook = new()
+        private readonly TabControl centerNotebook = new()
         {
+            TabAlignment = TabAlignment.Bottom,
         };
 
-        private readonly SideBarPanel rightNotebook = new()
+        private readonly TabControl rightNotebook = new()
         {
+            TabAlignment = TabAlignment.Bottom,
         };
 
         private ListBox? typesListBox;
@@ -64,12 +85,44 @@ namespace Alternet.UI
             rightNotebook.Parent = panel.RightPanel;
             panel.Parent = this;
 
-            centerNotebook.Add("Output", logListBox);
             logListBox.ContextMenu.Required();
+
+            logListBoxToolBar.VerticalAlignment = VerticalAlignment.Top;
+            logListBoxToolBar.SetVisibleBorders(false, false, false, true);
+            logListBoxToolBar.Parent = logListBoxPanel;
+
+            var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn(
+                "More actions", KnownSvgImages.ImgMoreActions/*KnownSvgImages.ImgGear*/);
+            logListBoxToolBar.SetToolDropDownMenu(btnLogListBoxSettings, logListBox.ContextMenu);
+            logListBoxToolBar.SetToolAlignRight(btnLogListBoxSettings);
+
+            var btnCopy = logListBoxToolBar.AddSpeedBtn(
+                    "Copy selected items",
+                    KnownSvgImages.ImgCopy,
+                    (_, _) => logListBox.SelectedItemsToClipboard());
+
+            var btnClear = logListBoxToolBar.AddSpeedBtn(
+                    "Clear items",
+                    KnownSvgImages.ImgTrashCan,
+                    (_, _) => logListBox.RemoveAll());
+
+            logListBox.VerticalAlignment = VerticalAlignment.Fill;
+            logListBox.Parent = logListBoxPanel;
+
+            centerNotebook.Add("Output", logListBoxPanel);
             logListBox.MenuItemShowDevTools?.SetEnabled(false);
             logListBox.BindApplicationLog();
 
-            rightNotebook.Add("Actions", actionsListBox);
+            actionsListBoxToolBar.Parent = actionsListBoxPanel;
+            var btnRunAction = actionsListBoxToolBar.AddSpeedBtn(
+                "Run action",
+                KnownSvgImages.ImgDebugRun,
+                (_, _) => actionsListBox.RunSelectedItemDoubleClickAction());
+
+            actionsListBox.VerticalAlignment = VerticalAlignment.Fill;
+            actionsListBox.Parent = actionsListBoxPanel;
+
+            rightNotebook.Add("Actions", actionsListBoxPanel);
 
             propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
@@ -87,9 +140,9 @@ namespace Alternet.UI
 
         public static DeveloperToolsPanel? DevPanel => devToolsWindow?.DevPanel;
 
-        public SideBarPanel CenterNotebook => centerNotebook;
+        public TabControl CenterNotebook => centerNotebook;
 
-        public SideBarPanel RightNotebook => rightNotebook;
+        public TabControl RightNotebook => rightNotebook;
 
         public PropertyGrid PropGrid => propGrid;
 

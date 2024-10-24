@@ -8,27 +8,27 @@ namespace Alternet.UI
 {
     internal class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
-        IAnimationPlayerHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)
+        IControlHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)
         {
             throw new NotImplementedException();
         }
 
-        IButtonHandler IControlFactoryHandler.CreateButtonHandler(Button control)
+        IControlHandler IControlFactoryHandler.CreateButtonHandler(Button control)
         {
             throw new NotImplementedException();
         }
 
-        ICalendarHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
+        IControlHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
         {
             throw new NotImplementedException();
         }
 
-        ICheckBoxHandler IControlFactoryHandler.CreateCheckBoxHandler(CheckBox control)
+        IControlHandler IControlFactoryHandler.CreateCheckBoxHandler(CheckBox control)
         {
             throw new NotImplementedException();
         }
 
-        ICheckListBoxHandler IControlFactoryHandler.CreateCheckListBoxHandler(CheckListBox control)
+        IControlHandler IControlFactoryHandler.CreateCheckListBoxHandler(CheckListBox control)
         {
             throw new NotImplementedException();
         }
@@ -38,12 +38,12 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IColorPickerHandler IControlFactoryHandler.CreateColorPickerHandler(ColorPicker control)
+        IControlHandler IControlFactoryHandler.CreateColorPickerHandler(ColorPicker control)
         {
             throw new NotImplementedException();
         }
 
-        IComboBoxHandler IControlFactoryHandler.CreateComboBoxHandler(ComboBox control)
+        IControlHandler IControlFactoryHandler.CreateComboBoxHandler(ComboBox control)
         {
             return new MauiComboBoxHandler();
         }
@@ -58,32 +58,32 @@ namespace Alternet.UI
             return new MauiControlHandler();
         }
 
-        IDateTimePickerHandler IControlFactoryHandler.CreateDateTimePickerHandler(DateTimePicker control)
+        IControlHandler IControlFactoryHandler.CreateDateTimePickerHandler(DateTimePicker control)
         {
             throw new NotImplementedException();
         }
 
-        IGroupBoxHandler IControlFactoryHandler.CreateGroupBoxHandler(GroupBox control)
+        IControlHandler IControlFactoryHandler.CreateGroupBoxHandler(GroupBox control)
         {
             throw new NotImplementedException();
         }
 
-        ILabelHandler IControlFactoryHandler.CreateLabelHandler(Label control)
+        IControlHandler IControlFactoryHandler.CreateLabelHandler(Label control)
         {
             throw new NotImplementedException();
         }
 
-        ILinkLabelHandler IControlFactoryHandler.CreateLinkLabelHandler(LinkLabel control)
+        IControlHandler IControlFactoryHandler.CreateLinkLabelHandler(LinkLabel control)
         {
             throw new NotImplementedException();
         }
 
-        IListBoxHandler IControlFactoryHandler.CreateListBoxHandler(ListBox control)
+        IControlHandler IControlFactoryHandler.CreateListBoxHandler(ListBox control)
         {
             throw new NotImplementedException();
         }
 
-        IListViewHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
+        IControlHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
         {
             throw new NotImplementedException();
         }
@@ -98,42 +98,42 @@ namespace Alternet.UI
             return new PlessMenuItemHandler();
         }
 
-        INumericUpDownHandler IControlFactoryHandler.CreateNumericUpDownHandler(NumericUpDown control)
+        IControlHandler IControlFactoryHandler.CreateNumericUpDownHandler(NumericUpDown control)
         {
             throw new NotImplementedException();
         }
 
-        IProgressBarHandler IControlFactoryHandler.CreateProgressBarHandler(ProgressBar control)
+        IControlHandler IControlFactoryHandler.CreateProgressBarHandler(ProgressBar control)
         {
             throw new NotImplementedException();
         }
 
-        IPropertyGridHandler IControlFactoryHandler.CreatePropertyGridHandler(PropertyGrid control)
+        IControlHandler IControlFactoryHandler.CreatePropertyGridHandler(PropertyGrid control)
         {
             throw new NotImplementedException();
         }
 
-        IRadioButtonHandler IControlFactoryHandler.CreateRadioButtonHandler(RadioButton control)
+        IControlHandler IControlFactoryHandler.CreateRadioButtonHandler(RadioButton control)
         {
             throw new NotImplementedException();
         }
 
-        IRichTextBoxHandler IControlFactoryHandler.CreateRichTextBoxHandler(RichTextBox editor)
+        IControlHandler IControlFactoryHandler.CreateRichTextBoxHandler(RichTextBox editor)
         {
             throw new NotImplementedException();
         }
 
-        IScrollBarHandler IControlFactoryHandler.CreateScrollBarHandler(ScrollBar control)
+        IControlHandler IControlFactoryHandler.CreateScrollBarHandler(ScrollBar control)
         {
             throw new NotImplementedException();
         }
 
-        IScrollViewerHandler IControlFactoryHandler.CreateScrollViewerHandler(ScrollViewer control)
+        IControlHandler IControlFactoryHandler.CreateScrollViewerHandler(ScrollViewer control)
         {
             throw new NotImplementedException();
         }
 
-        ISliderHandler IControlFactoryHandler.CreateSliderHandler(Slider control)
+        IControlHandler IControlFactoryHandler.CreateSliderHandler(Slider control)
         {
             throw new NotImplementedException();
         }
@@ -143,12 +143,12 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        ITextBoxHandler IControlFactoryHandler.CreateTextBoxHandler(TextBox control)
+        IControlHandler IControlFactoryHandler.CreateTextBoxHandler(TextBox control)
         {
             throw new NotImplementedException();
         }
 
-        ITreeViewHandler IControlFactoryHandler.CreateTreeViewHandler(TreeView control)
+        IControlHandler IControlFactoryHandler.CreateTreeViewHandler(TreeView control)
         {
             throw new NotImplementedException();
         }
@@ -158,7 +158,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IVListBoxHandler IControlFactoryHandler.CreateVListBoxHandler(VirtualListBox control)
+        IControlHandler IControlFactoryHandler.CreateVListBoxHandler(VirtualListBox control)
         {
             throw new NotImplementedException();
         }
@@ -168,7 +168,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IWindowHandler IControlFactoryHandler.CreateWindowHandler(Window window)
+        IControlHandler IControlFactoryHandler.CreateWindowHandler(Window window)
         {
             return new MauiWindowHandler();
         }

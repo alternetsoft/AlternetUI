@@ -12,6 +12,8 @@ namespace ControlsSample
         static MainWindow()
         {
             DefaultUseParentFont = true;
+
+            AddGlobalWindowNotification(new GlobalFormActivity());
         }
 
         protected override void AddPages()
@@ -219,6 +221,14 @@ namespace ControlsSample
             if (sender is not LinkLabel linkLabel)
                 return;
             LogEvent(linkLabel.Url);
+        }
+
+        private class GlobalFormActivity : BaseControlActivity
+        {
+            public override void AfterCreate(AbstractControl sender)
+            {
+                ControlActivities.KeyboardZoomInOut.Initialize(sender);
+            }
         }
     }
 }

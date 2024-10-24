@@ -13,7 +13,7 @@ namespace Alternet.UI
     public class ListBoxItemPaintEventArgs : PaintEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComboBoxItemPaintEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ListBoxItemPaintEventArgs"/> class.
         /// </summary>
         /// <param name="control">Control which owns the item.</param>
         /// <param name="graphics"><see cref="Graphics"/> where drawing is performed.</param>

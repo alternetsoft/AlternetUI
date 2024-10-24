@@ -408,5 +408,11 @@ namespace Alternet.UI
         {
             Control.Parent?.Update();
         }
+
+        /// <inheritdoc/>
+        public virtual bool EnableTouchEvents(TouchEventsMask flag)
+        {
+            return false;
+        }
     }
 }

@@ -1219,19 +1219,20 @@ namespace Alternet.UI
             if (Terminating)
                 return;
 
-#if DEBUG
-            if(kind == LogItemKind.Error)
+            DebugUtils.DebugCall(() =>
             {
-            }
+                if (kind == LogItemKind.Error)
+                {
+                }
 
-            if (kind == LogItemKind.Information)
-            {
-            }
+                if (kind == LogItemKind.Information)
+                {
+                }
 
-            if (kind == LogItemKind.Warning)
-            {
-            }
-#endif
+                if (kind == LogItemKind.Warning)
+                {
+                }
+            });
 
             var msg = obj?.ToString();
 
@@ -1525,6 +1526,11 @@ namespace Alternet.UI
             if (MainWindow == window)
                 MainWindow = null;
             windows.Remove(window);
+            if (windows.Count == 0 || VisibleWindows.Count() == 0)
+            {
+                DoEvents();
+                Exit();
+            }
         }
 
         /// <summary>
