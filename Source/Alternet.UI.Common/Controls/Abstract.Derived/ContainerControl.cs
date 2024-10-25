@@ -233,5 +233,11 @@ namespace Alternet.UI
 
             return result;
         }
+
+        /// <inheritdoc/>
+        protected override IControlHandler CreateHandler()
+        {
+            return ControlFactory.Handler.CreatePanelHandler(this);
+        }
     }
 }
