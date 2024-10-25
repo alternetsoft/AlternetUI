@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     internal class WxControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
-        public IControlHandler CreatePanelHandler(Panel control)
+        public IControlHandler CreatePanelHandler(ContainerControl control)
         {
             return new WxPanelHandler();
         }

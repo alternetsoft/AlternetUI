@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IControlHandler CreatePanelHandler(Panel control);
+        IControlHandler CreatePanelHandler(ContainerControl control);
 
         /// <summary>
         /// Creates <see cref="ICheckBoxHandler"/> interface provider.
