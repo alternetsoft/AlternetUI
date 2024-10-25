@@ -14,7 +14,7 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class UserControl : Control
     {
-        private bool hasBorder = true; // !! to border settings
+        private bool hasBorder = true;
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
         private Caret? caret;
 

@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Implements generic toolbar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class ToolBar : Border
+    public partial class ToolBar : HiddenBorder
     {
         private Coord itemSize;
         private bool textVisible = false;
@@ -40,7 +40,6 @@ namespace Alternet.UI
         /// </summary>
         public ToolBar()
         {
-            HasBorder = false;
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
             IsGraphicControl = true;

@@ -311,6 +311,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether key presses are sent to the parent control.
         /// </summary>
+        [Browsable(false)]
         public virtual bool BubbleKeys { get; set; }
 
         /// <summary>

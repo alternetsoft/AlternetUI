@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <see cref="UserControl"/> descendant with <see cref="PaintActions"/> property.
     /// Extends it's ancestor with an ability to call custom paint actions.
     /// </summary>
-    public class PaintActionsControl : UserControl
+    public class PaintActionsControl : HiddenBorder
     {
         private List<Action<AbstractControl, Graphics, RectD>>? paintActions;
 

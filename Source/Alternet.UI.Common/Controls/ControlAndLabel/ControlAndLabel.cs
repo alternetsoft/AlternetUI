@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// in order to implement your own custom labeled control.</remarks>
     [ControlCategory("Hidden")]
     public abstract partial class ControlAndLabel
-        : Control, IControlAndLabel, INotifyDataErrorInfo
+        : HiddenBorder, IControlAndLabel, INotifyDataErrorInfo
     {
         /// <summary>
         /// Gets or sets default distance between control and label.

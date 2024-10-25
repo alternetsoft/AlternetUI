@@ -493,6 +493,7 @@ namespace Alternet::UI
 
         wxWindow->Unbind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
         wxWindow->Unbind(wxEVT_TEXT, &Control::OnTextChanged, this);
+        wxWindow->Unbind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
         wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         //wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
@@ -1063,6 +1064,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);
         _wxWindow->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
+        _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
 
         if (bindScrollEvents)
         {
@@ -1495,6 +1497,59 @@ namespace Alternet::UI
     bool Control::EventsSuspended()
     {
         return _flags.IsSet(ControlFlags::CreatingWxWindow);
+    }
+
+    void Control::SetCursor(void* handle)
+    {
+        if (handle == nullptr)
+        {
+            _cursor = wxNullCursor;
+        }
+        else
+        {
+            auto cursor = (wxCursor*)handle;
+            _cursor = wxCursor(*cursor);
+        }
+
+        /*GetWxWindow()->SetCursor(_cursor);*/
+    }
+
+    void Control::OnSetCursor(wxSetCursorEvent& event)
+    {
+        auto mouseX = event.GetX();
+        auto mouseY = event.GetY();
+        auto mousePoint = wxPoint(mouseX, mouseY);
+
+        auto wxWindow = GetWxWindow();
+
+        const wxWindowList& list = wxWindow->GetChildren();
+        for (wxWindowList::compatibility_iterator node = list.GetFirst(); node; node = node->GetNext())
+        {
+            auto current = node->GetData();
+            auto rect = current->GetRect();
+            auto contains = rect.Contains(mousePoint);
+            if (contains)
+            {
+                event.Skip();
+                return;
+            }
+        }
+
+        event.SetCursor(_cursor);
+        /*event.Skip();*/
+
+        /*
+    // if we don't do it, the resizing cursor might be set for child window:
+    // and like this we explicitly say that our cursor should not be used for
+    // children windows which overlap us
+
+    if ( SashHitTest(event.GetX(), event.GetY()) != wxSASH_NONE)
+    {
+        // default processing is ok
+        event.Skip();
+    }
+    //else: do nothing, in particular, don't call Skip()
+        */
     }
 
     void Control::OnIdle(wxIdleEvent& event)
@@ -2209,17 +2264,6 @@ namespace Alternet::UI
 
         window->SetFocus();
         return window->HasFocus();
-    }
-
-    void Control::SetCursor(void* handle)
-    {
-        if(handle == nullptr)
-            GetWxWindow()->SetCursor(wxNullCursor);
-        else
-        {
-            auto cursor = (wxCursor*)handle;
-            GetWxWindow()->SetCursor(wxCursor(*cursor));
-        }
     }
 
     /*static*/ Control* Control::GetFocusedControl()
