@@ -10,6 +10,13 @@ namespace NativeApi.Api
 
     public abstract class Control
     {
+        public static IntPtr CreateControl() => default;
+
+        public bool WantChars { get; set; }
+        public bool ShowVertScrollBar { get; set; }
+        public bool ShowHorzScrollBar { get; set; }
+        public bool ScrollBarAlwaysVisible { get; set; }
+
         public bool EnableTouchEvents(int flag) => default;
 
         public bool BindScrollEvents { get; set; }

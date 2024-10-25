@@ -11,6 +11,94 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API c_bool Control_GetWantChars_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetWantChars();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetWantChars_(Control* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetWantChars(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Control_GetShowVertScrollBar_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetShowVertScrollBar();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetShowVertScrollBar_(Control* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetShowVertScrollBar(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Control_GetShowHorzScrollBar_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetShowHorzScrollBar();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetShowHorzScrollBar_(Control* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetShowHorzScrollBar(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Control_GetScrollBarAlwaysVisible_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetScrollBarAlwaysVisible();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Control_SetScrollBarAlwaysVisible_(Control* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetScrollBarAlwaysVisible(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool Control_GetBindScrollEvents_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -853,6 +941,17 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetMaximumSize(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* Control_CreateControl_()
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return Control::CreateControl();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

@@ -37,5 +37,11 @@ namespace Alternet.UI
             get => base.Text;
             set => base.Text = value;
         }
+
+        /// <inheritdoc/>
+        protected override IControlHandler CreateHandler()
+        {
+            return ControlFactory.Handler.CreatePanelHandler(this);
+        }
     }
 }

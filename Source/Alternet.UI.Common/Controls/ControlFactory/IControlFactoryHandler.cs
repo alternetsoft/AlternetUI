@@ -12,6 +12,13 @@ namespace Alternet.UI
     public interface IControlFactoryHandler : IDisposable
     {
         /// <summary>
+        /// Creates platform control for the <see cref="Panel"/>.
+        /// </summary>
+        /// <param name="control">Owner.</param>
+        /// <returns></returns>
+        IControlHandler CreatePanelHandler(Panel control);
+
+        /// <summary>
         /// Creates <see cref="ICheckBoxHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

@@ -8,6 +8,11 @@ namespace Alternet.UI
 {
     internal class WxControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
+        public IControlHandler CreatePanelHandler(Panel control)
+        {
+            return new WxPanelHandler();
+        }
+
         public IControlHandler CreateRichTextBoxHandler(RichTextBox editor)
         {
             return new RichTextBoxHandler();

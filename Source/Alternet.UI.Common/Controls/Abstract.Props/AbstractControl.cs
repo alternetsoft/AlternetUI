@@ -69,47 +69,54 @@ namespace Alternet.UI
 #pragma warning disable
         private Graphics? measureCanvas;
 #pragma warning restore
+
         private Coord? scaleFactorOverride;
+        private Coord? scaleFactor;
+
         private Color? textBackColor;
+        private Color? backgroundColor;
+        private Color? foregroundColor;
+        private FontStyle fontStyle;
+        private Font? font;
+
         private SizeD minimumSize;
         private SizeD maximumSize;
-        private FontStyle fontStyle;
-        private Coord? scaleFactor;
         private SizeD? dpi;
+        private SizeD suggestedSize = DefaultControlSize;
+
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
+        private MouseEventArgs? dragEventArgs;
+        private PointD lastMouseDownPos;
+        private IComponentDesigner? designer;
+        private ControlCollection? children;
+        private object? title;
+        private ControlStateSettings? stateObjects;
+        private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
+        private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
+        private ControlExtendedProps? extendedProps = null;
+        private AbstractControl? parent;
+        private ControlFlags stateFlags;
+        private Cursor? cursor;
+        private DockStyle dock;
+        private LayoutStyle? layout;
+        private List<IControlNotification>? notifications;
+
+        private RectD reportedBounds = RectD.MinusOne;
+        private RectD bounds;
+
         private int rowIndex;
         private int columnIndex;
         private int columnSpan = 1;
         private int rowSpan = 1;
         private int layoutSuspendCount;
-        private MouseEventArgs? dragEventArgs;
-        private PointD lastMouseDownPos;
-        private IComponentDesigner? designer;
-        private Color? backgroundColor;
-        private Color? foregroundColor;
-        private ControlCollection? children;
-        private SizeD suggestedSize = DefaultControlSize;
+        private int updateCount = 0;
+
         private Thickness margin;
         private Thickness padding;
-        private object? title;
-        private ControlStateSettings? stateObjects;
-        private Font? font;
-        private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
-        private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
-        private ControlExtendedProps? extendedProps = null;
         private Thickness? minMargin;
         private Thickness? minPadding;
         private Thickness? minChildMargin;
-        private AbstractControl? parent;
-        private int updateCount = 0;
-        private ControlFlags stateFlags;
-        private Cursor? cursor;
-        private DockStyle dock;
-        private LayoutStyle? layout;
-        private RectD reportedBounds = RectD.MinusOne;
-        private List<IControlNotification>? notifications;
-        private RectD bounds;
 
         private string? toolTip;
         private string? text;
@@ -300,6 +307,11 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool CanLongTap { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether key presses are sent to the parent control.
+        /// </summary>
+        public virtual bool BubbleKeys { get; set; }
 
         /// <summary>
         /// Gets or sets border for all visual states of the control.

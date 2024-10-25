@@ -14,9 +14,5 @@ namespace Alternet::UI
 
     protected:
     private:
-        bool _wantChars = false;
-        bool _showVertScrollBar = false;
-        bool _showHorzScrollBar = false;
-        bool _scrollBarAlwaysVisible = false;
     };
 }

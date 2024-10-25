@@ -24,6 +24,66 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool WantChars
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetWantChars_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetWantChars_(NativePointer, value);
+            }
+        }
+        
+        public bool ShowVertScrollBar
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetShowVertScrollBar_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetShowVertScrollBar_(NativePointer, value);
+            }
+        }
+        
+        public bool ShowHorzScrollBar
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetShowHorzScrollBar_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetShowHorzScrollBar_(NativePointer, value);
+            }
+        }
+        
+        public bool ScrollBarAlwaysVisible
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetScrollBarAlwaysVisible_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetScrollBarAlwaysVisible_(NativePointer, value);
+            }
+        }
+        
         public bool BindScrollEvents
         {
             get
@@ -648,6 +708,11 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.Control_SetMaximumSize_(NativePointer, value);
             }
+        }
+        
+        public static System.IntPtr CreateControl()
+        {
+            return NativeApi.Control_CreateControl_();
         }
         
         public bool EnableTouchEvents(int flag)
@@ -1341,6 +1406,30 @@ namespace Alternet.UI.Native
             public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetWantChars_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetWantChars_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetShowVertScrollBar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetShowVertScrollBar_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetShowHorzScrollBar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetShowHorzScrollBar_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetScrollBarAlwaysVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetScrollBarAlwaysVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetBindScrollEvents_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1570,6 +1659,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_CreateControl_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_EnableTouchEvents_(IntPtr obj, int flag);

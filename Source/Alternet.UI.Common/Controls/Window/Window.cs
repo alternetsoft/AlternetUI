@@ -1201,21 +1201,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void Dispose(bool disposing)
+        protected override void DisposeManaged()
         {
             if (IsDisposed)
                 return;
 
             Visible = false;
+            App.Current.UnregisterWindow(this);
 
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                App.Current.UnregisterWindow(this);
-                if (!App.Current.VisibleWindows.Any())
-                    App.Handler.ExitMainLoop();
-            }
+            base.DisposeManaged();
         }
 
         /// <inheritdoc/>

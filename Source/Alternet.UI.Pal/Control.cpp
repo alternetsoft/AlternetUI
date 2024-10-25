@@ -6,7 +6,55 @@
 
 namespace Alternet::UI
 {
-     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
+    class wxWindow2 : public wxWindow, public wxWidgetExtender
+    {
+    public:
+        Control* _owner = nullptr;
+
+        virtual bool AcceptsFocus() const override;
+        virtual bool AcceptsFocusFromKeyboard() const override;
+        virtual bool AcceptsFocusRecursively() const override;
+
+        wxWindow2() {}
+        wxWindow2(
+            Control* owner,
+            wxWindow* parent,
+            wxWindowID winid = wxID_ANY,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxNO_BORDER)
+        {
+            _owner = owner;
+            Create(parent, winid, pos, size, style);
+        }
+    protected:
+    };
+
+    bool wxWindow2::AcceptsFocus() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocus();
+        else
+            return _owner->_acceptsFocus;
+    }
+
+    bool wxWindow2::AcceptsFocusFromKeyboard() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocusFromKeyboard();
+        else
+            return _owner->_acceptsFocusFromKeyboard;
+    }
+
+    bool wxWindow2::AcceptsFocusRecursively() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocusRecursively();
+        else
+            return _owner->_acceptsFocusRecursively;
+    }
+
+    /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     wxString Control::GetMouseEventDesc(const wxMouseEvent& ev)
     {
@@ -2337,5 +2385,93 @@ namespace Alternet::UI
     Font* Control::GetClassDefaultAttributesFont(int controlType, int windowVariant)
     {
         return new Font(GetClassDefaultAttributes(controlType, windowVariant).font);
+    }
+
+    bool Control::GetWantChars()
+    {
+        return _wantChars;
+    }
+
+    void Control::SetWantChars(bool value)
+    {
+        if (_wantChars == value)
+            return;
+        _wantChars = value;
+    }
+
+    bool Control::GetShowVertScrollBar()
+    {
+        return _showVertScrollBar;
+    }
+
+    void Control::SetShowVertScrollBar(bool value)
+    {
+        if (_showVertScrollBar == value)
+            return;
+        _showVertScrollBar = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Control::GetShowHorzScrollBar()
+    {
+        return _showHorzScrollBar;
+    }
+
+    void Control::SetShowHorzScrollBar(bool value)
+    {
+        if (_showHorzScrollBar == value)
+            return;
+        _showHorzScrollBar = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Control::GetScrollBarAlwaysVisible()
+    {
+        return _scrollBarAlwaysVisible;
+    }
+
+    void Control::SetScrollBarAlwaysVisible(bool value)
+    {
+        if (_scrollBarAlwaysVisible == value)
+            return;
+        _scrollBarAlwaysVisible = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    class ControlNonAbstract : public Control
+    {
+    public:
+        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+        wxWindow* CreateWxWindowUnparented() override;
+
+    protected:
+    private:
+    };
+
+    void* Control::CreateControl()
+    {
+        return new ControlNonAbstract();
+    }
+
+    wxWindow* ControlNonAbstract::CreateWxWindowUnparented()
+    {
+        return new wxWindow2();
+    }
+
+    wxWindow* ControlNonAbstract::CreateWxWindowCore(wxWindow* parent)
+    {
+        long style = wxNO_BORDER | wxWANTS_CHARS;
+
+        if (GetIsScrollable())
+            style |= wxHSCROLL | wxVSCROLL;
+        if (_scrollBarAlwaysVisible)
+            style |= wxALWAYS_SHOW_SB;
+        if (_showVertScrollBar)
+            style |= wxVSCROLL;
+        if (_showHorzScrollBar)
+            style |= wxHSCROLL;
+
+        auto p = new wxWindow2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
+        return p;
     }
 }

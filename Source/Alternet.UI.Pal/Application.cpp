@@ -111,7 +111,8 @@ namespace Alternet::UI
         auto eventType = e.GetEventType();
         if (eventType == wxEVT_KEY_UP)
             _owner->GetKeyboardInternal()->OnKeyUp(e, handled);
-        else if (eventType == wxEVT_KEY_DOWN)
+        else
+        if (eventType == wxEVT_KEY_DOWN)
         {
 #ifndef __WXOSX_COCOA__            
             // For some reason, on Windows and Linux wxEVT_CHAR_HOOK are not sent
@@ -120,10 +121,16 @@ namespace Alternet::UI
                 _owner->GetKeyboardInternal()->OnKeyDown(e, handled);
 #endif                
         }
-        else if (eventType == wxEVT_CHAR_HOOK)
+        else
+        if (eventType == wxEVT_CHAR_HOOK)
+        {
             _owner->GetKeyboardInternal()->OnKeyDown(e, handled);
-        else if (eventType == wxEVT_CHAR)
+        }
+        else
+        if (eventType == wxEVT_CHAR)
+        {
             _owner->GetKeyboardInternal()->OnChar(e, handled);
+        }
     }
 
     int App::FilterEvent(wxEvent& e)
