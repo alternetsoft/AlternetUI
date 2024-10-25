@@ -302,7 +302,7 @@ namespace Alternet.UI
             {
                 action(control, e);
 
-                if (e.Handled)
+                if (e.Handled || !control.BubbleKeys)
                     return;
                 control = control.Parent;
             }

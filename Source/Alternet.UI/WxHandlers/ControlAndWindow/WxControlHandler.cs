@@ -282,45 +282,41 @@ namespace Alternet.UI
 
         public bool WantChars
         {
-            get => (NativeControl as Native.Panel)?.WantChars ?? true;
+            get => NativeControl.WantChars;
 
             set
             {
-                if (NativeControl is Native.Panel panel)
-                    panel.WantChars = value;
+                NativeControl.WantChars = value;
             }
         }
 
         public bool ShowHorzScrollBar
         {
-            get => (NativeControl as Native.Panel)?.ShowHorzScrollBar ?? false;
+            get => NativeControl.ShowHorzScrollBar;
 
             set
             {
-                if (NativeControl is Native.Panel panel)
-                    panel.ShowHorzScrollBar = value;
+                NativeControl.ShowHorzScrollBar = value;
             }
         }
 
         public bool ShowVertScrollBar
         {
-            get => (NativeControl as Native.Panel)?.ShowVertScrollBar ?? false;
+            get => NativeControl.ShowVertScrollBar;
 
             set
             {
-                if (NativeControl is Native.Panel panel)
-                    panel.ShowVertScrollBar = value;
+                NativeControl.ShowVertScrollBar = value;
             }
         }
 
         public bool ScrollBarAlwaysVisible
         {
-            get => (NativeControl as Native.Panel)?.ScrollBarAlwaysVisible ?? false;
+            get => NativeControl.ScrollBarAlwaysVisible;
 
             set
             {
-                if (NativeControl is Native.Panel panel)
-                    panel.ScrollBarAlwaysVisible = value;
+                NativeControl.ScrollBarAlwaysVisible = value;
             }
         }
 
@@ -800,7 +796,7 @@ namespace Alternet.UI
 
         internal virtual Native.Control CreateNativeControl()
         {
-            var result = new Native.Panel();
+            var result = new NonAbstractNativeControl();
             return result;
         }
 
@@ -949,6 +945,14 @@ namespace Alternet.UI
         public bool EnableTouchEvents(TouchEventsMask flag)
         {
             return NativeControl.EnableTouchEvents((int)flag);
+        }
+
+        internal class NonAbstractNativeControl : Native.Control
+        {
+            public NonAbstractNativeControl()
+            {
+                SetNativePointer(NativeApi.Control_CreateControl_());
+            }
         }
     }
 }

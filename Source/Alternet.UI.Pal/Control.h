@@ -60,7 +60,7 @@ namespace Alternet::UI
 
         }
     };
-  
+
     // Control ===========================================
                                       
     class Control : public Object
@@ -70,11 +70,12 @@ namespace Alternet::UI
         void OnTextChanged(wxCommandEvent& event);
         void OnDpiChanged(wxDPIChangedEvent& event);
 
-        long BuildStyle(long style, long element, bool value);
+        long BuildStyle(long style, long element, bool value); 
         void UpdateWindowStyle(long element, bool value);
         static wxString GetMouseEventDesc(const wxMouseEvent& ev);
 
         virtual wxWindow* CreateWxWindowCore(wxWindow* parent) = 0;
+
         virtual wxWindow* CreateWxWindowUnparented() = 0;
 
         wxWindow* GetWxWindow();
@@ -114,6 +115,11 @@ namespace Alternet::UI
         void ApplyVisible(bool value);
 
     protected:
+        bool _wantChars = false;
+        bool _showVertScrollBar = false;
+        bool _showHorzScrollBar = false;
+        bool _scrollBarAlwaysVisible = false;
+        
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;
         int _borderStyle = 0;
