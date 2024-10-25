@@ -213,13 +213,6 @@ namespace Alternet.UI
             }
         }
 
-        [Browsable(false)]
-        internal new string Text
-        {
-            get => base.Text;
-            set => base.Text = value;
-        }
-
         /// <summary>
         /// Creates border filled with default settings.
         /// </summary>
