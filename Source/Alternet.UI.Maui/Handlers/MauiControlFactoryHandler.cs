@@ -8,6 +8,11 @@ namespace Alternet.UI
 {
     internal class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
+        public IControlHandler CreatePanelHandler(ContainerControl control)
+        {
+            throw new NotImplementedException();
+        }
+
         IControlHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)
         {
             throw new NotImplementedException();
