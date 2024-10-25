@@ -67,6 +67,8 @@ namespace Alternet::UI
     {
 #include "Api/Control.inc"
     public:
+        wxCursor _cursor = wxNullCursor;
+
         void OnTextChanged(wxCommandEvent& event);
         void OnDpiChanged(wxDPIChangedEvent& event);
 
@@ -140,6 +142,7 @@ namespace Alternet::UI
         virtual void OnLocationChanged(wxMoveEvent& event);
         virtual void OnDestroy(wxWindowDestroyEvent& event);
         virtual void OnIdle(wxIdleEvent& event);
+        virtual void OnSetCursor(wxSetCursorEvent& event);
         virtual void OnActivate(wxActivateEvent& event);
         virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
 
