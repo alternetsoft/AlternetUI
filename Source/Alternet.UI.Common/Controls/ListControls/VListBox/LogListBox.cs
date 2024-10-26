@@ -22,17 +22,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets image used for error messages.
         /// </summary>
-        public static Image? ErrorImage = null;
+        public static SvgImage? ErrorImage = null;
 
         /// <summary>
         /// Gets or sets image used for warning messages.
         /// </summary>
-        public static Image? WarningImage = null;
+        public static SvgImage? WarningImage = null;
 
         /// <summary>
         /// Gets or sets image used for information messages.
         /// </summary>
-        public static Image? InformationImage = null;
+        public static SvgImage? InformationImage = null;
 
         private ContextMenuStrip? contextMenu;
         private string? lastLogMessage;
@@ -148,7 +148,7 @@ namespace Alternet.UI
         /// contains <paramref name="prefix"/>, last log item is replaced with
         /// <paramref name="message"/> instead of adding new log item.
         /// </remarks>
-        public virtual LogListBoxItem LogReplace(
+        public virtual ListControlItem LogReplace(
             string? message,
             string? prefix,
             LogItemKind kind = LogItemKind.Information)
@@ -193,7 +193,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">Message text.</param>
         /// <param name="kind">Message kind.</param>
-        public virtual LogListBoxItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
+        public virtual ListControlItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
             var result = LogInternal(obj, kind);
             LogRefresh();
@@ -216,7 +216,7 @@ namespace Alternet.UI
         /// Creates new empty item.
         /// </summary>
         /// <returns></returns>
-        protected virtual LogListBoxItem CreateItem()
+        protected virtual ListControlItem CreateItem()
         {
             return new();
         }
@@ -240,6 +240,27 @@ namespace Alternet.UI
         {
             UnbindApplicationLog();
             base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Gets <see cref="SvgImage"/> for the specified <see cref="LogItemKind"/>.
+        /// </summary>
+        protected virtual SvgImage? GetImage(LogItemKind kind)
+        {
+            switch (kind)
+            {
+                case LogItemKind.Error:
+                    ErrorImage ??= KnownColorSvgImages.ImgError;
+                    return ErrorImage;
+                case LogItemKind.Warning:
+                    WarningImage ??= KnownColorSvgImages.ImgWarning;
+                    return WarningImage;
+                case LogItemKind.Information:
+                    InformationImage ??= KnownColorSvgImages.ImgInformation;
+                    return InformationImage;
+                default:
+                    return null;
+            }
         }
 
         /// <inheritdoc/>
@@ -308,18 +329,12 @@ namespace Alternet.UI
             LogRefresh();
         }
 
-        private LogListBoxItem LogInternal(object? obj, LogItemKind kind)
+        private ListControlItem LogInternal(ListControlItem item)
         {
-            var message = obj?.ToString() ?? string.Empty;
-
             if (IsDisposed)
-                return new();
+                return item;
 
-            lastLogMessage = message;
-
-            LogListBoxItem item = CreateItem();
-            item.Text = ConstructLogMessage(message);
-            item.Kind = kind;
+            lastLogMessage = item.Text;
             Add(item);
             SelectedIndex = Count - 1;
             RefreshRow(Count - 1);
@@ -327,7 +342,27 @@ namespace Alternet.UI
             return item;
         }
 
-        private LogListBoxItem LogReplaceInternal(
+        private ListControlItem LogInternal(object? obj, LogItemKind kind)
+        {
+            var message = obj.SafeToString();
+
+            if (IsDisposed)
+                return new();
+
+            lastLogMessage = message;
+
+            var item = CreateItem();
+            item.Text = ConstructLogMessage(message);
+            item.SvgImage = GetImage(kind);
+            item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+            Add(item);
+            SelectedIndex = Count - 1;
+            RefreshRow(Count - 1);
+            EnsureVisible(Count - 1);
+            return item;
+        }
+
+        private ListControlItem LogReplaceInternal(
             string? message,
             string? prefix,
             LogItemKind kind)
@@ -347,9 +382,10 @@ namespace Alternet.UI
             if (b)
             {
                 lastLogMessage = message;
-                var item = (LogListBoxItem)LastItem!;
+                var item = LastItem!;
                 item.Text = ConstructLogMessage(message);
-                item.Kind = kind;
+                item.SvgImage = GetImage(kind);
+                item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
                 SelectedIndex = Count - 1;
                 RefreshRow(Count - 1);
                 EnsureVisible(Count - 1);
@@ -365,56 +401,18 @@ namespace Alternet.UI
 
             void Fn()
             {
+                var item = e.Item?.Item;
+
+                if(item is not null)
+                {
+                    LogInternal(item);
+                    return;
+                }
+
                 if (e.ReplaceLastMessage)
                     LogReplaceInternal(e.Message, e.MessagePrefix, e.Kind);
                 else
                     LogInternal(e.Message, e.Kind);
-            }
-        }
-
-        /// <summary>
-        /// Item of the <see cref="LogListBox"/> control.
-        /// </summary>
-        public class LogListBoxItem : ListControlItem
-        {
-            private LogItemKind kind = LogItemKind.Other;
-
-            /// <summary>
-            /// Gets or sets log item kind.
-            /// </summary>
-            public LogItemKind Kind
-            {
-                get => kind;
-
-                set
-                {
-                    if (kind == value)
-                        return;
-                    kind = value;
-
-                    var size = ToolBarUtils.GetDefaultImageSize();
-
-                    switch (kind)
-                    {
-                        case LogItemKind.Error:
-                            ErrorImage ??= KnownColorSvgImages.ImgError.AsImage(size.Width);
-                            Image = ErrorImage;
-                            break;
-                        case LogItemKind.Warning:
-                            WarningImage ??=
-                                KnownColorSvgImages.ImgWarning.AsImage(size.Width);
-                            Image = WarningImage;
-                            break;
-                        case LogItemKind.Information:
-                            InformationImage ??=
-                                KnownColorSvgImages.ImgInformation.AsImage(size.Width);
-                            Image = InformationImage;
-                            break;
-                        default:
-                            Image = null;
-                            break;
-                    }
-                }
             }
         }
     }
