@@ -65,6 +65,31 @@ namespace Alternet.UI
             return s;
         }
 
+        public static void LogDrawAction(
+            Coord scaleFactor,
+            Func<Graphics, SizeD> sizeFunc,
+            Action<Graphics>? drawAction = null)
+        {
+            drawAction ??= (graphics) =>
+            {
+                sizeFunc(graphics);
+            };
+
+            var measureCanvas = SkiaUtils.CreateMeasureCanvas(scaleFactor);
+            var size = sizeFunc(measureCanvas);
+            var canvas = SkiaUtils.CreateBitmapCanvas(size, scaleFactor);
+
+            drawAction(canvas);
+
+            var image = (Image)canvas.Bitmap!;
+
+            ListControlItem logItem = new();
+            logItem.Image = image;
+            logItem.HideSelection = true;
+
+            App.AddLogItem(logItem);
+        }
+
         /// <summary>
         /// Logs environment versions.
         /// </summary>
@@ -85,6 +110,31 @@ namespace Alternet.UI
                 App.DebugLog($"Log File = {App.LogFilePath}");
             if (Display.MinScaleFactor != Display.MaxScaleFactor)
                 App.LogWarning("Displays have different ScaleFactor");
+        }
+
+        /// <summary>
+        /// Shows a dialog with the list of test actions.
+        /// </summary>
+        public static void ShowTestActionsDialog()
+        {
+            Window popup = new();
+            popup.StartLocation = WindowStartLocation.ScreenTopRight;
+            popup.Size = (400, 500);
+            popup.HasTitleBar = true;
+            popup.CloseEnabled = true;
+
+            var listBox = new ActionsListBox();
+            listBox.Parent = popup;
+
+            LogUtils.EnumLogActions(Fn);
+
+            void Fn(string title, Action action)
+            {
+                if (title.StartsWith("Test "))
+                    listBox.AddBusyAction(title, action);
+            }
+
+            popup.Show();
         }
 
         /// <summary>
@@ -112,6 +162,8 @@ namespace Alternet.UI
                 items.Add(new(title, a));
             }
 
+            Fn("Show Test Actions Dialog", ShowTestActionsDialog);
+
             Fn("Log system settings", LogUtils.LogSystemSettings);
             Fn("Log font families", LogUtils.LogFontFamilies);
             Fn("Log fonts system", SystemSettings.LogSystemFonts);
@@ -121,6 +173,20 @@ namespace Alternet.UI
             Fn("Log system information", LogUtils.LogOSInformation);
             Fn("Log system colors", LogUtils.LogSystemColors);
             Fn("Log constraint checks", LogUtils.LogCheckConstraints);
+
+            Fn("Test Draw Bold Text", () =>
+            {
+                LogDrawAction(
+                    Display.MaxScaleFactor,
+                    (canvas) =>
+                    {
+                        return canvas.DrawTextWithBoldTags(
+                            "This is text with <b>bold</b> tag.",
+                            (0, 0),
+                            Control.DefaultFont,
+                            Color.Black);
+                    });
+            });
 
             Fn("Log Embedded Resources in Alternet.UI.Common", () =>
             {
