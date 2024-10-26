@@ -66,7 +66,7 @@ namespace Alternet.UI
         }
 
         [Conditional("DEBUG")]
-        private static void TestGetBoldTagSplitted()
+        internal static void TestGetBoldTagSplitted()
         {
             var s = "This is text with <b>bold</b> tag.";
 
@@ -82,7 +82,6 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         private static void Test()
         {
-            TestGetBoldTagSplitted();
         }
     }
 }
