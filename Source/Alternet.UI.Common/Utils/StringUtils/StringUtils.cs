@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
@@ -38,6 +39,16 @@ namespace Alternet.UI
     /// </summary>
     public static class StringUtils
     {
+        /// <summary>
+        /// Gets html start bold tag string constant.
+        /// </summary>
+        public const string BoldTagStart = "<b>";
+
+        /// <summary>
+        /// Gets html end bold tag string constant.
+        /// </summary>
+        public const string BoldTagEnd = "</b>";
+
         /// <summary>
         /// Gets initialized string with one space character.
         /// </summary>
@@ -729,9 +740,14 @@ namespace Alternet.UI
             };
         }
 
-        private class ComparerUsingToString<T> : IComparer<T>
-            where T : class
+        /// <summary>
+        /// Implementation of <see cref="IComparer{T}"/> interface that compares
+        /// two objects using <see cref="object.ToString"/> methods.
+        /// </summary>
+        /// <typeparam name="T">Type of objects to compare.</typeparam>
+        public class ComparerUsingToString<T> : IComparer<T>
         {
+            /// <inheritdoc/>
             public int Compare(T? x, T? y)
             {
                 var s1 = x?.ToString();
