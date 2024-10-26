@@ -137,6 +137,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets default <see cref="SvgImage"/> for the specified <see cref="LogItemKind"/>.
+        /// </summary>
+        public static SvgImage? GetDefaultImage(LogItemKind kind)
+        {
+            switch (kind)
+            {
+                case LogItemKind.Error:
+                    ErrorImage ??= KnownColorSvgImages.ImgError;
+                    return ErrorImage;
+                case LogItemKind.Warning:
+                    WarningImage ??= KnownColorSvgImages.ImgWarning;
+                    return WarningImage;
+                case LogItemKind.Information:
+                    InformationImage ??= KnownColorSvgImages.ImgInformation;
+                    return InformationImage;
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
         /// Same as <see cref="App.LogReplace"/> but
         /// uses only this control for the logging.
         /// </summary>
@@ -247,20 +268,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual SvgImage? GetImage(LogItemKind kind)
         {
-            switch (kind)
-            {
-                case LogItemKind.Error:
-                    ErrorImage ??= KnownColorSvgImages.ImgError;
-                    return ErrorImage;
-                case LogItemKind.Warning:
-                    WarningImage ??= KnownColorSvgImages.ImgWarning;
-                    return WarningImage;
-                case LogItemKind.Information:
-                    InformationImage ??= KnownColorSvgImages.ImgInformation;
-                    return InformationImage;
-                default:
-                    return null;
-            }
+            return GetDefaultImage(kind);
         }
 
         /// <inheritdoc/>
