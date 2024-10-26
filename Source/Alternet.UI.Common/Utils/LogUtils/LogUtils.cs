@@ -636,5 +636,33 @@ namespace Alternet.UI
                 LogEndSectionToFile(filename);
             }
         }
+
+        public class LogItem
+        {
+            public string Msg;
+
+            public LogItemKind Kind;
+
+            public ListControlItem? Item;
+
+            public LogItem(string msg, LogItemKind kind)
+            {
+                Msg = msg;
+                Kind = kind;
+            }
+
+            public LogItem(ListControlItem? item)
+            {
+                Msg = string.Empty;
+                Kind = LogItemKind.Information;
+                Item = item;
+            }
+
+            public LogItem()
+            {
+                Msg = string.Empty;
+                Kind = LogItemKind.Information;
+            }
+        }
     }
 }

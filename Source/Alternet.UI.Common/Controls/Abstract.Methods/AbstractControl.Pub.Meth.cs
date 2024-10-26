@@ -2120,5 +2120,40 @@ namespace Alternet.UI
                 return;
             notifications.Remove(n);
         }
+
+        /// <summary>
+        /// Gets top-most visible child control
+        /// which has <see cref="Bounds"/> that contains the specified point.
+        /// Controls are queried starting
+        /// from the last control in <see cref="Children"/>.
+        /// </summary>
+        /// <param name="point">Point to test.</param>
+        /// <returns></returns>
+        public virtual AbstractControl? PointInChild(PointD point)
+        {
+            return PointInChilds(point).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets <see cref="IEnumerable"/> list of visible child controls
+        /// which have <see cref="Bounds"/> that contains the specified point.
+        /// Controls are returned starting
+        /// from the last control in <see cref="Children"/>.
+        /// </summary>
+        /// <param name="point">Point to test.</param>
+        /// <returns></returns>
+        public virtual IEnumerable<AbstractControl> PointInChilds(PointD point)
+        {
+            var childs = AllChildren;
+
+            for(int i = childs.Count - 1; i >= 0; i--)
+            {
+                var child = childs[i];
+                if (!child.Visible)
+                    continue;
+                if(child.Bounds.Contains(point))
+                    yield return child;
+            }
+        }
     }
 }

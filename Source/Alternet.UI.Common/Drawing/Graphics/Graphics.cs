@@ -1536,6 +1536,53 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws text with html bold tags.
+        /// </summary>
+        public virtual SizeD DrawTextWithBoldTags(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color? backColor = null)
+        {
+            var splitted = RegexUtils.GetBoldTagSplitted(text);
+            return DrawTextWithFontStyle(
+                        splitted,
+                        location,
+                        font,
+                        foreColor,
+                        backColor);
+        }
+
+        /// <summary>
+        /// Draws an array of text elements with font styles.
+        /// </summary>
+        public virtual SizeD DrawTextWithFontStyle(
+            TextAndFontStyle[] splittedText,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color? backColor = null)
+        {
+            DebugFontAssert(font);
+            DebugColorAssert(foreColor);
+
+            SizeD result = 0;
+
+            foreach(var item in splittedText)
+            {
+                var itemFont = font.WithStyle(item.FontStyle);
+                var measure = GetTextExtent(item.Text, itemFont);
+                DrawText(item.Text, location, itemFont, foreColor, backColor ?? Color.Empty);
+                location.X += measure.Width;
+                result.Width += measure.Width;
+                result.Height = Math.Max(result.Height, measure.Height);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Sets transform matrix of the handler.
         /// </summary>
         /// <param name="matrix">New transform value.</param>

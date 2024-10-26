@@ -352,30 +352,15 @@ namespace Alternet.UI
             UpdateEventsPropertyGrid(propGrid, type);
         }
 
-        private void AddLogAction(string title, Action action)
-        {
-            actionsListBox.AddAction(title, Fn);
-
-            void Fn()
-            {
-                App.DoInsideBusyCursor(() =>
-                {
-                    App.LogBeginUpdate();
-                    try
-                    {
-                        action();
-                    }
-                    finally
-                    {
-                        App.LogEndUpdate();
-                    }
-                });
-            }
-        }
-
         private void InitActions()
         {
-            LogUtils.EnumLogActions(AddLogAction);
+            LogUtils.EnumLogActions(Fn);
+
+            void Fn(string title, Action action)
+            {
+                if(!title.StartsWith("Test "))
+                    actionsListBox.AddBusyAction(title, action);
+            }
         }
     }
 }

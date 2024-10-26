@@ -54,5 +54,26 @@ namespace Alternet.UI
 
             Add(item);
         }
+
+        public virtual void AddBusyAction(string title, Action action)
+        {
+            AddAction(title, Fn);
+
+            void Fn()
+            {
+                App.DoInsideBusyCursor(() =>
+                {
+                    App.LogBeginUpdate();
+                    try
+                    {
+                        action();
+                    }
+                    finally
+                    {
+                        App.LogEndUpdate();
+                    }
+                });
+            }
+        }
     }
 }

@@ -12,6 +12,14 @@ namespace Alternet.UI
         private Control? container;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PopupControl"/> class.
+        /// </summary>
+        public PopupControl()
+        {
+            Visible = false;
+        }
+
+        /// <summary>
         /// Occurs when popup is closed
         /// </summary>
         public event EventHandler? Closed;

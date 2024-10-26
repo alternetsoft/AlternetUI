@@ -16,6 +16,69 @@ namespace Alternet.UI
     public static class DrawingUtils
     {
         /// <summary>
+        /// Creates <see cref="Image"/> with the size specified by <paramref name="sizeAndDrawFunc"/>
+        /// and with pixels filled with <paramref name="drawAction"/>
+        /// (or <paramref name="sizeAndDrawFunc"/> if it is null).
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor to use when draw action is called.</param>
+        /// <param name="sizeAndDrawFunc">Function which calculates drawable element. Called with measure
+        /// <see cref="Graphics"/> which can measure text size.</param>
+        /// <param name="drawAction">Action which draws an element. If Null,
+        /// <paramref name="sizeAndDrawFunc"/>
+        /// is used for drawing with <see cref="Graphics"/> created on the <see cref="Bitmap"/>.
+        /// <paramref name="sizeAndDrawFunc"/>Optional. </param>
+        /// <returns></returns>
+        public static Image ImageFromAction(
+            Coord scaleFactor,
+            Func<Graphics, SizeD> sizeAndDrawFunc,
+            Action<Graphics>? drawAction = null)
+        {
+            drawAction ??= (graphics) =>
+            {
+                sizeAndDrawFunc(graphics);
+            };
+
+            var measureCanvas = SkiaUtils.CreateMeasureCanvas(scaleFactor);
+            var size = sizeAndDrawFunc(measureCanvas);
+            var canvas = SkiaUtils.CreateBitmapCanvas(size, scaleFactor);
+
+            drawAction(canvas);
+
+            var image = (Image)canvas.Bitmap!;
+            return image;
+        }
+
+        /// <summary>
+        /// Creates image from the specified text with html bold tags.
+        /// </summary>
+        /// <param name="text">String with html bold tags to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the font of the string.</param>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. Optional. Default is Null.
+        /// If Null, background is transparent.</param>
+        /// <returns></returns>
+        public static Image ImageFromTextWithBoldTag(
+            string text,
+            Coord scaleFactor,
+            Font font,
+            Color foreColor,
+            Color? backColor = null)
+        {
+            return ImageFromAction(
+                scaleFactor,
+                (canvas) =>
+                {
+                    return canvas.DrawTextWithBoldTags(
+                        text,
+                        PointD.Empty,
+                        font,
+                        foreColor,
+                        backColor);
+                });
+        }
+
+        /// <summary>
         /// Sets background of the control's parents to Red, Green, Blue and
         /// Yellow colors.
         /// </summary>

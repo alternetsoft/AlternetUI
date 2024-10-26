@@ -110,7 +110,7 @@ namespace Alternet.UI
         internal static readonly Destructor MyDestructor = new();
 
         private static readonly ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
-        private static readonly ConcurrentQueue<(string Msg, LogItemKind Kind)> LogQueue = new();
+        private static readonly ConcurrentQueue<LogUtils.LogItem> LogQueue = new();
 
         private static bool? isMono;
 
@@ -1262,7 +1262,18 @@ namespace Alternet.UI
             }
 
             foreach (string s2 in result)
-                LogQueue.Enqueue((s2, kind));
+                LogQueue.Enqueue(new(s2, kind));
+        }
+
+        /// <summary>
+        /// Adds log item using the specified <see cref="ListControlItem"/>.
+        /// <see cref="LogListBox"/> controls binded to the log will paint added item
+        /// with image, font and color properties specified in the <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        public static void AddLogItem(ListControlItem item)
+        {
+            LogQueue.Enqueue(new(item));
         }
 
         /// <inheritdoc cref="LogReplace"/>
@@ -1576,7 +1587,7 @@ namespace Alternet.UI
                 while (true)
                 {
                     if (LogQueue.TryDequeue(out var queueItem))
-                        LogToEvent(queueItem.Kind, queueItem.Msg);
+                        LogToEvent(queueItem);
                     else
                         break;
                 }
@@ -1633,19 +1644,17 @@ namespace Alternet.UI
             LogRefresh?.Invoke(null, EventArgs.Empty);
         }
 
-        private static void LogToEvent(LogItemKind kind, params string[] items)
+        private static void LogToEvent(LogUtils.LogItem item)
         {
             if (LogMessage is null)
                 return;
 
             LogMessageEventArgs? args = new();
-            args.Kind = kind;
+            args.Item = item;
+            args.Kind = item.Kind;
+            args.Message = item.Msg;
 
-            foreach (string s2 in items)
-            {
-                args.Message = s2;
-                LogMessage(null, args);
-            }
+            LogMessage(null, args);
         }
 
         private static void WriteToLogFileIfAllowed(string? msg)

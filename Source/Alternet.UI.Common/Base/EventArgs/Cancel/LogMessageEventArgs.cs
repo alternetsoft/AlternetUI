@@ -14,6 +14,15 @@ namespace Alternet.UI
         private readonly string? prefix;
         private readonly bool replaceLast;
         private string? message;
+        private LogUtils.LogItem? item;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogMessageEventArgs"/> class.
+        /// </summary>
+        public LogMessageEventArgs(LogUtils.LogItem item)
+        {
+            this.item = item;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogMessageEventArgs"/> class.
@@ -60,5 +69,10 @@ namespace Alternet.UI
         /// <see cref="MessagePrefix"/>).
         /// </summary>
         public bool ReplaceLastMessage => replaceLast;
+
+        /// <summary>
+        /// Gets <see cref="LogUtils.LogItem"/>.
+        /// </summary>
+        public LogUtils.LogItem? Item { get => item; set => item = value; }
     }
 }
