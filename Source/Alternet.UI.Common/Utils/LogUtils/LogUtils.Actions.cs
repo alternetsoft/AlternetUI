@@ -65,29 +65,36 @@ namespace Alternet.UI
             return s;
         }
 
-        public static void LogDrawAction(
-            Coord scaleFactor,
-            Func<Graphics, SizeD> sizeFunc,
-            Action<Graphics>? drawAction = null)
+        /// <summary>
+        /// Adds <see cref="Image"/> to log.
+        /// </summary>
+        /// <param name="image">Image to log.</param>
+        public static void LogImage(Image image)
         {
-            drawAction ??= (graphics) =>
-            {
-                sizeFunc(graphics);
-            };
-
-            var measureCanvas = SkiaUtils.CreateMeasureCanvas(scaleFactor);
-            var size = sizeFunc(measureCanvas);
-            var canvas = SkiaUtils.CreateBitmapCanvas(size, scaleFactor);
-
-            drawAction(canvas);
-
-            var image = (Image)canvas.Bitmap!;
-
             ListControlItem logItem = new();
             logItem.Image = image;
             logItem.HideSelection = true;
 
             App.AddLogItem(logItem);
+        }
+
+        /// <summary>
+        /// Logs draw action to log.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor to use when draw action is called.</param>
+        /// <param name="sizeAndDrawFunc">Function which calculates drawable element. Called with measure
+        /// <see cref="Graphics"/> which can measure text size.</param>
+        /// <param name="drawAction">Action which draws an element. If Null,
+        /// <paramref name="sizeAndDrawFunc"/>
+        /// is used for drawing with <see cref="Graphics"/> created on the <see cref="Bitmap"/>.
+        /// <paramref name="sizeAndDrawFunc"/>Optional. </param>
+        public static void LogDrawAction(
+            Coord scaleFactor,
+            Func<Graphics, SizeD> sizeAndDrawFunc,
+            Action<Graphics>? drawAction = null)
+        {
+            var image = DrawingUtils.ImageFromAction(scaleFactor, sizeAndDrawFunc, drawAction);
+            LogImage(image);
         }
 
         /// <summary>
@@ -162,7 +169,7 @@ namespace Alternet.UI
                 items.Add(new(title, a));
             }
 
-            Fn("Show Test Actions Dialog", ShowTestActionsDialog);
+            Fn("> Show Test Actions Dialog", ShowTestActionsDialog);
 
             Fn("Log system settings", LogUtils.LogSystemSettings);
             Fn("Log font families", LogUtils.LogFontFamilies);
@@ -176,16 +183,12 @@ namespace Alternet.UI
 
             Fn("Test Draw Bold Text", () =>
             {
-                LogDrawAction(
+                var image = DrawingUtils.ImageFromTextWithBoldTag(
+                    "This is text with <b>bold</b> tag.",
                     Display.MaxScaleFactor,
-                    (canvas) =>
-                    {
-                        return canvas.DrawTextWithBoldTags(
-                            "This is text with <b>bold</b> tag.",
-                            (0, 0),
-                            Control.DefaultFont,
-                            Color.Black);
-                    });
+                    Control.DefaultFont,
+                    Color.Black);
+                LogImage(image);
             });
 
             Fn("Log Embedded Resources in Alternet.UI.Common", () =>
