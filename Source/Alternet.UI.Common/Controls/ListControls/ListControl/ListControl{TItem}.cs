@@ -604,6 +604,18 @@ namespace Alternet.UI
             safeItems.SetCount(newCount, createItem);
         }
 
+        /// <summary>
+        /// Recreates items. Before calling this method, you need to unbind all events
+        /// connected to the <see cref="Items"/>.
+        /// </summary>
+        protected void RecreateItems()
+        {
+            if (items is null || items.Count == 0)
+                return;
+            items = null;
+            SafeItems();
+        }
+
         private ListControlItems<TItem> SafeItems()
         {
             return items ??= new ListControlItems<TItem>();

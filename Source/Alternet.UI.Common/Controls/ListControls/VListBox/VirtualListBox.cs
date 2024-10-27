@@ -196,6 +196,17 @@ namespace Alternet.UI
             return Handler.ScrollRowPages(pages);
         }
 
+        /// <inheritdoc/>
+        public override void RemoveAll()
+        {
+            if (Items.Count == 0)
+                return;
+            Handler.DetachItems(Items);
+            RecreateItems();
+            Handler.AttachItems(Items);
+            Invalidate();
+        }
+
         /// <summary>
         /// Triggers a refresh for just the given row's area of the control if it is visible.
         /// </summary>
