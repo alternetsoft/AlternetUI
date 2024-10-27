@@ -55,6 +55,12 @@ namespace Alternet.UI
             Add(item);
         }
 
+        /// <summary>
+        /// Adds "heavy" <see cref="Action"/> to the <see cref="ActionsListBox"/>. When action
+        /// executes, application's cursor is changed to the "busy" cursor.
+        /// </summary>
+        /// <param name="title">Action title.</param>
+        /// <param name="action">Action method.</param>
         public virtual void AddBusyAction(string title, Action action)
         {
             AddAction(title, Fn);
