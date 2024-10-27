@@ -60,6 +60,7 @@ namespace ControlsSample
                 new("Combo", () => new ComboBoxPage()),
                 new("Virtual", () => new VListBoxSamplePage()),
                 new("Colors", () => new ColorListBoxSamplePage()),
+                new("Other", () => new ListControlsOtherPage()),               
 
                 popupNameValue,
             };
