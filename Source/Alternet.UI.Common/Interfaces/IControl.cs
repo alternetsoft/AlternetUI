@@ -1305,7 +1305,7 @@ namespace Alternet.UI
         /// Sets value of the <see cref="Text"/> property.
         /// </summary>
         /// <param name="value">New value of the <see cref="Text"/> property.</param>
-        void SetText(string? value);
+        void SetText(object? value);
 
         /// <summary>
         /// Executes a delegate asynchronously on the thread that the control

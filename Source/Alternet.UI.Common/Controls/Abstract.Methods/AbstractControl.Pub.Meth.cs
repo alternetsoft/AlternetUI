@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -464,7 +465,7 @@ namespace Alternet.UI
         /// Sets value of the <see cref="Text"/> property.
         /// </summary>
         /// <param name="value">New value of the <see cref="Text"/> property.</param>
-        public void SetText(string? value) => Text = value ?? string.Empty;
+        public void SetText(object? value) => Text = value.SafeToString();
 
         /// <summary>
         /// Executes a delegate asynchronously on the thread that the control
