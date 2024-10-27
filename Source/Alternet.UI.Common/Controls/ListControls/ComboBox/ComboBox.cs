@@ -499,7 +499,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets control that will be shown in the popup.
         /// </summary>
-        public virtual VirtualListBox? PopupControl
+        internal virtual VirtualListBox? PopupControl
         {
             get => listBox.Value;
 
