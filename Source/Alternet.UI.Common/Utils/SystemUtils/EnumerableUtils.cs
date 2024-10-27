@@ -26,6 +26,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts items from the <see cref="IEnumerable{T}"/> specified in the
+        /// <paramref name="source"/> parameter to the destination by calling <paramref name="addToDest"/>
+        /// function. Item type is converted using <paramref name="convertItem"/> function.
+        /// </summary>
+        /// <typeparam name="TSource">Type of the item in the <paramref name="source"/>.</typeparam>
+        /// <typeparam name="TDest">Type of the destination item.</typeparam>
+        /// <param name="convertItem">The function which converts item from the
+        /// <typeparamref name="TSource"/> type to the <typeparamref name="TDest"/> type.
+        /// Return Null to ignore the item.</param>
+        /// <param name="addToDest">The function which is used to add items to the destination.</param>
+        /// <param name="source">Source of the items for the conversion.</param>
+        /// <param name="bufferSize">Size of the buffer for the items. Optional. Default is 10.</param>
+        public static void ConvertItems<TSource, TDest>(
+            Func<TSource, TDest?> convertItem,
+            Func<IEnumerable<TDest>, bool> addToDest,
+            IEnumerable<TSource> source,
+            int bufferSize = 10)
+        {
+            List<TDest> items = new(bufferSize);
+
+            foreach (var sourceItem in source)
+            {
+                var item = convertItem(sourceItem);
+                if (item is null)
+                    continue;
+                items.Add(item);
+
+                if (items.Count == bufferSize)
+                {
+                    if (!addToDest(items))
+                        return;
+                    items.Clear();
+                }
+            }
+        }
+
+        /// <summary>
         /// Enumerates root items of the <see cref="IEnumerableTree"/>.
         /// </summary>
         /// <typeparam name="T">Type of the result item.</typeparam>
