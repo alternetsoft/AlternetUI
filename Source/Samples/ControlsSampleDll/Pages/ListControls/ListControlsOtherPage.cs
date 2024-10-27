@@ -10,7 +10,7 @@ namespace ControlsSample
     {
         protected override void AddDefaultItems()
         {
-            Add("ComboBox with VirtualListBox in the popup", () => new VComboBoxWindow());
+            Add("ComboBox and VirtualListBox with BigData", () => new VComboBoxWindow());
         }
     }
 }
