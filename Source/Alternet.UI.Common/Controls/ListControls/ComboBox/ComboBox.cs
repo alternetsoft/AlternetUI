@@ -77,6 +77,7 @@ namespace Alternet.UI
         private IComboBoxItemPainter? painter;
         private ListControlItemDefaults? itemDefaults;
         private bool droppedDown;
+        private int? reportedSelectedIndex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
@@ -562,6 +563,13 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseSelectedItemChanged()
         {
+            var newIndex = SelectedIndex;
+
+            if (newIndex == reportedSelectedIndex)
+                return;
+
+            reportedSelectedIndex = newIndex;
+
             OnSelectedItemChanged(EventArgs.Empty);
             SelectedItemChanged?.Invoke(this, EventArgs.Empty);
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
@@ -821,6 +829,12 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnDropDown(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
         }
 
         /// <summary>

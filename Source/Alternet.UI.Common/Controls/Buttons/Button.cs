@@ -367,23 +367,23 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateButtonHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void BindHandlerEvents()
+        public override void BindHandlerEvents()
         {
             base.BindHandlerEvents();
             Handler.Click = RaiseClick;
         }
 
         /// <inheritdoc/>
-        protected override void UnbindHandlerEvents()
+        public override void UnbindHandlerEvents()
         {
             base.UnbindHandlerEvents();
             Handler.Click = null;
+        }
+
+        /// <inheritdoc/>
+        protected override IControlHandler CreateHandler()
+        {
+            return ControlFactory.Handler.CreateButtonHandler(this);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace Alternet.UI
     /// </summary>
     public abstract class BaseControlHandler : DisposableObject
     {
-        private AbstractControl? control;
+        private Control? control;
 
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
-        public AbstractControl Control
+        public Control Control
         {
             get => control ?? throw new InvalidOperationException();
         }
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The <see cref="Control"/> to attach this
         /// handler to.</param>
-        public void Attach(AbstractControl control)
+        public void Attach(Control control)
         {
             this.control = control;
             OnAttach();

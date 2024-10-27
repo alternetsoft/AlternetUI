@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <typeparam name="T">Type of the <see cref="Control"/>
     /// descendant</typeparam>
     internal class WxControlHandler<T> : WxControlHandler
-        where T : AbstractControl
+        where T : Control
     {
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.

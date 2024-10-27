@@ -95,6 +95,20 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.CheckedChanged = RaiseCheckedChanged;
+        }
+
+        /// <inheritdoc/>
+        public override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.CheckedChanged = null;
+        }
+
+        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateRadioButtonHandler(this);
@@ -143,20 +157,6 @@ namespace Alternet.UI
                     continue;
                 radioButton.RaiseCheckedChanged();
             }
-        }
-
-        /// <inheritdoc/>
-        protected override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.CheckedChanged = RaiseCheckedChanged;
-        }
-
-        /// <inheritdoc/>
-        protected override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            Handler.CheckedChanged = null;
         }
     }
 }

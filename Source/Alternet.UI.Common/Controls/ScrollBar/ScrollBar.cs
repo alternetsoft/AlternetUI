@@ -369,6 +369,21 @@ namespace Alternet.UI
             SetScrollbar(posInfo.Position, posInfo.Range, posInfo.PageSize);
         }
 
+        /// <inheritdoc/>
+        public override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            UpdateScrollInfo();
+            Handler.Scroll = RaiseScroll;
+        }
+
+        /// <inheritdoc/>
+        public override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.Scroll = null;
+        }
+
         /// <summary>
         /// Raises scroll events.
         /// </summary>
@@ -435,21 +450,6 @@ namespace Alternet.UI
         protected virtual void OnValueChanged(EventArgs e)
         {
             ValueChanged?.Invoke(this, e);
-        }
-
-        /// <inheritdoc/>
-        protected override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            UpdateScrollInfo();
-            Handler.Scroll = RaiseScroll;
-        }
-
-        /// <inheritdoc/>
-        protected override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            Handler.Scroll = null;
         }
 
         /// <summary>

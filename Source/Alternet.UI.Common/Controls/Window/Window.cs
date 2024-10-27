@@ -1105,6 +1105,24 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.StateChanged = RaiseStateChanged;
+            Handler.Closing = OnHandlerClosing;
+            Handler.InputBindingCommandExecuted = OnHandlerInputBindingCommandExecuted;
+        }
+
+        /// <inheritdoc/>
+        public override void UnbindHandlerEvents()
+        {
+            base.UnbindHandlerEvents();
+            Handler.StateChanged = null;
+            Handler.Closing = null;
+            Handler.InputBindingCommandExecuted = null;
+        }
+
         /// <summary>
         /// Aligns window location inside the specified display's client area using given
         /// horizontal and vertical alignment.
@@ -1508,29 +1526,11 @@ namespace Alternet.UI
             e.Handled = true;
         }
 
-        /// <inheritdoc/>
-        protected override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.StateChanged = RaiseStateChanged;
-            Handler.Closing = OnHandlerClosing;
-            Handler.InputBindingCommandExecuted = OnHandlerInputBindingCommandExecuted;
-        }
-
         /// <summary>
         /// Gets window kind used instead of the default value.
         /// </summary>
         /// <returns></returns>
         protected WindowKind? GetWindowKindOverride() => globalWindowKindOverride ?? windowKindOverride;
-
-        /// <inheritdoc/>
-        protected override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            Handler.StateChanged = null;
-            Handler.Closing = null;
-            Handler.InputBindingCommandExecuted = null;
-        }
 
         /// <inheritdoc/>
         protected override void OnHandlerLocationChanged(EventArgs e)

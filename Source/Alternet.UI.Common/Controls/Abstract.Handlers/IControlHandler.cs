@@ -143,7 +143,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
-        AbstractControl Control { get; }
+        Control Control { get; }
 
         /// <summary>
         /// Gets a value indicating whether handler is attached
@@ -354,7 +354,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The <see cref="Control"/> to attach this
         /// handler to.</param>
-        void Attach(AbstractControl control);
+        void Attach(Control control);
 
         /// <summary>
         /// Detaches this handler from the <see cref="Control"/> it is attached to.

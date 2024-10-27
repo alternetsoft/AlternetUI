@@ -82,13 +82,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateControl() => new ComboBox();
-
-        /// <inheritdoc/>
-        protected override void BindHandlerEvents()
+        public override void BindHandlerEvents()
         {
             base.BindHandlerEvents();
             Handler.TextChanged = null;
         }
+
+        /// <inheritdoc/>
+        protected override AbstractControl CreateControl() => new ComboBox();
     }
 }

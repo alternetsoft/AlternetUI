@@ -94,6 +94,13 @@ namespace Alternet.UI
         public virtual bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
         /// <inheritdoc/>
+        public override void BindHandlerEvents()
+        {
+            base.BindHandlerEvents();
+            Handler.TextChanged = null;
+        }
+
+        /// <inheritdoc/>
         protected override AbstractControl CreateControl() => new TextBox();
 
         /// <summary>
@@ -116,13 +123,6 @@ namespace Alternet.UI
         protected virtual void MainControlTextChanged()
         {
             OnTextChanged(EventArgs.Empty);
-        }
-
-        /// <inheritdoc/>
-        protected override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.TextChanged = null;
         }
 
         private void MainControl_TextChanged(object? sender, EventArgs e)

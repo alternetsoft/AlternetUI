@@ -22,14 +22,13 @@ namespace ControlsSample
             addItemButton.KeyDown += AddItemButton_KeyDown;
             KeyDown += ComboBoxPage_KeyDown;
 
-            comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged1;
             comboBox.DropDown += (_, _) =>
             {
-                App.Log("ComboBox: DropDown event fired");
+                App.LogIf("ComboBox: DropDown event fired", false);
             };
             comboBox.DropDownClosed += (_, _) =>
             {
-                App.Log("ComboBox: DropDownClosed event fired");
+                App.LogIf("ComboBox: DropDownClosed event fired", false);
             };
             comboBox.KeyDown += ComboBox_KeyDown;
             comboBox.TextChanged += (_, _) =>
@@ -74,12 +73,6 @@ namespace ControlsSample
             }
 
             comboBox.SelectedIndex = 1;
-        }
-
-        private void ComboBox_SelectedItemChanged1(object? sender, EventArgs e)
-        {
-            var prefix = "ComboBox.SelectedItemChanged";
-            App.LogReplace($"{prefix}: {comboBox.SelectedItem}", prefix);
         }
 
         private void ComboBoxPage_KeyDown(object? sender, KeyEventArgs e)
@@ -148,8 +141,8 @@ namespace ControlsSample
             if (ignoreEvents)
                 return;
             var s = (comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString());
-            var prefix = "ComboBox: SelectedItemChanged.SelectedIndex:";
-            App.LogReplace($"{prefix} {s}", prefix);
+            var prefix = "ComboBox: SelectedItemChanged - SelectedIndex:";
+            App.LogReplace($"{prefix} {s} Item: <{comboBox.SelectedItem}>", prefix);
         }
 
         private void OwnerDrawCheckBox_CheckedChanged(object? sender, EventArgs e)
