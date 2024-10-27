@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultDisabledTextColor = SystemColors.GrayText;
 
-        private readonly ValueContainer<VirtualListBox> listBox;
+        private ValueContainer<VirtualListBox> listBox;
 
         private int? selectedIndex;
         private bool isEditable = true;
@@ -505,20 +505,7 @@ namespace Alternet.UI
 
             set
             {
-                var oldValue = listBox.Value;
-
-                if (listBox.SetValue(value))
-                {
-                    if(oldValue is not null)
-                    {
-                        oldValue.HandleCreated -= HandlePopupControlHandleCreated;
-                    }
-
-                    if (value is not null)
-                    {
-                        value.HandleCreated += HandlePopupControlHandleCreated;
-                    }
-                }
+                listBox.SetValueAsControl(value);
             }
         }
 
@@ -850,11 +837,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
-        }
-
-        private void HandlePopupControlHandleCreated(object? sender, EventArgs e)
-        {
-            HandlePopupControlChanged();
         }
 
         private void HandlePopupControlChanged()

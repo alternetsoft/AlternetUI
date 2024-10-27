@@ -18,6 +18,7 @@ namespace ControlsSample
 
         private readonly VirtualListBox popupListBox = new()
         {
+            HasBorder = false,
         };
 
         public VComboBoxWindow()
@@ -44,6 +45,13 @@ namespace ControlsSample
             listBox.VerticalAlignment = VerticalAlignment.Fill;
 
             comboBox.TextChanged += ComboBox_TextChanged;
+
+            ContextMenuStrip = new ContextMenuStrip();
+
+            ContextMenuStrip.Add("Toggle HasBorder of the popup", () =>
+            {
+                popupListBox.HasBorder = !popupListBox.HasBorder;
+            });
         }
 
         private void ComboBox_TextChanged(object sender, EventArgs e)

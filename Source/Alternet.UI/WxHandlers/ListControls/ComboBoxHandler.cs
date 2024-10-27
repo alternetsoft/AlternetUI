@@ -38,6 +38,9 @@ namespace Alternet.UI
         {
             set
             {
+                var native = value?.NativeControl as Native.VListBox;
+
+                NativeControl.SetPopupControl(native);
             }
         }
 
