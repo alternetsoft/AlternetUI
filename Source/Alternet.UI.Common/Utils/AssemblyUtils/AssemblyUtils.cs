@@ -160,6 +160,88 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates members of all types in the loaded assemblies.
+        /// </summary>
+        /// <param name="bindingAttr">The bindings constraint. Optional.
+        /// Default is Null. If not specified, members are not filtered by the binding constraint.</param>
+        /// <returns></returns>
+        public static IEnumerable<MemberInfo[]> GetAllPublicMembers(BindingFlags? bindingAttr = null)
+        {
+            Func<Type, MemberInfo[]> getMembers;
+
+            if (bindingAttr is null)
+            {
+                getMembers = (type) =>
+                {
+                    return type.GetMembers();
+                };
+            }
+            else
+            {
+                getMembers = (type) =>
+                {
+                    return type.GetMembers(bindingAttr.Value);
+                };
+            }
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                var types = assembly.GetExportedTypes();
+                foreach (var type in types)
+                {
+                    var members = getMembers(type);
+                    yield return members;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enumerates members of all types in the loaded assemblies filtered
+        /// by name and binding constraint.
+        /// </summary>
+        /// <param name="bindingAttr">The bindings constraint. Optional.
+        /// Default is Null. If not specified, members are not filtered by the binding constraint.</param>
+        /// <returns></returns>
+        /// <param name="nameContainsText">The string which specifies member name constraint.</param>
+        public static IEnumerable<MemberInfo> GetAllPublicMembers(
+            string nameContainsText,
+            BindingFlags? bindingAttr = null)
+        {
+            SortedList<string, int> addedMethods = new();
+            var allMembers = GetAllPublicMembers();
+
+            foreach (var memberArray in allMembers)
+            {
+                addedMethods.Clear();
+
+                foreach (var member in memberArray)
+                {
+                    var type = member.DeclaringType;
+                    var name = member.Name;
+
+                    if (member is MethodInfo method)
+                    {
+                        if (method.IsSpecialName)
+                            continue;
+                        if (addedMethods.ContainsKey(name))
+                            continue;
+                        addedMethods.Add(name, 0);
+                    }
+
+                    var fullName = $"{type.Name}.{name}";
+
+                    if (fullName.IndexOf(
+                        nameContainsText,
+                        StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        yield return member;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the <see cref="System.Type"/> object with the specified name
         /// searching it through all assemblies of the current domain.
         /// </summary>
