@@ -66,7 +66,7 @@ namespace Alternet.UI
             return true;
         }
 
-        public bool SetValueForDisposable(T? value)
+        public bool SetValueAsDisposable(T? value)
         {
             if (ValueEquals(value))
                 return false;
@@ -79,14 +79,41 @@ namespace Alternet.UI
             return true;
         }
 
+        public bool SetValueAsControl(T? value)
+        {
+            var oldValue = Value;
+
+            var result = SetValueAsDisposable(value);
+
+            if (result)
+            {
+                if (oldValue is Control oldControl)
+                {
+                    oldControl.HandleCreated -= HandleControlHandleCreated;
+                }
+
+                if (value is Control newControl)
+                {
+                    newControl.HandleCreated += HandleControlHandleCreated;
+                }
+            }
+
+            return result;
+        }
+
         public readonly void RaiseChanged()
         {
             Changed?.Invoke();
         }
 
+        private void HandleControlHandleCreated(object? sender, EventArgs e)
+        {
+            RaiseChanged();
+        }
+
         private void ValueDisposedHandler(object? sender, EventArgs e)
         {
-            SetValueForDisposable(default);
+            SetValueAsDisposable(default);
         }
     }
 }
