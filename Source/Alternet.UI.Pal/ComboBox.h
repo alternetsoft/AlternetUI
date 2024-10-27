@@ -1,6 +1,7 @@
 #pragma once
 #include "Common.h"
 #include "Control.h"
+#include "VListBox.h"
 
 #include <wx/odcombo.h>
 
@@ -206,6 +207,8 @@ namespace Alternet::UI
         void OnBeforeDestroyWxWindow() override;
 
     private:
+        VListBox* _popupControl = nullptr;
+        
         wxDC* eventDc = nullptr;
         RectI eventRect;
         int eventItem = -1;

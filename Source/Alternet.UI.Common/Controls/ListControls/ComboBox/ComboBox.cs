@@ -70,6 +70,8 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultDisabledTextColor = SystemColors.GrayText;
 
+        private readonly ValueContainer<VirtualListBox> listBox;
+
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
@@ -91,6 +93,7 @@ namespace Alternet.UI
         /// </summary>
         public ComboBox()
         {
+            listBox = new(HandlePopupControlChanged);
         }
 
         /// <summary>
@@ -493,6 +496,32 @@ namespace Alternet.UI
 
         AbstractControl? IListControlItemContainer.Control => this;
 
+        /// <summary>
+        /// Gets or sets control that will be shown in the popup.
+        /// </summary>
+        public virtual VirtualListBox? PopupControl
+        {
+            get => listBox.Value;
+
+            set
+            {
+                var oldValue = listBox.Value;
+
+                if (listBox.SetValue(value))
+                {
+                    if(oldValue is not null)
+                    {
+                        oldValue.HandleCreated -= HandlePopupControlHandleCreated;
+                    }
+
+                    if (value is not null)
+                    {
+                        value.HandleCreated += HandlePopupControlHandleCreated;
+                    }
+                }
+            }
+        }
+
         internal OwnerDrawFlags OwnerDrawStyle
         {
             get
@@ -821,6 +850,16 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
+        }
+
+        private void HandlePopupControlHandleCreated(object? sender, EventArgs e)
+        {
+            HandlePopupControlChanged();
+        }
+
+        private void HandlePopupControlChanged()
+        {
+            PlatformControl.PopupControl = listBox.Value;
         }
 
         /// <summary>

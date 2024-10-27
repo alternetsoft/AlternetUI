@@ -13,6 +13,9 @@ namespace Alternet.UI
     /// </summary>
     public interface IComboBoxHandler
     {
+        /// <inheritdoc cref="ComboBox.PopupControl"/>
+        VirtualListBox? PopupControl { set; }
+
         /// <inheritdoc cref="ComboBox.OwnerDrawStyle"/>
         ComboBox.OwnerDrawFlags OwnerDrawStyle { get; set; }
 

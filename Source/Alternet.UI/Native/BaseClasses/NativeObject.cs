@@ -146,16 +146,5 @@ namespace Alternet.UI.Native
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Object_Release(IntPtr obj);
         }
-
-        private class NativeObjectContainer
-        {
-            public NativeObjectContainer(NativeObject Value)
-            {
-
-            }
-
-            public NativeObject Value;
-        }
-
     }
 }

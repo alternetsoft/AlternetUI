@@ -34,6 +34,13 @@ namespace Alternet.UI
 
         public int TextSelectionLength => NativeControl.TextSelectionLength;
 
+        public VirtualListBox? PopupControl
+        {
+            set
+            {
+            }
+        }
+
         public ComboBox.OwnerDrawFlags OwnerDrawStyle
         {
             get

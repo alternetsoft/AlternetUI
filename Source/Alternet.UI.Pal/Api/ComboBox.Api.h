@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ComboBox.h"
+#include "VListBox.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -267,6 +268,17 @@ ALTERNET_UI_API void ComboBox_SetEventCalled_(ComboBox* obj, c_bool value)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetEventCalled(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void ComboBox_SetPopupControl_(ComboBox* obj, VListBox* value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPopupControl(value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

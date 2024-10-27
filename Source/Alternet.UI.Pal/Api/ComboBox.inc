@@ -55,6 +55,7 @@ void SetEventResultInt(int value);
 bool GetEventCalled();
 void SetEventCalled(bool value);
 
+void SetPopupControl(VListBox* value);
 void DismissPopup();
 void ShowPopup();
 int DefaultOnMeasureItemWidth();

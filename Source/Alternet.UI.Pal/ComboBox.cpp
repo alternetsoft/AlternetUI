@@ -2,6 +2,11 @@
 
 namespace Alternet::UI
 {
+    void ComboBox::SetPopupControl(VListBox* value)
+    {
+        _popupControl = value;
+    }
+
     void ComboBox::OnPopup()
     {
         RaiseEvent(ComboBoxEvent::AfterShowPopup);
