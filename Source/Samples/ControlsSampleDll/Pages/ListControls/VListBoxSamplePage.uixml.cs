@@ -8,8 +8,8 @@ namespace ControlsSample
 {
     internal partial class VListBoxSamplePage: Control
     {
-        private readonly ListControlItems<ListControlItem> items1 = new();
-        private readonly ListControlItems<ListControlItem> items2 = new();
+        private readonly VirtualListBoxItems items1 = new();
+        private readonly VirtualListBoxItems items2 = new();
         private bool useItems1 = true;
 
         private readonly VirtualListBox listBox = new()
@@ -46,7 +46,9 @@ namespace ControlsSample
             roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged;
             showCheckBoxesCheckBox.CheckedChanged += ShowCheckBoxesCheckBox_CheckedChanged;
             threeStateCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckBoxThreeState));
-            allowAllStatesCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckBoxAllowAllStatesForUser));
+            allowAllStatesCheckBox.BindBoolProp(
+                listBox,
+                nameof(VirtualListBox.CheckBoxAllowAllStatesForUser));
             allowClickCheckCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckOnClick));
 
             SetSizeToContent();
@@ -60,7 +62,6 @@ namespace ControlsSample
                     LightDarkColor.IsDarkOverride = null;
                 listBox.Invalidate();
             };
-
 
             var contextMenu = new ContextMenuStrip();
             vertPanel2.ContextMenuStrip = contextMenu;

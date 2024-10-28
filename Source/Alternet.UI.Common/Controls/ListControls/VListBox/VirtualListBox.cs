@@ -234,7 +234,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Collection with the new items.</param>
         /// <param name="kind">The method which is used when items are set.</param>
-        public virtual bool SetItemsFast(ListControlItems<ListControlItem> value, SetItemsKind kind)
+        public virtual bool SetItemsFast(VirtualListBoxItems value, SetItemsKind kind)
         {
             switch (kind)
             {
