@@ -43,6 +43,7 @@ namespace Alternet.UI
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
             IsGraphicControl = true;
+            MinimumSize = itemSize;
         }
 
         /// <summary>
@@ -567,37 +568,6 @@ namespace Alternet.UI
                     button.Borders.Hovered?.SetWidth(1);
                 }
             }
-        }
-
-        /// <summary>
-        /// Adds <see cref="SpeedButton"/> to the control.
-        /// </summary>
-        /// <param name="text">Item text.</param>
-        /// <param name="action">Click action.</param>
-        /// <param name="toolTip">Item tooltip.</param>
-        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId AddTextBtn(
-            string? text,
-            string? toolTip = null,
-            EventHandler? action = null)
-        {
-            text ??= string.Empty;
-
-            SpeedTextButton speedButton = new()
-            {
-                ToolTip = toolTip ?? string.Empty,
-                Text = text,
-                VerticalAlignment = UI.VerticalAlignment.Center,
-                Margin = DefaultTextBtnMargin,
-            };
-
-            UpdateItemProps(speedButton, ItemKind.ButtonText);
-
-            if (action is not null)
-                speedButton.Click += action;
-            speedButton.Parent = this;
-
-            return speedButton.UniqueId;
         }
 
         /// <summary>
@@ -1369,6 +1339,102 @@ namespace Alternet.UI
             DisabledImageColor ?? DefaultDisabledImageColor ?? GetSvgColor(KnownSvgColor.Disabled);
 
         /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="action">Click action.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddTextBtn(
+            string? text,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            text ??= string.Empty;
+
+            var speedButton = CreateToolSpeedTextButton();
+
+            speedButton.ToolTip = toolTip ?? string.Empty;
+            speedButton.Text = text;
+            speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
+            speedButton.Margin = DefaultTextBtnMargin;
+
+            UpdateItemProps(speedButton, ItemKind.ButtonText);
+
+            if (action is not null)
+                speedButton.Click += action;
+            speedButton.Parent = this;
+
+            return speedButton.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="itemKind">Item kind.</param>
+        /// <param name="imageSet">Item image.</param>
+        /// <param name="imageSetDisabled">Item disabled image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="action">Click action.</param>
+        protected virtual SpeedButton InternalAddSpeedBtn(
+            ItemKind itemKind,
+            string? text,
+            ImageSet? imageSet,
+            ImageSet? imageSetDisabled,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            text ??= string.Empty;
+
+            var speedButton = CreateToolSpeedButton();
+
+            speedButton.ImageVisible = imageVisible;
+            speedButton.TextVisible = textVisible;
+            speedButton.ImageToText = imageToText;
+            speedButton.Text = text;
+            speedButton.ImageSet = imageSet;
+            speedButton.ToolTip = toolTip ?? text;
+            speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
+            speedButton.Margin = DefaultSpeedBtnMargin;
+
+            speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
+
+            if (imageSetDisabled is not null)
+            {
+                speedButton.DisabledImageSet = imageSetDisabled;
+            }
+
+            UpdateItemProps(speedButton, itemKind);
+
+            if (action is not null)
+                speedButton.Click += action;
+            speedButton.Parent = this;
+
+            return speedButton;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SpeedButton"/> for use in the toolbar.
+        /// Override to create customized speed buttons.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SpeedButton CreateToolSpeedButton()
+        {
+            return new SpeedButton();
+        }
+
+        /// <summary>
+        /// Creates <see cref="SpeedTextButton"/> for use in the toolbar.
+        /// Override to create customized speed text buttons.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SpeedTextButton CreateToolSpeedTextButton()
+        {
+            return new SpeedTextButton();
+        }
+
+        /// <summary>
         /// Updates common properties of the item control.
         /// </summary>
         /// <param name="control">Control which properties to update.</param>
@@ -1420,53 +1486,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds <see cref="SpeedButton"/> to the control.
+        /// Gets item's suggested size.
         /// </summary>
-        /// <param name="text">Item text.</param>
-        /// <param name="itemKind">Item kind.</param>
-        /// <param name="imageSet">Item image.</param>
-        /// <param name="imageSetDisabled">Item disabled image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
-        /// <param name="action">Click action.</param>
-        protected virtual SpeedButton InternalAddSpeedBtn(
-            ItemKind itemKind,
-            string? text,
-            ImageSet? imageSet,
-            ImageSet? imageSetDisabled,
-            string? toolTip = null,
-            EventHandler? action = null)
-        {
-            text ??= string.Empty;
-
-            SpeedButton speedButton = new()
-            {
-                ImageVisible = imageVisible,
-                TextVisible = textVisible,
-                ImageToText = imageToText,
-                Text = text,
-                ImageSet = imageSet,
-                ToolTip = toolTip ?? text,
-                VerticalAlignment = UI.VerticalAlignment.Center,
-                Margin = DefaultSpeedBtnMargin,
-            };
-
-            speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
-
-            if (imageSetDisabled is not null)
-            {
-                speedButton.DisabledImageSet = imageSetDisabled;
-            }
-
-            UpdateItemProps(speedButton, itemKind);
-
-            if (action is not null)
-                speedButton.Click += action;
-            speedButton.Parent = this;
-
-            return speedButton;
-        }
-
-        private SizeD GetItemSuggestedSize(AbstractControl control)
+        /// <param name="control">Child control for which to get the suggested size.</param>
+        /// <returns></returns>
+        protected virtual SizeD GetItemSuggestedSize(AbstractControl control)
         {
             if (control is PictureBox)
             {
