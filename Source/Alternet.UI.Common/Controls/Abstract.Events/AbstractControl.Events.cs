@@ -12,6 +12,11 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Occurs when control's caret is changed.
+        /// </summary>
+        public static event EventHandler? CaretControlChanged;
+
+        /// <summary>
         /// Occurs when hovered control is changed. Control is hovered when mouse pointer is over it.
         /// </summary>
         public static event EventHandler? HoveredControlChanged;
