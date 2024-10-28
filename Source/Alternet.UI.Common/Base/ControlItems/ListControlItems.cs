@@ -8,7 +8,11 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class ListControlItems<T>
+    /// <summary>
+    /// Internal items container for list controls.
+    /// </summary>
+    /// <typeparam name="T">Type of the item.</typeparam>
+    public class ListControlItems<T>
         : Collection<T>, IListControlItems<T>, IList, ICollection
     {
         /// <summary>
