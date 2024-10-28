@@ -146,11 +146,14 @@ namespace Alternet.Drawing
 
             SizeD result = 0;
 
+            bool visible = foreColor != Color.Empty;
+
             foreach (var item in splittedText)
             {
                 var itemFont = font.WithStyle(item.FontStyle);
                 var measure = GetTextExtent(item.Text, itemFont);
-                DrawText(item.Text, location, itemFont, foreColor, backColor ?? Color.Empty);
+                if(visible)
+                    DrawText(item.Text, location, itemFont, foreColor, backColor ?? Color.Empty);
                 location.X += measure.Width;
                 result.Width += measure.Width;
                 result.Height = Math.Max(result.Height, measure.Height);
@@ -191,29 +194,66 @@ namespace Alternet.Drawing
         /// <returns></returns>
         internal virtual RectD DrawLabel(ref DrawLabelParams prm)
         {
+            var info = prm;
             var indexAccel = prm.IndexAccel;
             var image = prm.Image;
+            var s = info.Text;
+            var font = info.Font;
 
-            if(image is null)
+            SizeD textSize;
+
+            TextAndFontStyle[]? parsed = null;
+
+            if (indexAccel == -1)
             {
-                if (indexAccel == -1)
-                {
-                }
-                else
-                {
-                }
+                textSize = MeasureText(s, font);
             }
             else
             {
-                if (indexAccel == -1)
+                parsed = StringUtils.ParseTextWithIndexAccel(
+                    prm.Text,
+                    indexAccel,
+                    FontStyle.Underline);
+                textSize = DrawTextWithFontStyle(
+                            parsed,
+                            PointD.Empty,
+                            font,
+                            Color.Empty);
+            }
+
+            var size = textSize;
+
+            if (image is not null)
+            {
+                var imageLabelDistance = prm.ImageLabelDistance ?? SpeedButton.DefaultImageLabelDistance;
+
+                if(prm.ImageToText == ImageToText.Horizontal)
                 {
+                    size.Width += image.PixelWidth + imageLabelDistance;
                 }
                 else
                 {
+                    size.Height += image.PixelHeight + imageLabelDistance;
                 }
             }
 
-            return RectD.Empty;
+            RectD beforeAlign = (prm.Rect.Location, size);
+
+            var afterAlign = AlignUtils.AlignRectInRect(
+                beforeAlign,
+                prm.Rect,
+                prm.Alignment.Horizontal,
+                prm.Alignment.Vertical,
+                shrinkSize: true);
+
+            if(image is null)
+            {
+            }
+            else
+            {
+            }
+
+            return afterAlign;
         }
 
         /// <summary>
@@ -221,6 +261,18 @@ namespace Alternet.Drawing
         /// </summary>
         public struct DrawLabelParams
         {
+            /// <summary>
+            /// Gets or sets a value which specifies display modes for
+            /// item image and text.
+            /// </summary>
+            public ImageToText ImageToText = ImageToText.Horizontal;
+
+            /// <summary>
+            /// Gets or sets distance between image and label. If Null,
+            /// <see cref="SpeedButton.DefaultImageLabelDistance"/> is used.
+            /// </summary>
+            public Coord? ImageLabelDistance;
+
             /// <summary>
             /// Gets or sets text to draw.
             /// </summary>
