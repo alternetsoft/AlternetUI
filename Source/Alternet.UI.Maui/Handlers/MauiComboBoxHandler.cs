@@ -22,6 +22,8 @@ namespace Alternet.UI
 
         public bool HasBorder { get; set; }
 
+        public VirtualListBox? PopupControl { get;  set; }
+
         public void DefaultOnDrawBackground()
         {
         }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
+
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
@@ -194,6 +196,17 @@ namespace Alternet.UI
         public virtual bool ScrollRowPages(int pages)
         {
             return Handler.ScrollRowPages(pages);
+        }
+
+        /// <inheritdoc/>
+        public override void RemoveAll()
+        {
+            if (Items.Count == 0)
+                return;
+            Handler.DetachItems(Items);
+            RecreateItems();
+            Handler.AttachItems(Items);
+            Invalidate();
         }
 
         /// <summary>

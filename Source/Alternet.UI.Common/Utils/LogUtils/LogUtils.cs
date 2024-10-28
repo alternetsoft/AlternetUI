@@ -637,20 +637,38 @@ namespace Alternet.UI
             }
         }
 
-        public class LogItem
+        /// <summary>
+        /// Implements log item.
+        /// </summary>
+        public class LogItem : BaseObject
         {
+            /// <summary>
+            /// Gets or sets message of the log item.
+            /// </summary>
             public string Msg;
 
+            /// <summary>
+            /// Gets or sets kind of the log item.
+            /// </summary>
             public LogItemKind Kind;
 
+            /// <summary>
+            /// Gets or sets <see cref="ListControlItem"/> used to show log item.
+            /// </summary>
             public ListControlItem? Item;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="LogItem"/> class with the specified parameters.
+            /// </summary>
             public LogItem(string msg, LogItemKind kind)
             {
                 Msg = msg;
                 Kind = kind;
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="LogItem"/> class with the specified parameters.
+            /// </summary>
             public LogItem(ListControlItem? item)
             {
                 Msg = string.Empty;
@@ -658,6 +676,9 @@ namespace Alternet.UI
                 Item = item;
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="LogItem"/> class.
+            /// </summary>
             public LogItem()
             {
                 Msg = string.Empty;

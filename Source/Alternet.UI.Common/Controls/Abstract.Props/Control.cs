@@ -578,6 +578,66 @@ namespace Alternet.UI
             return Handler.IsTransparentBackgroundSupported();
         }
 
+        /// <summary>
+        /// Unbinds events from the handler.
+        /// </summary>
+        public virtual void UnbindHandlerEvents()
+        {
+            Handler.TextChanged = null;
+            Handler.HandleCreated = null;
+            Handler.HandleDestroyed = null;
+            Handler.Activated = null;
+            Handler.Deactivated = null;
+            Handler.Idle = null;
+            Handler.Paint = null;
+            Handler.VisibleChanged = null;
+            Handler.MouseEnter = null;
+            Handler.MouseLeave = null;
+            Handler.MouseCaptureLost = null;
+            Handler.DragLeave = null;
+            Handler.GotFocus = null;
+            Handler.LostFocus = null;
+            Handler.SizeChanged = null;
+            Handler.LocationChanged = null;
+            Handler.VerticalScrollBarValueChanged = null;
+            Handler.HorizontalScrollBarValueChanged = null;
+            Handler.DragOver = null;
+            Handler.DragEnter = null;
+            Handler.DragDrop = null;
+            Handler.SystemColorsChanged = null;
+            Handler.DpiChanged = null;
+        }
+
+        /// <summary>
+        /// Binds events to the handler.
+        /// </summary>
+        public virtual void BindHandlerEvents()
+        {
+            Handler.MouseEnter = RaiseMouseEnterOnTarget;
+            Handler.MouseLeave = RaiseMouseLeaveOnTarget;
+            Handler.HandleCreated = RaiseHandleCreated;
+            Handler.HandleDestroyed = RaiseHandleDestroyed;
+            Handler.Activated = RaiseActivated;
+            Handler.Deactivated = RaiseDeactivated;
+            Handler.Paint = OnHandlerPaint;
+            Handler.VisibleChanged = OnHandlerVisibleChanged;
+            Handler.MouseCaptureLost = RaiseMouseCaptureLost;
+            Handler.GotFocus = RaiseGotFocus;
+            Handler.LostFocus = RaiseLostFocus;
+            Handler.Idle = RaiseIdle;
+            Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
+            Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
+            Handler.DragLeave = RaiseDragLeave;
+            Handler.SizeChanged = RaiseHandlerSizeChanged;
+            Handler.LocationChanged = RaiseContainerLocationChanged;
+            Handler.DragOver = RaiseDragOver;
+            Handler.DragEnter = RaiseDragEnter;
+            Handler.DragDrop = RaiseDragDrop;
+            Handler.TextChanged = OnHandlerTextChanged;
+            Handler.SystemColorsChanged = RaiseSystemColorsChanged;
+            Handler.DpiChanged = OnHandlerDpiChanged;
+        }
+
         /// <inheritdoc/>
         public override PointD ScreenToClient(PointD point)
         {
@@ -841,66 +901,6 @@ namespace Alternet.UI
         protected override Coord? RequestScaleFactor()
         {
             return Handler.GetPixelScaleFactor();
-        }
-
-        /// <summary>
-        /// Unbinds events from the handler.
-        /// </summary>
-        protected virtual void UnbindHandlerEvents()
-        {
-            Handler.TextChanged = null;
-            Handler.HandleCreated = null;
-            Handler.HandleDestroyed = null;
-            Handler.Activated = null;
-            Handler.Deactivated = null;
-            Handler.Idle = null;
-            Handler.Paint = null;
-            Handler.VisibleChanged = null;
-            Handler.MouseEnter = null;
-            Handler.MouseLeave = null;
-            Handler.MouseCaptureLost = null;
-            Handler.DragLeave = null;
-            Handler.GotFocus = null;
-            Handler.LostFocus = null;
-            Handler.SizeChanged = null;
-            Handler.LocationChanged = null;
-            Handler.VerticalScrollBarValueChanged = null;
-            Handler.HorizontalScrollBarValueChanged = null;
-            Handler.DragOver = null;
-            Handler.DragEnter = null;
-            Handler.DragDrop = null;
-            Handler.SystemColorsChanged = null;
-            Handler.DpiChanged = null;
-        }
-
-        /// <summary>
-        /// Binds events to the handler.
-        /// </summary>
-        protected virtual void BindHandlerEvents()
-        {
-            Handler.MouseEnter = RaiseMouseEnterOnTarget;
-            Handler.MouseLeave = RaiseMouseLeaveOnTarget;
-            Handler.HandleCreated = RaiseHandleCreated;
-            Handler.HandleDestroyed = RaiseHandleDestroyed;
-            Handler.Activated = RaiseActivated;
-            Handler.Deactivated = RaiseDeactivated;
-            Handler.Paint = OnHandlerPaint;
-            Handler.VisibleChanged = OnHandlerVisibleChanged;
-            Handler.MouseCaptureLost = RaiseMouseCaptureLost;
-            Handler.GotFocus = RaiseGotFocus;
-            Handler.LostFocus = RaiseLostFocus;
-            Handler.Idle = RaiseIdle;
-            Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
-            Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
-            Handler.DragLeave = RaiseDragLeave;
-            Handler.SizeChanged = RaiseHandlerSizeChanged;
-            Handler.LocationChanged = RaiseContainerLocationChanged;
-            Handler.DragOver = RaiseDragOver;
-            Handler.DragEnter = RaiseDragEnter;
-            Handler.DragDrop = RaiseDragDrop;
-            Handler.TextChanged = OnHandlerTextChanged;
-            Handler.SystemColorsChanged = RaiseSystemColorsChanged;
-            Handler.DpiChanged = OnHandlerDpiChanged;
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿// #define ObsoleteModalDialogs
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +28,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="owner">Dialog owner.</param>
         /// <returns></returns>
+#if ObsoleteModalDialogs
         [Obsolete("Method is deprecated. Use ShowAsync method instead of it.")]
+#endif
         ModalResult ShowModal(Window? owner);
 
         /// <summary>

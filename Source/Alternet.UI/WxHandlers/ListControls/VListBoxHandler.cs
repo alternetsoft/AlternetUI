@@ -189,17 +189,29 @@ namespace Alternet.UI
             return new NativeVListBox();
         }
 
+        public void DetachItems(IListControlItems<ListControlItem> items)
+        {
+            items.ItemInserted -= Items_ItemInserted;
+            items.ItemRemoved -= Items_ItemRemoved;
+            items.CollectionChanged -= Items_CollectionChanged;
+        }
+
+        public void AttachItems(IListControlItems<ListControlItem> items)
+        {
+            items.ItemInserted += Items_ItemInserted;
+            items.ItemRemoved += Items_ItemRemoved;
+            items.CollectionChanged += Items_CollectionChanged;
+            NativeControl.ItemsCount = items.Count;
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();
 
             ApplySelectionMode();
-            NativeControl.ItemsCount = Control.Items.Count;
+            AttachItems(Control.Items);
             ApplySelection();
 
-            Control.Items.ItemInserted += Items_ItemInserted;
-            Control.Items.ItemRemoved += Items_ItemRemoved;
-            Control.Items.CollectionChanged += Items_CollectionChanged;
             Control.SelectionModeChanged += Control_SelectionModeChanged;
             Control.SelectionChanged += Control_SelectionChanged;
 
@@ -209,10 +221,9 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
-            Control.Items.ItemInserted -= Items_ItemInserted;
-            Control.Items.ItemRemoved -= Items_ItemRemoved;
+            DetachItems(Control.Items);
+
             Control.SelectionModeChanged -= Control_SelectionModeChanged;
-            Control.Items.CollectionChanged -= Items_CollectionChanged;
             Control.SelectionChanged -= Control_SelectionChanged;
             NativeControl.MeasureItem = null;
             NativeControl.SelectionChanged = null;

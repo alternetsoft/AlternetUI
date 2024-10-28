@@ -1,6 +1,7 @@
 #pragma once
 #include "Common.h"
 #include "Control.h"
+#include "VListBox.h"
 
 #include <wx/odcombo.h>
 
@@ -206,6 +207,8 @@ namespace Alternet::UI
         void OnBeforeDestroyWxWindow() override;
 
     private:
+        VListBox* _popupControl = nullptr;
+        
         wxDC* eventDc = nullptr;
         RectI eventRect;
         int eventItem = -1;
@@ -220,18 +223,9 @@ namespace Alternet::UI
         bool IsUsingComboBoxControl();
         bool hasBorder = true;
 
-        std::vector<string> _items;
-
-        DelayedValue<ComboBox, int> _selectedIndex;
         DelayedValue<ComboBox, string> _text;
 
         bool _isEditable = true;
-
-        void ApplyItems();
-        void ReceiveItems();
-
-        int RetrieveSelectedIndex();
-        void ApplySelectedIndex(const int& value);
 
         string RetrieveText();
         void ApplyText(const string& value);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 using Alternet.Drawing;
 
@@ -1001,6 +1002,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Allows to set items from the <see cref="IEnumerable{T}"/> with huge number of items which
+        /// is "yield" constructed. This method can be called from the another thread which is different
+        /// from UI thread.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the item in the source enumerable.</typeparam>
+        /// <param name="source">The <see cref="IEnumerable{T}"/> instance which
+        /// is "yield" constructed in the another thread.</param>
+        /// <param name="convertItem">The function which is called to convert
+        /// <paramref name="source"/> items
+        /// to the items which can be used in this control. If this function returns Null,
+        /// source item is ignored. This function is called from the thread that
+        /// provides <paramref name="source"/> so do not access UI elements from it.</param>
+        /// <param name="continueFunc">The function which is called to check whether to continue
+        /// the conversion. You can return False to stop the conversion. This function is called from the
+        /// main thread so it can access UI elements.</param>
+        /// <param name="bufferSize">Size of the items buffer. Optional. Default is 10.</param>
+        /// <param name="sleepAfterBufferMsec">The value in milliseconds to wait after buffer is
+        /// converted and all buffered items were added to the control.
+        /// Optional. Default is 100.</param>
+        public virtual void AddItemsThreadSafe<TSource>(
+           IEnumerable<TSource> source,
+           Func<TSource, TItem?> convertItem,
+           Func<bool> continueFunc,
+           int bufferSize = 10,
+           int sleepAfterBufferMsec = 150)
+        {
+            bool AddToDest(IEnumerable<TItem> items)
+            {
+                var result = true;
+                Invoke(() =>
+                {
+                    if (!continueFunc())
+                        result = false;
+                    Items.AddRange(items);
+                    App.DoEvents();
+                });
+                Thread.Sleep(sleepAfterBufferMsec);
+                return result;
+            }
+
+            EnumerableUtils.ConvertItems<TSource, TItem>(
+                        convertItem,
+                        AddToDest,
+                        source,
+                        bufferSize);
+        }
+
+        /// <summary>
         /// Sets items from the specified collection to the control's items as fast as possible.
         /// </summary>
         /// <typeparam name="TItemFrom">Type of the item in the otgher collection
@@ -1056,6 +1105,109 @@ namespace Alternet.UI
         /// <remarks>See <see cref="CheckedChanged"/> for details.</remarks>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
+        }
+
+        public class AddRangeController<TSource> : DisposableObject
+        {
+            public VirtualListControl<TItem> ListBox;
+
+            public Func<IEnumerable<TSource>> SourceFunc;
+
+            public Func<TSource, TItem?> ConvertItemFunc;
+
+            public Func<bool> ContinueFunc;
+
+            public bool IsDebugInfoLogged = false;
+
+            public string? Name;
+
+            public int BufferSize = 10;
+
+            public int SleepAfterBufferMsec = 150;
+
+            private Thread? thread;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="AddRangeController{TSource}"/>
+            /// class with the specified parameters.
+            /// </summary>
+            public AddRangeController(
+                VirtualListControl<TItem> listBox,
+                Func<IEnumerable<TSource>> source,
+                Func<TSource, TItem?> convertItem,
+                Func<bool> continueFunc)
+            {
+                ListBox = listBox;
+                SourceFunc = source;
+                ConvertItemFunc = convertItem;
+                ContinueFunc = continueFunc;
+            }
+
+            public virtual string SafeName => Name ?? "ListBox.AddRangeController";
+
+            public virtual void Stop()
+            {
+                AsyncUtils.EndThread(ref thread);
+            }
+
+            public virtual void Start()
+            {
+                Stop();
+
+                thread = new Thread(ThreadAction)
+                {
+                    Name = $"{SafeName}Thread",
+                    IsBackground = true,
+                };
+
+                thread.Start();
+            }
+
+            /// <inheritdoc/>
+            protected override void DisposeManaged()
+            {
+                Stop();
+            }
+
+            private void ThreadAction()
+            {
+                void Fn()
+                {
+                    ListBox.AddItemsThreadSafe(
+                        SourceFunc(),
+                        ConvertItemFunc,
+                        () =>
+                        {
+                            if (ListBox.IsDisposed)
+                                return false;
+                            return ContinueFunc();
+                        },
+                        BufferSize,
+                        SleepAfterBufferMsec);
+                }
+
+                CallThreadAction(Fn);
+            }
+
+            private void CallThreadAction(Action action)
+            {
+                try
+                {
+                    action();
+                }
+                catch (ThreadInterruptedException)
+                {
+                    App.DebugIdleLogIf($"{SafeName} awoken.", IsDebugInfoLogged);
+                }
+                catch (ThreadAbortException)
+                {
+                    App.DebugIdleLogIf($"{SafeName} aborted.", IsDebugInfoLogged);
+                }
+                finally
+                {
+                    App.DebugIdleLogIf($"{SafeName} executing finally block.", IsDebugInfoLogged);
+                }
+            }
         }
     }
 }

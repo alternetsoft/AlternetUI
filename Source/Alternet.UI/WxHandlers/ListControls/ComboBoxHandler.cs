@@ -34,6 +34,16 @@ namespace Alternet.UI
 
         public int TextSelectionLength => NativeControl.TextSelectionLength;
 
+        public VirtualListBox? PopupControl
+        {
+            set
+            {
+                var native = value?.NativeControl as Native.VListBox;
+
+                NativeControl.SetPopupControl(native);
+            }
+        }
+
         public ComboBox.OwnerDrawFlags OwnerDrawStyle
         {
             get
@@ -100,6 +110,38 @@ namespace Alternet.UI
 
         public void SelectAllText() => NativeControl.SelectAllText();
 
+        protected override void OnHandleCreated()
+        {
+            ItemsToPlatform();
+        }
+
+        public void ItemsToPlatform()
+        {
+            var s = Control.Text;
+
+            var nativeControl = NativeControl;
+            nativeControl.ClearItems();
+
+            var control = Control;
+            var items = control.Items;
+
+            var insertion = NativeControl.CreateItemsInsertion();
+            for (var i = 0; i < items.Count; i++)
+            {
+                NativeControl.AddItemToInsertion(
+                    insertion,
+                    Control.GetItemText(control.Items[i], false));
+            }
+
+            NativeControl.CommitItemsInsertion(insertion, 0);
+            ApplySelectedItem();
+
+            if (Control.DropDownStyle == ComboBoxStyle.DropDown)
+            {
+                Text = s;
+            }
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ComboBox();
@@ -112,15 +154,15 @@ namespace Alternet.UI
             if (App.IsWindowsOS)
                 UserPaint = true;
 
-            ApplyItems();
+            ItemsToPlatform();
             ApplyIsEditable();
-            ApplySelectedItem();
  
             Control.Items.ItemRangeAdditionFinished +=
                 Items_ItemRangeAdditionFinished;
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.Items.CollectionChanged += Items_CollectionChanged;
+            
             Control.IsEditableChanged += Control_IsEditableChanged;
             Control.SelectedItemChanged += Control_SelectedItemChanged;
 
@@ -288,25 +330,6 @@ namespace Alternet.UI
         private void ApplyIsEditable()
         {
             NativeControl.IsEditable = Control.IsEditable;
-        }
-
-        private void ApplyItems()
-        {
-            var nativeControl = NativeControl;
-            nativeControl.ClearItems();
-
-            var control = Control;
-            var items = control.Items;
-
-            var insertion = NativeControl.CreateItemsInsertion();
-            for (var i = 0; i < items.Count; i++)
-            {
-                NativeControl.AddItemToInsertion(
-                    insertion,
-                    Control.GetItemText(control.Items[i], false));
-            }
-
-            NativeControl.CommitItemsInsertion(insertion, 0);
         }
 
         private void ApplySelectedItem()

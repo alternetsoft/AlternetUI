@@ -179,7 +179,7 @@ namespace Alternet.UI
             {
                 var isCatalyst = AssemblyUtils.InvokeMauiUtilsIsMacCatalyst();
 
-                if(isCatalyst == true)
+                if (isCatalyst == true)
                 {
                     App.IsMacOS = true;
                     BackendOS = OperatingSystems.MacOs;
@@ -204,7 +204,7 @@ namespace Alternet.UI
         /// <param name="handler">Application handler.</param>
         public App(IApplicationHandler? handler)
         {
-            if(handler is not null)
+            if (handler is not null)
                 Handler = handler;
             SynchronizationContext.InstallIfNeeded();
             App.Current = this;
@@ -377,11 +377,11 @@ namespace Alternet.UI
         {
             get
             {
-                if(logFilePath is null)
+                if (logFilePath is null)
                 {
                     string location;
 
-                    if(App.IsWindowsOS && File.Exists(@"e:\logToFile.on"))
+                    if (App.IsWindowsOS && File.Exists(@"e:\logToFile.on"))
                         location = @"e:\alternet-ui";
                     else
                         location = Assembly.GetExecutingAssembly().Location;
@@ -787,7 +787,7 @@ namespace Alternet.UI
             LogItemKind? kind = null,
             string? hint = null)
         {
-            if(hint is not null)
+            if (hint is not null)
             {
                 hint = $" ({hint})";
             }
@@ -1203,6 +1203,43 @@ namespace Alternet.UI
         public static void RaiseThreadException(object sender, ThreadExceptionEventArgs args)
         {
             ThreadException?.Invoke(sender, args);
+        }
+
+        /// <summary>
+        /// Calls <see cref="Log"/> method with <paramref name="obj"/> parameter
+        /// when application becomes idle. This method works only if DEBUG conditional is defined
+        /// and <paramref name="condition"/> is True.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <param name="condition">The flag which specifies whether to
+        /// call <see cref="Log"/> method.</param>
+        /// <param name="kind">Message kind.</param>
+        /// <remarks>
+        /// This method is thread safe and can be called from non-ui threads.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugIdleLogIf(
+            object? obj,
+            bool condition,
+            LogItemKind kind = LogItemKind.Information)
+        {
+            if(condition)
+                IdleLog(obj, kind);
+        }
+
+        /// <summary>
+        /// Calls <see cref="Log"/> method with <paramref name="obj"/> parameter
+        /// when application becomes idle. This method works only if DEBUG conditional is defined.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <param name="kind">Message kind.</param>
+        /// <remarks>
+        /// This method is thread safe and can be called from non-ui threads.
+        /// </remarks>
+        [Conditional("DEBUG")]
+        public static void DebugIdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
+        {
+            IdleLog(obj, kind);
         }
 
         /// <summary>

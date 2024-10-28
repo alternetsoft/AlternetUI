@@ -345,7 +345,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="TextChanged" /> event.</summary>
-        public void RaiseTextChanged()
+        public virtual void RaiseTextChanged()
         {
             TextChanged?.Invoke(this, EventArgs.Empty);
             OnTextChanged(EventArgs.Empty);

@@ -1172,12 +1172,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="text">New property value.</param>
-        public virtual void SetToolText(ObjectUniqueId id, string? text)
+        public virtual void SetToolText(ObjectUniqueId id, object? text)
         {
             var item = GetToolControl(id);
             if (item is null)
                 return;
-            item.Text = text ?? string.Empty;
+            item.Text = text.SafeToString();
         }
 
         /// <summary>
@@ -1185,12 +1185,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="value">New property value.</param>
-        public virtual void SetToolShortHelp(ObjectUniqueId id, string? value)
+        public virtual void SetToolShortHelp(ObjectUniqueId id, object? value)
         {
             var item = GetToolControl(id);
             if (item is null)
                 return;
-            item.ToolTip = value;
+            item.ToolTip = value.SafeToString();
         }
 
         /// <summary>

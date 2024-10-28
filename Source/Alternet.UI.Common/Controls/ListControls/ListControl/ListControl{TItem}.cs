@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
+
 using Alternet.Base.Collections;
 
 namespace Alternet.UI
@@ -602,6 +604,18 @@ namespace Alternet.UI
         {
             var safeItems = SafeItems();
             safeItems.SetCount(newCount, createItem);
+        }
+
+        /// <summary>
+        /// Recreates items. Before calling this method, you need to unbind all events
+        /// connected to the <see cref="Items"/>.
+        /// </summary>
+        protected void RecreateItems()
+        {
+            if (items is null || items.Count == 0)
+                return;
+            items = null;
+            SafeItems();
         }
 
         private ListControlItems<TItem> SafeItems()

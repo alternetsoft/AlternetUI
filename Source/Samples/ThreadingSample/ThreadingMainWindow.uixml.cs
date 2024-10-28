@@ -67,7 +67,7 @@ namespace ThreadingSample
                     {
                         if (IsDisposed)
                         {
-                            App.IdleLog($"Thread {counter}.1: Form is already diposed");
+                            App.IdleLog($"Thread {counter}.1: Form is already disposed");
                         }
                         else
                             beginInvokeCounterLabel.Text = i.ToString();
@@ -89,7 +89,7 @@ namespace ThreadingSample
                     {
                         if (IsDisposed)
                         {
-                            App.IdleLog($"Thread {counter}.2: Form is already diposed");
+                            App.IdleLog($"Thread {counter}.2: Form is already disposed");
                         }
                         else
                             invokeCounterLabel.Text = i.ToString(); 
@@ -161,7 +161,7 @@ namespace ThreadingSample
                 {
                     if (IsDisposed)
                     {
-                        App.IdleLog($"Form {counter} is already diposed");
+                        App.IdleLog($"Form {counter} is already disposed");
                     }
                     else
                         longOperationProgressBar.Maximum = Maximum;
@@ -176,7 +176,7 @@ namespace ThreadingSample
                     {
                         if (IsDisposed)
                         {
-                            App.IdleLog($"Form {counter} is already diposed");
+                            App.IdleLog($"Form {counter} is already disposed");
                         }
                         else
                         {

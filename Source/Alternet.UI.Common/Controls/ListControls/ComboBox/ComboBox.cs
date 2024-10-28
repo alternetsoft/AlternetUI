@@ -70,11 +70,14 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultDisabledTextColor = SystemColors.GrayText;
 
+        private ValueContainer<VirtualListBox> listBox;
+
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
         private ListControlItemDefaults? itemDefaults;
         private bool droppedDown;
+        private int? reportedSelectedIndex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
@@ -91,6 +94,7 @@ namespace Alternet.UI
         /// </summary>
         public ComboBox()
         {
+            listBox = new(HandlePopupControlChanged);
         }
 
         /// <summary>
@@ -493,6 +497,19 @@ namespace Alternet.UI
 
         AbstractControl? IListControlItemContainer.Control => this;
 
+        /// <summary>
+        /// Gets or sets control that will be shown in the popup.
+        /// </summary>
+        internal virtual VirtualListBox? PopupControl
+        {
+            get => listBox.Value;
+
+            set
+            {
+                listBox.SetValueAsControl(value);
+            }
+        }
+
         internal OwnerDrawFlags OwnerDrawStyle
         {
             get
@@ -546,6 +563,13 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseSelectedItemChanged()
         {
+            var newIndex = SelectedIndex;
+
+            if (newIndex == reportedSelectedIndex)
+                return;
+
+            reportedSelectedIndex = newIndex;
+
             OnSelectedItemChanged(EventArgs.Empty);
             SelectedItemChanged?.Invoke(this, EventArgs.Empty);
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
@@ -807,6 +831,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+        }
+
         /// <summary>
         /// Called when the <see cref="DropDownClosed"/> event is fired.
         /// </summary>
@@ -821,6 +851,11 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
+        }
+
+        private void HandlePopupControlChanged()
+        {
+            PlatformControl.PopupControl = listBox.Value;
         }
 
         /// <summary>

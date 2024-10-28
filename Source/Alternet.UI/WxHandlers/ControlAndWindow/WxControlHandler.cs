@@ -160,11 +160,7 @@ namespace Alternet.UI
             set => NativeControl.Deactivated = value;
         }
 
-        public Action? HandleCreated
-        {
-            get => NativeControl.HandleCreated;
-            set => NativeControl.HandleCreated = value;
-        }
+        public Action? HandleCreated { get; set; }
 
         public Action? HandleDestroyed
         {
@@ -828,6 +824,7 @@ namespace Alternet.UI
             NativeControl.DragOver -= NativeControl_DragOver;
             NativeControl.DragEnter -= NativeControl_DragEnter;
             NativeControl.DragDrop -= NativeControl_DragDrop;
+            NativeControl.HandleCreated = null;
         }
 
         protected virtual void OnNativeControlCreated()
@@ -843,6 +840,8 @@ namespace Alternet.UI
             NativeControl.DragOver += NativeControl_DragOver;
             NativeControl.DragEnter += NativeControl_DragEnter;
             NativeControl.DragDrop += NativeControl_DragDrop;
+
+            NativeControl.HandleCreated = OnNativeControlHandleCreated;
         }
 
         private static void DisposeNativeControlCore(Native.Control control)
@@ -945,6 +944,31 @@ namespace Alternet.UI
         public bool EnableTouchEvents(TouchEventsMask flag)
         {
             return NativeControl.EnableTouchEvents((int)flag);
+        }
+
+        protected void SafeHandleRecreate(Action? action = null)
+        {
+            Control.UnbindHandlerEvents();
+
+            try
+            {
+                action?.Invoke();
+                OnHandleCreated();
+            }
+            finally
+            {
+                Control.BindHandlerEvents();
+            }
+        }
+
+        protected virtual void OnHandleCreated()
+        {
+        }
+
+        private void OnNativeControlHandleCreated()
+        {
+            SafeHandleRecreate();
+            HandleCreated?.Invoke();
         }
 
         internal class NonAbstractNativeControl : Native.Control

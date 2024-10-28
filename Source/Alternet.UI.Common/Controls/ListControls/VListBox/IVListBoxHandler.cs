@@ -47,6 +47,16 @@ namespace Alternet.UI
         /// <inheritdoc cref="VirtualListBox.GetVisibleEnd"/>
         int GetVisibleEnd();
 
+        /// <summary>
+        /// Detaches events from items.
+        /// </summary>
+        void DetachItems(IListControlItems<ListControlItem> items);
+
+        /// <summary>
+        /// Attaches events to items.
+        /// </summary>
+        void AttachItems(IListControlItems<ListControlItem> items);
+
         /// <inheritdoc cref="VirtualListBox.GetVisibleBegin"/>
         int GetVisibleBegin();
 
