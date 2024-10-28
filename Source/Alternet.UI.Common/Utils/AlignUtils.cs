@@ -12,6 +12,42 @@ namespace Alternet.UI
     public static class AlignUtils
     {
         /// <summary>
+        /// Converts <see cref="GenericAlignment"/> to <see cref="VerticalAlignment"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
+        public static VerticalAlignment GetVertical(GenericAlignment value)
+        {
+            switch (value)
+            {
+                case GenericAlignment.Bottom:
+                    return VerticalAlignment.Bottom;
+                case GenericAlignment.CenterVertical:
+                    return VerticalAlignment.Center;
+                default:
+                    return VerticalAlignment.Top;
+            }
+        }
+
+        /// <summary>
+        /// Converts <see cref="GenericAlignment"/> to <see cref="HorizontalAlignment"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
+        public static HorizontalAlignment GetHorizontal(GenericAlignment value)
+        {
+            switch (value)
+            {
+                default:
+                    return HorizontalAlignment.Left;
+                case GenericAlignment.CenterHorizontal:
+                    return HorizontalAlignment.Center;
+                case GenericAlignment.Right:
+                    return HorizontalAlignment.Right;
+            }
+        }
+
+        /// <summary>
         /// Converts <see cref="TextHorizontalAlignment"/> to <see cref="HorizontalAlignment"/>.
         /// </summary>
         /// <param name="value"></param>

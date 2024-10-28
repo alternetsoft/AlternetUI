@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Alternet.UI;
@@ -22,14 +23,36 @@ namespace Alternet.Drawing
         public FontStyle FontStyle;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextAndFontStyle"/> struct.
+        /// Initializes a new instance of the <see cref="TextAndFontStyle"/> struct
+        /// with the specified text.
+        /// </summary>
+        /// <param name="text">Text string.</param>
+        public TextAndFontStyle(string text)
+        {
+            Text = text;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextAndFontStyle"/> struct with the specified
+        /// text and font style.
         /// </summary>
         /// <param name="text">Text string.</param>
         /// <param name="style">Font style.</param>
-        public TextAndFontStyle(string text, FontStyle style = FontStyle.Regular)
+        public TextAndFontStyle(string text, FontStyle style)
         {
             Text = text;
             FontStyle = style;
+        }
+
+        /// <summary>
+        /// Implicit operator declaration for the conversion from <see cref="string"/> to
+        /// <see cref="TextAndFontStyle"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator TextAndFontStyle(string value)
+        {
+            return new(value);
         }
 
         /// <inheritdoc/>

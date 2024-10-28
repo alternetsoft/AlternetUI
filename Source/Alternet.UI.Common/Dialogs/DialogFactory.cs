@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// </summary>
         public static void ShowDeveloperTools()
         {
-            DeveloperToolsPanel.ShowDeveloperTools();
+            DevToolsPanel.ShowDeveloperTools();
         }
 
         /// <summary>
