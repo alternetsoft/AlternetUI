@@ -17,6 +17,16 @@ namespace Alternet.UI
     public static partial class LogUtils
     {
         /// <summary>
+        /// Logs image created from an array with <see cref="TextAndFontStyle"/> elements.
+        /// </summary>
+        /// <param name="text">Array of strings with font styles.</param>
+        public static void LogTextAndFontStyle(TextAndFontStyle[] text)
+        {
+            var image = DrawingUtils.DebugImageFromTextWithFontStyle(text);
+            LogImage(image);
+        }
+
+        /// <summary>
         /// Logs environment versions.
         /// </summary>
         /// <remarks>
@@ -537,8 +547,7 @@ namespace Alternet.UI
         internal static void LogMeasureSkiaFont(string text, SKFont font)
         {
             SKRect bounds = SKRect.Empty;
-            SKPaint paint = new(font);
-            var result = paint.MeasureText(text, ref bounds);
+            var result = font.MeasureText(text, out bounds);
             App.Log($"Font.MeasureText: \"{text}\", {result}, {bounds}");
         }
 
