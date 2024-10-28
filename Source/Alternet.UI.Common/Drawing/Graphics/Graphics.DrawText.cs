@@ -202,7 +202,7 @@ namespace Alternet.Drawing
 
             SizeD textSize;
 
-            TextAndFontStyle[]? parsed = null;
+            TextAndFontStyle[]? parsed;
 
             if (indexAccel == -1)
             {
