@@ -162,6 +162,30 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether bottom border is visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasVisibleBorderBottom
+        {
+            get
+            {
+                return NormalBorder.Width.Bottom > 0 && HasBorder;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether top border is visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasVisibleBorderTop
+        {
+            get
+            {
+                return NormalBorder.Width.Top > 0 && HasBorder;
+            }
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Border;
 
@@ -246,6 +270,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Configures border so only top border is visible and other borders are hidden.
+        /// </summary>
+        /// <param name="width">The width assigned to the border side.
+        /// If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
+        public virtual void OnlyTopBorder(Coord? width = null)
+        {
+            SetVisibleBorders(false, true, false, false, width);
+        }
+
+        /// <summary>
+        /// Configures border so only bottom border is visible and other borders are hidden.
+        /// </summary>
+        /// <param name="width">The width assigned to the border side.
+        /// If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
+        public virtual void OnlyBottomBorder(Coord? width = null)
+        {
+            SetVisibleBorders(false, false, false, true, width);
+        }
+
+        /// <summary>
         /// Sets visible borders. Changes border side widths depending on the paramer values.
         /// </summary>
         /// <param name="left">Whether left border side is visible.</param>
@@ -253,7 +297,7 @@ namespace Alternet.UI
         /// <param name="right">Whether right border side is visible.</param>
         /// <param name="bottom">Whether bottom border side is visible.</param>
         /// <param name="width">The width assigned to the border side
-        /// when side is visible.</param>
+        /// when side is visible. If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
         public virtual void SetVisibleBorders(
             bool left,
             bool top,
@@ -261,17 +305,28 @@ namespace Alternet.UI
             bool bottom,
             Coord? width = null)
         {
-            width ??= BorderSideSettings.DefaultBorderWidth;
-
-            NormalBorder.Width = (GetWidth(left), GetWidth(top), GetWidth(right), GetWidth(bottom));
-            HasBorder = left || top || right || bottom;
-
-            Coord GetWidth(bool visible)
+            PerformLayoutAndInvalidate(() =>
             {
-                return visible ? width.Value : 0;
-            }
+                Thickness borderWidth;
 
-            Invalidate();
+                if (width is null)
+                    borderWidth = DefaultBorderWidth;
+                else
+                    borderWidth = width.Value;
+
+                NormalBorder.Width = (
+                    GetWidth(left, borderWidth.Left),
+                    GetWidth(top, borderWidth.Top),
+                    GetWidth(right, borderWidth.Right),
+                    GetWidth(bottom, borderWidth.Bottom));
+
+                HasBorder = left || top || right || bottom;
+
+                Coord GetWidth(bool visible, Coord width)
+                {
+                    return visible ? width : 0;
+                }
+            });
         }
 
         /// <summary>
