@@ -2690,7 +2690,8 @@ namespace Alternet.UI
                     HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
                 }
 
-                PerformLayout();
+                if (Parent is not null)
+                    PerformLayout();
             }
         }
 
@@ -2710,7 +2711,8 @@ namespace Alternet.UI
 
                 verticalAlignment = value;
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                PerformLayout();
+                if(Parent is not null)
+                    PerformLayout();
             }
         }
 
@@ -2802,7 +2804,8 @@ namespace Alternet.UI
 
                 horizontalAlignment = value;
                 HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                PerformLayout();
+                if (Parent is not null)
+                    PerformLayout();
             }
         }
 
