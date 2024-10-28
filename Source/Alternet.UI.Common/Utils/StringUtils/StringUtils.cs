@@ -774,19 +774,6 @@ namespace Alternet.UI
         }
 
         [Conditional("DEBUG")]
-        private static void TestParseTextWithIndexAccel()
-        {
-            var s1 = "Text1 with acell [2]";
-            var s2 = "Text2 with acell [-5]";
-
-            var splitted1 = ParseTextWithIndexAccel(s1, 2, FontStyle.Bold);
-            var splitted2 = ParseTextWithIndexAccel(s2, -5, FontStyle.Bold);
-
-            LogUtils.LogTextAndFontStyle(splitted1);
-            LogUtils.LogTextAndFontStyle(splitted2);
-        }
-
-        [Conditional("DEBUG")]
         private static void Test()
         {
         }

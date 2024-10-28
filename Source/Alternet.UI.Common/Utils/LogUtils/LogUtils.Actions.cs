@@ -134,24 +134,8 @@ namespace Alternet.UI
         /// </summary>
         public static void ShowTestActionsDialog()
         {
-            Window popup = new();
-            popup.StartLocation = WindowStartLocation.ScreenTopRight;
-            popup.Size = (400, 500);
-            popup.HasTitleBar = true;
-            popup.CloseEnabled = true;
-
-            var listBox = new ActionsListBox();
-            listBox.Parent = popup;
-
-            LogUtils.EnumLogActions(Fn);
-
-            void Fn(string title, Action action)
-            {
-                if (title.StartsWith("Test "))
-                    listBox.AddBusyAction(title, action);
-            }
-
-            popup.Show();
+            TestActionsWindow window = new();
+            window.Show();
         }
 
         /// <summary>
@@ -850,6 +834,67 @@ namespace Alternet.UI
                 {
                     method.Invoke(null, null);
                 });
+            }
+        }
+
+        private class TestActionsWindow : Window
+        {
+            private ActionsListBox listBox;
+            private VirtualListBox.AddRangeController<MemberInfo> controller;
+
+            public TestActionsWindow()
+            {
+                StartLocation = WindowStartLocation.ScreenTopRight;
+                Size = (400, 500);
+                HasTitleBar = true;
+                CloseEnabled = true;
+
+                listBox = new ActionsListBox();
+                listBox.Parent = this;
+
+                LogUtils.EnumLogActions(Fn);
+
+                void Fn(string title, Action action)
+                {
+                    if (title.StartsWith("Test "))
+                        listBox.AddBusyAction(title, action);
+                }
+
+                ListControlItem? ConvertItem(MemberInfo member)
+                {
+                    if (member.MemberType != MemberTypes.Method)
+                        return null;
+                    var method = (MethodInfo)member;
+                    if (!method.IsStatic)
+                        return null;
+                    if (method.ContainsGenericParameters)
+                        return null;
+                    var prm = method.GetParameters();
+                    if (prm.Length > 0)
+                        return null;
+                    if (!member.Name.StartsWith("Test"))
+                        return null;
+
+                    var fullName = $"{member.DeclaringType.FullName}.{member.Name}";
+
+                    var result = new ListControlItem(fullName);
+                    result.DoubleClickAction = () =>
+                    {
+                        method.Invoke(null, null);
+                    };
+
+                    return result;
+                }
+
+                controller = new(
+                    listBox,
+                    () => AssemblyUtils.GetAllPublicMembers("Test", KnownAssemblies.AllAlternet),
+                    ConvertItem,
+                    () =>
+                    {
+                        return !IsDisposed;
+                    });
+                controller.Start();
             }
         }
     }
