@@ -84,6 +84,7 @@ namespace Alternet.UI
         private SizeD? dpi;
         private SizeD suggestedSize = DefaultControlSize;
 
+        private Caret? caret;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
         private MouseEventArgs? dragEventArgs;
@@ -762,6 +763,26 @@ namespace Alternet.UI
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Caret"/> associated with this control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Caret? Caret
+        {
+            get
+            {
+                return caret;
+            }
+
+            set
+            {
+                if (caret == value)
+                    return;
+                caret = value;
+                CaretControlChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>

@@ -16,7 +16,6 @@ namespace Alternet.UI
     {
         private bool hasBorder = true;
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
-        private Caret? caret;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserControl"/> class.
@@ -115,23 +114,6 @@ namespace Alternet.UI
                     return;
                 hasBorder = value;
                 Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets <see cref="Caret"/> associated with this control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Caret? Caret
-        {
-            get
-            {
-                return caret;
-            }
-
-            set
-            {
-                caret = value;
             }
         }
 
