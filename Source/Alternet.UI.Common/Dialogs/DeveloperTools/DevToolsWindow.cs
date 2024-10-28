@@ -11,17 +11,17 @@ namespace Alternet.UI
     /// <summary>
     /// Developer tools window with additional debug related features.
     /// </summary>
-    internal class DeveloperToolsWindow : Window
+    internal class DevToolsWindow : Window
     {
         private static bool logGotFocus;
         private static bool logFocusedControl;
 
-        private readonly DeveloperToolsPanel panel = new()
+        private readonly DevToolsPanel panel = new()
         {
             SuggestedSize = new(900, 700),
         };
 
-        static DeveloperToolsWindow()
+        static DevToolsWindow()
         {
             LogUtils.RegisterLogAction("Toggle GotFocus event logging", () =>
             {
@@ -36,8 +36,9 @@ namespace Alternet.UI
             });
         }
 
-        public DeveloperToolsWindow()
+        public DevToolsWindow()
         {
+            HasSystemMenu = false;
             App.LogFileIsEnabled = true;
             StartLocation = WindowStartLocation.CenterScreen;
             Title = "Developer Tools";
@@ -55,7 +56,7 @@ namespace Alternet.UI
             panel.PropGrid.SuggestedInitDefaults();
         }
 
-        public DeveloperToolsPanel DevPanel => panel;
+        public DevToolsPanel DevPanel => panel;
 
         protected override void DisposeManaged()
         {
@@ -102,7 +103,7 @@ namespace Alternet.UI
 
         private bool IgnoreControl(AbstractControl control)
         {
-            if (control.ParentWindow is DeveloperToolsWindow)
+            if (control.ParentWindow is DevToolsWindow)
                 return true;
             return false;
         }
