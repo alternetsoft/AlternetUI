@@ -192,6 +192,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Same as <see cref="IsChecked"/>. This property is added for the compatibility
+        /// with legacy code.
+        /// </summary>
+        [Browsable(false)]
+        public bool Checked
+        {
+            get => IsChecked;
+            set => IsChecked = value;
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.CheckBox;
 
