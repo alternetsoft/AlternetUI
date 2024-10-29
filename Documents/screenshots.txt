@@ -1,0 +1,14 @@
+
+Ubuntu:
+
+[Print]: Use the [Print] key to create a photo of your entire screen, which is saved in the Pictures folder.
+[Print] + [Alt]: Using this combination, take a screenshot of the currently active window in Ubuntu.
+[Print] + [Shift]: This combination allows you to select which area of your screen you want to
+ photograph. Drag and click to set the height and width of the image.
+If you press [Ctrl] in addition to any of the above combinations, the image will not be saved, 
+but merely copied to the clipboard.
+
+macOs:
+
+press Shift-Command-5 (or use Launchpad) to open Screenshot and display the tools.
+
