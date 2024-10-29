@@ -186,6 +186,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="..\CommonData\Sample.ico" Link="Sample.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="SkiaSharpMedia\adobe-dng.dng" />
     <EmbeddedResource Include="SkiaSharpMedia\animated-heart.gif" />
     <EmbeddedResource Include="SkiaSharpMedia\baboon.png" />
