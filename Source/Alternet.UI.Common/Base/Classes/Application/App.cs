@@ -1028,12 +1028,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds first window of the specified type. If no window is found, returns Null.
+        /// </summary>
+        /// <typeparam name="T">Type of the window to find.</typeparam>
+        /// <returns></returns>
+        public static T? FindWindow<T>()
+            where T : Window
+        {
+            var windows = Current.Windows;
+
+            foreach(var window in windows)
+            {
+                if (window is T t)
+                    return t;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Returns first window or <c>null</c> if there are no windows or window is not
         /// of the <typeparamref name="T"/> type.
         /// </summary>
         /// <typeparam name="T">Type of the window to return.</typeparam>
         public static T? FirstWindow<T>()
-            where T : class
+            where T : Window
         {
             var windows = Current.Windows;
 

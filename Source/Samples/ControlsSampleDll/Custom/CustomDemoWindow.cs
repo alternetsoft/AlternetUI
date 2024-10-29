@@ -40,6 +40,21 @@ namespace Alternet.UI
             {
                 LogFocusedControl = !LogFocusedControl;
             });
+
+            LogUtils.RegisterLogAction("Setup Main Form for Screenshot", () =>
+            {
+                var window = App.FindWindow<CustomDemoWindow>();
+                if (window is null)
+                    return;
+
+                window.eventsControl?.SetVisible(false);
+                window.splitter.Visible = false;
+                window.Height = (window.Width / 3) * 2;
+                AddBuildNumber = false;
+                window.UpdateTitle();
+
+                WindowsUtils.SetWindowRoundCorners(window, WindowRoundedCornerPreference.NotRound);
+            });
         }
 
         public CustomDemoWindow()
@@ -123,16 +138,22 @@ namespace Alternet.UI
             pageContainer?.Add(title, action);
         }
 
-        public void Initialize()
+        public void UpdateTitle()
         {
-            pageContainer = new(SplittedTreeAndCards.TreeKind.ListBox);
-            panel.Parent = this;
             Title = $"AlterNET UI Demo";
 
             if (AddBuildNumber)
             {
                 Title = $"{Title} {SystemSettings.Handler.GetUIVersion()}";
             }
+        }
+
+        public void Initialize()
+        {
+            pageContainer = new(SplittedTreeAndCards.TreeKind.ListBox);
+            panel.Parent = this;
+
+            UpdateTitle();
 
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
@@ -149,7 +170,7 @@ namespace Alternet.UI
             pageContainer.Parent = splitterPanel;
             splitter.Parent = splitterPanel;
 
-            if(eventsControl is not null)
+            if (eventsControl is not null)
             {
                 eventsControl.Height = 150;
                 eventsControl.Parent = splitterPanel;

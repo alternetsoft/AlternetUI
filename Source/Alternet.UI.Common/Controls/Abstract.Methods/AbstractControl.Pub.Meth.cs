@@ -1293,7 +1293,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets native handler of the control. You should not use this property.
+        /// Gets native handler of the control. For Windows this is hWnd, for other
+        /// operating systems currently returns null.
+        /// You should not use this property.
         /// </summary>
         /// <returns></returns>
         public virtual IntPtr GetHandle()
@@ -1392,9 +1394,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="Visible"/> but implemented as method.
+        /// </summary>
+        /// <param name="value">New <see cref="Visible"/> property value.</param>
+        public void SetVisible(bool value) => Visible = value;
+
+        /// <summary>
         /// Same as <see cref="Enabled"/> but implemented as method.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">New <see cref="Enabled"/> property value.</param>
         public void SetEnabled(bool value) => Enabled = value;
 
         /// <summary>

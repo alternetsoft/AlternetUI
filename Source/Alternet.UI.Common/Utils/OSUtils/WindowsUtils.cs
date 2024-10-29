@@ -16,6 +16,31 @@ namespace Alternet.UI
         private static bool consoleAllocated = false;
 
         /// <summary>
+        /// Sets preference for the window corners.
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="value"></param>
+        public static void SetWindowRoundCorners(Window window, WindowRoundedCornerPreference value)
+        {
+            if (App.IsWindowsOS)
+            {
+                var version = System.Environment.OSVersion;
+                if (version.Version.Major >= 10)
+                {
+                    IntPtr hWnd = window.GetHandle();
+                    var attribute = WindowsUtils.NativeMethods
+                    .DwmWindowAttribute.DWMWA_WINDOW_CORNER_PREFERENCE;
+                    var preference = (int)value;
+                    WindowsUtils.NativeMethods.DwmSetWindowAttribute(
+                        hWnd,
+                        attribute,
+                        ref preference,
+                        sizeof(uint));
+                }
+            }
+        }
+
+        /// <summary>
         /// Shows console window on the screen.
         /// </summary>
         public static void ShowConsole()
@@ -32,6 +57,49 @@ namespace Alternet.UI
         /// </summary>
         public static class NativeMethods
         {
+            /// <summary>
+            /// Sets the value of Desktop Window Manager (DWM) non-client rendering
+            /// attributes for a window.
+            /// </summary>
+            [DllImport("dwmapi.dll")]
+            public static extern int DwmSetWindowAttribute(
+                IntPtr hwnd,
+                DwmWindowAttribute dwAttribute,
+                ref int pvAttribute,
+                int cbAttribute);
+
+#pragma warning disable
+            [Flags]
+            public enum DwmWindowAttribute : uint
+            {
+                DWMWA_NCRENDERING_ENABLED = 1,
+                DWMWA_NCRENDERING_POLICY,
+                DWMWA_TRANSITIONS_FORCEDISABLED,
+                DWMWA_ALLOW_NCPAINT,
+                DWMWA_CAPTION_BUTTON_BOUNDS,
+                DWMWA_NONCLIENT_RTL_LAYOUT,
+                DWMWA_FORCE_ICONIC_REPRESENTATION,
+                DWMWA_FLIP3D_POLICY,
+                DWMWA_EXTENDED_FRAME_BOUNDS,
+                DWMWA_HAS_ICONIC_BITMAP,
+                DWMWA_DISALLOW_PEEK,
+                DWMWA_EXCLUDED_FROM_PEEK,
+                DWMWA_CLOAK,
+                DWMWA_CLOAKED,
+                DWMWA_FREEZE_REPRESENTATION,
+                DWMWA_PASSIVE_UPDATE_MODE,
+                DWMWA_USE_HOSTBACKDROPBRUSH,
+                DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
+                DWMWA_WINDOW_CORNER_PREFERENCE = 33,
+                DWMWA_BORDER_COLOR,
+                DWMWA_CAPTION_COLOR,
+                DWMWA_TEXT_COLOR,
+                DWMWA_VISIBLE_FRAME_BORDER_THICKNESS,
+                DWMWA_SYSTEMBACKDROP_TYPE,
+                DWMWA_LAST,
+            }
+#pragma warning restore
+
             /// <summary>
             /// Gets key state.
             /// </summary>
