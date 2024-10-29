@@ -1,3 +1,25 @@
+# 0.9.640 (2024 October 29)
+
+- ToolBarSet is now derived from Border.
+- Fixed exceptions on Control.Dispose in some cases.
+- Fixed wrong set focus to child when click in control.
+- Fixed mouse cursor look when over child controls of UserControl.
+- Fixed input char events not raised in some cases. This happened when child control was added and removed from UserControl.
+- Fixed NativeObject.SetNativePointer to work more correctly.
+- Created HiddenBorder control. Some controls are now derived from HiddenBorder: 
+ControlAndLabel, ToolBar, ToolBarSet, PaintActionsControl, PaintActionsControl. So now is possible to show custom border for them.
+- Border: Some properties were renamed as many controls will be derived from Border. So we need to have property names in Border 
+to be simple to understand in the derived controls.
+- Created PopupControl - Allows to implement popups inside client area of the parent control.
+- Graphics: DrawTextWithBoldTags, DrawTextWithFontStyle.
+- LogListBox: can show custom draw log items.
+- Added sample: 'VirtualListBox with BigData'.
+- ComboBox: Shadow copy of items is no more stored on recreate in pal control.
+- Fixed EnumerableUtils.ConvertItems (last portion of data was not added to result).
+- VirtualListBox.SetItemsFast(VirtualListBoxItems value, SetItemsKind kind)
+- RectD: static Ceiling, Truncate, Round.
+- WindowsUtils.SetWindowRoundCorners.
+
 # 0.9.639 (2024 October 24)
 
 - ListViewColumn: MinAutoWidth, MaxAutoWidth, TitleSize, IsAttached, WidthInPercentToDips.
