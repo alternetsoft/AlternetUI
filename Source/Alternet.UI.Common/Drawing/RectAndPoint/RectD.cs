@@ -570,6 +570,47 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref="RectD" /> structure to a <see cref="RectI" />
+        /// structure by rounding the <see cref="RectD" /> values to the next higher
+        /// integer values.</summary>
+        /// <param name="value">The <see cref="RectD" /> structure to be converted.</param>
+        /// <returns>Returns a <see cref="RectI" />.</returns>
+        public static RectI Ceiling(RectD value)
+        {
+            return new(
+                (int)Math.Ceiling(value.X),
+                (int)Math.Ceiling(value.Y),
+                (int)Math.Ceiling(value.Width),
+                (int)Math.Ceiling(value.Height));
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="RectD" /> to a <see cref="RectI" />
+        /// by truncating the <see cref="RectD" /> values.
+        /// </summary>
+        /// <param name="value">The <see cref="RectD" /> to be converted.</param>
+        /// <returns>The truncated value of the  <see cref="RectI" />.</returns>
+        public static RectI Truncate(RectD value)
+        {
+            return new((int)value.X, (int)value.Y, (int)value.Width, (int)value.Height);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="RectD" /> to a <see cref="RectI" />
+        /// by rounding the <see cref="RectD" /> values to the nearest integer values.
+        /// </summary>
+        /// <param name="value">The <see cref="RectD" /> to be converted.</param>
+        /// <returns>The rounded interger value of the <see cref="RectI" />.</returns>
+        public static RectI Round(RectD value)
+        {
+            return new(
+                (int)Math.Round(value.X),
+                (int)Math.Round(value.Y),
+                (int)Math.Round(value.Width),
+                (int)Math.Round(value.Height));
+        }
+
+        /// <summary>
         /// Returns an instance converted from the provided string using
         /// the culture "en-US"
         /// <param name="source">string with Rect data.</param>
