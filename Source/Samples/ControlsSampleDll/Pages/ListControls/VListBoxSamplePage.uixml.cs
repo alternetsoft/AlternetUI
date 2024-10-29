@@ -8,6 +8,10 @@ namespace ControlsSample
 {
     internal partial class VListBoxSamplePage: Control
     {
+        private readonly VirtualListBoxItems items1 = new();
+        private readonly VirtualListBoxItems items2 = new();
+        private bool useItems1 = true;
+
         private readonly VirtualListBox listBox = new()
         {
             SuggestedWidth = 200,
@@ -16,6 +20,16 @@ namespace ControlsSample
 
         public VListBoxSamplePage()
         {
+            PropertyGridSample.ObjectInit.AddDefaultOwnerDrawItems(listBox, (s) =>
+            {
+                items1.Add(s);
+            });
+
+            for (int i = 0; i < 1000; i++)
+            {
+                items2.Add(new ListControlItem($"Items2.Item {i}"));
+            }
+
             InitializeComponent();
             Title = "Virtual";
 
@@ -32,7 +46,9 @@ namespace ControlsSample
             roundSelectionCheckBox.CheckedChanged += RoundSelectionCheckBox_CheckedChanged;
             showCheckBoxesCheckBox.CheckedChanged += ShowCheckBoxesCheckBox_CheckedChanged;
             threeStateCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckBoxThreeState));
-            allowAllStatesCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckBoxAllowAllStatesForUser));
+            allowAllStatesCheckBox.BindBoolProp(
+                listBox,
+                nameof(VirtualListBox.CheckBoxAllowAllStatesForUser));
             allowClickCheckCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.CheckOnClick));
 
             SetSizeToContent();
@@ -46,6 +62,23 @@ namespace ControlsSample
                     LightDarkColor.IsDarkOverride = null;
                 listBox.Invalidate();
             };
+
+            var contextMenu = new ContextMenuStrip();
+            vertPanel2.ContextMenuStrip = contextMenu;
+
+            contextMenu.Add("Toggle items fast", () =>
+            {
+                if (useItems1)
+                {
+                    listBox.SetItemsFast(items2, VirtualListBox.SetItemsKind.ChangeField);
+                }
+                else
+                {
+                    listBox.SetItemsFast(items1, VirtualListBox.SetItemsKind.ChangeField);
+                }
+
+                useItems1 = !useItems1;
+            });
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)

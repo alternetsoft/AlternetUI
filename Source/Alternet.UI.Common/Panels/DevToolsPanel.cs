@@ -14,9 +14,9 @@ using SkiaSharp;
 
 namespace Alternet.UI
 {
-    internal class DeveloperToolsPanel : Control
+    internal class DevToolsPanel : Control
     {
-        private static DeveloperToolsWindow? devToolsWindow;
+        private static DevToolsWindow? devToolsWindow;
 
         private readonly ActionsListBox actionsListBox = new()
         {
@@ -69,17 +69,17 @@ namespace Alternet.UI
             TabAlignment = TabAlignment.Bottom,
         };
 
-        private ListBox? typesListBox;
-        private ListBox? controlsListBox;
+        private VirtualListBox? typesListBox;
+        private VirtualListBox? controlsListBox;
         private bool insideSetProps;
 
-        static DeveloperToolsPanel()
+        static DevToolsPanel()
         {
             LogUtils.RegisterLogAction("Show Props FirstWindow", ControlsActionMainForm);
             LogUtils.RegisterLogAction("Show Props FocusedControl", ControlsActionFocusedControl);
         }
 
-        public DeveloperToolsPanel()
+        public DevToolsPanel()
         {
             centerNotebook.Parent = panel.FillPanel;
             rightNotebook.Parent = panel.RightPanel;
@@ -88,7 +88,8 @@ namespace Alternet.UI
             logListBox.ContextMenu.Required();
 
             logListBoxToolBar.VerticalAlignment = VerticalAlignment.Top;
-            logListBoxToolBar.SetVisibleBorders(false, false, false, true);
+            logListBoxToolBar.OnlyBottomBorder();
+
             logListBoxToolBar.Parent = logListBoxPanel;
 
             logListBoxToolBar.AddText("Output");
@@ -117,11 +118,21 @@ namespace Alternet.UI
             logListBox.MenuItemShowDevTools?.SetEnabled(false);
             logListBox.BindApplicationLog();
 
+            actionsListBoxToolBar.AddText("Actions");
+            actionsListBoxToolBar.OnlyBottomBorder();
             actionsListBoxToolBar.Parent = actionsListBoxPanel;
             var btnRunAction = actionsListBoxToolBar.AddSpeedBtn(
                 "Run action",
                 KnownSvgImages.ImgDebugRun,
                 (_, _) => actionsListBox.RunSelectedItemDoubleClickAction());
+            actionsListBoxToolBar.SetToolAlignRight(btnRunAction);
+
+            var btnActionsListBoxSettings = actionsListBoxToolBar.AddSpeedBtn(
+                "More actions", KnownSvgImages.ImgMoreActions);
+            actionsListBoxToolBar.SetToolDropDownMenu(
+                btnActionsListBoxSettings, null);
+            actionsListBoxToolBar.SetToolAlignRight(btnActionsListBoxSettings);
+            actionsListBoxToolBar.SetToolEnabled(btnActionsListBoxSettings, false);
 
             actionsListBox.VerticalAlignment = VerticalAlignment.Fill;
             actionsListBox.Parent = actionsListBoxPanel;
@@ -133,7 +144,7 @@ namespace Alternet.UI
             propGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             propGrid.ProcessException += PropertyGrid_ProcessException;
             propGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
-            rightNotebook.Add("Properties", propGrid);
+            rightNotebook.Add("Members", propGrid);
 
             InitActions();
 
@@ -142,7 +153,7 @@ namespace Alternet.UI
             LogUtils.LogVersion();
         }
 
-        public static DeveloperToolsPanel? DevPanel => devToolsWindow?.DevPanel;
+        public static DevToolsPanel? DevPanel => devToolsWindow?.DevPanel;
 
         public TabControl CenterNotebook => centerNotebook;
 
@@ -153,13 +164,13 @@ namespace Alternet.UI
         internal object? LastFocusedControl { get; set; }
 
         [Browsable(false)]
-        internal ListBox TypesListBox
+        internal VirtualListBox TypesListBox
         {
             get
             {
                 if (typesListBox == null)
                 {
-                    typesListBox = new ListBox()
+                    typesListBox = new VirtualListBox()
                     {
                         Parent = this,
                         HasBorder = false,
@@ -170,6 +181,7 @@ namespace Alternet.UI
                     void AddControl(Type type)
                     {
                         ListControlItem item = new(type.Name, type);
+                        typesListBox.Add(item);
                     }
 
                     AddControl(typeof(AbstractControl));
@@ -193,13 +205,13 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal ListBox ControlsListBox
+        internal VirtualListBox ControlsListBox
         {
             get
             {
                 if (controlsListBox == null)
                 {
-                    controlsListBox = new ListBox()
+                    controlsListBox = new VirtualListBox()
                     {
                         Parent = this,
                         HasBorder = false,

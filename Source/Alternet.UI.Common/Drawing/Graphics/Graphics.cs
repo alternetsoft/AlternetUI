@@ -1104,30 +1104,6 @@ namespace Alternet.Drawing
             RectD destinationRect,
             RectD sourceRect,
             GraphicsUnit unit);
-
-        /// <summary>
-        /// Draws the specified text string at the specified location with the specified
-        /// <see cref="Brush"/> and <see cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">String to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
-        /// the drawn text.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the drawn text.</param>
-        public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
-
-        /// <summary>
-        /// Draws text with <see cref="AbstractControl.DefaultFont"/> and <see cref="Brush.Default"/>.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="origin"></param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, PointD origin)
-        {
-            DrawText(text, Control.DefaultFont, Brush.Default, origin);
-        }
-
         /// <summary>
         /// Creates translation matrix and calls <see cref="PushTransform"/> with it.
         /// </summary>
@@ -1146,18 +1122,6 @@ namespace Alternet.Drawing
                 PushTransform(transform);
             }
         }
-
-        /// <summary>
-        /// Draws the specified text string at the specified location with the specified
-        /// <see cref="Brush"/> and <see cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">String to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture
-        /// of the drawn text.</param>
-        /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
-        /// the drawn text.</param>
-        public abstract void DrawText(string text, Font font, Brush brush, RectD bounds);
 
         /// <summary>
         /// Draws waved line in the specified rectangular area.
@@ -1319,46 +1283,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws text with the specified font, background and foreground colors.
-        /// </summary>
-        /// <param name="location">Location used to draw the text.</param>
-        /// <param name="text">Text to draw.</param>
-        /// <param name="font">Font used to draw the text.</param>
-        /// <param name="foreColor">Foreground color of the text.</param>
-        /// <param name="backColor">Background color of the text. If parameter is equal
-        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
-        public abstract void DrawText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor);
-
-        /// <summary>
-        /// Draws text with the specified font, background and foreground colors,
-        /// optional image, alignment and underlined mnemonic character.
-        /// </summary>
-        /// <param name="text">Text to draw.</param>
-        /// <param name="font">Font used to draw the text.</param>
-        /// <param name="foreColor">Foreground color of the text.</param>
-        /// <param name="backColor">Background color of the text. If parameter is equal
-        /// to <see cref="Color.Empty"/>, background will not be painted.</param>
-        /// <param name="image">Optional image.</param>
-        /// <param name="rect">Rectangle in which drawing is performed.</param>
-        /// <param name="alignment">Alignment of the text.</param>
-        /// <param name="indexAccel">Index of underlined mnemonic character</param>
-        /// <returns>The bounding rectangle.</returns>
-        public abstract RectD DrawLabel(
-            string text,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Image? image,
-            RectD rect,
-            GenericAlignment alignment = GenericAlignment.TopLeft,
-            int indexAccel = -1);
-
-        /// <summary>
         /// Returns the DPI of the display used by this object.
         /// </summary>
         /// <returns>
@@ -1483,103 +1407,6 @@ namespace Alternet.Drawing
                     rect,
                     graphicsType);
             }
-        }
-
-        /// <summary>
-        /// Draws the specified text string at the specified location with the specified
-        /// <see cref="Brush"/> and <see cref="Font"/> objects.
-        /// </summary>
-        /// <param name="text">String to draw.</param>
-        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
-        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
-        /// the drawn text.</param>
-        /// <param name="rect"><see cref="RectD"/> structure that specifies the bounds
-        /// of the text.</param>
-        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
-        /// such as alignment and trimming, that are applied to the drawn text.</param>
-        /// <remarks>
-        /// You can pass 0 as width of the <paramref name="rect"/>. In this case wrapping
-        /// will not be performed, only line breaks will be applied.
-        /// </remarks>
-        /// <remarks>
-        /// You can pass 0 as height of the <paramref name="rect"/>.
-        /// </remarks>
-        public virtual RectD DrawText(object? text, Font font, Brush brush, RectD rect, TextFormat format)
-        {
-            string s = text?.ToString() ?? string.Empty;
-
-            if (s.Length == 0)
-                return rect.WithEmptySize();
-
-            var document = SafeDocument;
-            var wrappedText = document.WrappedText;
-
-            if (rect.HasEmptyWidth)
-                rect.Width = HalfOfMaxValue;
-
-            if (rect.HasEmptyHeight)
-                rect.Height = HalfOfMaxValue;
-
-            document.Size = rect.Size;
-
-            wrappedText.DoInsideLayout(() =>
-            {
-                wrappedText.SetFormat(format.AsRecord);
-                wrappedText.Text = s!;
-                wrappedText.Font = font;
-                wrappedText.ForegroundColor = brush.AsColor;
-            });
-
-            TemplateUtils.RaisePaintClipped(wrappedText, this, rect.Location);
-            var result = wrappedText.Bounds.WithLocation(rect.Location);
-            return result;
-        }
-
-        /// <summary>
-        /// Draws text with html bold tags.
-        /// </summary>
-        public virtual SizeD DrawTextWithBoldTags(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color? backColor = null)
-        {
-            var splitted = RegexUtils.GetBoldTagSplitted(text);
-            return DrawTextWithFontStyle(
-                        splitted,
-                        location,
-                        font,
-                        foreColor,
-                        backColor);
-        }
-
-        /// <summary>
-        /// Draws an array of text elements with font styles.
-        /// </summary>
-        public virtual SizeD DrawTextWithFontStyle(
-            TextAndFontStyle[] splittedText,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color? backColor = null)
-        {
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor);
-
-            SizeD result = 0;
-
-            foreach(var item in splittedText)
-            {
-                var itemFont = font.WithStyle(item.FontStyle);
-                var measure = GetTextExtent(item.Text, itemFont);
-                DrawText(item.Text, location, itemFont, foreColor, backColor ?? Color.Empty);
-                location.X += measure.Width;
-                result.Width += measure.Width;
-                result.Height = Math.Max(result.Height, measure.Height);
-            }
-
-            return result;
         }
 
         /// <summary>

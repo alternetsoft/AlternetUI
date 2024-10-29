@@ -109,6 +109,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Implicit operator declaration for the conversion from <see cref="GenericAlignment"/> to
+        /// <see cref="HVAlignment"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        public static implicit operator HVAlignment(GenericAlignment value)
+        {
+            var vertical = AlignUtils.GetVertical(value);
+            var horizontal = AlignUtils.GetHorizontal(value);
+            return new(horizontal: horizontal, vertical: vertical);
+        }
+
+        /// <summary>
         /// Implicit operator declaration for the conversion from <see cref="VerticalAlignment"/> to
         /// <see cref="HVAlignment"/>.
         /// </summary>

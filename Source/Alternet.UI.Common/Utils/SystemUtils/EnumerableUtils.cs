@@ -60,6 +60,8 @@ namespace Alternet.UI
                     items.Clear();
                 }
             }
+
+            addToDest(items);
         }
 
         /// <summary>

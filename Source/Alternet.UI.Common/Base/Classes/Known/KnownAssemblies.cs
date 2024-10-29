@@ -27,5 +27,33 @@ namespace Alternet.UI
         /// Gets 'Alternet.UI.Interfaces' assembly.
         /// </summary>
         public static readonly Assembly LibraryInterfaces = typeof(DockStyle).Assembly;
+
+        private static List<Assembly>? allAlternet;
+
+        /// <summary>
+        /// Gets list of assemblies which includes <see cref="LibraryInterfaces"/>,
+        /// <see cref="LibraryCommon"/> and all loaded assemblies which use <see cref="LibraryCommon"/>.
+        /// </summary>
+        public static List<Assembly> AllAlternet
+        {
+            get
+            {
+                if(allAlternet is null)
+                {
+                    allAlternet = new();
+                    allAlternet.Add(LibraryCommon);
+                    allAlternet.Add(LibraryInterfaces);
+
+                    var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                    foreach (var assembly in assemblies)
+                    {
+                        if(AssemblyUtils.IsAssemblyReferencedFrom(assembly, LibraryCommon))
+                            allAlternet.Add(assembly);
+                    }
+                }
+
+                return allAlternet;
+            }
+        }
     }
 }

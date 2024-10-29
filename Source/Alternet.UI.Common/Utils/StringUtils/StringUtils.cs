@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -92,6 +95,11 @@ namespace Alternet.UI
         };
 
         private static IComparer<object>? comparerObjectUsingToString;
+
+        static StringUtils()
+        {
+            Test();
+        }
 
         /// <summary>
         /// Returns <see cref="IComparer{T}"/> which converts objects to strings using
@@ -318,9 +326,9 @@ namespace Alternet.UI
                 var value = values[i]?.ToString();
                 if (i > 0)
                     result.Append(", ");
-                if(name is null)
+                if (name is null)
                 {
-                    if(value is not null)
+                    if (value is not null)
                         result.Append(value);
                 }
                 else
@@ -709,6 +717,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Splits text into three parts using the specified position of the accelerator
+        /// character. Returns an array of three <see cref="TextAndFontStyle"/> elements.
+        /// </summary>
+        /// <param name="text">String to split into three parts.</param>
+        /// <param name="accelStyle">Style of the char on the
+        /// <paramref name="indexAccel"/> position.</param>
+        /// <param name="indexAccel">Position of the accelerator character.</param>
+        /// <returns></returns>
+        public static TextAndFontStyle[] ParseTextWithIndexAccel(
+            string text,
+            int indexAccel,
+            FontStyle accelStyle = FontStyle.Underline)
+        {
+            if (indexAccel < 0)
+                return [text];
+
+            TextAndFontStyle prefixElement = new(text.Substring(0, indexAccel));
+            TextAndFontStyle accelElement = new(text.Substring(indexAccel, 1), accelStyle);
+            TextAndFontStyle suffixElement = new(text.Substring(indexAccel + 1));
+
+            TextAndFontStyle[] result = [prefixElement, accelElement, suffixElement];
+            return result;
+        }
+
+        /// <summary>
         /// Calls <see cref="string.Format(string, object)"/>
         /// in a safe way allowing to use null parameters.
         /// </summary>
@@ -738,6 +771,11 @@ namespace Alternet.UI
                 TypeCode.Decimal => TryParseDecimal,
                 _ => null,
             };
+        }
+
+        [Conditional("DEBUG")]
+        private static void Test()
+        {
         }
 
         /// <summary>

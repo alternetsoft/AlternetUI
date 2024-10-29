@@ -165,17 +165,5 @@ namespace Alternet.UI
                 action((TKey)Enum.ToObject(typeof(TKey), i));
             }
         }
-
-        [Conditional("DEBUG")]
-        internal static void Test()
-        {
-            EnumArray<VisualControlState, int> data = new();
-
-            data[VisualControlState.Disabled] = 5;
-
-            var result = data[VisualControlState.Disabled];
-
-            App.Log($"EnumArray: 5 => {result}");
-        }
     }
 }

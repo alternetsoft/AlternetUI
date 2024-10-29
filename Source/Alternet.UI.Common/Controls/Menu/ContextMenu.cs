@@ -47,6 +47,12 @@ namespace Alternet.UI
         public event EventHandler? Closing;
 
         /// <summary>
+        /// Occurs when the control is closing.
+        /// </summary>
+        [Category("Action")]
+        public event EventHandler<ToolStripDropDownClosedEventArgs>? Closed;
+
+        /// <summary>
         /// This property has no meaning.
         /// </summary>
         [Browsable(false)]
@@ -80,6 +86,7 @@ namespace Alternet.UI
         public void RaiseClosing(EventArgs e)
         {
             Closing?.Invoke(this, e);
+            Closed?.Invoke(this, new(ToolStripDropDownCloseReason.Other));
             OnClosing(e);
         }
 

@@ -40,6 +40,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates supported kinds for <see cref="SetItemsFast"/> method.
+        /// </summary>
+        public enum SetItemsKind
+        {
+            /// <summary>
+            /// Items are cleared and after that 'AddRange' method is called.
+            /// </summary>
+            ClearAddRange,
+
+            /// <summary>
+            /// Internal field is changed to the new value. This is the fastest method.
+            /// </summary>
+            ChangeField,
+        }
+
+        /// <summary>
         /// Gets or sets whether horizontal scrollbar is visible in the control.
         /// </summary>
         public virtual bool HScrollBarVisible
@@ -203,10 +219,59 @@ namespace Alternet.UI
         {
             if (Items.Count == 0)
                 return;
-            Handler.DetachItems(Items);
-            RecreateItems();
-            Handler.AttachItems(Items);
-            Invalidate();
+
+            DoInsideUpdate(() =>
+            {
+                Handler.DetachItems(Items);
+                RecreateItems();
+                Handler.AttachItems(Items);
+                Invalidate();
+            });
+        }
+
+        /// <summary>
+        /// Sets items to the new value using the specified method.
+        /// </summary>
+        /// <param name="value">Collection with the new items.</param>
+        /// <param name="kind">The method which is used when items are set.</param>
+        public virtual bool SetItemsFast(VirtualListBoxItems value, SetItemsKind kind)
+        {
+            switch (kind)
+            {
+                case SetItemsKind.ClearAddRange:
+                    return UseClearAddRange();
+                case SetItemsKind.ChangeField:
+                    return UseChangeField();
+                default:
+                    return false;
+            }
+
+            bool UseClearAddRange()
+            {
+                DoInsideUpdate(() =>
+                {
+                    RemoveAll();
+                    Items.AddRange(value);
+                    Invalidate();
+                });
+
+                return true;
+            }
+
+            bool UseChangeField()
+            {
+                DoInsideUpdate(() =>
+                {
+                    ClearSelected();
+                    Handler.DetachItems(Items);
+                    RecreateItems(value);
+                    Handler.AttachItems(Items);
+                    Handler.ItemsCount = Items.Count;
+                    Invalidate();
+                });
+
+                return true;
+            }
         }
 
         /// <summary>

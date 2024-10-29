@@ -122,8 +122,11 @@ namespace Alternet.UI
 
             set
             {
-                Items.Clear();
-                Items.AddRange(value);
+                DoInsideUpdate(() =>
+                {
+                    RemoveAll();
+                    Items.AddRange(value);
+                });
             }
         }
 
@@ -449,16 +452,13 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RemoveAll()
         {
-            BeginUpdate();
-            try
+            if (Items.Count == 0)
+                return;
+            DoInsideUpdate(() =>
             {
                 ClearSelected();
                 Items.Clear();
-            }
-            finally
-            {
-                EndUpdate();
-            }
+            });
         }
 
         /// <summary>
@@ -610,12 +610,11 @@ namespace Alternet.UI
         /// Recreates items. Before calling this method, you need to unbind all events
         /// connected to the <see cref="Items"/>.
         /// </summary>
-        protected void RecreateItems()
+        protected virtual void RecreateItems(ListControlItems<TItem>? newItems = null)
         {
             if (items is null || items.Count == 0)
                 return;
-            items = null;
-            SafeItems();
+            items = newItems ?? SafeItems();
         }
 
         private ListControlItems<TItem> SafeItems()

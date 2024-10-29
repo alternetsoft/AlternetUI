@@ -1020,7 +1020,7 @@ namespace Alternet.UI
         /// <param name="bufferSize">Size of the items buffer. Optional. Default is 10.</param>
         /// <param name="sleepAfterBufferMsec">The value in milliseconds to wait after buffer is
         /// converted and all buffered items were added to the control.
-        /// Optional. Default is 100.</param>
+        /// Optional. Default is 150.</param>
         public virtual void AddItemsThreadSafe<TSource>(
            IEnumerable<TSource> source,
            Func<TSource, TItem?> convertItem,
@@ -1107,22 +1107,62 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Implements controller for the add range operation which is performed
+        /// in the background thread. It allows to continue work with the control while
+        /// new items are added to it.
+        /// </summary>
+        /// <typeparam name="TSource">Type of the source item.</typeparam>
         public class AddRangeController<TSource> : DisposableObject
         {
+            /// <summary>
+            /// Gets or sets control on which add range operation is performed.
+            /// </summary>
             public VirtualListControl<TItem> ListBox;
 
+            /// <summary>
+            /// Gets or sets the function which provides the <see cref="IEnumerable{T}"/> instance which
+            /// is "yield" constructed in the another thread.
+            /// </summary>
             public Func<IEnumerable<TSource>> SourceFunc;
 
+            /// <summary>
+            /// Gets or sets the function which is called to convert
+            /// source items
+            /// to the items which can be used in this control. If this function returns Null,
+            /// source item is ignored. This function is called from the thread that
+            /// provides source items so do not access UI elements from it.
+            /// </summary>
             public Func<TSource, TItem?> ConvertItemFunc;
 
+            /// <summary>
+            /// Gets or sets the function which is called to check whether to continue
+            /// the conversion. You can return False to stop the conversion.
+            /// This function is called from the
+            /// main thread so it can access UI elements.
+            /// </summary>
             public Func<bool> ContinueFunc;
 
+            /// <summary>
+            /// Gets or sets whether debug information is logged.
+            /// </summary>
             public bool IsDebugInfoLogged = false;
 
+            /// <summary>
+            /// Gets or sets object name for the debug purposes.
+            /// </summary>
             public string? Name;
 
+            /// <summary>
+            /// Gets or sets size of the items buffer. Default is 10.
+            /// </summary>
             public int BufferSize = 10;
 
+            /// <summary>
+            /// Gets or sets the value in milliseconds to wait after buffer is
+            /// converted and all buffered items were added to the control.
+            /// Default is 150.
+            /// </summary>
             public int SleepAfterBufferMsec = 150;
 
             private Thread? thread;
@@ -1143,13 +1183,22 @@ namespace Alternet.UI
                 ContinueFunc = continueFunc;
             }
 
+            /// <summary>
+            /// Gets name of the object safely so it will always be not empty.
+            /// </summary>
             public virtual string SafeName => Name ?? "ListBox.AddRangeController";
 
+            /// <summary>
+            /// Stops controller add range operation.
+            /// </summary>
             public virtual void Stop()
             {
                 AsyncUtils.EndThread(ref thread);
             }
 
+            /// <summary>
+            /// Starts controller add range operation.
+            /// </summary>
             public virtual void Start()
             {
                 Stop();

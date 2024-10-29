@@ -79,6 +79,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates image from the specified array of <see cref="TextAndFontStyle"/>.
+        /// </summary>
+        /// <param name="text">Array of strings with font styles.</param>
+        /// <param name="font"><see cref="Font"/> that defines the font of the string.</param>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. Optional. Default is Null.
+        /// If Null, background is transparent.</param>
+        /// <returns></returns>
+        /// <returns></returns>
+        public static Image ImageFromTextWithFontStyle(
+            TextAndFontStyle[] text,
+            Coord scaleFactor,
+            Font font,
+            Color foreColor,
+            Color? backColor = null)
+        {
+            return ImageFromAction(
+                scaleFactor,
+                (canvas) =>
+                {
+                    return canvas.DrawTextWithFontStyle(
+                        text,
+                        PointD.Empty,
+                        font,
+                        foreColor,
+                        backColor);
+                });
+        }
+
+        /// <summary>
+        /// Creates debug image from the specified array of <see cref="TextAndFontStyle"/>.
+        /// </summary>
+        /// <param name="text">Array of strings with font styles.</param>
+        public static Image DebugImageFromTextWithFontStyle(TextAndFontStyle[] text)
+        {
+            return ImageFromTextWithFontStyle(
+                        text,
+                        Display.MaxScaleFactor,
+                        Control.DefaultFont,
+                        Color.Black,
+                        Color.White);
+        }
+
+        /// <summary>
         /// Sets background of the control's parents to Red, Green, Blue and
         /// Yellow colors.
         /// </summary>

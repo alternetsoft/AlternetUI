@@ -165,7 +165,11 @@ namespace Alternet.UI
         /// <param name="bindingAttr">The bindings constraint. Optional.
         /// Default is Null. If not specified, members are not filtered by the binding constraint.</param>
         /// <returns></returns>
-        public static IEnumerable<MemberInfo[]> GetAllPublicMembers(BindingFlags? bindingAttr = null)
+        /// <param name="assemblies">Collection of the assemblies to enum their members. Optional.
+        /// If Null, uses all loaded assemblies.</param>
+        public static IEnumerable<MemberInfo[]> GetAllPublicMembers(
+            IEnumerable<Assembly>? assemblies = null,
+            BindingFlags? bindingAttr = null)
         {
             Func<Type, MemberInfo[]> getMembers;
 
@@ -184,7 +188,7 @@ namespace Alternet.UI
                 };
             }
 
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            assemblies ??= AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
             {
                 var types = assembly.GetExportedTypes();
@@ -204,12 +208,15 @@ namespace Alternet.UI
         /// Default is Null. If not specified, members are not filtered by the binding constraint.</param>
         /// <returns></returns>
         /// <param name="nameContainsText">The string which specifies member name constraint.</param>
+        /// <param name="assemblies">Collection of the assemblies to enum their members. Optional.
+        /// If Null, uses all loaded assemblies.</param>
         public static IEnumerable<MemberInfo> GetAllPublicMembers(
             string nameContainsText,
+            IEnumerable<Assembly>? assemblies = null,
             BindingFlags? bindingAttr = null)
         {
             SortedList<string, int> addedMethods = new();
-            var allMembers = GetAllPublicMembers();
+            var allMembers = GetAllPublicMembers(assemblies, bindingAttr);
 
             foreach (var memberArray in allMembers)
             {
@@ -1228,6 +1235,27 @@ namespace Alternet.UI
                 if (t.Namespace == namesp)
                     yield return t;
             }
+        }
+
+        /// <summary>
+        /// Gets whether <paramref name="referenceContainer"/> assembly references
+        /// <paramref name="possibleReference"/> assembly.
+        /// </summary>
+        /// <param name="referenceContainer">The Assembly which possibly contains the reference.</param>
+        /// <param name="possibleReference">The assembly which is possibly referenced.</param>
+        /// <returns></returns>
+        public static bool IsAssemblyReferencedFrom(
+            Assembly referenceContainer,
+            Assembly possibleReference)
+        {
+            var names = referenceContainer.GetReferencedAssemblies();
+            foreach (var name in names)
+            {
+                if (name.FullName == possibleReference.FullName)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

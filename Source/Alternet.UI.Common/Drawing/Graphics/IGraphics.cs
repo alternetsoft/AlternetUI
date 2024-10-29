@@ -251,7 +251,7 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor);
 
-        /// <inheritdoc cref="Graphics.DrawLabel"/>
+        /// <inheritdoc cref="Graphics.DrawLabel(string, Font, Color, Color, Image?, RectD, GenericAlignment, int)"/>
         RectD DrawLabel(
             string text,
             Font font,

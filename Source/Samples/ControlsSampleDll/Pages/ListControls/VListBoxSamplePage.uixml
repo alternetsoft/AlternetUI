@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
       <StackPanel Orientation="Horizontal" Name="tab1" Padding="5">
-        <StackPanel Orientation="Vertical" Margin="10,0,5,5">
+        <StackPanel Orientation="Vertical" Margin="10,0,5,5" Name="vertPanel1">
           <Button Text="Last Item Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
               Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
           <Button Text="Select Item: 2" Name="selectItemAtIndex2Button" IsTextLocalized="true"
@@ -27,7 +27,7 @@
           <CheckBox Margin="0,3,0,5" Text="Round Selection" IsTextLocalized="true"
                     Name="roundSelectionCheckBox"/>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Margin="10,0,5,5">
+        <StackPanel Orientation="Vertical" Margin="10,0,5,5" Name="vertPanel2">
           <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" IsTextLocalized="true"
               Margin="0,0,0,5" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
           <CheckBox Text="Find Exact" Name="findExactCheckBox" Margin="0,0,0,5" IsTextLocalized="true"/>

@@ -246,6 +246,16 @@ namespace Alternet.Drawing
             return Handler.GetBounds();
         }
 
+        /// <summary>
+        /// Gets a <see cref="RectD"/> structure that represents a rectangle that
+        /// bounds this <see cref="Region"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RectD GetBounds(Graphics g)
+        {
+            return GetBounds();
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
