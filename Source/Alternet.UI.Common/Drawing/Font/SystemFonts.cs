@@ -19,6 +19,7 @@ namespace Alternet.UI
         private static Font? deviceDefault;
         private static Font? sansSerif;
         private static Font? serif;
+        private static Font? menu;
 
         /// <summary>
         /// Original equipment manufacturer dependent fixed-pitch font.
@@ -78,6 +79,23 @@ namespace Alternet.UI
         {
             get => Font.Default;
             set => Font.Default = value;
+        }
+
+        /// <summary>
+        /// Gets or sets menu font.
+        /// This property added for the compatibility with legacy code.
+        /// </summary>
+        public static Font MenuFont
+        {
+            get
+            {
+                return menu ?? Control.DefaultFont;
+            }
+
+            set
+            {
+                menu = value;
+            }
         }
 
         /// <summary>
