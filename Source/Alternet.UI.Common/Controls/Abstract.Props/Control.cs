@@ -355,6 +355,23 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets border style of the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlBorderStyle BorderStyle
+        {
+            get
+            {
+                return Handler.BorderStyle;
+            }
+
+            set
+            {
+                Handler.BorderStyle = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override bool IsHandleCreated
         {
@@ -384,22 +401,6 @@ namespace Alternet.UI
             set
             {
                 Handler.ProcessUIUpdates = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets border style of the control.
-        /// </summary>
-        protected virtual ControlBorderStyle BorderStyle
-        {
-            get
-            {
-                return Handler.BorderStyle;
-            }
-
-            set
-            {
-                Handler.BorderStyle = value;
             }
         }
 
