@@ -53,7 +53,7 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Region.Translate"/>
         void Translate(Coord dx, Coord dy);
 
-        /// <inheritdoc cref="Region.GetBounds"/>
+        /// <inheritdoc cref="Region.GetBounds()"/>
         RectD GetBounds();
 
         /// <summary>
