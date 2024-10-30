@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains vertical alignment and horizontal alignment.
     /// </summary>
-    public readonly struct HVAlignment
+    public readonly struct HVAlignment : IEquatable<HVAlignment>
     {
         /// <summary>
         /// Gets <see cref="HVAlignment"/> with centered horizontal and vertical alignments.
@@ -108,7 +109,7 @@ namespace Alternet.UI
             return new(horizontal);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Implicit operator declaration for the conversion from <see cref="GenericAlignment"/> to
         /// <see cref="HVAlignment"/>.
         /// </summary>
@@ -118,7 +119,7 @@ namespace Alternet.UI
             var vertical = AlignUtils.GetVertical(value);
             var horizontal = AlignUtils.GetHorizontal(value);
             return new(horizontal: horizontal, vertical: vertical);
-        }
+        }*/
 
         /// <summary>
         /// Implicit operator declaration for the conversion from <see cref="VerticalAlignment"/> to
@@ -142,6 +143,34 @@ namespace Alternet.UI
         {
             return new(value.Horizontal, value.Vertical);
         }
+
+        /// <summary>
+        /// Tests whether two specified <see cref="HVAlignment"/> structures are equivalent.
+        /// </summary>
+        /// <param name="left">The <see cref="HVAlignment"/> that is to the left
+        /// of the equality operator.</param>
+        /// <param name="right">The <see cref="HVAlignment"/> that is to the right
+        /// of the equality operator.</param>
+        /// <returns><c>true</c> if the two <see cref="HVAlignment"/> structures
+        /// are equal; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator ==(HVAlignment left, HVAlignment right)
+        {
+            return left.Horizontal == right.Horizontal
+                && left.Vertical == right.Vertical;
+        }
+
+        /// <summary>
+        /// Tests whether two specified <see cref="HVAlignment"/> structures are different.
+        /// </summary>
+        /// <param name="left">The <see cref="HVAlignment"/> that is to the left
+        /// of the inequality operator.</param>
+        /// <param name="right">The <see cref="HVAlignment"/> that is to the right
+        /// of the inequality operator.</param>
+        /// <returns><c>true</c> if the two <see cref="HVAlignment"/> structures
+        /// are different; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator !=(HVAlignment left, HVAlignment right) => !(left == right);
 
         /// <summary>
         /// Returns next alignment or <see cref="CoordAlignment.Near"/> if
@@ -174,6 +203,37 @@ namespace Alternet.UI
         public HVAlignment WithHorizontal(CoordAlignment value)
         {
             return new((HorizontalAlignment)value, Vertical);
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the
+        /// current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is HVAlignment other && Equals(other);
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of
+        /// the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><c>true</c> if the current object is equal to other;
+        /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Equals(HVAlignment other)
+        {
+            return this == other;
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Horizontal, Vertical);
         }
 
         /// <summary>

@@ -251,7 +251,7 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor);
 
-        /// <inheritdoc cref="Graphics.DrawLabel(string, Font, Color, Color, Image?, RectD, GenericAlignment, int)"/>
+        /// <inheritdoc cref="Graphics.DrawLabel(string, Font, Color, Color, Image?, RectD, HVAlignment?, int)"/>
         RectD DrawLabel(
             string text,
             Font font,
@@ -259,7 +259,7 @@ namespace Alternet.Drawing
             Color backColor,
             Image? image,
             RectD rect,
-            GenericAlignment alignment = GenericAlignment.TopLeft,
+            HVAlignment? alignment = null,
             int indexAccel = -1);
 
         /// <inheritdoc cref="Graphics.GetDPI"/>

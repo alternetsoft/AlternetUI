@@ -18,8 +18,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default item alignment
         /// </summary>
-        public static readonly GenericAlignment DefaultItemAlignment
-            = GenericAlignment.CenterVertical | GenericAlignment.Left;
+        public static readonly HVAlignment DefaultItemAlignment
+            = new(HorizontalAlignment.Left, VerticalAlignment.Center);
 
         private CachedSvgImage cachedSvg = new();
 
@@ -279,7 +279,7 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual GenericAlignment Alignment { get; set; } = DefaultItemAlignment;
+        public virtual HVAlignment Alignment { get; set; } = DefaultItemAlignment;
 
         /// <summary>
         /// Gets or sets text which is displayed when item is painted.
@@ -545,14 +545,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item alignment.
         /// </summary>
-        public static GenericAlignment GetAlignment(
+        public static HVAlignment GetAlignment(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
             if (item is null)
             {
                 return container?.Defaults.ItemAlignment
-                    ?? (GenericAlignment.CenterVertical | GenericAlignment.Left);
+                    ?? new HVAlignment(HorizontalAlignment.Left, VerticalAlignment.Center);
             }
             else
                 return item.Alignment;
@@ -684,9 +684,6 @@ namespace Alternet.UI
             var textVisible = container?.Defaults.TextVisible ?? true;
 
             var s = textVisible ? e.ItemTextForDisplay.Trim() : string.Empty;
-
-            if (image is not null && s != string.Empty)
-                s = $" {s}";
 
             e.Graphics.DrawLabel(
                 s,
