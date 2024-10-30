@@ -493,5 +493,13 @@ namespace Alternet.UI
         /// Occurs when the validation errors have changed for this control or its child controls.
         /// </summary>
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        /// <summary>
+        /// Occurs when a control's display requires redrawing.
+        /// </summary>
+        [Category("Appearance")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public event InvalidateEventHandler? Invalidated;
     }
 }

@@ -552,6 +552,7 @@ namespace Alternet.UI
         public override void Invalidate()
         {
             Handler.Invalidate();
+            base.Invalidate();
         }
 
         /// <inheritdoc/>

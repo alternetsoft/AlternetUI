@@ -11,8 +11,18 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Raises the <see cref="Invalidated" /> event
+        /// and calls <see cref="OnInvalidated"/> method.
+        /// </summary>
+        public void RaiseInvalidated(InvalidateEventArgs e)
+        {
+            OnInvalidated(e);
+            Invalidated?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="FontChanged" /> event
-        /// and <see cref="OnFontChanged"/> method.
+        /// and calls <see cref="OnFontChanged"/> method.
         /// </summary>
         public void RaiseFontChanged()
         {
@@ -31,7 +41,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="PreviewKeyDown" /> event
-        /// and <see cref="OnPreviewKeyDown"/> method.
+        /// and calls <see cref="OnPreviewKeyDown"/> method.
         /// </summary>
         public void RaisePreviewKeyDown(Key key, ModifierKeys modifiers, ref bool isInputKey)
         {

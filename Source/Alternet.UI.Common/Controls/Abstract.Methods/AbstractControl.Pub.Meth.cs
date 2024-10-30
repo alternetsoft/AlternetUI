@@ -392,6 +392,7 @@ namespace Alternet.UI
         public virtual void Invalidate(RectD rect)
         {
             RefreshRect(rect, true);
+            RaiseInvalidated(new(rect));
         }
 
         /// <summary>
@@ -1041,6 +1042,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Invalidate()
         {
+            RaiseInvalidated(new(ClientRectangle));
         }
 
         /// <summary>
