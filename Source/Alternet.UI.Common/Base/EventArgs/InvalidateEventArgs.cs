@@ -7,6 +7,14 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents the method that will handle the <see cref="AbstractControl.Invalidated" /> event
+    /// of a <see cref="AbstractControl" />.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An <see cref="InvalidateEventArgs" /> that contains the event data.</param>
+    public delegate void InvalidateEventHandler(object sender, InvalidateEventArgs e);
+
+    /// <summary>
     /// Provides data for the 'Invalidated' event.
     /// </summary>
     public class InvalidateEventArgs : BaseEventArgs

@@ -1261,6 +1261,34 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns location of the upper-left corner of this rectangle.
+        /// </summary>
+        /// <returns>Point that contains location of the upper-left rectangle corner.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD LeftTop() => new(x, y);
+
+        /// <summary>
+        /// Returns location of the upper-right corner of this rectangle.
+        /// </summary>
+        /// <returns>Point that contains location of the upper-right rectangle corner.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD RightTop() => new(Right, y);
+
+        /// <summary>
+        /// Returns location of the bottom-right corner of this rectangle.
+        /// </summary>
+        /// <returns>Point that contains location of the bottom-right rectangle corner.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD RightBottom() => new(Right, Bottom);
+
+        /// <summary>
+        /// Returns location of the bottom-left corner of this rectangle.
+        /// </summary>
+        /// <returns>Point that contains location of the bottom-left rectangle corner.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD LeftBottom() => new(x, Bottom);
+
+        /// <summary>
         /// Creates a string representation of this object based on the format string
         /// and <see cref="IFormatProvider"/> passed in.
         /// If the provider is null, the

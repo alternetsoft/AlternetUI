@@ -319,6 +319,14 @@ namespace Alternet.UI
         public event EventHandler? MouseCaptureLost;
 
         /// <summary>
+        /// Same as <see cref="MouseCaptureLost"/>. This event is added for the compatibility with
+        /// legacy code.
+        /// </summary>
+        [Category("Mouse")]
+        [Browsable(false)]
+        public event EventHandler? MouseCaptureChanged;
+
+        /// <summary>
         /// When implemented by a class, occurs when user requests help for a control
         /// </summary>
         [Category("Behavior")]
@@ -493,5 +501,13 @@ namespace Alternet.UI
         /// Occurs when the validation errors have changed for this control or its child controls.
         /// </summary>
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        /// <summary>
+        /// Occurs when a control's display requires redrawing.
+        /// </summary>
+        [Category("Appearance")]
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public event InvalidateEventHandler? Invalidated;
     }
 }

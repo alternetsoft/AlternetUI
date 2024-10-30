@@ -95,6 +95,7 @@ namespace Alternet.UI
         private bool isClickRepeated;
         private bool subscribedClickRepeated;
         private VisualControlState stickyVisualState = VisualControlState.Normal;
+        private Color? borderColor;
 
         static SpeedButton()
         {
@@ -197,6 +198,27 @@ namespace Alternet.UI
                 if (isClickRepeated == value)
                     return;
                 isClickRepeated = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets border color override. Currently is not implemented.
+        /// Added for the compatibility with legacy code.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color? BorderColor
+        {
+            get
+            {
+                return borderColor;
+            }
+
+            set
+            {
+                if (borderColor == value)
+                    return;
+                borderColor = value;
+                Invalidate();
             }
         }
 

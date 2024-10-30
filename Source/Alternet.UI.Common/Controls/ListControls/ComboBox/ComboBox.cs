@@ -141,6 +141,11 @@ namespace Alternet.UI
         public enum OwnerDrawFlags
         {
             /// <summary>
+            /// Owner draw is off.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
             /// Specifies whether to draw background.
             /// </summary>
             ItemBackground = 1,
@@ -492,6 +497,46 @@ namespace Alternet.UI
             set
             {
                 OwnerDrawStyle |= OwnerDrawFlags.Item;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether your code or the operating system
+        /// will handle drawing of elements in the list.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="DrawMode" /> enumeration values. The default
+        /// is <see cref="DrawMode.Normal" />.
+        /// </returns>
+        /// <remarks>
+        /// This property is added for the compatibility with legacy code.
+        /// Use <see cref="OwnerDrawStyle"/> property as it has more options.
+        /// </remarks>
+        [Category("Behavior")]
+        [DefaultValue(DrawMode.Normal)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        public virtual DrawMode DrawMode
+        {
+            get
+            {
+                if (OwnerDrawItemBackground || OwnerDrawItem)
+                    return UI.DrawMode.OwnerDrawVariable;
+                else
+                    return UI.DrawMode.Normal;
+            }
+
+            set
+            {
+                if (DrawMode == value)
+                    return;
+                if(value == UI.DrawMode.Normal)
+                {
+                    OwnerDrawStyle = OwnerDrawFlags.None;
+                }
+                else
+                {
+                    OwnerDrawStyle = OwnerDrawFlags.ItemBackground;
+                }
             }
         }
 

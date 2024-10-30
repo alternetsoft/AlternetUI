@@ -129,6 +129,7 @@ namespace Alternet.UI
         {
             var defaults = GetDefaults(ControlKind);
             defaults.RaiseInitDefaults(this);
+            OnCreateControl();
             Designer?.RaiseCreated(this);
             RaiseNotifications((n) => n.AfterCreate(this));
         }
