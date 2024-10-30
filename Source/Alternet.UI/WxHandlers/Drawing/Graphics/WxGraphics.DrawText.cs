@@ -89,8 +89,7 @@ namespace Alternet.Drawing
                 backColor);
         }
 
-        /// <inheritdoc/>
-        public override RectD DrawLabel(
+        public RectD PlatformDrawLabel(
             string text,
             Font font,
             Color foreColor,

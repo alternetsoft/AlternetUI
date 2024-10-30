@@ -22,15 +22,15 @@ namespace PropertyGridSample
             var imageSize = 24; /* image sizes are always in pixels */
 
             ListControlItem item = new();
-            item.Alignment = GenericAlignment.Center;
+            item.Alignment = HVAlignment.Center;
             item.DisplayText = string.Empty;
             item.Text = "This is some text";
             item.Image = new Bitmap(PhotoUrl);
             addAction(item);
 
             item = new();
-            item.Text = "Bold item at right";
-            item.Alignment = GenericAlignment.CenterRight;
+            item.Text = "Bold item CenterRight";
+            item.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
             item.FontStyle = FontStyle.Bold;
             item.MinHeight = control.PixelToDip(imageSize);
             item.SvgImage = KnownSvgImages.ImgBold;
@@ -48,7 +48,7 @@ namespace PropertyGridSample
             addAction(item);
 
             item = new();
-            item.Alignment = GenericAlignment.Center;
+            item.Alignment = HVAlignment.Center;
             item.Image = new Bitmap(CalendarUrl);
             item.CheckState = CheckState.Indeterminate;
             item.DisabledImage = item.Image?.ToGrayScale();
@@ -58,10 +58,10 @@ namespace PropertyGridSample
             addAction(item);
 
             item = new();
-            item.Text = "Custom height/align";
+            item.Text = "Height=60/BottomCenter";
             item.CheckBoxVisible = false;
             item.MinHeight = 60;
-            item.Alignment = GenericAlignment.Bottom | GenericAlignment.CenterHorizontal;
+            item.Alignment = (HorizontalAlignment.Center, VerticalAlignment.Bottom);
             item.Image = new Bitmap(PencilUrl);
             item.DisabledImage = item!.Image.ToGrayScale();
             item.ForegroundColor = Color.Indigo;
@@ -81,11 +81,11 @@ namespace PropertyGridSample
 
             item = new();
             item.Text = "Custom border";
-            item.Alignment = GenericAlignment.Center;
+            item.Alignment = HVAlignment.Center;
             item.CheckBoxVisible = false;
             item.Border = new();
             item.Border.Color = Color.Red;
-            item.Border.UniformCornerRadius = 50;
+            item.Border.UniformCornerRadius = 25;
             item.Border.UniformRadiusIsPercent = true;
             addAction(item);
 

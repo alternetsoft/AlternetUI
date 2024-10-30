@@ -18,7 +18,7 @@ namespace PropertyGridSample
             label.ForegroundColor = Color.Sienna;
             label.MnemonicCharIndex = 3;
             label.ImageVisible = true;
-            label.TextAlignment = GenericAlignment.Center;
+            label.TextAlignment = HVAlignment.Center;
             label.Image = DefaultImage;
             label.DisabledImage = DefaultImage.ToGrayScale();
             label.SuggestedSize = (300, 300);
