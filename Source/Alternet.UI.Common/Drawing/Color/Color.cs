@@ -790,7 +790,7 @@ namespace Alternet.Drawing
         public static implicit operator System.Drawing.Color(Color color)
         {
             if (color.IsEmpty)
-                return Color.Empty;
+                return System.Drawing.Color.Empty;
             var argb = color.ToArgb();
             return System.Drawing.Color.FromArgb(argb);
         }
