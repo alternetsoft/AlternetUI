@@ -18,15 +18,11 @@ namespace Alternet.UI
         /// <returns></returns>
         public static VerticalAlignment GetVertical(GenericAlignment value)
         {
-            switch (value)
-            {
-                case GenericAlignment.Bottom:
-                    return VerticalAlignment.Bottom;
-                case GenericAlignment.CenterVertical:
-                    return VerticalAlignment.Center;
-                default:
-                    return VerticalAlignment.Top;
-            }
+            if ((value & GenericAlignment.CenterVertical) != 0)
+                return VerticalAlignment.Center;
+            if ((value & GenericAlignment.Bottom) != 0)
+                return VerticalAlignment.Bottom;
+            return VerticalAlignment.Top;
         }
 
         /// <summary>
@@ -36,15 +32,11 @@ namespace Alternet.UI
         /// <returns></returns>
         public static HorizontalAlignment GetHorizontal(GenericAlignment value)
         {
-            switch (value)
-            {
-                default:
-                    return HorizontalAlignment.Left;
-                case GenericAlignment.CenterHorizontal:
-                    return HorizontalAlignment.Center;
-                case GenericAlignment.Right:
-                    return HorizontalAlignment.Right;
-            }
+            if ((value & GenericAlignment.CenterHorizontal) != 0)
+                return HorizontalAlignment.Center;
+            if ((value & GenericAlignment.Right) != 0)
+                return HorizontalAlignment.Right;
+            return HorizontalAlignment.Left;
         }
 
         /// <summary>
