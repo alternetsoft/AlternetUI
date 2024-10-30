@@ -15,7 +15,7 @@ namespace Alternet.UI
     {
         private bool imageVisible = true;
         private int? mnemonicCharIndex = null;
-        private GenericAlignment alignment = GenericAlignment.TopLeft;
+        private HVAlignment alignment;
         private string? textPrefix;
         private string? textSuffix;
         private string? textFormat;
@@ -129,7 +129,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets alignment of the text.
         /// </summary>
-        public GenericAlignment TextAlignment
+        [Browsable(false)]
+        public HVAlignment TextAlignment
         {
             get
             {
@@ -141,6 +142,44 @@ namespace Alternet.UI
                 if (alignment == value)
                     return;
                 alignment = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the text.
+        /// </summary>
+        public VerticalAlignment TextAlignmentVertical
+        {
+            get
+            {
+                return alignment.Vertical;
+            }
+
+            set
+            {
+                if (alignment.Vertical == value)
+                    return;
+                alignment = new(alignment.Horizontal, value);
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the text.
+        /// </summary>
+        public HorizontalAlignment TextAlignmentHorizontal
+        {
+            get
+            {
+                return alignment.Horizontal;
+            }
+
+            set
+            {
+                if (alignment.Horizontal == value)
+                    return;
+                alignment = new(value, alignment.Vertical);
                 Invalidate();
             }
         }
@@ -308,7 +347,7 @@ namespace Alternet.UI
                 labelBackColor,
                 labelImage,
                 paddedRect,
-                TextAlignment,
+                alignment,
                 mnemonicCharIndex);
 
             if(result == RectD.MinusOne)
@@ -339,6 +378,12 @@ namespace Alternet.UI
         public override void DefaultPaint(Graphics dc, RectD rect)
         {
             DrawDefaultBackground(dc, rect);
+
+            var state = VisualState;
+            var border = GetBorderSettings(state);
+            if(border is not null)
+                rect = rect.DeflatedWithPadding(border.Width);
+
             DrawDefaultText(dc, rect);
         }
 
@@ -392,9 +437,6 @@ namespace Alternet.UI
             var image = GetImage();
             var prefix = TextPrefix;
             var labelText = Text;
-
-            if (image is not null && prefix is null && !string.IsNullOrEmpty(labelText))
-                prefix = StringUtils.OneSpace;
 
             var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
             if (textFormat is not null)
