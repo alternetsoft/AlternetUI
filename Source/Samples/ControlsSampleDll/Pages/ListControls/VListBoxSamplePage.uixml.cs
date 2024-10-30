@@ -14,7 +14,7 @@ namespace ControlsSample
 
         private readonly VirtualListBox listBox = new()
         {
-            SuggestedWidth = 200,
+            SuggestedWidth = 350,
             Margin = (0,0,0,5),
         };
 
@@ -38,7 +38,7 @@ namespace ControlsSample
             findText.TextChanged += FindText_TextChanged;
             PropertyGridSample.ObjectInit.InitVListBox(listBox);
 
-            tab1.Children.Prepend(listBox);
+            Children.Prepend(listBox);
             listBox.SelectionChanged += ListBox_SelectionChanged;
             listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;
             listBox.Search.UseContains = true;
