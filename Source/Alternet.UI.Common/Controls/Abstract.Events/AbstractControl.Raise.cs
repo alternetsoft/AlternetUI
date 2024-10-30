@@ -348,7 +348,9 @@ namespace Alternet.UI
                 HoveredControl = null;
             IsMouseLeftButtonDown = false;
             OnMouseCaptureLost(EventArgs.Empty);
+            OnMouseCaptureChanged(EventArgs.Empty);
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
+            MouseCaptureChanged?.Invoke(this, EventArgs.Empty);
 
             RaiseNotifications((n) => n.AfterMouseCaptureLost(this));
         }

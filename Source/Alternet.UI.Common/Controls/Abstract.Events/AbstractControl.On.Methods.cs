@@ -168,6 +168,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the <see cref="MouseCaptureChanged" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnMouseCaptureChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the <see cref="Invalidated" /> event is raised.
         /// </summary>
         /// <param name="e">A <see cref="InvalidateEventArgs" /> that contains the event data.</param>

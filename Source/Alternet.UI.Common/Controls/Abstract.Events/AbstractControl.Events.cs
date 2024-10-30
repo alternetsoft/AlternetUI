@@ -319,6 +319,14 @@ namespace Alternet.UI
         public event EventHandler? MouseCaptureLost;
 
         /// <summary>
+        /// Same as <see cref="MouseCaptureLost"/>. This event is added for the compatibility with
+        /// legacy code.
+        /// </summary>
+        [Category("Mouse")]
+        [Browsable(false)]
+        public event EventHandler? MouseCaptureChanged;
+
+        /// <summary>
         /// When implemented by a class, occurs when user requests help for a control
         /// </summary>
         [Category("Behavior")]
