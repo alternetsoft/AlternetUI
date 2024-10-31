@@ -741,6 +741,44 @@ namespace Alternet.UI
             return result;
         }
 
+        public static string InsertBoldTags(
+            string s,
+            string textToFind,
+            StringComparison comparison = StringComparison.CurrentCultureIgnoreCase)
+        {
+            return InsertTags(
+                        s,
+                        textToFind,
+                        BoldTagStart,
+                        BoldTagEnd,
+                        comparison);
+        }
+
+        public static string InsertTags(
+            string s,
+            string textToFind,
+            string beforeTag,
+            string afterTag,
+            StringComparison comparison = StringComparison.CurrentCultureIgnoreCase)
+        {
+            var pos = s.IndexOf(textToFind, comparison);
+
+            if (pos < 0)
+                return s;
+
+            string result;
+
+            var afterTagPos = pos + textToFind.Length;
+
+            if (afterTagPos >= s.Length)
+                result = s + afterTag;
+            else
+                result = s.Insert(afterTagPos, afterTag);
+
+            result = result.Insert(pos, beforeTag);
+            return result;
+        }
+
         /// <summary>
         /// Calls <see cref="string.Format(string, object)"/>
         /// in a safe way allowing to use null parameters.
