@@ -237,6 +237,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a human-readable string that represents this
+        /// <see cref='HVAlignment'/>.
+        /// </summary>
+        public override readonly string ToString()
+        {
+            string[] names = { nameof(Horizontal), nameof(Vertical) };
+            object[] values = { Horizontal, Vertical };
+
+            return StringUtils.ToStringWithOrWithoutNames(names, values);
+        }
+
+        /// <summary>
         /// Gets next alignment value by incrementing alignments.
         /// </summary>
         /// <returns></returns>

@@ -178,7 +178,7 @@ namespace Alternet.Drawing
             {
                 var itemFont = font.WithStyle(item.FontStyle);
                 var measure = GetTextExtent(item.Text, itemFont);
-                if(visible)
+                if (visible)
                     DrawText(item.Text, location, itemFont, foreColor, backColor ?? Color.Empty);
                 location.X += measure.Width;
                 result.Width += measure.Width;
@@ -202,7 +202,7 @@ namespace Alternet.Drawing
         /// <param name="alignment">Alignment of the text.</param>
         /// <param name="indexAccel">Index of underlined mnemonic character.</param>
         /// <returns>The bounding rectangle.</returns>
-        public RectD DrawLabel(
+        public virtual RectD DrawLabel(
             string text,
             Font font,
             Color foreColor,
@@ -232,9 +232,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="prm">Parameters spedified using <see cref="DrawLabelParams"/> structure.</param>
         /// <returns></returns>
-        internal virtual RectD DrawLabel(ref DrawLabelParams prm)
+        public virtual RectD DrawLabel(ref DrawLabelParams prm)
         {
-            DrawElementsParams.ItemParams imageElement = DrawElementsParams.ItemParams.Default;
+            DrawElementsParams.ElementParams imageElement = DrawElementsParams.ElementParams.Default;
             var image = prm.Image;
             var indexAccel = prm.IndexAccel;
             var s = prm.Text;
@@ -267,17 +267,25 @@ namespace Alternet.Drawing
                     return (HorizontalAlignment.Left, VerticalAlignment.Center);
             }
 
-            TextAndFontStyle[]? parsed = null;
+            TextAndFontStyle[]? parsed = prm.TextAndFontStyle;
 
-            if (indexAccel >= 0)
+            if(parsed is null)
             {
-                parsed = StringUtils.ParseTextWithIndexAccel(
-                    s,
-                    indexAccel,
-                    FontStyle.Underline);
+                if (prm.Flags.HasFlag(DrawLabelFlags.TextHasBold))
+                {
+                    parsed = RegexUtils.GetBoldTagSplitted(s);
+                }
+                else
+                if (indexAccel >= 0)
+                {
+                    parsed = StringUtils.ParseTextWithIndexAccel(
+                        s,
+                        indexAccel,
+                        FontStyle.Underline);
+                }
             }
 
-            DrawElementsParams.ItemParams textElement = new()
+            DrawElementsParams.ElementParams textElement = new()
             {
                 GetSize = () =>
                 {
@@ -298,7 +306,7 @@ namespace Alternet.Drawing
                 },
                 Draw = (dc, rect) =>
                 {
-                    if(parsed is null)
+                    if (parsed is null)
                     {
                         DrawText(s, rect.Location, font, foreColor, backColor);
                     }
@@ -326,7 +334,12 @@ namespace Alternet.Drawing
             return result;
         }
 
-        internal virtual RectD DrawElements(ref DrawElementsParams prm)
+        /// <summary>
+        /// Draws array of elements specified with <see cref="DrawElementsParams"/>.
+        /// </summary>
+        /// <param name="prm">Method arguments.</param>
+        /// <returns></returns>
+        public virtual RectD DrawElements(ref DrawElementsParams prm)
         {
             var length = prm.Elements.Length;
             if (length == 0)
@@ -334,7 +347,7 @@ namespace Alternet.Drawing
 
             SizeD[] elementSizes = new SizeD[length];
 
-            for(int i = 0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 elementSizes[i] = prm.Elements[i].GetSize();
             }
@@ -393,10 +406,16 @@ namespace Alternet.Drawing
         /// <summary>
         /// Contains parameters for the draw elements method.
         /// </summary>
-        internal struct DrawElementsParams
+        public struct DrawElementsParams
         {
-            public ItemParams[] Elements = [];
+            /// <summary>
+            /// Gets or sets array of elements to draw.
+            /// </summary>
+            public ElementParams[] Elements = [];
 
+            /// <summary>
+            /// Gets or sets whether elements are painted as vertical or horizontal stack.
+            /// </summary>
             public bool IsVertical = false;
 
             /// <summary>
@@ -416,19 +435,61 @@ namespace Alternet.Drawing
             /// </summary>
             public HVAlignment Alignment = HVAlignment.TopLeft;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DrawElementsParams"/> struct.
+            /// </summary>
             public DrawElementsParams()
             {
             }
 
-            public struct ItemParams
+            /// <summary>
+            /// Contains element parameters
+            /// </summary>
+            public struct ElementParams
             {
-                public static readonly ItemParams Default = new();
+                /// <summary>
+                /// Gets default element.
+                /// </summary>
+                public static readonly ElementParams Default = new();
 
+                /// <summary>
+                /// Gets or sets element size function.
+                /// </summary>
                 public Func<SizeD> GetSize;
 
+                /// <summary>
+                /// Gets or sets element draw function.
+                /// </summary>
                 public Action<Graphics, RectD> Draw;
 
+                /// <summary>
+                /// Gets or sets element alignment.
+                /// </summary>
                 public HVAlignment Alignment;
+
+                /// <summary>
+                /// Initializes a new instance of the <see cref="ElementParams"/> struct.
+                /// </summary>
+                public ElementParams()
+                {
+                    GetSize = () => SizeD.Empty;
+                    Draw = (_, _) => { };
+                    Alignment = (HorizontalAlignment.Left, VerticalAlignment.Center);
+                }
+
+                /// <summary>
+                /// Initializes a new instance of the <see cref="ElementParams"/> struct
+                /// with the specified parameters.
+                /// </summary>
+                public ElementParams(
+                    Func<SizeD> getSize,
+                    Action<Graphics, RectD> draw,
+                    HVAlignment alignment)
+                {
+                    GetSize = getSize;
+                    Draw = draw;
+                    Alignment = alignment;
+                }
             }
         }
 
@@ -453,6 +514,11 @@ namespace Alternet.Drawing
             /// Gets or sets text to draw.
             /// </summary>
             public string Text;
+
+            /// <summary>
+            /// Gets or sets text with attributes to use instead of <see cref="Text"/>.
+            /// </summary>
+            public TextAndFontStyle[]? TextAndFontStyle;
 
             /// <summary>
             /// Gets or sets font used to draw the text.
@@ -489,6 +555,11 @@ namespace Alternet.Drawing
             /// Gets or sets index of underlined mnemonic character.
             /// </summary>
             public int IndexAccel = -1;
+
+            /// <summary>
+            /// Gets or sets flags that can be used to customize label painting.
+            /// </summary>
+            public DrawLabelFlags Flags;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="DrawLabelParams"/> struct.

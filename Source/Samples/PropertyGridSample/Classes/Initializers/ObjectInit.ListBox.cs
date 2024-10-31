@@ -54,7 +54,8 @@ namespace PropertyGridSample
             item.DisabledImage = item.Image?.ToGrayScale();
             item.ForegroundColor = Color.Green;
             item.BackgroundColor = Color.Lavender;
-            item.Text = "Green item at center";
+            item.Text = "Green <b>item</b> at center";
+            item.LabelFlags = DrawLabelFlags.TextHasBold;
             addAction(item);
 
             item = new();

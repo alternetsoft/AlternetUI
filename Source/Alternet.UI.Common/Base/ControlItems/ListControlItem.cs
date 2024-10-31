@@ -282,6 +282,11 @@ namespace Alternet.UI
         public virtual HVAlignment Alignment { get; set; } = DefaultItemAlignment;
 
         /// <summary>
+        /// Gets or sets draw label flags.
+        /// </summary>
+        public virtual DrawLabelFlags LabelFlags { get; set; }
+
+        /// <summary>
         /// Gets or sets text which is displayed when item is painted.
         /// </summary>
         public virtual string Text { get; set; }
@@ -685,14 +690,23 @@ namespace Alternet.UI
 
             var s = textVisible ? e.ItemTextForDisplay.Trim() : string.Empty;
 
-            e.Graphics.DrawLabel(
+            var itemColor = e.GetTextColor(isSelected) ?? SystemColors.WindowText;
+
+            Graphics.DrawLabelParams prm = new(
                 s,
                 e.ItemFont,
-                e.GetTextColor(isSelected) ?? SystemColors.WindowText,
+                itemColor,
                 Color.Empty,
                 image,
                 e.ClipRectangle,
                 e.ItemAlignment);
+
+            if(item is not null)
+            {
+                prm.Flags = item.LabelFlags;
+            }
+
+            e.Graphics.DrawLabel(ref prm);
         }
 
         /// <summary>
