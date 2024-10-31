@@ -349,6 +349,7 @@ namespace Alternet.Drawing
         public virtual RectD DrawElements(ref DrawElementsParams prm)
         {
             var drawDebugCorners = prm.DrawDebugCorners;
+            var visible = prm.Visible;
 
             var length = prm.Elements.Length;
             if (length == 0)
@@ -378,9 +379,6 @@ namespace Alternet.Drawing
                 shrinkSize: true);
 
             prm.ResultBounds = afterAlign;
-
-            if (!prm.Visible)
-                return afterAlign;
 
             RectD[] bounds = new RectD[length];
             prm.ResultRects = bounds;
@@ -423,6 +421,8 @@ namespace Alternet.Drawing
 
             void DrawElement(in DrawElementsParams.ElementParams element, RectD rect)
             {
+                if (!visible)
+                    return;
                 element.Draw(this, rect);
                 if (!drawDebugCorners)
                     return;
@@ -461,7 +461,7 @@ namespace Alternet.Drawing
 
             /// <summary>
             /// Gets element bounds after drawing was performed.
-            /// This is filled with bounds only if <see cref="Visible"/> is True.
+            /// This is filled with bounds even if <see cref="Visible"/> is False.
             /// </summary>
             public RectD[]? ResultRects;
 
