@@ -72,6 +72,18 @@ namespace ControlsSample
         {
             var containsText = lastReportedText ?? string.Empty;
 
+            ListControlItem? ConvertItem(MemberInfo member)
+            {
+                var fullName = $"{member.DeclaringType.Name}.{member.Name}";
+
+                var replaced = StringUtils.InsertBoldTags(fullName, containsText);
+
+                var item = new ListControlItem(replaced);
+                item.LabelFlags = DrawLabelFlags.TextHasBold;
+
+                return item;
+            }
+
             var controller = new VirtualListBox.AddRangeController<MemberInfo>(
                 listBox,
                 () => AssemblyUtils.GetAllPublicMembers(containsText),
@@ -118,15 +130,9 @@ namespace ControlsSample
             ResetListBox();
         }
 
-        ListControlItem? ConvertItem(MemberInfo member)
-        {
-            var fullName = $"{member.DeclaringType.FullName}.{member.Name}";
-            return new ListControlItem(fullName);
-        }
-
         private void StartThread()
         {
-            SafeDisposeObject(ref controller);
+            ResetListBox();
             controller = CreateController();
             controller.Start();
         }
