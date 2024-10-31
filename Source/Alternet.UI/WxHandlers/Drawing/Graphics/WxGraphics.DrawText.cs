@@ -33,7 +33,8 @@ namespace Alternet.Drawing
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
-            DebugColorAssert(foreColor);
+            if (!foreColor.IsOk)
+                return;
 
             font = TransformFontForDrawText(font);
             location = TransformPointForDrawText(location);
@@ -79,7 +80,8 @@ namespace Alternet.Drawing
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
-            DebugColorAssert(foreColor);
+            if (!foreColor.IsOk)
+                return;
             font = TransformFontForDrawText(font);
             dc.DrawText(
                 text,
@@ -87,33 +89,6 @@ namespace Alternet.Drawing
                 (UI.Native.Font)font.Handler,
                 foreColor,
                 backColor);
-        }
-
-        public RectD PlatformDrawLabel(
-            string text,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Image? image,
-            RectD rect,
-            GenericAlignment alignment = GenericAlignment.TopLeft,
-            int indexAccel = -1)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            DebugColorAssert(foreColor, nameof(foreColor));
-
-            font = TransformFontForDrawText(font);
-
-            return dc.DrawLabel(
-                text,
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor,
-                (UI.Native.Image?)image?.Handler,
-                TransformRectForDrawText(rect),
-                (int)alignment,
-                indexAccel);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
