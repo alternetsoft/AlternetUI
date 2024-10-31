@@ -308,6 +308,17 @@ namespace Alternet.UI
         public static UIPlatformKind PlatformKind => SystemSettings.Handler.GetPlatformKind();
 
         /// <summary>
+        /// Gets whether <see cref="Handler"/> is initialized.
+        /// </summary>
+        public static bool HasHandler
+        {
+            get
+            {
+                return Handler is not null;
+            }
+        }
+
+        /// <summary>
         /// Gets the <see cref="App"/> object for the currently
         /// runnning application.
         /// </summary>

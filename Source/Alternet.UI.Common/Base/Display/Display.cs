@@ -96,6 +96,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether display factory is initialized and <see cref="Display"/> class
+        /// can be used. Normally this returns False when <see cref="SystemSettings.Handler"/>
+        /// is not yet assigned.
+        /// </summary>
+        public static bool HasFactory
+        {
+            get
+            {
+                return factory is not null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="IDisplayFactoryHandler"/> object used to perform
         /// display related operations.
         /// </summary>
