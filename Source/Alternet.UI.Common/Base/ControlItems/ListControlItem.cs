@@ -21,6 +21,11 @@ namespace Alternet.UI
         public static readonly HVAlignment DefaultItemAlignment
             = new(HorizontalAlignment.Left, VerticalAlignment.Center);
 
+        /// <summary>
+        /// Gets or sets whether to draw debug corners around item elements (image, text, etc.).
+        /// </summary>
+        public static bool DrawDebugCornersOnElements = false;
+
         private CachedSvgImage cachedSvg = new();
 
         /// <summary>
@@ -655,7 +660,9 @@ namespace Alternet.UI
         /// </summary>
         public static void DefaultDrawForeground(
             IListControlItemContainer? container,
-            ListBoxItemPaintEventArgs e)
+            ListBoxItemPaintEventArgs e,
+            out Graphics.DrawLabelParams drawParams,
+            bool visible = true)
         {
             var item = e.Item;
 
@@ -701,12 +708,20 @@ namespace Alternet.UI
                 e.ClipRectangle,
                 e.ItemAlignment);
 
+            prm.Visible = visible;
+
             if(item is not null)
             {
                 prm.Flags = item.LabelFlags;
             }
 
+            if (DebugUtils.IsDebugDefined)
+            {
+                prm.DrawDebugCorners = DrawDebugCornersOnElements;
+            }
+
             e.Graphics.DrawLabel(ref prm);
+            drawParams = prm;
         }
 
         /// <summary>
@@ -829,9 +844,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual void DrawForeground(
             IListControlItemContainer? container,
-            ListBoxItemPaintEventArgs e)
+            ListBoxItemPaintEventArgs e,
+            out Graphics.DrawLabelParams drawParams,
+            bool visible = true)
         {
-            ListControlItem.DefaultDrawForeground(container, e);
+            ListControlItem.DefaultDrawForeground(container, e, out drawParams, visible);
         }
 
         /// <summary>
