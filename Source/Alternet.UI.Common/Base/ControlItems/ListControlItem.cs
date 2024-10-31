@@ -604,6 +604,7 @@ namespace Alternet.UI
 
             var control = container?.Control;
             var focused = control?.Focused ?? false;
+            var selectionUnderImage = container?.Defaults.SelectionUnderImage ?? true;
             var rect = e.ClipRectangle;
             var dc = e.Graphics;
 
@@ -629,6 +630,18 @@ namespace Alternet.UI
                     if (!hideSelection)
                     {
                         var selectionBorder = container?.Defaults.SelectionBorder;
+
+                        if (!selectionUnderImage)
+                        {
+                            DefaultDrawForeground(container, e, out var drawParams, false);
+                            var rects = drawParams.ResultRects;
+                            if (rects is not null && rects.Length > 1)
+                            {
+                                var imageRect = rects[1];
+                                var delta = imageRect.Left - rect.Left;
+                                rect = rect.DeflatedWithPadding((delta, 0, 0, 0));
+                            }
+                        }
 
                         dc.FillBorderRectangle(
                             rect,
