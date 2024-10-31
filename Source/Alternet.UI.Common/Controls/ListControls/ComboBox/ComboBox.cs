@@ -750,7 +750,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    item.DrawForeground(this, listEventArgs);
+                    item.DrawForeground(this, listEventArgs, out _);
                 }
 
                 return;

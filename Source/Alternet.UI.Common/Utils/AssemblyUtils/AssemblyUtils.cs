@@ -227,9 +227,12 @@ namespace Alternet.UI
                     var type = member.DeclaringType;
                     var name = member.Name;
 
+                    if (name == ".ctor")
+                        continue;
+
                     if (member is MethodInfo method)
                     {
-                        if (method.IsSpecialName)
+                        if (method.IsSpecialName || method.IsConstructor || method.IsAbstract)
                             continue;
                         if (addedMethods.ContainsKey(name))
                             continue;

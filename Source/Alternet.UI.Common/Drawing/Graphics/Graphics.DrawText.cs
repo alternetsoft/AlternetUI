@@ -329,8 +329,15 @@ namespace Alternet.Drawing
             drawParams.Distance = prm.ImageLabelDistance;
             drawParams.Rect = prm.Rect;
             drawParams.Alignment = prm.Alignment;
+            drawParams.Visible = prm.Visible;
+            drawParams.DrawDebugCorners = prm.DrawDebugCorners;
 
             var result = DrawElements(ref drawParams);
+
+            prm.ResultRects = drawParams.ResultRects;
+            prm.ResultSizes = drawParams.ResultSizes;
+            prm.ResultBounds = result;
+
             return result;
         }
 
@@ -341,6 +348,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual RectD DrawElements(ref DrawElementsParams prm)
         {
+            var drawDebugCorners = prm.DrawDebugCorners;
+            var visible = prm.Visible;
+
             var length = prm.Elements.Length;
             if (length == 0)
                 return prm.Rect;
@@ -351,6 +361,8 @@ namespace Alternet.Drawing
             {
                 elementSizes[i] = prm.Elements[i].GetSize();
             }
+
+            prm.ResultSizes = elementSizes;
 
             var sumSize = SizeD.Sum(elementSizes);
             var elementDistance = prm.Distance ?? SpeedButton.DefaultImageLabelDistance;
@@ -365,6 +377,11 @@ namespace Alternet.Drawing
                 prm.Alignment.Horizontal,
                 prm.Alignment.Vertical,
                 shrinkSize: true);
+
+            prm.ResultBounds = afterAlign;
+
+            RectD[] bounds = new RectD[length];
+            prm.ResultRects = bounds;
 
             var rect = afterAlign;
 
@@ -382,7 +399,8 @@ namespace Alternet.Drawing
                         element.Alignment.Horizontal,
                         VerticalAlignment.Top,
                         shrinkSize: false);
-                    element.Draw(this, elementAfterAlign);
+                    bounds[i] = elementAfterAlign;
+                    DrawElement(in element, elementAfterAlign);
                     rect.Y = elementAfterAlign.Bottom + elementDistance;
                     rect.Height = rect.Height - elementAfterAlign.Height - elementDistance;
                 }
@@ -394,10 +412,21 @@ namespace Alternet.Drawing
                         HorizontalAlignment.Left,
                         element.Alignment.Vertical,
                         shrinkSize: false);
-                    element.Draw(this, elementAfterAlign);
+                    bounds[i] = elementAfterAlign;
+                    DrawElement(in element, elementAfterAlign);
                     rect.X = elementAfterAlign.Right + elementDistance;
                     rect.Width = rect.Width - elementAfterAlign.Width - elementDistance;
                 }
+            }
+
+            void DrawElement(in DrawElementsParams.ElementParams element, RectD rect)
+            {
+                if (!visible)
+                    return;
+                element.Draw(this, rect);
+                if (!drawDebugCorners)
+                    return;
+                BorderSettings.DrawDesignCorners(this, rect, BorderSettings.DebugBorder);
             }
 
             return afterAlign;
@@ -409,14 +438,43 @@ namespace Alternet.Drawing
         public struct DrawElementsParams
         {
             /// <summary>
+            /// Gets or sets whether to draw debug corners around elements.
+            /// </summary>
+            public bool DrawDebugCorners;
+
+            /// <summary>
             /// Gets or sets array of elements to draw.
             /// </summary>
             public ElementParams[] Elements = [];
 
             /// <summary>
+            /// Gets elements bounding rectangle after drawing.
+            /// This is filled even if <see cref="Visible"/> is False.
+            /// </summary>
+            public RectD ResultBounds;
+
+            /// <summary>
+            /// Gets element sizes after drawing was performed.
+            /// This is filled with sizes even if <see cref="Visible"/> is False.
+            /// </summary>
+            public SizeD[]? ResultSizes;
+
+            /// <summary>
+            /// Gets element bounds after drawing was performed.
+            /// This is filled with bounds even if <see cref="Visible"/> is False.
+            /// </summary>
+            public RectD[]? ResultRects;
+
+            /// <summary>
             /// Gets or sets whether elements are painted as vertical or horizontal stack.
             /// </summary>
             public bool IsVertical = false;
+
+            /// <summary>
+            /// Gets or sets whether painting is actually performed. This property may be useful
+            /// when you need to calculate element sizes without painting.
+            /// </summary>
+            public bool Visible = true;
 
             /// <summary>
             /// Gets or sets distance between elements. If Null,
@@ -511,6 +569,12 @@ namespace Alternet.Drawing
             public Coord? ImageLabelDistance;
 
             /// <summary>
+            /// Gets or sets whether painting is actually performed. This property may be useful
+            /// when you need to calculate element sizes without painting.
+            /// </summary>
+            public bool Visible = true;
+
+            /// <summary>
             /// Gets or sets text to draw.
             /// </summary>
             public string Text;
@@ -560,6 +624,29 @@ namespace Alternet.Drawing
             /// Gets or sets flags that can be used to customize label painting.
             /// </summary>
             public DrawLabelFlags Flags;
+
+            /// <summary>
+            /// Gets element sizes after drawing was performed.
+            /// This is filled with sizes even if <see cref="Visible"/> is False.
+            /// </summary>
+            public SizeD[]? ResultSizes;
+
+            /// <summary>
+            /// Gets element bounds after drawing was performed.
+            /// This is filled with bounds only if <see cref="Visible"/> is True.
+            /// </summary>
+            public RectD[]? ResultRects;
+
+            /// <summary>
+            /// Gets all elements bounding rectangle after drawing.
+            /// This is filled even if <see cref="Visible"/> is False.
+            /// </summary>
+            public RectD ResultBounds;
+
+            /// <summary>
+            /// Gets or sets whether to draw debug corners around elements.
+            /// </summary>
+            public bool DrawDebugCorners;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="DrawLabelParams"/> struct.

@@ -80,6 +80,12 @@ namespace ControlsSample
                 useItems1 = !useItems1;
             });
 
+            contextMenu.Add("Toggle Draw Debug Corners", () =>
+            {
+                ListControlItem.DrawDebugCornersOnElements = !ListControlItem.DrawDebugCornersOnElements;
+                listBox.Invalidate();
+            });
+
             contextMenu.Add("Next item alignment", () =>
             {
                 var item = listBox.GetItem(listBox.SelectedIndex ?? 0);

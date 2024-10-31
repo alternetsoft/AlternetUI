@@ -614,6 +614,7 @@ namespace Alternet.UI
         {
             if (items is null || items.Count == 0)
                 return;
+            items = null;
             items = newItems ?? SafeItems();
         }
 

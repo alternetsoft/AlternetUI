@@ -826,7 +826,7 @@ namespace Alternet.UI
 
             if (painter is null)
             {
-                DefaultDrawItem(e);
+                DefaultDrawItem(e, out _);
                 return;
             }
 
@@ -993,13 +993,16 @@ namespace Alternet.UI
         /// <summary>
         /// Default method which draws items. Called from <see cref="DrawItem"/>.
         /// </summary>
-        public virtual void DefaultDrawItem(ListBoxItemPaintEventArgs e)
+        public virtual void DefaultDrawItem(
+            ListBoxItemPaintEventArgs e,
+            out Graphics.DrawLabelParams drawParams,
+            bool visible = true)
         {
             var item = SafeItem(e.ItemIndex);
             if (item is null)
-                ListControlItem.DefaultDrawForeground(this, e);
+                ListControlItem.DefaultDrawForeground(this, e, out drawParams, visible);
             else
-                item.DrawForeground(this, e);
+                item.DrawForeground(this, e, out drawParams, visible);
         }
 
         /// <summary>
