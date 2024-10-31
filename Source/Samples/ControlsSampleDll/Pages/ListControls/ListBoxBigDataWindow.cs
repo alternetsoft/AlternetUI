@@ -11,6 +11,8 @@ namespace ControlsSample
 {
     internal class ListBoxBigDataWindow : Window
     {
+        private static EnumImages<SymbolKind>? images;
+
         internal bool IsDebugInfoLogged = false;
 
         private static int globalCounter;
@@ -52,8 +54,9 @@ namespace ControlsSample
 
             textBox.Parent = this;
 
-            listBox.Parent = this;
             listBox.VerticalAlignment = VerticalAlignment.Fill;
+            listBox.Parent = this;
+            listBox.SelectionUnderImage = false;
 
             textBox.TextChanged += ComboBox_TextChanged;
 
@@ -66,6 +69,35 @@ namespace ControlsSample
             statusPanelId = statusBar.AddText("Ready");
             statusPanel = statusBar.GetToolControl(statusPanelId);
 
+            LoadImages();
+        }
+
+        private static void LoadImages()
+        {
+            if (images != null)
+                return;
+            images = new();
+
+            string prefix = "Resources.CodeComletionSymbols.";
+            images.SetImageName(SymbolKind.Namespace, $"{prefix}NamespaceAlpha");
+            images.SetImageName(SymbolKind.Struct, $"{prefix}StructAlpha");
+            images.SetImageName(SymbolKind.Field, $"{prefix}FieldAlpha");
+            images.SetImageName(SymbolKind.Constant, $"{prefix}ConstantAlpha");
+            images.SetImageName(SymbolKind.Class, $"{prefix}ClassAlpha");
+            images.SetImageName(SymbolKind.Delegate, $"{prefix}DelegateAlpha");
+            images.SetImageName(SymbolKind.Event, $"{prefix}EventAlpha");
+            images.SetImageName(SymbolKind.GenericParameter, $"{prefix}GenericParameterAlpha");
+            images.SetImageName(SymbolKind.Interface, $"{prefix}InterfaceAlpha");
+            images.SetImageName(SymbolKind.Keyword, $"{prefix}KeywordAlpha");
+            images.SetImageName(SymbolKind.LocalOrParameter, $"{prefix}LocalOrParameterAlpha");
+            images.SetImageName(SymbolKind.Method, $"{prefix}MethodAlpha");
+            images.SetImageName(SymbolKind.Property, $"{prefix}PropertyAlpha");
+            images.AssignImageNames(true);
+            images.FormatImageNames("{0}_HighDpi.png", false);
+            images.FormatImageNames("{0}.png", true);
+
+            images.LoadImagesFromResource(typeof(ListBoxBigDataWindow).Assembly, true);
+            images.LoadImagesFromResource(typeof(ListBoxBigDataWindow).Assembly, false);
         }
 
         public VirtualListBox.AddRangeController<MemberInfo> CreateController()
@@ -80,6 +112,8 @@ namespace ControlsSample
 
                 var item = new ListControlItem(replaced);
                 item.LabelFlags = DrawLabelFlags.TextHasBold;
+
+                item.Image = GetImage(member.MemberType);
 
                 return item;
             }
@@ -148,6 +182,46 @@ namespace ControlsSample
             ResetListBox();
             if (lastReportedText.Length > 0)
                 StartThread();
+        }
+
+        public Image? GetImage(MemberTypes mtype)
+        {
+            var kind = GetKind(mtype);
+            if (kind == SymbolKind.Other)
+                return KnownSvgImages.ImgEmpty.AsImage(HasScaleFactor ? 32 : 16);
+            var result = images?.GetImage(kind, !HasScaleFactor);
+            return result;
+        }
+
+        public static SymbolKind GetKind(MemberTypes mtype)
+        {
+            if (mtype.HasFlag(MemberTypes.Field))
+                return SymbolKind.Field;
+            if (mtype.HasFlag(MemberTypes.Event))
+                return SymbolKind.Event;
+            if (mtype.HasFlag(MemberTypes.Property))
+                return SymbolKind.Property;
+            if (mtype.HasFlag(MemberTypes.Method))
+                return SymbolKind.Method;
+            return SymbolKind.Other;
+        }
+
+        public enum SymbolKind
+        {
+            Other,
+            Class,
+            Method,
+            Property,
+            Field,
+            Namespace,
+            Constant,
+            Keyword,
+            Struct,
+            Interface,
+            Delegate,
+            LocalOrParameter,
+            Event,
+            GenericParameter,
         }
     }
 }
