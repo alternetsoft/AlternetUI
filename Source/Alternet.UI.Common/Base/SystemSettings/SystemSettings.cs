@@ -19,6 +19,19 @@ namespace Alternet.UI
         private static bool? isUsingDarkBackgroundOverride;
 
         /// <summary>
+        /// Gets whether <see cref="SystemSettings"/> is initialized and
+        /// can be used. Normally this returns False when <see cref="Handler"/>
+        /// is not yet assigned.
+        /// </summary>
+        public static bool HasHandler
+        {
+            get
+            {
+                return handler is not null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="ISystemSettingsHandler"/> provider used to work
         /// with system settings.
         /// </summary>
