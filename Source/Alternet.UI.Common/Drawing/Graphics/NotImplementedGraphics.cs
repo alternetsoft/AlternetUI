@@ -144,12 +144,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override RectD DrawLabel(string text, Font font, Color foreColor, Color backColor, Image? image, RectD rect, GenericAlignment alignment = GenericAlignment.Left, int indexAccel = -1)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void DrawLine(Pen pen, PointD a, PointD b)
         {
             throw new NotImplementedException();

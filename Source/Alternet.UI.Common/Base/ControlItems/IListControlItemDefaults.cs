@@ -85,7 +85,7 @@ namespace Alternet.UI
         /// In order to set individual item alignment, item must be <see cref="ListControlItem"/>
         /// descendant, it has <see cref="ListControlItem.Alignment"/> property.
         /// </remarks>
-        GenericAlignment ItemAlignment { get; set; }
+        HVAlignment ItemAlignment { get; set; }
 
         /// <summary>
         /// Gets or sets selected item text color.

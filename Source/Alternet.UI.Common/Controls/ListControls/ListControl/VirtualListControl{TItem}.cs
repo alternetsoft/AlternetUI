@@ -80,7 +80,7 @@ namespace Alternet.UI
         private bool checkBoxThreeState;
         private bool selectionUnderImage = true;
 
-        private GenericAlignment itemAlignment = ListControlItem.DefaultItemAlignment;
+        private HVAlignment itemAlignment = ListControlItem.DefaultItemAlignment;
 
         static VirtualListControl()
         {
@@ -559,7 +559,8 @@ namespace Alternet.UI
         /// In order to set individual item alignment, item must be <see cref="ListControlItem"/>
         /// descendant, it has <see cref="ListControlItem.Alignment"/> property.
         /// </remarks>
-        public virtual GenericAlignment ItemAlignment
+        [Browsable(false)]
+        public virtual HVAlignment ItemAlignment
         {
             get
             {
@@ -873,7 +874,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
         /// <returns></returns>
-        public GenericAlignment GetItemAlignment(int itemIndex)
+        public HVAlignment GetItemAlignment(int itemIndex)
         {
             return ListControlItem.GetAlignment(SafeItem(itemIndex), this);
         }

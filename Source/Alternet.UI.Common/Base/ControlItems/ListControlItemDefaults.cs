@@ -31,7 +31,7 @@ namespace Alternet.UI
         public virtual Color? ItemTextColor { get; set; }
 
         /// <inheritdoc/>
-        public virtual GenericAlignment ItemAlignment { get; set; }
+        public virtual HVAlignment ItemAlignment { get; set; }
             = ListControlItem.DefaultItemAlignment;
 
         /// <inheritdoc/>

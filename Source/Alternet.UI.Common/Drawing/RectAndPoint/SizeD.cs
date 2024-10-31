@@ -419,6 +419,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets sum of the each element of the specified <see cref="SizeD"/> array.
+        /// </summary>
+        /// <param name="sizes">Array of <see cref="SizeD"/>.</param>
+        /// <returns></returns>
+        public static SizeD Sum(SizeD[] sizes)
+        {
+            var length = sizes.Length;
+            SizeD result = SizeD.Empty;
+
+            for (int i = 0; i < length; i++)
+            {
+                result.Width += sizes[i].Width;
+                result.Height += sizes[i].Height;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Multiplies <see cref="SizeD"/> by a value
         /// producing <see cref="SizeD"/>.
         /// </summary>

@@ -63,6 +63,33 @@ namespace Alternet.Drawing
             Color backColor);
 
         /// <summary>
+        /// Draws text inside the bounds with the specified font, background and foreground colors.
+        /// </summary>
+        /// <param name="rect">Bounding rectangle used to draw the text.</param>
+        /// <param name="text">Text to draw.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
+        public virtual void DrawText(
+            string text,
+            RectD rect,
+            Font font,
+            Color foreColor,
+            Color backColor)
+        {
+            DoInsideClipped(rect, () =>
+            {
+                DrawText(
+                            text,
+                            rect.Location,
+                            font,
+                            foreColor,
+                            backColor);
+            });
+        }
+
+        /// <summary>
         /// Draws the text string at the specified location with
         /// <see cref="Brush"/> and <see cref="Font"/> objects.
         /// </summary>
@@ -142,11 +169,10 @@ namespace Alternet.Drawing
             Color? backColor = null)
         {
             DebugFontAssert(font);
-            DebugColorAssert(foreColor);
 
             SizeD result = 0;
 
-            bool visible = foreColor != Color.Empty;
+            bool visible = foreColor.IsOk && (foreColor != Color.Empty);
 
             foreach (var item in splittedText)
             {
@@ -176,15 +202,29 @@ namespace Alternet.Drawing
         /// <param name="alignment">Alignment of the text.</param>
         /// <param name="indexAccel">Index of underlined mnemonic character.</param>
         /// <returns>The bounding rectangle.</returns>
-        public abstract RectD DrawLabel(
+        public RectD DrawLabel(
             string text,
             Font font,
             Color foreColor,
             Color backColor,
             Image? image,
             RectD rect,
-            GenericAlignment alignment = GenericAlignment.TopLeft,
-            int indexAccel = -1);
+            HVAlignment? alignment = null,
+            int indexAccel = -1)
+        {
+            DrawLabelParams prm = new(
+                text,
+                font,
+                foreColor,
+                backColor,
+                image,
+                rect,
+                alignment,
+                indexAccel);
+
+            var result = DrawLabel(ref prm);
+            return result;
+        }
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors,
@@ -194,48 +234,115 @@ namespace Alternet.Drawing
         /// <returns></returns>
         internal virtual RectD DrawLabel(ref DrawLabelParams prm)
         {
-            var info = prm;
-            var indexAccel = prm.IndexAccel;
+            DrawElementsParams.ItemParams imageElement = DrawElementsParams.ItemParams.Default;
             var image = prm.Image;
-            var s = info.Text;
-            var font = info.Font;
-
-            SizeD textSize;
-
-            TextAndFontStyle[]? parsed;
-
-            if (indexAccel == -1)
-            {
-                textSize = MeasureText(s, font);
-            }
-            else
-            {
-                parsed = StringUtils.ParseTextWithIndexAccel(
-                    prm.Text,
-                    indexAccel,
-                    FontStyle.Underline);
-                textSize = DrawTextWithFontStyle(
-                            parsed,
-                            PointD.Empty,
-                            font,
-                            Color.Empty);
-            }
-
-            var size = textSize;
+            var indexAccel = prm.IndexAccel;
+            var s = prm.Text;
+            var font = prm.Font;
+            var foreColor = prm.ForegroundColor;
+            var backColor = prm.BackgroundColor;
+            var isVertical = prm.IsVertical;
 
             if (image is not null)
             {
-                var imageLabelDistance = prm.ImageLabelDistance ?? SpeedButton.DefaultImageLabelDistance;
-
-                if(prm.ImageToText == ImageToText.Horizontal)
+                imageElement = new()
                 {
-                    size.Width += image.PixelWidth + imageLabelDistance;
-                }
-                else
-                {
-                    size.Height += image.PixelHeight + imageLabelDistance;
-                }
+                    GetSize = () =>
+                    {
+                        return image.SizeDip(ScaleFactor);
+                    },
+                    Draw = (dc, rect) =>
+                    {
+                        dc.DrawImage(image, rect.Location);
+                    },
+                    Alignment = GetElementAlignment(),
+                };
             }
+
+            HVAlignment GetElementAlignment()
+            {
+                if (isVertical)
+                    return (HorizontalAlignment.Center, VerticalAlignment.Top);
+                else
+                    return (HorizontalAlignment.Left, VerticalAlignment.Center);
+            }
+
+            TextAndFontStyle[]? parsed = null;
+
+            if (indexAccel >= 0)
+            {
+                parsed = StringUtils.ParseTextWithIndexAccel(
+                    s,
+                    indexAccel,
+                    FontStyle.Underline);
+            }
+
+            DrawElementsParams.ItemParams textElement = new()
+            {
+                GetSize = () =>
+                {
+                    if (parsed is null)
+                    {
+                        var result = MeasureText(s, font);
+                        return result;
+                    }
+                    else
+                    {
+                        var result = DrawTextWithFontStyle(
+                                    parsed,
+                                    PointD.Empty,
+                                    font,
+                                    Color.Empty);
+                        return result;
+                    }
+                },
+                Draw = (dc, rect) =>
+                {
+                    if(parsed is null)
+                    {
+                        DrawText(s, rect.Location, font, foreColor, backColor);
+                    }
+                    else
+                    {
+                        DrawTextWithFontStyle(parsed, rect.Location, font, foreColor, backColor);
+                    }
+                },
+                Alignment = GetElementAlignment(),
+            };
+
+            DrawElementsParams drawParams = new();
+
+            if (image is null)
+                drawParams.Elements = [textElement];
+            else
+                drawParams.Elements = [imageElement, textElement];
+
+            drawParams.IsVertical = isVertical;
+            drawParams.Distance = prm.ImageLabelDistance;
+            drawParams.Rect = prm.Rect;
+            drawParams.Alignment = prm.Alignment;
+
+            var result = DrawElements(ref drawParams);
+            return result;
+        }
+
+        internal virtual RectD DrawElements(ref DrawElementsParams prm)
+        {
+            var length = prm.Elements.Length;
+            if (length == 0)
+                return prm.Rect;
+
+            SizeD[] elementSizes = new SizeD[length];
+
+            for(int i = 0; i < length; i++)
+            {
+                elementSizes[i] = prm.Elements[i].GetSize();
+            }
+
+            var sumSize = SizeD.Sum(elementSizes);
+            var elementDistance = prm.Distance ?? SpeedButton.DefaultImageLabelDistance;
+            Coord sumDistance = elementDistance * (length - 1);
+            var size = sumSize + sumDistance;
 
             RectD beforeAlign = (prm.Rect.Location, size);
 
@@ -246,14 +353,83 @@ namespace Alternet.Drawing
                 prm.Alignment.Vertical,
                 shrinkSize: true);
 
-            if(image is null)
+            var rect = afterAlign;
+
+            for (int i = 0; i < length; i++)
             {
-            }
-            else
-            {
+                var element = prm.Elements[i];
+                var elementSize = elementSizes[i];
+                RectD elementBeforeAlign = (rect.Location, elementSize);
+
+                if (prm.IsVertical)
+                {
+                    var elementAfterAlign = AlignUtils.AlignRectInRect(
+                        elementBeforeAlign,
+                        rect,
+                        element.Alignment.Horizontal,
+                        VerticalAlignment.Top,
+                        shrinkSize: false);
+                    element.Draw(this, elementAfterAlign);
+                    rect.Y = elementAfterAlign.Bottom + elementDistance;
+                    rect.Height = rect.Height - elementAfterAlign.Height - elementDistance;
+                }
+                else
+                {
+                    var elementAfterAlign = AlignUtils.AlignRectInRect(
+                        elementBeforeAlign,
+                        rect,
+                        HorizontalAlignment.Left,
+                        element.Alignment.Vertical,
+                        shrinkSize: false);
+                    element.Draw(this, elementAfterAlign);
+                    rect.X = elementAfterAlign.Right + elementDistance;
+                    rect.Width = rect.Width - elementAfterAlign.Width - elementDistance;
+                }
             }
 
             return afterAlign;
+        }
+
+        /// <summary>
+        /// Contains parameters for the draw elements method.
+        /// </summary>
+        internal struct DrawElementsParams
+        {
+            public ItemParams[] Elements = [];
+
+            public bool IsVertical = false;
+
+            /// <summary>
+            /// Gets or sets distance between elements. If Null,
+            /// <see cref="SpeedButton.DefaultImageLabelDistance"/> is used.
+            /// </summary>
+            public Coord? Distance;
+
+            /// <summary>
+            /// Gets or sets rectangle in which drawing is performed.
+            /// </summary>
+            public RectD Rect;
+
+            /// <summary>
+            /// Gets or sets alignment of the element's block.
+            /// Default is <see cref="HVAlignment.TopLeft"/>.
+            /// </summary>
+            public HVAlignment Alignment = HVAlignment.TopLeft;
+
+            public DrawElementsParams()
+            {
+            }
+
+            public struct ItemParams
+            {
+                public static readonly ItemParams Default = new();
+
+                public Func<SizeD> GetSize;
+
+                public Action<Graphics, RectD> Draw;
+
+                public HVAlignment Alignment;
+            }
         }
 
         /// <summary>
@@ -262,10 +438,10 @@ namespace Alternet.Drawing
         public struct DrawLabelParams
         {
             /// <summary>
-            /// Gets or sets a value which specifies display modes for
-            /// item image and text.
+            /// Gets or sets a value which specifies whether image to text are aligned vertically
+            /// or horizontally.
             /// </summary>
-            public ImageToText ImageToText = ImageToText.Horizontal;
+            public bool IsVertical = false;
 
             /// <summary>
             /// Gets or sets distance between image and label. If Null,
@@ -347,7 +523,7 @@ namespace Alternet.Drawing
                 Color backColor,
                 Image? image,
                 RectD rect,
-                GenericAlignment alignment = GenericAlignment.TopLeft,
+                HVAlignment? alignment = null,
                 int indexAccel = -1)
             {
                 Text = text;
@@ -357,7 +533,7 @@ namespace Alternet.Drawing
                 Image = image;
                 Rect = rect;
                 IndexAccel = indexAccel;
-                Alignment = alignment;
+                Alignment = alignment ?? HVAlignment.TopLeft;
             }
         }
     }
