@@ -637,8 +637,9 @@ namespace Alternet.UI
                             var rects = drawParams.ResultRects;
                             if (rects is not null && rects.Length > 1)
                             {
+                                var distance = (drawParams.ImageLabelDistance ?? 0) / 2;
                                 var imageRect = rects[1];
-                                var delta = imageRect.Left - rect.Left;
+                                var delta = imageRect.Left - rect.Left - distance;
                                 rect = rect.DeflatedWithPadding((delta, 0, 0, 0));
                             }
                         }
