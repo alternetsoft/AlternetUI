@@ -27,6 +27,11 @@ namespace Alternet.UI
         public static readonly BorderSettings Temp = new();
 
         /// <summary>
+        /// Gets or sets color of the debug border. Default value is Null. In this case red color is used.
+        /// </summary>
+        public static Color? DefaultDebugBorderColor;
+
+        /// <summary>
         /// Gets or sets size of the design corners.
         /// </summary>
         public static Coord DesignCornerSize = 5;
@@ -40,6 +45,8 @@ namespace Alternet.UI
         /// Default border color.
         /// </summary>
         public static Color DefaultCommonBorderColor = SystemColors.GrayText;
+
+        private static BorderSettings? debugBorder;
 
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();
@@ -78,6 +85,17 @@ namespace Alternet.UI
         /// Occurs when the border is redrawn.
         /// </summary>
         public event EventHandler<PaintEventArgs>? Paint;
+
+        /// <summary>
+        /// Default border settings.
+        /// </summary>
+        public static BorderSettings DebugBorder
+        {
+            get
+            {
+                return debugBorder ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the uniform corner radius for the <see cref="Border"/> control.
@@ -529,6 +547,18 @@ namespace Alternet.UI
         {
             BorderSettings result = new();
             result.Assign(this);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates clone of this object with changed border color.
+        /// </summary>
+        /// <param name="color">Border color of the new <see cref="BorderSettings"/>.</param>
+        /// <returns></returns>
+        public virtual BorderSettings WithColor(Color color)
+        {
+            var result = Clone();
+            result.Color = color;
             return result;
         }
 
