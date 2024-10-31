@@ -79,6 +79,19 @@ namespace ControlsSample
 
                 useItems1 = !useItems1;
             });
+
+            contextMenu.Add("Next item alignment", () =>
+            {
+                var item = listBox.GetItem(listBox.SelectedIndex ?? 0);
+                if (item is null)
+                    return;
+                item.Text ??= "Item 0 Text";
+                item.DisplayText = null;
+                item.MinHeight = 70;
+                item.Alignment = item.Alignment.NextValue();
+                App.LogNameValueReplace("VListBox.Items[0].ALignment", item.Alignment);
+                listBox.Invalidate();
+            });
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)
