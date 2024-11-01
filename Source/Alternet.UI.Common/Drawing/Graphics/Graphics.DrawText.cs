@@ -337,6 +337,7 @@ namespace Alternet.Drawing
             prm.ResultRects = drawParams.ResultRects;
             prm.ResultSizes = drawParams.ResultSizes;
             prm.ResultBounds = result;
+            prm.ImageLabelDistance = drawParams.Distance;
 
             return result;
         }
@@ -366,6 +367,7 @@ namespace Alternet.Drawing
 
             var sumSize = SizeD.Sum(elementSizes);
             var elementDistance = prm.Distance ?? SpeedButton.DefaultImageLabelDistance;
+            prm.Distance = elementDistance;
             Coord sumDistance = elementDistance * (length - 1);
             var size = sumSize + sumDistance;
 

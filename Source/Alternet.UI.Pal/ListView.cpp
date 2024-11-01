@@ -18,10 +18,12 @@ namespace Alternet::UI
 
     void ListView::SetHasBorder(bool value)
     {
+        /*
         if (hasBorder == value)
             return;
         hasBorder = value;
         RecreateWxWindowIfNeeded();
+        */
     }
 
     ListView::~ListView()
@@ -62,15 +64,25 @@ namespace Alternet::UI
     {
         if (_view == ListViewView::Details)
         {
+            auto listView = GetListView();
+            if (index > listView->GetColumnCount())
+                return;
+
             auto w = GetWxColumnWidth(width, widthMode);
-            GetListView()->InsertColumn(index, wxStr(header), 0, w);
+            listView->InsertColumn(index, wxStr(header), 0, w);
         }
     }
 
     void ListView::RemoveColumnAt(int64_t index)
     {
         if (_view == ListViewView::Details)
-            GetListView()->DeleteColumn(index);
+        {
+            auto listView = GetListView();
+
+            if (index >= listView->GetColumnCount())
+                return;
+            listView->DeleteColumn(index);
+        }
     }
 
     void ListView::InsertItemAt(int64_t index, const string& value, int64_t columnIndex,
@@ -87,11 +99,10 @@ namespace Alternet::UI
 
     void ListView::InsertItem(wxListView* listView, wxListItem& item)
     {
-        auto lView = GetListView();
         auto col = item.GetColumn();
 
         #pragma warning(suppress: 4018)
-        if (_view == ListViewView::Details && col >= lView->GetColumnCount())
+        if (_view == ListViewView::Details && col >= listView->GetColumnCount() && col > 0)
             return;
 
         if (_view == ListViewView::Details || col == 0)
@@ -99,10 +110,10 @@ namespace Alternet::UI
             if (col > 0)
             {
                 wxListItem i(item);
-                lView->SetItem(i);
+                listView->SetItem(i);
             }
             else
-                lView->InsertItem(item);
+                listView->InsertItem(item);
         }
     }
 
@@ -313,28 +324,44 @@ namespace Alternet::UI
 
     void ListView::SetItemText(int64_t itemIndex, int64_t columnIndex, const string& text)
     {
+        auto listView = GetListView();
+
+        if (itemIndex >= listView->GetItemCount() || itemIndex < 0)
+            return;
+
         if (_view == ListViewView::Details || columnIndex == 0)
         {
+            if (columnIndex >= listView->GetColumnCount() && columnIndex > 0)
+                return;
+
             wxListItem item;
             item.SetColumn(columnIndex);
             item.SetId(itemIndex);
             item.SetMask(wxLIST_MASK_TEXT);
             item.SetText(wxStr(text));
-            GetListView()->SetItem(item);
+            listView->SetItem(item);
         }
     }
 
     void ListView::SetItemImageIndex(int64_t itemIndex,
         int64_t columnIndex, int imageIndex)
     {
-        if (_view == ListViewView::Details) 
+        auto listView = GetListView();
+
+        if (itemIndex >= listView->GetItemCount() || itemIndex < 0)
+            return;
+
+        if (_view == ListViewView::Details)
         {
+            if (columnIndex >= listView->GetColumnCount() && columnIndex > 0)
+                return;
+
             wxListItem item;
             item.SetId(itemIndex);
             item.SetColumn(columnIndex);
             item.SetImage(imageIndex);
             item.SetMask(wxLIST_MASK_IMAGE);
-            GetListView()->SetItem(item);
+            listView->SetItem(item);
         }
     }
 
