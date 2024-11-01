@@ -22,6 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="LayoutUpdated"/> event.
         /// </summary>
+        [Browsable(false)]
         public void RaiseLayoutUpdated()
         {
             LayoutUpdated?.Invoke(this, EventArgs.Empty);

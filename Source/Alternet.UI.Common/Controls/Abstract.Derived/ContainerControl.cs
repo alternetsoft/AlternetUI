@@ -141,6 +141,7 @@ namespace Alternet.UI
         /// Creates new <see cref="HorizontalStackPanel"/> and adds
         /// it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
+        [Browsable(false)]
         public virtual HorizontalStackPanel AddHorizontalStackPanel()
         {
             var result = new HorizontalStackPanel

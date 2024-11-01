@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Alternet.UI
         /// Raises the <see cref="FontChanged" /> event
         /// and calls <see cref="OnFontChanged"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseFontChanged()
         {
             PerformLayoutAndInvalidate(() =>
@@ -67,6 +69,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="CellChanged" /> event and <see cref="OnCellChanged"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseCellChanged()
         {
             CellChanged?.Invoke(this, EventArgs.Empty);
@@ -80,6 +83,7 @@ namespace Alternet.UI
         /// <see cref="OnIdle(EventArgs)"/>.
         /// See <see cref="Idle"/> event description for more details.
         /// </summary>
+        [Browsable(false)]
         public void RaiseIdle()
         {
             OnIdle(EventArgs.Empty);
@@ -123,6 +127,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="ParentChanged"/>event and <see cref="OnParentChanged"/> .
         /// </summary>
+        [Browsable(false)]
         public void RaiseParentChanged()
         {
             ResetScaleFactor();
@@ -217,6 +222,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="GotFocus" /> event and <see cref="OnGotFocus"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseGotFocus()
         {
             FocusedControl = this;
@@ -239,6 +245,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="LostFocus" /> event and <see cref="OnLostFocus"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseLostFocus()
         {
             if (FocusedControl == this)
@@ -273,6 +280,7 @@ namespace Alternet.UI
         /// Raises the <see cref="OnHandlerLocationChanged" /> and <see cref="ReportBoundsChanged"/>
         /// methods.
         /// </summary>
+        [Browsable(false)]
         public void RaiseContainerLocationChanged()
         {
             OnHandlerLocationChanged(EventArgs.Empty);
@@ -284,6 +292,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="Deactivated" /> event and <see cref="OnDeactivated"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseDeactivated()
         {
             OnDeactivated(EventArgs.Empty);
@@ -296,6 +305,7 @@ namespace Alternet.UI
         /// Raises the <see cref="SystemColorsChanged" /> event
         /// and <see cref="OnSystemColorsChanged"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseSystemColorsChanged()
         {
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
@@ -319,6 +329,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="HandleCreated" /> event and <see cref="OnHandleCreated"/> method.
         /// </summary>
+        [Browsable(false)]
         public virtual void RaiseHandleCreated()
         {
             OnHandleCreated(EventArgs.Empty);
@@ -330,6 +341,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="HandleDestroyed" /> event and <see cref="OnHandleDestroyed"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseHandleDestroyed()
         {
             ResetScaleFactor();
@@ -342,6 +354,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="MouseCaptureLost" /> event and <see cref="OnMouseCaptureLost"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseMouseCaptureLost()
         {
             if (HoveredControl == this)
@@ -357,6 +370,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="TextChanged" /> event.</summary>
+        [Browsable(false)]
         public virtual void RaiseTextChanged()
         {
             TextChanged?.Invoke(this, EventArgs.Empty);
@@ -369,6 +383,7 @@ namespace Alternet.UI
         /// Raises the <see cref="SizeChanged"/>, <see cref="Resize"/> events and
         /// <see cref="OnSizeChanged"/>, <see cref="OnResize"/> methods.
         /// </summary>
+        [Browsable(false)]
         public void RaiseSizeChanged()
         {
             OnSizeChanged(EventArgs.Empty);
@@ -382,6 +397,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="MouseEnter" /> event and <see cref="OnMouseEnter"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseMouseEnter()
         {
             PlessMouse.CancelLongTapTimer();
@@ -398,6 +414,7 @@ namespace Alternet.UI
         /// Raises the <see cref="VisualStateChanged" /> event
         /// and <see cref="OnVisualStateChanged"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseVisualStateChanged()
         {
             OnVisualStateChanged(EventArgs.Empty);
@@ -410,6 +427,7 @@ namespace Alternet.UI
         /// Raises the <see cref="IsMouseOverChanged" /> event
         /// and <see cref="OnIsMouseOverChanged"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseIsMouseOverChanged()
         {
             OnIsMouseOverChanged(EventArgs.Empty);
@@ -422,6 +440,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called after background color changed.
         /// </summary>
+        [Browsable(false)]
         public virtual void RaiseBackgroundColorChanged()
         {
             Refresh();
@@ -437,6 +456,7 @@ namespace Alternet.UI
         /// Raises the <see cref="MouseLeave" /> event
         /// and <see cref="OnMouseLeave"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseMouseLeave()
         {
             PlessMouse.CancelLongTapTimer();
@@ -492,6 +512,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="LocationChanged"/> event.
         /// </summary>
+        [Browsable(false)]
         public void RaiseLocationChanged()
         {
             OnLocationChanged(EventArgs.Empty);
@@ -569,6 +590,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="DragLeave"/> event.
         /// </summary>
+        [Browsable(false)]
         public void RaiseDragLeave()
         {
             DragLeave?.Invoke(this, EventArgs.Empty);
@@ -581,6 +603,7 @@ namespace Alternet.UI
         /// Raises bounds changed events
         /// and <see cref="OnHandlerSizeChanged"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseHandlerSizeChanged()
         {
             OnHandlerSizeChanged(EventArgs.Empty);
@@ -593,6 +616,7 @@ namespace Alternet.UI
         /// Raises <see cref="VisibleChanged"/> event and <see cref="OnVisibleChanged"/>
         /// method.
         /// </summary>
+        [Browsable(false)]
         public virtual void RaiseVisibleChanged()
         {
             OnVisibleChanged(EventArgs.Empty);
@@ -727,6 +751,7 @@ namespace Alternet.UI
         /// <see cref="OnClick(EventArgs)"/>.
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
+        [Browsable(false)]
         public void RaiseClick()
         {
             LastClickedTimestamp = DateTime.Now.Ticks;
@@ -757,6 +782,7 @@ namespace Alternet.UI
         /// Raises the <see cref="TitleChanged"/> event and calls
         /// <see cref="OnTitleChanged(EventArgs)"/>.
         /// </summary>
+        [Browsable(false)]
         public void RaiseTitleChanged()
         {
             OnTitleChanged(EventArgs.Empty);
@@ -769,6 +795,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="RaiseMouseEnter"/> for the control under the mouse pointer.
         /// </summary>
+        [Browsable(false)]
         public void RaiseMouseEnterOnTarget()
         {
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
@@ -778,6 +805,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="RaiseMouseLeave"/> for the control under the mouse pointer.
         /// </summary>
+        [Browsable(false)]
         public void RaiseMouseLeaveOnTarget()
         {
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);

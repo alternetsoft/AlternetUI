@@ -429,6 +429,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override void RecreateHandler()
         {
             if (handler != null)
@@ -438,6 +439,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override void RaiseVisibleChanged()
         {
             Handler.Visible = Visible;
@@ -583,6 +585,7 @@ namespace Alternet.UI
         /// <summary>
         /// Unbinds events from the handler.
         /// </summary>
+        [Browsable(false)]
         public virtual void UnbindHandlerEvents()
         {
             Handler.TextChanged = null;
@@ -613,6 +616,7 @@ namespace Alternet.UI
         /// <summary>
         /// Binds events to the handler.
         /// </summary>
+        [Browsable(false)]
         public virtual void BindHandlerEvents()
         {
             Handler.MouseEnter = RaiseMouseEnterOnTarget;

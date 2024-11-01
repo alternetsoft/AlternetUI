@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -241,6 +242,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method performs checks only on MSW, on other os it does nothing.
         /// </remarks>
+        [Browsable(false)]
         public virtual void CheckSTARequirement()
         {
             if (!App.IsWindowsOS)
