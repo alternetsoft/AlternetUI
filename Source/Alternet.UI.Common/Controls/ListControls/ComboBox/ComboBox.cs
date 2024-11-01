@@ -606,6 +606,7 @@ namespace Alternet.UI
         /// Raises the <see cref="SelectedItemChanged"/> event and calls
         /// <see cref="OnSelectedItemChanged(EventArgs)"/>.
         /// </summary>
+        [Browsable(false)]
         public void RaiseSelectedItemChanged()
         {
             var newIndex = SelectedIndex;
@@ -623,6 +624,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="DropDown"/> event and calls <see cref="OnDropDown"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseDropDown()
         {
             droppedDown = true;
@@ -633,6 +635,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="DropDownClosed"/> event and calls <see cref="OnDropDownClosed"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseDropDownClosed()
         {
             droppedDown = false;

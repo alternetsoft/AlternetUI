@@ -91,6 +91,7 @@ namespace Alternet.UI
 
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources.
+        [Browsable(false)]
         public void Dispose()
         {
             Dispose(disposing: true);
@@ -105,6 +106,7 @@ namespace Alternet.UI
         /// Does nothing if DEBUG is not defined.
         /// </remarks>
         [Conditional("DEBUG")]
+        [Browsable(false)]
         public void CheckDisposed()
         {
             if (IsDisposed)

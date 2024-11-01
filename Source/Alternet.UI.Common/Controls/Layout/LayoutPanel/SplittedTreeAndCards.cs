@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets index of the selected item in the <see cref="TreeView"/>.
         /// </summary>
-        public int? SelectedIndex
+        public virtual int? SelectedIndex
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Alternet.UI
         /// Calls <see cref="TreeView.MakeAsListBox"/> for the left control if
         /// it is <see cref="TreeView"/>.
         /// </summary>
-        public void MakeAsListBox()
+        public virtual void MakeAsListBox()
         {
             TreeView?.MakeAsListBox();
         }
@@ -137,7 +137,7 @@ namespace Alternet.UI
         /// Sets debug background colors for the different parts of the control.
         /// </summary>
         [Conditional("DEBUG")]
-        public void SetDebugColors()
+        public virtual void SetDebugColors()
         {
             DebugBackgroundColor(Color.Green, nameof(SplittedTreeAndCards));
             Cards.DebugBackgroundColor(Color.Yellow, "SplittedTreeAndCards.Cards");
@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Item title.</param>
         /// <param name="action">Card control create action.</param>
-        public void Add(string title, Func<AbstractControl> action)
+        public virtual void Add(string title, Func<AbstractControl> action)
         {
             var index = cardPanel.Add(title, action);
 

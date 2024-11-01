@@ -894,6 +894,7 @@ namespace Alternet.UI
         /// <summary>
         /// Internal method. Do not call it directly.
         /// </summary>
+        [Browsable(false)]
         public virtual void SelectedIndicesAreDirty()
         {
             selectedIndices = null;

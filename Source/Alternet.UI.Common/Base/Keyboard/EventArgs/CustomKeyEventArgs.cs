@@ -161,6 +161,20 @@ namespace Alternet.UI
         /// </returns>
         public virtual bool Shift => modifiers.HasFlag(ModifierKeys.Shift);
 
+        public bool IsEscape => IsSimpleKey(Key.Escape);
+
+        public bool IsEnter => IsSimpleKey(Key.Enter);
+
+        /// <summary>
+        /// Gets whether the specified key is pressed and <see cref="ModifierKeys"/> is empty.
+        /// </summary>
+        /// <param name="key">Key to test.</param>
+        /// <returns></returns>
+        public virtual bool IsSimpleKey(Key key)
+        {
+            return Key == key && ModifierKeys == UI.ModifierKeys.None;
+        }
+
         /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>

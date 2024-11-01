@@ -414,8 +414,40 @@ namespace PropertyGridSample
                     });
 
                     SetBackground(SystemColors.Control);
-                    panel.RemoveActions();
-                    panel.AddActions(type);
+
+                    App.AddIdleTask(() =>
+                    {
+                        panel.RemoveActions();
+                        panel.AddActions(type);
+
+                        if (!DebugUtils.IsDebugDefined)
+                            return;
+
+                        var methods = type.GetMethods();
+                        foreach (var method in methods)
+                        {
+                            if (method.IsSpecialName)
+                                continue;
+                            if (method.IsGenericMethod)
+                                continue;
+                            var retParam = method.ReturnParameter;
+                            if (retParam.ParameterType != typeof(void))
+                                continue;
+                            var prms = method.GetParameters();
+                            if (prms.Length > 0)
+                                continue;
+                            var browsable = AssemblyUtils.GetBrowsable(method);
+                            if (!browsable)
+                                continue;
+                            panel.AddAction($"{method.Name}()", () =>
+                            {
+                                var selectedControl = GetSelectedControl<Control>();
+                                if (selectedControl is null)
+                                    return;
+                                method.Invoke(selectedControl, null);
+                            });
+                        }
+                    });
                 }
             }
 

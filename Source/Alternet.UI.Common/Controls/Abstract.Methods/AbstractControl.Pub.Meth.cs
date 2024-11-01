@@ -243,11 +243,13 @@ namespace Alternet.UI
         /// <summary>
         /// Brings the control to the front of the z-order.
         /// </summary>
+        [Browsable(false)]
         public void BringToFront() => Parent?.SetChildIndex(this, 0);
 
         /// <summary>
         /// Sends the control to the back of the z-order.
         /// </summary>
+        [Browsable(false)]
         public void SendToBack() => Parent?.SetChildIndex(this, -1);
 
         /// <summary>
@@ -295,6 +297,7 @@ namespace Alternet.UI
         /// <summary>
         /// Updates <see cref="ToolTip"/> so it will be repainted in the screen if it is currently shown.
         /// </summary>
+        [Browsable(false)]
         public virtual void UpdateToolTip()
         {
             var s = ToolTip;
@@ -345,6 +348,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets foreground color to the default value.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetForeColor()
         {
             ForegroundColor = null;
@@ -420,6 +424,7 @@ namespace Alternet.UI
         /// <summary>
         /// Invalidates internally painted caret.
         /// </summary>
+        [Browsable(false)]
         public virtual void InvalidateCaret()
         {
             if (caretInfo is null || !caretInfo.Visible)
@@ -446,6 +451,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates native control if its not already created.
         /// </summary>
+        [Browsable(false)]
         public virtual void HandleNeeded()
         {
         }
@@ -603,6 +609,7 @@ namespace Alternet.UI
         /// <summary>
         /// Captures the mouse to the control.
         /// </summary>
+        [Browsable(false)]
         public virtual void CaptureMouse()
         {
         }
@@ -610,6 +617,7 @@ namespace Alternet.UI
         /// <summary>
         /// Releases the mouse capture, if the control held the capture.
         /// </summary>
+        [Browsable(false)]
         public virtual void ReleaseMouseCapture()
         {
         }
@@ -1027,6 +1035,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified action for all the parent controls.
+        /// </summary>
+        /// <typeparam name="T">Type of the action parameters.</typeparam>
+        /// <param name="e">Action parameters.</param>
+        /// <param name="action">Action to call.</param>
+        /// <returns>True if <see cref="HandledEventArgs.Handled"/>
+        /// of the <paramref name="e"/> is True.</returns>
+        public bool ForEachParent<T>(T e, Action<AbstractControl, T> action)
+            where T : HandledEventArgs
+        {
+            if (Parent is null)
+                return false;
+            action(Parent, e);
+            if (e.Handled)
+                return true;
+            var result = Parent.ForEachParent(e, action);
+            return result;
+        }
+
+        /// <summary>
+        /// Calls the specified action for all visible child controls.
+        /// </summary>
+        /// <typeparam name="T">Type of the action parameters.</typeparam>
+        /// <param name="e">Action parameters.</param>
+        /// <param name="action">Action to call.</param>
+        /// <returns>True if <see cref="HandledEventArgs.Handled"/>
+        /// of the <paramref name="e"/> is True.</returns>
+        public bool ForEachVisibleChild<T>(T e, Action<AbstractControl, T> action)
+            where T : HandledEventArgs
+        {
+            if (!HasChildren)
+                return false;
+            var childs = Children;
+
+            foreach (var child in childs)
+            {
+                if (!child.Visible)
+                    continue;
+                action(child, e);
+                if (e.Handled)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Forces the control to invalidate itself and immediately redraw itself
         /// and any child controls. Calls <see cref="Invalidate()"/> and <see cref="Update"/>.
         /// </summary>
@@ -1069,6 +1124,7 @@ namespace Alternet.UI
         /// method to enable the changes to take effect.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public virtual void SuspendLayout()
         {
             layoutSuspendCount++;
@@ -1112,6 +1168,7 @@ namespace Alternet.UI
         /// re-execution of handler creation logic is needed.
         /// For example, this may happen when visual theme changes.
         /// </remarks>
+        [Browsable(false)]
         public virtual void RecreateHandler()
         {
             Invalidate();
@@ -1261,6 +1318,7 @@ namespace Alternet.UI
         /// <see cref="BeginUpdate"/> and <see cref="EndUpdate"/> calls.
         /// This method is mainly for multiple add or remove of the items in list like controls.
         /// </remarks>
+        [Browsable(false)]
         public virtual int BeginUpdate()
         {
             updateCount++;
@@ -1271,6 +1329,7 @@ namespace Alternet.UI
         /// Resumes painting the control after painting is suspended by the
         /// <see cref="BeginUpdate"/> method.
         /// </summary>
+        [Browsable(false)]
         public virtual int EndUpdate()
         {
             updateCount--;
@@ -1375,6 +1434,7 @@ namespace Alternet.UI
         /// <see cref="BeginInit"/> and <see cref="EndInit"/> methods
         /// prevents the control from being used before it is fully initialized.
         /// </remarks>
+        [Browsable(false)]
         public virtual void BeginInit()
         {
             SuspendLayout();
@@ -1390,6 +1450,7 @@ namespace Alternet.UI
         /// the <see cref="BeginInit"/> and <see cref="EndInit"/> methods
         /// prevents the control from being used before it is fully initialized.
         /// </remarks>
+        [Browsable(false)]
         public virtual void EndInit()
         {
             ResumeLayout();
@@ -1580,6 +1641,7 @@ namespace Alternet.UI
         /// <summary>
         /// Forces the re-creation of the underlying native control.
         /// </summary>
+        [Browsable(false)]
         public virtual void RecreateWindow()
         {
             Invalidate();
@@ -1625,6 +1687,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the control should reposition its child controls.
         /// </summary>
+        [Browsable(false)]
         public virtual void OnLayout()
         {
             if (CustomLayout is not null)
@@ -1896,6 +1959,7 @@ namespace Alternet.UI
         /// Resets the <see cref="AbstractControl.BackColor" /> property to its default value.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
         public virtual void ResetBackColor()
         {
             BackgroundColor = null;
@@ -1981,6 +2045,7 @@ namespace Alternet.UI
         /// Resets cached value of the <see cref="ScaleFactor"/> property, so it will be retrieved
         /// from the handler next time it is used.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetScaleFactor()
         {
             scaleFactor = null;

@@ -99,6 +99,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls page down.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollPageDown()
         {
             RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.LargeIncrement);
@@ -107,6 +108,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls page up.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollPageUp()
         {
             RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.LargeDecrement);
@@ -115,6 +117,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls line down.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollLineDown()
         {
             RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.SmallIncrement);
@@ -123,6 +126,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls line up.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollLineUp()
         {
             RaiseScroll(ScrollBarOrientation.Vertical, ScrollEventType.SmallDecrement);
@@ -131,6 +135,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls char right.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollCharRight()
         {
             RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.LargeIncrement);
@@ -139,6 +144,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls char left.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollCharLeft()
         {
             RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.SmallDecrement);
@@ -147,6 +153,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls page right.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollPageRight()
         {
             RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.LargeIncrement);
@@ -155,6 +162,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll event which scrolls page left.
         /// </summary>
+        [Browsable(false)]
         public void RaiseScrollPageLeft()
         {
             RaiseScroll(ScrollBarOrientation.Horizontal, ScrollEventType.LargeDecrement);

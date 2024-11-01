@@ -178,6 +178,7 @@ namespace Alternet.UI
         /// Binds <see cref="LogControl"/> to show messages which are logged with
         /// <see cref="App.Log"/>.
         /// </summary>
+        [Browsable(false)]
         public virtual void BindApplicationLog()
         {
             LogControl.BindApplicationLog();

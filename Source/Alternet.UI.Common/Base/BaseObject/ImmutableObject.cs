@@ -54,6 +54,7 @@ namespace Alternet.UI
         /// for the lifetime of the object. This state can be set, but it cannot be cleared once
         /// it is set.
         /// </remarks>
+        [Browsable(false)]
         public virtual void SetImmutable()
         {
             immutable = true;

@@ -10,6 +10,86 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Called before the <see cref="KeyDown" /> event of the child control is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnBeforeChildKeyDown(object? sender, KeyEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after the <see cref="KeyDown" /> event of the child control is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnAfterChildKeyDown(object? sender, KeyEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called before the <see cref="KeyDown" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnBeforeParentKeyDown(object? sender, KeyEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after the <see cref="KeyDown" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnAfterParentKeyDown(object? sender, KeyEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called before the <see cref="MouseDown" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnBeforeParentMouseDown(object? sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after the <see cref="MouseDown" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnAfterParentMouseDown(object? sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called before the <see cref="MouseUp" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnBeforeParentMouseUp(object? sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after the <see cref="MouseUp" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnAfterParentMouseUp(object? sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the <see cref="CellChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
