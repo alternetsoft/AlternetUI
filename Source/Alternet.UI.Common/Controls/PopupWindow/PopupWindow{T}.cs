@@ -84,7 +84,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Ok' button is visible.
         /// </summary>
-        public bool ShowOkButton
+        public virtual bool ShowOkButton
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether 'Cancel' button is visible.
         /// </summary>
-        public bool ShowCancelButton
+        public virtual bool ShowCancelButton
         {
             get
             {
@@ -175,13 +175,13 @@ namespace Alternet.UI
         /// Gets whether popup window was already shown at least one time.
         /// </summary>
         [Browsable(false)]
-        public bool WasShown { get; set; } = false;
+        public virtual bool WasShown { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user presses "Escape" key.
         /// </summary>
-        public bool HideOnEscape { get; set; } = true;
+        public virtual bool HideOnEscape { get; set; } = true;
 
         /// <summary>
         /// Gets or sets owner of the popup window.
