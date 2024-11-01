@@ -203,6 +203,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public virtual void Required()
         {
         }

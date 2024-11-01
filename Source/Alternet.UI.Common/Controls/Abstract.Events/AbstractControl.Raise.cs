@@ -268,6 +268,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the <see cref="Activated" /> event and <see cref="OnActivated"/> method.
         /// </summary>
+        [Browsable(false)]
         public void RaiseActivated()
         {
             OnActivated(EventArgs.Empty);

@@ -243,11 +243,13 @@ namespace Alternet.UI
         /// <summary>
         /// Brings the control to the front of the z-order.
         /// </summary>
+        [Browsable(false)]
         public void BringToFront() => Parent?.SetChildIndex(this, 0);
 
         /// <summary>
         /// Sends the control to the back of the z-order.
         /// </summary>
+        [Browsable(false)]
         public void SendToBack() => Parent?.SetChildIndex(this, -1);
 
         /// <summary>
@@ -346,6 +348,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets foreground color to the default value.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetForeColor()
         {
             ForegroundColor = null;
@@ -421,6 +424,7 @@ namespace Alternet.UI
         /// <summary>
         /// Invalidates internally painted caret.
         /// </summary>
+        [Browsable(false)]
         public virtual void InvalidateCaret()
         {
             if (caretInfo is null || !caretInfo.Visible)
@@ -1908,6 +1912,7 @@ namespace Alternet.UI
         /// Resets the <see cref="AbstractControl.BackColor" /> property to its default value.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
         public virtual void ResetBackColor()
         {
             BackgroundColor = null;
