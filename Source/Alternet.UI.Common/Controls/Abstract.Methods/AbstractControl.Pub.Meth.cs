@@ -1035,6 +1035,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified action for all the parent controls.
+        /// </summary>
+        /// <typeparam name="T">Type of the action parameters.</typeparam>
+        /// <param name="e">Action parameters.</param>
+        /// <param name="action">Action to call.</param>
+        /// <returns>True if <see cref="HandledEventArgs.Handled"/>
+        /// of the <paramref name="e"/> is True.</returns>
+        public bool ForEachParent<T>(T e, Action<AbstractControl, T> action)
+            where T : HandledEventArgs
+        {
+            if (Parent is null)
+                return false;
+            action(Parent, e);
+            if (e.Handled)
+                return true;
+            var result = Parent.ForEachParent(e, action);
+            return result;
+        }
+
+        /// <summary>
+        /// Calls the specified action for all visible child controls.
+        /// </summary>
+        /// <typeparam name="T">Type of the action parameters.</typeparam>
+        /// <param name="e">Action parameters.</param>
+        /// <param name="action">Action to call.</param>
+        /// <returns>True if <see cref="HandledEventArgs.Handled"/>
+        /// of the <paramref name="e"/> is True.</returns>
+        public bool ForEachVisibleChild<T>(T e, Action<AbstractControl, T> action)
+            where T : HandledEventArgs
+        {
+            if (!HasChildren)
+                return false;
+            var childs = Children;
+
+            foreach (var child in childs)
+            {
+                if (!child.Visible)
+                    continue;
+                action(child, e);
+                if (e.Handled)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Forces the control to invalidate itself and immediately redraw itself
         /// and any child controls. Calls <see cref="Invalidate()"/> and <see cref="Update"/>.
         /// </summary>
