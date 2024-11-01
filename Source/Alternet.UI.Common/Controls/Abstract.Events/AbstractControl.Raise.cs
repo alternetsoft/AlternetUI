@@ -143,6 +143,9 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseUp(MouseEventArgs e)
         {
+            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e)))
+                return;
+
             HoveredControl = this;
             PlessMouse.CancelLongTapTimer();
 
@@ -161,6 +164,8 @@ namespace Alternet.UI
             {
                 RaiseMouseRightButtonUp(e);
             }
+
+            ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e));
         }
 
         /// <summary>
@@ -193,6 +198,9 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseDown(MouseEventArgs e)
         {
+            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseDown(this, e)))
+                return;
+
             HoveredControl = this;
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -217,6 +225,8 @@ namespace Alternet.UI
             {
                 RaiseMouseRightButtonDown(e);
             }
+
+            ForEachVisibleChild(e, (control, e) => control.OnAfterParentMouseDown(this, e));
         }
 
         /// <summary>
@@ -726,6 +736,11 @@ namespace Alternet.UI
         {
             PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
 
+            if(ForEachParent(e, (control, e) => control.OnBeforeChildKeyDown(this, e)))
+                return;
+            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentKeyDown(this, e)))
+                return;
+
             bool isInputKey = false;
             RaisePreviewKeyDown(e.Key, e.ModifierKeys, ref isInputKey);
 
@@ -739,6 +754,9 @@ namespace Alternet.UI
                 if (!e.Handled)
                     KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
             });
+
+            Parent?.OnAfterChildKeyDown(this, e);
+            ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e));
 
             if (isInputKey)
             {
