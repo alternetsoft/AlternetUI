@@ -67,6 +67,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets suggested size of the image for the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor for which to get suggested size of the image.</param>
+        /// <returns></returns>
+        public static int GetSuggestedSize(Coord scaleFactor)
+        {
+            int size = 16;
+
+            if (scaleFactor > 1)
+            {
+                size = (int)(size * scaleFactor);
+                if (size < 32)
+                    size = 32;
+            }
+
+            return size;
+        }
+
+        /// <summary>
         /// Adds svg to the image list with the default normal color for the specified theme.
         /// </summary>
         /// <param name="svg">Svg to add.</param>
