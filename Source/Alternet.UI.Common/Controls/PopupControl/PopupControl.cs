@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -10,6 +11,7 @@ namespace Alternet.UI
     public partial class PopupControl : Border
     {
         private Control? container;
+        private ModalResult popupResult = ModalResult.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupControl"/> class.
@@ -43,10 +45,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the popup result value, which is updated when popup is closed.
+        /// This property is set to <see cref="ModalResult.None"/> at the moment
+        /// when popup is shown.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ModalResult PopupResult
+        {
+            get
+            {
+                return popupResult;
+            }
+
+            set
+            {
+                popupResult = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup window disappears automatically
+        /// when the user presses "Enter" key.
+        /// </summary>
+        public virtual bool HideOnEnter { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether a popup disappears automatically
         /// when the user presses "Escape" key.
         /// </summary>
-        public bool HideOnEscape { get; set; } = true;
+        public virtual bool HideOnEscape { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup disappears automatically
+        /// when the user clicks mouse outside it or if it loses focus in any other way.
+        /// </summary>
+        public virtual bool HideOnDeactivate { get; set; }
 
         /// <summary>
         /// Closes popup window and raises <see cref="Closed"/> event.
@@ -66,15 +99,50 @@ namespace Alternet.UI
             });
         }
 
-        /// <summary>
-        /// Handles common keys for all the popups. This includes "Escape" and other keys.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments.</param>
-        protected virtual void HandlePopupKeyDown(object sender, KeyEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
         {
-            if (HideOnEscape && e.Key == Key.Escape)
+            if (Visible)
             {
+                PopupResult = ModalResult.None;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnBeforeParentMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (HideOnDeactivate && Visible)
+            {
+                PopupResult = ModalResult.Canceled;
+                Close();
+                e.Handled = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnBeforeParentKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (HideOnEscape && e.IsEscape)
+            {
+                PopupResult = ModalResult.Canceled;
+                Close();
+                e.Suppressed();
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnBeforeChildKeyDown(object? sender, KeyEventArgs e)
+        {
+            if (HideOnEscape && e.IsEscape)
+            {
+                PopupResult = ModalResult.Canceled;
+                Close();
+                e.Suppressed();
+            }
+
+            if (HideOnEnter && e.IsEnter)
+            {
+                PopupResult = ModalResult.Accepted;
                 Close();
                 e.Suppressed();
             }
