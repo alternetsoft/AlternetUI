@@ -329,7 +329,7 @@ namespace Alternet.UI
         /// Notifies container about the column changes.
         /// </summary>
         /// <param name="eventType">Type of the event.</param>
-        public virtual void RaiseChanged(ColumnEventType eventType)
+        public virtual void RaiseChanged(ColumnEventType eventType = ColumnEventType.AllChanged)
         {
             if (!IsAttached)
                 return;

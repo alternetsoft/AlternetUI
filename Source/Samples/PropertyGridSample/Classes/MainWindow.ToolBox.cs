@@ -36,7 +36,7 @@ namespace PropertyGridSample
 
         private void InitToolBox()
         {
-            InitSimpleTestActions();
+            InitTestsAll();
 
             void Fn()
             {

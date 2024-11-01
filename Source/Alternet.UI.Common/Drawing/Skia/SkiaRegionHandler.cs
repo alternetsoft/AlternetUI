@@ -97,7 +97,7 @@ namespace Alternet.Drawing
                 return RegionContain.OutRegion;
         }
 
-        /// <seealso cref="Region.GetBounds"/>
+        /// <seealso cref="Region.GetBounds()"/>
         public virtual RectD GetBounds()
         {
             var resultI = (RectI)region.Bounds;

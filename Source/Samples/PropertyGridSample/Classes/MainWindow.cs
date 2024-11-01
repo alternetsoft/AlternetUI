@@ -385,6 +385,7 @@ namespace PropertyGridSample
                         }
 
                         control.Visible = true;
+                        control.Refresh();
                     });
                     parentParent.Refresh();
                 }
