@@ -129,16 +129,13 @@ namespace Alternet.UI
 
         public void Clear()
         {
-            clearing++;
             try
             {
-                NativeControl.Clear();
                 Control.Items.Clear();
                 Control.Columns.Clear();
             }
             finally
             {
-                clearing--;
             }
         }
 

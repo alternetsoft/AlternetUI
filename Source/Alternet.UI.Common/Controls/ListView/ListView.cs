@@ -587,8 +587,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
+        /// Gets a value indicating whether the control has a border.
         /// </summary>
+        /// <remarks>
+        /// This property currently does nothing and <see cref="ListView"/> is always without the border.
+        /// This is done to prevent bad behavior on Windows platform in some situations.
+        /// In order to have border place <see cref="ListView"/> inside <see cref="Border"/> control.
+        /// </remarks>
         public virtual bool HasBorder
         {
             get
@@ -598,7 +603,6 @@ namespace Alternet.UI
 
             set
             {
-                Handler.HasBorder = value;
             }
         }
 

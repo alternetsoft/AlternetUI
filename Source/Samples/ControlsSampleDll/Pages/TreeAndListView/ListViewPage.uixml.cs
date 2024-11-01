@@ -40,8 +40,7 @@ namespace ControlsSample
                 ModifyColumnTitleButton,
                 editItemsButton,
                 editColumnsButton,
-                beginSelectedLabelEditingButton,
-                hasBorderButton);
+                beginSelectedLabelEditingButton);
             buttons.SuggestedWidthToMax();
 
             var imageLists = DemoResourceLoader.LoadImageLists();
@@ -79,10 +78,14 @@ namespace ControlsSample
         private void AddDefaultItems()
         {
             listView!.View = ListViewView.Details;
+
+            PropertyGridSample.ObjectInit.InitListView(listView);
+            /*
             InitializeColumns();
             AddItems(50);
             foreach (var column in listView!.Columns)
                 column.WidthMode = ListViewColumnWidthMode.AutoSize;
+            */
         }
 
         private bool SlowRecreate
@@ -111,7 +114,6 @@ namespace ControlsSample
             allowMultipleSelectionCheckBox.Enabled = fastRecreate;
             allowLabelEditingCheckBox.Enabled = fastRecreate;
             columnHeaderVisibleCheckBox.Enabled = fastRecreate;
-            hasBorderButton.Enabled = fastRecreate;
         }
 
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)

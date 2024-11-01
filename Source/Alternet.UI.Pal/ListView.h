@@ -27,7 +27,7 @@ namespace Alternet::UI
         void ApplyLargeImageList(wxListView* value);
         void ApplySmallImageList(wxListView* value);
 
-        bool hasBorder = true;
+        bool hasBorder = false;
         ImageList* _smallImageList = nullptr;
         ImageList* _largeImageList = nullptr;
         ListViewSelectionMode _selectionMode = ListViewSelectionMode::Single;

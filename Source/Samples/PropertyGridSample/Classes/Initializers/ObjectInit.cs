@@ -463,6 +463,7 @@ namespace PropertyGridSample
 
             void AddDefaultItems()
             {
+                listView.View = ListViewView.Details;
                 InitializeColumns();
                 AddItems(50);
                 foreach (var column in listView!.Columns)
