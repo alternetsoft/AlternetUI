@@ -524,15 +524,11 @@ namespace MenuSample
             if (isBottomCheckBox.IsChecked)
             {
 
-                toolbar.VerticalAlignment = VerticalAlignment.Bottom;
-                toolbar.OnlyTopBorder();
-                toolbar.Margin = (0, ToolBar.DefaultDistanceToContent, 0, 0);
+                toolbar.MakeBottomAligned();
             }
             else
             {
-                toolbar.VerticalAlignment = VerticalAlignment.Top;
-                toolbar.OnlyBottomBorder();
-                toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
+                toolbar.MakeTopAligned();
             }
         }
     }
