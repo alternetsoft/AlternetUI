@@ -163,7 +163,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether bottom border is visible.
+        /// Gets whether bottom border is visible.
         /// </summary>
         [Browsable(false)]
         public virtual bool HasVisibleBorderBottom
@@ -175,7 +175,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether top border is visible.
+        /// Gets whether top border is visible.
         /// </summary>
         [Browsable(false)]
         public virtual bool HasVisibleBorderTop
