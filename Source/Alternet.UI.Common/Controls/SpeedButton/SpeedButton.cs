@@ -725,8 +725,8 @@ namespace Alternet.UI
             BorderSettings border = new()
             {
                 Width = 1,
-                UniformRadiusIsPercent = false,
-                UniformCornerRadius = 3,
+                /*UniformRadiusIsPercent = false,
+                UniformCornerRadius = 3,*/
                 Color = color,
             };
 
@@ -790,12 +790,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(Graphics dc, RectD rect)
         {
+            var state = VisualState;
+
+            if(state == VisualControlState.Hovered)
+            {
+            }
+
             DrawDefaultBackground(dc, rect);
             if(ImageVisible)
                 PictureBox.DrawDefaultImage(dc, PictureBox.Bounds);
             if (TextVisible)
             {
-                var state = VisualState;
                 var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
                 if(foreColor is null)
                 {
