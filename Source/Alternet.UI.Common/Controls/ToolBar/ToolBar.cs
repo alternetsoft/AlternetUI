@@ -1264,6 +1264,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Moves toolbar to the bottom of the container. This is done
+        /// by setting it's <see cref="AbstractControl.VerticalAlignment"/> to
+        /// <see cref="VerticalAlignment.Bottom"/>. This moves toolbar to the bottom if
+        /// container's <see cref="AbstractControl.Layout"/> is <see cref="LayoutStyle.Vertical"/>.
+        /// Also this method optionally updates margin and border of the toolbar.
+        /// </summary>
+        /// <param name="onlyTopBorder">If True, only top border will be visible.
+        /// If false, doesn't change the border.</param>
+        /// <param name="updateMargin">If True, margin will be updated to have distance to other
+        /// content of the container. If False, doesn't change the margin.</param>
+        public virtual void MakeBottomAligned(bool onlyTopBorder = true, bool updateMargin = true)
+        {
+            VerticalAlignment = VerticalAlignment.Bottom;
+            if(onlyTopBorder)
+                OnlyTopBorder();
+            if(updateMargin)
+                Margin = (0, ToolBar.DefaultDistanceToContent, 0, 0);
+        }
+
+        /// <summary>
+        /// Moves toolbar to the top of the container. This is done
+        /// by setting it's <see cref="AbstractControl.VerticalAlignment"/> to
+        /// <see cref="VerticalAlignment.Top"/>. This moves toolbar to the top if
+        /// container's <see cref="AbstractControl.Layout"/> is <see cref="LayoutStyle.Vertical"/>.
+        /// Also this method optionally updates margin and border of the toolbar.
+        /// </summary>
+        /// <param name="onlyBottomBorder">If True, only bottom border will be visible.
+        /// If false, doesn't change the border.</param>
+        /// <param name="updateMargin">If True, margin will be updated to have distance to other
+        /// content of the container. If False, doesn't change the margin.</param>
+        public virtual void MakeTopAligned(bool onlyBottomBorder = true, bool updateMargin = true)
+        {
+            VerticalAlignment = VerticalAlignment.Top;
+            if (onlyBottomBorder)
+                OnlyBottomBorder();
+            if (updateMargin)
+                Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
+        }
+
+        /// <summary>
         /// Sets item 'Shortcut' property value.
         /// </summary>
         /// <param name="id">Item id.</param>
