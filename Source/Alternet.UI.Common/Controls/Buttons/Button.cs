@@ -16,7 +16,8 @@ namespace Alternet.UI
         private ControlStateImages? stateImages;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Button"/> class.
+        /// Initializes a new instance of the <see cref="Button"/> class
+        /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public Button(Control parent)
@@ -39,6 +40,29 @@ namespace Alternet.UI
             : this()
         {
             Text = text;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Button"/> class
+        /// with the specified text, click action and parent control.
+        /// </summary>
+        public Button(Control parent, string text, Action? clickAction = null)
+            : this()
+        {
+            Text = text;
+            ClickAction = clickAction;
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Button"/> class
+        /// with the specified text and click action.
+        /// </summary>
+        public Button(string text, Action clickAction)
+            : this()
+        {
+            Text = text;
+            ClickAction = clickAction;
         }
 
         /// <summary>
