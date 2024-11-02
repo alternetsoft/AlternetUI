@@ -64,6 +64,7 @@ namespace Alternet.UI
             mainControl.Parent = this;
             CustomTextBox.InitErrorPicture(errorPicture);
             errorPicture.Parent = this;
+            errorPicture.ParentBackColor = true;
         }
 
         /// <summary>
