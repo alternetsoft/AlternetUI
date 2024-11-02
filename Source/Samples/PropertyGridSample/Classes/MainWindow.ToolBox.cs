@@ -93,6 +93,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(VirtualListBox));
                 LimitedTypes.Add(typeof(UserControl));
                 LimitedTypes.Add(typeof(RichToolTip));
+                LimitedTypes.Add(typeof(TextBoxAndButton));
 
                 if (DebugUtils.IsDebugDefined)
                 {
