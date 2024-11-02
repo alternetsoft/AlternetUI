@@ -141,12 +141,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {
-            var overrideValue = Backgrounds?.GetObjectOrNull(state);
+            var overrideValue = Backgrounds?.GetObjectOrNormal(state);
             if (overrideValue is not null)
                 return overrideValue;
 
             var result = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
-            var brush = result?.Backgrounds?.GetObjectOrNull(state);
+            var brush = result?.Backgrounds?.GetObjectOrNormal(state);
             brush ??= BackgroundColor?.AsBrush;
             return brush;
         }
