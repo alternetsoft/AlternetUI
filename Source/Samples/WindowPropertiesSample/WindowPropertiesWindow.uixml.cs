@@ -8,8 +8,8 @@ namespace WindowPropertiesSample
 {
     public partial class WindowPropertiesWindow : Window
     {
-        private static RectD Position1 = (250, 250, 450, 450);
-        private static RectD Position2 = (50, 50, 500, 500);
+        internal static RectD Position1 = (250, 250, 450, 450);
+        internal static RectD Position2 = (50, 50, 500, 500);
 
         private readonly IconSet Icon1;
         private readonly IconSet Icon2;
@@ -453,8 +453,9 @@ namespace WindowPropertiesSample
                 Title = "OwnedWindow",
             };
 
-            var label = ownedWindow.AddLabel("Owned Window #" + testWindow.OwnedWindows.Length);
+            Label label = new("Owned Window #" + testWindow.OwnedWindows.Length);
             label.Margin = 10;
+            label.Parent = ownedWindow;
             ownedWindow.Show();
         }
 
