@@ -6,7 +6,7 @@
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Layout="Vertical">
   <Window.Menu>
     <MainMenu>
-      <MenuItem Text="_File" IsTextLocalized="true">
+      <MenuItem Text="_File" IsTextLocalized="true" Name="fileMenu">
         <MenuItem Text="_Open..." Name="openMenuItem" IsTextLocalized="true"
                   Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
         <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveCommand_Click"

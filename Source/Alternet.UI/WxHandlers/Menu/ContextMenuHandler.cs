@@ -73,6 +73,9 @@ namespace Alternet.UI
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+
+            NativeControl.Opened = NativeControlOpened;
+            NativeControl.Closed = NativeControlClosed;
         }
 
         protected override void OnDetach()
@@ -81,6 +84,17 @@ namespace Alternet.UI
 
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
+
+            NativeControl.Opened = null;
+            NativeControl.Closed = null;
+        }
+
+        private void NativeControlOpened()
+        {
+        }
+
+        private void NativeControlClosed()
+        {
         }
 
         private void ApplyItems()

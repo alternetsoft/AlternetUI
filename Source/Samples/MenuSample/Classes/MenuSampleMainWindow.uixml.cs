@@ -47,7 +47,7 @@ namespace MenuSample
 
             toolbar.TextVisible = true;
             toolbar.ItemSize = 32;
-            toolbar.Margin = (0, 0, 0, 4);
+            toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
 
             toolbar.Parent = this;
 
@@ -59,7 +59,7 @@ namespace MenuSample
 
             verticalCheckBox.Enabled = false;
             isRightCheckBox.Enabled = false;
-            isBottomCheckBox.Enabled = false;
+            isBottomCheckBox.Enabled = true;
             imageToTextDisplayModeComboBox.Enabled = false;
 
             InitToolbar();
@@ -104,24 +104,28 @@ namespace MenuSample
 
             eventsListBox.BindApplicationLog();
 
-            openMenuItem.Opened += OpenMenuItem_Opened;
-            openMenuItem.Closed += OpenMenuItem_Closed;
-            openMenuItem.Highlighted += OpenMenuItem_Highlighted;
+            openMenuItem.Opened += MenuItem_Opened;
+            openMenuItem.Closed += MenuItem_Closed;
+            openMenuItem.Highlighted += MenuItem_Highlighted;
+
+            fileMenu.Opened += MenuItem_Opened;
+            fileMenu.Closed += MenuItem_Closed;
+            fileMenu.Highlighted += MenuItem_Highlighted;
         }
 
-        private void OpenMenuItem_Highlighted(object sender, EventArgs e)
+        private void MenuItem_Highlighted(object sender, EventArgs e)
         {
-            LogEvent("Open Menu Item: Highlighted");
+            LogEvent($"Menu Item '{(sender as MenuItem)?.Name}': Highlighted");
         }
 
-        private void OpenMenuItem_Closed(object sender, EventArgs e)
+        private void MenuItem_Closed(object sender, EventArgs e)
         {
-            LogEvent("Open Menu Item: Closed");
+            LogEvent($"Menu Item '{(sender as MenuItem)?.Name}': Closed");
         }
 
-        private void OpenMenuItem_Opened(object sender, EventArgs e)
+        private void MenuItem_Opened(object sender, EventArgs e)
         {
-            LogEvent("Open Menu Item: Opened");
+            LogEvent($"Menu Item '{(sender as MenuItem)?.Name}': Opened");
         }
 
         private StatusBar? GetStatusBar() => StatusBar as StatusBar;
@@ -459,12 +463,6 @@ namespace MenuSample
             ImageTextVertical();*/
         }
 
-        private void IsBottomCheckBox_Changed(object? sender, EventArgs e)
-        {
-            /*if (toolbar != null)
-                toolbar.IsBottom = isBottomCheckBox.IsChecked;*/
-        }
-
         private void NoDividerCheckBox_Changed(object? sender, EventArgs e)
         {
             if (toolbar is null)
@@ -517,6 +515,25 @@ namespace MenuSample
 
             if (s != null)
                 s.SizingGripVisible = !s.SizingGripVisible;
+        }
+
+        private void IsBottomCheckBox_Changed(object? sender, EventArgs e)
+        {
+            if (toolbar == null)
+                return;
+            if (isBottomCheckBox.IsChecked)
+            {
+
+                toolbar.VerticalAlignment = VerticalAlignment.Bottom;
+                toolbar.OnlyTopBorder();
+                toolbar.Margin = (0, ToolBar.DefaultDistanceToContent, 0, 0);
+            }
+            else
+            {
+                toolbar.VerticalAlignment = VerticalAlignment.Top;
+                toolbar.OnlyBottomBorder();
+                toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
+            }
         }
     }
 }
