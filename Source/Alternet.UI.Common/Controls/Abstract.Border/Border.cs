@@ -259,8 +259,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            var width = NormalBorder.Width;
-            return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
+            if (HasBorder)
+            {
+                var width = NormalBorder.Width;
+                return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
+            }
+            else
+            {
+                return base.GetPreferredSize(availableSize);
+            }
         }
 
         /// <inheritdoc/>

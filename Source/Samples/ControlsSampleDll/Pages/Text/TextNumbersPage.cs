@@ -48,6 +48,7 @@ namespace ControlsSample
 
             Group(shortEdit, byteEdit, doubleEdit, udoubleEdit, uint32HexEdit, twoDigitsEdit)
                 .Margin(0, 5, 5, 5).Parent(this).InnerSuggestedWidth(200)
+                .ParentForeColor(true).ParentBackColor(true)
                 .Action<ValueEditorCustom>(BindTextChanged).LabelSuggestedWidthToMax();
 
             label.Parent = this;
@@ -55,7 +56,12 @@ namespace ControlsSample
             toolTip.VerticalAlignment = VerticalAlignment.Fill;
             toolTip.Margin = 10;
             toolTip.Parent = this;
+            toolTip.ParentBackColor = true;
+            toolTip.ParentForeColor = true;
             ToolTipProvider = toolTip;
+
+            BackgroundColor = Color.LightBlue;
+            ForegroundColor = Color.Black;
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)

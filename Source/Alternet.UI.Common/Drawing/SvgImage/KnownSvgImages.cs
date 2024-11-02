@@ -43,6 +43,8 @@ namespace Alternet.UI
         private static SvgImage? imgRedo;
         private static SvgImage? imgSquarePlus;
         private static SvgImage? imgSquareMinus;
+        private static SvgImage? imgPlus;
+        private static SvgImage? imgMinus;
         private static SvgImage? imgYes;
         private static SvgImage? imgNo;
         private static SvgImage? imgAbort;
@@ -339,6 +341,24 @@ namespace Alternet.UI
         {
             get => imgFileSave ??= new MonoSvgImage(KnownSvgUrls.UrlImageFileSave);
             set => imgFileSave = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used as 'Plus' image.
+        /// </summary>
+        public static SvgImage ImgPlus
+        {
+            get => imgPlus ??= new MonoSvgImage(KnownSvgUrls.UrlImagePlus);
+            set => imgPlus = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used as 'Minus' image.
+        /// </summary>
+        public static SvgImage ImgMinus
+        {
+            get => imgMinus ??= new MonoSvgImage(KnownSvgUrls.UrlImageMinus);
+            set => imgMinus = value;
         }
 
         /// <summary>

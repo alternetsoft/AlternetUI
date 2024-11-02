@@ -140,5 +140,35 @@ namespace Alternet.UI
         /// 'Go' button (can be used in browser).
         /// </summary>
         BrowserGo,
+
+        /// <summary>
+        /// 'Ellipsis' button that can be used near the textbox or other value editors.
+        /// </summary>
+        TextBoxEllipsis,
+
+        /// <summary>
+        /// 'ComboBox' button that can be used near the textbox or other value editors.
+        /// </summary>
+        TextBoxCombo,
+
+        /// <summary>
+        /// 'Up' button that can be used near the textbox or other value editors.
+        /// </summary>
+        TextBoxUp,
+
+        /// <summary>
+        /// 'Down' button that can be used near the textbox or other value editors.
+        /// </summary>
+        TextBoxDown,
+
+        /// <summary>
+        /// 'Plus' button that can be used near the textbox or other value editors.
+        /// </summary>
+        TextBoxPlus,
+
+        /// <summary>
+        /// 'Minus' button that can be used near the textbox or other value editors.
+        /// </summary>
+        TextBoxMinus,
     }
 }

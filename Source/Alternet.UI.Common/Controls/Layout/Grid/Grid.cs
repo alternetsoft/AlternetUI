@@ -103,12 +103,6 @@ namespace Alternet.UI
             OnCellAttachedPropertyChanged(this);
         }
 
-        /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e); // todo: draw grid lines.
-        }
-
         private bool UseLayoutRounding { get; set; }
 
         /// <inheritdoc/>

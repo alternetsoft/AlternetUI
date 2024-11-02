@@ -86,7 +86,9 @@ namespace ExplorerUISample
                     Layout = LayoutStyle.Vertical,
                 };
 
-                progressWindow.AddLabel("Processing files...").Margin = 10;
+                Label progressLabel = new("Processing files...");
+                progressLabel.Margin = 10;
+                progressLabel.Parent = progressWindow;
 
                 var progressBar = new ProgressBar()
                 {

@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// your application.</remarks>
     [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
-    public partial class Window : ContainerControl, IWindow
+    public partial class Window : Control, IWindow
     {
         private static List<IControlNotification>? globalWindowNotifications;
         private static WindowKind? globalWindowKindOverride;

@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// Gets or sets which layout method is used when controls are aligned.
         /// This is for internal use only.
         /// </summary>
-        public static DefaultLayoutMethod UseLayoutMethod = DefaultLayoutMethod.Original;
+        public static DefaultLayoutMethod UseLayoutMethod = DefaultLayoutMethod.New;
 
         /// <summary>
         /// Enumerates known layout methods. This is for internal use only.
@@ -112,6 +112,9 @@ namespace Alternet.UI
             SizeD availableSize,
             bool isVert)
         {
+            if (availableSize.AnyIsEmptyOrNegative)
+                return SizeD.Empty;
+
             var containerSuggestedSize = container.SuggestedSize;
             if (!containerSuggestedSize.IsNanWidthOrHeight)
                 return containerSuggestedSize;
@@ -120,7 +123,7 @@ namespace Alternet.UI
 
             var isNanWidth = containerSuggestedSize.IsNanWidth;
             var isNanHeight = containerSuggestedSize.IsNanHeight;
-            var containerSize = availableSize;
+            var containerSize = container.GetSizeLimited(availableSize);
 
             SizeD result = SizeD.Empty;
 

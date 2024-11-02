@@ -26,34 +26,20 @@ namespace ControlsSample
             MinChildMargin = 5;
             Size = (800, 600);
 
-            AddLabels(
-                "This demo send mouse clicks and key presses to operating system",
-                "in order to control user interface of the application.",
-                "Press F5 to start.");
+            new Label(this, "This demo send mouse clicks and key presses to operating system");
+            new Label(this, "in order to control user interface of the application.");
+            new Label(this, "Press F5 to start.");
 
-            button1 = AddButton("Button 1", () =>
-            {
-                App.Log("Button 1 clicked");
-            });
+            button1 = new(this, "Button 1", () => App.Log("Button 1 clicked"));
+            button2 = new(this, "Button 2", () => App.Log("Button 2 clicked"));
 
-            button2 = AddButton("Button 2", () =>
-            {
-                App.Log("Button 2 clicked");
-            });
+            editor = new TextBox(this);
+            editor2 = new TextBox(this);
 
-            editor = new TextBox();
-            editor.Parent = this;
-
-            editor2 = new TextBox();
-            editor2.Parent = this;
-
-            AddLabels(
-                "Simulator moves mouse to 'Button1' and clicks it.",
-                "After that, it moves mouse to the editor, clicks it",
-                "and enters 'Hello' text.");
-
-            AddLabels(
-                "Simulator currently doesn't work when using Wayland on Linux.");
+            new Label(this, "Simulator moves mouse to 'Button1' and clicks it.");
+            new Label(this, "After that, it moves mouse to the editor, clicks it");
+            new Label(this, "and enters 'Hello' text.");
+            new Label(this, "Simulator currently doesn't work when using Wayland on Linux.");
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

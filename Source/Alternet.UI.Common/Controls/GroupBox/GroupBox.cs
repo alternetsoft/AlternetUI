@@ -27,7 +27,7 @@ namespace Alternet.UI
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
     [ControlCategory("Containers")]
-    public partial class GroupBox : ContainerControl
+    public partial class GroupBox : Control
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupBox"/> class.

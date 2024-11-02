@@ -32,12 +32,26 @@ namespace Alternet.UI
         private Coord? maxTextWidth;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Label"/> class.
+        /// Initializes a new instance of the <see cref="Label"/> class
+        /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public Label(Control parent)
             : this()
         {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Label"/> class.
+        /// with the specified text and parent control.
+        /// </summary>
+        /// <param name="text">Text displayed on this label.</param>
+        /// <param name="parent">Parent of the control.</param>
+        public Label(Control parent, string text)
+            : this()
+        {
+            Text = text ?? string.Empty;
             Parent = parent;
         }
 

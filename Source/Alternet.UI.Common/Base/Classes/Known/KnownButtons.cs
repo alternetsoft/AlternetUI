@@ -77,6 +77,13 @@ namespace Alternet.UI
             data[KnownButton.ZoomIn] = () => new(strings.ButtonZoomIn, KnownSvgImages.ImgZoomIn);
             data[KnownButton.ZoomOut] = () => new(strings.ButtonZoomOut, KnownSvgImages.ImgZoomOut);
             data[KnownButton.BrowserGo] = () => new(strings.ButtonGo, KnownSvgImages.ImgBrowserGo);
+
+            data[KnownButton.TextBoxEllipsis] = () => new(KnownSvgImages.ImgMoreActionsHorz);
+            data[KnownButton.TextBoxCombo] = () => new(KnownSvgImages.ImgAngleDown);
+            data[KnownButton.TextBoxUp] = () => new(KnownSvgImages.ImgTriangleArrowUp);
+            data[KnownButton.TextBoxDown] = () => new(KnownSvgImages.ImgTriangleArrowDown);
+            data[KnownButton.TextBoxPlus] = () => new(KnownSvgImages.ImgPlus);
+            data[KnownButton.TextBoxMinus] = () => new(KnownSvgImages.ImgMinus);
         }
 
         /// <summary>
@@ -89,9 +96,18 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="text">Button text.</param>
             /// <param name="svg">Button image.</param>
-            public Info(object text, SvgImage svg)
+            public Info(object? text, SvgImage svg)
             {
                 Text = text;
+                SvgImage = svg;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Info"/> class.
+            /// </summary>
+            /// <param name="svg">Button image.</param>
+            public Info(SvgImage svg)
+            {
                 SvgImage = svg;
             }
 

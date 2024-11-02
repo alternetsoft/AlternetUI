@@ -512,6 +512,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePaint(PaintEventArgs e)
         {
+            if (e.ClipRectangle.IsEmpty)
+                return;
             OnPaint(e);
             Paint?.Invoke(this, e);
             PaintCaret(e);

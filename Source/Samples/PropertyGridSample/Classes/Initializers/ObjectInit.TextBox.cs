@@ -9,6 +9,14 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
+        public static void InitTextBoxAndButton(object control)
+        {
+            if (control is not TextBoxAndButton textBox)
+                return;
+            textBox.Text = "some text";
+            textBox.InnerSuggestedWidth = 200;
+        }
+
         public static void InitTextBoxAndLabel(object control)
         {
             if (control is not TextBoxAndLabel textBox)
