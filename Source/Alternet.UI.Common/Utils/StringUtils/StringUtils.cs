@@ -741,6 +741,14 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Inserts html bold tags before and after substring.
+        /// </summary>
+        /// <param name="s">The text which will be processed.</param>
+        /// <param name="textToFind">The text around which html bold tags will be inserted.</param>
+        /// <param name="comparison"><see cref="StringComparison"/> used to specify how text
+        /// will be compared.</param>
+        /// <returns>Changed text with html bold tags around found substring.</returns>
         public static string InsertBoldTags(
             string s,
             string textToFind,
@@ -754,6 +762,19 @@ namespace Alternet.UI
                         comparison);
         }
 
+        /// <summary>
+        /// Inserts tags before and after substring.
+        /// </summary>
+        /// <param name="s">The text which will be processed.</param>
+        /// <param name="textToFind">The text around which tags will be inserted.</param>
+        /// <param name="comparison"><see cref="StringComparison"/> used to specify how text
+        /// will be compared.</param>
+        /// <returns>Changed text with tags around found substring.</returns>
+        /// <param name="beforeTag">The tag string which will be inserted before
+        /// the found substring.</param>
+        /// <param name="afterTag">The tag string which will be inserted after
+        /// the found substring.</param>
+        /// <returns></returns>
         public static string InsertTags(
             string s,
             string textToFind,
