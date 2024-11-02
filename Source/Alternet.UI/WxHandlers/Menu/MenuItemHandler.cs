@@ -19,7 +19,11 @@ namespace Alternet.UI
         internal Native.Menu EnsureNativeSubmenuCreated()
         {
             if (NativeControl.Submenu == null)
+            {
                 NativeControl.Submenu = new Native.Menu();
+                NativeControl.Submenu.Opened = NativeSubmenuOpened;
+                NativeControl.Submenu.Closed = NativeSubmenuClosed;
+            }
 
             return NativeControl.Submenu;
         }
@@ -196,6 +200,27 @@ namespace Alternet.UI
         private void Control_TextChanged(object? sender, EventArgs e)
         {
             ApplyText();
+        }
+
+        protected override void DisposeManaged()
+        {
+            if(NativeControl.Submenu is not null)
+            {
+                NativeControl.Submenu.Opened = null;
+                NativeControl.Submenu.Closed = null;
+            }
+
+            base.DisposeManaged();
+        }
+
+        private void NativeSubmenuOpened()
+        {
+            Control.RaiseOpened();
+        }
+
+        private void NativeSubmenuClosed()
+        {
+            Control.RaiseClosed();
         }
     }
 }

@@ -144,6 +144,18 @@ namespace Alternet.UI
         public static Thickness DefaultSeparatorMargin { get; set; } = (4, 4, 4, 4);
 
         /// <summary>
+        /// Gets or sets default toolbar distance to other content of the control.
+        /// </summary>
+        /// <remarks>
+        /// This property is not used in the <see cref="ToolBar"/> directly and added here
+        /// for the convenience.
+        /// You can assign one of the sides of <see cref="AbstractControl.Margin"/>
+        /// property with it. For example, for toolbars with top
+        /// <see cref="AbstractControl.VerticalAlignment"/>, you can set bottom margin.
+        /// </remarks>
+        public static Coord DefaultDistanceToContent { get; set; } = 4;
+
+        /// <summary>
         /// Gets or sets default image size.
         /// </summary>
         /// <remarks>
