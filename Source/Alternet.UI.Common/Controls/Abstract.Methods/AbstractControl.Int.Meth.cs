@@ -177,11 +177,17 @@ namespace Alternet.UI
 
         internal virtual SizeD GetPreferredSizeLimited(SizeD availableSize)
         {
-            var result = GetPreferredSize(availableSize);
+            var preferredSize = GetPreferredSize(availableSize);
+            var result = GetSizeLimited(preferredSize);
+            return result;
+        }
+
+        internal virtual SizeD GetSizeLimited(SizeD size)
+        {
             var minSize = MinimumSize;
             var maxSize = MaximumSize;
-            var preferredSize = result.ApplyMinMax(minSize, maxSize);
-            return preferredSize;
+            var result = size.ApplyMinMax(minSize, maxSize);
+            return result;
         }
 
         /// <summary>
