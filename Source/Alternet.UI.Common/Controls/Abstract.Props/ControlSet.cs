@@ -706,6 +706,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="AbstractControl.ParentForeColor"/> property for all the controls in the set.
+        /// </summary>
+        public virtual ControlSet ParentForeColor(bool value)
+        {
+            foreach (var item in Items)
+            {
+                item.ParentForeColor = value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="AbstractControl.ParentBackColor"/> property for all the controls in the set.
+        /// </summary>
+        public virtual ControlSet ParentBackColor(bool value)
+        {
+            foreach (var item in Items)
+            {
+                item.ParentBackColor = value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets <see cref="AbstractControl.Parent"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">Parent control.</param>
