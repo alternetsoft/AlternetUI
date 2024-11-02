@@ -1,3 +1,30 @@
+# 0.9.641 (2024 November 1)
+
+- VirtualListBox.SelectionUnderImage property.
+- Rewrite Graphics.DrawLabel on c#.
+- Graphics: DrawElements and new DrawLabel overload.
+- GenericLabel: Use HVAlignment instead of GenericAlignment for TextAlignment property.
+- GenericLabel: TextAlignmentVertical, TextAlignmentHorizontal properties.
+- GenericLabel: Take into account border size when paint label text.
+- GenericLabel: Do not add dummy space before Text when image is visible, use default image/text distance.
+- AbstractControl.Invalidated event and related methods.
+- AbstractControl.MouseCaptureChanged event and related methods.
+- ComboBox.DrawMode.
+- Fixed Color to System.Drawing.Color conversion.
+- Use HVAlignment instead of GenericAlignment in different places.
+- Remove debug assert on DrawText with wrong color. Now drawing is not performed with wrong colors and no asserts are shown.
+- Demo: VirtualListBox, show bold tags in item's text.
+- Demo: In ListBoxBigDataWindow show results with search text in bold and images.
+- ListControlItem.LabelFlags.
+- ListView: Fixed different exceptions when working with columns and items.
+- ListView: Changed HasBorder behavior. This property currently does nothing and ListView is always without the border. 
+This is done to prevent bad behavior of platform control on Windows in some situations. In order to have border place ListView 
+inside Border control.
+- PopupControl: PopupResult, HideOnEnter, HideOnDeactivate.
+- AbstractControl: ForEachParent, ForEachVisibleChild, OnBeforeChildKeyDown, OnAfterChildKeyDown, OnBeforeParentKeyDown, 
+OnAfterParentKeyDown, OnBeforeParentMouseDown, OnAfterParentMouseDown, OnBeforeParentMouseUp, OnAfterParentMouseUp.
+- MenuItem: Fixed Opened/Closed events not raised in some situations.
+
 # 0.9.640 (2024 October 29)
 
 - ToolBarSet is now derived from Border.
