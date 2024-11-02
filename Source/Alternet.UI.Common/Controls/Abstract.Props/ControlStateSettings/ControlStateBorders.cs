@@ -28,12 +28,12 @@ namespace Alternet.UI
         public virtual ControlStateBorders Clone()
         {
             var result = new ControlStateBorders();
-            result.Normal = Normal;
-            result.Hovered = Hovered;
-            result.Pressed = Pressed;
-            result.Disabled = Disabled;
-            result.Focused = Focused;
-            result.Selected = Selected;
+            result.Normal = Normal?.Clone();
+            result.Hovered = Hovered?.Clone();
+            result.Pressed = Pressed?.Clone();
+            result.Disabled = Disabled?.Clone();
+            result.Focused = Focused?.Clone();
+            result.Selected = Selected?.Clone();
             return result;
         }
 
