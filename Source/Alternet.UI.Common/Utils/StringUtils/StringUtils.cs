@@ -85,6 +85,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets values that split one string to many.
         /// </summary>
+        /// <remarks>
+        /// This field must contain at least CR, LF, CRLF, LFCR strings
+        /// and <see cref="Environment.NewLine"/>.
+        /// </remarks>
         public static string[] StringSplitToArrayChars =
         {
             Environment.NewLine,
@@ -645,6 +649,25 @@ namespace Alternet.UI
             var isOk = float.TryParse(s, style, provider, out var value);
             result = value;
             return isOk;
+        }
+
+        /// <summary>
+        /// Gets whether the specified string equals CR, LF or their combinations.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool EqualsNewLine(string str)
+        {
+            if (str is null || str.Length < 1 || str.Length > 2)
+                return false;
+
+            foreach(var s in StringSplitToArrayChars)
+            {
+                if (str == s)
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>

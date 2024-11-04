@@ -12,6 +12,8 @@ namespace Alternet.UI
     {
         private Control? container;
         private ModalResult popupResult = ModalResult.None;
+        private bool cancelOnLostFocus;
+        private bool acceptOnLostFocus;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupControl"/> class.
@@ -25,6 +27,27 @@ namespace Alternet.UI
         /// Occurs when popup is closed
         /// </summary>
         public event EventHandler? Closed;
+
+        /// <summary>
+        /// Enumerates known close popup reasons.
+        /// </summary>
+        public enum CloseReason
+        {
+            /// <summary>
+            /// Mouse clicked inside container.
+            /// </summary>
+            ClickContainer,
+
+            /// <summary>
+            /// Focus was lost.
+            /// </summary>
+            FocusLost,
+
+            /// <summary>
+            /// Other reason.
+            /// </summary>
+            Other,
+        }
 
         /// <summary>
         /// Gets or sets container where popup will be shown.
@@ -89,9 +112,52 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup disappears automatically
-        /// when the user clicks mouse outside it or if it loses focus in any other way.
+        /// when the user clicks mouse outside it in the client area of the parent control.
         /// </summary>
-        public virtual bool HideOnDeactivate { get; set; }
+        public virtual bool HideOnClickParent { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to focus <see cref="Container"/> when popup is closed.
+        /// </summary>
+        public virtual bool FocusContainerOnClose { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets whether popup should be closed with <see cref="ModalResult.Canceled"/> result
+        /// when it lost focus.
+        /// </summary>
+        public virtual bool CancelOnLostFocus
+        {
+            get
+            {
+                return cancelOnLostFocus;
+            }
+
+            set
+            {
+                cancelOnLostFocus = value;
+                if (cancelOnLostFocus)
+                    acceptOnLostFocus = false;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether popup should be closed with <see cref="ModalResult.Accepted"/> result
+        /// when it lost focus.
+        /// </summary>
+        public virtual bool AcceptOnLostFocus
+        {
+            get
+            {
+                return acceptOnLostFocus;
+            }
+
+            set
+            {
+                acceptOnLostFocus = value;
+                if (acceptOnLostFocus)
+                    cancelOnLostFocus = false;
+            }
+        }
 
         /// <summary>
         /// Closes popup window and raises <see cref="Closed"/> event.
@@ -101,13 +167,36 @@ namespace Alternet.UI
             Hide();
             Parent = null;
             App.DoEvents();
-            Container?.SetFocusIfPossible();
+            if(FocusContainerOnClose)
+                Container?.SetFocusIfPossible();
             App.DoEvents();
             App.AddIdleTask(() =>
             {
                 if (IsDisposed)
                     return;
                 Closed?.Invoke(this, EventArgs.Empty);
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="PopupResult"/> and calls <see cref="Close()"/>.
+        /// </summary>
+        public void Close(ModalResult result)
+        {
+            PopupResult = result;
+            Close();
+        }
+
+        /// <summary>
+        /// Closes popup control when application goes to the idle state.
+        /// </summary>
+        public virtual void CloseWhenIdle(ModalResult result)
+        {
+            App.AddIdleTask(() =>
+            {
+                if (IsDisposed)
+                    return;
+                Close(result);
             });
         }
 
@@ -123,10 +212,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnBeforeParentMouseDown(object? sender, MouseEventArgs e)
         {
-            if (HideOnDeactivate && Visible)
+            base.OnBeforeParentMouseDown(sender, e);
+            if (HideOnClickParent && Visible)
             {
-                PopupResult = ModalResult.Canceled;
-                Close();
+                CloseWhenIdle(GetPopupResult(CloseReason.ClickContainer));
                 e.Handled = true;
             }
         }
@@ -134,12 +223,47 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnBeforeParentKeyDown(object? sender, KeyEventArgs e)
         {
+            base.OnBeforeParentKeyDown(sender, e);
             if (HideOnEscape && e.IsEscape)
             {
-                PopupResult = ModalResult.Canceled;
-                Close();
+                Close(ModalResult.Canceled);
                 e.Suppressed();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnChildLostFocus(EventArgs e)
+        {
+            base.OnChildLostFocus(e);
+            if (ContainsFocus)
+                return;
+            if (CancelOnLostFocus || AcceptOnLostFocus)
+            {
+                CloseWhenIdle(GetPopupResult(CloseReason.FocusLost));
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            if (ContainsFocus)
+                return;
+            if(CancelOnLostFocus || AcceptOnLostFocus)
+            {
+                CloseWhenIdle(GetPopupResult(CloseReason.FocusLost));
+            }
+        }
+
+        /// <summary>
+        /// Gets popup result using the specified <see cref="CloseReason"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ModalResult GetPopupResult(CloseReason reason)
+        {
+            if (AcceptOnLostFocus)
+                return ModalResult.Accepted;
+            return ModalResult.Canceled;
         }
 
         /// <inheritdoc/>

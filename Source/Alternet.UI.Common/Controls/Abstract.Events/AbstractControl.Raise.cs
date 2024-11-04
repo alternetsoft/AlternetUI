@@ -252,6 +252,14 @@ namespace Alternet.UI
             RunKnownAction(RunAfterGotFocus);
         }
 
+        public void RaiseChildLostFocus()
+        {
+            if (Parent is null)
+                return;
+            Parent.OnChildLostFocus(EventArgs.Empty);
+            Parent.RaiseChildLostFocus();
+        }
+
         /// <summary>
         /// Raises the <see cref="LostFocus" /> event and <see cref="OnLostFocus"/> method.
         /// </summary>
@@ -261,6 +269,7 @@ namespace Alternet.UI
             if (FocusedControl == this)
                 FocusedControl = null;
             OnLostFocus(EventArgs.Empty);
+            RaiseChildLostFocus();
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
 
