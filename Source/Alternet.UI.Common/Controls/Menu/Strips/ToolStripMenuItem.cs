@@ -1,4 +1,6 @@
 ﻿using System;
+
+using Alternet.Base.Collections;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -76,5 +78,10 @@ namespace Alternet.UI
             : base(text, onClick, shortcut)
         {
         }
+
+        /// <summary>
+        /// Alias to <see cref="Menu.Items"/>.
+        /// </summary>
+        public Collection<MenuItem> DropDownItems => Items;
     }
 }
