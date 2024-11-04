@@ -1385,6 +1385,16 @@ namespace Alternet.Drawing
             return new Font(nativeFont);
         }
 
+        public Coord GetWidth(Graphics dc)
+        {
+            return dc.MeasureText("x", this).Width;
+        }
+
+        public Coord GetHeight(Graphics dc)
+        {
+            return dc.MeasureText("Wg", this).Height;
+        }
+
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
