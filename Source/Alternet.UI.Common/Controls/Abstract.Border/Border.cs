@@ -54,12 +54,17 @@ namespace Alternet.UI
             get
             {
                 var bounds = base.ChildrenLayoutBounds;
-                bounds.X += BorderWidth.Left;
-                bounds.Y += BorderWidth.Top;
-                if (bounds.Size == 0)
-                    return bounds;
-                bounds.Width -= BorderWidth.Horizontal;
-                bounds.Height -= BorderWidth.Vertical;
+
+                if (HasBorder)
+                {
+                    bounds.X += BorderWidth.Left;
+                    bounds.Y += BorderWidth.Top;
+                    if (bounds.Size == 0)
+                        return bounds;
+                    bounds.Width -= BorderWidth.Horizontal;
+                    bounds.Height -= BorderWidth.Vertical;
+                }
+
                 return bounds;
             }
         }
@@ -83,6 +88,19 @@ namespace Alternet.UI
                 UpdatePadding();
                 PerformLayout();
                 Refresh();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool HasBorder
+        {
+            get => base.HasBorder;
+            set
+            {
+                if (HasBorder == value)
+                    return;
+                base.HasBorder = value;
+                UpdatePadding();
             }
         }
 
@@ -345,10 +363,23 @@ namespace Alternet.UI
             return new(defaultSettings);
         }
 
-        private void UpdatePadding()
+        /// <summary>
+        /// Updates <see cref="AbstractControl.Padding"/> with border size.
+        /// </summary>
+        protected virtual void UpdatePadding()
         {
-            Thickness result = NormalBorder.Width;
-            Padding = result;
+            if (HasBorder)
+            {
+                Thickness borderPadding = NormalBorder.Width;
+                var padding = Padding;
+                padding.ApplyMin(borderPadding);
+                Padding = padding;
+            }
+            else
+            {
+                if(Padding == NormalBorder.Width)
+                    Padding = 0;
+            }
         }
 
         private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
