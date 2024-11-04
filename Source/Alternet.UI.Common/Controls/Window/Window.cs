@@ -364,6 +364,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool VisibleOnScreen
+        {
+            get
+            {
+                return Visible;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the window can be resized by user.
         /// </summary>

@@ -542,6 +542,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RefreshRect(RectD rect, bool eraseBackground = true)
         {
+            if (CanSkipInvalidate())
+                return;
             Handler.RefreshRect(rect, eraseBackground);
         }
 
@@ -554,6 +556,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void Invalidate()
         {
+            if (CanSkipInvalidate())
+                return;
             Handler.Invalidate();
             base.Invalidate();
         }
@@ -567,6 +571,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void Update()
         {
+            if (CanSkipInvalidate())
+                return;
             Handler.Update();
         }
 
@@ -819,6 +825,10 @@ namespace Alternet.UI
         internal virtual void OnHandlerPaint()
         {
             if (!UserPaint)
+                return;
+            if (ClientRectangle.SizeIsEmpty)
+                return;
+            if (!VisibleOnScreen)
                 return;
             using var dc = Handler.OpenPaintDrawingContext();
 

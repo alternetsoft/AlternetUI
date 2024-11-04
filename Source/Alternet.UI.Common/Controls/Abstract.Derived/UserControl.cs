@@ -14,7 +14,7 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class UserControl : Control
     {
-        private bool hasBorder = true;
+        private bool hasBorder;
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
 
         /// <summary>
@@ -32,6 +32,7 @@ namespace Alternet.UI
         /// </summary>
         public UserControl()
         {
+            hasBorder = GetDefaultHasBorder();
             UserPaint = true;
         }
 
@@ -253,6 +254,12 @@ namespace Alternet.UI
                 || RefreshOnColor())
                 Refresh();
         }
+
+        /// <summary>
+        /// Gets default value for <see cref="HasBorder"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool GetDefaultHasBorder() => true;
 
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)

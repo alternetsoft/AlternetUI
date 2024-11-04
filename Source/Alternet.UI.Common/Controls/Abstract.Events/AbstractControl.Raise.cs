@@ -512,7 +512,7 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePaint(PaintEventArgs e)
         {
-            if (e.ClipRectangle.IsEmpty)
+            if (e.ClipRectangle.SizeIsEmpty)
                 return;
             OnPaint(e);
             Paint?.Invoke(this, e);
@@ -726,6 +726,7 @@ namespace Alternet.UI
             LastDoubleClickTimestamp = e.Timestamp;
             OnMouseDoubleClick(e);
             MouseDoubleClick?.Invoke(this, e);
+            DoubleClick?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterMouseDoubleClick(this, e));
         }

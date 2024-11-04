@@ -65,6 +65,18 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
+        /// when the user presses "Space" key.
+        /// </summary>
+        public virtual bool AcceptOnSpace { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup window disappears automatically
+        /// when the user presses "Tab" key.
+        /// </summary>
+        public virtual bool AcceptOnTab { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup window disappears automatically
         /// when the user presses "Enter" key.
         /// </summary>
         public virtual bool HideOnEnter { get; set; } = true;
@@ -133,16 +145,37 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnBeforeChildKeyDown(object? sender, KeyEventArgs e)
         {
-            if (HideOnEscape && e.IsEscape)
+            if (e.IsEscape)
             {
-                PopupResult = ModalResult.Canceled;
-                Close();
-                e.Suppressed();
+                if(HideOnEscape)
+                    CloseWithResult(ModalResult.Canceled);
+                return;
             }
 
-            if (HideOnEnter && e.IsEnter)
+            if (e.IsEnter)
             {
-                PopupResult = ModalResult.Accepted;
+                if(HideOnEnter)
+                    CloseWithResult(ModalResult.Accepted);
+                return;
+            }
+
+            if (e.IsSimpleKey(Key.Tab))
+            {
+                if(AcceptOnTab)
+                    CloseWithResult(ModalResult.Accepted);
+                return;
+            }
+
+            if (e.IsSimpleKey(Key.Space))
+            {
+                if(AcceptOnSpace)
+                    CloseWithResult(ModalResult.Accepted);
+                return;
+            }
+
+            void CloseWithResult(ModalResult value)
+            {
+                PopupResult = value;
                 Close();
                 e.Suppressed();
             }

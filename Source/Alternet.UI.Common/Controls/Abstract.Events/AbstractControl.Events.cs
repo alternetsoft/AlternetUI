@@ -139,6 +139,13 @@ namespace Alternet.UI
         public event MouseEventHandler? MouseDoubleClick;
 
         /// <summary>
+        /// Occurs when the control is double clicked by the mouse.
+        /// </summary>
+        [Category("Mouse")]
+        [Browsable(false)]
+        public event MouseEventHandler? DoubleClick;
+
+        /// <summary>
         /// Occurs when the mouse pointer is over the control and left mouse button
         /// is released.</summary>
         [Category("Mouse")]

@@ -138,6 +138,11 @@ namespace Alternet.UI
         public virtual bool Control => modifiers.HasFlag(ModifierKeys.Control);
 
         /// <summary>
+        /// Gets wherher any modifiers are pressed.
+        /// </summary>
+        public virtual bool HasModifiers => modifiers != ModifierKeys.None;
+
+        /// <summary>
         /// Gets whether CTRL and SHIFT keys are pressed.
         /// </summary>
         public bool ControlAndShift => Control && Shift;

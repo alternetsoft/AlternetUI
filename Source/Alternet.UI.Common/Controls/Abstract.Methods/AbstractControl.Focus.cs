@@ -91,6 +91,9 @@ namespace Alternet.UI
         {
             get
             {
+                var focused = GetFocusedControl();
+                if (focused == this)
+                    return true;
                 return false;
             }
         }

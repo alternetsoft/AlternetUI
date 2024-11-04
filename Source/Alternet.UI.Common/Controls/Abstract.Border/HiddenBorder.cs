@@ -14,7 +14,9 @@ namespace Alternet.UI
         /// </summary>
         public HiddenBorder()
         {
-            HasBorder = false;
         }
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultHasBorder() => false;
     }
 }

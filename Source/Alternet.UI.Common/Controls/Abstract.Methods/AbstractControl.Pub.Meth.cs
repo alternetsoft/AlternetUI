@@ -1811,6 +1811,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves a value indicating whether the specified control
+        /// is a child of the control.</summary>
+        /// <param name="control">The <see cref="AbstractControl" /> to evaluate.</param>
+        /// <returns>
+        /// <see langword="true" /> if the specified control is a child of the control;
+        /// otherwise, <see langword="false" />.
+        /// </returns>
+        public virtual bool Contains(AbstractControl? control)
+        {
+            while (control != null)
+            {
+                control = control.Parent;
+                if (control == null)
+                    return false;
+                if (control == this)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Sets background color if <see cref="UseDebugBackgroundColor"/> is <c>true</c>
         /// and DEBUG conditional is defined.
         /// </summary>
