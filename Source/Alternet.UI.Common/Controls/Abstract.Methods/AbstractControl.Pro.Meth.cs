@@ -138,6 +138,19 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Gets whether <see cref="Invalidate()"/> and <see cref="Refresh"/> can be skipped.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool CanSkipInvalidate()
+        {
+            if (!VisibleOnScreen)
+                return true;
+            if (ClientRectangle.SizeIsEmpty)
+                return true;
+            return false;
+        }
+
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {

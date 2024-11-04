@@ -1284,6 +1284,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether control has visible parent window.
+        /// </summary>
+        public virtual bool IsParentWindowVisible
+        {
+            get
+            {
+                return ParentWindow?.Visible ?? false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether control is visible on screen.
+        /// </summary>
+        public virtual bool VisibleOnScreen
+        {
+            get
+            {
+                if (!Visible)
+                    return false;
+                var parent = Parent;
+                if (parent is null)
+                    return false;
+                var result = parent.VisibleOnScreen;
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets the parent window of the control.
         /// </summary>
         [Browsable(false)]
