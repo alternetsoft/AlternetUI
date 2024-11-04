@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// If <paramref name="position"/> is <c>null</c> (default value), popup menu is shown
         /// under the control specified in the <paramref name="control"/> parameter.
         /// </remarks>
-        public void Show(IControl control, PointD? position = null)
+        public void Show(AbstractControl control, PointD? position = null)
         {
             if (Items.Count == 0)
                 return;
