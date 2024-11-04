@@ -513,6 +513,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// This method is invoked when the control's child lost focus.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> that
+        /// contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnChildLostFocus(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// This method is invoked when the control lost focus.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> that
