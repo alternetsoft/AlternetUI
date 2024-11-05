@@ -16,6 +16,9 @@ namespace Alternet.UI
         /// Adds <see cref="IControlNotification"/> object to the global list of notifications.
         /// </summary>
         /// <param name="n">Notification object to add.</param>
+        /// <remarks>
+        /// You must also call <see cref="RemoveGlobalNotification"/> when subscriber is disposed.
+        /// </remarks>
         public static void AddGlobalNotification(IControlNotification n)
         {
             globalNotifications ??= new();
@@ -2185,6 +2188,9 @@ namespace Alternet.UI
         /// Adds <see cref="IControlNotification"/> object to the list of notifications.
         /// </summary>
         /// <param name="n">Notification object to add.</param>
+        /// <remarks>
+        /// You must also call <see cref="RemoveNotification"/> when subscriber is disposed.
+        /// </remarks>
         public virtual void AddNotification(IControlNotification? n)
         {
             if (n is null)

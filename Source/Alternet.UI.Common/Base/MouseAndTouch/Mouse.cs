@@ -32,6 +32,11 @@ namespace Alternet.UI
         private static IMouseHandler? handler;
 
         /// <summary>
+        /// Occurs when any of the controls receives mouse move event.
+        /// </summary>
+        public static event MouseEventHandler? Moved;
+
+        /// <summary>
         /// Gets whether mouse is present.
         /// </summary>
         public static bool? IsMousePresent
@@ -149,6 +154,16 @@ namespace Alternet.UI
             }
 
             return position;
+        }
+
+        /// <summary>
+        /// Raises <see cref="Moved"/> event.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
+        public static void RaiseMoved(object sender, MouseEventArgs e)
+        {
+            Moved?.Invoke(sender, e);
         }
     }
 }
