@@ -1260,5 +1260,13 @@ namespace Alternet.UI
 
             return false;
         }
+
+        internal static void SetPropertyViaExpression(object obj, PropertyInfo property, object value)
+        {
+            var setter = property.SetMethod
+                .CreateDelegate(typeof(Action<,>)
+                .MakeGenericType(property.DeclaringType, property.PropertyType));
+            ((dynamic)setter)(obj, value);
+        }
     }
 }
