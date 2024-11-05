@@ -101,6 +101,7 @@ namespace Alternet.UI
             MouseMove?.Invoke(this, e);
             OnMouseMove(e);
 
+            Mouse.RaiseMoved(this, e);
             RaiseNotifications((n) => n.AfterMouseMove(this, e));
 
             if (dragEventArgs is not null)
@@ -252,12 +253,28 @@ namespace Alternet.UI
             RunKnownAction(RunAfterGotFocus);
         }
 
-        public void RaiseChildLostFocus()
+        /// <summary>
+        /// Calls <see cref="OnChildMouseLeave"/> method of the parent control.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseChildMouseLeave(object? sender)
         {
             if (Parent is null)
                 return;
-            Parent.OnChildLostFocus(EventArgs.Empty);
-            Parent.RaiseChildLostFocus();
+            Parent.OnChildMouseLeave(sender, EventArgs.Empty);
+            Parent.RaiseChildMouseLeave(sender);
+        }
+
+        /// <summary>
+        /// Calls <see cref="OnChildLostFocus"/> method of the parent control.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseChildLostFocus(object? sender)
+        {
+            if (Parent is null)
+                return;
+            Parent.OnChildLostFocus(sender, EventArgs.Empty);
+            Parent.RaiseChildLostFocus(sender);
         }
 
         /// <summary>
@@ -269,7 +286,7 @@ namespace Alternet.UI
             if (FocusedControl == this)
                 FocusedControl = null;
             OnLostFocus(EventArgs.Empty);
-            RaiseChildLostFocus();
+            RaiseChildLostFocus(this);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
 
@@ -421,7 +438,7 @@ namespace Alternet.UI
         public void RaiseMouseEnter()
         {
             PlessMouse.CancelLongTapTimer();
-            IsMouseOver = true;
+            /*IsMouseOver = true;*/
             HoveredControl = this;
             RaiseIsMouseOverChanged();
             OnMouseEnter(EventArgs.Empty);
@@ -480,12 +497,13 @@ namespace Alternet.UI
         public void RaiseMouseLeave()
         {
             PlessMouse.CancelLongTapTimer();
-            IsMouseOver = false;
+            /*IsMouseOver = false;*/
             if (HoveredControl == this)
                 HoveredControl = null;
             RaiseIsMouseOverChanged();
             IsMouseLeftButtonDown = false;
             OnMouseLeave(EventArgs.Empty);
+            RaiseChildMouseLeave(this);
             MouseLeave?.Invoke(this, EventArgs.Empty);
 
             RaiseNotifications((n) => n.AfterMouseLeave(this));

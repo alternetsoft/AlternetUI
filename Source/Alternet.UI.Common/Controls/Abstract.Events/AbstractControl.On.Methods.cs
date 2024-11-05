@@ -10,6 +10,16 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Called when the mouse pointer leaves child control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnChildMouseLeave(object? sender, EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called before the <see cref="KeyDown" /> event of the child control is raised.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -517,8 +527,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> that
         /// contains the event data.</param>
+        /// <param name="sender">The source of the event.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildLostFocus(EventArgs e)
+        protected virtual void OnChildLostFocus(object? sender, EventArgs e)
         {
         }
 

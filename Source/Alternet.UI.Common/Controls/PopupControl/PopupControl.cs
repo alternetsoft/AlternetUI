@@ -14,6 +14,7 @@ namespace Alternet.UI
         private ModalResult popupResult = ModalResult.None;
         private bool cancelOnLostFocus;
         private bool acceptOnLostFocus;
+        private ControlSubscriber subscriber = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupControl"/> class.
@@ -21,6 +22,14 @@ namespace Alternet.UI
         public PopupControl()
         {
             Visible = false;
+
+            subscriber.AfterControlIsMouseOverChanged += (s, e) =>
+            {
+                if (Visible && HideOnMouseLeave && !IsMouseOver)
+                {
+                    CloseWhenIdle(ModalResult.Canceled);
+                }
+            };
         }
 
         /// <summary>
@@ -112,6 +121,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup disappears automatically
+        /// when the  mouse pointer leaves the popup control.
+        /// </summary>
+        public virtual bool HideOnMouseLeave { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a popup disappears automatically
         /// when the user clicks mouse outside it in the client area of the parent control.
         /// </summary>
         public virtual bool HideOnClickParent { get; set; }
@@ -164,6 +179,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Close()
         {
+            if (!Visible)
+                return;
+
             Hide();
             Parent = null;
             App.DoEvents();
@@ -192,6 +210,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CloseWhenIdle(ModalResult result)
         {
+            if (!Visible)
+                return;
             App.AddIdleTask(() =>
             {
                 if (IsDisposed)
@@ -206,6 +226,11 @@ namespace Alternet.UI
             if (Visible)
             {
                 PopupResult = ModalResult.None;
+                AddGlobalNotification(subscriber);
+            }
+            else
+            {
+                RemoveGlobalNotification(subscriber);
             }
         }
 
@@ -232,9 +257,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnChildLostFocus(EventArgs e)
+        protected override void OnChildLostFocus(object? sender, EventArgs e)
         {
-            base.OnChildLostFocus(e);
+            base.OnChildLostFocus(sender, e);
             if (ContainsFocus)
                 return;
             if (CancelOnLostFocus || AcceptOnLostFocus)
@@ -303,6 +328,13 @@ namespace Alternet.UI
                 Close();
                 e.Suppressed();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            RemoveGlobalNotification(subscriber);
+            base.DisposeManaged();
         }
     }
 }
