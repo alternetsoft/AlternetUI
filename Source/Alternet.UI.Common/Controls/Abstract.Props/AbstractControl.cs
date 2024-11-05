@@ -762,8 +762,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsMouseOver
         {
-            get;
-            private set;
+            get
+            {
+                var pt = Mouse.GetPosition(this);
+                var result = ClientRectangle.Contains(pt);
+                return result;
+            }
         }
 
         /// <summary>
