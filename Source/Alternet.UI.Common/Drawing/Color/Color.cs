@@ -789,7 +789,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.Color(Color color)
         {
-            if (color.IsEmpty)
+            if (color is null || color.IsEmpty)
                 return System.Drawing.Color.Empty;
             var argb = color.ToArgb();
             return System.Drawing.Color.FromArgb(argb);
