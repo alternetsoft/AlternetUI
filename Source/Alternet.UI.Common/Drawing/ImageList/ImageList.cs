@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     public class ImageList : ImageContainer<IImageListHandler>
     {
         /// <summary>
-        /// Gets an empty <see cref="ImageSet"/>.
+        /// Gets an empty <see cref="ImageList"/>.
         /// </summary>
         public static readonly ImageList Empty = new(immutable: true);
 
@@ -120,6 +120,22 @@ namespace Alternet.Drawing
                 var image = imageSet.AsImage(ImageSize);
                 return Add(image);
             }
+        }
+
+        /// <summary>
+        /// Draws an image on the specified graphic surface at the location specified by a coordinate pair.
+        /// </summary>
+        /// <param name="g">The Graphics object to draw on.</param>
+        /// <param name="x">X-coordinate of the upper-left corner of the image to be drawn.</param>
+        /// <param name="y">Y-coordinate of the upper-left corner of the image to be drawn.</param>
+        /// <param name="index">Index of image to draw within image list.</param>
+        public virtual bool Draw(Graphics g, Coord x, Coord y, int index)
+        {
+            if (index < 0 || index >= Images.Count)
+                return false;
+
+            g.DrawImageUnscaled(Images[index], new(x, y));
+            return true;
         }
 
         /// <inheritdoc/>
