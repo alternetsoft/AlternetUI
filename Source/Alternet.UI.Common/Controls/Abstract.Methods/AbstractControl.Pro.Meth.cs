@@ -139,6 +139,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified key is a regular input key or a special key
+        /// that requires preprocessing.
+        /// </summary>
+        /// <param name="keyData">One of the <see cref="Keys" /> values.</param>
+        /// <returns>
+        /// <see langword="true" /> if the specified key is a regular input key;
+        /// otherwise, <see langword="false" />.</returns>
+        protected virtual bool IsInputKey(Keys keyData)
+        {
+            if ((keyData & Keys.Alt) == Keys.Alt)
+            {
+                return false;
+            }
+
+            /*
+            int num = 4;
+            switch (keyData & Keys.KeyCode)
+            {
+                case Keys.Tab:
+                    num = 6;
+                    break;
+                case Keys.Left:
+                case Keys.Up:
+                case Keys.Right:
+                case Keys.Down:
+                    num = 5;
+                    break;
+            }
+            if (IsHandleCreated)
+            {
+                // https://learn.microsoft.com/en-us/windows/win32/dlgbox/wm-getdlgcode
+                return ((int)(long)SendMessage(135, 0, 0) & num) != 0;
+            }
+            */
+
+            return false;
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Invalidate()"/> and <see cref="Refresh"/> can be skipped.
         /// </summary>
         /// <returns></returns>
