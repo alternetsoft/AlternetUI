@@ -50,7 +50,7 @@ namespace Alternet.UI
 
             var mauiPlatform = AssemblyUtils.InvokeMauiUtilsGetDevicePlatform();
 
-            if(mauiPlatform is not null)
+            if (mauiPlatform is not null)
             {
                 mauiPlatform = $" ({mauiPlatform})";
             }
@@ -174,6 +174,14 @@ namespace Alternet.UI
             Fn("Log system information", LogUtils.LogOSInformation);
             Fn("Log system colors", LogUtils.LogSystemColors);
             Fn("Log constraint checks", LogUtils.LogCheckConstraints);
+
+            Fn("Set Height = (Width / 3) * 2", () =>
+            {
+                foreach (var window in App.Current.Windows)
+                {
+                    window.Height = (window.Width / 3) * 2;
+                }
+            });
 
             Fn("Test Draw Bold Text", () =>
             {
@@ -820,7 +828,7 @@ namespace Alternet.UI
 
             var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
 
-            foreach(var method in methods)
+            foreach (var method in methods)
             {
                 var name = method.Name;
                 if (!method.Name.StartsWith("Test"))
