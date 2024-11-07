@@ -1,0 +1,5 @@
+dotnet tool install -g git-credential-manager
+git-credential-manager configure
+
+dotnet tool update -g git-credential-manager
+
