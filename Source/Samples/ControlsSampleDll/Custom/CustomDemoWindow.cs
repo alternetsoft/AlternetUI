@@ -53,7 +53,7 @@ namespace Alternet.UI
                 AddBuildNumber = false;
                 window.UpdateTitle();
 
-                WindowsUtils.SetWindowRoundCorners(window, WindowRoundedCornerPreference.NotRound);
+                /*WindowsUtils.SetWindowRoundCorners(window, WindowRoundedCornerPreference.NotRound);*/
             });
         }
 

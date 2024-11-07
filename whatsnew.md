@@ -1,3 +1,34 @@
+# 0.9.642 (2024 November 7)
+
+- ContainerControl: now derived from HiddenBorder so it's possible to specify custom background and border for all the containers (like panel, stack panel, etc.).
+- Created ControlAndButton, TextBoxAndButton controls.
+- Button: new constructors with text and click action parameters.
+- Label: new constructor with text parameter.
+- SpeedButton: now has no round corners by default.
+- UserControl: Fixed background selector for different states. Now it returns default background and not null like it was previously.
+- ControlSet: ParentForeColor, ParentBackColor methods.
+- ControlAndLabel: Error picture now uses parent's background color by default.
+- ToolBar: MakeBottomAligned, MakeTopAligned methods.
+- Demo: Updated ToolBar demo with new features.
+- Demo: Added setting of the custom background color for the panel on TextNumbersPage.
+- Border: Fixed GetPreferredSize if no border.
+- ControlStateBorders: Fixed Clone method.
+- Created ToolStripSeparator, ControlSubscriber.
+- PopupControl: AcceptOnTab, AcceptOnSpace, HideOnClickParent, FocusContainerOnClose, CancelOnLostFocus, 
+AcceptOnLostFocus, CloseWhenIdle, HideOnMouseLeave.
+- Control: Do not call invalidate if not visible on screen.
+- AbstractControl: Contains, IsParentWindowVisible, VisibleOnScreen.
+- AbstractControl: DoubleClick event as in WinForms.
+- AbstractControl.Focused implemented (previously was empty and was overriden only in Control).
+- AbstractControl: Optyimization. Do not call paint if rect is empty.
+- AbstractControl: minor layout improvements.
+- Font: static GetWidth, GetHeight.
+- AbstractControl: OnChildLostFocus.
+- Mouse.Moved static event.
+- Changed AbstractControl.IsMouseOver to use Mouse.GetPosition.
+- ImageList.Draw.
+- Fixed Color -> System.Drawing.Color conversion.
+
 # 0.9.641 (2024 November 1)
 
 - VirtualListBox.SelectionUnderImage property.

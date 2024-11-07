@@ -1,0 +1,6 @@
+In macos or linux you can add package source with this command from the
+dotnet cli:
+
+dotnet nuget add source ./some/packages/dir
+
+Source https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-add-source#examples
