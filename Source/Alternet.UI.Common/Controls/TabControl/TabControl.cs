@@ -26,8 +26,17 @@ namespace Alternet.UI
         /// </summary>
         public static SizeD DefaultMinTabSize = (0, 0);
 
-        private readonly TabControlCardPanel cardPanel = new();
-        private readonly CardPanelHeader cardPanelHeader = new();
+        private readonly TabControlCardPanel cardPanel = new()
+        {
+            ParentBackColor = true,
+            ParentForeColor = true,
+            ParentFont = true,
+        };
+
+        private readonly CardPanelHeader cardPanelHeader = new()
+        {
+        };
+
         private bool hasInteriorBorder = true;
         private TabSizeMode sizeMode = TabSizeMode.Normal;
         private TabAppearance tabAppearance = TabAppearance.Normal;
