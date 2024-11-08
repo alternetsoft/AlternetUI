@@ -14,9 +14,9 @@ using SkiaSharp;
 
 namespace Alternet.UI
 {
-    internal class DevToolsPanel : Control
+    internal class PanelDevTools : Control
     {
-        private static DevToolsWindow? devToolsWindow;
+        private static WindowDevTools? devToolsWindow;
 
         private readonly ActionsListBox actionsListBox = new()
         {
@@ -73,13 +73,13 @@ namespace Alternet.UI
         private VirtualListBox? controlsListBox;
         private bool insideSetProps;
 
-        static DevToolsPanel()
+        static PanelDevTools()
         {
             LogUtils.RegisterLogAction("Show Props FirstWindow", ControlsActionMainForm);
             LogUtils.RegisterLogAction("Show Props FocusedControl", ControlsActionFocusedControl);
         }
 
-        public DevToolsPanel()
+        public PanelDevTools()
         {
             centerNotebook.Parent = panel.FillPanel;
             rightNotebook.Parent = panel.RightPanel;
@@ -153,7 +153,7 @@ namespace Alternet.UI
             LogUtils.LogVersion();
         }
 
-        public static DevToolsPanel? DevPanel => devToolsWindow?.DevPanel;
+        public static PanelDevTools? DevPanel => devToolsWindow?.DevPanel;
 
         public TabControl CenterNotebook => centerNotebook;
 
