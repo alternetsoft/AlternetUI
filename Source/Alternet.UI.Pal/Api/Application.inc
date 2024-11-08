@@ -45,7 +45,7 @@ static void SetSystemOptionInt(const string& name, int value);
 void Run(Window* window);
 void* GetTopWindow();
 void ExitMainLoop();
-void WakeUpIdle();
+static void WakeUpIdle();
 void Exit();
 static void SuppressDiagnostics(int flags);
 void BeginInvoke(PInvokeCallbackActionType action);

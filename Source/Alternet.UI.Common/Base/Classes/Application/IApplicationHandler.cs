@@ -96,6 +96,9 @@ namespace Alternet.UI
         /// <inheritdoc cref="App.Exit"/>
         void Exit();
 
+        /// <inheritdoc cref="App.WakeUpIdle"/>
+        void WakeUpIdle();
+
         /// <summary>
         /// Creates <see cref="IControlFactoryHandler"/> implementation specific to the platform.
         /// </summary>

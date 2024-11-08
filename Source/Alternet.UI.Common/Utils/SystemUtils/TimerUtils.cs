@@ -10,6 +10,12 @@ namespace Alternet.UI
     public static class TimerUtils
     {
         /// <summary>
+        /// Gets or sets default timeout interval (in msec) for timer that calls
+        /// <see cref="App.WakeUpIdle"/>.
+        /// </summary>
+        public static int DefaultWakeUpIdleTimeout = 100;
+
+        /// <summary>
         /// Gets or sets default tooltip timeout interval (in msec).
         /// </summary>
         // On Windows some multiple of double-click time is used but we currently have constant

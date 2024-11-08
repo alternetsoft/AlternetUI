@@ -340,6 +340,8 @@ namespace PropertyGridSample
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
                 Padding = 5,
+                ParentBackColor = true,
+                ParentForeColor = true,
             };
 
             for (int i = 1; i < 4; i++)

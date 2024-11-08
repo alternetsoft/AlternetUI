@@ -276,12 +276,12 @@ ALTERNET_UI_API void Application_ExitMainLoop_(Application* obj)
     #endif
 }
 
-ALTERNET_UI_API void Application_WakeUpIdle_(Application* obj)
+ALTERNET_UI_API void Application_WakeUpIdle_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->WakeUpIdle();
+        Application::WakeUpIdle();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

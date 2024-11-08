@@ -343,7 +343,7 @@ namespace Alternet::UI
 
     void Application::WakeUpIdle()
     {
-        _app->WakeUpIdle();
+        wxWakeUpIdle();
     }
 
     void* Application::GetTopWindow()

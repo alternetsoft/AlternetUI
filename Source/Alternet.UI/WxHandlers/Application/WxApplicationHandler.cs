@@ -211,7 +211,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public void WakeUpIdle()
         {
-            nativeApplication.WakeUpIdle();
+            Native.Application.WakeUpIdle();
         }
 
         /// <inheritdoc/>
