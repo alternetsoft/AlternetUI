@@ -245,6 +245,8 @@ namespace Alternet.UI
                 return;
 
             ReceiveSelection();
+            if (App.IsMacOS)
+                Invalidate();
         }
 
         private void Control_SelectionChanged(object? sender, EventArgs e)
