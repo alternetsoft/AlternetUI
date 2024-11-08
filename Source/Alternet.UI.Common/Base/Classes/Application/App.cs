@@ -128,6 +128,8 @@ namespace Alternet.UI
         private static App? current;
         private static string? logFilePath;
         private static Window? mainWindow;
+        private static bool wakeUpIdleWithTimer = true;
+        private static Timer? wakeUpIdleTimer;
 
         private readonly List<Window> windows = new();
 
@@ -216,6 +218,8 @@ namespace Alternet.UI
             {
                 WebBrowser.CrtSetDbgFlag(0);
             });
+
+            UpdateWakeUpIdleTimer();
         }
 
         /// <summary>
@@ -435,6 +439,25 @@ namespace Alternet.UI
 
                 if (logFileIsEnabled)
                     LogUtils.LogAppStartedToFile();
+            }
+        }
+
+        /// <summary>
+        /// Uses timer to call <see cref="WakeUpIdle"/> periodically.
+        /// Default value is <c>true</c>. Default timeout value is
+        /// <see cref="TimerUtils.DefaultWakeUpIdleTimeout"/>.
+        /// </summary>
+        public static bool WakeUpIdleWithTimer
+        {
+            get
+            {
+                return wakeUpIdleWithTimer;
+            }
+
+            set
+            {
+                WakeUpIdleWithTimer = value;
+                UpdateWakeUpIdleTimer();
             }
         }
 
@@ -765,6 +788,17 @@ namespace Alternet.UI
             {
                 AddIdleTask(action);
             });
+        }
+
+        /// <summary>
+        /// This function wakes up the (internal and platform dependent) idle system, i.e.
+        /// it will force the system to send an idle event even if the system currently is
+        /// idle and thus would not send any idle event until after some other event would get sent.
+        /// </summary>
+        public static void WakeUpIdle()
+        {
+            if (HasApplication)
+                Handler?.WakeUpIdle();
         }
 
         /// <summary>
@@ -1734,6 +1768,25 @@ namespace Alternet.UI
             }
             catch
             {
+            }
+        }
+
+        private static void UpdateWakeUpIdleTimer()
+        {
+            if (wakeUpIdleWithTimer)
+            {
+                wakeUpIdleTimer ??= new();
+                wakeUpIdleTimer.Stop();
+                wakeUpIdleTimer.Interval = TimerUtils.DefaultWakeUpIdleTimeout;
+                wakeUpIdleTimer.TickAction = () =>
+                {
+                    WakeUpIdle();
+                };
+                wakeUpIdleTimer.Start();
+            }
+            else
+            {
+                SafeDispose(ref wakeUpIdleTimer);
             }
         }
 

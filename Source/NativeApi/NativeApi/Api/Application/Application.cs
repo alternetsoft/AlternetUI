@@ -49,7 +49,7 @@ namespace NativeApi.Api
 
         public void ExitMainLoop() { }
 
-        public void WakeUpIdle() { }
+        public static void WakeUpIdle() { }
 
         public void Exit() { }
 
