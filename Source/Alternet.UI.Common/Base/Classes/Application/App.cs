@@ -456,7 +456,7 @@ namespace Alternet.UI
 
             set
             {
-                WakeUpIdleWithTimer = value;
+                wakeUpIdleWithTimer = value;
                 UpdateWakeUpIdleTimer();
             }
         }

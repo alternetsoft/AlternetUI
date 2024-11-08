@@ -17,6 +17,7 @@ namespace Alternet.UI
     {
         static MauiApplicationHandler()
         {
+            App.WakeUpIdleWithTimer = false;
         }
 
         /// <inheritdoc/>
@@ -272,6 +273,11 @@ namespace Alternet.UI
         public virtual IKeyboardHandler CreateKeyboardHandler()
         {
             return MauiKeyboardHandler.Default;
+        }
+
+        /// <inheritdoc/>
+        public virtual void WakeUpIdle()
+        {
         }
     }
 }
