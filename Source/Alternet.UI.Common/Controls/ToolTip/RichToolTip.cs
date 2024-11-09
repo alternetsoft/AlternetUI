@@ -9,10 +9,6 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    /*
-      Default title could be bold or DefaultFont.MakeLarger().
-    */
-
     /// <summary>
     /// Allows to show a tool tip with more customizations than a standard tooltip.
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to

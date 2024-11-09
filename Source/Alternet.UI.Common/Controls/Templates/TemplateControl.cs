@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Root control for the templates.
     /// </summary>
-    public class TemplateControl : Border
+    public class TemplateControl : HiddenBorder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateControl"/> class.
@@ -15,7 +15,6 @@ namespace Alternet.UI
         public TemplateControl()
         {
             Visible = false;
-            HasBorder = false;
         }
 
         /// <inheritdoc/>
