@@ -15,12 +15,6 @@ namespace Alternet.UI
         public class RichToolTip<TLabel> : TemplateControl
             where TLabel : AbstractControl, new()
         {
-            private readonly Border border = new()
-            {
-                Layout = LayoutStyle.Horizontal,
-                HasBorder = false,
-            };
-
             private readonly Grid grid = new()
             {
                 RowColumnCount = (2, 2),
@@ -40,8 +34,7 @@ namespace Alternet.UI
                     VerticalAlignment = VerticalAlignment.Top;
                     HorizontalAlignment = HorizontalAlignment.Left;
 
-                    border.Parent = this;
-                    grid.Parent = border;
+                    grid.Parent = this;
 
                     pictureBox.Margin = RichToolTip.DefaultImageMargin;
                     pictureBox.VerticalAlignment = VerticalAlignment.Center;
