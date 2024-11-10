@@ -21,6 +21,7 @@ namespace Alternet.UI
         /// </summary>
         public PopupControl()
         {
+            IgnoreLayout = true;
             Visible = false;
 
             subscriber.AfterControlIsMouseOverChanged += (s, e) =>
