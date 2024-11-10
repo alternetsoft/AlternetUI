@@ -78,6 +78,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to focus parent control when popup is shown.
+        /// </summary>
+        public bool FocusParentOnShow { get; set; }
+
+        /// <summary>
         /// Gets or sets the popup result value, which is updated when popup is closed.
         /// This property is set to <see cref="ModalResult.None"/> at the moment
         /// when popup is shown.
@@ -228,6 +233,8 @@ namespace Alternet.UI
             {
                 PopupResult = ModalResult.None;
                 AddGlobalNotification(subscriber);
+                if (FocusParentOnShow)
+                    Parent?.SetFocusIfPossible();
             }
             else
             {
