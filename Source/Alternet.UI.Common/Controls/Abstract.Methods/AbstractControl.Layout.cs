@@ -30,6 +30,60 @@ namespace Alternet.UI
             New,
         }
 
+        /// <summary>
+        /// Aligns control in the parent using horizontal and vertical
+        /// alignment options.
+        /// </summary>
+        /// <param name="horz">Horizontal alignment.</param>
+        /// <param name="vert">Vertical alignment.</param>
+        /// <param name="shrinkSize">Whether to shrink size of the rectangle
+        /// to fit in the container. Optional. Default is <c>true</c>.</param>
+        /// <remarks>
+        /// This method changes <see cref="Bounds"/> so default layout must be disabled
+        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property.
+        /// </remarks>
+        public virtual void AlignInParent(
+            HorizontalAlignment? horz,
+            VerticalAlignment? vert,
+            bool shrinkSize = true)
+        {
+            if (Parent is null)
+                return;
+            AlignInRect(
+                        Parent.ClientRectangle,
+                        horz,
+                        vert,
+                        shrinkSize);
+        }
+
+        /// <summary>
+        /// Aligns control in the specified container rectangle using horizontal and vertical
+        /// alignment options.
+        /// </summary>
+        /// <param name="container">Container rectangle.</param>
+        /// <param name="horz">Horizontal alignment.</param>
+        /// <param name="vert">Vertical alignment.</param>
+        /// <param name="shrinkSize">Whether to shrink size of the rectangle
+        /// to fit in the container. Optional. Default is <c>true</c>.</param>
+        /// <remarks>
+        /// This method changes <see cref="Bounds"/> so default layout must be disabled
+        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property.
+        /// </remarks>
+        public virtual void AlignInRect(
+            RectD container,
+            HorizontalAlignment? horz,
+            VerticalAlignment? vert,
+            bool shrinkSize = true)
+        {
+            var newBounds = AlignUtils.AlignRectInRect(
+                Bounds,
+                container,
+                horz,
+                vert,
+                shrinkSize);
+            Bounds = newBounds;
+        }
+
         internal static SizeD GetPreferredSizeWhenHorizontal(
             AbstractControl container,
             SizeD availableSize)
