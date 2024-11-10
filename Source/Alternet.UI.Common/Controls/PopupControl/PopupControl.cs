@@ -21,6 +21,7 @@ namespace Alternet.UI
         /// </summary>
         public PopupControl()
         {
+            IgnoreLayout = true;
             Visible = false;
 
             subscriber.AfterControlIsMouseOverChanged += (s, e) =>
@@ -75,6 +76,11 @@ namespace Alternet.UI
                 container = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets whether to focus parent control when popup is shown.
+        /// </summary>
+        public bool FocusParentOnShow { get; set; }
 
         /// <summary>
         /// Gets or sets the popup result value, which is updated when popup is closed.
@@ -227,6 +233,8 @@ namespace Alternet.UI
             {
                 PopupResult = ModalResult.None;
                 AddGlobalNotification(subscriber);
+                if (FocusParentOnShow)
+                    Parent?.SetFocusIfPossible();
             }
             else
             {

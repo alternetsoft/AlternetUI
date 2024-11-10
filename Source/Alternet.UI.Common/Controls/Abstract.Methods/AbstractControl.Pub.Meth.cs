@@ -2239,6 +2239,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this control contains mouse cursor.
+        /// </summary>
+        /// <param name="threshold">Additional value on which bounds of the control are inflated.</param>
+        /// <returns></returns>
+        public virtual bool ContainsMouseCursor(Coord threshold)
+        {
+            var rectangle = ClientRectangle;
+            rectangle.Inflate(threshold, threshold);
+            return rectangle.Contains(Mouse.GetPosition(this));
+        }
+
+        /// <summary>
         /// Gets <see cref="IEnumerable"/> list of visible child controls
         /// which have <see cref="Bounds"/> that contains the specified point.
         /// Controls are returned starting
