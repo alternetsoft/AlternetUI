@@ -23,7 +23,7 @@ namespace Alternet.UI
             ComboBox control,
             Graphics graphics,
             RectD bounds)
-            : base(graphics, bounds)
+            : base(() => graphics, bounds)
         {
             ComboBox = control;
         }

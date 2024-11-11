@@ -382,12 +382,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(dc, rect);
+            DrawDefaultBackground(e);
 
             if (TextVisible)
             {
+                var rect = e.ClipRectangle;
+                var dc = e.Graphics;
                 var state = VisualState;
 
                 var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
@@ -410,15 +412,24 @@ namespace Alternet.UI
             }
             else
             {
-                DrawDefaultImage(dc, rect);
+                DrawDefaultImage(e);
             }
         }
 
         /// <summary>
         /// Paints image in the default style.
         /// </summary>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect"></param>
+        /// <param name="e">Paint arguments.</param>
+        public void DrawDefaultImage(PaintEventArgs e)
+        {
+            var rect = e.ClipRectangle;
+            var dc = e.Graphics;
+            DrawDefaultImage(dc, rect);
+        }
+
+        /// <summary>
+        /// Paints image in the default style.
+        /// </summary>
         public virtual void DrawDefaultImage(Graphics dc, RectD rect)
         {
             var primitive = Primitive;

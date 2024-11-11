@@ -100,7 +100,7 @@ namespace Alternet.UI
 
             if (control.UserPaint)
             {
-                PaintEventArgs e = new(dc, (PointD.Empty, control.Size));
+                PaintEventArgs e = new(() => dc, (PointD.Empty, control.Size));
                 control.RaisePaint(e);
             }
 

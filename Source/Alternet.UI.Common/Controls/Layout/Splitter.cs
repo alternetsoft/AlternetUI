@@ -311,8 +311,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(PaintEventArgs e)
         {
+            var dc = e.Graphics;
+            var rect = e.ClipRectangle;
+
             var colors = NormalColors;
             Color defaultColor;
             if (IsDarkBackground)

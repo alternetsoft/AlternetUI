@@ -24,7 +24,7 @@ namespace Alternet.UI
             Graphics graphics,
             RectD bounds,
             int itemIndex)
-            : base(graphics, bounds)
+            : base(() => graphics, bounds)
         {
             ListBox = control;
             this.ItemIndex = itemIndex;
