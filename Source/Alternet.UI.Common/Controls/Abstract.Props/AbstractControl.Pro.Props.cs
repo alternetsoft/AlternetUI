@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -25,5 +26,41 @@ namespace Alternet.UI
         /// Gets whether this control is dummy control.
         /// </summary>
         protected virtual bool IsDummy => false;
+
+        /// <summary>
+        /// Gets minimal margin value.
+        /// </summary>
+        [Browsable(false)]
+        protected virtual Thickness MinMargin
+        {
+            get
+            {
+                if (minMargin == null)
+                {
+                    minMargin = AllPlatformDefaults.
+                        GetAsThickness(ControlKind, ControlDefaultsId.MinMargin);
+                }
+
+                return minMargin.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets minimal padding value.
+        /// </summary>
+        [Browsable(false)]
+        protected virtual Thickness MinPadding
+        {
+            get
+            {
+                if (minPadding == null)
+                {
+                    minPadding = AllPlatformDefaults.
+                        GetAsThickness(ControlKind, ControlDefaultsId.MinPadding);
+                }
+
+                return minPadding.Value;
+            }
+        }
     }
 }

@@ -28,34 +28,6 @@ namespace Alternet.UI
             }
         }
 
-        internal Thickness MinMargin
-        {
-            get
-            {
-                if (minMargin == null)
-                {
-                    minMargin = AllPlatformDefaults.
-                        GetAsThickness(ControlKind, ControlDefaultsId.MinMargin);
-                }
-
-                return minMargin.Value;
-            }
-        }
-
-        internal Thickness MinPadding
-        {
-            get
-            {
-                if (minPadding == null)
-                {
-                    minPadding = AllPlatformDefaults.
-                        GetAsThickness(ControlKind, ControlDefaultsId.MinPadding);
-                }
-
-                return minPadding.Value;
-            }
-        }
-
         internal bool HasExtendedProps => extendedProps != null;
 
         internal ControlExtendedProps ExtendedProps
