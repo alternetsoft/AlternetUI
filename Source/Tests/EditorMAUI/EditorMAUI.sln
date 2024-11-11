@@ -118,6 +118,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax.Parsers.Xam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoslynSyntaxParsing", "..\..\..\..\AlternetStudio\Demo\Editor.MAUI\QuickStarts\Parsers\RoslynSyntaxParsing\RoslynSyntaxParsing.csproj", "{1B1933CB-8858-4CD8-AF16-CD1BD3CDB292}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDocDll", "..\..\Samples\ApiDocDll\ApiDocDll.csproj", "{C830191C-31E9-45DD-9922-84FC6A1ED941}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -794,6 +796,18 @@ Global
 		{1B1933CB-8858-4CD8-AF16-CD1BD3CDB292}.Release|x86.ActiveCfg = Release|Any CPU
 		{1B1933CB-8858-4CD8-AF16-CD1BD3CDB292}.Release|x86.Build.0 = Release|Any CPU
 		{1B1933CB-8858-4CD8-AF16-CD1BD3CDB292}.Release|x86.Deploy.0 = Release|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Debug|x64.Build.0 = Debug|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Debug|x86.Build.0 = Debug|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Release|x64.ActiveCfg = Release|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Release|x64.Build.0 = Release|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Release|x86.ActiveCfg = Release|Any CPU
+		{C830191C-31E9-45DD-9922-84FC6A1ED941}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
