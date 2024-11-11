@@ -788,7 +788,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(PaintEventArgs e)
         {
             var state = VisualState;
 
@@ -796,9 +796,9 @@ namespace Alternet.UI
             {
             }
 
-            DrawDefaultBackground(dc, rect);
+            DrawDefaultBackground(e);
             if(ImageVisible)
-                PictureBox.DrawDefaultImage(dc, PictureBox.Bounds);
+                PictureBox.DrawDefaultImage(e.Graphics, PictureBox.Bounds);
             if (TextVisible)
             {
                 var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
@@ -809,7 +809,7 @@ namespace Alternet.UI
                 }
 
                 Label.ForegroundColor = foreColor;
-                TemplateUtils.RaisePaintRecursive(Label, dc, Label.Location);
+                TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
         }
 

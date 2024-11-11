@@ -59,7 +59,7 @@ namespace Alternet.UI
                 {
                     bounds.X += BorderWidth.Left;
                     bounds.Y += BorderWidth.Top;
-                    if (bounds.Size == 0)
+                    if (bounds.SizeIsEmpty)
                         return bounds;
                     bounds.Width -= BorderWidth.Horizontal;
                     bounds.Height -= BorderWidth.Vertical;
@@ -168,6 +168,12 @@ namespace Alternet.UI
                 BorderWidth = w;
             }
         }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="AbstractControl.Padding"/> is updated
+        /// when border width or visibility is changed. Default value is True.
+        /// </summary>
+        public virtual bool AutoPadding { get; set; } = true;
 
         /// <inheritdoc cref="AbstractControl.Background"/>
         [Browsable(true)]
@@ -289,9 +295,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(dc, rect);
+            DrawDefaultBackground(e);
         }
 
         /// <summary>
@@ -368,6 +374,9 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdatePadding()
         {
+            if (!AutoPadding)
+                return;
+
             if (HasBorder)
             {
                 Thickness borderPadding = NormalBorder.Width;

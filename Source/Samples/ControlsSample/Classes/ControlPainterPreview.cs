@@ -55,8 +55,11 @@ namespace PropertyGridSample
             }
         }
 
-        public override void DefaultPaint(Graphics dc, RectD bounds)
+        public override void DefaultPaint(PaintEventArgs e)
         {
+            var dc = e.Graphics;
+            var bounds = e.ClipRectangle;
+
             var brush = this.Background;
             if (brush != null)
                 dc.FillRectangle(brush, bounds);

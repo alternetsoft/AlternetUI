@@ -444,7 +444,7 @@ namespace Alternet.UI
         /// <param name="rect">Rectangle.</param>
         public void InvokePaint(Graphics dc, RectD rect)
         {
-            Paint?.Invoke(this, new PaintEventArgs(dc, rect));
+            Paint?.Invoke(this, new PaintEventArgs(() => dc, rect));
         }
 
         /// <summary>

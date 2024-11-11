@@ -375,12 +375,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(dc, rect);
+            DrawDefaultBackground(e);
 
             var state = VisualState;
             var border = GetBorderSettings(state);
+
+            var rect = e.ClipRectangle;
+            var dc = e.Graphics;
+
             if(border is not null)
                 rect = rect.DeflatedWithPadding(border.Width);
 

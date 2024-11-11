@@ -695,15 +695,14 @@ namespace Alternet::UI
 
     DrawingContext* Control::OpenPaintDrawingContext()
     {
-        //auto dc = new wxAutoBufferedPaintDC(GetWxWindow());
-        auto dc = new wxPaintDC(GetWxWindow());
-        
-        // // todo: work out a proper background brush solution (including transparency, patterns, etc)
-        // auto oldBackground = dc->GetBackground();
-        // dc->SetBackground(wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE));
-        // dc->Clear();
-        // dc->SetBackground(oldBackground);
+        auto window = GetWxWindow();
 
+        if (!window)
+        {
+        }
+
+        auto dc = new wxPaintDC(window);
+        
         return new DrawingContext(dc);
     }
 

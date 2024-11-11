@@ -728,13 +728,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(dc, rect);
+            DrawDefaultBackground(e);
 
             if(DebugUtils.IsDebugDefined && ShowDebugRectangleAtCenter)
             {
-                dc.FillRectangleAtCenter(
+                e.Graphics.FillRectangleAtCenter(
                     LightDarkColors.Red.AsBrush,
                     ClientRectangle,
                     3);

@@ -36,8 +36,11 @@ namespace Alternet.UI
             }
         }
 
-        public override void DefaultPaint(Graphics dc, RectD rect)
+        public override void DefaultPaint(PaintEventArgs e)
         {
+            var dc = e.Graphics;
+            var rect = e.ClipRectangle;
+
             dc.FillRectangle(Color.LightGoldenrodYellow.AsBrush, rect);
 
             var svgImage = KnownSvgImages.ImgAngleDown;

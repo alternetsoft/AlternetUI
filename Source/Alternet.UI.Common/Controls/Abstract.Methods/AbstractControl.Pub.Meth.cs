@@ -76,10 +76,7 @@ namespace Alternet.UI
             RectD space,
             IReadOnlyList<AbstractControl> items)
         {
-            var number = LayoutWhenDocked(
-                container,
-                ref space,
-                items);
+            var number = LayoutWhenDocked(ref space, items);
 
             void UpdateItems()
             {
@@ -88,7 +85,7 @@ namespace Alternet.UI
                 var newItems = new List<AbstractControl>();
                 foreach (var item in items)
                 {
-                    if (item.Dock == DockStyle.None)
+                    if (item.Dock == DockStyle.None && !item.IgnoreLayout)
                         newItems.Add(item);
                 }
 

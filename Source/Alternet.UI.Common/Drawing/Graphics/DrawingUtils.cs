@@ -189,7 +189,7 @@ namespace Alternet.UI
             bool hasBorder = true,
             AbstractControl? control = null)
         {
-            if (brush is null && border is null)
+            if (brush is null && (border is null || !hasBorder))
                 return;
 
             var radius = border?.GetUniformCornerRadius(rect);

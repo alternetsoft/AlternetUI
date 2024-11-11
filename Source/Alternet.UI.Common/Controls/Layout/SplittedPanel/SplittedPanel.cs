@@ -11,13 +11,14 @@ namespace Alternet.UI
     /// <summary>
     /// Implements panel with top, bottom, left, right sub-panels and splitters.
     /// </summary>
+    [ControlCategory("Containers")]
     public partial class SplittedPanel : LayoutPanel
     {
-        private readonly Control rightPanel;
-        private readonly Control leftPanel;
-        private readonly Control topPanel;
-        private readonly Control bottomPanel;
-        private readonly Control fillPanel;
+        private readonly AbstractControl rightPanel;
+        private readonly AbstractControl leftPanel;
+        private readonly AbstractControl topPanel;
+        private readonly AbstractControl bottomPanel;
+        private readonly AbstractControl fillPanel;
 
         private readonly Splitter leftSplitter = new()
         {
@@ -76,16 +77,22 @@ namespace Alternet.UI
             fillPanel.Dock = DockStyle.Fill;
 
             SuspendLayout();
-            FillPanel.Parent = this;
-            RightSplitter.Parent = this;
-            RightPanel.Parent = this;
-            LeftSplitter.Parent = this;
-            LeftPanel.Parent = this;
-            TopSplitter.Parent = this;
-            TopPanel.Parent = this;
-            BottomSplitter.Parent = this;
-            BottomPanel.Parent = this;
-            ResumeLayout();
+            try
+            {
+                FillPanel.Parent = this;
+                RightSplitter.Parent = this;
+                RightPanel.Parent = this;
+                LeftSplitter.Parent = this;
+                LeftPanel.Parent = this;
+                TopSplitter.Parent = this;
+                TopPanel.Parent = this;
+                BottomSplitter.Parent = this;
+                BottomPanel.Parent = this;
+            }
+            finally
+            {
+                ResumeLayout();
+            }
         }
 
         /// <summary>
@@ -98,37 +105,37 @@ namespace Alternet.UI
         /// Gets right sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Control RightPanel => rightPanel;
+        public AbstractControl RightPanel => rightPanel;
 
         /// <summary>
         /// Gets left sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Control LeftPanel => leftPanel;
+        public AbstractControl LeftPanel => leftPanel;
 
         /// <summary>
         /// Gets top sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Control TopPanel => topPanel;
+        public AbstractControl TopPanel => topPanel;
 
         /// <summary>
         /// Gets bottom sub-panel.
         /// </summary>
         [Browsable(false)]
-        public Control BottomPanel => bottomPanel;
+        public AbstractControl BottomPanel => bottomPanel;
 
         /// <summary>
         /// Gets center sub-panel. Same as <see cref="CenterPanel"/>.
         /// </summary>
         [Browsable(false)]
-        public Control FillPanel => fillPanel;
+        public AbstractControl FillPanel => fillPanel;
 
         /// <summary>
         /// Gets center sub-panel. Same as <see cref="FillPanel"/>.
         /// </summary>
         [Browsable(false)]
-        public Control CenterPanel => fillPanel;
+        public AbstractControl CenterPanel => fillPanel;
 
         /// <summary>
         /// Gets left splitter.
@@ -308,31 +315,31 @@ namespace Alternet.UI
         /// Creates right panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual Control CreateRightPanel() => CreateAnyPanel();
+        protected virtual AbstractControl CreateRightPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates left panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual Control CreateLeftPanel() => CreateAnyPanel();
+        protected virtual AbstractControl CreateLeftPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates top panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual Control CreateTopPanel() => CreateAnyPanel();
+        protected virtual AbstractControl CreateTopPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates bottom panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual Control CreateBottomPanel() => CreateAnyPanel();
+        protected virtual AbstractControl CreateBottomPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates center panel.
         /// </summary>
         /// <returns></returns>
-        protected virtual Control CreateCenterPanel() => CreateAnyPanel();
+        protected virtual AbstractControl CreateCenterPanel() => CreateAnyPanel();
 
         /// <summary>
         /// Creates panel.

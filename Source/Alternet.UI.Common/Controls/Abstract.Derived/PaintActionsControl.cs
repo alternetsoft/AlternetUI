@@ -46,18 +46,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DefaultPaint(Graphics dc, RectD bounds)
+        public override void DefaultPaint(PaintEventArgs e)
         {
             var brush = this.Background;
             if (brush != null)
-                dc.FillRectangle(brush, bounds);
+                e.Graphics.FillRectangle(brush, e.ClipRectangle);
 
             if (paintActions is null)
                 return;
 
             foreach(var paintAction in paintActions)
             {
-                paintAction(this, dc, bounds);
+                paintAction(this, e.Graphics, e.ClipRectangle);
             }
         }
 
