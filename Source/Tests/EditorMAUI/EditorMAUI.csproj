@@ -119,7 +119,7 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.92" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.0.0-preview.5.3" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.118.0-preview.1.2" />
   </ItemGroup>
 
 </Project>

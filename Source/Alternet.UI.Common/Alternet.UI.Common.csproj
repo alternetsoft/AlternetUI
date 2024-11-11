@@ -47,9 +47,9 @@
     <PackageReference Include="SkiaSharp.Extended" Version="3.0.0-preview.7" />
     <PackageReference Include="SkiaSharp.Extended.Iconify" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Extended.Iconify.FontAwesome" Version="5.0.0" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.0.0-preview.5.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="3.0.0-preview.5.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="3.0.0-preview.5.3" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.118.0-preview.1.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="3.118.0-preview.1.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="3.118.0-preview.1.2" />
     <PackageReference Include="Svg.Skia" Version="2.0.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
