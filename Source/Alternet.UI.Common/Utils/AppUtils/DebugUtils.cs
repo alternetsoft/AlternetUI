@@ -80,6 +80,7 @@ namespace Alternet.UI
                 {
                     Debug.WriteLine("First Chance Exception");
                     Debug.WriteLine(e.Exception.ToString());
+                    LogUtils.LogToFile(e.Exception.ToString());
                 });
             };
 
@@ -89,6 +90,7 @@ namespace Alternet.UI
                 {
                     Debug.WriteLine("CurrentDomain Unhandled exception");
                     Debug.WriteLine(e.ExceptionObject.ToString());
+                    LogUtils.LogToFile(e.ExceptionObject.ToString());
                 });
             };
 
@@ -98,6 +100,7 @@ namespace Alternet.UI
                 {
                     Debug.WriteLine("Unobserved Task Exception");
                     Debug.WriteLine(e.Exception.ToString());
+                    LogUtils.LogToFile(e.Exception.ToString());
                 });
             };
         }

@@ -26,6 +26,8 @@ public partial class MainPage : ContentPage
 
     public MainPage()
     {
+        Alternet.UI.DebugUtils.RegisterExceptionsLogger();
+
         Alternet.UI.PlessMouse.ShowTestMouseInControl = false;
 
         InitializeComponent();
