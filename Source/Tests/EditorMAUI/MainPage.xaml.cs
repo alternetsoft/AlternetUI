@@ -54,6 +54,10 @@ public partial class MainPage : ContentPage
             panel.Padding = new(10);
         }
 
+        editor.Interior.SetThemeMetrics(Alternet.UI.ScrollBar.KnownTheme.WindowsLight);
+        if (editor.Interior.Border?.Border is not null)
+            editor.Interior.Border.Border.Color = Alternet.UI.BorderSettings.DefaultColor;
+
         BindingContext = this;
 
         Alternet.UI.App.LogMessage += App_LogMessage;
@@ -79,6 +83,16 @@ public partial class MainPage : ContentPage
         editor.Editor.LongTap += Editor_LongTap;
 
         editor.Editor.CanLongTap = true;
+
+        extraControls.IsVisible = false;
+
+        setHeight.Clicked += SetHeight_Clicked;
+    }
+
+    private void SetHeight_Clicked(object? sender, EventArgs e)
+    {
+        if (Window is not null)
+            Window.Height = (Window.Width / 3) * 2;
     }
 
     private void Editor_LongTap(object? sender, Alternet.UI.LongTapEventArgs e)

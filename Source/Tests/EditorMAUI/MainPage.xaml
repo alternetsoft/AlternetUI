@@ -11,17 +11,19 @@
             <editor:SyntaxEditView x:Name="editor" ReadOnly="False" 
                                    SelectionChanged="editor_SelectionChanged">
             </editor:SyntaxEditView>
+            <FlyoutBase.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Set Height = (Width / 3) * 2"
+                                        x:Name="setHeight"/>
+                    <MenuFlyoutItem Text="Hide extra controls"
+                                        x:Name="hideExtra"/>
+                </MenuFlyout>
+            </FlyoutBase.ContextFlyout>
         </StackLayout>
 
-        <StackLayout Margin="0,20" Grid.Row="1">
+        <StackLayout Margin="0,20" Grid.Row="1" x:Name="extraControls">
             <Entry Text="some text" x:Name="entry1"/>
             <Button Text="Action 1" x:Name="button1" WidthRequest="150">
-                <FlyoutBase.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="Go to docs repo"/>
-                        <MenuFlyoutItem Text="Go to engineering repo"/>
-                    </MenuFlyout>
-                </FlyoutBase.ContextFlyout>
             </Button>
         </StackLayout>
     </Grid>

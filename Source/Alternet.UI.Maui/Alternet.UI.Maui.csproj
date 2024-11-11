@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
-    <PackageReference Include="SkiaSharp.Views.WinUI" Version="3.0.0-preview.5.3" />
+    <PackageReference Include="SkiaSharp.Views.WinUI" Version="3.118.0-preview.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +38,7 @@
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
     <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.92" />
-    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.0.0-preview.5.3" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.118.0-preview.1.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
