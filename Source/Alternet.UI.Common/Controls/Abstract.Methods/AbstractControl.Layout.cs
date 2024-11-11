@@ -40,7 +40,8 @@ namespace Alternet.UI
         /// to fit in the container. Optional. Default is <c>true</c>.</param>
         /// <remarks>
         /// This method changes <see cref="Bounds"/> so default layout must be disabled
-        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property.
+        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// of the control.
         /// </remarks>
         public virtual void AlignInParent(
             HorizontalAlignment? horz,
@@ -57,6 +58,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Aligns control in the parent using <see cref="DockStyle"/> alignment option.
+        /// </summary>
+        /// <param name="value"><see cref="DockStyle"/> value which specifies align option.</param>
+        /// <remarks>
+        /// This method changes <see cref="Bounds"/> so default layout must be disabled
+        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// of the control.
+        /// </remarks>
+        public virtual void DockInParent(DockStyle value)
+        {
+            if (Parent is null)
+                return;
+            DockInRect(Parent.ClientRectangle, value);
+        }
+
+        /// <summary>
+        /// Aligns control in the specified container rectangle
+        /// using <see cref="DockStyle"/> alignment option.
+        /// </summary>
+        /// <param name="value"><see cref="DockStyle"/> value which specifies align option.</param>
+        /// <param name="container">Container rectangle.</param>
+        /// <remarks>
+        /// This method changes <see cref="Bounds"/> so default layout must be disabled
+        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// of the control.
+        /// </remarks>
+        public virtual void DockInRect(RectD container, DockStyle value)
+        {
+            OldLayout.LayoutWhenDocked(
+                        ref container,
+                        this,
+                        value,
+                        false);
+        }
+
+        /// <summary>
         /// Aligns control in the specified container rectangle using horizontal and vertical
         /// alignment options.
         /// </summary>
@@ -67,7 +104,8 @@ namespace Alternet.UI
         /// to fit in the container. Optional. Default is <c>true</c>.</param>
         /// <remarks>
         /// This method changes <see cref="Bounds"/> so default layout must be disabled
-        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property.
+        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// of the control.
         /// </remarks>
         public virtual void AlignInRect(
             RectD container,
@@ -130,14 +168,13 @@ namespace Alternet.UI
         // of the container (fill controls are not counted).
         // On return, 'result' has number of controls with Dock != None.
         internal static int LayoutWhenDocked(
-            AbstractControl parent,
             ref RectD bounds,
             IReadOnlyList<AbstractControl> children)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                return OldLayout.LayoutWhenDocked(parent, ref bounds, children);
+                return OldLayout.LayoutWhenDocked(ref bounds, children);
             else
-                return OldLayout.LayoutWhenDocked(parent, ref bounds, children);
+                return OldLayout.LayoutWhenDocked(ref bounds, children);
         }
 
         internal static SizeD GetMinStretchedSize(

@@ -291,10 +291,127 @@ namespace Alternet.UI
             }
         }
 
+        internal static void LayoutWhenDocked(
+            ref RectD bounds,
+            AbstractControl child,
+            DockStyle value,
+            bool autoSize)
+        {
+            SizeD child_size = child.Bounds.Size;
+            var space = bounds;
+
+            switch (value)
+            {
+                case DockStyle.Left:
+                    LayoutLeft();
+                    break;
+                case DockStyle.Top:
+                    LayoutTop();
+                    break;
+                case DockStyle.Right:
+                    LayoutRight();
+                    break;
+                case DockStyle.Bottom:
+                    LayoutBottom();
+                    break;
+                case DockStyle.Fill:
+                    LayoutFill();
+                    break;
+            }
+
+            bounds = space;
+
+            void LayoutLeft()
+            {
+                if (autoSize)
+                {
+                    child_size =
+                        child.GetPreferredSizeLimited(
+                            new SizeD(child_size.Width, space.Height));
+                }
+
+                child.SetBounds(
+                    space.Left,
+                    space.Y,
+                    child_size.Width,
+                    space.Height,
+                    BoundsSpecified.All);
+                space.X += child_size.Width;
+                space.Width -= child_size.Width;
+            }
+
+            void LayoutTop()
+            {
+                if (autoSize)
+                {
+                    child_size =
+                        child.GetPreferredSizeLimited(
+                            new SizeD(space.Width, child_size.Height));
+                }
+
+                child.SetBounds(
+                    space.Left,
+                    space.Y,
+                    space.Width,
+                    child_size.Height,
+                    BoundsSpecified.All);
+                space.Y += child_size.Height;
+                space.Height -= child_size.Height;
+            }
+
+            void LayoutRight()
+            {
+                if (autoSize)
+                {
+                    child_size =
+                        child.GetPreferredSizeLimited(
+                            new SizeD(child_size.Width, space.Height));
+                }
+
+                child.SetBounds(
+                    space.Right - child_size.Width,
+                    space.Y,
+                    child_size.Width,
+                    space.Height,
+                    BoundsSpecified.All);
+                space.Width -= child_size.Width;
+            }
+
+            void LayoutBottom()
+            {
+                if (autoSize)
+                {
+                    child_size =
+                        child.GetPreferredSizeLimited(
+                            new SizeD(space.Width, child_size.Height));
+                }
+
+                child.SetBounds(
+                    space.Left,
+                    space.Bottom - child_size.Height,
+                    space.Width,
+                    child_size.Height,
+                    BoundsSpecified.All);
+                space.Height -= child_size.Height;
+            }
+
+            void LayoutFill()
+            {
+                child_size = new SizeD(space.Width, space.Height);
+                if (autoSize)
+                    child_size = child.GetPreferredSizeLimited(child_size);
+                child.SetBounds(
+                    space.Left,
+                    space.Top,
+                    child_size.Width,
+                    child_size.Height,
+                    BoundsSpecified.All);
+            }
+        }
+
         // On return, 'bounds' has an empty space left after docking the controls to sides
         // of the container (fill controls are not counted).
         internal static int LayoutWhenDocked(
-            AbstractControl parent,
             ref RectD bounds,
             IReadOnlyList<AbstractControl> children)
         {
@@ -309,118 +426,16 @@ namespace Alternet.UI
                 AbstractControl child = children[i];
                 DockStyle dock = child.Dock;
 
-                if (dock == DockStyle.None)
+                if (dock == DockStyle.None || child.IgnoreLayout)
                     continue;
 
                 result++;
-                SizeD child_size = child.Bounds.Size;
-                bool autoSize = false;
 
-                switch (dock)
-                {
-                    case DockStyle.Left:
-                        LayoutLeft();
-                        break;
-                    case DockStyle.Top:
-                        LayoutTop();
-                        break;
-                    case DockStyle.Right:
-                        LayoutRight();
-                        break;
-                    case DockStyle.Bottom:
-                        LayoutBottom();
-                        break;
-                    case DockStyle.Fill:
-                        LayoutFill();
-                        break;
-                }
-
-                void LayoutLeft()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(child_size.Width, space.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Left,
-                        space.Y,
-                        child_size.Width,
-                        space.Height,
-                        BoundsSpecified.All);
-                    space.X += child_size.Width;
-                    space.Width -= child_size.Width;
-                }
-
-                void LayoutTop()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(space.Width, child_size.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Left,
-                        space.Y,
-                        space.Width,
-                        child_size.Height,
-                        BoundsSpecified.All);
-                    space.Y += child_size.Height;
-                    space.Height -= child_size.Height;
-                }
-
-                void LayoutRight()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(child_size.Width, space.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Right - child_size.Width,
-                        space.Y,
-                        child_size.Width,
-                        space.Height,
-                        BoundsSpecified.All);
-                    space.Width -= child_size.Width;
-                }
-
-                void LayoutBottom()
-                {
-                    if (autoSize)
-                    {
-                        child_size =
-                            child.GetPreferredSizeLimited(
-                                new SizeD(space.Width, child_size.Height));
-                    }
-
-                    child.SetBounds(
-                        space.Left,
-                        space.Bottom - child_size.Height,
-                        space.Width,
-                        child_size.Height,
-                        BoundsSpecified.All);
-                    space.Height -= child_size.Height;
-                }
-
-                void LayoutFill()
-                {
-                    child_size = new SizeD(space.Width, space.Height);
-                    if (autoSize)
-                        child_size = child.GetPreferredSizeLimited(child_size);
-                    child.SetBounds(
-                        space.Left,
-                        space.Top,
-                        child_size.Width,
-                        child_size.Height,
-                        BoundsSpecified.All);
-                }
+                LayoutWhenDocked(
+                            ref space,
+                            child,
+                            dock,
+                            autoSize: false);
             }
 
             bounds = space;
