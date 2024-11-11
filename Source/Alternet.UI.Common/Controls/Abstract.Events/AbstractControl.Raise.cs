@@ -544,7 +544,7 @@ namespace Alternet.UI
             OnPaint(e);
             Paint?.Invoke(this, e);
             PaintCaret(e);
-            PlessMouse.DrawTestMouseRect(this, e.Graphics);
+            PlessMouse.DrawTestMouseRect(this, () => e.Graphics);
 
             RaiseNotifications((n) => n.AfterPaint(this, e));
         }

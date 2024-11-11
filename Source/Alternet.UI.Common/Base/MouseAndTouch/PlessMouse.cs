@@ -105,14 +105,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control.</param>
         /// <param name="dc">Drawing context.</param>
-        public static void DrawTestMouseRect(AbstractControl control, Graphics dc)
+        public static void DrawTestMouseRect(AbstractControl control, Func<Graphics> dc)
         {
             if (control != AbstractControl.HoveredControl)
                 return;
 
             if (control.UserPaint && ShowTestMouseInControl)
             {
-                dc.FillRectangle(TestMouseColor.AsBrush, GetTestMouseRect(control));
+                dc().FillRectangle(TestMouseColor.AsBrush, GetTestMouseRect(control));
             }
         }
 

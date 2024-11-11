@@ -826,14 +826,28 @@ namespace Alternet.UI
         {
             if (!UserPaint)
                 return;
-            if (ClientRectangle.SizeIsEmpty)
+            var clientRect = ClientRectangle;
+            if (clientRect.SizeIsEmpty)
                 return;
             if (!VisibleOnScreen)
                 return;
-            using var dc = Handler.OpenPaintDrawingContext();
 
-            var paintArgs = new PaintEventArgs(dc, ClientRectangle);
-            RaisePaint(paintArgs);
+            var e = new PaintEventArgs(() => Handler.OpenPaintDrawingContext(), clientRect);
+
+            try
+            {
+                RaisePaint(e);
+            }
+            finally
+            {
+                if (e.GraphicsAllocated)
+                {
+                    e.Graphics.Dispose();
+                }
+                else
+                {
+                }
+            }
         }
 
         /// <summary>

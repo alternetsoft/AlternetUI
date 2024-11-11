@@ -156,9 +156,8 @@ namespace Alternet.UI
         /// Default painting method of the <see cref="UserControl"/>
         /// and its descendants.
         /// </summary>
-        /// <param name="dc">Drawing Context.</param>
-        /// <param name="rect">Rectangle to draw in.</param>
-        public virtual void DefaultPaint(Graphics dc, RectD rect)
+        /// <param name="e">Paint arguments.</param>
+        public virtual void DefaultPaint(PaintEventArgs e)
         {
         }
 
@@ -176,13 +175,18 @@ namespace Alternet.UI
         /// <summary>
         /// Draw default background.
         /// </summary>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Ractangle.</param>
-        public virtual void DrawDefaultBackground(Graphics dc, RectD rect)
+        /// <param name="e">Paint arguments.</param>
+        public virtual void DrawDefaultBackground(PaintEventArgs e)
         {
             var state = VisualState;
             var brush = GetBackground(state);
             var border = GetBorderSettings(state);
+
+            if (brush is null && (border is null || !HasBorder))
+                return;
+
+            var dc = e.Graphics;
+            var rect = e.ClipRectangle;
 
             dc.FillBorderRectangle(
                 rect,
@@ -221,7 +225,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
-            DefaultPaint(e.Graphics, e.ClipRectangle);
+            DefaultPaint(e);
         }
 
         /// <inheritdoc/>
