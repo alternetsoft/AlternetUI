@@ -14,18 +14,33 @@ namespace Alternet.UI
     /// </remarks>
     public class PaintEventArgs : BaseEventArgs
     {
-        private Graphics canvas;
+        private Graphics? canvas;
+        private Func<Graphics> canvasFunc;
         private RectD rect;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaintEventArgs"/> class.
         /// </summary>
-        /// <param name="canvas">The <see cref="Graphics"/> used to paint.</param>
+        /// <param name="canvas"><see cref="Graphics"/> used to paint.</param>
         /// <param name="clipRect">The <see cref="RectD" /> that represents
         /// the rectangle in which to paint.</param>
         public PaintEventArgs(Graphics canvas, RectD clipRect)
         {
             this.canvas = canvas;
+            canvasFunc = () => canvas;
+            this.rect = clipRect;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaintEventArgs"/> class.
+        /// </summary>
+        /// <param name="canvasFunc">The function which returns
+        /// <see cref="Graphics"/> used to paint.</param>
+        /// <param name="clipRect">The <see cref="RectD" /> that represents
+        /// the rectangle in which to paint.</param>
+        public PaintEventArgs(Func<Graphics> canvasFunc, RectD clipRect)
+        {
+            this.canvasFunc = canvasFunc;
             this.rect = clipRect;
         }
 
@@ -46,6 +61,11 @@ namespace Alternet.UI
             get => Graphics;
             set => Graphics = value;
         }
+
+        /// <summary>
+        /// Gets whether canvas was allocated.
+        /// </summary>
+        public bool GraphicsAllocated => canvas is not null;
 
         /// <summary>
         /// Gets the rectangle in which to paint.
@@ -81,7 +101,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual Graphics Graphics
         {
-            get => canvas;
+            get => canvas ??= canvasFunc();
             set => canvas = value;
         }
     }
