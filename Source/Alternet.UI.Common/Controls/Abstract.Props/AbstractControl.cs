@@ -461,6 +461,9 @@ namespace Alternet.UI
                 if (value != dock)
                 {
                     dock = value;
+                    /*
+                    Do not uncomment or we will have an exception
+                    if(Parent is not null && !IgnoreLayout)*/
                     PerformLayout();
                 }
             }
@@ -1734,7 +1737,8 @@ namespace Alternet.UI
                 if (minChildMargin == value)
                     return;
                 minChildMargin = value;
-                PerformLayout();
+                if(HasChildren)
+                    PerformLayout();
             }
         }
 
@@ -1814,7 +1818,9 @@ namespace Alternet.UI
 
                 OnMarginChanged(EventArgs.Empty);
                 MarginChanged?.Invoke(this, EventArgs.Empty);
-                PerformLayout();
+
+                if(Parent is not null)
+                    PerformLayout();
             }
         }
 
@@ -2723,7 +2729,7 @@ namespace Alternet.UI
                     HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
                 }
 
-                if (Parent is not null)
+                if (Parent is not null && !IgnoreLayout)
                     PerformLayout();
             }
         }
@@ -2744,7 +2750,7 @@ namespace Alternet.UI
 
                 verticalAlignment = value;
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                if(Parent is not null)
+                if(Parent is not null && !IgnoreLayout)
                     PerformLayout();
             }
         }
@@ -2837,7 +2843,7 @@ namespace Alternet.UI
 
                 horizontalAlignment = value;
                 HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                if (Parent is not null)
+                if (Parent is not null && !IgnoreLayout)
                     PerformLayout();
             }
         }
