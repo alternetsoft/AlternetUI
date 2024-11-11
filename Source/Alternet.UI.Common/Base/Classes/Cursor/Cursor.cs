@@ -106,13 +106,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether custom cursors are allowed. Default is <c>true</c>.
+        /// Gets or sets whether custom cursors are allowed. Default is <c>false</c>.
         /// </summary>
         /// <remarks>
         /// When this property is <c>false</c>, all cursors which are not of <see cref="CursorType"/>
         /// will be created as <see cref="CursorType.Arrow"/>.
         /// </remarks>
-        public static bool AllowCustomCursors { get; set; } = true;
+        public static bool AllowCustomCursors { get; set; } = false;
 
         /// <summary>
         /// Gets or sets factory handler.
