@@ -29,14 +29,14 @@ namespace Alternet.UI
 
             if (e.IsAnyPlusKey)
             {
-                App.DebugLogIf("Pressed Ctrl+Shift+Plus: Zoom In Font", true);
+                App.DebugLogIf("Pressed Ctrl+Shift+Plus: Zoom In Font", false);
                 sender.Font = sender.RealFont.Larger();
                 e.Suppressed();
             }
 
             if (e.IsAnyMinusKey)
             {
-                App.DebugLogIf("Pressed Ctrl+Shift+Minus: Zoom Out Font", true);
+                App.DebugLogIf("Pressed Ctrl+Shift+Minus: Zoom Out Font", false);
                 sender.Font = sender.RealFont.Smaller();
                 e.Suppressed();
             }
