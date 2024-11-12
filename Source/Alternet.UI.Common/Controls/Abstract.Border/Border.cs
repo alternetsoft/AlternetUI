@@ -105,7 +105,8 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.UniformCornerRadius"/>
-        public virtual Coord? UniformCornerRadius
+        [Browsable(false)]
+        public virtual Coord? UniformBorderCornerRadius
         {
             get
             {
@@ -122,7 +123,8 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.UniformRadiusIsPercent"/>
-        public virtual bool? UniformRadiusIsPercent
+        [Browsable(false)]
+        public virtual bool? UniformBorderRadiusIsPercent
         {
             get
             {
@@ -173,6 +175,7 @@ namespace Alternet.UI
         /// Gets or sets whether <see cref="AbstractControl.Padding"/> is updated
         /// when border width or visibility is changed. Default value is True.
         /// </summary>
+        [Browsable(false)]
         public virtual bool AutoPadding { get; set; } = true;
 
         /// <inheritdoc cref="AbstractControl.Background"/>

@@ -131,6 +131,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for the marked days.
         /// </summary>
+        [Browsable(false)]
         public virtual ICalendarDateAttr? MarkDateAttr
         {
             get

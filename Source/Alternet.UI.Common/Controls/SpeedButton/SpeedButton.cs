@@ -594,6 +594,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets override for <see cref="VisualState"/> when <see cref="Sticky"/> is True.
         /// </summary>
+        [Browsable(false)]
         public VisualControlState StickyVisualStateOverride
         {
             get => stickyVisualState;

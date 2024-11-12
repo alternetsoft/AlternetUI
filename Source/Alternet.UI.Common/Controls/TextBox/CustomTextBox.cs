@@ -131,6 +131,7 @@ namespace Alternet.UI
         public virtual IFormatProvider? FormatProvider { get; set; }
 
         /// <inheritdoc cref="IObjectToStringOptions.DefaultFormat"/>
+        [Browsable(false)]
         public virtual string? DefaultFormat { get; set; }
 
         /// <inheritdoc cref="IObjectToStringOptions.Converter"/>
@@ -140,6 +141,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the <see cref="AbstractControl.Text"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual string? DefaultText { get; set; }
 
         /// <summary>

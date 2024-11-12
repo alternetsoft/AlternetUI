@@ -112,6 +112,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property of the main child control.
         /// </summary>
+        [Browsable(false)]
         public virtual SizeD InnerSuggestedSize
         {
             get => MainControl.SuggestedSize;

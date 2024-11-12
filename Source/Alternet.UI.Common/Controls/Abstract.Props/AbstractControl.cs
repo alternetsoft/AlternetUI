@@ -1293,6 +1293,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether control has visible parent window.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsParentWindowVisible
         {
             get
@@ -1304,6 +1305,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether control is visible on screen.
         /// </summary>
+        [Browsable(false)]
         public virtual bool VisibleOnScreen
         {
             get
@@ -1725,6 +1727,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets minimal value of the child's <see cref="Margin"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual Thickness? MinChildMargin
         {
             get
@@ -2968,6 +2971,7 @@ namespace Alternet.UI
         /// under the text. It's up to control how this property is used.
         /// </remarks>
         [DefaultValue(null)]
+        [Browsable(false)]
         public virtual Color? TextBackColor
         {
             get
