@@ -671,6 +671,23 @@ namespace Alternet.Drawing
         public abstract void FillRectangle(Brush brush, RectD rectangle);
 
         /// <summary>
+        /// Fills the interior of a rectangle specified by a pair of coordinates,
+        /// a width, and a height.
+        /// </summary>
+        /// <param name="brush">
+        /// <see cref="Brush" /> that determines the characteristics of the fill.
+        /// </param>
+        /// <param name="x">The x-coordinate of the upper-left corner of the rectangle to fill.</param>
+        /// <param name="y">The y-coordinate of the upper-left corner of the rectangle to fill.</param>
+        /// <param name="width">Width of the rectangle to fill.</param>
+        /// <param name="height">Height of the rectangle to fill.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FillRectangle(Brush brush, Coord x, Coord y, Coord width, Coord height)
+        {
+            FillRectangle(brush, (x, y, width, height));
+        }
+
+        /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectD"/> structure.
         /// Rectangle is specified in device-independent units.
         /// </summary>
@@ -1026,6 +1043,7 @@ namespace Alternet.Drawing
         /// <param name="image"><see cref="Image"/> to draw.</param>
         /// <param name="x">Horizontal position of the image.</param>
         /// <param name="y">Vertical position of the image.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void DrawImage(Image image, Coord x, Coord y) => DrawImage(image, (x, y));
 
         /// <summary>
