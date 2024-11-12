@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Tests\**"/>
+    <Compile Remove="Tests\**" />
     <EmbeddedResource Remove="Tests\**" />
     <MauiCss Remove="Tests\**" />
     <MauiXaml Remove="Tests\**" />
@@ -38,6 +38,7 @@
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
     <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.92" />
+    <PackageReference Include="SkiaSharp.Views" Version="3.118.0-preview.1.2" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.118.0-preview.1.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />

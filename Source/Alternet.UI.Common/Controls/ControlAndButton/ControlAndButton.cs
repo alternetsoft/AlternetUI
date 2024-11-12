@@ -50,10 +50,11 @@ namespace Alternet.UI
                 buttons.VerticalAlignment = UI.VerticalAlignment.Center;
                 buttons.ParentBackColor = true;
                 buttons.ParentForeColor = true;
+                HasBtnComboBox = true;
                 buttons.Parent = this;
-                IdButton = buttons.AddSpeedBtn(KnownButton.TextBoxCombo, (_, _) => RaiseButtonClick());
 
                 CustomTextBox.InitErrorPicture(errorPicture);
+                errorPicture.Visible = false;
                 errorPicture.Parent = this;
                 errorPicture.ParentBackColor = true;
             }
@@ -66,13 +67,56 @@ namespace Alternet.UI
         /// <summary>
         /// Occcurs when button is clicked.
         /// </summary>
-        public event EventHandler? ButtonClick;
+        public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
 
         /// <summary>
-        /// Gets id of the first button.
+        /// Gets or sets whether 'ComboBox' button is visible.
+        /// </summary>
+        public virtual bool HasBtnComboBox
+        {
+            get
+            {
+                if (IdButtonCombo is null)
+                    return false;
+                var result = buttons.GetToolVisible(IdButtonCombo.Value);
+                return result;
+            }
+
+            set
+            {
+                if (HasBtnComboBox == value)
+                    return;
+                if (value)
+                {
+                    if (IdButtonCombo is null)
+                    {
+                        IdButtonCombo
+                            = buttons.AddSpeedBtn(KnownButton.TextBoxCombo, (s, e) =>
+                            {
+                                ControlAndButtonClickEventArgs args = new();
+                                args.ButtonId = (s as AbstractControl)?.UniqueId;
+                                RaiseButtonClick(args);
+                            });
+                    }
+                    else
+                    {
+                        buttons.SetToolVisible(IdButtonCombo.Value, true);
+                    }
+                }
+                else
+                {
+                    if (IdButtonCombo is null)
+                        return;
+                    buttons.SetToolVisible(IdButtonCombo.Value, false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets id of the combo button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdButton { get; internal set; }
+        public virtual ObjectUniqueId? IdButtonCombo { get; protected set; }
 
         /// <summary>
         /// Gets attached <see cref="PictureBox"/> control which
@@ -112,6 +156,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property of the main child control.
         /// </summary>
+        [Browsable(false)]
         public virtual SizeD InnerSuggestedSize
         {
             get => MainControl.SuggestedSize;
@@ -161,16 +206,18 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="ButtonClick"/> event and calls <see cref="OnButtonClick"/> method.
         /// </summary>
-        public void RaiseButtonClick()
+        public void RaiseButtonClick(ControlAndButtonClickEventArgs e)
         {
-            ButtonClick?.Invoke(this, EventArgs.Empty);
-            OnButtonClick();
+            ButtonClick?.Invoke(this, e);
+            if (e.Handled)
+                return;
+            OnButtonClick(e);
         }
 
         /// <summary>
-        /// Called when first button is clicked.
+        /// Called when button is clicked.
         /// </summary>
-        public virtual void OnButtonClick()
+        public virtual void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
         }
 

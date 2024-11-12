@@ -515,6 +515,7 @@ namespace Alternet.UI
         [Category("Behavior")]
         [DefaultValue(DrawMode.Normal)]
         [RefreshProperties(RefreshProperties.Repaint)]
+        [Browsable(false)]
         public virtual DrawMode DrawMode
         {
             get

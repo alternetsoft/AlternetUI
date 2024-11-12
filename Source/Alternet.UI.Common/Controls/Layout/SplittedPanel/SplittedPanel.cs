@@ -98,6 +98,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlSet"/> with all splitters.
         /// </summary>
+        [Browsable(false)]
         public ControlSet Splitters =>
             ControlSet.New(leftSplitter, topSplitter, rightSplitter, bottomSplitter);
 
@@ -302,6 +303,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default size of the left, top, right and bottom panels.
         /// </summary>
+        [Browsable(false)]
         public virtual Thickness DefaultPanelSize => (50, 30, 50, 30);
 
         [Browsable(false)]

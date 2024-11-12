@@ -66,11 +66,12 @@ namespace Alternet.UI
         /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
         /// of the control.
         /// </remarks>
-        public virtual void DockInParent(DockStyle value)
+        public virtual RectD DockInParent(DockStyle value)
         {
             if (Parent is null)
-                return;
-            DockInRect(Parent.ClientRectangle, value);
+                return RectD.Empty;
+            var result = DockInRect(Parent.ClientRectangle, value);
+            return result;
         }
 
         /// <summary>
@@ -84,13 +85,14 @@ namespace Alternet.UI
         /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
         /// of the control.
         /// </remarks>
-        public virtual void DockInRect(RectD container, DockStyle value)
+        public virtual RectD DockInRect(RectD container, DockStyle value)
         {
             OldLayout.LayoutWhenDocked(
                         ref container,
                         this,
                         value,
                         false);
+            return container;
         }
 
         /// <summary>

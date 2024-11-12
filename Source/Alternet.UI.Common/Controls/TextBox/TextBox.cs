@@ -350,6 +350,7 @@ namespace Alternet.UI
         /// Default value is <see cref="GenericAlignment.Left"/>.
         /// </remarks>
         [DefaultValue(GenericAlignment.Left)]
+        [Browsable(false)]
         public virtual GenericAlignment TextAlign
         {
             get

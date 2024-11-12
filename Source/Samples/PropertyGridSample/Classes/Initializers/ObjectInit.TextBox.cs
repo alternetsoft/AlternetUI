@@ -15,6 +15,18 @@ namespace PropertyGridSample
                 return;
             textBox.Text = "some text";
             textBox.InnerSuggestedWidth = 200;
+            textBox.ButtonClick += (s, e) =>
+            {
+                string str = string.Empty;
+
+                if (e.ButtonId == textBox.IdButtonCombo)
+                    str = "ComboBtn";
+
+                if (str != string.Empty)
+                    str = ": " + str;
+
+                App.Log($"TextBoxAndButon.ButtonClick{str}");
+            };
         }
 
         public static void InitTextBoxAndLabel(object control)
