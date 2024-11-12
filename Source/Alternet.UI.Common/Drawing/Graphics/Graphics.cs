@@ -1020,6 +1020,15 @@ namespace Alternet.Drawing
         public abstract void DrawImage(Image image, PointD origin);
 
         /// <summary>
+        /// Draws the specified <see cref="Image"/>, using its original size, at the
+        /// specified location.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="x">Horizontal position of the image.</param>
+        /// <param name="y">Vertical position of the image.</param>
+        public void DrawImage(Image image, Coord x, Coord y) => DrawImage(image, (x, y));
+
+        /// <summary>
         /// Draws an image into the region defined by the specified <see cref="RectD"/>.
         /// </summary>
         /// <param name="image"><see cref="Image"/> to draw.</param>
@@ -1094,6 +1103,7 @@ namespace Alternet.Drawing
             RectD destinationRect,
             RectD sourceRect,
             GraphicsUnit unit);
+
         /// <summary>
         /// Creates translation matrix and calls <see cref="PushTransform"/> with it.
         /// </summary>
