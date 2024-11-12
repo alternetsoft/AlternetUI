@@ -596,6 +596,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets 'IsClickRepeated' property of the tool.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value">Value for the 'IsClickRepeated' property of the tool.</param>
+        public virtual void SetToolIsClickRepeated(ObjectUniqueId id, bool value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.IsClickRepeated = value;
+        }
+
+        /// <summary>
         /// Sets image of the item for the disabled state.
         /// </summary>
         /// <param name="id">Item id.</param>
@@ -1397,6 +1410,17 @@ namespace Alternet.UI
             DisabledImageColor ?? DefaultDisabledImageColor ?? GetSvgColor(KnownSvgColor.Disabled);
 
         /// <summary>
+        /// Gets item control as <see cref="SpeedButton"/>. If tool doesn't use
+        /// <see cref="SpeedButton"/> as a control, returns Null.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        public SpeedButton? FindTool(ObjectUniqueId id)
+        {
+            var result = GetToolControl(id) as SpeedButton;
+            return result;
+        }
+
+        /// <summary>
         /// Adds <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="text">Item text.</param>
@@ -1558,12 +1582,6 @@ namespace Alternet.UI
             if (TextVisible)
                 return (Coord.NaN, itemSize);
             return itemSize;
-        }
-
-        private SpeedButton? FindTool(ObjectUniqueId id)
-        {
-            var result = GetToolControl(id) as SpeedButton;
-            return result;
         }
     }
 }
