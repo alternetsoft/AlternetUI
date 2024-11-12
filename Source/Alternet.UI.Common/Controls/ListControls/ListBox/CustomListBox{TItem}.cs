@@ -41,6 +41,11 @@ namespace Alternet.UI
         public event EventHandler? SelectionChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="SelectedIndex"/> property has changed.
+        /// </summary>
+        public event EventHandler? SelectedIndexChanged;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="SelectionMode"/> property changes.
         /// </summary>
         public event EventHandler? SelectionModeChanged;
@@ -563,7 +568,9 @@ namespace Alternet.UI
             if (ignoreSelectEvents > 0)
                 return;
             OnSelectionChanged(e);
+            OnSelectedIndexChanged(e);
             SelectionChanged?.Invoke(this, e);
+            SelectedIndexChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -574,6 +581,17 @@ namespace Alternet.UI
         /// data.</param>
         /// <remarks>See <see cref="SelectionChanged"/> for details.</remarks>
         protected virtual void OnSelectionChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="SelectedIndex"/> property or the
+        /// <see cref="SelectedIndices"/> collection has changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event
+        /// data.</param>
+        /// <remarks>See <see cref="SelectionChanged"/> for details.</remarks>
+        protected virtual void OnSelectedIndexChanged(EventArgs e)
         {
         }
 
