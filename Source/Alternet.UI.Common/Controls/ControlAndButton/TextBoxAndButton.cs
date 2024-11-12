@@ -42,6 +42,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether main inner control has border.
+        /// </summary>
+        public virtual bool HasInnerBorder
+        {
+            get
+            {
+                return TextBox.HasBorder;
+            }
+
+            set
+            {
+                TextBox.HasBorder = value;
+            }
+        }
+
+        /// <summary>
         /// Gets main child control, same as <see cref="MainControl"/>.
         /// </summary>
         [Browsable(false)]
