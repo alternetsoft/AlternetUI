@@ -41,6 +41,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the sizes of the list items are determined.
+        /// </summary>
+        [Category("Behavior")]
+        public event MeasureItemEventHandler? MeasureItem;
+
+        /// <summary>
         /// Enumerates supported kinds for <see cref="SetItemsFast"/> method.
         /// </summary>
         public enum SetItemsKind
@@ -415,6 +421,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="MeasureItem"/> event and <see cref="OnMeasureItem"/> method.
+        /// </summary>
+        /// <param name="e"></param>
+        public void RaiseMeasureItem(MeasureItemEventArgs e)
+        {
+            OnMeasureItem(e);
+            MeasureItem?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Returns the rectangle occupied by this item in physical coordinates (dips).
         /// If the item is not currently visible, returns an empty rectangle.
         /// </summary>
@@ -478,9 +494,18 @@ namespace Alternet.UI
             rectRow.Width = clientSize.Width;
 
             int lineMax = Handler.GetVisibleEnd();
+
+            MeasureItemEventArgs measureItemArgs = new(dc, 0);
+
             for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
             {
-                var hRow = MeasureItemSize(line).Height;
+                var itemSize = MeasureItemSize(line);
+                measureItemArgs.Index = line;
+                measureItemArgs.ItemWidth = itemSize.Width;
+                measureItemArgs.ItemHeight = itemSize.Height;
+                RaiseMeasureItem(measureItemArgs);
+
+                var hRow = itemSize.Height;
 
                 rectRow.Height = hRow;
 
@@ -561,6 +586,13 @@ namespace Alternet.UI
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// Called when the <see cref="MeasureItem" /> event is raised.</summary>
+        /// <param name="e">A <see cref="MeasureItemEventArgs" /> that contains the event data.</param>
+        protected virtual void OnMeasureItem(MeasureItemEventArgs e)
+        {
         }
 
         /// <inheritdoc/>
