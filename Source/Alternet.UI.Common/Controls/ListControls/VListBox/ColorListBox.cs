@@ -297,7 +297,7 @@ namespace Alternet.UI
                 if (sender is not ColorListBox colorListBox)
                 {
                     if (sender is VirtualListControl<ListControlItem> listControl)
-                        listControl.DefaultDrawItem(e, out _);
+                        listControl.DefaultDrawItemForeground(e, out _);
                     return;
                 }
 
@@ -306,7 +306,7 @@ namespace Alternet.UI
                 {
                     var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClipRectangle);
                     e.ClipRectangle = itemRect;
-                    colorListBox.DefaultDrawItem(e, out _);
+                    colorListBox.DefaultDrawItemForeground(e, out _);
                     ColorComboBox.PaintColorImage(e.Graphics, colorRect, itemColor);
                 }
                 else

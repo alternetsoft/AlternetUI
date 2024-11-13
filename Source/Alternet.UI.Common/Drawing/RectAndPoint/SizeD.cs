@@ -623,6 +623,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns this size (in pixels) converted to device-independent units.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
+        /// If not specified, default value is used.</param>
+        /// <returns></returns>
+        public readonly SizeD PixelToDip(Coord? scaleFactor = null)
+        {
+            return GraphicsFactory.PixelToDip(this.ToSize(), scaleFactor);
+        }
+
+        /// <summary>
         /// Returns this size (in inches) converted to device-independent units.
         /// </summary>
         /// <returns></returns>

@@ -1226,6 +1226,15 @@ namespace Alternet::UI
         return rectBounding;
     }
 
+    static void _DrawText(wxDC* dc, const string& text, wxPoint point)
+    {
+#ifdef __WXMSW__
+        dc->DrawText(wxStr(text), point);
+#else
+        dc->DrawText(wxStr(text), point);
+#endif
+    }
+
     void DrawingContext::DrawText(const string& text, const PointD& location, Font* font,
         const Color& foreColor, const Color& backColor)
     {
@@ -1265,11 +1274,11 @@ namespace Alternet::UI
         {
             auto& oldTextBackground = _dc->GetTextBackground();
             _dc->SetTextBackground(backColor);
-            _dc->DrawText(wxStr(text), point);
+            _DrawText(_dc, text, point);
             _dc->SetTextBackground(oldTextBackground);
         }
         else
-            _dc->DrawText(wxStr(text), point);
+            _DrawText(_dc, text, point);
 
         _dc->SetTextForeground(oldTextForeground);
         _dc->SetFont(oldFont);

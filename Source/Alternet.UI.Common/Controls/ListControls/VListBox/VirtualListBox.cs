@@ -19,6 +19,8 @@ namespace Alternet.UI
 
         private Coord scrollOffset;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
+        private Coord horizontalExtent;
+        private DrawMode drawMode = DrawMode.Normal;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
@@ -40,6 +42,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a visual aspect of an owner-drawn control is changed.
+        /// </summary>
+        [Category("Behavior")]
+        public event DrawItemEventHandler? DrawItem;
+
+        /// <summary>
+        /// Occurs when the sizes of the list items are determined.
+        /// </summary>
+        [Category("Behavior")]
+        public event MeasureItemEventHandler? MeasureItem;
+
+        /// <summary>
         /// Enumerates supported kinds for <see cref="SetItemsFast"/> method.
         /// </summary>
         public enum SetItemsKind
@@ -56,15 +70,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the width by which the horizontal scroll bar can scroll.
+        /// </summary>
+        /// <returns>
+        /// The width, in device-independent units, that the horizontal scroll bar can
+        /// scroll the control. The default is zero.
+        /// </returns>
+        [Category("Behavior")]
+        [DefaultValue(0)]
+        [Localizable(true)]
+        [Browsable(false)]
+        public virtual Coord HorizontalExtent
+        {
+            get
+            {
+                return horizontalExtent;
+            }
+
+            set
+            {
+                if (value == horizontalExtent)
+                    return;
+                horizontalExtent = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether horizontal scrollbar is visible in the control.
         /// </summary>
-        public virtual bool HScrollBarVisible
+        public virtual bool HorizontalScrollbar
         {
             get => Handler.HScrollBarVisible;
 
             set
             {
-                if (HScrollBarVisible == value || !App.IsWindowsOS)
+                if (HorizontalScrollbar == value || !App.IsWindowsOS)
                     return;
                 Handler.HScrollBarVisible = value;
                 Refresh();
@@ -90,6 +130,45 @@ namespace Alternet.UI
             set
             {
                 Handler.ItemsCount = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the drawing mode for the control.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="DrawMode" /> values representing the mode for drawing
+        /// the items of the control. The default is <see langword="DrawMode.Normal" />.
+        /// </returns>
+        [Category("Behavior")]
+        [DefaultValue(DrawMode.Normal)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        public virtual DrawMode DrawMode
+        {
+            get
+            {
+                return drawMode;
+            }
+
+            set
+            {
+                if (drawMode == value)
+                    return;
+                drawMode = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the index of the first visible item in the control.</summary>
+        /// <returns>The zero-based index of the first visible item in the control.</returns>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual int TopIndex
+        {
+            get
+            {
+                return GetVisibleBegin();
             }
         }
 
@@ -388,6 +467,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="MeasureItem"/> event and <see cref="OnMeasureItem"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public void RaiseMeasureItem(MeasureItemEventArgs e)
+        {
+            OnMeasureItem(e);
+            MeasureItem?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises <see cref="DrawItem"/> event and <see cref="OnDrawItem"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public void RaiseDrawItem(DrawItemEventArgs e)
+        {
+            OnDrawItem(e);
+            DrawItem?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Returns the rectangle occupied by this item in physical coordinates (dips).
         /// If the item is not currently visible, returns an empty rectangle.
         /// </summary>
@@ -436,6 +535,14 @@ namespace Alternet.UI
             base.OnMouseLeftButtonDown(e);
         }
 
+        /// <summary>
+        /// Called when <see cref="DrawItem"/> event is raised.
+        /// </summary>
+        /// <param name="e">Paint arguments.</param>
+        protected virtual void OnDrawItem(DrawItemEventArgs e)
+        {
+        }
+
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -451,32 +558,84 @@ namespace Alternet.UI
             rectRow.Width = clientSize.Width;
 
             int lineMax = Handler.GetVisibleEnd();
+
+            MeasureItemEventArgs measureItemArgs = new(dc, 0);
+            DrawItemEventArgs drawItemArgs = new(dc);
+
             for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
             {
-                var hRow = MeasureItemSize(line).Height;
+                var itemSize = MeasureItemSize(line);
+
+                if (drawMode != DrawMode.Normal)
+                {
+                    measureItemArgs.Index = line;
+                    measureItemArgs.ItemWidth = itemSize.Width;
+                    measureItemArgs.ItemHeight = itemSize.Height;
+                    RaiseMeasureItem(measureItemArgs);
+                }
+
+                var hRow = itemSize.Height;
 
                 rectRow.Height = hRow;
 
                 if (rectRow.IntersectsWith(rectUpdate))
                 {
-                    if (itemPaintArgs is null)
-                        itemPaintArgs = new(this, dc, rectRow, line);
+                    var isCurrentItem = IsCurrent(line);
+                    var isSelectedItem = IsSelected(line);
+
+                    if(drawMode != DrawMode.Normal)
+                    {
+                        var item = SafeItem(line);
+                        drawItemArgs.Bounds = rectRow;
+                        drawItemArgs.Index = line;
+                        drawItemArgs.Font = ListControlItem.GetFont(item, this);
+
+                        DrawItemState state = 0;
+                        if (isCurrentItem)
+                            state |= DrawItemState.Focus;
+                        if (isSelectedItem)
+                            state |= DrawItemState.Selected;
+
+                        drawItemArgs.State = state;
+
+                        if (isSelectedItem)
+                        {
+                            drawItemArgs.BackColor
+                                = ListControlItem.GetSelectedItemBackColor(item, this)
+                                ?? RealBackgroundColor;
+                            drawItemArgs.ForeColor
+                                = ListControlItem.GetSelectedTextColor(item, this) ?? RealForegroundColor;
+                        }
+                        else
+                        {
+                            drawItemArgs.BackColor = RealBackgroundColor;
+                            drawItemArgs.ForeColor
+                                = ListControlItem.GetItemTextColor(item, this) ?? RealForegroundColor;
+                        }
+
+                        RaiseDrawItem(drawItemArgs);
+                    }
                     else
                     {
-                        itemPaintArgs.Graphics = dc;
-                        itemPaintArgs.ClipRectangle = rectRow;
-                        itemPaintArgs.ItemIndex = line;
-                        itemPaintArgs.IsCurrent = IsCurrent(line);
-                        itemPaintArgs.IsSelected = IsSelected(line);
+                        if (itemPaintArgs is null)
+                            itemPaintArgs = new(this, dc, rectRow, line);
+                        else
+                        {
+                            itemPaintArgs.Graphics = dc;
+                            itemPaintArgs.ClipRectangle = rectRow;
+                            itemPaintArgs.ItemIndex = line;
+                            itemPaintArgs.IsCurrent = IsCurrent(line);
+                            itemPaintArgs.IsSelected = IsSelected(line);
+                        }
+
+                        matrix.Reset();
+                        dc.Transform = matrix;
+                        DrawItemBackground(itemPaintArgs);
+
+                        matrix.Translate(-scrollOffset, 0);
+                        dc.Transform = matrix;
+                        DrawItemForeground(itemPaintArgs);
                     }
-
-                    matrix.Reset();
-                    dc.Transform = matrix;
-                    DrawItemBackground(itemPaintArgs);
-
-                    matrix.Translate(-scrollOffset, 0);
-                    dc.Transform = matrix;
-                    DrawItem(itemPaintArgs);
                 }
                 else
                 {
@@ -534,6 +693,13 @@ namespace Alternet.UI
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// Called when the <see cref="MeasureItem" /> event is raised.</summary>
+        /// <param name="e">A <see cref="MeasureItemEventArgs" /> that contains the event data.</param>
+        protected virtual void OnMeasureItem(MeasureItemEventArgs e)
+        {
         }
 
         /// <inheritdoc/>

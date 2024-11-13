@@ -28,15 +28,5 @@ namespace Alternet.UI
         /// A solid border.
         /// </summary>
         Solid,
-
-        /// <summary>
-        /// A sunken border.
-        /// </summary>
-        Inset,
-
-        /// <summary>
-        /// A raised border.
-        /// </summary>
-        Outset,
     }
 }

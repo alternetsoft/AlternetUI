@@ -539,14 +539,26 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePaint(PaintEventArgs e)
         {
-            if (e.ClipRectangle.SizeIsEmpty)
+            if (IsPainting())
                 return;
-            OnPaint(e);
-            Paint?.Invoke(this, e);
-            PaintCaret(e);
-            PlessMouse.DrawTestMouseRect(this, () => e.Graphics);
 
-            RaiseNotifications((n) => n.AfterPaint(this, e));
+            BeginPaint();
+
+            try
+            {
+                if (e.ClipRectangle.SizeIsEmpty)
+                    return;
+                OnPaint(e);
+                Paint?.Invoke(this, e);
+                PaintCaret(e);
+                PlessMouse.DrawTestMouseRect(this, () => e.Graphics);
+
+                RaiseNotifications((n) => n.AfterPaint(this, e));
+            }
+            finally
+            {
+                EndPaint();
+            }
         }
 
         /// <summary>
