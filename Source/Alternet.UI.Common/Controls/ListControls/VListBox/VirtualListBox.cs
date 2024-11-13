@@ -19,6 +19,7 @@ namespace Alternet.UI
 
         private Coord scrollOffset;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
+        private Coord horizontalExtent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
@@ -53,6 +54,32 @@ namespace Alternet.UI
             /// Internal field is changed to the new value. This is the fastest method.
             /// </summary>
             ChangeField,
+        }
+
+        /// <summary>
+        /// Gets or sets the width by which the horizontal scroll bar can scroll.
+        /// </summary>
+        /// <returns>
+        /// The width, in device-independent units, that the horizontal scroll bar can
+        /// scroll the control. The default is zero.
+        /// </returns>
+        [Category("Behavior")]
+        [DefaultValue(0)]
+        [Localizable(true)]
+        [Browsable(false)]
+        public virtual Coord HorizontalExtent
+        {
+            get
+            {
+                return horizontalExtent;
+            }
+
+            set
+            {
+                if (value == horizontalExtent)
+                    return;
+                horizontalExtent = value;
+            }
         }
 
         /// <summary>
