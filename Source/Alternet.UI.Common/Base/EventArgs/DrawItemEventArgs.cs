@@ -7,20 +7,30 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /// <summary>Provides data for the draw item events.</summary>
+    /// <summary>
+    /// Represents the method that will handle the draw item events.</summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">A <see cref="DrawItemEventArgs" /> that contains the event data.</param>
+    public delegate void DrawItemEventHandler(object? sender, DrawItemEventArgs e);
+
+    /// <summary>
+    /// Provides data for the draw item events.
+    /// </summary>
     public class DrawItemEventArgs : BaseEventArgs
     {
-        private readonly Graphics graphics;
-        private readonly int index;
-        private readonly RectD rect;
-        private readonly DrawItemState state;
-        private readonly Color backColor;
-        private readonly Color foreColor;
-        private readonly Font font;
+        private Graphics graphics;
+        private int index;
+        private RectD rect;
+        private DrawItemState state;
+        private Color backColor;
+        private Color foreColor;
+        private Font font;
 
-        /// <summary>Initializes a new instance of the <see cref="DrawItemEventArgs" /> class
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawItemEventArgs" /> class
         /// for the specified control with the specified font, state, surface to draw on,
-        /// and the bounds to draw within.</summary>
+        /// and the bounds to draw within.
+        /// </summary>
         /// <param name="graphics">The <see cref="Graphics" /> surface on which to draw.</param>
         /// <param name="font">The <see cref="Font" /> to use, usually
         /// the parent control's <see cref="Font" /> property.</param>
@@ -29,14 +39,14 @@ namespace Alternet.UI
         /// <param name="state">The control's <see cref="DrawItemState" /> information.</param>
         public DrawItemEventArgs(
             Graphics graphics,
-            Font font,
-            RectD rect,
-            int index,
-            DrawItemState state)
+            Font? font = null,
+            RectD? rect = null,
+            int index = 0,
+            DrawItemState state = 0)
         {
             this.graphics = graphics;
-            this.font = font;
-            this.rect = rect;
+            this.font = font ?? Control.DefaultFont;
+            this.rect = rect ?? RectD.Empty;
             this.index = index;
             this.state = state;
             foreColor = SystemColors.WindowText;
@@ -77,7 +87,7 @@ namespace Alternet.UI
 
         /// <summary>Gets the background color of the item that is being drawn.</summary>
         /// <returns>The background <see cref="Color" /> of the item that is being drawn.</returns>
-        public Color BackColor
+        public virtual Color BackColor
         {
             get
             {
@@ -88,6 +98,11 @@ namespace Alternet.UI
 
                 return backColor;
             }
+
+            set
+            {
+                backColor = value;
+            }
         }
 
         /// <summary>
@@ -95,15 +110,37 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>The <see cref="RectD" /> that represents the bounds of the item that
         /// is being drawn.</returns>
-        public RectD Bounds => rect;
+        public virtual RectD Bounds
+        {
+            get
+            {
+                return rect;
+            }
+
+            set
+            {
+                rect = value;
+            }
+        }
 
         /// <summary>Gets the font that is assigned to the item being drawn.</summary>
         /// <returns>The <see cref="Font" /> that is assigned to the item being drawn.</returns>
-        public Font Font => font;
+        public virtual Font Font
+        {
+            get
+            {
+                return font;
+            }
+
+            set
+            {
+                font = value;
+            }
+        }
 
         /// <summary>Gets the foreground color of the of the item being drawn.</summary>
         /// <returns>The foreground <see cref="Color" /> of the item being drawn.</returns>
-        public Color ForeColor
+        public virtual Color ForeColor
         {
             get
             {
@@ -114,19 +151,57 @@ namespace Alternet.UI
 
                 return foreColor;
             }
+
+            set
+            {
+                foreColor = value;
+            }
         }
 
         /// <summary>Gets the graphics surface to draw the item on.</summary>
         /// <returns>The <see cref="Graphics" /> surface to draw the item on.</returns>
-        public Graphics Graphics => graphics;
+        public virtual Graphics Graphics
+        {
+            get
+            {
+                return graphics;
+            }
+
+            set
+            {
+                graphics = value;
+            }
+        }
 
         /// <summary>Gets the index value of the item that is being drawn.</summary>
-        public int Index => index;
+        public virtual int Index
+        {
+            get
+            {
+                return index;
+            }
+
+            set
+            {
+                index = value;
+            }
+        }
 
         /// <summary>Gets the state of the item being drawn.</summary>
         /// <returns>The <see cref="DrawItemState" /> that represents the state of the
         /// item being drawn.</returns>
-        public DrawItemState State => state;
+        public virtual DrawItemState State
+        {
+            get
+            {
+                return state;
+            }
+
+            set
+            {
+                state = value;
+            }
+        }
 
         /// <summary>Draws the background within the bounds specified
         /// in the constructor and with the appropriate color.</summary>

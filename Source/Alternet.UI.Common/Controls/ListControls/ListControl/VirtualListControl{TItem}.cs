@@ -817,16 +817,16 @@ namespace Alternet.UI
         /// <summary>
         /// Draws item with the specified index.  If <see cref="ItemPainter"/> is assigned, uses
         /// <see cref="IListBoxItemPainter.Paint"/>, otherwise calls
-        /// <see cref="DefaultDrawItem"/>.
+        /// <see cref="DefaultDrawItemForeground"/>.
         /// </summary>
         /// <param name="e">Draw parameters.</param>
-        public virtual void DrawItem(ListBoxItemPaintEventArgs e)
+        public virtual void DrawItemForeground(ListBoxItemPaintEventArgs e)
         {
             e.ClipRectangle = e.ClipRectangle.WithMargin(ItemMargin);
 
             if (painter is null)
             {
-                DefaultDrawItem(e, out _);
+                DefaultDrawItemForeground(e, out _);
                 return;
             }
 
@@ -991,9 +991,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default method which draws items. Called from <see cref="DrawItem"/>.
+        /// Default method which draws items. Called from <see cref="DrawItemForeground"/>.
         /// </summary>
-        public virtual void DefaultDrawItem(
+        public virtual void DefaultDrawItemForeground(
             ListBoxItemPaintEventArgs e,
             out Graphics.DrawLabelParams drawParams,
             bool visible = true)
