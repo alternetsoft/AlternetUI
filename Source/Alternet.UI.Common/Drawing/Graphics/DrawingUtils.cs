@@ -153,7 +153,7 @@ namespace Alternet.UI
             CheckState checkState,
             VisualControlState controlState)
         {
-            return ControlPainter.Handler.GetCheckBoxSize(control, checkState, controlState);
+            return ControlPaint.Handler.GetCheckBoxSize(control, checkState, controlState);
         }
 
         /// <inheritdoc cref="IControlPainterHandler.DrawCheckBox"/>
@@ -164,7 +164,7 @@ namespace Alternet.UI
             CheckState checkState,
             VisualControlState controlState)
         {
-            ControlPainter.Handler.DrawCheckBox(
+            ControlPaint.Handler.DrawCheckBox(
                 control,
                 canvas,
                 rect,
