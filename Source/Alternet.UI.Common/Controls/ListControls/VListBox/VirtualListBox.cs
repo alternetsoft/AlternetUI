@@ -159,6 +159,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the index of the first visible item in the control.</summary>
+        /// <returns>The zero-based index of the first visible item in the control.</returns>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual int TopIndex
+        {
+            get
+            {
+                return GetVisibleBegin();
+            }
+        }
+
         /// <inheritdoc/>
         public override int? SelectedIndex
         {
