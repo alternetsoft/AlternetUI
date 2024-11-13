@@ -177,7 +177,7 @@ namespace Alternet.UI
             }
 
             pageContainer.SelectedIndex = 0;
-            pageContainer.ListBox!.HScrollBarVisible = true;
+            pageContainer.ListBox!.HorizontalScrollbar = true;
             pageContainer.LeftControl?.SetFocusIfPossible();
 
             var logSizeChanged = false;

@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// </summary>
         int ItemsCount { get; set; }
 
-        /// <inheritdoc cref="VirtualListBox.HScrollBarVisible"/>
+        /// <inheritdoc cref="VirtualListBox.HorizontalScrollbar"/>
         bool HScrollBarVisible { get; set; }
 
         /// <inheritdoc cref="VirtualListBox.VScrollBarVisible"/>

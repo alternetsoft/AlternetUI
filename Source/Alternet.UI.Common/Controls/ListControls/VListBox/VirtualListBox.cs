@@ -58,13 +58,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether horizontal scrollbar is visible in the control.
         /// </summary>
-        public virtual bool HScrollBarVisible
+        public virtual bool HorizontalScrollbar
         {
             get => Handler.HScrollBarVisible;
 
             set
             {
-                if (HScrollBarVisible == value || !App.IsWindowsOS)
+                if (HorizontalScrollbar == value || !App.IsWindowsOS)
                     return;
                 Handler.HScrollBarVisible = value;
                 Refresh();

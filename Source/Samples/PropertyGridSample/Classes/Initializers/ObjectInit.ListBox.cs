@@ -118,7 +118,7 @@ namespace PropertyGridSample
                 listBox.Add(s);
             });
 
-            listBox.HScrollBarVisible = true;
+            listBox.HorizontalScrollbar = true;
             listBox.Count = 5000;
             listBox.CustomItemText += ListBox_CustomItemText;
 
