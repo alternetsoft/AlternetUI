@@ -345,6 +345,21 @@ namespace Alternet.UI
             return color ?? TextBackColor ?? Color.Empty;
         }
 
+        protected bool IsPainting()
+        {
+            return paintCounter > 0;
+        }
+
+        protected virtual void BeginPaint()
+        {
+            paintCounter++;
+        }
+
+        protected virtual void EndPaint()
+        {
+            paintCounter--;
+        }
+
         /// <summary>
         /// Gets <see cref="Font"/> which is used to draw label's text.
         /// </summary>
