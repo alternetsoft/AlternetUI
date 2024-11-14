@@ -132,6 +132,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "raw", "..\..\..\..\Alternet
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Scripter.Integration.AlternetUI", "..\..\..\..\AlternetStudio\Source\Libraries\Scripter.Integration.AlternetUI\Alternet.Scripter.Integration.AlternetUI.csproj", "{115B125F-5DF6-4C87-9AB4-A5E1A61850E2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Common.Winforms", "..\..\..\..\AlternetStudio\Source\Common.Winforms\Alternet.Common.Winforms.csproj", "{D65C610F-BEBD-4D24-A355-FAE0FE760716}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -880,6 +882,18 @@ Global
 		{115B125F-5DF6-4C87-9AB4-A5E1A61850E2}.Release|x64.Build.0 = Release|Any CPU
 		{115B125F-5DF6-4C87-9AB4-A5E1A61850E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{115B125F-5DF6-4C87-9AB4-A5E1A61850E2}.Release|x86.Build.0 = Release|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Debug|x64.Build.0 = Debug|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Debug|x86.Build.0 = Debug|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Release|x64.ActiveCfg = Release|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Release|x64.Build.0 = Release|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Release|x86.ActiveCfg = Release|Any CPU
+		{D65C610F-BEBD-4D24-A355-FAE0FE760716}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

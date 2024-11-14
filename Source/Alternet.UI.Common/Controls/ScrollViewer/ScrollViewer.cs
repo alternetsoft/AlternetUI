@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets offset of the layout.
         /// </summary>
-        public PointD LayoutOffset
+        public virtual PointD LayoutOffset
         {
             get => layoutOffset;
 

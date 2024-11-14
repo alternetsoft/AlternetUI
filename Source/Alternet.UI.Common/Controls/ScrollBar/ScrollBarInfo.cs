@@ -18,7 +18,7 @@ namespace Alternet.UI
         private HiddenOrVisible visibility;
         private int position;
         private int range;
-        private int pageSize;
+        private int pageSize = -1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct
@@ -137,7 +137,7 @@ namespace Alternet.UI
             {
                 if (immutable)
                     return;
-                value = Math.Max(value, 0);
+                value = Math.Max(value, -1);
                 pageSize = value;
             }
         }
