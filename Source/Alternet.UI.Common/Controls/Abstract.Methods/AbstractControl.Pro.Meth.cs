@@ -345,16 +345,26 @@ namespace Alternet.UI
             return color ?? TextBackColor ?? Color.Empty;
         }
 
+        /// <summary>
+        /// Gets whether painting is currently performed.
+        /// </summary>
+        /// <returns></returns>
         protected bool IsPainting()
         {
             return paintCounter > 0;
         }
 
+        /// <summary>
+        /// Called before painting is started.
+        /// </summary>
         protected virtual void BeginPaint()
         {
             paintCounter++;
         }
 
+        /// <summary>
+        /// Called after painting is finished.
+        /// </summary>
         protected virtual void EndPaint()
         {
             paintCounter--;
