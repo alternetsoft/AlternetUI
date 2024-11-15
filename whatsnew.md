@@ -1,3 +1,29 @@
+# 0.9.643 (2024 November 15)
+
+- VirtualListBox: MeasureItem event and related methods.
+- VirtualListBox: Owner draw as in WinForms, DrawItem event and related methods, DrawMode property.
+- Fixed Idle events behavior. Added App.WakeUpIdleWithTimer property and WakeUpIdle() method.
+- TabControl: Internal CardPanel now uses parent's font and colors.
+- VirtualListBox: Fixed bad repaint on macos.
+- RichToolTip: Fixed right border paint.
+- AbstractControl: AlignInParent, AlignInRect, ContainsMouseCursor, DockInRect, DockInParent.
+- PopupControl: FocusParentOnShow.
+- AbstractControl: MinMargin, MinPadding made protected (were internal).
+- SplittedPanel: All sub panels now have AbstractControl type.
+- Graphics is not allocated if no painting is done.
+- Border.AutpPadding.
+- Updated SkiaSharp references to the new version.
+- HasInnerBorder property in TextBoxAndButton, TextBoxAndLabel, ComboBoxAndLabel controls.
+- ToolBar: SetToolIsClickRepeated, FindTool.
+- ControlAndButton: HasBtnComboBox.
+- ControlAndButton: ButtonClick event now has ControlAndButtonClickEventArgs as event argument.
+- Graphics: DrawImage and FillRectangle overloads as in WinForms.
+- CustomListBox: SelectedIndexChanged event as in WinForms.
+- Renamed ControlPainter -> ControlPaint, added DrawBorder method.
+- Renamed VirtualListBox: Renamed HScrollBarVisible -> HorizontalScrollbar as in WinForms.
+- VirtualListBox.TopIndex as in WinForms.
+- Fixed native scrollbars behavior.
+
 # 0.9.642 (2024 November 7)
 
 - ContainerControl: now derived from HiddenBorder so it's possible to specify custom background and border for all the containers (like panel, stack panel, etc.).
