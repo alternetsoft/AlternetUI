@@ -14,18 +14,18 @@ namespace PropertyGridSample
             if (control is not TextBoxAndButton textBox)
                 return;
             textBox.Text = "some text";
+            textBox.HasBtnEllipsis = true;
             textBox.InnerSuggestedWidth = 200;
             textBox.ButtonClick += (s, e) =>
             {
-                string str = string.Empty;
+                var str = textBox.GetBtnName(e.ButtonId);
 
-                if (e.ButtonId == textBox.IdButtonCombo)
-                    str = "ComboBtn";
-
-                if (str != string.Empty)
+                if (!string.IsNullOrEmpty(str))
                     str = ": " + str;
 
-                App.Log($"TextBoxAndButon.ButtonClick{str}");
+                var prefix = "TextBoxAndButon.ButtonClick";
+
+                App.Log($"{prefix}{str}");
             };
         }
 
