@@ -916,8 +916,7 @@ namespace Alternet.UI
             if (!App.Initialized)
                 return;
 
-            var dpi = Display.MaxDPI;
-            var incFont = (dpi > 96) ? Window.IncFontSizeHighDpi : Window.IncFontSize;
+            var incFont = SystemSettings.GetDefaultFontSizeIncrement();
 
             if (incFont > 0)
             {
@@ -925,6 +924,11 @@ namespace Alternet.UI
                 info.SizeInPoints += incFont;
                 Font font = info;
                 AbstractControl.DefaultFont = font;
+
+                info = Font.DefaultMono;
+                info.SizeInPoints += incFont;
+                font = info;
+                AbstractControl.DefaultMonoFont = font;
             }
         }
 

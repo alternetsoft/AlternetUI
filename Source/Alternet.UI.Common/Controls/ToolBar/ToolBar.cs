@@ -317,6 +317,38 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets 'IsClickRepeated' property for all the tools.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsToolClickRepeated
+        {
+            get
+            {
+                var hasTrue = false;
+                var hasFalse = false;
+                foreach (var btn in ChildrenOfType<SpeedButton>())
+                {
+                    if (btn.IsClickRepeated)
+                        hasTrue = true;
+                    else
+                        hasFalse = true;
+                }
+
+                if (hasTrue && !hasFalse)
+                    return true;
+                return false;
+            }
+
+            set
+            {
+                foreach (var btn in ChildrenOfType<SpeedButton>())
+                {
+                    btn.IsClickRepeated = value;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override Brush? Background
         {
@@ -593,6 +625,18 @@ namespace Alternet.UI
             if (item is null)
                 return;
             item.ImageSet = value;
+        }
+
+        /// <summary>
+        /// Gets 'IsClickRepeated' property of the tool.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        public virtual bool GetToolIsClickRepeated(ObjectUniqueId id)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return false;
+            return item.IsClickRepeated;
         }
 
         /// <summary>

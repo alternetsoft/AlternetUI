@@ -200,6 +200,9 @@ namespace Alternet.UI
         {
             get
             {
+                if (!HasFactory)
+                    return [96];
+
                 var screens = AllScreens;
                 var length = screens.Length;
                 var result = new int[length];

@@ -21,6 +21,11 @@ namespace Alternet.UI
             Margin = new Thickness(ControlAndLabel.DefaultControlLabelDistance, 0, 0, 0),
         };
 
+        private ObjectUniqueId? idButtonCombo;
+        private ObjectUniqueId? idButtonEllipsis;
+        private ObjectUniqueId? idButtonPlus;
+        private ObjectUniqueId? idButtonMinus;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlAndButton"/> class
         /// with the specified parent control.
@@ -76,39 +81,61 @@ namespace Alternet.UI
         {
             get
             {
-                if (IdButtonCombo is null)
-                    return false;
-                var result = buttons.GetToolVisible(IdButtonCombo.Value);
-                return result;
+                return HasButton(idButtonCombo);
             }
 
             set
             {
-                if (HasBtnComboBox == value)
-                    return;
-                if (value)
-                {
-                    if (IdButtonCombo is null)
-                    {
-                        IdButtonCombo
-                            = buttons.AddSpeedBtn(KnownButton.TextBoxCombo, (s, e) =>
-                            {
-                                ControlAndButtonClickEventArgs args = new();
-                                args.ButtonId = (s as AbstractControl)?.UniqueId;
-                                RaiseButtonClick(args);
-                            });
-                    }
-                    else
-                    {
-                        buttons.SetToolVisible(IdButtonCombo.Value, true);
-                    }
-                }
-                else
-                {
-                    if (IdButtonCombo is null)
-                        return;
-                    buttons.SetToolVisible(IdButtonCombo.Value, false);
-                }
+                SetHasButton(KnownButton.TextBoxCombo, ref idButtonCombo, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Ellipsis' button is visible.
+        /// </summary>
+        public virtual bool HasBtnEllipsis
+        {
+            get
+            {
+                return HasButton(IdButtonEllipsis);
+            }
+
+            set
+            {
+                SetHasButton(KnownButton.TextBoxEllipsis, ref idButtonEllipsis, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Plus' and 'Minus' buttons are visible.
+        /// </summary>
+        public virtual bool HasBtnPlusMinus
+        {
+            get
+            {
+                return HasButton(IdButtonPlus) && HasButton(IdButtonMinus);
+            }
+
+            set
+            {
+                SetHasButton(KnownButton.TextBoxPlus, ref idButtonPlus, value);
+                SetHasButton(KnownButton.TextBoxMinus, ref idButtonMinus, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets 'IsClickRepeated' property of the buttons.
+        /// </summary>
+        public virtual bool IsBtnClickRepeated
+        {
+            get
+            {
+                return buttons.GetToolCount() > 0 && buttons.IsToolClickRepeated;
+            }
+
+            set
+            {
+                buttons.IsToolClickRepeated = value;
             }
         }
 
@@ -116,7 +143,25 @@ namespace Alternet.UI
         /// Gets id of the combo button.
         /// </summary>
         [Browsable(false)]
-        public virtual ObjectUniqueId? IdButtonCombo { get; protected set; }
+        public ObjectUniqueId? IdButtonCombo => idButtonCombo;
+
+        /// <summary>
+        /// Gets id of the ellipsis button.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId? IdButtonEllipsis => idButtonEllipsis;
+
+        /// <summary>
+        /// Gets id of the plus button.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId? IdButtonPlus => idButtonPlus;
+
+        /// <summary>
+        /// Gets id of the minus button.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId? IdButtonMinus => idButtonMinus;
 
         /// <summary>
         /// Gets attached <see cref="PictureBox"/> control which
@@ -219,6 +264,74 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Gets whether button with the specified id is visible.
+        /// </summary>
+        /// <param name="id">Button id.</param>
+        /// <returns></returns>
+        public virtual bool HasButton(ObjectUniqueId? id)
+        {
+            if (id is null)
+                return false;
+            var result = buttons.GetToolVisible(id.Value);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets button name for the debug purposes for the specified button id.
+        /// </summary>
+        /// <param name="id">Button id.</param>
+        /// <returns></returns>
+        public virtual string? GetBtnName(ObjectUniqueId? id)
+        {
+            if (id is null)
+                return null;
+            if (id == idButtonCombo)
+                return "combo";
+            if (id == idButtonEllipsis)
+                return "ellipsis";
+            if (id == idButtonPlus)
+                return "plus";
+            if (id == idButtonMinus)
+                return "minus";
+            return "other";
+        }
+
+        /// <summary>
+        /// Sets whether button with the specified id is visible.
+        /// </summary>
+        /// <param name="btn">Known button.</param>
+        /// <param name="id">Id of the created button.</param>
+        /// <param name="value">Whether button is visible.</param>
+        public virtual void SetHasButton(KnownButton btn, ref ObjectUniqueId? id, bool value)
+        {
+            if (HasButton(id) == value)
+                return;
+            if (value)
+            {
+                if (id is null)
+                {
+                    id
+                        = buttons.AddSpeedBtn(btn, (s, e) =>
+                        {
+                            ControlAndButtonClickEventArgs args = new();
+                            args.ButtonId = (s as AbstractControl)?.UniqueId;
+                            RaiseButtonClick(args);
+                        });
+                }
+                else
+                {
+                    buttons.SetToolVisible(id.Value, true);
+                }
+            }
+            else
+            {
+                if (id is null)
+                    return;
+                buttons.SetToolVisible(id.Value, false);
+            }
         }
 
         /// <summary>

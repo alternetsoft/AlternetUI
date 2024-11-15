@@ -1,0 +1,49 @@
+        // public static Int64 Parse(string s, IFormatProvider provider);
+        // public static Int64 Parse(string s, NumberStyles style, IFormatProvider provider);
+        // public static Int64 Parse(string s, NumberStyles style);
+        // public static Int64 Parse(string s);
+
+        // public static bool TryParse(string s, NumberStyles style, IFormatProvider provider, out Int64 result);
+        // public static bool TryParse(string s, out Int64 result);
+
+        // public static DateTime Parse(string s, IFormatProvider provider, DateTimeStyles styles);
+
+        // public static DateTime ParseExact(string s, string[] formats, IFormatProvider provider, DateTimeStyles style);
+        // public static DateTime ParseExact(string s, string format, IFormatProvider provider, DateTimeStyles style);
+        // public static DateTime ParseExact(string s, string format, IFormatProvider provider);
+
+        // public static bool TryParse(string s, IFormatProvider provider, DateTimeStyles styles, out DateTime result);
+        // public static bool TryParse(string s, out DateTime result);
+        // public static bool TryParseExact(string s, string format, IFormatProvider provider, DateTimeStyles style, out DateTime result);
+        // public static bool TryParseExact(string s, string[] formats, IFormatProvider provider, DateTimeStyles style, out DateTime result);
+
+        // public static PlessVariant operator +(PlessVariant d);
+        // public static PlessVariant operator +(PlessVariant d1, PlessVariant d2);
+        // public static PlessVariant operator -(PlessVariant d);
+        // public static PlessVariant operator -(PlessVariant d1, PlessVariant d2);
+        // public static PlessVariant operator ++(PlessVariant d);
+        // public static PlessVariant operator --(PlessVariant d);
+        // public static PlessVariant operator *(PlessVariant d1, PlessVariant d2);
+        // public static PlessVariant operator /(PlessVariant d1, PlessVariant d2);
+        // public static PlessVariant operator %(PlessVariant d1, PlessVariant d2);
+        // Negate  Remainder    
+        // Round Round(Decimal d, int decimals);
+        // Round(Decimal d, int decimals, MidpointRounding mode);
+        // Round(Decimal d, MidpointRounding mode);
+        // Subtract(Decimal d1, Decimal d2);
+
+        /* in Extender interface
+        PlessVariant Negate(PlessVariant d);
+        PlessVariant Increment(PlessVariant d);
+        PlessVariant Decrement(PlessVariant d);
+
+        PlessVariant +(PlessVariant d);
+        PlessVariant Add(PlessVariant d1, PlessVariant d2);
+        PlessVariant Subtract(PlessVariant d1, PlessVariant d2);
+        PlessVariant Multiply(PlessVariant d1, PlessVariant d2);
+        PlessVariant Divide(PlessVariant d1, PlessVariant d2);
+
+        // The remainder operator % computes the remainder after dividing its
+        // left-hand operand by its right-hand operand.
+        PlessVariant Remainder(PlessVariant d1, PlessVariant d2);
+        */
