@@ -163,6 +163,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets default font size increnent depending on the dpi value of the screen.
+        /// Uses <see cref="Window.IncFontSize"/> and <see cref="Window.IncFontSizeHighDpi"/>
+        /// properties.
+        /// </summary>
+        /// <returns></returns>
+        public static int GetDefaultFontSizeIncrement()
+        {
+            var dpi = Display.MaxDPI;
+            var incFont = (dpi > 96) ? Window.IncFontSizeHighDpi : Window.IncFontSize;
+            return incFont;
+        }
+
+        /// <summary>
         /// Logs all fonts enumerated in <see cref="SystemSettingsFont"/>.
         /// </summary>
         public static void LogSystemFonts()
