@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\Version\Version.props" />
+  <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFrameworks>net8.0-maccatalyst;net8.0-ios;net8.0-android</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.00</TargetFrameworks>
+    <TargetFrameworks>net9.0-maccatalyst;net9.0-ios;net9.0-android</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.00</TargetFrameworks>
     <WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
@@ -27,28 +28,31 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
-    <PackageReference Include="SkiaSharp.Views.WinUI" Version="3.118.0-preview.1.2" />
+    <PackageReference Include="SkiaSharp.Views.WinUI" Version="$(SkiaSharpVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Core" Version="8.0.92" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.92" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.92" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="8.0.92" />
-    <PackageReference Include="SkiaSharp.Views" Version="3.118.0-preview.1.2" />
-    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.118.0-preview.1.2" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
+    <PackageReference Include="SkiaSharp.Views" Version="$(SkiaSharpVersion)" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="$(SkiaSharpVersion)" />
+
+    <PackageReference Include="Microsoft.Maui.Core" Version="$(MicrosoftMauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="$(MicrosoftMauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MicrosoftMauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MicrosoftMauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="$(MicrosoftMauiVersion)" />
+
+    <PackageReference Include="CommunityToolkit.Maui" Version="$(CommunityToolkitMauiVersion)" />
+
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="System.Memory" Version="4.6.0" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+    <PackageReference Include="System.IO.Packaging" Version="9.0.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
