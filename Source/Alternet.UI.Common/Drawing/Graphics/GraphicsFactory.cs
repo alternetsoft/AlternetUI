@@ -25,41 +25,12 @@ namespace Alternet.Drawing
         public static int DefaultDPI = 96;
 
         /// <summary>
-        /// Gets or sets default scaling quality used when images are scaled.
-        /// </summary>
-        public static SKFilterQuality DefaultScaleQuality = SKFilterQuality.High;
-
-        /// <summary>
-        /// Gets or sets function which is used when
-        /// <see cref="Font"/> is converted to <see cref="SKPaint"/>
-        /// with <see cref="SKPaintStyle.Fill"/> style.
-        /// </summary>
-        public static Func<Font, SKPaint> FontToFillPaint
-            = (font) => GraphicsFactory.CreateFillPaint(font.SkiaFont);
-
-        /// <summary>
         /// Gets or sets function which is used when
         /// <see cref="BrushAndPen"/> is converted to <see cref="SKPaint"/>
         /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
         /// </summary>
         public static Func<BrushAndPen, SKPaint> BrushAndPenToStrokeAndFillPaint
             = (brushAndPen) => GraphicsFactory.CreateStrokeAndFillPaint(brushAndPen);
-
-        /// <summary>
-        /// Gets or sets function which is used when
-        /// <see cref="Font"/> is converted to <see cref="SKPaint"/>
-        /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
-        /// </summary>
-        public static Func<Font, SKPaint> FontToStrokeAndFillPaint
-            = (font) => GraphicsFactory.CreateStrokeAndFillPaint(font.SkiaFont);
-
-        /// <summary>
-        /// Gets or sets function which is used when
-        /// <see cref="Font"/> is converted to <see cref="SKPaint"/>
-        /// with <see cref="SKPaintStyle.Stroke"/> style.
-        /// </summary>
-        public static Func<Font, SKPaint> FontToStrokePaint
-            = (font) => GraphicsFactory.CreateStrokePaint(font.SkiaFont);
 
         /// <summary>
         /// Gets or sets function which is used when
@@ -412,48 +383,6 @@ namespace Alternet.Drawing
         {
             var result = new SKPaint();
             result.Color = color;
-            result.Style = SKPaintStyle.StrokeAndFill;
-            SetPaintDefaults(result);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.Stroke"/> style
-        /// for the specified <see cref="SKFont"/> value.
-        /// </summary>
-        /// <param name="font">Font for which <see cref="SKPaint"/> is created.</param>
-        /// <returns></returns>
-        public static SKPaint CreateStrokePaint(SKFont font)
-        {
-            var result = new SKPaint(font);
-            result.Style = SKPaintStyle.Stroke;
-            SetPaintDefaults(result);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.Fill"/> style
-        /// for the specified <see cref="SKFont"/> value.
-        /// </summary>
-        /// <param name="font">Font for which <see cref="SKPaint"/> is created.</param>
-        /// <returns></returns>
-        public static SKPaint CreateFillPaint(SKFont font)
-        {
-            var result = new SKPaint(font);
-            result.Style = SKPaintStyle.Fill;
-            SetPaintDefaults(result);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.StrokeAndFill"/> style
-        /// for the specified <see cref="SKFont"/> value.
-        /// </summary>
-        /// <param name="font">Font for which <see cref="SKPaint"/> is created.</param>
-        /// <returns></returns>
-        public static SKPaint CreateStrokeAndFillPaint(SKFont font)
-        {
-            var result = new SKPaint(font);
             result.Style = SKPaintStyle.StrokeAndFill;
             SetPaintDefaults(result);
             return result;

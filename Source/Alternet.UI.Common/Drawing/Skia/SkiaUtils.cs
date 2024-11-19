@@ -14,7 +14,11 @@ namespace Alternet.Drawing
     /// </summary>
     public static class SkiaUtils
     {
-        internal static readonly EnumArray<InterpolationMode, SKPaint> InterpolationModePaints = new();
+        /// <summary>
+        /// Contains <see cref="SKPaint"/> object used when images are painted with the specific
+        /// <see cref="InterpolationMode"/>.
+        /// </summary>
+        public static readonly EnumArray<InterpolationMode, SKPaint?> InterpolationModePaints = new();
 
         private static string[]? fontFamilies;
         private static FontSize defaultFontSize = 12;
@@ -24,20 +28,6 @@ namespace Alternet.Drawing
 
         static SkiaUtils()
         {
-            InterpolationModePaints[InterpolationMode.None] = CreatePaints(SKFilterQuality.None);
-            InterpolationModePaints[InterpolationMode.LowQuality] = CreatePaints(SKFilterQuality.Low);
-            InterpolationModePaints[InterpolationMode.HighQuality] = CreatePaints(SKFilterQuality.High);
-            InterpolationModePaints[InterpolationMode.MediumQuality] = CreatePaints(SKFilterQuality.Medium);
-
-            SKPaint CreatePaints(SKFilterQuality quality)
-            {
-                SKPaint result = new()
-                {
-                    FilterQuality = quality,
-                };
-
-                return result;
-            }
         }
 
         /// <summary>
@@ -250,28 +240,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="InterpolationMode"/> to <see cref="SKFilterQuality"/>.
-        /// </summary>
-        /// <param name="interpolationMode">Value to convert.</param>
-        /// <returns></returns>
-        public static SKFilterQuality ToSkia(this InterpolationMode interpolationMode)
-        {
-            switch (interpolationMode)
-            {
-                case InterpolationMode.None:
-                    return SKFilterQuality.None;
-                case InterpolationMode.LowQuality:
-                    return SKFilterQuality.Low;
-                case InterpolationMode.MediumQuality:
-                    return SKFilterQuality.Medium;
-                case InterpolationMode.HighQuality:
-                    return SKFilterQuality.High;
-                default:
-                    return SKFilterQuality.None;
-            }
-        }
-
-        /// <summary>
         /// Converts <see cref="FillMode"/> to <see cref="SKPathFillType"/>.
         /// </summary>
         /// <param name="fillMode">Value to convert.</param>
@@ -302,10 +270,8 @@ namespace Alternet.Drawing
             Font font)
         {
             var skFont = (SKFont)font;
-            var skFontPaint = font.AsStrokeAndFillPaint;
 
-            var measure = SKRect.Empty;
-            var measureResult = skFontPaint.MeasureText(text, ref measure);
+            var measureResult = skFont.MeasureText(text);
 
             SizeD result = new(
                 measureResult,
@@ -336,13 +302,11 @@ namespace Alternet.Drawing
             float y = (float)location.Y;
 
             var skFont = (SKFont)font;
-            var skFontPaint = font.AsStrokeAndFillPaint;
 
             var offsetX = 0;
             var offsetY = Math.Abs(skFont.Metrics.Top);
 
-            var measure = SKRect.Empty;
-            var measureResult = skFontPaint.MeasureText(s, ref measure);
+            var measureResult = skFont.MeasureText(s);
 
             var rect = SKRect.Create(
                 measureResult,
@@ -465,7 +429,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="width">Width of the image data.</param>
         /// <param name="height">Height of the image data.</param>
-        /// <param name="scan0">The pointer to an in memory-buffer that can hold the image as specified.</param>
+        /// <param name="scan0">The pointer to an in memory-buffer that can hold
+        /// the image as specified.</param>
         /// <param name="stride">The number of bytes per row in the pixel buffer.</param>
         /// <param name="dpi">Dpi (dots per inch).</param>
         /// <param name="onRender">Render action.</param>
