@@ -29,7 +29,7 @@ namespace ControlsSample
         {
             LeftVisible = false,
             TopVisible = false,
-            BottomVisible = false,
+            BottomVisible = true,
         };
 
         private readonly VerticalStackPanel mainPanel = new()
@@ -52,8 +52,8 @@ namespace ControlsSample
         {
         };
 
-        private readonly TemplateControl controlTemplate = new();
-        private readonly TemplateControl toolTemplate = new();
+        private readonly TemplateControl controlTemplate;
+        private readonly TemplateControl toolTemplate;
 
         private readonly InteriorDrawable interiorDrawable;
 
@@ -99,7 +99,7 @@ namespace ControlsSample
             customDrawControl.Layout = LayoutStyle.Vertical;
 
             toolbar.VerticalAlignment = VerticalAlignment.Bottom;
-            toolbar.Parent = customDrawControl;
+            toolbar.Parent = panel.BottomPanel;
             toolbar.AddSpeedBtn(KnownButton.Yes, (s, e) =>
             {
                 if (toolbar.ItemSize != 64)

@@ -100,7 +100,7 @@ namespace Alternet.UI
                 if (HasBorder == value)
                     return;
                 base.HasBorder = value;
-                UpdatePadding();
+                DoInsideLayout(UpdatePadding);
             }
         }
 
