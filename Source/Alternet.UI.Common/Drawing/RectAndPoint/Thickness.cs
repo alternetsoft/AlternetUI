@@ -29,6 +29,12 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness Empty = new();
 
+        /// <summary>
+        /// Gets an empty <see cref="Thickness"/> object with
+        /// Left, Top, Right, Bottom properties equal to 1.
+        /// </summary>
+        public static readonly Thickness One = new(1);
+
         private Coord left;
         private Coord top;
         private Coord right;
