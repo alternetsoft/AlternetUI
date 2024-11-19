@@ -11,6 +11,8 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        private VisualControlStates? reportedVisualStates;
+
         /// <summary>
         /// Raises the <see cref="Invalidated" /> event
         /// and calls <see cref="OnInvalidated"/> method.
@@ -228,6 +230,8 @@ namespace Alternet.UI
             }
 
             ForEachVisibleChild(e, (control, e) => control.OnAfterParentMouseDown(this, e));
+
+            RaiseVisualStateChanged();
         }
 
         /// <summary>
@@ -454,6 +458,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseVisualStateChanged()
         {
+            if (reportedVisualStates == VisualStates)
+                return;
+            reportedVisualStates = VisualStates;
+
             OnVisualStateChanged(EventArgs.Empty);
             VisualStateChanged?.Invoke(this, EventArgs.Empty);
 
@@ -467,6 +475,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseIsMouseOverChanged()
         {
+            var reportedHovered = reportedVisualStates?.HasFlag(VisualControlStates.Hovered);
+            if (reportedHovered == IsMouseOver)
+                return;
+
             OnIsMouseOverChanged(EventArgs.Empty);
             IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
