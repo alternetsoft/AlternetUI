@@ -17,6 +17,12 @@ namespace Alternet.UI
     /// </summary>
     public class SkiaImageHandler : PlessImageHandler, IImageHandler
     {
+        /// <summary>
+        /// Gets or sets default <see cref="SKSamplingOptions"/> used hen images are resized.
+        /// If this is Null, <see cref="SKSamplingOptions.Default"/> is used when images are resized.
+        /// </summary>
+        public static SKSamplingOptions? DefaultSamplingOptions;
+
         private SKBitmap bitmap;
 
         /// <summary>
@@ -130,7 +136,7 @@ namespace Alternet.UI
 
             void Fn(SKBitmap source)
             {
-                if (!source.ScalePixels(bitmap, GraphicsFactory.DefaultScaleQuality))
+                if (!source.ScalePixels(bitmap, GetDefaultSamplingOptions()))
                     App.LogError("Error scaling pixels in SkiaImageHandler.Create(Image, SizeI)");
             }
         }
@@ -260,6 +266,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets default <see cref="SKSamplingOptions"/> used when image is scaled.
+        /// Uses <see cref="DefaultSamplingOptions"/>.
+        /// </summary>
+        /// <returns></returns>
+        public static SKSamplingOptions GetDefaultSamplingOptions()
+        {
+            return DefaultSamplingOptions ?? SKSamplingOptions.Default;
+        }
+
+        /// <summary>
         /// Creates <see cref="SkiaImageHandler"/> from <see cref="SKPicture"/>
         /// using the specified width and height.
         /// </summary>
@@ -355,7 +371,7 @@ namespace Alternet.UI
         public virtual bool Rescale(SizeI sizeNeeded)
         {
             SKBitmap? newBitmap = new(sizeNeeded.Width, sizeNeeded.Height);
-            var result = bitmap.ScalePixels(newBitmap, GraphicsFactory.DefaultScaleQuality);
+            var result = bitmap.ScalePixels(newBitmap, GetDefaultSamplingOptions());
             if (result)
             {
                 DisposeBitmap();

@@ -77,12 +77,6 @@ namespace Alternet.UI
         public class BoldText<TLabel> : TemplateControl
             where TLabel : AbstractControl, new()
         {
-            private readonly Border border = new()
-            {
-                Layout = LayoutStyle.Horizontal,
-                HasBorder = false,
-            };
-
             private readonly TLabel prefixLabel = new();
             private readonly TLabel suffixLabel = new();
 
@@ -100,6 +94,7 @@ namespace Alternet.UI
             /// <param name="hasBorder">Whether to draw default border around the text.</param>
             public BoldText(string prefix, string boldText, string suffix, bool hasBorder)
             {
+                Layout = LayoutStyle.Horizontal;
                 HasBorder = hasBorder;
 
                 prefixLabel.Text = prefix;
@@ -108,10 +103,9 @@ namespace Alternet.UI
 
                 DoInsideLayout(() =>
                 {
-                    border.Parent = this;
-                    prefixLabel.Parent = border;
-                    boldLabel.Parent = border;
-                    suffixLabel.Parent = border;
+                    prefixLabel.Parent = this;
+                    boldLabel.Parent = this;
+                    suffixLabel.Parent = this;
 
                     SetChildrenUseParentBackColor(true, true);
                     SetChildrenUseParentForeColor(true, true);

@@ -657,6 +657,8 @@ namespace Alternet.UI
             /// </summary>
             public ListControlItem? Item;
 
+            private int? id;
+
             /// <summary>
             /// Initializes a new instance of the <see cref="LogItem"/> class with the specified parameters.
             /// </summary>
@@ -684,6 +686,11 @@ namespace Alternet.UI
                 Msg = string.Empty;
                 Kind = LogItemKind.Information;
             }
+
+            /// <summary>
+            /// Gets id of the log message.
+            /// </summary>
+            public int Id => id ??= LogUtils.GenNewId();
         }
     }
 }

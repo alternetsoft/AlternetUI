@@ -27,5 +27,8 @@ namespace Alternet.UI
                 base.Parent = value;
             }
         }
+
+        /// <inheritdoc/>
+        protected override Thickness MinPadding => Thickness.One;
     }
 }

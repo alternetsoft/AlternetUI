@@ -74,13 +74,20 @@ namespace Alternet.UI
         /// </summary>
         public static void RegisterExceptionsLogger()
         {
+            void LogException(string title, object e)
+            {
+                Console.WriteLine(title);
+                Console.WriteLine(e.ToString());
+                Debug.WriteLine(title);
+                Debug.WriteLine(e.ToString());
+                LogUtils.LogToFile(e.ToString());
+            }
+
             AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
             {
                 DebugCall(() =>
                 {
-                    Debug.WriteLine("First Chance Exception");
-                    Debug.WriteLine(e.Exception.ToString());
-                    LogUtils.LogToFile(e.Exception.ToString());
+                    LogException("First Chance Exception", e.Exception);
                 });
             };
 
@@ -88,9 +95,7 @@ namespace Alternet.UI
             {
                 DebugCall(() =>
                 {
-                    Debug.WriteLine("CurrentDomain Unhandled exception");
-                    Debug.WriteLine(e.ExceptionObject.ToString());
-                    LogUtils.LogToFile(e.ExceptionObject.ToString());
+                    LogException("CurrentDomain Unhandled exception", e.ExceptionObject);
                 });
             };
 
@@ -98,9 +103,7 @@ namespace Alternet.UI
             {
                 DebugCall(() =>
                 {
-                    Debug.WriteLine("Unobserved Task Exception");
-                    Debug.WriteLine(e.Exception.ToString());
-                    LogUtils.LogToFile(e.Exception.ToString());
+                    LogException("Unobserved Task Exception", e.Exception);
                 });
             };
         }

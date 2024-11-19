@@ -38,9 +38,6 @@ namespace Alternet.Drawing
         private Font[]? fonts;
         private Font? baseFont;
         private FontFamily? fontFamily;
-        private SKPaint? strokeAndFillPaint;
-        private SKPaint? strokePaint;
-        private SKPaint? fillPaint;
         private ObjectUniqueId? uniqueId;
 
         /// <summary>
@@ -459,48 +456,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="SKPaint"/> for this font with
-        /// <see cref="SKPaintStyle.StrokeAndFill"/> style.
-        /// </summary>
-        [Browsable(false)]
-        public virtual SKPaint AsStrokeAndFillPaint
-        {
-            get
-            {
-                strokeAndFillPaint ??= GraphicsFactory.FontToStrokeAndFillPaint(this);
-                return strokeAndFillPaint;
-            }
-        }
-
-        /// <summary>
-        /// Gets <see cref="SKPaint"/> for this font with
-        /// <see cref="SKPaintStyle.Stroke"/> style.
-        /// </summary>
-        [Browsable(false)]
-        public virtual SKPaint AsStrokePaint
-        {
-            get
-            {
-                strokePaint ??= GraphicsFactory.FontToStrokePaint(this);
-                return strokePaint;
-            }
-        }
-
-        /// <summary>
-        /// Gets <see cref="SKPaint"/> for this font with
-        /// <see cref="SKPaintStyle.Fill"/> style.
-        /// </summary>
-        [Browsable(false)]
-        public virtual SKPaint AsFillPaint
-        {
-            get
-            {
-                fillPaint ??= GraphicsFactory.FontToFillPaint(this);
-                return fillPaint;
-            }
-        }
-
-        /// <summary>
         /// Gets <see cref="SKFontMetrics"/> for this font.
         /// </summary>
         [Browsable(false)]
@@ -525,9 +480,6 @@ namespace Alternet.Drawing
 
             set
             {
-                strokeAndFillPaint = null;
-                fillPaint = null;
-                strokePaint = null;
                 skiaFont = value;
             }
         }

@@ -193,8 +193,17 @@ namespace Alternet.UI
             {
                 if (hoveredControl == value)
                     return;
+                hoveredControl?.RaiseVisualStateChanged();
+
+                if (value is not null)
+                {
+                    if (!value.IsMouseOver)
+                        value = null;
+                }
+
                 hoveredControl = value;
                 HoveredControlChanged?.Invoke(hoveredControl, EventArgs.Empty);
+                hoveredControl?.RaiseVisualStateChanged();
             }
         }
 
