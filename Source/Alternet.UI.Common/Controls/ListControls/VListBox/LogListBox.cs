@@ -174,7 +174,7 @@ namespace Alternet.UI
             string? prefix,
             LogItemKind kind = LogItemKind.Information)
         {
-            var result = LogReplaceInternal(message, prefix, kind);
+            var result = LogReplaceInternal(LogUtils.GenNewId(), message, prefix, kind);
             LogRefresh();
             return result;
         }
@@ -216,7 +216,7 @@ namespace Alternet.UI
         /// <param name="kind">Message kind.</param>
         public virtual ListControlItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
-            var result = LogInternal(obj, kind);
+            var result = LogInternal(LogUtils.GenNewId(), obj, kind);
             LogRefresh();
             return result;
         }
@@ -245,15 +245,16 @@ namespace Alternet.UI
         /// <summary>
         /// Adds additional information to the log messages.
         /// </summary>
-        /// <param name="msg">Log message.</param>
+        /// <param name="msg">Message to log.</param>
+        /// <param name="id">Message id.</param>
         /// <remarks>
         /// By default adds unique integer identifier to the beginning of the <paramref name="msg"/>.
         /// </remarks>
-        protected virtual string ConstructLogMessage(string? msg)
+        protected virtual string ConstructLogMessage(int id, string? msg)
         {
             if (string.IsNullOrWhiteSpace(msg))
                 return string.Empty;
-            return $" [{LogUtils.GenNewId()}] {msg}";
+            return $" [{id}] {msg}";
         }
 
         /// <inheritdoc/>
@@ -337,7 +338,7 @@ namespace Alternet.UI
             LogRefresh();
         }
 
-        private ListControlItem LogInternal(ListControlItem item)
+        private ListControlItem LogInternal(int id, ListControlItem item)
         {
             if (IsDisposed)
                 return item;
@@ -350,7 +351,7 @@ namespace Alternet.UI
             return item;
         }
 
-        private ListControlItem LogInternal(object? obj, LogItemKind kind)
+        private ListControlItem LogInternal(int id, object? obj, LogItemKind kind)
         {
             var message = obj.SafeToString();
 
@@ -360,7 +361,7 @@ namespace Alternet.UI
             lastLogMessage = message;
 
             var item = CreateItem();
-            item.Text = ConstructLogMessage(message);
+            item.Text = ConstructLogMessage(id, message);
             item.SvgImage = GetImage(kind);
             item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
             Add(item);
@@ -371,6 +372,7 @@ namespace Alternet.UI
         }
 
         private ListControlItem LogReplaceInternal(
+            int id,
             string? message,
             string? prefix,
             LogItemKind kind)
@@ -391,7 +393,7 @@ namespace Alternet.UI
             {
                 lastLogMessage = message;
                 var item = LastItem!;
-                item.Text = ConstructLogMessage(message);
+                item.Text = ConstructLogMessage(id, message);
                 item.SvgImage = GetImage(kind);
                 item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
                 SelectedIndex = Count - 1;
@@ -400,7 +402,7 @@ namespace Alternet.UI
                 return item;
             }
             else
-                return LogInternal(message, kind);
+                return LogInternal(id, message, kind);
         }
 
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
@@ -413,14 +415,14 @@ namespace Alternet.UI
 
                 if(item is not null)
                 {
-                    LogInternal(item);
+                    LogInternal(e.Id, item);
                     return;
                 }
 
                 if (e.ReplaceLastMessage)
-                    LogReplaceInternal(e.Message, e.MessagePrefix, e.Kind);
+                    LogReplaceInternal(e.Id, e.Message, e.MessagePrefix, e.Kind);
                 else
-                    LogInternal(e.Message, e.Kind);
+                    LogInternal(e.Id, e.Message, e.Kind);
             }
         }
     }

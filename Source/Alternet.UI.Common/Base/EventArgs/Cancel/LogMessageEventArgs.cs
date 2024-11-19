@@ -15,6 +15,7 @@ namespace Alternet.UI
         private readonly bool replaceLast;
         private string? message;
         private LogUtils.LogItem? item;
+        private int? id;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogMessageEventArgs"/> class.
@@ -47,6 +48,11 @@ namespace Alternet.UI
             this.prefix = prefix;
             this.replaceLast = replaceLast;
         }
+
+        /// <summary>
+        /// Gets id of the log message.
+        /// </summary>
+        public int Id => id ??= item?.Id ?? LogUtils.GenNewId();
 
         /// <summary>
         /// Gets or sets message kind.
