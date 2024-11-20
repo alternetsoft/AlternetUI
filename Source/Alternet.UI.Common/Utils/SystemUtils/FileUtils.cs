@@ -106,6 +106,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether the specified file name has the same char case as file on disk.
+        /// </summary>
+        /// <param name="fileName">Path to file.</param>
+        /// <returns></returns>
+        public static bool RealFileHasSameCase(string fileName)
+        {
+            fileName = Path.GetFullPath(fileName);
+
+            var onlyFileName = Path.GetFileName(fileName);
+            var files = Directory.GetFiles(Path.GetDirectoryName(fileName)!, onlyFileName);
+
+            if (files.Length == 0 || files[0] != fileName)
+                return false;
+            return true;
+        }
+
+        /// <summary>
         /// Returns the full file name that match a search pattern in the application folder.
         /// Searches in all subdirectories.
         /// </summary>

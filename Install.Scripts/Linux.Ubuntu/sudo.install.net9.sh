@@ -1,0 +1,1 @@
+sudo apt -y install dotnet-sdk-9.0
