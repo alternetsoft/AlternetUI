@@ -78,12 +78,15 @@ namespace Alternet.UI
                     "Log mapping: Key <-> WxWidgetsKeyCode",
                     WxKeyboardHandler.KeyAndWxMapping.LogToFile);
             }
+
+            if(!App.IsWindowsOS)
+                UsePlessCaret = true;
         }
 
         /// <summary>
         /// Gets or sets whether to use internal caret. This can be used for testing purposes.
         /// </summary>
-        public static bool UsePlessCaret { get; set; } = false;
+        public static bool UsePlessCaret { get; set; }
 
         /// <summary>
         /// Gets or sets whether to use dummy timer which doesn't call timer event.
