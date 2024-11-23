@@ -1,0 +1,1 @@
+This folder contains external libraries used in Alternet.UI.
