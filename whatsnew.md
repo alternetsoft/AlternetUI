@@ -1,3 +1,17 @@
+# 0.9.644 (2024 November 23)
+
+- Added Net 9 support.
+- ToolBar: IsToolClickRepeated, GetToolIsClickRepeated.
+- ControlAndButton: HasBtnEllipsis, HasBtnPlusMinus, IdButtonEllipsis, IdButtonPlus, IdButtonMinus, IsBtnClickRepeated.
+- ControlAndButton: HasButton, GetBtnName, SetHasButton.
+- Fixed: Default monospaced font size is updated like font size.
+- Used MAUI 9 in the library.
+- Fixed: VisualStateChanged events not fired if state not changed.
+- Fixed: AbstractControl.SetSizeToContent.
+- Fixed: Template controls layout.
+- Removed SkiaSharp related warnings.
+- Fixed: Caret behavior on Linux and macOs.
+
 # 0.9.643 (2024 November 15)
 
 - VirtualListBox: MeasureItem event and related methods.
