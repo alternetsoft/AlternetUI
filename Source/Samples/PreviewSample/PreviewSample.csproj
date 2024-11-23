@@ -2,6 +2,7 @@
   <Import Project="..\CommonData\CommonProject.props" />
 
   <PropertyGroup>
+    <NuGetAuditMode>direct</NuGetAuditMode>
     <CommonResourcesPath>..\ControlsSampleDll\Resources</CommonResourcesPath>
   </PropertyGroup>
 
