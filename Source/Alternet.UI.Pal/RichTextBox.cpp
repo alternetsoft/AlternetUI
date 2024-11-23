@@ -1185,7 +1185,9 @@ namespace Alternet::UI
 
 	void RichTextBox::InitFileHandlers()
 	{
-		wxRichTextBuffer::AddHandler(new wxRichTextXMLHandler);
+		/*
+		Disabled as requires compat library on macos and it is not supported there properly
+		wxRichTextBuffer::AddHandler(new wxRichTextXMLHandler);*/
 		wxRichTextBuffer::AddHandler(new wxRichTextHTMLHandler);
 	}
 
