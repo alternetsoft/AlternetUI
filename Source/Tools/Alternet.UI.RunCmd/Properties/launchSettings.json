@@ -26,6 +26,10 @@
     "GenerateBindable": {
       "commandName": "Project",
       "commandLineArgs": "-r=generateBindable Settings=\"E:\\DIMA\\AlternetUI\\Source\\Tools\\Alternet.UI.RunCmd\\GenerateBindableSettings.xml\""
+    },
+    "ReplaceInFiles": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=replaceInFiles Settings=\"E:\\DIMA\\AlternetUI\\Source\\Tools\\Alternet.UI.RunCmd\\ReplaceInFilesSettings.xml\" Names=\"test.setup.h;test.richtextbuffer.h\""
     }
   }
 }

@@ -215,6 +215,71 @@ namespace Alternet.UI
             Console.WriteLine("Completed");
         }
 
+        public static void CmdReplaceInFiles(CommandLineArgs args)
+        {
+            var pathToConfig = args.AsString("Settings");
+            var pathToConfigFull = Path.GetFullPath(pathToConfig);
+            var configNames = args.AsString("Names");
+
+            Console.WriteLine($"Command: replaceInFiles");
+            Console.WriteLine($"Path to config: {pathToConfigFull}");
+            Console.WriteLine($"Config names: {configNames}");
+
+            configNames = $";{configNames};";
+
+            if (!File.Exists(pathToConfigFull))
+            {
+                Console.WriteLine($"Settings file doesn't exist: [{pathToConfigFull}]");
+                return;
+            }
+
+            try
+            {
+                var settings = XmlUtils.DeserializeFromFile<ReplaceInFilesSettings>(pathToConfigFull);
+
+                if (settings is null)
+                {
+                    Console.WriteLine($"Settings file reading error");
+                    return;
+                }
+
+                foreach (var item in settings.Items)
+                {
+                    if (!configNames.Contains($";{item.Name};"))
+                        continue;
+
+                    item.Prepare(settings, pathToConfigFull);
+
+                    Console.WriteLine($"======================");
+                    Console.WriteLine($"Name: {item.Name}");
+                    Console.WriteLine($"PathToFile: {item.PathToFile}");
+                    Console.WriteLine($"PathToResultFile: {item.PathToResultFile}");
+
+                    if (!File.Exists(item.PathToFile))
+                    {
+                        Console.WriteLine($"File not exists: {item.PathToFile}");
+                        continue;
+                    }
+
+                    var destFolder = Path.GetDirectoryName(item.PathToResultFile);
+
+                    if (!Path.Exists(destFolder))
+                    {
+                        Console.WriteLine($"Path not exists: {destFolder}");
+                        continue;
+                    }
+
+                    item.Execute(settings);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error replace in files");
+                Console.WriteLine($"Error info logged to file");
+                LogUtils.LogExceptionToFile(e);
+            }
+        }
+
         public static void CmdFilterLog(CommandLineArgs args)
         {
             string logFilter = args.AsString("Filter").ToLower();
@@ -283,6 +348,11 @@ namespace Alternet.UI
 
         public static void RegisterCommands()
         {
+            RegisterCommand(
+                "replaceInFiles",
+                CmdReplaceInFiles,
+                "");
+
             RegisterCommand(
                 "del",
                 CmdDeleteFilesByMasks,

@@ -53,6 +53,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets command line argument as string and splits it to the array of strings.
+        /// Semicolon is used as the separator of the items.
+        /// </summary>
+        /// <param name="argName">Argument name.</param>
+        /// <returns></returns>
+        public virtual string[] AsSemicolonArray(string argName)
+        {
+            var value = AsString(argName);
+            var result = value.Split(';');
+            return result;
+        }
+
+        /// <summary>
         /// Gets command line argument as string.
         /// </summary>
         /// <param name="argName">Argument name.</param>
