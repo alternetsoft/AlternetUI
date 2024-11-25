@@ -193,8 +193,8 @@
 
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build WxWidgets Windows..." Importance="high" />
-        	<CallTarget Targets="BuildWxWidgets_Windows"/>
-		
+        	<CallTarget Targets="BuildWxWidgets_Windows" Condition="!Exists($(WxWidgetsWindowsBuildDirectory_vc_mswu))"/>
+
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build WxWidgets Linux..." Importance="high" />
         	<CallTarget Targets="BuildWxWidgets_Linux" Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>

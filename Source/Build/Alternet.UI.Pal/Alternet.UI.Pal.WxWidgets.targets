@@ -30,6 +30,10 @@
 
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet build" />
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=replaceInFiles Settings=&quot;$(PathToReplaceInFilesSettings)&quot; Names=&quot;setup.h;richtextbuffer.h&quot;" />
 
     </Target>
