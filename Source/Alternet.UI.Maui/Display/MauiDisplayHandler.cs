@@ -22,6 +22,11 @@ namespace Alternet.UI
 
         public bool IsOk => true;
 
+        public static Coord GetDefaultScaleFactor()
+        {
+            return DeviceDisplay.Current.MainDisplayInfo.Density;
+        }
+
         public void Log()
         {
             App.LogFileIsEnabled = true;
@@ -78,7 +83,7 @@ namespace Alternet.UI
 
         public Coord GetScaleFactor()
         {
-            return DeviceDisplay.Current.MainDisplayInfo.Density;
+            return GetDefaultScaleFactor();
         }
 
         public bool IsPrimary()

@@ -79,21 +79,64 @@ namespace Alternet.UI
                 App.LogSection(
                     () =>
                     {
-                        App.LogNameValue("HScrollY", info.HScrollY, null, "Height of horizontal scrollbar in pixels");
-                        App.LogNameValue("VScrollX", info.VScrollX, null, "Width of vertical scrollbar in pixels");
-                        App.LogNameValue("VScrollArrowX", info.VScrollArrowX, null, "Width of arrow bitmap on a vertical scrollbar");
-                        App.LogNameValue("VScrollArrowY", info.VScrollArrowY, null, "Height of arrow bitmap on a vertical scrollbar");
-                        App.LogNameValue("VThumbY", info.VThumbY, null, "Height of vertical scrollbar thumb");
-                        App.LogNameValue("HScrollArrowX", info.HScrollArrowX, null, "Width of arrow bitmap on horizontal scrollbar");
-                        App.LogNameValue("HScrollArrowY", info.HScrollArrowY, null, "Height of arrow bitmap on horizontal scrollbar");
-                        App.LogNameValue("HThumbX", info.HThumbX, null, "Width of horizontal scrollbar thumb");
+                        App.LogNameValue(
+                            "HScrollY",
+                            info.HScrollY,
+                            null,
+                            "Height of horizontal scrollbar in pixels");
+
+                        App.LogNameValue(
+                            "VScrollX",
+                            info.VScrollX,
+                            null,
+                            "Width of vertical scrollbar in pixels");
+
+                        App.LogNameValue(
+                            "VScrollArrowX",
+                            info.VScrollArrowX,
+                            null,
+                            "Width of arrow bitmap on a vertical scrollbar");
+
+                        App.LogNameValue(
+                            "VScrollArrowY",
+                            info.VScrollArrowY,
+                            null,
+                            "Height of arrow bitmap on a vertical scrollbar");
+
+                        App.LogNameValue(
+                            "VThumbY",
+                            info.VThumbY,
+                            null,
+                            "Height of vertical scrollbar thumb");
+
+                        App.LogNameValue(
+                            "HScrollArrowX",
+                            info.HScrollArrowX,
+                            null,
+                            "Width of arrow bitmap on horizontal scrollbar");
+
+                        App.LogNameValue(
+                            "HScrollArrowY",
+                            info.HScrollArrowY,
+                            null,
+                            "Height of arrow bitmap on horizontal scrollbar");
+
+                        App.LogNameValue(
+                            "HThumbX",
+                            info.HThumbX,
+                            null,
+                            "Width of horizontal scrollbar thumb");
 
                         App.LogNameValue("info.GetPreferredSize(vert)", info.GetPreferredSize(true));
                         App.LogNameValue("info.GetPreferredSize(horz)", info.GetPreferredSize(false));
                         App.LogNameValue("info.GetArrowBitmapSize(vert)", info.GetArrowBitmapSize(true));
                         App.LogNameValue("info.GetArrowBitmapSize(horz)", info.GetArrowBitmapSize(false));
-                        App.LogNameValue("info.GetThumbSize(vert,(50,50))", info.GetThumbSize(true, (50, 50)));
-                        App.LogNameValue("info.GetThumbSize(horz,(50,50))", "info.GetThumbSize(false,(50,50))");
+                        App.LogNameValue(
+                            "info.GetThumbSize(vert,(50,50))",
+                            info.GetThumbSize(true, (50, 50)));
+                        App.LogNameValue(
+                            "info.GetThumbSize(horz,(50,50))",
+                            info.GetThumbSize(false, (50, 50)));
                     },
                     "ScrollBar metrics");
             }

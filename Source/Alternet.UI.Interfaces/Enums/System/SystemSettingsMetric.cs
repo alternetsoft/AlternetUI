@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Possible values for SystemSettings.GetMetric index parameter.
+    /// Known system settings metric identifiers.
     /// </summary>
     public enum SystemSettingsMetric
     {
@@ -37,36 +37,36 @@ namespace Alternet.UI
         CursorY = 5,
 
         /// <summary>
-        /// Width in pixels of rectangle within which two successive mouse clicks must fall
+        /// Width of rectangle within which two successive mouse clicks must fall
         /// to generate a double-click.
         /// </summary>
         DClickX = 6,
 
         /// <summary>
-        /// Height in pixels of rectangle within which two successive mouse clicks must
+        /// Height of rectangle within which two successive mouse clicks must
         /// fall to generate a double-click.
         /// </summary>
         DClickY = 7,
 
         /// <summary>
-        /// Width in pixels of a rectangle centered on a drag point to allow for limited
+        /// Width of a rectangle centered on a drag point to allow for limited
         /// movement of the mouse pointer before a drag operation begins.
         /// </summary>
         DragX = 8,
 
         /// <summary>
-        /// Height in pixels of a rectangle centered on a drag point to allow for limited
+        /// Height of a rectangle centered on a drag point to allow for limited
         /// movement of the mouse pointer before a drag operation begins.
         /// </summary>
         DragY = 9,
 
         /// <summary>
-        /// Width of a 3D border, in pixels.
+        /// Width of a 3D border.
         /// </summary>
         EdgeX = 10,
 
         /// <summary>
-        /// Height of a 3D border, in pixels.
+        /// Height of a 3D border.
         /// </summary>
         EdgeY = 11,
 
@@ -96,13 +96,13 @@ namespace Alternet.UI
         IconY = 16,
 
         /// <summary>
-        /// Width of a grid cell for items in large icon view, in pixels. Each item
+        /// Width of a grid cell for items in large icon view. Each item
         /// fits into a rectangle of this size when arranged.
         /// </summary>
         IconSpacingX = 17,
 
         /// <summary>
-        /// Height of a grid cell for items in large icon view, in pixels. Each item
+        /// Height of a grid cell for items in large icon view. Each item
         /// fits into a rectangle of this size when arranged.
         /// </summary>
         IconSpacingY = 18,
@@ -124,12 +124,12 @@ namespace Alternet.UI
         */
 
         /// <summary>
-        /// Width of the window frame for a wxTHICK_FRAME window.
+        /// Width of the window frame for a THICK FRAME window.
         /// </summary>
         FrameSizeX = 23,
 
         /// <summary>
-        /// Height of the window frame for a wxTHICK_FRAME window.
+        /// Height of the window frame for a THICK FRAME window.
         /// </summary>
         FrameSizeY = 24,
 
@@ -144,12 +144,12 @@ namespace Alternet.UI
         SmallIconY = 26,
 
         /// <summary>
-        /// Height of horizontal scrollbar in pixels.
+        /// Height of horizontal scrollbar.
         /// </summary>
         HScrollY = 27,
 
         /// <summary>
-        /// Width of vertical scrollbar in pixels.
+        /// Width of vertical scrollbar.
         /// </summary>
         VScrollX = 28,
 

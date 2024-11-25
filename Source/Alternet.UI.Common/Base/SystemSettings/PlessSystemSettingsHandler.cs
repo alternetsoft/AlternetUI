@@ -9,11 +9,46 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements dummy <see cref="ISystemSettingsHandler"/> provider.
+    /// Implements internal <see cref="ISystemSettingsHandler"/> provider.
     /// </summary>
     public abstract class PlessSystemSettingsHandler : DisposableObject, ISystemSettingsHandler
     {
+        private static readonly bool[] metricScaled = new bool[(int)SystemSettingsMetric.Max + 1];
+
         private readonly int[] metrics = new int[(int)SystemSettingsMetric.Max + 1];
+
+        static PlessSystemSettingsHandler()
+        {
+            SetMetricScaled(SystemSettingsMetric.HScrollArrowX);
+            SetMetricScaled(SystemSettingsMetric.HScrollArrowY);
+            SetMetricScaled(SystemSettingsMetric.HThumbX);
+            SetMetricScaled(SystemSettingsMetric.HScrollY);
+            SetMetricScaled(SystemSettingsMetric.VScrollX);
+            SetMetricScaled(SystemSettingsMetric.VScrollArrowX);
+            SetMetricScaled(SystemSettingsMetric.VScrollArrowY);
+            SetMetricScaled(SystemSettingsMetric.VThumbY);
+
+            SetMetricScaled(SystemSettingsMetric.CursorX);
+            SetMetricScaled(SystemSettingsMetric.CursorY);
+
+            SetMetricScaled(SystemSettingsMetric.IconX);
+            SetMetricScaled(SystemSettingsMetric.IconY);
+
+            SetMetricScaled(SystemSettingsMetric.IconSpacingX);
+            SetMetricScaled(SystemSettingsMetric.IconSpacingY);
+
+            SetMetricScaled(SystemSettingsMetric.WindowMinX);
+            SetMetricScaled(SystemSettingsMetric.WindowMinY);
+
+            SetMetricScaled(SystemSettingsMetric.FrameSizeX);
+            SetMetricScaled(SystemSettingsMetric.FrameSizeY);
+
+            SetMetricScaled(SystemSettingsMetric.SmallIconX);
+            SetMetricScaled(SystemSettingsMetric.SmallIconY);
+
+            SetMetricScaled(SystemSettingsMetric.CaptionY);
+            SetMetricScaled(SystemSettingsMetric.MenuY);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlessSystemSettingsHandler"/> class.
@@ -40,6 +75,25 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual bool UseBestVisual { get; set; } = true;
+
+        /// <summary>
+        /// Sets whether metric value is scaled.
+        /// </summary>
+        /// <param name="index">Metric id.</param>
+        /// <param name="value">Whether metric is scaled.</param>
+        public static void SetMetricScaled(SystemSettingsMetric index, bool value = true)
+        {
+            metricScaled[(int)index] = value;
+        }
+
+        /// <summary>
+        /// Gets whether metric value is scaled.
+        /// </summary>
+        /// <param name="index">Metric id.</param>
+        public static bool IsMetricScaled(SystemSettingsMetric index)
+        {
+            return metricScaled[(int)index];
+        }
 
         /// <inheritdoc/>
         public abstract IDisplayFactoryHandler CreateDisplayFactoryHandler();
@@ -121,41 +175,62 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets all scroll bar related metrics to the specified value.
+        /// </summary>
+        /// <param name="scrollMetric"></param>
+        public virtual void SetAllScrollBarMetrics(int scrollMetric)
+        {
+            SetMetric(SystemSettingsMetric.HScrollArrowX, scrollMetric);
+            SetMetric(SystemSettingsMetric.HScrollArrowY, scrollMetric);
+            SetMetric(SystemSettingsMetric.HThumbX, scrollMetric);
+            SetMetric(SystemSettingsMetric.HScrollY, scrollMetric);
+            SetMetric(SystemSettingsMetric.VScrollX, scrollMetric);
+            SetMetric(SystemSettingsMetric.VScrollArrowX, scrollMetric);
+            SetMetric(SystemSettingsMetric.VScrollArrowY, scrollMetric);
+            SetMetric(SystemSettingsMetric.VThumbY, scrollMetric);
+        }
+
+        /// <summary>
         /// Resets internal metrics to the default values.
         /// </summary>
         public virtual void Reset()
         {
-            SetMetric(SystemSettingsMetric.MouseButtons, 8);
-            SetMetric(SystemSettingsMetric.BorderX, 1);
-            SetMetric(SystemSettingsMetric.BorderY, 1);
-            SetMetric(SystemSettingsMetric.CursorX, 64);
-            SetMetric(SystemSettingsMetric.CursorY, 64);
+            SetAllScrollBarMetrics(17); // 34
+
+            SetMetric(SystemSettingsMetric.BorderX, 1); // same on high dpi
+            SetMetric(SystemSettingsMetric.BorderY, 1); // same on high dpi
+
+            SetMetric(SystemSettingsMetric.CursorX, 32); // 64
+            SetMetric(SystemSettingsMetric.CursorY, 32); // 64
+
             SetMetric(SystemSettingsMetric.DClickX, 4);
             SetMetric(SystemSettingsMetric.DClickY, 4);
-            SetMetric(SystemSettingsMetric.DragX, 4);
-            SetMetric(SystemSettingsMetric.DragY, 4);
-            SetMetric(SystemSettingsMetric.EdgeX, 2);
-            SetMetric(SystemSettingsMetric.EdgeY, 2);
-            SetMetric(SystemSettingsMetric.HScrollArrowX, 34);
-            SetMetric(SystemSettingsMetric.HScrollArrowY, 34);
-            SetMetric(SystemSettingsMetric.HThumbX, 34);
-            SetMetric(SystemSettingsMetric.IconX, 64);
-            SetMetric(SystemSettingsMetric.IconY, 64);
-            SetMetric(SystemSettingsMetric.IconSpacingX, 150);
-            SetMetric(SystemSettingsMetric.IconSpacingY, 150);
-            SetMetric(SystemSettingsMetric.WindowMinX, 258);
-            SetMetric(SystemSettingsMetric.WindowMinY, 71);
-            SetMetric(SystemSettingsMetric.FrameSizeX, 5);
-            SetMetric(SystemSettingsMetric.FrameSizeY, 5);
-            SetMetric(SystemSettingsMetric.SmallIconX, 32);
-            SetMetric(SystemSettingsMetric.SmallIconY, 32);
-            SetMetric(SystemSettingsMetric.HScrollY, 34);
-            SetMetric(SystemSettingsMetric.VScrollX, 34);
-            SetMetric(SystemSettingsMetric.VScrollArrowX, 34);
-            SetMetric(SystemSettingsMetric.VScrollArrowY, 34);
-            SetMetric(SystemSettingsMetric.VThumbY, 34);
-            SetMetric(SystemSettingsMetric.CaptionY, 45);
-            SetMetric(SystemSettingsMetric.MenuY, 39);
+
+            SetMetric(SystemSettingsMetric.DragX, 4); // same on high dpi
+            SetMetric(SystemSettingsMetric.DragY, 4); // same on high dpi
+
+            SetMetric(SystemSettingsMetric.EdgeX, 2); // same on high dpi
+            SetMetric(SystemSettingsMetric.EdgeY, 2); // same on high dpi
+
+            SetMetric(SystemSettingsMetric.IconX, 32); // 64
+            SetMetric(SystemSettingsMetric.IconY, 32); // 64
+
+            SetMetric(SystemSettingsMetric.IconSpacingX, 75); // 150
+            SetMetric(SystemSettingsMetric.IconSpacingY, 75); // 150
+
+            SetMetric(SystemSettingsMetric.WindowMinX, 136); // 258
+            SetMetric(SystemSettingsMetric.WindowMinY, 39); // 71
+
+            SetMetric(SystemSettingsMetric.FrameSizeX, 4); // 5
+            SetMetric(SystemSettingsMetric.FrameSizeY, 4); // 5
+
+            SetMetric(SystemSettingsMetric.SmallIconX, 16); // 32
+            SetMetric(SystemSettingsMetric.SmallIconY, 16); // 32
+
+            SetMetric(SystemSettingsMetric.CaptionY, 23); // 45
+            SetMetric(SystemSettingsMetric.MenuY, 20); // 39
+
+            SetMetric(SystemSettingsMetric.MouseButtons, 8);
             SetMetric(SystemSettingsMetric.NetworkPresent, 1);
             SetMetric(SystemSettingsMetric.PenWindowsPresent, 0);
             SetMetric(SystemSettingsMetric.ShowSounds, 0);
