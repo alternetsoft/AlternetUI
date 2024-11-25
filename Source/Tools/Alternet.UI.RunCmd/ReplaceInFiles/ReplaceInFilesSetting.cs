@@ -56,6 +56,33 @@ namespace Alternet.UI
 
         public bool Execute(ReplaceInFilesSettings globals)
         {
+            if (PathToFile is null || PathToResultFile is null)
+                return false;
+
+            var data = FileUtils.StringFromFile(PathToFile);
+            var tempFileName = StringUtils.GetUniqueString();
+            var resultFolder = Path.GetDirectoryName(PathToResultFile) ?? string.Empty;
+            var tempFilePath = Path.Combine(Path.GetFullPath(resultFolder), tempFileName);
+            
+            foreach(var replaceItem in ReplaceItems)
+            {
+                if (replaceItem.ReplaceFrom is null)
+                    continue;
+
+                data = data.Replace(replaceItem.ReplaceFrom, replaceItem.ReplaceTo);
+            }
+
+            File.Delete(tempFilePath);
+            FileUtils.StringToFile(tempFilePath, data);
+
+            var oldResult = PathToResultFile + ".old";
+            File.Delete(oldResult);
+            if(File.Exists(PathToResultFile))
+            {
+                File.Move(PathToResultFile, oldResult);
+            }
+            File.Move(tempFilePath, PathToResultFile);
+
             return true;
         }
     }
