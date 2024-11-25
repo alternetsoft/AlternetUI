@@ -188,14 +188,20 @@
 			
 		<CallTarget Targets="ClearProjectBin"/>
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec DownloadAndExtract WxWidgets Bin..." Importance="high" />
-		<CallTarget Targets="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDirectory))"/>
+		<Message Text="Exec DownloadAndExtract WxWidgets..." Importance="high" />
+		<CallTarget Targets="DownloadAndExtractWxWidgets" Condition="!Exists($(WxWidgetsDirectory))"/>
+
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec Build WxWidgets Windows..." Importance="high" />
+        	<CallTarget Targets="BuildWxWidgets_Windows"/>
+		
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build WxWidgets Linux..." Importance="high" />
-        <CallTarget Targets="BuildWxWidgets_Linux" Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>
+        	<CallTarget Targets="BuildWxWidgets_Linux" Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>
+		
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build WxWidgets MacOS..." Importance="high" />
-        <CallTarget Targets="BuildWxWidgets_MacOS" Condition="!Exists($(WxWidgetsMacOSBuildDirectory))"/>
+	        <CallTarget Targets="BuildWxWidgets_MacOS" Condition="!Exists($(WxWidgetsMacOSBuildDirectory))"/>
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build Alternet.UI.Pal..." Importance="high" />
