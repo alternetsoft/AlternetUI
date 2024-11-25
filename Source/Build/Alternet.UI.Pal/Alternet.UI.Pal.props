@@ -66,8 +66,7 @@
     <WebViewDirectory>$(ExternalComponentsDirectory)\WxWidgets\3rdparty\webview2</WebViewDirectory>
 
     <WebViewDownloadUrlOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.2045.28.zip</WebViewDownloadUrlOld>
-    <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.2045.28.zip</WebViewDownloadUrl>
-    <WebViewDownloadUrlNew>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.2903.40.zip</WebViewDownloadUrlNew>
+    <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.2903.40.zip</WebViewDownloadUrl>
 
     <WebViewDownloadDirectory>$(ExternalComponentsDirectory)</WebViewDownloadDirectory>
     <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
