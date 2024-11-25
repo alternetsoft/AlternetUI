@@ -88,13 +88,21 @@
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" 
 			Command="mkdir $(WxWidgetsGtkBuildDirectoryName)" 
 			Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>
+
+        <PropertyGroup>
+            <ConfigureCommand>../configure</ConfigureCommand>
+            <DebugFlag>--enable-debug</DebugFlag>
+    
+            <ConfigureCommandParameters>--enable-webview --enable-webviewwebkit --disable-shared --without-libtiff --without-regex --without-expat</ConfigureCommandParameters>
+        </PropertyGroup>
+
         <!-- Linux Debug -->
         <Exec 	WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" 
-				Command="../configure --enable-webview --enable-webviewwebkit --enable-debug --disable-shared" 
+				Command="$(ConfigureCommand) $(DebugFlag) $(ConfigureCommandParameters)" 
 				Condition="'$(DebugWxWidgetsBuild)' == 'true'"/>
         <!-- Linux Release -->
         <Exec 	WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" 
-				Command="../configure --enable-webview --enable-webviewwebkit --disable-shared" 
+				Command="$(ConfigureCommand) $(ConfigureCommandParameters)" 
 				Condition="'$(DebugWxWidgetsBuild)' != 'true'"/>
         <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make -j20" />
     </Target>
