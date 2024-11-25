@@ -27,6 +27,11 @@
         <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDirectory)" />
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
 	<CallTarget Targets="DownloadAndExtractWebView"/>
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=replaceInFiles Settings=&quot;$(PathToReplaceInFilesSettings)&quot; Names=&quot;setup.h;richtextbuffer.h&quot;" />
+
     </Target>
     <!-- ========================================== -->
     <Target Name="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDownloadTargetPath))">
@@ -124,7 +129,8 @@
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildWxWidgets">
-        <CallTarget Targets="DownloadAndExtractWxWidgetsBin" />
+        <CallTarget Targets="DownloadAndExtractWxWidgets" />
+        <CallTarget Targets="BuildWxWidgets_Windows" />
         <CallTarget Targets="BuildWxWidgets_Linux" />
         <CallTarget Targets="BuildWxWidgets_MacOS" />
     </Target>
