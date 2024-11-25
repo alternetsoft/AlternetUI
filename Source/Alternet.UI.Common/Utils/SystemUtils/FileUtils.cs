@@ -55,6 +55,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Reads <see cref="string"/> from the file using the specified encoding.
+        /// </summary>
+        /// <param name="path">Path to file from which string will be loaded.</param>
+        /// <param name="encoding">Stream encoding. Optional. If not specified,
+        /// <see cref="Encoding.UTF8"/> is used.</param>
+        public static string StringFromFile(string path, Encoding? encoding = null)
+        {
+            using var stream = File.OpenRead(path);
+            var result = StreamUtils.StringFromStream(stream, encoding);
+            return result;
+        }
+
+        /// <summary>
         /// Saves string to file. If file with such name already exists,
         /// it is deleted before saving the string.
         /// </summary>
