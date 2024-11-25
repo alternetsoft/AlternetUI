@@ -1,3 +1,12 @@
+# 0.9.645 (2024 November 25)
+
+- Fixed installation on macOs Sonoma and newer versions.
+- Use WxWidgets 3.2.6.
+- Use new Edge library (microsoft.web.webview2.1.0.2903.40).
+- ControlAndButton.IsMinusButtonFirst property.
+- RichTextBox: remove xml open/save as not supported on macOs.
+- Alternet.UI.RunCmd: Added ReplaceInFiles command.
+
 # 0.9.644 (2024 November 23)
 
 - Added Net 9 support.
