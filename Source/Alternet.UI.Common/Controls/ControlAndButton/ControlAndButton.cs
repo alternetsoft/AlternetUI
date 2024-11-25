@@ -13,6 +13,15 @@ namespace Alternet.UI
     /// </summary>
     public abstract partial class ControlAndButton : HiddenBorder, INotifyDataErrorInfo
     {
+        /// <summary>
+        /// Gets or sets whether minus button is shown before plus button. Default value is True.
+        /// </summary>
+        /// <remarks>
+        /// This property affects all <see cref="ControlAndButton"/> descendants created after
+        /// it was changed.
+        /// </remarks>
+        public static bool IsMinusButtonFirst = true;
+
         private readonly ToolBar buttons;
         private readonly AbstractControl mainControl;
 
@@ -118,8 +127,26 @@ namespace Alternet.UI
 
             set
             {
-                SetHasButton(KnownButton.TextBoxPlus, ref idButtonPlus, value);
-                SetHasButton(KnownButton.TextBoxMinus, ref idButtonMinus, value);
+                if (IsMinusButtonFirst)
+                {
+                    ToggleMinusButton();
+                    TogglePlusButton();
+                }
+                else
+                {
+                    TogglePlusButton();
+                    ToggleMinusButton();
+                }
+
+                void TogglePlusButton()
+                {
+                    SetHasButton(KnownButton.TextBoxPlus, ref idButtonPlus, value);
+                }
+
+                void ToggleMinusButton()
+                {
+                    SetHasButton(KnownButton.TextBoxMinus, ref idButtonMinus, value);
+                }
             }
         }
 
