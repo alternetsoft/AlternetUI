@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:editor="http://schemas.alternetsoft.com/editor/2024"
+             x:Class="RoslynSyntaxParsing.MainPage"
+             Title="Roslyn-Based Parsing">
+    <Grid RowDefinitions="auto,auto,*" ColumnDefinitions="*">
+        <Label x:Name="laDescription" Margin="10,10,10,10" Grid.Row="0"
+               Text="This demo shows how to use the dedicated parsers for C# and VB.NET languages based on .NET Compiler Platform ('Roslyn'). These parsers support automatic code completion, code outlining, smart formatting, and syntax error underlining.">
+        </Label>
+        <StackLayout Orientation="Horizontal" Grid.Row="1">
+            <Label Margin="10,10,10,10" HorizontalTextAlignment="Start" 
+                       Text="Language:"  VerticalTextAlignment="Center"/>
+            <Picker x:Name="LanguagesPicker"
+                        MinimumWidthRequest="150"
+                        ToolTipProperties.Text="Choose programming language"
+                        Margin="10,10,10,10"
+                        SelectedIndexChanged = "LanguagesPicker_SelectedIndexChanged"
+                        >
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>c#</x:String>
+                        <x:String>Visual Basic</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Button Margin="10,10,10,10" HorizontalOptions="Start"
+                        x:Name="loadButton" Text="Load" 
+                        Clicked="LoadButton_Clicked" 
+                        ToolTipProperties.Text="Load code file"/>
+            <ImageButton Margin="10,10,10,10" 
+                HorizontalOptions="Start" WidthRequest="32" HeightRequest="32"
+                         x:Name="keyboardButton" ToolTipProperties.Text="Toggle keyboard visibility"
+                         Clicked="KeyboardButton_Clicked"/>
+        </StackLayout>
+        <editor:SyntaxEditView Grid.Row="2" x:Name="syntaxEdit1"
+                               Margin="10,10,10,10"/>
+    </Grid>
+</ContentPage>
