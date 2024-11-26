@@ -189,11 +189,11 @@
 		<CallTarget Targets="ClearProjectBin"/>
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec DownloadAndExtract WxWidgets..." Importance="high" />
-		<CallTarget Targets="DownloadAndExtractWxWidgets" Condition="!Exists($(WxWidgetsDirectory))"/>
+		<CallTarget Targets="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDirectory))"/>
 
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build WxWidgets Windows..." Importance="high" />
-        	<CallTarget Targets="BuildWxWidgets_Windows" Condition="!Exists($(WxWidgetsWindowsBuildDirectory_vc_mswu))"/>
+        	<CallTarget Targets="BuildWxWidgets_Windows" Condition="!Exists($(WxWidgetsWindowsBuildDirectory_vc_x64_lib))"/>
 
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build WxWidgets Linux..." Importance="high" />

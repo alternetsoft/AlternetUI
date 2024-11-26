@@ -42,6 +42,9 @@
         <CallTarget Targets="CleanWxWidgets" />
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet build" />
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=downloadAndUnzip Url=&quot;$(WxWidgetsBinDownloadUrlWindows)&quot; Path=&quot;$(WxWidgetsDownloadDirectory)/$(WxWidgetsDownloadFileName)&quot; ExtractTo=&quot;$(WxWidgetsDownloadDirectory)&quot;" />
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
     </Target>
