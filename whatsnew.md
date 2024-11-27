@@ -1,3 +1,8 @@
+# 0.9.646 (2024 November 27)
+
+- Fixed scrollbar interior metrics and painting.
+- Updated installation to reflect referenced libraries changes.
+
 # 0.9.645 (2024 November 25)
 
 - Fixed installation on macOs Sonoma and newer versions.
