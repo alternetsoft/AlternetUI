@@ -2,6 +2,7 @@
   <Import Project="..\CommonData\TargetFrameworks.props" />
 
   <PropertyGroup>
+    <NuGetAuditMode>direct</NuGetAuditMode>
     <OutputType>WinExe</OutputType>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <ApplicationManifest>app.manifest</ApplicationManifest>

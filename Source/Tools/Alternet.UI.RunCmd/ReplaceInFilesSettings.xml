@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReplaceInFilesSettings
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Items>
+
+    <ReplaceInFilesSetting>
+      <Name>richtextbuffer.h</Name>
+      <PathToFile>$(ThisFileDirectory)/../../../External/WxWidgets/include/wx/richtext/richtextbuffer.h</PathToFile>
+      <ReplaceItems>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxRICHTEXT_HAVE_XMLDOCUMENT_OUTPUT 1</ReplaceFrom>
+          <ReplaceTo>#define wxRICHTEXT_HAVE_XMLDOCUMENT_OUTPUT 0</ReplaceTo>
+        </ReplaceInFileSetting>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxRICHTEXT_HAVE_DIRECT_OUTPUT 1</ReplaceFrom>
+          <ReplaceTo>#define wxRICHTEXT_HAVE_DIRECT_OUTPUT 0</ReplaceTo>
+        </ReplaceInFileSetting>
+      </ReplaceItems>
+    </ReplaceInFilesSetting>
+
+    <ReplaceInFilesSetting>
+      <Name>setup.h</Name>
+      <PathToFile>$(ThisFileDirectory)/../../../External/WxWidgets/include/wx/msw/setup.h</PathToFile>
+      <ReplaceItems>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxUSE_WEBVIEW_EDGE 0</ReplaceFrom>
+          <ReplaceTo>#define wxUSE_WEBVIEW_EDGE 1</ReplaceTo>
+        </ReplaceInFileSetting>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxUSE_WEBVIEW_EDGE_STATIC 0</ReplaceFrom>
+          <ReplaceTo>#define wxUSE_WEBVIEW_EDGE_STATIC 1</ReplaceTo>
+        </ReplaceInFileSetting>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxUSE_XML       1</ReplaceFrom>
+          <ReplaceTo>#define wxUSE_XML       0</ReplaceTo>
+        </ReplaceInFileSetting>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxUSE_XRC       1</ReplaceFrom>
+          <ReplaceTo>#define wxUSE_XRC       0</ReplaceTo>
+        </ReplaceInFileSetting>
+      </ReplaceItems>
+    </ReplaceInFilesSetting>
+
+    <ReplaceInFilesSetting>
+      <Name>test.setup.h</Name>
+      <PathToFile>$(ThisFileDirectory)/ReplaceInFilesTest/setup.h</PathToFile>
+      <PathToResultFile>$(ThisFileDirectoryRootDrive)/setup.result.h</PathToResultFile>
+      <ReplaceItems>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxUSE_WEBVIEW_EDGE 0</ReplaceFrom>
+          <ReplaceTo>#define wxUSE_WEBVIEW_EDGE 1</ReplaceTo>
+        </ReplaceInFileSetting>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxUSE_WEBVIEW_EDGE_STATIC 0</ReplaceFrom>
+          <ReplaceTo>#define wxUSE_WEBVIEW_EDGE_STATIC 1</ReplaceTo>
+        </ReplaceInFileSetting>
+      </ReplaceItems>
+    </ReplaceInFilesSetting>
+
+    <ReplaceInFilesSetting>
+      <Name>test.richtextbuffer.h</Name>
+      <PathToFile>$(ThisFileDirectory)/ReplaceInFilesTest/richtextbuffer.h</PathToFile>
+      <PathToResultFile>$(ThisFileDirectoryRootDrive)/richtextbuffer.result.h</PathToResultFile>
+      <ReplaceItems>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxRICHTEXT_HAVE_XMLDOCUMENT_OUTPUT 1</ReplaceFrom>
+          <ReplaceTo>#define wxRICHTEXT_HAVE_XMLDOCUMENT_OUTPUT 0</ReplaceTo>
+        </ReplaceInFileSetting>
+        <ReplaceInFileSetting>
+          <ReplaceFrom>#define wxRICHTEXT_HAVE_DIRECT_OUTPUT 1</ReplaceFrom>
+          <ReplaceTo>#define wxRICHTEXT_HAVE_DIRECT_OUTPUT 0</ReplaceTo>
+        </ReplaceInFileSetting>
+      </ReplaceItems>
+    </ReplaceInFilesSetting>
+
+  </Items>
+
+</ReplaceInFilesSettings>

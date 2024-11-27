@@ -7,6 +7,7 @@
 <!-- ================================================= -->
 
   <PropertyGroup>
+    <NuGetAuditMode>direct</NuGetAuditMode>
     <NoWarn>CS8032</NoWarn>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <LangVersion>12.0</LangVersion>
@@ -23,19 +24,6 @@
     <PackageIcon>icon.png</PackageIcon>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>    
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="9.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Memory" Version="4.6.0" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="System.IO.Packaging" Version="9.0.0" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="Package\readme.md" Pack="true" PackagePath="" />

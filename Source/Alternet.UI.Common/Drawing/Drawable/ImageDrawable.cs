@@ -16,7 +16,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets svg image to draw.
         /// </summary>
-        public SvgImageInfo? SvgImage;
+        public SvgImageInfo SvgImage;
 
         /// <summary>
         /// Gets or sets image to draw.
@@ -59,9 +59,18 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image? GetImage()
         {
-            var image = SvgImage?.AsImage;
+            var image = SvgImage.AsImage;
             image ??= Image ?? ImageSet?.AsImage(ImageSet.DefaultSize);
             return image;
+        }
+
+        /// <summary>
+        /// Sets svg size. Implemented for the convenience.
+        /// </summary>
+        /// <param name="size">New svg image width and height.</param>
+        public void SetSvgSize(int size)
+        {
+            SvgImage.SvgSize = size;
         }
 
         /// <summary>

@@ -1,0 +1,1 @@
+dotnet build -f net9.0-maccatalyst

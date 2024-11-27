@@ -54,14 +54,5 @@ namespace Alternet.Drawing
                 return SvgImage?.ImageWithColor(SvgSize, SvgColor);
             }
         }
-
-        /// <summary>
-        /// Sets <see cref="SvgSize"/> property value/. Implemented for the convenience.
-        /// </summary>
-        /// <param name="size">New svg image width and height.</param>
-        public void SetSvgSize(int size)
-        {
-            SvgSize = size;
-        }
     }
 }

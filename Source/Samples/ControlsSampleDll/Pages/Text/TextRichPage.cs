@@ -30,13 +30,13 @@ namespace ControlsSample
         [IsTextLocalized(true)]
         public static string XmlFilesFilter = "XML Files (*.xml)|*.xml";
 
-        public static string SaveFileDialogFilter = $"{TextFilesFilter}|{HtmlFilesFilter}|{XmlFilesFilter}";
+        public static string SaveFileDialogFilter = $"{TextFilesFilter}|{HtmlFilesFilter}";
 
         [IsTextLocalized(true)]
         public static string AllFilesFilter = "All Files (*.*)|*.*";
 
         [IsTextLocalized(true)]
-        public static string SupportedFilesFilter = "Supported Files (*.txt; *.xml)|*.txt;*.xml;";
+        public static string SupportedFilesFilter = "Supported Files (*.txt)|*.txt";
 
         public static string OpenFileDialogFilter =
             $"{SupportedFilesFilter}|{AllFilesFilter}";
@@ -429,8 +429,8 @@ namespace ControlsSample
             var ext = Path.GetExtension(filename).ToLower();
             if (ext == ".txt")
                 return RichTextFileType.Text;
-            if (ext == ".xml")
-                return RichTextFileType.Xml;
+            /*if (ext == ".xml")
+                return RichTextFileType.Xml;*/
             if (ext == ".html" || ext == ".htm")
                 return RichTextFileType.Html;
             return RichTextFileType.Any;

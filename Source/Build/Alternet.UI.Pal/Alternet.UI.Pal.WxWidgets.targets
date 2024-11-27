@@ -27,10 +27,22 @@
         <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDirectory)" />
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
 	<CallTarget Targets="DownloadAndExtractWebView"/>
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet build" />
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=replaceInFiles Settings=&quot;$(PathToReplaceInFilesSettings)&quot; Names=&quot;setup.h;richtextbuffer.h&quot;" />
+
     </Target>
     <!-- ========================================== -->
     <Target Name="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDownloadTargetPath))">
         <CallTarget Targets="CleanWxWidgets" />
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet build" />
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=downloadAndUnzip Url=&quot;$(WxWidgetsBinDownloadUrlWindows)&quot; Path=&quot;$(WxWidgetsDownloadDirectory)/$(WxWidgetsDownloadFileName)&quot; ExtractTo=&quot;$(WxWidgetsDownloadDirectory)&quot;" />
@@ -79,13 +91,21 @@
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" 
 			Command="mkdir $(WxWidgetsGtkBuildDirectoryName)" 
 			Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>
+
+        <PropertyGroup>
+            <ConfigureCommand>../configure</ConfigureCommand>
+            <DebugFlag>--enable-debug</DebugFlag>
+    
+            <ConfigureCommandParameters>--enable-webview --enable-webviewwebkit --disable-shared --without-libtiff --without-regex --without-expat</ConfigureCommandParameters>
+        </PropertyGroup>
+
         <!-- Linux Debug -->
         <Exec 	WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" 
-				Command="../configure --enable-webview --enable-webviewwebkit --enable-debug --disable-shared" 
+				Command="$(ConfigureCommand) $(DebugFlag) $(ConfigureCommandParameters)" 
 				Condition="'$(DebugWxWidgetsBuild)' == 'true'"/>
         <!-- Linux Release -->
         <Exec 	WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" 
-				Command="../configure --enable-webview --enable-webviewwebkit --disable-shared" 
+				Command="$(ConfigureCommand) $(ConfigureCommandParameters)" 
 				Condition="'$(DebugWxWidgetsBuild)' != 'true'"/>
         <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make -j20" />
     </Target>
@@ -102,7 +122,7 @@
             <DebugFlag>--enable-debug</DebugFlag>
     
             <!-- without-expat On macOS High Sierra (10.13.6, the minimum supported version), libtiff, expat, pcre fail to build. So have to exclude them. -->
-            <ConfigureCommandParameters>--disable-shared --enable-webview --enable-webviewwebkit --disable-sys-libs --with-macosx-version-min=10.15 --without-libtiff --without-regex</ConfigureCommandParameters>
+            <ConfigureCommandParameters>--disable-shared --enable-webview --enable-webviewwebkit --disable-sys-libs --with-macosx-version-min=10.15 --without-libtiff --without-regex --without-expat</ConfigureCommandParameters>
         </PropertyGroup>
 
         <!-- MacOS Debug -->
@@ -124,7 +144,8 @@
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildWxWidgets">
-        <CallTarget Targets="DownloadAndExtractWxWidgetsBin" />
+        <CallTarget Targets="DownloadAndExtractWxWidgets" />
+        <CallTarget Targets="BuildWxWidgets_Windows" />
         <CallTarget Targets="BuildWxWidgets_Linux" />
         <CallTarget Targets="BuildWxWidgets_MacOS" />
     </Target>

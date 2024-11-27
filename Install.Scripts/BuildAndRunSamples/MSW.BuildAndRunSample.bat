@@ -12,8 +12,8 @@ ECHO platform: %platform%
 
 pushd %sampleHome%
 pushd %sampleName%
-dotnet build /p:Platform=%platform% --property WarningLevel=0
-start /b dotnet run /p:Platform=%platform% --property WarningLevel=0 --framework net8.0
+dotnet build -tl:off /p:Platform=%platform% --property WarningLevel=0
+start /b dotnet run -tl:off /p:Platform=%platform% --property WarningLevel=0 --framework net8.0
 popd
 popd
 

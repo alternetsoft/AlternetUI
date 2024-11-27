@@ -78,19 +78,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Reads <see cref="string"/> from <see cref="Stream"/> using <see cref="Encoding.UTF8"/>
-        /// encoding.
+        /// Reads <see cref="string"/> from <see cref="Stream"/> using the specified encoding.
         /// </summary>
         /// <param name="stream">Stream with data.</param>
-        public static string StringFromStream(Stream stream)
+        /// <param name="encoding">Stream encoding. Optional. If not specified,
+        /// <see cref="Encoding.UTF8"/> is used.</param>
+        public static string StringFromStream(Stream stream, Encoding? encoding = null)
         {
-            var reader = new StreamReader(stream, Encoding.UTF8);
+            var reader = new StreamReader(stream, encoding ?? Encoding.UTF8);
             return reader.ReadToEnd();
         }
 
         /// <summary>
-        /// Writes <see cref="string"/> to <see cref="Stream"/> using <see cref="Encoding.UTF8"/>
-        /// encoding.
+        /// Writes <see cref="string"/> to <see cref="Stream"/> using the specified encoding.
         /// </summary>
         /// <param name="stream">Stream with data.</param>
         /// <param name="s">String with data.</param>

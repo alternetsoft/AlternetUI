@@ -21,10 +21,10 @@ namespace Alternet.UI
         /// </summary>
         Text = 1,
 
-        /// <summary>
+        /*/// <summary>
         /// Xml file type.
         /// </summary>
-        Xml = 2,
+        Xml = 2,*/
 
         /// <summary>
         /// Html file type.

@@ -361,7 +361,8 @@ namespace Alternet.Drawing
             var startArrow = GetVisibleStartArrow(startArrowState);
             var endArrow = GetVisibleEndArrow(endArrowState);
 
-            var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor);
+            var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor) - 6;
+            arrowSize = SizeD.Max(9, arrowSize);
 
             var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
             arrowMargin *= 2;
@@ -391,7 +392,7 @@ namespace Alternet.Drawing
             if (startArrow is not null)
             {
                 startArrow.Bounds = rectangles[HitTestResult.StartButton];
-                startArrow.SvgImage?.SetSvgSize(realArrowSizeI);
+                startArrow.SetSvgSize(realArrowSizeI);
                 startArrow.Draw(control, dc);
             }
 
@@ -404,7 +405,7 @@ namespace Alternet.Drawing
             if (endArrow is not null)
             {
                 endArrow.Bounds = rectangles[HitTestResult.EndButton];
-                endArrow.SvgImage?.SetSvgSize(realArrowSizeI);
+                endArrow.SetSvgSize(realArrowSizeI);
                 endArrow.Draw(control, dc);
             }
         }

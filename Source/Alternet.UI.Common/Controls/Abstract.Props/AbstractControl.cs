@@ -777,6 +777,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (!VisibleOnScreen)
+                    return false;
                 var pt = Mouse.GetPosition(this);
                 var result = ClientRectangle.Contains(pt);
                 return result;
