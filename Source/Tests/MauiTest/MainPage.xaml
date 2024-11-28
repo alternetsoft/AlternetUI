@@ -22,19 +22,21 @@
 
         <HorizontalStackLayout x:Name="buttonPanel"
                            Grid.Row="2">
-            <Entry Text="" x:Name="entryToFocus"></Entry>
+            <Entry Text="" x:Name="entryToFocus" Margin="10,10"/>
             <Button
-                Margin="0,20"
+                Margin="10,10"
                 FontSize="12"
                 Text="1"
                 x:Name="button1"
                 HorizontalOptions="Center" />
             <Button
-                Margin="0,20"
+                Margin="10,10"
                 FontSize="12"
                 Text="2"
                 x:Name="button2"
                 HorizontalOptions="Center" />
+            <alternet:ColorPickerView x:Name="colorPicker" 
+                Margin="10,10"/>
         </HorizontalStackLayout>
 
 

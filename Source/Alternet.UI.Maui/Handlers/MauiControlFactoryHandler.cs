@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
+    internal partial class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
