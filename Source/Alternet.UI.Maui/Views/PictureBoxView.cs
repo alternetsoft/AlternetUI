@@ -18,7 +18,10 @@ namespace Alternet.UI
     /// <summary>
     /// Implements picture box view on the MAUI platform using <see cref="PictureBox"/> control.
     /// </summary>
-    [Experimental("MAUI0001")]
+    /// <remarks>
+    /// This controls is implemented for testing purposes. It is better to use native MAUI control
+    /// instead of <see cref="PictureBoxView"/>.
+    /// </remarks>
     public partial class PictureBoxView : ControlView<PictureBox>
     {
         /// <summary>

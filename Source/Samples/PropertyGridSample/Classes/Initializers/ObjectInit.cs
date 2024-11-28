@@ -43,7 +43,7 @@ namespace PropertyGridSample
 
         private static int newItemIndex = 0;
 
-        static void SetBackgrounds(AbstractControl control)
+        public static void SetBackgrounds(AbstractControl control)
         {
             control.Backgrounds = new()
             {
