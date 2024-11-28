@@ -88,17 +88,19 @@ namespace Alternet.UI
         {
             cats ??= [KnownColorCategory.Standard, KnownColorCategory.Web];
 
-            var knownColors =
-                Color.GetKnownColors(cats);
-            var colors = new List<Color>();
-            colors.AddRange(knownColors);
+            var knownColors = Color.GetKnownColors(cats);
 
-            if (defaultValue is not null && !colors.Exists(x => x == defaultValue))
-                colors.Add(defaultValue);
-
-            foreach (var item in colors)
+            foreach (var item in knownColors)
             {
-                ListControlItem controlItem = new(item.NameLocalized, item);
+                AddColor(item);
+            }
+
+            if (defaultValue is not null && !knownColors.Contains(defaultValue))
+                AddColor(defaultValue);
+
+            void AddColor(Color c)
+            {
+                ListControlItem controlItem = new(c.NameLocalized, c);
                 control.Add(controlItem);
             }
 
