@@ -66,6 +66,12 @@ public partial class MainPage : ContentPage
         skiaContainer.HandlerChanged += SkiaContainer_HandlerChanged;
 
         Alternet.UI.AbstractControl.FocusedControlChanged += Control_FocusedControlChanged;
+
+        colorPicker.SelectedColor = Alternet.Drawing.Color.LightBlue;
+        colorPicker.SelectedIndexChanged += (s, e) =>
+        {
+            Log($"Color changed: {colorPicker.SelectedColor?.NameLocalized}, {colorPicker.SelectedColor}");
+        };
     }
 
     private void Control_FocusedControlChanged(object? sender, EventArgs e)

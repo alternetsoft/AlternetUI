@@ -507,7 +507,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return state.HasFlag(StateFlags.NameValid | StateFlags.KnownColorValid);
+                return state.HasFlag(StateFlags.NameValid) || state.HasFlag(StateFlags.KnownColorValid);
             }
         }
 
@@ -1749,6 +1749,8 @@ namespace Alternet.Drawing
         /// </remarks>
         public override string? ToString()
         {
+            RequireArgb();
+
             if (ColorToString is not null)
             {
                 var e = new ValueConvertEventArgs<Color?, string?>(this);
