@@ -18,7 +18,6 @@ namespace Alternet.UI
     /// <summary>
     /// Implements border view on the MAUI platform using <see cref="Border"/> control.
     /// </summary>
-    [Experimental("MAUI0001")]
     public partial class BorderView : ControlView<Border>
     {
         /// <summary>
