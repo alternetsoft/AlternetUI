@@ -442,6 +442,20 @@ namespace Alternet.UI
             }
         }
 
+        public virtual bool VisibleOnScreen
+        {
+            get
+            {
+                if (!Control.Visible)
+                    return false;
+                var parent = Control.Parent;
+                if (parent is null)
+                    return false;
+                var result = parent.VisibleOnScreen;
+                return result;
+            }
+        }
+
         public object GetNativeControl() => NativeControl;
 
         public override void OnLayoutChanged()

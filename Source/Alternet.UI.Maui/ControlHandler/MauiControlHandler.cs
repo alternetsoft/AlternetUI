@@ -171,6 +171,8 @@ namespace Alternet.UI
             }
         }
 
+        public virtual bool VisibleOnScreen => Container?.IsVisible ?? false;
+
         public virtual void BeginInit()
         {
         }

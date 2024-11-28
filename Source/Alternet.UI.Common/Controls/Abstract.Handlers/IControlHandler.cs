@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial interface IControlHandler : IDisposableObject
     {
         /// <summary>
+        /// Gets whether control is visible on screen.
+        /// </summary>
+        bool VisibleOnScreen { get; }
+
+        /// <summary>
         /// Gets old dpi. Available only in the <see cref="AbstractControl.DpiChanged"/> event handler.
         /// </summary>
         SizeI EventOldDpi { get; }

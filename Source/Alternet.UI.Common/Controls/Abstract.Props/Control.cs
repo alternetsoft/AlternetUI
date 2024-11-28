@@ -50,6 +50,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool VisibleOnScreen
+        {
+            get
+            {
+                return Handler.VisibleOnScreen;
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool TabStop
         {
             get
