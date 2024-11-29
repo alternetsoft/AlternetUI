@@ -76,11 +76,9 @@ namespace Alternet.UI
         {
             void LogException(string title, object e)
             {
-                Console.WriteLine(title);
-                Console.WriteLine(e.ToString());
                 Debug.WriteLine(title);
-                Debug.WriteLine(e.ToString());
-                LogUtils.LogToFile(e.ToString());
+                var s = e.ToString();
+                Debug.WriteLine(s);
             }
 
             AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
