@@ -8,6 +8,10 @@ using Alternet.Drawing;
 using Alternet.Drawing.Printing;
 using Alternet.UI.Extensions;
 
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Dispatching;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -47,7 +51,27 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual bool InvokeRequired
         {
-            get => false;
+            get
+            {
+                var isMainThread = MainThread.IsMainThread;
+                return !isMainThread;
+            }
+        }
+
+        /// <summary>
+        /// Gets main page from the first window of the application.
+        /// </summary>
+        /// <returns></returns>
+        public static Page? GetMainPageFromApplication()
+        {
+            var app = Application.Current;
+            if (app is null)
+                return null;
+            var windows = app.Windows;
+            if (windows.Count == 0)
+                return null;
+            var result = windows[0].Page;
+            return result;
         }
 
         /// <summary>
@@ -58,16 +82,14 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Microsoft.Maui.Controls.Page? GetParentPage(AbstractControl? control)
         {
-            var mainPage = Microsoft.Maui.Controls.Application.Current?.MainPage;
-
             if (control is null)
-                return mainPage;
+                return GetMainPageFromApplication();
             else
             {
                 var container = ControlView.GetContainer(control);
                 var window = container?.Window;
                 var page = window?.Page;
-                return page ?? mainPage;
+                return page ?? GetMainPageFromApplication();
             }
         }
 
@@ -187,7 +209,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void BeginInvoke(Action action)
         {
-            throw new NotImplementedException();
+            var isMainThread = MainThread.IsMainThread;
+            if (isMainThread)
+                action();
+            else
+                MainThread.BeginInvokeOnMainThread(action);
         }
 
         /// <inheritdoc/>
