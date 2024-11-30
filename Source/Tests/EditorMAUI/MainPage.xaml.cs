@@ -89,12 +89,23 @@ public partial class MainPage : ContentPage
         extraControls.IsVisible = false;
 
         setHeight.Clicked += SetHeight_Clicked;
+
+        if(Alternet.UI.App.IsMacOS)
+        {
+            editor.Editor.Font = editor.Editor.RealFont.IncSize(2);    
+        }
+
+        editor.Editor.SizeChanged+=(s,e)=>
+        {
+        };
     }
 
     private void SetHeight_Clicked(object? sender, EventArgs e)
     {
         if (Window is not null)
+        {
             Window.Height = (Window.Width / 3) * 2;
+        }
     }
 
     private void Editor_LongTap(object? sender, Alternet.UI.LongTapEventArgs e)
