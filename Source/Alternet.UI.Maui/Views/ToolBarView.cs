@@ -18,7 +18,10 @@ namespace Alternet.UI
     /// <summary>
     /// Implements tool bar view on the MAUI platform using <see cref="ToolBar"/> control.
     /// </summary>
-    [Experimental("MAUI0001")]
+    /// <remarks>
+    /// This controls is implemented for testing purposes. It is better to use native MAUI control
+    /// instead of <see cref="ToolBarView"/>.
+    /// </remarks>
     public partial class ToolBarView : ControlView<ToolBar>
     {
         /// <summary>

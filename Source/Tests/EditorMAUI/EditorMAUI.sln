@@ -116,8 +116,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax.Parsers.Tex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax.Parsers.Xaml", "..\..\..\..\AlternetStudio\Source\Parsers\Xaml\Alternet.Syntax.Parsers.Xaml.csproj", "{AC82E71E-7D62-4109-B872-781D05B5593C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoslynSyntaxParsing", "..\..\..\..\AlternetStudio\Demo\Editor.MAUI\QuickStarts\Parsers\RoslynSyntaxParsing\RoslynSyntaxParsing.csproj", "{1B1933CB-8858-4CD8-AF16-CD1BD3CDB292}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDocDll", "..\..\Samples\ApiDocDll\ApiDocDll.csproj", "{C830191C-31E9-45DD-9922-84FC6A1ED941}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DebuggerOld", "DebuggerOld", "{1999A30D-FEE6-4EF4-9A0E-CFCA97A3DADE}"

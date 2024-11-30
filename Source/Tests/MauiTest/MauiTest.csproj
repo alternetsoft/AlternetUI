@@ -71,5 +71,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
+    <ProjectReference Include="..\..\Samples\ControlsSampleDll\ControlsSampleDll.csproj" />
   </ItemGroup>
 </Project>

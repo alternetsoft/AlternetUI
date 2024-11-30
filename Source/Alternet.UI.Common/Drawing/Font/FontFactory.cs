@@ -227,6 +227,9 @@ namespace Alternet.Drawing
             {
                 return new string[]
                 {
+                "Monaco",
+                "Menlo",
+                "Andale Mono",
                 "Courier New",
                 };
             }

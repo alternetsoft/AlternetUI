@@ -18,7 +18,10 @@ namespace Alternet.UI
     /// <summary>
     /// Implements label view on the MAUI platform using <see cref="GenericLabel"/> control.
     /// </summary>
-    [Experimental("MAUI0001")]
+    /// <remarks>
+    /// This controls is implemented for testing purposes. It is better to use native MAUI control
+    /// instead of <see cref="LabelView"/>.
+    /// </remarks>
     public partial class LabelView : ControlView<GenericLabel>
     {
         /// <summary>

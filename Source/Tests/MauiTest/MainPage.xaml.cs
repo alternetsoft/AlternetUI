@@ -72,6 +72,15 @@ public partial class MainPage : ContentPage
         {
             Log($"Color changed: {colorPicker.SelectedColor?.NameLocalized}, {colorPicker.SelectedColor}");
         };
+
+        labelView.Control.Text = "Hello";
+        PropertyGridSample.ObjectInit.SetBackgrounds(labelView.Control);
+
+        pictureBoxView.Control.Image = Alternet.UI.KnownSvgImages.ImgFileSave.AsImage(64);
+        pictureBoxView.UseUnscaledDrawImage = true;
+        pictureBoxView.Control.ImageStretch = false;
+        pictureBoxView.Control.HasBorder = true;
+        PropertyGridSample.ObjectInit.SetBackgrounds(pictureBoxView.Control);
     }
 
     private void Control_FocusedControlChanged(object? sender, EventArgs e)

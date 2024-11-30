@@ -13,6 +13,14 @@ namespace Alternet.UI
 
         public Action<CancelEventArgs>? Closing { get; set; }
 
+        public override bool VisibleOnScreen
+        {
+            get
+            {
+                return Visible;
+            }
+        }
+
         public bool ShowInTaskbar
         {
             get => NativeControl.ShowInTaskbar;

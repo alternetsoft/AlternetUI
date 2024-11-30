@@ -111,7 +111,8 @@ namespace Alternet.UI
 
         RectD IControlHandler.EventBounds { get; }
 
-        bool IControlHandler.Visible { get; set; }
+        /// <inheritdoc/>
+        public bool Visible { get; set; }
 
         bool IControlHandler.UserPaint
         {
@@ -187,6 +188,9 @@ namespace Alternet.UI
         bool IControlHandler.TabStop => tabStop;
 
         bool IControlHandler.CanSelect => canSelect;
+
+        /// <inheritdoc/>
+        public virtual bool VisibleOnScreen => Visible;
 
         void IControlHandler.BeginInit()
         {

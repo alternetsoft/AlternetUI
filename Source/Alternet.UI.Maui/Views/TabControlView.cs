@@ -16,18 +16,18 @@ using Microsoft.Maui.Dispatching;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements border view on the MAUI platform using <see cref="Border"/> control.
+    /// Implements tab control view on the MAUI platform using <see cref="TabControl"/> control.
     /// </summary>
     /// <remarks>
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
-    /// instead of <see cref="BorderView"/>.
+    /// instead of <see cref="TabControlView"/>.
     /// </remarks>
-    public partial class BorderView : ControlView<Border>
+    public partial class TabControlView : ControlView<TabControl>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BorderView"/> class.
+        /// Initializes a new instance of the <see cref="TabControlView"/> class.
         /// </summary>
-        public BorderView()
+        public TabControlView()
         {
         }
     }

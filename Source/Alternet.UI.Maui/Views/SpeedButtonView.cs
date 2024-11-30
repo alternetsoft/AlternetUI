@@ -18,7 +18,10 @@ namespace Alternet.UI
     /// <summary>
     /// Implements speed button view on the MAUI platform using <see cref="SpeedButton"/> control.
     /// </summary>
-    [Experimental("MAUI0001")]
+    /// <remarks>
+    /// This controls is implemented for testing purposes. It is better to use native MAUI control
+    /// instead of <see cref="SpeedButtonView"/>.
+    /// </remarks>
     public partial class SpeedButtonView : ControlView<SpeedButton>
     {
         /// <summary>
