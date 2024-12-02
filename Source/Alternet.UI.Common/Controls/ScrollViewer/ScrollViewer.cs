@@ -56,12 +56,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateScrollViewerHandler(this);
-        }
-
-        /// <inheritdoc/>
         protected override void OnScroll(ScrollEventArgs e)
         {
             base.OnScroll(e);
