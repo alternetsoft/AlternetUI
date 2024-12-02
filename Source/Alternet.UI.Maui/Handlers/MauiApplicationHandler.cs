@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="IApplicationHandler"/> for the MAUI platform.
     /// </summary>
-    public class MauiApplicationHandler : DisposableObject, IApplicationHandler
+    public partial class MauiApplicationHandler : DisposableObject, IApplicationHandler
     {
         static MauiApplicationHandler()
         {
