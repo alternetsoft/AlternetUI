@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:alternet="http://schemas.alternetsoft.com/alternetui/2024"
-             x:Class="AllQuickStarts.SpeedButtonTestPage"
-             Title="SpeedButtonTestPage">
+             x:Class="AllQuickStarts.ColorPickerTestPage"
+             Title="ColorPickerTestPage">
         <StackLayout Orientation="Horizontal" MaximumHeightRequest="350">
-            <alternet:SpeedButtonView x:Name="speedButtonView"
+            <alternet:ColorPickerView x:Name="colorPickerView"
                         MinimumWidthRequest="150"
                         Margin="10,10,10,10"
                         />
