@@ -10,7 +10,7 @@ public partial class LabelTestPage : ContentPage
 
     public LabelTestPage()
     {
-        DemoTitleView titleView = new DemoTitleView("LabelView");
+        DemoTitleView titleView = new("LabelView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();

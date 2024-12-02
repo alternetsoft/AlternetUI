@@ -10,7 +10,7 @@ public partial class ColorPickerTestPage : ContentPage
 
     public ColorPickerTestPage()
     {
-        DemoTitleView titleView = new DemoTitleView("ColorPickerView");
+        DemoTitleView titleView = new("ColorPickerView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();

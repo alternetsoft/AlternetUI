@@ -10,7 +10,7 @@ public partial class SpeedButtonTestPage : ContentPage
 
     public SpeedButtonTestPage()
     {
-        DemoTitleView titleView = new DemoTitleView("SpeedButtonView");
+        DemoTitleView titleView = new("SpeedButtonView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();

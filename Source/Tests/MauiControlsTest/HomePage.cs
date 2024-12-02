@@ -2,9 +2,9 @@ using AllQuickStarts.Pages;
 
 namespace AllQuickStarts;
 
-public class HomePage : ContentPage
+public partial class HomePage : ContentPage
 {
-    WaitPage waitPage = new();
+    private readonly WaitPage waitPage = new();
 
     public HomePage()
     {
