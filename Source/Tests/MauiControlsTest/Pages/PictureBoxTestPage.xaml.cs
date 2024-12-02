@@ -2,18 +2,20 @@ using AllQuickStarts.Pages;
 
 namespace AllQuickStarts;
 
-public partial class SpeedButtonTestPage : ContentPage
+public partial class PictureBoxTestPage : ContentPage
 {
-    static SpeedButtonTestPage()
+    static PictureBoxTestPage()
     {
     }
 
-    public SpeedButtonTestPage()
+    public PictureBoxTestPage()
     {
-        DemoTitleView titleView = new("SpeedButtonView");
+        DemoTitleView titleView = new DemoTitleView("PictureBoxView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();
+
+        PropertyGridSample.ObjectInit.SetBackgrounds(pictureBoxView.Control);
 
         if (!Alternet.UI.App.IsDesktopDevice)
         {

@@ -197,12 +197,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateScrollViewerHandler(ScrollViewer control)
-        {
-            return new ScrollViewerHandler();
-        }
-
-        /// <inheritdoc/>
         public IControlHandler CreateVListBoxHandler(VirtualListBox control)
         {
             return new VListBoxHandler();

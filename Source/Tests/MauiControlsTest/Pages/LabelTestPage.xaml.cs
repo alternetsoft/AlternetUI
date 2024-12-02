@@ -2,18 +2,21 @@ using AllQuickStarts.Pages;
 
 namespace AllQuickStarts;
 
-public partial class SpeedButtonTestPage : ContentPage
+public partial class LabelTestPage : ContentPage
 {
-    static SpeedButtonTestPage()
+    static LabelTestPage()
     {
     }
 
-    public SpeedButtonTestPage()
+    public LabelTestPage()
     {
-        DemoTitleView titleView = new("SpeedButtonView");
+        DemoTitleView titleView = new("LabelView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();
+
+        labelView.Control.Text = "Hello";
+        PropertyGridSample.ObjectInit.SetBackgrounds(labelView.Control);
 
         if (!Alternet.UI.App.IsDesktopDevice)
         {

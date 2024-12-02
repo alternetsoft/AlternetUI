@@ -2,15 +2,15 @@ using AllQuickStarts.Pages;
 
 namespace AllQuickStarts;
 
-public partial class SpeedButtonTestPage : ContentPage
+public partial class TabControlTestPage : ContentPage
 {
-    static SpeedButtonTestPage()
+    static TabControlTestPage()
     {
     }
 
-    public SpeedButtonTestPage()
+    public TabControlTestPage()
     {
-        DemoTitleView titleView = new("SpeedButtonView");
+        DemoTitleView titleView = new DemoTitleView("TabControlView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();

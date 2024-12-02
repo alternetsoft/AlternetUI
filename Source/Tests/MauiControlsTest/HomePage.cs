@@ -2,9 +2,9 @@ using AllQuickStarts.Pages;
 
 namespace AllQuickStarts;
 
-public class HomePage : ContentPage
+public partial class HomePage : ContentPage
 {
-    WaitPage waitPage = new();
+    private readonly WaitPage waitPage = new();
 
     public HomePage()
     {
@@ -21,7 +21,13 @@ public class HomePage : ContentPage
             }
         };
 
+        AddPage("LabelView", typeof(LabelTestPage));
+        AddPage("ColorPickerView", typeof(ColorPickerTestPage));
+        AddPage("BorderView", typeof(BorderTestPage));
+        AddPage("PictureBoxView", typeof(PictureBoxTestPage));
         AddPage("SpeedButtonView", typeof(SpeedButtonTestPage));
+        AddPage("ToolBarView", typeof(ToolBarTestPage));
+        AddPage("TabControlView", typeof(TabControlTestPage));
         (Content as IView).InvalidateArrange();
     }
 

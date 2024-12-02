@@ -163,13 +163,6 @@ namespace Alternet.UI
         IControlHandler CreateWindowHandler(Window window);
 
         /// <summary>
-        /// Creates <see cref="IScrollViewerHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateScrollViewerHandler(ScrollViewer control);
-
-        /// <summary>
         /// Creates <see cref="ITreeViewHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

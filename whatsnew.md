@@ -1,3 +1,11 @@
+# 0.9.647 (2024 December 2)
+
+- Colors are loaded faster to the color editors.
+- Color: Fixed ToString and IsNamedColor.
+- Maui: Add ColorPickerView.
+- Maui: Fixed ControlView behavior on macOs.
+- Changed default mono fonts for macos.
+
 # 0.9.646 (2024 November 27)
 
 - Fixed scrollbar interior metrics and painting.

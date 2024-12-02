@@ -2,15 +2,15 @@ using AllQuickStarts.Pages;
 
 namespace AllQuickStarts;
 
-public partial class SpeedButtonTestPage : ContentPage
+public partial class ColorPickerTestPage : ContentPage
 {
-    static SpeedButtonTestPage()
+    static ColorPickerTestPage()
     {
     }
 
-    public SpeedButtonTestPage()
+    public ColorPickerTestPage()
     {
-        DemoTitleView titleView = new("SpeedButtonView");
+        DemoTitleView titleView = new("ColorPickerView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();

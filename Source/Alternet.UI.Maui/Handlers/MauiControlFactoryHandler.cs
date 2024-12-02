@@ -133,11 +133,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IControlHandler IControlFactoryHandler.CreateScrollViewerHandler(ScrollViewer control)
-        {
-            throw new NotImplementedException();
-        }
-
         IControlHandler IControlFactoryHandler.CreateSliderHandler(Slider control)
         {
             throw new NotImplementedException();
