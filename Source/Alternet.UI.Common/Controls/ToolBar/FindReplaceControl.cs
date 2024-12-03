@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -173,7 +174,9 @@ namespace Alternet.UI
                 IdFindNext = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonFindNext,
                     KnownSvgImages.ImgArrowDown);
-                FindToolBar.SetToolShortcut(IdFindNext, KnownShortcuts.FindReplaceControlKeys.FindNext);
+                FindToolBar.SetToolShortcut(
+                    IdFindNext,
+                    KnownShortcuts.FindReplaceControlKeys.FindNext);
 
                 IdFindPrevious = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonFindPrevious,
@@ -196,7 +199,9 @@ namespace Alternet.UI
                 IdReplace = ReplaceToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonReplace,
                     KnownSvgImages.ImgReplace);
-                ReplaceToolBar.SetToolShortcut(IdReplace, KnownShortcuts.FindReplaceControlKeys.Replace);
+                ReplaceToolBar.SetToolShortcut(
+                    IdReplace,
+                    KnownShortcuts.FindReplaceControlKeys.Replace);
 
                 IdReplaceAll = ReplaceToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonReplaceAll,
@@ -258,6 +263,32 @@ namespace Alternet.UI
         /// Occurs when option 'Use Regular Expressions' is changed.
         /// </summary>
         public event EventHandler? OptionUseRegularExpressionsChanged;
+
+        /// <summary>
+        /// Enumerates all known search scopes.
+        /// </summary>
+        public enum SearchScope
+        {
+            /// <summary>
+            /// Search scope is 'Current Document'.
+            /// </summary>
+            CurrentDocument,
+
+            /// <summary>
+            /// Search scope is 'All Open Documents'.
+            /// </summary>
+            AllOpenDocuments,
+
+            /// <summary>
+            /// Search scope is 'Current Project'.
+            /// </summary>
+            CurrentProject,
+
+            /// <summary>
+            /// Search scope is 'Selection Only'.
+            /// </summary>
+            SelectionOnly,
+        }
 
         /// <summary>
         /// Provides methods and properties for connection of the search/replace engine with
@@ -334,6 +365,164 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="text"></param>
             void SetReplaceText(string text);
+        }
+
+        /// <summary>
+        /// Gets search scope as <see cref="SearchScope"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SearchScope? Scope
+        {
+            get
+            {
+                if (IsScopeAllOpenDocuments)
+                    return FindReplaceControl.SearchScope.AllOpenDocuments;
+                if (IsScopeCurrentDocument)
+                    return FindReplaceControl.SearchScope.CurrentDocument;
+                if (IsScopeCurrentProject)
+                    return FindReplaceControl.SearchScope.CurrentProject;
+                if (IsScopeSelectionOnly)
+                    return FindReplaceControl.SearchScope.SelectionOnly;
+                return null;
+            }
+
+            set
+            {
+                if (Scope == value)
+                    return;
+                if (value is null)
+                {
+                    scopeEdit.SelectedItem = null;
+                    return;
+                }
+
+                switch (value)
+                {
+                    case SearchScope.CurrentDocument:
+                        IsScopeCurrentDocument = true;
+                        break;
+                    case SearchScope.AllOpenDocuments:
+                        IsScopeAllOpenDocuments = true;
+                        break;
+                    case SearchScope.CurrentProject:
+                        IsScopeCurrentProject = true;
+                        break;
+                    case SearchScope.SelectionOnly:
+                        IsScopeSelectionOnly = true;
+                        break;
+                    default:
+                        scopeEdit.SelectedItem = null;
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets whether selected scope is 'All open documents'.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsScopeAllOpenDocuments
+        {
+            get
+            {
+                return scopeEdit.SelectedItem == scopeAllOpenDocuments;
+            }
+
+            set
+            {
+                if (IsScopeAllOpenDocuments == value)
+                    return;
+                if (value)
+                {
+                    if (canFindInAllOpenDocuments)
+                        scopeEdit.SelectedItem = scopeAllOpenDocuments;
+                }
+                else
+                {
+                    scopeEdit.SelectedItem = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets whether selected scope is 'Current project'.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsScopeCurrentProject
+        {
+            get
+            {
+                return scopeEdit.SelectedItem == scopeCurrentProject;
+            }
+
+            set
+            {
+                if (IsScopeCurrentProject == value)
+                    return;
+                if (value)
+                {
+                    if (canFindInCurrentProject)
+                        scopeEdit.SelectedItem = scopeCurrentProject;
+                }
+                else
+                {
+                    scopeEdit.SelectedItem = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets whether selected scope is 'Selection only'.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsScopeSelectionOnly
+        {
+            get
+            {
+                return scopeEdit.SelectedItem == scopeSelectionOnly;
+            }
+
+            set
+            {
+                if (IsScopeSelectionOnly == value)
+                    return;
+                if (value)
+                {
+                    if (canFindInSelectionOnly)
+                        scopeEdit.SelectedItem = scopeSelectionOnly;
+                }
+                else
+                {
+                    scopeEdit.SelectedItem = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets whether selected scope is 'Current document'.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsScopeCurrentDocument
+        {
+            get
+            {
+                return scopeEdit.SelectedItem == scopeCurrentDocument;
+            }
+
+            set
+            {
+                if (IsScopeCurrentDocument == value)
+                    return;
+                if (value)
+                {
+                    if (canFindInCurrentDocument)
+                        scopeEdit.SelectedItem = scopeCurrentDocument;
+                }
+                else
+                {
+                    scopeEdit.SelectedItem = null;
+                }
+            }
         }
 
         /// <summary>
@@ -521,6 +710,24 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public ListControlItem ScopeItemCurrentProject => scopeCurrentProject;
+
+        /// <summary>
+        /// Gets or sets 'Find Text At Cursor' option.
+        /// </summary>
+        public virtual bool OptionFindTextAtCursor
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Prompt On Replace' option.
+        /// </summary>
+        public virtual bool OptionPromptOnReplace
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets 'Hidden Text' option.
