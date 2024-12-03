@@ -1699,6 +1699,8 @@ namespace Alternet.UI
 
                 if (!Enabled)
                     result |= VisualControlStates.Disabled;
+                if (IsDummy)
+                    return result;
                 if (IsMouseLeftButtonDown)
                     result |= VisualControlStates.Pressed;
                 if (IsMouseOver)

@@ -16,6 +16,13 @@ namespace Alternet.UI
     public interface IControl : IDisposable, IWin32Window
     {
         /// <summary>
+        /// Occurs before the <see cref="AbstractControl.KeyDown" /> event when a key is pressed
+        /// while focus is on this control.
+        /// </summary>
+        [Category("Key")]
+        public event PreviewKeyDownEventHandler? PreviewKeyDown;
+
+        /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
         /// </summary>
         event ScrollEventHandler? Scroll;
