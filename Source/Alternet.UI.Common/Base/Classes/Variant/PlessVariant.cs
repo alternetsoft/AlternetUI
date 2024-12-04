@@ -6,18 +6,29 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal partial struct PlessVariant : IPlessVariantToString, IEquatable<PlessVariant>, IComparable,
+    /// <summary>
+    /// Implements variant structure which can contain data with different types.
+    /// </summary>
+    internal partial struct PlessVariant : IValueToString, IEquatable<PlessVariant>, IComparable,
         IComparable<PlessVariant>, IFormattable, IConvertible
     {
-        public const int TypeCodeCount = 19;
-
-        public static readonly IPlessVariantExtender[] Extenders = new IPlessVariantExtender[TypeCodeCount];
-
+        /// <summary>
+        /// Gets an empty variant.
+        /// </summary>
         public static readonly PlessVariant Empty = new();
+
+        /// <summary>
+        /// Gets variant as value with <see cref="TypeCode.DBNull"/> type.
+        /// </summary>
         public static readonly PlessVariant DBNull = GetDBNull();
 
         internal SimpleVariantData SimpleData;
         internal object? Data;
+
+        private const int TypeCodeCount = 19;
+
+        private static readonly IPlessVariantExtender[] Extenders
+            = new IPlessVariantExtender[TypeCodeCount];
 
         private TypeCode dataType;
 
@@ -27,113 +38,140 @@ namespace Alternet.UI
             IPlessVariantExtender extenderInt = new PlessVariantInt64();
             IPlessVariantExtender extenderUInt = new PlessVariantUInt64();
 
-            Extenders[(int)TypeCode.Empty] = extenderEmpty;
-            Extenders[(int)TypeCode.DBNull] = extenderEmpty;
-            Extenders[(int)TypeCode.Object] = new PlessVariantObject();
-            Extenders[(int)TypeCode.Boolean] = new PlessVariantBoolean();
-            Extenders[(int)TypeCode.Char] = new PlessVariantChar();
-            Extenders[(int)TypeCode.Single] = new PlessVariantSingle();
-            Extenders[(int)TypeCode.Double] = new PlessVariantDouble();
-            Extenders[(int)TypeCode.Decimal] = new PlessVariantDecimal();
-            Extenders[(int)TypeCode.DateTime] = new PlessVariantDateTime();
-            Extenders[(int)TypeCode.String] = new PlessVariantString();
+            SetVariantExtender(TypeCode.Empty, extenderEmpty);
+            SetVariantExtender(TypeCode.DBNull, extenderEmpty);
+            SetVariantExtender(TypeCode.Object, new PlessVariantObject());
+            SetVariantExtender(TypeCode.Boolean, new PlessVariantBoolean());
+            SetVariantExtender(TypeCode.Char, new PlessVariantChar());
+            SetVariantExtender(TypeCode.Single, new PlessVariantSingle());
+            SetVariantExtender(TypeCode.Double, new PlessVariantDouble());
+            SetVariantExtender(TypeCode.Decimal, new PlessVariantDecimal());
+            SetVariantExtender(TypeCode.DateTime, new PlessVariantDateTime());
+            SetVariantExtender(TypeCode.String, new PlessVariantString());
 
-            Extenders[(int)TypeCode.SByte] = extenderInt;
-            Extenders[(int)TypeCode.Int16] = extenderInt;
-            Extenders[(int)TypeCode.Int32] = extenderInt;
-            Extenders[(int)TypeCode.Int64] = extenderInt;
+            SetVariantExtender(TypeCode.SByte, extenderInt);
+            SetVariantExtender(TypeCode.Int16, extenderInt);
+            SetVariantExtender(TypeCode.Int32, extenderInt);
+            SetVariantExtender(TypeCode.Int64, extenderInt);
 
-            Extenders[(int)TypeCode.UInt64] = extenderUInt;
-            Extenders[(int)TypeCode.Byte] = extenderUInt;
-            Extenders[(int)TypeCode.UInt16] = extenderUInt;
-            Extenders[(int)TypeCode.UInt32] = extenderUInt;
+            SetVariantExtender(TypeCode.UInt64, extenderUInt);
+            SetVariantExtender(TypeCode.Byte, extenderUInt);
+            SetVariantExtender(TypeCode.UInt16, extenderUInt);
+            SetVariantExtender(TypeCode.UInt32, extenderUInt);
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="string"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(string v)
         {
             Data = v;
             dataType = TypeCode.String;
-            SimpleData = SimpleVariantData.Empty;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="object"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(object v)
         {
             Data = v;
             dataType = TypeCode.Object;
-            SimpleData = SimpleVariantData.Empty;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="bool"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(bool v)
         {
-            Data = null;
             dataType = TypeCode.Boolean;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsBoolean = v;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="char"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(char v)
         {
-            Data = null;
             dataType = TypeCode.Char;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsChar = v;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="long"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(long v)
         {
-            Data = null;
             dataType = TypeCode.Int64;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsInt = v;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="ulong"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(ulong v)
         {
-            Data = null;
             dataType = TypeCode.UInt64;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsUInt = v;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="float"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(float v)
         {
-            Data = null;
             dataType = TypeCode.Single;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsSingle = v;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="double"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(double v)
         {
-            Data = null;
             dataType = TypeCode.Double;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsDouble = v;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="decimal"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(decimal v)
         {
-            Data = null;
             dataType = TypeCode.Decimal;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsDecimal = v;
         }
 
+        /// <summary>
+        /// Creates variant with the default value of the <see cref="DateTime"/> type.
+        /// </summary>
+        /// <param name="v">Default value.</param>
         public PlessVariant(DateTime v)
         {
-            Data = null;
             dataType = TypeCode.DateTime;
-            SimpleData = new SimpleVariantData();
             SimpleData.AsDateTime = v;
         }
 
+        /// <summary>
+        /// Gets whether variant has <see cref="TypeCode.Empty"/> type.
+        /// </summary>
         public bool IsEmpty
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return ValueType == TypeCode.Empty;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 ValueType = TypeCode.Empty;
@@ -141,13 +179,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether variant has <see cref="TypeCode.DBNull"/> type.
+        /// </summary>
         public bool IsDBNull
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return ValueType == TypeCode.DBNull;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 ValueType = TypeCode.DBNull;
@@ -155,8 +198,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether variant is null.
+        /// </summary>
         public bool IsNull
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 if (IsDBNull || IsEmpty)
@@ -166,6 +213,7 @@ namespace Alternet.UI
                 return false;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -175,8 +223,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="string"/>.
+        /// </summary>
         public string AsString
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 if (ValueType == TypeCode.String)
@@ -184,6 +236,7 @@ namespace Alternet.UI
                 return Extender.ToString();
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = value;
@@ -191,8 +244,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="object"/>.
+        /// </summary>
         public object? AsObject
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 if (ValueType == TypeCode.Object)
@@ -200,6 +257,7 @@ namespace Alternet.UI
                 return Extender.GetAsObject(this);
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = value;
@@ -207,13 +265,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="bool"/>.
+        /// </summary>
         public bool AsBoolean
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsBoolean;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -222,13 +285,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="char"/>.
+        /// </summary>
         public char AsChar
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsChar;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -239,11 +307,13 @@ namespace Alternet.UI
 
         public long AsInt
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsInt;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -254,11 +324,13 @@ namespace Alternet.UI
 
         public ulong AsUInt
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsUInt;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -267,13 +339,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="float"/>.
+        /// </summary>
         public float AsSingle
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsSingle;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -282,13 +359,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="double"/>.
+        /// </summary>
         public double AsDouble
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsDouble;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -297,13 +379,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="decimal"/>.
+        /// </summary>
         public decimal AsDecimal
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsDecimal;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -312,13 +399,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets value as <see cref="DateTime"/>.
+        /// </summary>
         public DateTime AsDateTime
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return SimpleData.AsDateTime;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 Data = null;
@@ -327,6 +419,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets variant extender implementation.
+        /// </summary>
         public readonly IPlessVariantExtender Extender
         {
             get => Extenders[(int)ValueType];
@@ -334,11 +429,13 @@ namespace Alternet.UI
 
         internal TypeCode ValueType
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
             {
                 return dataType;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 dataType = value;
@@ -504,6 +601,16 @@ namespace Alternet.UI
         public static int Compare(PlessVariant d1, PlessVariant d2)
         {
             return GetExtender(d1.ValueType).Compare(d1, d2);
+        }
+
+        public static IPlessVariantExtender GetVariantExtender(TypeCode typeCode)
+        {
+            return Extenders[(int)typeCode];
+        }
+
+        public static void SetVariantExtender(TypeCode typeCode, IPlessVariantExtender extender)
+        {
+            Extenders[(int)typeCode] = extender;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
