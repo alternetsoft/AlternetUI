@@ -34,6 +34,11 @@ namespace Alternet.UI
         event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinished;
 
         /// <summary>
+        /// Gets items as <see cref="IList"/>.
+        /// </summary>
+        IList AsList { get; }
+
+        /// <summary>
         /// Returns <see langword="true"/> if <see cref="AddRange"/> is being
         /// executed at the moment.
         /// </summary>
