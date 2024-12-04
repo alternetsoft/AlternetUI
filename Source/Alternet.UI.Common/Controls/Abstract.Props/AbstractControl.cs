@@ -84,6 +84,8 @@ namespace Alternet.UI
         private SizeD? dpi;
         private SizeD suggestedSize = DefaultControlSize;
 
+        private PointD layoutOffset;
+
         private Caret? caret;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
@@ -535,6 +537,26 @@ namespace Alternet.UI
                 RaiseTextChanged();
 
                 StateFlags &= ~ControlFlags.ForceTextChange;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets offset of the layout which is applied to the position of
+        /// the child controls.
+        /// This property is used only in some descendant's of the control and by default
+        /// doesn't affect the layout.
+        /// </summary>
+        [Browsable(false)]
+        public virtual PointD LayoutOffset
+        {
+            get => layoutOffset;
+
+            set
+            {
+                if (layoutOffset == value)
+                    return;
+                layoutOffset = value;
+                PerformLayout();
             }
         }
 

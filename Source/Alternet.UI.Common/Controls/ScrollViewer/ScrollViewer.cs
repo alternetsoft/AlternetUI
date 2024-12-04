@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -9,8 +11,6 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class ScrollViewer : ContainerControl
     {
-        private PointD layoutOffset;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollViewer"/> class.
         /// </summary>
@@ -27,22 +27,6 @@ namespace Alternet.UI
         public ScrollViewer()
         {
             IsScrollable = true;
-        }
-
-        /// <summary>
-        /// Gets or sets offset of the layout.
-        /// </summary>
-        public virtual PointD LayoutOffset
-        {
-            get => layoutOffset;
-
-            set
-            {
-                if (layoutOffset == value)
-                    return;
-                layoutOffset = value;
-                PerformLayout();
-            }
         }
 
         /// <inheritdoc/>
@@ -63,9 +47,9 @@ namespace Alternet.UI
             var offset = GetScrollBarInfo(e.IsVertical).Position;
 
             if (e.IsVertical)
-                LayoutOffset = new PointD(layoutOffset.X, -offset);
+                LayoutOffset = new PointD(LayoutOffset.X, -offset);
             else
-                LayoutOffset = new PointD(-offset, layoutOffset.Y);
+                LayoutOffset = new PointD(-offset, LayoutOffset.Y);
         }
 
         /// <summary>
@@ -107,8 +91,8 @@ namespace Alternet.UI
                         verticalAlignment);
 
                 control.Bounds = new RectD(
-                    horizontalPosition.Origin + layoutOffset.X,
-                    verticalPosition.Origin + layoutOffset.Y,
+                    horizontalPosition.Origin + LayoutOffset.X,
+                    verticalPosition.Origin + LayoutOffset.Y,
                     horizontalPosition.Size,
                     verticalPosition.Size);
             }
