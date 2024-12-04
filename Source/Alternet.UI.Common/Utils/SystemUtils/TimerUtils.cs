@@ -22,7 +22,7 @@ namespace Alternet.UI
         // constant value by default.
         public static int DefaultToolTipTimeout = 5000;
 
-        private static int clickRepeatInterval = 20;
+        private static int clickRepeatInterval = 50;
         private static Timer? clickRepeatTimer;
 
         /// <summary>
