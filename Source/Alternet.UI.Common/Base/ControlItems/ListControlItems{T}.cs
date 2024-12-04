@@ -24,5 +24,11 @@ namespace Alternet.UI
         {
             ThrowOnNullAdd = true;
         }
+
+        /// <inheritdoc/>
+        public IList AsList
+        {
+            get => this;
+        }
     }
 }

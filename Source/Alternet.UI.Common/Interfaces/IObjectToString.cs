@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains different ToString methods.
+    /// Contains different methods which convert object to string.
     /// </summary>
     public interface IObjectToString
     {
@@ -16,7 +16,8 @@ namespace Alternet.UI
         /// representation.
         /// </summary>
         /// <param name="value">A value for convertion.</param>
-        /// <returns>The <see cref="string"/> representation of the <paramref name="value"/>.</returns>
+        /// <returns>The <see cref="string"/> representation of the
+        /// <paramref name="value"/>.</returns>
         string? ToString(object value);
 
         /// <summary>

@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// </summary>
         public static void RegisterExceptionsLogger()
         {
-            void LogException(string title, object e)
+            static void LogException(string title, object e)
             {
                 Debug.WriteLine(LogUtils.SectionSeparator);
                 Debug.WriteLine(title);

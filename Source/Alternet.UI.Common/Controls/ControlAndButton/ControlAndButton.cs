@@ -340,13 +340,17 @@ namespace Alternet.UI
             {
                 if (id is null)
                 {
-                    id
-                        = buttons.AddSpeedBtn(btn, (s, e) =>
-                        {
-                            ControlAndButtonClickEventArgs args = new();
-                            args.ButtonId = (s as AbstractControl)?.UniqueId;
-                            RaiseButtonClick(args);
-                        });
+                    var isClickRepeat = IsBtnClickRepeated;
+                    id = buttons.AddSpeedBtn(btn, (s, e) =>
+                            {
+                                ControlAndButtonClickEventArgs args = new();
+                                args.ButtonId = (s as AbstractControl)?.UniqueId;
+                                RaiseButtonClick(args);
+                            });
+                    if (isClickRepeat)
+                    {
+                        buttons.SetToolIsClickRepeated(id.Value, true);
+                    }
                 }
                 else
                 {

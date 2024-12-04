@@ -15,6 +15,17 @@ namespace Alternet.UI
     public partial class SpeedButton : GraphicControl
     {
         /// <summary>
+        /// Gets or sets default click repeat delay used when
+        /// <see cref="SpeedButton.IsClickRepeated"/> is True.
+        /// </summary>
+        /// <remarks>
+        /// The default value of delay is 50 milliseconds. This means
+        /// the first event is initiated after 250 milliseconds (5 times the specified value).
+        /// Each subsequent event is initiated after 50 milliseconds delay.
+        /// </remarks>
+        public static int DefaultClickRepeatDelay = 50;
+
+        /// <summary>
         /// Gets or sets default image and label distance in the <see cref="SpeedButton"/>.
         /// </summary>
         public static Coord DefaultImageLabelDistance = 4;
@@ -96,6 +107,9 @@ namespace Alternet.UI
         private bool subscribedClickRepeated;
         private VisualControlState stickyVisualState = VisualControlState.Normal;
         private Color? borderColor;
+        private Timer? repeatTimer;
+        private Timer? firstClickTimer;
+        private int clickRepeatDelay = DefaultClickRepeatDelay;
 
         static SpeedButton()
         {
@@ -181,6 +195,30 @@ namespace Alternet.UI
         /// Default value is "({0})".
         /// </remarks>
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
+
+        /// <summary>
+        /// Gets or sets click repeat delay used when
+        /// <see cref="SpeedButton.IsClickRepeated"/> is True.
+        /// </summary>
+        /// <remarks>
+        /// The default value of delay is 50 milliseconds. This means
+        /// the first event is initiated after 250 milliseconds (5 times the specified value).
+        /// Each subsequent event is initiated after 50 milliseconds delay.
+        /// </remarks>
+        public virtual int ClickRepeatDelay
+        {
+            get
+            {
+                return clickRepeatDelay;
+            }
+
+            set
+            {
+                if (clickRepeatDelay == value)
+                    return;
+                clickRepeatDelay = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether mouse clicks are repeated continiously while left mouse
@@ -885,12 +923,9 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
-        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        private void OnClickRepeatTimerEvent()
         {
             if (VisualState != VisualControlState.Pressed)
-                return;
-
-            if (TimerUtils.LastClickLessThanRepeatInterval(this))
                 return;
             RaiseClick();
         }
@@ -899,7 +934,8 @@ namespace Alternet.UI
         {
             if (subscribedClickRepeated)
             {
-                TimerUtils.ClickRepeated -= OnClickRepeatTimerEvent;
+                SafeDispose(ref repeatTimer);
+                SafeDispose(ref firstClickTimer);
                 subscribedClickRepeated = false;
             }
         }
@@ -908,7 +944,21 @@ namespace Alternet.UI
         {
             if (!subscribedClickRepeated && IsClickRepeated)
             {
-                TimerUtils.ClickRepeated += OnClickRepeatTimerEvent;
+                SafeDispose(ref repeatTimer);
+                firstClickTimer ??= new();
+                firstClickTimer.Stop();
+                firstClickTimer.Interval = ClickRepeatDelay * 5;
+                firstClickTimer.AutoReset = false;
+                firstClickTimer.TickAction = () =>
+                {
+                    repeatTimer ??= new();
+                    repeatTimer.Stop();
+                    repeatTimer.Interval = ClickRepeatDelay;
+                    repeatTimer.AutoReset = true;
+                    repeatTimer.TickAction = OnClickRepeatTimerEvent;
+                    repeatTimer.Start();
+                };
+                firstClickTimer.Start();
                 subscribedClickRepeated = true;
             }
         }
