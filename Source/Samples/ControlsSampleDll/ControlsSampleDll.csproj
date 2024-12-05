@@ -129,6 +129,9 @@
     <UIXml Include="..\LayoutSample\Classes\**\*.uixml">
       <Link>Links\LayoutSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </UIXml>
+    <None Include="..\LayoutSample\Classes\**\*.uixml">
+      <Link>Links\LayoutSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

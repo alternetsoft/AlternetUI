@@ -262,7 +262,12 @@ namespace Alternet.UI
         {
         }
 
-        private int CoerceValue(int value)
+        /// <summary>
+        /// Coerces value to fit in the allowed bounds.
+        /// </summary>
+        /// <param name="value">Value to coerce.</param>
+        /// <returns></returns>
+        protected virtual int CoerceValue(int value)
         {
             if (value < Minimum)
                 return Minimum;

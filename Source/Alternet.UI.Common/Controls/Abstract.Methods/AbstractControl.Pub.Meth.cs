@@ -68,14 +68,22 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="container">Container control which childs will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
-        /// <param name="space">Rectangle in which layout is performed.</param>
+        /// <param name="getBounds">Returns rectangle in which layout is performed.</param>
         /// <param name="items">List of controls to layout.</param>
         public static void DefaultOnLayout(
             AbstractControl container,
             LayoutStyle layout,
-            RectD space,
+            Func<RectD> getBounds,
             IReadOnlyList<AbstractControl> items)
         {
+            if(layout == LayoutStyle.Scroll)
+            {
+                OldLayout.LayoutWhenScroll(container, getBounds, items, true);
+                return;
+            }
+
+            var space = getBounds();
+
             var number = LayoutWhenDocked(ref space, items);
 
             void UpdateItems()
@@ -899,6 +907,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="BeginInit"/>
+        /// and <see cref="EndInit"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        public virtual void DoInsideInit(Action action)
+        {
+            BeginInit();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndInit();
+            }
+        }
+
+        /// <summary>
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
         /// <seealso cref="GetVisibleChildOrNull"/>
@@ -1699,19 +1725,23 @@ namespace Alternet.UI
             }
 
             var layoutType = Layout ?? GetDefaultLayout();
-            var space = ChildrenLayoutBounds;
+
+            RectD GetSpace()
+            {
+                return ChildrenLayoutBounds;
+            }
+
             var items = AllChildrenInLayout;
 
             if (GlobalOnLayout is not null)
             {
-                var e = new DefaultLayoutEventArgs(this, layoutType, space, items);
+                var e = new DefaultLayoutEventArgs(this, layoutType, GetSpace(), items);
                 GlobalOnLayout(this, e);
                 if (e.Handled)
                     return;
                 else
                 {
                     layoutType = e.Layout;
-                    space = e.Bounds;
                     items = e.Children;
                 }
             }
@@ -1719,7 +1749,7 @@ namespace Alternet.UI
             DefaultOnLayout(
                 this,
                 layoutType,
-                space,
+                GetSpace,
                 items);
         }
 
@@ -2245,6 +2275,14 @@ namespace Alternet.UI
             var rectangle = ClientRectangle;
             rectangle.Inflate(threshold, threshold);
             return rectangle.Contains(Mouse.GetPosition(this));
+        }
+
+        /// <summary>
+        /// Returns a maximal preferred size of the children with an added padding.
+        /// </summary>
+        public virtual SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
+        {
+            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
         }
 
         /// <summary>

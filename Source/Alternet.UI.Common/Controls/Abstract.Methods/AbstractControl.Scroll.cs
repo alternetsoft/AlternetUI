@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public partial class AbstractControl
@@ -179,6 +181,17 @@ namespace Alternet.UI
             var nn2 = GlobalNotifications;
 
             OnScroll(e);
+
+            if(Layout == LayoutStyle.Scroll)
+            {
+                var offset = GetScrollBarInfo(e.IsVertical).Position;
+
+                if (e.IsVertical)
+                    LayoutOffset = new PointD(LayoutOffset.X, -offset);
+                else
+                    LayoutOffset = new PointD(-offset, LayoutOffset.Y);
+            }
+
             Scroll?.Invoke(this, e);
 
             foreach (var n in nn)
@@ -201,6 +214,57 @@ namespace Alternet.UI
         public virtual ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
             return ScrollBarInfo.Default;
+        }
+
+        /// <summary>
+        /// Sets vertical and horizontal scrollbar positions using page
+        /// and total size parameters.
+        /// </summary>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="totalSize">Total size.</param>
+        /// <param name="visibilityHorz">Horizontal scrollbar visibility.</param>
+        /// <param name="visibilityVert">Vertical scrollbar visibility.</param>
+        public virtual void SetScrollBarInfo(
+            SizeD pageSize,
+            SizeD totalSize,
+            HiddenOrVisible? visibilityHorz = null,
+            HiddenOrVisible? visibilityVert = null)
+        {
+            if (totalSize.Width <= pageSize.Width)
+            {
+                HorzScrollBarInfo
+                    = HorzScrollBarInfo.WithVisibility(visibilityHorz ?? HiddenOrVisible.Hidden);
+            }
+            else
+            {
+                ScrollBarInfo horz = new()
+                {
+                    Visibility = visibilityHorz ?? HiddenOrVisible.Auto,
+                    Range = (int)totalSize.Width,
+                    PageSize = (int)pageSize.Width,
+                    Position = GetScrollBarValue(false),
+                };
+
+                HorzScrollBarInfo = horz;
+            }
+
+            if (totalSize.Height <= pageSize.Height)
+            {
+                VertScrollBarInfo
+                    = VertScrollBarInfo.WithVisibility(visibilityVert ?? HiddenOrVisible.Hidden);
+            }
+            else
+            {
+                ScrollBarInfo vert = new()
+                {
+                    Visibility = visibilityVert ?? HiddenOrVisible.Auto,
+                    Range = (int)totalSize.Height,
+                    PageSize = (int)pageSize.Height,
+                    Position = GetScrollBarValue(true),
+                };
+
+                VertScrollBarInfo = vert;
+            }
         }
 
         /// <summary>
