@@ -44,7 +44,10 @@ namespace Alternet.UI
         /// <summary>
         /// Rectangle in which layout is performed.
         /// </summary>
-        public RectD Bounds { get; set; }
+        public RectD Bounds
+        {
+            get;
+        }
 
         /// <summary>
         /// List of controls to layout.

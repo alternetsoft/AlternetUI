@@ -222,15 +222,24 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="pageSize">Page size.</param>
         /// <param name="totalSize">Total size.</param>
-        public virtual void SetScrollBarInfo(SizeD pageSize, SizeD totalSize)
+        /// <param name="visibilityHorz">Horizontal scrollbar visibility.</param>
+        /// <param name="visibilityVert">Vertical scrollbar visibility.</param>
+        public virtual void SetScrollBarInfo(
+            SizeD pageSize,
+            SizeD totalSize,
+            HiddenOrVisible? visibilityHorz = null,
+            HiddenOrVisible? visibilityVert = null)
         {
             if (totalSize.Width <= pageSize.Width)
-                HorzScrollBarInfo = HorzScrollBarInfo.WithVisibility(HiddenOrVisible.Hidden);
+            {
+                HorzScrollBarInfo
+                    = HorzScrollBarInfo.WithVisibility(visibilityHorz ?? HiddenOrVisible.Hidden);
+            }
             else
             {
                 ScrollBarInfo horz = new()
                 {
-                    Visibility = HiddenOrVisible.Auto,
+                    Visibility = visibilityHorz ?? HiddenOrVisible.Auto,
                     Range = (int)totalSize.Width,
                     PageSize = (int)pageSize.Width,
                     Position = GetScrollBarValue(false),
@@ -240,12 +249,15 @@ namespace Alternet.UI
             }
 
             if (totalSize.Height <= pageSize.Height)
-                VertScrollBarInfo = VertScrollBarInfo.WithVisibility(HiddenOrVisible.Hidden);
+            {
+                VertScrollBarInfo
+                    = VertScrollBarInfo.WithVisibility(visibilityVert ?? HiddenOrVisible.Hidden);
+            }
             else
             {
                 ScrollBarInfo vert = new()
                 {
-                    Visibility = HiddenOrVisible.Auto,
+                    Visibility = visibilityVert ?? HiddenOrVisible.Auto,
                     Range = (int)totalSize.Height,
                     PageSize = (int)pageSize.Height,
                     Position = GetScrollBarValue(true),

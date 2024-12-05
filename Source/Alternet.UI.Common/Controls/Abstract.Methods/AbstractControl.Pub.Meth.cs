@@ -68,19 +68,21 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="container">Container control which childs will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
-        /// <param name="space">Rectangle in which layout is performed.</param>
+        /// <param name="getBounds">Returns rectangle in which layout is performed.</param>
         /// <param name="items">List of controls to layout.</param>
         public static void DefaultOnLayout(
             AbstractControl container,
             LayoutStyle layout,
-            RectD space,
+            Func<RectD> getBounds,
             IReadOnlyList<AbstractControl> items)
         {
             if(layout == LayoutStyle.Scroll)
             {
-                OldLayout.LayoutWhenScroll(container, space, items, true);
+                OldLayout.LayoutWhenScroll(container, getBounds, items, true);
                 return;
             }
+
+            var space = getBounds();
 
             var number = LayoutWhenDocked(ref space, items);
 
@@ -1723,19 +1725,23 @@ namespace Alternet.UI
             }
 
             var layoutType = Layout ?? GetDefaultLayout();
-            var space = ChildrenLayoutBounds;
+
+            RectD GetSpace()
+            {
+                return ChildrenLayoutBounds;
+            }
+
             var items = AllChildrenInLayout;
 
             if (GlobalOnLayout is not null)
             {
-                var e = new DefaultLayoutEventArgs(this, layoutType, space, items);
+                var e = new DefaultLayoutEventArgs(this, layoutType, GetSpace(), items);
                 GlobalOnLayout(this, e);
                 if (e.Handled)
                     return;
                 else
                 {
                     layoutType = e.Layout;
-                    space = e.Bounds;
                     items = e.Children;
                 }
             }
@@ -1743,7 +1749,7 @@ namespace Alternet.UI
             DefaultOnLayout(
                 this,
                 layoutType,
-                space,
+                GetSpace,
                 items);
         }
 

@@ -293,7 +293,7 @@ namespace Alternet.UI
 
         internal static void LayoutWhenScroll(
             AbstractControl container,
-            RectD childrenLayoutBounds,
+            Func<RectD> getBounds,
             IReadOnlyList<AbstractControl> controls,
             bool updateScrollbars)
         {
@@ -301,8 +301,10 @@ namespace Alternet.UI
             {
                 container.IsScrollable = true;
                 var totalSize = container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
-                container.SetScrollBarInfo(childrenLayoutBounds.Size, totalSize);
+                container.SetScrollBarInfo(getBounds().Size, totalSize);
             }
+
+            var childrenLayoutBounds = getBounds();
 
             foreach (var control in controls)
             {
