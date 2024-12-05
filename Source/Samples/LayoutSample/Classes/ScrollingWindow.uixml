@@ -21,10 +21,10 @@
 
         <Border SuggestedWidth="200" SuggestedHeight="200" Padding="5"
                         VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="true">
-          <ScrollViewer Name="scrollViewerStack">
+          <ContainerControl Name="scrollViewerStack" Layout="Scroll">
             <StackPanel Name="stackPanel" Orientation="Vertical">
             </StackPanel>
-          </ScrollViewer>
+          </ContainerControl>
         </Border>
 
         <Grid Margin="10,0,0,0">

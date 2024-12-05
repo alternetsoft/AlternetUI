@@ -17,7 +17,7 @@ namespace Alternet.UI
         None,
 
         /// <summary>
-        /// Uses <c>Control.Dock</c> setting for layout of the children.
+        /// Uses only <c>Control.Dock</c> setting for layout of the children.
         /// </summary>
         Dock,
 
@@ -35,5 +35,10 @@ namespace Alternet.UI
         /// Layout as in horizontal stack panel.
         /// </summary>
         Horizontal,
+
+        /// <summary>
+        /// Layout as in <c>ScrollViewer</c> control.
+        /// </summary>
+        Scroll,
     }
 }

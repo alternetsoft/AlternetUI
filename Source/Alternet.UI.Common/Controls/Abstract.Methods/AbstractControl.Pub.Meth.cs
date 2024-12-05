@@ -76,6 +76,12 @@ namespace Alternet.UI
             RectD space,
             IReadOnlyList<AbstractControl> items)
         {
+            if(layout == LayoutStyle.Scroll)
+            {
+                OldLayout.LayoutWhenScroll(container, space, items, true);
+                return;
+            }
+
             var number = LayoutWhenDocked(ref space, items);
 
             void UpdateItems()

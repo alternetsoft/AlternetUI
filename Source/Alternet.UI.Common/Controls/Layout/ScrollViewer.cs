@@ -33,28 +33,9 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.ScrollViewer;
 
         /// <inheritdoc/>
-        public override void OnLayout()
-        {
-            OldLayout.LayoutWhenScroll(this, ChildrenLayoutBounds, AllChildrenInLayout, true);
-        }
-
-        /// <inheritdoc/>
         protected override LayoutStyle GetDefaultLayout()
         {
-            return base.GetDefaultLayout();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnScroll(ScrollEventArgs e)
-        {
-            base.OnScroll(e);
-
-            var offset = GetScrollBarInfo(e.IsVertical).Position;
-
-            if (e.IsVertical)
-                LayoutOffset = new PointD(LayoutOffset.X, -offset);
-            else
-                LayoutOffset = new PointD(-offset, LayoutOffset.Y);
+            return LayoutStyle.Scroll;
         }
     }
 }

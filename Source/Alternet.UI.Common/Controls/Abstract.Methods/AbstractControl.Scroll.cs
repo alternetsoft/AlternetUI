@@ -181,6 +181,17 @@ namespace Alternet.UI
             var nn2 = GlobalNotifications;
 
             OnScroll(e);
+
+            if(Layout == LayoutStyle.Scroll)
+            {
+                var offset = GetScrollBarInfo(e.IsVertical).Position;
+
+                if (e.IsVertical)
+                    LayoutOffset = new PointD(LayoutOffset.X, -offset);
+                else
+                    LayoutOffset = new PointD(-offset, LayoutOffset.Y);
+            }
+
             Scroll?.Invoke(this, e);
 
             foreach (var n in nn)
