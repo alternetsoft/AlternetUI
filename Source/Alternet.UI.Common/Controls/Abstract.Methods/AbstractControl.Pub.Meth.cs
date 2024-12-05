@@ -899,6 +899,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="BeginInit"/>
+        /// and <see cref="EndInit"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        public virtual void DoInsideInit(Action action)
+        {
+            BeginInit();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndInit();
+            }
+        }
+
+        /// <summary>
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
         /// <seealso cref="GetVisibleChildOrNull"/>
@@ -2245,6 +2263,14 @@ namespace Alternet.UI
             var rectangle = ClientRectangle;
             rectangle.Inflate(threshold, threshold);
             return rectangle.Contains(Mouse.GetPosition(this));
+        }
+
+        /// <summary>
+        /// Returns a maximal preferred size of the children with an added padding.
+        /// </summary>
+        public virtual SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
+        {
+            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
         }
 
         /// <summary>

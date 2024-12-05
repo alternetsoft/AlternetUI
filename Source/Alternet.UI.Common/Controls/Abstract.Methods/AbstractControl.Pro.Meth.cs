@@ -49,14 +49,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns a preferred size of control with an added padding.
-        /// </summary>
-        protected SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
-        {
-            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
-        }
-
-        /// <summary>
         /// Returns the size of the area which can fit all the children of this
         /// control, with an added padding.
         /// </summary>
