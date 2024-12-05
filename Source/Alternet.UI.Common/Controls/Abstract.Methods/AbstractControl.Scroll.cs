@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public partial class AbstractControl
@@ -201,6 +203,45 @@ namespace Alternet.UI
         public virtual ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
             return ScrollBarInfo.Default;
+        }
+
+        /// <summary>
+        /// Sets vertical and horizontal scrollbar positions using page
+        /// and total size parameters.
+        /// </summary>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="totalSize">Total size.</param>
+        public virtual void SetScrollBarInfo(SizeD pageSize, SizeD totalSize)
+        {
+            if (totalSize.Width <= pageSize.Width)
+                HorzScrollBarInfo = HorzScrollBarInfo.WithVisibility(HiddenOrVisible.Hidden);
+            else
+            {
+                ScrollBarInfo horz = new()
+                {
+                    Visibility = HiddenOrVisible.Auto,
+                    Range = (int)totalSize.Width,
+                    PageSize = (int)pageSize.Width,
+                    Position = GetScrollBarValue(false),
+                };
+
+                HorzScrollBarInfo = horz;
+            }
+
+            if (totalSize.Height <= pageSize.Height)
+                VertScrollBarInfo = VertScrollBarInfo.WithVisibility(HiddenOrVisible.Hidden);
+            else
+            {
+                ScrollBarInfo vert = new()
+                {
+                    Visibility = HiddenOrVisible.Auto,
+                    Range = (int)totalSize.Height,
+                    PageSize = (int)pageSize.Height,
+                    Position = GetScrollBarValue(true),
+                };
+
+                VertScrollBarInfo = vert;
+            }
         }
 
         /// <summary>
