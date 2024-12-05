@@ -262,14 +262,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.IsVertical;
+                return PlatformControl.IsVertical;
             }
 
             set
             {
                 if (IsVertical == value)
                     return;
-                Handler.IsVertical = value;
+                PlatformControl.IsVertical = value;
                 IsVerticalChanged?.Invoke(this, EventArgs.Empty);
                 UpdateScrollInfo();
             }
@@ -287,11 +287,14 @@ namespace Alternet.UI
         [Browsable(false)]
         public ScrollBarInfo PosInfo => pos.AsPositionInfo();
 
-        /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new IScrollBarHandler Handler => (IScrollBarHandler)base.Handler;
+        internal IScrollBarHandler PlatformControl
+        {
+            get
+            {
+                CheckDisposed();
+                return (IScrollBarHandler)Handler;
+            }
+        }
 
         [Browsable(false)]
         internal new string Text
@@ -354,9 +357,9 @@ namespace Alternet.UI
         public virtual void LogInfo()
         {
             App.Log(ToString());
-            var position = $"Position: {Handler.ThumbPosition}";
-            var range = $"Range: {Handler.Range}";
-            var pageSize = $"PageSize: {Handler.PageSize}";
+            var position = $"Position: {PlatformControl.ThumbPosition}";
+            var range = $"Range: {PlatformControl.Range}";
+            var pageSize = $"PageSize: {PlatformControl.PageSize}";
             App.Log($"Native: {position}, {range}, {pageSize}");
         }
 
@@ -374,14 +377,14 @@ namespace Alternet.UI
         {
             base.BindHandlerEvents();
             UpdateScrollInfo();
-            Handler.Scroll = RaiseScroll;
+            PlatformControl.Scroll = RaiseScroll;
         }
 
         /// <inheritdoc/>
         public override void UnbindHandlerEvents()
         {
             base.UnbindHandlerEvents();
-            Handler.Scroll = null;
+            PlatformControl.Scroll = null;
         }
 
         /// <summary>
@@ -389,14 +392,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseScroll()
         {
-            var newPos = (Handler.EventNewPos / SmallChange) + Minimum;
+            var newPos = (PlatformControl.EventNewPos / SmallChange) + Minimum;
             var oldPos = Value;
             newPos = MathUtils.ApplyMinMax(newPos, Minimum, Maximum);
             if (newPos == oldPos)
                 return;
             pos.Value = newPos;
-            var eventType = Handler.EventTypeID;
-            var orientation = Handler.IsVertical ? ScrollBarOrientation.Vertical
+            var eventType = PlatformControl.EventTypeID;
+            var orientation = PlatformControl.IsVertical ? ScrollBarOrientation.Vertical
                 : ScrollBarOrientation.Horizontal;
             RaiseScroll(new ScrollEventArgs(eventType, oldPos, newPos, orientation));
             OnValueChanged(EventArgs.Empty);
@@ -437,7 +440,7 @@ namespace Alternet.UI
             int? pageSize,
             bool refresh = true)
         {
-            Handler.SetScrollbar(
+            PlatformControl.SetScrollbar(
                 position,
                 range,
                 pageSize,
