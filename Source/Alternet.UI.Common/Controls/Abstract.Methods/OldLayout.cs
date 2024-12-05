@@ -291,6 +291,61 @@ namespace Alternet.UI
             }
         }
 
+        internal static void LayoutWhenScroll(
+            AbstractControl container,
+            RectD childrenLayoutBounds,
+            IReadOnlyList<AbstractControl> controls,
+            bool updateScrollbars)
+        {
+            if (updateScrollbars)
+            {
+                container.IsScrollable = true;
+                var totalSize = container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+                container.SetScrollBarInfo(childrenLayoutBounds.Size, totalSize);
+            }
+
+            foreach (var control in controls)
+            {
+                var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
+                var unboundedPreferredSize =
+                    control.GetPreferredSize(SizeD.PositiveInfinity);
+
+                var verticalAlignment = control.VerticalAlignment;
+                var horizontalAlignment = control.HorizontalAlignment;
+
+                if (unboundedPreferredSize.Width > childrenLayoutBounds.Width)
+                {
+                    horizontalAlignment = UI.HorizontalAlignment.Left;
+                }
+
+                if (unboundedPreferredSize.Height > childrenLayoutBounds.Height)
+                {
+                    verticalAlignment = UI.VerticalAlignment.Top;
+                }
+
+                var horizontalPosition =
+                    AbstractControl.AlignHorizontal(
+                        childrenLayoutBounds,
+                        control,
+                        boundedPreferredSize,
+                        horizontalAlignment);
+                var verticalPosition =
+                    AbstractControl.AlignVertical(
+                        childrenLayoutBounds,
+                        control,
+                        boundedPreferredSize,
+                        verticalAlignment);
+
+                var layoutOffset = container.LayoutOffset;
+
+                control.Bounds = new RectD(
+                    horizontalPosition.Origin + layoutOffset.X,
+                    verticalPosition.Origin + layoutOffset.Y,
+                    horizontalPosition.Size,
+                    verticalPosition.Size);
+            }
+        }
+
         internal static void LayoutWhenDocked(
             ref RectD bounds,
             AbstractControl child,

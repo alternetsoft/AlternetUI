@@ -117,6 +117,8 @@ namespace Alternet.UI
 
             set
             {
+                if (IsScrollable == value)
+                    return;
                 Handler.IsScrollable = value;
             }
         }
