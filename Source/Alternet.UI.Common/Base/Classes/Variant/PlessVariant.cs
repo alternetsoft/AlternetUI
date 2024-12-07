@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements variant structure which can contain data with different types.
     /// </summary>
-    internal partial struct PlessVariant : IValueToString, IEquatable<PlessVariant>, IComparable,
+    public partial struct PlessVariant : IValueToString, IEquatable<PlessVariant>, IComparable,
         IComparable<PlessVariant>, IFormattable, IConvertible
     {
         /// <summary>
@@ -38,26 +38,26 @@ namespace Alternet.UI
             IPlessVariantExtender extenderInt = new PlessVariantInt64();
             IPlessVariantExtender extenderUInt = new PlessVariantUInt64();
 
-            SetVariantExtender(TypeCode.Empty, extenderEmpty);
-            SetVariantExtender(TypeCode.DBNull, extenderEmpty);
-            SetVariantExtender(TypeCode.Object, new PlessVariantObject());
-            SetVariantExtender(TypeCode.Boolean, new PlessVariantBoolean());
-            SetVariantExtender(TypeCode.Char, new PlessVariantChar());
-            SetVariantExtender(TypeCode.Single, new PlessVariantSingle());
-            SetVariantExtender(TypeCode.Double, new PlessVariantDouble());
-            SetVariantExtender(TypeCode.Decimal, new PlessVariantDecimal());
-            SetVariantExtender(TypeCode.DateTime, new PlessVariantDateTime());
-            SetVariantExtender(TypeCode.String, new PlessVariantString());
+            SetExtender(TypeCode.Empty, extenderEmpty);
+            SetExtender(TypeCode.DBNull, extenderEmpty);
+            SetExtender(TypeCode.Object, new PlessVariantObject());
+            SetExtender(TypeCode.Boolean, new PlessVariantBoolean());
+            SetExtender(TypeCode.Char, new PlessVariantChar());
+            SetExtender(TypeCode.Single, new PlessVariantSingle());
+            SetExtender(TypeCode.Double, new PlessVariantDouble());
+            SetExtender(TypeCode.Decimal, new PlessVariantDecimal());
+            SetExtender(TypeCode.DateTime, new PlessVariantDateTime());
+            SetExtender(TypeCode.String, new PlessVariantString());
 
-            SetVariantExtender(TypeCode.SByte, extenderInt);
-            SetVariantExtender(TypeCode.Int16, extenderInt);
-            SetVariantExtender(TypeCode.Int32, extenderInt);
-            SetVariantExtender(TypeCode.Int64, extenderInt);
+            SetExtender(TypeCode.SByte, extenderInt);
+            SetExtender(TypeCode.Int16, extenderInt);
+            SetExtender(TypeCode.Int32, extenderInt);
+            SetExtender(TypeCode.Int64, extenderInt);
 
-            SetVariantExtender(TypeCode.UInt64, extenderUInt);
-            SetVariantExtender(TypeCode.Byte, extenderUInt);
-            SetVariantExtender(TypeCode.UInt16, extenderUInt);
-            SetVariantExtender(TypeCode.UInt32, extenderUInt);
+            SetExtender(TypeCode.UInt64, extenderUInt);
+            SetExtender(TypeCode.Byte, extenderUInt);
+            SetExtender(TypeCode.UInt16, extenderUInt);
+            SetExtender(TypeCode.UInt32, extenderUInt);
         }
 
         /// <summary>
@@ -305,7 +305,10 @@ namespace Alternet.UI
             }
         }
 
-        public long AsInt
+        /// <summary>
+        /// Gets or sets value as <see cref="long"/>.
+        /// </summary>
+        public long AsInt64
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
@@ -322,7 +325,10 @@ namespace Alternet.UI
             }
         }
 
-        public ulong AsUInt
+        /// <summary>
+        /// Gets or sets value as <see cref="ulong"/>.
+        /// </summary>
+        public ulong AsUInt64
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
@@ -424,10 +430,14 @@ namespace Alternet.UI
         /// </summary>
         public readonly IPlessVariantExtender Extender
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => Extenders[(int)ValueType];
         }
 
-        internal TypeCode ValueType
+        /// <summary>
+        /// Gets type code of the value stored in this variant.
+        /// </summary>
+        public TypeCode ValueType
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get
@@ -436,189 +446,473 @@ namespace Alternet.UI
             }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
+            private set
             {
                 dataType = value;
             }
         }
 
+        internal int AsInt32
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (int)AsInt64;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => AsInt64 = value;
+        }
+
+        internal short AsInt16
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (short)AsInt64;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => AsInt64 = value;
+        }
+
+        internal uint AsUInt32
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (uint)AsUInt64;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => AsUInt64 = value;
+        }
+
+        internal ushort AsUInt16
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (ushort)AsUInt64;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => AsUInt64 = value;
+        }
+
+        internal byte AsByte
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (byte)AsUInt64;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => AsUInt64 = value;
+        }
+
+        internal sbyte AsSByte
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => (sbyte)AsInt64;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => AsInt64 = value;
+        }
+
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="decimal"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator decimal(PlessVariant value)
             => GetExtender(value.ValueType).ToDecimal(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="DateTime"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator DateTime(PlessVariant value)
             => GetExtender(value.ValueType).ToDateTime(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="sbyte"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator sbyte(PlessVariant value)
             => GetExtender(value.ValueType).ToSByte(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="byte"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator byte(PlessVariant value)
             => GetExtender(value.ValueType).ToByte(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="char"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator char(PlessVariant value)
             => GetExtender(value.ValueType).ToChar(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="double"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator double(PlessVariant value)
             => GetExtender(value.ValueType).ToDouble(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="float"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator float(PlessVariant value)
             => GetExtender(value.ValueType).ToSingle(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="long"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator long(PlessVariant value)
             => GetExtender(value.ValueType).ToInt64(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="int"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator int(PlessVariant value)
             => GetExtender(value.ValueType).ToInt32(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="ulong"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator ulong(PlessVariant value)
             => GetExtender(value.ValueType).ToUInt64(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="uint"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator uint(PlessVariant value)
             => GetExtender(value.ValueType).ToUInt32(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="ushort"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator ushort(PlessVariant value)
             => GetExtender(value.ValueType).ToUInt16(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="short"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator short(PlessVariant value)
             => GetExtender(value.ValueType).ToInt16(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="bool"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator bool(PlessVariant value)
             => GetExtender(value.ValueType).ToBoolean(value);
 
+        /// <summary>
+        /// Implements explicit conversion operator from
+        /// variant to <see cref="string"/> value.
+        /// </summary>
+        /// <param name="value">Variant to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator string(PlessVariant value)
         {
             return GetExtender(value.ValueType).ToString(value);
         }
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="bool"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(bool b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="char"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(char b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="float"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(float b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="double"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(double b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="decimal"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(decimal b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="DateTime"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(DateTime b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="string"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(string b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="byte"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(byte b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="short"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(short b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="sbyte"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(sbyte b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="ushort"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(ushort b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="long"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(long b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="ulong"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(ulong b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="uint"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(uint b) => new(b);
 
+        /// <summary>
+        /// Implements implicit conversion operator from the
+        /// <see cref="int"/> value to the variant.
+        /// </summary>
+        /// <param name="b">Value to convert</param>.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PlessVariant(int b) => new(b);
 
+        /// <summary>
+        /// Determines whether one specified <see cref="PlessVariant" /> is less
+        /// than another specified <see cref="PlessVariant" />.</summary>
+        /// <param name="d1">The first object to compare.</param>
+        /// <param name="d2">The second object to compare.</param>
+        /// <returns>
+        /// <see langword="true" /> if <paramref name="d1" /> is less than
+        /// <paramref name="d2" />; otherwise, <see langword="false" />.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <(PlessVariant d1, PlessVariant d2)
         {
             return GetExtender(d1.ValueType).Compare(d1, d2) < 0;
         }
 
+        /// <summary>
+        /// Determines whether one specified <see cref="PlessVariant" /> is greater
+        /// than another specified <see cref="PlessVariant" />.</summary>
+        /// <param name="d1">The first object to compare.</param>
+        /// <param name="d2">The second object to compare.</param>
+        /// <returns>
+        /// <see langword="true" /> if <paramref name="d1" /> is greater than
+        /// <paramref name="d2" />; otherwise, <see langword="false" />.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >(PlessVariant d1, PlessVariant d2)
         {
             return GetExtender(d1.ValueType).Compare(d1, d2) > 0;
         }
 
+        /// <summary>
+        /// Tests whether two specified variants are equivalent.
+        /// </summary>
+        /// <param name="d1">The <see cref="PlessVariant"/> that is to the left
+        /// of the equality operator.</param>
+        /// <param name="d2">The <see cref="PlessVariant"/> that is to the right
+        /// of the equality operator.</param>
+        /// <returns><c>true</c> if the two <see cref="PlessVariant"/> structures
+        /// are equal; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(PlessVariant d1, PlessVariant d2)
         {
             return Equals(d1, d2);
         }
 
+        /// <summary>
+        /// Tests whether two specified variants are different.
+        /// </summary>
+        /// <param name="d1">The <see cref="PlessVariant"/> that is to the left
+        /// of the equality operator.</param>
+        /// <param name="d2">The <see cref="PlessVariant"/> that is to the right
+        /// of the equality operator.</param>
+        /// <returns><c>true</c> if the two <see cref="PlessVariant"/> structures
+        /// are different; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(PlessVariant d1, PlessVariant d2)
         {
             return !Equals(d1, d2);
         }
 
+        /// <summary>
+        /// Determines whether one specified <see cref="PlessVariant" /> is less or equal
+        /// to another specified <see cref="PlessVariant" />.</summary>
+        /// <param name="d1">The first object to compare.</param>
+        /// <param name="d2">The second object to compare.</param>
+        /// <returns>
+        /// <see langword="true" /> if <paramref name="d1" /> is less or equal to
+        /// <paramref name="d2" />; otherwise, <see langword="false" />.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <=(PlessVariant d1, PlessVariant d2)
         {
             return GetExtender(d1.ValueType).Compare(d1, d2) <= 0;
         }
 
+        /// <summary>
+        /// Determines whether one specified <see cref="PlessVariant" /> is greater
+        /// or equal to another specified <see cref="PlessVariant" />.</summary>
+        /// <param name="d1">The first object to compare.</param>
+        /// <param name="d2">The second object to compare.</param>
+        /// <returns>
+        /// <see langword="true" /> if <paramref name="d1" /> is greater or equal to
+        /// <paramref name="d2" />; otherwise, <see langword="false" />.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >=(PlessVariant d1, PlessVariant d2)
         {
             return GetExtender(d1.ValueType).Compare(d1, d2) >= 0;
         }
 
+        /// <summary>
+        /// Gets whether to variants are equal.
+        /// </summary>
+        /// <param name="d1">First value to compare.</param>
+        /// <param name="d2">Second value to compare.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Equals(PlessVariant d1, PlessVariant d2)
         {
             return GetExtender(d1.ValueType).Equals(d1, d2);
         }
 
+        /// <summary>
+        /// Gets <see cref="IPlessVariantExtender"/> for the specified variant type.
+        /// </summary>
+        /// <param name="valueType">Type of the variant.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IPlessVariantExtender GetExtender(TypeCode valueType)
         {
             return Extenders[(int)valueType];
         }
 
+        /// <summary>
+        /// Compares two variant values.
+        /// </summary>
+        /// <param name="d1">First value to compare.</param>
+        /// <param name="d2">Second value to compare.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Compare(PlessVariant d1, PlessVariant d2)
         {
             return GetExtender(d1.ValueType).Compare(d1, d2);
         }
 
-        public static IPlessVariantExtender GetVariantExtender(TypeCode typeCode)
-        {
-            return Extenders[(int)typeCode];
-        }
-
-        public static void SetVariantExtender(TypeCode typeCode, IPlessVariantExtender extender)
+        /// <summary>
+        /// Sets <see cref="IPlessVariantExtender"/> for the specified variant type.
+        /// </summary>
+        /// <param name="typeCode">Type of the variant.</param>
+        /// <param name="extender"><see cref="IPlessVariantExtender"/> provider to use
+        /// with the specified variant type.</param>
+        public static void SetExtender(TypeCode typeCode, IPlessVariantExtender extender)
         {
             Extenders[(int)typeCode] = extender;
         }
 
+        /// <summary>
+        /// Compares this variant with another variant.
+        /// </summary>
+        /// <param name="value">Value to compare with.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly int CompareTo(PlessVariant value)
         {
             return Compare(this, value);
         }
 
+        /// <summary>
+        /// Compare this object with the another object.
+        /// </summary>
+        /// <param name="value">Object to compare with.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">if <paramref name="value"/>
+        /// is not <see cref="PlessVariant"/>.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly int CompareTo(object value)
         {
@@ -629,53 +923,122 @@ namespace Alternet.UI
             throw new ArgumentException();
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="bool"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool ToBoolean() => Extender.ToBoolean(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="byte"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly byte ToByte() => Extender.ToByte(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="char"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly char ToChar() => Extender.ToChar(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="DateTime"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly DateTime ToDateTime() => Extender.ToDateTime(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="decimal"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly decimal ToDecimal() => Extender.ToDecimal(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="double"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly double ToDouble() => Extender.ToDouble(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="short"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly short ToInt16() => Extender.ToInt16(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="int"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly int ToInt32() => Extender.ToInt32(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="long"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly long ToInt64() => Extender.ToInt64(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="sbyte"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly sbyte ToSByte() => Extender.ToSByte(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="float"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly float ToSingle() => Extender.ToSingle(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="ushort"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly ushort ToUInt16() => Extender.ToUInt16(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="uint"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly uint ToUInt32() => Extender.ToUInt32(this);
 
+        /// <summary>
+        /// Converts this variant to <see cref="ulong"/> if possible.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly ulong ToUInt64() => Extender.ToUInt64(this);
 
+        /// <summary>
+        /// Returns the hash code of this variant.
+        /// </summary>
+        /// <returns></returns>
         public readonly override int GetHashCode()
         {
             return Extender.GetHashCode(this);
         }
 
+        /// <summary>
+        /// Checks if this object equals another object.
+        /// </summary>
+        /// <param name="value">Object to compare with. May be null.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the specified object is a <see cref="PlessVariant"/> and it equals
+        /// this object; <c>false</c> otherwise.
+        /// </returns>
         public override readonly bool Equals(object value)
         {
             if (value is not PlessVariant v)
@@ -683,101 +1046,195 @@ namespace Alternet.UI
             return Equals(this, v);
         }
 
+        /// <summary>
+        /// Checks if this object equals another object.
+        /// </summary>
+        /// <param name="value">Object to compare with.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the specified object is equal to
+        /// this object; <c>false</c> otherwise.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(PlessVariant value)
         {
             return Equals(this, value);
         }
 
+        /// <inheritdoc cref="IValueToString.ToString()"/>
         public readonly override string ToString()
         {
             return Extender.ToString(this);
         }
 
+        /// <inheritdoc cref="IValueToString.ToString(string)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly string ToString(string format)
         {
             return Extender.ToString(this, format);
         }
 
+        /// <inheritdoc cref="IValueToString.ToString(IFormatProvider)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly string ToString(IFormatProvider provider)
         {
             return Extender.ToString(this, provider);
         }
 
+        /// <inheritdoc cref="IValueToString.ToString(string, IFormatProvider)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly string ToString(string format, IFormatProvider provider)
         {
             return Extender.ToString(this, format, provider);
         }
 
+        /// <summary>
+        /// Gets type code of this variant.
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly TypeCode GetTypeCode()
         {
             return ValueType;
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="bool"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool ToBoolean(IFormatProvider provider)
         {
             return Extender.ToBoolean(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="byte"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly byte ToByte(IFormatProvider provider)
         {
             return Extender.ToByte(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="char"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly char ToChar(IFormatProvider provider)
         {
             return Extender.ToChar(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="DateTime"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly DateTime ToDateTime(IFormatProvider provider)
         {
             return Extender.ToDateTime(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="decimal"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly decimal ToDecimal(IFormatProvider provider)
         {
             return Extender.ToDecimal(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="double"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly double ToDouble(IFormatProvider provider)
         {
             return Extender.ToDouble(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="short"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly short ToInt16(IFormatProvider provider)
         {
             return Extender.ToInt16(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="int"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly int ToInt32(IFormatProvider provider)
         {
             return Extender.ToInt32(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="long"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly long ToInt64(IFormatProvider provider)
         {
             return Extender.ToInt64(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="sbyte"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly sbyte ToSByte(IFormatProvider provider)
         {
             return Extender.ToSByte(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="float"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly float ToSingle(IFormatProvider provider)
         {
@@ -789,18 +1246,39 @@ namespace Alternet.UI
             return Extender.ToType(this, conversionType, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="ushort"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly ushort ToUInt16(IFormatProvider provider)
         {
             return Extender.ToUInt16(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="uint"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly uint ToUInt32(IFormatProvider provider)
         {
             return Extender.ToUInt32(this, provider);
         }
 
+        /// <summary>
+        /// Converts this variant to <see cref="ulong"/> if possible
+        /// using the specified format provider.
+        /// </summary>
+        /// <param name="provider">An object that supplies culture-specific formatting
+        /// information.</param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly ulong ToUInt64(IFormatProvider provider)
         {

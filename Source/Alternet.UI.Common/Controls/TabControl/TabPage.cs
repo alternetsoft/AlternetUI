@@ -14,7 +14,8 @@ namespace Alternet.UI
     /// not parts of the individual <see cref="TabPage"/> controls.
     /// </remarks>
     /// <remarks>
-    /// You can add any control descendant to the <see cref="TabControl"/>, not only <see cref="TabPage"/>.
+    /// You can add any control descendant to the <see cref="TabControl"/>, not only
+    /// <see cref="TabPage"/>.
     /// </remarks>
     [ControlCategory("Hidden")]
     public partial class TabPage : ContainerControl

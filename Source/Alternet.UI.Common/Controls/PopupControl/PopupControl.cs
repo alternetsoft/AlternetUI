@@ -144,7 +144,8 @@ namespace Alternet.UI
         public virtual bool FocusContainerOnClose { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets whether popup should be closed with <see cref="ModalResult.Canceled"/> result
+        /// Gets or sets whether popup should be closed with
+        /// <see cref="ModalResult.Canceled"/> result
         /// when it lost focus.
         /// </summary>
         public virtual bool CancelOnLostFocus
@@ -163,7 +164,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether popup should be closed with <see cref="ModalResult.Accepted"/> result
+        /// Gets or sets whether popup should be closed with
+        /// <see cref="ModalResult.Accepted"/> result
         /// when it lost focus.
         /// </summary>
         public virtual bool AcceptOnLostFocus
