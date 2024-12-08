@@ -39,6 +39,33 @@ namespace Alternet.Base.Collections
     public class Collection<T> : ObservableCollection<T>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Collection{T}"/> class.
+        /// </summary>
+        public Collection()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collection{T}"/> class
+        /// class that contains elements copied from the specified collection.
+        /// </summary>
+        /// <param name="collection">The collection from which the elements are copied.</param>
+        public Collection(IEnumerable<T> collection)
+            : base(collection)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collection{T}"/> class
+        /// that contains elements copied from the specified list.
+        /// </summary>
+        /// <param name="list">The list from which the elements are copied.</param>
+        public Collection(List<T> list)
+            : base(list)
+        {
+        }
+
+        /// <summary>
         /// Occurs when an item is inserted in the collection.
         /// </summary>
         public event CollectionItemChangedHandler<T>? ItemInserted;

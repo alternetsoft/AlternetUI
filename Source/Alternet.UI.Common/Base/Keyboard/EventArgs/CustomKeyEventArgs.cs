@@ -100,7 +100,8 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>Gets the keyboard value for a <see cref="AbstractControl.KeyDown" /> event.</summary>
+        /// <summary>Gets the keyboard value for
+        /// a <see cref="AbstractControl.KeyDown" /> event.</summary>
         /// <returns>The integer representation of the
         /// <see cref="KeyCode" /> property.</returns>
         public virtual int KeyValue => (int)(KeyData & Keys.KeyCode);
@@ -150,12 +151,12 @@ namespace Alternet.UI
         /// <summary>
         /// Get whether <see cref="Key"/> is plus or numpad plus character.
         /// </summary>
-        public bool IsAnyPlusKey => Key == Key.PlusSign || Key == Key.NumPadPlus;
+        public virtual bool IsAnyPlusKey => Key == Key.PlusSign || Key == Key.NumPadPlus;
 
         /// <summary>
         /// Get whether <see cref="Key"/> is minus or numpad minus character.
         /// </summary>
-        public bool IsAnyMinusKey => Key == Key.Minus || Key == Key.NumPadMinus;
+        public virtual bool IsAnyMinusKey => Key == Key.Minus || Key == Key.NumPadMinus;
 
         /// <summary>
         /// Gets a value indicating whether the SHIFT key was pressed.
@@ -167,14 +168,22 @@ namespace Alternet.UI
         public virtual bool Shift => modifiers.HasFlag(ModifierKeys.Shift);
 
         /// <summary>
-        /// Gets whether 'Escape' key is pressed without modifiers (<see cref="ModifierKeys"/> is empty).
+        /// Gets a value indicating whether the SHIFT key was pressed or
+        /// no other modifiers were pressed.
         /// </summary>
-        public bool IsEscape => IsSimpleKey(Key.Escape);
+        public virtual bool ShiftOrNone => Shift || !HasModifiers;
 
         /// <summary>
-        /// Gets whether 'Enter' key is pressed without modifiers (<see cref="ModifierKeys"/> is empty).
+        /// Gets whether 'Escape' key is pressed without modifiers
+        /// (<see cref="ModifierKeys"/> is empty).
         /// </summary>
-        public bool IsEnter => IsSimpleKey(Key.Enter);
+        public virtual bool IsEscape => IsSimpleKey(Key.Escape);
+
+        /// <summary>
+        /// Gets whether 'Enter' key is pressed without modifiers
+        /// (<see cref="ModifierKeys"/> is empty).
+        /// </summary>
+        public virtual bool IsEnter => IsSimpleKey(Key.Enter);
 
         /// <summary>
         /// Gets whether the specified key is pressed and <see cref="ModifierKeys"/> is empty.

@@ -60,6 +60,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called after the <see cref="KeyPress" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="e">A <see cref="KeyPressEventArgs" /> that contains the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnAfterParentKeyPress(object? sender, KeyPressEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called after the <see cref="KeyDown" /> event of the <see cref="Parent"/> is raised.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
