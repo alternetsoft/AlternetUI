@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to get different system settings.
     /// </summary>
-    public interface ISystemSettingsHandler : IDisposable
+    public interface ISystemSettingsHandler : IDisposableObject
     {
         /// <summary>
         /// Gets or sets application name.

@@ -200,17 +200,21 @@ namespace Alternet.UI
         {
             get
             {
-                if (!HasFactory)
+                try
+                {
+                    var screens = AllScreens;
+                    var length = screens.Length;
+                    var result = new int[length];
+
+                    for (int i = 0; i < length; i++)
+                        result[i] = screens[i].DPI.Height;
+
+                    return result;
+                }
+                catch
+                {
                     return [96];
-
-                var screens = AllScreens;
-                var length = screens.Length;
-                var result = new int[length];
-
-                for (int i = 0; i < length; i++)
-                    result[i] = screens[i].DPI.Height;
-
-                return result;
+                }
             }
         }
 
