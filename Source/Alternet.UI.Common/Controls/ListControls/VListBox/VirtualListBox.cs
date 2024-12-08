@@ -396,6 +396,86 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects item on the next page.
+        /// </summary>
+        public virtual void SelectItemOnNextPage()
+        {
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                SelectFirstItem();
+                return;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return;
+
+            SelectedIndex = Math.Min(selected.Value + numVisible, Count - 1);
+        }
+
+        /// <summary>
+        /// Selects item on the previous page.
+        /// </summary>
+        public virtual void SelectItemOnPreviousPage()
+        {
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                SelectFirstItem();
+                return;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return;
+
+            SelectedIndex = Math.Max(selected.Value - numVisible, 0);
+        }
+
+        /// <summary>
+        /// Selects next item.
+        /// </summary>
+        public virtual void SelectNextItem()
+        {
+            if (SelectedIndex is null)
+            {
+                SelectFirstItem();
+            }
+            else
+            if (SelectedIndex == Count - 1)
+            {
+            }
+            else
+            {
+                SelectedIndex++;
+            }
+        }
+
+        /// <summary>
+        /// Selects previous item.
+        /// </summary>
+        public virtual void SelectPreviousItem()
+        {
+            if (SelectedIndex is null)
+            {
+                SelectFirstItem();
+            }
+            else
+            if (SelectedIndex == 0)
+            {
+            }
+            else
+            {
+                SelectedIndex--;
+            }
+        }
+
+        /// <summary>
         /// Triggers a refresh for the area between the specified range of rows given (inclusively).
         /// </summary>
         /// <param name="from">First item index.</param>
