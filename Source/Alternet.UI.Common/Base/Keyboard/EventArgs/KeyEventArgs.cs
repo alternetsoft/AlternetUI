@@ -107,6 +107,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="SuppressKeyPress"/> or
+        /// <see cref="HandledEventArgs.Handled"/> is True.
+        /// </summary>
+        public bool IsHandledOrSupressed => SuppressKeyPress || Handled;
+
+        /// <summary>
         /// Gets whether or not the key referenced by the event is down.
         /// </summary>
         public virtual bool IsDown => keyStates == KeyStates.Down;

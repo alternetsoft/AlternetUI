@@ -207,6 +207,17 @@ ALTERNET_UI_API RectI_C VListBox_GetItemRectI_(VListBox* obj, int index)
     #endif
 }
 
+ALTERNET_UI_API c_bool VListBox_ScrollToRow_(VListBox* obj, int row)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->ScrollToRow(row);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool VListBox_ScrollRows_(VListBox* obj, int rows)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

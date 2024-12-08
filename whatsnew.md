@@ -1,3 +1,20 @@
+# 0.9.649 (2024 December 8)
+
+- LayoutStyle.Scroll - new control layout style as in ScrollViewer.
+- ScrollViewer: Fix bad layout in some cases.
+- SpeedButton: DefaultClickRepeatDelay, ClickRepeatDelay.
+- VirtualListBox: VisibleCount, ScrollToRow(int), ScrollToFirstRow(), ScrollToLastRow(), TopIndex (set method).
+- VirtualListBox: SelectItemOnNextPage(), SelectItemOnPreviousPage(), SelectNextItem(), SelectPreviousItem().
+- PlessVariant struct made public. It implements variant structure which can contain data with different types.
+- FindReplaceControl: Scope, IsScopeAllOpenDocuments, IsScopeCurrentProject, IsScopeSelectionOnly, IsScopeCurrentDocument, OptionFindTextAtCursor, OptionPromptOnReplace.
+- AbstractControl.OnBeforeParentKeyPress.
+- TimerUtils: Change ScrollBar click interval 20->50.
+- ControlAndButton: Fix IsBtnClickRepeated behavior.
+- AbstractControl: DoInsideInit, GetChildrenMaxPreferredSizePadded, SetScrollBarInfo.
+- KeyEventArgs.IsHandledOrSupressed.
+- Fix Display.AllDPI behavior in some cases.
+- PropertyGridSample: Add test actions for methods with result.
+
 # 0.9.647 (2024 December 2)
 
 - Colors are loaded faster to the color editors.

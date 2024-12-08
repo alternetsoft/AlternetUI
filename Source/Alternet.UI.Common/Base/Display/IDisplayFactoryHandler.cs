@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with displays.
     /// </summary>
-    public interface IDisplayFactoryHandler : IDisposable
+    public interface IDisplayFactoryHandler : IDisposableObject
     {
         /// <inheritdoc cref="Display.GetFromControl(AbstractControl)"/>
         int GetFromControl(AbstractControl control);

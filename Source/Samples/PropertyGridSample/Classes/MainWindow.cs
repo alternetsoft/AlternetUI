@@ -431,20 +431,25 @@ namespace PropertyGridSample
                             if (method.IsGenericMethod)
                                 continue;
                             var retParam = method.ReturnParameter;
-                            if (retParam.ParameterType != typeof(void))
-                                continue;
+                            var resultIsVoid = retParam.ParameterType == typeof(void);
+
                             var prms = method.GetParameters();
                             if (prms.Length > 0)
                                 continue;
                             var browsable = AssemblyUtils.GetBrowsable(method);
                             if (!browsable)
                                 continue;
-                            panel.AddAction($"{method.Name}()", () =>
+                            var methodName = $"{method.Name}()";
+                            panel.AddAction(methodName, () =>
                             {
                                 var selectedControl = GetSelectedControl<Control>();
                                 if (selectedControl is null)
                                     return;
-                                method.Invoke(selectedControl, null);
+                                var result = method.Invoke(selectedControl, null);
+                                if(resultIsVoid)
+                                    App.Log($"Called {type.Name}.{methodName}");
+                                else
+                                    App.Log($"Called {type.Name}.{methodName} with result {result}");
                             });
                         }
                     });

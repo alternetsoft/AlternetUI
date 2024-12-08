@@ -94,6 +94,11 @@ namespace Alternet.UI
             return NativeControl.ScrollRowPages(pages);
         }
 
+        bool IVListBoxHandler.ScrollToRow(int pages)
+        {
+            return NativeControl.ScrollToRow(pages);
+        }
+        
         void IVListBoxHandler.RefreshRow(int row)
         {
             NativeControl.RefreshRow(row);

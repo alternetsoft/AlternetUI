@@ -35,6 +35,9 @@ namespace Alternet.UI
         /// <inheritdoc cref="VirtualListBox.ScrollRows(int)"/>
         bool ScrollRows(int rows);
 
+        /// <inheritdoc cref="VirtualListBox.ScrollToRow(int)"/>
+        bool ScrollToRow(int row);
+
         /// <inheritdoc cref="VirtualListBox.ScrollRowPages(int)"/>
         bool ScrollRowPages(int pages);
 

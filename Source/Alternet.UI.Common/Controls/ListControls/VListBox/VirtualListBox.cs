@@ -118,6 +118,22 @@ namespace Alternet.UI
             set => base.UserPaint = true;
         }
 
+        /// <summary>
+        /// Gets number of visible items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual int VisibleCount
+        {
+            get
+            {
+                var firstVisibleItem = GetVisibleBegin();
+                var lastVisibleItem = GetVisibleEnd();
+                if (firstVisibleItem < 0 || lastVisibleItem < 0)
+                    return 0;
+                return lastVisibleItem - firstVisibleItem + 1;
+            }
+        }
+
         /// <inheritdoc/>
         public override int Count
         {
@@ -169,6 +185,13 @@ namespace Alternet.UI
             get
             {
                 return GetVisibleBegin();
+            }
+
+            set
+            {
+                if (TopIndex == value)
+                    return;
+                ScrollToRow(value);
             }
         }
 
@@ -271,6 +294,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Scrolls to the specified row.
+        /// </summary>
+        /// <param name="rows">It will become the first visible row in the control.</param>
+        /// <returns>True if we scrolled the control, False if nothing was done.</returns>
+        public virtual bool ScrollToRow(int rows)
+        {
+            return Handler.ScrollToRow(rows);
+        }
+
+        /// <summary>
         /// Sets items from the specified collection to the control's items as fast as possible.
         /// </summary>
         public virtual void SetItemsFast<TItemFrom>(
@@ -363,6 +396,86 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects item on the next page.
+        /// </summary>
+        public virtual void SelectItemOnNextPage()
+        {
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                SelectFirstItem();
+                return;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return;
+
+            SelectedIndex = Math.Min(selected.Value + numVisible, Count - 1);
+        }
+
+        /// <summary>
+        /// Selects item on the previous page.
+        /// </summary>
+        public virtual void SelectItemOnPreviousPage()
+        {
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                SelectFirstItem();
+                return;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return;
+
+            SelectedIndex = Math.Max(selected.Value - numVisible, 0);
+        }
+
+        /// <summary>
+        /// Selects next item.
+        /// </summary>
+        public virtual void SelectNextItem()
+        {
+            if (SelectedIndex is null)
+            {
+                SelectFirstItem();
+            }
+            else
+            if (SelectedIndex == Count - 1)
+            {
+            }
+            else
+            {
+                SelectedIndex++;
+            }
+        }
+
+        /// <summary>
+        /// Selects previous item.
+        /// </summary>
+        public virtual void SelectPreviousItem()
+        {
+            if (SelectedIndex is null)
+            {
+                SelectFirstItem();
+            }
+            else
+            if (SelectedIndex == 0)
+            {
+            }
+            else
+            {
+                SelectedIndex--;
+            }
+        }
+
+        /// <summary>
         /// Triggers a refresh for the area between the specified range of rows given (inclusively).
         /// </summary>
         /// <param name="from">First item index.</param>
@@ -440,6 +553,28 @@ namespace Alternet.UI
         public virtual int GetVisibleEnd()
         {
             return Handler.GetVisibleEnd();
+        }
+
+        /// <summary>
+        /// Scrolls control to the first row.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool ScrollToFirstRow()
+        {
+            return ScrollToRow(0);
+        }
+
+        /// <summary>
+        /// Scrolls control to the last row.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool ScrollToLastRow()
+        {
+            var visibleRows = VisibleCount;
+            if (visibleRows <= 0)
+                return false;
+            var result = ScrollToRow(Count - VisibleCount + 1);
+            return result;
         }
 
         /// <summary>
@@ -604,13 +739,15 @@ namespace Alternet.UI
                                 = ListControlItem.GetSelectedItemBackColor(item, this)
                                 ?? RealBackgroundColor;
                             drawItemArgs.ForeColor
-                                = ListControlItem.GetSelectedTextColor(item, this) ?? RealForegroundColor;
+                                = ListControlItem.GetSelectedTextColor(item, this)
+                                ?? RealForegroundColor;
                         }
                         else
                         {
                             drawItemArgs.BackColor = RealBackgroundColor;
                             drawItemArgs.ForeColor
-                                = ListControlItem.GetItemTextColor(item, this) ?? RealForegroundColor;
+                                = ListControlItem.GetItemTextColor(item, this)
+                                ?? RealForegroundColor;
                         }
 
                         RaiseDrawItem(drawItemArgs);
@@ -697,7 +834,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Called when the <see cref="MeasureItem" /> event is raised.</summary>
-        /// <param name="e">A <see cref="MeasureItemEventArgs" /> that contains the event data.</param>
+        /// <param name="e">A <see cref="MeasureItemEventArgs" /> that
+        /// contains the event data.</param>
         protected virtual void OnMeasureItem(MeasureItemEventArgs e)
         {
         }
