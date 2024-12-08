@@ -741,6 +741,9 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyPress(KeyPressEventArgs e)
         {
+            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentKeyPress(this, e)))
+                return;
+
             var isValidChar = IsValidInputChar(e.KeyChar);
 
             if (!isValidChar)
