@@ -1050,7 +1050,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a Rectangle that represents the intersection between this Rectangle and rect.
+        /// Changes this rectangle to the rectangle that represents the
+        /// intersection between this rectangle and the rectangle specified
+        /// in the <paramref name="rect"/> parameter.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Intersect(RectD rect)
