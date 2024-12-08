@@ -118,6 +118,22 @@ namespace Alternet.UI
             set => base.UserPaint = true;
         }
 
+        /// <summary>
+        /// Gets number of visible items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual int VisibleCount
+        {
+            get
+            {
+                var firstVisibleItem = GetVisibleBegin();
+                var lastVisibleItem = GetVisibleEnd();
+                if (firstVisibleItem < 0 || lastVisibleItem < 0)
+                    return 0;
+                return lastVisibleItem - firstVisibleItem + 1;
+            }
+        }
+
         /// <inheritdoc/>
         public override int Count
         {
@@ -604,13 +620,15 @@ namespace Alternet.UI
                                 = ListControlItem.GetSelectedItemBackColor(item, this)
                                 ?? RealBackgroundColor;
                             drawItemArgs.ForeColor
-                                = ListControlItem.GetSelectedTextColor(item, this) ?? RealForegroundColor;
+                                = ListControlItem.GetSelectedTextColor(item, this)
+                                ?? RealForegroundColor;
                         }
                         else
                         {
                             drawItemArgs.BackColor = RealBackgroundColor;
                             drawItemArgs.ForeColor
-                                = ListControlItem.GetItemTextColor(item, this) ?? RealForegroundColor;
+                                = ListControlItem.GetItemTextColor(item, this)
+                                ?? RealForegroundColor;
                         }
 
                         RaiseDrawItem(drawItemArgs);
@@ -697,7 +715,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Called when the <see cref="MeasureItem" /> event is raised.</summary>
-        /// <param name="e">A <see cref="MeasureItemEventArgs" /> that contains the event data.</param>
+        /// <param name="e">A <see cref="MeasureItemEventArgs" /> that
+        /// contains the event data.</param>
         protected virtual void OnMeasureItem(MeasureItemEventArgs e)
         {
         }
