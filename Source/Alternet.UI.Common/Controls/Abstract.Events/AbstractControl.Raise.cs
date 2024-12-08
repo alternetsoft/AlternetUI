@@ -756,6 +756,8 @@ namespace Alternet.UI
             OnKeyPress(e);
 
             RaiseNotifications((n) => n.AfterKeyPress(this, e));
+
+            ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyPress(this, e));
         }
 
         /// <summary>
