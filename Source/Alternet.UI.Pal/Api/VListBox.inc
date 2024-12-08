@@ -37,6 +37,7 @@ ListBoxSelectionMode GetSelectionMode();
 void SetSelectionMode(ListBoxSelectionMode value);
 
 RectI GetItemRectI(int index);
+bool ScrollToRow(int row);
 bool ScrollRows(int rows);
 bool ScrollRowPages(int pages);
 void RefreshRow(int row);

@@ -415,6 +415,11 @@ namespace Alternet::UI
         GetListBox()->RefreshRow(row);
     }
 
+    bool VListBox::ScrollToRow(int row)
+    {
+        return GetListBox()->ScrollToRow(row);
+    }
+
     void VListBox::RefreshRows(int from, int to)
     {
         GetListBox()->RefreshRows(from, to);

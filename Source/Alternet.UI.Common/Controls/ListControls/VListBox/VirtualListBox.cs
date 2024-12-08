@@ -186,6 +186,13 @@ namespace Alternet.UI
             {
                 return GetVisibleBegin();
             }
+
+            set
+            {
+                if (TopIndex == value)
+                    return;
+                ScrollToRow(value);
+            }
         }
 
         /// <inheritdoc/>
@@ -284,6 +291,16 @@ namespace Alternet.UI
         public virtual bool ScrollRows(int rows)
         {
             return Handler.ScrollRows(rows);
+        }
+
+        /// <summary>
+        /// Scrolls to the specified row.
+        /// </summary>
+        /// <param name="rows">It will become the first visible row in the control.</param>
+        /// <returns>True if we scrolled the control, False if nothing was done.</returns>
+        public virtual bool ScrollToRow(int rows)
+        {
+            return Handler.ScrollToRow(rows);
         }
 
         /// <summary>
@@ -456,6 +473,28 @@ namespace Alternet.UI
         public virtual int GetVisibleEnd()
         {
             return Handler.GetVisibleEnd();
+        }
+
+        /// <summary>
+        /// Scrolls control to the first row.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool ScrollToFirstRow()
+        {
+            return ScrollToRow(0);
+        }
+
+        /// <summary>
+        /// Scrolls control to the last row.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool ScrollToLastRow()
+        {
+            var visibleRows = VisibleCount;
+            if (visibleRows <= 0)
+                return false;
+            var result = ScrollToRow(Count - VisibleCount + 1);
+            return result;
         }
 
         /// <summary>

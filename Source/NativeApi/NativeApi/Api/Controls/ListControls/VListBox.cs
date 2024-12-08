@@ -15,6 +15,8 @@ namespace NativeApi.Api
 
         public RectI GetItemRectI(int index) => default;
 
+        public bool ScrollToRow(int row) => default;
+
         public bool ScrollRows(int rows) => default;
         public bool ScrollRowPages(int pages) => default;
         public void RefreshRow(int row) { }
