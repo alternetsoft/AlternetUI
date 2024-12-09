@@ -175,6 +175,8 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool CanSkipInvalidate()
         {
+            if (InUpdates)
+                return true;
             if (!VisibleOnScreen)
                 return true;
             if (ClientRectangle.SizeIsEmpty)
