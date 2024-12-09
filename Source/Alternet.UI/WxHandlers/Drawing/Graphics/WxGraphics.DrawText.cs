@@ -14,6 +14,11 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override SizeD GetTextExtent(string text, Font font)
         {
+            if (text is null || text.Length == 0)
+                return SizeD.Empty;
+
+            var dpi = GetDPI().Width;
+
             var result = dc.GetTextExtentSimple(
                 text,
                 (UI.Native.Font)font.Handler,
