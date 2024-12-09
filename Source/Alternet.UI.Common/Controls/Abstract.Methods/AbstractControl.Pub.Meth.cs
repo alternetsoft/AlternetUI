@@ -400,7 +400,8 @@ namespace Alternet.UI
         /// update region, which is the area that will be repainted at the next
         /// paint operation), and causes a paint message to be sent to the
         /// control.</summary>
-        /// <param name="rect">A <see cref="RectD" /> that represents the region to invalidate.</param>
+        /// <param name="rect">A <see cref="RectD" /> that represents the region
+        /// to invalidate.</param>
         public virtual void Invalidate(RectD rect)
         {
             RefreshRect(rect, true);
@@ -411,7 +412,8 @@ namespace Alternet.UI
         /// Same as <see cref="Invalidate(RectD)"/> but has additional
         /// parameter <paramref name="eraseBackground"/>.
         /// </summary>
-        /// <param name="rect">A <see cref="RectD" /> that represents the region to invalidate.</param>
+        /// <param name="rect">A <see cref="RectD" /> that represents the region
+        /// to invalidate.</param>
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
         public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
         {
@@ -1093,8 +1095,7 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return false;
-            var childs = Children;
-
+            var childs = GetVisibleChildren();
             foreach (var child in childs)
             {
                 if (!child.Visible)
