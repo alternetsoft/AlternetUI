@@ -170,5 +170,15 @@ namespace Alternet.UI
         /// 'Minus' button that can be used near the textbox or other value editors.
         /// </summary>
         TextBoxMinus,
+
+        /// <summary>
+        /// 'Show password' button.
+        /// </summary>
+        TextBoxShowPassword,
+
+        /// <summary>
+        /// 'Hide password' button.
+        /// </summary>
+        TextBoxHidePassword,
     }
 }

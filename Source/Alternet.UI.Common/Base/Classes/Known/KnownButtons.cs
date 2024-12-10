@@ -84,6 +84,9 @@ namespace Alternet.UI
             data[KnownButton.TextBoxDown] = () => new(KnownSvgImages.ImgTriangleArrowDown);
             data[KnownButton.TextBoxPlus] = () => new(KnownSvgImages.ImgPlus);
             data[KnownButton.TextBoxMinus] = () => new(KnownSvgImages.ImgMinus);
+
+            data[KnownButton.TextBoxShowPassword] = () => new(KnownSvgImages.ImgEyeOn);
+            data[KnownButton.TextBoxHidePassword] = () => new(KnownSvgImages.ImgEyeOff);
         }
 
         /// <summary>
