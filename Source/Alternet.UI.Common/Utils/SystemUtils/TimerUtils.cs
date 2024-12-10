@@ -95,6 +95,31 @@ namespace Alternet.UI
             return false;
         }
 
+        /// <summary>
+        /// logs execution time of the specified action.
+        /// </summary>
+        /// <param name="action">Action to measure.</param>
+        /// <returns></returns>
+        /// <param name="varName">Text to log as prefix.</param>
+        public static void LogActionRunTime(string varName, Action action)
+        {
+            App.LogNameValue(varName, GetActionRunTime(action));
+        }
+
+        /// <summary>
+        /// Measures execution time of the specified action.
+        /// </summary>
+        /// <param name="action">Action to measure.</param>
+        /// <returns></returns>
+        public static long GetActionRunTime(Action action)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            action();
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            return elapsedMs;
+        }
+
         private static void ClickRepeatTimerTick(object? sender, EventArgs e)
         {
             ClickRepeatedEvent?.Invoke(sender, e);
