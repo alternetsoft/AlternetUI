@@ -1096,6 +1096,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets 'Tag' property of the tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        /// <param name="tag">Value of the 'Tag' property.</param>
+        public void SetToolTag(ObjectUniqueId toolId, object? tag)
+        {
+            var item = GetToolControl(toolId);
+            if (item is null)
+                return;
+            item.Tag = tag;
+        }
+
+        /// <summary>
+        /// Gets 'Tag' property of the tool.
+        /// </summary>
+        /// <param name="toolId">ID of a previously added tool.</param>
+        public object? GetToolTag(ObjectUniqueId toolId)
+        {
+            var item = GetToolControl(toolId);
+            return item?.Tag;
+        }
+
+        /// <summary>
+        /// Gets all tools which are derived from the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type of the tool</typeparam>
+        /// <returns></returns>
+        public virtual IEnumerable<T> GetToolsAs<T>()
+        {
+            foreach (var item in Children)
+            {
+                if (item is not T btn)
+                    continue;
+                yield return btn;
+            }
+        }
+
+        /// <summary>
+        /// Gets all tools which are derived from the <see cref="SpeedButton"/>.
+        /// </summary>
+        public IEnumerable<SpeedButton> GetTools() => GetToolsAs<SpeedButton>();
+
+        /// <summary>
+        /// Gets collection of the tools with 'Sticky' property equal to the specified value.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<SpeedButton> GetStickyTools(bool value = true)
+        {
+            foreach (var item in Children)
+            {
+                if (item is not SpeedButton btn)
+                    continue;
+                if(btn.Sticky == value)
+                    yield return btn;
+            }
+        }
+
+        /// <summary>
         /// Gets the specified toolbar item Sticky property value.
         /// </summary>
         /// <param name="toolId">ID of a previously added tool.</param>
