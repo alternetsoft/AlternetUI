@@ -58,6 +58,16 @@ namespace Alternet.UI
             GetImageUrl("alternet-file");
 
         /// <summary>
+        /// Gets or sets url used to load "Eye on" svg image.
+        /// </summary>
+        public static string UrlImageEyeOn { get; set; } = GetImageUrl("alternet-eye-on");
+
+        /// <summary>
+        /// Gets or sets url used to load "Eye off" svg image.
+        /// </summary>
+        public static string UrlImageEyeOff { get; set; } = GetImageUrl("alternet-eye-off");
+
+        /// <summary>
         /// Gets or sets url used to load "Plus Inside Square" svg image.
         /// </summary>
         public static string UrlImageSquarePlus { get; set; } = GetImageUrl("alternet-square-plus");
