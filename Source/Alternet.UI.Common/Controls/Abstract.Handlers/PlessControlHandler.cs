@@ -204,10 +204,6 @@ namespace Alternet.UI
         {
         }
 
-        void IControlHandler.CenterOnParent(GenericOrientation direction)
-        {
-        }
-
         PointD IControlHandler.ClientToScreen(PointD point)
         {
             PointD result;

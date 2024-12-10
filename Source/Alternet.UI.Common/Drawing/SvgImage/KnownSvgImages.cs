@@ -70,6 +70,26 @@ namespace Alternet.UI
         private static SvgImage? imgKeyboard;
         private static SvgImage? imgCircleFilled;
         private static SvgImage? imgDiamondFilled;
+        private static SvgImage? imgEyeOn;
+        private static SvgImage? imgEyeOff;
+
+        /// <summary>
+        /// Gets or sets 'Eye On' image.
+        /// </summary>
+        public static SvgImage ImgEyeOn
+        {
+            get => imgEyeOn ??= new MonoSvgImage(KnownSvgUrls.UrlImageEyeOn);
+            set => imgEyeOn = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Eye Off' image.
+        /// </summary>
+        public static SvgImage ImgEyeOff
+        {
+            get => imgEyeOff ??= new MonoSvgImage(KnownSvgUrls.UrlImageEyeOff);
+            set => imgEyeOff = value;
+        }
 
         /// <summary>
         /// Gets or sets 'Circle Filled' image.

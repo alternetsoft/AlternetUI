@@ -1712,6 +1712,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Visible"/> property value for all the children controls.
+        /// </summary>
+        /// <param name="visible">New value of the <see cref="Visible"/> property.</param>
+        public void SetChildrenVisible(bool visible = true)
+        {
+            ForEachChild((c) => c.Visible = visible);
+        }
+
+        /// <summary>
+        /// Centers the window.
+        /// </summary>
+        /// <param name="direction">Specifies the direction for the centering.</param>
+        /// <remarks>
+        /// If the window is a top level one (i.e. doesn't have a parent), it will be
+        /// centered relative to the screen anyhow.
+        /// </remarks>
+        public virtual bool CenterOnParent(GenericOrientation direction = GenericOrientation.Both)
+        {
+            if (Parent is null)
+                return false;
+
+            var vert = HVAlignment.Center.VerticalOrNull(direction);
+            var horz = HVAlignment.Center.HorizontalOrNull(direction);
+            var newBounds = AlignUtils.AlignRectInRect(
+                Bounds,
+                Parent.ClientRectangle,
+                horz,
+                vert,
+                true);
+            Bounds = newBounds.ToRect();
+            return true;
+        }
+
+        /// <summary>
         /// Called when the control should reposition its child controls.
         /// </summary>
         [Browsable(false)]

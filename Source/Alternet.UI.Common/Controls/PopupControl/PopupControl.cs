@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -59,6 +61,21 @@ namespace Alternet.UI
             /// </summary>
             Other,
         }
+
+/*
+        /// <summary>
+        /// Get or sets the rectangle which should not be overlapped when popup is shown.
+        /// </summary>
+        /// <remarks>
+        /// This could be useful when more than one popup is shown at the same moment
+        /// and popups should not intersect.
+        /// </remarks>
+        public virtual RectD? NoOverlap
+        {
+            get;
+            set;
+        }
+*/
 
         /// <summary>
         /// Gets or sets container where popup will be shown.

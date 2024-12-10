@@ -537,19 +537,6 @@ namespace Alternet.UI
             base.RaiseBackgroundColorChanged();
         }
 
-        /// <summary>
-        /// Centers the window.
-        /// </summary>
-        /// <param name="direction">Specifies the direction for the centering.</param>
-        /// <remarks>
-        /// If the window is a top level one (i.e. doesn't have a parent), it will be
-        /// centered relative to the screen anyhow.
-        /// </remarks>
-        public virtual void CenterOnParent(GenericOrientation direction)
-        {
-            Handler.CenterOnParent(direction);
-        }
-
         /// <inheritdoc/>
         public override void RefreshRect(RectD rect, bool eraseBackground = true)
         {
