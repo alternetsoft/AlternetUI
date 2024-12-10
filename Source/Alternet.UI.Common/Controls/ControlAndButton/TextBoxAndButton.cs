@@ -82,6 +82,31 @@ namespace Alternet.UI
             Handler.TextChanged = null;
         }
 
+        /// <summary>
+        /// Initializes this control for the password editing.
+        /// </summary>
+        public virtual void InitPasswordEdit()
+        {
+            TextBox.IsPassword = true;
+            Buttons.SetChildrenVisible(false);
+            this.HasBtnComboBox = true;
+            this.BtnComboBoxSvg = null;
+            this.BtnComboBoxKnownImage = KnownButton.TextBoxShowPassword;
+
+            this.ButtonClick += (s, e) =>
+            {
+                TextBox.IsPassword = !TextBox.IsPassword;
+                if (TextBox.IsPassword)
+                {
+                    this.BtnComboBoxKnownImage = KnownButton.TextBoxShowPassword;
+                }
+                else
+                {
+                    this.BtnComboBoxKnownImage = KnownButton.TextBoxHidePassword;
+                }
+            };
+        }
+
         /// <inheritdoc/>
         protected override AbstractControl CreateControl()
         {
