@@ -109,18 +109,6 @@ namespace Alternet.UI
             return new(horizontal);
         }
 
-        /*/// <summary>
-        /// Implicit operator declaration for the conversion from <see cref="GenericAlignment"/> to
-        /// <see cref="HVAlignment"/>.
-        /// </summary>
-        /// <param name="value">Value to convert.</param>
-        public static implicit operator HVAlignment(GenericAlignment value)
-        {
-            var vertical = AlignUtils.GetVertical(value);
-            var horizontal = AlignUtils.GetHorizontal(value);
-            return new(horizontal: horizontal, vertical: vertical);
-        }*/
-
         /// <summary>
         /// Implicit operator declaration for the conversion from <see cref="VerticalAlignment"/> to
         /// <see cref="HVAlignment"/>.
@@ -183,6 +171,32 @@ namespace Alternet.UI
             if (EnumUtils.IsMaxValueUseLast(alignment))
                 return CoordAlignment.Near;
             return alignment + 1;
+        }
+
+        /// <summary>
+        /// Gets vertical alignment or Null if <paramref name="direction"/> parameter
+        /// doesn't contain <see cref="GenericOrientation.Vertical"/>.
+        /// </summary>
+        /// <param name="direction">Direction filter.</param>
+        /// <returns></returns>
+        public VerticalAlignment? VerticalOrNull(GenericOrientation direction)
+        {
+            if (direction.HasFlag(GenericOrientation.Vertical))
+                return Vertical;
+            return null;
+        }
+
+        /// <summary>
+        /// Gets horizontal alignment or Null if <paramref name="direction"/> parameter
+        /// doesn't contain <see cref="GenericOrientation.Horizontal"/>.
+        /// </summary>
+        /// <param name="direction">Direction filter.</param>
+        /// <returns></returns>
+        public HorizontalAlignment? HorizontalOrNull(GenericOrientation direction)
+        {
+            if (direction.HasFlag(GenericOrientation.Horizontal))
+                return Horizontal;
+            return null;
         }
 
         /// <summary>
