@@ -14,6 +14,34 @@ namespace Alternet.UI
     public abstract partial class ControlAndButton : HiddenBorder, INotifyDataErrorInfo
     {
         /// <summary>
+        /// Gets or sets default image for the 'ComboBox' button.
+        /// </summary>
+        public static KnownButton DefaultBtnComboBoxImage = KnownButton.TextBoxCombo;
+
+        /// <summary>
+        /// Gets or sets default image for the 'Ellipsis' button.
+        /// </summary>
+        public static KnownButton DefaultBtnEllipsisImage = KnownButton.TextBoxEllipsis;
+
+        /// <summary>
+        /// Gets or sets default image for the 'Plus' button.
+        /// </summary>
+        public static KnownButton DefaultBtnPlusImage = KnownButton.TextBoxPlus;
+
+        /// <summary>
+        /// Gets or sets default image for the 'Minus' button.
+        /// </summary>
+        public static KnownButton DefaultBtnMinusImage = KnownButton.TextBoxMinus;
+
+        /// <summary>
+        /// Gets or sets default svg image for 'ComboBox' button.
+        /// </summary>
+        /// <remarks>
+        /// If not specified, <see cref="DefaultBtnComboBoxImage"/> is used.
+        /// </remarks>
+        public static SvgImage? DefaultBtnComboBoxSvg;
+
+        /// <summary>
         /// Gets or sets whether minus button is shown before plus button. Default value is True.
         /// </summary>
         /// <remarks>
@@ -34,6 +62,8 @@ namespace Alternet.UI
         private ObjectUniqueId? idButtonEllipsis;
         private ObjectUniqueId? idButtonPlus;
         private ObjectUniqueId? idButtonMinus;
+        private KnownButton? comboBoxKnownImage;
+        private SvgImage? comboBoxSvg;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlAndButton"/> class
@@ -95,7 +125,50 @@ namespace Alternet.UI
 
             set
             {
-                SetHasButton(KnownButton.TextBoxCombo, ref idButtonCombo, value);
+                SetHasButton(
+                    comboBoxKnownImage ?? DefaultBtnComboBoxImage,
+                    ref idButtonCombo,
+                    value,
+                    comboBoxSvg ?? DefaultBtnComboBoxSvg);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets 'ComboBox' button image as <see cref="KnownButton"/>.
+        /// </summary>
+        public virtual KnownButton? BtnComboBoxKnownImage
+        {
+            get
+            {
+                return comboBoxKnownImage;
+            }
+
+            set
+            {
+                if (comboBoxKnownImage == value)
+                    return;
+                comboBoxKnownImage = value;
+                UpdateComboBoxImage();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets 'ComboBox' button image as <see cref="SvgImage"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SvgImage? BtnComboBoxSvg
+        {
+            get
+            {
+                return comboBoxSvg;
+            }
+
+            set
+            {
+                if (comboBoxSvg == value)
+                    return;
+                comboBoxSvg = value;
+                UpdateComboBoxImage();
             }
         }
 
@@ -111,7 +184,7 @@ namespace Alternet.UI
 
             set
             {
-                SetHasButton(KnownButton.TextBoxEllipsis, ref idButtonEllipsis, value);
+                SetHasButton(DefaultBtnEllipsisImage, ref idButtonEllipsis, value);
             }
         }
 
@@ -140,12 +213,12 @@ namespace Alternet.UI
 
                 void TogglePlusButton()
                 {
-                    SetHasButton(KnownButton.TextBoxPlus, ref idButtonPlus, value);
+                    SetHasButton(DefaultBtnPlusImage, ref idButtonPlus, value);
                 }
 
                 void ToggleMinusButton()
                 {
-                    SetHasButton(KnownButton.TextBoxMinus, ref idButtonMinus, value);
+                    SetHasButton(DefaultBtnMinusImage, ref idButtonMinus, value);
                 }
             }
         }
@@ -239,7 +312,7 @@ namespace Alternet.UI
         /// Gets attached <see cref="ToolBar"/> control.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl Buttons => buttons;
+        public ToolBar Buttons => buttons;
 
         /// <summary>
         /// Gets or sets visibility of the attached <see cref="ToolBar"/> control.
@@ -327,12 +400,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates main child control.
+        /// </summary>
+        /// <remarks>
+        /// For example, main control for the <see cref="TextBoxAndButton"/> is <see cref="TextBox"/>.
+        /// </remarks>
+        protected abstract AbstractControl CreateControl();
+
+        /// <summary>
         /// Sets whether button with the specified id is visible.
         /// </summary>
         /// <param name="btn">Known button.</param>
+        /// <param name="svg">Known button.</param>
         /// <param name="id">Id of the created button.</param>
         /// <param name="value">Whether button is visible.</param>
-        public virtual void SetHasButton(KnownButton btn, ref ObjectUniqueId? id, bool value)
+        private void SetHasButton(
+            KnownButton btn,
+            ref ObjectUniqueId? id,
+            bool value,
+            SvgImage? svg = null)
         {
             if (HasButton(id) == value)
                 return;
@@ -341,12 +427,23 @@ namespace Alternet.UI
                 if (id is null)
                 {
                     var isClickRepeat = IsBtnClickRepeated;
-                    id = buttons.AddSpeedBtn(btn, (s, e) =>
-                            {
-                                ControlAndButtonClickEventArgs args = new();
-                                args.ButtonId = (s as AbstractControl)?.UniqueId;
-                                RaiseButtonClick(args);
-                            });
+
+                    void ClickAction(object? s, EventArgs e)
+                    {
+                        ControlAndButtonClickEventArgs args = new();
+                        args.ButtonId = (s as AbstractControl)?.UniqueId;
+                        RaiseButtonClick(args);
+                    }
+
+                    if(svg is null)
+                    {
+                        id = buttons.AddSpeedBtn(btn, ClickAction);
+                    }
+                    else
+                    {
+                        id = buttons.AddSpeedBtn(null, svg, ClickAction);
+                    }
+
                     if (isClickRepeat)
                     {
                         buttons.SetToolIsClickRepeated(id.Value, true);
@@ -365,12 +462,15 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Creates main child control.
-        /// </summary>
-        /// <remarks>
-        /// For example, main control for the <see cref="TextBoxAndButton"/> is <see cref="TextBox"/>.
-        /// </remarks>
-        protected abstract AbstractControl CreateControl();
+        private void UpdateComboBoxImage()
+        {
+            if (idButtonCombo is null)
+                return;
+            var svg = comboBoxSvg ?? DefaultBtnComboBoxSvg;
+            if(svg is null)
+                Buttons.SetToolImage(idButtonCombo.Value, comboBoxKnownImage ?? DefaultBtnComboBoxImage);
+            else
+                Buttons.SetToolSvg(idButtonCombo.Value, svg);
+        }
     }
 }
