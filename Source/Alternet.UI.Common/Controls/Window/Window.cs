@@ -1136,6 +1136,15 @@ namespace Alternet.UI
             Handler.InputBindingCommandExecuted = null;
         }
 
+        /// <inheritdoc/>
+        public override bool CenterOnParent(GenericOrientation direction = GenericOrientation.Both)
+        {
+            var vert = HVAlignment.Center.VerticalOrNull(direction);
+            var horz = HVAlignment.Center.HorizontalOrNull(direction);
+            SetLocationOnDisplay(horz, vert);
+            return true;
+        }
+
         /// <summary>
         /// Aligns window location inside the specified display's client area using given
         /// horizontal and vertical alignment.

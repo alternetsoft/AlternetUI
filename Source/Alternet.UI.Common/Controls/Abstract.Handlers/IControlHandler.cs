@@ -221,9 +221,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Window.Raise"/>
         void Raise();
 
-        /// <inheritdoc cref="Control.CenterOnParent"/>
-        void CenterOnParent(GenericOrientation direction);
-
         /// <inheritdoc cref="AbstractControl.SetCursor"/>
         void SetCursor(Cursor? value);
 
