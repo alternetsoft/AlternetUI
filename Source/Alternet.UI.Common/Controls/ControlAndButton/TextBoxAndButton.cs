@@ -93,7 +93,7 @@ namespace Alternet.UI
             this.BtnComboBoxSvg = null;
             this.BtnComboBoxKnownImage = KnownButton.TextBoxShowPassword;
 
-            this.ButtonClick += (s, e) =>
+            void TogglePasswordButtonClick(object? s, EventArgs e)
             {
                 TextBox.IsPassword = !TextBox.IsPassword;
                 if (TextBox.IsPassword)
@@ -104,7 +104,10 @@ namespace Alternet.UI
                 {
                     this.BtnComboBoxKnownImage = KnownButton.TextBoxHidePassword;
                 }
-            };
+            }
+
+            this.ButtonClick -= TogglePasswordButtonClick;
+            this.ButtonClick += TogglePasswordButtonClick;
         }
 
         /// <inheritdoc/>
