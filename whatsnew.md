@@ -1,3 +1,20 @@
+# 0.9.650 (2024 December 10)
+
+- VirtualListBox: Fixed RecreateItems method.
+- TextBoxAndButton: InitPasswordEdit.
+- ToolBar: SetToolSvg, SetToolImage(KnownButton), SetToolTag, GetToolTag, GetToolsAs, GetTools, GetStickyTools.
+- KnownButton: TextBoxShowPassword, TextBoxHidePassword.
+- AbstractControl: OnAfterParentKeyPress, SetChildrenVisible.
+- AbstractControl: Fixed exception in ForEachVisibleChild.
+- AbstractControl: Do not call Invalidate if BeginUpdate is called.
+- New constructors for Collection, VirtualListBoxItems, ListControlItems{T}.
+- CustomKeyEventArgs.ShiftOrNone.
+- TimerUtils: LogActionRunTime, GetActionRunTime.
+- Redo Control.CenterOnParent without platform handler.
+- HVAlignment: VerticalOrNull, HorizontalOrNull.
+- SvgImage: ImgEyeOn, ImgEyeOff.
+- ControlAndButton: BtnComboBoxKnownImage, DefaultBtnComboBoxImage, DefaultBtnEllipsisImage, DefaultBtnPlusImage, DefaultBtnMinusImage, BtnComboBoxSvg.
+
 # 0.9.649 (2024 December 8)
 
 - LayoutStyle.Scroll - new control layout style as in ScrollViewer.
