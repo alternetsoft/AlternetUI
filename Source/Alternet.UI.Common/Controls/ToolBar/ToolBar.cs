@@ -618,6 +618,29 @@ namespace Alternet.UI
         /// Sets image of the item for the normal state.
         /// </summary>
         /// <param name="id">Item id.</param>
+        /// <param name="value">Image identifier.</param>
+        public virtual void SetToolImage(ObjectUniqueId id, KnownButton value)
+        {
+            var info = KnownButtons.GetInfo(value);
+            var svg = info?.SvgImage;
+            SetToolSvg(id, svg);
+        }
+
+        /// <summary>
+        /// Sets image of the item for the normal state.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="value"><see cref="ImageSet"/> to use as item image.</param>
+        public virtual void SetToolSvg(ObjectUniqueId id, SvgImage? value)
+        {
+            var image = value?.AsImageSet(GetImageSize());
+            SetToolImage(id, image);
+        }
+
+        /// <summary>
+        /// Sets image of the item for the normal state.
+        /// </summary>
+        /// <param name="id">Item id.</param>
         /// <param name="value"><see cref="ImageSet"/> to use as item image.</param>
         public virtual void SetToolImage(ObjectUniqueId id, ImageSet? value)
         {
