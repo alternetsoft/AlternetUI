@@ -1712,6 +1712,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="Visible"/> property value for all the children controls.
+        /// </summary>
+        /// <param name="visible">New value of the <see cref="Visible"/> property.</param>
+        public void SetChildrenVisible(bool visible = true)
+        {
+            ForEachChild((c) => c.Visible = visible);
+        }
+
+        /// <summary>
         /// Centers the window.
         /// </summary>
         /// <param name="direction">Specifies the direction for the centering.</param>
