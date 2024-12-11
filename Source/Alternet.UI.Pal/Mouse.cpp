@@ -49,6 +49,6 @@ namespace Alternet::UI
     void Mouse::OnMouse(int eventKind, wxMouseEvent& e, bool& handled)
     {
         MouseEventData data { eventKind, e.GetTimestamp(), GetEventTargetControl(e), e.GetWheelRotation()};
-        handled = RaiseEvent(MouseEvent::MouseChanged, &data);
+        handled = RaiseStaticEvent(MouseEvent::MouseChanged, &data);
     }
 }
