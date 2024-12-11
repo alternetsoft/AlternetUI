@@ -452,6 +452,8 @@ using System.Security;");
 
             w.WriteLine("static GCHandle eventCallbackGCHandle;");
 
+            w.WriteLine($"public static {declaringTypeName}? GlobalObject;");
+
             w.WriteLine();
 
             w.WriteLine("static void SetEventCallback()");
@@ -468,6 +470,7 @@ using System.Security;");
                         using (new BlockIndent(w))
                         {
                             w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType(), out _), "obj")};");
+                            w.WriteLine("w ??= GlobalObject;");
                             w.WriteLine("if (w == null) return IntPtr.Zero;");
                             w.WriteLine("return w.OnEvent(e, parameter);");
                         }

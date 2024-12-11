@@ -230,6 +230,7 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle eventCallbackGCHandle;
+        public static Button? GlobalObject;
         
         static void SetEventCallback()
         {
@@ -239,6 +240,7 @@ namespace Alternet.UI.Native
                     UI.Application.HandleThreadExceptions(() =>
                     {
                         var w = NativeObject.GetFromNativePointer<Button>(obj, p => new Button(p));
+                        w ??= GlobalObject;
                         if (w == null) return IntPtr.Zero;
                         return w.OnEvent(e, parameter);
                     }

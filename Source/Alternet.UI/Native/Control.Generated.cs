@@ -1198,6 +1198,7 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle eventCallbackGCHandle;
+        public static Control? GlobalObject;
         
         static void SetEventCallback()
         {
@@ -1207,6 +1208,7 @@ namespace Alternet.UI.Native
                     UI.Application.HandleThreadExceptions(() =>
                     {
                         var w = NativeObject.GetFromNativePointer<Control>(obj, null);
+                        w ??= GlobalObject;
                         if (w == null) return IntPtr.Zero;
                         return w.OnEvent(e, parameter);
                     }

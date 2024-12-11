@@ -35,6 +35,7 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle eventCallbackGCHandle;
+        public static Mouse? GlobalObject;
         
         static void SetEventCallback()
         {
@@ -44,6 +45,7 @@ namespace Alternet.UI.Native
                     UI.Application.HandleThreadExceptions(() =>
                     {
                         var w = NativeObject.GetFromNativePointer<Mouse>(obj, p => new Mouse(p));
+                        w ??= GlobalObject;
                         if (w == null) return IntPtr.Zero;
                         return w.OnEvent(e, parameter);
                     }

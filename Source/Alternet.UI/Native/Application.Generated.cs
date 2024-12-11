@@ -321,6 +321,7 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle eventCallbackGCHandle;
+        public static Application? GlobalObject;
         
         static void SetEventCallback()
         {
@@ -330,6 +331,7 @@ namespace Alternet.UI.Native
                     UI.Application.HandleThreadExceptions(() =>
                     {
                         var w = NativeObject.GetFromNativePointer<Application>(obj, p => new Application(p));
+                        w ??= GlobalObject;
                         if (w == null) return IntPtr.Zero;
                         return w.OnEvent(e, parameter);
                     }

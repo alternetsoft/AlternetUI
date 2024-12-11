@@ -76,6 +76,7 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle eventCallbackGCHandle;
+        public static Timer? GlobalObject;
         
         static void SetEventCallback()
         {
@@ -85,6 +86,7 @@ namespace Alternet.UI.Native
                     UI.Application.HandleThreadExceptions(() =>
                     {
                         var w = NativeObject.GetFromNativePointer<Timer>(obj, p => new Timer(p));
+                        w ??= GlobalObject;
                         if (w == null) return IntPtr.Zero;
                         return w.OnEvent(e, parameter);
                     }

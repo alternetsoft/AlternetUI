@@ -1,4 +1,5 @@
 using System;
+
 using Alternet.UI.Native;
 
 namespace Alternet.UI
@@ -15,29 +16,42 @@ namespace Alternet.UI
         public MouseInputProvider(Native.Mouse nativeMouse)
         {
             this.nativeMouse = nativeMouse;
+            Native.Mouse.GlobalObject = nativeMouse;
 
             nativeMouse.MouseChanged += NativeMouse_MouseChanged;
 
             events[(int)WxEventIdentifiers.MouseMove] = ReportMouseMove;
             events[(int)WxEventIdentifiers.MouseWheel] = ReportMouseWheel;
 
-            events[(int)WxEventIdentifiers.MouseDoubleClickLeft]        = () => { ReportMouseDoubleClick(MouseButton.Left); };
-            events[(int)WxEventIdentifiers.MouseDoubleClickMiddle]      = () => { ReportMouseDoubleClick(MouseButton.Middle); };
-            events[(int)WxEventIdentifiers.MouseDoubleClickRight]       = () => { ReportMouseDoubleClick(MouseButton.Right); };
-            events[(int)WxEventIdentifiers.MouseDoubleClickXButton1]    = () => { ReportMouseDoubleClick(MouseButton.XButton1); };
-            events[(int)WxEventIdentifiers.MouseDoubleClickXButton2]    = () => { ReportMouseDoubleClick(MouseButton.XButton2); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickLeft]
+                = () => { ReportMouseDoubleClick(MouseButton.Left); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickMiddle]
+                = () => { ReportMouseDoubleClick(MouseButton.Middle); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickRight]
+                = () => { ReportMouseDoubleClick(MouseButton.Right); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickXButton1]
+                = () => { ReportMouseDoubleClick(MouseButton.XButton1); };
+            events[(int)WxEventIdentifiers.MouseDoubleClickXButton2]
+                = () => { ReportMouseDoubleClick(MouseButton.XButton2); };
 
-            events[(int)WxEventIdentifiers.MouseDownLeft]       = () => { ReportMouseDown(MouseButton.Left); };
-            events[(int)WxEventIdentifiers.MouseDownMiddle]     = () => { ReportMouseDown(MouseButton.Middle); };
-            events[(int)WxEventIdentifiers.MouseDownRight]      = () => { ReportMouseDown(MouseButton.Right); };
-            events[(int)WxEventIdentifiers.MouseDownXButton1]   = () => { ReportMouseDown(MouseButton.XButton1); };
-            events[(int)WxEventIdentifiers.MouseDownXButton2]   = () => { ReportMouseDown(MouseButton.XButton2); };
+            events[(int)WxEventIdentifiers.MouseDownLeft]
+                = () => { ReportMouseDown(MouseButton.Left); };
+            events[(int)WxEventIdentifiers.MouseDownMiddle]
+                = () => { ReportMouseDown(MouseButton.Middle); };
+            events[(int)WxEventIdentifiers.MouseDownRight]
+                = () => { ReportMouseDown(MouseButton.Right); };
+            events[(int)WxEventIdentifiers.MouseDownXButton1]
+                = () => { ReportMouseDown(MouseButton.XButton1); };
+            events[(int)WxEventIdentifiers.MouseDownXButton2]
+                = () => { ReportMouseDown(MouseButton.XButton2); };
 
-            events[(int)WxEventIdentifiers.MouseUpLeft]         = () => { ReportMouseUp(MouseButton.Left); };
-            events[(int)WxEventIdentifiers.MouseUpMiddle]       = () => { ReportMouseUp(MouseButton.Middle); };
-            events[(int)WxEventIdentifiers.MouseUpRight]        = () => { ReportMouseUp(MouseButton.Right); };
-            events[(int)WxEventIdentifiers.MouseUpXButton1]     = () => { ReportMouseUp(MouseButton.XButton1); };
-            events[(int)WxEventIdentifiers.MouseUpXButton2]     = () => { ReportMouseUp(MouseButton.XButton2); };
+            events[(int)WxEventIdentifiers.MouseUpLeft] = () => { ReportMouseUp(MouseButton.Left); };
+            events[(int)WxEventIdentifiers.MouseUpMiddle] = () => { ReportMouseUp(MouseButton.Middle); };
+            events[(int)WxEventIdentifiers.MouseUpRight] = () => { ReportMouseUp(MouseButton.Right); };
+            events[(int)WxEventIdentifiers.MouseUpXButton1]
+                = () => { ReportMouseUp(MouseButton.XButton1); };
+            events[(int)WxEventIdentifiers.MouseUpXButton2]
+                = () => { ReportMouseUp(MouseButton.XButton2); };
         }
 
         private void NativeMouse_MouseChanged(object? sender, NativeEventArgs<MouseEventData> e)
@@ -62,6 +76,7 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             nativeMouse.MouseChanged -= NativeMouse_MouseChanged;
+            Native.Mouse.GlobalObject = null;
         }
 
         private static AbstractControl? GetTargetControl(IntPtr targetControlPointer, bool setHoveredControl)
@@ -73,7 +88,7 @@ namespace Alternet.UI
 
             var nativeHoveredHandler = Control.RequireHandler(hoveredControl) as WxControlHandler;
 
-            if(nativeHoveredHandler is not null)
+            if (nativeHoveredHandler is not null)
             {
                 if (nativeHoveredHandler.NativeControl.NativePointer == targetControlPointer)
                     return hoveredControl;
@@ -86,7 +101,7 @@ namespace Alternet.UI
                 return null;
 
             var result = WxControlHandler.NativeControlToHandler(c)?.Control;
-            if(setHoveredControl && result is not null)
+            if (setHoveredControl && result is not null)
                 AbstractControl.HoveredControl = result;
 
             return result;
@@ -116,5 +131,5 @@ namespace Alternet.UI
         {
             AbstractControl.BubbleMouseMove(targetControl, timestamp, null, out _);
         }
-     }
+    }
 }

@@ -117,21 +117,21 @@ namespace Alternet::UI
 	void Keyboard::OnChar(wxKeyEvent& e, bool& handled)
 	{
 		SetFields(e, InputEventCode_Char);
-		RaiseEvent(KeyboardEvent::KeyPress);
+		RaiseStaticEvent(KeyboardEvent::KeyPress);
 		handled = _inputHandled;
 	}
 
 	void Keyboard::OnKeyDown(wxKeyEvent& e, bool& handled)
 	{
 		SetFields(e, InputEventCode_KeyDown);
-		RaiseEvent(KeyboardEvent::KeyPress);
+		RaiseStaticEvent(KeyboardEvent::KeyPress);
 		handled = _inputHandled;
 	}
 
 	void Keyboard::OnKeyUp(wxKeyEvent& e, bool& handled)
 	{
 		SetFields(e, InputEventCode_KeyUp);
-		RaiseEvent(KeyboardEvent::KeyPress);
+		RaiseStaticEvent(KeyboardEvent::KeyPress);
 		handled = _inputHandled;
 	}
 

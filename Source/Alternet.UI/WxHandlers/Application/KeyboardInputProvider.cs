@@ -1,7 +1,11 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace Alternet.UI
 {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void CdeclActionDelegate();
+
     internal class KeyboardInputProvider : DisposableObject
     {
         private readonly Native.Keyboard nativeKeyboard;
@@ -9,12 +13,14 @@ namespace Alternet.UI
         public KeyboardInputProvider(Native.Keyboard nativeKeyboard)
         {
             this.nativeKeyboard = nativeKeyboard;
+            Native.Keyboard.GlobalObject = nativeKeyboard;
             nativeKeyboard.KeyPress = NativeKeyboard_KeyPress;
         }
 
         protected override void DisposeManaged()
         {
             nativeKeyboard.KeyPress = null;
+            Native.Keyboard.GlobalObject = null;
         }
 
         private void NativeKeyboard_KeyPress()
