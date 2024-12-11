@@ -7,23 +7,23 @@ namespace NativeApi.Api
 {
     public class Keyboard
     {
-        public char InputChar { get; }
+        public static char InputChar { get; }
 
         /*
             0 - key down
             1 - key up
             2 - char press
         */
-        public byte InputEventCode { get; }
+        public static byte InputEventCode { get; }
 
-        public bool InputHandled { get; set; }
+        public static bool InputHandled { get; set; }
 
-        public Key InputKey { get; }
+        public static Key InputKey { get; }
 
-        public bool InputIsRepeat { get; }
+        public static bool InputIsRepeat { get; }
 
         public event EventHandler? KeyPress;
 
-        public KeyStates GetKeyState(Key key) => throw new Exception();
+        public static KeyStates GetKeyState(Key key) => default;
     }
 }

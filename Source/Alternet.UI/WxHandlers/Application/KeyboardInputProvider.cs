@@ -23,12 +23,12 @@ namespace Alternet.UI
             const byte InputEventCodeKeyUp = 1;
             const byte InputEventCodeChar = 2;
 
-            var inputChar = nativeKeyboard.InputChar;
+            var inputChar = Native.Keyboard.InputChar;
             bool handled = false;
-            var repeatCount = Keyboard.IsRepeatToRepeatCount(nativeKeyboard.InputIsRepeat);
-            var key = nativeKeyboard.InputKey;
+            var repeatCount = Keyboard.IsRepeatToRepeatCount(Native.Keyboard.InputIsRepeat);
+            Key key = Native.Keyboard.InputKey;
 
-            switch (nativeKeyboard.InputEventCode)
+            switch (Native.Keyboard.InputEventCode)
             {
                 case InputEventCodeKeyDown:
                     AbstractControl.BubbleKeyDown(
@@ -50,7 +50,7 @@ namespace Alternet.UI
                     break;
             }
 
-            nativeKeyboard.InputHandled = handled;
+            Native.Keyboard.InputHandled = handled;
         }
     }
 }

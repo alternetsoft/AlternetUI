@@ -10,8 +10,8 @@ namespace NativeApi.Api
     {
         public event NativeEventHandler<MouseEventData>? MouseChanged;
 
-        public PointI GetPosition() => default;
+        public static PointI GetPosition() => default;
 
-        public MouseButtonState GetButtonState(MouseButton button) => default;
+        public static MouseButtonState GetButtonState(MouseButton button) => default;
     }
 }

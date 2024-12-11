@@ -15,21 +15,21 @@ namespace Alternet::UI
 
         static int KeyToWxKey(Key value);
 
-        wxAcceleratorEntryFlags ModifierKeysToAcceleratorFlags(ModifierKeys modifierKeys);
+        static wxAcceleratorEntryFlags ModifierKeysToAcceleratorFlags(ModifierKeys modifierKeys);
 
     private:
-        char16_t _inputChar;
-        uint8_t _inputEventCode;
-        bool _inputHandled;
-        Key _inputKey;
-        bool _isRepeat;
+        static char16_t _inputChar;
+        static uint8_t _inputEventCode;
+        static bool _inputHandled;
+        static Key _inputKey;
+        static bool _isRepeat;
 
-        void SetFields(wxKeyEvent& e, uint8_t eventCode);
-        int IsAsciiKey(int value);
-        Key WxAsciiKeyToKey(int value);
-        Key WxKeyToKey(int value);
+        static void SetFields(wxKeyEvent& e, uint8_t eventCode);
+        static int IsAsciiKey(int value);
+        static Key WxAsciiKeyToKey(int value);
+        static Key WxKeyToKey(int value);
 
-        std::vector<int> KeyToWxKeys(Key value);
-        bool KeyHasMultipleWxKeys(Key value);
+        static std::vector<int> KeyToWxKeys(Key value);
+        static bool KeyHasMultipleWxKeys(Key value);
     };
 }

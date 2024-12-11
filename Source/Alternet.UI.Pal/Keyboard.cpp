@@ -3,6 +3,12 @@
 
 namespace Alternet::UI
 {
+	char16_t Keyboard::_inputChar;
+	uint8_t Keyboard::_inputEventCode;
+	bool Keyboard::_inputHandled;
+	Key Keyboard::_inputKey;
+	bool Keyboard::_isRepeat;
+
 	char16_t Keyboard::GetInputChar()
 	{
 		return _inputChar;

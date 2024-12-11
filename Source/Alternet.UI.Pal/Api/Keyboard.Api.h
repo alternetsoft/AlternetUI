@@ -19,78 +19,78 @@ ALTERNET_UI_API Keyboard* Keyboard_Create_()
     #endif
 }
 
-ALTERNET_UI_API char16_t Keyboard_GetInputChar_(Keyboard* obj)
+ALTERNET_UI_API char16_t Keyboard_GetInputChar_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<char16_t>([&](){
     #endif
-        return obj->GetInputChar();
+        return Keyboard::GetInputChar();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API uint8_t Keyboard_GetInputEventCode_(Keyboard* obj)
+ALTERNET_UI_API uint8_t Keyboard_GetInputEventCode_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<uint8_t>([&](){
     #endif
-        return obj->GetInputEventCode();
+        return Keyboard::GetInputEventCode();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool Keyboard_GetInputHandled_(Keyboard* obj)
+ALTERNET_UI_API c_bool Keyboard_GetInputHandled_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->GetInputHandled();
+        return Keyboard::GetInputHandled();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void Keyboard_SetInputHandled_(Keyboard* obj, c_bool value)
+ALTERNET_UI_API void Keyboard_SetInputHandled_(c_bool value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetInputHandled(value);
+        Keyboard::SetInputHandled(value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API Key Keyboard_GetInputKey_(Keyboard* obj)
+ALTERNET_UI_API Key Keyboard_GetInputKey_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Key>([&](){
     #endif
-        return obj->GetInputKey();
+        return Keyboard::GetInputKey();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool Keyboard_GetInputIsRepeat_(Keyboard* obj)
+ALTERNET_UI_API c_bool Keyboard_GetInputIsRepeat_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return obj->GetInputIsRepeat();
+        return Keyboard::GetInputIsRepeat();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API KeyStates Keyboard_GetKeyState_(Keyboard* obj, Key key)
+ALTERNET_UI_API KeyStates Keyboard_GetKeyState_(Key key)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<KeyStates>([&](){
     #endif
-        return obj->GetKeyState(key);
+        return Keyboard::GetKeyState(key);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

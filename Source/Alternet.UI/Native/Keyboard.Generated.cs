@@ -24,65 +24,58 @@ namespace Alternet.UI.Native
         {
         }
         
-        public char InputChar
+        public static char InputChar
         {
             get
             {
-                CheckDisposed();
-                return NativeApi.Keyboard_GetInputChar_(NativePointer);
+                return NativeApi.Keyboard_GetInputChar_();
             }
             
         }
         
-        public byte InputEventCode
+        public static byte InputEventCode
         {
             get
             {
-                CheckDisposed();
-                return NativeApi.Keyboard_GetInputEventCode_(NativePointer);
+                return NativeApi.Keyboard_GetInputEventCode_();
             }
             
         }
         
-        public bool InputHandled
+        public static bool InputHandled
         {
             get
             {
-                CheckDisposed();
-                return NativeApi.Keyboard_GetInputHandled_(NativePointer);
+                return NativeApi.Keyboard_GetInputHandled_();
             }
             
             set
             {
-                CheckDisposed();
-                NativeApi.Keyboard_SetInputHandled_(NativePointer, value);
+                NativeApi.Keyboard_SetInputHandled_(value);
             }
         }
         
-        public Alternet.UI.Key InputKey
+        public static Alternet.UI.Key InputKey
         {
             get
             {
-                CheckDisposed();
-                return NativeApi.Keyboard_GetInputKey_(NativePointer);
+                return NativeApi.Keyboard_GetInputKey_();
             }
             
         }
         
-        public bool InputIsRepeat
+        public static bool InputIsRepeat
         {
             get
             {
-                CheckDisposed();
-                return NativeApi.Keyboard_GetInputIsRepeat_(NativePointer);
+                return NativeApi.Keyboard_GetInputIsRepeat_();
             }
             
         }
         
-        public Alternet.UI.KeyStates GetKeyState(Alternet.UI.Key key)
+        public static Alternet.UI.KeyStates GetKeyState(Alternet.UI.Key key)
         {
-            CheckDisposed();
-            return NativeApi.Keyboard_GetKeyState_(NativePointer, key);
+            return NativeApi.Keyboard_GetKeyState_(key);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -132,25 +125,25 @@ namespace Alternet.UI.Native
             public static extern IntPtr Keyboard_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern char Keyboard_GetInputChar_(IntPtr obj);
+            public static extern char Keyboard_GetInputChar_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern byte Keyboard_GetInputEventCode_(IntPtr obj);
+            public static extern byte Keyboard_GetInputEventCode_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Keyboard_GetInputHandled_(IntPtr obj);
+            public static extern bool Keyboard_GetInputHandled_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Keyboard_SetInputHandled_(IntPtr obj, bool value);
+            public static extern void Keyboard_SetInputHandled_(bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.Key Keyboard_GetInputKey_(IntPtr obj);
+            public static extern Alternet.UI.Key Keyboard_GetInputKey_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Keyboard_GetInputIsRepeat_(IntPtr obj);
+            public static extern bool Keyboard_GetInputIsRepeat_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.KeyStates Keyboard_GetKeyState_(IntPtr obj, Alternet.UI.Key key);
+            public static extern Alternet.UI.KeyStates Keyboard_GetKeyState_(Alternet.UI.Key key);
             
         }
     }
