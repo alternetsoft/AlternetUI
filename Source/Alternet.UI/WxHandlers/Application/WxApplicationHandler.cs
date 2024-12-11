@@ -40,6 +40,7 @@ namespace Alternet.UI
                 Native.Application.SuppressDiagnostics(-1);
 
             nativeApplication = new Native.Application();
+            Native.Application.GlobalObject = nativeApplication;
             nativeApplication.Idle = App.RaiseIdle;
             nativeApplication.LogMessage += NativeApplication_LogMessage;
             nativeApplication.Name = Path.GetFileNameWithoutExtension(
