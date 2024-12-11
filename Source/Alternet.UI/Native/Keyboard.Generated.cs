@@ -24,6 +24,61 @@ namespace Alternet.UI.Native
         {
         }
         
+        public char InputChar
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Keyboard_GetInputChar_(NativePointer);
+            }
+            
+        }
+        
+        public byte InputEventCode
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Keyboard_GetInputEventCode_(NativePointer);
+            }
+            
+        }
+        
+        public bool InputHandled
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Keyboard_GetInputHandled_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Keyboard_SetInputHandled_(NativePointer, value);
+            }
+        }
+        
+        public Alternet.UI.Key InputKey
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Keyboard_GetInputKey_(NativePointer);
+            }
+            
+        }
+        
+        public bool InputIsRepeat
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Keyboard_GetInputIsRepeat_(NativePointer);
+            }
+            
+        }
+        
         public Alternet.UI.KeyStates GetKeyState(Alternet.UI.Key key)
         {
             CheckDisposed();
@@ -52,30 +107,10 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.KeyboardEvent e, IntPtr parameter)
         {
-            switch (e)
-            {
-                case NativeApi.KeyboardEvent.KeyDown:
-                {
-                    var ea = new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter));
-                    KeyDown?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.KeyboardEvent.KeyUp:
-                {
-                    var ea = new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter));
-                    KeyUp?.Invoke(this, ea); return ea.Result;
-                }
-                case NativeApi.KeyboardEvent.TextInput:
-                {
-                    var ea = new NativeEventArgs<TextInputEventData>(MarshalEx.PtrToStructure<TextInputEventData>(parameter));
-                    TextInput?.Invoke(this, ea); return ea.Result;
-                }
-                default: throw new Exception("Unexpected KeyboardEvent value: " + e);
-            }
+            KeyPress?.Invoke(); return IntPtr.Zero;
         }
         
-        public event NativeEventHandler<KeyEventData>? KeyDown;
-        public event NativeEventHandler<KeyEventData>? KeyUp;
-        public event NativeEventHandler<TextInputEventData>? TextInput;
+        public Action? KeyPress;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -87,9 +122,7 @@ namespace Alternet.UI.Native
             
             public enum KeyboardEvent
             {
-                KeyDown,
-                KeyUp,
-                TextInput,
+                KeyPress,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -97,6 +130,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Keyboard_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern char Keyboard_GetInputChar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte Keyboard_GetInputEventCode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Keyboard_GetInputHandled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Keyboard_SetInputHandled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.Key Keyboard_GetInputKey_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Keyboard_GetInputIsRepeat_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.KeyStates Keyboard_GetKeyState_(IntPtr obj, Alternet.UI.Key key);

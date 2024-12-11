@@ -19,6 +19,72 @@ ALTERNET_UI_API Keyboard* Keyboard_Create_()
     #endif
 }
 
+ALTERNET_UI_API char16_t Keyboard_GetInputChar_(Keyboard* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t>([&](){
+    #endif
+        return obj->GetInputChar();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API uint8_t Keyboard_GetInputEventCode_(Keyboard* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<uint8_t>([&](){
+    #endif
+        return obj->GetInputEventCode();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Keyboard_GetInputHandled_(Keyboard* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetInputHandled();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Keyboard_SetInputHandled_(Keyboard* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetInputHandled(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Key Keyboard_GetInputKey_(Keyboard* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Key>([&](){
+    #endif
+        return obj->GetInputKey();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Keyboard_GetInputIsRepeat_(Keyboard* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetInputIsRepeat();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API KeyStates Keyboard_GetKeyState_(Keyboard* obj, Key key)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

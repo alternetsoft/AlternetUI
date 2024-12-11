@@ -9,50 +9,48 @@ namespace Alternet.UI
         public KeyboardInputProvider(Native.Keyboard nativeKeyboard)
         {
             this.nativeKeyboard = nativeKeyboard;
-            nativeKeyboard.KeyDown += NativeKeyboard_KeyDown;
-            nativeKeyboard.KeyUp += NativeKeyboard_KeyUp;
-            nativeKeyboard.TextInput += NativeKeyboard_TextInput;
+            nativeKeyboard.KeyPress = NativeKeyboard_KeyPress;
         }
 
         protected override void DisposeManaged()
         {
-            nativeKeyboard.KeyDown -= NativeKeyboard_KeyDown;
-            nativeKeyboard.KeyUp -= NativeKeyboard_KeyUp;
-            nativeKeyboard.TextInput -= NativeKeyboard_TextInput;
+            nativeKeyboard.KeyPress = null;
         }
 
-        private void NativeKeyboard_TextInput(
-            object? sender,
-            Native.NativeEventArgs<Native.TextInputEventData> e)
+        private void NativeKeyboard_KeyPress()
         {
-            if (e.Data.keyChar == 0)
-                return;
-            AbstractControl.BubbleTextInput(e.Data.keyChar, out var handled);
-            e.Handled = handled;
-        }
+            const byte InputEventCodeKeyDown = 0;
+            const byte InputEventCodeKeyUp = 1;
+            const byte InputEventCodeChar = 2;
 
-        private void NativeKeyboard_KeyDown(
-            object? sender,
-            Native.NativeEventArgs<Native.KeyEventData> e)
-        {
-            AbstractControl.BubbleKeyDown(
-                (Key)e.Data.key,
-                Keyboard.Modifiers,
-                Keyboard.IsRepeatToRepeatCount(e.Data.isRepeat),
-                out var handled);
-            e.Handled = handled;
-        }
+            var inputChar = nativeKeyboard.InputChar;
+            bool handled = false;
+            var repeatCount = Keyboard.IsRepeatToRepeatCount(nativeKeyboard.InputIsRepeat);
+            var key = nativeKeyboard.InputKey;
 
-        private void NativeKeyboard_KeyUp(
-            object? sender,
-            Native.NativeEventArgs<Native.KeyEventData> e)
-        {
-            AbstractControl.BubbleKeyUp(
-                (Key)e.Data.key,
-                Keyboard.Modifiers,
-                Keyboard.IsRepeatToRepeatCount(e.Data.isRepeat),
-                out var handled);
-            e.Handled = handled;
+            switch (nativeKeyboard.InputEventCode)
+            {
+                case InputEventCodeKeyDown:
+                    AbstractControl.BubbleKeyDown(
+                        key,
+                        Keyboard.Modifiers,
+                        repeatCount,
+                        out handled);
+                    break;
+                case InputEventCodeKeyUp:
+                    AbstractControl.BubbleKeyUp(
+                        key,
+                        Keyboard.Modifiers,
+                        repeatCount,
+                        out handled);
+                    break;
+                case InputEventCodeChar:
+                    if (inputChar != 0)
+                        AbstractControl.BubbleTextInput(inputChar, out handled);
+                    break;
+            }
+
+            nativeKeyboard.InputHandled = handled;
         }
     }
 }
