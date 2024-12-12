@@ -2183,6 +2183,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the foreground color for the control.
+        /// </summary>
+        [Browsable(true)]
+        public virtual Color? ForegroundColor
+        {
+            get
+            {
+                return foregroundColor;
+            }
+
+            set
+            {
+                if (foregroundColor == value && value != null)
+                    return;
+                foregroundColor = value;
+                InternalSetColor(false, value);
+                RaiseForegroundColorChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
         [Browsable(true)]
@@ -2198,6 +2219,7 @@ namespace Alternet.UI
                 if (backgroundColor == value)
                     return;
                 backgroundColor = value;
+                InternalSetColor(true, value);
                 RaiseBackgroundColorChanged();
             }
         }
@@ -2352,33 +2374,6 @@ namespace Alternet.UI
             set
             {
                 BackgroundColor = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the foreground color for the control.
-        /// </summary>
-        [Browsable(true)]
-        public virtual Color? ForegroundColor
-        {
-            get
-            {
-                return foregroundColor;
-            }
-
-            set
-            {
-                if (foregroundColor == value && value != null)
-                    return;
-                foregroundColor = value;
-                InternalSetColor(false, value);
-                Refresh();
-
-                foreach (var child in Children)
-                {
-                    if (child.ParentForeColor)
-                        child.ForegroundColor = value;
-                }
             }
         }
 

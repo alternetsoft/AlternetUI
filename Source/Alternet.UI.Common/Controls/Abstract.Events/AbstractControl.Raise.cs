@@ -28,17 +28,20 @@ namespace Alternet.UI
         /// and calls <see cref="OnFontChanged"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseFontChanged()
+        public virtual void RaiseFontChanged()
         {
             PerformLayoutAndInvalidate(() =>
             {
                 OnFontChanged(EventArgs.Empty);
                 FontChanged?.Invoke(this, EventArgs.Empty);
 
-                foreach (var child in Children)
+                if (HasChildren)
                 {
-                    if (child.ParentFont)
-                        child.Font = Font?.WithStyle(child.fontStyle);
+                    foreach (var child in Children)
+                    {
+                        if (child.ParentFont)
+                            child.Font = Font?.WithStyle(child.fontStyle);
+                    }
                 }
             });
         }
@@ -494,10 +497,31 @@ namespace Alternet.UI
         {
             Refresh();
 
-            foreach (var child in Children)
+            if (HasChildren)
             {
-                if (child.ParentBackColor)
-                    child.BackgroundColor = BackgroundColor;
+                foreach (var child in Children)
+                {
+                    if (child.ParentBackColor)
+                        child.BackgroundColor = BackgroundColor;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called after foreground color changed.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void RaiseForegroundColorChanged()
+        {
+            Refresh();
+
+            if (HasChildren)
+            {
+                foreach (var child in Children)
+                {
+                    if (child.ParentForeColor)
+                        child.ForegroundColor = ForegroundColor;
+                }
             }
         }
 
