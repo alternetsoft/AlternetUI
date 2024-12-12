@@ -97,6 +97,7 @@ namespace Alternet.UI
 
         private Action? clickAction;
         private bool sticky;
+        private bool stickyToggleOnClick;
         private ShortcutInfo? shortcut;
         private bool textVisible = false;
         private bool imageVisible = true;
@@ -578,6 +579,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether <see cref="Sticky"/> is toggled
+        /// when control is clicked.
+        /// </summary>
+        public virtual bool StickyToggleOnClick
+        {
+            get
+            {
+                return stickyToggleOnClick;
+            }
+
+            set
+            {
+                if (stickyToggleOnClick == value)
+                    return;
+                stickyToggleOnClick = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the image that is displayed by the control.
         /// </summary>
         [DefaultValue(null)]
@@ -932,6 +952,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (StickyToggleOnClick && e.ChangedButton == MouseButton.Left)
+            {
+                Sticky = !Sticky;
+            }
+
             base.OnMouseDown(e);
             if (HideToolTipOnClick)
                 HideToolTip();
