@@ -156,6 +156,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether contents of the control is visible.
+        /// If contents is hidden only tab headers are shown.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool ContentsVisible
+        {
+            get
+            {
+                return cardPanel.Visible;
+            }
+
+            set
+            {
+                if (ContentsVisible == value)
+                    return;
+                cardPanel.Visible = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether tab titles are visible.
         /// </summary>
         public virtual bool TabsVisible
