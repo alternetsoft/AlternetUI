@@ -985,6 +985,11 @@ namespace Alternet.UI
             HandleCreated?.Invoke();
         }
 
+        public void InvalidateBestSize()
+        {
+            NativeControl.InvalidateBestSize();
+        }
+
         internal class NonAbstractNativeControl : Native.Control
         {
             public NonAbstractNativeControl()

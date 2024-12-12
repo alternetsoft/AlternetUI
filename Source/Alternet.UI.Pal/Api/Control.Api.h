@@ -1430,6 +1430,17 @@ ALTERNET_UI_API void Control_Update_(Control* obj)
     #endif
 }
 
+ALTERNET_UI_API void Control_InvalidateBestSize_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->InvalidateBestSize();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD availableSize)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

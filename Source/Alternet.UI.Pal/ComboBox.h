@@ -202,6 +202,12 @@ namespace Alternet::UI
 
         void OnPopup();
         void OnDismiss();
+
+        virtual Size GetPreferredSize(const Size& availableSize) override
+        {
+            return Control::GetPreferredSize(availableSize);
+        }
+
     protected:
         void OnWxWindowCreated() override;
         void OnBeforeDestroyWxWindow() override;

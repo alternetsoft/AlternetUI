@@ -152,6 +152,11 @@ namespace ControlsSample
         {
             if(tabAlignmentComboBox.SelectedItem is TabAlignment tabAlignment)
                 tabControl.TabAlignment = tabAlignment;
+
+            var preferredSize = tabAlignmentComboBox.GetPreferredSize();
+            tabAlignmentComboBox.InvalidateBestSize();
+            var preferredSize2 = tabAlignmentComboBox.GetPreferredSize();
+            App.DebugLogIf($"tabAlignmentComboBox.PreferredSize = {preferredSize} {preferredSize2}", true);
         }
     }
 }

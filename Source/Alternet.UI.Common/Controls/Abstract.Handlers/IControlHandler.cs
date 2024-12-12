@@ -221,6 +221,11 @@ namespace Alternet.UI
         /// <inheritdoc cref="Window.Raise"/>
         void Raise();
 
+        /// <summary>
+        /// Resets the cached best size value so it will be recalculated the next time it is needed.
+        /// </summary>
+        void InvalidateBestSize();
+
         /// <inheritdoc cref="AbstractControl.SetCursor"/>
         void SetCursor(Cursor? value);
 

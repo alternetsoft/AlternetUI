@@ -675,6 +675,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void InvalidateBestSize()
+        {
+            Handler.InvalidateBestSize();
+        }
+
+        /// <inheritdoc/>
         public override void EndInit()
         {
             Handler.EndInit();
