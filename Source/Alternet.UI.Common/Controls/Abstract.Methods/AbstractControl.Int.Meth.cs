@@ -138,8 +138,8 @@ namespace Alternet.UI
         internal static SizeD GetPreferredSizeDefaultLayout(AbstractControl container, SizeD availableSize)
         {
             if (container.HasChildren)
-                return container.GetSpecifiedOrChildrenPreferredSize(availableSize);
-            return container.GetNativeControlSize(availableSize);
+                return container.GetBestSizeWithChildren(availableSize);
+            return container.GetBestSizeWithPadding(availableSize);
         }
 
         internal static Color GetClassDefaultAttributesBgColor(

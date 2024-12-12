@@ -181,7 +181,7 @@ void AddChild(Control* control);
 void RemoveChild(Control* control);
 void Invalidate();
 void Update();
-void InvalidateBestSize();
+virtual void InvalidateBestSize();
 virtual SizeD GetPreferredSize(const SizeD& availableSize);
 void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively);
 DragDropEffects DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEffects);

@@ -1819,7 +1819,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
+        public SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
 
         /// <summary>
         /// Performs some action for the each child of the control.

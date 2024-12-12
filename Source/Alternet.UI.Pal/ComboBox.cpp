@@ -462,6 +462,14 @@ namespace Alternet::UI
         ownerDrawStyle = value;
     }
 
+    wxVListBoxComboPopup2* ComboBox::GetPopup()
+    {
+        auto combo = GetComboBox();
+        auto popup = combo->GetPopupControl();
+        auto value = dynamic_cast<wxVListBoxComboPopup2*>(popup);
+        return value;
+    }
+
     wxOwnerDrawnComboBox2* ComboBox::GetComboBox()
     {
         auto value = dynamic_cast<wxOwnerDrawnComboBox2*>(GetWxWindow());

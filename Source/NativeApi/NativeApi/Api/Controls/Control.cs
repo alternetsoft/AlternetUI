@@ -154,7 +154,7 @@ namespace NativeApi.Api
         public void Invalidate() { }
         public void Update() { }
 
-        public void InvalidateBestSize() { }
+        public virtual void InvalidateBestSize() { }
 
         public virtual SizeD GetPreferredSize(SizeD availableSize) => default;
 
