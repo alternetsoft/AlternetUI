@@ -134,6 +134,7 @@ namespace Alternet.UI
             }
 
             NativeControl.CommitItemsInsertion(insertion, 0);
+            InvalidateBestSize();
             ApplySelectedItem();
 
             if (Control.DropDownStyle == ComboBoxStyle.DropDown)
@@ -202,6 +203,7 @@ namespace Alternet.UI
                 var index = e.NewStartingIndex;
                 var text = Control.GetItemText(item, false);
                 NativeControl.SetItem(index, text);
+                InvalidateBestSize();
             }
         }
 
@@ -348,12 +350,14 @@ namespace Alternet.UI
             if (!Control.Items.RangeOpInProgress)
             {
                 NativeControl.InsertItem(index, Control.GetItemText(item, false));
+                InvalidateBestSize();
             }
         }
 
         private void Items_ItemRemoved(object? sender, int index, object item)
         {
             NativeControl.RemoveItemAt(index);
+            InvalidateBestSize();
         }
 
         private void Items_ItemRangeAdditionFinished(
@@ -370,6 +374,7 @@ namespace Alternet.UI
             }
 
             NativeControl.CommitItemsInsertion(insertion, index);
+            InvalidateBestSize();
         }
     }
 }
