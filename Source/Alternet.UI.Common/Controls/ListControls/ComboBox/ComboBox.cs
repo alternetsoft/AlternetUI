@@ -78,6 +78,7 @@ namespace Alternet.UI
         private ListControlItemDefaults? itemDefaults;
         private bool droppedDown;
         private int? reportedSelectedIndex;
+        private SizeD? savedBestSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBox"/> class.
@@ -725,6 +726,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RaiseFontChanged()
         {
+            InvalidateBestSize();
             base.RaiseFontChanged();
         }
 
@@ -881,13 +883,19 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void InvalidateBestSize()
         {
+            savedBestSize = null;
             base.InvalidateBestSize();
         }
 
         /// <inheritdoc/>
         protected override SizeD GetBestSizeWithoutPadding(SizeD availableSize)
         {
-            var result = base.GetBestSizeWithoutPadding(availableSize);
+            SizeD result = base.GetBestSizeWithoutPadding(availableSize);
+            if (Count > 0)
+            {
+                result.Width = Math.Max(CalcBestSizeCached().Width, result.Width);
+            }
+
             return result;
         }
 
@@ -930,6 +938,37 @@ namespace Alternet.UI
         private void HandlePopupControlChanged()
         {
             PlatformControl.PopupControl = listBox.Value;
+        }
+
+        private SizeD CalcBestSize(int startIndex, int count)
+        {
+            var dc = MeasureCanvas;
+            SizeD result = SizeD.Empty;
+
+            for (int i = startIndex; i < count; i++)
+            {
+                var size = ListControlItem.DefaultMeasureItemSize(this, dc, i);
+                result.Width = Math.Max(result.Width, size.Width);
+                result.Height = Math.Max(result.Height, size.Height);
+            }
+
+            result.Width += 2 + PixelToDip(SystemSettings.GetMetric(SystemSettingsMetric.VScrollX, this));
+            result.Height += 2;
+
+            return result;
+        }
+
+        private SizeD CalcBestSizeCached()
+        {
+            SizeD result;
+            if (savedBestSize is null)
+            {
+                result = CalcBestSize(0, Math.Min(Count, 512));
+                savedBestSize = result;
+            }
+            else
+                result = savedBestSize.Value;
+            return result;
         }
 
         /// <summary>
