@@ -19,10 +19,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the size of the control specified in its
-        /// <see cref="AbstractControl.SuggestedWidth"/> and <see cref="AbstractControl.SuggestedHeight"/>
+        /// <see cref="AbstractControl.SuggestedWidth"/>
+        /// and <see cref="AbstractControl.SuggestedHeight"/>
         /// properties or calculates preferred size from its children.
         /// </summary>
-        protected virtual SizeD GetSpecifiedOrChildrenPreferredSize(SizeD availableSize)
+        protected virtual SizeD GetBestSizeWithChildren(SizeD availableSize)
         {
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
@@ -257,13 +258,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets size of the native control without padding.
+        /// </summary>
+        /// <param name="availableSize">Available size for the control.</param>
+        /// <returns></returns>
+        protected virtual SizeD GetBestSizeWithoutPadding(SizeD availableSize)
+        {
+            return SizeD.Empty;
+        }
+
+        /// <summary>
         /// Gets size of the native control based on the specified available size.
         /// </summary>
         /// <param name="availableSize">Available size for the control.</param>
         /// <returns></returns>
-        protected virtual SizeD GetNativeControlSize(SizeD availableSize)
+        protected SizeD GetBestSizeWithPadding(SizeD availableSize)
         {
-            var s = SizeD.Empty;
+            if (IsDummy)
+                return SizeD.Empty;
+            var s = GetBestSizeWithoutPadding(availableSize);
             s += Padding.Size;
             return new SizeD(
                 Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,

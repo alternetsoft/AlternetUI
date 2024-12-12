@@ -252,7 +252,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual KeyStates GetKeyStatesFromSystem(Key key)
         {
-            return WxApplicationHandler.NativeKeyboard.GetKeyState(key);
+            return Native.Keyboard.GetKeyState(key);
         }
 
         /// <inheritdoc/>

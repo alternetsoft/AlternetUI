@@ -422,7 +422,7 @@ namespace Alternet::UI
 
     void Application::RaiseIdle()
     {
-        RaiseEvent(ApplicationEvent::Idle);
+        RaiseStaticEvent(ApplicationEvent::Idle);
     }
 
     Clipboard* Application::GetClipboard()
@@ -477,14 +477,14 @@ namespace Alternet::UI
     void Application::Log(const string& msg)
     {
         GetCurrent()->_eventArgString = msg;
-        GetCurrent()->RaiseEvent(ApplicationEvent::LogMessage);
+        GetCurrent()->RaiseStaticEvent(ApplicationEvent::LogMessage);
     }
 
     void Application::DoLogRecord(wxLogLevel level /*unsigned long*/, const wxString& msg,
         const wxLogRecordInfo& info)
     {
         _eventArgString = wxStr(msg);
-        RaiseEvent(ApplicationEvent::LogMessage);
+        RaiseStaticEvent(ApplicationEvent::LogMessage);
     }
 
     /*static*/ Application* Application::GetCurrent()
@@ -551,7 +551,7 @@ currently means only Microsoft Visual C++.
     bool Application::OnFatalException()
     {
         Application::Log("Error: Fatal Exception");
-        RaiseEvent(ApplicationEvent::FatalException);
+        RaiseStaticEvent(ApplicationEvent::FatalException);
         return false;
     }
 
@@ -592,7 +592,7 @@ or wxFAIL was used
         Application::Log("Msg:  " + sMsg);
 
         Application::LogSeparator();
-        RaiseEvent(ApplicationEvent::AssertFailure);
+        RaiseStaticEvent(ApplicationEvent::AssertFailure);
         return false;
     }
 
@@ -612,7 +612,7 @@ The default implementation dumps information about the exception using wxMessage
     bool Application::OnUnhandledException()
     {
         Application::Log("Error: Unhandled Exception");
-        RaiseEvent(ApplicationEvent::UnhandledException);
+        RaiseStaticEvent(ApplicationEvent::UnhandledException);
         return false;
     }
 
@@ -660,7 +660,7 @@ public:
     bool Application::OnExceptionInMainLoop()
     {
         Application::Log("Error: Exception In Main Loop");
-        RaiseEvent(ApplicationEvent::ExceptionInMainLoop);
+        RaiseStaticEvent(ApplicationEvent::ExceptionInMainLoop);
         return false;
     }
 }

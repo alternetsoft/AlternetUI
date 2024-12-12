@@ -69,23 +69,6 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
-    struct TextInputEventData
-    {
-        char16_t keyChar;
-        int64_t timestamp;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
-    struct KeyEventData
-    {
-        Key key;
-        int64_t timestamp;
-        c_bool isRepeat;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
     struct MouseEventData
     {
         int mouseEventKind;

@@ -364,9 +364,13 @@ namespace Alternet.UI
             return new SkiaGraphics(canvas);
         }
 
-        public bool EnableTouchEvents(TouchEventsMask flag)
+        public virtual bool EnableTouchEvents(TouchEventsMask flag)
         {
             return false;
+        }
+
+        public virtual void InvalidateBestSize()
+        {
         }
     }
 }

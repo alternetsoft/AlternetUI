@@ -1819,7 +1819,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
+        public SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
 
         /// <summary>
         /// Performs some action for the each child of the control.
@@ -2318,6 +2318,13 @@ namespace Alternet.UI
         public virtual SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
         {
             return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
+        }
+
+        /// <summary>
+        /// Resets the cached best size value so it will be recalculated the next time it is needed.
+        /// </summary>
+        public virtual void InvalidateBestSize()
+        {
         }
 
         /// <summary>

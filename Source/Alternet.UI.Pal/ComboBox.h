@@ -30,6 +30,11 @@ namespace Alternet::UI
 
         // Called when popup is dismissed
         void OnDismiss() override;
+
+        void ItemWidthChanged(unsigned int item)
+        {
+            wxVListBoxComboPopup::ItemWidthChanged(item);
+        }
     };
 
     class wxOwnerDrawnComboBox2 : public wxOwnerDrawnComboBox, public wxWidgetExtender
@@ -202,6 +207,17 @@ namespace Alternet::UI
 
         void OnPopup();
         void OnDismiss();
+
+        virtual Size GetPreferredSize(const Size& availableSize) override
+        {
+            return Control::GetPreferredSize(availableSize);
+        }
+
+        virtual void InvalidateBestSize() override
+        {
+            Control::InvalidateBestSize();
+        }
+
     protected:
         void OnWxWindowCreated() override;
         void OnBeforeDestroyWxWindow() override;
@@ -230,6 +246,7 @@ namespace Alternet::UI
         string RetrieveText();
         void ApplyText(const string& value);
 
+        wxVListBoxComboPopup2* GetPopup();
         wxOwnerDrawnComboBox2* GetComboBox();
         wxItemContainer* GetItemContainer();
         wxControlWithItems* GetControlWithItems();

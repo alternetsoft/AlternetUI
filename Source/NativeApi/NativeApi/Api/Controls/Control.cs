@@ -153,6 +153,9 @@ namespace NativeApi.Api
         public void RemoveChild(Control control) { }
         public void Invalidate() { }
         public void Update() { }
+
+        public virtual void InvalidateBestSize() { }
+
         public virtual SizeD GetPreferredSize(SizeD availableSize) => default;
 
         public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively) { }

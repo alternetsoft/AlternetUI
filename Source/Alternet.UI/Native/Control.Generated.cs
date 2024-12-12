@@ -981,6 +981,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_Update_(NativePointer);
         }
         
+        public void InvalidateBestSize()
+        {
+            CheckDisposed();
+            NativeApi.Control_InvalidateBestSize_(NativePointer);
+        }
+        
         public Alternet.Drawing.SizeD GetPreferredSize(Alternet.Drawing.SizeD availableSize)
         {
             CheckDisposed();
@@ -1198,6 +1204,7 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle eventCallbackGCHandle;
+        public static Control? GlobalObject;
         
         static void SetEventCallback()
         {
@@ -1207,6 +1214,7 @@ namespace Alternet.UI.Native
                     UI.Application.HandleThreadExceptions(() =>
                     {
                         var w = NativeObject.GetFromNativePointer<Control>(obj, null);
+                        w ??= GlobalObject;
                         if (w == null) return IntPtr.Zero;
                         return w.OnEvent(e, parameter);
                     }
@@ -1791,6 +1799,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Update_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_InvalidateBestSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeD Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.SizeD availableSize);

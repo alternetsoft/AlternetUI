@@ -3,6 +3,42 @@
 
 namespace Alternet::UI
 {
+	char16_t Keyboard::_inputChar;
+	uint8_t Keyboard::_inputEventCode;
+	bool Keyboard::_inputHandled;
+	Key Keyboard::_inputKey;
+	bool Keyboard::_isRepeat;
+
+	char16_t Keyboard::GetInputChar()
+	{
+		return _inputChar;
+	}
+
+	uint8_t Keyboard::GetInputEventCode()
+	{
+		return _inputEventCode;
+	}
+
+	bool Keyboard::GetInputHandled()
+	{
+		return _inputHandled;
+	}
+
+	void Keyboard::SetInputHandled(bool value)
+	{
+		_inputHandled = value;
+	}
+
+	Key Keyboard::GetInputKey()
+	{
+		return _inputKey;
+	}
+
+	bool Keyboard::GetInputIsRepeat()
+	{
+		return _isRepeat;
+	}
+
 	Keyboard::Keyboard()
 	{
 	}
@@ -64,24 +100,39 @@ namespace Alternet::UI
 		return KeyStates::None;
 	}
 
-	void Keyboard::OnChar(wxKeyEvent& e, bool& handled)
+	void Keyboard::SetFields(wxKeyEvent& e, uint8_t eventCode)
 	{
 		auto unicodeKey = e.GetUnicodeKey();
-		auto char16 = wcharToChar16(unicodeKey);
-		TextInputEventData textInputdata{ char16, e.GetTimestamp() };
-		handled = RaiseEvent(KeyboardEvent::TextInput, &textInputdata);
+		_inputChar = wcharToChar16(unicodeKey);
+		_inputEventCode = eventCode;
+		_inputHandled = false;
+		_inputKey = WxKeyToKey(e.GetKeyCode());
+		_isRepeat = e.IsAutoRepeat();
+	}
+
+#define InputEventCode_KeyDown 0
+#define InputEventCode_KeyUp 1
+#define InputEventCode_Char 2
+
+	void Keyboard::OnChar(wxKeyEvent& e, bool& handled)
+	{
+		SetFields(e, InputEventCode_Char);
+		RaiseStaticEvent(KeyboardEvent::KeyPress);
+		handled = _inputHandled;
 	}
 
 	void Keyboard::OnKeyDown(wxKeyEvent& e, bool& handled)
 	{
-		KeyEventData keyData{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
-		handled = RaiseEvent(KeyboardEvent::KeyDown, &keyData);
+		SetFields(e, InputEventCode_KeyDown);
+		RaiseStaticEvent(KeyboardEvent::KeyPress);
+		handled = _inputHandled;
 	}
 
 	void Keyboard::OnKeyUp(wxKeyEvent& e, bool& handled)
 	{
-		KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), false };
-		handled = RaiseEvent(KeyboardEvent::KeyUp, &data);
+		SetFields(e, InputEventCode_KeyUp);
+		RaiseStaticEvent(KeyboardEvent::KeyPress);
+		handled = _inputHandled;
 	}
 
 	int Keyboard::IsAsciiKey(int value)

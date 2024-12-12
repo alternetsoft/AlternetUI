@@ -716,6 +716,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override void PerformLayout(bool layoutParent = true)
+        {
+            base.PerformLayout(layoutParent);
+        }
+
+        /// <inheritdoc/>
+        public override void RaiseFontChanged()
+        {
+            base.RaiseFontChanged();
+        }
+
         /// <summary>
         /// Gets text color when control is disabled.
         /// </summary>
@@ -864,6 +876,19 @@ namespace Alternet.UI
             bool noText = string.IsNullOrEmpty(Text);
 
             return !Focused && noText && !noHintText;
+        }
+
+        /// <inheritdoc/>
+        public override void InvalidateBestSize()
+        {
+            base.InvalidateBestSize();
+        }
+
+        /// <inheritdoc/>
+        protected override SizeD GetBestSizeWithoutPadding(SizeD availableSize)
+        {
+            var result = base.GetBestSizeWithoutPadding(availableSize);
+            return result;
         }
 
         /// <inheritdoc/>

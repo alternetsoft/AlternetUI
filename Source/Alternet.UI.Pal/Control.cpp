@@ -1845,6 +1845,12 @@ namespace Alternet::UI
         return toDip(wxWindow->GetBestSize(), wxWindow);
     }
 
+    void Control::InvalidateBestSize()
+    {
+        auto wxWindow = GetWxWindow();
+        wxWindow->InvalidateBestSize();
+    }
+
     /*static*/ Control* Control::TryFindControlByWxWindow(wxWindow* wxWindow)
     {
         wxWidgetExtender* extender = wxWidgetExtender::AsExtender(wxWindow);

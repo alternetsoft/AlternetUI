@@ -675,6 +675,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void InvalidateBestSize()
+        {
+            Handler.InvalidateBestSize();
+        }
+
+        /// <inheritdoc/>
         public override void EndInit()
         {
             Handler.EndInit();
@@ -947,15 +953,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override SizeD GetNativeControlSize(SizeD availableSize)
+        protected override SizeD GetBestSizeWithoutPadding(SizeD availableSize)
         {
-            if (IsDummy)
-                return SizeD.Empty;
-            var s = Handler.GetPreferredSize(availableSize);
-            s += Padding.Size;
-            return new SizeD(
-                Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
-                Coord.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
+            return Handler.GetPreferredSize(availableSize);
         }
 
         /// <summary>

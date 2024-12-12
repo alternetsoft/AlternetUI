@@ -20,6 +20,7 @@ namespace ApiGenerator.Native
             var types = new CppTypes();
 
             w.WriteLine(GeneratorUtils.HeaderText);
+            w.WriteLine();
             w.WriteLine("public:");
 
             foreach (var property in apiType.Properties)
@@ -30,12 +31,15 @@ namespace ApiGenerator.Native
 
             WriteEvents(w, types, MemberProvider.GetEvents(type).ToArray());
 
+            w.WriteLine();
             w.WriteLine(GetVisibility(MemberProvider.GetConstructorVisibility(type)));
             WriteConstructor(w, types, type);
 
+            w.WriteLine();
             w.WriteLine(GetVisibility(MemberProvider.GetDestructorVisibility(type)));
             WriteDestructor(w, types, type);
 
+            w.WriteLine();
             w.WriteLine("private:");
 
             var aa = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
@@ -52,7 +56,6 @@ namespace ApiGenerator.Native
             var property = apiProperty.Property;
             var name = property.Name;
             var modifiers = GetModifiers(property);
-            w.WriteLine();
             
             if (property.GetMethod != null)
                 w.WriteLine($"{modifiers}{types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return)} Get{name}();");
@@ -109,11 +112,13 @@ namespace ApiGenerator.Native
             if (events.Length == 0)
                 return;
 
-            var declaringTypeName = types.GetTypeName(
+            var declTName = types.GetTypeName(
                 events[0].DeclaringType!.ToContextualType(),
                 TypeUsage.Static);
+            w.WriteLine();
             w.WriteLine("public:");
-            w.WriteLine($"enum class {declaringTypeName}Event");
+            w.WriteLine();
+            w.WriteLine($"enum class {declTName}Event");
 
             w.WriteLine("{");
             w.Indent++;
@@ -123,21 +128,53 @@ namespace ApiGenerator.Native
 
             w.Indent--;
             w.WriteLine("};");
+            w.WriteLine();
 
-            w.WriteLine($"typedef void* (*{declaringTypeName}EventCallbackType)({declaringTypeName}* obj, {declaringTypeName}Event event, void* param);");
+            w.WriteLine($"typedef void* (*{declTName}EventCallbackType)({declTName}* obj, {declTName}Event event, void* param);");
+            w.WriteLine();
 
-            w.Write($"static void SetEventCallback({declaringTypeName}EventCallbackType value)");
+            w.Write($"static void SetEventCallback({declTName}EventCallbackType value)");
             w.WriteLine(" { eventCallback = value; }");
 
+            w.WriteLine();
             w.WriteLine("protected:");
-            w.Write($"bool RaiseEvent({declaringTypeName}Event event, void* parameter = nullptr)");
-            w.WriteLine(" { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }");
+            w.WriteLine();
 
-            w.Write($"void* RaiseEventWithPointerResult({declaringTypeName}Event event, void* parameter = nullptr)");
-            w.WriteLine(" { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }");
+            w.WriteLine($"bool RaiseEvent({declTName}Event event, void* parameter = nullptr)");
+            w.WriteLine("{" + Environment.NewLine +
+                "if (EventsSuspended()) return false;" + Environment.NewLine +
+                "if (eventCallback != nullptr)" + Environment.NewLine +
+                "   return eventCallback(this, event, parameter) != nullptr;" + Environment.NewLine +
+                "else" + Environment.NewLine +
+                "   return false;" + Environment.NewLine +
+                "}");
+            w.WriteLine();
+
+            w.WriteLine(
+                $"bool RaiseStaticEvent({declTName}Event event, void* parameter = nullptr)");
+            w.WriteLine("{" + Environment.NewLine +
+                "if (EventsSuspended()) return false;" + Environment.NewLine +
+                "if (eventCallback != nullptr)" + Environment.NewLine +
+                "   return eventCallback(nullptr, event, parameter) != nullptr;" + Environment.NewLine +
+                "else" + Environment.NewLine +
+                "   return false;" + Environment.NewLine +
+                "}");
+            w.WriteLine();
+
+            w.WriteLine(
+                $"void* RaiseEventWithPointerResult({declTName}Event event, void* parameter = nullptr)");
+            w.WriteLine("{" + Environment.NewLine +
+                "if (EventsSuspended()) return nullptr;" + Environment.NewLine +
+                "if (eventCallback != nullptr)" + Environment.NewLine +
+                "   return eventCallback(this, event, parameter);" + Environment.NewLine +
+                "else" + Environment.NewLine +
+                "   return nullptr;" + Environment.NewLine +
+                "}");
+            w.WriteLine();
 
             w.WriteLine("private:");
-            w.WriteLine($"inline static {declaringTypeName}EventCallbackType eventCallback = nullptr;");
+            w.WriteLine();
+            w.WriteLine($"inline static {declTName}EventCallbackType eventCallback = nullptr;");
         }
 
         private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)

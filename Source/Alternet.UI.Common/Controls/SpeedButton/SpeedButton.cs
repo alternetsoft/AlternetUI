@@ -120,7 +120,8 @@ namespace Alternet.UI
             StaticBorderTheme.NormalBorderAsHovered();
 
             StickyBorderTheme = DefaultTheme.Clone();
-            StickyBorderTheme.SetBorderFromBorder(VisualControlState.Normal, VisualControlState.Hovered);
+            StickyBorderTheme
+                .SetBorderFromBorder(VisualControlState.Normal, VisualControlState.Hovered);
             StickyBorderTheme.SetBorderWidth(2);
             StickyBorderTheme.SetBorderColor(ColorUtils.GetTabControlInteriorBorderColor());
         }
@@ -142,11 +143,12 @@ namespace Alternet.UI
         {
             Padding = 4;
             Layout = LayoutStyle.Horizontal;
-            picture.Parent = this;
+
+            /*picture.Parent = this;
             picture.InputTransparent = true;
             spacer.Parent = this;
             label.Parent = this;
-            label.InputTransparent = true;
+            label.InputTransparent = true;*/
 
             IsGraphicControl = true;
             RefreshOptions = ControlRefreshOptions.RefreshOnState;
@@ -197,6 +199,26 @@ namespace Alternet.UI
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
 
         /// <summary>
+        /// Gets or sets distance between image and label.
+        /// </summary>
+        public virtual Coord ImageLabelDistance
+        {
+            get
+            {
+                return spacer.SuggestedWidth;
+            }
+
+            set
+            {
+                if (ImageLabelDistance == value)
+                    return;
+                spacer.SuggestedSize = value;
+                if(HasImage && TextVisible)
+                    PerformLayout();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets click repeat delay used when
         /// <see cref="SpeedButton.IsClickRepeated"/> is True.
         /// </summary>
@@ -237,6 +259,20 @@ namespace Alternet.UI
                     return;
                 isClickRepeated = value;
             }
+        }
+
+        /// <inheritdoc/>
+        public override Font? Font
+        {
+            get => base.Font;
+            set => base.Font = value;
+        }
+
+        /// <inheritdoc/>
+        public override bool IsBold
+        {
+            get => base.IsBold;
+            set => base.IsBold = value;
         }
 
         /// <summary>
@@ -428,24 +464,35 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override IReadOnlyList<AbstractControl> AllChildrenInLayout
+        /// <summary>
+        /// Gets whether control has image and it is visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasImage
         {
             get
             {
                 bool hasImage = (Image is not null) || (ImageSet is not null);
                 var img = ImageVisible && hasImage;
+                return img;
+            }
+        }
 
+        /// <inheritdoc/>
+        public override IReadOnlyList<AbstractControl> AllChildrenInLayout
+        {
+            get
+            {
                 if (TextVisible)
                 {
-                    if (img)
-                        return Children;
+                    if (HasImage)
+                        return new AbstractControl[] { PictureBox, spacer, Label };
                     else
                         return new AbstractControl[] { Label };
                 }
                 else
                 {
-                    if (img)
+                    if (HasImage)
                         return new AbstractControl[] { PictureBox };
                     else
                         return Array.Empty<AbstractControl>();
@@ -630,7 +677,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets override for <see cref="VisualState"/> when <see cref="Sticky"/> is True.
+        /// Gets or sets override for <see cref="VisualState"/>
+        /// when <see cref="Sticky"/> is True.
         /// </summary>
         [Browsable(false)]
         public VisualControlState StickyVisualStateOverride
@@ -761,20 +809,25 @@ namespace Alternet.UI
         /// <returns></returns>
         public static ControlStateBorders CreateBorders(Color color)
         {
-            BorderSettings border = new()
+            BorderSettings hoveredBorder = new()
             {
                 Width = 1,
-                /*UniformRadiusIsPercent = false,
-                UniformCornerRadius = 3,*/
                 Color = color,
             };
 
             ControlStateBorders borders = new();
-            var hoveredBorder = border;
             var pressedBorder = hoveredBorder.Clone();
             borders.SetObject(hoveredBorder, VisualControlState.Hovered);
             borders.SetObject(pressedBorder, VisualControlState.Pressed);
             return borders;
+        }
+
+        /// <inheritdoc/>
+        public override void RaiseFontChanged()
+        {
+            Label.IsBold = IsBold;
+            Label.Font = Font;
+            base.RaiseFontChanged();
         }
 
         /// <inheritdoc/>
@@ -836,7 +889,7 @@ namespace Alternet.UI
             }
 
             DrawDefaultBackground(e);
-            if(ImageVisible)
+            if(HasImage)
                 PictureBox.DrawDefaultImage(e.Graphics, PictureBox.Bounds);
             if (TextVisible)
             {

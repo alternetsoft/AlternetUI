@@ -1,4 +1,5 @@
 #include "Api/Application.Api.h"
+#include "Api/Keyboard.Api.h"
 #include "Api/NotifyIcon.Api.h"
 #include "Api/Timer.Api.h"
 #include "Api/Clipboard.Api.h"
@@ -64,7 +65,6 @@
 #include "Api/PrintDocument.Api.h"
 #include "Api/PrinterSettings.Api.h"
 #include "Api/PrintPreviewDialog.Api.h"
-#include "Api/Keyboard.Api.h"
 #include "Api/MainMenu.Api.h"
 #include "Api/Menu.Api.h"
 #include "Api/MenuItem.Api.h"

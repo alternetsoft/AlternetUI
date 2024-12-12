@@ -414,5 +414,10 @@ namespace Alternet.UI
         {
             return false;
         }
+
+        /// <inheritdoc/>
+        public virtual void InvalidateBestSize()
+        {
+        }
     }
 }

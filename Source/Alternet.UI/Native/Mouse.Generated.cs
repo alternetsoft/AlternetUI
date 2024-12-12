@@ -24,19 +24,18 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.PointI GetPosition()
+        public static Alternet.Drawing.PointI GetPosition()
         {
-            CheckDisposed();
-            return NativeApi.Mouse_GetPosition_(NativePointer);
+            return NativeApi.Mouse_GetPosition_();
         }
         
-        public Alternet.UI.MouseButtonState GetButtonState(Alternet.UI.MouseButton button)
+        public static Alternet.UI.MouseButtonState GetButtonState(Alternet.UI.MouseButton button)
         {
-            CheckDisposed();
-            return NativeApi.Mouse_GetButtonState_(NativePointer, button);
+            return NativeApi.Mouse_GetButtonState_(button);
         }
         
         static GCHandle eventCallbackGCHandle;
+        public static Mouse? GlobalObject;
         
         static void SetEventCallback()
         {
@@ -46,6 +45,7 @@ namespace Alternet.UI.Native
                     UI.Application.HandleThreadExceptions(() =>
                     {
                         var w = NativeObject.GetFromNativePointer<Mouse>(obj, p => new Mouse(p));
+                        w ??= GlobalObject;
                         if (w == null) return IntPtr.Zero;
                         return w.OnEvent(e, parameter);
                     }
@@ -84,10 +84,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr Mouse_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI Mouse_GetPosition_(IntPtr obj);
+            public static extern Alternet.Drawing.PointI Mouse_GetPosition_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.MouseButtonState Mouse_GetButtonState_(IntPtr obj, Alternet.UI.MouseButton button);
+            public static extern Alternet.UI.MouseButtonState Mouse_GetButtonState_(Alternet.UI.MouseButton button);
             
         }
     }

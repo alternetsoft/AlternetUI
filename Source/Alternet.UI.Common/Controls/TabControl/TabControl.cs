@@ -41,6 +41,7 @@ namespace Alternet.UI
         private TabSizeMode sizeMode = TabSizeMode.Normal;
         private TabAppearance tabAppearance = TabAppearance.Normal;
         private int addSuspended;
+        private TabAlignment? tabPaintAlignment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -69,11 +70,14 @@ namespace Alternet.UI
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
             cardPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             cardPanelHeader.Parent = this;
+
             cardPanel.Margin = 1;
             cardPanel.Parent = this;
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
+
             cardPanelHeader.CardPanel = cardPanel;
+
             cardPanel.Children.ItemInserted += Pages_ItemInserted;
             cardPanel.Children.ItemRemoved += Pages_ItemRemoved;
         }
@@ -152,6 +156,26 @@ namespace Alternet.UI
                 Header.SelectedTabIndex = value;
                 Invalidate();
                 RaiseSelectedIndexChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether contents of the control is visible.
+        /// If contents is hidden only tab headers are shown.
+        /// </summary>
+        [Browsable(true)]
+        public virtual bool ContentVisible
+        {
+            get
+            {
+                return cardPanel.Visible;
+            }
+
+            set
+            {
+                if (ContentVisible == value)
+                    return;
+                cardPanel.Visible = value;
             }
         }
 
@@ -241,7 +265,7 @@ namespace Alternet.UI
                 if (sizeMode == value)
                     return;
                 sizeMode = value;
-                PerformLayout();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -270,7 +294,7 @@ namespace Alternet.UI
                 if (tabAppearance == value)
                     return;
                 tabAppearance = value;
-                PerformLayout();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -316,6 +340,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets alignment override used when tabs are painted.
+        /// </summary>
+        public virtual TabAlignment? TabPaintAlignment
+        {
+            get
+            {
+                return tabPaintAlignment;
+            }
+
+            set
+            {
+                if (tabPaintAlignment == value)
+                    return;
+                tabPaintAlignment = value;
+                Header.Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the area of the control (for example, along the top) where
         /// the tabs are aligned.
         /// </summary>
@@ -355,7 +398,7 @@ namespace Alternet.UI
 
                     if (isVertical)
                     {
-                        cardPanelHeader.HorizontalAlignment = UI.HorizontalAlignment.Stretch;
+                        Header.HorizontalAlignment = UI.HorizontalAlignment.Stretch;
 
                         base.Layout = LayoutStyle.Vertical;
                         Header.Layout = LayoutStyle.Horizontal;
@@ -366,7 +409,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Stretch;
+                        Header.VerticalAlignment = UI.VerticalAlignment.Stretch;
 
                         base.Layout = LayoutStyle.Horizontal;
                         Header.Layout = LayoutStyle.Vertical;
@@ -886,7 +929,7 @@ namespace Alternet.UI
                 ClientRectangle,
                 r,
                 GetInteriorBorderColor().AsBrush,
-                TabAlignment);
+                tabPaintAlignment ?? TabAlignment);
         }
 
         private void CardPanelHeader_ButtonSizeChanged(object? sender, BaseEventArgs<AbstractControl> e)
@@ -941,11 +984,26 @@ namespace Alternet.UI
                 e.Graphics,
                 r,
                 GetInteriorBorderColor().AsBrush,
-                TabAlignment);
+                tabPaintAlignment ?? TabAlignment);
         }
 
         private class TabControlCardPanel : CardPanel
         {
+            public bool IsVisibleInParent
+            {
+                get
+                {
+                    return ((TabControl?)Parent)?.ContentVisible ?? false;
+                }
+            }
+
+            /// <inheritdoc/>
+            public override bool Visible
+            {
+                get => base.Visible;
+                set => base.Visible = value && IsVisibleInParent;
+            }
+
             /// <inheritdoc/>
             public override void OnChildPropertyChanged(
                 AbstractControl child,
