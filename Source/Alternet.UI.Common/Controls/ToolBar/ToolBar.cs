@@ -1487,6 +1487,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets last tool casted to the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type of the required result.</typeparam>
+        /// <returns></returns>
+        public virtual T? LastTool<T>()
+            where T : AbstractControl
+        {
+            return Children[Children.Count - 1] as T;
+        }
+
+        /// <summary>
         /// Adds click event handler to the item.
         /// </summary>
         /// <param name="id">Item id.</param>
