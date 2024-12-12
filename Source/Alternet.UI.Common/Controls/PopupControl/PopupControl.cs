@@ -206,7 +206,9 @@ namespace Alternet.UI
         public virtual void Close()
         {
             if (!Visible)
+            {
                 return;
+            }
 
             Hide();
             Parent = null;
