@@ -334,9 +334,9 @@ namespace Alternet.UI
         /// when side is visible. If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
         public virtual void SetVisibleBorders(
             bool left,
-            bool top,
-            bool right,
-            bool bottom,
+            bool top = false,
+            bool right = false,
+            bool bottom = false,
             Coord? width = null)
         {
             PerformLayoutAndInvalidate(() =>
