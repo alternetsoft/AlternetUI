@@ -20,19 +20,18 @@ namespace Alternet.UI
         /// <param name="line">Current line number.</param>
         /// <param name="owner">Dialog owner.</param>
         /// <param name="onApply">Action to call when the user clicks 'Ok' button.</param>
+        /// <param name="onBeforeShow">Action to call before dialog is shown.</param>
         public static void ShowDialogGoToLine(
             int lines,
             int line,
             AbstractControl? owner,
-            Action<int> onApply)
+            Action<int> onApply,
+            Action<LongFromUserParams>? onBeforeShow = null)
         {
             var lastLineNumber = lines;
-            var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
 
             LongFromUserParams prm = new()
             {
-                Title = CommonStrings.Default.WindowTitleGoToLine,
-                Message = prompt,
                 Parent = owner,
                 MinValue = 1,
                 MaxValue = lastLineNumber,
@@ -45,6 +44,15 @@ namespace Alternet.UI
                     onApply(line);
                 },
             };
+
+            onBeforeShow?.Invoke(prm);
+
+            prm.Title ??= CommonStrings.Default.WindowTitleGoToLine;
+
+            var template = (prm.Message ?? CommonStrings.Default.LineNumber) + " ({0} - {1})";
+            var prompt = string.Format(template, 1, lastLineNumber);
+
+            prm.Message = prompt;
 
             DialogFactory.GetNumberFromUserAsync(prm);
         }
@@ -62,7 +70,8 @@ namespace Alternet.UI
                 return;
 
             var lastLineNumber = richTextBox.LastLineNumber + 1;
-            var prompt = string.Format(CommonStrings.Default.LineNumberTemplate, 1, lastLineNumber);
+            var template = CommonStrings.Default.LineNumber + " ({0} - {1})";
+            var prompt = string.Format(template, 1, lastLineNumber);
 
             LongFromUserParams prm = new()
             {
