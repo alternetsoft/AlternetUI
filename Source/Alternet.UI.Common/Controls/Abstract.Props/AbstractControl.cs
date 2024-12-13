@@ -1012,8 +1012,7 @@ namespace Alternet.UI
             get => bounds;
             set
             {
-                value.Width = Math.Max(0, value.Width);
-                value.Height = Math.Max(0, value.Height);
+                value.Size = value.Size.ApplyMinMax(MinimumSize, MaximumSize);
                 if (Bounds == value)
                     return;
                 bounds = value;
@@ -2026,6 +2025,8 @@ namespace Alternet.UI
 
             set
             {
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
                 if (MinimumSize == value)
                     return;
                 minimumSize = value;
@@ -2046,6 +2047,8 @@ namespace Alternet.UI
 
             set
             {
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
                 if (MaximumSize == value)
                     return;
                 maximumSize = value;

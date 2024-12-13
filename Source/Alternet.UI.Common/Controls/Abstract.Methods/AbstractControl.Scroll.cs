@@ -177,9 +177,6 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseScroll(ScrollEventArgs e)
         {
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
-
             OnScroll(e);
 
             if(Layout == LayoutStyle.Scroll)
@@ -194,15 +191,9 @@ namespace Alternet.UI
 
             Scroll?.Invoke(this, e);
 
-            foreach (var n in nn)
-            {
-                n.AfterScroll(this, e);
-            }
+            RaiseNotifications((n) => n.AfterScroll(this, e));
 
-            foreach (var n in nn2)
-            {
-                n.AfterScroll(this, e);
-            }
+            ForEachVisibleChild(e, (control, e) => control.OnAfterParentScroll(this, e));
         }
 
         /// <summary>
@@ -275,18 +266,7 @@ namespace Alternet.UI
         /// <param name="value">Scrollbar position.</param>
         public virtual void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
-
-            foreach (var n in nn)
-            {
-                n.AfterSetScrollBarInfo(this, isVertical, value);
-            }
-
-            foreach (var n in nn2)
-            {
-                n.AfterSetScrollBarInfo(this, isVertical, value);
-            }
+            RaiseNotifications((n) => n.AfterSetScrollBarInfo(this, isVertical, value));
         }
 
         /// <summary>
@@ -351,6 +331,16 @@ namespace Alternet.UI
         public int GetScrollBarMaximum(bool isVertical)
         {
             return GetScrollBarInfo(isVertical).Range;
+        }
+
+        /// <summary>
+        /// Called after <see cref="Scroll"/> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="e">A <see cref="ScrollEventArgs"/> that
+        /// contains the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        protected virtual void OnAfterParentScroll(object? sender, ScrollEventArgs e)
+        {
         }
 
         /// <summary>

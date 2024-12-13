@@ -394,6 +394,16 @@ namespace Alternet.UI
             return value;
         }
 
+        /// <inheritdoc cref="ApplyMinMax(int, int?, int?)"/>
+        public static Coord ApplyMinMaxCoord(Coord value, Coord? min = null, Coord? max = null)
+        {
+            if (min is not null && value < min)
+                value = min.Value;
+            if (max is not null && value > max)
+                value = max.Value;
+            return value;
+        }
+
         /// <summary>
         /// Returns <see cref="int"/> value clamped to the inclusive range of min and max.
         /// </summary>
@@ -414,6 +424,18 @@ namespace Alternet.UI
         /// <param name="max">The upper bound of the result.</param>
         /// <returns></returns>
         public static double ClampD(double v, double min, double max)
+        {
+            return Math.Min(Math.Max(v, min), max);
+        }
+
+        /// <summary>
+        /// Returns coordinate value clamped to the inclusive range of min and max.
+        /// </summary>
+        /// <param name="v">The value to be clamped.</param>
+        /// <param name="min">The lower bound of the result.</param>
+        /// <param name="max">The upper bound of the result.</param>
+        /// <returns></returns>
+        public static Coord ClampCoord(Coord v, Coord min, Coord max)
         {
             return Math.Min(Math.Max(v, min), max);
         }

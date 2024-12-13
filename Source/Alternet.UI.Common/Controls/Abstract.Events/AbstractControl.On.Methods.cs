@@ -40,6 +40,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called after the <see cref="MouseWheel" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnAfterParentMouseWheel(object? sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called before the <see cref="KeyDown" /> event of the <see cref="Parent"/> is raised.
         /// </summary>
         /// <param name="sender">The source of the event.</param>

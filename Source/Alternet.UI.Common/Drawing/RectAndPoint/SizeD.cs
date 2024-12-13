@@ -533,9 +533,9 @@ namespace Alternet.Drawing
         public readonly SizeD ApplyMin(SizeD min)
         {
             var result = this;
-            if (min.Width > 0 && result.Width < min.Width)
+            if (min.Width >= 0 && result.Width < min.Width)
                 result.Width = min.Width;
-            if (min.Height > 0 && result.Height < min.Height)
+            if (min.Height >= 0 && result.Height < min.Height)
                 result.Height = min.Height;
             return result;
         }

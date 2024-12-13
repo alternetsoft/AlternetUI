@@ -795,6 +795,7 @@ namespace Alternet.UI
             MouseWheel?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterMouseWheel(this, e));
+            ForEachVisibleChild(e, (control, e) => control.OnAfterParentMouseWheel(this, e));
         }
 
         /// <summary>
