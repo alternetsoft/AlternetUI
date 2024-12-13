@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the <see langword="Scroll" /> event.
     /// </summary>
-    public class ScrollEventArgs : BaseEventArgs
+    public class ScrollEventArgs : HandledEventArgs
     {
         private int oldValue = -1;
         private ScrollEventType type;
