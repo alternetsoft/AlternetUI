@@ -712,6 +712,12 @@ namespace Alternet.UI
         public ListControlItem ScopeItemCurrentProject => scopeCurrentProject;
 
         /// <summary>
+        /// Gets 'Selection Only' item in the <see cref="ScopeEdit"/>.
+        /// </summary>
+        [Browsable(false)]
+        public ListControlItem ScopeItemSelectionOnly => scopeSelectionOnly;
+
+        /// <summary>
         /// Gets or sets 'Find Text At Cursor' option.
         /// </summary>
         public virtual bool OptionFindTextAtCursor
