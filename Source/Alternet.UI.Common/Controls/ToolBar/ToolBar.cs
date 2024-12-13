@@ -98,7 +98,8 @@ namespace Alternet.UI
         public static Coord DefaultSize { get; set; } = 24;
 
         /// <summary>
-        /// Gets or sets default minimal item size in dips. You should not normally set this value
+        /// Gets or sets default minimal item size in dips. You should not normally
+        /// set this value
         /// to lower than 24.
         /// </summary>
         public static Coord DefaultMinItemSize { get; set; } = 24;
@@ -1484,6 +1485,17 @@ namespace Alternet.UI
             if (item is null)
                 return;
             item.ClickAction = value;
+        }
+
+        /// <summary>
+        /// Gets last tool casted to the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type of the required result.</typeparam>
+        /// <returns></returns>
+        public virtual T? LastTool<T>()
+            where T : AbstractControl
+        {
+            return Children[Children.Count - 1] as T;
         }
 
         /// <summary>

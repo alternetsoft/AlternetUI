@@ -854,7 +854,7 @@ namespace Alternet.UI
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
         [Browsable(false)]
-        public void RaiseClick()
+        public virtual void RaiseClick()
         {
             LastClickedTimestamp = DateTime.Now.Ticks;
 
