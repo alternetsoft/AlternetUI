@@ -186,8 +186,7 @@ namespace Alternet.UI
             get => Handler.Bounds;
             set
             {
-                value.Width = Math.Max(0, value.Width);
-                value.Height = Math.Max(0, value.Height);
+                value.Size = value.Size.ApplyMinMax(MinimumSize, MaximumSize);
                 if (Bounds == value)
                     return;
                 Handler.Bounds = value;
@@ -204,6 +203,8 @@ namespace Alternet.UI
 
             set
             {
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
                 if (MinimumSize == value)
                     return;
                 Handler.MinimumSize = value;
@@ -221,6 +222,8 @@ namespace Alternet.UI
 
             set
             {
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
                 if (MaximumSize == value)
                     return;
                 Handler.MaximumSize = value;
