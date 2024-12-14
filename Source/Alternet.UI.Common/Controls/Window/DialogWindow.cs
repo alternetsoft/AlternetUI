@@ -130,6 +130,21 @@ namespace Alternet.UI
             return Handler.ShowModal(owner);
         }
 
+        /// <summary>
+        /// Runs a dialog asynchroniously.
+        /// </summary>
+        /// <param name="onClose">Action to call after dialog is closed.</param>
+        /// <param name="owner">A window that will own this window.</param>
+        /// <remarks>
+        /// On some platforms dialogs are shown synchroniously and application waits
+        /// until dialog is closed.
+        /// </remarks>
+        public virtual void ShowDialogAsync(Window? owner = null, Action<bool>? onClose = null)
+        {
+            var result = ShowModal(owner);
+            onClose?.Invoke(result == ModalResult.Accepted);
+        }
+
         /// <inheritdoc/>
         public override WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Dialog;
 
