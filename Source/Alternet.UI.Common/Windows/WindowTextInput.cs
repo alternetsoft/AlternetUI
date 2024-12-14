@@ -18,10 +18,13 @@ namespace Alternet.UI
 
         private readonly Label label = new(CommonStrings.Default.EnterValue)
         {
+            Margin = 5,
         };
 
         private readonly TextBoxAndButton edit = new()
         {
+            Margin = 5,
+            MinWidth = 200,
             ButtonsVisible = false,
         };
 
@@ -30,17 +33,20 @@ namespace Alternet.UI
         /// </summary>
         public WindowTextInput()
         {
+            Padding = 5;
             MinimizeEnabled = false;
             StartLocation = WindowStartLocation.CenterOwner;
             MaximizeEnabled = false;
             Resizable = false;
             Title = CommonStrings.Default.WindowTitleInput;
             Layout = LayoutStyle.Vertical;
-            MinChildMargin = 5;
             label.Parent = this;
             edit.HorizontalAlignment = HorizontalAlignment.Stretch;
             edit.Parent = this;
             buttons.Parent = this;
+            SetSizeToContent();
+            ActiveControl = edit;
+            Buttons.UseModalResult = true;
         }
 
         /// <summary>
