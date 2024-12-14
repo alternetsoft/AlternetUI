@@ -213,6 +213,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Starts the timer which will raise tick events repeatedly.
+        /// </summary>
+        public void StartRepeated()
+        {
+            AutoReset = true;
+            Enabled = true;
+        }
+
+        /// <summary>
+        /// Starts the timer which will raise tick event only once.
+        /// </summary>
+        public void StartOnce()
+        {
+            AutoReset = false;
+            Enabled = true;
+        }
+
+        /// <summary>
         /// Starts the timer.
         /// </summary>
         /// <remarks>You can also start the timer by setting the <see cref="Enabled"/>
