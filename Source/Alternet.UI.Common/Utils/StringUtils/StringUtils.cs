@@ -78,6 +78,11 @@ namespace Alternet.UI
         public const string OneNewLine = "\n";
 
         /// <summary>
+        /// Gets initialized string with three dots.
+        /// </summary>
+        public const string ThreeDots = "...";
+
+        /// <summary>
         /// Gets title of the windows key on MacOs (0x2318 character).
         /// </summary>
         public const string MacCommandKeyTitle = "\u2318";
