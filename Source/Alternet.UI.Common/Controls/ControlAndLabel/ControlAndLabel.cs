@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -53,15 +54,18 @@ namespace Alternet.UI
         /// </summary>
         public ControlAndLabel()
         {
+            Layout = LayoutStyle.Horizontal;
+
             label = CreateLabel();
             label.Margin = new Thickness(0, 0, DefaultControlLabelDistance, 0);
             label.VerticalAlignment = UI.VerticalAlignment.Center;
-
-            Layout = LayoutStyle.Horizontal;
             label.Parent = this;
+
             mainControl = CreateControl();
-            mainControl.VerticalAlignment = UI.VerticalAlignment.Center;
+            mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
             mainControl.Parent = this;
+
+            errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
             CustomTextBox.InitErrorPicture(errorPicture);
             errorPicture.Parent = this;
             errorPicture.ParentBackColor = true;
@@ -70,6 +74,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
         /// </summary>
+        [DefaultValue(Coord.PositiveInfinity)]
         public virtual Coord LabelSuggestedWidth
         {
             get => Label.SuggestedWidth;
@@ -79,6 +84,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
         /// </summary>
+        [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedWidth
         {
             get => MainControl.SuggestedWidth;
@@ -88,6 +94,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property of the main child control.
         /// </summary>
+        [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedHeight
         {
             get => MainControl.SuggestedHeight;

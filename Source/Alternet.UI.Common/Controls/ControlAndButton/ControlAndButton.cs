@@ -53,11 +53,7 @@ namespace Alternet.UI
         private readonly ToolBar buttons;
         private readonly AbstractControl mainControl;
 
-        private readonly PictureBox errorPicture = new()
-        {
-            Margin = new Thickness(ControlAndLabel.DefaultControlLabelDistance, 0, 0, 0),
-        };
-
+        private PictureBox? errorPicture;
         private ObjectUniqueId? idButtonCombo;
         private ObjectUniqueId? idButtonEllipsis;
         private ObjectUniqueId? idButtonPlus;
@@ -87,20 +83,15 @@ namespace Alternet.UI
             try
             {
                 mainControl = CreateControl();
-                mainControl.VerticalAlignment = UI.VerticalAlignment.Center;
+                mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
                 mainControl.Parent = this;
 
                 buttons = new();
-                buttons.VerticalAlignment = UI.VerticalAlignment.Center;
+                buttons.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
                 buttons.ParentBackColor = true;
                 buttons.ParentForeColor = true;
                 HasBtnComboBox = true;
                 buttons.Parent = this;
-
-                CustomTextBox.InitErrorPicture(errorPicture);
-                errorPicture.Visible = false;
-                errorPicture.Parent = this;
-                errorPicture.ParentBackColor = true;
             }
             finally
             {
@@ -268,7 +259,24 @@ namespace Alternet.UI
         /// displays validation error information.
         /// </summary>
         [Browsable(false)]
-        public PictureBox ErrorPicture => errorPicture;
+        public PictureBox ErrorPicture
+        {
+            get
+            {
+                if(errorPicture is null)
+                {
+                    errorPicture = new();
+                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
+                    errorPicture.Margin = (ControlAndLabel.DefaultControlLabelDistance, 0, 0, 0);
+                    CustomTextBox.InitErrorPicture(errorPicture);
+                    errorPicture.Visible = false;
+                    errorPicture.ParentBackColor = true;
+                    errorPicture.Parent = this;
+                }
+
+                return errorPicture;
+            }
+        }
 
         /// <summary>
         /// Gets or sets visibility of the attached <see cref="PictureBox"/> control which
@@ -283,6 +291,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
         /// </summary>
+        [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedWidth
         {
             get => MainControl.SuggestedWidth;
@@ -292,6 +301,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property of the main child control.
         /// </summary>
+        [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedHeight
         {
             get => MainControl.SuggestedHeight;
