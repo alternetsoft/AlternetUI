@@ -1362,18 +1362,6 @@ namespace Alternet.UI
             get
             {
                 return Root as Window;
-
-                /*
-                var result = Parent;
-                while (true)
-                {
-                    if (result == null)
-                        return null;
-                    if (result is Window window)
-                        return window;
-                    result = result.Parent;
-                }
-                */
             }
         }
 
@@ -1588,6 +1576,7 @@ namespace Alternet.UI
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
+        [DefaultValue(Coord.NaN)]
         public Coord SuggestedWidth
         {
             get => SuggestedSize.Width;
@@ -1612,6 +1601,7 @@ namespace Alternet.UI
         /// The value of this property is always the same as the value that was
         /// set to it and is not changed by the layout system.
         /// </remarks>
+        [DefaultValue(Coord.NaN)]
         public Coord SuggestedHeight
         {
             get => SuggestedSize.Height;
@@ -1763,6 +1753,7 @@ namespace Alternet.UI
         /// Gets or sets minimal value of the child's <see cref="Margin"/> property.
         /// </summary>
         [Browsable(false)]
+        [DefaultValue(null)]
         public virtual Thickness? MinChildMargin
         {
             get
@@ -2059,6 +2050,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the minimum width the window can be resized to.
         /// </summary>
+        [DefaultValue(null)]
         public virtual Coord? MinWidth
         {
             get
@@ -2081,6 +2073,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the minimum height the window can be resized to.
         /// </summary>
+        [DefaultValue(null)]
         public virtual Coord? MinHeight
         {
             get
@@ -2103,6 +2096,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the maximum width the window can be resized to.
         /// </summary>
+        [DefaultValue(null)]
         public virtual Coord? MaxWidth
         {
             get
@@ -2166,6 +2160,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the maximum height the window can be resized to.
         /// </summary>
+        [DefaultValue(null)]
         public virtual Coord? MaxHeight
         {
             get
@@ -2394,6 +2389,7 @@ namespace Alternet.UI
         /// This property modifies <see cref="GroupIndexes"/>.
         /// </remarks>
         [Browsable(false)]
+        [DefaultValue(null)]
         public virtual int? GroupIndex
         {
             get
@@ -2557,6 +2553,7 @@ namespace Alternet.UI
         /// this property for background painting.
         /// </remarks>
         [Browsable(false)]
+        [DefaultValue(null)]
         public virtual Brush? Background
         {
             get => Backgrounds?.Normal;
@@ -2613,6 +2610,7 @@ namespace Alternet.UI
         /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
         [Browsable(false)]
+        [DefaultValue(null)]
         public virtual Brush? Foreground
         {
             get => Foregrounds?.Normal;
@@ -2635,6 +2633,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If <see cref="Font"/> is not specified, <see cref="AbstractControl.DefaultFont"/> is used.
         /// </remarks>
+        [DefaultValue(null)]
         public virtual Font? Font
         {
             get
