@@ -12,6 +12,38 @@ namespace Alternet.UI
     /// </summary>
     public static class ValidationUtils
     {
+        private static Func<string?, bool> funcIsValidMailAddress = (email) =>
+        {
+            var method = typeof(MailAddress).GetMethod(
+                "TryCreate",
+                [typeof(string), typeof(MailAddress).MakeByRefType()]);
+
+            if (method is null)
+            {
+                funcIsValidMailAddress = (email) =>
+                {
+                    try
+                    {
+                        var mail = new MailAddress(email);
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                };
+            }
+            else
+            {
+                funcIsValidMailAddress = (email) =>
+                {
+                    return (bool)method.Invoke(null, [email, null]);
+                };
+            }
+
+            return funcIsValidMailAddress(email);
+        };
+
         /// <summary>
         /// Validates e-mail address.
         /// </summary>
@@ -22,21 +54,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(email))
                 return false;
-
-#if NET6_0_OR_GREATER
-            var result = MailAddress.TryCreate(email, out _);
-            return result;
-#else
-            try
-            {
-                var mail = new MailAddress(email);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-#endif
+            return funcIsValidMailAddress(email);
         }
 
         /// <summary>
