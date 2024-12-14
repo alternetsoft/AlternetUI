@@ -181,6 +181,12 @@ namespace Alternet.UI
             return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName) ?? Array.Empty<string>();
         }
 
+        /// <inheritdoc/>
+        public override bool SetFocus()
+        {
+            return MainControl.SetFocus();
+        }
+
         /// <summary>
         /// Creates main child control.
         /// </summary>

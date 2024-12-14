@@ -389,6 +389,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc/>
+        public override bool SetFocus()
+        {
+            return MainControl.SetFocus();
+        }
+
         /// <summary>
         /// Gets button name for the debug purposes for the specified button id.
         /// </summary>
