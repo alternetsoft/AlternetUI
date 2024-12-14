@@ -68,5 +68,13 @@ namespace Alternet.UI
                 Reference.SetTarget(value);
             }
         }
+
+        /// <summary>
+        /// Sets <see cref="Value"/> to Null.
+        /// </summary>
+        public void Reset()
+        {
+            Value = null;
+        }
     }
 }
