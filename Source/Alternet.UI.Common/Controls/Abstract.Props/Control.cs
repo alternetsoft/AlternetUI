@@ -165,9 +165,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Font RealFont => Handler.Font ?? base.RealFont;
-
-        /// <inheritdoc/>
         public override bool UserPaint
         {
             get => Handler.UserPaint;
@@ -1011,8 +1008,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnFontChanged(EventArgs e)
         {
-            Handler.Font = HasDefaultFont ? null : Font;
-            Handler.IsBold = IsBold;
+            Handler.Font = RealFont;
         }
 
         /// <inheritdoc/>
