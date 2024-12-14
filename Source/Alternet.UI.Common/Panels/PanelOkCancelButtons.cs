@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -14,6 +15,8 @@ namespace Alternet.UI
     [ControlCategory("Panels")]
     public partial class PanelOkCancelButtons : StackPanel
     {
+        private Button? applyButton;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelOkCancelButtons"/> class.
         /// </summary>
@@ -37,9 +40,8 @@ namespace Alternet.UI
                 VerticalAlignment = UI.VerticalAlignment.Center;
                 OkButton.Parent = this;
                 CancelButton.Parent = this;
-                ApplyButton.Parent = this;
-                OkButton.Click += OkButton_Click;
-                CancelButton.Click += CancelButton_Click;
+                OkButton.Click += HandleOkButtonClick;
+                CancelButton.Click += HandleCancelButtonClick;
             }
             finally
             {
@@ -48,9 +50,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets default button margin for the 'Ok', 'Cancel' and 'Apply' buttons.
+        /// Gets or sets default margin for the buttons.
         /// </summary>
-        public static Thickness DefaultButtonMargin { get; set; } = new(5);
+        public static Thickness DefaultButtonMargin { get; set; } = 5;
 
         /// <summary>
         /// Gets 'Ok' button.
@@ -82,14 +84,26 @@ namespace Alternet.UI
         /// Gets 'Apply' button.
         /// </summary>
         [Browsable(false)]
-        public Button ApplyButton { get; } = new()
+        public Button ApplyButton
         {
-            Margin = DefaultButtonMargin,
-            Text = CommonStrings.Default.ButtonApply,
-            VerticalAlignment = UI.VerticalAlignment.Center,
-            HorizontalAlignment = UI.HorizontalAlignment.Right,
-            Visible = false,
-        };
+            get
+            {
+                if (applyButton is null)
+                {
+                    applyButton = new()
+                    {
+                        Margin = DefaultButtonMargin,
+                        Text = CommonStrings.Default.ButtonApply,
+                        VerticalAlignment = UI.VerticalAlignment.Center,
+                        HorizontalAlignment = UI.HorizontalAlignment.Right,
+                        Visible = false,
+                        Parent = this,
+                    };
+                }
+
+                return applyButton;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether 'Apply' button is visible.
@@ -128,6 +142,26 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Called when 'Cancel' button is clicked.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleCancelButtonClick(object? sender, EventArgs e)
+        {
+            ApplyModalResult(ModalResult.Canceled);
+        }
+
+        /// <summary>
+        /// Called when 'Ok' button is clicked.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void HandleOkButtonClick(object? sender, EventArgs e)
+        {
+            ApplyModalResult(ModalResult.Accepted);
+        }
+
         private void ApplyModalResult(ModalResult modalResult)
         {
             if (!UseModalResult)
@@ -135,16 +169,6 @@ namespace Alternet.UI
             if (ParentWindow is not DialogWindow dialog)
                 return;
             dialog.ModalResult = modalResult;
-        }
-
-        private void CancelButton_Click(object? sender, EventArgs e)
-        {
-            ApplyModalResult(ModalResult.Canceled);
-        }
-
-        private void OkButton_Click(object? sender, EventArgs e)
-        {
-            ApplyModalResult(ModalResult.Accepted);
         }
     }
 }
