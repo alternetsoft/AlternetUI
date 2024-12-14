@@ -176,9 +176,7 @@ namespace Alternet.UI
                 eventsControl.Parent = splitterPanel;
             }
 
-            pageContainer.SelectedIndex = 0;
             pageContainer.ListBox!.HorizontalScrollbar = true;
-            pageContainer.LeftControl?.SetFocusIfPossible();
 
             var logSizeChanged = false;
 
@@ -187,6 +185,13 @@ namespace Alternet.UI
                 SizeChanged += MainWindow_SizeChanged;
                 StateChanged += MainWindow_StateChanged;
             }
+
+            ActiveControl = pageContainer.ListBox;
+
+            App.AddIdleTask(() =>
+            {
+                pageContainer.SelectedIndex = 0;
+            });           
         }
 
         protected virtual void AddPages()

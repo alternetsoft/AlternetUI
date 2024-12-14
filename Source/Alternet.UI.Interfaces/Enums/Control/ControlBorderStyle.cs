@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
     /// Border flags for the control.
+    /// </summary>
     public enum ControlBorderStyle
     {
         /// <summary>
