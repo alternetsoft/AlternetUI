@@ -124,9 +124,15 @@ namespace Alternet.UI
 #endif
         public virtual ModalResult ShowModal(Window? owner)
         {
-            CheckDisposed();
+            App.DoEvents();
+            if (IsDisposed)
+                return ModalResult.Canceled;
             ModalResult = ModalResult.None;
             ApplyStartLocationOnce(owner);
+            App.AddIdleTask(() =>
+            {
+                ActiveControl?.SetFocusIfPossible();
+            });
             return Handler.ShowModal(owner);
         }
 
