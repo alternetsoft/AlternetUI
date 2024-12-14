@@ -2693,6 +2693,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether font style override is underlined.
+        /// </summary>
+        public virtual bool IsUnderline
+        {
+            get
+            {
+                return fontStyle.HasFlag(FontStyle.Underline);
+            }
+
+            set
+            {
+                var oldValue = IsUnderline;
+
+                if (value)
+                    fontStyle |= FontStyle.Underline;
+                else
+                    fontStyle &= ~FontStyle.Underline;
+
+                var newValue = IsUnderline;
+
+                if (newValue == oldValue)
+                    return;
+
+                RaiseFontChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the control is currently re-creating its handle.
         /// </summary>
         /// <returns>

@@ -1365,6 +1365,22 @@ namespace Alternet::UI
         _flags.Set(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
+    Font* Control::GetFont()
+    {
+        return new Font(GetWxWindow()->GetFont());
+    }
+
+    void Control::SetFont(Font* value)
+    {
+        auto w = GetWxWindow();
+        if (value == nullptr)
+        {
+            w->SetFont(wxNullFont);
+            return;
+        }
+        w->SetFont(value->GetWxFont());
+    }
+
     bool Control::GetIsBold()
     {
         auto w = GetWxWindow();
@@ -1393,22 +1409,6 @@ namespace Alternet::UI
     void Control::UnsetToolTip()
     {
         GetWxWindow()->UnsetToolTip();
-    }
-
-    Font* Control::GetFont()
-    {
-        return new Font(GetWxWindow()->GetFont());
-    }
-
-    void Control::SetFont(Font* value)
-    {
-        auto w = GetWxWindow();
-        if (value == nullptr)
-        {
-            w->SetFont(wxNullFont);
-            return;
-        }
-        w->SetFont(value->GetWxFont());
     }
 
     void Control::BeginUpdate()

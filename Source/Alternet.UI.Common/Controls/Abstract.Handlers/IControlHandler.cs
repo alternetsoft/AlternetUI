@@ -192,10 +192,7 @@ namespace Alternet.UI
         Color ForegroundColor { get; set; }
 
         /// <inheritdoc cref="AbstractControl.Font"/>
-        Font? Font { get; set; }
-
-        /// <inheritdoc cref="AbstractControl.IsBold"/>
-        bool IsBold { get; set; }
+        Font? Font { set; }
 
         /// <inheritdoc cref="AbstractControl.AllowDrop"/>
         bool AllowDrop { get; set; }
