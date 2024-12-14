@@ -12,6 +12,7 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         private VisualControlStates? reportedVisualStates;
+        private Timer? delayedTextChangedTimer;
 
         /// <summary>
         /// Raises the <see cref="Invalidated" /> event
@@ -421,6 +422,20 @@ namespace Alternet.UI
             OnTextChanged(EventArgs.Empty);
 
             RaiseNotifications((n) => n.AfterTextChanged(this));
+
+            if(DelayedTextChanged is not null)
+            {
+                delayedTextChangedTimer ??= new();
+                delayedTextChangedTimer.Stop();
+                delayedTextChangedTimer.Interval = TimerUtils.DefaultDelayedTextChangedTimeout;
+                delayedTextChangedTimer.TickAction = () =>
+                {
+                    if (IsDisposed)
+                        return;
+                    DelayedTextChanged?.Invoke(this, EventArgs.Empty);
+                };
+                delayedTextChangedTimer.StartOnce();
+            }
         }
 
         /// <summary>

@@ -4,9 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ControlsSample.Misc
+using Alternet.UI;
+
+namespace ControlsSample
 {
-    internal class Tests
+    public static class Tests
     {
+        public static void TestWindowTextInput()
+        {
+            var window = new WindowTextInput();
+            window.ShowDialogAsync();
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace Alternet.UI
         private readonly WindowInfo info = new();
         private readonly WindowKind? windowKindOverride;
 
+        private WeakReferenceValue<AbstractControl> activeControl;
         private IconSet? icon = null;
         private object? menu = null;
         private Window? owner;
@@ -76,11 +77,6 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="Icon"/> property changes.
         /// </summary>
         public event EventHandler? IconChanged;
-
-        /*/// <summary>
-        /// Occurs when the value of the <see cref="ToolBar"/> property changes.
-        /// </summary>
-        public event EventHandler? ToolBarChanged;*/
 
         /// <summary>
         /// Occurs when the value of the <see cref="StatusBar"/> property changes.
@@ -219,7 +215,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default control font size increment
         /// (in points) on high dpi displays (DPI greater than 96).
-        /// Default value is 2.
         /// </summary>
         public static int IncFontSizeHighDpi
         {
@@ -237,7 +232,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default control font size increment (in points) on normal
         /// dpi displays (DPI less or equal to 96).
-        /// Default value is 0.
         /// </summary>
         public static int IncFontSize
         {
@@ -340,7 +334,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets border style of the window.
         /// </summary>
-        public new ControlBorderStyle BorderStyle
+        [Browsable(true)]
+        public override ControlBorderStyle BorderStyle
         {
             get => base.BorderStyle;
             set => base.BorderStyle = value;
@@ -795,6 +790,42 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets active control.
+        /// </summary>
+        /// <remarks>
+        /// When forms is shown active control becomes focused.
+        /// </remarks>
+        public virtual AbstractControl? ActiveControl
+        {
+            get
+            {
+                return activeControl.Value;
+            }
+
+            set
+            {
+                if (value is null)
+                {
+                    activeControl.Value = null;
+                    return;
+                }
+
+                if (activeControl.Value == value)
+                    return;
+
+                activeControl.Value = value;
+
+                if (Visible && value is not null)
+                {
+                    App.AddIdleTask(() =>
+                    {
+                        value.SetFocusIfPossible();
+                    });
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override bool Visible
         {
@@ -814,6 +845,11 @@ namespace Alternet.UI
                 }
 
                 base.Visible = value;
+
+                if (value)
+                {
+                    ActiveControl?.SetFocusIfPossible();
+                }
             }
         }
 

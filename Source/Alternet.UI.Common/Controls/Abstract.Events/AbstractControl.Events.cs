@@ -216,6 +216,14 @@ namespace Alternet.UI
         public event EventHandler? TextChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="AbstractControl.Text" /> property value changes.
+        /// </summary>
+        /// <remarks>
+        /// This is a delayed event. If multiple events are occurred during the delay, they are ignored.
+        /// </remarks>
+        public event EventHandler? DelayedTextChanged;
+
+        /// <summary>
         /// Occurs when a character, space or backspace key is pressed while the control has focus.
         /// </summary>
         [Category("Key")]
