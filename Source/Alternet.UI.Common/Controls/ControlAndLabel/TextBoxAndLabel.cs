@@ -130,20 +130,25 @@ namespace Alternet.UI
         protected virtual void Init()
         {
             MainControl.ValidatorReporter = ErrorPicture;
-            MainControl.TextChanged += MainControl_TextChanged;
+            MainControl.TextChanged += (s, e) =>
+            {
+                RaiseTextChanged();
+            };
+
+            MainControl.DelayedTextChanged += (s, e) =>
+            {
+                MainControlTextChanged();
+            };
         }
 
         /// <summary>
         /// Called when text is changed in the main child control.
         /// </summary>
+        /// <remarks>
+        /// This method is called after some delay and is suitable for the text validation.
+        /// </remarks>
         protected virtual void MainControlTextChanged()
         {
-            OnTextChanged(EventArgs.Empty);
-        }
-
-        private void MainControl_TextChanged(object? sender, EventArgs e)
-        {
-            MainControlTextChanged();
         }
     }
 }

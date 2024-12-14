@@ -62,6 +62,7 @@ namespace Alternet.UI
         protected override void MainControlTextChanged()
         {
             base.MainControlTextChanged();
+
             if (TextBox.ReportErrorEmptyText())
                 return;
 
@@ -69,7 +70,7 @@ namespace Alternet.UI
             {
                 ValidationEventArgs e = new(Text);
                 TextValidation(this, e);
-                if(e.IsValid is not null)
+                if (e.IsValid is not null)
                 {
                     TextBox.ReportValidatorError(!e.IsValid.Value);
                     return;
