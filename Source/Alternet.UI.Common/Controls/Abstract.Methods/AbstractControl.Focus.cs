@@ -206,10 +206,22 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool SetFocusIfPossible()
         {
-            if (!IsDisposed && CanFocus)
+            if (!IsDisposed && Visible && CanFocus)
                 return SetFocus();
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Sets input focus to the control when all application messages are
+        /// processed and application goes to the idle state.
+        /// </summary>
+        public virtual void SetFocusIdle()
+        {
+            App.AddIdleTask(() =>
+            {
+                SetFocusIfPossible();
+            });
         }
 
         /// <summary>
