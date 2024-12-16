@@ -20,8 +20,8 @@ namespace Alternet.UI
         private static List<IControlNotification>? globalWindowNotifications;
         private static WindowKind? globalWindowKindOverride;
         private static RectD defaultBounds = new(100, 100, 400, 400);
-        private static int incFontSizeHighDpi = 2;
-        private static int incFontSize = 1;
+        private static int? incFontSizeHighDpi;
+        private static int? incFontSize;
 
         private readonly WindowInfo info = new();
         private readonly WindowKind? windowKindOverride;
@@ -216,7 +216,7 @@ namespace Alternet.UI
         /// Gets or sets default control font size increment
         /// (in points) on high dpi displays (DPI greater than 96).
         /// </summary>
-        public static int IncFontSizeHighDpi
+        public static int? IncFontSizeHighDpi
         {
             get => incFontSizeHighDpi;
 
@@ -233,7 +233,7 @@ namespace Alternet.UI
         /// Gets or sets default control font size increment (in points) on normal
         /// dpi displays (DPI less or equal to 96).
         /// </summary>
-        public static int IncFontSize
+        public static int? IncFontSize
         {
             get => incFontSize;
             set
