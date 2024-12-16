@@ -170,9 +170,33 @@ namespace Alternet.UI
         /// <returns></returns>
         public static int GetDefaultFontSizeIncrement()
         {
+            int GetIncFontSizeHighDpi()
+            {
+                var result = Window.IncFontSizeHighDpi
+                    ?? AllPlatformDefaults.PlatformCurrent.IncFontSizeHighDpi;
+                return result;
+            }
+
+            int GetIncFontSize()
+            {
+                var result = Window.IncFontSize
+                    ?? AllPlatformDefaults.PlatformCurrent.IncFontSize;
+                return result;
+            }
+
             var dpi = Display.MaxDPI;
-            var incFont = (dpi > 96) ? Window.IncFontSizeHighDpi : Window.IncFontSize;
+            var incFont = (dpi > 96) ? GetIncFontSizeHighDpi() : GetIncFontSize();
             return incFont;
+        }
+
+        /// <summary>
+        /// Initializes <see cref="Window.IncFontSizeHighDpi"/> and
+        /// <see cref="Window.IncFontSize"/> with the default values.
+        /// </summary>
+        public static void InitDefaultFontSizeIncrement(int? value = null)
+        {
+            Window.IncFontSizeHighDpi = value ?? AllPlatformDefaults.DefaultIncFontSizeHighDpi;
+            Window.IncFontSize = value ?? AllPlatformDefaults.DefaultIncFontSize;
         }
 
         /// <summary>

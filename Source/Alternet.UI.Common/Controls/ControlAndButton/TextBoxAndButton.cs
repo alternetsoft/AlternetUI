@@ -83,6 +83,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows common border and validation error place.
+        /// </summary>
+        public virtual void InitErrorAndBorder()
+        {
+            ErrorPictureVisible = true;
+            MainControl.HasBorder = false;
+            HasBorder = true;
+            BackColor = MainControl.BackColor;
+        }
+
+        /// <summary>
         /// Initializes this control for the password editing.
         /// </summary>
         public virtual void InitPasswordEdit()

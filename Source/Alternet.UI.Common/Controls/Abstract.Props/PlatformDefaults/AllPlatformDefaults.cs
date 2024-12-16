@@ -40,6 +40,10 @@ namespace Alternet.UI
         /// </summary>
         public static readonly PlatformDefaults PlatformMacOs = new();
 
+        internal const int DefaultIncFontSizeHighDpi = 1;
+
+        internal const int DefaultIncFontSize = 1;
+
         static AllPlatformDefaults()
         {
             if (App.IsWindowsOS)
@@ -65,6 +69,18 @@ namespace Alternet.UI
 
             PlatformCurrent = PlatformAny;
 
+            void InitCommon()
+            {
+                var platform = PlatformCurrent;
+                platform.IncFontSizeHighDpi = DefaultIncFontSizeHighDpi;
+                platform.IncFontSize = DefaultIncFontSize;
+            }
+
+            void InitLinuxOrMacOs()
+            {
+                var platform = PlatformCurrent;
+            }
+
             void InitLinux()
             {
                 var platform = PlatformLinux;
@@ -75,6 +91,8 @@ namespace Alternet.UI
                 platform.Controls.CheckBox.MinMargin = minMargin;
                 platform.AdjustTextBoxesHeight = true;
                 platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
+                InitLinuxOrMacOs();
+                InitCommon();
             }
 
             void InitWindows()
@@ -83,6 +101,7 @@ namespace Alternet.UI
 
                 platform.TextBoxUrlClickModifiers = ModifierKeys.Control;
                 platform.Controls.Button.MinMargin = 3;
+                InitCommon();
             }
 
             void InitMacOs()
@@ -94,6 +113,8 @@ namespace Alternet.UI
                 platform.Controls.MultilineTextBox.HasBorderOnBlack = false;
                 platform.Controls.ListBox.HasBorderOnBlack = false;
                 platform.Controls.CheckListBox.HasBorderOnBlack = false;
+                InitLinuxOrMacOs();
+                InitCommon();
             }
         }
 
