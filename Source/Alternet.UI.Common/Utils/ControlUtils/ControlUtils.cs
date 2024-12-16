@@ -25,6 +25,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds visible control of the specified type.
+        /// </summary>
+        /// <typeparam name="T">Type of the control to find.</typeparam>
+        /// <returns></returns>
+        public static T? FindVisibleControl<T>()
+            where T : AbstractControl
+        {
+            T? result = null;
+
+            foreach(var window in App.Current.Windows)
+            {
+                window.ForEachVisibleChild(
+                    (control) =>
+                    {
+                        if (control is T tt)
+                            result = tt;
+                    }, true);
+
+                if (result is not null)
+                    break;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets control for measure purposes in a safe way. Do not change
         /// any properties of the returned control.
         /// </summary>

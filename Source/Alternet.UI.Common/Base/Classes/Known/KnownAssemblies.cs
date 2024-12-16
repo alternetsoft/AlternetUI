@@ -32,7 +32,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets list of assemblies which includes <see cref="LibraryInterfaces"/>,
-        /// <see cref="LibraryCommon"/> and all loaded assemblies which use <see cref="LibraryCommon"/>.
+        /// <see cref="LibraryCommon"/> and all loaded assemblies which
+        /// use <see cref="LibraryCommon"/>.
         /// </summary>
         public static List<Assembly> AllAlternet
         {
@@ -47,7 +48,7 @@ namespace Alternet.UI
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies();
                     foreach (var assembly in assemblies)
                     {
-                        if(AssemblyUtils.IsAssemblyReferencedFrom(assembly, LibraryCommon))
+                        if(AssemblyUtils.IsAssemblyReferencedFrom(assembly, allAlternet))
                             allAlternet.Add(assembly);
                     }
                 }

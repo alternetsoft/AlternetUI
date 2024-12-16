@@ -1844,7 +1844,8 @@ namespace Alternet.UI
         /// Performs some action for the each child of the control.
         /// </summary>
         /// <param name="action">Specifies action which will be called for the each child.</param>
-        /// <param name="recursive">Whether to call action for all child controls recursively.</param>
+        /// <param name="recursive">Whether to call action
+        /// for all child controls recursively.</param>
         public virtual void ForEachChild(Action<AbstractControl> action, bool recursive = false)
         {
             if (!HasChildren)
@@ -1855,6 +1856,30 @@ namespace Alternet.UI
                 action(child);
                 if (recursive)
                     child.ForEachChild(action, true);
+            }
+        }
+
+        /// <summary>
+        /// Performs some action for the each visible child of the control.
+        /// </summary>
+        /// <param name="action">Specifies action which will be called
+        /// for the each visible child.</param>
+        /// <param name="recursive">Whether to call action
+        /// for all child controls recursively.</param>
+        public virtual void ForEachVisibleChild(
+            Action<AbstractControl> action,
+            bool recursive = false)
+        {
+            if (!HasChildren)
+                return;
+
+            foreach (var child in Children)
+            {
+                if (!child.Visible)
+                    continue;
+                action(child);
+                if (recursive)
+                    child.ForEachVisibleChild(action, true);
             }
         }
 

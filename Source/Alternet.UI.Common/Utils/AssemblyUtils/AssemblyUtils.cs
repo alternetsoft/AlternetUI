@@ -1244,7 +1244,8 @@ namespace Alternet.UI
         /// Gets whether <paramref name="referenceContainer"/> assembly references
         /// <paramref name="possibleReference"/> assembly.
         /// </summary>
-        /// <param name="referenceContainer">The Assembly which possibly contains the reference.</param>
+        /// <param name="referenceContainer">The Assembly which possibly
+        /// contains the reference.</param>
         /// <param name="possibleReference">The assembly which is possibly referenced.</param>
         /// <returns></returns>
         public static bool IsAssemblyReferencedFrom(
@@ -1256,6 +1257,33 @@ namespace Alternet.UI
             {
                 if (name.FullName == possibleReference.FullName)
                     return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets whether <paramref name="referenceContainer"/> assembly references
+        /// any assembly fromn the <paramref name="possibleReference"/> collection.
+        /// </summary>
+        /// <param name="referenceContainer">The Assembly which possibly
+        /// contains the reference.</param>
+        /// <param name="possibleReference">Collection of the assemblies
+        /// which are possibly referenced.</param>
+        /// <returns></returns>
+        public static bool IsAssemblyReferencedFrom(
+            Assembly referenceContainer,
+            IEnumerable<Assembly> possibleReference)
+        {
+            var names = referenceContainer.GetReferencedAssemblies();
+
+            foreach (var name in names)
+            {
+                foreach (var asm in possibleReference)
+                {
+                    if (name.FullName == asm.FullName)
+                        return true;
+                }
             }
 
             return false;

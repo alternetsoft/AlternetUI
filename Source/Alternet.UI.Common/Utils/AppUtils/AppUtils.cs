@@ -67,7 +67,8 @@ namespace Alternet.UI
         /// <summary>
         /// Creates clone of the first window and optinally shows it on the screen.
         /// </summary>
-        /// <param name="show">Whether to show created window. Optional. Default is <c>true</c>.</param>
+        /// <param name="show">Whether to show created window. Optional.
+        /// Default is <c>true</c>.</param>
         /// <returns></returns>
         public static Window CreateFirstWindowClone(bool show = true)
         {
@@ -166,7 +167,9 @@ namespace Alternet.UI
         /// <param name="command">Command to run.</param>
         /// <param name="folder">Value of <see cref="ProcessStartInfo.WorkingDirectory"/>.</param>
         /// <returns></returns>
-        public static bool OpenTerminalAndRunCommand(string? command = default, string? folder = default)
+        public static bool OpenTerminalAndRunCommand(
+            string? command = default,
+            string? folder = default)
         {
             folder ??= PathUtils.GetAppFolder();
 

@@ -296,8 +296,9 @@ namespace Alternet.UI
 
             ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
 
-            menuItemShowDevTools = ContextMenu.Add(new("Developer Tools"));
-            menuItemShowDevTools.ClickAction = ShowDevTools;
+            menuItemShowDevTools = ContextMenu.Add("Developer Tools...", ShowDevTools);
+
+            ContextMenu.Add("Test Actions...", LogUtils.ShowTestActionsDialog);
 
             var logToFileItem = ContextMenu.Add(new("Enable Log to file"));
             logToFileItem.ClickAction = AlsoLogToFile;
