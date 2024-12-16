@@ -22,6 +22,9 @@ namespace Alternet.UI
         /// </summary>
         public static Coord DefaultMargin = 5;
 
+        private static WindowTextInput? textDialog;
+        private static WindowTextInput? longDialog;
+
         private readonly PanelOkCancelButtons buttons = new()
         {
         };
@@ -102,11 +105,12 @@ namespace Alternet.UI
         /// </remarks>
         public static void GetTextFromUserAsync(TextFromUserParams prm)
         {
-            WindowTextInput dialog = new();
-            dialog.InitAsText(prm);
-            dialog.ShowDialogAsync(prm.Parent as Window, (result) =>
+            textDialog ??= new();
+            textDialog.InitAsText(prm);
+            prm.OnSetup?.Invoke(textDialog);
+            textDialog.ShowDialogAsync(prm.Parent as Window, (result) =>
             {
-                var s = dialog.Edit.Text;
+                var s = textDialog.Edit.Text;
                 prm.RaiseActions(result ? s : null);
             });
         }
@@ -122,15 +126,16 @@ namespace Alternet.UI
         /// </remarks>
         public static void GetLongFromUserAsync(LongFromUserParams prm)
         {
-            WindowTextInput dialog = new();
-            dialog.InitAsLong(prm);
-            dialog.ShowDialogAsync(prm.Parent as Window, (result) =>
+            longDialog ??= new();
+            longDialog.InitAsLong(prm);
+            prm.OnSetup?.Invoke(longDialog);
+            longDialog.ShowDialogAsync(prm.Parent as Window, (result) =>
             {
                 long? s;
 
                 try
                 {
-                    s = (long?)dialog.Edit.MainControl.TextAsNumber;
+                    s = (long?)longDialog.Edit.MainControl.TextAsNumber;
                 }
                 catch
                 {

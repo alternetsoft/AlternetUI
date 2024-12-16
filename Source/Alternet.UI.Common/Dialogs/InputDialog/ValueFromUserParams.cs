@@ -54,6 +54,15 @@ namespace Alternet.UI
         public virtual Action? OnCancel { get; set; }
 
         /// <summary>
+        /// Gets or sets action which is fired before dialog is shown to the user.
+        /// </summary>
+        /// <remarks>
+        /// This action is fired only if <see cref="WindowTextInput"/> is used for the input dialog.
+        /// Currently it is used on WxWidgets platform and not used on MAUI platform.
+        /// </remarks>
+        public virtual Action<WindowTextInput>? OnSetup { get; set; }
+
+        /// <summary>
         /// Gets or sets dialog parent.
         /// </summary>
         public virtual AbstractControl? Parent { get; set; }
