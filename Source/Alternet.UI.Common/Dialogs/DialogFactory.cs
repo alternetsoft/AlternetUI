@@ -170,7 +170,8 @@ namespace Alternet.UI
         /// Shows a dialog asking the user for numeric input.
         /// </summary>
         /// <remarks>
-        /// Minimal, maximal and default values specified in the dialog parameters must be positive.
+        /// Minimal, maximal and default values specified in the dialog
+        /// parameters must be positive.
         /// </remarks>
         /// <param name="prm">Dialog parameters.</param>
         public static void GetNumberFromUserAsync(LongFromUserParams prm)

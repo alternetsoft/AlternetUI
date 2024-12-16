@@ -69,25 +69,21 @@ namespace Alternet.UI
         /// <param name="prm">Dialog parameters.</param>
         public void GetTextFromUserAsync(TextFromUserParams prm)
         {
-            var handle = WxApplicationHandler.WxWidget(prm.Parent);
-            var result = Native.WxOtherFactory.GetTextFromUser(
-                prm.SafeMessage,
-                prm.SafeTitle,
-                prm.SafeDefaultValueAsString,
-                handle,
-                -1,
-                -1,
-                true);
-            if (result == DialogCancelGuid)
-                prm.RaiseActions(null);
-            else
-                prm.RaiseActions(result);
+            WindowTextInput.GetTextFromUserAsync(prm);
         }
 
         /// <summary>
         /// Shows a dialog asking the user for numeric input.
         /// </summary>
         public void GetNumberFromUserAsync(LongFromUserParams prm)
+        {
+            WindowTextInput.GetLongFromUserAsync(prm);
+        }
+
+        /// <summary>
+        /// Shows a dialog asking the user for numeric input.
+        /// </summary>
+        internal void NativeGetNumberFromUserAsync(LongFromUserParams prm)
         {
             var handle = WxApplicationHandler.WxWidget(prm.Parent);
 
@@ -110,6 +106,23 @@ namespace Alternet.UI
                 handle,
                 (-1, -1));
             if (result < 0)
+                prm.RaiseActions(null);
+            else
+                prm.RaiseActions(result);
+        }
+
+        internal void NativeGetTextFromUserAsync(TextFromUserParams prm)
+        {
+            var handle = WxApplicationHandler.WxWidget(prm.Parent);
+            var result = Native.WxOtherFactory.GetTextFromUser(
+                prm.SafeMessage,
+                prm.SafeTitle,
+                prm.SafeDefaultValueAsString,
+                handle,
+                -1,
+                -1,
+                true);
+            if (result == DialogCancelGuid)
                 prm.RaiseActions(null);
             else
                 prm.RaiseActions(result);
