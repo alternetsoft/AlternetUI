@@ -218,6 +218,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetFocusIdle()
         {
+            if (!Visible)
+                return;
             App.AddIdleTask(() =>
             {
                 SetFocusIfPossible();
