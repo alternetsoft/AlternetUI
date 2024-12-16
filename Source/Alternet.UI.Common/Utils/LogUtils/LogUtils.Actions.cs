@@ -16,6 +16,8 @@ namespace Alternet.UI
 {
     public static partial class LogUtils
     {
+        private static TestActionsWindow? testActionsWindow;
+
         /// <summary>
         /// Logs image created from an array with <see cref="TextAndFontStyle"/> elements.
         /// </summary>
@@ -92,7 +94,8 @@ namespace Alternet.UI
         /// Logs draw action to log.
         /// </summary>
         /// <param name="scaleFactor">Scale factor to use when draw action is called.</param>
-        /// <param name="sizeAndDrawFunc">Function which calculates drawable element. Called with measure
+        /// <param name="sizeAndDrawFunc">Function which calculates drawable element.
+        /// Called with measure
         /// <see cref="Graphics"/> which can measure text size.</param>
         /// <param name="drawAction">Action which draws an element. If Null,
         /// <paramref name="sizeAndDrawFunc"/>
@@ -134,8 +137,8 @@ namespace Alternet.UI
         /// </summary>
         public static void ShowTestActionsDialog()
         {
-            TestActionsWindow window = new();
-            window.Show();
+            testActionsWindow ??= new();
+            testActionsWindow.Show();
         }
 
         /// <summary>
@@ -174,6 +177,7 @@ namespace Alternet.UI
             Fn("Log system information", LogUtils.LogOSInformation);
             Fn("Log system colors", LogUtils.LogSystemColors);
             Fn("Log constraint checks", LogUtils.LogCheckConstraints);
+            Fn("Log used Alternet assemblies", LogUtils.LogUsedAlternetAssemblies);
 
             Fn("Set Height = (Width / 3) * 2", () =>
             {
@@ -753,6 +757,15 @@ namespace Alternet.UI
             App.Log($"{names.Count()} FontFamilies logged to file.");
         }
 
+        internal static void LogUsedAlternetAssemblies()
+        {
+            var list = KnownAssemblies.AllAlternet;
+            foreach(var item in list)
+            {
+                App.Log(item.FullName);
+            }
+        }
+
         /// <summary>
         /// Logs all system colors.
         /// </summary>
@@ -847,11 +860,12 @@ namespace Alternet.UI
 
         private class TestActionsWindow : Window
         {
-            private ActionsListBox listBox;
-            private VirtualListBox.AddRangeController<MemberInfo> controller;
+            private readonly ActionsListBox listBox;
+            private readonly VirtualListBox.AddRangeController<MemberInfo> controller;
 
             public TestActionsWindow()
             {
+                Title = "Test Actions";
                 StartLocation = WindowStartLocation.ScreenTopRight;
                 Size = (400, 500);
                 HasTitleBar = true;
