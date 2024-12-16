@@ -1187,7 +1187,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="horz">Horizontal alignment of the window inside display's client area.</param>
         /// <param name="vert">Vertical alignment of the window inside display's client area.</param>
-        /// <param name="display">Display which client area is used as a container for the window.</param>
+        /// <param name="display">Display which client area is used
+        /// as a container for the window.</param>
         /// <param name="shrinkSize">Whether to shrink size of the window
         /// to fit in the display client area. Optional. Default is <c>true</c>.</param>
         public virtual void SetLocationOnDisplay(

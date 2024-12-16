@@ -867,12 +867,15 @@ namespace Alternet.UI
             {
                 Title = "Test Actions";
                 StartLocation = WindowStartLocation.ScreenTopRight;
-                Size = (400, 500);
+
+                MinimumSize = (400, 500);
                 HasTitleBar = true;
                 CloseEnabled = true;
 
                 listBox = new ActionsListBox();
                 listBox.Parent = this;
+
+                SetLocationOnDisplay(HorizontalAlignment.Left, VerticalAlignment.Fill);
 
                 LogUtils.EnumLogActions(Fn);
 
@@ -898,6 +901,11 @@ namespace Alternet.UI
                         return null;
 
                     var fullName = $"{member.DeclaringType.FullName}.{member.Name}";
+
+                    var desc = AssemblyUtils.GetDescription(member);
+
+                    if (desc is not null)
+                        fullName = desc;
 
                     var result = new ListControlItem(fullName);
                     result.DoubleClickAction = () =>
