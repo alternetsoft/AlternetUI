@@ -274,14 +274,14 @@ namespace Alternet.UI
         /// if error backround color is used for reporting it.
         /// </summary>
         [Browsable(false)]
-        public ResetColorType? ResetErrorBackgroundMethod { get; set; }
+        public virtual ResetColorType? ResetErrorBackgroundMethod { get; set; }
 
         /// <summary>
         /// Gets or sets method which is used to clear error state
         /// if error foreground color is used for reporting it.
         /// </summary>
         [Browsable(false)]
-        public ResetColorType? ResetErrorForegroundMethod { get; set; }
+        public virtual ResetColorType? ResetErrorForegroundMethod { get; set; }
 
         /// <summary>
         /// Gets whether <see cref="AbstractControl.Text"/> is null or empty.
@@ -296,10 +296,12 @@ namespace Alternet.UI
         public bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.Text"/> property value as <see cref="object"/> of a number type.
+        /// Gets or sets <see cref="AbstractControl.Text"/> property value
+        /// as <see cref="object"/> of a number type.
         /// </summary>
         /// <remarks>
-        /// If <see cref="AbstractControl.Text"/> property doesn't contain a number value, <c>null</c> is returned.
+        /// If <see cref="AbstractControl.Text"/> property doesn't contain
+        /// a number value, <c>null</c> is returned.
         /// </remarks>
         [Browsable(false)]
         public virtual object? TextAsNumber
@@ -475,6 +477,7 @@ namespace Alternet.UI
             picture.ImageStretch = false;
             picture.TabStop = false;
 
+            picture.MouseLeftButtonUp -= Picture_MouseLeftButtonUp;
             picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
 
             static void Picture_MouseLeftButtonUp(object? sender, MouseEventArgs e)
