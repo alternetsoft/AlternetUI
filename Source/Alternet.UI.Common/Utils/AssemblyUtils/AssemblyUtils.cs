@@ -163,7 +163,8 @@ namespace Alternet.UI
         /// Enumerates members of all types in the loaded assemblies.
         /// </summary>
         /// <param name="bindingAttr">The bindings constraint. Optional.
-        /// Default is Null. If not specified, members are not filtered by the binding constraint.</param>
+        /// Default is Null. If not specified, members are not filtered
+        /// by the binding constraint.</param>
         /// <returns></returns>
         /// <param name="assemblies">Collection of the assemblies to enum their members. Optional.
         /// If Null, uses all loaded assemblies.</param>
@@ -205,7 +206,8 @@ namespace Alternet.UI
         /// by name and binding constraint.
         /// </summary>
         /// <param name="bindingAttr">The bindings constraint. Optional.
-        /// Default is Null. If not specified, members are not filtered by the binding constraint.</param>
+        /// Default is Null. If not specified, members are not filtered
+        /// by the binding constraint.</param>
         /// <returns></returns>
         /// <param name="nameContainsText">The string which specifies member name constraint.</param>
         /// <param name="assemblies">Collection of the assemblies to enum their members. Optional.
@@ -723,6 +725,18 @@ namespace Alternet.UI
             if (browsable is not null)
                 return browsable.Browsable;
             return true;
+        }
+
+        /// <summary>
+        /// Gets value of thr <see cref="DescriptionAttribute.Description"/>
+        /// for the specified member.
+        /// </summary>
+        /// <param name="p">Property or method info.</param>
+        /// <returns></returns>
+        public static string? GetDescription(MemberInfo p)
+        {
+            var attr = p.GetCustomAttribute(typeof(DescriptionAttribute)) as DescriptionAttribute;
+            return attr?.Description;
         }
 
         /// <summary>
