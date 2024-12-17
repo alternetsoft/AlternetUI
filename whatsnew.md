@@ -1,3 +1,33 @@
+# 0.9.651 (2024 December 17)
+
+- AbstractControl: DelayedTextChanged event.
+- Window.ActiveControl property.
+- Simplify and speedup native keyboard, mouse and application events.
+- TabControl: ContentsVisible, TabPaintAlignment.
+- AbstractControl: OnAfterParentScroll, RaiseForegroundColorChanged, OnAfterParentMouseWheel, SetFocusIdle, ForEachVisibleChild.
+- AbstractControl: Optimize scroll notification.
+- AbstractControl: MinimumSize, MaximumSize constraints are handled correctly (previously were handled in Control).
+- AbstractControl: IsUnderline.
+- SpeedButton: StickyToggleOnClick, ImageLabelDistance, HasImage.
+- SpeedButton: Fixed Font and IsBold behavior.
+- SpeedButton: Fixed incorrect painting in hover state in some cases.
+- ComboBox: Fixed auto size bugs.
+- ToolBar: LastTool.
+- MathUtils: ApplyMinMaxCoord, ClampCoord.
+- Fixed SizeD.ApplyMin.
+- FindReplaceControl: ScopeItemSelectionOnly.
+- Timer: StartOnce, StartRepeated.
+- ControlAndButton, ControlAndLabel: Fixed horizontal alignment. Fixed SetFocus.
+- PanelOkCancelButtons: ApplyButton is not created when no needed. Add HandleCancelButtonClick, HandleOkButtonClick.
+- ValidationUtils: Redo IsValidMailAddress without using exception.
+- DialogWindow.ShowDialogAsync, WeakReferenceValue.Reset.
+- TextBoxAndLabel: use delayed event for validation.
+- Add WindowTextInput window and use it instead of platform dialogs.
+- DialogWindow: ActiveControl is focused on ShowModal.
+- TextBoxAndButton.InitErrorAndBorder, ControlUtils.FindVisibleControl.
+- ValueFromUserParams.OnSetup.
+- PlatformDefaults: IncFontSizeHighDpi, IncFontSize.
+
 # 0.9.650 (2024 December 10)
 
 - VirtualListBox: Fixed RecreateItems method.
