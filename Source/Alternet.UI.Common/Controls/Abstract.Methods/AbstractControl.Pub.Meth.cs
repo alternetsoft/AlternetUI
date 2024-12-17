@@ -1568,10 +1568,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets children as <see cref="ControlSet"/>.
+        /// Gets children of the specified type as <see cref="ControlSet"/>.
         /// </summary>
         /// <param name="recursive">Whether to get all children recurively.</param>
         /// <returns></returns>
+        /// <typeparam name="T">Type of the control to find.</typeparam>
         public virtual ControlSet GetChildren<T>(bool recursive = false)
         {
             ControlSet result;
