@@ -612,6 +612,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void RecreateItems(ListControlItems<TItem>? newItems = null)
         {
+            items = null; // This call must be here.
             items = newItems ?? SafeItems();
         }
 
