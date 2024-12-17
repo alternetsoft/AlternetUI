@@ -761,6 +761,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="KeyDown" /> event
+        /// and <see cref="OnKeyDown"/> method.
+        /// </summary>
+        public void RaiseKeyDown(KeyEventArgs e)
+        {
+            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
+
+            if (ForEachParent(e, (control, e) => control.OnBeforeChildKeyDown(this, e)))
+                return;
+            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentKeyDown(this, e)))
+                return;
+
+            bool isInputKey = false;
+            RaisePreviewKeyDown(e.Key, e.ModifierKeys, ref isInputKey);
+
+            KeyDown?.Invoke(this, e);
+            OnKeyDown(e);
+
+            RaiseNotifications((n) => n.AfterKeyDown(this, e));
+
+            DebugUtils.DebugCall(() =>
+            {
+                if (!e.Handled)
+                    KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
+            });
+
+            Parent?.OnAfterChildKeyDown(this, e);
+            ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e));
+
+            if (isInputKey)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="KeyUp" /> event
         /// and <see cref="OnKeyUp"/> method.
         /// </summary>
@@ -825,43 +862,6 @@ namespace Alternet.UI
             DoubleClick?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterMouseDoubleClick(this, e));
-        }
-
-        /// <summary>
-        /// Raises the <see cref="KeyDown" /> event
-        /// and <see cref="OnKeyDown"/> method.
-        /// </summary>
-        public void RaiseKeyDown(KeyEventArgs e)
-        {
-            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
-
-            if(ForEachParent(e, (control, e) => control.OnBeforeChildKeyDown(this, e)))
-                return;
-            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentKeyDown(this, e)))
-                return;
-
-            bool isInputKey = false;
-            RaisePreviewKeyDown(e.Key, e.ModifierKeys, ref isInputKey);
-
-            KeyDown?.Invoke(this, e);
-            OnKeyDown(e);
-
-            RaiseNotifications((n) => n.AfterKeyDown(this, e));
-
-            DebugUtils.DebugCall(() =>
-            {
-                if (!e.Handled)
-                    KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
-            });
-
-            Parent?.OnAfterChildKeyDown(this, e);
-            ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e));
-
-            if (isInputKey)
-            {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-            }
         }
 
         /// <summary>

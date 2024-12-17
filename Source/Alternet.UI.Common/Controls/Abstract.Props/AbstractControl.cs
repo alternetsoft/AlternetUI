@@ -301,6 +301,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the TAB key is received and
+        /// processed by the control.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the TAB key is received by the control;
+        /// <see langword="false" />, if the TAB key is not received by the control.
+        /// The default is <see langword="false" />.
+        /// </returns>
+        /// <remarks>
+        /// Normally, TAB key is used for passing to the next control in a dialog.
+        /// </remarks>
+        public virtual bool ProcessTab { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tab order of the control within its container.
+        /// </summary>
+        public virtual int TabIndex { get; set; }
+
+        /// <summary>
         /// Gets time when this control was last clicked.
         /// </summary>
         [Browsable(false)]
@@ -940,6 +959,48 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public AbstractControl? FirstChild => GetChildOrNull();
+
+        /// <summary>
+        /// Gets collection of all children recursively.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IEnumerable<AbstractControl> ChildrenRecursive
+        {
+            get
+            {
+                if (HasChildren)
+                {
+                    foreach (var child in Children)
+                    {
+                        yield return child;
+                        foreach (var childOfChild in child.ChildrenRecursive)
+                        {
+                            yield return childOfChild;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the first visible child of the control if it exists or <c>null</c> otherwise.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl? FirstVisibleChild
+        {
+            get
+            {
+                if (!HasChildren)
+                    return null;
+                foreach(var child in Children)
+                {
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
 
         /// <summary>
         /// Gets control index in the <see cref="Children"/> of the container control.
@@ -3074,10 +3135,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets number of children items.
+        /// Gets number of child controls.
         /// </summary>
         [Browsable(false)]
         public int ChildCount => Children.Count;
+
+        /// <summary>
+        /// Gets number of visible child controls.
+        /// </summary>
+        [Browsable(false)]
+        public int VisibleChildCount
+        {
+            get
+            {
+                if (!HasChildren)
+                    return 0;
+
+                int result = 0;
+
+                foreach (var control in Children)
+                {
+                    if (control.Visible)
+                        result++;
+                }
+
+                return result;
+            }
+        }
 
         IControl? IControl.NextSibling => NextSibling;
 
