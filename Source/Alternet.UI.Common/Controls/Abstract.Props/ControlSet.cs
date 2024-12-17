@@ -38,6 +38,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="Items"/> collection is empty.
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return items.Count == 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets first item in the <see cref="Items"/> collection or Null.
+        /// </summary>
+        public AbstractControl? First
+        {
+            get
+            {
+                if (items.Count == 0)
+                    return null;
+                return items[0];
+            }
+        }
+
+        /// <summary>
         /// Gets all controls which will be affected by the group operations.
         /// </summary>
         public IReadOnlyList<AbstractControl> Items => items;
