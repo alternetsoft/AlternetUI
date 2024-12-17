@@ -53,6 +53,8 @@ SizeI GetEventOldDpi();
 
 SizeI GetEventNewDpi();
 
+Control* GetEventFocusedControl();
+
 virtual string GetText();
 virtual void SetText(const string& value);
 

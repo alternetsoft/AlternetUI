@@ -128,6 +128,7 @@ namespace Alternet::UI
         int _disableRecreateCounter = 0;
         SizeI _eventOldDpi;
         SizeI _eventNewDpi;
+        wxWindow* _eventFocusWindow;
 
         virtual void OnPaint(wxPaintEvent& event);
         void OnEraseBackground(wxEraseEvent& event);

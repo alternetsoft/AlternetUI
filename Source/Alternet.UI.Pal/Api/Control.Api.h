@@ -385,6 +385,17 @@ ALTERNET_UI_API SizeI_C Control_GetEventNewDpi_(Control* obj)
     #endif
 }
 
+ALTERNET_UI_API Control* Control_GetEventFocusedControl_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Control*>([&](){
+    #endif
+        return obj->GetEventFocusedControl();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API char16_t* Control_GetText_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

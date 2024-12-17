@@ -46,8 +46,10 @@ namespace NativeApi.Api
         public Color GetDefaultAttributesBgColor() => default;
         public Color GetDefaultAttributesFgColor() => default;
         public Font GetDefaultAttributesFont() => default;
-        public static Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant) => default;
-        public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant) => default;
+        public static Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant)
+            => default;
+        public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant)
+            => default;
         public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant) => default;
 
         public static int DrawingFromDip(Coord value, IntPtr window) => default;
@@ -73,6 +75,8 @@ namespace NativeApi.Api
         public SizeI EventOldDpi { get; }
 
         public SizeI EventNewDpi { get; }
+
+        public Control? EventFocusedControl { get; }
 
         public event EventHandler? Idle;
         public event EventHandler? Paint;

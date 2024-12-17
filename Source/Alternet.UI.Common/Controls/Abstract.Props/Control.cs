@@ -632,8 +632,17 @@ namespace Alternet.UI
             Handler.Paint = OnHandlerPaint;
             Handler.VisibleChanged = OnHandlerVisibleChanged;
             Handler.MouseCaptureLost = RaiseMouseCaptureLost;
-            Handler.GotFocus = RaiseGotFocus;
-            Handler.LostFocus = RaiseLostFocus;
+
+            Handler.GotFocus = () =>
+            {
+                RaiseGotFocus(Handler.EventFocusedControl);
+            };
+
+            Handler.LostFocus = () =>
+            {
+                RaiseLostFocus(Handler.EventFocusedControl);
+            };
+
             Handler.Idle = RaiseIdle;
             Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
             Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;

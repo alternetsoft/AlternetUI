@@ -103,7 +103,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterGotFocus(AbstractControl sender)
+        public virtual void AfterGotFocus(AbstractControl sender, AbstractControl? oldFocus = null)
         {
         }
 
@@ -173,7 +173,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterLostFocus(AbstractControl sender)
+        public virtual void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null)
         {
         }
 

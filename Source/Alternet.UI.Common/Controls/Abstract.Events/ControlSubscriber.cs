@@ -412,7 +412,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterGotFocus(AbstractControl sender)
+        public void AfterGotFocus(AbstractControl sender, AbstractControl? oldFocus = null)
         {
             AfterControlGotFocus?.Invoke(sender, EventArgs.Empty);
         }
@@ -496,7 +496,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterLostFocus(AbstractControl sender)
+        public void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null)
         {
             AfterControlLostFocus?.Invoke(sender, EventArgs.Empty);
         }

@@ -456,6 +456,14 @@ namespace Alternet.UI
             }
         }
 
+        public AbstractControl? EventFocusedControl
+        {
+            get
+            {
+                return WxApplicationHandler.FromNativeControl(NativeControl.EventFocusedControl);
+            }
+        }
+
         public object GetNativeControl() => NativeControl;
 
         public override void OnLayoutChanged()

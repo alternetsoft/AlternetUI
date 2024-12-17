@@ -197,6 +197,8 @@ namespace Alternet.UI
 
         public virtual bool VisibleOnScreen => Container?.IsVisible ?? false;
 
+        public AbstractControl? EventFocusedControl { get; }
+
         public virtual void BeginInit()
         {
         }
