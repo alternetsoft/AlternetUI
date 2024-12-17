@@ -21,6 +21,8 @@ namespace Alternet.UI
         private ControlView? container;
         private Color backgroundColor = DefaultBackgroundColor;
         private Color foregroundColor = DefaultForegroundColor;
+        private bool visible = true;
+        private RectD bounds;
 
         public MauiControlHandler()
         {
@@ -108,11 +110,33 @@ namespace Alternet.UI
 
         public virtual Thickness IntrinsicPreferredSizePadding { get; set; }
 
-        public virtual RectD Bounds { get; set; }
+        public virtual RectD Bounds
+        {
+            get => bounds;
+
+            set
+            {
+                if (bounds == value)
+                    return;
+                bounds = value;
+                InvalidateContainer();
+            }
+        }
 
         public virtual RectD EventBounds { get; set; }
 
-        public virtual bool Visible { get; set; }
+        public virtual bool Visible
+        {
+            get => visible;
+
+            set
+            {
+                if (visible == value)
+                    return;
+                visible = value;
+                InvalidateContainer();
+            }
+        }
 
         public virtual SizeD MinimumSize { get; set; }
 
@@ -185,10 +209,6 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void CenterOnParent(GenericOrientation direction)
-        {
-        }
-
         public virtual PointD ScreenToClient(PointD point)
         {
             return MauiApplicationHandler.ScreenToClient(point, Control);
@@ -239,7 +259,8 @@ namespace Alternet.UI
 
         public virtual object GetNativeControl()
         {
-            return AssemblyUtils.Default;
+            object? result = container;
+            return result ?? AssemblyUtils.Default;
         }
 
         public virtual Coord GetPixelScaleFactor()
@@ -272,10 +293,14 @@ namespace Alternet.UI
 
         public virtual void OnChildInserted(AbstractControl childControl)
         {
+            if (childControl.Visible)
+                InvalidateContainer();
         }
 
         public virtual void OnChildRemoved(AbstractControl childControl)
         {
+            if (childControl.Visible)
+                InvalidateContainer();
         }
 
         public virtual Graphics OpenPaintDrawingContext()
@@ -344,17 +369,16 @@ namespace Alternet.UI
 
         public virtual void RefreshRect(RectD rect, bool eraseBackground = true)
         {
-            Invalidate();
+            InvalidateContainer(rect);
         }
 
         public virtual void Update()
         {
-            Invalidate();
         }
 
         public virtual void Invalidate()
         {
-            container?.Invalidate();
+            InvalidateContainer();
         }
 
         public virtual Graphics CreateDrawingContext()
@@ -371,6 +395,19 @@ namespace Alternet.UI
 
         public virtual void InvalidateBestSize()
         {
+        }
+
+        private MauiControlHandler? GetRootHandler()
+        {
+            var result = (Control.Root as Control)?.Handler as MauiControlHandler;
+            return result;
+        }
+
+        private void InvalidateContainer(RectD? rect = null)
+        {
+            var c = container ?? GetRootHandler()?.container;
+
+            c?.Invalidate();
         }
     }
 }
