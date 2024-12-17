@@ -10,7 +10,7 @@ namespace Alternet.UI
     {
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
-            throw new NotImplementedException();
+            return new MauiControlHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)

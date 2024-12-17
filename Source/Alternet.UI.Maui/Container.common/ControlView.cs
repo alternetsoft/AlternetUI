@@ -491,6 +491,8 @@ namespace Alternet.UI
 
             control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
 
+            TemplateUtils.RaisePaintForChildren(control, graphics);
+
             graphics.UseUnscaledDrawImage = false;
 
             dc.Restore();

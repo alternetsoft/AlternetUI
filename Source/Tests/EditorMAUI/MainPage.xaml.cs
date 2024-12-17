@@ -17,6 +17,7 @@ public partial class MainPage : ContentPage
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
 
     private readonly Alternet.Syntax.Parsers.Advanced.CsParser parserCs;
+    private Alternet.Syntax.Parsers.Roslyn.CsParser roslynParser;
 
     private readonly Button button = new();
 
@@ -32,10 +33,18 @@ public partial class MainPage : ContentPage
 
         InitializeComponent();
 
-        parserCs = new();
-
         InitEdit();
-        editor.Editor.Lexer = parserCs;
+
+        if (Alternet.UI.App.IsWindowsOS)
+        {
+            roslynParser = new();
+            editor.Editor.Lexer = roslynParser;
+        }
+        else
+        {
+            parserCs = new();
+            editor.Editor.Lexer = parserCs;
+        }
 
         LoadFile(NewFileNameNoExt + ".cs");
 
