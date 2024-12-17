@@ -12,6 +12,11 @@ namespace Alternet.UI
         private static AbstractControl? focusedControl;
 
         /// <summary>
+        /// Occurs when <see cref="FocusNextControl"/> is called.
+        /// </summary>
+        public static event EventHandler<GlobalFocusNextEventArgs>? GlobalFocusNextControl;
+
+        /// <summary>
         /// Gets or sets focused control for internal purposes. Use <see cref="GetFocusedControl"/>
         /// instead of this property.
         /// </summary>
@@ -237,6 +242,14 @@ namespace Alternet.UI
         /// <see langword="false"/>.</param>
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
+            if(GlobalFocusNextControl is not null)
+            {
+                GlobalFocusNextEventArgs e = new(forward, nested);
+                GlobalFocusNextControl(this, e);
+                if (e.Handled)
+                    return;
+            }
+
             if (ParentWindow is null)
                 return;
 
