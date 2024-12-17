@@ -632,8 +632,17 @@ namespace Alternet.UI
             Handler.Paint = OnHandlerPaint;
             Handler.VisibleChanged = OnHandlerVisibleChanged;
             Handler.MouseCaptureLost = RaiseMouseCaptureLost;
-            Handler.GotFocus = RaiseGotFocus;
-            Handler.LostFocus = RaiseLostFocus;
+
+            Handler.GotFocus = () =>
+            {
+                RaiseGotFocus(Handler.EventFocusedControl);
+            };
+
+            Handler.LostFocus = () =>
+            {
+                RaiseLostFocus(Handler.EventFocusedControl);
+            };
+
             Handler.Idle = RaiseIdle;
             Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
             Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
@@ -721,7 +730,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void FocusNextControl(bool forward = true, bool nested = true)
         {
-            Handler.FocusNextControl(forward, nested);
+            if (Keyboard.ProcessTabInternally)
+                base.FocusNextControl(forward, nested);
+            else
+                Handler.FocusNextControl(forward, nested);
         }
 
         /// <summary>

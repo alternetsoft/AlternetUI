@@ -75,7 +75,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void AfterLostFocus(AbstractControl sender)
+        public override void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null)
         {
             UnsubscribeClickRepeated();
         }

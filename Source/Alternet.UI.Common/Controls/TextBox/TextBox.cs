@@ -126,6 +126,13 @@ namespace Alternet.UI
         /// </remarks>
         public static ModifierKeys? DefaultAutoUrlModifiers { get; set; }
 
+        /// <inheritdoc/>
+        public override bool ProcessTab
+        {
+            get => base.ProcessTab && !ReadOnly;
+            set => base.ProcessTab = value;
+        }
+
         /// <summary>
         /// Gets or sets the starting point of text selected in the control.
         /// </summary>
@@ -573,33 +580,6 @@ namespace Alternet.UI
             set
             {
                 Handler.HideSelection = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the TAB key is received and
-        /// processed by the control.
-        /// </summary>
-        /// <returns>
-        /// <see langword="true" /> if the TAB key is received by the control;
-        /// <see langword="false" />, if the TAB key is not received by the control.
-        /// The default is <see langword="false" />.
-        /// </returns>
-        /// <remarks>
-        /// Normally, TAB key is used for passing to the next control in a dialog.
-        /// For the control created with this style, you can still use
-        /// Ctrl-Enter to pass to the next control from the keyboard.
-        /// </remarks>
-        public virtual bool ProcessTab
-        {
-            get
-            {
-                return Handler.ProcessTab;
-            }
-
-            set
-            {
-                Handler.ProcessTab = value;
             }
         }
 

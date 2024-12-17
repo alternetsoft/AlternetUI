@@ -17,14 +17,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 
-// FocusChangedEvent
-
-// Validation
-
-
-
-// Invariant.Assert
-
 namespace Alternet.UI.Port
 {
     /// <summary>

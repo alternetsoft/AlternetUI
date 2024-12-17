@@ -262,12 +262,12 @@ namespace Alternet.UI
         /// <summary>
         /// This method is invoked when the control gets focus.
         /// </summary>
-        void AfterGotFocus(AbstractControl sender);
+        void AfterGotFocus(AbstractControl sender, AbstractControl? oldFocus = null);
 
         /// <summary>
         /// This method is invoked when the control lost focus.
         /// </summary>
-        void AfterLostFocus(AbstractControl sender);
+        void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null);
 
         /// <summary>
         /// Called after the mouse button was double-clicked.

@@ -204,7 +204,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="modifiers">The set of modifier keys pressed
         /// at the time when event was received.</param>
-        /// <param name="key">Key.</param>
+        /// <param name="key">Key code.</param>
+        /// <param name="keyChar">Key char.</param>
         /// <param name="repeatCount">Key repeat count.</param>
         /// <param name="handled">Result of the key procesing.</param>
         /// <param name="keyStates">The state of the key referenced by the event. Optional.
@@ -214,6 +215,7 @@ namespace Alternet.UI
             ModifierKeys modifiers,
             uint repeatCount,
             out bool handled,
+            char keyChar,
             KeyStates keyStates = KeyStates.Down)
         {
             var control = AbstractControl.GetFocusedControl();
@@ -223,9 +225,20 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
-            control.BubbleKeyDown(eventArgs);
-            handled = eventArgs.Handled;
+            var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
+
+            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab && e.ShiftOrNone && !control.ProcessTab)
+            {
+                App.AddIdleTask(() =>
+                {
+                    control.FocusNextControl(!e.HasModifiers, nested: true);
+                });
+                handled = true;
+                return;
+            }
+
+            control.BubbleKeyDown(e);
+            handled = e.Handled;
         }
 
         /// <summary>
@@ -234,7 +247,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="modifiers">The set of modifier keys pressed
         /// at the time when event was received.</param>
-        /// <param name="key">Key.</param>
+        /// <param name="keyChar">Key char.</param>
+        /// <param name="key">Key code.</param>
         /// <param name="repeatCount">Key repeat count.</param>
         /// <param name="handled">Result of the key procesing.</param>
         /// <param name="keyStates">The state of the key referenced by the event. Optional.
@@ -244,6 +258,7 @@ namespace Alternet.UI
             ModifierKeys modifiers,
             uint repeatCount,
             out bool handled,
+            char keyChar,
             KeyStates keyStates = KeyStates.None)
         {
             var control = AbstractControl.GetFocusedControl();
@@ -253,9 +268,16 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
-            control.BubbleKeyUp(eventArgs);
-            handled = eventArgs.Handled;
+            var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
+
+            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab && e.ShiftOrNone && !control.ProcessTab)
+            {
+                handled = true;
+                return;
+            }
+
+            control.BubbleKeyUp(e);
+            handled = e.Handled;
         }
 
         /// <summary>
@@ -264,7 +286,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="keyChar">Character of the pressed Key.</param>
         /// <param name="handled">Result of the key procesing.</param>
-        public static void BubbleTextInput(char keyChar, out bool handled)
+        /// <param name="key">Key code.</param>
+        public static void BubbleTextInput(char keyChar, out bool handled, Key key)
         {
             var control = AbstractControl.GetFocusedControl();
             if (control is null)
@@ -273,9 +296,15 @@ namespace Alternet.UI
                 return;
             }
 
-            var eventArgs = new KeyPressEventArgs(control, keyChar);
-            control.BubbleKeyPress(eventArgs);
-            handled = eventArgs.Handled;
+            if (Keyboard.ProcessTabInternally && keyChar == 8 && !control.ProcessTab)
+            {
+                handled = true;
+                return;
+            }
+
+            var e = new KeyPressEventArgs(control, keyChar);
+            control.BubbleKeyPress(e);
+            handled = e.Handled;
         }
 
         /// <summary>

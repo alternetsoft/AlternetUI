@@ -176,17 +176,6 @@ namespace Alternet::UI
         _menu.Set(value);
     }
 
-    /*Toolbar* Window::GetToolbar()
-    {
-        return _toolbar.Get();
-    }
-
-    void Window::SetToolbar(Toolbar* value)
-    {
-        _storedToolbar = value;
-        _toolbar.Set(value);
-    }*/
-
     MainMenu* Window::RetrieveMenu()
     {
         return _storedMenu;
@@ -201,23 +190,6 @@ namespace Alternet::UI
         frame->Layout();
         frame->PostSizeEvent();
     }
-
-    /*Toolbar* Window::RetrieveToolbar()
-    {
-        return _storedToolbar;
-    }
-
-    void Window::ApplyToolbar(Toolbar* const& value)
-    {
-        if (value != nullptr)
-            value->SetOwnerWindow(this);
-        auto frame = GetFrame();
-        if (frame == nullptr)
-            return;
-        frame->SetToolBar(value == nullptr ? nullptr : value->GetWxToolBar());
-        frame->Layout();
-        frame->PostSizeEvent();
-    }*/
 
     void* Window::GetWxStatusBar()
     {
@@ -242,22 +214,6 @@ namespace Alternet::UI
         Control::OnWxWindowDestroyed(window);
 
         bool recreatingWxWindow = IsRecreatingWxWindow();
-
-        /*if (GetModal())
-        {
-            if (!recreatingWxWindow)
-                _flags.Set(WindowFlags::ModalLoopStopRequested, true);
-
-            if (_modalWindowDisabler != nullptr)
-            {
-                delete _modalWindowDisabler;
-                _modalWindowDisabler = nullptr;
-
-                _modalWindows.pop();
-                if (!_modalWindows.empty())
-                    _modalWindowDisabler = new FrameDisabler(_modalWindows.top()->_frame);
-            }
-        }*/
 
         if (_flags.IsSet(WindowFlags::Modal) && !recreatingWxWindow)
             _flags.Set(WindowFlags::Modal, false);

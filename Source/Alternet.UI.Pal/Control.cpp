@@ -167,7 +167,6 @@ namespace Alternet::UI
     double Control::DrawingDPIScaleFactor(void* window)
     {
         return ((wxWindow*)window)->GetDPIScaleFactor();
-        //return GetDPIScaleFactor((wxWindow*)window);
     }
 
     double Control::DrawingToDip(int value, void* window)
@@ -271,8 +270,6 @@ namespace Alternet::UI
     void Control::LogSizeMethod(std::string methodName, const Size& value)
     {
         auto window = GetWxWindow();
-        /*if (window->GetName() != wxDatePickerCtrlNameStr)
-            return;*/
         auto minSize = Size(window->GetMinSize());
         auto maxSize = Size(window->GetMaxSize());
         auto s = methodName + ": " + value.ToString() + ", minSize: " + minSize.ToString() + 
@@ -282,20 +279,16 @@ namespace Alternet::UI
 
     void Control::ApplyMinimumSize(const Size& value)
     {
-        //LogMethod("Before ApplyMinimumSize", value);
-        //return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
             if (window->GetMinSize() != wxDefaultSize)
                 window->SetMinSize(wxDefaultSize);
-            //LogMethod("After ApplyMinimumSize", value);
             return;
         }
 
         auto size = fromDip(value, window);
         window->SetMinSize(size);
-        //LogMethod("After2 ApplyMinimumSize", value);
     }
 
     Size Control::GetMinimumSize()
@@ -305,8 +298,6 @@ namespace Alternet::UI
 
     void Control::SetMinimumSize(const Size& value)
     {
-        //LogMethod("SetMinimumSize", value);
-        //return; // !!
         _minimumSize.Set(value);
         _appliedMinimumSize = value;
         auto limited = CoerceSize(GetSize());
@@ -359,8 +350,6 @@ namespace Alternet::UI
 
     void Control::SetMaximumSize(const Size& value)
     {
-        //LogMethod("SetMaximumSize", value);
-        //return; // !!
         _maximumSize.Set(value);
         _appliedMaximumSize = value;
         auto limited = CoerceSize(GetSize());
@@ -375,19 +364,15 @@ namespace Alternet::UI
 
     void Control::ApplyMaximumSize(const Size& value)
     {
-        //LogMethod("ApplyMaximumSize", value);
-        //return; // !!
         auto window = GetWxWindow();
         if (value.Width <= 0 && value.Height <= 0)
         {
             if(window->GetMaxSize() != wxDefaultSize)
                 window->SetMaxSize(wxDefaultSize);
-            //LogMethod("After ApplyMaximumSize", value);
             return;
         }
         auto size = fromDip(value, window);
         window->SetMaxSize(size);
-        //LogMethod("After2 ApplyMaximumSize", value);
     }
 
     int Control::GetId()
@@ -496,7 +481,6 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
         wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
-        //wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
         wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
@@ -673,12 +657,15 @@ namespace Alternet::UI
 
     void Control::OnGotFocus(wxFocusEvent& event)
     {
+        _eventFocusWindow = event.GetWindow();
         event.Skip();
         RaiseEvent(ControlEvent::GotFocus);
+        _eventFocusWindow = nullptr;
     }
 
     void Control::OnLostFocus(wxFocusEvent& event)
     {
+        _eventFocusWindow = event.GetWindow();
         event.Skip();
         RaiseEvent(ControlEvent::LostFocus);
     }
@@ -1849,6 +1836,18 @@ namespace Alternet::UI
     {
         auto wxWindow = GetWxWindow();
         wxWindow->InvalidateBestSize();
+    }
+
+    Control* Control::GetEventFocusedControl()
+    {
+        if (_eventFocusWindow == nullptr)
+            return nullptr;
+
+        auto control = TryFindControlByWxWindow(_eventFocusWindow);
+        if (control != nullptr)
+            control->AddRef();
+
+        return control;
     }
 
     /*static*/ Control* Control::TryFindControlByWxWindow(wxWindow* wxWindow)

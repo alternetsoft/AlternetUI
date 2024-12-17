@@ -192,6 +192,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual bool VisibleOnScreen => Visible;
 
+        /// <inheritdoc/>
+        public AbstractControl? EventFocusedControl { get; set; }
+
         void IControlHandler.BeginInit()
         {
         }

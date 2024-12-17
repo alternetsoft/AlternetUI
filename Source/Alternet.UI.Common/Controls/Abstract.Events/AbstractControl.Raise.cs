@@ -242,7 +242,7 @@ namespace Alternet.UI
         /// Raises the <see cref="GotFocus" /> event and <see cref="OnGotFocus"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseGotFocus()
+        public virtual void RaiseGotFocus(AbstractControl? previousFocus = null)
         {
             FocusedControl = this;
             OnGotFocus(EventArgs.Empty);
@@ -256,7 +256,7 @@ namespace Alternet.UI
                 InvalidateCaret();
             }
 
-            RaiseNotifications((n) => n.AfterGotFocus(this));
+            RaiseNotifications((n) => n.AfterGotFocus(this, previousFocus));
 
             RunKnownAction(RunAfterGotFocus);
         }
@@ -277,24 +277,24 @@ namespace Alternet.UI
         /// Calls <see cref="OnChildLostFocus"/> method of the parent control.
         /// </summary>
         [Browsable(false)]
-        public void RaiseChildLostFocus(object? sender)
+        public void RaiseChildLostFocus(object? sender, AbstractControl? newFocus = null)
         {
             if (Parent is null)
                 return;
-            Parent.OnChildLostFocus(sender, EventArgs.Empty);
-            Parent.RaiseChildLostFocus(sender);
+            Parent.OnChildLostFocus(sender, newFocus);
+            Parent.RaiseChildLostFocus(sender, newFocus);
         }
 
         /// <summary>
         /// Raises the <see cref="LostFocus" /> event and <see cref="OnLostFocus"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseLostFocus()
+        public virtual void RaiseLostFocus(AbstractControl? newFocus = null)
         {
             if (FocusedControl == this)
                 FocusedControl = null;
             OnLostFocus(EventArgs.Empty);
-            RaiseChildLostFocus(this);
+            RaiseChildLostFocus(this, newFocus);
             LostFocus?.Invoke(this, EventArgs.Empty);
             RaiseVisualStateChanged();
 
@@ -304,7 +304,7 @@ namespace Alternet.UI
                 Invalidate();
             }
 
-            RaiseNotifications((n) => n.AfterLostFocus(this));
+            RaiseNotifications((n) => n.AfterLostFocus(this, newFocus));
 
             RunKnownAction(RunAfterLostFocus);
         }
@@ -761,6 +761,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="KeyDown" /> event
+        /// and <see cref="OnKeyDown"/> method.
+        /// </summary>
+        public void RaiseKeyDown(KeyEventArgs e)
+        {
+            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
+
+            if (ForEachParent(e, (control, e) => control.OnBeforeChildKeyDown(this, e)))
+                return;
+            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentKeyDown(this, e)))
+                return;
+
+            bool isInputKey = false;
+            RaisePreviewKeyDown(e.Key, e.ModifierKeys, ref isInputKey);
+
+            KeyDown?.Invoke(this, e);
+            OnKeyDown(e);
+
+            RaiseNotifications((n) => n.AfterKeyDown(this, e));
+
+            DebugUtils.DebugCall(() =>
+            {
+                if (!e.Handled)
+                    KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
+            });
+
+            Parent?.OnAfterChildKeyDown(this, e);
+            ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e));
+
+            if (isInputKey)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="KeyUp" /> event
         /// and <see cref="OnKeyUp"/> method.
         /// </summary>
@@ -825,43 +862,6 @@ namespace Alternet.UI
             DoubleClick?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterMouseDoubleClick(this, e));
-        }
-
-        /// <summary>
-        /// Raises the <see cref="KeyDown" /> event
-        /// and <see cref="OnKeyDown"/> method.
-        /// </summary>
-        public void RaiseKeyDown(KeyEventArgs e)
-        {
-            PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
-
-            if(ForEachParent(e, (control, e) => control.OnBeforeChildKeyDown(this, e)))
-                return;
-            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentKeyDown(this, e)))
-                return;
-
-            bool isInputKey = false;
-            RaisePreviewKeyDown(e.Key, e.ModifierKeys, ref isInputKey);
-
-            KeyDown?.Invoke(this, e);
-            OnKeyDown(e);
-
-            RaiseNotifications((n) => n.AfterKeyDown(this, e));
-
-            DebugUtils.DebugCall(() =>
-            {
-                if (!e.Handled)
-                    KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
-            });
-
-            Parent?.OnAfterChildKeyDown(this, e);
-            ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e));
-
-            if (isInputKey)
-            {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-            }
         }
 
         /// <summary>

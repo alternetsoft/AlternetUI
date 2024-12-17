@@ -34,6 +34,7 @@ namespace Alternet.UI
         /// </summary>
         public RichTextBox()
         {
+            ProcessTab = true;
         }
 
         /// <summary>
@@ -100,6 +101,13 @@ namespace Alternet.UI
                     return;
                 search = value;
             }
+        }
+
+        /// <inheritdoc/>
+        public override bool ProcessTab
+        {
+            get => base.ProcessTab && !ReadOnly;
+            set => base.ProcessTab = value;
         }
 
         /// <summary>

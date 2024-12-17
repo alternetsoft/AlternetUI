@@ -139,6 +139,11 @@ namespace Alternet.UI
         /// </summary>
         RectD EventBounds { get; }
 
+        /// <summary>
+        /// Gets control which is focused or unfocused. Valid only in the event handler.
+        /// </summary>
+        AbstractControl? EventFocusedControl { get; }
+
         /// <inheritdoc cref="Control.LangDirection"/>
         LangDirection LangDirection { get; set; }
 

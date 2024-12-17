@@ -284,6 +284,19 @@ namespace Alternet.UI.Native
             
         }
         
+        public Control? EventFocusedControl
+        {
+            get
+            {
+                CheckDisposed();
+                var _nnn = NativeApi.Control_GetEventFocusedControl_(NativePointer);
+                var _mmm = NativeObject.GetFromNativePointer<Control>(_nnn, null);
+                ReleaseNativeObjectPointer(_nnn);
+                return _mmm;
+            }
+            
+        }
+        
         public string Text
         {
             get
@@ -1514,6 +1527,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI Control_GetEventNewDpi_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetEventFocusedControl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Control_GetText_(IntPtr obj);

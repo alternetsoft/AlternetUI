@@ -243,18 +243,22 @@ namespace Alternet.UI
             Native.Control.NotifyCaptureLost();
         }
 
-        /// <inheritdoc/>
-        public AbstractControl? GetFocusedControl()
+        internal static AbstractControl? FromNativeControl(Native.Control? nativeControl)
         {
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl == null)
+            if (nativeControl == null)
                 return null;
 
-            var handler = WxControlHandler.NativeControlToHandler(focusedNativeControl);
+            var handler = WxControlHandler.NativeControlToHandler(nativeControl);
             if (handler == null || !handler.IsAttached)
                 return null;
 
             return handler.Control;
+        }
+
+        /// <inheritdoc/>
+        public AbstractControl? GetFocusedControl()
+        {
+            return FromNativeControl(Native.Control.GetFocusedControl());
         }
 
         /// <inheritdoc/>
