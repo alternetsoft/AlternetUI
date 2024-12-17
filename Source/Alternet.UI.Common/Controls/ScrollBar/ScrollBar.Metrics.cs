@@ -9,6 +9,22 @@ namespace Alternet.UI
     public partial class ScrollBar
     {
         /// <summary>
+        /// Gets size of the scrollbar corner for the specified control.
+        /// </summary>
+        /// <param name="control">Control to use for getting scrollbar metrics.</param>
+        /// <returns></returns>
+        public static SizeD GetCornerSize(AbstractControl control)
+        {
+            var hScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY, control);
+            var vScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX, control);
+
+            SizeD result = new();
+            result.Width = GraphicsFactory.PixelToDip(vScrollX, control.ScaleFactor);
+            result.Height = GraphicsFactory.PixelToDip(hScrollY, control.ScaleFactor);
+            return result;
+        }
+
+        /// <summary>
         /// Contains properties which specify different scrollbar metrics.
         /// </summary>
         /// <typeparam name="T">Type of the metrics value.</typeparam>
