@@ -721,7 +721,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void FocusNextControl(bool forward = true, bool nested = true)
         {
-            Handler.FocusNextControl(forward, nested);
+            if (Keyboard.ProcessTabInternally)
+                base.FocusNextControl(forward, nested);
+            else
+                Handler.FocusNextControl(forward, nested);
         }
 
         /// <summary>

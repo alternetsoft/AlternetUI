@@ -41,18 +41,20 @@ namespace Alternet.UI
                         key,
                         Keyboard.Modifiers,
                         repeatCount,
-                        out handled);
+                        out handled,
+                        inputChar);
                     break;
                 case InputEventCodeKeyUp:
                     AbstractControl.BubbleKeyUp(
                         key,
                         Keyboard.Modifiers,
                         repeatCount,
-                        out handled);
+                        out handled,
+                        inputChar);
                     break;
                 case InputEventCodeChar:
                     if (inputChar != 0)
-                        AbstractControl.BubbleTextInput(inputChar, out handled);
+                        AbstractControl.BubbleTextInput(inputChar, out handled, key);
                     break;
             }
 

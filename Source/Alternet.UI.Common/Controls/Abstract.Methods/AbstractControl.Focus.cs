@@ -47,7 +47,7 @@ namespace Alternet.UI
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Category("Focus")]
-        public virtual bool CanFocus /* WinForms */
+        public virtual bool CanFocus
         {
             get
             {
@@ -68,7 +68,7 @@ namespace Alternet.UI
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool ContainsFocus /* WinForms */
+        public bool ContainsFocus
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public virtual bool Focused /* WinForms */
+        public virtual bool Focused
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Alternet.UI
         /// it with the mouse, it shouldn't be included
         /// in the TAB traversal chain when using the keyboard.
         /// </returns>
-        public virtual bool TabStop /* WinForms */
+        public virtual bool TabStop
         {
             get
             {
@@ -237,6 +237,91 @@ namespace Alternet.UI
         /// <see langword="false"/>.</param>
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
+            if (ParentWindow is null)
+                return;
+
+            IEnumerable<TabOrderItem> GetItems(AbstractControl container)
+            {
+                foreach (var control in container.ChildrenRecursive)
+                {
+                    if (!control.TabStop || !control.Visible || !control.CanSelect || !control.CanFocus
+                        || control.HasChildren)
+                        continue;
+
+                    if (control.Parent == this && !nested)
+                        continue;
+
+                    yield return new(control);
+                }
+            }
+
+            TabOrderItem[] GetSortedItems(AbstractControl container)
+            {
+                var result = GetItems(container).ToArray();
+                Array.Sort(result);
+                return result;
+            }
+
+            int IndexOfControl(AbstractControl control, TabOrderItem[] items)
+            {
+                for (int i = 0; i < items.Length; i++)
+                {
+                    if (items[i].Control == control)
+                        return i;
+                }
+
+                return -1;
+            }
+
+            bool FocusFirstOrLast(bool first, TabOrderItem[] items)
+            {
+                if (items.Length > 0)
+                {
+                    if (first)
+                        items[0].Control.SetFocusIdle();
+                    else
+                        items[items.Length - 1].Control.SetFocusIdle();
+                    return true;
+                }
+
+                return false;
+            }
+
+            TabOrderItem[] items;
+
+            if (nested)
+            {
+                items = GetSortedItems(this);
+                if(FocusFirstOrLast(forward, items))
+                    return;
+            }
+
+            items = GetSortedItems(Root);
+
+            var indexInParent = IndexOfControl(this, items);
+
+            if (indexInParent >= 0)
+            {
+                if (forward)
+                {
+                    indexInParent++;
+                    if (indexInParent >= items.Length)
+                        indexInParent = 0;
+                }
+                else
+                {
+                    indexInParent--;
+                    if (indexInParent < 0)
+                        indexInParent = items.Length - 1;
+                }
+
+                var control = items[indexInParent].Control;
+                control.SetFocusIdle();
+            }
+            else
+            {
+                FocusFirstOrLast(forward, items);
+            }
         }
 
         /// <summary>
@@ -244,6 +329,29 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
+        }
+
+        private struct TabOrderItem : IComparable<TabOrderItem>, IComparable
+        {
+            public AbstractControl Control;
+            public int[] TabIndex = [];
+
+            public TabOrderItem(AbstractControl control)
+            {
+                Control = control;
+            }
+
+            public readonly int CompareTo(TabOrderItem other)
+            {
+                return 0;
+            }
+
+            public readonly int CompareTo(object obj)
+            {
+                if (obj is TabOrderItem item)
+                    return CompareTo(item);
+                throw new NotImplementedException();
+            }
         }
     }
 }
