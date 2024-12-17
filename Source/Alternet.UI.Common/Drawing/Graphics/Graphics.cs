@@ -653,7 +653,11 @@ namespace Alternet.Drawing
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
-        public abstract void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode);
+        public abstract void Polygon(
+            Pen pen,
+            Brush brush,
+            PointD[] points,
+            FillMode fillMode = FillMode.Alternate);
 
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectD"/> structure.
