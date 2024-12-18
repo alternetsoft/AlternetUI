@@ -79,6 +79,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets 'Tag' property of the selected item.
+        /// </summary>
+        public object? SelectedItemTag
+        {
+            get
+            {
+                object? result;
+
+                if (kind == TreeKind.TreeView)
+                    result = TreeView?.SelectedItem?.Tag;
+                else
+                    result = ListBox?.SelectedItemTag;
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="CardPanel"/> attached to the control.
         /// </summary>
         public CardPanel Cards => cardPanel;
@@ -207,7 +224,7 @@ namespace Alternet.UI
                 HasBorder = false,
             };
 
-            listBox.SelectionChanged += OnSelectionChanged;
+            listBox.DelayedSelectionChanged += OnSelectionChanged;
 
             return listBox;
         }
@@ -246,16 +263,7 @@ namespace Alternet.UI
 
         private void SetActiveCard()
         {
-            object? pageIndex;
-
-            if (kind == TreeKind.TreeView)
-                pageIndex = TreeView?.SelectedItem?.Tag;
-            else
-                pageIndex = (ListBox?.SelectedItem as ListControlItem)?.Tag;
-
-            if (pageIndex == null)
-                return;
-            cardPanel.SelectedCardIndex = (int)pageIndex;
+            cardPanel.SelectedCardIndex = (int?)SelectedItemTag;
         }
     }
 }

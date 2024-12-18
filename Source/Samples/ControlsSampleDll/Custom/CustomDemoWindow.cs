@@ -52,8 +52,6 @@ namespace Alternet.UI
                 window.Height = (window.Width / 3) * 2;
                 AddBuildNumber = false;
                 window.UpdateTitle();
-
-                /*WindowsUtils.SetWindowRoundCorners(window, WindowRoundedCornerPreference.NotRound);*/
             });
         }
 

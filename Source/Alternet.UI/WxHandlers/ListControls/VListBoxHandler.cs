@@ -274,22 +274,22 @@ namespace Alternet.UI
 
         private void ApplySelection()
         {
-            if (Control.SelectionMode == ListBoxSelectionMode.Single)
-            {
-                var indices = Control.SelectedIndices;
-                if(indices.Count > 0)
-                    NativeControl.SetSelection(indices[0]);
-                else
-                    NativeControl.SetSelection(-1);
-            }
-
             applyingSelection = true;
 
             try
             {
-                NativeControl.ClearSelected();
-
                 var indices = Control.SelectedIndices;
+
+                if (Control.SelectionMode == ListBoxSelectionMode.Single)
+                {
+                    if (indices.Count > 0)
+                        NativeControl.SetSelection(indices[0]);
+                    else
+                        NativeControl.SetSelection(-1);
+                    return;
+                }
+
+                NativeControl.ClearSelected();
 
                 for (var i = 0; i < indices.Count; i++)
                     NativeControl.SetSelected(indices[i], true);

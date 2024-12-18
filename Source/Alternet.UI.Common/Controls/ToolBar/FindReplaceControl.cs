@@ -125,8 +125,8 @@ namespace Alternet.UI
                 scopeEdit.IsEditable = false;
                 UpdateFindScope();
 
-                replaceEdit.TextChanged += ReplaceEdit_TextChanged;
-                findEdit.TextChanged += FindEdit_TextChanged;
+                replaceEdit.DelayedTextChanged += OnReplaceEditTextChanged;
+                findEdit.DelayedTextChanged += OnFindEditTextChanged;
 
                 ToolBarCount = 3;
 
@@ -1262,7 +1262,8 @@ namespace Alternet.UI
                 HandleKeys(e);
         }
 
-        private void OnClickUseRegularExpressions() => OnClickUseRegularExpressions(this, EventArgs.Empty);
+        private void OnClickUseRegularExpressions()
+            => OnClickUseRegularExpressions(this, EventArgs.Empty);
 
         private void OnClickMatchWholeWord() => OnClickMatchWholeWord(this, EventArgs.Empty);
 
@@ -1325,12 +1326,13 @@ namespace Alternet.UI
             ClickClose?.Invoke(this, e);
         }
 
-        private void FindEdit_TextChanged(object? sender, EventArgs e)
+        private void OnFindEditTextChanged(object? sender, EventArgs e)
         {
-            Manager?.SetFindText(findEdit.Text);
+            var s = findEdit.Text;
+            Manager?.SetFindText(s);
         }
 
-        private void ReplaceEdit_TextChanged(object? sender, EventArgs e)
+        private void OnReplaceEditTextChanged(object? sender, EventArgs e)
         {
             Manager?.SetReplaceText(replaceEdit.Text);
         }
@@ -1373,11 +1375,18 @@ namespace Alternet.UI
 
         internal class FindReplaceManagerLogger : IFindReplaceConnect
         {
+            private string? text;
+
             public bool CanMatchCase => true;
 
             public bool CanMatchWholeWord => true;
 
             public bool CanUseRegularExpressions => true;
+
+            public bool ShowErrorBorder
+            {
+                get => string.IsNullOrEmpty(text);
+            }
 
             public void FindNext()
             {
@@ -1401,6 +1410,7 @@ namespace Alternet.UI
 
             public void SetFindText(string text)
             {
+                this.text = text;
                 App.Log($"FindReplaceControl.FindText = '{text}'");
             }
 

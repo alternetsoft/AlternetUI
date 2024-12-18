@@ -219,9 +219,14 @@ namespace Alternet.UI
         /// Occurs when the <see cref="AbstractControl.Text" /> property value changes.
         /// </summary>
         /// <remarks>
-        /// This is a delayed event. If multiple events are occurred during the delay, they are ignored.
+        /// This is a delayed event. If multiple events are occurred during the delay,
+        /// they are ignored.
         /// </remarks>
-        public event EventHandler? DelayedTextChanged;
+        public event EventHandler<EventArgs>? DelayedTextChanged
+        {
+            add => delayedTextChanged.Delayed += value;
+            remove => delayedTextChanged.Delayed -= value;
+        }
 
         /// <summary>
         /// Occurs when a character, space or backspace key is pressed while the control has focus.

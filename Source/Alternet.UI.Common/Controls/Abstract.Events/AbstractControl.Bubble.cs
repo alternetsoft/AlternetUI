@@ -296,12 +296,6 @@ namespace Alternet.UI
                 return;
             }
 
-            if (Keyboard.ProcessTabInternally && keyChar == 8 && !control.ProcessTab)
-            {
-                handled = true;
-                return;
-            }
-
             var e = new KeyPressEventArgs(control, keyChar);
             control.BubbleKeyPress(e);
             handled = e.Handled;

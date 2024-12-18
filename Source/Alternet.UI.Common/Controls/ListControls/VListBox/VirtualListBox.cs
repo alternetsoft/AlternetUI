@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// </summary>
     public class VirtualListBox : VirtualListControl<ListControlItem>, IListControl
     {
-        private readonly TransformMatrix matrix = new();
+        private TransformMatrix matrix = new();
 
         private Coord scrollOffset;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
@@ -508,11 +508,11 @@ namespace Alternet.UI
         /// Changes item <see cref="CheckState"/> to the next value.
         /// </summary>
         /// <param name="itemIndex">Index of the item.</param>
-        public virtual void ToggleItemCheckState(int itemIndex)
+        public virtual bool ToggleItemCheckState(int itemIndex)
         {
             var item = SafeItem(itemIndex);
             if (item is null)
-                return;
+                return false;
             var checkState = item.GetCheckState(this);
             var allowThreeState = item.GetAllowThreeState(this);
             var allowAllStatesForUser = GetItemCheckBoxAllowAllStatesForUser(item);
@@ -544,6 +544,7 @@ namespace Alternet.UI
 
             RaiseCheckedChanged(EventArgs.Empty);
             RefreshRow(itemIndex);
+            return true;
         }
 
         /// <summary>
@@ -640,12 +641,18 @@ namespace Alternet.UI
             Items.Add(item);
         }
 
-        internal void ToggleItemCheckState(PointD location)
+        /// <summary>
+        /// Toggles checked state of the item at the specified coordinates.
+        /// </summary>
+        /// <param name="location">A <see cref="PointD"/> object containing
+        /// the coordinates used to obtain the item
+        /// index.</param>
+        public virtual bool ToggleItemCheckState(PointD location)
         {
             var itemIndex = HitTestCheckBox(location);
             if (itemIndex is null)
-                return;
-            ToggleItemCheckState(itemIndex.Value);
+                return false;
+            return ToggleItemCheckState(itemIndex.Value);
         }
 
         /// <inheritdoc/>
@@ -655,19 +662,128 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (IsSelectionModeSingle)
+            {
+                HandleInSingleMode();
+                if (e.IsHandledOrSupressed)
+                    return;
+                base.OnKeyDown(e);
+            }
+            else
+            {
+                base.OnKeyDown(e);
+            }
+
+            void HandleInSingleMode()
+            {
+                if (Count == 0)
+                    return;
+
+                var selectedIndex = SelectedIndex;
+
+                switch (e.Key)
+                {
+                    case Key.Home:
+                        DoInsideUpdate(() =>
+                        {
+                            if (e.Control)
+                            {
+                                scrollOffset = 0;
+                            }
+                            else
+                            {
+                                scrollOffset = 0;
+                                SelectFirstItem();
+                            }
+
+                            AfterKeyDown();
+                        });
+                        break;
+                    case Key.End:
+                        SelectLastItem();
+                        AfterKeyDown();
+                        break;
+                    case Key.Left:
+                        if(e.Control)
+                            IncHorizontalOffsetChars(-4);
+                        else
+                            IncHorizontalOffsetChars(-1);
+                        AfterKeyDown();
+                        break;
+                    case Key.Right:
+                        if (e.Control)
+                            IncHorizontalOffsetChars(4);
+                        else
+                            IncHorizontalOffsetChars(1);
+                        AfterKeyDown();
+                        break;
+                    case Key.Up:
+                        SelectPreviousItem();
+                        AfterKeyDown();
+                        break;
+                    case Key.Down:
+                        SelectNextItem();
+                        AfterKeyDown();
+                        break;
+                    case Key.PageUp:
+                        SelectItemOnPreviousPage();
+                        AfterKeyDown();
+                        break;
+                    case Key.PageDown:
+                        SelectItemOnNextPage();
+                        AfterKeyDown();
+                        break;
+                }
+
+                e.Suppressed();
+
+                void AfterKeyDown()
+                {
+                    if (selectedIndex != SelectedIndex)
+                    {
+                        RaiseSelectionChanged();
+                    }
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-            if(CheckOnClick)
-                ToggleItemCheckState(e.Location);
+            if (CheckOnClick && CheckBoxVisible)
+            {
+                if (ToggleItemCheckState(e.Location))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+
             base.OnMouseDoubleClick(e);
         }
 
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
-            if (CheckOnClick)
-                ToggleItemCheckState(e.Location);
-            base.OnMouseLeftButtonDown(e);
+            if (CheckOnClick && CheckBoxVisible)
+            {
+                if (ToggleItemCheckState(e.Location))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            if (IsSelectionModeSingle)
+            {
+                base.OnMouseLeftButtonDown(e);
+            }
+            else
+            {
+                base.OnMouseLeftButtonDown(e);
+            }
         }
 
         /// <summary>
@@ -718,7 +834,7 @@ namespace Alternet.UI
                     var isCurrentItem = IsCurrent(line);
                     var isSelectedItem = IsSelected(line);
 
-                    if(drawMode != DrawMode.Normal)
+                    if (drawMode != DrawMode.Normal)
                     {
                         var item = SafeItem(line);
                         drawItemArgs.Bounds = rectRow;
@@ -784,44 +900,59 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Increments horizontal scroll offset.
+        /// </summary>
+        /// <param name="delta">Increment value in device-independent units.</param>
+        protected void IncHorizontalOffset(Coord delta)
+        {
+            var newOffset = Math.Max(scrollOffset + delta, 0);
+            if (newOffset != scrollOffset)
+            {
+                scrollOffset = newOffset;
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Increments horizontal scroll offset.
+        /// </summary>
+        /// <param name="chars">Increment value in chars.</param>
+        protected void IncHorizontalOffsetChars(int chars = 1)
+        {
+            Coord CharWidth() => MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
+            IncHorizontalOffset(chars * CharWidth());
+        }
+
         /// <inheritdoc/>
         protected override void OnScroll(ScrollEventArgs e)
         {
             if (!App.IsWindowsOS)
                 return;
-            Coord CharWidth() => MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
-
-            void IncOffset(Coord delta)
-            {
-                var newOffset = Math.Max(scrollOffset + delta, 0);
-                if (newOffset != scrollOffset)
-                {
-                    scrollOffset = newOffset;
-                    Refresh();
-                }
-            }
 
             base.OnScroll(e);
 
             switch (e.Type)
             {
                 case ScrollEventType.SmallDecrement:
-                    if (scrollOffset == 0)
-                        return;
-                    IncOffset(-CharWidth());
+                    IncHorizontalOffsetChars(-1);
                     break;
                 case ScrollEventType.SmallIncrement:
-                    IncOffset(CharWidth());
+                    IncHorizontalOffsetChars(1);
                     break;
                 case ScrollEventType.LargeDecrement:
+                    IncHorizontalOffsetChars(-4);
                     break;
                 case ScrollEventType.LargeIncrement:
+                    IncHorizontalOffsetChars(4);
                     break;
                 case ScrollEventType.ThumbPosition:
                     break;
                 case ScrollEventType.ThumbTrack:
                     break;
                 case ScrollEventType.First:
+                    scrollOffset = 0;
+                    Invalidate();
                     break;
                 case ScrollEventType.Last:
                     break;

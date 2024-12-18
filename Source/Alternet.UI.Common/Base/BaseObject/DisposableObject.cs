@@ -99,6 +99,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds <paramref name="action"/> which will be executed one time
+        /// when the application finished processing events and is
+        /// about to enter the idle state.
+        /// </summary>
+        /// <param name="action">Action to call.</param>
+        public void RunWhenIdle(Action action)
+        {
+            App.AddIdleTask(() =>
+            {
+                if (IsDisposed)
+                    return;
+                action();
+            });
+        }
+
+        /// <summary>
         /// Throws <see cref="ObjectDisposedException"/> if
         /// <see cref="IsDisposed"/> is <c>true</c>.
         /// </summary>

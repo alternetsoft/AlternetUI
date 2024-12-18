@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// Gets or sets default timeout interval (in msec) for timer that calls
         /// <see cref="AbstractControl.DelayedTextChanged"/> event.
         /// </summary>
-        public static int DefaultDelayedTextChangedTimeout = 100;
+        public static int DefaultDelayedTextChangedTimeout = 150;
 
         /// <summary>
         /// Gets or sets default timeout interval (in msec) for timer that calls
