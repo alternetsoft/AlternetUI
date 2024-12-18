@@ -19,7 +19,7 @@ namespace Alternet.UI
         public static bool RaiseActivatedForChildren = true;
 
         private VisualControlStates? reportedVisualStates;
-        private Timer? delayedTextChangedTimer;
+        private DelayedEvent<EventArgs> delayedTextChanged;
 
         /// <summary>
         /// Raises the <see cref="Invalidated" /> event
@@ -440,19 +440,7 @@ namespace Alternet.UI
 
             RaiseNotifications((n) => n.AfterTextChanged(this));
 
-            if (DelayedTextChanged is not null)
-            {
-                delayedTextChangedTimer ??= new();
-                delayedTextChangedTimer.Stop();
-                delayedTextChangedTimer.Interval = TimerUtils.DefaultDelayedTextChangedTimeout;
-                delayedTextChangedTimer.TickAction = () =>
-                {
-                    if (IsDisposed)
-                        return;
-                    DelayedTextChanged?.Invoke(this, EventArgs.Empty);
-                };
-                delayedTextChangedTimer.StartOnce();
-            }
+            delayedTextChanged.Raise(this, EventArgs.Empty, () => IsDisposed);
         }
 
         /// <summary>

@@ -192,7 +192,7 @@ namespace Alternet.UI
                 FocusedControl = null;
             if (HoveredControl == this)
                 HoveredControl = null;
-            SafeDispose(ref delayedTextChangedTimer);
+            SafeDispose(ref delayedTextChanged);
 
             Designer?.RaiseDisposed(this);
 
