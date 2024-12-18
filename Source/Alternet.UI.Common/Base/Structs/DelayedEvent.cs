@@ -10,6 +10,13 @@ namespace Alternet.UI
     /// <typeparam name="TArgs">Type of the event argument.</typeparam>
     public struct DelayedEvent<TArgs> : IDisposable
     {
+        /// <summary>
+        /// Gets or sets default timeout interval (in msec) for timer that calls
+        /// <see cref="Delayed"/> event. If not specified,
+        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
+        /// </summary>
+        public int? Interval;
+
         private Timer? timer;
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace Alternet.UI
                 var self = this;
                 timer ??= new();
                 timer.Stop();
-                timer.Interval = TimerUtils.DefaultDelayedTextChangedTimeout;
+                timer.Interval = Interval ?? TimerUtils.DefaultDelayedTextChangedTimeout;
                 timer.TickAction = () =>
                 {
                     if (isSuspended())
