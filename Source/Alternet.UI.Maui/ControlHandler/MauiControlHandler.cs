@@ -118,7 +118,14 @@ namespace Alternet.UI
             {
                 if (bounds == value)
                     return;
+                var oldBounds = bounds;
                 bounds = value;
+
+                if(oldBounds.Location != value.Location)
+                    Control.RaiseContainerLocationChanged();
+                if(oldBounds.Size != value.Size)
+                    Control.RaiseHandlerSizeChanged();
+
                 InvalidateContainer();
             }
         }
