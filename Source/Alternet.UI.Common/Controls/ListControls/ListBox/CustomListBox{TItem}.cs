@@ -112,7 +112,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="SelectedIndices"/>
+        /// Same as <see cref="SelectedIndices"/>.
         /// </summary>
         [Browsable(false)]
         public IReadOnlyList<int> SelectedIndexes => SelectedIndices;
@@ -317,13 +317,53 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public virtual IReadOnlyList<object> SelectedItems
+        public virtual IReadOnlyList<TItem> SelectedItems
         {
             get
             {
                 CheckDisposed();
 
                 return SelectedIndices.Select(x => Items[x]).ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether selection mode is <see cref="ListBoxSelectionMode.Single"/>
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSelectionModeSingle
+        {
+            get
+            {
+                return SelectionMode == ListBoxSelectionMode.Single;
+            }
+
+            set
+            {
+                if(value)
+                    SelectionMode = ListBoxSelectionMode.Single;
+                else
+                    SelectionMode = ListBoxSelectionMode.Multiple;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether selection mode is <see cref="ListBoxSelectionMode.Multiple"/>
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSelectionModeMultiple
+        {
+            get
+            {
+                return SelectionMode == ListBoxSelectionMode.Multiple;
+            }
+
+            set
+            {
+                if (value)
+                    SelectionMode = ListBoxSelectionMode.Multiple;
+                else
+                    SelectionMode = ListBoxSelectionMode.Single;
             }
         }
 
@@ -563,14 +603,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
-        public void RaiseSelectionChanged(EventArgs e)
+        public void RaiseSelectionChanged(EventArgs? e = null)
         {
             if (ignoreSelectEvents > 0)
                 return;
-            OnSelectionChanged(e);
-            OnSelectedIndexChanged(e);
-            SelectionChanged?.Invoke(this, e);
-            SelectedIndexChanged?.Invoke(this, e);
+            OnSelectionChanged(EventArgs.Empty);
+            OnSelectedIndexChanged(EventArgs.Empty);
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
+            SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
