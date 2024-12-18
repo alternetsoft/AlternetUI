@@ -19,7 +19,7 @@ namespace Alternet.UI
         public static bool RaiseActivatedForChildren = true;
 
         private VisualControlStates? reportedVisualStates;
-        private DelayedEvent<EventArgs> delayedTextChanged;
+        private DelayedEvent<EventArgs> delayedTextChanged = new();
 
         /// <summary>
         /// Raises the <see cref="Invalidated" /> event

@@ -17,7 +17,9 @@ namespace Alternet.UI
             where TItem : class, new()
     {
         private readonly HashSet<int> selectedIndices = new();
+
         private int ignoreSelectEvents = 0;
+        private DelayedEvent<EventArgs> delayedSelectionChanged = new();
 
         private ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;
 
@@ -41,7 +43,22 @@ namespace Alternet.UI
         public event EventHandler? SelectionChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="SelectedIndex"/>, <see cref="SelectedItem"/> or the
+        /// <see cref="SelectedIndices"/> have changed.
+        /// </summary>
+        /// <remarks>
+        /// This is a delayed event. If multiple events are occurred during the delay,
+        /// they are ignored.
+        /// </remarks>
+        public event EventHandler<EventArgs>? DelayedSelectionChanged
+        {
+            add => delayedSelectionChanged.Delayed += value;
+            remove => delayedSelectionChanged.Delayed -= value;
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="SelectedIndex"/> property has changed.
+        /// Same as <see cref="SelectionChanged"/>, see it for the details.
         /// </summary>
         public event EventHandler? SelectedIndexChanged;
 
@@ -120,6 +137,18 @@ namespace Alternet.UI
                 if (changed)
                     RaiseSelectionChanged(EventArgs.Empty);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets default timeout interval (in msec) for timer that calls
+        /// <see cref="DelayedSelectionChanged"/> event. If not specified,
+        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public int? DelayedSelectionChangedInterval
+        {
+            get => delayedSelectionChanged.Interval;
+            set => delayedSelectionChanged.Interval = value;
         }
 
         /// <summary>
@@ -299,6 +328,12 @@ namespace Alternet.UI
                     SelectedIndex = index;
             }
         }
+
+        /// <summary>
+        /// Gets 'Tag' property of the selected item if it is <see cref="BaseObjectWithAttr"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? SelectedItemTag => (SelectedItem as BaseObjectWithAttr)?.Tag;
 
         /// <summary>
         /// Gets a collection containing the currently selected items in the
@@ -622,6 +657,7 @@ namespace Alternet.UI
             OnSelectedIndexChanged(EventArgs.Empty);
             SelectionChanged?.Invoke(this, EventArgs.Empty);
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
+            delayedSelectionChanged.Raise(this, EventArgs.Empty, () => IsDisposed);
         }
 
         /// <summary>
