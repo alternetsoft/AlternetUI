@@ -33,19 +33,18 @@ for Visual Studio is available.
 ## How to build:
 
 It is better to use AlterNET UI from [NuGet](https://www.nuget.org/packages/Alternet.UI). If you need a custom build, 
-here is step by step instructions:
+here is step by step instruction:
 
 - 3 build machines are needed: Windows, macOS, Linux.
-- On all machines installations of .NET SDK [6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0),
- [7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0), [8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) 
+- On all machines installations of .NET SDK [8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0), [9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) 
 are required.
 - If you want to use UI on single platform, skip installation steps for other platforms.
 
 <b>STEP 1.</b> Windows Machine Setup:
 
-- Windows 7 or newer is supported.
+- Windows 7 or newer is supported (Windows 11 is preferred).
 - Install Visual Studio 2022 Version 17.8.0 or later, with C# Desktop development, C++ Desktop development workloads, 
-VS Extenstion Development installed. Net 8.0, 6.0, 7.0, 4.62, 4.81 targeting packs are required.
+VS Extenstion Development installed. Net 9.0, 8.0, 6.0, 7.0, 4.62, 4.81 targeting packs are required.
 - Clone the AlterNET UI repo.
 - Use the "C:\Alternet.UI" folder or any other root folder. The folder name should not contain any spaces or non-English letters.
 
