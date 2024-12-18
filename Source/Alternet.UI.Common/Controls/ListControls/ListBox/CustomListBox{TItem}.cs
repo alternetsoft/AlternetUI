@@ -90,7 +90,18 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return selectedIndices.ToArray();
+
+                if (IsSelectionModeSingle)
+                {
+                    if (SelectedIndex is null)
+                        return [];
+                    else
+                        return [SelectedIndex.Value];
+                }
+                else
+                {
+                    return selectedIndices.ToArray();
+                }
             }
 
             set
