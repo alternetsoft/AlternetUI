@@ -27,7 +27,7 @@ namespace ControlsSample
             window.Deactivated -= Window_Deactivated;
             window.Deactivated += Window_Deactivated;
 
-            var ch = window.GetChildren<LogListBox>();
+            var ch = window.GetChildren<LogListBox>(true);
             var control = ch.First;
 
             if (control is null)
