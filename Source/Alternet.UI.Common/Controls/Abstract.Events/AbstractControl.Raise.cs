@@ -11,6 +11,13 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        /// <summary>
+        /// Gets or sets whether to call activated/deactivated events for all child
+        /// controls recursively.
+        /// Default is True. If this property is False, only top-most forms are notified.
+        /// </summary>
+        public static bool RaiseActivatedForChildren = true;
+
         private VisualControlStates? reportedVisualStates;
         private Timer? delayedTextChangedTimer;
 
@@ -53,7 +60,7 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePreviewKeyDown(Key key, ModifierKeys modifiers, ref bool isInputKey)
         {
-            if(PreviewKeyDown is not null)
+            if (PreviewKeyDown is not null)
             {
                 PreviewKeyDownEventArgs e = new(this, key, modifiers);
                 PreviewKeyDown(this, e);
@@ -310,6 +317,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="Deactivated" /> event and <see cref="OnDeactivated"/> method.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseDeactivated()
+        {
+            OnDeactivated(EventArgs.Empty);
+            Deactivated?.Invoke(this, EventArgs.Empty);
+
+            RaiseNotifications((n) => n.AfterDeactivated(this));
+
+            if (RaiseActivatedForChildren)
+            {
+                ForEachChild((c) => c.RaiseDeactivated(), false);
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="Activated" /> event and <see cref="OnActivated"/> method.
         /// </summary>
         [Browsable(false)]
@@ -319,6 +343,11 @@ namespace Alternet.UI
             Activated?.Invoke(this, EventArgs.Empty);
 
             RaiseNotifications((n) => n.AfterActivated(this));
+
+            if (RaiseActivatedForChildren)
+            {
+                ForEachChild((c) => c.RaiseActivated(), false);
+            }
         }
 
         /// <summary>
@@ -332,18 +361,6 @@ namespace Alternet.UI
             ReportBoundsChanged();
 
             RaiseNotifications((n) => n.AfterContainerLocationChanged(this));
-        }
-
-        /// <summary>
-        /// Raises the <see cref="Deactivated" /> event and <see cref="OnDeactivated"/> method.
-        /// </summary>
-        [Browsable(false)]
-        public void RaiseDeactivated()
-        {
-            OnDeactivated(EventArgs.Empty);
-            Deactivated?.Invoke(this, EventArgs.Empty);
-
-            RaiseNotifications((n) => n.AfterDeactivated(this));
         }
 
         /// <summary>
@@ -423,7 +440,7 @@ namespace Alternet.UI
 
             RaiseNotifications((n) => n.AfterTextChanged(this));
 
-            if(DelayedTextChanged is not null)
+            if (DelayedTextChanged is not null)
             {
                 delayedTextChangedTimer ??= new();
                 delayedTextChangedTimer.Stop();
@@ -890,7 +907,7 @@ namespace Alternet.UI
         {
             OnTouch(e);
             Touch?.Invoke(this, e);
-            if(!e.Handled && TouchEventsAsMouse)
+            if (!e.Handled && TouchEventsAsMouse)
                 TouchToMouseEvents(e);
 
             RaiseNotifications((n) => n.AfterTouch(this, e));
