@@ -35,9 +35,12 @@ namespace Alternet.UI
         /// <remarks>
         /// This method allows to separate different action groups.
         /// </remarks>
-        public virtual void AddActionSpacer()
+        public virtual ListControlItem AddActionSpacer()
         {
-            Add(new ListControlItem(string.Empty));
+            var result = new ListControlItem(string.Empty);
+            result.HideSelection = true;
+            Add(result);
+            return result;
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Action title.</param>
         /// <param name="action">Action method.</param>
-        public virtual void AddAction(string title, Action? action)
+        public virtual ListControlItem AddAction(string title, Action? action)
         {
             ListControlItem item = new(title)
             {
@@ -53,6 +56,7 @@ namespace Alternet.UI
             };
 
             Add(item);
+            return item;
         }
 
         /// <summary>
@@ -61,9 +65,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Action title.</param>
         /// <param name="action">Action method.</param>
-        public virtual void AddBusyAction(string title, Action action)
+        public virtual ListControlItem AddBusyAction(string title, Action action)
         {
-            AddAction(title, Fn);
+            return AddAction(title, Fn);
 
             void Fn()
             {
