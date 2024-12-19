@@ -258,6 +258,16 @@ namespace Alternet.UI
         public virtual bool IsActive => Handler.IsActive;
 
         /// <summary>
+        /// Gets time when window was last time activated.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime? LastActivateTime
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets window handler.
         /// </summary>
         [Browsable(false)]
@@ -880,6 +890,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets action which is performed when window is closed using
+        /// <see cref="Close"/> method.
+        /// </summary>
+        public WindowCloseAction? CloseAction { get; set; }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
@@ -931,7 +947,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Removes <see cref="IControlNotification"/> object from the global list of window notifications.
+        /// Removes <see cref="IControlNotification"/> object from the global
+        /// list of window notifications.
         /// </summary>
         /// <param name="n">Notification object to remove.</param>
         public static void RemoveGlobalWindowNotification(IControlNotification n)
@@ -1035,11 +1052,24 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Close()
         {
-            Visible = false;
+            if (IsDisposed)
+                return;
 
-            CheckDisposed();
+            var action = CloseAction ?? WindowCloseAction.Dispose;
 
-            Handler.Close();
+            switch (action)
+            {
+                default:
+                case WindowCloseAction.Dispose:
+                    Visible = false;
+                    Handler.Close();
+                    break;
+                case WindowCloseAction.Hide:
+                    Visible = false;
+                    break;
+                case WindowCloseAction.None:
+                    break;
+            }
         }
 
         /// <summary>
@@ -1232,6 +1262,30 @@ namespace Alternet.UI
         /// This function only works for top level windows.
         /// </summary>
         public virtual void Lower() => Handler.Lower();
+
+        /// <summary>
+        /// Raises <see cref="DisplayChanged"/> event if it is required.
+        /// </summary>
+        public virtual void RaiseDisplayChanged()
+        {
+            if (DisplayChanged is null)
+                return;
+
+            var newDisplay = Display.GetFromControl(this);
+
+            if (oldDisplay is null)
+            {
+                oldDisplay = newDisplay;
+                return;
+            }
+
+            if (oldDisplay == newDisplay)
+                return;
+
+            DisplayChanged?.Invoke(this, EventArgs.Empty);
+
+            oldDisplay = newDisplay;
+        }
 
         /// <summary>
         /// Recreates all native controls in all windows.
@@ -1597,25 +1651,21 @@ namespace Alternet.UI
             InsideTryCatch(RaiseDisplayChanged);
         }
 
-        private void RaiseDisplayChanged()
+        /// <summary>
+        /// Common initialization method which is called from all the constructors.
+        /// </summary>
+        protected virtual void Initialize()
         {
-            if (DisplayChanged is null)
-                return;
+            SetVisibleValue(false);
+            ProcessIdle = true;
 
-            var newDisplay = Display.GetFromControl(this);
+            if (GetWindowKind() != WindowKind.Control)
+                App.Current.RegisterWindow(this);
 
-            if (oldDisplay is null)
-            {
-                oldDisplay = newDisplay;
-                return;
-            }
+            Bounds = GetDefaultBounds();
 
-            if (oldDisplay == newDisplay)
-                return;
-
-            DisplayChanged?.Invoke(this, EventArgs.Empty);
-
-            oldDisplay = newDisplay;
+            if (AbstractControl.DefaultFont != Font.Default)
+                Font = AbstractControl.DefaultFont;
         }
 
         private void RaiseLoadedOnce()
@@ -1624,20 +1674,6 @@ namespace Alternet.UI
                 return;
             loadedCalled = true;
             Load?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void Initialize()
-        {
-            SetVisibleValue(false);
-            ProcessIdle = true;
-
-            if(GetWindowKind() != WindowKind.Control)
-                App.Current.RegisterWindow(this);
-
-            Bounds = GetDefaultBounds();
-
-            if (AbstractControl.DefaultFont != Font.Default)
-                Font = AbstractControl.DefaultFont;
         }
     }
 }
