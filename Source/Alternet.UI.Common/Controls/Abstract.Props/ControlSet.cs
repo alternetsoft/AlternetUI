@@ -766,5 +766,24 @@ namespace Alternet.UI
                 item.Parent = value;
             return this;
         }
+
+        /// <summary>
+        /// Adds event handler to 'CheckedChanged' event.
+        /// </summary>
+        /// <param name="evt">Event Handler.</param>
+        /// <returns></returns>
+        public virtual ControlSet WhenCheckedChanged(EventHandler evt)
+        {
+            foreach (var item in items)
+            {
+                if (item is CheckBox checkBox)
+                    checkBox.CheckedChanged += evt;
+                else
+                if (item is RadioButton radioButton)
+                    radioButton.CheckedChanged += evt;
+            }
+
+            return this;
+        }
     }
 }
