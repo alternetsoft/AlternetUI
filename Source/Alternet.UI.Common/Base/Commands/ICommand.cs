@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
     /// <summary>
     /// An interface that allows an application author to define a method to be invoked.
     /// </summary>
+    [TypeConverter(typeof(CommandConverter))]
     public interface ICommand
     {
         /// <summary>

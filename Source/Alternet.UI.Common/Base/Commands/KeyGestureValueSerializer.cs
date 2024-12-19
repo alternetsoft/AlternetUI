@@ -6,7 +6,7 @@ using Alternet.UI.Port;
 namespace Alternet.UI
 {
     /// <summary>
-    /// KeyGestureValueSerializer - Converter class for serializing a KeyGesture
+    /// Converter class for serializing a <see cref="KeyGesture"/>.
     /// </summary>
     public class KeyGestureValueSerializer : ValueSerializer
     {
