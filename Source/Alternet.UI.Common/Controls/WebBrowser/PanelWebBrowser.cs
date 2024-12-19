@@ -325,7 +325,9 @@ namespace Alternet.UI
                 if (target.IsDisposed)
                     Recreate();
                 else
+                {
                     target.Show();
+                }
             }
             else
                 Recreate();
@@ -333,6 +335,7 @@ namespace Alternet.UI
             void Recreate()
             {
                 WindowWebBrowserSearch win = new(FindParams);
+                win.CloseAction = WindowCloseAction.Hide;
                 win.TopMost = true;
                 searchWindow = new(win);
                 win.Show();
