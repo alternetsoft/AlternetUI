@@ -1063,6 +1063,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Processes input bindings and calls associated commands
+        /// if their key bindings are equal to keys specified
+        /// in the parameters.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <param name="recursive">Whether to process input bindings only for this
+        /// control (False) or this control and its child controls recursively (True).</param>
+        /// <returns></returns>
+        public virtual bool ExecuteKeyBinding(Key key, ModifierKeys modifiers, bool recursive)
+        {
+            if (recursive)
+            {
+                return Internal(InputBindingsRecursive);
+            }
+            else
+            {
+                if (!HasInputBindings)
+                    return false;
+                return Internal(InputBindings);
+            }
+
+            bool Internal(IEnumerable<InputBinding> bindings)
+            {
+                foreach (var binding in bindings)
+                {
+                    if (!binding.IsActive)
+                        continue;
+                    if (!binding.HasKey(key, modifiers))
+                        continue;
+                    var executed = binding.Execute();
+                    if (executed)
+                        return true;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Calls the specified action for all the parent controls.
         /// </summary>
         /// <typeparam name="T">Type of the action parameters.</typeparam>
@@ -1070,7 +1110,7 @@ namespace Alternet.UI
         /// <param name="action">Action to call.</param>
         /// <returns>True if <see cref="HandledEventArgs.Handled"/>
         /// of the <paramref name="e"/> is True.</returns>
-        public bool ForEachParent<T>(T e, Action<AbstractControl, T> action)
+        public virtual bool ForEachParent<T>(T e, Action<AbstractControl, T> action)
             where T : HandledEventArgs
         {
             if (Parent is null)
@@ -1090,7 +1130,7 @@ namespace Alternet.UI
         /// <param name="action">Action to call.</param>
         /// <returns>True if <see cref="HandledEventArgs.Handled"/>
         /// of the <paramref name="e"/> is True.</returns>
-        public bool ForEachVisibleChild<T>(T e, Action<AbstractControl, T> action)
+        public virtual bool ForEachVisibleChild<T>(T e, Action<AbstractControl, T> action)
             where T : HandledEventArgs
         {
             if (!HasChildren)

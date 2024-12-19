@@ -32,7 +32,6 @@ namespace Alternet.UI
         private object? menu = null;
         private Window? owner;
         private bool needLayout = false;
-        private Collection<InputBinding>? inputBindings;
         private int? oldDisplay;
         private bool loadedCalled;
 
@@ -603,31 +602,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the window that owns this window.
-        /// </summary>
-        /// <value>
-        /// A <see cref="Window"/> that represents the window that is the owner of this window.
-        /// </value>
-        /// <remarks>
-        /// When a window is owned by another window, it is closed or hidden with the owner window.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Window? Owner
-        {
-            get => owner;
-
-            set
-            {
-                if (owner == value)
-                    return;
-                owner = value;
-                OnOwnerChanged(EventArgs.Empty);
-                OwnerChanged?.Invoke(this, EventArgs.Empty);
-                Handler.SetOwner(value);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>
         /// <value>A <see cref="WindowStartLocation"/> that represents the starting position
@@ -668,6 +642,31 @@ namespace Alternet.UI
             get
             {
                 return Handler.OwnedWindows;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the window that owns this window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Window"/> that represents the window that is the owner of this window.
+        /// </value>
+        /// <remarks>
+        /// When a window is owned by another window, it is closed or hidden with the owner window.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual Window? Owner
+        {
+            get => owner;
+
+            set
+            {
+                if (owner == value)
+                    return;
+                owner = value;
+                OnOwnerChanged(EventArgs.Empty);
+                OwnerChanged?.Invoke(this, EventArgs.Empty);
+                Handler.SetOwner(value);
             }
         }
 
@@ -881,54 +880,6 @@ namespace Alternet.UI
                 if (value)
                 {
                     ActiveControl?.SetFocusIdle();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets whether this object has items in the <see cref="InputBindings"/>
-        /// collection.
-        /// </summary>
-        [Browsable(false)]
-        public bool HasInputBindings
-        {
-            get
-            {
-                return inputBindings is not null && inputBindings.Count > 0;
-            }
-        }
-
-        /// <summary>
-        /// Gets the collection of input bindings associated with this window.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Collection<InputBinding> InputBindings
-        {
-            get
-            {
-                if (inputBindings is null)
-                {
-                    inputBindings = new();
-
-                    inputBindings.ItemRemoved += (sender, index, item) =>
-                    {
-                        RemoveBinding(item);
-                    };
-
-                    inputBindings.ItemInserted += (sender, index, item) =>
-                    {
-                        AddBinding(item);
-                    };
-                }
-
-                return inputBindings;
-
-                void RemoveBinding(InputBinding binding)
-                {
-                }
-
-                void AddBinding(InputBinding binding)
-                {
                 }
             }
         }
@@ -1356,28 +1307,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Processes <see cref="InputBindings"/> and calls associated commands
-        /// if their key bindings are equal to keys specified
-        /// in the parameters.
-        /// </summary>
-        public virtual bool ProcessKeyBindings(Key key, ModifierKeys modifiers)
-        {
-            if (!HasInputBindings)
-                return false;
-
-            foreach (var binding in InputBindings)
-            {
-                if (!binding.HasKey(key, modifiers))
-                    continue;
-                var executed = binding.Execute();
-                if(executed)
-                    return true;
-            }
-
-            return false;
-        }
-
         internal static Window? GetParentWindow(object dp)
         {
             if (dp is Window w)
@@ -1393,10 +1322,31 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Key == Key.Enter)
+            {
+            }
+
+            if (e.Key == Key.Escape)
+            {
+                if (SupressEsc)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            ProcessShortcuts(e);
+        }
+
+        /// <inheritdoc/>
         protected override void OnAfterChildKeyDown(object? sender, KeyEventArgs e)
         {
             base.OnAfterChildKeyDown(sender, e);
-            e.Handled = e.Handled || ProcessKeyBindings(e.Key, e.ModifierKeys);
+            e.Handled = e.Handled || ExecuteKeyBinding(e.Key, e.ModifierKeys, true);
         }
 
         /// <inheritdoc/>
@@ -1560,24 +1510,11 @@ namespace Alternet.UI
             needLayout = true;
         }
 
-        /// <inheritdoc/>
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (e.Key == Key.Escape && SupressEsc)
-            {
-                e.Handled = true;
-                return;
-            }
-
-            ProcessShortcuts(e);
-        }
-
         /// <summary>
         /// Iterates through all child control's shortcuts and
         /// calls shortcut action if its key is pressed.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments.</param>
         protected virtual void ProcessShortcuts(KeyEventArgs e)
         {
             var shortcuts = GetShortcuts();
