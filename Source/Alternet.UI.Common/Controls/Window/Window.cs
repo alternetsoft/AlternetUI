@@ -796,6 +796,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When forms is shown active control becomes focused.
         /// </remarks>
+        [Browsable(false)]
         public virtual AbstractControl? ActiveControl
         {
             get
@@ -816,12 +817,9 @@ namespace Alternet.UI
 
                 activeControl.Value = value;
 
-                if (Visible && value is not null)
+                if (Visible)
                 {
-                    App.AddIdleTask(() =>
-                    {
-                        value.SetFocusIfPossible();
-                    });
+                    value?.SetFocusIdle();
                 }
             }
         }
@@ -848,7 +846,7 @@ namespace Alternet.UI
 
                 if (value)
                 {
-                    ActiveControl?.SetFocusIfPossible();
+                    ActiveControl?.SetFocusIdle();
                 }
             }
         }
