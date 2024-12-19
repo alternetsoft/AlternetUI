@@ -516,28 +516,32 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the collection of input bindings associated with this control
-        /// and its visible child controls.
+        /// and its visible child controls. Only bindings from visible and
+        /// enabled controls are returned.
         /// </summary>
         [Browsable(false)]
         public virtual IEnumerable<InputBinding> InputBindingsRecursive
         {
             get
             {
-                if (HasInputBindings)
+                if (Visible && IsEnabled)
                 {
-                    foreach (var binding in InputBindings)
+                    if (HasInputBindings)
                     {
-                        yield return binding;
+                        foreach (var binding in InputBindings)
+                        {
+                            yield return binding;
+                        }
                     }
-                }
 
-                foreach (var control in ChildrenRecursive)
-                {
-                    if (!control.Visible || !control.HasInputBindings)
-                        continue;
-                    foreach(var binding in control.InputBindings)
+                    foreach (var control in ChildrenRecursive)
                     {
-                        yield return binding;
+                        if (!control.Visible || !control.HasInputBindings || !control.IsEnabled)
+                            continue;
+                        foreach (var binding in control.InputBindings)
+                        {
+                            yield return binding;
+                        }
                     }
                 }
             }
@@ -1435,6 +1439,26 @@ namespace Alternet.UI
             get
             {
                 return children != null && children.Count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether control has visible children controls.
+        /// </summary>
+        public bool HasVisibleChildren
+        {
+            get
+            {
+                if (!HasChildren)
+                    return false;
+
+                foreach(var child in Children)
+                {
+                    if (child.Visible)
+                        return true;
+                }
+
+                return false;
             }
         }
 

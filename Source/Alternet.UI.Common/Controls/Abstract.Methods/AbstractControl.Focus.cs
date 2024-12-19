@@ -10,6 +10,8 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         private static AbstractControl? focusedControl;
+        private bool canSelect = true;
+        private bool tabStop = true;
 
         /// <summary>
         /// Occurs when <see cref="FocusNextControl"/> is called.
@@ -73,7 +75,7 @@ namespace Alternet.UI
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool ContainsFocus
+        public virtual bool ContainsFocus
         {
             get
             {
@@ -120,11 +122,12 @@ namespace Alternet.UI
         {
             get
             {
-                return false;
+                return tabStop;
             }
 
             set
             {
+                UpdateFocusFlags(canSelect, value);
             }
         }
 
@@ -159,11 +162,12 @@ namespace Alternet.UI
         {
             get
             {
-                return false;
+                return canSelect;
             }
 
             set
             {
+                UpdateFocusFlags(value, TabStop);
             }
         }
 
@@ -232,19 +236,59 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this control has focusable child controls.
+        /// </summary>
+        /// <param name="recursive">Whether to process child controls recursively</param>
+        /// <returns></returns>
+        public virtual bool HasFocusableChildren(bool recursive)
+        {
+            var items = GetFocusableChildren(recursive);
+            var first = items.FirstOrDefault();
+            return first != null;
+        }
+
+        /// <summary>
+        /// Gets collection of the focusable children controls.
+        /// </summary>
+        /// <param name="recursive">Whether to process child controls recursively</param>
+        /// <returns></returns>
+        public virtual IEnumerable<AbstractControl> GetFocusableChildren(bool recursive)
+        {
+            IEnumerable<AbstractControl> containerItems;
+
+            if (recursive)
+                containerItems = ChildrenRecursive;
+            else
+                containerItems = Children;
+
+            foreach (var control in containerItems)
+            {
+                if (control.Parent == this && !recursive)
+                    continue;
+
+                if (!control.TabStop || !control.Visible || !control.IsEnabled
+                    || !control.CanSelect || !control.CanFocus
+                    || control.HasChildren || control.HasFocusableChildren(true))
+                    continue;
+
+                yield return control;
+            }
+        }
+
+        /// <summary>
         /// Focuses the next control.
         /// </summary>
         /// <param name="forward"><see langword="true"/> to move forward in the
         /// tab order; <see langword="false"/> to move backward in the tab
         /// order.</param>
-        /// <param name="nested"><see langword="true"/> to include nested
+        /// <param name="recursive"><see langword="true"/> to include nested
         /// (children of child controls) child controls; otherwise,
         /// <see langword="false"/>.</param>
-        public virtual void FocusNextControl(bool forward = true, bool nested = true)
+        public virtual void FocusNextControl(bool forward = true, bool recursive = true)
         {
             if(GlobalFocusNextControl is not null)
             {
-                GlobalFocusNextEventArgs e = new(forward, nested);
+                GlobalFocusNextEventArgs e = new(forward, recursive);
                 GlobalFocusNextControl(this, e);
                 if (e.Handled)
                     return;
@@ -253,63 +297,42 @@ namespace Alternet.UI
             if (ParentWindow is null)
                 return;
 
-            IEnumerable<TabOrderItem> GetItems(AbstractControl container)
+            AbstractControl[] GetItems(AbstractControl container)
             {
-                foreach (var control in container.ChildrenRecursive)
-                {
-                    if (!control.TabStop || !control.Visible || !control.CanSelect || !control.CanFocus
-                        || control.HasChildren)
-                        continue;
-
-                    if (control.Parent == this && !nested)
-                        continue;
-
-                    yield return new(control);
-                }
-            }
-
-            TabOrderItem[] GetSortedItems(AbstractControl container)
-            {
-                var result = GetItems(container).ToArray();
-                Array.Sort(result);
+                var result = container.GetFocusableChildren(recursive).ToArray();
                 return result;
             }
 
-            int IndexOfControl(AbstractControl control, TabOrderItem[] items)
+            int IndexOfControl(AbstractControl control, AbstractControl[] items)
             {
-                for (int i = 0; i < items.Length; i++)
-                {
-                    if (items[i].Control == control)
-                        return i;
-                }
-
-                return -1;
+                var result = Array.IndexOf(items, control);
+                return result;
             }
 
-            bool FocusFirstOrLast(bool first, TabOrderItem[] items)
+            bool FocusFirstOrLast(bool first, AbstractControl[] items)
             {
                 if (items.Length > 0)
                 {
                     if (first)
-                        items[0].Control.SetFocusIdle();
+                        items[0].SetFocusIdle();
                     else
-                        items[items.Length - 1].Control.SetFocusIdle();
+                        items[items.Length - 1].SetFocusIdle();
                     return true;
                 }
 
                 return false;
             }
 
-            TabOrderItem[] items;
+            AbstractControl[] items;
 
-            if (nested)
+            if (recursive)
             {
-                items = GetSortedItems(this);
+                items = GetItems(this);
                 if(FocusFirstOrLast(forward, items))
                     return;
             }
 
-            items = GetSortedItems(Root);
+            items = GetItems(Root);
 
             var indexInParent = IndexOfControl(this, items);
 
@@ -328,7 +351,7 @@ namespace Alternet.UI
                         indexInParent = items.Length - 1;
                 }
 
-                var control = items[indexInParent].Control;
+                var control = items[indexInParent];
                 control.SetFocusIdle();
             }
             else
@@ -342,29 +365,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
-        }
-
-        private struct TabOrderItem : IComparable<TabOrderItem>, IComparable
-        {
-            public AbstractControl Control;
-            public int[] TabIndex = [];
-
-            public TabOrderItem(AbstractControl control)
-            {
-                Control = control;
-            }
-
-            public readonly int CompareTo(TabOrderItem other)
-            {
-                return 0;
-            }
-
-            public readonly int CompareTo(object obj)
-            {
-                if (obj is TabOrderItem item)
-                    return CompareTo(item);
-                throw new NotImplementedException();
-            }
+            this.canSelect = canSelect;
+            this.tabStop = tabStop;
         }
     }
 }

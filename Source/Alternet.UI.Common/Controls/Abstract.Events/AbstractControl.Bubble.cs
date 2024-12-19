@@ -232,7 +232,7 @@ namespace Alternet.UI
             {
                 App.AddIdleTask(() =>
                 {
-                    control.FocusNextControl(!e.HasModifiers, nested: true);
+                    control.FocusNextControl(!e.HasModifiers, recursive: true);
                 });
                 handled = true;
                 return;
