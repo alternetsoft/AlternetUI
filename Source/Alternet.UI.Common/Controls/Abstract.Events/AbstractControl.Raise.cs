@@ -339,6 +339,11 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseActivated()
         {
+            if(this is Window window)
+            {
+                window.LastActivateTime = DateTime.Now;
+            }
+
             OnActivated(EventArgs.Empty);
             Activated?.Invoke(this, EventArgs.Empty);
 

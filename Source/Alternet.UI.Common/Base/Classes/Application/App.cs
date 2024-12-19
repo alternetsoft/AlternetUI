@@ -330,8 +330,6 @@ namespace Alternet.UI
         {
             get
             {
-                // maybe make it thread static?
-                // maybe move this to native?
                 return current ??= new App(null);
             }
 
@@ -465,7 +463,13 @@ namespace Alternet.UI
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
         /// <see cref="EndBusyCursor"/> calls.
         /// </summary>
-        public static bool IsBusyCursor => Cursor.Factory.IsBusyCursor();
+        public static bool IsBusyCursor
+        {
+            get
+            {
+                return Cursor.Factory.IsBusyCursor();
+            }
+        }
 
         /// <summary>
         /// Allows to suppress some debug messages.
@@ -545,22 +549,38 @@ namespace Alternet.UI
         public static bool HasForms => HasApplication && Current.Windows.Count > 0;
 
         /// <summary>
-        /// Gets the instantiated windows in an application.
+        /// Gets the instantiated windows in the application.
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
-        /// references to all window objects in the current application.</value>
+        /// references to all window objects in the application.</value>
         public IReadOnlyList<Window> Windows => windows;
 
         /// <summary>
-        /// Gets all visible windows in an application.
+        /// Gets all visible windows in the application.
         /// </summary>
-        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
-        /// references to all visible window objects in the current application.</value>
+        /// <value>A <see cref="IEnumerable{Window}"/> that contains
+        /// references to all visible <see cref="Window"/> objects in the application.</value>
         public virtual IEnumerable<Window> VisibleWindows
         {
             get
             {
                 var result = Windows.Where(x => x.Visible);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets all visible windows in the application ordered by the last activated time.
+        /// Last activated window will be the first one in the result.
+        /// </summary>
+        /// <value>A <see cref="IEnumerable{Window}"/> that contains
+        /// references to all visible <see cref="Window"/> objects in the application
+        /// ordered by the last activated time.</value>
+        public virtual IEnumerable<Window> LastActivatedWindows
+        {
+            get
+            {
+                var result = VisibleWindows.OrderByDescending(x => x.LastActivateTime);
                 return result;
             }
         }

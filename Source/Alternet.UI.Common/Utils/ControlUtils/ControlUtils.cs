@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
@@ -32,9 +33,16 @@ namespace Alternet.UI
         public static T? FindVisibleControl<T>()
             where T : AbstractControl
         {
+            var windows = App.Current.LastActivatedWindows;
+
+            if (AssemblyUtils.TypeEqualsOrDescendant(typeof(T), typeof(Window)))
+            {
+                return windows.FirstOrDefault() as T;
+            }
+
             T? result = null;
 
-            foreach(var window in App.Current.Windows)
+            foreach(var window in windows)
             {
                 window.ForEachVisibleChild(
                     (control) =>
