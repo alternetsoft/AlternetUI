@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Customization flags for text search operations in the WebBrowser control.
     /// </summary>
-    public class WebBrowserFindParams
+    public class WebBrowserFindParams : BaseObject
     {
         /// <summary>
         /// Causes the search to restart when end or beginning reached.

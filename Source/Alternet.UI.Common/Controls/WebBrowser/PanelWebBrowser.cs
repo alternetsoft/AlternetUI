@@ -17,8 +17,14 @@ namespace Alternet.UI
     [ControlCategory("Panels")]
     public partial class PanelWebBrowser : Control
     {
+        /// <summary>
+        /// Gets or sets find parameters.
+        /// </summary>
+        public static WebBrowserFindParams FindParams = new();
+
+        private static WeakReference<WindowWebBrowserSearch>? searchWindow;
+
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
-        private readonly WebBrowserFindParams findParams = new();
 
         private readonly SplittedPanel panel = new()
         {
@@ -57,7 +63,6 @@ namespace Alternet.UI
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
         private ActionsListBox? actionsControl;
-        private WeakReference<WebBrowserSearchWindow>? searchWindow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
@@ -327,7 +332,7 @@ namespace Alternet.UI
 
             void Recreate()
             {
-                WebBrowserSearchWindow win = new(WebBrowser, findParams);
+                WindowWebBrowserSearch win = new(FindParams);
                 win.TopMost = true;
                 searchWindow = new(win);
                 win.Show();
