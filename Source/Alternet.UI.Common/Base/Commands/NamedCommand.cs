@@ -10,7 +10,8 @@ namespace Alternet.UI
     /// </summary>
     public class NamedCommand : Command
     {
-        private string command;
+        private string commandName;
+        private ICommand? command;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedCommand"/> class.
@@ -18,7 +19,7 @@ namespace Alternet.UI
         /// <param name="command">Command name.</param>
         public NamedCommand(string? command)
         {
-            this.command = command ?? string.Empty;
+            this.commandName = command ?? string.Empty;
         }
 
         /// <summary>
@@ -26,26 +27,29 @@ namespace Alternet.UI
         /// </summary>
         public virtual string CommandName
         {
-            get => command;
+            get => commandName;
 
             set
             {
-                if (command == value)
+                if (commandName == value)
                     return;
-                command = value;
+                commandName = value;
+                command = null;
             }
         }
+
+        private ICommand Command => command ??= NamedCommands.Default.GetCommand(CommandName);
 
         /// <inheritdoc/>
         public override bool CanExecute(object? parameter)
         {
-            return NamedCommands.Default.CanExecute(CommandName, parameter);
+            return Command.CanExecute(parameter);
         }
 
         /// <inheritdoc/>
         public override void Execute(object? parameter)
         {
-            NamedCommands.Default.Execute(CommandName, parameter);
+            Command.Execute(parameter);
         }
     }
 }

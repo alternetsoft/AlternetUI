@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// of <see cref="GetCommand"/> obtained previously still can be used to call the
         /// newly registered command.
         /// </remarks>
-        public virtual ICommand? GetCommand(string name)
+        public virtual ICommand GetCommand(string name)
         {
             return GetEntry(name);
         }
