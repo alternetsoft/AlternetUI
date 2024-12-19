@@ -530,11 +530,11 @@ namespace Alternet.UI
         /// Gets <see cref="Window.ActiveWindow"/> or <see cref="MainWindow"/> or
         /// <see cref="FirstWindow()"/>. The first not null value of these is returned.
         /// </summary>
-        public static Window? SafeWindow
+        public static Window SafeWindow
         {
             get
             {
-                return Window.ActiveWindow ?? MainWindow ?? FirstWindow();
+                return Window.Default;
             }
         }
 
@@ -1093,6 +1093,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds first visible window of the specified type. If no window is found, returns Null.
+        /// </summary>
+        /// <typeparam name="T">Type of the window to find.</typeparam>
+        /// <returns></returns>
+        public static T? FindVisibleWindow<T>()
+            where T : Window
+        {
+            var windows = Current.LastActivatedWindows;
+
+            foreach (var window in windows)
+            {
+                if (window is T t)
+                    return t;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Finds first window of the specified type. If no window is found, returns Null.
         /// </summary>
         /// <typeparam name="T">Type of the window to find.</typeparam>
@@ -1119,11 +1138,8 @@ namespace Alternet.UI
         public static T? FirstWindow<T>()
             where T : Window
         {
-            var windows = Current.Windows;
-
-            if (windows.Count == 0)
-                return null;
-            return windows[0] as T;
+            var result = FindVisibleWindow<T>() ?? FindWindow<T>();
+            return result;
         }
 
         /// <summary>
