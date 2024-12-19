@@ -4,6 +4,13 @@
         Width="900"
         Height="700"
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Layout="Vertical">
+
+  <Window.InputBindings>
+    <KeyBinding Key="B" Modifiers="Control"
+                Command="App.Log"
+                CommandParameter="message1"/>
+  </Window.InputBindings>
+  
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File" IsTextLocalized="true" Name="fileMenu">
