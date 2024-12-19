@@ -73,9 +73,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether this binding is active. If binding is not active, it is ignored.
+        /// </summary>
+        public virtual bool IsActive { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets target where the command should be raised.
         /// </summary>
-        public object? CommandTarget
+        public virtual object? CommandTarget
         {
             get
             {
