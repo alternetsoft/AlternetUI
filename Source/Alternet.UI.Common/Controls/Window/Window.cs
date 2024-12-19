@@ -17,6 +17,7 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class Window : Control, IWindow
     {
+        private static Window? dummy;
         private static List<IControlNotification>? globalWindowNotifications;
         private static WindowKind? globalWindowKindOverride;
         private static RectD defaultBounds = new(100, 100, 400, 400);
@@ -193,6 +194,30 @@ namespace Alternet.UI
                 if (globalWindowNotifications is null)
                     return Array.Empty<IControlNotification>();
                 return globalWindowNotifications;
+            }
+        }
+
+        /// <summary>
+        /// Gets default window.
+        /// </summary>
+        /// <remarks>
+        /// Result is not null. The following properties and methods are used in order to find
+        /// the result: <see cref="ActiveWindow"/>, <see cref="App.MainWindow"/>,
+        /// <see cref="App.FirstWindow()"/>. If these members return null, dummy window is created
+        /// and returned.
+        /// </remarks>
+        public static Window Default
+        {
+            get
+            {
+                var result = Window.ActiveWindow ?? App.MainWindow ?? App.FirstWindow();
+                if(result is null)
+                {
+                    dummy ??= new();
+                    return dummy;
+                }
+
+                return result;
             }
         }
 
@@ -620,7 +645,6 @@ namespace Alternet.UI
                 if (info.StartLocation == value)
                     return;
                 info.StartLocation = value;
-                Handler.StartLocation = value;
             }
         }
 
@@ -862,6 +886,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this object has items in the <see cref="InputBindings"/>
+        /// collection.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasInputBindings
+        {
+            get
+            {
+                return inputBindings is not null && inputBindings.Count > 0;
+            }
+        }
+
+        /// <summary>
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
         [Browsable(false)]
@@ -875,18 +912,24 @@ namespace Alternet.UI
 
                     inputBindings.ItemRemoved += (sender, index, item) =>
                     {
-                        Port.InheritanceContextHelper.RemoveContextFromObject(this, item);
-                        Handler.RemoveInputBinding(item);
+                        RemoveBinding(item);
                     };
 
                     inputBindings.ItemInserted += (sender, index, item) =>
                     {
-                        Handler.AddInputBinding(item);
-                        Port.InheritanceContextHelper.ProvideContextForObject(this, item);
+                        AddBinding(item);
                     };
                 }
 
                 return inputBindings;
+
+                void RemoveBinding(InputBinding binding)
+                {
+                }
+
+                void AddBinding(InputBinding binding)
+                {
+                }
             }
         }
 
@@ -1188,7 +1231,6 @@ namespace Alternet.UI
             base.BindHandlerEvents();
             Handler.StateChanged = RaiseStateChanged;
             Handler.Closing = OnHandlerClosing;
-            Handler.InputBindingCommandExecuted = OnHandlerInputBindingCommandExecuted;
         }
 
         /// <inheritdoc/>
@@ -1197,7 +1239,6 @@ namespace Alternet.UI
             base.UnbindHandlerEvents();
             Handler.StateChanged = null;
             Handler.Closing = null;
-            Handler.InputBindingCommandExecuted = null;
         }
 
         /// <inheritdoc/>
@@ -1315,6 +1356,28 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Processes <see cref="InputBindings"/> and calls associated commands
+        /// if their key bindings are equal to keys specified
+        /// in the parameters.
+        /// </summary>
+        public virtual bool ProcessKeyBindings(Key key, ModifierKeys modifiers)
+        {
+            if (!HasInputBindings)
+                return false;
+
+            foreach (var binding in InputBindings)
+            {
+                if (!binding.HasKey(key, modifiers))
+                    continue;
+                var executed = binding.Execute();
+                if(executed)
+                    return true;
+            }
+
+            return false;
+        }
+
         internal static Window? GetParentWindow(object dp)
         {
             if (dp is Window w)
@@ -1327,6 +1390,13 @@ namespace Alternet.UI
                 return null;
 
             return GetParentWindow(c.Parent);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnAfterChildKeyDown(object? sender, KeyEventArgs e)
+        {
+            base.OnAfterChildKeyDown(sender, e);
+            e.Handled = e.Handled || ProcessKeyBindings(e.Key, e.ModifierKeys);
         }
 
         /// <inheritdoc/>
@@ -1617,27 +1687,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default <see cref="IWindowHandler.InputBindingCommandExecuted"/> event implementation.
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnHandlerInputBindingCommandExecuted(HandledEventArgs<string> e)
-        {
-            var binding = InputBindings.First(x => x.ManagedCommandId == e.Value);
-
-            e.Handled = false;
-
-            var command = binding.Command;
-            if (command == null)
-                return;
-
-            if (!command.CanExecute(binding.CommandParameter))
-                return;
-
-            command.Execute(binding.CommandParameter);
-            e.Handled = true;
-        }
-
-        /// <summary>
         /// Gets window kind used instead of the default value.
         /// </summary>
         /// <returns></returns>
@@ -1654,7 +1703,7 @@ namespace Alternet.UI
         /// <summary>
         /// Common initialization method which is called from all the constructors.
         /// </summary>
-        protected virtual void Initialize()
+        private void Initialize()
         {
             SetVisibleValue(false);
             ProcessIdle = true;
