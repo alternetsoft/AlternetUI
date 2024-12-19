@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains key information.
     /// </summary>
-    public class KeyInfo
+    public partial class KeyInfo : BaseObject
     {
         /// <summary>
         /// Gets an empty <see cref="KeyInfo"/> object.

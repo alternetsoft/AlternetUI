@@ -1,20 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.ComponentModel;
 using System.Security;
 
-using Alternet.UI.Port;
-
 namespace Alternet.UI
 {
     /// <summary>
-    /// InputBinding - InputGesture and ICommand combination.
-    /// Used to specify the binding between Gesture and Command at Element level.
+    /// Used to specify the binding between <see cref="InputGesture"/>
+    /// and <see cref="ICommand"/>.
     /// </summary>
-    public class InputBinding : FrameworkElement, ICommandSource
+    public class InputBinding : BaseObjectWithAttr, ICommandSource
     {
         private static readonly object DataLock = new();
 
@@ -23,12 +17,9 @@ namespace Alternet.UI
         private object? commandTarget;
         private object? commandParameter;
 
-        // Fields to implement DO's inheritance context
-        private DependencyObject? inheritanceContext = null;
-        private bool hasMultipleInheritanceContexts = false;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="InputBinding"/> class.
+        /// Initializes a new instance of the <see cref="InputBinding"/> class with
+        /// the specified parameters.
         /// </summary>
         /// <param name="command">Command.</param>
         /// <param name="gesture">Input Gesture.</param>
@@ -41,15 +32,14 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="InputBinding"/> class.
         /// </summary>
-        protected InputBinding()
+        public InputBinding()
         {
         }
 
         /// <summary>
-        /// Command Object associated
+        /// Gets or sets command associated with the object.
         /// </summary>
-        [Localizability(LocalizationCategory.NeverLocalize)]
-        public ICommand? Command
+        public virtual ICommand? Command
         {
             get
             {
@@ -65,9 +55,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     A parameter for the command.
+        /// Gets or sets a parameter for the command.
         /// </summary>
-        public object? CommandParameter
+        public virtual object? CommandParameter
         {
             get
             {
@@ -83,7 +73,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Where the command should be raised.
+        /// Gets or sets target where the command should be raised.
         /// </summary>
         public object? CommandTarget
         {
@@ -105,8 +95,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual InputGesture? Gesture
         {
-            // We would like to make this getter non-virtual but that's not legal
-            // in C#.  Luckily there is no security issue with leaving it virtual.
             get
             {
                 return gesture;
@@ -114,8 +102,7 @@ namespace Alternet.UI
 
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                value ??= new InputGesture();
 
                 lock (DataLock)
                 {
@@ -125,46 +112,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets command identifier.
+        /// Executes <see cref="Command"/> with the specified <see cref="CommandParameter"/>.
         /// </summary>
-        public string ManagedCommandId { get; } = Guid.NewGuid().ToString("N");
-
-        /// <summary>
-        /// Says if the current instance has multiple InheritanceContexts.
-        /// </summary>
-        internal override bool HasMultipleInheritanceContexts => hasMultipleInheritanceContexts;
-
-        /// <summary>
-        /// Defines the DO's inheritance context.
-        /// </summary>
-        internal override DependencyObject? InheritanceContext => inheritanceContext;
-
-        /// <summary>
-        /// Receives a new inheritance context.
-        /// </summary>
-        internal override void AddInheritanceContext(
-            DependencyObject context,
-            DependencyProperty property)
+        /// <returns>True if command was executed; False if command cannot be executed.</returns>
+        public virtual bool Execute()
         {
-            InheritanceContextHelper.AddInheritanceContext(
-                context,
-                this,
-                ref hasMultipleInheritanceContexts,
-                ref inheritanceContext);
+            if (command == null)
+                return false;
+
+            var prm = CommandParameter;
+
+            if (!command.CanExecute(prm))
+                return false;
+
+            command.Execute(prm);
+            return true;
         }
 
         /// <summary>
-        /// Removes an inheritance context.
+        /// Gets whether <see cref="Gesture"/> has the specified key and key modifiers.
         /// </summary>
-        internal override void RemoveInheritanceContext(
-            DependencyObject context,
-            DependencyProperty property)
+        public virtual bool HasKey(Key key, ModifierKeys modifiers)
         {
-            InheritanceContextHelper.RemoveInheritanceContext(
-                context,
-                this,
-                ref hasMultipleInheritanceContexts,
-                ref inheritanceContext);
+            if(Gesture is KeyGesture gst)
+            {
+                if (gst.HasKey(key, modifiers))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

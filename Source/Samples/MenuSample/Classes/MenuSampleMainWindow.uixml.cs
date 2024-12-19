@@ -198,6 +198,7 @@ namespace MenuSample
                 null,
                 "Calendar Toolbar Item",
                 ToolbarItem_Click);
+            toolbar.SetToolShortcut(calendarToolbarItem, Key.C, Alternet.UI.ModifierKeys.Control);
 
             photoToolbarItem = toolbar.AddSpeedBtn(
                 "Photo",

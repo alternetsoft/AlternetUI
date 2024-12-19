@@ -227,7 +227,8 @@ namespace Alternet.UI
 
             var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
 
-            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab && e.ShiftOrNone && !control.ProcessTab)
+            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab
+                && e.ShiftOrNone && !control.ProcessTab)
             {
                 App.AddIdleTask(() =>
                 {
@@ -270,7 +271,8 @@ namespace Alternet.UI
 
             var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
 
-            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab && e.ShiftOrNone && !control.ProcessTab)
+            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab
+                && e.ShiftOrNone && !control.ProcessTab)
             {
                 handled = true;
                 return;
@@ -307,19 +309,32 @@ namespace Alternet.UI
         /// <typeparam name="T">Type of the event arguments.</typeparam>
         /// <param name="e">Event arguments.</param>
         /// <param name="action">Action to call.</param>
-        public virtual void BubbleKeyAction<T>(T e, Action<AbstractControl, T> action)
+        /// <param name="formActionBefore">Action to call for the parent window
+        /// before all controls are notified.</param>
+        /// <param name="formActionAfter">Action to call for the parent window
+        /// after all controls are notified.</param>
+        public virtual void BubbleKeyAction<T>(
+            T e,
+            Action<AbstractControl, T> action,
+            Action<Window, T>? formActionBefore = null,
+            Action<Window, T>? formActionAfter = null)
             where T : HandledEventArgs
         {
             var control = this;
             var form = ParentWindow;
-            if (form is not null && form.KeyPreview)
+            if (form is not null)
             {
-                action(form, e);
+                formActionBefore?.Invoke(form, e);
                 if (e.Handled)
                     return;
+
+                if (form.KeyPreview)
+                {
+                    action(form, e);
+                    if (e.Handled)
+                        return;
+                }
             }
-            else
-                form = null;
 
             while (control is not null && control != form)
             {
@@ -328,6 +343,11 @@ namespace Alternet.UI
                 if (e.Handled || !control.BubbleKeys)
                     return;
                 control = control.Parent;
+            }
+
+            if (form is not null)
+            {
+                formActionAfter?.Invoke(form, e);
             }
         }
 
@@ -363,11 +383,13 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public virtual void BubbleKeyDown(KeyEventArgs e)
         {
-            BubbleKeyAction(e, (s, e) =>
-            {
-                e.CurrentTarget = s;
-                s.RaiseKeyDown(e);
-            });
+            BubbleKeyAction(
+                e,
+                action: (s, e) =>
+                {
+                    e.CurrentTarget = s;
+                    s.RaiseKeyDown(e);
+                });
         }
 
         /// <summary>

@@ -44,28 +44,6 @@ ALTERNET_UI_API void Window_SetTitle_(Window* obj, const char16_t* value)
     #endif
 }
 
-ALTERNET_UI_API WindowStartLocation Window_GetWindowStartLocation_(Window* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<WindowStartLocation>([&](){
-    #endif
-        return obj->GetWindowStartLocation();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Window_SetWindowStartLocation_(Window* obj, WindowStartLocation value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetWindowStartLocation(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool Window_GetShowInTaskbar_(Window* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -545,28 +523,6 @@ ALTERNET_UI_API void Window_Activate_(Window* obj)
     MarshalExceptions<void>([&](){
     #endif
         obj->Activate();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Window_AddInputBinding_(Window* obj, const char16_t* managedCommandId, Key key, ModifierKeys modifiers)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->AddInputBinding(managedCommandId, key, modifiers);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Window_RemoveInputBinding_(Window* obj, const char16_t* managedCommandId)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->RemoveInputBinding(managedCommandId);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

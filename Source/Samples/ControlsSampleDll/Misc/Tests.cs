@@ -33,6 +33,23 @@ namespace ControlsSample
             window.ShowDialogAsync();
         }
 
+        [Description("Add input binding [Z]")]
+        public static void TestInputBinding()
+        {
+            var window = Window.Default;
+            KeyGesture gesture = new(Key.Z, ModifierKeys.None);
+            Command command = new();
+            command.AfterExecute += (param) =>
+            {
+                App.Log($"Binding is called: {param}");
+            };
+            InputBinding binding = new(command, gesture);
+            binding.CommandParameter = "parameter1";
+            window.InputBindings.Add(binding);
+
+            App.Log($"Registered binding to form: {window.Name ?? window.GetType().ToString()}");
+        }
+
         public static void TestActivateEvents()
         {
             var window = App.FindWindow<MainWindow>();

@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows an application author to define a method to be invoked.
     /// </summary>
-    public class Command : ICommand
+    public class Command : BaseObject, ICommand
     {
         private readonly ExecuteDelegate? executeDelegate;
         private readonly CanExecuteDelegate? canExecuteDelegate;
@@ -23,8 +23,7 @@ namespace Alternet.UI
         /// </summary>
         public Command(ExecuteDelegate executeDelegate)
         {
-            this.executeDelegate =
-                executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
+            this.executeDelegate = executeDelegate;
         }
 
         /// <summary>
@@ -33,10 +32,8 @@ namespace Alternet.UI
         /// </summary>
         public Command(ExecuteDelegate executeDelegate, CanExecuteDelegate canExecuteDelegate)
         {
-            this.executeDelegate =
-                executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
-            this.canExecuteDelegate =
-                canExecuteDelegate ?? throw new ArgumentNullException(nameof(canExecuteDelegate));
+            this.executeDelegate = executeDelegate;
+            this.canExecuteDelegate = canExecuteDelegate;
         }
 
         /// <summary>
@@ -53,9 +50,19 @@ namespace Alternet.UI
         public event EventHandler? CanExecuteChanged;
 
         /// <summary>
+        /// Occurs after <see cref="Execute"/> method is called.
+        /// </summary>
+        public event ExecuteDelegate? AfterExecute;
+
+        /// <summary>
+        /// Occurs before <see cref="Execute"/> method is called.
+        /// </summary>
+        public event ExecuteDelegate? BeforeExecute;
+
+        /// <summary>
         /// Raises the <see cref="CanExecuteChanged"/> event.
         /// </summary>
-        public void RaiseCanExecuteChanged()
+        public virtual void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -72,7 +79,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void Execute(object? parameter)
         {
+            BeforeExecute?.Invoke(parameter);
             executeDelegate?.Invoke(parameter);
+            AfterExecute?.Invoke(parameter);
         }
     }
 }

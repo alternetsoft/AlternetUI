@@ -4,9 +4,6 @@ public:
 string GetTitle();
 void SetTitle(const string& value);
 
-WindowStartLocation GetWindowStartLocation();
-void SetWindowStartLocation(WindowStartLocation value);
-
 bool GetShowInTaskbar();
 void SetShowInTaskbar(bool value);
 
@@ -69,8 +66,6 @@ static void SetParkingWindowFont(Font* font);
 void ShowModal(void* owner);
 void Close();
 void Activate();
-void AddInputBinding(const string& managedCommandId, Key key, ModifierKeys modifiers);
-void RemoveInputBinding(const string& managedCommandId);
 
 public:
 
@@ -78,7 +73,6 @@ enum class WindowEvent
 {
     Closing,
     StateChanged,
-    InputBindingCommandExecuted,
 };
 
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);

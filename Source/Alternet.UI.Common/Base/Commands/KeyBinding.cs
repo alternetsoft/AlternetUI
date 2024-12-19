@@ -1,10 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-// Description: The KeyBinding class is used by the developer to create Keyboard Input Bindings
-//                  See spec at : http://avalon/coreui/Specs/Commanding(new).mht
-// * KeyBinding class serves the purpose of Input Bindings for Keyboard Device.
 using System;
 using System.ComponentModel;
 using Alternet.UI.Markup;
@@ -12,15 +5,13 @@ using Alternet.UI.Markup;
 namespace Alternet.UI
 {
     /// <summary>
-    /// KeyBinding - Implements InputBinding (generic InputGesture-Command map)
-    ///         KeyBinding acts like a map for KeyGesture and Commands.
-    ///         Most of the logic is in InputBinding and KeyGesture, this only
-    ///         facilitates user  to add Key/Modifiers directly without going in
-    ///         KeyGesture path. Also it provides the KeyGestureTypeConverter
-    ///         on the Gesture property to have KeyGesture, like Ctrl+X, Alt+V
-    ///         defined in Markup as Gesture="Ctrl+X" working
+    /// KeyBinding acts like a map for <see cref="KeyGesture"/> and commands.
+    /// Most of the logic is in <see cref="InputBinding"/> and <see cref="KeyGesture"/>,
+    /// this only facilitates user to add key and modifiers directly without going in
+    /// <see cref="KeyGesture"/> path. Also it provides the type converter
+    /// on the <see cref="Gesture"/> property.
     /// </summary>
-    public class KeyBinding : InputBinding
+    public partial class KeyBinding : InputBinding
     {
         private bool settingGesture = false;
         private ModifierKeys modifiers = ModifierKeys.None;
@@ -56,9 +47,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Key
+        /// Gets or sets key.
         /// </summary>
-        public Key Key
+        public virtual Key Key
         {
             get
             {
@@ -74,10 +65,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// KeyGesture Override, to ensure type-safety and provide a
-        ///  TypeConverter for KeyGesture
-        /// </summary>
+        /// <inheritdoc/>
         [TypeConverter(typeof(KeyGestureConverter))]
         [ValueSerializer(typeof(KeyGestureValueSerializer))]
         public override InputGesture? Gesture
@@ -103,9 +91,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Modifiers
+        /// Gets or sets key modifiers.
         /// </summary>
-        public ModifierKeys Modifiers
+        public virtual ModifierKeys Modifiers
         {
             get
             {
@@ -121,9 +109,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        ///     Synchronized Properties from Gesture
-        /// </summary>
+        /// <inheritdoc/>
+        public override bool HasKey(Key key, ModifierKeys modifiers)
+        {
+            return base.HasKey(key, modifiers);
+        }
+
         private void SynchronizePropertiesFromGesture(KeyGesture keyGesture)
         {
             if (!settingGesture)
@@ -141,9 +132,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        ///     Synchronized Gesture from properties
-        /// </summary>
         private void SynchronizeGestureFromProperties(Key key, ModifierKeys modifiers)
         {
             if (!settingGesture)
@@ -151,7 +139,7 @@ namespace Alternet.UI
                 settingGesture = true;
                 try
                 {
-                    Gesture = new KeyGesture(key, modifiers, /*validateGesture = */ false);
+                    Gesture = new KeyGesture(key, modifiers, validateGesture: false);
                 }
                 finally
                 {

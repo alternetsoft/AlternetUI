@@ -69,10 +69,4 @@ namespace Alternet.UI.Native
         public int delta;
     }
     
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class CommandEventData
-    {
-        public string managedCommandId;
-    }
-    
 }

@@ -2,9 +2,10 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="MenuSample.ExampleContextMenu">
   <MenuItem Text="_Open..." Name="openMenuItem" IsTextLocalized="true"
-            Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
+            Click="OpenMenuItem_Click" Shortcut="Ctrl+Alt+1" IsShortcutEnabled="false"/>
   <MenuItem Text="_Save..." IsTextLocalized="true"
-            Name="saveMenuItem" Click="SaveMenuItem_Click" Shortcut="Ctrl+S"/>
+            Name="saveMenuItem" Click="SaveMenuItem_Click" Shortcut="Ctrl+Alt+2"
+            IsShortcutEnabled="false"/>
   <MenuItem Text="-" />
   <MenuItem Text="_Export" IsTextLocalized="true">
     <MenuItem Text="Export to P_DF" IsTextLocalized="true"
