@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,21 @@ namespace ControlsSample
 {
     public static class Tests
     {
+        public static void LogManifestResourceNames(Assembly? assembly = null)
+        {
+            assembly ??= typeof(Tests).Assembly;
+
+            var resources = assembly?.GetManifestResourceNames();
+
+            if (resources is null)
+                return;
+
+            foreach (var item in resources)
+            {
+                LogUtils.LogToFile(item);
+            }
+        }
+
         [Description("Show WindowTextInput dialog...")]
         public static void TestWindowTextInput()
         {

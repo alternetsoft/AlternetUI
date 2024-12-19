@@ -17,6 +17,49 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Html\pageinresource.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Edge\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Edge\win-arm64\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Edge\win-x64\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Edge\win-x86\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\doc.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\SampleArchive.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\version.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SamplePandaPdf.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Edge\readme.txt" />
+    <None Remove="Edge\win-arm64\readme.txt" />
+    <None Remove="Edge\win-x64\readme.txt" />
+    <None Remove="Edge\win-x86\readme.txt" />
+    <None Remove="EmptyWindow.uixml" />
+    <None Remove="Html\doc.zip" />
+    <None Remove="Html\pageinresource.html" />
+    <None Remove="Html\SampleArchive.zip" />
+    <None Remove="Html\version.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Html\**" />
     <None Remove="Resources\**" />
     <None Remove="*.bat" />
@@ -186,6 +229,10 @@
     <UIXml Include="..\PropertyGridSample\Classes\**\*.uixml">
       <Link>Links\PropertyGridSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </UIXml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\SamplePandaPdf.pdf" />
   </ItemGroup>
 
   <ItemGroup>

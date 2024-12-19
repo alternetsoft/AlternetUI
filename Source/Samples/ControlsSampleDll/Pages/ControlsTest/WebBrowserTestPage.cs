@@ -9,7 +9,7 @@ using Alternet.Drawing;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
-namespace ControlsTest
+namespace ControlsSample
 {
     internal partial class WebBrowserTestPage : Control
     {
@@ -211,7 +211,8 @@ namespace ControlsTest
 
         internal void DoTestNavigateToString3()
         {
-            string html = "<html><body><h1>Sample HTML File</h1><p>First Sample paragraph.</p><p>Second Sample paragraph.</p></body></html>";
+            string html = "<html><body><h1>Sample HTML File</h1><p>First Sample paragraph.</p>"
+                + "<p>Second Sample paragraph.</p></body></html>";
             WebBrowser.NavigateToString(html);
         }
 
@@ -223,21 +224,9 @@ namespace ControlsTest
             WebBrowser.NavigateToStream(stream);
         }
 
-        internal string? GetControlsSamplePath()
-        {
-            var samplesFolder = CommonUtils.GetSamplesFolder();
-
-            if (samplesFolder is null)
-                return null;
-
-            var result = Path.Combine(samplesFolder, "ControlsSample");
-
-            return result;
-        }
-
         internal string? PrepareControlsSampleUrl(string suffix)
         {
-            var path = GetControlsSamplePath();
+            var path = App.StartupPath;
             if (path is null)
                 return null;
             var s = WebBrowser.PrepareFileUrl(Path.Combine(path, suffix));
@@ -361,7 +350,7 @@ namespace ControlsTest
 
         private void Log(string s)
         {
-            Application.Log(s);
+            App.Log(s);
         }
 
         private void WebBrowser_TitleChanged(object? sender, WebBrowserEventArgs e)
@@ -413,7 +402,6 @@ namespace ControlsTest
                 LogUtils.LogProp(webBrowser, "ZoomType", "WebBrowser");
                 LogUtils.LogProp(webBrowser, "ZoomFactor", "WebBrowser");
 
-                // Log("GetDefaultImageSize = " + Toolbar.GetDefaultImageSize());
                 Log("DPI = " + webBrowser.GetDPI().ToString());
                 Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
                 Log("os = " + WebBrowser.GetBackendOS().ToString());
@@ -579,7 +567,7 @@ namespace ControlsTest
 
                 // Under Windows 'Black' scheme for other controls is not implemented
                 // so we turn on Light scheme in browser.
-                if (Application.IsWindowsOS)
+                if (App.IsWindowsOS)
                     rootPanel.WebBrowser.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
             }
 

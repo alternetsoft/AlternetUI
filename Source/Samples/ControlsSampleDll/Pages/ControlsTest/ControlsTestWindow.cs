@@ -2,19 +2,18 @@
 using Alternet.Drawing;
 using Alternet.UI;
 
-namespace ControlsTest
+namespace ControlsSample
 {
-    internal partial class MainTestWindow : Window
+    internal partial class ControlsTestWindow : Window
     {
         private readonly StatusBar statusbar = new();
         private readonly PanelTreeAndCards mainPanel;
 
-        static MainTestWindow()
+        static ControlsTestWindow()
         {
-            Test.DoTests();
         }
 
-        public MainTestWindow()
+        public ControlsTestWindow()
         {
             Title = "Alternet UI Controls Test";
             Size = (900, 700);
@@ -24,7 +23,7 @@ namespace ControlsTest
             mainPanel.LeftTreeViewAsListBox = true;
             mainPanel.RightPanel.MinWidth = 150;
 
-            Icon = new("embres:ControlsTest.Sample.ico");
+            Icon = new("embres:ControlsSampleDll.Sample.ico");
 
             this.StatusBar = statusbar;
             mainPanel.Parent = this;
@@ -67,7 +66,7 @@ namespace ControlsTest
         {
             var control = sender as AbstractControl;
             var name = control?.Name ?? control?.GetType().Name;
-            Application.LogIf($"{evName}: {name}, Bounds: {control!.Bounds}", false);
+            App.LogIf($"{evName}: {name}, Bounds: {control!.Bounds}", false);
         }
 
         private void Log_SizeChanged(object? sender, EventArgs e)
