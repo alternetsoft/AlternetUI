@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="MenuItem"/> objects associated with the menu.
         /// </summary>
         [Content]
-        public Collection<MenuItem> Items
+        public virtual Collection<MenuItem> Items
         {
             get
             {

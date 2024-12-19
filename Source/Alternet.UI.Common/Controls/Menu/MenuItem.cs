@@ -21,6 +21,7 @@ namespace Alternet.UI
         private ICommand? command;
         private object? commandParameter;
         private object? commandTarget;
+        private bool shortcutEnabled = true;
 
         static MenuItem()
         {
@@ -264,6 +265,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether <see cref="Shortcut"/> is enabled.
+        /// </summary>
+        public virtual bool IsShortcutEnabled
+        {
+            get
+            {
+                return shortcutEnabled;
+            }
+
+            set
+            {
+                if (shortcutEnabled == value)
+                    return;
+                shortcutEnabled = value;
+                RaiseShortcutChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating the shortcut key associated with
         /// the menu item.
         /// </summary>
@@ -280,7 +300,7 @@ namespace Alternet.UI
                     return;
 
                 shortcut = value;
-                ShortcutChanged?.Invoke(this, EventArgs.Empty);
+                RaiseShortcutChanged();
             }
         }
 
@@ -437,6 +457,14 @@ namespace Alternet.UI
                 return Text;
         }
 
+        /// <summary>
+        /// Raises <see cref="ShortcutChanged"/> event.
+        /// </summary>
+        public void RaiseShortcutChanged()
+        {
+            ShortcutChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         /// <inheritdoc />
         protected override void OnClick(EventArgs e)
         {
@@ -450,7 +478,10 @@ namespace Alternet.UI
             return ControlFactory.Handler.CreateMenuItemHandler(this);
         }
 
-        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
+        /// <summary>
+        /// Called when <see cref="Command"/> property is changed.
+        /// </summary>
+        protected virtual void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
                 UnhookCommand(oldCommand);
