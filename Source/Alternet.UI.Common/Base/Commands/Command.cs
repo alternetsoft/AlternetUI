@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Command"/> class with the
         /// specified <paramref name="executeDelegate"/> and <paramref name="canExecuteDelegate"/>.
         /// </summary>
-        public Command(ExecuteDelegate executeDelegate, CanExecuteDelegate canExecuteDelegate)
+        public Command(ExecuteDelegate executeDelegate, CanExecuteDelegate? canExecuteDelegate)
         {
             this.executeDelegate = executeDelegate;
             this.canExecuteDelegate = canExecuteDelegate;
