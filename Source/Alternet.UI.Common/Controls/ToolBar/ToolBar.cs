@@ -1475,6 +1475,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets item 'Shortcut' property value.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="key">Key code.</param>
+        /// <param name="modifiers">Key modifiers.</param>
+        public virtual void SetToolShortcut(
+            ObjectUniqueId id,
+            Key key,
+            ModifierKeys modifiers = UI.ModifierKeys.None)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ShortcutKeyInfo = [new KeyInfo(key, modifiers)];
+        }
+
+        /// <summary>
         /// Set click action for the item.
         /// </summary>
         /// <param name="id">Item id.</param>
