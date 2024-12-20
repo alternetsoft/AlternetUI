@@ -42,6 +42,9 @@
       <MenuItem Text="_Tools" IsTextLocalized="true">
         <MenuItem Text="_Options..." IsTextLocalized="true" Name="optionsMenuItem"
                   Click="OptionsMenuItem_Click" />
+        <MenuItem Text="Sample Command" Command="SampleCommand"
+                  CommandParameter="param1" />
+        <MenuItem Text="Toggle Sample Command Enabled" Command="ToggleSampleCommandEnabled"/>
       </MenuItem>
       <MenuItem Text="_Help" IsTextLocalized="true">
         <MenuItem Text="Index" IsTextLocalized="true" Enabled="false" />

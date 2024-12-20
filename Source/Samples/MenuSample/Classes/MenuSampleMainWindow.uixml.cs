@@ -7,6 +7,9 @@ namespace MenuSample
 {
     public partial class MenuMainWindow : Window
     {
+        private static readonly Command sampleCommand = new();
+        private static bool canExecuteSampleCommand = false;
+
         private readonly int dynamicToolbarItemsSeparatorIndex;
         private readonly bool IsDebugBackground = false;
         private readonly ToolBar toolbar = new();
@@ -21,6 +24,24 @@ namespace MenuSample
 
         static MenuMainWindow()
         {
+            sampleCommand.CanExecuteFunc = (param) =>
+            {
+                return canExecuteSampleCommand;
+            };
+
+            sampleCommand.ExecuteAction = (param) =>
+            {
+                App.Log($"Sample command execute with param : {param}");
+            };
+
+            NamedCommands.Default.Register("SampleCommand", sampleCommand);
+            NamedCommands.Default.Register(
+                "ToggleSampleCommandEnabled",
+                (param) =>
+                {
+                    canExecuteSampleCommand = !canExecuteSampleCommand;
+                    sampleCommand.RaiseCanExecuteChanged();
+                });
         }
 
         public void ExportToPngCommand_Click(object? sender, EventArgs e)
