@@ -1029,6 +1029,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Closes the window when application goes to the idle state.
+        /// </summary>
+        public void CloseIdle(WindowCloseAction? action = null)
+        {
+            RunWhenIdle(() => Close(action));
+        }
+
+        /// <summary>
         /// Closes the window.
         /// </summary>
         /// <remarks>
@@ -1044,12 +1052,12 @@ namespace Alternet.UI
         /// window using <see cref="DialogWindow.ShowModal()"/>.
         /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
-        public virtual void Close()
+        public virtual void Close(WindowCloseAction? action = null)
         {
             if (IsDisposed)
                 return;
 
-            var action = CloseAction ?? WindowCloseAction.Dispose;
+            action ??= CloseAction ?? WindowCloseAction.Dispose;
 
             switch (action)
             {
@@ -1083,6 +1091,22 @@ namespace Alternet.UI
         {
             OnClosing(e);
             Closing?.Invoke(this, e);
+
+            if (e.Cancel)
+                return;
+
+            if (CloseAction == WindowCloseAction.Hide)
+            {
+                e.Cancel = true;
+                Visible = false;
+                return;
+            }
+
+            if (CloseAction == WindowCloseAction.None)
+            {
+                e.Cancel = true;
+                return;
+            }
         }
 
         /// <summary>
