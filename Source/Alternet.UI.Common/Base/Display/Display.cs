@@ -104,7 +104,7 @@ namespace Alternet.UI
         {
             get
             {
-                return factory is not null;
+                return App.Handler is not null;
             }
         }
 
