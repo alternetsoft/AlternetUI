@@ -62,6 +62,18 @@ namespace Alternet.UI
         /// Registers command with the specified name and implementation.
         /// </summary>
         /// <param name="name">Command name.</param>
+        /// <param name="execute">Action to execute.</param>
+        public virtual void Register(
+            string name,
+            Action execute)
+        {
+            Register(name, (param) => execute());
+        }
+
+        /// <summary>
+        /// Registers command with the specified name and implementation.
+        /// </summary>
+        /// <param name="name">Command name.</param>
         /// <param name="command">Command provider.</param>
         public virtual void Register(string name, ICommand? command)
         {
