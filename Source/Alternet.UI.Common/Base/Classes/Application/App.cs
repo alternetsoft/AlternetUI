@@ -1194,18 +1194,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Runs single idle task if it is present.
+        /// </summary>
+        public static bool ProcessIdleTask()
+        {
+            try
+            {
+                if (App.Terminating)
+                    return false;
+
+                if (IdleTasks.TryDequeue(out var task))
+                {
+                    task.Action(task.Data);
+                    return true;
+                }
+
+                return false;
+            }
+            catch(Exception e)
+            {
+                TryCatchSilent(() => App.LogError(e));
+
+                if (DebugUtils.IsDebugDefined)
+                {
+                    throw e;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Runs idle tasks if they are present.
         /// </summary>
         public static void ProcessIdleTasks()
         {
-            while (true)
-            {
-                if (App.Terminating)
-                    return;
+            int count = 0;
 
-                if (IdleTasks.TryDequeue(out var task))
-                    task.Action(task.Data);
-                else
+            while (count < 10)
+            {
+                count++;
+                if (!ProcessIdleTask())
                     break;
             }
         }
