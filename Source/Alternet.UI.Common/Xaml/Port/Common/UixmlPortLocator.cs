@@ -11,7 +11,8 @@ namespace Alternet.UI.Port
         private readonly IUixmlPortDependencyResolver? _parentScope;
         public static IUixmlPortDependencyResolver Current { get; set; }
         public static UixmlPortLocator CurrentMutable { get; set; }
-        private readonly Dictionary<Type, Func<object?>> _registry = new Dictionary<Type, Func<object?>>();
+        private readonly Dictionary<Type, Func<object?>> _registry
+            = new Dictionary<Type, Func<object?>>();
 
         static UixmlPortLocator()
         {
