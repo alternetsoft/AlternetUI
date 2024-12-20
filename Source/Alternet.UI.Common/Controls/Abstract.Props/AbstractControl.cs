@@ -1443,9 +1443,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether key bindings are validated using
+        /// <see cref="KeyGesture.IsValid"/> before they are used
+        /// in <see cref="ExecuteKeyBinding"/>. Default is True.
+        /// </summary>
+        public virtual bool ValidateKeyBinding { get; set; } = true;
+
+        /// <summary>
         /// Gets whether control has visible children controls.
         /// </summary>
-        public bool HasVisibleChildren
+        public virtual bool HasVisibleChildren
         {
             get
             {

@@ -1063,9 +1063,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether key is a valid key gesture for this control.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns>True if <see cref="ValidateKeyBinding"/> is False; otherwise
+        /// returns result of <see cref="KeyGesture.IsValid"/> call.</returns>
+        /// <remarks>
+        /// Override this method in order to allow/supress allowed keys
+        /// for this control used in <see cref="ExecuteKeyBinding"/> method.
+        /// </remarks>
+        public virtual bool IsKeyBindingValid(Key key, ModifierKeys modifiers)
+        {
+            var isValid = KeyGesture.IsValid(key, modifiers);
+            return isValid;
+        }
+
+        /// <summary>
         /// Processes input bindings and calls associated commands
-        /// if their key bindings are equal to keys specified
-        /// in the parameters.
+        /// if their key bindings are valid and equal to key specified
+        /// in the <paramref name="key"/>, <paramref name="modifiers"/> parameters.
         /// </summary>
         /// <param name="key">Key.</param>
         /// <param name="modifiers">Key modifiers.</param>
@@ -1074,6 +1091,13 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool ExecuteKeyBinding(Key key, ModifierKeys modifiers, bool recursive)
         {
+            if (ValidateKeyBinding)
+            {
+                var isValid = IsKeyBindingValid(key, modifiers);
+                if (!isValid)
+                    return false;
+            }
+
             if (recursive)
             {
                 return Internal(InputBindingsRecursive);
