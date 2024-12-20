@@ -10,24 +10,8 @@ namespace Alternet.UI
     /// </summary>
     public static class FormUtils
     {
-        /// <summary>
-        /// Gets name of the 'CloseOtherWindows' command.
-        /// </summary>
-        public const string CommandNameCloseOtherWindows = "App.CloseOtherWindows";
-
         static FormUtils()
         {
-            NamedCommands.Default.Register(
-                CommandNameCloseOtherWindows,
-                (prm) => CloseOtherWindows(null, prm as Window));
-        }
-
-        /// <summary>
-        /// Executes command which closes all windows.
-        /// </summary>
-        public static void ExecuteCommandCloseOtherWindows(Window? exceptWindow = null)
-        {
-            NamedCommands.Default.Execute(CommandNameCloseOtherWindows, exceptWindow);
         }
 
         /// <summary>

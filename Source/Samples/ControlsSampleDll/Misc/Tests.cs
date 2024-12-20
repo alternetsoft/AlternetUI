@@ -33,11 +33,11 @@ namespace ControlsSample
             window.ShowDialogAsync();
         }
 
-        [Description("Add input binding [Z]")]
+        [Description("Add input binding [Ctrl+Shift+Z]")]
         public static void TestInputBinding()
         {
             var window = Window.Default;
-            KeyGesture gesture = new(Key.Z, ModifierKeys.None);
+            KeyGesture gesture = new(Key.Z, ModifierKeys.ControlShift);
             Command command = new();
             command.AfterExecute += (param) =>
             {

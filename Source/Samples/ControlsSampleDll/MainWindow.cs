@@ -20,7 +20,7 @@ namespace ControlsSample
         {
             base.OnClosing(e);
 
-            FormUtils.ExecuteCommandCloseOtherWindows(this);
+            FormUtils.CloseOtherWindows(exceptWindow:this);
         }
 
         protected override void AddPages()
