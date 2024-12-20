@@ -72,16 +72,14 @@ namespace Alternet.UI
             get => clickAction;
             set
             {
-                if (clickAction != null)
-                    Click -= OnClickAction;
                 clickAction = value;
-                if (clickAction != null)
-                    Click += OnClickAction;
             }
         }
 
-        private void OnClickAction(object? sender, EventArgs e)
+        /// <inheritdoc />
+        protected override void OnClick(EventArgs e)
         {
+            base.OnClick(e);
             clickAction?.Invoke();
         }
     }
