@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,11 +11,43 @@ namespace ControlsSample
 {
     public static class Tests
     {
+        public static void LogManifestResourceNames(Assembly? assembly = null)
+        {
+            assembly ??= typeof(Tests).Assembly;
+
+            var resources = assembly?.GetManifestResourceNames();
+
+            if (resources is null)
+                return;
+
+            foreach (var item in resources)
+            {
+                LogUtils.LogToFile(item);
+            }
+        }
+
         [Description("Show WindowTextInput dialog...")]
         public static void TestWindowTextInput()
         {
             var window = new WindowTextInput();
             window.ShowDialogAsync();
+        }
+
+        [Description("Add input binding [Ctrl+Shift+Z]")]
+        public static void TestInputBinding()
+        {
+            var window = Window.Default;
+            KeyGesture gesture = new(Key.Z, ModifierKeys.ControlShift);
+            Command command = new();
+            command.AfterExecute += (param) =>
+            {
+                App.Log($"Binding is called: {param}");
+            };
+            InputBinding binding = new(command, gesture);
+            binding.CommandParameter = "parameter1";
+            window.InputBindings.Add(binding);
+
+            App.Log($"Registered binding to form: {window.Name ?? window.GetType().ToString()}");
         }
 
         public static void TestActivateEvents()

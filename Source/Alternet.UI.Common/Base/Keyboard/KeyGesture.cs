@@ -86,24 +86,27 @@ namespace Alternet.UI
         {
             if (!ModifierKeysConverter.IsDefinedModifierKeys(modifiers))
             {
-                throw new InvalidEnumArgumentException(
+                App.LogError(new InvalidEnumArgumentException(
                     "modifiers",
                     (int)modifiers,
-                    typeof(ModifierKeys));
+                    typeof(ModifierKeys)));
             }
 
             if (!IsDefinedKey(key))
-                throw new InvalidEnumArgumentException("key", (int)key, typeof(Key));
+            {
+                App.LogError(new InvalidEnumArgumentException("key", (int)key, typeof(Key)));
+            }
+
             if (validateGesture && !IsValid(key, modifiers))
             {
-                throw new NotSupportedException(
+                var exception = new NotSupportedException(
                     string.Format(ErrorMessages.Default.KeyGestureInvalid, modifiers, key));
+                App.LogError(exception);
             }
 
             fmodifiers = modifiers;
             fkey = key;
-            fdisplayString = displayString ??
-                throw new ArgumentNullException(nameof(displayString));
+            fdisplayString = displayString ?? string.Empty;
         }
 
         /// <summary>
@@ -190,6 +193,17 @@ namespace Alternet.UI
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="Key"/> and <see cref="Modifiers"/>
+        /// are equal to the values specified in the parameters.
+        /// </summary>
+        public virtual bool HasKey(Key key, ModifierKeys modifiers)
+        {
+            if (Key == key && Modifiers == modifiers)
+                return true;
+            return false;
         }
 
         /// <summary>

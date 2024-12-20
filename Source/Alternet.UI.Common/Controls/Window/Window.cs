@@ -17,6 +17,7 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class Window : Control, IWindow
     {
+        private static Window? dummy;
         private static List<IControlNotification>? globalWindowNotifications;
         private static WindowKind? globalWindowKindOverride;
         private static RectD defaultBounds = new(100, 100, 400, 400);
@@ -31,7 +32,6 @@ namespace Alternet.UI
         private object? menu = null;
         private Window? owner;
         private bool needLayout = false;
-        private Collection<InputBinding>? inputBindings;
         private int? oldDisplay;
         private bool loadedCalled;
 
@@ -197,6 +197,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets default window.
+        /// </summary>
+        /// <remarks>
+        /// Result is not null. The following properties and methods are used in order to find
+        /// the result: <see cref="ActiveWindow"/>, <see cref="App.MainWindow"/>,
+        /// <see cref="App.FirstWindow()"/>. If these members return null, dummy window is created
+        /// and returned.
+        /// </remarks>
+        public static Window Default
+        {
+            get
+            {
+                var result = Window.ActiveWindow ?? App.MainWindow ?? App.FirstWindow();
+                if(result is null)
+                {
+                    dummy ??= new();
+                    return dummy;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets default location and position of the window.
         /// </summary>
         public static RectD DefaultBounds
@@ -256,6 +280,16 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool IsActive => Handler.IsActive;
+
+        /// <summary>
+        /// Gets time when window was last time activated.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime? LastActivateTime
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets window handler.
@@ -568,31 +602,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the window that owns this window.
-        /// </summary>
-        /// <value>
-        /// A <see cref="Window"/> that represents the window that is the owner of this window.
-        /// </value>
-        /// <remarks>
-        /// When a window is owned by another window, it is closed or hidden with the owner window.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Window? Owner
-        {
-            get => owner;
-
-            set
-            {
-                if (owner == value)
-                    return;
-                owner = value;
-                OnOwnerChanged(EventArgs.Empty);
-                OwnerChanged?.Invoke(this, EventArgs.Empty);
-                Handler.SetOwner(value);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>
         /// <value>A <see cref="WindowStartLocation"/> that represents the starting position
@@ -610,7 +619,6 @@ namespace Alternet.UI
                 if (info.StartLocation == value)
                     return;
                 info.StartLocation = value;
-                Handler.StartLocation = value;
             }
         }
 
@@ -634,6 +642,31 @@ namespace Alternet.UI
             get
             {
                 return Handler.OwnedWindows;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the window that owns this window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Window"/> that represents the window that is the owner of this window.
+        /// </value>
+        /// <remarks>
+        /// When a window is owned by another window, it is closed or hidden with the owner window.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual Window? Owner
+        {
+            get => owner;
+
+            set
+            {
+                if (owner == value)
+                    return;
+                owner = value;
+                OnOwnerChanged(EventArgs.Empty);
+                OwnerChanged?.Invoke(this, EventArgs.Empty);
+                Handler.SetOwner(value);
             }
         }
 
@@ -796,6 +829,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When forms is shown active control becomes focused.
         /// </remarks>
+        [Browsable(false)]
         public virtual AbstractControl? ActiveControl
         {
             get
@@ -816,12 +850,9 @@ namespace Alternet.UI
 
                 activeControl.Value = value;
 
-                if (Visible && value is not null)
+                if (Visible)
                 {
-                    App.AddIdleTask(() =>
-                    {
-                        value.SetFocusIfPossible();
-                    });
+                    value?.SetFocusIdle();
                 }
             }
         }
@@ -848,39 +879,16 @@ namespace Alternet.UI
 
                 if (value)
                 {
-                    ActiveControl?.SetFocusIfPossible();
+                    ActiveControl?.SetFocusIdle();
                 }
             }
         }
 
         /// <summary>
-        /// Gets the collection of input bindings associated with this window.
+        /// Gets or sets action which is performed when window is closed using
+        /// <see cref="Close"/> method.
         /// </summary>
-        [Browsable(false)]
-        public virtual Collection<InputBinding> InputBindings
-        {
-            get
-            {
-                if (inputBindings is null)
-                {
-                    inputBindings = new();
-
-                    inputBindings.ItemRemoved += (sender, index, item) =>
-                    {
-                        Port.InheritanceContextHelper.RemoveContextFromObject(this, item);
-                        Handler.RemoveInputBinding(item);
-                    };
-
-                    inputBindings.ItemInserted += (sender, index, item) =>
-                    {
-                        Handler.AddInputBinding(item);
-                        Port.InheritanceContextHelper.ProvideContextForObject(this, item);
-                    };
-                }
-
-                return inputBindings;
-            }
-        }
+        public WindowCloseAction? CloseAction { get; set; }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Window;
@@ -933,7 +941,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Removes <see cref="IControlNotification"/> object from the global list of window notifications.
+        /// Removes <see cref="IControlNotification"/> object from the global
+        /// list of window notifications.
         /// </summary>
         /// <param name="n">Notification object to remove.</param>
         public static void RemoveGlobalWindowNotification(IControlNotification n)
@@ -1020,6 +1029,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Closes the window when application goes to the idle state.
+        /// </summary>
+        public void CloseIdle(WindowCloseAction? action = null)
+        {
+            RunWhenIdle(() => Close(action));
+        }
+
+        /// <summary>
         /// Closes the window.
         /// </summary>
         /// <remarks>
@@ -1035,13 +1052,26 @@ namespace Alternet.UI
         /// window using <see cref="DialogWindow.ShowModal()"/>.
         /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
-        public virtual void Close()
+        public virtual void Close(WindowCloseAction? action = null)
         {
-            Visible = false;
+            if (IsDisposed)
+                return;
 
-            CheckDisposed();
+            action ??= CloseAction ?? WindowCloseAction.Dispose;
 
-            Handler.Close();
+            switch (action)
+            {
+                default:
+                case WindowCloseAction.Dispose:
+                    Visible = false;
+                    Handler.Close();
+                    break;
+                case WindowCloseAction.Hide:
+                    Visible = false;
+                    break;
+                case WindowCloseAction.None:
+                    break;
+            }
         }
 
         /// <summary>
@@ -1061,6 +1091,22 @@ namespace Alternet.UI
         {
             OnClosing(e);
             Closing?.Invoke(this, e);
+
+            if (e.Cancel)
+                return;
+
+            if (CloseAction == WindowCloseAction.Hide)
+            {
+                e.Cancel = true;
+                Visible = false;
+                return;
+            }
+
+            if (CloseAction == WindowCloseAction.None)
+            {
+                e.Cancel = true;
+                return;
+            }
         }
 
         /// <summary>
@@ -1160,7 +1206,6 @@ namespace Alternet.UI
             base.BindHandlerEvents();
             Handler.StateChanged = RaiseStateChanged;
             Handler.Closing = OnHandlerClosing;
-            Handler.InputBindingCommandExecuted = OnHandlerInputBindingCommandExecuted;
         }
 
         /// <inheritdoc/>
@@ -1169,7 +1214,6 @@ namespace Alternet.UI
             base.UnbindHandlerEvents();
             Handler.StateChanged = null;
             Handler.Closing = null;
-            Handler.InputBindingCommandExecuted = null;
         }
 
         /// <inheritdoc/>
@@ -1236,6 +1280,30 @@ namespace Alternet.UI
         public virtual void Lower() => Handler.Lower();
 
         /// <summary>
+        /// Raises <see cref="DisplayChanged"/> event if it is required.
+        /// </summary>
+        public virtual void RaiseDisplayChanged()
+        {
+            if (DisplayChanged is null)
+                return;
+
+            var newDisplay = Display.GetFromControl(this);
+
+            if (oldDisplay is null)
+            {
+                oldDisplay = newDisplay;
+                return;
+            }
+
+            if (oldDisplay == newDisplay)
+                return;
+
+            DisplayChanged?.Invoke(this, EventArgs.Empty);
+
+            oldDisplay = newDisplay;
+        }
+
+        /// <summary>
         /// Recreates all native controls in all windows.
         /// </summary>
         public virtual void RecreateAllHandlers()
@@ -1275,6 +1343,34 @@ namespace Alternet.UI
                 return null;
 
             return GetParentWindow(c.Parent);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Key == Key.Enter)
+            {
+            }
+
+            if (e.Key == Key.Escape)
+            {
+                if (SupressEsc)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            ProcessShortcuts(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnAfterChildKeyDown(object? sender, KeyEventArgs e)
+        {
+            base.OnAfterChildKeyDown(sender, e);
+            e.Handled = e.Handled || ExecuteKeyBinding(e.Key, e.ModifierKeys, true);
         }
 
         /// <inheritdoc/>
@@ -1438,24 +1534,11 @@ namespace Alternet.UI
             needLayout = true;
         }
 
-        /// <inheritdoc/>
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (e.Key == Key.Escape && SupressEsc)
-            {
-                e.Handled = true;
-                return;
-            }
-
-            ProcessShortcuts(e);
-        }
-
         /// <summary>
         /// Iterates through all child control's shortcuts and
         /// calls shortcut action if its key is pressed.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments.</param>
         protected virtual void ProcessShortcuts(KeyEventArgs e)
         {
             var shortcuts = GetShortcuts();
@@ -1565,27 +1648,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default <see cref="IWindowHandler.InputBindingCommandExecuted"/> event implementation.
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnHandlerInputBindingCommandExecuted(HandledEventArgs<string> e)
-        {
-            var binding = InputBindings.First(x => x.ManagedCommandId == e.Value);
-
-            e.Handled = false;
-
-            var command = binding.Command;
-            if (command == null)
-                return;
-
-            if (!command.CanExecute(binding.CommandParameter))
-                return;
-
-            command.Execute(binding.CommandParameter);
-            e.Handled = true;
-        }
-
-        /// <summary>
         /// Gets window kind used instead of the default value.
         /// </summary>
         /// <returns></returns>
@@ -1599,25 +1661,21 @@ namespace Alternet.UI
             InsideTryCatch(RaiseDisplayChanged);
         }
 
-        private void RaiseDisplayChanged()
+        /// <summary>
+        /// Common initialization method which is called from all the constructors.
+        /// </summary>
+        private void Initialize()
         {
-            if (DisplayChanged is null)
-                return;
+            SetVisibleValue(false);
+            ProcessIdle = true;
 
-            var newDisplay = Display.GetFromControl(this);
+            if (GetWindowKind() != WindowKind.Control)
+                App.Current.RegisterWindow(this);
 
-            if (oldDisplay is null)
-            {
-                oldDisplay = newDisplay;
-                return;
-            }
+            Bounds = GetDefaultBounds();
 
-            if (oldDisplay == newDisplay)
-                return;
-
-            DisplayChanged?.Invoke(this, EventArgs.Empty);
-
-            oldDisplay = newDisplay;
+            if (AbstractControl.DefaultFont != Font.Default)
+                Font = AbstractControl.DefaultFont;
         }
 
         private void RaiseLoadedOnce()
@@ -1626,20 +1684,6 @@ namespace Alternet.UI
                 return;
             loadedCalled = true;
             Load?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void Initialize()
-        {
-            SetVisibleValue(false);
-            ProcessIdle = true;
-
-            if(GetWindowKind() != WindowKind.Control)
-                App.Current.RegisterWindow(this);
-
-            Bounds = GetDefaultBounds();
-
-            if (AbstractControl.DefaultFont != Font.Default)
-                Font = AbstractControl.DefaultFont;
         }
     }
 }

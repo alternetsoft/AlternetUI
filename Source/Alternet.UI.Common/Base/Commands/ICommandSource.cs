@@ -4,15 +4,14 @@ using System.Windows.Input;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     An interface for classes that know how to invoke a Command.
+    /// An interface for classes that know how to invoke a <see cref="ICommand"/>.
     /// </summary>
     public interface ICommandSource
     {
         /// <summary>
-        ///     The command that will be executed when the class is "invoked."
-        ///     Classes that implement this interface should enable or disable based on the
-        ///     command's CanExecute return value.
-        ///     The property may be implemented as read-write if desired.
+        /// The command that will be executed when the class is "invoked".
+        /// Classes that implement this interface should enable or disable based on the
+        /// command's <see cref="ICommand.CanExecute"/> return value.
         /// </summary>
         ICommand? Command
         {
@@ -20,8 +19,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The parameter that will be passed to the command when executing the command.
-        ///     The property may be implemented as read-write if desired.
+        /// Gets the parameter that will be passed to the command when executing it.
         /// </summary>
         object? CommandParameter
         {
@@ -29,9 +27,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     An element that an implementor may wish to target as the destination
-        ///     for the command.
-        ///     The property may be implemented as read-write if desired.
+        /// Gets an element that an implementor may wish to target
+        /// as the destination for the command.
         /// </summary>
         object? CommandTarget
         {

@@ -22,8 +22,6 @@ namespace Alternet::UI
     {
     }
 
-    // ------------
-
     Window::Window()
         : Window(0)
     {
@@ -56,8 +54,6 @@ namespace Alternet::UI
             &Window::ApplyTitle),
         _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu,   
             &Window::ApplyMenu)
-        /*_toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, 
-            &Window::ApplyToolbar)*/
     {
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_delayedFlags);
@@ -70,88 +66,6 @@ namespace Alternet::UI
     {
         if (_icon != nullptr)
             _icon->Release();
-    }
-
-    void Window::AddInputBinding(const string& managedCommandId, Key key,
-        ModifierKeys modifiers)
-    {
-        if (managedCommandId.empty())
-        {
-            DebugLogInvalidArg(managedCommandId, u"Command ID must not be empty.");
-            return;
-        }
-
-        if (_acceleratorsByCommandIds.find(managedCommandId) !=
-            _acceleratorsByCommandIds.end())
-        {
-            DebugLogInvalidArg(managedCommandId,
-                u"Input binding with this command ID was already added to this window.");
-        }
-
-        auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
-        auto wxKey = keyboard->KeyToWxKey(key);
-        auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifiers);
-
-        _acceleratorsByCommandIds[managedCommandId] =
-            wxAcceleratorEntry(acceleratorFlags, wxKey, IdManager::AllocateId());
-
-        UpdateAcceleratorTable(GetWxWindow());
-    }
-
-    void Window::RemoveInputBinding(const string& managedCommandId)
-    {
-        if (managedCommandId.empty())
-        {
-            DebugLogInvalidArg(managedCommandId, u"Command ID must not be empty.");
-            return;
-        }
-
-        auto it = _acceleratorsByCommandIds.find(managedCommandId);
-        if (it == _acceleratorsByCommandIds.end()) 
-        {
-            DebugLogInvalidArg(managedCommandId,
-                u"Input binding with this command ID was not found in this window.");
-            return;
-        }
-
-        IdManager::FreeId(it->second.GetCommand());
-
-        _acceleratorsByCommandIds.erase(it);
-
-        UpdateAcceleratorTable(GetWxWindow());
-    }
-
-    void Window::UpdateAcceleratorTable(wxWindow* frame)
-    {
-        if (frame == nullptr)
-            return;
-
-        std::vector<wxAcceleratorEntry> entries;
-        for (auto& pair : _acceleratorsByCommandIds)
-            entries.push_back(pair.second);
-
-        frame->SetAcceleratorTable(entries.empty() ?
-            wxNullAcceleratorTable : wxAcceleratorTable(entries.size(), &entries[0]));
-    }
-
-    void Window::OnCommand(wxCommandEvent& event)
-    {
-        auto id = event.GetId();
-
-        optional<string> foundManagedCommandId;
-        for (auto& pair : _acceleratorsByCommandIds)
-        {
-            if (pair.second.GetCommand() == id)
-                foundManagedCommandId = pair.first;
-        }
-
-        if (!foundManagedCommandId.has_value())
-            return;
-
-        CommandEventData data{ const_cast<char16_t*>(foundManagedCommandId.value().c_str()) };
-        bool handled = RaiseEvent(WindowEvent::InputBindingCommandExecuted, &data);
-        if (!handled)
-            event.Skip();
     }
 
     void Window::OnCharHook(wxKeyEvent& event)
@@ -231,7 +145,6 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
-        wxWindow->Unbind(wxEVT_MENU, &Window::OnCommand, this);
         wxWindow->Unbind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
     }
             
@@ -297,16 +210,6 @@ namespace Alternet::UI
     void Window::ApplyTitle(const string& value)
     {
         GetTopLevelWindow()->SetTitle(wxStr(value));
-    }
-
-    WindowStartLocation Window::GetWindowStartLocation()
-    {
-        return _startLocation;
-    }
-
-    void Window::SetWindowStartLocation(WindowStartLocation value)
-    {
-        _startLocation = value;
     }
 
     bool Window::GetIsPopupWindow()
@@ -430,12 +333,10 @@ namespace Alternet::UI
         }
 
         ApplyIcon(frame);
-        UpdateAcceleratorTable(frame);
 
         frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
-        frame->Bind(wxEVT_MENU, &Window::OnCommand, this);
         frame->Bind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
 
         auto panelColor =

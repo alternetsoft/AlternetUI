@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains information about the shortcut.
     /// </summary>
-    public class ShortcutInfo
+    public partial class ShortcutInfo : BaseObject
     {
         private KeyInfo[]? keys;
 

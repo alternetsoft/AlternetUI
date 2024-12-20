@@ -21,12 +21,6 @@ namespace Alternet.UI
         Action? StateChanged { get; set; }
 
         /// <summary>
-        /// Gets or sets action which is called when command specified in the input bindings
-        /// is executed.
-        /// </summary>
-        Action<HandledEventArgs<string>>? InputBindingCommandExecuted { get; set; }
-
-        /// <summary>
         /// Gets or sets action which is called when window is closing.
         /// </summary>
         Action<CancelEventArgs>? Closing { get; set; }
@@ -72,9 +66,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Window.IsPopupWindow"/>
         bool IsPopupWindow { get; set; }
 
-        /// <inheritdoc cref="Window.StartLocation"/>
-        WindowStartLocation StartLocation { get; set; }
-
         /// <inheritdoc cref="Window.IsActive"/>
         bool IsActive { get; }
 
@@ -115,18 +106,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Window.Activate"/>
         void Activate();
-
-        /// <summary>
-        /// Adds input binding.
-        /// </summary>
-        /// <param name="value"></param>
-        void AddInputBinding(InputBinding value);
-
-        /// <summary>
-        /// Removes input binding.
-        /// </summary>
-        /// <param name="item"></param>
-        void RemoveInputBinding(InputBinding item);
 
         /// <summary>
         /// Sets window icon.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Alternet.UI
@@ -29,6 +30,34 @@ namespace Alternet.UI
                 result |= KeyStates.Toggled;
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets whether the specified key is digit.
+        /// </summary>
+        /// <param name="key">Key to test.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// There is also <see cref="IsNumPadDigit"/>.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsDigit(Key key)
+        {
+            return key >= Key.D0 && key <= Key.D9;
+        }
+
+        /// <summary>
+        /// Gets whether the specified key is a NumPad digit.
+        /// </summary>
+        /// <param name="key">Key to test.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// There is also <see cref="IsDigit"/>.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsNumPadDigit(Key key)
+        {
+            return key >= Key.NumPad0 && key <= Key.NumPad9;
         }
     }
 }

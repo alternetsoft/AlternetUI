@@ -78,11 +78,4 @@ namespace Alternet::UI
     };
     #pragma pack(pop)
     
-    #pragma pack(push, 1)
-    struct CommandEventData
-    {
-        char16_t* managedCommandId;
-    };
-    #pragma pack(pop)
-    
 }

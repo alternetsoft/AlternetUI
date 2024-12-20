@@ -5,10 +5,11 @@ namespace Alternet.UI
     /// <summary>
     /// Allows an application author to define a method to be invoked.
     /// </summary>
-    public class Command : ICommand
+    public class Command : BaseObject, ICommand
     {
-        private readonly ExecuteDelegate? executeDelegate;
-        private readonly CanExecuteDelegate? canExecuteDelegate;
+        private ExecuteDelegate? executeDelegate;
+        private CanExecuteDelegate? canExecuteDelegate;
+        private bool? canExecuteOverride;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Command"/> class.
@@ -23,20 +24,17 @@ namespace Alternet.UI
         /// </summary>
         public Command(ExecuteDelegate executeDelegate)
         {
-            this.executeDelegate =
-                executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
+            this.executeDelegate = executeDelegate;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Command"/> class with the
         /// specified <paramref name="executeDelegate"/> and <paramref name="canExecuteDelegate"/>.
         /// </summary>
-        public Command(ExecuteDelegate executeDelegate, CanExecuteDelegate canExecuteDelegate)
+        public Command(ExecuteDelegate executeDelegate, CanExecuteDelegate? canExecuteDelegate)
         {
-            this.executeDelegate =
-                executeDelegate ?? throw new ArgumentNullException(nameof(executeDelegate));
-            this.canExecuteDelegate =
-                canExecuteDelegate ?? throw new ArgumentNullException(nameof(canExecuteDelegate));
+            this.executeDelegate = executeDelegate;
+            this.canExecuteDelegate = canExecuteDelegate;
         }
 
         /// <summary>
@@ -53,9 +51,74 @@ namespace Alternet.UI
         public event EventHandler? CanExecuteChanged;
 
         /// <summary>
+        /// Occurs after <see cref="Execute"/> method is called.
+        /// </summary>
+        public event ExecuteDelegate? AfterExecute;
+
+        /// <summary>
+        /// Occurs before <see cref="Execute"/> method is called.
+        /// </summary>
+        public event ExecuteDelegate? BeforeExecute;
+
+        /// <summary>
+        /// Gets or sets execute action.
+        /// </summary>
+        public virtual ExecuteDelegate? ExecuteAction
+        {
+            get
+            {
+                return executeDelegate;
+            }
+
+            set
+            {
+                executeDelegate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets 'CanExecute' function.
+        /// </summary>
+        public virtual CanExecuteDelegate? CanExecuteFunc
+        {
+            get
+            {
+                return canExecuteDelegate;
+            }
+
+            set
+            {
+                if (canExecuteDelegate == value)
+                    return;
+                canExecuteDelegate = value;
+                RaiseCanExecuteChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets override for 'CanExecute'. If this property is not Null,
+        /// it is used inside <see cref="CanExecute"/> method.
+        /// </summary>
+        public virtual bool? CanExecuteOverride
+        {
+            get
+            {
+                return canExecuteOverride;
+            }
+
+            set
+            {
+                if (canExecuteOverride == value)
+                    return;
+                canExecuteOverride = value;
+                RaiseCanExecuteChanged();
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="CanExecuteChanged"/> event.
         /// </summary>
-        public void RaiseCanExecuteChanged()
+        public virtual void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -63,6 +126,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual bool CanExecute(object? parameter)
         {
+            if (CanExecuteOverride is not null)
+                return CanExecuteOverride.Value;
+
             if (canExecuteDelegate != null)
                 return canExecuteDelegate(parameter);
 
@@ -72,7 +138,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void Execute(object? parameter)
         {
+            BeforeExecute?.Invoke(parameter);
             executeDelegate?.Invoke(parameter);
+            AfterExecute?.Invoke(parameter);
         }
     }
 }

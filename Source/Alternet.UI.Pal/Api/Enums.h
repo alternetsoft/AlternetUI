@@ -616,14 +616,6 @@ namespace Alternet::UI
         Accepted = 2,
     };
     
-    enum class WindowStartLocation
-    {
-        Default = 0,
-        Manual = 1,
-        CenterScreen = 2,
-        CenterOwner = 3,
-    };
-    
     enum class WindowState
     {
         Normal = 0,

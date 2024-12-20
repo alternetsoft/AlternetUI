@@ -330,8 +330,6 @@ namespace Alternet.UI
         {
             get
             {
-                // maybe make it thread static?
-                // maybe move this to native?
                 return current ??= new App(null);
             }
 
@@ -465,7 +463,13 @@ namespace Alternet.UI
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
         /// <see cref="EndBusyCursor"/> calls.
         /// </summary>
-        public static bool IsBusyCursor => Cursor.Factory.IsBusyCursor();
+        public static bool IsBusyCursor
+        {
+            get
+            {
+                return Cursor.Factory.IsBusyCursor();
+            }
+        }
 
         /// <summary>
         /// Allows to suppress some debug messages.
@@ -526,11 +530,11 @@ namespace Alternet.UI
         /// Gets <see cref="Window.ActiveWindow"/> or <see cref="MainWindow"/> or
         /// <see cref="FirstWindow()"/>. The first not null value of these is returned.
         /// </summary>
-        public static Window? SafeWindow
+        public static Window SafeWindow
         {
             get
             {
-                return Window.ActiveWindow ?? MainWindow ?? FirstWindow();
+                return Window.Default;
             }
         }
 
@@ -545,22 +549,38 @@ namespace Alternet.UI
         public static bool HasForms => HasApplication && Current.Windows.Count > 0;
 
         /// <summary>
-        /// Gets the instantiated windows in an application.
+        /// Gets the instantiated windows in the application.
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
-        /// references to all window objects in the current application.</value>
+        /// references to all window objects in the application.</value>
         public IReadOnlyList<Window> Windows => windows;
 
         /// <summary>
-        /// Gets all visible windows in an application.
+        /// Gets all visible windows in the application.
         /// </summary>
-        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
-        /// references to all visible window objects in the current application.</value>
+        /// <value>A <see cref="IEnumerable{Window}"/> that contains
+        /// references to all visible <see cref="Window"/> objects in the application.</value>
         public virtual IEnumerable<Window> VisibleWindows
         {
             get
             {
                 var result = Windows.Where(x => x.Visible);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets all visible windows in the application ordered by the last activated time.
+        /// Last activated window will be the first one in the result.
+        /// </summary>
+        /// <value>A <see cref="IEnumerable{Window}"/> that contains
+        /// references to all visible <see cref="Window"/> objects in the application
+        /// ordered by the last activated time.</value>
+        public virtual IEnumerable<Window> LastActivatedWindows
+        {
+            get
+            {
+                var result = VisibleWindows.OrderByDescending(x => x.LastActivateTime);
                 return result;
             }
         }
@@ -1073,6 +1093,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds first visible window of the specified type. If no window is found, returns Null.
+        /// </summary>
+        /// <typeparam name="T">Type of the window to find.</typeparam>
+        /// <returns></returns>
+        public static T? FindVisibleWindow<T>()
+            where T : Window
+        {
+            var windows = Current.LastActivatedWindows;
+
+            foreach (var window in windows)
+            {
+                if (window is T t)
+                    return t;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Finds first window of the specified type. If no window is found, returns Null.
         /// </summary>
         /// <typeparam name="T">Type of the window to find.</typeparam>
@@ -1099,11 +1138,8 @@ namespace Alternet.UI
         public static T? FirstWindow<T>()
             where T : Window
         {
-            var windows = Current.Windows;
-
-            if (windows.Count == 0)
-                return null;
-            return windows[0] as T;
+            var result = FindVisibleWindow<T>() ?? FindWindow<T>();
+            return result;
         }
 
         /// <summary>
@@ -1158,18 +1194,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Runs single idle task if it is present.
+        /// </summary>
+        public static bool ProcessIdleTask()
+        {
+            try
+            {
+                if (App.Terminating)
+                    return false;
+
+                if (IdleTasks.TryDequeue(out var task))
+                {
+                    task.Action(task.Data);
+                    return true;
+                }
+
+                return false;
+            }
+            catch(Exception e)
+            {
+                TryCatchSilent(() => App.LogError(e));
+
+                if (DebugUtils.IsDebugDefined)
+                {
+                    throw e;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Runs idle tasks if they are present.
         /// </summary>
         public static void ProcessIdleTasks()
         {
-            while (true)
-            {
-                if (App.Terminating)
-                    return;
+            int count = 0;
 
-                if (IdleTasks.TryDequeue(out var task))
-                    task.Action(task.Data);
-                else
+            while (count < 10)
+            {
+                count++;
+                if (!ProcessIdleTask())
                     break;
             }
         }

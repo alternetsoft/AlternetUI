@@ -4,6 +4,13 @@
         Width="900"
         Height="700"
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Layout="Vertical">
+
+  <Window.InputBindings>
+    <KeyBinding Key="B" Modifiers="Control"
+                Command="App.Log"
+                CommandParameter="Sample binding message from Window"/>
+  </Window.InputBindings>
+  
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File" IsTextLocalized="true" Name="fileMenu">
@@ -35,6 +42,9 @@
       <MenuItem Text="_Tools" IsTextLocalized="true">
         <MenuItem Text="_Options..." IsTextLocalized="true" Name="optionsMenuItem"
                   Click="OptionsMenuItem_Click" />
+        <MenuItem Text="Sample Command" Command="SampleCommand"
+                  CommandParameter="param1" />
+        <MenuItem Text="Toggle Sample Command Enabled" Command="ToggleSampleCommandEnabled"/>
       </MenuItem>
       <MenuItem Text="_Help" IsTextLocalized="true">
         <MenuItem Text="Index" IsTextLocalized="true" Enabled="false" />
@@ -52,6 +62,12 @@
   <!-- ========================= -->
 
   <TabControl Name="mainPanel" Margin="10" VerticalAlignment="Fill">
+
+    <TabControl.InputBindings>
+      <KeyBinding Key="R" Modifiers="Control"
+                  Command="App.Log"
+                  CommandParameter="Sample binding message from TabControl"/>
+    </TabControl.InputBindings>
 
     <!-- ========================= -->
     

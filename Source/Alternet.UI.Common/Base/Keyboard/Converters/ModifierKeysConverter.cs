@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -21,7 +17,7 @@ namespace Alternet.UI
             ModifierKeys.Alt | ModifierKeys.Control;
 
         /// <summary>
-        ///     Check for Valid enum, as any int can be casted to the enum.
+        /// Check for valid enum, as any int can be casted to the enum.
         /// </summary>
         public static bool IsDefinedModifierKeys(ModifierKeys modifierKeys)
         {
@@ -77,7 +73,6 @@ namespace Alternet.UI
             ITypeDescriptorContext? context,
             Type sourceType)
         {
-            // We can only handle string.
             if (sourceType == typeof(string))
             {
                 return true;
@@ -93,7 +88,6 @@ namespace Alternet.UI
             ITypeDescriptorContext? context,
             Type? destinationType)
         {
-            // We can convert to a string.
             if (destinationType == typeof(string))
             {
                 // When invoked by the serialization engine we can convert to

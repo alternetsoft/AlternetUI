@@ -22,8 +22,11 @@ namespace ControlsSample
                 InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
 
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
-            AddIfDebug("Custom Draw Test Page", () => new CustomDrawTestPage());
-            AddIfDebug("Test Page", () => new SkiaDrawingWindow());
+            
+            AddIfDebug("Draw Test Page: Custom", () => new CustomDrawTestPage());
+            AddIfDebug("Draw Test Page: Skia", () => new SkiaDrawingWindow());
+            AddIfDebug("Controls Test Window", () => new ControlsTestWindow());           
+
             Add("Documentation Samples", () => new ApiDoc.MainWindowSimple());
             Add("Preview File Sample", () => new PreviewSample.PreviewSampleWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.ExplorerMainWindow());

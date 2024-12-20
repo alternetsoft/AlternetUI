@@ -737,10 +737,10 @@ namespace Alternet.UI
                         break;
                 }
 
-                e.Suppressed();
-
                 void AfterKeyDown()
                 {
+                    e.Suppressed();
+
                     if (selectedIndex != SelectedIndex)
                     {
                         RaiseSelectionChanged();

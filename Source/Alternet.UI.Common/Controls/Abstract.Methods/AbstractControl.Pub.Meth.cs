@@ -1063,6 +1063,70 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether key is a valid key gesture for this control.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <returns>True if <see cref="ValidateKeyBinding"/> is False; otherwise
+        /// returns result of <see cref="KeyGesture.IsValid"/> call.</returns>
+        /// <remarks>
+        /// Override this method in order to allow/supress allowed keys
+        /// for this control used in <see cref="ExecuteKeyBinding"/> method.
+        /// </remarks>
+        public virtual bool IsKeyBindingValid(Key key, ModifierKeys modifiers)
+        {
+            var isValid = KeyGesture.IsValid(key, modifiers);
+            return isValid;
+        }
+
+        /// <summary>
+        /// Processes input bindings and calls associated commands
+        /// if their key bindings are valid and equal to key specified
+        /// in the <paramref name="key"/>, <paramref name="modifiers"/> parameters.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="modifiers">Key modifiers.</param>
+        /// <param name="recursive">Whether to process input bindings only for this
+        /// control (False) or this control and its child controls recursively (True).</param>
+        /// <returns></returns>
+        public virtual bool ExecuteKeyBinding(Key key, ModifierKeys modifiers, bool recursive)
+        {
+            if (ValidateKeyBinding)
+            {
+                var isValid = IsKeyBindingValid(key, modifiers);
+                if (!isValid)
+                    return false;
+            }
+
+            if (recursive)
+            {
+                return Internal(InputBindingsRecursive);
+            }
+            else
+            {
+                if (!HasInputBindings)
+                    return false;
+                return Internal(InputBindings);
+            }
+
+            bool Internal(IEnumerable<InputBinding> bindings)
+            {
+                foreach (var binding in bindings)
+                {
+                    if (!binding.IsActive)
+                        continue;
+                    if (!binding.HasKey(key, modifiers))
+                        continue;
+                    var executed = binding.Execute();
+                    if (executed)
+                        return true;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Calls the specified action for all the parent controls.
         /// </summary>
         /// <typeparam name="T">Type of the action parameters.</typeparam>
@@ -1070,7 +1134,7 @@ namespace Alternet.UI
         /// <param name="action">Action to call.</param>
         /// <returns>True if <see cref="HandledEventArgs.Handled"/>
         /// of the <paramref name="e"/> is True.</returns>
-        public bool ForEachParent<T>(T e, Action<AbstractControl, T> action)
+        public virtual bool ForEachParent<T>(T e, Action<AbstractControl, T> action)
             where T : HandledEventArgs
         {
             if (Parent is null)
@@ -1090,7 +1154,7 @@ namespace Alternet.UI
         /// <param name="action">Action to call.</param>
         /// <returns>True if <see cref="HandledEventArgs.Handled"/>
         /// of the <paramref name="e"/> is True.</returns>
-        public bool ForEachVisibleChild<T>(T e, Action<AbstractControl, T> action)
+        public virtual bool ForEachVisibleChild<T>(T e, Action<AbstractControl, T> action)
             where T : HandledEventArgs
         {
             if (!HasChildren)

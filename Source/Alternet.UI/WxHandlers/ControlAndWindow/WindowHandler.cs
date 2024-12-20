@@ -9,8 +9,6 @@ namespace Alternet.UI
     {
         private object? statusBar;
 
-        public Action<HandledEventArgs<string>>? InputBindingCommandExecuted { get; set; }
-
         public Action<CancelEventArgs>? Closing { get; set; }
 
         public override bool VisibleOnScreen
@@ -97,19 +95,6 @@ namespace Alternet.UI
             set
             {
                 NativeControl.StateChanged = value;
-            }
-        }
-
-        public WindowStartLocation StartLocation
-        {
-            get
-            {
-                return NativeControl.WindowStartLocation;
-            }
-
-            set
-            {
-                NativeControl.WindowStartLocation = value;
             }
         }
 
@@ -252,7 +237,6 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             NativeControl.Closing -= NativeControl_Closing;
-            NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
 
             base.OnDetach();
         }
@@ -262,7 +246,6 @@ namespace Alternet.UI
             base.OnAttach();
 
             NativeControl.Closing += NativeControl_Closing;
-            NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
 
         private void SetStatusBar(object? oldValue, object? value)
@@ -299,32 +282,6 @@ namespace Alternet.UI
                 if (sb.Handler is StatusBarHandler handler)
                     handler.AttachedTo = window;
             }
-        }
-
-        private void NativeControl_InputBindingCommandExecuted(
-            object? sender,
-            Native.NativeEventArgs<Native.CommandEventData> e)
-        {
-            if(InputBindingCommandExecuted is not null)
-            {
-                HandledEventArgs<string> args = new(e.Data.managedCommandId);
-                InputBindingCommandExecuted.Invoke(args);
-                e.Handled = args.Handled;
-            }
-        }
-
-        public void AddInputBinding(InputBinding value)
-        {
-            var keyBinding = (KeyBinding)value;
-            NativeControl.AddInputBinding(
-                keyBinding.ManagedCommandId,
-                keyBinding.Key,
-                keyBinding.Modifiers);
-        }
-
-        public void RemoveInputBinding(InputBinding item)
-        {
-            NativeControl.RemoveInputBinding(item.ManagedCommandId);
         }
 
         public void SetOwner(Window? owner)

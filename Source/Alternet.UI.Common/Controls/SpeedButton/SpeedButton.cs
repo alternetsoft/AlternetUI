@@ -383,6 +383,24 @@ namespace Alternet.UI
         /// Gets or sets a value indicating the associated shortcut key.
         /// </summary>
         [Browsable(false)]
+        public virtual ShortcutInfo? ShortcutInfo
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                shortcut = value;
+                UpdateToolTip();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
         public virtual KeyInfo[]? ShortcutKeyInfo
         {
             get

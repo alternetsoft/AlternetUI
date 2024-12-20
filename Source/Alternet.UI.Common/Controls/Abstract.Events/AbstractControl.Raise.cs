@@ -339,6 +339,11 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseActivated()
         {
+            if(this is Window window)
+            {
+                window.LastActivateTime = DateTime.Now;
+            }
+
             OnActivated(EventArgs.Empty);
             Activated?.Invoke(this, EventArgs.Empty);
 
@@ -769,7 +774,7 @@ namespace Alternet.UI
         /// Raises the <see cref="KeyDown" /> event
         /// and <see cref="OnKeyDown"/> method.
         /// </summary>
-        public void RaiseKeyDown(KeyEventArgs e)
+        public void RaiseKeyDown(KeyEventArgs e, Action<KeyEventArgs>? after = null)
         {
             PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
 
@@ -792,8 +797,12 @@ namespace Alternet.UI
                     KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
             });
 
-            Parent?.OnAfterChildKeyDown(this, e);
-            ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e));
+            if (ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e)))
+                return;
+            if (ForEachParent(e, (control, e) => control.OnAfterChildKeyDown(this, e)))
+                return;
+
+            after?.Invoke(e);
 
             if (isInputKey)
             {

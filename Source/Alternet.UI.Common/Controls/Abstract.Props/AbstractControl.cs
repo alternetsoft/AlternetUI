@@ -86,6 +86,7 @@ namespace Alternet.UI
 
         private PointD layoutOffset;
 
+        private Collection<InputBinding>? inputBindings;
         private Caret? caret;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
@@ -496,6 +497,87 @@ namespace Alternet.UI
                     Do not uncomment or we will have an exception
                     if(Parent is not null && !IgnoreLayout)*/
                     PerformLayout();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this object has items in the <see cref="InputBindings"/>
+        /// collection.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasInputBindings
+        {
+            get
+            {
+                return inputBindings is not null && inputBindings.Count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of input bindings associated with this control
+        /// and its visible child controls. Only bindings from visible and
+        /// enabled controls are returned.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IEnumerable<InputBinding> InputBindingsRecursive
+        {
+            get
+            {
+                if (Visible && IsEnabled)
+                {
+                    if (HasInputBindings)
+                    {
+                        foreach (var binding in InputBindings)
+                        {
+                            yield return binding;
+                        }
+                    }
+
+                    foreach (var control in ChildrenRecursive)
+                    {
+                        if (!control.Visible || !control.HasInputBindings || !control.IsEnabled)
+                            continue;
+                        foreach (var binding in control.InputBindings)
+                        {
+                            yield return binding;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of input bindings associated with this control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Collection<InputBinding> InputBindings
+        {
+            get
+            {
+                if (inputBindings is null)
+                {
+                    inputBindings = new();
+
+                    inputBindings.ItemRemoved += (sender, index, item) =>
+                    {
+                        RemoveBinding(item);
+                    };
+
+                    inputBindings.ItemInserted += (sender, index, item) =>
+                    {
+                        AddBinding(item);
+                    };
+                }
+
+                return inputBindings;
+
+                void RemoveBinding(InputBinding binding)
+                {
+                }
+
+                void AddBinding(InputBinding binding)
+                {
                 }
             }
         }
@@ -1357,6 +1439,33 @@ namespace Alternet.UI
             get
             {
                 return children != null && children.Count > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether key bindings are validated using
+        /// <see cref="KeyGesture.IsValid"/> before they are used
+        /// in <see cref="ExecuteKeyBinding"/>. Default is True.
+        /// </summary>
+        public virtual bool ValidateKeyBinding { get; set; } = true;
+
+        /// <summary>
+        /// Gets whether control has visible children controls.
+        /// </summary>
+        public virtual bool HasVisibleChildren
+        {
+            get
+            {
+                if (!HasChildren)
+                    return false;
+
+                foreach(var child in Children)
+                {
+                    if (child.Visible)
+                        return true;
+                }
+
+                return false;
             }
         }
 

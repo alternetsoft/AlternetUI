@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default <see cref="WindowPropertyGrid"/>.
         /// </summary>
-        public static WindowPropertyGrid? Default => defaultWindow;
+        public static new WindowPropertyGrid? Default => defaultWindow;
 
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> control.

@@ -615,14 +615,6 @@ namespace Alternet.UI.Native
         Accepted = 2,
     }
     
-    enum WindowStartLocation
-    {
-        Default = 0,
-        Manual = 1,
-        CenterScreen = 2,
-        CenterOwner = 3,
-    }
-    
     enum WindowState
     {
         Normal = 0,

@@ -17,10 +17,8 @@ namespace NativeApi.Api
         public event EventHandler? Closing;
 
         public event EventHandler StateChanged;
-        public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted;
 
         public string Title { get; set; }
-        public WindowStartLocation WindowStartLocation { get; set; }
         public bool ShowInTaskbar { get; set; }
         public bool MinimizeEnabled { get; set; }
         public bool MaximizeEnabled { get; set; }
@@ -45,9 +43,5 @@ namespace NativeApi.Api
         public IconSet? Icon { get; set; }
         public MainMenu? Menu { get; set; }
         public IntPtr WxStatusBar { get; set; }
-
-        public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) { }
-        public void RemoveInputBinding(string managedCommandId) { }
-
     }
 }

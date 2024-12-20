@@ -8,7 +8,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class WebBrowserSearchWindow : Window
+    internal class WindowWebBrowserSearch : Window
     {
         private readonly CheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
         private readonly CheckBox findEntireWordCheckBox
@@ -36,12 +36,15 @@ namespace Alternet.UI
         private readonly Button findButton = new(CommonStrings.Default.ButtonFind);
         private readonly Button findClearButton = new(CommonStrings.Default.ButtonClear);
         private readonly Button closeButton = new(CommonStrings.Default.ButtonCancel);
-        private readonly WebBrowserFindParams findParams;
 
-        private WebBrowser? webBrowser;
+        private WebBrowserFindParams findParams;
 
-        public WebBrowserSearchWindow(WebBrowser webBrowser, WebBrowserFindParams findParams)
+        public WindowWebBrowserSearch(WebBrowserFindParams? findParams = null)
         {
+            findParams ??= new();
+
+            HasSystemMenu = false;
+            IsToolWindow = true;
             ShowInTaskbar = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
@@ -51,7 +54,6 @@ namespace Alternet.UI
             findButton.IsDefault = true;
             closeButton.IsCancel = true;
 
-            this.webBrowser = webBrowser;
             this.findParams = findParams;
 
             findPanel.Parent = this;
@@ -66,7 +68,8 @@ namespace Alternet.UI
                 findEntireWordCheckBox,
                 findMatchCaseCheckBox,
                 findHighlightResultCheckBox,
-                findBackwardsCheckBox).Margin(5).Parent(findPanel);
+                findBackwardsCheckBox).Margin(5).Parent(findPanel)
+                .WhenCheckedChanged(OnCheckedChanged);
 
             HorizontalStackPanel buttonPanel = new()
             {
@@ -76,64 +79,72 @@ namespace Alternet.UI
 
             Group(findButton, findClearButton, closeButton).Margin(5).Parent(buttonPanel);
 
-            FindParamsToControls();
+            ParamsToControls(findParams);
 
             this.SetSizeToContent();
             this.MinimumSize = Size;
             StartLocation = WindowStartLocation.CenterScreen;
-
-            webBrowser.Root.Disposed += WebBrowser_Disposed;
-            webBrowser.Disposed += WebBrowser_Disposed;
+            ActiveControl = findTextBox;
         }
 
-        private void WebBrowser_Disposed(object sender, EventArgs e)
+        public virtual WebBrowser? WebBrowser => ControlUtils.FindVisibleControl<WebBrowser>();
+
+        public virtual WebBrowserFindParams FindParams
         {
-            if(webBrowser is not null)
+            get
             {
-                webBrowser.Root.Disposed -= WebBrowser_Disposed;
-                webBrowser.Disposed -= WebBrowser_Disposed;
-                webBrowser = null;
+                return findParams;
             }
 
-            Close();
+            set
+            {
+                if (findParams == value)
+                    return;
+                findParams = value;
+                ParamsToControls(value);
+            }
+        }
+
+        public virtual void ParamsToControls(WebBrowserFindParams prm)
+        {
+            findWrapCheckBox.IsChecked = prm.Wrap;
+            findEntireWordCheckBox.IsChecked = prm.EntireWord;
+            findMatchCaseCheckBox.IsChecked = prm.MatchCase;
+            findHighlightResultCheckBox.IsChecked = prm.HighlightResult;
+            findBackwardsCheckBox.IsChecked = prm.Backwards;
+        }
+
+        public virtual void ParamsFromControls(WebBrowserFindParams prm)
+        {
+            prm.Wrap = findWrapCheckBox.IsChecked;
+            prm.EntireWord = findEntireWordCheckBox.IsChecked;
+            prm.MatchCase = findMatchCaseCheckBox.IsChecked;
+            prm.HighlightResult = findHighlightResultCheckBox.IsChecked;
+            prm.Backwards = findBackwardsCheckBox.IsChecked;
+        }
+
+        private void OnCheckedChanged(object? sender, EventArgs e)
+        {
+            ParamsFromControls(findParams);
         }
 
         private void CloseButton_Click(object? sender, EventArgs e)
         {
-            FindParamsFromControls();
             Close();
         }
 
         private void FindButton_Click(object? sender, EventArgs e)
         {
-            FindParamsFromControls();
-            var findResult = webBrowser?.Find(findTextBox.Text, findParams);
+            ParamsFromControls(findParams);
+            var findResult = WebBrowser?.Find(findTextBox.Text, findParams);
             if (findResult is not null)
                 App.DebugLog("Find Result = " + findResult.ToString());
-        }
-
-        private void FindParamsToControls()
-        {
-            findWrapCheckBox.IsChecked = findParams.Wrap;
-            findEntireWordCheckBox.IsChecked = findParams.EntireWord;
-            findMatchCaseCheckBox.IsChecked = findParams.MatchCase;
-            findHighlightResultCheckBox.IsChecked = findParams.HighlightResult;
-            findBackwardsCheckBox.IsChecked = findParams.Backwards;
         }
 
         private void FindClearButton_Click(object? sender, EventArgs e)
         {
             findTextBox.Text = string.Empty;
-            webBrowser?.FindClearResult();
-        }
-
-        private void FindParamsFromControls()
-        {
-            findParams.Wrap = findWrapCheckBox.IsChecked;
-            findParams.EntireWord = findEntireWordCheckBox.IsChecked;
-            findParams.MatchCase = findMatchCaseCheckBox.IsChecked;
-            findParams.HighlightResult = findHighlightResultCheckBox.IsChecked;
-            findParams.Backwards = findBackwardsCheckBox.IsChecked;
+            WebBrowser?.FindClearResult();
         }
     }
 }

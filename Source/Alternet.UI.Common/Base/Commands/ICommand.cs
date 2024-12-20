@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
     /// <summary>
     /// An interface that allows an application author to define a method to be invoked.
     /// </summary>
+    [TypeConverter(typeof(CommandConverter))]
     public interface ICommand
     {
         /// <summary>
@@ -13,19 +15,19 @@ namespace Alternet.UI
         event EventHandler? CanExecuteChanged;
 
         /// <summary>
-        ///     Returns whether the command can be executed.
+        /// Returns whether the command can be executed.
         /// </summary>
         /// <param name="parameter">A parameter that may be used in executing the command.
         /// This parameter may be ignored by some implementations.</param>
-        /// <returns>true if the command can be executed with the given parameter and current
-        /// state. false otherwise.</returns>
-        bool CanExecute(object? parameter);
+        /// <returns>True if the command can be executed with the given parameter and current
+        /// state; False otherwise.</returns>
+        bool CanExecute(object? parameter = null);
 
         /// <summary>
-        ///     Defines the method that should be executed when the command is executed.
+        /// Defines the method that should be called when the command is executed.
         /// </summary>
-        /// <param name="parameter">A parameter that may be used in executing the command.
+        /// <param name="parameter">A parameter that may be used when the command is executed.
         /// This parameter may be ignored by some implementations.</param>
-        void Execute(object? parameter);
+        void Execute(object? parameter = null);
     }
 }

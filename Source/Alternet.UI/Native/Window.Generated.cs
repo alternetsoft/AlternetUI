@@ -39,21 +39,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.WindowStartLocation WindowStartLocation
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Window_GetWindowStartLocation_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Window_SetWindowStartLocation_(NativePointer, value);
-            }
-        }
-        
         public bool ShowInTaskbar
         {
             get
@@ -382,18 +367,6 @@ namespace Alternet.UI.Native
             NativeApi.Window_Activate_(NativePointer);
         }
         
-        public void AddInputBinding(string managedCommandId, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifiers)
-        {
-            CheckDisposed();
-            NativeApi.Window_AddInputBinding_(NativePointer, managedCommandId, key, modifiers);
-        }
-        
-        public void RemoveInputBinding(string managedCommandId)
-        {
-            CheckDisposed();
-            NativeApi.Window_RemoveInputBinding_(NativePointer, managedCommandId);
-        }
-        
         static GCHandle eventCallbackGCHandle;
         public static Window? GlobalObject;
         
@@ -436,18 +409,12 @@ namespace Alternet.UI.Native
                 {
                     StateChanged?.Invoke(); return IntPtr.Zero;
                 }
-                case NativeApi.WindowEvent.InputBindingCommandExecuted:
-                {
-                    var ea = new NativeEventArgs<CommandEventData>(MarshalEx.PtrToStructure<CommandEventData>(parameter));
-                    InputBindingCommandExecuted?.Invoke(this, ea); return ea.Result;
-                }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }
         
         public event EventHandler<CancelEventArgs>? Closing;
         public Action? StateChanged;
-        public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -461,7 +428,6 @@ namespace Alternet.UI.Native
             {
                 Closing,
                 StateChanged,
-                InputBindingCommandExecuted,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -475,12 +441,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetTitle_(IntPtr obj, string value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.WindowStartLocation Window_GetWindowStartLocation_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetWindowStartLocation_(IntPtr obj, Alternet.UI.WindowStartLocation value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetShowInTaskbar_(IntPtr obj);
@@ -613,12 +573,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Activate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_AddInputBinding_(IntPtr obj, string managedCommandId, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifiers);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_RemoveInputBinding_(IntPtr obj, string managedCommandId);
             
         }
     }

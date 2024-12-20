@@ -129,6 +129,12 @@ namespace Alternet.UI
 
         private void ApplyShortcut()
         {
+            if (!Control.IsShortcutEnabled)
+            {
+                NativeControl.SetShortcut(Key.None, ModifierKeys.None);
+                return;
+            }
+
             var shortcut = Control.Shortcut;
 
             Key key;

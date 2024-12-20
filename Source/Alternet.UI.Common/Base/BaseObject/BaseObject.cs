@@ -180,6 +180,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified action inside try catch block silently.
+        /// </summary>
+        /// <param name="action">Action to call.</param>
+        public static void TryCatchSilent(Action? action)
+        {
+            try
+            {
+                action?.Invoke();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Calls the specified action inside try catch block when DEBUG is specified; otherwise
         /// simply calls the action without try catch block.
         /// </summary>
