@@ -7,8 +7,9 @@ namespace Alternet.UI
     /// </summary>
     public class Command : BaseObject, ICommand
     {
-        private readonly ExecuteDelegate? executeDelegate;
-        private readonly CanExecuteDelegate? canExecuteDelegate;
+        private ExecuteDelegate? executeDelegate;
+        private CanExecuteDelegate? canExecuteDelegate;
+        private bool? canExecuteOverride;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Command"/> class.
@@ -60,6 +61,61 @@ namespace Alternet.UI
         public event ExecuteDelegate? BeforeExecute;
 
         /// <summary>
+        /// Gets or sets execute action.
+        /// </summary>
+        public virtual ExecuteDelegate? ExecuteAction
+        {
+            get
+            {
+                return executeDelegate;
+            }
+
+            set
+            {
+                executeDelegate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets 'CanExecute' function.
+        /// </summary>
+        public virtual CanExecuteDelegate? CanExecuteFunc
+        {
+            get
+            {
+                return canExecuteDelegate;
+            }
+
+            set
+            {
+                if (canExecuteDelegate == value)
+                    return;
+                canExecuteDelegate = value;
+                RaiseCanExecuteChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets override for 'CanExecute'. If this property is not Null,
+        /// it is used inside <see cref="CanExecute"/> method.
+        /// </summary>
+        public virtual bool? CanExecuteOverride
+        {
+            get
+            {
+                return canExecuteOverride;
+            }
+
+            set
+            {
+                if (canExecuteOverride == value)
+                    return;
+                canExecuteOverride = value;
+                RaiseCanExecuteChanged();
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="CanExecuteChanged"/> event.
         /// </summary>
         public virtual void RaiseCanExecuteChanged()
@@ -70,6 +126,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual bool CanExecute(object? parameter)
         {
+            if (CanExecuteOverride is not null)
+                return CanExecuteOverride.Value;
+
             if (canExecuteDelegate != null)
                 return canExecuteDelegate(parameter);
 
