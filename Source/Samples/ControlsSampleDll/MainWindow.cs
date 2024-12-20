@@ -16,6 +16,13 @@ namespace ControlsSample
             AddGlobalWindowNotification(new GlobalFormActivity());
         }
 
+        protected override void OnClosing(WindowClosingEventArgs e)
+        {
+            base.OnClosing(e);
+
+            FormUtils.ExecuteCommandCloseOtherWindows(this);
+        }
+
         protected override void AddPages()
         {
             try
