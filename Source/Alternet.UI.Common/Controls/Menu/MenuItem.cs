@@ -13,7 +13,6 @@ namespace Alternet.UI
     {
         private KeyGesture? shortcut;
         private MenuItemRole? role;
-        private bool preCommandEnabledValue = true;
         private bool isChecked;
         private Action? action;
         private ImageSet? image;
@@ -232,11 +231,7 @@ namespace Alternet.UI
             get => action;
             set
             {
-                if (action != null)
-                    Click -= OnClickAction;
                 action = value;
-                if (action != null)
-                    Click += OnClickAction;
             }
         }
 
@@ -433,12 +428,18 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="Opened"/> event.
         /// </summary>
-        public void RaiseOpened() => Opened?.Invoke(this, EventArgs.Empty);
+        public void RaiseOpened()
+        {
+            Opened?.Invoke(this, EventArgs.Empty);
+        }
 
         /// <summary>
         /// Raises <see cref="Closed"/> event.
         /// </summary>
-        public void RaiseClosed() => Closed?.Invoke(this, EventArgs.Empty);
+        public void RaiseClosed()
+        {
+            Closed?.Invoke(this, EventArgs.Empty);
+        }
 
         /// <summary>
         /// Raises <see cref="Highlighted"/> event.
@@ -469,7 +470,15 @@ namespace Alternet.UI
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
+            action?.Invoke();
             CommandHelpers.ExecuteCommandSource(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            Command = null;
+            base.DisposeManaged();
         }
 
         /// <inheritdoc/>
@@ -481,7 +490,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called when <see cref="Command"/> property is changed.
         /// </summary>
-        protected virtual void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
                 UnhookCommand(oldCommand);
@@ -489,30 +498,18 @@ namespace Alternet.UI
             if (newCommand != null)
                 HookCommand(newCommand);
 
-            if (oldCommand != null && newCommand != null)
-            {
-                Enabled = preCommandEnabledValue;
-            }
-            else
-            {
-                if (oldCommand == null && newCommand != null)
-                    preCommandEnabledValue = Enabled;
-
-                UpdateCanExecute();
-            }
+            UpdateCanExecute();
         }
 
         private void UnhookCommand(ICommand command)
         {
-            CanExecuteChangedEventManager.RemoveHandler(
-                command,
-                OnCanExecuteChanged);
+            command.CanExecuteChanged -= OnCanExecuteChanged;
             UpdateCanExecute();
         }
 
         private void HookCommand(ICommand command)
         {
-            CanExecuteChangedEventManager.AddHandler(command, OnCanExecuteChanged);
+            command.CanExecuteChanged += OnCanExecuteChanged;
             UpdateCanExecute();
         }
 
@@ -525,11 +522,6 @@ namespace Alternet.UI
         {
             if (Command != null)
                 Enabled = CommandHelpers.CanExecuteCommandSource(this);
-        }
-
-        private void OnClickAction(object? sender, EventArgs? e)
-        {
-            action?.Invoke();
         }
     }
 }
