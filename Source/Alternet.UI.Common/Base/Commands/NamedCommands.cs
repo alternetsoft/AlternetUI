@@ -136,6 +136,8 @@ namespace Alternet.UI
                     {
                         command.CanExecuteChanged += Command_CanExecuteChanged;
                     }
+
+                    RaiseCanExecuteChanged();
                 }
             }
 
@@ -151,7 +153,12 @@ namespace Alternet.UI
 
             private void Command_CanExecuteChanged(object sender, EventArgs e)
             {
-                CanExecuteChanged?.Invoke(this, e);
+                RaiseCanExecuteChanged();
+            }
+
+            private void RaiseCanExecuteChanged()
+            {
+                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }

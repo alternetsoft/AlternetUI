@@ -35,10 +35,26 @@ namespace Alternet.UI
                     return;
                 commandName = value;
                 command = null;
+                RaiseCanExecuteChanged();
             }
         }
 
-        private ICommand Command => command ??= NamedCommands.Default.GetCommand(CommandName);
+        private ICommand Command
+        {
+            get
+            {
+                if (command is null)
+                {
+                    command = NamedCommands.Default.GetCommand(CommandName);
+                    command.CanExecuteChanged += (s, e) =>
+                    {
+                        RaiseCanExecuteChanged();
+                    };
+                }
+
+                return command;
+            }
+        }
 
         /// <inheritdoc/>
         public override bool CanExecute(object? parameter)
