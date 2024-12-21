@@ -100,6 +100,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public void Dispose()
         {
+            if (IsDisposed)
+                return;
+
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
