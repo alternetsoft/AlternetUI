@@ -549,6 +549,12 @@ namespace Alternet.UI
         public static bool HasForms => HasApplication && Current.Windows.Count > 0;
 
         /// <summary>
+        /// Gets whether application has visible forms.
+        /// </summary>
+        public static bool HasVisibleForms => HasForms
+            && Current.VisibleWindows.FirstOrDefault() != null;
+
+        /// <summary>
         /// Gets the instantiated windows in the application.
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
@@ -1703,12 +1709,6 @@ namespace Alternet.UI
             if (MainWindow == window)
                 MainWindow = null;
             windows.Remove(window);
-            if (windows.Count == 0 || !VisibleWindows.Any())
-            {
-                DoEvents();
-                App.Handler.ExitMainLoop();
-                Exit();
-            }
         }
 
         /// <summary>
