@@ -67,12 +67,14 @@ namespace Alternet.UI
         public virtual IObjectToString DoubleToString { get; set; } = new DoubleToStringConverter();
 
         /// <summary>
-        /// Gets default <see cref="IObjectToString"/> implementation for the <see cref="decimal"/> type.
+        /// Gets default <see cref="IObjectToString"/>
+        /// implementation for the <see cref="decimal"/> type.
         /// </summary>
         public virtual IObjectToString DecimalToString { get; set; } = new DecimalToStringConverter();
 
         /// <summary>
-        /// Gets default <see cref="IObjectToString"/> implementation for the <see cref="DateTime"/> type.
+        /// Gets default <see cref="IObjectToString"/>
+        /// implementation for the <see cref="DateTime"/> type.
         /// </summary>
         public virtual IObjectToString DateTimeToString { get; set; } = new DateTimeToStringConverter();
 

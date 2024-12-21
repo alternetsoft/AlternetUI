@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// </summary>
         public static NamedCommands Default = new();
 
-        private FlagsAndAttributes<string, CommandEntry?> commands = new();
+        private readonly FlagsAndAttributes<string, CommandEntry?> commands = new();
 
         static NamedCommands()
         {
