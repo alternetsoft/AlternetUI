@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,28 @@ namespace Alternet.UI
     /// </summary>
     public class ObjectToStringFactory : BaseObject
     {
+        /// <summary>
+        /// Gets <see cref="Type"/> to <see cref="TypeConverter"/> dictionary.
+        /// </summary>
+        public static readonly IndexedValues<Type, TypeConverter> Converters = new();
+
+        /// <summary>
+        /// Gets or sets whether to handle <see cref="TypeDescriptor.Refreshed"/> event.
+        /// Default is False.
+        /// </summary>
+        public static bool HandleTypeDescriptorRefreshed = true;
+
+        static ObjectToStringFactory()
+        {
+            TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
+
+            void TypeDescriptorRefreshed(RefreshEventArgs e)
+            {
+                if(HandleTypeDescriptorRefreshed)
+                    Converters.Clear();
+            }
+        }
+
         /// <summary>
         /// Gets or sets default <see cref="ObjectToStringFactory"/> implementation.
         /// </summary>
@@ -111,6 +135,67 @@ namespace Alternet.UI
         public virtual IObjectToString StringToString { get; set; } = new StringToStringConverter();
 
         /// <summary>
+        /// Gets <see cref="TypeConverter"/> object for the specified type.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        /// <param name="toString">Whether conversion is from object to string. If not Null,
+        /// type converter is quieried whether it can convert to/from string.
+        /// If Null, no such check is performed.</param>
+        public virtual TypeConverter? GetTypeConverter(Type type, bool? toString = true)
+        {
+            if (type is null)
+                return null;
+
+            var typeConverter = Converters.GetValue(type, Internal);
+
+            TypeConverter? Internal()
+            {
+                var result = TypeDescriptor.GetConverter(type);
+                return result;
+            }
+
+            if (typeConverter is null)
+                return null;
+
+            if(toString is not null)
+            {
+                var canConvert = toString.Value
+                    ? typeConverter.CanConvertTo(typeof(string))
+                    : typeConverter.CanConvertFrom(typeof(string));
+                if (!canConvert)
+                    return null;
+            }
+
+            return typeConverter;
+        }
+
+        /// <summary>
+        /// Creates <see cref="IObjectToString"/> implementation
+        /// for the specified type converter.
+        /// </summary>
+        /// <param name="converter">Type converter.</param>
+        /// <returns></returns>
+        public virtual IObjectToString? CreateAdapter(TypeConverter? converter)
+        {
+            if (converter is null)
+                return null;
+            return new TypeConverterAdapter(converter);
+        }
+
+        /// <summary>
+        /// Gets <see cref="IObjectToString"/> implementation
+        /// for the specified type using adapted <see cref="TypeConverter"/>
+        /// which is obtained using <see cref="GetTypeConverter"/>.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        public virtual IObjectToString? CreateAdapterForTypeConverter(Type type)
+        {
+            var typeConverter = GetTypeConverter(type);
+            var result = CreateAdapter(typeConverter);
+            return result;
+        }
+
+        /// <summary>
         /// Gets default <see cref="IObjectToString"/> implementation for the
         /// specified <see cref="TypeCode"/>.
         /// </summary>
@@ -159,415 +244,531 @@ namespace Alternet.UI
             }
         }
 
-        internal class SByteToStringConverter : IObjectToString
+        internal abstract class BaseToStringConverter : IObjectToString
         {
-            public string? ToString(object value)
+            public virtual string? ToString(object value)
+            {
+                return value.ToString();
+            }
+
+            public virtual string? ToString(object value, IFormatProvider? provider)
+            {
+                return ToString();
+            }
+
+            public virtual string? ToString(object value, string? format)
+            {
+                return ToString();
+            }
+
+            public virtual string? ToString(object value, string? format, IFormatProvider? provider)
+            {
+                return ToString();
+            }
+
+            public virtual string? ToString(
+                object value,
+                ITypeDescriptorContext? context,
+                CultureInfo? culture,
+                bool useInvariantConversion)
+            {
+                return ToString(value);
+            }
+        }
+
+        internal class SByteToStringConverter : BaseToStringConverter, IObjectToString
+        {
+            public override string? ToString(object value)
             {
                 return ((sbyte)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((sbyte)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((sbyte)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((sbyte)value).ToString(format, provider);
             }
         }
 
-        internal class ByteToStringConverter : IObjectToString
+        internal class ByteToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((byte)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((byte)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((byte)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((byte)value).ToString(format, provider);
             }
         }
 
-        internal class Int16ToStringConverter : IObjectToString
+        internal class Int16ToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((short)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((short)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((short)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((short)value).ToString(format, provider);
             }
         }
 
-        internal class UInt16ToStringConverter : IObjectToString
+        internal class UInt16ToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((ushort)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((ushort)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((ushort)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((ushort)value).ToString(format, provider);
             }
         }
 
-        internal class Int32ToStringConverter : IObjectToString
+        internal class Int32ToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((int)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((int)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((int)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((int)value).ToString(format, provider);
             }
         }
 
-        internal class UInt32ToStringConverter : IObjectToString
+        internal class UInt32ToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((uint)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((uint)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((uint)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((uint)value).ToString(format, provider);
             }
         }
 
-        internal class Int64ToStringConverter : IObjectToString
+        internal class Int64ToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((long)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((long)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((long)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((long)value).ToString(format, provider);
             }
         }
 
-        internal class UInt64ToStringConverter : IObjectToString
+        internal class UInt64ToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((ulong)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((ulong)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((ulong)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((ulong)value).ToString(format, provider);
             }
         }
 
-        internal class SingleToStringConverter : IObjectToString
+        internal class SingleToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((float)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((float)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((float)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((float)value).ToString(format, provider);
             }
         }
 
-        internal class DoubleToStringConverter : IObjectToString
+        internal class DoubleToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((double)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((double)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((double)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((double)value).ToString(format, provider);
             }
         }
 
-        internal class DecimalToStringConverter : IObjectToString
+        internal class DecimalToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((decimal)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((decimal)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((decimal)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((decimal)value).ToString(format, provider);
             }
         }
 
-        internal class DateTimeToStringConverter : IObjectToString
+        internal class DateTimeToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((DateTime)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((DateTime)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((DateTime)value).ToString(format);
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((DateTime)value).ToString(format, provider);
             }
         }
 
-        internal class EmptyToStringConverter : IObjectToString
+        internal class EmptyToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return value.ToString();
             }
         }
 
-        internal class DBNullToStringConverter : IObjectToString
+        internal class DBNullToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return value.ToString();
             }
         }
 
-        internal class ObjectToStringConverter : IObjectToString
+        internal class ObjectToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return value.ToString();
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return value.ToString();
             }
         }
 
-        internal class BooleanToStringConverter : IObjectToString
+        internal class BooleanToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((bool)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((bool)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((bool)value).ToString();
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((bool)value).ToString(provider);
             }
         }
 
-        internal class CharToStringConverter : IObjectToString
+        internal class CharToStringConverter : BaseToStringConverter, IObjectToString
         {
-            public string? ToString(object value)
+            public override string? ToString(object value)
             {
                 return ((char)value).ToString();
             }
 
-            public string? ToString(object value, IFormatProvider? provider)
+            public override string? ToString(object value, IFormatProvider? provider)
             {
                 return ((char)value).ToString(provider);
             }
 
-            public string? ToString(object value, string? format)
+            public override string? ToString(object value, string? format)
             {
                 return ((char)value).ToString();
             }
 
-            public string? ToString(object value, string? format, IFormatProvider? provider)
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return ((char)value).ToString(provider);
             }
         }
 
-        internal class StringToStringConverter : IObjectToString
+        internal class TypeConverterAdapter : IObjectToString
         {
+            private readonly TypeConverter converter;
+
+            public TypeConverterAdapter(TypeConverter converter)
+            {
+                this.converter = converter;
+            }
+
+            public string? ToString(
+                object value,
+                ITypeDescriptorContext? context,
+                CultureInfo? culture,
+                bool useInvariantConversion)
+            {
+                string? result;
+
+                if (useInvariantConversion)
+                    result = InvariantConversion();
+                else
+                    result = Conversion();
+
+                string? InvariantConversion()
+                {
+                    if (context is not null)
+                    {
+                        return converter.ConvertToInvariantString(context, value);
+                    }
+                    else
+                    {
+                        return converter.ConvertToInvariantString(value);
+                    }
+                }
+
+                string? Conversion()
+                {
+                    if (context is null)
+                    {
+                        if (culture is null)
+                        {
+                            return converter.ConvertToString(value);
+                        }
+                        else
+                        {
+                            return converter.ConvertToString(null, culture, value);
+                        }
+                    }
+                    else
+                    {
+                        if (culture is null)
+                        {
+                            return converter.ConvertToString(context, value);
+                        }
+                        else
+                        {
+                            return converter.ConvertToString(context, culture, value);
+                        }
+                    }
+                }
+
+                return result;
+            }
+
             public string? ToString(object value)
             {
-                return (string)value;
+                return ToString(value, null, null, false);
             }
 
             public string? ToString(object value, IFormatProvider? provider)
             {
-                return (string)value;
+                return ToString(value);
             }
 
             public string? ToString(object value, string? format)
             {
-                return (string)value;
+                return ToString(value);
             }
 
             public string? ToString(object value, string? format, IFormatProvider? provider)
+            {
+                return ToString(value);
+            }
+        }
+
+        internal class StringToStringConverter : BaseToStringConverter, IObjectToString
+        {
+            public override string? ToString(object value)
+            {
+                return (string)value;
+            }
+
+            public override string? ToString(object value, IFormatProvider? provider)
+            {
+                return (string)value;
+            }
+
+            public override string? ToString(object value, string? format)
+            {
+                return (string)value;
+            }
+
+            public override string? ToString(object value, string? format, IFormatProvider? provider)
             {
                 return (string)value;
             }

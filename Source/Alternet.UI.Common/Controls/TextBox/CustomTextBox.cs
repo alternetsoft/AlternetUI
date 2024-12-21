@@ -61,7 +61,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default <see cref="Color"/> that can be used
         /// as a background color for the <see cref="TextBox"/> in cases when
-        /// application needs to report user an error in <see cref="AbstractControl.Text"/> property.
+        /// application needs to report user an error in
+        /// <see cref="AbstractControl.Text"/> property.
         /// </summary>
         public static Color DefaultErrorBackgroundColor { get; set; } = Color.Red;
 
@@ -96,13 +97,15 @@ namespace Alternet.UI
         /// Gets or sets default value for the <see cref="ResetErrorBackgroundMethod"/>
         /// property.
         /// </summary>
-        public static ResetColorType DefaultResetErrorBackgroundMethod { get; set; } = ResetColorType.Auto;
+        public static ResetColorType DefaultResetErrorBackgroundMethod { get; set; }
+            = ResetColorType.Auto;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="ResetErrorForegroundMethod"/>
         /// property.
         /// </summary>
-        public static ResetColorType DefaultResetErrorForegroundMethod { get; set; } = ResetColorType.Auto;
+        public static ResetColorType DefaultResetErrorForegroundMethod { get; set; }
+            = ResetColorType.Auto;
 
         /// <inheritdoc/>
         public override bool HasErrors
@@ -945,10 +948,21 @@ namespace Alternet.UI
 
             var type = value.GetType();
             DataType ??= type;
-            var typeCode = AssemblyUtils.GetRealTypeCode(type);
+            var converter = Converter;
 
-            var converter = Converter ??
-                ObjectToStringFactory.Default.GetConverter(typeCode);
+            if (converter is null)
+            {
+                /*
+                converter = ObjectToStringFactory.Default.CreateAdapterForTypeConverter(type);
+                */
+            }
+
+            if (converter is null)
+            {
+                var typeCode = AssemblyUtils.GetRealTypeCode(type);
+                converter = ObjectToStringFactory.Default.GetConverter(typeCode);
+            }
+
             if (converter is null)
             {
                 Text = value.ToString() ?? string.Empty;
