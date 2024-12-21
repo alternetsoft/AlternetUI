@@ -1,24 +1,15 @@
-#pragma warning disable
-#nullable disable
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//  Contents:  TypeConverter to ValueSerializer adapter
-
 using System.ComponentModel;
-
 
 namespace Alternet.UI.Port
 {
     /// <summary>
-    /// The TypeConverter value serializer uses a TypeConverter to implement the translation
+    /// Uses a TypeConverter to implement the translation
     /// to and from a string. The caller of the constructor must ensure the TypeConverter supports
     /// converstion to and from string.
     /// </summary>
     internal sealed class TypeConverterValueSerializer : ValueSerializer
     {
-        private TypeConverter converter;
+        private readonly TypeConverter converter;
 
         public TypeConverterValueSerializer(TypeConverter converter)
         {

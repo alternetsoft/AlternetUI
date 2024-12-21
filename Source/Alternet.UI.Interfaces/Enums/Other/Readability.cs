@@ -1,7 +1,9 @@
-#pragma warning disable
 namespace Alternet.UI
 {
-    internal enum Readability
+    /// <summary>
+    /// Enumerates possible readability kinds for the targeted value.
+    /// </summary>
+    public enum Readability
     {
         /// <summary>
         /// Targeted value is not readable.
@@ -14,7 +16,7 @@ namespace Alternet.UI
         Readable = 1,
 
         /// <summary>
-        /// Targeted value's readability inherites from parent nodes.
+        /// Targeted value's readability inherites from parent.
         /// </summary>
         Inherit = 2,
     }

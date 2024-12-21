@@ -1,23 +1,15 @@
-#pragma warning disable
-#nullable disable
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//  Contents:  Limited converter for string <--> System.Uri
+using System;
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
+using System.Globalization;
+using System.Reflection;
 
 namespace Alternet.UI.Port
 {
-    using System;
-    using System.ComponentModel;
-    using System.ComponentModel.Design.Serialization;
-    using System.Globalization;
-    using System.Reflection;
-
     internal class TypeUriConverter : TypeConverter
     {
         public TypeUriConverter()
-        { 
+        {
         }
 
         /// <inheritdoc />
@@ -34,14 +26,18 @@ namespace Alternet.UI.Port
         /// <inheritdoc />
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            return 
+            return
                 destinationType == typeof(InstanceDescriptor) ||
                 destinationType == typeof(string) ||
                 destinationType == typeof(Uri);
         }
 
         /// <inheritdoc />
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(
+            ITypeDescriptorContext context,
+            CultureInfo culture,
+            object value,
+            Type destinationType)
         {
             var uri = value as Uri;
             if (uri != null)
@@ -54,17 +50,14 @@ namespace Alternet.UI.Port
 
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    var ci = 
-                        typeof(Uri)
-                        .GetConstructor(
-                            BindingFlags.Public | BindingFlags.Instance, 
-                            null, 
-                            new Type[] { typeof(string), typeof(UriKind) }, 
+                    var ci = typeof(Uri).GetConstructor(
+                            BindingFlags.Public | BindingFlags.Instance,
+                            null,
+                            new Type[] { typeof(string), typeof(UriKind) },
                             null);
-                    return 
-                        new InstanceDescriptor(
-                            ci, 
-                            new object[] { uri.OriginalString, uriKind});
+                    return new InstanceDescriptor(
+                            ci,
+                            new object[] { uri.OriginalString, uriKind });
                 }
 
                 if (destinationType == typeof(string))
@@ -82,10 +75,12 @@ namespace Alternet.UI.Port
         }
 
         /// <inheritdoc />
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public override object ConvertFrom(
+            ITypeDescriptorContext context,
+            CultureInfo culture,
+            object value)
         {
-            var uriString = value as string;
-            if (uriString != null)
+            if (value is string uriString)
             {
                 if (Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
                 {
@@ -105,7 +100,9 @@ namespace Alternet.UI.Port
             {
                 if (uri.IsWellFormedOriginalString())
                 {
-                    return new Uri(uri.OriginalString, uri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
+                    return new Uri(
+                        uri.OriginalString,
+                        uri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
                 }
 
                 return new Uri(uri.OriginalString, UriKind.RelativeOrAbsolute);
@@ -117,8 +114,7 @@ namespace Alternet.UI.Port
         /// <inheritdoc />
         public override bool IsValid(ITypeDescriptorContext context, object value)
         {
-            var uriString = value as string;
-            if (uriString != null)
+            if (value is string uriString)
             {
                 return Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out _);
             }

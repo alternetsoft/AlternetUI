@@ -4,12 +4,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Description: Specifies that the whitespace surrounding an element should be trimmed.
-//
-
 using System;
 using System.IO;
 using System.Reflection;
@@ -95,9 +89,11 @@ namespace Alternet.UI.Port
                 // ifdef magic to save compiler update.
                 // the fix below is for an FxCop rule about non-CLR exceptions.
                 // however this rule has now been removed.
-                catch (Exception e)   // Load throws generic Exceptions, so this can't be made more specific.
+                catch (Exception e)   
                 {
-                    if (CriticalExceptions.IsCriticalException(e))
+                    // Load throws generic Exceptions, so this can't be made more specific.
+
+                    if (ExceptionUtils.IsCriticalException(e))
                     {
                         throw;
                     }
@@ -135,8 +131,10 @@ namespace Alternet.UI.Port
             Type origType = type;
             Debug.Assert(null != type, "Type passed to IsInternalType is null");
 
-            // If this is an internal nested type or a parent nested public type, walk up the declaring types.
-            while (type.IsNestedAssembly || type.IsNestedFamORAssem || (origType != type && type.IsNestedPublic))
+            // If this is an internal nested type or a parent nested public type,
+            // walk up the declaring types.
+            while (type.IsNestedAssembly || type.IsNestedFamORAssem
+                || (origType != type && type.IsNestedPublic))
             {
                 type = type.DeclaringType;
             }
@@ -218,12 +216,20 @@ namespace Alternet.UI.Port
         internal static string GetTypeConverterAttributeData(Type type, out Type converterType)
         {
             bool foundTC = false;
-            return GetCustomAttributeData(type, GetSystemType(typeof(TypeConverterAttribute)), true, ref foundTC, out converterType);
+            return GetCustomAttributeData(
+                type,
+                GetSystemType(typeof(TypeConverterAttribute)),
+                true,
+                ref foundTC,
+                out converterType);
         }
 
         internal static string GetTypeConverterAttributeData(MemberInfo mi, out Type converterType)
         {
-            return GetCustomAttributeData(mi, GetSystemType(typeof(TypeConverterAttribute)), out converterType);
+            return GetCustomAttributeData(
+                mi,
+                GetSystemType(typeof(TypeConverterAttribute)),
+                out converterType);
         }
 
         // Given a ReflectionOnlyLoaded member, returns the value of a metadata attribute of
@@ -296,13 +302,21 @@ namespace Alternet.UI.Port
                     if (cad.Constructor.ReflectedType == attrType)
                     {
                         attributeDataFound = true;
-                        attributeDataString = GetCustomAttributeData(cad, attrType, out typeValue, allowTypeAlso, false, false);
+                        attributeDataString = GetCustomAttributeData(
+                            cad,
+                            attrType,
+                            out typeValue,
+                            allowTypeAlso,
+                            false,
+                            false);
                     }
                 }
 
                 if (!attributeDataFound)
                 {
-                    currentType = currentType.BaseType; // object.BaseType is null, used as terminating condition for the while() loop.
+                    currentType = currentType.BaseType;
+                    
+                    // object.BaseType is null, used as terminating condition for the while() loop.
                 }
             }
 

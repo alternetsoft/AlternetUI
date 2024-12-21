@@ -19,7 +19,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        [Localizability(LocalizationCategory.NeverLocalize)]
         public virtual object? DataContext
         {
             get;
@@ -35,25 +34,26 @@ namespace Alternet.UI
             LogicalChildrenCollection.ToArray();
 
         /// <summary>
-        /// Gets logical parent.
-        /// </summary>
-        [Browsable(false)]
-        public virtual FrameworkElement? LogicalParent
-        {
-            get => logicalParent;
-            internal set
-            {
-                logicalParent = value;
-            }
-        }
-
-        /// <summary>
         /// Returns a collection of elements which can be treated as "logical children" of
         /// this element.
         /// </summary>
         [Browsable(false)]
         public virtual IEnumerable<FrameworkElement> LogicalChildrenCollection =>
             Array.Empty<FrameworkElement>();
+
+        /// <summary>
+        /// Gets logical parent.
+        /// </summary>
+        [Browsable(false)]
+        internal virtual FrameworkElement? LogicalParent
+        {
+            get => logicalParent;
+
+            set
+            {
+                logicalParent = value;
+            }
+        }
 
         /// <summary>
         /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with

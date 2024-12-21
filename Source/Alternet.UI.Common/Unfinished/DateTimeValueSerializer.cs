@@ -1,8 +1,3 @@
-#pragma warning disable
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-#nullable disable
 using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -17,15 +12,12 @@ namespace Alternet.UI.Port
     /// </summary>
     internal class DateTimeValueSerializer : ValueSerializer
     {
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="System.ComponentModel.DateTimeConverter"></see> class.
-        /// </summary>
         public DateTimeValueSerializer()
         {
         }
 
         /// <summary>
-        ///     Indicate that we do convert DateTime's from string.
+        /// Indicates that we do convert DateTime's from string.
         /// </summary>
         public override bool CanConvertFromString(string value, IValueSerializerContext context)
         {
@@ -33,9 +25,8 @@ namespace Alternet.UI.Port
         }
 
         /// <summary>
-        ///     Indicate that we do convert a DateTime to string.
+        /// Indicates that we do convert a DateTime to string.
         /// </summary>
-
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             if (value is not DateTime)
@@ -45,10 +36,9 @@ namespace Alternet.UI.Port
         }
 
         /// <summary>
-        ///     Converts the given value object to a <see cref="T:System.DateTime"></see>.
+        /// Converts the given value object to a <see cref="DateTime"></see>.
         /// </summary>
-
-        public override object ConvertFromString(string value, IValueSerializerContext context)
+        public override object ConvertFromString(string? value, IValueSerializerContext context)
         {
             // Validate and clean up input.
             if (value == null)
@@ -65,7 +55,8 @@ namespace Alternet.UI.Port
             DateTimeFormatInfo dateTimeFormatInfo;
 
             dateTimeFormatInfo =
-                (DateTimeFormatInfo)TypeConverterHelper.InvariantEnglishUS.GetFormat(typeof(DateTimeFormatInfo));
+                (DateTimeFormatInfo)TypeConverterHelper.InvariantEnglishUS.GetFormat(
+                    typeof(DateTimeFormatInfo));
 
             // Set the formatting style for round-tripping and to trim the string.
             DateTimeStyles dateTimeStyles = DateTimeStyles.RoundtripKind
@@ -74,7 +65,6 @@ namespace Alternet.UI.Port
                       | DateTimeStyles.AllowTrailingWhite;
 
             // Create the DateTime, using the DateTimeInfo if possible, and the culture otherwise.
-
             if (dateTimeFormatInfo != null)
             {
                 return DateTime.Parse(value, dateTimeFormatInfo, dateTimeStyles);
@@ -87,11 +77,11 @@ namespace Alternet.UI.Port
         }
 
         /// <summary>
-        ///     Converts the given value object to a <see cref="DateTime"></see> using the arguments.
+        /// Converts the given value object to a <see cref="DateTime"></see> using the arguments.
         /// </summary>
-        public override string ConvertToString(object value, IValueSerializerContext context)
+        public override string ConvertToString(object? value, IValueSerializerContext context)
         {
-            if (value == null || !(value is DateTime))
+            if (value == null || value is not DateTime)
             {
                 throw GetConvertToException(value, typeof(string));
             }
@@ -99,11 +89,11 @@ namespace Alternet.UI.Port
             DateTime dateTime = (DateTime)value;
 
             // Build up the format string to be used in DateTime.ToString()
-            StringBuilder formatString = new StringBuilder("yyyy-MM-dd");
+            StringBuilder formatString = new("yyyy-MM-dd");
 
             if (dateTime.TimeOfDay == TimeSpan.Zero)
             {
-                // The time portion of this DateTime is exactly at midnight.  
+                // The time portion of this DateTime is exactly at midnight.
                 // We don't include the time component if the Kind is unspecified.
                 // Otherwise, we're going to be including the time zone info, so'll
                 // we'll have to include the time.
