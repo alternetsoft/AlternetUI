@@ -1037,7 +1037,6 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_TEXT, &Control::OnTextChanged, this);
         _wxWindow->Bind(wxEVT_ACTIVATE, &Control::OnActivate, this);
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
-        //_wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         _wxWindow->Bind(wxEVT_DESTROY, &Control::OnDestroy, this);
         _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
@@ -1272,9 +1271,6 @@ namespace Alternet::UI
 
     void Control::ShowCore()
     {
-        //if (Application::GetCurrent()->GetInUixmlPreviewerMode())
-        //    return;
-
         GetWxWindow()->Show();
     }
 
@@ -1522,20 +1518,6 @@ namespace Alternet::UI
         }
 
         event.SetCursor(_cursor);
-        /*event.Skip();*/
-
-        /*
-    // if we don't do it, the resizing cursor might be set for child window:
-    // and like this we explicitly say that our cursor should not be used for
-    // children windows which overlap us
-
-    if ( SashHitTest(event.GetX(), event.GetY()) != wxSASH_NONE)
-    {
-        // default processing is ok
-        event.Skip();
-    }
-    //else: do nothing, in particular, don't call Skip()
-        */
     }
 
     void Control::OnIdle(wxIdleEvent& event)
@@ -1547,22 +1529,6 @@ namespace Alternet::UI
     void Control::OnPaint(wxPaintEvent& event)
     {
         event.Skip();
-
-        /*if (GetUserPaint())
-        {
-            wxPaintDC dc(GetWxWindow());
-            
-            auto background = GetBackgroundColor();
-            wxColor color;
-            if (background.IsEmpty())
-                color = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE);
-            else
-                color = background;
-            
-            dc.SetBackground(wxBrush(color));
-            dc.Clear();
-        }*/
-
         RaiseEvent(ControlEvent::Paint);
     }
 

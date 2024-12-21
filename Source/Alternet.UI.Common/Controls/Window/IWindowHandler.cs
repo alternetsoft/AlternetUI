@@ -72,9 +72,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Window.State"/>
         WindowState State { get; set; }
 
-        /// <inheritdoc cref="Window.OwnedWindows"/>
-        Window[] OwnedWindows { get; }
-
         /// <inheritdoc cref="DialogWindow.ModalResult"/>
         ModalResult ModalResult { get; set; }
 
@@ -87,12 +84,6 @@ namespace Alternet.UI
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
         new Window Control { get; }
-
-        /// <summary>
-        /// Sets window owner.
-        /// </summary>
-        /// <param name="owner">Window owner.</param>
-        void SetOwner(Window? owner);
 
         /// <summary>
         /// Shows window as a modal dialog.

@@ -418,50 +418,6 @@ ALTERNET_UI_API void Window_SetWxStatusBar_(Window* obj, void* value)
     #endif
 }
 
-ALTERNET_UI_API void* Window_OpenOwnedWindowsArray_(Window* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return obj->OpenOwnedWindowsArray();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int Window_GetOwnedWindowsItemCount_(Window* obj, void* array)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetOwnedWindowsItemCount(array);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Window* Window_GetOwnedWindowsItemAt_(Window* obj, void* array, int index)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Window*>([&](){
-    #endif
-        return obj->GetOwnedWindowsItemAt(array, index);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Window_CloseOwnedWindowsArray_(Window* obj, void* array)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->CloseOwnedWindowsArray(array);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void* Window_CreateEx_(int kind)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

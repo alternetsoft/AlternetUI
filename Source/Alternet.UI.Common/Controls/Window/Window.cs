@@ -30,7 +30,7 @@ namespace Alternet.UI
         private WeakReferenceValue<AbstractControl> activeControl;
         private IconSet? icon = null;
         private object? menu = null;
-        private Window? owner;
+        /*private Window? owner;*/
         private bool needLayout = false;
         private int? oldDisplay;
         private bool loadedCalled;
@@ -83,10 +83,12 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? StatusBarChanged;
 
+        /*
         /// <summary>
         /// Occurs when the value of the <see cref="Owner"/> property changes.
         /// </summary>
         public event EventHandler? OwnerChanged;
+        */
 
         /// <summary>
         /// Occurs when the value of the <see cref="ShowInTaskbar"/> property changes.
@@ -289,6 +291,20 @@ namespace Alternet.UI
         {
             get;
             set;
+        }
+
+        /// <inheritdoc/>
+        public override AbstractControl? Parent
+        {
+            get => base.Parent;
+
+            set
+            {
+                if (GetWindowKind() == WindowKind.Control)
+                {
+                    base.Parent = value;
+                }
+            }
         }
 
         /// <summary>
@@ -622,6 +638,7 @@ namespace Alternet.UI
             }
         }
 
+/*
         /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are
         /// owned by this window.
@@ -644,7 +661,9 @@ namespace Alternet.UI
                 return Handler.OwnedWindows;
             }
         }
+*/
 
+/*
         /// <summary>
         /// Gets or sets the window that owns this window.
         /// </summary>
@@ -669,6 +688,7 @@ namespace Alternet.UI
                 Handler.SetOwner(value);
             }
         }
+*/
 
         /// <summary>
         /// Gets or sets whether this window is maximized.
@@ -871,7 +891,7 @@ namespace Alternet.UI
                     return;
                 if (value)
                 {
-                    ApplyStartLocationOnce(Owner);
+                    ApplyStartLocationOnce(null);
                     RaiseLoadedOnce();
                 }
 
@@ -1381,8 +1401,19 @@ namespace Alternet.UI
 
             Visible = false;
             App.Current.UnregisterWindow(this);
-
-            base.DisposeManaged();
+            try
+            {
+                base.DisposeManaged();
+            }
+            finally
+            {
+                if (!App.HasVisibleForms)
+                {
+                    App.DoEvents();
+                    App.Handler.ExitMainLoop();
+                    App.Exit();
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -1466,6 +1497,7 @@ namespace Alternet.UI
         {
         }
 
+/*
         /// <summary>
         /// Called when the value of the <see cref="Owner"/> property changes.
         /// </summary>
@@ -1473,6 +1505,7 @@ namespace Alternet.UI
         protected virtual void OnOwnerChanged(EventArgs e)
         {
         }
+*/
 
         /// <summary>
         /// Called when the value of the <see cref="IsToolWindow"/> property changes.

@@ -56,10 +56,6 @@ void SetMenu(MainMenu* value);
 void* GetWxStatusBar();
 void SetWxStatusBar(void* value);
 
-void* OpenOwnedWindowsArray();
-int GetOwnedWindowsItemCount(void* array);
-Window* GetOwnedWindowsItemAt(void* array, int index);
-void CloseOwnedWindowsArray(void* array);
 static void* CreateEx(int kind);
 static void SetDefaultBounds(const RectD& bounds);
 static void SetParkingWindowFont(Font* font);

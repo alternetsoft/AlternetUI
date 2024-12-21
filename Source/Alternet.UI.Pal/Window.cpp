@@ -148,50 +148,6 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
     }
             
-    std::vector<Window*> Window::GetOwnedWindows()
-    {
-        std::vector<Window*> result;
-
-        for (auto child : GetChildren())
-        {
-            auto childWindow = dynamic_cast<Window*>(child);
-            if (childWindow != nullptr)
-                result.push_back(childWindow);
-        }
-
-        return result;
-    }
-
-    void Window::ShowCore()
-    {
-        bool hasHiddenOwner = GetParent() != nullptr && !GetParent()->GetVisible();
-
-        if (!hasHiddenOwner)
-            Control::ShowCore();
-
-        for (auto child : GetOwnedWindows())
-        {
-            if (_preservedHiddenOwnedWindows.find(child) == _preservedHiddenOwnedWindows.end())
-                child->SetVisible(true);
-        }
-
-        _preservedHiddenOwnedWindows.clear();
-    }
-
-    void Window::HideCore()
-    {
-        Control::HideCore();
-        
-        _preservedHiddenOwnedWindows.clear();
-        for (auto child : GetOwnedWindows())
-        {
-            if (!child->GetVisible())
-                _preservedHiddenOwnedWindows.insert(child);
-
-            child->SetVisible(false);
-        }
-    }
-
     string Window::GetTitle()
     {
         return _title.Get();
@@ -565,28 +521,6 @@ namespace Alternet::UI
         }
     }
 
-    void* Window::OpenOwnedWindowsArray()
-    {
-        return new std::vector<Window*>(GetOwnedWindows());
-    }
-
-    int Window::GetOwnedWindowsItemCount(void* array)
-    {
-        return ((std::vector<Window*>*)array)->size();
-    }
-
-    Window* Window::GetOwnedWindowsItemAt(void* array, int index)
-    {
-        auto window = (*((std::vector<Window*>*)array))[index];
-        window->AddRef();
-        return window;
-    }
-
-    void Window::CloseOwnedWindowsArray(void* array)
-    {
-        delete (std::vector<Window*>*)array;
-    }
-
     /*static*/ Window* Window::GetActiveWindow()
     {
         wxTopLevelWindow* window = NULL;
@@ -659,19 +593,6 @@ namespace Alternet::UI
         else
         {
             event.Skip();
-
-            auto parent = GetParent();
-
-            if (parent != nullptr) 
-            {
-                parent->RemoveChild(this);
-            }
-
-            for (auto window : GetOwnedWindows())
-            {
-                RemoveChild(window);
-                window->Close();
-            }
         }
     }
 

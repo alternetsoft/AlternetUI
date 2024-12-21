@@ -110,7 +110,7 @@ namespace Alternet.UI
                 NativeControl.State = value;
             }
         }
-
+/*
         public Window[] OwnedWindows
         {
             get
@@ -121,7 +121,7 @@ namespace Alternet.UI
                 return result;
             }
         }
-
+*/
         public ModalResult ModalResult
         {
             get
@@ -284,6 +284,7 @@ namespace Alternet.UI
             }
         }
 
+/*
         public void SetOwner(Window? owner)
         {
             var newOwner = (owner as IControl)?.NativeControl as UI.Native.Control;
@@ -298,7 +299,7 @@ namespace Alternet.UI
 
             newOwner.AddChild(NativeControl);
         }
-
+*/
         public void SetIcon(IconSet? value)
         {
             NativeControl.Icon = (UI.Native.IconSet?)value?.Handler;

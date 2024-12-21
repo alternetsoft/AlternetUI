@@ -38,7 +38,6 @@ namespace NativeApi.Api
 
         public void Activate() { }
         public static Window ActiveWindow { get; }
-        public Window[] OwnedWindows { get; }
         public WindowState State { get; set; }
         public IconSet? Icon { get; set; }
         public MainMenu? Menu { get; set; }
