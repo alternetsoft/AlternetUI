@@ -75,6 +75,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this object is disposing or disposed.
+        /// </summary>
+        public bool DisposingOrDisposed => IsDisposed || Disposing;
+
+        /// <summary>
         /// Gets whether object is currently disposing.
         /// </summary>
         [Browsable(false)]
