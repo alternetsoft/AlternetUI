@@ -6,9 +6,10 @@ namespace Alternet.UI
     /// <summary>
     /// Implements the basic functionality common to button controls.
     /// </summary>
-    public abstract class ButtonBase : Control
+    public abstract class ButtonBase : Control, ICommandSource
     {
         private Action? clickAction;
+        private CommandSourceStruct commandSource = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ButtonBase"/> class.
@@ -25,6 +26,52 @@ namespace Alternet.UI
         /// </summary>
         public ButtonBase()
         {
+            commandSource.Changed = () =>
+            {
+                Enabled = commandSource.CanExecute;
+            };
+        }
+
+        /// <inheritdoc/>
+        public virtual ICommand? Command
+        {
+            get
+            {
+                return commandSource.Command;
+            }
+
+            set
+            {
+                commandSource.Command = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual object? CommandParameter
+        {
+            get
+            {
+                return commandSource.CommandParameter;
+            }
+
+            set
+            {
+                commandSource.CommandParameter = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual object? CommandTarget
+        {
+            get
+            {
+                return commandSource.CommandTarget;
+            }
+
+            set
+            {
+                commandSource.CommandTarget = value;
+            }
         }
 
         /// <summary>
@@ -76,11 +123,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            commandSource.Changed = null;
+            base.DisposeManaged();
+        }
+
         /// <inheritdoc />
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
             clickAction?.Invoke();
+            commandSource.Execute();
         }
     }
 }
