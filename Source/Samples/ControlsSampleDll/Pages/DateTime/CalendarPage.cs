@@ -6,7 +6,7 @@ using Alternet.Drawing;
 namespace ControlsSample
 {
     [IsCsLocalized(true)]
-    internal partial class CalendarPage : Control
+    internal partial class CalendarPage : Panel
     {
         private readonly Calendar calendar = new();
         private readonly TabControl tabControl = new();
@@ -17,17 +17,17 @@ namespace ControlsSample
 
         public CalendarPage()
         {
+            Layout = LayoutStyle.Horizontal;
+            calendar.Margin = 5;
+            calendar.Alignment = (HorizontalAlignment.Left, VerticalAlignment.Top);
+            calendar.Parent = this;
+            tabControl.Margin = 5;
+            tabControl.Parent = this;
+
             DoInsideLayout(Fn);
 
             void Fn()
             {
-                Layout = LayoutStyle.Horizontal;
-                calendar.Margin = 5;
-                calendar.HorizontalAlignment = HorizontalAlignment.Left;
-                calendar.VerticalAlignment = VerticalAlignment.Top;
-                calendar.Parent = this;
-                tabControl.Margin = 5;
-                tabControl.Parent = this;
 
                 // CheckBoxes panel
 
@@ -45,11 +45,13 @@ namespace ControlsSample
                 var useGenericCheckBox = checkboxPanel.AddCheckBox(GenericStrings.UseGeneric)
                     .BindBoolProp(calendar, nameof(Calendar.UseGeneric));
 
-                var sequentalMonthSelectCheckBox = checkboxPanel.AddCheckBox(GenericStrings.SequentalMonthSelect)
+                var sequentalMonthSelectCheckBox
+                    = checkboxPanel.AddCheckBox(GenericStrings.SequentalMonthSelect)
                     .BindBoolProp(calendar, nameof(Calendar.SequentalMonthSelect));
                 sequentalMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
-                var showSurroundWeeksCheckBox = checkboxPanel.AddCheckBox(GenericStrings.ShowSurroundWeeks)
+                var showSurroundWeeksCheckBox
+                    = checkboxPanel.AddCheckBox(GenericStrings.ShowSurroundWeeks)
                     .BindBoolProp(calendar, nameof(Calendar.ShowSurroundWeeks));
                 showSurroundWeeksCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
@@ -81,16 +83,15 @@ namespace ControlsSample
                     ($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate_Click),
                     ($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow_Click),
                     ($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday_Click),
-                    ($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow_Click)).Margin(5);
+                    ($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", 
+                        RangeYesterdayTomorrow_Click))
+                    .Margin(5);
 
                 // Other initializations
 
                 useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(Button.Enabled));
                 useGenericCheckBox.BindBoolProp(sequentalMonthSelectCheckBox, nameof(Button.Enabled));
                 useGenericCheckBox.BindBoolProp(showSurroundWeeksCheckBox, nameof(Button.Enabled));
-
-                calendar.RecreateWindow();
-                calendar.PerformLayout();
 
                 useGenericCheckBox.CheckedChanged += Generic_CheckedChanged;
 
