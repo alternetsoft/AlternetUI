@@ -11,17 +11,17 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
     class UixmlPortXamlIlWellKnownTypes
     {
         public IXamlType UixmlPortObject { get; }
-        public IXamlType DependencyObject { get; }
+        /*public IXamlType DependencyObject { get; }*/
         public IXamlType IUixmlPortObject { get; }
         public IXamlType BindingPriority { get; }
-        public IXamlType UixmlPortObjectExtensions { get; }
+        /*public IXamlType UixmlPortObjectExtensions { get; }*/
         public IXamlType UixmlPortProperty { get; }
         public IXamlType DependencyProperty { get; }
         public IXamlType UixmlPortPropertyT { get; }
         public IXamlType UixmlPortAttachedPropertyT { get; }
-        //public IXamlType IBinding { get; }
-        public IXamlType Binding { get; }
-        public IXamlMethod UixmlPortObjectBindMethod { get; }
+
+        /*public IXamlType Binding { get; }*/
+        /*public IXamlMethod UixmlPortObjectBindMethod { get; }*/
         public IXamlMethod UixmlPortObjectSetValueMethod { get; }
         public IXamlType IDisposable { get; }
         public XamlTypeWellKnownTypes XamlIlTypes { get; }
@@ -65,7 +65,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         public IXamlConstructor ThicknessFullConstructor { get; }
         public IXamlType Point { get; }
         public IXamlConstructor PointFullConstructor { get; }
-        /*public IXamlType Vector { get; }*/
+
         public IXamlConstructor VectorFullConstructor { get; }
         public IXamlType Size { get; }
         public IXamlConstructor SizeFullConstructor { get; }
@@ -94,19 +94,19 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         {
             XamlIlTypes = cfg.WellKnownTypes;
 
-            UixmlPortObjectExtensions =
-                cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.UixmlPortObjectExtensions));
+            /*UixmlPortObjectExtensions =
+                cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.UixmlPortObjectExtensions));*/
 
-            DependencyObject = cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.DependencyObject));
-            DependencyProperty = cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.DependencyProperty));
+            /*DependencyObject = cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.DependencyObject));
+            DependencyProperty = cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.DependencyProperty));*/
 
-            Binding = cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.Binding));
+            /*Binding = cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.Binding));*/
             IDisposable = cfg.TypeSystem.FindType(typeof(System.IDisposable));
 
-            UixmlPortObjectBindMethod =
+            /*UixmlPortObjectBindMethod =
                 UixmlPortObjectExtensions.FindMethod("Bind", IDisposable, false, DependencyObject,
                 DependencyProperty,
-                Binding, cfg.WellKnownTypes.Object);
+                Binding, cfg.WellKnownTypes.Object);*/
             UnsetValueType = cfg.TypeSystem.FindType(typeof(Alternet.UI.UnsetValueType));
 
             IPropertyInfo = cfg.TypeSystem.FindType(typeof(Alternet.UI.Port.IPropertyInfo));

@@ -36,6 +36,7 @@ namespace Alternet.UI.Port
             {
                 MethodInfo methodInfo;
 #if !PBTCOMPILER
+                /*
                 DependencyProperty dp = dpOrPiOrMi as DependencyProperty;
 
                 if (dp != null)
@@ -61,11 +62,13 @@ namespace Alternet.UI.Port
                     }
                 }
                 else
+                */
 #endif
                 if ((methodInfo = dpOrPiOrMi as MethodInfo) != null)
                 {
                     // miSetter may not be a MethodInfo when we are dealing with event handlers that
-                    // belong to local assemblies. One such case is encountered when building DrtCompiler.
+                    // belong to local assemblies. One such case is encountered when
+                    // building DrtCompiler.
                     if (methodInfo.GetParameters().Length == 1)
                     {
                         // Use Getter of the attached property

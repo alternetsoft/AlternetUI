@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Alternet.UI.Port
+namespace Alternet.UI
 {
     /// <summary>
     /// Specifies the localization preferences for a class or property in Baml

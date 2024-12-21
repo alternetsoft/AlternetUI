@@ -24,7 +24,6 @@ namespace Alternet.UI.Port
     public abstract class DispatcherObject : BaseComponent
     {
         private Dispatcher _dispatcher;
-        private static Dispatcher _sentinelDispatcher;
 
         /// <summary>
         ///     Returns the <see cref="Dispatcher"/> that this
@@ -43,33 +42,10 @@ namespace Alternet.UI.Port
 
         // This method allows certain derived classes to break the dispatcher affinity
         // of our objects.
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
+        [FriendAccessAllowed]
         internal void DetachFromDispatcher()
         {
             _dispatcher = null;
-        }
-
-        // Make this object a "sentinel" - it can be used in equality tests, but should
-        // not be used in any other way.  To enforce this and catch bugs, use a special
-        // sentinel dispatcher, so that calls to CheckAccess and VerifyAccess will
-        // fail;  this will catch most accidental uses of the sentinel.
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
-        internal void MakeSentinel()
-        {
-            _dispatcher = EnsureSentinelDispatcher();
-        }
-
-        private static Dispatcher EnsureSentinelDispatcher()
-        {
-            if (_sentinelDispatcher == null)
-            {
-                // lazy creation - the first thread reaching here creates the sentinel
-                // dispatcher, all other threads use it.
-                Dispatcher sentinelDispatcher = new Dispatcher(isSentinel:true);
-                Interlocked.CompareExchange<Dispatcher>(ref _sentinelDispatcher, sentinelDispatcher, null);
-            }
-
-            return _sentinelDispatcher;
         }
 
         /// <summary>

@@ -90,7 +90,7 @@ namespace Alternet.UI.Port
             public object IntermediateRootObject => RootObject;
         }
 
-
+        /*
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.
         /// </summary>
@@ -114,7 +114,7 @@ namespace Alternet.UI.Port
             //}
             else
                 throw new ArgumentException("Don't know what to do with " + value.GetType());
-        }
+        }*/
 
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.

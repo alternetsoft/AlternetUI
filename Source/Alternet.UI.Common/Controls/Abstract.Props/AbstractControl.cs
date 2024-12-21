@@ -666,7 +666,7 @@ namespace Alternet.UI
         /// to use in the control. Only some controls are affected by this property.
         /// </summary>
         [Browsable(false)]
-        public new virtual object? DataContextProperty { get; set; }
+        public virtual object? DataContextProperty { get; set; }
 
         /// <summary>
         /// Gets internally painted caret information. This is used on some platforms

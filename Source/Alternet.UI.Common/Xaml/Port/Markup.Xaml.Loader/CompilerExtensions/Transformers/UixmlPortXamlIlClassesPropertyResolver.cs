@@ -13,7 +13,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
-            if (node is XamlAstNamePropertyReference prop
+            /*if (node is XamlAstNamePropertyReference prop
                 && prop.TargetType is XamlAstClrTypeReference targetRef
                 && prop.DeclaringType is XamlAstClrTypeReference declaringRef)
             {
@@ -28,6 +28,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                     };
                 }
             }
+            */
             return node;
         }
 
@@ -65,7 +66,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             public IReadOnlyList<IXamlType> Parameters { get; }
         }
 
-        class ClassBindingSetter : IXamlEmitablePropertySetter<IXamlILEmitter>
+        /*class ClassBindingSetter : IXamlEmitablePropertySetter<IXamlILEmitter>
         {
             private readonly UixmlPortXamlIlWellKnownTypes _types;
             private readonly string _className;
@@ -94,6 +95,6 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             public PropertySetterBinderParameters BinderParameters { get; } =
                 new PropertySetterBinderParameters { AllowXNull = false };
             public IReadOnlyList<IXamlType> Parameters { get; }
-        }
+        }*/
     }
 }

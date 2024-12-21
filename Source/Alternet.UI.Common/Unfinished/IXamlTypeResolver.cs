@@ -20,7 +20,6 @@ namespace Alternet.UI.Port
     /// <summary>
     /// Provides services to help resolve nsPrefix:LocalName into the appropriate Type.
     /// </summary>
-    [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     internal interface IXamlTypeResolver
     {
         /// <summary>

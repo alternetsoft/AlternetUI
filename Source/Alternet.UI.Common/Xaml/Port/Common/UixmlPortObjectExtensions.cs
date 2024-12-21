@@ -3,6 +3,7 @@ using System;
 
 namespace Alternet.UI.Port
 {
+    /*
     /// <summary>
     /// Provides extension methods for UixmlPortObject and related classes.
     /// </summary>
@@ -23,4 +24,5 @@ namespace Alternet.UI.Port
             return DisposableObject.EmptyDisposable;
         }
     }
+    */
 }

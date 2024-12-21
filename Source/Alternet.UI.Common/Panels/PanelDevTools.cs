@@ -186,7 +186,6 @@ namespace Alternet.UI
 
                     AddControl(typeof(AbstractControl));
                     AddControl(typeof(FrameworkElement));
-                    AddControl(typeof(UIElement));
 
                     foreach (var type in result)
                     {
