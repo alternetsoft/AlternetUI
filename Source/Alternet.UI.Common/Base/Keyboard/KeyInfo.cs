@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly KeyInfo Empty = new();
 
-        private static AdvDictionary<Key, string>? customKeyLabels;
+        private static IndexedValues<Key, string>? customKeyLabels;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyInfo"/> class.
@@ -129,8 +129,7 @@ namespace Alternet.UI
         public static void SetCustomKeyLabel(Key key, string label)
         {
             customKeyLabels ??= new();
-            customKeyLabels.Remove(key);
-            customKeyLabels.Add(key, label);
+            customKeyLabels[key] = label;
         }
 
         /// <summary>
@@ -140,7 +139,7 @@ namespace Alternet.UI
         public static string GetCustomKeyLabel(Key key)
         {
             RegisterCustomKeyLabels();
-            var result = customKeyLabels!.GetValueOrDefault(key, key.ToString());
+            var result = customKeyLabels![key] ?? key.ToString();
             return result;
         }
 

@@ -20,6 +20,13 @@ namespace Alternet.UI
     {
         private static readonly CultureInfo invariantEnglishUS = CultureInfo.InvariantCulture;
 
+        private static IndexedValues<Type, TypeConverter> converters = new();
+
+        static TypeConverterHelper()
+        {
+            TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
+        }
+
         internal static CultureInfo InvariantEnglishUS
         {
             get
@@ -41,37 +48,43 @@ namespace Alternet.UI
         /// which to find a <see cref="TypeConverter"/>.</param>
         /// <returns>A <see cref="TypeConverter"/> for the <see cref="Type"/>
         /// type if found; Null otherwise.</returns>
-        public static TypeConverter? GetTypeConverter(Type type)
+        public static TypeConverter? GetTypeConverter(Type? type)
         {
             if (type == null)
                 return null;
 
-            TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
+            var result = converters.GetValue(type, Internal);
+            return result;
 
-            if (typeConverter == null)
+            TypeConverter? Internal()
             {
-                Type? converterType = GetConverterType(type);
-                if (converterType != null)
-                {
-                    typeConverter = Activator.CreateInstance(
-                        converterType,
-                        BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
-                        null,
-                        null,
-                        InvariantEnglishUS) as TypeConverter;
-                }
-                else
-                {
-                    typeConverter = GetCoreConverterFromCustomType(type);
-                }
+                TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
 
                 if (typeConverter == null)
                 {
-                    typeConverter = new TypeConverter();
-                }
-            }
+                    Type? converterType = GetConverterType(type);
+                    if (converterType != null)
+                    {
+                        typeConverter = Activator.CreateInstance(
+                            converterType,
+                            BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
+                            null,
+                            null,
+                            InvariantEnglishUS) as TypeConverter;
+                    }
+                    else
+                    {
+                        typeConverter = GetCoreConverterFromCustomType(type);
+                    }
 
-            return typeConverter;
+                    if (typeConverter == null)
+                    {
+                        typeConverter = new TypeConverter();
+                    }
+                }
+
+                return typeConverter;
+            }
         }
 
         private static Type? GetConverterType(Type type)
@@ -116,7 +129,9 @@ namespace Alternet.UI
             return converterType;
         }
 
+#pragma warning disable
         private static Type? GetCoreConverterTypeFromCustomType(Type type)
+#pragma warning restore
         {
             Type? converterType = null;
             if (type.IsEnum)
@@ -384,6 +399,11 @@ namespace Alternet.UI
             }
 
             return typeConverter;
+        }
+
+        private static void TypeDescriptorRefreshed(RefreshEventArgs args)
+        {
+            converters = new();
         }
     }
 }
