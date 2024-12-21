@@ -12,7 +12,7 @@ namespace Alternet.MAUI
     /// <summary>
     /// Shows list with registered developer tools actions.
     /// </summary>
-    internal class SelectDevToolsActionPage : ContentPage
+    internal partial class SelectDevToolsActionPage : ContentPage
     {
         private readonly StackLayout layout;
         private readonly StackLayout buttonLayout;
@@ -24,12 +24,12 @@ namespace Alternet.MAUI
         /// </summary>
         public SelectDevToolsActionPage()
         {
-            List<Person> people = new List<Person>
+            List<Person> people = new()
             {
-                new Person("Abigail", new DateTime(1975, 1, 15), Color.Aqua),
-                new Person("Bob", new DateTime(1976, 2, 20), Color.Black),
-                new Person("Yvonne", new DateTime(1987, 1, 10), Color.Purple),
-                new Person("Zachary", new DateTime(1988, 2, 5), Color.Red),
+                new ("Abigail", new DateTime(1975, 1, 15), Color.Aqua),
+                new ("Bob", new DateTime(1976, 2, 20), Color.Black),
+                new ("Yvonne", new DateTime(1987, 1, 10), Color.Purple),
+                new ("Zachary", new DateTime(1988, 2, 5), Color.Red),
             };
 
             layout = new StackLayout
@@ -48,8 +48,8 @@ namespace Alternet.MAUI
                 ItemsSource = people,
 
                 // Define template for displaying each item.
-                // (Argument of DataTemplate constructor is called for 
-                //      each item; it must return a Cell derivative.)
+                // (Argument of DataTemplate constructor is called for
+                // each item; it must return a Cell derivative.)
                 ItemTemplate = new DataTemplate(() =>
                 {
                     // Create views with bindings for displaying each property.
@@ -57,11 +57,16 @@ namespace Alternet.MAUI
                     nameLabel.SetBinding(Microsoft.Maui.Controls.Label.TextProperty, "Name");
 
                     Microsoft.Maui.Controls.Label birthdayLabel = new();
-                    birthdayLabel.SetBinding(Microsoft.Maui.Controls.Label.TextProperty,
-                        new Binding("Birthday", BindingMode.OneWay,
-                            null, null, "Born {0:d}"));
+                    birthdayLabel.SetBinding(
+                        Microsoft.Maui.Controls.Label.TextProperty,
+                        new Binding(
+                            "Birthday",
+                            BindingMode.OneWay,
+                            null,
+                            null,
+                            "Born {0:d}"));
 
-                    BoxView boxView = new BoxView();
+                    BoxView boxView = new();
                     boxView.SetBinding(BoxView.ColorProperty, "FavoriteColor");
 
                     // Return an assembled ViewCell.
@@ -87,7 +92,7 @@ namespace Alternet.MAUI
                                 },
                         },
                     };
-                })
+                }),
             };
 
             layout.Add(listView);
@@ -122,7 +127,7 @@ namespace Alternet.MAUI
             await Navigation.PopModalAsync();
         }
 
-        class Person
+        public class Person
         {
             public Person(string name, DateTime birthday, Color favoriteColor)
             {
@@ -131,12 +136,11 @@ namespace Alternet.MAUI
                 this.FavoriteColor = favoriteColor;
             }
 
-            public string Name { private set; get; }
+            public string Name { get; private set; }
 
-            public DateTime Birthday { private set; get; }
+            public DateTime Birthday { get; private set; }
 
-            public Color FavoriteColor { private set; get; }
-        };
-
+            public Color FavoriteColor { get; private set; }
+        }
     }
 }
