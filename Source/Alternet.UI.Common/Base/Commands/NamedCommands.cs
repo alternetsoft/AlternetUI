@@ -11,6 +11,11 @@ namespace Alternet.UI
     public class NamedCommands
     {
         /// <summary>
+        /// Gets 'App.Log' command.
+        /// </summary>
+        public static readonly ICommand CommandAppLog;
+
+        /// <summary>
         /// Gets or sets default named commands provider.
         /// </summary>
         public static NamedCommands Default = new();
@@ -19,7 +24,7 @@ namespace Alternet.UI
 
         static NamedCommands()
         {
-            Default.Register(
+            CommandAppLog = Default.Register(
                 "App.Log",
                 (p) =>
                 {
@@ -49,13 +54,14 @@ namespace Alternet.UI
         /// <param name="name">Command name.</param>
         /// <param name="execute">Action to execute.</param>
         /// <param name="canExecute">Function to get whether command can be executed.</param>
-        public virtual void Register(
+        public virtual ICommand Register(
             string name,
             Command.ExecuteDelegate execute,
             Command.CanExecuteDelegate? canExecute = null)
         {
             Command command = new(execute, canExecute);
             Register(name, command);
+            return command;
         }
 
         /// <summary>
@@ -63,11 +69,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">Command name.</param>
         /// <param name="execute">Action to execute.</param>
-        public virtual void Register(
+        public virtual ICommand Register(
             string name,
             Action execute)
         {
-            Register(name, (param) => execute());
+            return Register(name, (param) => execute());
         }
 
         /// <summary>
