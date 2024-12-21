@@ -874,6 +874,12 @@ namespace Alternet.UI
         {
             if (handler == null)
             {
+                if (DisposingOrDisposed)
+                {
+                    handler = PlessControlHandler.Default;
+                    return;
+                }
+
                 CreateAndAttachHandler();
             }
 
@@ -917,7 +923,7 @@ namespace Alternet.UI
         protected internal override void DetachHandler()
         {
             if (handler == null)
-                throw new InvalidOperationException();
+                return;
             OnHandlerDetaching(EventArgs.Empty);
             UnbindHandlerEvents();
             handler.Detach();

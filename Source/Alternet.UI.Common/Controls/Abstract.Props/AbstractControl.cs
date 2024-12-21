@@ -1496,16 +1496,31 @@ namespace Alternet.UI
             {
                 if (parent == value)
                     return;
-                parent?.Children.Remove(this);
-                value?.Children.Add(this);
 
-                if(ParentFont && HasParent)
+                if(parent is not null)
                 {
-                    Font ??= Parent?.Font;
+                    if(parent.HasChildren)
+                        parent.Children.Remove(this);
                 }
 
-                RaiseParentChanged();
-                stateFlags |= ControlFlags.ParentAssigned;
+                parent = null;
+                base.LogicalParent = null;
+
+                if (!DisposingOrDisposed)
+                {
+                    if (value is not null)
+                    {
+                        value.Children.Add(this);
+
+                        if (ParentFont)
+                        {
+                            Font ??= Parent?.Font;
+                        }
+                    }
+
+                    RaiseParentChanged();
+                    stateFlags |= ControlFlags.ParentAssigned;
+                }
             }
         }
 

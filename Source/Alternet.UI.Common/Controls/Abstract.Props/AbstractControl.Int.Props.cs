@@ -12,6 +12,12 @@ namespace Alternet.UI
     {
         internal static int ScreenShotCounter { get; set; } = 0;
 
+        internal override FrameworkElement? LogicalParent
+        {
+            get => Parent;
+            set => Parent = value as AbstractControl;
+        }
+
         internal bool HasExtendedProps => extendedProps != null;
 
         internal ControlExtendedProps ExtendedProps

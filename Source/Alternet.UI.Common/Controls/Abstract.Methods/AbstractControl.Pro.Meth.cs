@@ -192,47 +192,31 @@ namespace Alternet.UI
                 FocusedControl = null;
             if (HoveredControl == this)
                 HoveredControl = null;
-            SafeDispose(ref delayedTextChanged);
+            delayedTextChanged.Reset();
 
             Designer?.RaiseDisposed(this);
 
-            var allChildren = AllChildren.ToArray();
-
-            /*
-            SuspendLayout();
-            if (HasChildren)
-                Children.Clear();
-            ResumeLayout(performLayout: false);
-            */
-
             DetachHandler();
 
-            try
+            if (children != null)
             {
-                foreach (var child in allChildren)
-                {
-                    child.ParentDisposed();
-                }
-            }
-            catch (Exception e)
-            {
-                if (DebugUtils.IsDebugDefined)
-                {
-                    LogUtils.LogExceptionToFile(e);
-                    throw;
-                }
-            }
-        }
+                var allChildren = AllChildren.ToArray();
 
-        /// <summary>
-        /// Called when parent is disposed.
-        /// </summary>
-        protected virtual void ParentDisposed()
-        {
-            var children = AllChildren.ToArray();
-            foreach (var child in children)
-            {
-                child.ParentDisposed();
+                try
+                {
+                    foreach (var child in allChildren)
+                    {
+                        child.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (DebugUtils.IsDebugDefined)
+                    {
+                        LogUtils.LogExceptionToFile(e);
+                        throw;
+                    }
+                }
             }
         }
 
