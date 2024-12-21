@@ -1378,6 +1378,22 @@ namespace Alternet.UI
         [Browsable(false)]
         public abstract bool IsHandleCreated { get; }
 
+        /// <inheritdoc />
+        public override IEnumerable<FrameworkElement> LogicalChildrenCollection
+            => HasChildren ? Children : Array.Empty<FrameworkElement>();
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override IReadOnlyList<FrameworkElement> ContentElements
+        {
+            get
+            {
+                if (children == null)
+                    return Array.Empty<FrameworkElement>();
+                return children;
+            }
+        }
+
         /// <summary>
         /// Gets the collection of child controls contained within the control.
         /// </summary>

@@ -31,35 +31,28 @@ namespace Alternet.UI
         /// find content items by index.
         /// </summary>
         [Browsable(false)]
-        internal virtual IReadOnlyList<FrameworkElement> ContentElements =>
+        public virtual IReadOnlyList<FrameworkElement> ContentElements =>
             LogicalChildrenCollection.ToArray();
 
+        /// <summary>
+        /// Gets logical parent.
+        /// </summary>
         [Browsable(false)]
-        internal FrameworkElement? LogicalParent
+        public virtual FrameworkElement? LogicalParent
         {
             get => logicalParent;
-            set
+            internal set
             {
                 logicalParent = value;
             }
         }
-
-        internal bool IsInitialized { get; set; }
-
-        internal virtual bool HasLogicalChildren => LogicalChildrenCollection.Any();
-
-        /// <summary>
-        ///     Returns enumerator to logical children
-        /// </summary>
-        internal virtual IEnumerator LogicalChildren =>
-            LogicalChildrenCollection.GetEnumerator();
 
         /// <summary>
         /// Returns a collection of elements which can be treated as "logical children" of
         /// this element.
         /// </summary>
         [Browsable(false)]
-        internal virtual IEnumerable<FrameworkElement> LogicalChildrenCollection =>
+        public virtual IEnumerable<FrameworkElement> LogicalChildrenCollection =>
             Array.Empty<FrameworkElement>();
 
         /// <summary>

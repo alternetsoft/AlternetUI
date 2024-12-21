@@ -467,6 +467,14 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         [Browsable(false)]
+        public override IReadOnlyList<FrameworkElement> ContentElements => Pages;
+
+        /// <inheritdoc />
+        [Browsable(false)]
+        public override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
+
+        /// <inheritdoc/>
+        [Browsable(false)]
         public override Thickness Padding
         {
             get => base.Padding;
@@ -533,19 +541,11 @@ namespace Alternet.UI
         [Browsable(false)]
         internal CardPanel Contents => cardPanel;
 
-        /// <inheritdoc/>
-        [Browsable(false)]
-        internal override IReadOnlyList<FrameworkElement> ContentElements => Pages;
-
         /// <summary>
         /// Gets internal control with tab labels.
         /// </summary>
         [Browsable(false)]
         internal CardPanelHeader Header => cardPanelHeader;
-
-        /// <inheritdoc />
-        [Browsable(false)]
-        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
 
         /// <summary>
         /// Gets default interior border color as light/dark color pair.
