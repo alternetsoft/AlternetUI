@@ -17,10 +17,8 @@ namespace Alternet.UI
         private Action? action;
         private ImageSet? image;
         private ImageSet? disabledImage;
-        private ICommand? command;
-        private object? commandParameter;
-        private object? commandTarget;
         private bool shortcutEnabled = true;
+        private CommandSourceStruct commandSource = new();
 
         static MenuItem()
         {
@@ -31,6 +29,10 @@ namespace Alternet.UI
         /// </summary>
         public MenuItem()
         {
+            commandSource.Changed = () =>
+            {
+                Enabled = commandSource.CanExecute;
+            };
         }
 
         /// <summary>
@@ -38,6 +40,7 @@ namespace Alternet.UI
         /// the specified <paramref name="text"/> and <paramref name="shortcut"/> for the menu item.
         /// </summary>
         public MenuItem(string? text, KeyGesture shortcut)
+            : this()
         {
             Text = text ?? string.Empty;
             this.shortcut = shortcut;
@@ -52,6 +55,7 @@ namespace Alternet.UI
         /// <param name="onClick">An event handler that raises the <see cref="AbstractControl.Click" />
         /// event when the control is clicked.</param>
         public MenuItem(string? text, Image image, EventHandler onClick)
+            : this()
         {
             Text = text ?? string.Empty;
             Click += onClick;
@@ -62,6 +66,7 @@ namespace Alternet.UI
         /// the specified <paramref name="text"/> for the menu item.
         /// </summary>
         public MenuItem(string? text)
+            : this()
         {
             Text = text ?? string.Empty;
         }
@@ -72,6 +77,7 @@ namespace Alternet.UI
         /// <paramref name="shortcut"/> for the menu item.
         /// </summary>
         public MenuItem(string? text, EventHandler? onClick = null, KeyGesture? shortcut = null)
+            : this()
         {
             Text = text ?? string.Empty;
             this.shortcut = shortcut;
@@ -85,6 +91,7 @@ namespace Alternet.UI
         /// for the menu item.
         /// </summary>
         public MenuItem(string? text, Action? onClick)
+            : this()
         {
             Text = text ?? string.Empty;
             ClickAction = onClick;
@@ -96,6 +103,7 @@ namespace Alternet.UI
         /// <paramref name="shortcut"/> for the menu item.
         /// </summary>
         public MenuItem(string? text, Action? onClick, KeyGesture? shortcut)
+            : this()
         {
             Text = text ?? string.Empty;
             this.shortcut = shortcut;
@@ -360,16 +368,12 @@ namespace Alternet.UI
         {
             get
             {
-                return command;
+                return commandSource.Command;
             }
 
             set
             {
-                if (command == value)
-                    return;
-                var oldCommand = command;
-                command = value;
-                OnCommandChanged(oldCommand, value);
+                commandSource.Command = value;
             }
         }
 
@@ -378,14 +382,12 @@ namespace Alternet.UI
         {
             get
             {
-                return commandParameter;
+                return commandSource.CommandParameter;
             }
 
             set
             {
-                if (commandParameter == value)
-                    return;
-                commandParameter = value;
+                commandSource.CommandParameter = value;
             }
         }
 
@@ -394,14 +396,12 @@ namespace Alternet.UI
         {
             get
             {
-                return commandTarget;
+                return commandSource.CommandTarget;
             }
 
             set
             {
-                if (commandTarget == value)
-                    return;
-                commandTarget = value;
+                commandSource.CommandTarget = value;
             }
         }
 
@@ -471,13 +471,13 @@ namespace Alternet.UI
         {
             base.OnClick(e);
             action?.Invoke();
-            CommandHelpers.ExecuteCommandSource(this);
+            commandSource.Execute();
         }
 
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            Command = null;
+            commandSource.Changed = null;
             base.DisposeManaged();
         }
 
@@ -485,43 +485,6 @@ namespace Alternet.UI
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateMenuItemHandler(this);
-        }
-
-        /// <summary>
-        /// Called when <see cref="Command"/> property is changed.
-        /// </summary>
-        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
-        {
-            if (oldCommand != null)
-                UnhookCommand(oldCommand);
-
-            if (newCommand != null)
-                HookCommand(newCommand);
-
-            UpdateCanExecute();
-        }
-
-        private void UnhookCommand(ICommand command)
-        {
-            command.CanExecuteChanged -= OnCanExecuteChanged;
-            UpdateCanExecute();
-        }
-
-        private void HookCommand(ICommand command)
-        {
-            command.CanExecuteChanged += OnCanExecuteChanged;
-            UpdateCanExecute();
-        }
-
-        private void OnCanExecuteChanged(object? sender, EventArgs e)
-        {
-            UpdateCanExecute();
-        }
-
-        private void UpdateCanExecute()
-        {
-            if (Command != null)
-                Enabled = CommandHelpers.CanExecuteCommandSource(this);
         }
     }
 }
