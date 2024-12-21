@@ -11,7 +11,6 @@ namespace Alternet.UI
     /// Contains key and key modifiers combination.
     /// </summary>
     [TypeConverter(typeof(KeyGestureConverter))]
-    [ValueSerializer(typeof(KeyGestureValueSerializer))]
     public class KeyGesture : InputGesture
     {
         private const char MultipleGestureDelimiter = ';';

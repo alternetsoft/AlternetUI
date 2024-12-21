@@ -12,7 +12,6 @@ namespace Alternet.UI
     /// This enumeration supports a bitwise combination of its member values.
     /// </remarks>
     [TypeConverter("Alternet.UI.ModifierKeysConverter")]
-    [ValueSerializer("Alternet.UI.ModifierKeysValueSerializer")]
     [Flags]
     public enum ModifierKeys
     {
