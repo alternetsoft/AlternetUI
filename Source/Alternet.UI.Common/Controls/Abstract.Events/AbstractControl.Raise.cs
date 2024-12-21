@@ -22,6 +22,20 @@ namespace Alternet.UI
         private DelayedEvent<EventArgs> delayedTextChanged = new();
 
         /// <summary>
+        /// Occurs when the layout of the various visual elements changes.
+        /// </summary>
+        public event EventHandler? LayoutUpdated;
+
+        /// <summary>
+        /// Raises <see cref="LayoutUpdated"/> event.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseLayoutUpdated()
+        {
+            LayoutUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Invalidated" /> event
         /// and calls <see cref="OnInvalidated"/> method.
         /// </summary>

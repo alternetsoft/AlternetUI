@@ -114,7 +114,8 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             }
 
             IXamlType itemsCollectionType = null;
-            if (context.GetUixmlPortTypes().Binding.IsAssignableFrom(parentItemsValue.Type.GetClrType()))
+            
+            /*if (context.GetUixmlPortTypes().Binding.IsAssignableFrom(parentItemsValue.Type.GetClrType()))
             {
                 if (parentItemsValue.Type.GetClrType().Equals(context.GetUixmlPortTypes().CompiledBindingExtension)
                     && parentItemsValue is XamlMarkupExtensionNode ext && ext.Value is XamlAstConstructableObjectNode parentItemsBinding)
@@ -127,6 +128,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 }
             }
             else
+            */
             {
                 itemsCollectionType = parentItemsValue.Type.GetClrType();
             }
@@ -148,12 +150,14 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
         private static UixmlPortXamlIlDataContextTypeMetadataNode ParseDataContext(AstTransformationContext context, XamlAstConstructableObjectNode on, XamlAstConstructableObjectNode obj)
         {
-            var bindingType = context.GetUixmlPortTypes().Binding;
+
+            /*var bindingType = context.GetUixmlPortTypes().Binding;
             if (!bindingType.IsAssignableFrom(obj.Type.GetClrType()) && !obj.Type.GetClrType().Equals(context.GetUixmlPortTypes().ReflectionBindingExtension))
             {
                 return new UixmlPortXamlIlDataContextTypeMetadataNode(on, obj.Type.GetClrType());
             }
-            else if (obj.Type.GetClrType().Equals(context.GetUixmlPortTypes().CompiledBindingExtension))
+            else*/
+            if (obj.Type.GetClrType().Equals(context.GetUixmlPortTypes().CompiledBindingExtension))
             {
                 Func<IXamlType> startTypeResolver = () =>
                 {

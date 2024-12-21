@@ -89,7 +89,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             {
                 Getter = setterType.Methods.First(m => m.Name == "get_Value");
                 var method = setterType.Methods.First(m => m.Name == "set_Value");
-                Setters.Add(new XamlIlDirectCallPropertySetter(method, types.Binding));
+                /*Setters.Add(new XamlIlDirectCallPropertySetter(method, types.Binding));*/
                 Setters.Add(new XamlIlDirectCallPropertySetter(method, types.UnsetValueType));
                 Setters.Add(new XamlIlDirectCallPropertySetter(method, targetType));
             }

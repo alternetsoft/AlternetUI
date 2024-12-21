@@ -666,7 +666,7 @@ namespace Alternet.UI
         /// to use in the control. Only some controls are affected by this property.
         /// </summary>
         [Browsable(false)]
-        public new virtual object? DataContextProperty { get; set; }
+        public virtual object? DataContextProperty { get; set; }
 
         /// <summary>
         /// Gets internally painted caret information. This is used on some platforms
@@ -1377,6 +1377,22 @@ namespace Alternet.UI
         /// control; otherwise, <see langword="false" />.</returns>
         [Browsable(false)]
         public abstract bool IsHandleCreated { get; }
+
+        /// <inheritdoc />
+        public override IEnumerable<FrameworkElement> LogicalChildrenCollection
+            => HasChildren ? Children : Array.Empty<FrameworkElement>();
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override IReadOnlyList<FrameworkElement> ContentElements
+        {
+            get
+            {
+                if (children == null)
+                    return Array.Empty<FrameworkElement>();
+                return children;
+            }
+        }
 
         /// <summary>
         /// Gets the collection of child controls contained within the control.

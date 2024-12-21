@@ -32,7 +32,8 @@ namespace Alternet.UI
         {
             get
             {
-                allControlDescendants ??= GetSortedTypeDescendantsWithFullNames(typeof(AbstractControl));
+                allControlDescendants
+                    ??= GetSortedTypeDescendantsWithFullNames(typeof(AbstractControl));
                 return allControlDescendants;
             }
 
@@ -58,6 +59,60 @@ namespace Alternet.UI
             {
                 allControlEvents = value;
             }
+        }
+
+        /// <summary>
+        /// Gets whether the speciffied type is nullable.
+        /// </summary>
+        /// <param name="type">Type to test</param>
+        /// <returns></returns>
+        public static bool IsNullableType(Type type)
+        {
+            return type!.IsGenericType && (type!.GetGenericTypeDefinition() == typeof(Nullable<>));
+        }
+
+        /// <summary>
+        /// Gets whether the speciffied type is internal.
+        /// </summary>
+        /// <param name="type">Type to test</param>
+        /// <returns></returns>
+        public static bool IsInternalType(Type type)
+        {
+            Type origType = type;
+            Debug.Assert(type != null, "Type passed to IsInternalType is null");
+
+            // If this is an internal nested type or a parent nested public type,
+            // walk up the declaring types.
+            while (type!.IsNestedAssembly || type.IsNestedFamORAssem
+                || (origType != type && type.IsNestedPublic))
+            {
+                type = type.DeclaringType;
+            }
+
+            // If we're on a non-internal nested type, IsNotPublic & IsPublic will both return false.
+            // If we were originally on a nested type and have currently reached a parent
+            // top-level(non nested) type, then it must be top level internal or public type.
+            return type.IsNotPublic || (origType != type && type.IsPublic);
+        }
+
+        /// <summary>
+        /// Helper for determine if the type is a public.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>True if type is public</returns>
+        public static bool IsPublicType(Type? type)
+        {
+            if (type is null)
+                return false;
+
+            // If this is a nested internal type, walk up the declaring types.
+            while (type.IsNestedPublic)
+            {
+                type = type.DeclaringType;
+            }
+
+            // If we're on a non-public nested type, IsPublic will return false.
+            return type.IsPublic;
         }
 
         /// <summary>
@@ -1301,6 +1356,181 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        internal static string? GetTypeConverterAttributeData(Type? type, out Type? converterType)
+        {
+            bool foundTC = false;
+            return GetCustomAttributeData(
+                type,
+                typeof(TypeConverterAttribute),
+                true,
+                ref foundTC,
+                out converterType);
+        }
+
+        internal static string GetTypeConverterAttributeData(MemberInfo mi, out Type? converterType)
+        {
+            return GetCustomAttributeData(
+                mi,
+                typeof(TypeConverterAttribute),
+                out converterType);
+        }
+
+        // Special version of type-based GetCustomAttributeData that does two
+        //  additional tasks:
+        //  1) Retrieves the attributes even if it's defined on a base type, and
+        //  2) Distinguishes between "attribute found and said null" and
+        //     "no attribute found at all" via the ref bool.
+        internal static string? GetCustomAttributeData(
+            Type? t,
+            Type attrType,
+            bool allowTypeAlso,
+            ref bool attributeDataFound,
+            out Type? typeValue)
+        {
+            typeValue = null;
+            attributeDataFound = false;
+            Type? currentType = t;
+            string? attributeDataString = null;
+            CustomAttributeData cad;
+
+            while (currentType != null && !attributeDataFound)
+            {
+                IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(currentType);
+
+                for (int j = 0; j < list.Count && !attributeDataFound; j++)
+                {
+                    cad = list[j];
+
+                    if (cad.Constructor.ReflectedType == attrType)
+                    {
+                        attributeDataFound = true;
+                        attributeDataString = GetCustomAttributeData(
+                            cad,
+                            attrType,
+                            out typeValue,
+                            allowTypeAlso,
+                            false,
+                            false);
+                    }
+                }
+
+                if (!attributeDataFound)
+                {
+                    currentType = currentType.BaseType;
+
+                    // object.BaseType is null, used as terminating condition for the while() loop.
+                }
+            }
+
+            return attributeDataString;
+        }
+
+        // Helper that inspects a specific CustomAttributeData obtained via ReflectionOnlyLoad, and
+        // returns its value if the Type of the attribiutes matches the passed in attrType. It only
+        // looks for attributes with no values or a single value of Type string that is passed in via
+        // a ctor. If allowTypeAlso is true, then it looks for values of typeof(Type) as well in the
+        // single value case. If noArgs == false and zeroArgsAllowed = true, that means 0 or 1 args
+        // are permissible.
+        private static string? GetCustomAttributeData(
+            CustomAttributeData cad,
+            Type attrType,
+            out Type? typeValue,
+            bool allowTypeAlso,
+            bool noArgs,
+            bool zeroArgsAllowed)
+        {
+            string? attrValue = null;
+            typeValue = null;
+
+            // get the Constructor info
+            ConstructorInfo cinfo = cad.Constructor;
+            if (cinfo.ReflectedType == attrType)
+            {
+                // typedConstructorArguments (the Attribute constructor arguments)
+                // [MyAttribute("test", Name=Hello)]
+                // "test" is the Constructor Argument
+                IList<CustomAttributeTypedArgument> constructorArguments = cad.ConstructorArguments;
+                if (constructorArguments.Count == 1 && !noArgs)
+                {
+                    CustomAttributeTypedArgument tca = constructorArguments[0];
+                    attrValue = tca.Value as string;
+                    if (attrValue == null && allowTypeAlso && tca.ArgumentType == typeof(Type))
+                    {
+                        typeValue = tca.Value as Type;
+                        attrValue = typeValue?.AssemblyQualifiedName;
+                    }
+
+                    if (attrValue == null)
+                    {
+                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                    }
+                }
+                else if (constructorArguments.Count == 0)
+                {
+                    // zeroArgsAllowed = true for CPA for example.
+                    // CPA with no args is valid and would mean that this type is overriding a base CPA
+                    if (noArgs || zeroArgsAllowed)
+                    {
+                        attrValue = string.Empty;
+                    }
+                    else
+                    {
+                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, attrType.Name));
+                }
+            }
+
+            return attrValue;
+        }
+
+        // Given a ReflectionOnlyLoaded member, returns the value of a metadata attribute of
+        // Type attrType if set on that member. Looks only for attributes that have a ctor with
+        // one parameter that is of Type string or Type.
+        private static string GetCustomAttributeData(MemberInfo mi, Type attrType, out Type? typeValue)
+        {
+            IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(mi);
+            string? attrValue = GetCustomAttributeData(list, attrType, out typeValue, true, false);
+            return attrValue ?? string.Empty;
+        }
+
+        // Helper that enumerates a list of CustomAttributeData obtained
+        // via ReflectionOnlyLoad, and
+        // looks for a specific attribute of Type attrType.
+        // It only looks for attribiutes with a single
+        // value of Type string that is passed in via a ctor.
+        // If allowTypeAlso is true, then it looks for
+        // values of typeof(Type) as well.
+        private static string? GetCustomAttributeData(
+            IList<CustomAttributeData> list,
+            Type attrType,
+            out Type? typeValue,
+            bool allowTypeAlso,
+            bool allowZeroArgs)
+        {
+            typeValue = null;
+            string? attrValue = null;
+            for (int j = 0; j < list.Count; j++)
+            {
+                attrValue = GetCustomAttributeData(
+                    list[j],
+                    attrType,
+                    out typeValue,
+                    allowTypeAlso,
+                    false,
+                    allowZeroArgs);
+                if (attrValue != null)
+                {
+                    break;
+                }
+            }
+
+            return attrValue;
         }
     }
 }

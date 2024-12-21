@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using Alternet.UI;
 
-[assembly: XmlnsDefinition("http://schemas.alternetsoft.com/ui/2021", "Alternet.UI")]
-
 namespace Alternet.UI
 {
     /// <summary>
@@ -50,54 +48,6 @@ namespace Alternet.UI
         /// directly from your code.
         /// </summary>
         Uri BaseUri { get; set; }
-    }
-
-    /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly
-    /// from your code.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.All)]
-    public class ContentAttribute : Attribute
-    {
-    }
-
-    /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly
-    /// from your code.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.All)]
-    public class XmlnsDefinitionAttribute : Attribute
-    {
-        /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used
-        /// directly from your code.
-        /// </summary>
-        public XmlnsDefinitionAttribute(string xmlNamespace, string clrNamespace)
-        {
-        }
-    }
-
-    /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly
-    /// from your code.
-    /// </summary>
-    public class UsableDuringInitializationAttribute : Attribute
-    {
-        /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used
-        /// directly from your code.
-        /// </summary>
-        public UsableDuringInitializationAttribute(bool usable)
-        {
-        }
-    }
-
-    /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly
-    /// from your code.
-    /// </summary>
-    public class DeferredContentAttribute : Attribute
-    {
     }
 }
 

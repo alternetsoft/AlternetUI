@@ -894,7 +894,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Window;
 
         /// <inheritdoc />
-        internal override IEnumerable<FrameworkElement> LogicalChildrenCollection
+        public override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {
             get
             {

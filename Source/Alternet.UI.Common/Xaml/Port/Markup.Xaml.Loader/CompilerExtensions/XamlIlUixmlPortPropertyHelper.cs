@@ -187,8 +187,10 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
         {
             UixmlPortProperty = field;
             CustomAttributes = original.CustomAttributes;
+            /*
             if (!original.CustomAttributes.Any(ca => ca.Type.Equals(types.AssignBindingAttribute)))
                 Setters.Insert(0, new BindingSetter(types, original.DeclaringType, field));
+            */
             
             //Setters.Insert(0, new UnsetValueSetter(types, original.DeclaringType, field));
         }
@@ -218,7 +220,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             public abstract void Emit(IXamlILEmitter codegen);
         }
 
-        class BindingSetter : UixmlPortPropertyCustomSetter
+        /*class BindingSetter : UixmlPortPropertyCustomSetter
         {
             public BindingSetter(UixmlPortXamlIlWellKnownTypes types,
                 IXamlType declaringType,
@@ -238,7 +240,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                         .Ldnull();
                 emitter.EmitCall(Types.UixmlPortObjectBindMethod, true);
             }
-        }
+        }*/
 
         class UnsetValueSetter : UixmlPortPropertyCustomSetter
         {

@@ -1,5 +1,3 @@
-#pragma warning disable
-#nullable disable
 namespace Alternet.UI.Data
 {
     /// <summary>

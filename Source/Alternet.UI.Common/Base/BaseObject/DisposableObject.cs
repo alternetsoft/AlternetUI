@@ -60,6 +60,11 @@ namespace Alternet.UI
         public event EventHandler? Disposed;
 
         /// <summary>
+        /// Gets the disposable that does nothing when disposed.
+        /// </summary>
+        public static IDisposable EmptyDisposable => EmptyDisposableObject.Instance;
+
+        /// <summary>
         /// Gets whether object is disposed.
         /// </summary>
         [Browsable(false)]
@@ -80,7 +85,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to call <see cref="DisposeUnmanaged"/> method when this object is disposed.
+        /// Gets or sets whether to call <see cref="DisposeUnmanaged"/> method
+        /// when this object is disposed.
         /// </summary>
         [Browsable(false)]
         public bool DisposeHandle
@@ -187,6 +193,28 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void DisposeUnmanaged()
         {
+        }
+
+        /// <summary>
+        /// Represents a disposable that does nothing on disposal.
+        /// </summary>
+        private sealed class EmptyDisposableObject : IDisposable
+        {
+            /// <summary>
+            /// Singleton default disposable.
+            /// </summary>
+            public static readonly EmptyDisposableObject Instance = new();
+
+            private EmptyDisposableObject()
+            {
+            }
+
+            /// <summary>
+            /// Does nothing.
+            /// </summary>
+            public void Dispose()
+            {
+            }
         }
     }
 }
