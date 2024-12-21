@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public class PlessControlHandler : BaseControlHandler, IControlHandler
     {
+        /// <summary>
+        /// Gets dummy control handler.
+        /// </summary>
+        public static readonly PlessControlHandler Default = new();
+
 #pragma warning disable
         private bool enabled = true;
         private string? toolTip;
