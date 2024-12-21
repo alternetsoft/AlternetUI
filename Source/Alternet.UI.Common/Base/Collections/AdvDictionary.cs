@@ -30,11 +30,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds the specified key and value to the dictionary.
+        /// Adds the specified key and value pair to the dictionary or updates value if
+        /// key is already added.
         /// </summary>
         /// <param name="key">The key of the element to add.</param>
         /// <param name="value">The value of the element to add.
         /// The value can be null for reference types.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(TKey key, TValue value)
         {
             AddOrUpdate(key, (k) => value, (k, v) => value);
