@@ -110,6 +110,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes all keys and values from the dictionary. All previously locked items
+        /// become invalid.
+        /// </summary>
+        public void Clear()
+        {
+            values.Clear();
+        }
+
+        /// <summary>
         /// Gets locked item initialized with the default value.
         /// </summary>
         /// <param name="index">Index of value.</param>
