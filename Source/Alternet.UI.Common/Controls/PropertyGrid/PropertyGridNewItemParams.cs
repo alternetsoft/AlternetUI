@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -31,6 +32,12 @@ namespace Alternet.UI
         public IFormatProvider? FormatProvider { get; set; }
 
         public IObjectToString? Converter { get; set; }
+
+        public CultureInfo? Culture { get; set; }
+
+        public ITypeDescriptorContext? Context { get; set; }
+
+        public bool? UseInvariantCulture { get; set; }
 
         public string? DefaultFormat { get; set; }
 
@@ -102,7 +109,12 @@ namespace Alternet.UI
             private IFormatProvider? constructedFormatProvider;
             private IObjectToString? constructedConverter;
             private string? constructedDefaultFormat;
+            private CultureInfo? constructedCulture;
+            private ITypeDescriptorContext? constructedContext;
+            private bool? constructedUseInvariantCulture;
 
+            private bool loadedContext;
+            private bool loadedCulture;
             private bool loadedDefaultFormat;
             private bool loadedFormatProvider;
             private bool loadedConverter;
@@ -114,6 +126,7 @@ namespace Alternet.UI
             private bool loadedHasEllipsis;
             private bool loadedTextReadOnly;
             private bool loadedOnlyTextReadOnly;
+            private bool loadedUseInvariantCulture;
 
             public ConstructedParams(IPropertyGridNewItemParams owner)
             {
@@ -195,6 +208,54 @@ namespace Alternet.UI
                         ref loadedNumberStyles,
                         ref constructedNumberStyles,
                         (r) => r?.NewItemParams?.NumberStyles);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public CultureInfo? Culture
+            {
+                get
+                {
+                    var result = GetConstructedValue<CultureInfo?>(
+                        ref loadedCulture,
+                        ref constructedCulture,
+                        (r) => r?.NewItemParams?.Culture);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public ITypeDescriptorContext? Context
+            {
+                get
+                {
+                    var result = GetConstructedValue<ITypeDescriptorContext?>(
+                        ref loadedContext,
+                        ref constructedContext,
+                        (r) => r?.NewItemParams?.Context);
+                    return result;
+                }
+
+                set
+                {
+                }
+            }
+
+            public bool? UseInvariantCulture
+            {
+                get
+                {
+                    var result = GetConstructedValue<bool?>(
+                        ref loadedUseInvariantCulture,
+                        ref constructedUseInvariantCulture,
+                        (r) => r?.NewItemParams?.UseInvariantCulture);
                     return result;
                 }
 

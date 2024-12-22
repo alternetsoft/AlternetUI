@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +20,21 @@ namespace Alternet.UI
             this.propInfo = propInfo;
             this.owner = owner;
         }
+
+        /// <summary>
+        /// Gets or sets <see cref="CultureInfo"/> used for the conversion.
+        /// </summary>
+        public CultureInfo? Culture { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="ITypeDescriptorContext"/> used for the conversion.
+        /// </summary>
+        public ITypeDescriptorContext? Context { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to use invariant conversion.
+        /// </summary>
+        public bool? UseInvariantCulture { get; set; }
 
         public NumberStyles? NumberStyles { get; set; }
 
