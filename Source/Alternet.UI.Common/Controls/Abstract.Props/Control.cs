@@ -507,6 +507,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            UnbindHandlerEvents();
+            base.DisposeManaged();
+        }
+
+        /// <inheritdoc/>
         public override Color? GetDefaultAttributesBgColor()
         {
             CheckDisposed();
@@ -623,6 +630,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void BindHandlerEvents()
         {
+            if (DisposingOrDisposed)
+                return;
+
             Handler.MouseEnter = RaiseMouseEnterOnTarget;
             Handler.MouseLeave = RaiseMouseLeaveOnTarget;
             Handler.HandleCreated = RaiseHandleCreated;
