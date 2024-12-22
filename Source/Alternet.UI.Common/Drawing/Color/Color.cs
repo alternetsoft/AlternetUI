@@ -155,7 +155,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color"/> class from the <see cref="KnownColor"/>.
+        /// Initializes a new instance of the <see cref="Color"/> class
+        /// from the <see cref="KnownColor"/>.
         /// </summary>
         /// <param name="knownColor">Color specified using <see cref="KnownColor"/> value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -213,12 +214,13 @@ namespace Alternet.Drawing
         public static event EventHandler<ValueConvertEventArgs<string?, Color?>>? StringToColor;
 
         /// <summary>
-        /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
+        /// Occurs when <see cref="Color"/> is converted to <see cref="string"/>.
         /// </summary>
         public static event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToString;
 
         /// <summary>
-        /// Occurs when <see cref="string"/> is converted to <see cref="Color"/>.
+        /// Occurs when <see cref="Color"/> is converted to <see cref="string"/>
+        /// for the display purposes.
         /// </summary>
         public static event EventHandler<ValueConvertEventArgs<Color?, string?>>? ColorToDisplayString;
 

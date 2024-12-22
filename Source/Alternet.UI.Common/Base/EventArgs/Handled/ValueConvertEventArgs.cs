@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the value convertion events. <typeparamref name="T1"/> specifies
-    /// type of the source data. <typeparamref name="T2"/> specifies type of the destination data.
+    /// Provides data for the value convertion events. <typeparamref name="TFrom"/> specifies
+    /// type of the source data. <typeparamref name="TResult"/> specifies type of the destination data.
     /// </summary>
-    public class ValueConvertEventArgs<T1, T2> : HandledEventArgs
+    public class ValueConvertEventArgs<TFrom, TResult> : HandledEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueConvertEventArgs{T1, T2}"/> class.
+        /// Initializes a new instance of the <see cref="ValueConvertEventArgs{TFrom, TResult}"/> class.
         /// </summary>
         /// <param name="value"></param>
-        public ValueConvertEventArgs(T1 value)
+        public ValueConvertEventArgs(TFrom value)
         {
             Value = value;
         }
@@ -24,11 +24,11 @@ namespace Alternet.UI
         /// <summary>
         /// Value to convert from.
         /// </summary>
-        public T1 Value { get; set; }
+        public TFrom Value { get; set; }
 
         /// <summary>
         /// Result of the conversion.
         /// </summary>
-        public T2? Result { get; set; }
+        public TResult? Result { get; set; }
     }
 }
