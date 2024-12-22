@@ -1030,11 +1030,17 @@ namespace Alternet.UI
         /// <param name="kind">Message kind.</param>
         public static void Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
-            IdleLog(obj, kind);
+            try
+            {
+                IdleLog(obj, kind);
 
-            if (LogMessage is null || LogInUpdates())
-                return;
-            ProcessLogQueue(true);
+                if (LogMessage is null || LogInUpdates())
+                    return;
+                ProcessLogQueue(true);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
