@@ -188,6 +188,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            SuspendLayout();
+
             if (FocusedControl == this)
                 FocusedControl = null;
             if (HoveredControl == this)
