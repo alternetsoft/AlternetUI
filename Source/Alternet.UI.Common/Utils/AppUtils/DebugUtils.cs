@@ -69,18 +69,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="RegisterExceptionsLogger"/> if DEBUG conditional is defined.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void RegisterExceptionsLoggerIfDebug(
+            bool debugWriteLine = true,
+            bool appLog = false)
+        {
+            RegisterExceptionsLogger(debugWriteLine, appLog);
+        }
+
+        /// <summary>
         /// Subscribes to <see cref="AppDomain"/> and <see cref="TaskScheduler"/> events
         /// related to the exceptions handling.
         /// </summary>
-        public static void RegisterExceptionsLogger()
+        public static void RegisterExceptionsLogger(bool debugWriteLine = true, bool appLog = false)
         {
-            static void LogException(string title, object e)
+            void LogException(string title, object e)
             {
-                Debug.WriteLine(LogUtils.SectionSeparator);
-                Debug.WriteLine(title);
+                if(debugWriteLine)
+                    LogExceptionToAction(title, e, (s) => Debug.WriteLine(s));
+                if(appLog)
+                    LogExceptionToAction(title, e, (s) => App.Log(s));
+            }
+
+            static void LogExceptionToAction(string title, object e, Action<string> writeLine)
+            {
+                writeLine(LogUtils.SectionSeparator);
+                writeLine(title);
                 var s = e.ToString();
-                Debug.WriteLine(s);
-                Debug.WriteLine(LogUtils.SectionSeparator);
+                writeLine(s);
+                writeLine(LogUtils.SectionSeparator);
             }
 
             AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
