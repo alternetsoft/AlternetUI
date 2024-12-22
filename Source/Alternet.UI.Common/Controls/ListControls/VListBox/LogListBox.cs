@@ -336,6 +336,9 @@ namespace Alternet.UI
 
         private void Application_LogRefresh(object? sender, EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+
             LogRefresh();
         }
 
@@ -408,6 +411,9 @@ namespace Alternet.UI
 
         private void Application_LogMessage(object? sender, LogMessageEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+
             Invoke(Fn);
 
             void Fn()
