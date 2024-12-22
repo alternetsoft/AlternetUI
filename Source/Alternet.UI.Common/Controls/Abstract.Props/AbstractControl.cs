@@ -1463,11 +1463,13 @@ namespace Alternet.UI
         /// <see cref="KeyGesture.IsValid"/> before they are used
         /// in <see cref="ExecuteKeyBinding"/>. Default is True.
         /// </summary>
+        [Browsable(false)]
         public virtual bool ValidateKeyBinding { get; set; } = true;
 
         /// <summary>
         /// Gets whether control has visible children controls.
         /// </summary>
+        [Browsable(false)]
         public virtual bool HasVisibleChildren
         {
             get
