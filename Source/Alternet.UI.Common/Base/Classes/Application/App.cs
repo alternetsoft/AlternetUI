@@ -987,10 +987,16 @@ namespace Alternet.UI
         /// <param name="obj">Message text or object to log.</param>
         public static void LogError(object? obj)
         {
-            if (obj is Exception e)
-                LogUtils.LogException(e);
-            else
-                Log($"Error: {obj}", LogItemKind.Error);
+            try
+            {
+                if (obj is Exception e)
+                    LogUtils.LogException(e);
+                else
+                    Log($"Error: {obj}", LogItemKind.Error);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
