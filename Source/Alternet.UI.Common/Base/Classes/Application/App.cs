@@ -1500,6 +1500,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Instructs the application how to respond to unhandled exceptions in debug mode.
+        /// </summary>
+        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
+        /// behave if an exception is thrown without being caught.</param>
+        public static void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
+        {
+            unhandledExceptionModeDebug = mode;
+        }
+
+        /// <summary>
         /// Can be called before massive outputs to log. Pairs with <see cref="LogEndUpdate"/>.
         /// </summary>
         public static void LogBeginUpdate()
@@ -1582,6 +1593,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Instructs the application how to respond to unhandled exceptions.
+        /// </summary>
+        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
+        /// behave if an exception is thrown without being caught.</param>
+        public static void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
+        {
+            unhandledExceptionMode = mode;
+        }
+
+        /// <summary>
         /// Raises <see cref="Idle"/> event.
         /// </summary>
         public static void RaiseIdle()
@@ -1616,17 +1638,6 @@ namespace Alternet.UI
         public virtual void ProcessPendingEvents()
         {
             App.Handler.ProcessPendingEvents();
-        }
-
-        /// <summary>
-        /// Instructs the application how to respond to unhandled exceptions.
-        /// </summary>
-        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
-        /// value describing how the application should
-        /// behave if an exception is thrown without being caught.</param>
-        public virtual void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
-        {
-            unhandledExceptionMode = mode;
         }
 
         /// <summary>
@@ -1698,17 +1709,6 @@ namespace Alternet.UI
         public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
         {
             SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
-        }
-
-        /// <summary>
-        /// Instructs the application how to respond to unhandled exceptions in debug mode.
-        /// </summary>
-        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
-        /// value describing how the application should
-        /// behave if an exception is thrown without being caught.</param>
-        public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
-        {
-            unhandledExceptionModeDebug = mode;
         }
 
         internal void RegisterWindow(Window window)

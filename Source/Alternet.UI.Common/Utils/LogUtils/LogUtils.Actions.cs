@@ -272,15 +272,15 @@ namespace Alternet.UI
 
             Fn("Test Exception: Throw C++", () =>
             {
-                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 WebBrowser.DoCommandGlobal("CppThrow");
             });
 
             Fn("Test Exception: Throw C#", () =>
             {
-                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 throw new FileNotFoundException("Test message", "MyFileName.dat");
             });
 

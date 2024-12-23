@@ -102,8 +102,7 @@ namespace Alternet.UI
                 return;
             hookedExceptionEvents = true;
 
-            var a = App.Current;
-            a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
             void LogException(string title, object e)
             {
