@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Implements speed button control.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class SpeedButton : GraphicControl
+    public partial class SpeedButton : GraphicControl, ICommandSource
     {
         /// <summary>
         /// Gets or sets default click repeat delay used when
@@ -111,6 +111,7 @@ namespace Alternet.UI
         private Timer? repeatTimer;
         private Timer? firstClickTimer;
         private int clickRepeatDelay = DefaultClickRepeatDelay;
+        private CommandSourceStruct commandSource = new();
 
         static SpeedButton()
         {
@@ -145,14 +146,13 @@ namespace Alternet.UI
             Padding = 4;
             Layout = LayoutStyle.Horizontal;
 
-            /*picture.Parent = this;
-            picture.InputTransparent = true;
-            spacer.Parent = this;
-            label.Parent = this;
-            label.InputTransparent = true;*/
-
             IsGraphicControl = true;
             RefreshOptions = ControlRefreshOptions.RefreshOnState;
+
+            commandSource.Changed = () =>
+            {
+                Enabled = commandSource.CanExecute;
+            };
         }
 
         /// <summary>
@@ -352,6 +352,48 @@ namespace Alternet.UI
             {
                 shortcut = value;
                 UpdateToolTip();
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual ICommand? Command
+        {
+            get
+            {
+                return commandSource.Command;
+            }
+
+            set
+            {
+                commandSource.Command = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual object? CommandParameter
+        {
+            get
+            {
+                return commandSource.CommandParameter;
+            }
+
+            set
+            {
+                commandSource.CommandParameter = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual object? CommandTarget
+        {
+            get
+            {
+                return commandSource.CommandTarget;
+            }
+
+            set
+            {
+                commandSource.CommandTarget = value;
             }
         }
 
@@ -759,11 +801,7 @@ namespace Alternet.UI
             get => clickAction;
             set
             {
-                if (clickAction != null)
-                    Click -= OnClickAction;
                 clickAction = value;
-                if (clickAction != null)
-                    Click += OnClickAction;
             }
         }
 
@@ -1006,17 +1044,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void ParentDisposed()
-        {
-            UnsubscribeClickRepeated();
-            base.ParentDisposed();
-        }
-
-        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            commandSource.Changed = null;
             UnsubscribeClickRepeated();
             base.DisposeManaged();
+        }
+
+        /// <inheritdoc />
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+            clickAction?.Invoke();
+            commandSource.Execute();
         }
 
         private void OnClickRepeatTimerEvent()
@@ -1057,11 +1097,6 @@ namespace Alternet.UI
                 firstClickTimer.Start();
                 subscribedClickRepeated = true;
             }
-        }
-
-        private void OnClickAction(object? sender, EventArgs? e)
-        {
-            clickAction?.Invoke();
         }
     }
 }

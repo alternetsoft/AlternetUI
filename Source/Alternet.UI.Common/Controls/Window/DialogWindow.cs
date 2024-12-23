@@ -104,7 +104,7 @@ namespace Alternet.UI
 #endif
         public virtual ModalResult ShowModal()
         {
-            return ShowModal(Owner);
+            return ShowModal(null);
         }
 
         /// <summary>

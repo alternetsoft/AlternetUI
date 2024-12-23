@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,5 +35,16 @@ namespace Alternet.UI
         /// Performs default value validation.
         /// </summary>
         DefaultValidation = 4,
+
+        /// <summary>
+        /// Whether to use <see cref="TypeConverter"/> when string to/from value is converted.
+        /// </summary>
+        UseTypeConverter = 8,
+
+        /// <summary>
+        /// Whether to use <see cref="TypeConverter"/> with invariant
+        /// string to/from value conversion.
+        /// </summary>
+        UseInvariantCulture = 16,
     }
 }

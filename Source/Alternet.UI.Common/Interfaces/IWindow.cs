@@ -29,10 +29,12 @@ namespace Alternet.UI
         /// </summary>
         event EventHandler? StatusBarChanged;
 
+/*
         /// <summary>
         /// Occurs when the value of the "Owner" property changes.
         /// </summary>
         event EventHandler? OwnerChanged;
+*/
 
         /// <summary>
         /// Occurs when the value of the <see cref="ShowInTaskbar"/> property changes.
@@ -230,6 +232,7 @@ namespace Alternet.UI
         /// </summary>
         bool MinimizeEnabled { get; set; }
 
+/*
         /// <summary>
         /// Gets or sets the window that owns this window.
         /// </summary>
@@ -240,7 +243,7 @@ namespace Alternet.UI
         /// When a window is owned by another window, it is closed or hidden with the owner window.
         /// </remarks>
         Window? Owner { get; set; }
-
+*/
         /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>
@@ -253,6 +256,7 @@ namespace Alternet.UI
         /// </remarks>
         WindowStartLocation StartLocation { get; set; }
 
+/*
         /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are
         /// owned by this window.
@@ -268,6 +272,7 @@ namespace Alternet.UI
         /// with the owner window.
         /// </remarks>
         Window[] OwnedWindows { get; }
+*/
 
         /// <summary>
         /// Gets or sets a value that indicates whether window is minimized,

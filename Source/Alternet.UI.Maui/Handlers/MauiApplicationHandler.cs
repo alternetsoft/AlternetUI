@@ -10,6 +10,7 @@ using Alternet.UI.Extensions;
 
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
 using Microsoft.Maui.Dispatching;
 
 namespace Alternet.UI
@@ -21,6 +22,7 @@ namespace Alternet.UI
     {
         static MauiApplicationHandler()
         {
+            DeviceDisplay.MainDisplayInfoChanged += DeviceDisplay_MainDisplayInfoChanged;
             App.WakeUpIdleWithTimer = false;
         }
 
@@ -304,6 +306,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void WakeUpIdle()
         {
+        }
+
+        private static void DeviceDisplay_MainDisplayInfoChanged(
+            object? sender,
+            DisplayInfoChangedEventArgs e)
+        {
+            Display.Reset();
         }
     }
 }

@@ -8,15 +8,24 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 
-namespace Alternet.UI.Port
+using Alternet.UI.Port;
+
+namespace Alternet.UI
 {
     /// <summary>
     /// Class that provides functionality to obtain a TypeConverter from a property or the
     /// type of the property, based on logic similar to TypeDescriptor.GetConverter.
     /// </summary>
-    internal static class TypeConverterHelper
+    public static class TypeConverterHelper
     {
-        private static CultureInfo invariantEnglishUS = CultureInfo.InvariantCulture;
+        private static readonly CultureInfo invariantEnglishUS = CultureInfo.InvariantCulture;
+
+        private static IndexedValues<Type, TypeConverter> converters = new();
+
+        static TypeConverterHelper()
+        {
+            TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
+        }
 
         internal static CultureInfo InvariantEnglishUS
         {
@@ -26,15 +35,65 @@ namespace Alternet.UI.Port
             }
         }
 
-        internal static Type? GetConverterType(Type type)
+        /// <summary>
+        /// Returns a <see cref="TypeConverter"/> for the given target Type,
+        /// otherwise Null if not found.
+        /// First, if the type is one of the known system types, it lookups
+        /// a table to determine the <see cref="TypeConverter"/>.
+        /// Next, it tries to find a <see cref="TypeConverterAttribute"/> on the type using reflection.
+        /// Finally, it looks up the table of known typeConverters again if
+        /// the given type derives from one of the known system types.
+        /// </summary>
+        /// <param name="type">The target <see cref="Type"/> for
+        /// which to find a <see cref="TypeConverter"/>.</param>
+        /// <returns>A <see cref="TypeConverter"/> for the <see cref="Type"/>
+        /// type if found; Null otherwise.</returns>
+        public static TypeConverter? GetTypeConverter(Type? type)
+        {
+            if (type == null)
+                return null;
+
+            var result = converters.GetValue(type, Internal);
+            return result;
+
+            TypeConverter? Internal()
+            {
+                TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
+
+                if (typeConverter == null)
+                {
+                    Type? converterType = GetConverterType(type);
+                    if (converterType != null)
+                    {
+                        typeConverter = Activator.CreateInstance(
+                            converterType,
+                            BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
+                            null,
+                            null,
+                            InvariantEnglishUS) as TypeConverter;
+                    }
+                    else
+                    {
+                        typeConverter = GetCoreConverterFromCustomType(type);
+                    }
+
+                    if (typeConverter == null)
+                    {
+                        typeConverter = new TypeConverter();
+                    }
+                }
+
+                return typeConverter;
+            }
+        }
+
+        private static Type? GetConverterType(Type type)
         {
             Debug.Assert(type != null, "Null passed for type to GetConverterType");
 
-            Type? converterType = null;
-
             // Try looking for the TypeConverter for the type using reflection.
             string? converterName
-                = AssemblyUtils.GetTypeConverterAttributeData(type, out converterType);
+                = AssemblyUtils.GetTypeConverterAttributeData(type, out Type? converterType);
 
             if (converterType == null)
             {
@@ -44,7 +103,7 @@ namespace Alternet.UI.Port
             return converterType;
         }
 
-        internal static Type? GetConverterTypeFromName(string? converterName)
+        private static Type? GetConverterTypeFromName(string? converterName)
         {
             Type? GetQualifiedType()
             {
@@ -70,7 +129,9 @@ namespace Alternet.UI.Port
             return converterType;
         }
 
-        internal static Type? GetCoreConverterTypeFromCustomType(Type type)
+#pragma warning disable
+        private static Type? GetCoreConverterTypeFromCustomType(Type type)
+#pragma warning restore
         {
             Type? converterType = null;
             if (type.IsEnum)
@@ -160,7 +221,94 @@ namespace Alternet.UI.Port
             return converterType;
         }
 
-        internal static TypeConverter? GetCoreConverterFromCustomType(Type type)
+        private static TypeConverter? GetCoreConverterFromCoreType(Type type)
+        {
+            TypeConverter? typeConverter = null;
+            if (type == typeof(int))
+            {
+                typeConverter = new System.ComponentModel.Int32Converter();
+            }
+            else if (type == typeof(short))
+            {
+                typeConverter = new System.ComponentModel.Int16Converter();
+            }
+            else if (type == typeof(long))
+            {
+                typeConverter = new System.ComponentModel.Int64Converter();
+            }
+            else if (type == typeof(uint))
+            {
+                typeConverter = new System.ComponentModel.UInt32Converter();
+            }
+            else if (type == typeof(ushort))
+            {
+                typeConverter = new System.ComponentModel.UInt16Converter();
+            }
+            else if (type == typeof(ulong))
+            {
+                typeConverter = new System.ComponentModel.UInt64Converter();
+            }
+            else if (type == typeof(bool))
+            {
+                typeConverter = new System.ComponentModel.BooleanConverter();
+            }
+            else if (type == typeof(double))
+            {
+                typeConverter = new System.ComponentModel.DoubleConverter();
+            }
+            else if (type == typeof(float))
+            {
+                typeConverter = new System.ComponentModel.SingleConverter();
+            }
+            else if (type == typeof(byte))
+            {
+                typeConverter = new System.ComponentModel.ByteConverter();
+            }
+            else if (type == typeof(sbyte))
+            {
+                typeConverter = new System.ComponentModel.SByteConverter();
+            }
+            else if (type == typeof(char))
+            {
+                typeConverter = new System.ComponentModel.CharConverter();
+            }
+            else if (type == typeof(decimal))
+            {
+                typeConverter = new System.ComponentModel.DecimalConverter();
+            }
+            else if (type == typeof(TimeSpan))
+            {
+                typeConverter = new System.ComponentModel.TimeSpanConverter();
+            }
+            else if (type == typeof(Guid))
+            {
+                typeConverter = new System.ComponentModel.GuidConverter();
+            }
+            else if (type == typeof(string))
+            {
+                typeConverter = new System.ComponentModel.StringConverter();
+            }
+            else if (type == typeof(CultureInfo))
+            {
+                typeConverter = new System.ComponentModel.CultureInfoConverter();
+            }
+            else if (type == typeof(Type))
+            {
+                typeConverter = new TypeTypeConverter();
+            }
+            else if (type == typeof(DateTime))
+            {
+                typeConverter = new DateTimeConverter2();
+            }
+            else if (AssemblyUtils.IsNullableType(type))
+            {
+                typeConverter = new System.ComponentModel.NullableConverter(type);
+            }
+
+            return typeConverter;
+        }
+
+        private static TypeConverter? GetCoreConverterFromCustomType(Type type)
         {
             TypeConverter? typeConverter = null;
             if (type.IsEnum)
@@ -253,135 +401,9 @@ namespace Alternet.UI.Port
             return typeConverter;
         }
 
-        /// <summary>
-        /// Returns a TypeConverter for the given target Type, otherwise null if not found.
-        /// First, if the type is one of the known system types, it lookups
-        /// a table to determine the TypeConverter.
-        /// Next, it tries to find a TypeConverterAttribute on the type using reflection.
-        /// Finally, it looks up the table of known typeConverters again if
-        /// the given type derives from one of the
-        /// known system types.
-        /// </summary>
-        /// <param name="type">The target Type for which to find a TypeConverter.</param>
-        /// <returns>A TypeConverter for the Type type if found. Null otherwise.</returns>
-        internal static TypeConverter? GetTypeConverter(Type type)
+        private static void TypeDescriptorRefreshed(RefreshEventArgs args)
         {
-            if (type == null)
-                return null;
-
-            TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
-
-            if (typeConverter == null)
-            {
-                Type? converterType = GetConverterType(type);
-                if (converterType != null)
-                {
-                    typeConverter = Activator.CreateInstance(
-                        converterType,
-                        BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
-                        null,
-                        null,
-                        InvariantEnglishUS) as TypeConverter;
-                }
-                else
-                {
-                    typeConverter = GetCoreConverterFromCustomType(type);
-                }
-
-                if (typeConverter == null)
-                {
-                    typeConverter = new TypeConverter();
-                }
-            }
-
-            return typeConverter;
-        }
-
-        private static TypeConverter? GetCoreConverterFromCoreType(Type type)
-        {
-            TypeConverter? typeConverter = null;
-            if (type == typeof(int))
-            {
-                typeConverter = new System.ComponentModel.Int32Converter();
-            }
-            else if (type == typeof(short))
-            {
-                typeConverter = new System.ComponentModel.Int16Converter();
-            }
-            else if (type == typeof(long))
-            {
-                typeConverter = new System.ComponentModel.Int64Converter();
-            }
-            else if (type == typeof(uint))
-            {
-                typeConverter = new System.ComponentModel.UInt32Converter();
-            }
-            else if (type == typeof(ushort))
-            {
-                typeConverter = new System.ComponentModel.UInt16Converter();
-            }
-            else if (type == typeof(ulong))
-            {
-                typeConverter = new System.ComponentModel.UInt64Converter();
-            }
-            else if (type == typeof(bool))
-            {
-                typeConverter = new System.ComponentModel.BooleanConverter();
-            }
-            else if (type == typeof(double))
-            {
-                typeConverter = new System.ComponentModel.DoubleConverter();
-            }
-            else if (type == typeof(float))
-            {
-                typeConverter = new System.ComponentModel.SingleConverter();
-            }
-            else if (type == typeof(byte))
-            {
-                typeConverter = new System.ComponentModel.ByteConverter();
-            }
-            else if (type == typeof(sbyte))
-            {
-                typeConverter = new System.ComponentModel.SByteConverter();
-            }
-            else if (type == typeof(char))
-            {
-                typeConverter = new System.ComponentModel.CharConverter();
-            }
-            else if (type == typeof(decimal))
-            {
-                typeConverter = new System.ComponentModel.DecimalConverter();
-            }
-            else if (type == typeof(TimeSpan))
-            {
-                typeConverter = new System.ComponentModel.TimeSpanConverter();
-            }
-            else if (type == typeof(Guid))
-            {
-                typeConverter = new System.ComponentModel.GuidConverter();
-            }
-            else if (type == typeof(string))
-            {
-                typeConverter = new System.ComponentModel.StringConverter();
-            }
-            else if (type == typeof(CultureInfo))
-            {
-                typeConverter = new System.ComponentModel.CultureInfoConverter();
-            }
-            else if (type == typeof(Type))
-            {
-                typeConverter = new TypeTypeConverter();
-            }
-            else if (type == typeof(DateTime))
-            {
-                typeConverter = new DateTimeConverter2();
-            }
-            else if (AssemblyUtils.IsNullableType(type))
-            {
-                typeConverter = new System.ComponentModel.NullableConverter(type);
-            }
-
-            return typeConverter;
+            converters = new();
         }
     }
 }

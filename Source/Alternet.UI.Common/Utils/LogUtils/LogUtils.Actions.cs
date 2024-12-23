@@ -240,7 +240,7 @@ namespace Alternet.UI
             Fn("Run terminal command", () => DialogFactory.ShowRunTerminalCommandDlg());
             Fn("Show Second MainForm", () => AppUtils.CreateFirstWindowClone());
             Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.LogToFile);
-            Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics.Log);
+            Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics(Window.Default).Log);
             Fn("Log CultureInfo.CurrentCulture", LogCurrentCulture);
 
             EnumDebugLogActions(Fn);
@@ -272,15 +272,15 @@ namespace Alternet.UI
 
             Fn("Test Exception: Throw C++", () =>
             {
-                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 WebBrowser.DoCommandGlobal("CppThrow");
             });
 
             Fn("Test Exception: Throw C#", () =>
             {
-                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
                 throw new FileNotFoundException("Test message", "MyFileName.dat");
             });
 

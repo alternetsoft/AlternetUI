@@ -21,7 +21,8 @@ using SkiaSharp.Views.Maui.Controls;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="Alternet.UI.AbstractControl"/> container using <see cref="SKCanvasView"/>.
+    /// Implements <see cref="Alternet.UI.AbstractControl"/>
+    /// container using <see cref="SKCanvasView"/>.
     /// </summary>
     public partial class ControlView : SKCanvasView
     {
@@ -66,9 +67,6 @@ namespace Alternet.UI
                 if(interior is null)
                 {
                     interior = new();
-                    interior.Metrics = ScrollBar.DefaultMetrics;
-                    interior.SetDefaultBorder(true);
-                    interior.SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
                 }
 
                 return interior;
@@ -415,7 +413,7 @@ namespace Alternet.UI
             if (control is null)
                 return;
 
-            TouchEventArgs args = MauiUtils.Convert(e);
+            TouchEventArgs args = MauiUtils.Convert(e, Control);
 
 #if ANDROID
             if(args.ActionType == TouchAction.WheelChanged)
@@ -434,6 +432,8 @@ namespace Alternet.UI
             if (control is null)
                 return;
 
+            control.ResetScaleFactor();
+
             var scaleFactor = (float)control.ScaleFactor;
             var bounds = Bounds;
 
@@ -451,7 +451,7 @@ namespace Alternet.UI
             {
                 interior.Bounds = newBounds;
 
-                var rectangles = interior.GetLayoutRectangles(scaleFactor);
+                var rectangles = interior.GetLayoutRectangles(control);
                 var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
                 control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
@@ -460,11 +460,12 @@ namespace Alternet.UI
 
         private void Canvas_PaintSurface(object? sender, SKPaintSurfaceEventArgs e)
         {
-            var dc = e.Surface.Canvas;
-
             if (control is null)
                 return;
 
+            var dc = e.Surface.Canvas;
+
+            control.ResetScaleFactor();
             var scaleFactor = (float)control.ScaleFactor;
 
             dc.Save();

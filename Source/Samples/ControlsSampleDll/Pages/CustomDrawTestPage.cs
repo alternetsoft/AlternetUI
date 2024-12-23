@@ -140,14 +140,7 @@ namespace ControlsSample
         public static InteriorDrawable CreateInteriorDrawable(bool isDarkBackground)
         {
             InteriorDrawable result = new();
-
-            var metrics = ScrollBar.DefaultMetrics;
-            result.Metrics = metrics;
-
-            result.Border = new();
-            result.Border.Border = new();
-            result.Border.Border.Color = ColorUtils.GetDefaultBorderColor(isDarkBackground);
-
+            result.SetThemeMetrics(ScrollBar.KnownTheme.MauiAuto, isDarkBackground);
             return result;
         }
 

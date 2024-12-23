@@ -256,11 +256,6 @@ namespace Alternet.UI
             return default;
         }
 
-        public virtual SizeD GetDPI()
-        {
-            return 96 * GetPixelScaleFactor();
-        }
-
         public virtual nint GetHandle()
         {
             return default;
@@ -272,9 +267,14 @@ namespace Alternet.UI
             return result ?? AssemblyUtils.Default;
         }
 
-        public virtual Coord GetPixelScaleFactor()
+        public virtual Coord? GetPixelScaleFactor()
         {
-            return Display.Primary.ScaleFactor;
+            var result = MauiDisplayHandler.GetDefaultScaleFactor();
+
+            if (result >= 1)
+                return result;
+
+            return null;
         }
 
         public virtual SizeD GetPreferredSize(SizeD availableSize)

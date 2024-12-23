@@ -99,12 +99,8 @@ namespace Alternet::UI
         void OnBeforeDestroyWxWindow() override;
         void OnWxWindowDestroyed(wxWindow* window) override;
 
-        void ShowCore() override;
-        void HideCore() override;
-
         void UpdateWxWindowParent() override;
     private:
-
         Button* _acceptButton = nullptr;
         Button* _cancelButton = nullptr;
         int _frameKind = 0;
@@ -126,8 +122,6 @@ namespace Alternet::UI
         long GetWindowStyle();
 
         void ApplyIcon(wxTopLevelWindow* value);
-
-        std::vector<Window*> GetOwnedWindows();
 
         enum class DelayedWindowFlags
         {
@@ -154,21 +148,15 @@ namespace Alternet::UI
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;
-
         FlagsAccessor<WindowFlags> _flags;
-
         DelayedValue<Window, string> _title;
         WindowState _state = WindowState::Normal;
-
         DelayedValue<Window, MainMenu*> _menu;
-
         MainMenu* _storedMenu = nullptr;
         IconSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;
 
         inline static RectD _defaultBounds = RectD(0, 0, 0, 0);
-
-        std::set<Window*> _preservedHiddenOwnedWindows;
     };
 }
 

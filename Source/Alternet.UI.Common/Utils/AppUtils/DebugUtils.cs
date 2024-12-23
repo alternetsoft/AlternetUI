@@ -26,6 +26,20 @@ namespace Alternet.UI
         public static bool DebugLoading = false;
 
         /// <summary>
+        /// Gets or sets whether exception logger (registered with
+        /// <see cref="RegisterExceptionsLogger"/>)
+        /// outputs messages to <see cref="Debug.WriteLine(string)"/>.
+        /// </summary>
+        public static bool ExceptionsLoggerDebugWriteLine = true;
+
+        /// <summary>
+        /// Gets or sets whether exception logger (registered with
+        /// <see cref="RegisterExceptionsLogger"/>)
+        /// outputs messages to <see cref="App.Log"/>.
+        /// </summary>
+        public static bool ExceptionsLoggerAppLog = false;
+
+        /// <summary>
         /// Gets or sets whether to use 'dlOpen' on Linux in order to load native dll.
         /// </summary>
         public static bool UseDlOpenOnLinux = false;
@@ -69,42 +83,82 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Subscribes to <see cref="AppDomain"/> and <see cref="TaskScheduler"/> events
-        /// related to the exceptions handling.
+        /// Calls <see cref="RegisterExceptionsLogger"/> if DEBUG conditional is defined.
         /// </summary>
-        public static void RegisterExceptionsLogger()
+        [Conditional("DEBUG")]
+        public static void RegisterExceptionsLoggerIfDebug(Action<Exception>? callback = null)
         {
-            static void LogException(string title, object e)
+            RegisterExceptionsLogger(callback);
+        }
+
+        /// <summary>
+        /// Subscribes to events related to the exception handling and logs exceptions.
+        /// </summary>
+        /// <seealso cref="ExceptionsLoggerDebugWriteLine"/>.
+        /// <seealso cref="ExceptionsLoggerAppLog"/>.
+        public static void RegisterExceptionsLogger(Action<Exception>? callback = null)
+        {
+            if (hookedExceptionEvents)
+                return;
+            hookedExceptionEvents = true;
+
+            App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+            void LogException(string title, object e)
             {
-                Debug.WriteLine(LogUtils.SectionSeparator);
-                Debug.WriteLine(title);
-                var s = e.ToString();
-                Debug.WriteLine(s);
-                Debug.WriteLine(LogUtils.SectionSeparator);
+                if (insideUnhandledException)
+                    return;
+
+                insideUnhandledException = true;
+
+                try
+                {
+                    if(e is Exception exception)
+                        callback?.Invoke(exception);
+                    else
+                    {
+                        Exception newException = new(e.ToString());
+                        callback?.Invoke(newException);
+                    }
+
+                    if (ExceptionsLoggerDebugWriteLine)
+                        LogExceptionToAction(title, e, (s) => Debug.WriteLine(s));
+                    if (ExceptionsLoggerAppLog)
+                        LogExceptionToAction(title, e, (s) => App.Log(s));
+                }
+                finally
+                {
+                    insideUnhandledException = false;
+                }
             }
+
+            static void LogExceptionToAction(string title, object e, Action<string> writeLine)
+            {
+                writeLine(LogUtils.SectionSeparator);
+                writeLine(title);
+                var s = e.ToString();
+                writeLine(s);
+                writeLine(LogUtils.SectionSeparator);
+            }
+
+            App.ThreadException += (s, e) =>
+            {
+                LogException("Application.ThreadException", e.Exception);
+            };
 
             AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
             {
-                DebugCall(() =>
-                {
-                    LogException("First Chance Exception", e.Exception);
-                });
+                LogException("First Chance Exception", e.Exception);
             };
 
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
-                DebugCall(() =>
-                {
-                    LogException("CurrentDomain Unhandled exception", e.ExceptionObject);
-                });
+                LogException("CurrentDomain Unhandled exception", e.ExceptionObject);
             };
 
             TaskScheduler.UnobservedTaskException += (s, e) =>
             {
-                DebugCall(() =>
-                {
-                    LogException("Unobserved Task Exception", e.Exception);
-                });
+                LogException("Unobserved Task Exception", e.Exception);
             };
         }
 
@@ -134,46 +188,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Hooks exception events for the debug purposes.
+        /// Same as <see cref="RegisterExceptionsLogger"/>.
         /// </summary>
         public static void HookExceptionEvents()
         {
-            if (hookedExceptionEvents)
-                return;
-            var a = App.Current;
-            App.ThreadException += Application_ThreadException;
-            a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            AppDomain.CurrentDomain.UnhandledException +=
-                CurrentDomain_UnhandledException;
-            hookedExceptionEvents = true;
-        }
-
-        private static void HandleException(Exception e, string info)
-        {
-            LogUtils.LogException(e, info);
-        }
-
-        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
-        {
-            HandleException(e.Exception, "Application.ThreadException");
-        }
-
-        private static void CurrentDomain_UnhandledException(
-            object? sender,
-            UnhandledExceptionEventArgs e)
-        {
-            if (!insideUnhandledException)
-            {
-                insideUnhandledException = true;
-                try
-                {
-                    HandleException((e.ExceptionObject as Exception)!, "CurrentDomain.UnhandledException");
-                }
-                finally
-                {
-                    insideUnhandledException = false;
-                }
-            }
+            RegisterExceptionsLogger();
         }
 
         /// <summary>

@@ -24,9 +24,9 @@ namespace Alternet.UI
 
         private static IDisplayFactoryHandler? factory;
         private static Coord? maxScaleFactor;
+        private static Coord? minScaleFactor;
         private static SizeI? baseDPI;
 
-        private SizeI? dpi;
         private Coord? scaleFactor;
 
         static Display()
@@ -67,6 +67,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool SuggestedLargeImages
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return MaxScaleFactor > SizeD.One.Width;
@@ -78,9 +79,18 @@ namespace Alternet.UI
         /// </summary>
         public static Coord MaxScaleFactor
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return maxScaleFactor ??= MathUtils.Max(AllScaleFactors);
+                if(maxScaleFactor is null)
+                {
+                    var value = MathUtils.Max(AllScaleFactorsUnsafe());
+
+                    if (value >= 1)
+                        maxScaleFactor = value;
+                }
+
+                return maxScaleFactor ?? 1;
             }
         }
 
@@ -89,9 +99,18 @@ namespace Alternet.UI
         /// </summary>
         public static Coord MinScaleFactor
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return maxScaleFactor ??= MathUtils.Min(AllScaleFactors);
+                if (minScaleFactor is null)
+                {
+                    var value = MathUtils.Min(AllScaleFactorsUnsafe());
+
+                    if (value >= 1)
+                        minScaleFactor = value;
+                }
+
+                return minScaleFactor ?? 1;
             }
         }
 
@@ -102,9 +121,10 @@ namespace Alternet.UI
         /// </summary>
         public static bool HasFactory
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return App.Handler is not null;
+                return App.Handler is not null && Primary.HasValidScaleFactor;
             }
         }
 
@@ -162,16 +182,23 @@ namespace Alternet.UI
         {
             get
             {
-                // Do not keep displays in memory,
-                // otherwise when DPI is changed we will have an exception.
-                var count = Count;
-                var allScreens = new Display[count];
-                for (int i = 0; i < count; i++)
+                if (Count == 1)
                 {
-                    allScreens[i] = new Display(i);
+                    return [Primary];
                 }
+                else
+                {
+                    // Do not keep displays in memory,
+                    // otherwise when DPI is changed we will have an exception.
+                    var count = Count;
+                    var allScreens = new Display[count];
+                    for (int i = 0; i < count; i++)
+                    {
+                        allScreens[i] = new Display(i);
+                    }
 
-                return allScreens;
+                    return allScreens;
+                }
             }
         }
 
@@ -182,14 +209,21 @@ namespace Alternet.UI
         {
             get
             {
-                var screens = AllScreens;
-                var length = screens.Length;
-                var result = new Coord[length];
+                if(Count == 1)
+                {
+                    return [Primary.ScaleFactor];
+                }
+                else
+                {
+                    var screens = AllScreens;
+                    var length = screens.Length;
+                    var result = new Coord[length];
 
-                for (int i = 0; i < length; i++)
-                    result[i] = screens[i].ScaleFactor;
+                    for (int i = 0; i < length; i++)
+                        result[i] = screens[i].ScaleFactor;
 
-                return result;
+                    return result;
+                }
             }
         }
 
@@ -202,14 +236,21 @@ namespace Alternet.UI
             {
                 try
                 {
-                    var screens = AllScreens;
-                    var length = screens.Length;
-                    var result = new int[length];
+                    if (Count == 1)
+                    {
+                        return [Primary.DPI.Height];
+                    }
+                    else
+                    {
+                        var screens = AllScreens;
+                        var length = screens.Length;
+                        var result = new int[length];
 
-                    for (int i = 0; i < length; i++)
-                        result[i] = screens[i].DPI.Height;
+                        for (int i = 0; i < length; i++)
+                            result[i] = screens[i].DPI.Height;
 
-                    return result;
+                        return result;
+                    }
                 }
                 catch
                 {
@@ -325,9 +366,34 @@ namespace Alternet.UI
         /// </summary>
         public SizeI DPI
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return dpi ??= GraphicsFactory.ScaleFactorToDpi(ScaleFactor);
+                return GraphicsFactory.ScaleFactorToDpi(ScaleFactor);
+            }
+        }
+
+        /// <summary>
+        /// Gets scaling factor value returned by the platform.
+        /// Please use <see cref="ScaleFactor"/> instead of this property.
+        /// </summary>
+        public Coord UnsafeScaleFactor
+        {
+            get
+            {
+                return Handler.GetScaleFactor();
+            }
+        }
+
+        /// <summary>
+        /// Gets whether scale factor information reported
+        /// by <see cref="UnsafeScaleFactor"/> is valid.
+        /// </summary>
+        public bool HasValidScaleFactor
+        {
+            get
+            {
+                return UnsafeScaleFactor >= 1;
             }
         }
 
@@ -338,7 +404,15 @@ namespace Alternet.UI
         {
             get
             {
-                return scaleFactor ??= Handler.GetScaleFactor();
+                if (scaleFactor >= 1)
+                    return scaleFactor.Value;
+
+                var newScaleFactor = UnsafeScaleFactor;
+
+                if (newScaleFactor >= 1)
+                    scaleFactor = newScaleFactor;
+
+                return Math.Max(1, newScaleFactor);
             }
         }
 
@@ -558,7 +632,9 @@ namespace Alternet.UI
         /// </summary>
         public static void Reset()
         {
+            baseDPI = null;
             maxScaleFactor = null;
+            minScaleFactor = null;
         }
 
         /// <summary>
@@ -683,6 +759,25 @@ namespace Alternet.UI
         protected override IDisplayHandler CreateHandler()
         {
             return Factory.CreateDisplay();
+        }
+
+        private static Coord[] AllScaleFactorsUnsafe()
+        {
+            if (Count == 1)
+            {
+                return [Primary.UnsafeScaleFactor];
+            }
+            else
+            {
+                var screens = AllScreens;
+                var length = screens.Length;
+                var result = new Coord[length];
+
+                for (int i = 0; i < length; i++)
+                    result[i] = screens[i].UnsafeScaleFactor;
+
+                return result;
+            }
         }
     }
 }

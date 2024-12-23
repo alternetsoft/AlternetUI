@@ -12,6 +12,10 @@ namespace Alternet.UI
 {
     internal class MauiDisplayHandler : DisposableObject, IDisplayHandler
     {
+        static MauiDisplayHandler()
+        {
+        }
+
         public MauiDisplayHandler()
         {
         }
@@ -83,7 +87,8 @@ namespace Alternet.UI
 
         public Coord GetScaleFactor()
         {
-            return GetDefaultScaleFactor();
+            var result = GetDefaultScaleFactor();
+            return result;
         }
 
         public bool IsPrimary()

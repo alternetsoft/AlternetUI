@@ -447,7 +447,14 @@ namespace Alternet.UI
 
             foreach (string s2 in result)
                 contents += $"{dt} :: {s2}{Environment.NewLine}";
-            File.AppendAllText(filename, contents);
+
+            try
+            {
+                File.AppendAllText(filename, contents);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>

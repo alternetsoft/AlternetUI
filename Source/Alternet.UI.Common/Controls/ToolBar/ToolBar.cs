@@ -652,6 +652,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets command and command parameters for the item.
+        /// </summary>
+        /// <param name="id">Item id.</param>
+        /// <param name="command">A command that will be executed when tool is clicked.</param>
+        /// <param name="commandParameter">A parameter that will be passed
+        /// to the command when executing it.</param>
+        /// <param name="commandTarget">An element that an implementor
+        /// may wish to target as the destination for the command.</param>
+        public virtual void SetToolCommand(
+            ObjectUniqueId id,
+            ICommand? command = null,
+            object? commandParameter = null,
+            object? commandTarget = null)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.CommandParameter = commandParameter;
+            item.CommandTarget = commandTarget;
+            item.Command = command;
+        }
+
+        /// <summary>
         /// Gets 'IsClickRepeated' property of the tool.
         /// </summary>
         /// <param name="id">Item id.</param>

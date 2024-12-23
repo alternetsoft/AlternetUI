@@ -50,6 +50,26 @@ namespace PropertyGridSample
             InitTestsListBox();
             InitTestsTreeView();
             InitTestsListView();
+            InitTestsButton();
+            InitTestsSpeedButton();
+
+            void InitTestsButton()
+            {
+                AddControlAction<Button>("Set Command", (c) =>
+                {
+                    c.Command = NamedCommands.CommandAppLog;
+                    c.CommandParameter = "Button.Command executed";
+                });
+            }
+
+            void InitTestsSpeedButton()
+            {
+                AddControlAction<SpeedButton>("Set Command", (c) =>
+                {
+                    c.Command = NamedCommands.CommandAppLog;
+                    c.CommandParameter = "SpeedButton.Command executed";
+                });
+            }
 
             void InitTestsListBox()
             {

@@ -11,6 +11,10 @@ namespace ControlsSample
     {
         static MainWindow()
         {
+            DebugUtils.RegisterExceptionsLoggerIfDebug((e) =>
+            {
+            });
+
             DefaultUseParentFont = true;
 
             AddGlobalWindowNotification(new GlobalFormActivity());

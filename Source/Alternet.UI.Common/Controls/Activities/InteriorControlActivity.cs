@@ -35,7 +35,7 @@ namespace Alternet.UI
         {
             DebugUtils.DebugCallIf(false, () =>
             {
-                var hitTests = interior.HitTests(sender.ScaleFactor, e.Location);
+                var hitTests = interior.HitTests(sender, e.Location);
                 App.LogIf(hitTests.ToString(), false);
             });
         }
@@ -97,7 +97,7 @@ namespace Alternet.UI
         public override void AfterClick(AbstractControl sender)
         {
             var mouseLocation = Mouse.GetPosition(sender);
-            var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
+            var hitTests = interior.HitTests(sender, mouseLocation);
 
             if (!hitTests.IsNone)
             {
@@ -121,7 +121,7 @@ namespace Alternet.UI
         {
             var mouseLocation = Mouse.GetPosition(sender);
 
-            var hitTests = interior.HitTests(sender.ScaleFactor, mouseLocation);
+            var hitTests = interior.HitTests(sender, mouseLocation);
 
             if (!hitTests.IsScrollBar)
                 return;

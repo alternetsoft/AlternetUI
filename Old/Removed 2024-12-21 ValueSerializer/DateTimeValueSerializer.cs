@@ -12,6 +12,8 @@ namespace Alternet.UI.Port
     /// </summary>
     internal class DateTimeValueSerializer : ValueSerializer
     {
+        public static readonly DateTimeValueSerializer Default = new();
+
         public DateTimeValueSerializer()
         {
         }

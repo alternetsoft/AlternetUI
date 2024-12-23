@@ -75,6 +75,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this object is disposing or disposed.
+        /// </summary>
+        [Browsable(false)]
+        public bool DisposingOrDisposed => IsDisposed || Disposing;
+
+        /// <summary>
         /// Gets whether object is currently disposing.
         /// </summary>
         [Browsable(false)]
@@ -100,6 +106,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public void Dispose()
         {
+            if (IsDisposed)
+                return;
+
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

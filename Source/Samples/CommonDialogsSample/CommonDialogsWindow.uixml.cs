@@ -169,14 +169,14 @@ namespace ControlsSample
         {
             if (App.UnhandledExceptionMode != UnhandledExceptionMode.CatchException)
             {
-                App.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Log("Application.Current.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)");
+                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+                App.Log("Application.Current.SetUnhandledExceptionMode(CatchException)");
             }
 
             if(App.UnhandledExceptionModeIfDebugger != UnhandledExceptionMode.CatchException)
             {
-                App.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
-                App.Log("Application.Current.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException)");
+                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                App.Log("Application.Current.SetUnhandledExceptionModeIfDebugger(CatchException)");
             }
 
             throw (TestExceptionType)exceptionTypeComboBox.SelectedItem! switch

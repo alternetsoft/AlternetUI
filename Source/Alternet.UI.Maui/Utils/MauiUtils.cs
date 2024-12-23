@@ -189,8 +189,9 @@ namespace Alternet.UI
         /// Converts <see cref="SKTouchEventArgs"/> to <see cref="TouchEventArgs"/>.
         /// </summary>
         /// <param name="e">Value to convert.</param>
+        /// <param name="control">Control where touch event occured.</param>
         /// <returns></returns>
-        public static TouchEventArgs Convert(SKTouchEventArgs e)
+        public static TouchEventArgs Convert(SKTouchEventArgs e, AbstractControl? control)
         {
             TouchEventArgs result = new();
 

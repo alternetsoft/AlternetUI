@@ -623,6 +623,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void BindHandlerEvents()
         {
+            if (DisposingOrDisposed)
+                return;
+
             Handler.MouseEnter = RaiseMouseEnterOnTarget;
             Handler.MouseLeave = RaiseMouseLeaveOnTarget;
             Handler.HandleCreated = RaiseHandleCreated;
@@ -874,6 +877,12 @@ namespace Alternet.UI
         {
             if (handler == null)
             {
+                if (DisposingOrDisposed)
+                {
+                    handler = PlessControlHandler.Default;
+                    return;
+                }
+
                 CreateAndAttachHandler();
             }
 
@@ -917,7 +926,7 @@ namespace Alternet.UI
         protected internal override void DetachHandler()
         {
             if (handler == null)
-                throw new InvalidOperationException();
+                return;
             OnHandlerDetaching(EventArgs.Empty);
             UnbindHandlerEvents();
             handler.Detach();
@@ -1015,6 +1024,13 @@ namespace Alternet.UI
                 else
                     Handler.ForegroundColor = color;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            UnbindHandlerEvents();
+            base.DisposeManaged();
         }
 
         /// <inheritdoc/>

@@ -440,7 +440,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public static int ScaleFactorToDpi(Coord scaleFactor)
         {
-            if (scaleFactor == 1)
+            if (scaleFactor <= 1)
                 return DefaultDPI;
             return (int)(scaleFactor * DefaultDPI);
         }

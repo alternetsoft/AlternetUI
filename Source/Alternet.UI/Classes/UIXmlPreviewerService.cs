@@ -36,7 +36,8 @@ namespace Alternet.UI.Integration
         public void Run()
         {
 #if NETCOREAPP
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
+            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving
+            += AssemblyLoadContext_Resolving;
 #else
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 #endif
@@ -47,7 +48,7 @@ namespace Alternet.UI.Integration
             application = new Application();
 
             UixmlLoader.DisableComponentInitialization = true;
-            application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
+            App.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
             application.InUixmlPreviewerMode = true;
 
             Application.Idle += Application_Idle;
@@ -85,7 +86,9 @@ namespace Alternet.UI.Integration
                 {
                     MoveWindowToScreenUnderneath(
                         window,
-                        new System.Drawing.Point((int)parameters["OwnerWindowX"], (int)parameters["OwnerWindowY"]));
+                        new System.Drawing.Point(
+                            (int)parameters["OwnerWindowX"],
+                            (int)parameters["OwnerWindowY"]));
 
                     timer.Stop();
                     timer.Dispose();
@@ -95,7 +98,8 @@ namespace Alternet.UI.Integration
                     window.Close();
                     window.Dispose();
 
-                    onUixmlUpdateSuccess(new Dictionary<string, object> { { "ImageFileName", screenshotFileName } });
+                    onUixmlUpdateSuccess(
+                        new Dictionary<string, object> { { "ImageFileName", screenshotFileName } });
                 };
 
                 timer.Start();
@@ -135,7 +139,9 @@ namespace Alternet.UI.Integration
             }
         }
 
-        private void MoveWindowToScreenUnderneath(Window window, System.Drawing.Point ownerWindowLocation)
+        private void MoveWindowToScreenUnderneath(
+            Window window,
+            System.Drawing.Point ownerWindowLocation)
         {
             var hwnd = window.GetHandle();
             PInvoke.User32.GetWindowRect(hwnd, out var rect);
@@ -160,7 +166,8 @@ namespace Alternet.UI.Integration
             // var appAssembly = Assembly.Load(File.ReadAllBytes((string)parameters["AssemblyPath"]));
             AbstractControl control;
 
-            using var stream = new MemoryStream(Encoding.Default.GetBytes((string)parameters["Uixml"]));
+            using var stream = new MemoryStream(
+                Encoding.Default.GetBytes((string)parameters["Uixml"]));
 
             var convertedStream = UixmlLoader.PrepareUixmlStreamForPreview(stream);
 
@@ -197,13 +204,16 @@ namespace Alternet.UI.Integration
         }
 
 #if NETCOREAPP
-        private Assembly? AssemblyLoadContext_Resolving(System.Runtime.Loader.AssemblyLoadContext context, AssemblyName name)
+        private Assembly? AssemblyLoadContext_Resolving(
+            System.Runtime.Loader.AssemblyLoadContext context,
+            AssemblyName name)
         {
             try
             {
                 // you need to unsubscribe here to avoid StackOverflowException,
                 // as LoadFromAssemblyName will go in recursion here otherwise
-                System.Runtime.Loader.AssemblyLoadContext.Default.Resolving -= AssemblyLoadContext_Resolving;
+                System.Runtime.Loader.AssemblyLoadContext.Default.Resolving
+                    -= AssemblyLoadContext_Resolving;
 
                 if (name.Name == "Alternet.UI")
                     return typeof(Application).Assembly;
@@ -230,7 +240,8 @@ namespace Alternet.UI.Integration
             finally
             {
                 // don't forget to restore our load handler
-                System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
+                System.Runtime.Loader.AssemblyLoadContext.Default.Resolving
+                    += AssemblyLoadContext_Resolving;
             }
         }
 #else
@@ -242,7 +253,8 @@ namespace Alternet.UI.Integration
 
         private Assembly? TryLoadAssemblyFromApplicationDirectory(AssemblyName name)
         {
-            var directory = Path.GetDirectoryName(GetType().Assembly.Location) ?? throw new Exception();
+            var directory = Path.GetDirectoryName(GetType().Assembly.Location)
+                ?? throw new Exception();
             var file = Path.Combine(directory, name.Name + ".dll");
             if (!File.Exists(file))
                 return null;
@@ -291,13 +303,13 @@ namespace Alternet.UI.Integration
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
-#pragma warning disable  // SYSLIB1054 Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
+#pragma warning disable
                 public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 #pragma warning restore
 
                 [DllImport(nameof(User32), SetLastError = true)]
                 [return: MarshalAs(UnmanagedType.Bool)]
-#pragma warning disable // SYSLIB1054
+#pragma warning disable
                 public static extern bool SetWindowPos(
                     IntPtr hWnd,
                     IntPtr hWndInsertAfter,

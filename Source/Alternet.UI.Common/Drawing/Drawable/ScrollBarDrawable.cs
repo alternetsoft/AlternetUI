@@ -205,9 +205,9 @@ namespace Alternet.Drawing
         /// <see cref="ScrollBar.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual ScrollBar.MetricsInfo GetRealMetrics()
+        public virtual ScrollBar.MetricsInfo GetRealMetrics(AbstractControl control)
         {
-            return metrics ?? ScrollBar.DefaultMetrics;
+            return metrics ?? ScrollBar.DefaultMetrics(control);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Alternet.Drawing
                 backgroundDrawable.Draw(control, dc);
             }
 
-            var metrics = GetRealMetrics();
+            var metrics = GetRealMetrics(control);
 
             var startButtonState = VisualState;
             var endButtonState = VisualState;

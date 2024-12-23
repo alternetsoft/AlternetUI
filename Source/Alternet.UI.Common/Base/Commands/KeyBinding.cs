@@ -67,7 +67,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         [TypeConverter(typeof(KeyGestureConverter))]
-        [ValueSerializer(typeof(KeyGestureValueSerializer))]
         public override InputGesture? Gesture
         {
             get

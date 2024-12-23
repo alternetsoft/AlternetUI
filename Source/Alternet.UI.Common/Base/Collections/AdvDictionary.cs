@@ -1,36 +1,21 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Adds additional functionality to the <see cref="Dictionary{TKey,TValue}"/>.
+    /// Adds additional functionality to the <see cref="ConcurrentDictionary{TKey,TValue}"/>.
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-    public class AdvDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    public class AdvDictionary<TKey, TValue> : ConcurrentDictionary<TKey, TValue>
         where TKey : notnull
     {
-#if NETFRAMEWORK || NETSTANDARD2_0
-        /// <summary>
-        /// Attempts to add the specified key and value to the dictionary.
-        /// </summary>
-        /// <param name="key">The key of the element to add.</param>
-        /// <param name="value">The value of the element to add. It can be null.</param>
-        /// <returns>true if the key/value pair was added to the dictionary successfully;
-        /// otherwise, false.</returns>
-        public bool TryAdd(TKey key, TValue value)
-        {
-            if (ContainsKey(key))
-                return false;
-            Add(key, value);
-            return true;
-        }
-#endif
-
         /// <summary>
         /// Gets the value associated with the specified key.
         /// If the <paramref name="key"/> is not found in the dictionary,
@@ -38,13 +23,34 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="key">The key of the value to get.</param>
         /// <param name="func">Value provider function.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TValue GetOrCreate(TKey key, Func<TValue> func)
         {
-            if (TryGetValue(key, out var result))
-                return result;
-            result = func();
-            Add(key, result);
-            return result;
+            return GetOrAdd(key, (k) => func());
+        }
+
+        /// <summary>
+        /// Adds the specified key and value pair to the dictionary or updates value if
+        /// key is already added.
+        /// </summary>
+        /// <param name="key">The key of the element to add.</param>
+        /// <param name="value">The value of the element to add.
+        /// The value can be null for reference types.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Add(TKey key, TValue value)
+        {
+            AddOrUpdate(key, (k) => value, (k, v) => value);
+        }
+
+        /// <summary>
+        /// Attempts to remove and return the value that has the specified key from the ditionary.
+        /// </summary>
+        /// <param name="key">The key of the element to remove.</param>
+        /// <returns>True if the object was removed successfully; otherwise, False.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Remove(TKey key)
+        {
+            return TryRemove(key, out _);
         }
 
         /// <summary>
@@ -53,6 +59,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="key">The key of the value to get.</param>
         /// <param name="defaultValue">Default value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TValue GetValueOrDefault(TKey key, TValue defaultValue = default!)
         {
             return TryGetValue(key, out var value) ? value : defaultValue;
@@ -65,6 +72,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="key">The key of the value to get.</param>
         /// <param name="func">Default value provider function.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TValue GetValueOrDefault(TKey key, Func<TValue> func)
         {
             return TryGetValue(key, out var value) ? value : func();

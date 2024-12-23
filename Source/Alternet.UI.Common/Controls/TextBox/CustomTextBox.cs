@@ -43,6 +43,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when <see cref="string"/> is converted to value. This is static event
+        /// and is called for all the editors.
+        /// </summary>
+        public static event EventHandler<ValueConvertEventArgs<string?, object?>>? GlobalStringToValue;
+
+        /// <summary>
+        /// Occurs when value is converted to <see cref="string"/>. This is static event
+        /// and is called for all the editors.
+        /// </summary>
+        public static event EventHandler<ValueConvertEventArgs<object?, string?>>? GlobalValueToString;
+
+        /// <summary>
+        /// Occurs when <see cref="string"/> is converted to value in this control.
+        /// </summary>
+        public static event EventHandler<ValueConvertEventArgs<string?, object?>>? StringToValue;
+
+        /// <summary>
+        /// Occurs when value is converted to <see cref="string"/> in this control.
+        /// </summary>
+        public static event EventHandler<ValueConvertEventArgs<object?, string?>>? ValueToString;
+
+        /// <summary>
         /// Occurs when <see cref="ReportValidatorError"/> is called.
         /// </summary>
         /// <remarks>
@@ -61,7 +83,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default <see cref="Color"/> that can be used
         /// as a background color for the <see cref="TextBox"/> in cases when
-        /// application needs to report user an error in <see cref="AbstractControl.Text"/> property.
+        /// application needs to report user an error in
+        /// <see cref="AbstractControl.Text"/> property.
         /// </summary>
         public static Color DefaultErrorBackgroundColor { get; set; } = Color.Red;
 
@@ -96,13 +119,15 @@ namespace Alternet.UI
         /// Gets or sets default value for the <see cref="ResetErrorBackgroundMethod"/>
         /// property.
         /// </summary>
-        public static ResetColorType DefaultResetErrorBackgroundMethod { get; set; } = ResetColorType.Auto;
+        public static ResetColorType DefaultResetErrorBackgroundMethod { get; set; }
+            = ResetColorType.Auto;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="ResetErrorForegroundMethod"/>
         /// property.
         /// </summary>
-        public static ResetColorType DefaultResetErrorForegroundMethod { get; set; } = ResetColorType.Auto;
+        public static ResetColorType DefaultResetErrorForegroundMethod { get; set; }
+            = ResetColorType.Auto;
 
         /// <inheritdoc/>
         public override bool HasErrors
@@ -137,6 +162,28 @@ namespace Alternet.UI
         /// <inheritdoc cref="IObjectToStringOptions.Converter"/>
         [Browsable(false)]
         public virtual IObjectToString? Converter { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="TypeConverter"/> used for the text to/from value conversion.
+        /// You also need to specify <see cref="TextBoxOptions.UseTypeConverter"/>
+        /// in <see cref="Options"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TypeConverter? TypeConverter { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="ITypeDescriptorContext"/> value which is used
+        /// when text to/from value is converted using <see cref="TypeConverter"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ITypeDescriptorContext? Context { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="CultureInfo"/> value which is used
+        /// when text to/from value is converted using <see cref="TypeConverter"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual CultureInfo? Culture { get; set; }
 
         /// <summary>
         /// Gets or sets default value for the <see cref="AbstractControl.Text"/> property.
@@ -212,7 +259,8 @@ namespace Alternet.UI
         public virtual string? ValidatorErrorText { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether empty string is allowed in <see cref="AbstractControl.Text"/>.
+        /// Gets or sets a value indicating whether empty string
+        /// is allowed in <see cref="AbstractControl.Text"/>.
         /// </summary>
         /// <remarks>
         /// Default value is <c>true</c>. <see cref="TextBox"/> behavior is not affected
@@ -222,7 +270,8 @@ namespace Alternet.UI
         public virtual bool AllowEmptyText { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether <see cref="AbstractControl.Text"/> is required to be not empty.
+        /// Gets or sets a value indicating whether
+        /// <see cref="AbstractControl.Text"/> is required to be not empty.
         /// This is an opposite of <see cref="AllowEmptyText"/> property.
         /// </summary>
         /// <remarks>
@@ -295,6 +344,19 @@ namespace Alternet.UI
         [Browsable(false)]
         public bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
+        bool? IObjectToStringOptions.UseInvariantCulture
+        {
+            get => Options.HasFlag(TextBoxOptions.UseInvariantCulture);
+
+            set
+            {
+                if (value ?? false)
+                    Options |= TextBoxOptions.UseInvariantCulture;
+                else
+                    Options &= ~TextBoxOptions.UseInvariantCulture;
+            }
+        }
+
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.Text"/> property value
         /// as <see cref="object"/> of a number type.
@@ -310,6 +372,18 @@ namespace Alternet.UI
             {
                 if (string.IsNullOrWhiteSpace(Text))
                     return this.EmptyTextValue;
+
+                var stringToValue = StringToValue ?? GlobalStringToValue;
+
+                if (stringToValue is not null)
+                {
+                    var e = new ValueConvertEventArgs<string?, object?>(Text);
+                    stringToValue(this, e);
+                    if (e.Handled)
+                    {
+                        return e.Result;
+                    }
+                }
 
                 var typeCode = GetDataTypeCode();
                 if (!AssemblyUtils.IsTypeCodeNumber(typeCode))
@@ -943,28 +1017,80 @@ namespace Alternet.UI
                 return;
             }
 
+            var valueToString = ValueToString ?? GlobalValueToString;
+
+            if (valueToString is not null)
+            {
+                var e = new ValueConvertEventArgs<object?, string?>(value);
+                valueToString(this, e);
+                if (e.Handled)
+                {
+                    Text = e.Result ?? string.Empty;
+                    return;
+                }
+            }
+
             var type = value.GetType();
             DataType ??= type;
-            var typeCode = AssemblyUtils.GetRealTypeCode(type);
+            var converter = Converter;
+            bool usedTypeConverter = false;
 
-            var converter = Converter ??
-                ObjectToStringFactory.Default.GetConverter(typeCode);
+            if (converter is null && options.HasFlag(TextBoxOptions.UseTypeConverter))
+            {
+                converter = ObjectToStringFactory.Default.CreateAdapter(TypeConverter);
+
+                if (converter is null)
+                {
+                    converter = ObjectToStringFactory.Default.CreateAdapterForTypeConverter(type);
+                }
+
+                usedTypeConverter = converter is not null;
+            }
+
+            if (converter is null)
+            {
+                var typeCode = AssemblyUtils.GetRealTypeCode(type);
+                converter = ObjectToStringFactory.Default.GetConverter(typeCode);
+            }
+
             if (converter is null)
             {
                 Text = value.ToString() ?? string.Empty;
                 return;
             }
 
+            var converted = converter.TryConvert(
+                this,
+                value,
+                this,
+                out var conversionResult);
+
+            if (converted)
+            {
+                Text = conversionResult ?? string.Empty;
+                return;
+            }
+
+            if (usedTypeConverter)
+            {
+                Text = converter.ToString(
+                    this,
+                    value,
+                    Context,
+                    Culture,
+                    Options.HasFlag(TextBoxOptions.UseInvariantCulture)) ?? string.Empty;
+            }
+
             if (DefaultFormat is null)
             {
                 if (FormatProvider is null)
                 {
-                    Text = converter.ToString(value) ?? string.Empty;
+                    Text = converter.ToString(this, value) ?? string.Empty;
                     return;
                 }
                 else
                 {
-                    Text = converter.ToString(value, FormatProvider) ?? string.Empty;
+                    Text = converter.ToString(this, value, FormatProvider) ?? string.Empty;
                     return;
                 }
             }
@@ -972,12 +1098,16 @@ namespace Alternet.UI
             {
                 if (FormatProvider is null)
                 {
-                    Text = converter.ToString(value, DefaultFormat) ?? string.Empty;
+                    Text = converter.ToString(this, value, DefaultFormat) ?? string.Empty;
                     return;
                 }
                 else
                 {
-                    Text = converter.ToString(value, DefaultFormat, FormatProvider) ?? string.Empty;
+                    Text = converter.ToString(
+                        this,
+                        value,
+                        DefaultFormat,
+                        FormatProvider) ?? string.Empty;
                     return;
                 }
             }

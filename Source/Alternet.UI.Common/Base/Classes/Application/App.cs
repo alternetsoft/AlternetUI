@@ -549,6 +549,12 @@ namespace Alternet.UI
         public static bool HasForms => HasApplication && Current.Windows.Count > 0;
 
         /// <summary>
+        /// Gets whether application has visible forms.
+        /// </summary>
+        public static bool HasVisibleForms => HasForms
+            && Current.VisibleWindows.FirstOrDefault() != null;
+
+        /// <summary>
         /// Gets the instantiated windows in the application.
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
@@ -981,10 +987,16 @@ namespace Alternet.UI
         /// <param name="obj">Message text or object to log.</param>
         public static void LogError(object? obj)
         {
-            if (obj is Exception e)
-                LogUtils.LogException(e);
-            else
-                Log($"Error: {obj}", LogItemKind.Error);
+            try
+            {
+                if (obj is Exception e)
+                    LogUtils.LogException(e);
+                else
+                    Log($"Error: {obj}", LogItemKind.Error);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -1018,11 +1030,17 @@ namespace Alternet.UI
         /// <param name="kind">Message kind.</param>
         public static void Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
-            IdleLog(obj, kind);
+            try
+            {
+                IdleLog(obj, kind);
 
-            if (LogMessage is null || LogInUpdates())
-                return;
-            ProcessLogQueue(true);
+                if (LogMessage is null || LogInUpdates())
+                    return;
+                ProcessLogQueue(true);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
@@ -1482,6 +1500,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Instructs the application how to respond to unhandled exceptions in debug mode.
+        /// </summary>
+        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
+        /// behave if an exception is thrown without being caught.</param>
+        public static void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
+        {
+            unhandledExceptionModeDebug = mode;
+        }
+
+        /// <summary>
         /// Can be called before massive outputs to log. Pairs with <see cref="LogEndUpdate"/>.
         /// </summary>
         public static void LogBeginUpdate()
@@ -1564,6 +1593,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Instructs the application how to respond to unhandled exceptions.
+        /// </summary>
+        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
+        /// behave if an exception is thrown without being caught.</param>
+        public static void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
+        {
+            unhandledExceptionMode = mode;
+        }
+
+        /// <summary>
         /// Raises <see cref="Idle"/> event.
         /// </summary>
         public static void RaiseIdle()
@@ -1598,17 +1638,6 @@ namespace Alternet.UI
         public virtual void ProcessPendingEvents()
         {
             App.Handler.ProcessPendingEvents();
-        }
-
-        /// <summary>
-        /// Instructs the application how to respond to unhandled exceptions.
-        /// </summary>
-        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
-        /// value describing how the application should
-        /// behave if an exception is thrown without being caught.</param>
-        public virtual void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
-        {
-            unhandledExceptionMode = mode;
         }
 
         /// <summary>
@@ -1682,17 +1711,6 @@ namespace Alternet.UI
             SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
         }
 
-        /// <summary>
-        /// Instructs the application how to respond to unhandled exceptions in debug mode.
-        /// </summary>
-        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
-        /// value describing how the application should
-        /// behave if an exception is thrown without being caught.</param>
-        public virtual void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
-        {
-            unhandledExceptionModeDebug = mode;
-        }
-
         internal void RegisterWindow(Window window)
         {
             windows.Add(window);
@@ -1703,12 +1721,6 @@ namespace Alternet.UI
             if (MainWindow == window)
                 MainWindow = null;
             windows.Remove(window);
-            if (windows.Count == 0 || !VisibleWindows.Any())
-            {
-                DoEvents();
-                App.Handler.ExitMainLoop();
-                Exit();
-            }
         }
 
         /// <summary>

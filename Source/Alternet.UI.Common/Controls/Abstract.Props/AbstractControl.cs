@@ -255,9 +255,14 @@ namespace Alternet.UI
                 if (ScaleFactorOverride is not null)
                     return ScaleFactorOverride.Value;
 
-                scaleFactor ??= RequestScaleFactor();
+                var newScaleFactor = RequestScaleFactor();
 
-                if(scaleFactor is null)
+                if(newScaleFactor is not null)
+                {
+                    scaleFactor ??= newScaleFactor;
+                }
+
+                if (scaleFactor is null)
                     return Display.Primary.ScaleFactor;
 
                 return scaleFactor.Value;
@@ -1463,11 +1468,13 @@ namespace Alternet.UI
         /// <see cref="KeyGesture.IsValid"/> before they are used
         /// in <see cref="ExecuteKeyBinding"/>. Default is True.
         /// </summary>
+        [Browsable(false)]
         public virtual bool ValidateKeyBinding { get; set; } = true;
 
         /// <summary>
         /// Gets whether control has visible children controls.
         /// </summary>
+        [Browsable(false)]
         public virtual bool HasVisibleChildren
         {
             get
@@ -1496,16 +1503,31 @@ namespace Alternet.UI
             {
                 if (parent == value)
                     return;
-                parent?.Children.Remove(this);
-                value?.Children.Add(this);
 
-                if(ParentFont && HasParent)
+                if(parent is not null)
                 {
-                    Font ??= Parent?.Font;
+                    if(parent.HasChildren)
+                        parent.Children.Remove(this);
                 }
 
-                RaiseParentChanged();
-                stateFlags |= ControlFlags.ParentAssigned;
+                parent = null;
+                base.LogicalParent = null;
+
+                if (!DisposingOrDisposed)
+                {
+                    if (value is not null)
+                    {
+                        value.Children.Add(this);
+
+                        if (ParentFont)
+                        {
+                            Font ??= Parent?.Font;
+                        }
+                    }
+
+                    RaiseParentChanged();
+                    stateFlags |= ControlFlags.ParentAssigned;
+                }
             }
         }
 

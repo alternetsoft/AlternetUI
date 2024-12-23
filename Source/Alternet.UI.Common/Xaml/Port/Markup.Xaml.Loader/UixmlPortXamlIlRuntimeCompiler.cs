@@ -115,7 +115,6 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             var prop = tb.DefineProperty("AssemblyName", PropertyAttributes.None, typeof(string), Array.Empty<Type>());
             prop.SetGetMethod(propGet);
 
-
             var ctor = tb.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard,
                 new[] { typeof(string) });
             var ctorIl = ctor.GetILGenerator();

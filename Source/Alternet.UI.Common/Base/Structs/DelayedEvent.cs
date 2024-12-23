@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Implements delayed event.
     /// </summary>
     /// <typeparam name="TArgs">Type of the event argument.</typeparam>
-    public struct DelayedEvent<TArgs> : IDisposable
+    public struct DelayedEvent<TArgs>
     {
         /// <summary>
         /// Gets or sets default timeout interval (in msec) for timer that calls
@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when delayed event handlers are notified.
         /// </summary>
-        public event EventHandler<TArgs> Delayed;
+        public event EventHandler<TArgs>? Delayed;
 
         /// <summary>
         /// Adds event handler.
@@ -66,10 +66,13 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public void Dispose()
+        /// <summary>
+        /// Resets object state, disposes event timer.
+        /// </summary>
+        public void Reset()
         {
             BaseObject.SafeDispose(ref timer);
+            Delayed = null;
         }
     }
 }

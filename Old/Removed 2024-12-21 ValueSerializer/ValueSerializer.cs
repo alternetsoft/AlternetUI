@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -23,8 +22,7 @@ namespace Alternet.UI.Port
     /// </summary>
     public abstract class ValueSerializer
     {
-        private static readonly object valueSerializersLock = new();
-        private static Hashtable valueSerializers = new();
+        private static IndexedValues<Type, ValueSerializer> serializers = new();
 
         static ValueSerializer()
         {
@@ -46,62 +44,58 @@ namespace Alternet.UI.Port
         public static ValueSerializer? GetSerializerFor(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException(nameof(type));
+                return null;
 
-            object value = valueSerializers[type];
+            var result = serializers.GetValue(type, Internal);
+            return result;
 
-            // This uses _valueSerializersLock's instance as a sentinal for null
-            // (as opposed to not attempted yet).
-            if (value != null)
-                return value == valueSerializersLock ? null : value as ValueSerializer;
-
-            AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
-            ValueSerializer? result = null;
-
-            if (attributes[typeof(ValueSerializerAttribute)]
-                is ValueSerializerAttribute attribute)
-                result = (ValueSerializer)Activator.CreateInstance(attribute.ValueSerializerType);
-
-            if (result == null)
+            ValueSerializer? Internal()
             {
-                if (type == typeof(string))
-                {
-                    result = new StringValueSerializer();
-                }
-                else
-                {
-                    // Try to use the type converter
-                    TypeConverter converter = TypeConverterHelper.GetTypeConverter(type);
+                AttributeCollection attributes = TypeDescriptor.GetAttributes(type);
+                ValueSerializer? result = null;
 
-                    // DateTime is a special-case.  We can't use the DateTimeConverter,
-                    // because it doesn't
-                    // support anything other than user culture and invariant culture,
-                    // and we need to specify
-                    // en-us culture.
-                    if (converter.GetType() == typeof(DateTimeConverter2))
+                if (attributes[typeof(ValueSerializerAttribute)]
+                    is ValueSerializerAttribute attribute)
+                    result = (ValueSerializer)Activator.CreateInstance(attribute.ValueSerializerType);
+
+                if (result == null)
+                {
+                    if (type == typeof(string))
                     {
-                        result = new DateTimeValueSerializer();
+                        result = new StringValueSerializer();
                     }
                     else
-                    if (converter.CanConvertTo(typeof(string))
-                        && converter.CanConvertFrom(typeof(string))
-                        && converter is not ReferenceConverter)
                     {
-                        result = new TypeConverterValueSerializer(converter);
+                        // Try to use the type converter
+                        TypeConverter? converter = TypeConverterHelper.GetTypeConverter(type);
+
+                        if (converter is not null)
+                        {
+                            // DateTime is a special-case.  We can't use the DateTimeConverter,
+                            // because it doesn't
+                            // support anything other than user culture and invariant culture,
+                            // and we need to specify
+                            // en-us culture.
+                            if (converter.GetType() == typeof(DateTimeConverter2))
+                            {
+                                result = DateTimeValueSerializer.Default;
+                            }
+                            else
+                            if (converter.CanConvertTo(typeof(string))
+                                && converter.CanConvertFrom(typeof(string))
+                                && converter is not ReferenceConverter)
+                            {
+                                result = new TypeConverterValueSerializer(converter);
+                            }
+                        }
                     }
                 }
-            }
 
-            lock (valueSerializersLock)
-            {
-                // This uses _valueSerializersLock's instance as a sentinal for null
-                // (as opposed to not attempted yet).
-                valueSerializers[type] = result ?? valueSerializersLock;
+                return result;
             }
-
-            return result;
         }
 
+/*
         /// <summary>
         /// Get the value serializer declared for the given property.
         /// ValueSerializer can be overriden by an attribute
@@ -138,7 +132,9 @@ namespace Alternet.UI.Port
 
             return result;
         }
+*/
 
+/*
         /// <summary>
         /// Get the value serializer declared for the given type. This version should
         /// be called whenever the caller
@@ -160,7 +156,8 @@ namespace Alternet.UI.Port
 
             return GetSerializerFor(type);
         }
-
+*/
+/*
         /// <summary>
         /// Get the value serializer declared for the given property. ValueSerializer
         /// can be overriden by an attribute
@@ -185,6 +182,7 @@ namespace Alternet.UI.Port
 
             return GetSerializerFor(descriptor);
         }
+*/
 
         /// <summary>
         /// Returns true if the given value can be converted to a string.
@@ -297,7 +295,7 @@ namespace Alternet.UI.Port
 
         private static void TypeDescriptorRefreshed(RefreshEventArgs args)
         {
-            valueSerializers = new Hashtable();
+            serializers = new();
         }
     }
 }
