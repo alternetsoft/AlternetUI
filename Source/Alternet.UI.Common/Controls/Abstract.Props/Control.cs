@@ -507,13 +507,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DisposeManaged()
-        {
-            UnbindHandlerEvents();
-            base.DisposeManaged();
-        }
-
-        /// <inheritdoc/>
         public override Color? GetDefaultAttributesBgColor()
         {
             CheckDisposed();
@@ -1031,6 +1024,13 @@ namespace Alternet.UI
                 else
                     Handler.ForegroundColor = color;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            UnbindHandlerEvents();
+            base.DisposeManaged();
         }
 
         /// <inheritdoc/>
