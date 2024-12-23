@@ -293,6 +293,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="DataType"/> is a number type.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsNumber
+        {
+            get
+            {
+                return DataTypeIsNumber();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets data value in cases when <see cref="AbstractControl.Text"/> property is empty.
         /// </summary>
         /// <remarks>
