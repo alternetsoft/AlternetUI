@@ -167,7 +167,7 @@ namespace Alternet.UI
         /// <param name="disposing">Disposing scenario.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (IsDisposed)
+            if (DisposingOrDisposed)
                 return;
 
             Disposing = true;
