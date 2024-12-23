@@ -44,6 +44,11 @@ namespace PropertyGridSample
 
         void InitTestsTextBox()
         {
+            AddControlAction<TextBox>("Edit sbyte", (c) =>
+            {
+                c.SetValueAndValidator((sbyte)5, true);
+            });
+
             PropertyGrid.AddSimpleAction<TextBox>("SelectionStart++", () =>
             {
                 var control = GetSelectedControl<TextBox>();
