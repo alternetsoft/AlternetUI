@@ -1187,18 +1187,24 @@ namespace Alternet.UI
             if (Terminating)
                 return;
 
-            var msg = obj?.ToString();
-            if (msg is null || msg.Length == 0)
-                return;
-            WriteToLogFileIfAllowed(msg);
-            if (DebugWriteLine.HasKind(kind))
-                Debug.WriteLine(msg);
-            var prefixStr = prefix?.ToString() ?? msg;
+            try
+            {
+                var msg = obj?.ToString();
+                if (msg is null || msg.Length == 0)
+                    return;
+                WriteToLogFileIfAllowed(msg);
+                if (DebugWriteLine.HasKind(kind))
+                    Debug.WriteLine(msg);
+                var prefixStr = prefix?.ToString() ?? msg;
 
-            var args = new LogMessageEventArgs(msg, prefixStr, true);
-            args.Kind = kind;
+                var args = new LogMessageEventArgs(msg, prefixStr, true);
+                args.Kind = kind;
 
-            LogMessage?.Invoke(null, args);
+                LogMessage?.Invoke(null, args);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
