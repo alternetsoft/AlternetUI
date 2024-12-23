@@ -234,7 +234,7 @@ namespace Alternet.UI.Localization
         public string LineNumber { get; set; } = "Line Number";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string LoadingPleaseWait { get; set; } = "Loading. Please wait...";
+        public string LoadingPleaseWait { get; set; } = "Please wait...";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ToolbarSeeMore { get; set; } = "See more";
