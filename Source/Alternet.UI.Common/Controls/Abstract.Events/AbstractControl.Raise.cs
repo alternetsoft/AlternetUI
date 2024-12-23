@@ -32,6 +32,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseLayoutUpdated()
         {
+            if (DisposingOrDisposed)
+                return;
             LayoutUpdated?.Invoke(this, EventArgs.Empty);
         }
 
@@ -41,6 +43,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseInvalidated(InvalidateEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnInvalidated(e);
             Invalidated?.Invoke(this, e);
         }
@@ -52,6 +56,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseFontChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             PerformLayoutAndInvalidate(() =>
             {
                 OnFontChanged(EventArgs.Empty);
@@ -74,6 +80,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePreviewKeyDown(Key key, ModifierKeys modifiers, ref bool isInputKey)
         {
+            if (DisposingOrDisposed)
+                return;
             if (PreviewKeyDown is not null)
             {
                 PreviewKeyDownEventArgs e = new(this, key, modifiers);
@@ -99,6 +107,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseCellChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             CellChanged?.Invoke(this, EventArgs.Empty);
             OnCellChanged(EventArgs.Empty);
 
@@ -113,6 +123,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseIdle()
         {
+            if (DisposingOrDisposed)
+                return;
             OnIdle(EventArgs.Empty);
             Idle?.Invoke(this, EventArgs.Empty);
 
@@ -124,6 +136,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseMove(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             HoveredControl = this;
             MouseMove?.Invoke(this, e);
             OnMouseMove(e);
@@ -146,6 +160,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseHelpRequested(HelpEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnHelpRequested(e);
             HelpRequested?.Invoke(this, e);
 
@@ -158,6 +174,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseParentChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             ResetScaleFactor();
             Designer?.RaiseParentChanged(this);
             ParentChanged?.Invoke(this, EventArgs.Empty);
@@ -171,6 +189,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseUp(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e)))
                 return;
 
@@ -201,6 +221,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseLeftButtonUp(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             IsMouseLeftButtonDown = false;
             RaiseVisualStateChanged();
             MouseLeftButtonUp?.Invoke(this, e);
@@ -215,6 +237,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseRightButtonUp(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             MouseRightButtonUp?.Invoke(this, e);
             OnMouseRightButtonUp(e);
 
@@ -226,6 +250,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseDown(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseDown(this, e)))
                 return;
 
@@ -265,6 +291,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseGotFocus(AbstractControl? previousFocus = null)
         {
+            if (DisposingOrDisposed)
+                return;
             FocusedControl = this;
             OnGotFocus(EventArgs.Empty);
             GotFocus?.Invoke(this, EventArgs.Empty);
@@ -288,6 +316,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseChildMouseLeave(object? sender)
         {
+            if (DisposingOrDisposed)
+                return;
             if (Parent is null)
                 return;
             PlessMouse.LastMousePosition = (null, null);
@@ -301,6 +331,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseChildLostFocus(object? sender, AbstractControl? newFocus = null)
         {
+            if (DisposingOrDisposed)
+                return;
             if (Parent is null)
                 return;
             Parent.OnChildLostFocus(sender, newFocus);
@@ -313,6 +345,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseLostFocus(AbstractControl? newFocus = null)
         {
+            if (DisposingOrDisposed)
+                return;
             if (FocusedControl == this)
                 FocusedControl = null;
             OnLostFocus(EventArgs.Empty);
@@ -337,6 +371,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseDeactivated()
         {
+            if (DisposingOrDisposed)
+                return;
             OnDeactivated(EventArgs.Empty);
             Deactivated?.Invoke(this, EventArgs.Empty);
 
@@ -354,7 +390,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseActivated()
         {
-            if(this is Window window)
+            if (DisposingOrDisposed)
+                return;
+            if (this is Window window)
             {
                 window.LastActivateTime = DateTime.Now;
             }
@@ -377,6 +415,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseContainerLocationChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             OnHandlerLocationChanged(EventArgs.Empty);
             ReportBoundsChanged();
 
@@ -390,6 +430,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseSystemColorsChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
             OnSystemColorsChanged(EventArgs.Empty);
 
@@ -402,6 +444,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseQueryContinueDrag(QueryContinueDragEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             QueryContinueDrag?.Invoke(this, e);
             OnQueryContinueDrag(e);
 
@@ -414,6 +458,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseHandleCreated()
         {
+            if (DisposingOrDisposed)
+                return;
             OnHandleCreated(EventArgs.Empty);
             HandleCreated?.Invoke(this, EventArgs.Empty);
 
@@ -426,6 +472,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseHandleDestroyed()
         {
+            if (DisposingOrDisposed)
+                return;
             ResetScaleFactor();
             OnHandleDestroyed(EventArgs.Empty);
             HandleDestroyed?.Invoke(this, EventArgs.Empty);
@@ -439,6 +487,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseMouseCaptureLost()
         {
+            if (DisposingOrDisposed)
+                return;
             if (HoveredControl == this)
                 HoveredControl = null;
             IsMouseLeftButtonDown = false;
@@ -455,6 +505,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseTextChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             TextChanged?.Invoke(this, EventArgs.Empty);
             OnTextChanged(EventArgs.Empty);
 
@@ -470,6 +522,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseSizeChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             OnSizeChanged(EventArgs.Empty);
             SizeChanged?.Invoke(this, EventArgs.Empty);
             Resize?.Invoke(this, EventArgs.Empty);
@@ -484,6 +538,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseMouseEnter()
         {
+            if (DisposingOrDisposed)
+                return;
             PlessMouse.CancelLongTapTimer();
             HoveredControl = this;
             PlessMouse.LastMousePosition = (null, this);
@@ -501,6 +557,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseVisualStateChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             if (reportedVisualStates == VisualStates)
                 return;
             reportedVisualStates = VisualStates;
@@ -518,6 +576,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseIsMouseOverChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             var reportedHovered = reportedVisualStates?.HasFlag(VisualControlStates.Hovered);
             if (reportedHovered == IsMouseOver)
                 return;
@@ -535,6 +595,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseBackgroundColorChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             Refresh();
 
             if (HasChildren)
@@ -553,6 +615,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseForegroundColorChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             Refresh();
 
             if (HasChildren)
@@ -572,8 +636,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseMouseLeave()
         {
+            if (DisposingOrDisposed)
+                return;
             PlessMouse.CancelLongTapTimer();
-            /*IsMouseOver = false;*/
             if (HoveredControl == this)
                 HoveredControl = null;
             RaiseIsMouseOverChanged();
@@ -596,6 +661,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseChildInserted(int index, AbstractControl childControl)
         {
+            if (DisposingOrDisposed)
+                return;
             OnChildInserted(index, childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
@@ -608,6 +675,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseChildRemoved(AbstractControl childControl)
         {
+            if (DisposingOrDisposed)
+                return;
             OnChildRemoved(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
@@ -620,6 +689,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaisePaint(PaintEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (IsPainting())
                 return;
 
@@ -650,6 +721,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseLocationChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             OnLocationChanged(EventArgs.Empty);
             LocationChanged?.Invoke(this, EventArgs.Empty);
 
@@ -663,6 +736,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDragStart(DragStartEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnDragStart(e);
             DragStart?.Invoke(this, e);
 
@@ -676,6 +751,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDragDrop(DragEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnDragDrop(e);
             DragDrop?.Invoke(this, e);
 
@@ -689,6 +766,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDragOver(DragEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnDragOver(e);
             DragOver?.Invoke(this, e);
 
@@ -701,6 +780,8 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to notify child controls.</param>
         public void RaiseDpiChanged(bool recursive)
         {
+            if (DisposingOrDisposed)
+                return;
             RaiseDpiChanged();
             if (recursive && HasChildren)
             {
@@ -718,6 +799,8 @@ namespace Alternet.UI
         /// <param name="dpiOld">Old dpi value</param>
         public void RaiseDpiChanged(SizeI? dpiOld = null, SizeI? dpiNew = null)
         {
+            if (DisposingOrDisposed)
+                return;
             var oldValue = dpiOld ?? GetDPI().ToSize();
 
             if(dpiNew is null)
@@ -737,6 +820,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseDpiChanged(DpiChangedEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             Display.Reset();
             ResetScaleFactor();
             OnDpiChanged(e);
@@ -752,6 +837,8 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseDragEnter(DragEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnDragEnter(e);
             DragEnter?.Invoke(this, e);
 
@@ -764,6 +851,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseDragLeave()
         {
+            if (DisposingOrDisposed)
+                return;
             DragLeave?.Invoke(this, EventArgs.Empty);
             OnDragLeave(EventArgs.Empty);
 
@@ -777,6 +866,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseHandlerSizeChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             OnHandlerSizeChanged(EventArgs.Empty);
             ReportBoundsChanged();
 
@@ -790,7 +881,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseVisibleChanged()
         {
-            if(Visible)
+            if (DisposingOrDisposed)
+                return;
+            if (Visible)
             {
                 ResetScaleFactor();
             }
@@ -811,6 +904,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseLeftButtonDown(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             IsMouseLeftButtonDown = true;
             RaiseVisualStateChanged();
             Designer?.RaiseMouseLeftButtonDown(this, e);
@@ -826,6 +921,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseRightButtonDown(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             MouseRightButtonDown?.Invoke(this, e);
             ShowPopupMenu(ContextMenuStrip);
             OnMouseRightButtonDown(e);
@@ -839,6 +936,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyDown(KeyEventArgs e, Action<KeyEventArgs>? after = null)
         {
+            if (DisposingOrDisposed)
+                return;
             PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
 
             if (ForEachParent(e, (control, e) => control.OnBeforeChildKeyDown(this, e)))
@@ -880,6 +979,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyUp(KeyEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             PlessKeyboard.UpdateKeyStateInMemory(e, isDown: false);
 
             KeyUp?.Invoke(this, e);
@@ -894,6 +995,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseKeyPress(KeyPressEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentKeyPress(this, e)))
                 return;
 
@@ -919,6 +1022,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseWheel(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             HoveredControl = this;
             OnMouseWheel(e);
             MouseWheel?.Invoke(this, e);
@@ -933,6 +1038,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseMouseDoubleClick(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             LastDoubleClickTimestamp = e.Timestamp;
             OnMouseDoubleClick(e);
             MouseDoubleClick?.Invoke(this, e);
@@ -949,6 +1056,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseClick()
         {
+            if (DisposingOrDisposed)
+                return;
             LastClickedTimestamp = DateTime.Now.Ticks;
 
             OnClick(EventArgs.Empty);
@@ -965,6 +1074,8 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseTouch(TouchEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnTouch(e);
             Touch?.Invoke(this, e);
             if (!e.Handled && TouchEventsAsMouse)
@@ -980,6 +1091,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseTitleChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             OnTitleChanged(EventArgs.Empty);
             TitleChanged?.Invoke(this, EventArgs.Empty);
             Parent?.OnChildPropertyChanged(this, nameof(Title));
@@ -993,6 +1106,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseMouseEnterOnTarget()
         {
+            if (DisposingOrDisposed)
+                return;
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
             currentTarget?.RaiseMouseEnter();
         }
@@ -1003,6 +1118,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseMouseLeaveOnTarget()
         {
+            if (DisposingOrDisposed)
+                return;
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
             currentTarget?.RaiseMouseLeave();
         }
@@ -1013,6 +1130,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseLongTap(LongTapEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnLongTap(e);
             LongTap?.Invoke(this, e);
             RaiseNotifications((n) => n.AfterLongTap(this, e));
@@ -1024,6 +1143,8 @@ namespace Alternet.UI
         /// <param name="action">Action to call.</param>
         public virtual void RaiseNotifications(Action<IControlNotification> action)
         {
+            if (DisposingOrDisposed)
+                return;
             var nn = Notifications;
             var nn2 = GlobalNotifications;
 
@@ -1046,6 +1167,8 @@ namespace Alternet.UI
         /// event data.</param>
         protected virtual void RaiseEnabledChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             RaiseVisualStateChanged();
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
