@@ -30,7 +30,6 @@ public static class Registration
             h.AddHandler<PictureBoxView, PlatformViewHandler>();
             h.AddHandler<SpeedButtonView, PlatformViewHandler>();
             h.AddHandler<ToolBarView, PlatformViewHandler>();
-            h.AddHandler<ColorPickerView, PlatformViewHandler>();
             h.AddHandler<TabControlView, PlatformViewHandler>();
         });
 
