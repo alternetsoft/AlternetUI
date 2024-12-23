@@ -240,7 +240,7 @@ namespace Alternet.UI
             Fn("Run terminal command", () => DialogFactory.ShowRunTerminalCommandDlg());
             Fn("Show Second MainForm", () => AppUtils.CreateFirstWindowClone());
             Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.LogToFile);
-            Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics.Log);
+            Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics(Window.Default).Log);
             Fn("Log CultureInfo.CurrentCulture", LogCurrentCulture);
 
             EnumDebugLogActions(Fn);
