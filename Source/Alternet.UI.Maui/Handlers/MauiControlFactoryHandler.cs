@@ -130,7 +130,7 @@ namespace Alternet.UI
 
         IControlHandler IControlFactoryHandler.CreateScrollBarHandler(ScrollBar control)
         {
-            throw new NotImplementedException();
+            return new PlessScrollBarHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateSliderHandler(Slider control)

@@ -25,13 +25,13 @@ public static class Registration
         builder.ConfigureMauiHandlers(h =>
         {
             h.AddHandler<ControlView, PlatformViewHandler>();
-#pragma warning disable MAUI0001
             h.AddHandler<BorderView, PlatformViewHandler>();
             h.AddHandler<LabelView, PlatformViewHandler>();
             h.AddHandler<PictureBoxView, PlatformViewHandler>();
             h.AddHandler<SpeedButtonView, PlatformViewHandler>();
             h.AddHandler<ToolBarView, PlatformViewHandler>();
-#pragma warning restore MAUI0001
+            h.AddHandler<ColorPickerView, PlatformViewHandler>();
+            h.AddHandler<TabControlView, PlatformViewHandler>();
         });
 
         return builder;

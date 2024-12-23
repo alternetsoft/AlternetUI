@@ -41,6 +41,14 @@ namespace Alternet.Drawing
         private InteriorControlActivity? notification;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="InteriorDrawable"/> class.
+        /// </summary>
+        public InteriorDrawable()
+        {
+            SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
+        }
+
+        /// <summary>
         /// Occurs when the interior element is clicked.
         /// </summary>
         public event EventHandler<BaseEventArgs<HitTestsResult>>? ElementClick;
@@ -208,7 +216,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets scrollbar metrics.
         /// </summary>
-        public virtual ScrollBar.MetricsInfo? Metrics
+        public virtual ScrollBar.MetricsInfo? ScrollBarMetrics
         {
             get
             {
@@ -285,11 +293,13 @@ namespace Alternet.Drawing
         /// interior hit test and scrollbar hit test.
         /// </summary>
         /// <param name="point">Point to check.</param>
-        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        /// <param name="control">Control which scale factor
+        /// is used to convert pixels to/from dips.</param>
         /// <returns></returns>
-        public virtual HitTestsResult HitTests(Coord scaleFactor, PointD point)
+        public virtual HitTestsResult HitTests(AbstractControl control, PointD point)
         {
-            var rectangles = GetLayoutRectangles(scaleFactor);
+            Coord scaleFactor = control.ScaleFactor;
+            var rectangles = GetLayoutRectangles(control);
             var hitTest = HitTest(rectangles, point);
 
             ScrollBarDrawable.HitTestResult scrollHitTest;
@@ -359,10 +369,12 @@ namespace Alternet.Drawing
         /// Performs layout of the drawable childs and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
-        /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
+        /// <param name="control">Control which scale factor used to convert pixels to/from dips.</param>
         /// <returns>Calculated bounds of the different parts of the drawable.</returns>
-        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(Coord scaleFactor)
+        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(AbstractControl control)
         {
+            Coord scaleFactor = control.ScaleFactor;
+
             var result = new EnumArray<HitTestResult, RectD>();
             var borderWidth = BorderWidth;
 
@@ -390,7 +402,7 @@ namespace Alternet.Drawing
             var bothVisible = vertVisible && horzVisible;
             var cornerVisible = CornerVisible;
 
-            var metrics = GetRealMetrics();
+            var metrics = GetRealMetrics(control);
 
             var vertWidth = metrics.GetPreferredSize(true, scaleFactor).Width;
             var vertHeight = boundsInsideBorder.Height;
@@ -472,7 +484,7 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            var rectangles = GetLayoutRectangles(control.ScaleFactor);
+            var rectangles = GetLayoutRectangles(control);
 
             if (Background is not null && Background.Visible)
             {
@@ -506,13 +518,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets real scroll bar metrics. If <see cref="Metrics"/> is not specified, returns
+        /// Gets real scroll bar metrics. If <see cref="ScrollBarMetrics"/> is not specified, returns
         /// <see cref="ScrollBar.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual ScrollBar.MetricsInfo GetRealMetrics()
+        public virtual ScrollBar.MetricsInfo GetRealMetrics(AbstractControl control)
         {
-            return metrics ?? ScrollBar.DefaultMetrics;
+            return metrics ?? ScrollBar.DefaultMetrics(control);
         }
 
         /// <summary>
@@ -520,6 +532,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual void SetThemeMetrics(ScrollBar.KnownTheme theme, bool isDark = false)
         {
+            SetDefaultBorder(isDark);
             var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
             themeObj.AssignTo(this);
         }

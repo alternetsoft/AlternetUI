@@ -1622,7 +1622,6 @@ namespace Alternet.UI
         protected override void OnDpiChanged(DpiChangedEventArgs e)
         {
             base.OnDpiChanged(e);
-            Display.Reset();
             PerformLayoutAndInvalidate();
         }
 

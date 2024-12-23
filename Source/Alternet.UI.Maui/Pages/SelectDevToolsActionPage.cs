@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Maui.Controls;
 
-namespace Alternet.MAUI
+namespace Alternet.Maui
 {
     /// <summary>
     /// Shows list with registered developer tools actions.

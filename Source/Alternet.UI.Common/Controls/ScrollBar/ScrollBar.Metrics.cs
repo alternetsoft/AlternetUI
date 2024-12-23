@@ -80,9 +80,9 @@ namespace Alternet.UI
             /// <summary>
             /// Initializes a new instance of the <see cref="MetricsInfo"/> struct.
             /// </summary>
-            public MetricsInfo()
+            public MetricsInfo(AbstractControl control)
             {
-                Reset();
+                Reset(control);
             }
 
             /// <summary>
@@ -160,16 +160,16 @@ namespace Alternet.UI
             /// <summary>
             /// Resets all properties, reloading them from the system settings.
             /// </summary>
-            public virtual void Reset()
+            public virtual void Reset(AbstractControl control)
             {
-                HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY);
-                VScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX);
-                VScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowX);
-                VScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowY);
-                VThumbY = SystemSettings.GetMetric(SystemSettingsMetric.VThumbY);
-                HScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowX);
-                HScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowY);
-                HThumbX = SystemSettings.GetMetric(SystemSettingsMetric.HThumbX);
+                HScrollY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollY, control);
+                VScrollX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollX, control);
+                VScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowX, control);
+                VScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.VScrollArrowY, control);
+                VThumbY = SystemSettings.GetMetric(SystemSettingsMetric.VThumbY, control);
+                HScrollArrowX = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowX, control);
+                HScrollArrowY = SystemSettings.GetMetric(SystemSettingsMetric.HScrollArrowY, control);
+                HThumbX = SystemSettings.GetMetric(SystemSettingsMetric.HThumbX, control);
             }
 
             /// <summary>
