@@ -1263,22 +1263,19 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void DeleteAll(bool dispose = false)
         {
-            Stack<AbstractControl> controls = new();
-            controls.PushRange(Children);
-            SuspendLayout();
-            try
+            if (!HasChildren)
+                return;
+
+            Stack<AbstractControl> controls = new(Children);
+            DoInsideLayout(() =>
             {
                 foreach (var control in controls)
                 {
                     control.Parent = null;
-                    if(dispose)
+                    if (dispose)
                         control.Dispose();
                 }
-            }
-            finally
-            {
-                ResumeLayout();
-            }
+            });
         }
 
         /// <summary>
@@ -1406,6 +1403,18 @@ namespace Alternet.UI
         {
             var result = FindChild(id);
             return result;
+        }
+
+        /// <summary>
+        /// Gets item control at the specified index.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual AbstractControl? GetToolControlAt(int index)
+        {
+            if(index < GetToolCount())
+                return Children[index];
+            return null;
         }
 
         /// <summary>
