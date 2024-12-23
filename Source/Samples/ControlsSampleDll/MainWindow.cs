@@ -11,7 +11,9 @@ namespace ControlsSample
     {
         static MainWindow()
         {
-            DebugUtils.RegisterExceptionsLoggerIfDebug(true, true);
+            DebugUtils.RegisterExceptionsLoggerIfDebug((e) =>
+            {
+            });
 
             DefaultUseParentFont = true;
 
