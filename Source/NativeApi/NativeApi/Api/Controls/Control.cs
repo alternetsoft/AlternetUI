@@ -87,9 +87,7 @@ namespace NativeApi.Api
         public event EventHandler? MouseCaptureLost;
         public event EventHandler? DpiChanged;
 
-        [NativeEvent(cancellable: true)]
         public event EventHandler? Destroyed;
-
         public event EventHandler? TextChanged;
         public event EventHandler? GotFocus;
         public event EventHandler? LostFocus;

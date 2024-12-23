@@ -9,8 +9,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides base functionality for implementing a specific <see cref="AbstractControl"/> behavior
-    /// and appearance.
+    /// Provides base functionality for implementing
+    /// a specific <see cref="AbstractControl"/> behavior and appearance.
     /// </summary>
     internal class WxControlHandler : BaseControlHandler, IControlHandler
     {
@@ -841,8 +841,6 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
-            /*todo: consider clearing the native control's children.*/
-
             NativeControl.DragOver -= NativeControl_DragOver;
             NativeControl.DragEnter -= NativeControl_DragEnter;
             NativeControl.DragDrop -= NativeControl_DragDrop;
@@ -864,12 +862,6 @@ namespace Alternet.UI
             NativeControl.DragDrop += NativeControl_DragDrop;
 
             NativeControl.HandleCreated = OnNativeControlHandleCreated;
-        }
-
-        private static void DisposeNativeControlCore(Native.Control control)
-        {
-            control.handler = null;
-            control.Dispose();
         }
 
         private void RaiseDragAndDropEvent(
@@ -912,21 +904,18 @@ namespace Alternet.UI
             {
                 if (nativeControl.HasWindowCreated)
                 {
-                    nativeControl.Destroyed += NativeControl_Destroyed;
+                    nativeControl.Destroyed = ()=>
+                    {
+                        nativeControl.Destroyed = null;
+                        SafeDispose(ref nativeControl);
+                    };
                     nativeControl.Destroy();
                 }
                 else
-                    DisposeNativeControlCore(nativeControl);
-
-                nativeControl = null;
+                {
+                    SafeDispose(ref nativeControl);
+                }
             }
-        }
-
-        private void NativeControl_Destroyed(object? sender, CancelEventArgs e)
-        {
-            var nativeControl = (Native.Control)sender!;
-            nativeControl.Destroyed -= NativeControl_Destroyed;
-            DisposeNativeControlCore(nativeControl);
         }
 
         public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
