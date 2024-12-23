@@ -25,8 +25,8 @@ namespace Alternet.UI
         private static int? incFontSize;
 
         private readonly WindowInfo info = new();
-        private readonly WindowKind? windowKindOverride;
 
+        private WindowKind? windowKindOverride;
         private WeakReferenceValue<AbstractControl> activeControl;
         private IconSet? icon = null;
         private object? menu = null;
@@ -942,6 +942,7 @@ namespace Alternet.UI
             try
             {
                 var result = Activator.CreateInstance<T>();
+                result.windowKindOverride = windowKind;
                 return result;
             }
             finally
@@ -1683,7 +1684,8 @@ namespace Alternet.UI
         /// Gets window kind used instead of the default value.
         /// </summary>
         /// <returns></returns>
-        protected WindowKind? GetWindowKindOverride() => globalWindowKindOverride ?? windowKindOverride;
+        protected WindowKind? GetWindowKindOverride()
+            => globalWindowKindOverride ?? windowKindOverride;
 
         /// <inheritdoc/>
         protected override void OnHandlerLocationChanged(EventArgs e)
