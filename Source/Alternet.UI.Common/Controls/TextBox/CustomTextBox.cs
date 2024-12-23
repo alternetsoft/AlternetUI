@@ -239,6 +239,112 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="DataType"/> specifies a signed integer number
+        /// (int, long, sbyte, short).
+        /// Additionally <see cref="MinValue"/>
+        /// is also checked whether it allows negative numbers.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsSignedInt
+        {
+            get
+            {
+                var typeCode = GetDataTypeCode();
+
+                if (AssemblyUtils.IsTypeCodeSignedInt(typeCode) && IsMinValueNegativeOrNull)
+                    return true;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="DataType"/> specifies an unsigned integer number
+        /// (uint, ulong, byte, ushort).
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsUnsignedInt
+        {
+            get
+            {
+                var typeCode = GetDataTypeCode();
+
+                if (AssemblyUtils.IsTypeCodeUnsignedInt(typeCode))
+                    return true;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="DataType"/> specifies a float number
+        /// (single, double, decimal).
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsFloat
+        {
+            get
+            {
+                var typeCode = GetDataTypeCode();
+
+                if (AssemblyUtils.IsTypeCodeFloat(typeCode))
+                    return true;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="DataType"/> specifies a signed number.
+        /// Additionally <see cref="MinValue"/>
+        /// is also checked whether it allows negative numbers.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsSignedNumber
+        {
+            get
+            {
+                if (IsNumber && IsMinValueNegativeOrNull)
+                    return true;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="MinValue"/> is specified and negative.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsMinValueNegativeOrNull
+        {
+            get
+            {
+                var realMinValue = GetRealMinValue();
+
+                if (realMinValue is null)
+                    return true;
+                else
+                {
+                    var typeCode = GetDataTypeCode();
+                    var signed = MathUtils.LessThanDefault(typeCode, realMinValue);
+                    return signed ?? true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="NumberStyles"/>
+        /// has <see cref="System.Globalization.NumberStyles.HexNumber"/> flag.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsHexNumber
+        {
+            get
+            {
+                if (NumberStyles is not null
+                    && NumberStyles.Value.HasFlag(System.Globalization.NumberStyles.HexNumber))
+                    return true;
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets validator reporter object or control.
         /// </summary>
         /// <remarks>
@@ -598,6 +704,57 @@ namespace Alternet.UI
         /// insertion point is), so this function never returns 0.
         /// </remarks>
         public abstract int GetNumberOfLines();
+
+        /// <summary>
+        /// Sets <see cref="CustomTextBox.ValidatorErrorText"/> property
+        /// to <paramref name="knownError"/>.
+        /// </summary>
+        /// <param name="knownError">Known error identifier.</param>
+        public virtual void SetErrorText(ValueValidatorKnownError knownError)
+        {
+            ValidatorErrorText = GetKnownErrorText(knownError);
+        }
+
+        /// <summary>
+        /// Sets <see cref="CustomTextBox.ValidatorErrorText"/>
+        /// with default error text for the data type specified in <see cref="DataType"/>.
+        public virtual void SetErrorTextFromDataType()
+        {
+            if(DataType is null)
+            {
+                ValidatorErrorText = null;
+                return;
+            }
+
+            if (IsHexNumber)
+            {
+                SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
+                return;
+            }
+
+            if (IsFloat)
+            {
+                if (IsSignedNumber)
+                    SetErrorText(ValueValidatorKnownError.FloatIsExpected);
+                else
+                    SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+                return;
+            }
+
+            if (IsUnsignedInt)
+            {
+                SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+                return;
+            }
+
+            if (IsSignedInt)
+            {
+                SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+                return;
+            }
+
+            SetErrorText(ValueValidatorKnownError.None);
+        }
 
         /// <summary>
         /// Returns the contents of a given line in the text control, not
@@ -1006,6 +1163,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="CustomTextBox.DataType"/> property to <typeparamref name="T"/>
+        /// and <see cref="CharValidator"/> to the appropriate validator provider.
+        /// </summary>
+        /// <typeparam name="T">New <see cref="CustomTextBox.DataType"/> property value.</typeparam>
+        public virtual void UseCharValidator<T>()
+        {
+            DataType = typeof(T);
+            CharValidator = Alternet.UI.CharValidator.CreateValidator(typeof(T));
+        }
+
+        /// <summary>
+        /// Sets <see cref="DataType"/> to the specified type and
+        /// and <see cref="CharValidator"/> to the appropriate validator provider.
+        /// </summary>
+        /// <param name="type">New <see cref="CustomTextBox.DataType"/> property value.</param>
+        /// <param name="charValidator">Whether to create and assign
+        /// appropriate char validator or assign <see cref="CharValidator"/> to Null.</param>
+        public virtual void SetValidator(Type? type, bool charValidator)
+        {
+            DataType = type;
+            SetErrorTextFromDataType();
+
+            if (charValidator)
+                CharValidator = Alternet.UI.CharValidator.CreateValidator(type);
+            else
+                CharValidator = null;
+        }
+
+        /// <summary>
+        /// Sets text as value (using <see cref="SetTextAsObject"/>)
+        /// and assigns appropriate char and value validators.
+        /// </summary>
+        /// <param name="value">Object which will be converted to string and assigned
+        /// to <see cref="AbstractControl.Text"/> property.</param>
+        /// <param name="charValidator">Whether to set char validator.</param>
+        public virtual void SetValueAndValidator(object? value, bool charValidator)
+        {
+            SetValidator(value?.GetType(), charValidator);
+            Options |= TextBoxOptions.DefaultValidation;
+            SetTextAsObject(value);
+        }
+
+        /// <summary>
         /// Converts <paramref name="value"/> to <see cref="string"/> and assigns
         /// <see cref="AbstractControl.Text"/>
         /// property with the converted value.
@@ -1021,7 +1221,8 @@ namespace Alternet.UI
         /// If <see cref="CustomTextBox.DataType"/> property is <c>null</c>, it is set to
         /// the type of <paramref name="value"/>.
         /// </remarks>
-        public virtual void SetTextAsObject(object? value)
+        public virtual void SetTextAsObject(
+            object? value)
         {
             if (value is null)
             {
@@ -1185,7 +1386,7 @@ namespace Alternet.UI
         /// Gets known error text.
         /// </summary>
         /// <param name="kind">Error kind.</param>
-        public virtual string GetKnownErrorText(ValueValidatorKnownError kind)
+        public virtual string? GetKnownErrorText(ValueValidatorKnownError kind)
         {
             string AddRangeSuffix(string s)
             {
@@ -1200,6 +1401,8 @@ namespace Alternet.UI
 
             switch (kind)
             {
+                case ValueValidatorKnownError.None:
+                    return null;
                 case ValueValidatorKnownError.NumberIsExpected:
                     return AddRangeSuffix(ErrorMessages.Default.ValidationNumberIsExpected);
                 case ValueValidatorKnownError.UnsignedNumberIsExpected:

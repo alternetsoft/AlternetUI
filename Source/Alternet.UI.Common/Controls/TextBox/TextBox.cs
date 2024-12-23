@@ -945,17 +945,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="CustomTextBox.DataType"/> property to <typeparamref name="T"/>
-        /// and <see cref="CharValidator"/> to the appropriate validator provider.
-        /// </summary>
-        /// <typeparam name="T">New <see cref="CustomTextBox.DataType"/> property value.</typeparam>
-        public virtual void UseCharValidator<T>()
-        {
-            DataType = typeof(T);
-            CharValidator = Alternet.UI.CharValidator.CreateValidator(typeof(T));
-        }
-
-        /// <summary>
         /// Gets the length of the specified line, not including any trailing
         /// newline character(s).
         /// </summary>
@@ -1565,16 +1554,6 @@ namespace Alternet.UI
         public virtual void SelectionAlignLeft()
         {
             SelectionSetAlignment(TextBoxTextAttrAlignment.Left);
-        }
-
-        /// <summary>
-        /// Sets <see cref="CustomTextBox.ValidatorErrorText"/> property
-        /// to <paramref name="knownError"/>.
-        /// </summary>
-        /// <param name="knownError">Known error identifier.</param>
-        public virtual void SetErrorText(ValueValidatorKnownError knownError)
-        {
-            ValidatorErrorText = GetKnownErrorText(knownError);
         }
 
         /// <summary>
