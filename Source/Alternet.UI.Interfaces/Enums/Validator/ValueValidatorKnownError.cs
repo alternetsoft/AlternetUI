@@ -12,6 +12,11 @@ namespace Alternet.UI
     public enum ValueValidatorKnownError
     {
         /// <summary>
+        /// Report no error.
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Error: "A number is expected.".
         /// </summary>
         NumberIsExpected,
