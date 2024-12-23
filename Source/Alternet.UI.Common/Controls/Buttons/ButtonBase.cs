@@ -60,20 +60,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public virtual object? CommandTarget
-        {
-            get
-            {
-                return commandSource.CommandTarget;
-            }
-
-            set
-            {
-                commandSource.CommandTarget = value;
-            }
-        }
-
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>

@@ -19,7 +19,6 @@ namespace Alternet.UI
 
         private ICommand? command;
         private object? commandParameter;
-        private object? commandTarget;
 
         /// <summary>
         /// Gets whether command can be executed.
@@ -65,22 +64,6 @@ namespace Alternet.UI
                 if (commandParameter == value)
                     return;
                 commandParameter = value;
-            }
-        }
-
-        /// <inheritdoc cref="ICommandSource.CommandTarget"/>
-        public object? CommandTarget
-        {
-            readonly get
-            {
-                return commandTarget;
-            }
-
-            set
-            {
-                if (commandTarget == value)
-                    return;
-                commandTarget = value;
             }
         }
 

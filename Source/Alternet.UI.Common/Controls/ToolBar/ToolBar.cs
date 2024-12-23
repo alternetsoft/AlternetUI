@@ -658,19 +658,15 @@ namespace Alternet.UI
         /// <param name="command">A command that will be executed when tool is clicked.</param>
         /// <param name="commandParameter">A parameter that will be passed
         /// to the command when executing it.</param>
-        /// <param name="commandTarget">An element that an implementor
-        /// may wish to target as the destination for the command.</param>
         public virtual void SetToolCommand(
             ObjectUniqueId id,
             ICommand? command = null,
-            object? commandParameter = null,
-            object? commandTarget = null)
+            object? commandParameter = null)
         {
             var item = FindTool(id);
             if (item is null)
                 return;
             item.CommandParameter = commandParameter;
-            item.CommandTarget = commandTarget;
             item.Command = command;
         }
 
