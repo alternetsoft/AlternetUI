@@ -17,6 +17,11 @@ namespace Alternet.UI
         public WeakReference<T>? Reference;
 
         /// <summary>
+        /// Occurs when <see cref="Value"/> is changed.
+        /// </summary>
+        public Action? Changed;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WeakReferenceValue{T}"/> struct.
         /// </summary>
         public WeakReferenceValue()
@@ -34,7 +39,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets control where caret is located.
+        /// Gets value.
         /// </summary>
         public T? Value
         {
@@ -47,25 +52,33 @@ namespace Alternet.UI
                 else
                 {
                     Reference = null;
+                    RaiseValueChanged();
                     return null;
                 }
             }
 
             set
             {
+                if (Value == value)
+                    return;
+
                 if(value is null)
                 {
                     Reference = null;
-                    return;
                 }
-
-                if(Reference is null)
+                else
                 {
-                    Reference = new(value);
-                    return;
+                    if (Reference is null)
+                    {
+                        Reference = new(value);
+                    }
+                    else
+                    {
+                        Reference.SetTarget(value);
+                    }
                 }
 
-                Reference.SetTarget(value);
+                RaiseValueChanged();
             }
         }
 
@@ -75,6 +88,14 @@ namespace Alternet.UI
         public void Reset()
         {
             Value = null;
+        }
+
+        /// <summary>
+        /// Raises <see cref="Changed"/> event.
+        /// </summary>
+        public readonly void RaiseValueChanged()
+        {
+            Changed?.Invoke();
         }
     }
 }
