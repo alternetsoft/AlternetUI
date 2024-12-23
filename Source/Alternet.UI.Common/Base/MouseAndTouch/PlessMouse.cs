@@ -64,13 +64,19 @@ namespace Alternet.UI
                 if (lastMousePosition == value)
                     return;
 
+                var lastControl = LastMousePosition.Control;
+
                 lastMousePosition = value;
 
                 LastMousePositionChanged?.Invoke(null, EventArgs.Empty);
 
                 if (ShowTestMouseInControl)
                 {
-                    AbstractControl.HoveredControl?.Refresh();
+                    var hovered = AbstractControl.HoveredControl;
+
+                    lastControl?.Refresh();
+                    if (hovered != lastControl)
+                        hovered?.Refresh();
                 }
             }
         }
