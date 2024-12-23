@@ -25,9 +25,9 @@
             <Button Text="Create Dialog" Name="createAndShowModalWindowButton" IsTextLocalized="true"
                 Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
             <Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" IsTextLocalized="true"
-                Text="Create Owned" Margin="0,0,0,5" IsEnabled="false"/>
+                Text="Create Owned" Margin="0,0,0,5" IsEnabled="true"/>
             <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"
-                      IsTextLocalized="true" IsEnabled="false"/>
+                      IsTextLocalized="true" IsEnabled="true"/>
             <CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox"
                       Margin="0,0,0,5" IsTextLocalized="true" />
 

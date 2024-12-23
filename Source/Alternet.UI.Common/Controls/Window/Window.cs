@@ -26,11 +26,12 @@ namespace Alternet.UI
 
         private readonly WindowInfo info = new();
 
+        private bool ignoreClosingEvent;
         private WindowKind? windowKindOverride;
         private WeakReferenceValue<AbstractControl> activeControl;
         private IconSet? icon = null;
         private object? menu = null;
-        /*private Window? owner;*/
+        private WeakReferenceValue<Window> owner;
         private bool needLayout = false;
         private int? oldDisplay;
         private bool loadedCalled;
@@ -83,12 +84,10 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? StatusBarChanged;
 
-        /*
         /// <summary>
         /// Occurs when the value of the <see cref="Owner"/> property changes.
         /// </summary>
         public event EventHandler? OwnerChanged;
-        */
 
         /// <summary>
         /// Occurs when the value of the <see cref="ShowInTaskbar"/> property changes.
@@ -638,7 +637,6 @@ namespace Alternet.UI
             }
         }
 
-/*
         /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are
         /// owned by this window.
@@ -658,12 +656,40 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.OwnedWindows;
+                return OwnedWindowsCollection.ToArray();
             }
         }
-*/
 
-/*
+        /// <summary>
+        /// Gets a collection of <see cref="Window"/> objects that represent all windows that are
+        /// owned by this window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Window"/> collection that represents the owned windows for this window.
+        /// </value>
+        /// <remarks>
+        /// This property returns a collection that contains all windows that are owned by this
+        /// window. To make a window owned by another window, set the
+        /// <see cref="Owner"/> property.
+        /// When a window is owned by another window, it is closed or hidden
+        /// with the owner window.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual IEnumerable<Window> OwnedWindowsCollection
+        {
+            get
+            {
+                if (App.HasApplication)
+                {
+                    foreach (var window in App.Current.Windows)
+                    {
+                        if (window.Owner == this)
+                            yield return window;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets the window that owns this window.
         /// </summary>
@@ -676,19 +702,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Window? Owner
         {
-            get => owner;
+            get => owner.Value;
 
             set
             {
-                if (owner == value)
+                if (Owner == value)
                     return;
-                owner = value;
-                OnOwnerChanged(EventArgs.Empty);
-                OwnerChanged?.Invoke(this, EventArgs.Empty);
-                Handler.SetOwner(value);
+                owner.Value = value;
             }
         }
-*/
 
         /// <summary>
         /// Gets or sets whether this window is maximized.
@@ -1008,7 +1030,12 @@ namespace Alternet.UI
         /// raise the window, not do it at all or indicate that a window requested to be
         /// raised in some other way, e.g.by flashing its icon if it is minimized.
         /// </remarks>
-        public virtual void Raise() => Handler.Raise();
+        public virtual void Raise()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.Raise();
+        }
 
         /// <summary>
         /// Shows window and focuses it.
@@ -1017,6 +1044,9 @@ namespace Alternet.UI
         /// event to show the window.</param>
         public virtual void ShowAndFocus(bool useIdle = false)
         {
+            if (DisposingOrDisposed)
+                return;
+
             if (useIdle)
                 App.AddIdleTask(Fn);
             else
@@ -1038,7 +1068,12 @@ namespace Alternet.UI
         /// Activating a window brings it to the front if this is the active application,
         /// or it flashes the window caption if this is not the active application.
         /// </remarks>
-        public virtual void Activate() => Handler.Activate();
+        public virtual void Activate()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.Activate();
+        }
 
         /// <summary>
         /// Gets default bounds assigned to the window.
@@ -1054,6 +1089,8 @@ namespace Alternet.UI
         /// </summary>
         public void CloseIdle(WindowCloseAction? action = null)
         {
+            if (DisposingOrDisposed)
+                return;
             RunWhenIdle(() => Close(action));
         }
 
@@ -1075,7 +1112,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Close(WindowCloseAction? action = null)
         {
-            if (IsDisposed)
+            if (DisposingOrDisposed)
                 return;
 
             action ??= CloseAction ?? WindowCloseAction.Dispose;
@@ -1084,6 +1121,11 @@ namespace Alternet.UI
             {
                 default:
                 case WindowCloseAction.Dispose:
+                    WindowClosingEventArgs e = new();
+                    RaiseClosing(e);
+                    if (e.Cancel)
+                        return;
+                    ignoreClosingEvent = true;
                     Visible = false;
                     Handler.Close();
                     break;
@@ -1100,6 +1142,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseStateChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             OnStateChanged(EventArgs.Empty);
             StateChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -1110,6 +1154,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseClosing(WindowClosingEventArgs e)
         {
+            if (DisposingOrDisposed || ignoreClosingEvent)
+                return;
             OnClosing(e);
             Closing?.Invoke(this, e);
 
@@ -1498,7 +1544,6 @@ namespace Alternet.UI
         {
         }
 
-/*
         /// <summary>
         /// Called when the value of the <see cref="Owner"/> property changes.
         /// </summary>
@@ -1506,7 +1551,6 @@ namespace Alternet.UI
         protected virtual void OnOwnerChanged(EventArgs e)
         {
         }
-*/
 
         /// <summary>
         /// Called when the value of the <see cref="IsToolWindow"/> property changes.
@@ -1551,6 +1595,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnIdle(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnIdle(e);
 
             if (needLayout)
@@ -1700,6 +1746,14 @@ namespace Alternet.UI
         /// </summary>
         private void Initialize()
         {
+            owner.Changed = () =>
+            {
+                if (DisposingOrDisposed)
+                    return;
+                OnOwnerChanged(EventArgs.Empty);
+                OwnerChanged?.Invoke(this, EventArgs.Empty);
+            };
+
             SetVisibleValue(false);
             ProcessIdle = true;
 
