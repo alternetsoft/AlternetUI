@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+
 namespace Alternet.UI
 {
     internal class MauiSystemSettingsHandler : PlessSystemSettingsHandler, ISystemSettingsHandler
@@ -26,7 +29,11 @@ namespace Alternet.UI
 
         public override bool GetAppearanceIsDark()
         {
-            return base.GetAppearanceIsDark();
+            var currentTheme = Application.Current?.RequestedTheme;
+
+            if (currentTheme == AppTheme.Dark)
+                return true;
+            return false;
         }
 
         public override IDisplayFactoryHandler CreateDisplayFactoryHandler()

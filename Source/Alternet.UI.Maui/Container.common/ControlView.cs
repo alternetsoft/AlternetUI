@@ -21,7 +21,8 @@ using SkiaSharp.Views.Maui.Controls;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="Alternet.UI.AbstractControl"/> container using <see cref="SKCanvasView"/>.
+    /// Implements <see cref="Alternet.UI.AbstractControl"/>
+    /// container using <see cref="SKCanvasView"/>.
     /// </summary>
     public partial class ControlView : SKCanvasView
     {

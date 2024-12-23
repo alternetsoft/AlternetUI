@@ -45,7 +45,7 @@ namespace Alternet.Drawing
         /// </summary>
         public InteriorDrawable()
         {
-            SetThemeMetrics(ScrollBar.KnownTheme.MauiDark);
+            SetThemeMetrics(ScrollBar.KnownTheme.MauiAuto, SystemSettings.AppearanceIsDark);
         }
 
         /// <summary>
