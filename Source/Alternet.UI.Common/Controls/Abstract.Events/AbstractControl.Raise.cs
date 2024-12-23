@@ -290,6 +290,7 @@ namespace Alternet.UI
         {
             if (Parent is null)
                 return;
+            PlessMouse.LastMousePosition = (null, null);
             Parent.OnChildMouseLeave(sender, EventArgs.Empty);
             Parent.RaiseChildMouseLeave(sender);
         }
@@ -484,8 +485,8 @@ namespace Alternet.UI
         public void RaiseMouseEnter()
         {
             PlessMouse.CancelLongTapTimer();
-            /*IsMouseOver = true;*/
             HoveredControl = this;
+            PlessMouse.LastMousePosition = (null, this);
             RaiseIsMouseOverChanged();
             OnMouseEnter(EventArgs.Empty);
             MouseEnter?.Invoke(this, EventArgs.Empty);
@@ -582,6 +583,11 @@ namespace Alternet.UI
             MouseLeave?.Invoke(this, EventArgs.Empty);
 
             RaiseNotifications((n) => n.AfterMouseLeave(this));
+
+            if (PlessMouse.ShowTestMouseInControl)
+            {
+                Refresh();
+            }
         }
 
         /// <summary>
@@ -616,6 +622,8 @@ namespace Alternet.UI
         {
             if (IsPainting())
                 return;
+
+            ResetScaleFactor();
 
             BeginPaint();
 
@@ -688,12 +696,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Notifies control and optionally it's child controls about dpi changes.
+        /// </summary>
+        /// <param name="recursive">Whether to notify child controls.</param>
+        public void RaiseDpiChanged(bool recursive)
+        {
+            RaiseDpiChanged();
+            if (recursive && HasChildren)
+            {
+                foreach(var child in Children)
+                {
+                    child.RaiseDpiChanged(true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calls <see cref="RaiseDpiChanged(DpiChangedEventArgs)"/>.
+        /// </summary>
+        /// <param name="dpiNew">New dpi value</param>
+        /// <param name="dpiOld">Old dpi value</param>
+        public void RaiseDpiChanged(SizeI? dpiOld = null, SizeI? dpiNew = null)
+        {
+            var oldValue = dpiOld ?? GetDPI().ToSize();
+
+            if(dpiNew is null)
+            {
+                ResetScaleFactor();
+                dpiNew = GetDPI().ToSize();
+            }
+
+            DpiChangedEventArgs e = new(oldValue, dpiNew.Value);
+            RaiseDpiChanged(e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="DpiChanged"/> event and <see cref="OnDpiChanged"/> method.
         /// </summary>
         /// <param name="e">The <see cref="DpiChangedEventArgs"/> that contains the
         /// event data.</param>
         public void RaiseDpiChanged(DpiChangedEventArgs e)
         {
+            Display.Reset();
             ResetScaleFactor();
             OnDpiChanged(e);
             DpiChanged?.Invoke(this, e);
@@ -746,6 +790,11 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void RaiseVisibleChanged()
         {
+            if(Visible)
+            {
+                ResetScaleFactor();
+            }
+
             OnVisibleChanged(EventArgs.Empty);
             VisibleChanged?.Invoke(this, EventArgs.Empty);
             Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
