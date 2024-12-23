@@ -12,6 +12,17 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Notifies all windows and their child controls about changed dpi.
+        /// </summary>
+        public static void BubbleDpiChanged()
+        {
+            foreach(var window in App.Current.Windows)
+            {
+                window.RaiseDpiChanged(true);
+            }
+        }
+
+        /// <summary>
         /// Bubbles long tap event with the specified argument.
         /// </summary>
         /// <param name="originalTarget">Control on which event is originally fired.</param>
@@ -45,6 +56,9 @@ namespace Alternet.UI
                 return;
 
             position = PlessMouse.UpdateMousePosition(position, currentTarget);
+
+            if (position is null)
+                return;
 
             var eventArgs = new MouseEventArgs(
                 currentTarget,
@@ -80,6 +94,9 @@ namespace Alternet.UI
                 return;
 
             position = PlessMouse.UpdateMousePosition(position, currentTarget);
+
+            if (position is null)
+                return;
 
             var eventArgs
                 = new MouseEventArgs(
@@ -117,6 +134,9 @@ namespace Alternet.UI
 
             position = PlessMouse.UpdateMousePosition(position, currentTarget);
 
+            if (position is null)
+                return;
+
             var eventArgs = new MouseEventArgs(
                 currentTarget,
                 originalTarget!,
@@ -149,6 +169,9 @@ namespace Alternet.UI
                 return;
 
             position = PlessMouse.UpdateMousePosition(position, currentTarget);
+
+            if (position is null)
+                return;
 
             var eventArgs =
                 new MouseEventArgs(
@@ -185,6 +208,9 @@ namespace Alternet.UI
                 return;
 
             position = PlessMouse.UpdateMousePosition(position, currentTarget);
+
+            if (position is null)
+                return;
 
             var eventArgs
                 = new MouseEventArgs(
