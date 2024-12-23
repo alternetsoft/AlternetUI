@@ -15,7 +15,8 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// A caret is always associated with a control and the current caret can be retrieved
-    /// using <see cref="AbstractControl"/> methods. The same caret can't be reused in two different controls.
+    /// using <see cref="AbstractControl"/> methods. The same caret can't be reused
+    /// in two different controls.
     /// </remarks>
     /// <remarks>
     /// Currently, the caret appears as a rectangle of the given size.
