@@ -718,6 +718,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="CustomTextBox.ValidatorErrorText"/>
         /// with default error text for the data type specified in <see cref="DataType"/>.
+        /// </summary>
         public virtual void SetErrorTextFromDataType()
         {
             if(DataType is null)

@@ -109,7 +109,9 @@ namespace Alternet.UI
 
         internal static readonly Destructor MyDestructor = new();
 
-        private static readonly ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
+        private static readonly
+            ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
+
         private static readonly ConcurrentQueue<LogUtils.LogItem> LogQueue = new();
 
         private static bool? isMono;
