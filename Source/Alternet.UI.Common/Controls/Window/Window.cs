@@ -27,6 +27,7 @@ namespace Alternet.UI
         private readonly WindowInfo info = new();
 
         private bool ignoreClosingEvent;
+        private bool ignoreClosedEvent;
         private WindowKind? windowKindOverride;
         private WeakReferenceValue<AbstractControl> activeControl;
         private IconSet? icon = null;
@@ -681,7 +682,9 @@ namespace Alternet.UI
             {
                 if (App.HasApplication)
                 {
-                    foreach (var window in App.Current.Windows)
+                    var windows = App.Current.Windows.ToArray();
+
+                    foreach (var window in windows)
                     {
                         if (window.Owner == this)
                             yield return window;
@@ -899,6 +902,24 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether <see cref="Owner"/> is null or visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsOwnerVisible
+        {
+            get
+            {
+                return Owner is null || Owner.Visible;
+            }
+
+            set
+            {
+                if (Owner is not null)
+                    Owner.Visible = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override bool Visible
         {
@@ -911,6 +932,7 @@ namespace Alternet.UI
             {
                 if (Visible == value)
                     return;
+
                 if (value)
                 {
                     ApplyStartLocationOnce(null);
@@ -922,6 +944,43 @@ namespace Alternet.UI
                 if (value)
                 {
                     ActiveControl?.SetFocusIdle();
+                }
+                else
+                {
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether owned windows are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool? OwnedWindowsVisible
+        {
+            get
+            {
+                bool? result = null;
+
+                foreach (var window in OwnedWindowsCollection)
+                {
+                    if (result is null)
+                        result = window.Visible;
+                    else
+                    {
+                        if (result != window.Visible)
+                            return null;
+                    }
+                }
+
+                return result;
+            }
+
+            set
+            {
+                foreach (var window in OwnedWindowsCollection)
+                {
+                    window.Visible = value ?? Visible;
+                    window.OwnedWindowsVisible = window.Visible;
                 }
             }
         }
@@ -1121,9 +1180,7 @@ namespace Alternet.UI
             {
                 default:
                 case WindowCloseAction.Dispose:
-                    WindowClosingEventArgs e = new();
-                    RaiseClosing(e);
-                    if (e.Cancel)
+                    if (CanClose(true))
                         return;
                     ignoreClosingEvent = true;
                     Visible = false;
@@ -1146,6 +1203,38 @@ namespace Alternet.UI
                 return;
             OnStateChanged(EventArgs.Empty);
             StateChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Returns whether window can be closed. Optionally checks whether
+        /// owned windows can be closed.
+        /// </summary>
+        public virtual bool CanClose(bool askOwned)
+        {
+            bool CanClose()
+            {
+                WindowClosingEventArgs e = new();
+                RaiseClosing(e);
+                if (e.Cancel)
+                    return false;
+                return true;
+            }
+
+            var result = CanClose();
+
+            if (!result)
+                return false;
+
+            if (askOwned)
+            {
+                foreach (var window in OwnedWindowsCollection)
+                {
+                    if (!window.CanClose(true))
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -1180,8 +1269,11 @@ namespace Alternet.UI
         /// Raises <see cref="Closed"/> event and <see cref="OnClosed"/> method.
         /// </summary>
         /// <param name="e">Event arguments.</param>
-        public void RaiseClosed(WindowClosedEventArgs e)
+        public void RaiseClosed(WindowClosedEventArgs? e = null)
         {
+            if (ignoreClosedEvent)
+                return;
+            e ??= new();
             OnClosed(e);
             Closed?.Invoke(this, e);
             if (!Modal)
@@ -1319,23 +1411,21 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public virtual void OnHandlerClosing(CancelEventArgs e)
         {
-            // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
-            var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
-            RaiseClosing(closingEventArgs);
-            if (closingEventArgs.Cancel)
-            {
-                e.Cancel = true;
-                return;
-            }
+            var canClose = CanClose(true);
 
-            RaiseClosed(new WindowClosedEventArgs());
+            e.Cancel = e.Cancel || !canClose;
+
+            if (e.Cancel)
+                return;
+
+            RaiseClosed();
 
             if (!Modal)
                 Dispose();
         }
 
         /// <summary>
-        /// Gets window kind (window, dialog, etc.).
+        /// Gets window kind (window, dialog, control, miniframe).
         /// </summary>
         /// <returns></returns>
         public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
@@ -1443,8 +1533,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            if (IsDisposed)
-                return;
+            var ownedWindows = OwnedWindowsCollection.ToArray();
+            foreach(var window in ownedWindows)
+            {
+                window.RaiseClosed();
+                ignoreClosedEvent = true;
+                window.Dispose();
+            }
 
             Visible = false;
             App.Current.UnregisterWindow(this);

@@ -258,6 +258,10 @@ namespace WindowPropertiesSample
         {
             App.Log("Test Window: StateChanged");
             UpdateWindowState();
+            if(sender is Window window)
+            {
+                window.OwnedWindowsVisible = !window.IsMinimized;
+            }
         }
 
         private void UpdateWindowState()
@@ -273,7 +277,8 @@ namespace WindowPropertiesSample
                 activeWindowTitleLabel.Text = title;
 
                 if (testWindow != null)
-                    isWindowActiveLabel.Text = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
+                    isWindowActiveLabel.Text
+                    = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
                 else
                     isWindowActiveLabel.Text = string.Empty;
             });
@@ -449,17 +454,35 @@ namespace WindowPropertiesSample
             if (testWindow == null)
                 return;
 
+            var s1 = "Owned Window #" + testWindow.OwnedWindows.Length;
+
             var ownedWindow = new Window
             {
                 Owner = testWindow,
                 MinimumSize = (300, 300),
                 IsToolWindow = true,
-                Title = "OwnedWindow",
+                Title = s1,
             };
 
-            Label label = new("Owned Window #" + testWindow.OwnedWindows.Length);
+            Label label = new(s1);
             label.Margin = 10;
             label.Parent = ownedWindow;
+
+            ownedWindow.Disposed += (s, e) =>
+            {
+                App.Log($"Disposed: {s1}");
+            };
+
+            ownedWindow.Closed += (s, e) =>
+            {
+                App.Log($"Closed: {s1}");
+            };
+
+            ownedWindow.Closing += (s, e) =>
+            {
+                App.Log($"Closing: {s1}");
+            };
+
             ownedWindow.Show();
          }
 
@@ -523,7 +546,11 @@ namespace WindowPropertiesSample
         private void HideWindowCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
             if (testWindow != null)
-                testWindow.Visible = !hideWindowCheckBox.IsChecked;
+            {
+                var b = !hideWindowCheckBox.IsChecked;
+                testWindow.OwnedWindowsVisible = b;
+                testWindow.Visible = b;
+            }
         }
 
         private void SetSizeToContentButton_Click(object sender, System.EventArgs e)
