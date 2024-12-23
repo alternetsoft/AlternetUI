@@ -294,7 +294,7 @@ namespace Alternet.UI
         /// Gets scale factor.
         /// </summary>
         /// <returns></returns>
-        Coord GetPixelScaleFactor();
+        Coord? GetPixelScaleFactor();
 
         /// <inheritdoc cref="Control.GetUpdateClientRectI"/>
         RectI GetUpdateClientRectI();

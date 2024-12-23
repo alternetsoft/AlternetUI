@@ -105,12 +105,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GraphicsFactory.PixelFromDip(Bounds, GetPixelScaleFactor());
+                return GraphicsFactory.PixelFromDip(Bounds, Control.ScaleFactor);
             }
 
             set
             {
-                Bounds = GraphicsFactory.PixelToDip(value, GetPixelScaleFactor());
+                Bounds = GraphicsFactory.PixelToDip(value, Control.ScaleFactor);
             }
         }
 
@@ -275,7 +275,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public Coord GetPixelScaleFactor()
+        public Coord? GetPixelScaleFactor()
         {
             return Control.Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
         }

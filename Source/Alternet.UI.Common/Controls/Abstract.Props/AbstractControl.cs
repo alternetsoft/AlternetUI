@@ -255,9 +255,14 @@ namespace Alternet.UI
                 if (ScaleFactorOverride is not null)
                     return ScaleFactorOverride.Value;
 
-                scaleFactor ??= RequestScaleFactor();
+                var newScaleFactor = RequestScaleFactor();
 
-                if(scaleFactor is null)
+                if(newScaleFactor is not null)
+                {
+                    scaleFactor ??= newScaleFactor;
+                }
+
+                if (scaleFactor is null)
                     return Display.Primary.ScaleFactor;
 
                 return scaleFactor.Value;
