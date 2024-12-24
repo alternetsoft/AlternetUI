@@ -16,11 +16,13 @@ namespace ControlsSample
             PropertyGridSample.MainWindow.LimitedTypesStatic.Add(
                 typeof(PropertyGridSample.ControlPainterPreview));
 
-            PropertyGridSample.ObjectInit.Actions.Add(typeof(PropertyGridSample.ControlPainterPreview), (c) =>
-            {
-                var control = (c as PropertyGridSample.ControlPainterPreview)!;
-                control.SuggestedSize = 200;
-            });
+            PropertyGridSample.ObjectInit.Actions.Add(
+                typeof(PropertyGridSample.ControlPainterPreview),
+                (c) =>
+                {
+                    var control = (c as PropertyGridSample.ControlPainterPreview)!;
+                    control.SuggestedSize = 200;
+                });
         }
 
         public static void LogToFileSimple(object? obj = null)

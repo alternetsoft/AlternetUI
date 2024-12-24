@@ -35,12 +35,12 @@ namespace Alternet.UI.Integration
 
         public void Run()
         {
-#if NETCOREAPP
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving
-            += AssemblyLoadContext_Resolving;
-#else
+                += AssemblyLoadContext_Resolving;
+
+            /*
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-#endif
+            */
 
             if (application != null)
                 throw new InvalidOperationException();
@@ -203,7 +203,6 @@ namespace Alternet.UI.Integration
             window.Location = new PointD(20000, 20000);
         }
 
-#if NETCOREAPP
         private Assembly? AssemblyLoadContext_Resolving(
             System.Runtime.Loader.AssemblyLoadContext context,
             AssemblyName name)
@@ -244,12 +243,11 @@ namespace Alternet.UI.Integration
                     += AssemblyLoadContext_Resolving;
             }
         }
-#else
+
         private Assembly? CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             return TryLoadAssemblyFromApplicationDirectory(new AssemblyName(args.Name));
         }
-#endif
 
         private Assembly? TryLoadAssemblyFromApplicationDirectory(AssemblyName name)
         {

@@ -19,14 +19,19 @@ namespace Alternet.UI.Native
 
 #if NETCOREAPP
         internal const string NativeModuleName = NativeModuleNameNoExt;
-        internal static IntPtr libHandle = default;
 #else
         internal const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
 #endif
 
+        internal static IntPtr libHandle = default;
+
         private static bool initialized;
         private static GCHandle unhandledExceptionCallbackHandle;
         private static GCHandle caughtExceptionCallbackHandle;
+
+        static NativeApiProvider()
+        {
+        }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         internal delegate void PInvokeCallbackActionType();
@@ -102,8 +107,41 @@ namespace Alternet.UI.Native
             }
         }
 
+        internal static bool NativeLibraryTryLoad(string libraryPath, out IntPtr handle)
+        {
 #if NETCOREAPP
-        private static IntPtr ImportResolver(
+            return NativeLibrary.TryLoad(libraryPath, out handle);
+#else
+            handle = default;
+            return false;
+#endif
+        }
+
+        internal static IntPtr NativeLibraryLoad(
+            string libraryName,
+            Assembly assembly,
+            DllImportSearchPath? searchPath)
+        {
+#if NETCOREAPP
+            return NativeLibrary.Load(
+                libraryName,
+                assembly,
+                searchPath);
+#else
+            return default;
+#endif
+        }
+
+        internal static IntPtr NativeLibraryLoad(string libraryPath)
+        {
+#if NETCOREAPP
+            return NativeLibrary.Load(libraryPath);
+#else
+            return default;
+#endif
+        }
+
+        internal static IntPtr ImportResolver(
             string libraryName,
             Assembly assembly,
             DllImportSearchPath? searchPath)
@@ -138,7 +176,7 @@ namespace Alternet.UI.Native
                 {
                     if (libHandle == default)
                     {
-                        var libraryFileName = OSUtils.FindNativeDll(NativeModuleNameWithExt);                            
+                        var libraryFileName = OSUtils.FindNativeDll(NativeModuleNameWithExt);
 
                         if (debugResolver)
                         {
@@ -147,7 +185,7 @@ namespace Alternet.UI.Native
 
                         if (libraryFileName is null)
                         {
-                            libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
+                            libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
                         }
                         else
                         {
@@ -155,13 +193,15 @@ namespace Alternet.UI.Native
 
                             if (debugResolver)
                             {
-                                LogUtils.LogNameValueToFile("NativeLibrary.TryLoad libHandle", libHandle);
+                                LogUtils.LogNameValueToFile(
+                                    "NativeLibrary.TryLoad libHandle",
+                                    libHandle);
                                 LogUtils.LogNameValueToFile("NativeLibrary.TryLoad loaded", loaded);
                             }
 
                             if (!loaded)
                             {
-                                libHandle = NativeLibrary.Load(libraryName, assembly, searchPath);
+                                libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
                             }
                         }
                     }
@@ -169,7 +209,7 @@ namespace Alternet.UI.Native
                     result = libHandle;
                 }
                 else
-                    result = NativeLibrary.Load(libraryName);
+                    result = NativeLibraryLoad(libraryName);
 
                 if (debugResolver)
                 {
@@ -190,7 +230,7 @@ namespace Alternet.UI.Native
                     result = handle != default;
                 }
                 else
-                    result = NativeLibrary.TryLoad(libraryPath, out handle);
+                    result = NativeLibraryTryLoad(libraryPath, out handle);
 
                 if (App.IsLinuxOS && debugResolver)
                 {
@@ -209,7 +249,6 @@ namespace Alternet.UI.Native
                 return result;
             }
         }
-#endif
 
         [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
         private static extern void SetExceptionCallback(
