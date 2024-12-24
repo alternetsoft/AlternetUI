@@ -15,9 +15,6 @@ namespace Alternet.UI
     public class PlessWindowHandler : PlessControlHandler, IWindowHandler
     {
         /// <inheritdoc/>
-        public Action<HandledEventArgs<string>>? InputBindingCommandExecuted { get; set; }
-
-        /// <inheritdoc/>
         public Action<CancelEventArgs>? Closing { get; set; }
 
         /// <inheritdoc/>
@@ -63,16 +60,10 @@ namespace Alternet.UI
         public virtual bool IsPopupWindow { get; set; }
 
         /// <inheritdoc/>
-        public virtual WindowStartLocation StartLocation { get; set; }
-
-        /// <inheritdoc/>
         public virtual bool IsActive { get; }
 
         /// <inheritdoc/>
         public virtual WindowState State { get; set; }
-
-        /// <inheritdoc/>
-        public virtual Window[] OwnedWindows { get; } = Array.Empty<Window>();
 
         /// <inheritdoc/>
         public virtual ModalResult ModalResult { get; set; }
@@ -88,17 +79,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AddInputBinding(InputBinding value)
-        {
-        }
-
-        /// <inheritdoc/>
         public virtual void Close()
-        {
-        }
-
-        /// <inheritdoc/>
-        public virtual void RemoveInputBinding(InputBinding item)
         {
         }
 
@@ -109,11 +90,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual void SetMenu(object? value)
-        {
-        }
-
-        /// <inheritdoc/>
-        public virtual void SetOwner(Window? owner)
         {
         }
 

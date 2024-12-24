@@ -658,19 +658,15 @@ namespace Alternet.UI
         /// <param name="command">A command that will be executed when tool is clicked.</param>
         /// <param name="commandParameter">A parameter that will be passed
         /// to the command when executing it.</param>
-        /// <param name="commandTarget">An element that an implementor
-        /// may wish to target as the destination for the command.</param>
         public virtual void SetToolCommand(
             ObjectUniqueId id,
             ICommand? command = null,
-            object? commandParameter = null,
-            object? commandTarget = null)
+            object? commandParameter = null)
         {
             var item = FindTool(id);
             if (item is null)
                 return;
             item.CommandParameter = commandParameter;
-            item.CommandTarget = commandTarget;
             item.Command = command;
         }
 
@@ -1267,22 +1263,19 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void DeleteAll(bool dispose = false)
         {
-            Stack<AbstractControl> controls = new();
-            controls.PushRange(Children);
-            SuspendLayout();
-            try
+            if (!HasChildren)
+                return;
+
+            Stack<AbstractControl> controls = new(Children);
+            DoInsideLayout(() =>
             {
                 foreach (var control in controls)
                 {
                     control.Parent = null;
-                    if(dispose)
+                    if (dispose)
                         control.Dispose();
                 }
-            }
-            finally
-            {
-                ResumeLayout();
-            }
+            });
         }
 
         /// <summary>
@@ -1410,6 +1403,18 @@ namespace Alternet.UI
         {
             var result = FindChild(id);
             return result;
+        }
+
+        /// <summary>
+        /// Gets item control at the specified index.
+        /// </summary>
+        /// <param name="index">Item index.</param>
+        /// <returns></returns>
+        public virtual AbstractControl? GetToolControlAt(int index)
+        {
+            if(index < GetToolCount())
+                return Children[index];
+            return null;
         }
 
         /// <summary>

@@ -141,27 +141,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual Font? Font { get; set; }
 
-        /// <inheritdoc/>
-        public virtual bool IsBold
-        {
-            get
-            {
-                if (Font is null)
-                    return false;
-                return Font.IsBold;
-            }
-
-            set
-            {
-                if (IsBold == value)
-                    return;
-                if (Font is null)
-                    Font = AbstractControl.DefaultFont.AsBold;
-                else
-                    Font = Font.AsBold;
-            }
-        }
-
         bool IControlHandler.AllowDrop { get; set; }
 
         ControlBackgroundStyle IControlHandler.BackgroundStyle { get; set; }

@@ -57,10 +57,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override object ConvertFrom(
+        public override object? ConvertFrom(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
-            object source)
+            object? source)
         {
             if (source is string v)
                 return FromString(v);
@@ -68,7 +68,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override object ConvertTo(
+        public override object? ConvertTo(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
             object? value,

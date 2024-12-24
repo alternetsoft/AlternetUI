@@ -12,12 +12,19 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowClosingEventArgs"/> class.
         /// </summary>
+        public WindowClosingEventArgs()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowClosingEventArgs"/> class
+        /// with the specified argument.
+        /// </summary>
         /// <param name="cancel"><c>true</c> to cancel the event; otherwise, <c>false</c>.</param>
         public WindowClosingEventArgs(bool cancel)
             : base(cancel)
         {
         }
-
-        // Additional properties like CloseReason may be added here later.
     }
 }

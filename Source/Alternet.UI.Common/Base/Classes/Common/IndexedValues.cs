@@ -14,6 +14,11 @@ namespace Alternet.UI
         private readonly AdvDictionary<TIndex, ILockedItem> values = new();
 
         /// <summary>
+        /// Occurs after all items are cleared.
+        /// </summary>
+        public event EventHandler? AfterClear;
+
+        /// <summary>
         /// Contains properties, methods and events which allow to work with indexed value.
         /// </summary>
         public interface ILockedItem
@@ -116,6 +121,7 @@ namespace Alternet.UI
         public void Clear()
         {
             values.Clear();
+            AfterClear?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

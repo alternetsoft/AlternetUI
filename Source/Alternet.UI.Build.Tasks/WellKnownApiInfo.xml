@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.651.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.652.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -283,7 +283,9 @@
     <Type Name="Alternet.UI.BaseAttribute" />
     <Type Name="Alternet.UI.BaseBoolAttribute" />
     <Type Name="Alternet.UI.BaseValueAttribute`1" />
+    <Type Name="Alternet.UI.ContentAttribute" />
     <Type Name="Alternet.UI.ControlCategoryAttribute" />
+    <Type Name="Alternet.UI.DeferredContentAttribute" />
     <Type Name="Alternet.UI.DisableDpiAwarenessAttribute" />
     <Type Name="Alternet.UI.IsCsLocalizedAttribute" />
     <Type Name="Alternet.UI.IsLocalizedAttribute" />
@@ -292,6 +294,8 @@
     <Type Name="Alternet.UI.IsToolTipLocalizedAttribute" />
     <Type Name="Alternet.UI.SRDescriptionAttribute" />
     <Type Name="Alternet.UI.ToolboxBitmapAttribute" />
+    <Type Name="Alternet.UI.UsableDuringInitializationAttribute" />
+    <Type Name="Alternet.UI.XmlnsDefinitionAttribute" />
     <Type Name="Alternet.UI.BaseComponent">
       <Event Name="Disposed" />
     </Type>
@@ -358,6 +362,9 @@
     </Type>
     <Type Name="Alternet.UI.WindowsCaretHandler">
       <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.IndexedValues`2">
+      <Event Name="AfterClear" />
     </Type>
     <Type Name="Alternet.UI.NameValue`1" />
     <Type Name="Alternet.UI.ObjectToStringFactory" />
@@ -428,21 +435,24 @@
     <Type Name="Alternet.UI.AdvDictionaryCached`2" />
     <Type Name="Alternet.UI.Command">
       <Event Name="CanExecuteChanged" />
+      <Event Name="AfterExecute" />
+      <Event Name="BeforeExecute" />
     </Type>
+    <Type Name="Alternet.UI.CommandConverter" />
     <Type Name="Alternet.UI.CommandHelpers" />
+    <Type Name="Alternet.UI.CommandSourceStruct" />
     <Type Name="Alternet.UI.ICommand">
       <Event Name="CanExecuteChanged" />
     </Type>
     <Type Name="Alternet.UI.ICommandSource" />
-    <Type Name="Alternet.UI.InputBinding">
-      <Event Name="LayoutUpdated" />
-      <Event Name="Disposed" />
+    <Type Name="Alternet.UI.InputBinding" />
+    <Type Name="Alternet.UI.KeyBinding" />
+    <Type Name="Alternet.UI.NamedCommand">
+      <Event Name="CanExecuteChanged" />
+      <Event Name="AfterExecute" />
+      <Event Name="BeforeExecute" />
     </Type>
-    <Type Name="Alternet.UI.KeyBinding">
-      <Event Name="LayoutUpdated" />
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.KeyGestureValueSerializer" />
+    <Type Name="Alternet.UI.NamedCommands" />
     <Type Name="Alternet.UI.BaseControlItem" />
     <Type Name="Alternet.UI.IListControl" />
     <Type Name="Alternet.UI.IListControlItemContainer" />
@@ -501,6 +511,7 @@
     <Type Name="Alternet.UI.DefaultLayoutEventArgs" />
     <Type Name="Alternet.UI.DefaultPreferredSizeEventArgs" />
     <Type Name="Alternet.UI.GetItemTextEventArgs" />
+    <Type Name="Alternet.UI.GlobalFocusNextEventArgs" />
     <Type Name="Alternet.UI.HandledEventArgs" />
     <Type Name="Alternet.UI.HandledEventArgsWithResult`2" />
     <Type Name="Alternet.UI.HandledEventArgs`1" />
@@ -526,11 +537,6 @@
     <Type Name="Alternet.UI.DefaultFileSystem" />
     <Type Name="Alternet.UI.FileSystem" />
     <Type Name="Alternet.UI.IFileSystem" />
-    <Type Name="Alternet.UI.KeyConverter" />
-    <Type Name="Alternet.UI.KeyGestureConverter" />
-    <Type Name="Alternet.UI.KeyValueSerializer" />
-    <Type Name="Alternet.UI.ModifierKeysConverter" />
-    <Type Name="Alternet.UI.ModifierKeysValueSerializer" />
     <Type Name="Alternet.UI.CustomKeyEventArgs" />
     <Type Name="Alternet.UI.KeyboardEventArgs" />
     <Type Name="Alternet.UI.KeyEventHandler" />
@@ -599,6 +605,9 @@
     <Type Name="Alternet.UI.StreamReadWriteEventArgs" />
     <Type Name="Alternet.UI.AutoPinner" />
     <Type Name="Alternet.UI.BitArray64" />
+    <Type Name="Alternet.UI.DelayedEvent`1">
+      <Event Name="Delayed" />
+    </Type>
     <Type Name="Alternet.UI.EnumArray`2" />
     <Type Name="Alternet.UI.HVAlignment" />
     <Type Name="Alternet.UI.LazyStruct`1" />
@@ -613,12 +622,11 @@
     </Type>
     <Type Name="Alternet.UI.SystemInformation" />
     <Type Name="Alternet.UI.SystemSettings" />
+    <Type Name="Alternet.UI.KeyConverter" />
+    <Type Name="Alternet.UI.KeyGestureConverter" />
+    <Type Name="Alternet.UI.ModifierKeysConverter" />
+    <Type Name="Alternet.UI.TypeConverterHelper" />
     <Type Name="Alternet.UI.FrameworkElement">
-      <Event Name="LayoutUpdated" />
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.UIElement">
-      <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Border">
@@ -689,8 +697,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.BorderSettings">
@@ -770,8 +778,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ContainerControl">
@@ -842,8 +850,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.GraphicControl">
@@ -914,8 +922,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.NonVisualControl">
@@ -986,8 +994,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PaintActionsControl">
@@ -1058,8 +1066,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Panel">
@@ -1130,8 +1138,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PictureBox">
@@ -1203,8 +1211,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.UserControl">
@@ -1275,8 +1283,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.AbstractControl">
@@ -1347,8 +1355,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ControlNotification">
@@ -1489,8 +1497,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.GenericTextControl">
@@ -1561,8 +1569,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.GenericWrappedTextControl">
@@ -1633,8 +1641,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Spacer">
@@ -1705,8 +1713,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.BaseControlHandler">
@@ -1785,8 +1793,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.AllControlDefaults" />
@@ -1951,8 +1959,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IAnimationPlayerHandler" />
@@ -2024,8 +2032,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ButtonBase">
@@ -2096,8 +2104,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.CheckBox">
@@ -2169,8 +2177,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IButtonHandler" />
@@ -2245,8 +2253,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ColorPicker">
@@ -2318,8 +2326,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IColorPickerHandler" />
@@ -2392,8 +2400,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TextBoxAndButton">
@@ -2465,8 +2473,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ComboBoxAndLabel">
@@ -2537,8 +2545,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ControlAndLabel">
@@ -2609,8 +2617,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorDouble">
@@ -2681,8 +2689,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSingle">
@@ -2753,8 +2761,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUDouble">
@@ -2825,8 +2833,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUSingle">
@@ -2897,8 +2905,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt16">
@@ -2969,8 +2977,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt32">
@@ -3041,8 +3049,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt64">
@@ -3113,8 +3121,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSByte">
@@ -3185,8 +3193,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorEMail">
@@ -3258,8 +3266,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorString">
@@ -3331,8 +3339,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUrl">
@@ -3404,8 +3412,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TextBoxAndLabel">
@@ -3476,8 +3484,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.HexEditorUInt32">
@@ -3548,8 +3556,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorByte">
@@ -3620,8 +3628,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt16">
@@ -3692,8 +3700,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt32">
@@ -3764,8 +3772,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt64">
@@ -3836,8 +3844,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorCustom">
@@ -3908,8 +3916,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ControlFactory" />
@@ -3987,8 +3995,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.CustomDateEdit">
@@ -4059,8 +4067,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.DateTimePicker">
@@ -4132,8 +4140,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ICalendarDateAttr" />
@@ -4207,8 +4215,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IGroupBoxHandler" />
@@ -4281,8 +4289,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.HeaderLabel">
@@ -4353,8 +4361,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ILabelHandler" />
@@ -4427,8 +4435,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.LinkLabel">
@@ -4500,12 +4508,11 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ColumnDefinition">
-      <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Grid">
@@ -4576,13 +4583,12 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.GridColumnCollection" />
     <Type Name="Alternet.UI.GridDefinitionBase">
-      <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.GridLength" />
@@ -4590,7 +4596,6 @@
     <Type Name="Alternet.UI.GridRowCollection" />
     <Type Name="Alternet.UI.LengthConverter" />
     <Type Name="Alternet.UI.RowDefinition">
-      <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.LayoutPanel">
@@ -4661,8 +4666,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SplittedTreeAndCards">
@@ -4733,8 +4738,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ScrollViewer">
@@ -4805,8 +4810,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PanelTreeAndCards">
@@ -4877,8 +4882,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SplittedControlsPanel">
@@ -4949,8 +4954,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SplittedPanel">
@@ -5021,8 +5026,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Splitter">
@@ -5095,8 +5100,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.HorizontalStackPanel">
@@ -5168,8 +5173,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.StackPanel">
@@ -5241,8 +5246,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.VerticalStackPanel">
@@ -5314,13 +5319,14 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.CheckListBox">
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -5391,8 +5397,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ICheckListBoxHandler" />
@@ -5470,8 +5476,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ComboBox">
@@ -5548,8 +5554,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ComboBoxItemPaintEventArgs" />
@@ -5557,6 +5563,7 @@
     <Type Name="Alternet.UI.IComboBoxItemPainter" />
     <Type Name="Alternet.UI.CustomListBox`1">
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -5627,13 +5634,14 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IListBoxHandler" />
     <Type Name="Alternet.UI.ListBox">
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -5704,8 +5712,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ListControl">
@@ -5777,8 +5785,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ListControl`1">
@@ -5850,13 +5858,14 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.VirtualListControl`1">
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -5927,8 +5936,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ActionsListBox">
@@ -5936,6 +5945,7 @@
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -6006,8 +6016,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ColorListBox">
@@ -6015,6 +6025,7 @@
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -6085,8 +6096,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.FileListBox">
@@ -6095,6 +6106,7 @@
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -6165,8 +6177,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.FontListBox">
@@ -6174,6 +6186,7 @@
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -6244,8 +6257,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IListBoxItemPainter" />
@@ -6256,6 +6269,7 @@
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -6326,8 +6340,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.VirtualCheckListBox">
@@ -6335,6 +6349,7 @@
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -6405,8 +6420,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.VirtualListBox">
@@ -6414,6 +6429,7 @@
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
@@ -6484,8 +6500,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IListViewHandler" />
@@ -6565,8 +6581,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ListViewColumnEventArgs" />
@@ -6643,8 +6659,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IContextMenuHandler" />
@@ -6718,8 +6734,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Menu">
@@ -6790,8 +6806,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.MenuItem">
@@ -6870,8 +6886,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PlessContextMenuHandler">
@@ -6957,8 +6973,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ToolStripMenuItem">
@@ -7037,8 +7053,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ToolStripSeparator">
@@ -7117,8 +7133,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.INumericUpDownHandler" />
@@ -7193,8 +7209,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ComponentDesigner">
@@ -7274,8 +7290,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupCalendar">
@@ -7365,8 +7381,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupCheckListBox">
@@ -7456,8 +7472,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupColorListBox">
@@ -7547,8 +7563,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupListBox">
@@ -7638,8 +7654,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupListBox`1">
@@ -7729,8 +7745,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupPictureBox">
@@ -7820,8 +7836,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupPropertyGrid">
@@ -7911,8 +7927,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupTreeView">
@@ -8002,8 +8018,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupWindow">
@@ -8093,8 +8109,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PopupWindow`1">
@@ -8184,8 +8200,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IFilePreview" />
@@ -8257,8 +8273,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PreviewFileSplitted">
@@ -8329,8 +8345,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PreviewInBrowser">
@@ -8401,8 +8417,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PreviewTextFile">
@@ -8473,8 +8489,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixml">
@@ -8545,8 +8561,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixmlSplitted">
@@ -8617,8 +8633,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IProgressBarHandler" />
@@ -8695,8 +8711,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PropertyGridAdapterBrush" />
@@ -8788,8 +8804,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PropertyGridColors" />
@@ -8870,8 +8886,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.RichTextBox">
@@ -8945,8 +8961,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.HScrollBar">
@@ -9019,8 +9035,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IScrollBarHandler" />
@@ -9097,8 +9113,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ScrollBarInfo" />
@@ -9173,8 +9189,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ISliderHandler" />
@@ -9254,8 +9270,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SpeedButton">
@@ -9326,8 +9342,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SpeedColorButton">
@@ -9401,8 +9417,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SpeedTextButton">
@@ -9473,13 +9489,12 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IStatusBarHandler" />
     <Type Name="Alternet.UI.StatusBar">
-      <Event Name="LayoutUpdated" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.StatusBarPanel">
@@ -9557,8 +9572,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.CardPanelItem">
@@ -9641,8 +9656,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TabControl">
@@ -9716,8 +9731,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TabPage">
@@ -9788,8 +9803,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TemplateControl">
@@ -9860,8 +9875,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls" />
@@ -9935,8 +9950,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ITextBoxHandler" />
@@ -10016,8 +10031,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TextBox">
@@ -10096,8 +10111,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.FindReplaceControl">
@@ -10176,8 +10191,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ToolBar">
@@ -10248,8 +10263,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ToolBarSet">
@@ -10320,8 +10335,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ToolStripRenderEventHandler" />
@@ -10397,8 +10412,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ToolTipFactory" />
@@ -10483,8 +10498,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TreeViewCancelEventArgs" />
@@ -10585,8 +10600,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.WebBrowser">
@@ -10667,8 +10682,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.WebBrowserEventArgs" />
@@ -10760,8 +10775,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.Form">
@@ -10851,8 +10866,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.HiddenWindow">
@@ -10942,8 +10957,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IWindowHandler" />
@@ -11034,8 +11049,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PlessWindowHandler">
@@ -11128,8 +11143,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.WindowInfo" />
@@ -11229,8 +11244,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.FileDialog">
@@ -11382,7 +11397,6 @@
       <Event Name="MenuChanged" />
       <Event Name="IconChanged" />
       <Event Name="StatusBarChanged" />
-      <Event Name="OwnerChanged" />
       <Event Name="ShowInTaskbarChanged" />
       <Event Name="StateChanged" />
       <Event Name="Closing" />
@@ -11507,8 +11521,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PanelMultilineTextBox">
@@ -11582,8 +11596,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PanelOkCancelButtons">
@@ -11655,8 +11669,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PanelWithToolBar">
@@ -11727,8 +11741,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SR" />
@@ -11741,6 +11755,7 @@
     <Type Name="Alternet.UI.ConsoleUtils" />
     <Type Name="Alternet.UI.ICustomConsole" />
     <Type Name="Alternet.UI.ControlUtils" />
+    <Type Name="Alternet.UI.FormUtils" />
     <Type Name="Alternet.UI.ListControlUtils" />
     <Type Name="Alternet.UI.TextBoxUtils" />
     <Type Name="Alternet.UI.ToolBarUtils" />
@@ -11868,8 +11883,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.WindowPropertyGrid">
@@ -11959,8 +11974,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.WindowTextInput">
@@ -12050,8 +12065,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.SynchronousCompletionAsyncResult`1" />
@@ -12059,29 +12074,10 @@
     <Type Name="Alternet.UI.ITestRootObjectProvider" />
     <Type Name="Alternet.UI.ITestProvideValueTarget" />
     <Type Name="Alternet.UI.ITestUriContext" />
-    <Type Name="Alternet.UI.ContentAttribute" />
-    <Type Name="Alternet.UI.XmlnsDefinitionAttribute" />
-    <Type Name="Alternet.UI.UsableDuringInitializationAttribute" />
-    <Type Name="Alternet.UI.DeferredContentAttribute" />
     <Type Name="Alternet.UI.Markup.INameScope" />
     <Type Name="Alternet.UI.Extensions.ExtensionsPublic" />
     <Type Name="Alternet.UI.Extensions.BoolBoxes" />
     <Type Name="Alternet.UI.Extensions.NullBoolBoxes" />
-    <Type Name="Alternet.UI.Port.IValueSerializerContext" />
-    <Type Name="Alternet.UI.Port.ValueSerializer" />
-    <Type Name="Alternet.UI.Port.DependencyObject">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.Port.DispatcherObject">
-      <Event Name="Disposed" />
-    </Type>
-    <Type Name="Alternet.UI.Port.IUixmlPortXamlIlParentStackProvider" />
-    <Type Name="Alternet.UI.Port.IUixmlPortXamlIlXmlNamespaceInfoProvider" />
-    <Type Name="Alternet.UI.Port.UixmlPortXamlIlXmlNamespaceInfo" />
-    <Type Name="Alternet.UI.Port.XamlIlRuntimeHelpers" />
-    <Type Name="Alternet.UI.Port.IUixmlProvideValueTarget" />
-    <Type Name="Alternet.UI.Port.IUixmlRootObjectProvider" />
-    <Type Name="Alternet.UI.Port.IUixmlUriContext" />
     <Type Name="Alternet.UI.Localization.KnownColorStrings" />
     <Type Name="Alternet.UI.Localization.CommonStrings" />
     <Type Name="Alternet.UI.Localization.ControlCategoryStrings" />
@@ -12090,6 +12086,13 @@
     <Type Name="Alternet.UI.Localization.PropCategoryStrings" />
     <Type Name="Alternet.UI.Localization.PropNameStrings" />
     <Type Name="Alternet.UI.Tests.Tests" />
+    <Type Name="Alternet.UI.Port.IUixmlPortXamlIlParentStackProvider" />
+    <Type Name="Alternet.UI.Port.IUixmlPortXamlIlXmlNamespaceInfoProvider" />
+    <Type Name="Alternet.UI.Port.UixmlPortXamlIlXmlNamespaceInfo" />
+    <Type Name="Alternet.UI.Port.XamlIlRuntimeHelpers" />
+    <Type Name="Alternet.UI.Port.IUixmlProvideValueTarget" />
+    <Type Name="Alternet.UI.Port.IUixmlRootObjectProvider" />
+    <Type Name="Alternet.UI.Port.IUixmlUriContext" />
     <Type Name="Alternet.Drawing.Color+StateFlags" />
     <Type Name="Alternet.Drawing.Color+ColorNameLocalizedComparer" />
     <Type Name="Alternet.Drawing.Color+ColorNameComparer" />
@@ -12172,12 +12175,35 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.Drawing.TextFormat+Record" />
     <Type Name="Alternet.UI.BaseObject+GenericStaticOptions" />
+    <Type Name="Alternet.UI.IndexedValues`2+ILockedItem">
+      <Event Name="Changed" />
+    </Type>
+    <Type Name="Alternet.UI.ObjectToStringFactory+BaseToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+SByteToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+ByteToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+Int16ToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+UInt16ToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+Int32ToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+UInt32ToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+Int64ToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+UInt64ToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+SingleToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+DoubleToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+DecimalToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+DateTimeToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+EmptyToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+DBNullToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+ObjectToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+BooleanToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+CharToStringConverter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+TypeConverterAdapter" />
+    <Type Name="Alternet.UI.ObjectToStringFactory+StringToStringConverter" />
     <Type Name="Alternet.UI.KnownButtons+Info" />
     <Type Name="Alternet.UI.UixmlLoader+Flags" />
     <Type Name="Alternet.UI.Command+CanExecuteDelegate" />
@@ -12295,8 +12321,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls+BoldText`1">
@@ -12367,8 +12393,8 @@
       <Event Name="SystemColorsChanged" />
       <Event Name="ErrorsChanged" />
       <Event Name="Invalidated" />
-      <Event Name="Scroll" />
       <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.FindReplaceControl+SearchScope" />

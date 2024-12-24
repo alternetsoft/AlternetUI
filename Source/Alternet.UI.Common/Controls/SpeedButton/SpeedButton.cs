@@ -383,20 +383,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public virtual object? CommandTarget
-        {
-            get
-            {
-                return commandSource.CommandTarget;
-            }
-
-            set
-            {
-                commandSource.CommandTarget = value;
-            }
-        }
-
         /// <summary>
         /// Gets or sets a value indicating the associated shortcut key.
         /// </summary>

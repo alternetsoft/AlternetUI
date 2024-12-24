@@ -157,10 +157,10 @@ namespace WindowPropertiesSample
             testWindow = (Window)Activator.CreateInstance(type)!;
             if (parent is not null)
                 testWindow.Parent = parent;
-/*
+
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;
-*/
+
             testWindow.BeginInit();
 
             testWindow.Title = "Test Window";
@@ -258,6 +258,10 @@ namespace WindowPropertiesSample
         {
             App.Log("Test Window: StateChanged");
             UpdateWindowState();
+            if(sender is Window window)
+            {
+                window.OwnedWindowsVisible = !window.IsMinimized;
+            }
         }
 
         private void UpdateWindowState()
@@ -273,7 +277,8 @@ namespace WindowPropertiesSample
                 activeWindowTitleLabel.Text = title;
 
                 if (testWindow != null)
-                    isWindowActiveLabel.Text = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
+                    isWindowActiveLabel.Text
+                    = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
                 else
                     isWindowActiveLabel.Text = string.Empty;
             });
@@ -347,7 +352,7 @@ namespace WindowPropertiesSample
         private void OnWindowClosed()
         {
             if (testWindow == null)
-                throw new InvalidOperationException();
+                return;
 
             testWindow.Activated -= TestWindow_Activated;
             testWindow.Deactivated -= TestWindow_Deactivated;
@@ -360,6 +365,9 @@ namespace WindowPropertiesSample
 
             testWindow = null;
 
+            if (DisposingOrDisposed)
+                return;
+
             hideWindowCheckBox.IsChecked = false;
 
             UpdateControls();
@@ -368,7 +376,8 @@ namespace WindowPropertiesSample
         private void TestWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
             App.Log("Test Window: Closing");
-            e.Cancel = cancelClosingCheckBox.IsChecked;
+            if(!cancelClosingCheckBox.DisposingOrDisposed)
+                e.Cancel = cancelClosingCheckBox.IsChecked;
         }
 
         private void ShowInTaskBarCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -442,24 +451,40 @@ namespace WindowPropertiesSample
 
         private void AddOwnedWindow_Click(object sender, EventArgs e)
         {
-            /*
             if (testWindow == null)
                 return;
+
+            var s1 = "Owned Window #" + testWindow.OwnedWindows.Length;
 
             var ownedWindow = new Window
             {
                 Owner = testWindow,
                 MinimumSize = (300, 300),
                 IsToolWindow = true,
-                Title = "OwnedWindow",
+                Title = s1,
             };
 
-            Label label = new("Owned Window #" + testWindow.OwnedWindows.Length);
+            Label label = new(s1);
             label.Margin = 10;
             label.Parent = ownedWindow;
+
+            ownedWindow.Disposed += (s, e) =>
+            {
+                App.Log($"Disposed: {s1}");
+            };
+
+            ownedWindow.Closed += (s, e) =>
+            {
+                App.Log($"Closed: {s1}");
+            };
+
+            ownedWindow.Closing += (s, e) =>
+            {
+                App.Log($"Closing: {s1}");
+            };
+
             ownedWindow.Show();
-            */
-        }
+         }
 
         private void StateComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
@@ -521,7 +546,11 @@ namespace WindowPropertiesSample
         private void HideWindowCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
             if (testWindow != null)
-                testWindow.Visible = !hideWindowCheckBox.IsChecked;
+            {
+                var b = !hideWindowCheckBox.IsChecked;
+                testWindow.OwnedWindowsVisible = b;
+                testWindow.Visible = b;
+            }
         }
 
         private void SetSizeToContentButton_Click(object sender, System.EventArgs e)

@@ -25,14 +25,5 @@ namespace Alternet.UI
         {
             get;
         }
-
-        /// <summary>
-        /// Gets an element that an implementor may wish to target
-        /// as the destination for the command.
-        /// </summary>
-        object? CommandTarget
-        {
-            get;
-        }
     }
 }

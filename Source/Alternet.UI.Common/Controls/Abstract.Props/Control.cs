@@ -468,7 +468,8 @@ namespace Alternet.UI
         public override void RaiseChildRemoved(AbstractControl childControl)
         {
             base.RaiseChildRemoved(childControl);
-            Handler.OnChildRemoved(childControl);
+            if(handler is not null)
+                Handler.OnChildRemoved(childControl);
         }
 
         /// <summary>

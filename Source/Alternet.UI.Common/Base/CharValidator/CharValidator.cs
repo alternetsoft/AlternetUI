@@ -349,11 +349,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates <see cref="ICustomCharValidator"/> instance for the specified type.
-        /// Only numeric types are supported.
+        /// Only numeric types are supported. Returns Null if type is Null.
         /// </summary>
         /// <param name="type">Type.</param>
-        public static ICustomCharValidator? CreateValidator(Type type)
+        public static ICustomCharValidator? CreateValidator(Type? type)
         {
+            if (type is null)
+                return null;
+
             if(QueryCharValidatorForType is not null)
             {
                 HandledEventArgsWithResult<Type, ICustomCharValidator?> e = new(type);

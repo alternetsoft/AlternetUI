@@ -392,20 +392,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual object? CommandTarget
-        {
-            get
-            {
-                return commandSource.CommandTarget;
-            }
-
-            set
-            {
-                commandSource.CommandTarget = value;
-            }
-        }
-
-        /// <inheritdoc/>
         protected override bool IsDummy => true;
 
         /// <summary>

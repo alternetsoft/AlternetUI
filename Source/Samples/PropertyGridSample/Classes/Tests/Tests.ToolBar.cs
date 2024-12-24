@@ -18,7 +18,31 @@ namespace PropertyGridSample
         {
             PropertyGrid.AddSimpleAction<ToolBar>("Test Visible", TestGenericToolBarVisible);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Enabled", TestGenericToolBarEnabled);
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Delete", TestGenericToolBarDelete);
+
+            PropertyGrid.AddSimpleAction<ToolBar>(
+                "Test Delete (Without Dispose)",
+                ()=> { TestGenericToolBarDelete(); });
+
+            PropertyGrid.AddSimpleAction<ToolBar>(
+                "Test Delete (With Dispose)",
+                () => { TestGenericToolBarDelete(true); });
+
+            AddControlAction<ToolBar>("Test Dispose 1st item", (c) =>
+            {
+                var child = c.GetToolControlAt(0);
+
+                if (child is not null)
+                {
+                    child.Disposed += (s, e) =>
+                    {
+                        App.Log($"ToolBar item '{c.GetType()}' disposed");
+                    };
+
+                    child.Dispose();
+                }
+            });
+
+
             PropertyGrid.AddSimpleAction<ToolBar>("Test Sticky", TestGenericToolBarSticky);
             PropertyGrid.AddSimpleAction<ToolBar>(
                 "Test Foreground Color",
@@ -28,7 +52,9 @@ namespace PropertyGridSample
                 TestGenericToolBarBackgroundColor);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Font", TestGenericToolBarFont);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Background", TestGenericToolBarBackground);
-            PropertyGrid.AddSimpleAction<ToolBar>("Reset Background", TestGenericToolBarResetBackground);
+            PropertyGrid.AddSimpleAction<ToolBar>(
+                "Reset Background",
+                TestGenericToolBarResetBackground);
             PropertyGrid.AddSimpleAction<ToolBar>("Clear", TestGenericToolBarClear);
             PropertyGrid.AddSimpleAction<ToolBar>("Add OK button", TestGenericToolBarAddOk);
             PropertyGrid.AddSimpleAction<ToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
@@ -145,13 +171,28 @@ namespace PropertyGridSample
             control.SetToolSticky(childId, value);
         }
 
-        void TestGenericToolBarDelete()
+        void TestGenericToolBarDelete(bool dispose = false)
         {
             var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
-            var childId = control.GetToolId(1);
-            control.DeleteTool(childId);
+
+            var countBefore = control.ChildCount;
+
+            var childId = control.GetToolId(0);
+            var child = control.GetToolControl(childId);
+
+            if (child is not null && dispose)
+            {
+                child.Disposed += (s, e) =>
+                {
+                    App.Log($"ToolBar item '{control.GetType()}' disposed");
+                };
+            }
+
+            control.DeleteTool(childId, dispose);
+
+            App.Log($"ToolBar.Delete 1st item. Count before: {countBefore} after {control.ChildCount}");
         }
     }
 }

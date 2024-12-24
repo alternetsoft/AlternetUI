@@ -166,6 +166,6 @@ namespace Alternet.UI
             Action<string>? errorEnumerator = null);
 
         /// <inheritdoc cref="CustomTextBox.GetKnownErrorText"/>
-        string GetKnownErrorText(ValueValidatorKnownError kind);
+        string? GetKnownErrorText(ValueValidatorKnownError kind);
     }
 }

@@ -78,7 +78,13 @@ namespace Alternet.UI
         /// Gets whether this object is disposing or disposed.
         /// </summary>
         [Browsable(false)]
-        public bool DisposingOrDisposed => IsDisposed || Disposing;
+        public bool DisposingOrDisposed
+        {
+            get
+            {
+                return IsDisposed || Disposing;
+            }
+        }
 
         /// <summary>
         /// Gets whether object is currently disposing.
@@ -106,7 +112,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public void Dispose()
         {
-            if (IsDisposed)
+            if (DisposingOrDisposed)
                 return;
 
             Dispose(disposing: true);
@@ -161,7 +167,7 @@ namespace Alternet.UI
         /// <param name="disposing">Disposing scenario.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (IsDisposed)
+            if (DisposingOrDisposed)
                 return;
 
             Disposing = true;

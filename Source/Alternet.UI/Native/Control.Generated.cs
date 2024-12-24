@@ -1279,15 +1279,7 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.ControlEvent.Destroyed:
                 {
-                    {
-                        if(Destroyed is not null)
-                        {
-                        var cea = new CancelEventArgs();
-                        Destroyed.Invoke(this, cea);
-                        return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
-                        }
-                        else return IntPtr.Zero;
-                    }
+                    Destroyed?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.TextChanged:
                 {
@@ -1368,7 +1360,7 @@ namespace Alternet.UI.Native
         public Action? VisibleChanged;
         public Action? MouseCaptureLost;
         public Action? DpiChanged;
-        public event EventHandler<CancelEventArgs>? Destroyed;
+        public Action? Destroyed;
         public Action? TextChanged;
         public Action? GotFocus;
         public Action? LostFocus;
