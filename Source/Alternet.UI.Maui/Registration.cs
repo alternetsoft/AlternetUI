@@ -33,6 +33,8 @@ public static class Registration
             h.AddHandler<TabControlView, PlatformViewHandler>();
         });
 
+        ControlView.InitMauiHandler();
+
         return builder;
     }
 }
