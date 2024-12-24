@@ -39,6 +39,7 @@ namespace Alternet.Drawing
 
         private ScrollBar.MetricsInfo? metrics;
         private InteriorControlActivity? notification;
+        private ScrollBar.KnownTheme? scrollBarTheme;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InteriorDrawable"/> class.
@@ -112,6 +113,17 @@ namespace Alternet.Drawing
             /// Hit is inside the client rectangle.
             /// </summary>
             ClientRect,
+        }
+
+        /// <summary>
+        /// Gets theme assigned with <see cref="SetThemeMetrics"/>.
+        /// </summary>
+        public virtual ScrollBar.KnownTheme? ScrollBarTheme
+        {
+            get
+            {
+                return scrollBarTheme;
+            }
         }
 
         /// <summary>
@@ -532,6 +544,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual void SetThemeMetrics(ScrollBar.KnownTheme theme, bool isDark = false)
         {
+            scrollBarTheme = theme;
             SetDefaultBorder(isDark);
             var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
             themeObj.AssignTo(this);
