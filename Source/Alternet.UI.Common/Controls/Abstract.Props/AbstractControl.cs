@@ -1299,6 +1299,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (enabled == value)
                     return;
                 enabled = value;
