@@ -132,6 +132,7 @@ namespace Alternet.UI
         private static Window? mainWindow;
         private static bool wakeUpIdleWithTimer = true;
         private static Timer? wakeUpIdleTimer;
+        private static bool? isNetOrCoreApp;
 
         private readonly List<Window> windows = new();
 
@@ -312,6 +313,21 @@ namespace Alternet.UI
         /// Gets currently used platform.
         /// </summary>
         public static UIPlatformKind PlatformKind => SystemSettings.Handler.GetPlatformKind();
+
+        /// <summary>
+        /// Returns True if application runs on Net or NetCore platform (Net 5 or higher).
+        /// Returns False if application runs on Net Framework.
+        /// </summary>
+        public static bool IsNetOrCoreApp
+        {
+            get
+            {
+                isNetOrCoreApp ??=
+                    AppUtils.FrameworkIdentifier == NetFrameworkIdentifier.Net ||
+                    AppUtils.FrameworkIdentifier == NetFrameworkIdentifier.NetCore;
+                return isNetOrCoreApp.Value;
+            }
+        }
 
         /// <summary>
         /// Gets whether <see cref="Handler"/> is initialized.

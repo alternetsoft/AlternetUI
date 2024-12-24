@@ -18,22 +18,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class Application : App, IDisposable
     {
-        /// <summary>
-        /// Gets whether 'NETCOREAPP' is defined.
-        /// </summary>
-        public static readonly bool IsNetCoreApp;
-
         static Application()
         {
-#if NETCOREAPP
-            IsNetCoreApp = true;
-#else
-            IsNetCoreApp = false;
-#endif
-
             if (!App.Is64BitProcess && App.IsWindowsOS)
             {
-                if (!IsNetCoreApp)
+                if (!IsNetOrCoreApp)
                 {
                     var s = $"Critical error\n\n";
                     s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
