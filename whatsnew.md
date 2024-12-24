@@ -1,3 +1,72 @@
+# 0.9.652 (2024 December 24)
+
+- AbstractControl: ProcessTab, TabIndex, FirstVisibleChild, ChildrenRecursive,  VisibleChildCount, HasVisibleChildren, HasFocusableChildren, GetFocusableChildren, IsKeyBindingValid, ValidateKeyBinding.
+- Keyboard.ProcessTabInternally. Default is True. Specifies whether to process TAB key internally without using the platform.
+- New classes: IndexedValues, NamedCommand, NamedCommands, GlobalFocusNextEventArg, CommandConverter, FormUtils.
+- New structs: DelayedEvent, CommandSourceStruct.
+- New events: CustomListBox.DelayedSelectionChanged, AbstractControl.GlobalFocusNextControl.
+- New methods: DisposableObject.RunWhenIdle, BaseObject.TryCatchSilent.
+- New properties: PanelWebBrowser.FindParams, InputBinding.IsActive.
+- New enums: WindowCloseAction.
+- ButtonBase: Command, CommandParameter, CommandTarget. As a result Button, CheckBox, RadioButton controls now have these properties. Command is called when control is clicked.
+- New feature: Old/New focused control can be retrieved in the event handlers.
+- ControlSet: First, IsEmpty, WhenCheckedChanged.
+- Fixed: ListControl.RecreateItems.
+- Fixed: Activated/Deactivated were raised only for top-most windows (now raised for all controls).
+- Fixed: Backspace key were ignored in some cases.
+- CustomListBox: IsSelectionModeSingle, IsSelectionModeMultiple.
+- CustomListBox: SelectedItems element type changed from object to TItem.
+- VirtualListBox: Handle keys internally in single select mode.
+- SplittedTreeAndCards: SelectedItemTag property, use delayed event when selected item is changed.
+- FindReplaceControl: Use delayed events when text is changed.
+- MauiControlHandler: Fix control resize events not fired in some cases.
+- ActionsListBox: Add action methods now return created item.
+- ActionsListBox: Added AddActionSpacer() (creates non selectable item).
+- Window: LastActivateTime, CloseAction, Initialize, IsOwnerVisible, CanClose, OwnedWindowsVisible.
+- Window: Fix usage of ActiveControl on Show.
+- Window: Default, HasInputBindings, ProcessKeyBindings.
+- Window: CloseIdle method, redo CloseAction behavior.
+- Redo: Process input bindings in controls without C++ code.
+- Demo: Add ControlsTestWindow to Samples page.
+- WindowWebBrowserSearch: Fixed exception when WebBrowser was disposed.
+- WindowWebBrowserSearch: Use last activated window in order to get WebBrowser control where search is performed.
+- WindowWebBrowserSearch: Remember last window position and search options.
+- App: LastActivatedWindows, FindVisibleWindow, HasVisibleForm.
+- MenuItem: IsShortcutEnabled.
+- MenuItem: Fixed Enabled state handling if Command is specified.
+- SpeedButton: ShortcutInfo, Command, CommandParameter, CommandTarget.
+- ToolBar: GetToolControlAt, SetToolCommand, new SetToolShortcut overload, redo DeleteAll.
+- Move InputBindings property from Window to AbstractControl and also add InputBindingsRecursive property.
+- AbstractControl: Better TabStop and CanSelect handling.
+- Command: CanExecuteOverride, CanExecuteFunc, ExecuteAction.
+- Optimize ClickAction in different controls not to use events add/remove.
+- InputUtils: IsDigit, IsNumPadDigit.
+- DisposableObject: EmptyDisposable, DisposingOrDisposed.
+- Remove Xaml\Port\Common\Logging as not used.
+- FrameworkElement: made some props public (ContentElements, LogicalParent, LogicalChildrenCollection).
+- FrameworkElement: made much more simple and efficient.
+- AdvDictionary is now derived from ConcurrentDictionary.
+- Optimize FlagsAndAttributes.SetAttribute.
+- Use try/catch to supress exception in log to file and other log methods.
+- Fixed: Dispose on child controls was not called.
+- IObjectToString: new ToString overload.
+- ObjectToStringFactory: GetTypeConverter, CreateAdapter, CreateAdapterForTypeConverter, Converters, HandleTypeDescriptorRefreshed.
+- ObjectToStringFactory: Made public IObjectToString providers.
+- IObjectToStringOptions: Culture, Context, UseInvariantCulture.
+- New enum members: ValueValidatorKnownError.None, TextBoxOptions.UseTypeConverter, TextBoxOptions.UseInvariantCulture.
+- CustomTextBox new events: GlobalStringToValue, StringToValue, GlobalValueToString, ValueToString.
+- CustomTextBox new properties: TypeConverter, Context, Culture, IsNumber, IsSignedInt, IsUnsignedInt, IsFloat, IsSignedNumber, IsMinValueNegativeOrNull, IsHexNumber.
+- CustomTextBox new methods: SetErrorTextFromDataType, SetValidator, SetValueAndValidator.
+- CustomTextBox new feature: Use events and/or type converter for text to/from value conversion.
+- Display: Fixed incorrect behavior under Maui in some cases.
+- Maui: Fixed incorrect scrollbar metrics usage in some cases.
+- Maui: Fixed incorrect ScaleFactor usage in some cases.
+- Maui: Added DisposableContentPage, WaitContentPage.
+- Fixed Window.CreateAs.
+- Maui: Fixed to use app theme in order to get scrollbar colors.
+- WeakReferenceValue: Changed event, RaiseValueChanged().
+- AsbtractControl: do not raise events if disposed.
+
 # 0.9.651 (2024 December 17)
 
 - AbstractControl: DelayedTextChanged event.
