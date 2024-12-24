@@ -20,6 +20,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class MauiApplicationHandler : DisposableObject, IApplicationHandler
     {
+        private static bool themeChangedHandlerRegistered;
+
         static MauiApplicationHandler()
         {
             DeviceDisplay.MainDisplayInfoChanged += DeviceDisplay_MainDisplayInfoChanged;
@@ -58,6 +60,29 @@ namespace Alternet.UI
                 var isMainThread = MainThread.IsMainThread;
                 return !isMainThread;
             }
+        }
+
+        /// <summary>
+        /// Registers <see cref="Application.RequestedThemeChanged"/> event handler.
+        /// </summary>
+        public static void RegisterThemeChangedHandler()
+        {
+            if (Application.Current is null)
+                return;
+
+            if (themeChangedHandlerRegistered)
+                return;
+            themeChangedHandlerRegistered = true;
+
+            Application.Current.RequestedThemeChanged += (s, a) =>
+            {
+                var elements = MauiUtils.ControlViews;
+
+                foreach(var element in elements)
+                {
+                    element.RaiseSystemColorsChanged();
+                }
+            };
         }
 
         /// <summary>
