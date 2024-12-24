@@ -24,7 +24,7 @@ namespace ControlsSample
         private void Initialize()
         {
             this.SuspendLayout();
-            Icon = IconSet.FromUrlOrDefault("embres:CommonDialogsSample.Sample.ico", App.DefaultIcon);
+            Icon = App.DefaultIcon;
             InitializeComponent();
 
             messageBoxButtonsComboBox.Add(MessageBoxButtons.OK);
@@ -42,6 +42,8 @@ namespace ControlsSample
             messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button2);
             messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button3);
             messageBoxDefaultButtonComboBox.SelectedItem = MessageBoxDefaultButton.Button1;
+
+            tabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
 
             this.ResumeLayout();
         }
