@@ -44,6 +44,8 @@ namespace Alternet.UI
         /// </summary>
         public static bool UseDlOpenOnLinux = false;
 
+        private static readonly IndexedValues<Type, ExceptionItem> exceptionRegister = new();
+
         private static bool insideUnhandledException;
         private static bool hookedExceptionEvents;
 
@@ -56,6 +58,36 @@ namespace Alternet.UI
 #endif
 
             DebugLoading = DebugUtils.IsDebugDefined && false;
+
+            ExceptionLoggerSetIgnore<ThreadInterruptedException>();
+            ExceptionLoggerSetIgnore<ThreadAbortException>();
+            ExceptionLoggerSetIgnore<OperationCanceledException>();
+        }
+
+        /// <summary>
+        /// Sets whether exceptions of the specified type are ignored in the exception logger.
+        /// </summary>
+        /// <typeparam name="T">Type of the exception to ignore.</typeparam>
+        /// <param name="value">Whether to ignore the exceptions of the specified type.</param>
+        public static void ExceptionLoggerSetIgnore<T>(bool value = true)
+        {
+            var item = exceptionRegister.GetValue(typeof(T), () => new ExceptionItem());
+            if (item is null)
+                return;
+            item.IgnoredInLogger = value;
+        }
+
+        /// <summary>
+        /// Gets whether exceptions of the specified type are ignored in the exception logger.
+        /// </summary>
+        /// <param name="t">Type of the exception.</param>
+        /// <returns>True if exception is ignored in the exception logger;
+        /// False if it is processed.</returns>
+        public static bool ExceptionLoggerIgnored(Type t)
+        {
+            var item = exceptionRegister.GetValue(t);
+            var result = item?.IgnoredInLogger ?? false;
+            return result;
         }
 
         /// <summary>
@@ -113,13 +145,13 @@ namespace Alternet.UI
 
                 try
                 {
-                    if(e is Exception exception)
-                        callback?.Invoke(exception);
-                    else
-                    {
-                        Exception newException = new(e.ToString());
-                        callback?.Invoke(newException);
-                    }
+                    if (e is not Exception exception)
+                        exception = new(e.ToString());
+
+                    if (ExceptionLoggerIgnored(exception.GetType()))
+                        return;
+
+                    callback?.Invoke(exception);
 
                     if (ExceptionsLoggerDebugWriteLine)
                         LogExceptionToAction(title, e, (s) => Debug.WriteLine(s));
@@ -218,6 +250,11 @@ namespace Alternet.UI
             {
                 CommonUtils.Nop();
             }
+        }
+
+        private class ExceptionItem
+        {
+            public bool IgnoredInLogger;
         }
     }
 }
