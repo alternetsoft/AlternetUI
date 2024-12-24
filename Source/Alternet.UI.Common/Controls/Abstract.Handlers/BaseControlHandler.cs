@@ -16,11 +16,18 @@ namespace Alternet.UI
         private Control? control;
 
         /// <summary>
+        /// Gets a <see cref="Control"/> this handler provides the implementation for
+        /// or Null if control is not assigned.
+        /// </summary>
+        public Control? ControlOrNull => control;
+
+        /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
         public Control Control
         {
-            get => control ?? throw new InvalidOperationException();
+            get => control ?? throw new InvalidOperationException(
+                "BaseControlHandler: Control is null");
         }
 
         /// <summary>
