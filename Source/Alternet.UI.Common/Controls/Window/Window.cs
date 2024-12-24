@@ -709,9 +709,35 @@ namespace Alternet.UI
 
             set
             {
+                if (value == this)
+                    return;
+                if (OwnersCollection.Contains(this))
+                    return;
+
                 if (Owner == value)
                     return;
                 owner.Value = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets collection of all owner windows
+        /// (including those owning this window indirectly).
+        /// </summary>
+        [Browsable(false)]
+        public virtual IEnumerable<Window> OwnersCollection
+        {
+            get
+            {
+                if(Owner is not null)
+                {
+                    yield return Owner;
+
+                    foreach(var window in Owner.OwnersCollection)
+                    {
+                        yield return window;
+                    }
+                }
             }
         }
 
