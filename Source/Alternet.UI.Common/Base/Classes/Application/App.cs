@@ -935,6 +935,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates application and main form, runs and disposes them.
+        /// </summary>
+        /// <param name="createFunc">Function which creates main form.</param>
+        /// <param name="runAction">Runs action after main form is created.</param>
+        /// <exception cref="Exception">If application is already created.</exception>
+        public static void CreateAndRun(Func<Window> createFunc, Action? runAction = null)
+        {
+            if (!Initialized)
+            {
+                App? application = null;
+
+                var appType = Type.GetType("Alternet.UI.Application, Alternet.UI");
+
+                if (appType is not null)
+                {
+                    application = (App?)Activator.CreateInstance(appType);
+                }
+                else
+                {
+                    throw new Exception("Alternet.UI library not loaded.");
+                }
+
+                if (App.Handler is null)
+                {
+                    throw new Exception("Application handler is not assigned.");
+                }
+
+                application ??= new App(App.Handler);
+
+                var window = createFunc();
+                AddIdleTask(runAction);
+
+                application.Run(window);
+
+                window.Dispose();
+                application.Dispose();
+            }
+            else
+            {
+                var window = createFunc();
+                runAction?.Invoke();
+                window.ShowAndFocus();
+            }
+        }
+
+        /// <summary>
         /// Calls <paramref name="func"/> inside try-catch block if specified by the exception handling
         /// settings <see cref="FastThreadExceptions"/> and <see cref="GetUnhandledExceptionMode()"/>.
         /// </summary>
