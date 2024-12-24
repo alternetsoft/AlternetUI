@@ -180,7 +180,7 @@
 - AbstractControl: MinMargin, MinPadding made protected (were internal).
 - SplittedPanel: All sub panels now have AbstractControl type.
 - Graphics is not allocated if no painting is done.
-- Border.AutpPadding.
+- Border.AutoPadding.
 - Updated SkiaSharp references to the new version.
 - HasInnerBorder property in TextBoxAndButton, TextBoxAndLabel, ComboBoxAndLabel controls.
 - ToolBar: SetToolIsClickRepeated, FindTool.
@@ -215,7 +215,7 @@ AcceptOnLostFocus, CloseWhenIdle, HideOnMouseLeave.
 - AbstractControl: Contains, IsParentWindowVisible, VisibleOnScreen.
 - AbstractControl: DoubleClick event as in WinForms.
 - AbstractControl.Focused implemented (previously was empty and was overriden only in Control).
-- AbstractControl: Optyimization. Do not call paint if rect is empty.
+- AbstractControl: Optimization. Do not call paint if rect is empty.
 - AbstractControl: minor layout improvements.
 - Font: static GetWidth, GetHeight.
 - AbstractControl: OnChildLostFocus.
