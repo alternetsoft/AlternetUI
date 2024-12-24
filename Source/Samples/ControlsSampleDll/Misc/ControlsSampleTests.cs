@@ -9,11 +9,11 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    public static class Tests
+    public static class ControlsSampleTests
     {
         public static void LogManifestResourceNames(Assembly? assembly = null)
         {
-            assembly ??= typeof(Tests).Assembly;
+            assembly ??= typeof(ControlsSampleTests).Assembly;
 
             var resources = assembly?.GetManifestResourceNames();
 

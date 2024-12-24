@@ -50,6 +50,8 @@ namespace Alternet.UI
 
             Focused += SkiaContainer_Focused;
             Unfocused += SkiaContainer_Unfocused;
+
+            MauiApplicationHandler.RegisterThemeChangedHandler();
         }
 
         /// <summary>
@@ -120,7 +122,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static ControlView? GetContainer(AbstractControl? control)
         {
-            if ((control as Control)?.Handler is MauiControlHandler handler)
+            if (control is Control { Handler: MauiControlHandler handler })
                 return handler.Container;
             return null;
         }
@@ -137,6 +139,16 @@ namespace Alternet.UI
                 return null;
             var platformView = container.GetPlatformView(container.Handler);
             return platformView;
+        }
+
+        /// <summary>
+        /// Initializes application handler. You should not call this method directly.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
+        public static void InitMauiHandler()
+        {
+            App.Handler ??= new MauiApplicationHandler();
         }
 
         /// <summary>
@@ -241,6 +253,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates colors after application theme is changed.
+        /// </summary>
+        public virtual void RaiseSystemColorsChanged()
+        {
+            if (control is null)
+                return;
+            control.RaiseSystemColorsChanged();
+
+            if(Interior.ScrollBarTheme is not null)
+            {
+                Interior.SetThemeMetrics(Interior.ScrollBarTheme.Value, SystemSettings.AppearanceIsDark);
+            }
+
+            Invalidate();
+        }
+
+        /// <summary>
         /// Gets whether on-screen keyboard is shown for this control.
         /// </summary>
         /// <returns></returns>
@@ -268,14 +297,6 @@ namespace Alternet.UI
         public virtual void ToggleKeyboard()
         {
             Alternet.UI.Keyboard.ToggleKeyboardVisibility(Control);
-        }
-
-        /// <summary>
-        /// Initializes application handler.
-        /// </summary>
-        protected static void InitMauiHandler()
-        {
-            App.Handler ??= new MauiApplicationHandler();
         }
 
         /// <summary>
@@ -434,7 +455,6 @@ namespace Alternet.UI
 
             control.ResetScaleFactor();
 
-            var scaleFactor = (float)control.ScaleFactor;
             var bounds = Bounds;
 
             RectD newBounds = (

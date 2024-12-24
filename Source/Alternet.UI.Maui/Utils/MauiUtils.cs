@@ -34,8 +34,95 @@ namespace Alternet.UI
     /// </summary>
     public static partial class MauiUtils
     {
-        private static GenericDeviceType? deviceType;
+        private static Alternet.UI.GenericDeviceType? deviceType;
         private static PlatformApplication? platformApplication;
+
+        /// <summary>
+        /// Gets collection of all windows in the application. This is safe property
+        /// and it returns an empty collection if application is not yet created.
+        /// </summary>
+        public static IEnumerable<Microsoft.Maui.Controls.Window> Windows
+        {
+            get
+            {
+                if (Application.Current is not null)
+                {
+                    foreach (var window in Application.Current.Windows)
+                    {
+                        yield return window;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets collection of <see cref="Alternet.UI.Control"/>
+        /// added to pages of the application inside <see cref="Alternet.UI.ControlView"/>
+        /// elements.
+        /// </summary>
+        public static IEnumerable<Alternet.UI.Control> Controls
+        {
+            get
+            {
+                foreach(var view in ControlViews)
+                {
+                    if (view.Control is not null)
+                        yield return view.Control;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets collection of <see cref="Alternet.UI.ControlView"/> elements
+        /// added to pages of the application.
+        /// </summary>
+        public static IEnumerable<Alternet.UI.ControlView> ControlViews
+        {
+            get
+            {
+                foreach(var page in Pages)
+                {
+                    var elements = GetChildren<Alternet.UI.ControlView>(page, true);
+
+                    foreach (var element in elements)
+                        yield return element;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets collection of all pages in the application. If application is not yet created,
+        /// returns an empty collection. Uses <see cref="Windows"/>,
+        /// <see cref="Microsoft.Maui.Controls.Window.Page"/>,
+        /// <see cref="INavigation.ModalStack"/>, <see cref="INavigation.NavigationStack"/>
+        /// in order to get the result.
+        /// </summary>
+        public static IEnumerable<Page> Pages
+        {
+            get
+            {
+                foreach(var window in Windows)
+                {
+                    var page = window.Page;
+                    if (page is not null)
+                    {
+                        var navigation = page.Navigation;
+
+                        foreach (var subpage in navigation.NavigationStack)
+                        {
+                            yield return subpage;
+                        }
+
+                        foreach (var subpage in navigation.ModalStack)
+                        {
+                            yield return subpage;
+                        }
+
+                        yield return page;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets whether current application theme is dark.
@@ -77,18 +164,19 @@ namespace Alternet.UI
         /// </summary>
         public static void AddAllViewsToParent(Layout parent)
         {
-            var types = AssemblyUtils.GetTypeDescendants(typeof(View));
+            var types = Alternet.UI.AssemblyUtils.GetTypeDescendants(typeof(View));
 
             foreach(var type in types)
             {
-                if (type == typeof(WebView) || type == typeof(VerticalStackLayout) || type == typeof(GroupableItemsView))
+                if (type == typeof(WebView) || type == typeof(VerticalStackLayout)
+                    || type == typeof(GroupableItemsView))
                     continue;
 
                 View? instance;
 
                 try
                 {
-                    if (!AssemblyUtils.HasConstructorNoParams(type))
+                    if (!Alternet.UI.AssemblyUtils.HasConstructorNoParams(type))
                         continue;
                     instance = (View?)Activator.CreateInstance(type);
                 }
@@ -104,7 +192,7 @@ namespace Alternet.UI
                 {
                     parent.Children.Add(instance);
                     var nativeType = instance.Handler?.PlatformView?.GetType().FullName;
-                    LogUtils.LogToFile($"{instance.GetType().FullName} uses {nativeType}");
+                    Alternet.UI.LogUtils.LogToFile($"{instance.GetType().FullName} uses {nativeType}");
                     parent.Children.Remove(instance);
                 }
                 catch (Exception)
@@ -161,27 +249,27 @@ namespace Alternet.UI
         /// Gets device the app is running on, such as a desktop computer or a tablet.
         /// </summary>
         /// <returns></returns>
-        public static GenericDeviceType GetDeviceType()
+        public static Alternet.UI.GenericDeviceType GetDeviceType()
         {
             deviceType ??= Fn();
             return deviceType.Value;
 
-            GenericDeviceType Fn()
+            Alternet.UI.GenericDeviceType Fn()
             {
                 var idiom = DeviceInfo.Current.Idiom;
 
                 if (idiom == DeviceIdiom.Desktop)
-                    return GenericDeviceType.Desktop;
+                    return Alternet.UI.GenericDeviceType.Desktop;
                 if (idiom == DeviceIdiom.Phone)
-                    return GenericDeviceType.Phone;
+                    return Alternet.UI.GenericDeviceType.Phone;
                 if (idiom == DeviceIdiom.Tablet)
-                    return GenericDeviceType.Tablet;
+                    return Alternet.UI.GenericDeviceType.Tablet;
                 if (idiom == DeviceIdiom.TV)
-                    return GenericDeviceType.TV;
+                    return Alternet.UI.GenericDeviceType.TV;
                 if (idiom == DeviceIdiom.Watch)
-                    return GenericDeviceType.Watch;
+                    return Alternet.UI.GenericDeviceType.Watch;
 
-                return GenericDeviceType.Unknown;
+                return Alternet.UI.GenericDeviceType.Unknown;
             }
         }
 
@@ -191,13 +279,15 @@ namespace Alternet.UI
         /// <param name="e">Value to convert.</param>
         /// <param name="control">Control where touch event occured.</param>
         /// <returns></returns>
-        public static TouchEventArgs Convert(SKTouchEventArgs e, AbstractControl? control)
+        public static Alternet.UI.TouchEventArgs Convert(
+            SKTouchEventArgs e,
+            Alternet.UI.AbstractControl? control)
         {
-            TouchEventArgs result = new();
+            Alternet.UI.TouchEventArgs result = new();
 
             result.Id = e.Id;
-            result.ActionType = (TouchAction)e.ActionType;
-            result.DeviceType = (TouchDeviceType)e.DeviceType;
+            result.ActionType = (Alternet.UI.TouchAction)e.ActionType;
+            result.DeviceType = (Alternet.UI.TouchDeviceType)e.DeviceType;
             result.Location = GraphicsFactory.PixelToDip(((PointD)e.Location).ToPoint());
             result.InContact = e.InContact;
             result.WheelDelta = e.WheelDelta;
@@ -250,7 +340,34 @@ namespace Alternet.UI
             {
                 var nativeType = item.Handler?.PlatformView?.GetType().Name;
 
-                LogUtils.LogToFile($"{item.GetType().Name} uses {nativeType}");
+                Alternet.UI.LogUtils.LogToFile($"{item.GetType().Name} uses {nativeType}");
+            }
+        }
+
+        /// <summary>
+        /// Gets collection of the child elements in the specified container.
+        /// </summary>
+        /// <typeparam name="T">Type of the child element.</typeparam>
+        /// <param name="container">Elements container.</param>
+        /// <param name="recursive">Whether to get elements recursively.</param>
+        /// <returns></returns>
+        public static IEnumerable<T> GetChildren<T>(object? container, bool recursive)
+            where T : View
+        {
+            if (container is IElementController controller)
+            {
+                foreach (var element in controller.LogicalChildren)
+                {
+                    if (element is T result)
+                        yield return result;
+                    if (recursive)
+                    {
+                        var elements = GetChildren<T>(element, true);
+
+                        foreach (var item in elements)
+                            yield return item;
+                    }
+                }
             }
         }
     }
