@@ -6,26 +6,26 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(AlternetUIBuildTaskAllPlatformsPath)' == ''">
-        <AlternetUIBuildTaskAllPlatformsPath>$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\bin\Debug\</AlternetUIBuildTaskAllPlatformsPath>
+        <AlternetUIBuildTaskAllPlatformsPath>$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\bin\Debug\</AlternetUIBuildTaskAllPlatformsPath>
     </PropertyGroup>
 
-    <Import Project="$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" />
-    <Import Project="$(AlternetUIPath)\Source\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" />
+    <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" />
+    <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" />
 
-  <ItemGroup Condition="Exists($(AlternetUIPath))">
-	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI\Alternet.UI.csproj"
+  <ItemGroup>
+	<ProjectReference Include="$(MSBuildThisFileDirectory)\..\Alternet.UI\Alternet.UI.csproj"
 		Condition="'$(UseFullAlternetUI)'=='true'"
 		PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
 
-	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI.Common\Alternet.UI.Common.csproj" PrivateAssets="All">
+	<ProjectReference Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Common\Alternet.UI.Common.csproj" PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
 
-	<ProjectReference Include="$(AlternetUIPath)\Source\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
+	<ProjectReference Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
@@ -39,10 +39,10 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|x64'">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.pdb" Link="Alternet.UI.Pal.pdb">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.pdb" Link="Alternet.UI.Pal.pdb">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -50,17 +50,17 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|x64'">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 
    <!-- ====================================================== -->
 
-    <PropertyGroup Condition="'$(AlternetUIBuildTaskAllPlatformsPath)' == ''">
-        <Palx86Release>$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll</Palx86Release>
-	<Palx86Debug>$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll</Palx86Debug>
-	<Palx86DebugPdb>$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb</Palx86DebugPdb>
+    <PropertyGroup>
+        <Palx86Release>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll</Palx86Release>
+	<Palx86Debug>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll</Palx86Debug>
+	<Palx86DebugPdb>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb</Palx86DebugPdb>
     </PropertyGroup>
 	
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|x86'">
@@ -95,10 +95,10 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.pdb" Link="x64\Alternet.UI.Pal.pdb">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.pdb" Link="x64\Alternet.UI.Pal.pdb">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -106,7 +106,7 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -114,7 +114,7 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dylib" Link="Alternet.UI.Pal.dylib">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dylib" Link="Alternet.UI.Pal.dylib">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -122,7 +122,7 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-        <None Include="$(AlternetUIPath)\Source\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.so" Link="Alternet.UI.Pal.so">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.so" Link="Alternet.UI.Pal.so">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
