@@ -28,7 +28,7 @@ namespace Alternet.UI
         public static Color? DefaultOverlayColor;
 
         private static int blinkTime = 530;
-        private static Color? color;
+        private static LightDarkColor? color;
 
         private readonly CaretInfo info = new();
         private AbstractControl? control;
@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets caret colors.
         /// </summary>
-        public static Color CaretColor
+        public static LightDarkColor CaretColor
         {
             get
             {

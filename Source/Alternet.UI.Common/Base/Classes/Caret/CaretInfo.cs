@@ -20,8 +20,8 @@ namespace Alternet.UI
         private bool focused;
         private bool topOverlayVisible;
         private bool bottomOverlayVisible;
-        private Color? overlayColor;
-        private Color? color;
+        private LightDarkColor? overlayColor;
+        private LightDarkColor? color;
         private int overlaySize;
         private SvgImage? overlayImage;
 
@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// Get or sets overlay image color. If <c>null</c>,
         /// <see cref="PlessCaretHandler.DefaultOverlayColor"/> will be used.
         /// </summary>
-        public virtual Color? OverlayColor
+        public virtual LightDarkColor? OverlayColor
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Alternet.UI
         /// Gets or sets caret color. If <c>null</c>, <see cref="PlessCaretHandler.CaretColor"/>
         /// will be used.
         /// </summary>
-        public virtual Color? Color
+        public virtual LightDarkColor? Color
         {
             get
             {
@@ -378,7 +378,11 @@ namespace Alternet.UI
         {
             var dc = e.Graphics;
 
-            var caretColor = Color ?? PlessCaretHandler.CaretColor;
+            var ldColor = Color ?? PlessCaretHandler.CaretColor;
+
+            Color caretColor
+                = ldColor.LightOrDark(sender.IsDarkBackground);
+
             dc.FillRectangle(caretColor.AsBrush, sender.PixelToDip(Rect));
 
             if (TopOrBottomOverlayVisible)
