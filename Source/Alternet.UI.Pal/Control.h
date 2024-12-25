@@ -131,7 +131,7 @@ namespace Alternet::UI
         wxWindow* _eventFocusWindow = nullptr;
 
         virtual void OnPaint(wxPaintEvent& event);
-        void OnEraseBackground(wxEraseEvent& event);
+        virtual void OnEraseBackground(wxEraseEvent& event);
 
         void OnMouseCaptureLost(wxEvent& event);
 

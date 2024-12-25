@@ -11,6 +11,9 @@ namespace Alternet.UI
     /// </summary>
     public interface IWebBrowserFactoryHandler : IDisposable
     {
+        /// <inheritdoc cref="WebBrowser.IsEdgeBackendEnabled"/>
+        bool IsEdgeBackendEnabled { get; set; }
+
         /// <summary>
         /// Creates <see cref="IWebBrowserHandler"/> interface provider.
         /// </summary>

@@ -10,6 +10,8 @@ namespace NativeApi.Api
     {
         public static IntPtr CreateWebBrowser(string url) => default;
 
+        public static bool IsEdgeBackendEnabled { get; set; }
+
         public bool HasBorder { get; set; }
 
         public static void SetDefaultUserAgent(string value) => 

@@ -54,12 +54,19 @@ namespace Alternet.UI
 
         private IWebBrowserMemoryFS? fMemoryFS;
 
+        static WebBrowser()
+        {
+            // This call is here because current version of wxWidgets
+            // doesn't work with WebView2 browser properly.
+            IsEdgeBackendEnabled = false;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public WebBrowser(Control parent)
-            : this()
+            : this(string.Empty)
         {
             Parent = parent;
         }
@@ -68,6 +75,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
         public WebBrowser()
+            : this(string.Empty)
         {
         }
 
@@ -76,7 +84,12 @@ namespace Alternet.UI
         /// </summary>
         public WebBrowser(string url)
         {
-            defaultUrl = url;
+            if (string.IsNullOrEmpty(url))
+            {
+                defaultUrl = AboutBlankUrl;
+            }
+            else
+                defaultUrl = url;
         }
 
         /// <summary>
@@ -269,6 +282,24 @@ namespace Alternet.UI
             get
             {
                 return Environment.Is64BitOperatingSystem;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether Edge backend which uses WebView2 is available.
+        /// </summary>
+        public static bool IsEdgeBackendEnabled
+        {
+            get
+            {
+                return App.IsWindowsOS && Factory.IsEdgeBackendEnabled;
+            }
+
+            set
+            {
+                if (IsEdgeBackendEnabled == value)
+                    return;
+                Factory.IsEdgeBackendEnabled = value;
             }
         }
 

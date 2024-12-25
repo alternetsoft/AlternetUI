@@ -8,6 +8,19 @@ namespace Alternet.UI
 {
     internal class WebBrowserFactoryHandler : DisposableObject, IWebBrowserFactoryHandler
     {
+        public bool IsEdgeBackendEnabled
+        {
+            get
+            {
+                return Native.WebBrowser.IsEdgeBackendEnabled;
+            }
+
+            set
+            {
+                Native.WebBrowser.IsEdgeBackendEnabled = value;
+            }
+        }
+
         public void SetDefaultUserAgent(string value)
         {
             Native.WebBrowser.SetDefaultUserAgent(value);

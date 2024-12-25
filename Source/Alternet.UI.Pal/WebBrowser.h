@@ -91,6 +91,9 @@ namespace Alternet::UI
         void SetZoomType(wxWebViewZoomType zoomType);
 
         int Find(const string& text, int flags);
+
+        virtual void OnSizeChanged(wxSizeEvent& event) override;
+
     protected:
         void OnWxWindowCreated() override;
 
@@ -108,6 +111,22 @@ namespace Alternet::UI
         void OnScriptMessageReceived(wxWebViewEvent& event);
         void OnScriptResult(wxWebViewEvent& event);
 
+        virtual void OnEraseBackground(wxEraseEvent& event) override
+        {
+/*
+            auto dc = event.GetDC();
+
+            auto background = GetBackgroundColor();
+            wxColor color;
+            if (background.IsEmpty())
+                color = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOW);
+            else
+                color = background;
+
+            dc->SetBackground(wxBrush(color));
+            dc->Clear();
+*/
+        }
     };
 }
 
