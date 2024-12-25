@@ -455,13 +455,13 @@ namespace Alternet.UI
             var hasInnerBorder = innerColor != Color.Empty;
             if (hasOuterBorder)
             {
-                DrawingUtils.FillRectangleBorder(canvas, outerColor.AsBrush, result);
+                DrawingUtils.DrawBorderWithBrush(canvas, outerColor.AsBrush, result);
                 result.Deflate();
             }
 
             if (hasInnerBorder)
             {
-                DrawingUtils.FillRectangleBorder(canvas, innerColor.AsBrush, result);
+                DrawingUtils.DrawBorderWithBrush(canvas, innerColor.AsBrush, result);
                 result.Deflate();
             }
 
@@ -469,13 +469,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws rectangle border using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
+        /// Draws rectangle border using the specified brush and
+        /// <see cref="Graphics.FillRectangle(Brush,RectD)"/>. This method doesn't fill background,
+        /// it only draws border.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw border.</param>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="borderWidth">Border width.</param>
-        public static void FillRectangleBorder(
+        public static void DrawBorderWithBrush(
             this Graphics dc,
             Brush brush,
             RectD rect,
@@ -488,13 +490,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws rectangle border using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
+        /// Draws rectangle border using the specified brush and
+        /// <see cref="Graphics.FillRectangle(Brush,RectD)"/>. This method doesn't fill background,
+        /// it only draws border.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw border.</param>
         /// <param name="rect">Border rectangle.</param>
         /// <param name="borderWidth">Border width.</param>
-        public static void FillRectangleBorder(
+        public static void DrawBorderWithBrush(
             this Graphics dc,
             Brush brush,
             RectD rect,
@@ -517,7 +521,7 @@ namespace Alternet.UI
         /// <param name="brush">Brush to draw border.</param>
         /// <param name="rects">Border rectangles.</param>
         /// <param name="borders">Border width.</param>
-        public static void FillRectanglesBorder(
+        public static void DrawBordersWithBrush(
             this Graphics dc,
             Brush brush,
             RectD[] rects,
@@ -525,7 +529,7 @@ namespace Alternet.UI
         {
             for (int i = 0; i < rects.Length; i++)
             {
-                FillRectangleBorder(dc, brush, rects[i], borders?[i] ?? 1);
+                DrawBorderWithBrush(dc, brush, rects[i], borders?[i] ?? 1);
             }
         }
 

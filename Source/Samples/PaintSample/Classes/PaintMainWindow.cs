@@ -635,9 +635,9 @@ namespace PaintSample
             RectD r1 = (location.X, location.Y, measure.Width, measure.Height);
             RectD r2 = (location.X, location.Y, size.Width, size.Height);
 
-            DrawingUtils.FillRectangleBorder(dc, Color.DarkRed.AsBrush, r1, 1);
+            DrawingUtils.DrawBorderWithBrush(dc, Color.DarkRed.AsBrush, r1, 1);
 
-            DrawingUtils.FillRectangleBorder(dc, Color.Red.AsBrush, r2, 1);
+            DrawingUtils.DrawBorderWithBrush(dc, Color.Red.AsBrush, r2, 1);
 
             dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
 

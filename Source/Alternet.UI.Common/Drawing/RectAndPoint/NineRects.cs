@@ -275,16 +275,16 @@ namespace Alternet.Drawing
             {
                 var scaleFactor = ScaleFactor;
                 NineRects rects = new(e.ClipRectangle.ToRect(), PatchRect);
-                DrawingUtils.FillRectanglesBorder(
+                DrawingUtils.DrawBordersWithBrush(
                     e.Graphics,
                     Color.Red.AsBrush,
                     GraphicsFactory.PixelToDip(rects.Rects, scaleFactor));
-                DrawingUtils.FillRectangleBorder(
+                DrawingUtils.DrawBorderWithBrush(
                     e.Graphics,
                     Color.Navy.AsBrush,
                     PatchRect.PixelToDip(scaleFactor));
                 var borderRect = rects.GetRect(SelectedHorz, SelectedVert);
-                DrawingUtils.FillRectangleBorder(
+                DrawingUtils.DrawBorderWithBrush(
                     e.Graphics,
                     Color.Green.AsBrush,
                     borderRect.PixelToDip(scaleFactor));

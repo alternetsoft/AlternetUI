@@ -30,7 +30,7 @@ namespace Alternet.UI
 
             void DrawBorder(RectD rect, Thickness border)
             {
-                DrawingUtils.FillRectangleBorder(
+                DrawingUtils.DrawBorderWithBrush(
                             dc,
                             brush,
                             rect,
@@ -190,7 +190,7 @@ namespace Alternet.UI
             void DrawBorders(Thickness[] borders)
             {
 #pragma warning disable
-                DrawingUtils.FillRectanglesBorder(
+                DrawingUtils.DrawBordersWithBrush(
                             dc,
                             brush,
                             rects,

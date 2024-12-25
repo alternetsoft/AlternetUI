@@ -300,7 +300,7 @@ namespace DrawingSample
 
                 blockRect = dc.DrawText(GetText(), paragraph.Font, color.AsBrush, rect, textFormat);
 
-                dc.FillRectangleBorder(Color.Green.AsBrush, blockRect, 1);
+                dc.DrawBorderWithBrush(Color.Green.AsBrush, blockRect, 1);
  
                 y += blockRect.Height + 20;
 
