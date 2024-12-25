@@ -43,9 +43,14 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class WebBrowser : Control, IWebBrowser
     {
+        /// <summary>
+        /// Gets "about:blank" url.
+        /// </summary>
+        public const string AboutBlankUrl = "about:blank";
+
         private static IWebBrowserFactoryHandler? factory;
 
-        private readonly string defaultUrl = "about:blank";
+        private readonly string defaultUrl = AboutBlankUrl;
 
         private IWebBrowserMemoryFS? fMemoryFS;
 
@@ -117,7 +122,8 @@ namespace Alternet.UI
         /// </para>
         /// <para>
         ///  When the Navigated event occurs, the new web page has begun loading,
-        ///  which means you can access the loaded content through the WebBrowser properties and methods.
+        ///  which means you can access the loaded content through the WebBrowser
+        ///  properties and methods.
         /// </para>
         /// <para>
         ///  Handle the <see cref="Loaded"/> event to receive notification when the
@@ -414,7 +420,10 @@ namespace Alternet.UI
         /// otherwise, <see langword="false"/>.
         /// </returns>
         [Browsable(false)]
-        public virtual bool CanZoomIn { get => Zoom != WebBrowserZoom.Largest; }
+        public virtual bool CanZoomIn
+        {
+            get => Zoom != WebBrowserZoom.Largest;
+        }
 
         /// <summary>
         /// Gets a value indicating whether a previous page in navigation history
@@ -2274,6 +2283,12 @@ namespace Alternet.UI
         /// </param>
         protected virtual void OnNavigated(WebBrowserEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
         }
 
         /// <summary>
