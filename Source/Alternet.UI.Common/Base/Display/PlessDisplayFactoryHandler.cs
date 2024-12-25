@@ -11,10 +11,13 @@ namespace Alternet.UI
     /// <summary>
     /// Implements dummy <see cref="IDisplayFactoryHandler"/> provider.
     /// </summary>
-    public abstract class PlessDisplayFactoryHandler : DisposableObject, IDisplayFactoryHandler
+    public class PlessDisplayFactoryHandler : DisposableObject, IDisplayFactoryHandler
     {
         /// <inheritdoc/>
-        public abstract IDisplayHandler CreateDisplay();
+        public virtual IDisplayHandler CreateDisplay()
+        {
+            return new PlessDisplayHandler();
+        }
 
         /// <inheritdoc/>
         public virtual IDisplayHandler CreateDisplay(int index)

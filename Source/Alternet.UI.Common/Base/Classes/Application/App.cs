@@ -213,10 +213,11 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
         /// <param name="handler">Application handler.</param>
-        public App(IApplicationHandler? handler)
+        public App(IApplicationHandler? handler = null)
         {
             if (handler is not null)
                 Handler = handler;
+            Handler ??= CreateDefaultHandler();
             SynchronizationContext.InstallIfNeeded();
             App.Current = this;
 
@@ -360,7 +361,7 @@ namespace Alternet.UI
         {
             get
             {
-                return current ??= new Application();
+                return current ??= new App();
             }
 
             protected set
@@ -1861,6 +1862,28 @@ namespace Alternet.UI
             {
                 LogEndUpdate();
             }
+        }
+
+        /// <summary>
+        /// Creates default application handler.
+        /// </summary>
+        /// <returns></returns>
+        protected static IApplicationHandler CreateDefaultHandler()
+        {
+            IApplicationHandler? result = null;
+            Type? type;
+
+            if (IsMaui && !IsLinuxOS)
+                type = Type.GetType("Alternet.UI.MauiApplicationHandler, Alternet.UI.Maui");
+            else
+                type = Type.GetType("Alternet.UI.WxApplicationHandler, Alternet.UI");
+
+            if (type is not null)
+            {
+                result = (IApplicationHandler?)Activator.CreateInstance(type);
+            }
+
+            return result ?? throw new Exception("Application handler not found.");
         }
 
         /// <inheritdoc/>

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements internal <see cref="ISystemSettingsHandler"/> provider.
     /// </summary>
-    public abstract class PlessSystemSettingsHandler : DisposableObject, ISystemSettingsHandler
+    public class PlessSystemSettingsHandler : DisposableObject, ISystemSettingsHandler
     {
         private static readonly bool[] metricScaled = new bool[(int)SystemSettingsMetric.Max + 1];
 
@@ -96,7 +96,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public abstract IDisplayFactoryHandler CreateDisplayFactoryHandler();
+        public virtual IDisplayFactoryHandler CreateDisplayFactoryHandler()
+        {
+            return new PlessDisplayFactoryHandler();
+        }
 
         /// <inheritdoc/>
         public virtual bool GetAppearanceIsDark()
