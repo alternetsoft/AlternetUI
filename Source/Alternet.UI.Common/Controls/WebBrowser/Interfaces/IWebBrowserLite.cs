@@ -11,6 +11,9 @@ namespace Alternet.UI
     /// </summary>
     public interface IWebBrowserLite
     {
+        /// <inheritdoc cref="WebBrowser.IsEdgeBackend"/>
+        bool IsEdgeBackend { get; }
+
         /// <inheritdoc cref="WebBrowser.PreferredColorScheme"/>
         WebBrowserPreferredColorScheme PreferredColorScheme { get; set; }
 

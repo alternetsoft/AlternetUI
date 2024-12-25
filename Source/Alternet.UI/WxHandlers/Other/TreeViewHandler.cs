@@ -530,8 +530,7 @@ namespace Alternet.UI
 
         private void ApplySelectionMode()
         {
-            NativeControl.SelectionMode =
-                (Native.TreeViewSelectionMode)Control.SelectionMode;
+            NativeControl.SelectionMode = Control.SelectionMode;
         }
 
         private IntPtr GetHandleFromItem(TreeViewItem item)

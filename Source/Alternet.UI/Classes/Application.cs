@@ -16,25 +16,28 @@ namespace Alternet.UI
     /// <summary>
     /// Provides methods and properties to manage an application.
     /// </summary>
-    public partial class Application : App, IDisposable
+    public partial class Application : App
     {
         static Application()
         {
-            if (!App.Is64BitProcess && App.IsWindowsOS)
+            if (!App.IsMaui)
             {
-                if (!IsNetOrCoreApp)
+                if (!App.Is64BitProcess && App.IsWindowsOS)
                 {
-                    var s = $"Critical error\n\n";
-                    s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
-                    s += $"Your software configuration is not supported:\n";
-                    s += $"Windows 32 bit and Net Framework {Environment.Version}\n\n";
-                    s += $"Use Windows 64 bit or newer Net Framework version.\n";
+                    if (!IsNetOrCoreApp)
+                    {
+                        var s = $"Critical error\n\n";
+                        s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
+                        s += $"Your software configuration is not supported:\n";
+                        s += $"Windows 32 bit and Net Framework {Environment.Version}\n\n";
+                        s += $"Use Windows 64 bit or newer Net Framework version.\n";
 
-                    DialogFactory.ShowCriticalMessage(s);
+                        DialogFactory.ShowCriticalMessage(s);
+                    }
                 }
             }
 
-            Handler = new WxApplicationHandler();
+            Handler = CreateDefaultHandler();
         }
 
         /// <summary>
@@ -50,7 +53,7 @@ namespace Alternet.UI
         /// with the specified handler.
         /// </summary>
         public Application(IApplicationHandler? handler)
-            : base(handler ?? Handler ?? new WxApplicationHandler())
+            : base(handler ?? Handler ?? CreateDefaultHandler())
         {
         }
    }

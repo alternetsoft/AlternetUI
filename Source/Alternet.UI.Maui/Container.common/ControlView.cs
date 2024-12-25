@@ -34,6 +34,7 @@ namespace Alternet.UI
 
         static ControlView()
         {
+            App.Current.Required();
             InitMauiHandler();
         }
 
@@ -263,7 +264,9 @@ namespace Alternet.UI
 
             if(Interior.ScrollBarTheme is not null)
             {
-                Interior.SetThemeMetrics(Interior.ScrollBarTheme.Value, SystemSettings.AppearanceIsDark);
+                Interior.SetThemeMetrics(
+                    Interior.ScrollBarTheme.Value,
+                    SystemSettings.AppearanceIsDark);
             }
 
             Invalidate();

@@ -19,6 +19,28 @@ ALTERNET_UI_API WebBrowser* WebBrowser_Create_()
     #endif
 }
 
+ALTERNET_UI_API c_bool WebBrowser_GetIsEdgeBackendEnabled_()
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return WebBrowser::GetIsEdgeBackendEnabled();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void WebBrowser_SetIsEdgeBackendEnabled_(c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        WebBrowser::SetIsEdgeBackendEnabled(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool WebBrowser_GetHasBorder_(WebBrowser* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -333,6 +355,17 @@ ALTERNET_UI_API void WebBrowser_SetZoom_(WebBrowser* obj, int value)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetZoom(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool WebBrowser_GetIsEdge_(WebBrowser* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsEdge();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

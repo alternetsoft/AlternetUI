@@ -10,6 +10,8 @@ namespace NativeApi.Api
     {
         public static IntPtr CreateWebBrowser(string url) => default;
 
+        public static bool IsEdgeBackendEnabled { get; set; }
+
         public bool HasBorder { get; set; }
 
         public static void SetDefaultUserAgent(string value) => 
@@ -84,6 +86,8 @@ namespace NativeApi.Api
 
         public bool Editable { get; set; }
         public int Zoom { get; set; }
+
+        public bool IsEdge { get; }
 
         public string GetCurrentTitle() => throw new Exception();
         public string GetCurrentURL() => throw new Exception();

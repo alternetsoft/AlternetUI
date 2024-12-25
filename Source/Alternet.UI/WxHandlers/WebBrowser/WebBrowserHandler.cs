@@ -5,6 +5,11 @@ namespace Alternet.UI
     internal partial class WebBrowserHandler :
         WxControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserHandler
     {
+        public bool IsEdgeBackend
+        {
+            get => NativeControl.IsEdge;
+        }
+
         public bool HasBorder
         {
             get => NativeControl.HasBorder;

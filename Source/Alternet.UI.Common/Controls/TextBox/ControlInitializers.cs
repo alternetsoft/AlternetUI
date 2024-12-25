@@ -13,7 +13,7 @@ namespace Alternet.UI
         where TControl : AbstractControl
         where TEventArgs : EventArgs
     {
-        private EnumArray<KnownTextValueType, Item?> register = new();
+        private EnumArray<KnownInputType, Item?> register = new();
 
         static ControlInitializers()
         {
@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// <param name="e">Initialization arguments.</param>
         public virtual void Initialize(
             TControl control,
-            KnownTextValueType type,
+            KnownInputType type,
             TEventArgs? e)
         {
             var initializer = GetInitializer(type);
@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type of the input value.</param>
         /// <returns></returns>
-        public virtual Action<TControl, TEventArgs?> GetInitializer(KnownTextValueType type)
+        public virtual Action<TControl, TEventArgs?> GetInitializer(KnownInputType type)
         {
             var item = GetItem(type);
             return item.RaiseInitializer;
@@ -66,7 +66,7 @@ namespace Alternet.UI
         /// for editing the specified value type.</param>
         /// <returns></returns>
         public virtual void RemoveInitializer(
-            KnownTextValueType type,
+            KnownInputType type,
             Action<TControl, TEventArgs?> action)
         {
             var item = GetItem(type);
@@ -82,14 +82,14 @@ namespace Alternet.UI
         /// <param name="action">Action to call when control is initialized for editing
         /// the specified value type.</param>
         public virtual void AddInitializer(
-            KnownTextValueType type,
+            KnownInputType type,
             Action<TControl, TEventArgs?> action)
         {
             var item = GetItem(type);
             item.AddInitializer(action);
         }
 
-        public virtual Item GetItem(KnownTextValueType type)
+        public virtual Item GetItem(KnownInputType type)
         {
             var item = register[type];
             if (item is null)

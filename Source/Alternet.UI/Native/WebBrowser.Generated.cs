@@ -24,6 +24,19 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static bool IsEdgeBackendEnabled
+        {
+            get
+            {
+                return NativeApi.WebBrowser_GetIsEdgeBackendEnabled_();
+            }
+            
+            set
+            {
+                NativeApi.WebBrowser_SetIsEdgeBackendEnabled_(value);
+            }
+        }
+        
         public bool HasBorder
         {
             get
@@ -272,6 +285,16 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.WebBrowser_SetZoom_(NativePointer, value);
             }
+        }
+        
+        public bool IsEdge
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.WebBrowser_GetIsEdge_(NativePointer);
+            }
+            
         }
         
         public static System.IntPtr CreateWebBrowser(string url)
@@ -614,6 +637,12 @@ namespace Alternet.UI.Native
             public static extern IntPtr WebBrowser_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WebBrowser_GetIsEdgeBackendEnabled_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetIsEdgeBackendEnabled_(bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WebBrowser_GetHasBorder_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -699,6 +728,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetZoom_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WebBrowser_GetIsEdge_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WebBrowser_CreateWebBrowser_(string url);

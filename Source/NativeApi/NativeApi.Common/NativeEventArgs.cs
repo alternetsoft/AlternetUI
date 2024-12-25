@@ -2,7 +2,8 @@
 
 namespace ApiCommon
 {
-    public class NativeEventArgs<T> : EventArgs where T : NativeEventData
+    public class NativeEventArgs<T> : EventArgs
+        where T : NativeEventData
     {
         public NativeEventArgs(T data)
         {
@@ -12,5 +13,6 @@ namespace ApiCommon
         public T Data { get; }
     }
 
-    public delegate void NativeEventHandler<T>(object? sender, NativeEventArgs<T> e) where T : NativeEventData;
+    public delegate void NativeEventHandler<T>(object? sender, NativeEventArgs<T> e)
+        where T : NativeEventData;
 }

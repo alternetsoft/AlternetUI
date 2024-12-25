@@ -403,15 +403,15 @@ namespace ControlsSample
                 LogUtils.LogProp(webBrowser, "ZoomFactor", "WebBrowser");
 
                 Log("DPI = " + webBrowser.GetDPI().ToString());
+                Log("isEdge = " + webBrowser.IsEdgeBackend);
                 Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
-                Log("os = " + WebBrowser.GetBackendOS().ToString());
                 Log("backend = " + webBrowser.Backend.ToString());
                 Log("wxWidgetsVersion = " + WebBrowser.GetLibraryVersionString());
                 Log("GetCurrentTitle() = " + webBrowser.GetCurrentTitle());
                 Log("GetCurrentURL() = " + webBrowser.GetCurrentURL());
-                Log("IE = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.IE));
-                Log("Edge = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge));
-                Log("WebKit = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit));
+                Log("Support IE = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.IE));
+                Log("Support Edge = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge));
+                Log("Support WebKit = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit));
                 Log("Net Version = " + Environment.Version.ToString());
 
                 Log("GetUsefulDefines" + WebBrowser.DoCommandGlobal("GetUsefulDefines"));
@@ -435,15 +435,7 @@ namespace ControlsSample
                 Log("=======");
             }
 
-            App.LogBeginUpdate();
-            try
-            {
-                Fn();
-            }
-            finally
-            {
-                App.LogEndUpdate();
-            }
+            Fn();
         }
 
         private void AddTestAction(string? name = null, Action? action = null)

@@ -11,6 +11,9 @@ namespace Alternet.UI
     /// </summary>
     public interface IWebBrowserFactoryHandler : IDisposable
     {
+        /// <inheritdoc cref="WebBrowser.IsEdgeBackendEnabled"/>
+        bool IsEdgeBackendEnabled { get; set; }
+
         /// <summary>
         /// Creates <see cref="IWebBrowserHandler"/> interface provider.
         /// </summary>
@@ -45,9 +48,6 @@ namespace Alternet.UI
         /// <param name="browser">Owner.</param>
         /// <returns></returns>
         IWebBrowserMemoryFS CreateMemoryFileSystem(WebBrowser browser);
-
-        /// <inheritdoc cref="WebBrowser.GetBackendOS"/>
-        WebBrowserBackendOS GetBackendOS();
 
         /// <inheritdoc cref="WebBrowser.SetBackendPath(string, bool)"/>
         void SetEdgePath(string path);

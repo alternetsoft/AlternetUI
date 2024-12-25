@@ -165,7 +165,7 @@ namespace Alternet.UI
 
         IWebBrowserFactoryHandler IControlFactoryHandler.CreateWebBrowserFactoryHandler()
         {
-            throw new NotImplementedException();
+            return new MauiWebBrowserFactoryHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateWindowHandler(Window window)

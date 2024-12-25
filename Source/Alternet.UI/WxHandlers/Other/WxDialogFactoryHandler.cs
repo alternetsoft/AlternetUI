@@ -52,13 +52,13 @@ namespace Alternet.UI
         public DialogResult ShowMessageBox(MessageBoxInfo info)
         {
             var nativeOwner = UI.Native.NativeObject.GetNativeWindow(info.Owner);
-            return (DialogResult)Native.MessageBox.Show(
+            return Native.MessageBox.Show(
                 nativeOwner,
                 info.Text?.ToString() ?? string.Empty,
                 info.Caption ?? string.Empty,
-                (Native.MessageBoxButtons)info.Buttons,
-                (Native.MessageBoxIcon)info.Icon,
-                (Native.MessageBoxDefaultButton)info.DefaultButton);
+                info.Buttons,
+                info.Icon,
+                info.DefaultButton);
         }
 
         /// <summary>

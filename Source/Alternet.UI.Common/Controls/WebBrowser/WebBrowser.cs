@@ -43,18 +43,30 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class WebBrowser : Control, IWebBrowser
     {
+        /// <summary>
+        /// Gets "about:blank" url.
+        /// </summary>
+        public const string AboutBlankUrl = "about:blank";
+
         private static IWebBrowserFactoryHandler? factory;
 
-        private readonly string defaultUrl = "about:blank";
+        private readonly string defaultUrl = AboutBlankUrl;
 
         private IWebBrowserMemoryFS? fMemoryFS;
+
+        static WebBrowser()
+        {
+            // This call is here because current version of wxWidgets
+            // doesn't work with WebView2 browser properly.
+            IsEdgeBackendEnabled = false;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public WebBrowser(Control parent)
-            : this()
+            : this(string.Empty)
         {
             Parent = parent;
         }
@@ -63,6 +75,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="WebBrowser"/> class.
         /// </summary>
         public WebBrowser()
+            : this(string.Empty)
         {
         }
 
@@ -71,7 +84,12 @@ namespace Alternet.UI
         /// </summary>
         public WebBrowser(string url)
         {
-            defaultUrl = url;
+            if (string.IsNullOrEmpty(url))
+            {
+                defaultUrl = AboutBlankUrl;
+            }
+            else
+                defaultUrl = url;
         }
 
         /// <summary>
@@ -117,7 +135,8 @@ namespace Alternet.UI
         /// </para>
         /// <para>
         ///  When the Navigated event occurs, the new web page has begun loading,
-        ///  which means you can access the loaded content through the WebBrowser properties and methods.
+        ///  which means you can access the loaded content through the WebBrowser
+        ///  properties and methods.
         /// </para>
         /// <para>
         ///  Handle the <see cref="Loaded"/> event to receive notification when the
@@ -267,6 +286,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether Edge backend which uses WebView2 is available.
+        /// </summary>
+        public static bool IsEdgeBackendEnabled
+        {
+            get
+            {
+                return App.IsWindowsOS && Factory.IsEdgeBackendEnabled;
+            }
+
+            set
+            {
+                if (IsEdgeBackendEnabled == value)
+                    return;
+                Factory.IsEdgeBackendEnabled = value;
+            }
+        }
+
+        /// <summary>
         /// Contains methods related to the memory scheme WebBrowser protocol.
         /// </summary>
         /// <returns>
@@ -386,6 +423,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether backend is WebView2.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsEdgeBackend
+        {
+            get
+            {
+                return App.IsWindowsOS && Handler.IsEdgeBackend;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the Uri of the current document hosted in the WebBrowser.
         /// </summary>
         /// <returns>
@@ -414,7 +463,10 @@ namespace Alternet.UI
         /// otherwise, <see langword="false"/>.
         /// </returns>
         [Browsable(false)]
-        public virtual bool CanZoomIn { get => Zoom != WebBrowserZoom.Largest; }
+        public virtual bool CanZoomIn
+        {
+            get => Zoom != WebBrowserZoom.Largest;
+        }
 
         /// <summary>
         /// Gets a value indicating whether a previous page in navigation history
@@ -855,18 +907,6 @@ namespace Alternet.UI
         public new IWebBrowserHandler Handler => (IWebBrowserHandler)base.Handler;
 
         /// <summary>
-        /// Returns type of the OS for which the WebBrowser was compiled.
-        /// </summary>
-        /// <returns>
-        ///     A <see cref="WebBrowserBackendOS"/> representing type of the
-        ///     OS for which the WebBrowser was compiled.
-        /// </returns>
-        public static WebBrowserBackendOS GetBackendOS()
-        {
-            return Factory.GetBackendOS();
-        }
-
-        /// <summary>
         /// Prepends filename with "file" url protocol prefix.
         /// </summary>
         /// <param name="filename">Path to the file.</param>
@@ -1010,7 +1050,7 @@ namespace Alternet.UI
             if (value == WebBrowserBackend.IE || value == WebBrowserBackend.IELatest
                 || value == WebBrowserBackend.Edge)
             {
-                if (WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
+                if (!App.IsWindowsOS)
                     value = WebBrowserBackend.Default;
             }
 
@@ -2212,7 +2252,6 @@ namespace Alternet.UI
         {
             CheckDisposed();
             throw new NotImplementedException();
-            /*return Handler.RunScript(javascript, out result);*/
         }
 
         internal virtual string? InvokeScript(string scriptName)
@@ -2274,6 +2313,12 @@ namespace Alternet.UI
         /// </param>
         protected virtual void OnNavigated(WebBrowserEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
         }
 
         /// <summary>

@@ -43,10 +43,10 @@ namespace Alternet::UI
         if ((style & FontStyle::Italic) != (FontStyle)0)
             fontInfo.Italic();
 
-        if ((style & FontStyle::Strikethrough) != (FontStyle)0)
+        if ((style & FontStyle::Strikeout) != (FontStyle)0)
             fontInfo.Strikethrough();
 
-        if ((style & FontStyle::Underlined) != (FontStyle)0)
+        if ((style & FontStyle::Underline) != (FontStyle)0)
             fontInfo.Underlined();
 
         return wxFont(fontInfo);
@@ -99,10 +99,10 @@ namespace Alternet::UI
             style |= FontStyle::Bold;
 
         if (font.GetStrikethrough())
-            style |= FontStyle::Strikethrough;
+            style |= FontStyle::Strikeout;
 
         if (font.GetUnderlined())
-            style |= FontStyle::Underlined;
+            style |= FontStyle::Underline;
 
         return style;
     }
@@ -226,8 +226,10 @@ namespace Alternet::UI
     /*static*/ bool Font::IsFamilyValid(const string& fontFamily)
     {
 #ifdef __WXOSX_COCOA__
+        // the wx function will return false for this.
+        // This is a family name of the macOS system font.
         if (fontFamily == u".AppleSystemUIFont")
-            return true; // the wx function will return false for this. This is a family name of the macOS system font.
+            return true; 
 #endif
 
         return wxFontEnumerator::IsValidFacename(wxStr(fontFamily));

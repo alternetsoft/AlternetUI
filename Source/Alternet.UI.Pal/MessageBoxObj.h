@@ -11,7 +11,8 @@ namespace Alternet::UI
     public:
 
     private:
-        static long GetStyle(MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
-        static MessageBoxResult GetResult(int wxResult);
+        static long GetStyle(
+            MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
+        static DialogResult GetResult(int wxResult);
     };
 }

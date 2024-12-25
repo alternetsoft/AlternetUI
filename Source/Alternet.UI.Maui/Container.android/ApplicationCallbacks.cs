@@ -41,9 +41,9 @@ namespace Alternet.UI
 
         public event EventHandler? ActivityStopped;
 
-        public event EventHandler<BaseEventArgs<Bundle?>>? ActivityCreated;
+        public event EventHandler<UI.BaseEventArgs<Bundle?>>? ActivityCreated;
 
-        public event EventHandler<BaseEventArgs<Bundle>>? ActivitySaveInstanceState;
+        public event EventHandler<UI.BaseEventArgs<Bundle>>? ActivitySaveInstanceState;
 
         public static ApplicationCallbacks Default
         {

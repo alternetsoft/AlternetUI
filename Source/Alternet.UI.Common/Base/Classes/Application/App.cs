@@ -27,6 +27,11 @@ namespace Alternet.UI
     public class App : DisposableObject
     {
         /// <summary>
+        /// Gets id of the application thread.
+        /// </summary>
+        public static readonly int AppThreadId = Thread.CurrentThread.ManagedThreadId;
+
+        /// <summary>
         /// Returns true if operating system is Windows.
         /// </summary>
         public static readonly bool IsWindowsOS;
@@ -122,6 +127,7 @@ namespace Alternet.UI
         private static UnhandledExceptionMode unhandledExceptionModeDebug
             = UnhandledExceptionMode.ThrowException;
 
+        private static bool? isMaui;
         private static bool inOnThreadException;
         private static IconSet? icon;
         private static bool terminating = false;
@@ -207,10 +213,11 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
         /// <param name="handler">Application handler.</param>
-        public App(IApplicationHandler? handler)
+        public App(IApplicationHandler? handler = null)
         {
             if (handler is not null)
                 Handler = handler;
+            Handler ??= CreateDefaultHandler();
             SynchronizationContext.InstallIfNeeded();
             App.Current = this;
 
@@ -283,6 +290,12 @@ namespace Alternet.UI
         public static bool IsPhoneDevice => DeviceType == GenericDeviceType.Phone;
 
         /// <summary>
+        /// Gets whether current thread is the thread which was used to initialize the application.
+        /// It is better to use platform specific ways to get whether current thread is UI thread.
+        /// </summary>
+        public static bool IsAppThread => Thread.CurrentThread.ManagedThreadId == AppThreadId;
+
+        /// <summary>
         /// Gets the path for the executable file that started the application, not including
         /// the executable name.</summary>
         /// <returns>
@@ -348,7 +361,7 @@ namespace Alternet.UI
         {
             get
             {
-                return current ??= new App(null);
+                return current ??= new App();
             }
 
             protected set
@@ -457,6 +470,11 @@ namespace Alternet.UI
                     LogUtils.LogAppStartedToFile();
             }
         }
+
+        /// <summary>
+        /// Gets whether application is executed on Maui platform.
+        /// </summary>
+        public static bool IsMaui => isMaui ??= KnownAssemblies.LibraryMaui.Value is not null;
 
         /// <summary>
         /// Uses timer to call <see cref="WakeUpIdle"/> periodically.
@@ -944,7 +962,7 @@ namespace Alternet.UI
         {
             if (!Initialized)
             {
-                App? application = null;
+                App? application;
 
                 var appType = Type.GetType("Alternet.UI.Application, Alternet.UI");
 
@@ -1844,6 +1862,28 @@ namespace Alternet.UI
             {
                 LogEndUpdate();
             }
+        }
+
+        /// <summary>
+        /// Creates default application handler.
+        /// </summary>
+        /// <returns></returns>
+        protected static IApplicationHandler CreateDefaultHandler()
+        {
+            IApplicationHandler? result = null;
+            Type? type;
+
+            if (IsMaui && !IsLinuxOS)
+                type = Type.GetType("Alternet.UI.MauiApplicationHandler, Alternet.UI.Maui");
+            else
+                type = Type.GetType("Alternet.UI.WxApplicationHandler, Alternet.UI");
+
+            if (type is not null)
+            {
+                result = (IApplicationHandler?)Activator.CreateInstance(type);
+            }
+
+            return result ?? throw new Exception("Application handler not found.");
         }
 
         /// <inheritdoc/>

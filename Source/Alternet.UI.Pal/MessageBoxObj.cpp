@@ -34,7 +34,7 @@ namespace Alternet::UI
         return wxCANCEL;
     }
 
-    MessageBoxResult MessageBoxObj::Show(
+    DialogResult MessageBoxObj::Show(
         Window* owner,
         const string& text,
         optional<string> caption,
@@ -118,22 +118,22 @@ namespace Alternet::UI
         return style;
     }
 
-    MessageBoxResult MessageBoxObj::GetResult(int wxResult)
+    DialogResult MessageBoxObj::GetResult(int wxResult)
     {
-        MessageBoxResult result;
+        DialogResult result;
         switch (wxResult)
         {
         case wxOK:
-            result = MessageBoxResult::OK;
+            result = DialogResult::OK;
             break;
         case wxYES:
-            result = MessageBoxResult::Yes;
+            result = DialogResult::Yes;
             break;
         case wxNO:
-            result = MessageBoxResult::No;
+            result = DialogResult::No;
             break;
         case wxCANCEL:
-            result = MessageBoxResult::Cancel;
+            result = DialogResult::Cancel;
             break;
         default:
             throwEx(u"Unexpected wxMessageBox value.");

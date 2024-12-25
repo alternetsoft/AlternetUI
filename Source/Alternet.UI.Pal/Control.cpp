@@ -1027,7 +1027,6 @@ namespace Alternet::UI
         if (GetUserPaint())
         {
             _wxWindow->SetDoubleBuffered(true);
-            //_wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
         }
 
         if (!GetTabStop())
