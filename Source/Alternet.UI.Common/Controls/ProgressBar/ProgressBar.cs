@@ -143,6 +143,9 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
+
                 value = CoerceValue(value);
                 if (this.val == value)
                     return;

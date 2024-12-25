@@ -18,17 +18,17 @@ namespace MinMaster
 
             var type = typeof(Program);
             var resources = type.Module.Assembly.GetManifestResourceNames();
-            LogUtils.Log(resources);
+            LogUtils.LogRange(resources);
 
             var stream = type.Module.Assembly.GetManifestResourceStream(
                 "CustomCursor.CUR.HideWhiteSpace.cur");
             if (stream is null)
             {
-                Application.Log("Error loading sample cursor");
+                App.Log("Error loading sample cursor");
                 return;
             }
 
-            var form = Application.FirstWindow<WindowLogListBox>();
+            var form = App.FirstWindow<WindowLogListBox>();
             if (form is null)
                 return;
             form.ListBox.Cursor = new(stream);

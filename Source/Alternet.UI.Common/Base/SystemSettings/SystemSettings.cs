@@ -19,6 +19,11 @@ namespace Alternet.UI
         private static bool? isUsingDarkBackgroundOverride;
 
         /// <summary>
+        /// Occurs when the system colors change.
+        /// </summary>
+        public static event Action? SystemColorsChanged;
+
+        /// <summary>
         /// Gets whether <see cref="SystemSettings"/> is initialized and
         /// can be used. Normally this returns False when <see cref="Handler"/>
         /// is not yet assigned.
@@ -289,11 +294,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Resets internal structures related to the system colors.
+        /// and raises <see cref="SystemColorsChanged"/> event.
         /// </summary>
         public static void ResetColors()
         {
             validColors = false;
             PlessSystemColors.Reset();
+            SystemColorsChanged?.Invoke();
         }
 
         /// <summary>

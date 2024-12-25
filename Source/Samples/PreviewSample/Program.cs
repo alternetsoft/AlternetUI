@@ -10,13 +10,7 @@ namespace PreviewSample
         [STAThread]
         public static void Main()
         {
-            var application = new Application();
-            var window = new PreviewSampleWindow();
-
-            application.Run(window);
-
-            window.Dispose();
-            application.Dispose();
+            Application.CreateAndRun(() => new PreviewSampleWindow());
         }
     }
 }

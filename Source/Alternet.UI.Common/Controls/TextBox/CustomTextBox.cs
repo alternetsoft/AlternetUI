@@ -24,6 +24,8 @@ namespace Alternet.UI
         private int minLength;
         private int maxLength;
         private TextBoxOptions options = TextBoxOptions.IntRangeInError;
+        private KnownTextValueType? inputType;
+        private object? minValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomTextBox"/> class.
@@ -574,7 +576,44 @@ namespace Alternet.UI
         /// by this property, you can use it for any purposes.
         /// </remarks>
         [Browsable(false)]
-        public virtual object? MinValue { get; set; }
+        public virtual object? MinValue
+        {
+            get => minValue;
+
+            set
+            {
+                minValue = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets init arguments which are used when <see cref="InputType"/>
+        /// property is assigned.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TextBoxInitializeEventArgs? InputTypeArgs { get; set; }
+
+        /// <summary>
+        /// Gets or sets input type. Default is Null.
+        /// </summary>
+        public virtual KnownTextValueType? InputType
+        {
+            get
+            {
+                return inputType;
+            }
+
+            set
+            {
+                if (inputType == value)
+                    return;
+                inputType = value;
+                TextBoxInitializers.Default.Initialize(
+                    this,
+                    value ?? KnownTextValueType.None,
+                    InputTypeArgs);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the maximum value that can be
@@ -855,10 +894,13 @@ namespace Alternet.UI
         /// validation is ok and error was not reported.</returns>
         /// <remarks>
         /// <see cref="ReportValidatorError"/> is used to report the error. If
-        /// <see cref="CustomTextBox.DataType"/> is assigned, it is also used to get possible min and max
+        /// <see cref="CustomTextBox.DataType"/> is assigned, it is also used
+        /// to get possible min and max
         /// values.
         /// </remarks>
-        public virtual bool ReportErrorMinMaxValue(object? value, Action<string>? errorEnumerator = null)
+        public virtual bool ReportErrorMinMaxValue(
+            object? value,
+            Action<string>? errorEnumerator = null)
         {
             if (value is null)
                 return false;

@@ -45,9 +45,12 @@ namespace Alternet.UI
             events[(int)WxEventIdentifiers.MouseDownXButton2]
                 = () => { ReportMouseDown(MouseButton.XButton2); };
 
-            events[(int)WxEventIdentifiers.MouseUpLeft] = () => { ReportMouseUp(MouseButton.Left); };
-            events[(int)WxEventIdentifiers.MouseUpMiddle] = () => { ReportMouseUp(MouseButton.Middle); };
-            events[(int)WxEventIdentifiers.MouseUpRight] = () => { ReportMouseUp(MouseButton.Right); };
+            events[(int)WxEventIdentifiers.MouseUpLeft]
+                = () => { ReportMouseUp(MouseButton.Left); };
+            events[(int)WxEventIdentifiers.MouseUpMiddle]
+                = () => { ReportMouseUp(MouseButton.Middle); };
+            events[(int)WxEventIdentifiers.MouseUpRight]
+                = () => { ReportMouseUp(MouseButton.Right); };
             events[(int)WxEventIdentifiers.MouseUpXButton1]
                 = () => { ReportMouseUp(MouseButton.XButton1); };
             events[(int)WxEventIdentifiers.MouseUpXButton2]
@@ -79,7 +82,9 @@ namespace Alternet.UI
             Native.Mouse.GlobalObject = null;
         }
 
-        private static AbstractControl? GetTargetControl(IntPtr targetControlPointer, bool setHoveredControl)
+        private static AbstractControl? GetTargetControl(
+            IntPtr targetControlPointer,
+            bool setHoveredControl)
         {
             if (targetControlPointer == IntPtr.Zero)
                 return null;
@@ -100,7 +105,7 @@ namespace Alternet.UI
             if (nobj is not Native.Control c)
                 return null;
 
-            var result = WxControlHandler.NativeControlToHandler(c)?.Control;
+            var result = WxControlHandler.NativeControlToHandler(c)?.ControlOrNull;
             if (setHoveredControl && result is not null)
                 AbstractControl.HoveredControl = result;
 

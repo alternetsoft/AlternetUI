@@ -76,6 +76,8 @@ namespace Alternet.UI
 
             Application.Current.RequestedThemeChanged += (s, a) =>
             {
+                SystemSettings.ResetColors();
+
                 var elements = MauiUtils.ControlViews;
 
                 foreach(var element in elements)

@@ -15,7 +15,7 @@ namespace MinMaster
             };
 
             control.BindApplicationLog();
-            Application.Log($"The application started at {DateTime.Now:HH:mm:ss.fff}");
+            Application.Log($"Timers started at {DateTime.Now:HH:mm:ss.fff}");
 
             SetTimer();
         }

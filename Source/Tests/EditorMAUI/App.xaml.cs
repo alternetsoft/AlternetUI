@@ -5,38 +5,29 @@ public partial class App : Application
     public App()
 	{
 		InitializeComponent();
-
-		MainPage = new AppShell();
-
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        Window window = base.CreateWindow(activationState);
+        var window = new Window(new NavigationPage(new AppShell()));
 
         window.Created += (s, e) =>
         {
         };
 
-        window.Destroying += Window_Destroying;
+        window.Destroying += (s, e) =>
+        {
+        };
 
-        window.Stopped += Window_Stopped;
+        window.Stopped += (s, e) =>
+        {
+        };
 
-        window.Deactivated += Window_Deactivated;
+        window.Deactivated += (s, e) =>
+        {
+        };
 
         return window;
-    }
-
-    private void Window_Deactivated(object? sender, EventArgs e)
-    {
-    }
-
-    private void Window_Stopped(object? sender, EventArgs e)
-    {
-    }
-
-    private void Window_Destroying(object? sender, EventArgs e)
-    {
     }
 }
 

@@ -542,8 +542,7 @@ namespace Alternet.UI
         /// <param name="font">Font.</param>
         internal static void LogMeasureSkiaFont(string text, SKFont font)
         {
-            SKRect bounds = SKRect.Empty;
-            var result = font.MeasureText(text, out bounds);
+            var result = font.MeasureText(text, out var bounds);
             App.Log($"Font.MeasureText: \"{text}\", {result}, {bounds}");
         }
 

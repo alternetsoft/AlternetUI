@@ -18,22 +18,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class Application : App, IDisposable
     {
-        /// <summary>
-        /// Gets whether 'NETCOREAPP' is defined.
-        /// </summary>
-        public static readonly bool IsNetCoreApp;
-
         static Application()
         {
-#if NETCOREAPP
-            IsNetCoreApp = true;
-#else
-            IsNetCoreApp = false;
-#endif
-
             if (!App.Is64BitProcess && App.IsWindowsOS)
             {
-                if (!IsNetCoreApp)
+                if (!IsNetOrCoreApp)
                 {
                     var s = $"Critical error\n\n";
                     s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
@@ -51,37 +40,18 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="Application"/> class.
         /// </summary>
-        public Application(IApplicationHandler? handler = null)
-            : base(handler ?? Handler ?? new WxApplicationHandler())
+        public Application()
+            : this(null)
         {
         }
 
         /// <summary>
-        /// Creates application and main form, runs and disposes them.
+        /// Initializes a new instance of the <see cref="Application"/> class
+        /// with the specified handler.
         /// </summary>
-        /// <param name="createFunc">Function which creates main form.</param>
-        /// <param name="runAction">Runs action after main form is created.</param>
-        /// <exception cref="Exception">If application is already created.</exception>
-        public static void CreateAndRun(Func<Window> createFunc, Action? runAction = null)
+        public Application(IApplicationHandler? handler)
+            : base(handler ?? Handler ?? new WxApplicationHandler())
         {
-            if (Initialized)
-                throw new Exception("The application has already been created.");
-
-            var application = new Application();
-            var window = createFunc();
-
-            void Task(object? userData)
-            {
-                runAction();
-            }
-
-            if (runAction is not null)
-                AddIdleTask(Task);
-
-            application.Run(window);
-
-            window.Dispose();
-            application.Dispose();
         }
    }
 }

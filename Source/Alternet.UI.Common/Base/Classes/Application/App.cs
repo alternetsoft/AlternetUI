@@ -132,6 +132,7 @@ namespace Alternet.UI
         private static Window? mainWindow;
         private static bool wakeUpIdleWithTimer = true;
         private static Timer? wakeUpIdleTimer;
+        private static bool? isNetOrCoreApp;
 
         private readonly List<Window> windows = new();
 
@@ -312,6 +313,21 @@ namespace Alternet.UI
         /// Gets currently used platform.
         /// </summary>
         public static UIPlatformKind PlatformKind => SystemSettings.Handler.GetPlatformKind();
+
+        /// <summary>
+        /// Returns True if application runs on Net or NetCore platform (Net 5 or higher).
+        /// Returns False if application runs on Net Framework.
+        /// </summary>
+        public static bool IsNetOrCoreApp
+        {
+            get
+            {
+                isNetOrCoreApp ??=
+                    AppUtils.FrameworkIdentifier == NetFrameworkIdentifier.Net ||
+                    AppUtils.FrameworkIdentifier == NetFrameworkIdentifier.NetCore;
+                return isNetOrCoreApp.Value;
+            }
+        }
 
         /// <summary>
         /// Gets whether <see cref="Handler"/> is initialized.
@@ -916,6 +932,52 @@ namespace Alternet.UI
         {
             if (condition)
                 Log(obj, kind);
+        }
+
+        /// <summary>
+        /// Creates application and main form, runs and disposes them.
+        /// </summary>
+        /// <param name="createFunc">Function which creates main form.</param>
+        /// <param name="runAction">Runs action after main form is created.</param>
+        /// <exception cref="Exception">If application is already created.</exception>
+        public static void CreateAndRun(Func<Window> createFunc, Action? runAction = null)
+        {
+            if (!Initialized)
+            {
+                App? application = null;
+
+                var appType = Type.GetType("Alternet.UI.Application, Alternet.UI");
+
+                if (appType is not null)
+                {
+                    application = (App?)Activator.CreateInstance(appType);
+                }
+                else
+                {
+                    throw new Exception("Alternet.UI library not loaded.");
+                }
+
+                if (App.Handler is null)
+                {
+                    throw new Exception("Application handler is not assigned.");
+                }
+
+                application ??= new App(App.Handler);
+
+                var window = createFunc();
+                AddIdleTask(runAction);
+
+                application.Run(window);
+
+                window.Dispose();
+                application.Dispose();
+            }
+            else
+            {
+                var window = createFunc();
+                runAction?.Invoke();
+                window.ShowAndFocus();
+            }
         }
 
         /// <summary>
