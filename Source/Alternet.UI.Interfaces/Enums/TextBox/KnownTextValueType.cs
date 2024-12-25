@@ -10,6 +10,11 @@ namespace Alternet.UI
     public enum KnownTextValueType
     {
         /// <summary>
+        /// Value type is not specified.
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Value is <see cref="string"/>.
         /// </summary>
         String,
