@@ -11,7 +11,8 @@ using Microsoft.Maui.Controls;
 
 namespace Alternet.UI
 {
-    internal partial class MauiSystemSettingsHandler : PlessSystemSettingsHandler, ISystemSettingsHandler
+    internal partial class MauiSystemSettingsHandler
+        : PlessSystemSettingsHandler, ISystemSettingsHandler
     {
         public override int GetMetric(SystemSettingsMetric index)
         {
