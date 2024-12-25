@@ -907,18 +907,6 @@ namespace Alternet.UI
         public new IWebBrowserHandler Handler => (IWebBrowserHandler)base.Handler;
 
         /// <summary>
-        /// Returns type of the OS for which the WebBrowser was compiled.
-        /// </summary>
-        /// <returns>
-        ///     A <see cref="WebBrowserBackendOS"/> representing type of the
-        ///     OS for which the WebBrowser was compiled.
-        /// </returns>
-        public static WebBrowserBackendOS GetBackendOS()
-        {
-            return Factory.GetBackendOS();
-        }
-
-        /// <summary>
         /// Prepends filename with "file" url protocol prefix.
         /// </summary>
         /// <param name="filename">Path to the file.</param>
@@ -1062,7 +1050,7 @@ namespace Alternet.UI
             if (value == WebBrowserBackend.IE || value == WebBrowserBackend.IELatest
                 || value == WebBrowserBackend.Edge)
             {
-                if (WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
+                if (!App.IsWindowsOS)
                     value = WebBrowserBackend.Default;
             }
 

@@ -49,9 +49,6 @@ namespace Alternet.UI
         /// <returns></returns>
         IWebBrowserMemoryFS CreateMemoryFileSystem(WebBrowser browser);
 
-        /// <inheritdoc cref="WebBrowser.GetBackendOS"/>
-        WebBrowserBackendOS GetBackendOS();
-
         /// <inheritdoc cref="WebBrowser.SetBackendPath(string, bool)"/>
         void SetEdgePath(string path);
 
