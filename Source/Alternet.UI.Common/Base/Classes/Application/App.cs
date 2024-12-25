@@ -122,6 +122,7 @@ namespace Alternet.UI
         private static UnhandledExceptionMode unhandledExceptionModeDebug
             = UnhandledExceptionMode.ThrowException;
 
+        private static bool? isMaui;
         private static bool inOnThreadException;
         private static IconSet? icon;
         private static bool terminating = false;
@@ -457,6 +458,11 @@ namespace Alternet.UI
                     LogUtils.LogAppStartedToFile();
             }
         }
+
+        /// <summary>
+        /// Gets whether application is executed on Maui platform.
+        /// </summary>
+        public static bool IsMaui => isMaui ??= KnownAssemblies.LibraryMaui.Value is not null;
 
         /// <summary>
         /// Uses timer to call <see cref="WakeUpIdle"/> periodically.
@@ -944,7 +950,7 @@ namespace Alternet.UI
         {
             if (!Initialized)
             {
-                App? application = null;
+                App? application;
 
                 var appType = Type.GetType("Alternet.UI.Application, Alternet.UI");
 
