@@ -16,8 +16,8 @@ public partial class MainPage : ContentPage
 
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
 
-    private readonly Alternet.Syntax.Parsers.Advanced.CsParser parserCs;
-    private Alternet.Syntax.Parsers.Roslyn.CsParser roslynParser;
+    private readonly Alternet.Syntax.Parsers.Advanced.CsParser? parserCs;
+    private readonly Alternet.Syntax.Parsers.Roslyn.CsParser? roslynParser;
 
     private readonly Button button = new();
 
@@ -50,9 +50,10 @@ public partial class MainPage : ContentPage
 
         button.Text = "Hello";
 
+        editor.Interior.HasBorder = false;
+
         if (!Alternet.UI.App.IsDesktopDevice)
         {
-            editor.Interior.HasBorder = false;
             editor.Editor.RunAfterGotFocus = Alternet.UI.GenericControlAction.ShowKeyboardIfUnknown;
 
             editor.Editor.Selection.Options |= SelectionOptions.DisableSelectionByMouse;
@@ -60,14 +61,27 @@ public partial class MainPage : ContentPage
         }
         else
         {
-            editor.Interior.HasBorder = true;
-            panel.BackgroundColor = Colors.White;
-            panel.Padding = new(10);
+            panel.Padding = new(0);
         }
 
-        editor.Interior.SetThemeMetrics(Alternet.UI.ScrollBar.KnownTheme.WindowsLight);
-        if (editor.Interior.Border?.Border is not null)
-            editor.Interior.Border.Border.Color = Alternet.UI.BorderSettings.DefaultColor;
+        UpdateEditorTheme();
+
+        void UpdateEditorTheme()
+        {
+            if (Alternet.UI.SystemSettings.AppearanceIsDark)
+            {
+                editor.Editor.VisualThemeType = VisualThemeType.Dark;
+            }
+            else
+            {
+                editor.Editor.VisualThemeType = VisualThemeType.Light;
+            }
+        }
+
+        Alternet.UI.SystemSettings.SystemColorsChanged += () =>
+        {
+            UpdateEditorTheme();
+        };
 
         BindingContext = this;
 
@@ -195,7 +209,7 @@ public partial class MainPage : ContentPage
         }
     }
 
-    void InsertText(string s)
+    internal void InsertText(string s)
     {
         var ed = editor.Editor;
         var position = ed.Position;
