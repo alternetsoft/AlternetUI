@@ -20,14 +20,14 @@ using AndroidX.Core.View;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="IKeyboardHandler"/> for MAUI platform under Android.
+    /// Implements <see cref="UI.IKeyboardHandler"/> for MAUI platform under Android.
     /// </summary>
-    public class MauiKeyboardHandler : PlatformKeyboardHandler<Keycode>
+    public class MauiKeyboardHandler : UI.PlatformKeyboardHandler<Keycode>
     {
         public const Keycode MaxKeyValue = Keycode.Macro4;
 
         /// <summary>
-        /// Gets or sets default <see cref="IKeyboardHandler"/> implementation.
+        /// Gets or sets default <see cref="UI.IKeyboardHandler"/> implementation.
         /// </summary>
         public static MauiKeyboardHandler Default = new();
 
@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="MauiKeyboardHandler"/> class.
         /// </summary>
         public MauiKeyboardHandler()
-            : base(MaxKeyValue, Key.Max)
+            : base(MaxKeyValue, UI.Key.Max)
         {
         }
 
@@ -46,14 +46,14 @@ namespace Alternet.UI
             Application.Context.GetSystemService(Context.InputMethodService) as InputMethodManager;
 
         public virtual Alternet.UI.KeyEventArgs ToKeyEventArgs(
-                    AbstractControl control,
-                    KeyStates keyStates,
+                    UI.AbstractControl control,
+                    UI.KeyStates keyStates,
                     Keycode keyCode,
                     KeyEvent e)
         {
             var key = Convert(keyCode);
 
-            ModifierKeys modifiers;
+            UI.ModifierKeys modifiers;
             int repeatCount;
 
             modifiers = Convert(e.MetaState);
@@ -73,18 +73,18 @@ namespace Alternet.UI
             return result;
         }
 
-        public virtual ModifierKeys Convert(MetaKeyStates states)
+        public virtual UI.ModifierKeys Convert(MetaKeyStates states)
         {
             var shiftPressed = (states & MetaKeyStates.ShiftMask) != 0;
             var altPressed = (states & MetaKeyStates.AltMask) != 0;
             var controlPressed = (states & MetaKeyStates.CtrlMask) != 0;
-            ModifierKeys result = ModifierKeys.None;
+            UI.ModifierKeys result = UI.ModifierKeys.None;
             if (shiftPressed)
-                result |= ModifierKeys.Shift;
+                result |= UI.ModifierKeys.Shift;
             if (altPressed)
-                result |= ModifierKeys.Alt;
+                result |= UI.ModifierKeys.Alt;
             if (controlPressed)
-                result |= ModifierKeys.Control;
+                result |= UI.ModifierKeys.Control;
             return result;
         }
 
@@ -735,13 +735,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override KeyStates GetKeyStatesFromSystem(Key key)
+        public override UI.KeyStates GetKeyStatesFromSystem(Key key)
         {
-            return PlessKeyboard.GetKeyStatesFromMemory(key);
+            return UI.PlessKeyboard.GetKeyStatesFromMemory(key);
         }
 
         /// <inheritdoc/>
-        public override bool HideKeyboard(AbstractControl? control)
+        public override bool HideKeyboard(UI.AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)
@@ -763,7 +763,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool IsSoftKeyboardShowing(AbstractControl? control)
+        public override bool IsSoftKeyboardShowing(UI.AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)
@@ -778,14 +778,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool ShowKeyboard(AbstractControl? control)
+        public override bool ShowKeyboard(UI.AbstractControl? control)
         {
             var platformView = ControlView.GetPlatformView(control);
             if (platformView is null)
                 return false;
 
             using var inputMethodManager
-                = (InputMethodManager?)platformView.Context?.GetSystemService(Context.InputMethodService);
+                = (InputMethodManager?)platformView.Context
+                ?.GetSystemService(Context.InputMethodService);
 
             // The zero value for the second parameter comes from
             // https://developer.android.com/reference/android/view/inputmethod/InputMethodManager#showSoftInput(android.view.View,%20int)

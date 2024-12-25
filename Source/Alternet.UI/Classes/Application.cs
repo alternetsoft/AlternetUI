@@ -56,14 +56,5 @@ namespace Alternet.UI
             : base(handler ?? Handler ?? CreateDefaultHandler())
         {
         }
-
-        /// <summary>
-        /// Creates default application handler.
-        /// </summary>
-        /// <returns></returns>
-        protected static IApplicationHandler CreateDefaultHandler()
-        {
-            return new WxApplicationHandler();
-        }
    }
 }
