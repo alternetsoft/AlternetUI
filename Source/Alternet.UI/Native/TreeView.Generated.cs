@@ -172,7 +172,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public TreeViewSelectionMode SelectionMode
+        public Alternet.UI.TreeViewSelectionMode SelectionMode
         {
             get
             {
@@ -627,10 +627,10 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr TreeView_GetRootItem_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern TreeViewSelectionMode TreeView_GetSelectionMode_(IntPtr obj);
+            public static extern Alternet.UI.TreeViewSelectionMode TreeView_GetSelectionMode_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetSelectionMode_(IntPtr obj, TreeViewSelectionMode value);
+            public static extern void TreeView_SetSelectionMode_(IntPtr obj, Alternet.UI.TreeViewSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TreeView_GetShowLines_(IntPtr obj);

@@ -18,13 +18,16 @@ namespace ApiGenerator
 
             var classTypes = TypeProvider.GetClassTypes();
             ManagedGenerator.GenerateClasses(paths, classTypes);
-            if(UseNativeGenerator)
-                NativeGenerator.GenerateClasses(paths, classTypes);
-
-            var enumTypes = TypeProvider.GetEnumTypes();
             if (UseNativeGenerator)
-                NativeGenerator.GenerateEnums(paths, enumTypes);
-            ManagedGenerator.GenerateEnums(paths, enumTypes);
+            {
+                NativeGenerator.GenerateClasses(paths, classTypes);
+            }
+
+            if (UseNativeGenerator)
+            {
+                NativeGenerator.GenerateEnums(paths, TypeProvider.GetEnumTypes(false));
+            }
+            ManagedGenerator.GenerateEnums(paths, TypeProvider.GetEnumTypes(true));
 
             var nativeEventDataTypes = TypeProvider.GetNativeEventDataTypes();
             if (UseNativeGenerator)

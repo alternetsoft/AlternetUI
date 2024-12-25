@@ -54,7 +54,9 @@ namespace ApiGenerator.Managed
 
         public static void GenerateEnums(Paths paths, IEnumerable<Type> types)
         {
-            WriteAllTextSmart(Path.Combine(paths.ManagedApiSourcePath, "Enums.Generated.cs"), ManagedEnumsGenerator.Generate(types));
+            WriteAllTextSmart(
+                Path.Combine(paths.ManagedApiSourcePath, "Enums.Generated.cs"), 
+                ManagedEnumsGenerator.Generate(types));
         }
     }
 }

@@ -78,11 +78,13 @@ namespace Alternet::UI
 			Height = height;
 		}
 
-		/*inline operator SizeI_C() { return SizeI_C{Width, Height}; }*/
-
 		inline operator wxSize() const { return wxSize(Width, Height); }
 
-		inline bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
+		inline bool operator==(const Int32Size& rhs)
+		{
+			return Width == rhs.Width && Height == rhs.Height;
+		}
+		
 		inline bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
 
 		std::string ToString() const
@@ -132,8 +134,6 @@ namespace Alternet::UI
 			return *this;
 		}
 
-		/*inline operator SizeD_C() { return SizeD_C{Width, Height}; }*/
-
 		inline bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
 		inline bool operator!=(const Size& rhs) { return !(*this == rhs); }
 
@@ -175,8 +175,6 @@ namespace Alternet::UI
 			Y = p.y;
 		}
 
-		/*inline operator PointI_C() const { return PointI_C{X, Y}; }*/
-
 		inline operator wxPoint() const { return wxPoint{ X, Y }; }
 
 		inline bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
@@ -212,8 +210,6 @@ namespace Alternet::UI
 			X = x;
 			Y = y;
 		}
-
-		/*inline operator PointD_C() const { return PointD_C{X, Y}; }*/
 
 		inline Point operator+(const Size& value) const {
 			return Point(X + value.Width, Y + value.Height);
@@ -280,8 +276,6 @@ namespace Alternet::UI
 		}
 
 		inline operator wxRect() const { return wxRect{ X, Y, Width, Height }; }
-
-		/*inline operator RectI_C() const { return RectI_C{X, Y, Width, Height}; }*/
 
 		inline bool operator==(const Int32Rect& rhs)
 		{
@@ -351,8 +345,6 @@ namespace Alternet::UI
 			return Rect(X + value.Width, Y + value.Height, Width, Height);
 		}
 
-		/*inline operator RectD_C() { return RectD_C{X, Y, Width, Height}; }*/
-
 		inline bool operator==(const Rect& rhs)
 		{
 			return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height;
@@ -396,8 +388,6 @@ namespace Alternet::UI
 			Right = right;
 			Bottom = bottom;
 		}
-
-		/*inline operator Thickness_C() { return Thickness_C{Left, Top, Right, Bottom}; }*/
 
 		inline bool operator==(const Thickness& rhs) {
 			return Left == rhs.Left
@@ -470,8 +460,6 @@ namespace Alternet::UI
 			}
 		}
 
-		/*inline operator Color_C() { return Color_C{R, G, B, A, state}; }*/
-
 		bool operator==(const Color& rhs)
 		{
 			return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A &&
@@ -519,11 +507,6 @@ namespace Alternet::UI
 			Second = 0;
 			Millisecond = 0;
 		}
-
-		/*operator DateTime_C() {
-			return DateTime_C{ Year, Month, // was (uint8_t)(Month + 1)
-				Day, Hour, Minute, Second, Millisecond };
-		}*/
 
 		bool operator==(const DateTime& rhs) {
 			return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second
@@ -623,22 +606,6 @@ namespace Alternet::UI
 				_idleCallback();
 		}
 	};
-
-	/*
-		static wxSize GetDPIHelper(const wxWindowBase* w)
-		{
-			wxSize dpi;
-
-			if (w)
-				dpi = w->GetDPI();
-			if (!dpi.x || !dpi.y)
-				dpi = wxScreenDC().GetPPI();
-			if (!dpi.x || !dpi.y)
-				dpi = wxDisplay::GetStdPPI();
-
-			return dpi;
-		}
-	*/
 
 	inline Coord GetDPIScaleFactor(wxWindow* window)
 	{
@@ -764,47 +731,6 @@ namespace Alternet::UI
 		return Point(
 			toDip(value.m_x, window),
 			toDip(value.m_y, window));
-	};
-
-	enum KnownSystemColor
-	{
-		// 0 - reserved for "not a known color"
-
-		KnownSystemColor_ActiveBorder = 1,
-		KnownSystemColor_ActiveCaption = 2,
-		KnownSystemColor_ActiveCaptionText = 3,
-		KnownSystemColor_AppWorkspace = 4,
-		KnownSystemColor_Control = 5,
-		KnownSystemColor_ControlDark = 6,
-		KnownSystemColor_ControlDarkDark = 7,
-		KnownSystemColor_ControlLight = 8,
-		KnownSystemColor_ControlLightLight = 9,
-		KnownSystemColor_ControlText = 10,
-		KnownSystemColor_Desktop = 11,
-		KnownSystemColor_GrayText = 12,
-		KnownSystemColor_Highlight = 13,
-		KnownSystemColor_HighlightText = 14,
-		KnownSystemColor_HotTrack = 15,
-		KnownSystemColor_InactiveBorder = 16,
-		KnownSystemColor_InactiveCaption = 17,
-		KnownSystemColor_InactiveCaptionText = 18,
-		KnownSystemColor_Info = 19,
-		KnownSystemColor_InfoText = 20,
-		KnownSystemColor_Menu = 21,
-		KnownSystemColor_MenuText = 22,
-		KnownSystemColor_ScrollBar = 23,
-		KnownSystemColor_Window = 24,
-		KnownSystemColor_WindowFrame = 25,
-		KnownSystemColor_WindowText = 26,
-		KnownSystemColor_Transparent = 27,
-
-		KnownSystemColor_ButtonFace = 168,
-		KnownSystemColor_ButtonHighlight = 169,
-		KnownSystemColor_ButtonShadow = 170,
-		KnownSystemColor_GradientActiveCaption = 171,
-		KnownSystemColor_GradientInactiveCaption = 172,
-		KnownSystemColor_MenuBar = 173,
-		KnownSystemColor_MenuHighlight = 174,
 	};
 
 #pragma pack(pop)

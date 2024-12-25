@@ -9,37 +9,32 @@ namespace Alternet::UI
         Save = 1,
     };
     
-    enum class MessageBoxResult
+    enum class TextHorizontalAlignment
     {
-        OK = 0,
-        Cancel = 1,
-        Yes = 2,
-        No = 3,
+        Left = 0,
+        Center = 1,
+        Right = 2,
     };
     
-    enum class MessageBoxDefaultButton
-    {
-        OK = 0,
-        Cancel = 1,
-        Yes = 2,
-        No = 3,
-    };
-    
-    enum class MessageBoxButtons
-    {
-        OK = 0,
-        OKCancel = 1,
-        YesNoCancel = 2,
-        YesNo = 3,
-    };
-    
-    enum class MessageBoxIcon
+    enum class TextTrimming
     {
         None = 0,
-        Information = 1,
-        Warning = 2,
-        Error = 3,
-        Question = 4,
+        Pixel = 1,
+        Character = 2,
+    };
+    
+    enum class TextVerticalAlignment
+    {
+        Top = 0,
+        Center = 1,
+        Bottom = 2,
+    };
+    
+    enum class TextWrapping
+    {
+        None = 0,
+        Character = 1,
+        Word = 2,
     };
     
     enum class BrushHatchStyle
@@ -52,20 +47,254 @@ namespace Alternet::UI
         Vertical = 5,
     };
     
-    enum class DashStyle
+    enum class BrushType
     {
-        Solid = 0,
-        Dot = 1,
-        Dash = 2,
-        DashDot = 3,
-        Custom = 4,
+        None = 0,
+        Solid = 1,
+        Hatch = 2,
+        LinearGradient = 3,
+        RadialGradient = 4,
+        Transparent = 5,
+        Texture = 6,
     };
     
-    enum class Duplex
+    enum class KnownColor
     {
-        Simplex = 0,
-        Vertical = 1,
-        Horizontal = 2,
+        ActiveBorder = 1,
+        ActiveCaption = 2,
+        ActiveCaptionText = 3,
+        AppWorkspace = 4,
+        Control = 5,
+        ControlDark = 6,
+        ControlDarkDark = 7,
+        ControlLight = 8,
+        ControlLightLight = 9,
+        ControlText = 10,
+        Desktop = 11,
+        GrayText = 12,
+        Highlight = 13,
+        HighlightText = 14,
+        HotTrack = 15,
+        InactiveBorder = 16,
+        InactiveCaption = 17,
+        InactiveCaptionText = 18,
+        Info = 19,
+        InfoText = 20,
+        Menu = 21,
+        MenuText = 22,
+        ScrollBar = 23,
+        Window = 24,
+        WindowFrame = 25,
+        WindowText = 26,
+        Transparent = 27,
+        AliceBlue = 28,
+        AntiqueWhite = 29,
+        Aqua = 30,
+        Aquamarine = 31,
+        Azure = 32,
+        Beige = 33,
+        Bisque = 34,
+        Black = 35,
+        BlanchedAlmond = 36,
+        Blue = 37,
+        BlueViolet = 38,
+        Brown = 39,
+        BurlyWood = 40,
+        CadetBlue = 41,
+        Chartreuse = 42,
+        Chocolate = 43,
+        Coral = 44,
+        CornflowerBlue = 45,
+        Cornsilk = 46,
+        Crimson = 47,
+        Cyan = 48,
+        DarkBlue = 49,
+        DarkCyan = 50,
+        DarkGoldenrod = 51,
+        DarkGray = 52,
+        DarkGreen = 53,
+        DarkKhaki = 54,
+        DarkMagenta = 55,
+        DarkOliveGreen = 56,
+        DarkOrange = 57,
+        DarkOrchid = 58,
+        DarkRed = 59,
+        DarkSalmon = 60,
+        DarkSeaGreen = 61,
+        DarkSlateBlue = 62,
+        DarkSlateGray = 63,
+        DarkTurquoise = 64,
+        DarkViolet = 65,
+        DeepPink = 66,
+        DeepSkyBlue = 67,
+        DimGray = 68,
+        DodgerBlue = 69,
+        Firebrick = 70,
+        FloralWhite = 71,
+        ForestGreen = 72,
+        Fuchsia = 73,
+        Gainsboro = 74,
+        GhostWhite = 75,
+        Gold = 76,
+        Goldenrod = 77,
+        Gray = 78,
+        Green = 79,
+        GreenYellow = 80,
+        Honeydew = 81,
+        HotPink = 82,
+        IndianRed = 83,
+        Indigo = 84,
+        Ivory = 85,
+        Khaki = 86,
+        Lavender = 87,
+        LavenderBlush = 88,
+        LawnGreen = 89,
+        LemonChiffon = 90,
+        LightBlue = 91,
+        LightCoral = 92,
+        LightCyan = 93,
+        LightGoldenrodYellow = 94,
+        LightGray = 95,
+        LightGreen = 96,
+        LightPink = 97,
+        LightSalmon = 98,
+        LightSeaGreen = 99,
+        LightSkyBlue = 100,
+        LightSlateGray = 101,
+        LightSteelBlue = 102,
+        LightYellow = 103,
+        Lime = 104,
+        LimeGreen = 105,
+        Linen = 106,
+        Magenta = 107,
+        Maroon = 108,
+        MediumAquamarine = 109,
+        MediumBlue = 110,
+        MediumOrchid = 111,
+        MediumPurple = 112,
+        MediumSeaGreen = 113,
+        MediumSlateBlue = 114,
+        MediumSpringGreen = 115,
+        MediumTurquoise = 116,
+        MediumVioletRed = 117,
+        MidnightBlue = 118,
+        MintCream = 119,
+        MistyRose = 120,
+        Moccasin = 121,
+        NavajoWhite = 122,
+        Navy = 123,
+        OldLace = 124,
+        Olive = 125,
+        OliveDrab = 126,
+        Orange = 127,
+        OrangeRed = 128,
+        Orchid = 129,
+        PaleGoldenrod = 130,
+        PaleGreen = 131,
+        PaleTurquoise = 132,
+        PaleVioletRed = 133,
+        PapayaWhip = 134,
+        PeachPuff = 135,
+        Peru = 136,
+        Pink = 137,
+        Plum = 138,
+        PowderBlue = 139,
+        Purple = 140,
+        Red = 141,
+        RosyBrown = 142,
+        RoyalBlue = 143,
+        SaddleBrown = 144,
+        Salmon = 145,
+        SandyBrown = 146,
+        SeaGreen = 147,
+        SeaShell = 148,
+        Sienna = 149,
+        Silver = 150,
+        SkyBlue = 151,
+        SlateBlue = 152,
+        SlateGray = 153,
+        Snow = 154,
+        SpringGreen = 155,
+        SteelBlue = 156,
+        Tan = 157,
+        Teal = 158,
+        Thistle = 159,
+        Tomato = 160,
+        Turquoise = 161,
+        Violet = 162,
+        Wheat = 163,
+        White = 164,
+        WhiteSmoke = 165,
+        Yellow = 166,
+        YellowGreen = 167,
+        ButtonFace = 168,
+        ButtonHighlight = 169,
+        ButtonShadow = 170,
+        GradientActiveCaption = 171,
+        GradientInactiveCaption = 172,
+        MenuBar = 173,
+        MenuHighlight = 174,
+        RebeccaPurple = 175,
+    };
+    
+    enum class KnownColorCategory
+    {
+        Standard = 1,
+        System = 2,
+        Web = 4,
+        Other = 8,
+    };
+    
+    enum class KnownSystemColor
+    {
+        ActiveBorder = 1,
+        ActiveCaption = 2,
+        ActiveCaptionText = 3,
+        AppWorkspace = 4,
+        Control = 5,
+        ControlDark = 6,
+        ControlDarkDark = 7,
+        ControlLight = 8,
+        ControlLightLight = 9,
+        ControlText = 10,
+        Desktop = 11,
+        GrayText = 12,
+        Highlight = 13,
+        HighlightText = 14,
+        HotTrack = 15,
+        InactiveBorder = 16,
+        InactiveCaption = 17,
+        InactiveCaptionText = 18,
+        Info = 19,
+        InfoText = 20,
+        Menu = 21,
+        MenuText = 22,
+        ScrollBar = 23,
+        Window = 24,
+        WindowFrame = 25,
+        WindowText = 26,
+        ButtonFace = 168,
+        ButtonHighlight = 169,
+        ButtonShadow = 170,
+        GradientActiveCaption = 171,
+        GradientInactiveCaption = 172,
+        MenuBar = 173,
+        MenuHighlight = 174,
+    };
+    
+    enum class CombineMode
+    {
+        Replace = 0,
+        Intersect = 1,
+        Union = 2,
+        Xor = 3,
+        Exclude = 4,
+        Complement = 5,
+    };
+    
+    enum class DrawLabelFlags
+    {
+        TextHasBold = 1,
     };
     
     enum class FillMode
@@ -74,13 +303,140 @@ namespace Alternet::UI
         Winding = 1,
     };
     
+    enum class FontEncoding
+    {
+        Default = 0,
+        ISO8859_1 = 1,
+        ISO8859_2 = 2,
+        ISO8859_3 = 3,
+        ISO8859_4 = 4,
+        ISO8859_5 = 5,
+        ISO8859_6 = 6,
+        ISO8859_7 = 7,
+        ISO8859_8 = 8,
+        ISO8859_9 = 9,
+        ISO8859_10 = 10,
+        ISO8859_11 = 11,
+        ISO8859_12 = 12,
+        ISO8859_13 = 13,
+        ISO8859_14 = 14,
+        ISO8859_15 = 15,
+        ISO8859_MAX = 16,
+        KOI8 = 17,
+        KOI8_U = 18,
+        ALTERNATIVE = 19,
+        BULGARIAN = 20,
+        CP437 = 21,
+        CP850 = 22,
+        CP852 = 23,
+        CP855 = 24,
+        CP866 = 25,
+        CP874 = 26,
+        SHIFT_JIS = 27,
+        CP932 = 27,
+        GB2312 = 28,
+        CP936 = 28,
+        CP949 = 29,
+        EUC_KR = 29,
+        CP950 = 30,
+        BIG5 = 30,
+        CP1250 = 31,
+        CP1251 = 32,
+        CP1252 = 33,
+        CP1253 = 34,
+        CP1254 = 35,
+        CP1255 = 36,
+        CP1256 = 37,
+        CP1257 = 38,
+        VIETNAMESE = 39,
+        CP1258 = 39,
+        JOHAB = 40,
+        CP1361 = 40,
+        CP12_MAX = 41,
+        UTF7 = 42,
+        UTF8 = 43,
+        EUC_JP = 44,
+        UTF16BE = 45,
+        UTF16LE = 46,
+        UTF32BE = 47,
+        UTF32LE = 48,
+        MACMIN = 49,
+        MACROMAN = 49,
+        MACJAPANESE = 50,
+        MACCHINESETRAD = 51,
+        MACKOREAN = 52,
+        MACARABIC = 53,
+        MACHEBREW = 54,
+        MACGREEK = 55,
+        MACCYRILLIC = 56,
+        MACDEVANAGARI = 57,
+        MACGURMUKHI = 58,
+        MACGUJARATI = 59,
+        MACORIYA = 60,
+        MACBENGALI = 61,
+        MACTAMIL = 62,
+        MACTELUGU = 63,
+        MACKANNADA = 64,
+        MACMALAJALAM = 65,
+        MACSINHALESE = 66,
+        MACBURMESE = 67,
+        MACKHMER = 68,
+        MACTHAI = 69,
+        MACLAOTIAN = 70,
+        MACGEORGIAN = 71,
+        MACARMENIAN = 72,
+        MACCHINESESIMP = 73,
+        MACTIBETAN = 74,
+        MACMONGOLIAN = 75,
+        MACETHIOPIC = 76,
+        MACCENTRALEUR = 77,
+        MACVIATNAMESE = 78,
+        MACARABICEXT = 79,
+        MACSYMBOL = 80,
+        MACDINGBATS = 81,
+        MACTURKISH = 82,
+        MACCROATIAN = 83,
+        MACICELANDIC = 84,
+        MACROMANIAN = 85,
+        MACCELTIC = 86,
+        MACGAELIC = 87,
+        MACKEYBOARD = 88,
+        MACMAX = 88,
+        ISO2022_JP = 89,
+        MAX = 90,
+        System = -1,
+    };
+    
     enum class FontStyle
     {
         Regular = 0,
         Bold = 1,
         Italic = 2,
-        Underlined = 4,
-        Strikethrough = 8,
+        Underline = 4,
+        Strikeout = 8,
+    };
+    
+    enum class FontWeight
+    {
+        Invalid = 0,
+        Thin = 100,
+        ExtraLight = 200,
+        UltraLight = 200,
+        Light = 300,
+        Normal = 400,
+        Regular = 400,
+        Medium = 500,
+        SemiBold = 600,
+        DemiBold = 600,
+        Bold = 700,
+        ExtraBold = 800,
+        UltraBold = 800,
+        Heavy = 900,
+        Black = 900,
+        ExtraBlack = 950,
+        UltraBlack = 950,
+        ExtraHeavy = 1000,
+        Max = 1000,
     };
     
     enum class GenericFontFamily
@@ -92,12 +448,159 @@ namespace Alternet::UI
         Default = 4,
     };
     
+    enum class GenericImageAlphaBlendMode
+    {
+        Overwrite = 0,
+        Compose = 1,
+    };
+    
+    enum class GenericImageLoadFlags
+    {
+        Verbose = 1,
+    };
+    
+    enum class GenericImagePngSetFilter
+    {
+        None = 8,
+        Sub = 16,
+        Up = 32,
+        FastFilters = 56,
+        Avg = 64,
+        Paeth = 128,
+        All = 248,
+    };
+    
+    enum class GenericImagePngType
+    {
+        Color = 0,
+        Grey = 2,
+        GreyRed = 3,
+        Palette = 4,
+    };
+    
+    enum class GenericImageResizeQuality
+    {
+        Nearest = 0,
+        Normal = 0,
+        Bilinear = 1,
+        Bicubic = 2,
+        BoxAverage = 3,
+        High = 4,
+    };
+    
+    enum class GenericImageResolutionUnit
+    {
+        None = 0,
+        Inches = 1,
+        Centimeters = 2,
+    };
+    
+    enum class GenericImageTiffCompression
+    {
+        None = 1,
+        CCITTRLE = 2,
+        CCITTFAX3 = 3,
+        CCITT_T = 3,
+        CCITTFAX4 = 4,
+        CCITT_T6 = 4,
+        LZW = 5,
+        OJPEG = 6,
+        JPEG = 7,
+        T85 = 9,
+        T43 = 10,
+    };
+    
+    enum class GenericImageTiffPhotometric
+    {
+        MINISWHITE = 0,
+        MINISBLACK = 1,
+        RGB = 2,
+        PALETTE = 3,
+        MASK = 4,
+        SEPARATED = 5,
+        YCBCR = 6,
+        CIELAB = 8,
+        ICCLAB = 9,
+        ITULAB = 10,
+    };
+    
+    enum class GraphicsUnit
+    {
+        World = 0,
+        Display = 1,
+        Pixel = 2,
+        Point = 3,
+        Inch = 4,
+        Document = 5,
+        Millimeter = 6,
+        Dip = 7,
+    };
+    
+    enum class ImageBitsFormatKind
+    {
+        Native = 0,
+        Alpha = 1,
+        Generic = 2,
+        Unknown = -1,
+    };
+    
+    enum class ImageGrayScaleMethod
+    {
+        Default = 0,
+        SetColorRGB150 = 1,
+        FillWithDisabledBrush = 2,
+    };
+    
+    enum class ImageLockMode
+    {
+        ReadOnly = 1,
+        WriteOnly = 2,
+        ReadWrite = 3,
+    };
+    
     enum class InterpolationMode
     {
         None = 0,
         LowQuality = 1,
         MediumQuality = 2,
         HighQuality = 3,
+    };
+    
+    enum class PixelFormat
+    {
+        DontCare = 0,
+        Undefined = 0,
+        Max = 15,
+        Indexed = 65536,
+        Gdi = 131072,
+        Format16bppRgb555 = 135173,
+        Format16bppRgb565 = 135174,
+        Format24bppRgb = 137224,
+        Format32bppRgb = 139273,
+        Format1bppIndexed = 196865,
+        Format4bppIndexed = 197634,
+        Format8bppIndexed = 198659,
+        Alpha = 262144,
+        Format16bppArgb1555 = 397319,
+        PAlpha = 524288,
+        Format32bppPArgb = 925707,
+        Extended = 1048576,
+        Format16bppGrayScale = 1052676,
+        Format48bppRgb = 1060876,
+        Format64bppPArgb = 1851406,
+        Canonical = 2097152,
+        Format32bppArgb = 2498570,
+        Format64bppArgb = 3424269,
+    };
+    
+    enum class DashStyle
+    {
+        Solid = 0,
+        Dot = 1,
+        Dash = 2,
+        DashDot = 3,
+        DashDotDot = 3,
+        Custom = 4,
     };
     
     enum class LineCap
@@ -112,6 +615,71 @@ namespace Alternet::UI
         Miter = 0,
         Bevel = 1,
         Round = 2,
+    };
+    
+    enum class RasterOperationMode
+    {
+        Clear = 0,
+        Xor = 1,
+        Invert = 2,
+        OrReverse = 3,
+        AndReverse = 4,
+        Copy = 5,
+        And = 6,
+        AndInvert = 7,
+        NoOp = 8,
+        Nor = 9,
+        Equiv = 10,
+        SrcInvert = 11,
+        OrInvert = 12,
+        Nand = 13,
+        Or = 14,
+        Set = 15,
+    };
+    
+    enum class RegionContain
+    {
+        OutRegion = 0,
+        InRegion = 2,
+    };
+    
+    enum class TextFormatFlags
+    {
+        GlyphOverhangPadding = 0,
+        Default = 0,
+        Left = 0,
+        Top = 0,
+        HorizontalCenter = 1,
+        Right = 2,
+        VerticalCenter = 4,
+        Bottom = 8,
+        WordBreak = 16,
+        SingleLine = 32,
+        ExpandTabs = 64,
+        NoClipping = 256,
+        ExternalLeading = 512,
+        NoPrefix = 2048,
+        Internal = 4096,
+        TextBoxControl = 8192,
+        PathEllipsis = 16384,
+        EndEllipsis = 32768,
+        ModifyString = 65536,
+        RightToLeft = 131072,
+        WordEllipsis = 262144,
+        NoFullWidthCharacterBreak = 524288,
+        HidePrefix = 1048576,
+        PrefixOnly = 2097152,
+        PreserveGraphicsClipping = 16777216,
+        PreserveGraphicsTranslateTransform = 33554432,
+        NoPadding = 268435456,
+        LeftAndRightPadding = 536870912,
+    };
+    
+    enum class Duplex
+    {
+        Simplex = 0,
+        Vertical = 1,
+        Horizontal = 2,
     };
     
     enum class PaperKind
@@ -251,52 +819,561 @@ namespace Alternet::UI
         SomePages = 2,
     };
     
-    enum class TextHorizontalAlignment
+    enum class AnchorStyles
+    {
+        None = 0,
+        Top = 1,
+        Bottom = 2,
+        TopBottom = 3,
+        Left = 4,
+        LeftTop = 5,
+        Right = 8,
+        LeftRight = 12,
+    };
+    
+    enum class ArrowDirection
+    {
+        Up = 0,
+        Down = 1,
+        Left = 2,
+        Right = 3,
+    };
+    
+    enum class AutoSizeMode
+    {
+        GrowAndShrink = 0,
+        GrowOnly = 1,
+    };
+    
+    enum class ContentAlignment
+    {
+        TopLeft = 1,
+        TopCenter = 2,
+        TopRight = 4,
+        MiddleLeft = 16,
+        MiddleCenter = 32,
+        MiddleRight = 64,
+        BottomLeft = 256,
+        BottomCenter = 512,
+        BottomRight = 1024,
+    };
+    
+    enum class CoordAlignment
+    {
+        Near = 0,
+        Center = 1,
+        Far = 2,
+        Stretch = 3,
+        Fill = 4,
+    };
+    
+    enum class DockStyle
+    {
+        None = 0,
+        Top = 1,
+        Bottom = 2,
+        Left = 3,
+        Right = 4,
+        Fill = 5,
+    };
+    
+    enum class GenericAlignment
+    {
+        Not = 0,
+        Left = 0,
+        Top = 0,
+        TopLeft = 0,
+        CenterHorizontal = 256,
+        Right = 512,
+        TopRight = 512,
+        Bottom = 1024,
+        BottomLeft = 1024,
+        BottomRight = 1536,
+        CenterVertical = 2048,
+        Center = 2304,
+        CenterRight = 2560,
+        Invalid = -1,
+    };
+    
+    enum class GenericDirection
+    {
+        None = 0,
+        Default = 0,
+        Left = 16,
+        Right = 32,
+        Top = 64,
+        TopLeft = 80,
+        TopRight = 96,
+        Bottom = 128,
+        BottomLeft = 144,
+        BottomRight = 160,
+        All = 240,
+    };
+    
+    enum class GenericOrientation
+    {
+        Horizontal = 4,
+        Vertical = 8,
+        Both = 12,
+    };
+    
+    enum class HorizontalAlignment
     {
         Left = 0,
         Center = 1,
         Right = 2,
+        Stretch = 3,
+        Fill = 4,
     };
     
-    enum class TextTrimming
+    enum class ImageToText
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    };
+    
+    enum class LayoutStyle
     {
         None = 0,
-        Pixel = 1,
-        Character = 2,
+        Dock = 1,
+        Basic = 2,
+        Vertical = 3,
+        Horizontal = 4,
+        Scroll = 5,
     };
     
-    enum class TextVerticalAlignment
+    enum class RightToLeft
+    {
+        No = 0,
+        Yes = 1,
+        Inherit = 2,
+    };
+    
+    enum class SplitterPanelSplitMethod
+    {
+        Manual = 0,
+        Horizontal = 1,
+        Vertical = 2,
+        Unsplitted = 3,
+    };
+    
+    enum class StackPanelOrientation
+    {
+        Vertical = 0,
+        Horizontal = 1,
+    };
+    
+    enum class VerticalAlignment
     {
         Top = 0,
         Center = 1,
         Bottom = 2,
+        Stretch = 3,
+        Fill = 4,
     };
     
-    enum class TextWrapping
+    enum class SliderTickStyle
     {
         None = 0,
-        Character = 1,
-        Word = 2,
+        TopLeft = 1,
+        BottomRight = 2,
+        Both = 3,
+    };
+    
+    enum class StatusBarPanelStyle
+    {
+        Normal = 0,
+        Flat = 1,
+        Raised = 2,
+        Sunken = 3,
+    };
+    
+    enum class WindowRoundedCornerPreference
+    {
+        Default = 0,
+        NotRound = 1,
+        Round = 2,
+        RoundSmall = 3,
+    };
+    
+    enum class ButtonBorderStyle
+    {
+        None = 0,
+        Dotted = 1,
+        Dashed = 2,
+        Solid = 3,
+    };
+    
+    enum class CheckState
+    {
+        Unchecked = 0,
+        Checked = 1,
+        Indeterminate = 2,
+    };
+    
+    enum class KnownButton
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+        Abort = 4,
+        Retry = 5,
+        Ignore = 6,
+        Help = 7,
+        Add = 8,
+        Remove = 9,
+        Clear = 10,
+        AddChild = 11,
+        MoreItems = 12,
+        New = 13,
+        Open = 14,
+        Save = 15,
+        Undo = 16,
+        Redo = 17,
+        Bold = 18,
+        Italic = 19,
+        Underline = 20,
+        Back = 21,
+        Forward = 22,
+        ZoomIn = 23,
+        ZoomOut = 24,
+        BrowserGo = 25,
+        TextBoxEllipsis = 26,
+        TextBoxCombo = 27,
+        TextBoxUp = 28,
+        TextBoxDown = 29,
+        TextBoxPlus = 30,
+        TextBoxMinus = 31,
+        TextBoxShowPassword = 32,
+        TextBoxHidePassword = 33,
+    };
+    
+    enum class TextDataFormat
+    {
+        Text = 0,
+        UnicodeText = 0,
+        Rtf = 1,
+        Html = 2,
+        CommaSeparatedValue = 3,
+        Xaml = 4,
+    };
+    
+    enum class Border3DSide
+    {
+        Left = 1,
+        Top = 2,
+        Right = 4,
+        Bottom = 8,
+        Middle = 2048,
+        All = 2063,
+    };
+    
+    enum class BoundsSpecified
+    {
+        None = 0,
+        X = 1,
+        Y = 2,
+        Location = 3,
+        Width = 4,
+        Height = 8,
+        Size = 12,
+        All = 15,
+    };
+    
+    enum class ControlBackgroundStyle
+    {
+        Erase = 0,
+        System = 1,
+        Paint = 2,
+        Transparent = 3,
+    };
+    
+    enum class ControlBorderStyle
+    {
+        Default = 0,
+        None = 2097152,
+        Static = 16777216,
+        Simple = 33554432,
+        Raised = 67108864,
+        Sunken = 134217728,
+        Theme = 268435456,
+    };
+    
+    enum class ControlFlags
+    {
+        ParentAssigned = 1,
+        StartLocationApplied = 2,
+        ForceTextChange = 4,
+    };
+    
+    enum class ControlRefreshOptions
+    {
+        None = 0,
+        RefreshOnBorder = 1,
+        RefreshOnImage = 2,
+        RefreshOnBackground = 4,
+        RefreshOnColor = 8,
+        RefreshOnState = 16,
+    };
+    
+    enum class ControlRenderSizeVariant
+    {
+        Normal = 0,
+        Small = 1,
+        Mini = 2,
+        Large = 3,
+    };
+    
+    enum class ControlStyles
+    {
+        ContainerControl = 1,
+        UserPaint = 2,
+        Opaque = 4,
+        ResizeRedraw = 16,
+        FixedWidth = 32,
+        FixedHeight = 64,
+        StandardClick = 256,
+        Selectable = 512,
+        UserMouse = 1024,
+        SupportsTransparentBackColor = 2048,
+        StandardDoubleClick = 4096,
+        AllPaintingInWmPaint = 8192,
+        CacheText = 16384,
+        EnableNotifyMessage = 32768,
+        DoubleBuffer = 65536,
+        OptimizedDoubleBuffer = 131072,
+        UseTextForAccessibility = 262144,
+    };
+    
+    enum class FocusState
+    {
+        Unfocused = 0,
+        Pointer = 1,
+        Keyboard = 2,
+        Programmatic = 3,
+    };
+    
+    enum class GenericControlAction
+    {
+        None = 0,
+        ShowKeyboard = 1,
+        HideKeyboard = 2,
+        ShowKeyboardIfNoHardware = 3,
+        ShowKeyboardIfUnknown = 4,
+    };
+    
+    enum class SetBoundsFlags
+    {
+        UseExisting = 0,
+        AutoWidth = 1,
+        AutoHeight = 2,
+        Auto = 3,
+        AllowMinusOne = 4,
+        NoAdjustments = 8,
+        Force = 16,
+        ForceEvent = 32,
+    };
+    
+    enum class VisualControlState
+    {
+        Normal = 0,
+        Hovered = 1,
+        Pressed = 2,
+        Disabled = 3,
+        Focused = 4,
+        Selected = 5,
+    };
+    
+    enum class VisualControlStates
+    {
+        Hovered = 1,
+        Pressed = 2,
+        Disabled = 4,
+        Focused = 8,
+        Selected = 16,
+    };
+    
+    enum class CalendarDateBorder
+    {
+        None = 0,
+        Square = 1,
+        Round = 2,
+    };
+    
+    enum class DatePickerStyleFlags
+    {
+        Default = 0,
+        Spin = 1,
+        DropDown = 2,
+        ShowCentury = 4,
+        AllowNone = 8,
+    };
+    
+    enum class DateTimePickerKind
+    {
+        Date = 0,
+        Time = 1,
+    };
+    
+    enum class DateTimePickerPopupKind
+    {
+        Default = 0,
+        Spin = 1,
+        DropDown = 2,
+    };
+    
+    enum class LogItemKind
+    {
+        Information = 0,
+        Error = 1,
+        Warning = 2,
+        Other = 3,
+    };
+    
+    enum class LogItemKindFlags
+    {
+        None = 0,
+        Information = 1,
+        Error = 2,
+        Warning = 4,
+        Other = 8,
+    };
+    
+    enum class UnhandledExceptionMode
+    {
+        CatchException = 0,
+        ThrowException = 1,
+    };
+    
+    enum class DialogResult
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+        Abort = 4,
+        Retry = 5,
+        Ignore = 6,
+        None = 7,
+    };
+    
+    enum class MessageBoxButtons
+    {
+        OK = 0,
+        OKCancel = 1,
+        YesNoCancel = 2,
+        YesNo = 3,
+        AbortRetryIgnore = 4,
+        RetryCancel = 5,
+    };
+    
+    enum class MessageBoxDefaultButton
+    {
+        Button1 = 0,
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+        Button2 = 256,
+        Button3 = 512,
+    };
+    
+    enum class MessageBoxIcon
+    {
+        None = 0,
+        Information = 1,
+        Warning = 2,
+        Error = 3,
+        Question = 4,
+        Hand = 5,
+        Exclamation = 6,
+        Asterisk = 7,
+        Stop = 8,
+    };
+    
+    enum class MessageBoxOptions
+    {
+        DefaultDesktopOnly = 131072,
+        RightAlign = 524288,
+        RtlReading = 1048576,
+        ServiceNotification = 2097152,
+    };
+    
+    enum class AppColorTheme
+    {
+        Default = 0,
+        Light = 1,
+        Dark = 2,
+    };
+    
+    enum class DrawMode
+    {
+        Normal = 0,
+        OwnerDrawFixed = 1,
+        OwnerDrawVariable = 2,
+    };
+    
+    enum class BitmapType
+    {
+        Invalid = 0,
+        Bmp = 1,
+        Ico = 3,
+        Cur = 5,
+        Xbm = 7,
+        XbmData = 8,
+        Xpm = 9,
+        XpmData = 10,
+        Tiff = 11,
+        Gif = 13,
+        Png = 15,
+        Jpeg = 17,
+        Pnm = 19,
+        Pcx = 21,
+        Pict = 23,
+        Icon = 25,
+        Ani = 27,
+        Iff = 28,
+        Tga = 29,
+        MacCursor = 30,
+        Any = 50,
+        CursorDefaultType = -1,
+    };
+    
+    enum class TextEllipsizeType
+    {
+        None = 0,
+        End = 1,
+        Start = 2,
+        Middle = 3,
     };
     
     enum class Key
     {
         None = 0,
         Backspace = 1,
+        Back = 1,
         Tab = 2,
         Enter = 3,
+        Return = 3,
         Pause = 4,
         CapsLock = 5,
         Escape = 6,
         Space = 7,
         PageUp = 8,
+        Prior = 8,
         PageDown = 9,
+        Next = 9,
         End = 10,
         Home = 11,
+        Left = 12,
         LeftArrow = 12,
         UpArrow = 13,
+        Up = 13,
+        Right = 14,
         RightArrow = 14,
         DownArrow = 15,
+        Down = 15,
         PrintScreen = 16,
         Insert = 17,
         Delete = 18,
@@ -399,10 +1476,13 @@ namespace Alternet::UI
         Equals = 115,
         Comma = 116,
         Minus = 117,
+        OemPeriod = 118,
         Period = 118,
         Slash = 119,
+        OemOpenBrackets = 120,
         OpenBracket = 120,
         CloseBracket = 121,
+        OemCloseBrackets = 121,
         Quote = 122,
         Backslash = 123,
         Clear = 124,
@@ -434,8 +1514,481 @@ namespace Alternet::UI
         LowLine = 150,
         LeftCurlyBracket = 151,
         VerticalLine = 152,
+        OemPipe = 152,
         RightCurlyBracket = 153,
+        MaxWxWidgets = 154,
         Tilde = 154,
+        GamepadA = 155,
+        GamepadB = 156,
+        GamepadX = 157,
+        GamepadY = 158,
+        GamepadRightShoulder = 159,
+        GamepadLeftShoulder = 160,
+        GamepadLeftTrigger = 161,
+        GamepadRightTrigger = 162,
+        GamepadDPadUp = 163,
+        GamepadDPadDown = 164,
+        GamepadDPadLeft = 165,
+        GamepadDPadRight = 166,
+        GamepadMenu = 167,
+        GamepadView = 168,
+        GamepadLeftThumbstickButton = 169,
+        GamepadRightThumbstickButton = 170,
+        GamepadLeftThumbstickUp = 171,
+        GamepadLeftThumbstickDown = 172,
+        GamepadLeftThumbstickRight = 173,
+        GamepadLeftThumbstickLeft = 174,
+        GamepadRightThumbstickUp = 175,
+        GamepadRightThumbstickDown = 176,
+        GamepadRightThumbstickRight = 177,
+        GamepadRightThumbstickLeft = 178,
+        Kana = 179,
+        Hangul = 179,
+        Junja = 180,
+        Final = 181,
+        Hanja = 182,
+        Kanji = 182,
+        Convert = 183,
+        NonConvert = 184,
+        Accept = 185,
+        ModeChange = 186,
+        Select = 187,
+        Execute = 188,
+        Snapshot = 189,
+        Sleep = 190,
+        NavigationView = 191,
+        NavigationMenu = 192,
+        NavigationUp = 193,
+        NavigationDown = 194,
+        NavigationLeft = 195,
+        NavigationRight = 196,
+        NavigationAccept = 197,
+        NavigationCancel = 198,
+        AlternateErase = 199,
+        SysReqOrAttention = 200,
+        ClearOrAgain = 201,
+        CrSelOrProps = 202,
+        ExSel = 203,
+        Katakana = 204,
+        Hiragana = 205,
+        LockingCapsLock = 206,
+        LockingNumLock = 207,
+        LockingScrollLock = 208,
+        Undo = 209,
+        Cut = 210,
+        Copy = 211,
+        Paste = 212,
+        Find = 213,
+        NumPadEqualSignAS400 = 214,
+        Help = 215,
+        Power = 216,
+        NonUSBackslash = 217,
+        International1 = 218,
+        International2 = 219,
+        International3 = 220,
+        International4 = 221,
+        International5 = 222,
+        International6 = 223,
+        International7 = 224,
+        International8 = 225,
+        International9 = 226,
+        Lang1 = 227,
+        Lang2 = 228,
+        Lang3 = 229,
+        Lang4 = 230,
+        Lang5 = 231,
+        Lang6 = 232,
+        Lang7 = 233,
+        Lang8 = 234,
+        Lang9 = 235,
+        AlphanumericSwitch = 236,
+        Separator = 237,
+        Out = 238,
+        Oper = 239,
+        NonUSPound = 240,
+        Application = 241,
+        Again = 242,
+        LineFeed = 243,
+        Oem8 = 244,
+        ProcessKey = 245,
+        Packet = 246,
+        Attn = 247,
+        EraseEof = 248,
+        Zoom = 249,
+        NoName = 250,
+        Pa1 = 251,
+        MediaAudioTrack = 252,
+        Wakeup = 253,
+        Pairing = 254,
+        MediaTopMenu = 255,
+        K11 = 256,
+        K12 = 257,
+        LastChannel = 258,
+        TvDataService = 259,
+        VoiceAssist = 260,
+        TvRadioService = 261,
+        TvTeletext = 262,
+        TvNumberEntry = 263,
+        TvTerrestrialAnalog = 264,
+        TvTerrestrialDigital = 265,
+        TvSatellite = 266,
+        TvSatelliteBs = 267,
+        TvSatelliteCs = 268,
+        TvSatelliteService = 269,
+        TvNetwork = 270,
+        TvAntennaCable = 271,
+        TvInputHdmi1 = 272,
+        TvInputHdmi2 = 273,
+        TvInputHdmi3 = 274,
+        TvInputHdmi4 = 275,
+        TvInputComposite1 = 276,
+        TvInputComposite2 = 277,
+        TvInputComponent1 = 278,
+        TvInputComponent2 = 279,
+        TvInputVga1 = 280,
+        TvAudioDescription = 281,
+        TvAudioDescriptionMixUp = 282,
+        TvAudioDescriptionMixDown = 283,
+        TvZoomMode = 284,
+        TvContentsMenu = 285,
+        TvMediaContextMenu = 286,
+        TvTimerProgramming = 287,
+        NavigatePrevious = 288,
+        NavigateNext = 289,
+        NavigateIn = 290,
+        NavigateOut = 291,
+        StemPrimary = 292,
+        Stem1 = 293,
+        Stem2 = 294,
+        Stem3 = 295,
+        DpadUpLeft = 296,
+        DpadDownLeft = 297,
+        DpadUpRight = 298,
+        DpadDownRight = 299,
+        MediaSkipForward = 300,
+        MediaSkipBackward = 301,
+        MediaStepForward = 302,
+        MediaStepBackward = 303,
+        SoftSleep = 304,
+        SystemNavigationUp = 305,
+        SystemNavigationDown = 306,
+        SystemNavigationLeft = 307,
+        SystemNavigationRight = 308,
+        AllApps = 309,
+        ThumbsUp = 310,
+        ThumbsDown = 311,
+        ProfileSwitch = 312,
+        VideoApp1 = 313,
+        VideoApp2 = 314,
+        VideoApp3 = 315,
+        VideoApp4 = 316,
+        VideoApp5 = 317,
+        VideoApp6 = 318,
+        VideoApp7 = 319,
+        VideoApp8 = 320,
+        FeaturedApp1 = 321,
+        FeaturedApp2 = 322,
+        FeaturedApp3 = 323,
+        FeaturedApp4 = 324,
+        DemoApp1 = 325,
+        DemoApp2 = 326,
+        DemoApp3 = 327,
+        DemoApp4 = 328,
+        KeyboardBacklightDown = 329,
+        KeyboardBacklightUp = 330,
+        KeyboardBacklightToggle = 331,
+        StylusButtonPrimary = 332,
+        StylusButtonSecondary = 333,
+        StylusButtonTertiary = 334,
+        StylusButtonTail = 335,
+        RecentApps = 336,
+        Macro1 = 337,
+        Macro2 = 338,
+        Macro3 = 339,
+        Macro4 = 340,
+        TVWindow = 341,
+        TVGuide = 342,
+        TvDvr = 343,
+        TVBookmark = 344,
+        TVCaptions = 345,
+        Settings = 346,
+        TVPower = 347,
+        TVInput = 348,
+        TVStbPower = 349,
+        TVStbInput = 350,
+        TVAvrPower = 351,
+        TVAvrInput = 352,
+        TVProgRed = 353,
+        TVProgGreen = 354,
+        TVProgYellow = 355,
+        TVProgBlue = 356,
+        AppSwitch = 357,
+        GamepadButton1 = 358,
+        GamepadButton2 = 359,
+        GamepadButton3 = 360,
+        GamepadButton4 = 361,
+        GamepadButton5 = 362,
+        GamepadButton6 = 363,
+        GamepadButton7 = 364,
+        GamepadButton8 = 365,
+        GamepadButton9 = 366,
+        GamepadButton10 = 367,
+        GamepadButton11 = 368,
+        GamepadButton12 = 369,
+        GamepadButton13 = 370,
+        GamepadButton14 = 371,
+        GamepadButton15 = 372,
+        GamepadButton16 = 373,
+        LanguageSwitch = 374,
+        MannerMode = 375,
+        ThreeDMode = 376,
+        Contacts = 377,
+        Calendar = 378,
+        Music = 379,
+        Calculator = 380,
+        JapaneseZenkakuHankaku = 381,
+        JapaneseEisu = 382,
+        JapaneseMuhenkan = 383,
+        JapaneseHenkan = 384,
+        JapaneseYen = 385,
+        JapaneseRo = 386,
+        Assist = 387,
+        BrightnessDown = 388,
+        BrightnessUp = 389,
+        NumPadLeftParen = 390,
+        NumPadRightParen = 391,
+        GamepadC = 392,
+        GamepadZ = 393,
+        Function = 394,
+        TVInfo = 395,
+        TVChannelUp = 396,
+        TVChannelDown = 397,
+        MediaRewind = 398,
+        MediaFastForward = 399,
+        Sym = 400,
+        LaunchBrowser = 401,
+        Mute = 402,
+        Pictsymbols = 403,
+        SwitchCharset = 404,
+        ZoomIn = 405,
+        ZoomOut = 406,
+        Num = 407,
+        Headsethook = 408,
+        Focus = 409,
+        Notification = 410,
+        Call = 411,
+        Endcall = 412,
+        DpadUp = 413,
+        DpadDown = 414,
+        DpadLeft = 415,
+        DpadRight = 416,
+        DpadCenter = 417,
+        Camera = 418,
+        TvViewLive = 419,
+        MediaPlay = 420,
+        MediaPause = 421,
+        MediaClose = 422,
+        MediaEject = 423,
+        MediaRecord = 424,
+        Max = 424,
+    };
+    
+    enum class Keys
+    {
+        None = 0,
+        LButton = 1,
+        RButton = 2,
+        Cancel = 3,
+        MButton = 4,
+        XButton1 = 5,
+        XButton2 = 6,
+        Back = 8,
+        Tab = 9,
+        LineFeed = 10,
+        Clear = 12,
+        Return = 13,
+        Enter = 13,
+        ShiftKey = 16,
+        ControlKey = 17,
+        Menu = 18,
+        Pause = 19,
+        Capital = 20,
+        CapsLock = 20,
+        KanaMode = 21,
+        HanguelMode = 21,
+        HangulMode = 21,
+        JunjaMode = 23,
+        FinalMode = 24,
+        HanjaMode = 25,
+        KanjiMode = 25,
+        Escape = 27,
+        IMEConvert = 28,
+        IMENonconvert = 29,
+        IMEAccept = 30,
+        IMEAceept = 30,
+        IMEModeChange = 31,
+        Space = 32,
+        PageUp = 33,
+        Prior = 33,
+        Next = 34,
+        PageDown = 34,
+        End = 35,
+        Home = 36,
+        Left = 37,
+        Up = 38,
+        Right = 39,
+        Down = 40,
+        Select = 41,
+        Print = 42,
+        Execute = 43,
+        PrintScreen = 44,
+        Snapshot = 44,
+        Insert = 45,
+        Delete = 46,
+        Help = 47,
+        D0 = 48,
+        D1 = 49,
+        D2 = 50,
+        D3 = 51,
+        D4 = 52,
+        D5 = 53,
+        D6 = 54,
+        D7 = 55,
+        D8 = 56,
+        D9 = 57,
+        A = 65,
+        B = 66,
+        C = 67,
+        D = 68,
+        E = 69,
+        F = 70,
+        G = 71,
+        H = 72,
+        I = 73,
+        J = 74,
+        K = 75,
+        L = 76,
+        M = 77,
+        N = 78,
+        O = 79,
+        P = 80,
+        Q = 81,
+        R = 82,
+        S = 83,
+        T = 84,
+        U = 85,
+        V = 86,
+        W = 87,
+        X = 88,
+        Y = 89,
+        Z = 90,
+        LWin = 91,
+        RWin = 92,
+        Apps = 93,
+        Sleep = 95,
+        NumPad0 = 96,
+        NumPad1 = 97,
+        NumPad2 = 98,
+        NumPad3 = 99,
+        NumPad4 = 100,
+        NumPad5 = 101,
+        NumPad6 = 102,
+        NumPad7 = 103,
+        NumPad8 = 104,
+        NumPad9 = 105,
+        Multiply = 106,
+        Add = 107,
+        Separator = 108,
+        Subtract = 109,
+        Decimal = 110,
+        Divide = 111,
+        F1 = 112,
+        F2 = 113,
+        F3 = 114,
+        F4 = 115,
+        F5 = 116,
+        F6 = 117,
+        F7 = 118,
+        F8 = 119,
+        F9 = 120,
+        F10 = 121,
+        F11 = 122,
+        F12 = 123,
+        F13 = 124,
+        F14 = 125,
+        F15 = 126,
+        F16 = 127,
+        F17 = 128,
+        F18 = 129,
+        F19 = 130,
+        F20 = 131,
+        F21 = 132,
+        F22 = 133,
+        F23 = 134,
+        F24 = 135,
+        NumLock = 144,
+        Scroll = 145,
+        LShiftKey = 160,
+        RShiftKey = 161,
+        LControlKey = 162,
+        RControlKey = 163,
+        LMenu = 164,
+        RMenu = 165,
+        BrowserBack = 166,
+        BrowserForward = 167,
+        BrowserRefresh = 168,
+        BrowserStop = 169,
+        BrowserSearch = 170,
+        BrowserFavorites = 171,
+        BrowserHome = 172,
+        VolumeMute = 173,
+        VolumeDown = 174,
+        VolumeUp = 175,
+        MediaNextTrack = 176,
+        MediaPreviousTrack = 177,
+        MediaStop = 178,
+        MediaPlayPause = 179,
+        LaunchMail = 180,
+        SelectMedia = 181,
+        LaunchApplication1 = 182,
+        LaunchApplication2 = 183,
+        Oem1 = 186,
+        OemSemicolon = 186,
+        Oemplus = 187,
+        Oemcomma = 188,
+        OemMinus = 189,
+        OemPeriod = 190,
+        OemQuestion = 191,
+        Oem2 = 191,
+        Oemtilde = 192,
+        Oem3 = 192,
+        OemOpenBrackets = 219,
+        Oem4 = 219,
+        Oem5 = 220,
+        OemPipe = 220,
+        OemCloseBrackets = 221,
+        Oem6 = 221,
+        OemQuotes = 222,
+        Oem7 = 222,
+        Oem8 = 223,
+        OemBackslash = 226,
+        Oem102 = 226,
+        ProcessKey = 229,
+        Packet = 231,
+        Attn = 246,
+        Crsel = 247,
+        Exsel = 248,
+        EraseEof = 249,
+        Play = 250,
+        Zoom = 251,
+        NoName = 252,
+        Pa1 = 253,
+        OemClear = 254,
+        KeyCode = 65535,
+        Shift = 65536,
+        Control = 131072,
+        Alt = 262144,
+        Modifiers = -65536,
     };
     
     enum class KeyStates
@@ -450,8 +2003,119 @@ namespace Alternet::UI
         None = 0,
         Alt = 1,
         Control = 2,
+        ControlAlt = 3,
+        Shift = 4,
+        AltShift = 5,
+        ControlShift = 6,
+        ControlShiftAlt = 7,
+        Windows = 8,
+        WindowsShift = 12,
+    };
+    
+    enum class MouseButton
+    {
+        Left = 0,
+        Middle = 1,
+        Right = 2,
+        XButton1 = 3,
+        XButton2 = 4,
+        Unknown = 5,
+    };
+    
+    enum class MouseButtons
+    {
+        None = 0,
+        Left = 1048576,
+        Right = 2097152,
+        Middle = 4194304,
+        XButton1 = 8388608,
+        XButton2 = 16777216,
+    };
+    
+    enum class MouseButtonState
+    {
+        Released = 0,
+        Pressed = 1,
+    };
+    
+    enum class RawModifierKeys
+    {
+        None = 0,
+        Alt = 1,
+        Control = 2,
         Shift = 4,
         Windows = 8,
+        MacCommand = 16,
+        MacOption = 32,
+        MacControl = 64,
+    };
+    
+    enum class TouchAction
+    {
+        Entered = 0,
+        Pressed = 1,
+        Moved = 2,
+        Released = 3,
+        Cancelled = 4,
+        Exited = 5,
+        WheelChanged = 6,
+    };
+    
+    enum class TouchDeviceType
+    {
+        Touch = 0,
+        Mouse = 1,
+        Pen = 2,
+        Touchpad = 3,
+        Other = 4,
+        Unknown = 5,
+    };
+    
+    enum class TouchEventsMask
+    {
+        None = 0,
+        VerticalPan = 1,
+        HorizontalPan = 2,
+        Pan = 3,
+        Zoom = 4,
+        Rotate = 8,
+        Press = 16,
+        All = 31,
+    };
+    
+    enum class TouchInteractionKind
+    {
+        CancelInteraction = 0,
+        EndInteraction = 1,
+        DragInteraction = 2,
+        StartInteraction = 3,
+        EndHoverInteraction = 4,
+        MoveHoverInteraction = 5,
+        StartHoverInteraction = 6,
+    };
+    
+    enum class VirtualKeyboardClass
+    {
+        Default = 0,
+        Chat = 1,
+        Email = 2,
+        Numeric = 3,
+        Plain = 4,
+        Telephone = 5,
+        Text = 6,
+        Url = 7,
+    };
+    
+    enum class VirtualKeyboardFlags
+    {
+        None = 0,
+        CapitalizeSentence = 1,
+        Spellcheck = 2,
+        Suggestions = 4,
+        CapitalizeWord = 8,
+        CapitalizeCharacter = 16,
+        CapitalizeNone = 32,
+        All = -1,
     };
     
     enum class ListViewColumnWidthMode
@@ -459,6 +2123,7 @@ namespace Alternet::UI
         Fixed = 0,
         AutoSize = 1,
         AutoSizeHeader = 2,
+        FixedInPercent = 3,
     };
     
     enum class ListViewGridLinesDisplayMode
@@ -510,46 +2175,35 @@ namespace Alternet::UI
         LargeIcon = 3,
     };
     
-    enum class MouseButton
+    enum class AnimationType
     {
-        Left = 0,
-        Middle = 1,
-        Right = 2,
-        XButton1 = 3,
-        XButton2 = 4,
+        Invalid = 0,
+        Gif = 1,
+        Ani = 2,
+        Any = 3,
     };
     
-    enum class MouseButtonState
+    enum class SoundPlayFlags
     {
-        Released = 0,
-        Pressed = 1,
+        Synchronous = 0,
+        Asynchronous = 1,
+        AsynchronousLoop = 3,
     };
     
-    enum class DragAction
+    enum class SystemSoundType
     {
-        Continue = 0,
-        Drop = 1,
-        Cancel = 2,
+        Beep = 0,
+        Hand = 16,
+        Question = 32,
+        Exclamation = 48,
+        Asterisk = 64,
     };
     
-    enum class DragDropEffects
+    enum class LangDirection
     {
-        None = 0,
-        Copy = 1,
-        Move = 2,
-        Link = 4,
-    };
-    
-    enum class ImageToText
-    {
-        Horizontal = 0,
-        Vertical = 1,
-    };
-    
-    enum class ListBoxSelectionMode
-    {
-        Single = 0,
-        Multiple = 1,
+        Default = 0,
+        LeftToRight = 1,
+        RightToLeft = 2,
     };
     
     enum class ProgressBarOrientation
@@ -570,12 +2224,597 @@ namespace Alternet::UI
         Vertical = 1,
     };
     
-    enum class SliderTickStyle
+    enum class CursorType
+    {
+        None = 0,
+        Arrow = 1,
+        Char = 4,
+        Cross = 5,
+        Hand = 6,
+        IBeam = 7,
+        LeftButton = 8,
+        MiddleButton = 10,
+        NoEntry = 11,
+        QuestionArrow = 16,
+        RightButton = 17,
+        SizeNESW = 18,
+        SizeNS = 19,
+        SizeNWSE = 20,
+        SizeWE = 21,
+        Sizing = 22,
+        Wait = 24,
+        Watch = 25,
+    };
+    
+    enum class DragAction
+    {
+        Continue = 0,
+        Drop = 1,
+        Cancel = 2,
+    };
+    
+    enum class DragDropEffects
+    {
+        None = 0,
+        Copy = 1,
+        Move = 2,
+        Link = 4,
+        Scroll = -2147483648,
+        All = -2147483645,
+    };
+    
+    enum class DrawItemState
+    {
+        None = 0,
+        Selected = 1,
+        Grayed = 2,
+        Disabled = 4,
+        Checked = 8,
+        Focus = 16,
+        Default = 32,
+        HotLight = 64,
+        Inactive = 128,
+        NoAccelerator = 256,
+        NoFocusRect = 512,
+        ComboBoxEdit = 4096,
+    };
+    
+    enum class FontDialogRestrictSelection
+    {
+        None = 0,
+        Scalable = 1,
+        FixedPitch = 2,
+    };
+    
+    enum class GridUnitType
+    {
+        Auto = 0,
+        Pixel = 1,
+        Star = 2,
+    };
+    
+    enum class HelpNavigator
+    {
+        Topic = -2147483647,
+        TableOfContents = -2147483646,
+        Index = -2147483645,
+        Find = -2147483644,
+        AssociateIndex = -2147483643,
+        KeywordIndex = -2147483642,
+        TopicId = -2147483641,
+    };
+    
+    enum class HiddenOrVisible
+    {
+        Auto = 0,
+        Hidden = 1,
+        Visible = 2,
+    };
+    
+    enum class ImeMode
+    {
+        NoControl = 0,
+        On = 1,
+        Off = 2,
+        Disable = 3,
+        Hiragana = 4,
+        Katakana = 5,
+        KatakanaHalf = 6,
+        AlphaFull = 7,
+        Alpha = 8,
+        HangulFull = 9,
+        Hangul = 10,
+        Close = 11,
+        OnHalf = 12,
+        Inherit = -1,
+    };
+    
+    enum class ListBoxSelectionMode
+    {
+        Single = 0,
+        Multiple = 1,
+    };
+    
+    enum class Modifiability
+    {
+        Unmodifiable = 0,
+        Modifiable = 1,
+        Inherit = 2,
+    };
+    
+    enum class Readability
+    {
+        Unreadable = 0,
+        Readable = 1,
+        Inherit = 2,
+    };
+    
+    enum class ResetColorType
+    {
+        Auto = 0,
+        EmptyColor = 1,
+        NullColor = 2,
+        DefaultAttributes = 3,
+        DefaultAttributesTextBox = 4,
+        DefaultAttributesListBox = 5,
+        DefaultAttributesButton = 6,
+        ColorMenu = 7,
+        ColorActiveCaption = 8,
+        ColorInactiveCaption = 9,
+        ColorInfo = 10,
+        ColorWindow = 11,
+        ColorHighlight = 12,
+        ColorButtonFace = 13,
+    };
+    
+    enum class RichToolTipKind
     {
         None = 0,
         TopLeft = 1,
-        BottomRight = 2,
+        Top = 2,
+        TopRight = 3,
+        BottomLeft = 4,
+        Bottom = 5,
+        BottomRight = 6,
+        Auto = 7,
+    };
+    
+    enum class RoutingStrategy
+    {
+        Tunnel = 0,
+        Bubble = 1,
+        Direct = 2,
+    };
+    
+    enum class SelectionMode
+    {
+        None = 0,
+        One = 1,
+        MultiSimple = 2,
+        MultiExtended = 3,
+    };
+    
+    enum class ToolStripDropDownCloseReason
+    {
+        AppFocusChange = 0,
+        AppClicked = 1,
+        ItemClicked = 2,
+        Keyboard = 3,
+        CloseCalled = 4,
+        Other = 5,
+    };
+    
+    enum class ValueInRangeResult
+    {
+        Unknown = 0,
+        Ok = 1,
+        Less = 2,
+        Greater = 3,
+    };
+    
+    enum class PropertyGridApplyFlags
+    {
+        PropEvent = 1,
+        Default = 1,
+        PropInfoSetValue = 2,
+        ReloadAfterSetValue = 4,
+        SetValueAndReload = 6,
+        ReloadAllAfterSetValue = 8,
+        SetValueAndReloadAll = 10,
+    };
+    
+    enum class PropertyGridCreateStyle
+    {
+        AutoSort = 16,
+        HideCategories = 32,
+        AlphabeticMode = 48,
+        BoldModified = 64,
+        SplitterAutoCenter = 128,
+        Tooltips = 256,
+        DefaultStyle = 256,
+        HideMargin = 512,
+        StaticSplitter = 1024,
+        StaticLayout = 1536,
+        LimitedEditing = 2048,
+    };
+    
+    enum class PropertyGridCreateStyleEx
+    {
+        InitNoCat = 4096,
+        NoFlatToolbar = 8192,
+        ModeButtons = 32768,
+        HelpAsTooltips = 65536,
+        NativeDoubleBuffering = 524288,
+        AlwaysAllowFocus = 1048576,
+        DefaultStyle = 1048576,
+        AutoUnspecifiedValues = 2097152,
+        WriteOnlyBuiltinAttributes = 4194304,
+        HidePageButtons = 16777216,
+        MultipleSelection = 33554432,
+        EnableTlpTracking = 67108864,
+        NoToolbarDivider = 134217728,
+        ToolbarSeparator = 268435456,
+    };
+    
+    enum class PropertyGridEditableState
+    {
+        SelectionState = 1,
+        ExpandedState = 2,
+        ScrollPosState = 4,
+        PageState = 8,
+        SplitterPosState = 16,
+        DescBoxState = 32,
+        AllStates = 63,
+    };
+    
+    enum class PropertyGridEditKindAll
+    {
+        String = 0,
+        StringLong = 1,
+        StringFilename = 2,
+        StringDirectory = 3,
+        StringImageFilename = 4,
+        EnumFlags = 5,
+        Enum = 6,
+        EnumEditable = 7,
+        Int64 = 8,
+        Int32 = 9,
+        Int16 = 10,
+        SByte = 11,
+        UInt64 = 12,
+        UInt32 = 13,
+        UInt16 = 14,
+        Byte = 15,
+        Double = 16,
+        Single = 17,
+        Decimal = 18,
+        Color = 19,
+        ColorSystem = 20,
+        Date = 21,
+        Time = 22,
+        DateTime = 23,
+        Bool = 24,
+        Other = 25,
+    };
+    
+    enum class PropertyGridEditKindColor
+    {
+        Default = 0,
+        TextBoxAndButton = 1,
+        SystemColors = 2,
+        ComboBox = 3,
+        Choice = 4,
+        ChoiceAndButton = 5,
+    };
+    
+    enum class PropertyGridEditKindString
+    {
+        Simple = 0,
+        Long = 1,
+        Ellipsis = 2,
+        FileName = 3,
+        ImageFileName = 4,
+        Directory = 5,
+    };
+    
+    enum class PropertyGridFeature
+    {
+        QuestionCharInNullable = 0,
+    };
+    
+    enum class PropertyGridItemAttrId
+    {
+        DefaultValue = 0,
+        Min = 1,
+        Max = 2,
+        Units = 3,
+        Hint = 4,
+        AutoComplete = 5,
+        UseCheckbox = 6,
+        UseDClickCycling = 7,
+        Precision = 8,
+        Password = 9,
+        Base = 10,
+        Prefix = 11,
+        DialogTitle = 12,
+        Wildcard = 13,
+        ShowFullPath = 14,
+        ShowRelativePath = 15,
+        InitialPath = 16,
+        DialogStyle = 17,
+        Delimiter = 18,
+        DateFormat = 19,
+        PickerStyle = 20,
+        Step = 21,
+        Wrap = 22,
+        MotionSpin = 23,
+        UserStringMode = 24,
+        AllowCustom = 25,
+        HasAlpha = 26,
+    };
+    
+    enum class PropertyGridItemFlags
+    {
+        Modified = 1,
+        Disabled = 2,
+        Hidden = 4,
+        CustomImage = 8,
+        NoEditor = 16,
+        Collapsed = 32,
+        InvalidValue = 64,
+        WasModified = 512,
+        Aggregate = 1024,
+        ChildrenAreCopies = 2048,
+        Property = 4096,
+        Category = 8192,
+        MiscParent = 16384,
+        ReadOnly = 32768,
+        ComposedValue = 65536,
+        UsesCommonValue = 131072,
+        AutoUnspecified = 262144,
+        ClassSpecific1 = 524288,
+        ClassSpecific2 = 1048576,
+        BeingDeleted = 2097152,
+        ClassSpecific3 = 4194304,
+    };
+    
+    enum class PropertyGridItemValueFlags
+    {
+        DontRecurse = 0,
+        KeepStructure = 16,
+        Recurse = 32,
+        IncAttributes = 64,
+        RecurseStarts = 128,
+        Force = 256,
+        SortTopLevelOnly = 512,
+    };
+    
+    enum class PropertyGridIteratorFlags
+    {
+        IterateAllParents = 25600,
+        IteratorFlagsAll = 29732,
+        IterateHidden = 2097156,
+        IterateCategories = 536879136,
+        IterateProperties = 1610634272,
+        IterateNormal = 1612731428,
+        IterateDefault = 1612731428,
+        IterateFixedChildren = 1677743136,
+        IterateAllParentsRecursively = 1677747200,
+        IterateVisible = 1677751328,
+        IterateAll = 1679848484,
+    };
+    
+    enum class PropertyGridKeyboardAction
+    {
+        ActionInvalid = 0,
+        ActionNextProperty = 1,
+        ActionPrevProperty = 2,
+        ActionExpandProperty = 3,
+        ActionCollapseProperty = 4,
+        ActionCancelEdit = 5,
+        ActionEdit = 6,
+        ActionPressButton = 7,
+    };
+    
+    enum class PropertyGridKnownColors
+    {
+        Default = 0,
+        White = 1,
+        Net = 2,
+        Cream = 3,
+        Black = 4,
+        Custom = 5,
+    };
+    
+    enum class PropertyGridKnownEditors
+    {
+        CheckBox = 0,
+        Choice = 1,
+        TextCtrl = 2,
+        ChoiceAndButton = 3,
+        ComboBox = 4,
+        SpinCtrl = 5,
+        TextCtrlAndButton = 6,
+        DatePickerCtrl = 7,
+    };
+    
+    enum class PropertyGridSelectPropFlags
+    {
+        Focus = 1,
+        Force = 2,
+        NonVisible = 4,
+        NoValidate = 8,
+        Deleting = 16,
+        SetUnspecified = 32,
+        DialogValue = 64,
+        DontSendEvent = 128,
+        NoRefresh = 256,
+    };
+    
+    enum class PropertyGridSetValueFlags
+    {
+        RefreshEditor = 1,
+        Aggregated = 2,
+        FromParent = 4,
+        ByUser = 8,
+    };
+    
+    enum class PropertyGridSplitterPosFlags
+    {
+        Refresh = 1,
+        AllPages = 2,
+        FromEvent = 4,
+        FromAutoCenter = 8,
+    };
+    
+    enum class PropertyGridValidationFailure
+    {
+        StayInProperty = 1,
+        Beep = 2,
+        MarkCell = 4,
+        ShowMessage = 8,
+        ShowMessagebox = 16,
+        Default = 20,
+        ShowMessageOnStatusbar = 32,
+    };
+    
+    enum class PropertyGridValueFormatFlags
+    {
+        FullValue = 1,
+        ReportError = 2,
+        PropertySpecific = 4,
+        EditableValue = 8,
+        CompositeFragment = 16,
+        UneditableCompositeFragment = 32,
+        ValueIsCurrent = 64,
+        ProgrammaticValue = 128,
+    };
+    
+    enum class RichTextBoxScrollBars
+    {
+        None = 0,
+        Horizontal = 1,
+        Vertical = 2,
         Both = 3,
+        ForcedHorizontal = 17,
+        ForcedVertical = 18,
+        ForcedBoth = 19,
+    };
+    
+    enum class ScrollEventType
+    {
+        SmallDecrement = 0,
+        SmallIncrement = 1,
+        LargeDecrement = 2,
+        LargeIncrement = 3,
+        ThumbPosition = 4,
+        ThumbTrack = 5,
+        First = 6,
+        Last = 7,
+        EndScroll = 8,
+    };
+    
+    enum class GenericDeviceType
+    {
+        Unknown = 0,
+        Phone = 1,
+        Tablet = 2,
+        Desktop = 3,
+        TV = 4,
+        Watch = 5,
+    };
+    
+    enum class NetFrameworkIdentifier
+    {
+        Net = 0,
+        NetCore = 1,
+        NetFramework = 2,
+        NetNative = 3,
+        Other = 4,
+    };
+    
+    enum class OperatingSystems
+    {
+        None = 0,
+        Windows = 1,
+        Linux = 2,
+        WindowsOrLinux = 3,
+        MacOs = 4,
+        Android = 8,
+        IOS = 16,
+        Unknown = 32,
+        Any = 63,
+    };
+    
+    enum class SystemSettingsFeature
+    {
+        CanDrawFrameDecorations = 1,
+        CanIconizeFrame = 2,
+        TabletPresent = 3,
+    };
+    
+    enum class SystemSettingsFont
+    {
+        OemFixed = 10,
+        AnsiFixed = 11,
+        AnsiVar = 12,
+        System = 13,
+        DeviceDefault = 14,
+        DefaultGui = 17,
+    };
+    
+    enum class SystemSettingsMetric
+    {
+        MouseButtons = 1,
+        BorderX = 2,
+        BorderY = 3,
+        CursorX = 4,
+        CursorY = 5,
+        DClickX = 6,
+        DClickY = 7,
+        DragX = 8,
+        DragY = 9,
+        EdgeX = 10,
+        EdgeY = 11,
+        HScrollArrowX = 12,
+        HScrollArrowY = 13,
+        HThumbX = 14,
+        IconX = 15,
+        IconY = 16,
+        IconSpacingX = 17,
+        IconSpacingY = 18,
+        WindowMinX = 19,
+        WindowMinY = 20,
+        FrameSizeX = 23,
+        FrameSizeY = 24,
+        SmallIconX = 25,
+        SmallIconY = 26,
+        HScrollY = 27,
+        VScrollX = 28,
+        VScrollArrowX = 29,
+        VScrollArrowY = 30,
+        VThumbY = 31,
+        CaptionY = 32,
+        MenuY = 33,
+        NetworkPresent = 34,
+        PenWindowsPresent = 35,
+        ShowSounds = 36,
+        SwapButtons = 37,
+        DClickMSec = 38,
+        CaretOnMSec = 39,
+        CaretOffMSec = 40,
+        CaretTimeoutMSec = 41,
+        Max = 41,
+    };
+    
+    enum class UIPlatformKind
+    {
+        WxWidgets = 0,
+        Maui = 1,
+        Avalonia = 2,
+        WinForms = 3,
+        WinUI = 4,
+        Plarformless = 5,
     };
     
     enum class TabAlignment
@@ -584,6 +2823,244 @@ namespace Alternet::UI
         Bottom = 1,
         Left = 2,
         Right = 3,
+    };
+    
+    enum class TabAppearance
+    {
+        Normal = 0,
+        Buttons = 1,
+        FlatButtons = 2,
+    };
+    
+    enum class TabControlAction
+    {
+        Selecting = 0,
+        Selected = 1,
+        Deselecting = 2,
+        Deselected = 3,
+    };
+    
+    enum class TabSizeMode
+    {
+        Normal = 0,
+        FillToRight = 1,
+        Fixed = 2,
+    };
+    
+    enum class ComboBoxStyle
+    {
+        DropDown = 1,
+        DropDownList = 2,
+    };
+    
+    enum class KnownInputType
+    {
+        None = 0,
+        String = 1,
+        Boolean = 2,
+        Char = 3,
+        SByte = 4,
+        Byte = 5,
+        Int16 = 6,
+        UInt16 = 7,
+        Int32 = 8,
+        UInt32 = 9,
+        Int64 = 10,
+        UInt64 = 11,
+        Single = 12,
+        USingle = 13,
+        Double = 14,
+        UDouble = 15,
+        Decimal = 16,
+        UDecimal = 17,
+        DateTime = 18,
+        Date = 19,
+        Time = 20,
+        EMail = 21,
+        Url = 22,
+    };
+    
+    enum class RichTextFileType
+    {
+        Any = 0,
+        Text = 1,
+        Html = 3,
+    };
+    
+    enum class RichTextHandlerFlags
+    {
+        IncludeStylesheet = 1,
+        SaveImagesToMemory = 16,
+        SaveImagesToFiles = 32,
+        SaveImagesToBase64 = 64,
+        NoHeaderFooter = 128,
+        ConvertFacenames = 256,
+        UseCss = 4096,
+    };
+    
+    enum class RichTextInsertFlags
+    {
+        None = 0,
+        WithPreviousParagraphStyle = 1,
+        Interactive = 2,
+    };
+    
+    enum class RichTextMoveCaretFlags
+    {
+        ShiftDown = 1,
+        ControlDown = 2,
+        AltDown = 4,
+    };
+    
+    enum class RichTextSetPropFlags
+    {
+        None = 0,
+        WithUndo = 1,
+        ParagraphsOnly = 2,
+        CharactersOnly = 4,
+        Reset = 8,
+        Remove = 16,
+    };
+    
+    enum class RichTextSetStyleFlags
+    {
+        None = 0,
+        WithUndo = 1,
+        Optimize = 2,
+        ParagraphsOnly = 4,
+        CharactersOnly = 8,
+        Renumber = 16,
+        SpecifyLevel = 32,
+        Reset = 64,
+        Remove = 128,
+    };
+    
+    enum class TextBoxOptions
+    {
+        SetNativeMaxLength = 1,
+        IntRangeInError = 2,
+        DefaultValidation = 4,
+        UseTypeConverter = 8,
+        UseInvariantCulture = 16,
+    };
+    
+    enum class TextBoxSetValueFlags
+    {
+        NoEvent = 0,
+        SendEvent = 1,
+        SelectionOnly = 2,
+    };
+    
+    enum class TextBoxTextAttrAlignment
+    {
+        Default = 0,
+        Left = 1,
+        Center = 2,
+        Right = 3,
+        Justified = 4,
+    };
+    
+    enum class TextBoxTextAttrBulletStyle
+    {
+        None = 0,
+        AlignLeft = 0,
+        Arabic = 1,
+        LettersUpper = 2,
+        LettersLower = 4,
+        RomanUpper = 8,
+        RomanLower = 16,
+        Symbol = 32,
+        Bitmap = 64,
+        Parentheses = 128,
+        Period = 256,
+        Standard = 512,
+        RightParenthesis = 1024,
+        Outline = 2048,
+        AlignRight = 4096,
+        AlignCentre = 8192,
+        Continuation = 16384,
+    };
+    
+    enum class TextBoxTextAttrEffects
+    {
+        None = 0,
+        Capitals = 1,
+        SmallCapitals = 2,
+        Strikethrough = 4,
+        DoubleStrikethrough = 8,
+        Shadow = 16,
+        Emboss = 32,
+        Outline = 64,
+        Engrave = 128,
+        Superscript = 256,
+        Subscript = 512,
+        Rtl = 1024,
+        SuppressHyphenation = 4096,
+    };
+    
+    enum class TextBoxTextAttrFlags
+    {
+        None = 0,
+        TextColor = 1,
+        BackgroundColor = 2,
+        FontFace = 4,
+        FontPointSize = 8,
+        FontWeight = 16,
+        FontItalic = 32,
+        FontUnderline = 64,
+        Alignment = 128,
+        LeftIndent = 256,
+        RightIndent = 512,
+        Tabs = 1024,
+        ParaSpacingAfter = 2048,
+        ParaSpacingBefore = 4096,
+        LineSpacing = 8192,
+        CharacterStyleName = 16384,
+        ParagraphStyleName = 32768,
+        ListStyleName = 65536,
+        BulletStyle = 131072,
+        BulletNumber = 262144,
+        BulletText = 524288,
+        BulletName = 1048576,
+        Bullet = 1966080,
+        Url = 2097152,
+        PageBreak = 4194304,
+        Effects = 8388608,
+        OutlineLevel = 16777216,
+        FontEncoding = 33554432,
+        FontFamily = 67108864,
+        FontStrikethrough = 134217728,
+        FontPixelSize = 268435456,
+        FontSize = 268435464,
+        Font = 503316604,
+        Character = 513818751,
+        AvoidPageBreakBefore = 536870912,
+        AvoidPageBreakAfter = 1073741824,
+        Paragraph = 1633664896,
+        All = 2147483647,
+    };
+    
+    enum class TextBoxTextAttrLineSpacing
+    {
+        Normal = 10,
+        Half = 15,
+        Twice = 20,
+    };
+    
+    enum class TextBoxTextAttrUnderlineType
+    {
+        None = 0,
+        Solid = 1,
+        Double = 2,
+        Special = 3,
+    };
+    
+    enum class TextBoxTextWrap
+    {
+        Best = 0,
+        Word = 1,
+        Char = 2,
+        None = 3,
     };
     
     enum class TreeViewHitTestLocations
@@ -609,11 +3086,99 @@ namespace Alternet::UI
         Multiple = 1,
     };
     
+    enum class ValueValidatorKind
+    {
+        Generic = 0,
+        SignedInt = 1,
+        UnsignedInt = 2,
+        SignedFloat = 3,
+        SignedHex = 4,
+        UnsignedHex = 5,
+    };
+    
+    enum class ValueValidatorKnownError
+    {
+        None = 0,
+        NumberIsExpected = 1,
+        UnsignedNumberIsExpected = 2,
+        FloatIsExpected = 3,
+        UnsignedFloatIsExpected = 4,
+        HexNumberIsExpected = 5,
+        InvalidFormat = 6,
+        MinimumLength = 7,
+        MaximumLength = 8,
+        MinMaxLength = 9,
+        MinimumValue = 10,
+        MaximumValue = 11,
+        ValueIsRequired = 12,
+        EMailIsExpected = 13,
+        UrlIsExpected = 14,
+    };
+    
+    enum class ValueValidatorNumStyle
+    {
+        Signed = 0,
+        Unsigned = 1,
+        Float = 2,
+    };
+    
+    enum class ValueValidatorTextStyle
+    {
+        None = 0,
+        Empty = 1,
+        Ascii = 2,
+        Alpha = 4,
+        AlphaNumeric = 8,
+        Digits = 16,
+        Numeric = 32,
+        IncludeList = 64,
+        IncludeCharList = 128,
+        ExcludeList = 256,
+        ExcludeCharList = 512,
+        XDigits = 1024,
+        Space = 2048,
+    };
+    
     enum class ModalResult
     {
         None = 0,
         Canceled = 1,
         Accepted = 2,
+    };
+    
+    enum class WindowCloseAction
+    {
+        Dispose = 0,
+        Hide = 1,
+        None = 2,
+    };
+    
+    enum class WindowKind
+    {
+        Window = 0,
+        Dialog = 1,
+        MiniFrame = 2,
+        Control = 3,
+    };
+    
+    enum class WindowSizeToContentMode
+    {
+        None = 0,
+        Width = 1,
+        Height = 2,
+        WidthAndHeight = 3,
+    };
+    
+    enum class WindowStartLocation
+    {
+        Default = 0,
+        Manual = 1,
+        CenterScreen = 2,
+        CenterOwner = 3,
+        CenterMainWindow = 4,
+        CenterActiveWindow = 5,
+        ScreenTopRight = 6,
+        ScreenBottomRight = 7,
     };
     
     enum class WindowState
@@ -623,10 +3188,88 @@ namespace Alternet::UI
         Maximized = 2,
     };
     
+    enum class ClipboardDataFormatId
+    {
+        Invalid = 0,
+        Text = 1,
+        Bitmap = 2,
+        MetaFile = 3,
+        Sylk = 4,
+        Dif = 5,
+        Tiff = 6,
+        OemText = 7,
+        Dib = 8,
+        Palette = 9,
+        PenData = 10,
+        Riff = 11,
+        Wave = 12,
+        UnicodeText = 13,
+        EnhMetaFile = 14,
+        Filename = 15,
+        Locale = 16,
+        Private = 20,
+        Html = 30,
+        Png = 31,
+        Max = 32,
+    };
+    
 }
+template<> struct enable_bitmask_operators<Alternet::UI::KnownColorCategory> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DrawLabelFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::FontWeight> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::GenericImageLoadFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::GenericImagePngSetFilter> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TextFormatFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::AnchorStyles> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::GenericAlignment> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::GenericDirection> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::GenericOrientation> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::Border3DSide> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::BoundsSpecified> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ControlFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ControlRefreshOptions> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ControlStyles> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::SetBoundsFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::VisualControlStates> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DatePickerStyleFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::LogItemKindFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::MessageBoxOptions> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::Keys> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ModifierKeys> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::MouseButtons> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::RawModifierKeys> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TouchEventsMask> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::VirtualKeyboardFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ListViewHitTestLocations> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::SoundPlayFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DrawItemState> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::FontDialogRestrictSelection> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridApplyFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridCreateStyle> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridCreateStyleEx> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridEditableState> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridFeature> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridItemFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridItemValueFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridIteratorFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridSelectPropFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridSetValueFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridSplitterPosFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridValidationFailure> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridValueFormatFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::OperatingSystems> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::RichTextHandlerFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::RichTextInsertFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::RichTextMoveCaretFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::RichTextSetPropFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::RichTextSetStyleFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TextBoxOptions> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TextBoxSetValueFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrBulletStyle> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrEffects> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ValueValidatorTextStyle> { static const bool enable = true; };
