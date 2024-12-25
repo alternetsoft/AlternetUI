@@ -27,6 +27,11 @@ namespace Alternet.UI
     public class App : DisposableObject
     {
         /// <summary>
+        /// Gets id of the application thread.
+        /// </summary>
+        public static readonly int AppThreadId = Thread.CurrentThread.ManagedThreadId;
+
+        /// <summary>
         /// Returns true if operating system is Windows.
         /// </summary>
         public static readonly bool IsWindowsOS;
@@ -284,6 +289,12 @@ namespace Alternet.UI
         public static bool IsPhoneDevice => DeviceType == GenericDeviceType.Phone;
 
         /// <summary>
+        /// Gets whether current thread is the thread which was used to initialize the application.
+        /// It is better to use platform specific ways to get whether current thread is UI thread.
+        /// </summary>
+        public static bool IsAppThread => Thread.CurrentThread.ManagedThreadId == AppThreadId;
+
+        /// <summary>
         /// Gets the path for the executable file that started the application, not including
         /// the executable name.</summary>
         /// <returns>
@@ -349,7 +360,7 @@ namespace Alternet.UI
         {
             get
             {
-                return current ??= new App(null);
+                return current ??= new Application();
             }
 
             protected set
