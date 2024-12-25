@@ -75,6 +75,33 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
+        /// <summary>
+        /// Gets or sets init arguments which are used when <see cref="InputType"/>
+        /// property is assigned.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TextBoxInitializeEventArgs? InputTypeArgs
+        {
+            get => TextBox.InputTypeArgs;
+            set => TextBox.InputTypeArgs = value;
+        }
+
+        /// <summary>
+        /// Gets or sets input type. Default is Null.
+        /// </summary>
+        public virtual KnownInputType? InputType
+        {
+            get
+            {
+                return TextBox.InputType;
+            }
+
+            set
+            {
+                TextBox.InputType = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override void BindHandlerEvents()
         {

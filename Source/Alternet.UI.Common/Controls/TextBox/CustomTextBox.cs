@@ -24,7 +24,7 @@ namespace Alternet.UI
         private int minLength;
         private int maxLength;
         private TextBoxOptions options = TextBoxOptions.IntRangeInError;
-        private KnownTextValueType? inputType;
+        private KnownInputType? inputType;
         private object? minValue;
 
         /// <summary>
@@ -596,7 +596,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets input type. Default is Null.
         /// </summary>
-        public virtual KnownTextValueType? InputType
+        public virtual KnownInputType? InputType
         {
             get
             {
@@ -610,7 +610,7 @@ namespace Alternet.UI
                 inputType = value;
                 TextBoxInitializers.Default.Initialize(
                     this,
-                    value ?? KnownTextValueType.None,
+                    value ?? KnownInputType.None,
                     InputTypeArgs);
             }
         }

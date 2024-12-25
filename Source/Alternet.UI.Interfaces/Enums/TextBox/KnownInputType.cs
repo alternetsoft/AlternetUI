@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Enumerates known text value types.
     /// </summary>
-    public enum KnownTextValueType
+    public enum KnownInputType
     {
         /// <summary>
         /// Value type is not specified.
