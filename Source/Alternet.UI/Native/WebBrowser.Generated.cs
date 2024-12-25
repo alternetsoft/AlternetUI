@@ -274,6 +274,16 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsEdge
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.WebBrowser_GetIsEdge_(NativePointer);
+            }
+            
+        }
+        
         public static System.IntPtr CreateWebBrowser(string url)
         {
             return NativeApi.WebBrowser_CreateWebBrowser_(url);
@@ -699,6 +709,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetZoom_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WebBrowser_GetIsEdge_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WebBrowser_CreateWebBrowser_(string url);

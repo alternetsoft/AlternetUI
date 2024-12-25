@@ -51,6 +51,8 @@ void SetEditable(bool value);
 int GetZoom();
 void SetZoom(int value);
 
+bool GetIsEdge();
+
 static void* CreateWebBrowser(const string& url);
 static void SetDefaultUserAgent(const string& value);
 static void SetDefaultScriptMesageName(const string& value);

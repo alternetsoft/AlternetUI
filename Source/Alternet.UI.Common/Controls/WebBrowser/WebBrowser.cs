@@ -392,6 +392,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether backend is WebView2.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsEdgeBackend
+        {
+            get
+            {
+                return App.IsWindowsOS && Handler.IsEdgeBackend;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the Uri of the current document hosted in the WebBrowser.
         /// </summary>
         /// <returns>
@@ -2221,7 +2233,6 @@ namespace Alternet.UI
         {
             CheckDisposed();
             throw new NotImplementedException();
-            /*return Handler.RunScript(javascript, out result);*/
         }
 
         internal virtual string? InvokeScript(string scriptName)

@@ -248,7 +248,6 @@ namespace Alternet::UI
         if (!DefaultFSNameCustomDone && 
             WebBrowser::DefaultFSNameCustom != wxEmptyString)
         {
-            //wxWebView::RegisterHandler(wxSharedPtr< wxWebViewHandler > 	handler)
             DefaultFSNameCustomDone = true;
         }
     }
@@ -310,7 +309,7 @@ namespace Alternet::UI
     {
         RaiseSimpleEvent(WebBrowserEvent::BeforeBrowserCreate);
 
-        long style = GetBorderStyle();
+        long style = GetBorderStyle() | wxFULL_REPAINT_ON_RESIZE;
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;
@@ -322,11 +321,42 @@ namespace Alternet::UI
             wxDefaultPosition,
             wxDefaultSize,
             style);
+
+#if defined(__WXMSW__)
+#ifdef wxUSE_WEBVIEW_EDGE
+        if (GetIsEdge())
+        {
+            webView->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_PAINT);
+        }
+#endif
+#endif
+
+
     }
 
     wxWindow* WebBrowser::CreateWxWindowUnparented()
     {
         return nullptr;
+    }
+
+#if defined(__WXMSW__)
+#ifdef wxUSE_WEBVIEW_EDGE
+    class wxWebViewEdge2 : public wxWebViewEdge, public wxWidgetExtender
+    {
+    public:
+        wxWebViewEdge2() {}
+    };
+#endif
+#endif
+
+    bool WebBrowser::GetIsEdge()
+    {
+#if defined(__WXMSW__)
+#ifdef wxUSE_WEBVIEW_EDGE
+        return dynamic_cast<wxWebViewEdge2*>(GetWxWindow()) != nullptr;
+#endif
+#endif
+        return false;
     }
 
     wxWindow* WebBrowser::CreateWxWindowCore(wxWindow* parent)
@@ -347,7 +377,22 @@ namespace Alternet::UI
 
         auto backendName = WebViewBackendNameFromId(Backend);
 
-        webView = wxWebView::New(backendName);
+        webView = nullptr;
+
+#if defined(__WXMSW__)
+#ifdef wxUSE_WEBVIEW_EDGE
+        if (Backend == WEBBROWSER_BACKEND_EDGE)
+        {
+            webView = new wxWebViewEdge2();
+        }
+#endif
+#endif
+
+        if (webView == nullptr)
+        {
+            webView = wxWebView::New(backendName);
+        }
+
         webViewParent = parent;
         
         webView->Bind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);
@@ -357,7 +402,8 @@ namespace Alternet::UI
         webView->Bind(wxEVT_WEBVIEW_NEWWINDOW, &WebBrowser::OnNewWindow, this);
         webView->Bind(wxEVT_WEBVIEW_TITLE_CHANGED, &WebBrowser::OnTitleChanged, this);
         webView->Bind(wxEVT_WEBVIEW_FULLSCREEN_CHANGED, &WebBrowser::OnFullScreenChanged, this);
-        webView->Bind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, &WebBrowser::OnScriptMessageReceived, this);
+        webView->Bind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED,
+            &WebBrowser::OnScriptMessageReceived, this);
         webView->Bind(wxEVT_WEBVIEW_SCRIPT_RESULT, &WebBrowser::OnScriptResult, this);
         
         return webView;
@@ -376,8 +422,10 @@ namespace Alternet::UI
                 window->Unbind(wxEVT_WEBVIEW_ERROR, &WebBrowser::OnError, this);
                 window->Unbind(wxEVT_WEBVIEW_NEWWINDOW, &WebBrowser::OnNewWindow, this);
                 window->Unbind(wxEVT_WEBVIEW_TITLE_CHANGED, &WebBrowser::OnTitleChanged, this);
-                window->Unbind(wxEVT_WEBVIEW_FULLSCREEN_CHANGED, &WebBrowser::OnFullScreenChanged, this);
-                window->Unbind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, &WebBrowser::OnScriptMessageReceived, this);
+                window->Unbind(wxEVT_WEBVIEW_FULLSCREEN_CHANGED,
+                    &WebBrowser::OnFullScreenChanged, this);
+                window->Unbind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, 
+                    &WebBrowser::OnScriptMessageReceived, this);
                 window->Unbind(wxEVT_WEBVIEW_SCRIPT_RESULT, &WebBrowser::OnScriptResult, this);
             }
         }

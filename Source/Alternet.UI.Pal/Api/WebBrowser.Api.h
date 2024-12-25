@@ -338,6 +338,17 @@ ALTERNET_UI_API void WebBrowser_SetZoom_(WebBrowser* obj, int value)
     #endif
 }
 
+ALTERNET_UI_API c_bool WebBrowser_GetIsEdge_(WebBrowser* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetIsEdge();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void* WebBrowser_CreateWebBrowser_(const char16_t* url)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

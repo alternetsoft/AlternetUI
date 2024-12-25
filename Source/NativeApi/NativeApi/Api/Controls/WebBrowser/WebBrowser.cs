@@ -85,6 +85,8 @@ namespace NativeApi.Api
         public bool Editable { get; set; }
         public int Zoom { get; set; }
 
+        public bool IsEdge { get; }
+
         public string GetCurrentTitle() => throw new Exception();
         public string GetCurrentURL() => throw new Exception();
         public void LoadURL(string url) => throw new Exception();
