@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="t">Type for which actions are requested.</param>
         /// <returns></returns>
-        public static IEnumerable<(string, Action)>? GetSimpleActions(Type t)
+        public static IEnumerable<(string Title, Action Action)>? GetSimpleActions(Type t)
         {
             var registry = PropertyGrid.GetTypeRegistryOrNull(t);
             return registry?.GetSimpleActions();

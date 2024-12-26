@@ -420,10 +420,7 @@ namespace PropertyGridSample
                         panel.RemoveActions();
                         panel.AddActions(type);
 
-                        if (!DebugUtils.IsDebugDefined)
-                            return;
-
-                        var methods = type.GetMethods();
+                        var methods = type.GetMethods().OrderBy(method => method.Name);
                         foreach (var method in methods)
                         {
                             if (method.IsSpecialName)
