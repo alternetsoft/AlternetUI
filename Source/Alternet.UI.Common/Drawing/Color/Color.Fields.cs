@@ -11,6 +11,46 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
+        public static readonly Color Gray100 = Color.FromArgb(0xE1E1E1);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Gray200 = Color.FromArgb(0xC8C8C8);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Gray300 = Color.FromArgb(0xACACAC);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Gray400 = Color.FromArgb(0x919191);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Gray500 = Color.FromArgb(0x6E6E6E);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Gray600 = Color.FromArgb(0x404040);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Gray900 = Color.FromArgb(0x212121);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
+        public static readonly Color Gray950 = Color.FromArgb(0x141414);
+
+        /// <summary>
+        /// Gets a system-defined color.
+        /// </summary>
         public static readonly Color White = new(KnownColor.White);
 
         /// <summary>

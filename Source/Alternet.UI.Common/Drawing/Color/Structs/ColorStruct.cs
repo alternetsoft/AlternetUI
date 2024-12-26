@@ -122,6 +122,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ColorStruct"/> struct.
+        /// </summary>
+        /// <param name="value">Color value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ColorStruct(int value)
+        {
+            Value = unchecked((uint)value);
+        }
+
+        /// <summary>
         /// Converts the specified <see cref='SKColor'/> to a <see cref='ColorStruct'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -147,6 +157,12 @@ namespace Alternet.Drawing
         {
             return new(color);
         }
+
+        /// <summary>
+        /// Converts the specified <see cref='int'/> to a <see cref='ColorStruct'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator ColorStruct(int d) => new(d);
 
         /// <summary>
         /// Converts the specified <see cref='uint'/> to a <see cref='ColorStruct'/>.

@@ -144,7 +144,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color"/> class from the <see cref="ColorStruct"/>.
+        /// Initializes a new instance of the <see cref="Color"/> class from
+        /// the <see cref="ColorStruct"/>.
         /// </summary>
         /// <param name="value">Color specified using <see cref="ColorStruct"/> value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -916,7 +917,7 @@ namespace Alternet.Drawing
         /// respectively, are the color components red, green, and blue, respectively.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Color FromArgb(int argb) => new(unchecked((uint)argb));
+        public static Color FromArgb(int argb) => new(argb);
 
         /// <summary>
         /// Creates a <see cref="Color"/> structure from the four ARGB
@@ -1885,6 +1886,10 @@ namespace Alternet.Drawing
         /// Gets whether color is dark.
         /// </summary>
         /// <returns></returns>
+        /// <remarks>
+        /// Body of this function doesn't use logical not of <see cref="IsLight"/>,
+        /// it implements completely different approach.
+        /// </remarks>
         public bool IsDark()
         {
             RequireArgb();
@@ -1903,6 +1908,27 @@ namespace Alternet.Drawing
                 return false;
             else
                 return true;
+        }
+
+        /// <summary>
+        /// Gets whether color is light.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// This function is suggested in
+        /// <see href="https://learn.microsoft.com/en-us/uwp/api/windows.ui.color.b?view=winrt-26100"/>
+        /// and it's implementation doesn't use logical not of <see cref="IsDark"/>.
+        /// </remarks>
+        public bool IsLight()
+        {
+            RequireArgb();
+            var r = color.R;
+            var g = color.G;
+            var b = color.B;
+
+            int v = (5 * g) + (2 * r) + b;
+
+            return v > 8 * 128;
         }
 
         /// <summary>
