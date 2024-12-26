@@ -88,6 +88,19 @@ namespace Alternet.UI
         public const string MacCommandKeyTitle = "\u2318";
 
         /// <summary>
+        /// Gets or sets array of delegates used for the text to number conversion.
+        /// </summary>
+        public static TryParseNumberDelegate[] TryParseNumberDelegates =
+        [
+            StringUtils.TryParseInt32,
+            StringUtils.TryParseUInt32,
+            StringUtils.TryParseInt64,
+            StringUtils.TryParseUInt64,
+            StringUtils.TryParseDouble,
+            StringUtils.TryParseDecimal,
+        ];
+
+        /// <summary>
         /// Gets or sets values that split one string to many.
         /// </summary>
         /// <remarks>
@@ -520,7 +533,8 @@ namespace Alternet.UI
         /// Calls <see cref="int.TryParse(string, NumberStyles, IFormatProvider, out int)"/>
         /// </summary>
         /// <param name="s">The string to parse.</param>
-        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
         /// the permitted format of <paramref name="s"/>.</param>
         /// <param name="provider">
         /// An object that supplies culture-specific formatting information
@@ -545,10 +559,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Uses collection of <see cref="TryParseNumberDelegate"/> delegates 
+        /// in order to convert string to a number.
+        /// </summary>
+        /// <param name="s">String to convert</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="delegates">Collection of delegates used for the conversion.</param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
+        public static bool TryParseNumberWithDelegates(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result,
+            IEnumerable<TryParseNumberDelegate> delegates)
+        {
+            foreach (var proc in delegates)
+            {
+                var converted = proc(
+                    s,
+                    style,
+                    provider,
+                    out result);
+
+                if (converted)
+                    return true;
+            }
+
+            result = default;
+            return false;
+        }
+
+        /// <summary>
         /// Calls <see cref="uint.TryParse(string, NumberStyles, IFormatProvider, out uint)"/>
         /// </summary>
         /// <param name="s">The string to parse.</param>
-        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
         /// the permitted format of <paramref name="s"/>.</param>
         /// <param name="provider">
         /// An object that supplies culture-specific formatting information
