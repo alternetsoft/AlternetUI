@@ -460,6 +460,14 @@ namespace PropertyGridSample
 
         }
 
+        protected override void DisposeManaged()
+        {
+            ComponentDesigner.SafeDefault.PropertyChanged -= Designer_PropertyChanged;
+            ComponentDesigner.SafeDefault.MouseLeftButtonDown -= Designer_MouseLeftButtonDown;
+
+            base.DisposeManaged();
+        }
+
         private void SetBackground(Color color)
         {
             if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
