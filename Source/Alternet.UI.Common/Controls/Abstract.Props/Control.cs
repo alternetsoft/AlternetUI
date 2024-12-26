@@ -12,6 +12,16 @@ namespace Alternet.UI
     /// </summary>
     public class Control : AbstractControl
     {
+        /// <summary>
+        /// Gets an empty control for use in the different places.
+        /// Do not change any properties of this control.
+        /// </summary>
+        public static readonly Control Empty = new EmptyControl()
+        {
+            Visible = false,
+            Enabled = false,
+        };
+
         private int handlerTextChanging;
         private IControlHandler? handler;
 
@@ -1044,6 +1054,14 @@ namespace Alternet.UI
         protected override void OnToolTipChanged(EventArgs e)
         {
             Handler.SetToolTip(GetRealToolTip());
+        }
+
+        private class EmptyControl : Control
+        {
+            protected override IControlHandler CreateHandler()
+            {
+                return PlessControlHandler.Default;
+            }
         }
     }
 }
