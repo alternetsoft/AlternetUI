@@ -117,6 +117,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether the specified object is disposing or disposed.
+        /// </summary>
+        /// <param name="obj">Object to test.</param>
+        /// <returns></returns>
+        public static bool IsDisposingOrDisposed(object? obj)
+        {
+            if (obj is IDisposableObject disposable)
+            {
+                return disposable.DisposingOrDisposed;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Safely disposes specified object which supports
         /// <see cref="IDisposableObject"/> interface.
         /// </summary>
