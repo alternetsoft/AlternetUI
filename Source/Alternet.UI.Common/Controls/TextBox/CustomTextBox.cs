@@ -19,25 +19,79 @@ namespace Alternet.UI
         : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions,
         INotifyDataErrorInfo
     {
-        private int oldErrorCount;
-        private StringSearch? search;
-        private int minLength;
-        private int maxLength;
-        private TextBoxOptions options = TextBoxOptions.IntRangeInError;
-        private KnownInputType? inputType;
-        private object? minValue;
-        private Type? dataType;
-        private string? defaultText;
+        private const TextBoxOptions DefaultOptions = TextBoxOptions.IntRangeInError;
+        private const bool DefaultAllowEmptyText = true;
+
+        [DefaultValue(DefaultAllowEmptyText)]
+        [AutoReset]
+        private bool allowEmptyText = DefaultAllowEmptyText;
+
+        [AutoReset]
+        [DefaultValue(DefaultOptions)]
+        private TextBoxOptions options = DefaultOptions;
+
+        [AutoReset]
         private CultureInfo? culture;
+
+        [AutoReset]
         private TypeConverter? typeConverter;
+
+        [AutoReset]
         private ITypeDescriptorContext? context;
+
+        [AutoReset]
         private IObjectToString? converter;
+
+        [AutoReset]
         private string? defaultFormat;
+
+        [AutoReset]
         private NumberStyles? numberStyles;
-        private bool allowEmptyText = true;
+
+        [AutoReset(false)]
         private IValidatorReporter? validatorReporter;
+
+        [AutoReset]
         private string? validatorErrorText;
+
+        [AutoReset]
         private object? emptyTextValue;
+
+        [AutoReset]
+        private int minLength;
+
+        [AutoReset]
+        private int maxLength;
+
+        [AutoReset]
+        private KnownInputType? inputType;
+
+        [AutoReset]
+        private object? minValue;
+
+        [AutoReset]
+        private object? maxValue;
+
+        [AutoReset]
+        private Type? dataType;
+
+        [AutoReset]
+        private string? defaultText;
+
+        [AutoReset]
+        private int reportedErrorCount;
+
+        [AutoReset]
+        private StringSearch? search;
+
+        [AutoReset]
+        private Exception? textAsValueError;
+
+        [AutoReset]
+        private TrimTextRules trimTextRules;
+
+        [AutoReset]
+        private TextBoxInitializeEventArgs? inputTypeArgs;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomTextBox"/> class.
@@ -193,7 +247,8 @@ namespace Alternet.UI
 
             set
             {
-                if (maxLength == value || value < 0)
+                value = Math.Max(0, value);
+                if (maxLength == value)
                     return;
                 maxLength = value;
             }
@@ -339,13 +394,21 @@ namespace Alternet.UI
         /// Gets last error occured inside <see cref="TextAsValue"/> property getter or setter.
         /// </summary>
         [Browsable(false)]
-        public virtual Exception? TextAsValueError { get; private set; }
+        public virtual Exception? TextAsValueError
+        {
+            get => textAsValueError;
+            private set => textAsValueError = value;
+        }
 
         /// <summary>
         /// Gets or sets text trimming rules used in <see cref="TextAsValue"/> setter and some
         /// other places.
         /// </summary>
-        public virtual TrimTextRules TrimTextRules { get; set; }
+        public virtual TrimTextRules TrimTextRules
+        {
+            get => trimTextRules;
+            set => trimTextRules = value;
+        }
 
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.Text"/>
@@ -479,7 +542,11 @@ namespace Alternet.UI
         /// property is assigned.
         /// </summary>
         [Browsable(false)]
-        public virtual TextBoxInitializeEventArgs? InputTypeArgs { get; set; }
+        public virtual TextBoxInitializeEventArgs? InputTypeArgs
+        {
+            get => inputTypeArgs;
+            set => inputTypeArgs = value;
+        }
 
         /// <summary>
         /// Gets or sets input type. Default is Null.
@@ -516,7 +583,11 @@ namespace Alternet.UI
         /// by this property, you can use it for any purposes.
         /// </remarks>
         [Browsable(false)]
-        public virtual object? MaxValue { get; set; }
+        public virtual object? MaxValue
+        {
+            get => maxValue;
+            set => maxValue = value;
+        }
 
         /// <summary>
         /// Gets or sets flags which customize behavior and visual style of the control.
@@ -615,24 +686,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the number of lines in the text control buffer.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// The returned number is the number of logical lines, i.e. just the count of
-        /// the number of newline characters in the control + 1, for GTK
-        /// and OSX/Cocoa ports while it is the number of physical lines,
-        /// i.e. the count of
-        /// lines actually shown in the control, in MSW and OSX/Carbon. Because of
-        /// this discrepancy, it is not recommended to use this function.
-        /// </remarks>
-        /// <remarks>
-        /// Note that even empty text controls have one line (where the
-        /// insertion point is), so this function never returns 0.
-        /// </remarks>
-        public abstract int GetNumberOfLines();
-
-        /// <summary>
         /// Sets <see cref="CustomTextBox.ValidatorErrorText"/> property
         /// to <paramref name="knownError"/>.
         /// </summary>
@@ -683,14 +736,6 @@ namespace Alternet.UI
 
             SetErrorText(ValueValidatorKnownError.None);
         }
-
-        /// <summary>
-        /// Returns the contents of a given line in the text control, not
-        /// including any trailing newline character(s).
-        /// </summary>
-        /// <param name="lineNo">Line number (starting from zero).</param>
-        /// <returns>The contents of the line.</returns>
-        public abstract string GetLineText(long lineNo);
 
         void IValidatorReporter.SetErrorStatus(object? sender, bool showError, string? errorText)
         {
@@ -962,9 +1007,9 @@ namespace Alternet.UI
 
             void RaiseErrorsChanged()
             {
-                if (errorCount != oldErrorCount)
+                if (errorCount != reportedErrorCount)
                 {
-                    oldErrorCount = errorCount;
+                    reportedErrorCount = errorCount;
                     BubbleErrorsChanged(new DataErrorsChangedEventArgs(null));
                 }
             }
