@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Default <see cref="IComponentDesigner"/> implementation.
     /// </summary>
-    public class ComponentDesigner : IComponentDesigner
+    public class ComponentDesigner : DisposableObject, IComponentDesigner
     {
         /// <summary>
         /// Occurs when the left mouse button was pressed on the control
@@ -67,6 +67,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void RaisePropertyChanged(object? instance, string? propName)
         {
+            if (IsDisposingOrDisposed(instance))
+                return;
             PropertyChanged?.Invoke(this, new ObjectPropertyChangedEventArgs(instance, propName));
         }
 
@@ -76,12 +78,16 @@ namespace Alternet.UI
         /// <param name="control">Control which received focus.</param>
         public void RaiseGotFocus(object control)
         {
+            if (IsDisposingOrDisposed(control))
+                return;
             ControlGotFocus?.Invoke(control, EventArgs.Empty);
         }
 
         /// <see cref="IComponentDesigner.RaiseCreated"/>
         public void RaiseCreated(object control)
         {
+            if (IsDisposingOrDisposed(control))
+                return;
             ControlCreated?.Invoke(control, EventArgs.Empty);
         }
 
@@ -94,12 +100,16 @@ namespace Alternet.UI
         /// <see cref="IComponentDesigner.RaiseParentChanged"/>
         public void RaiseParentChanged(object control)
         {
+            if (IsDisposingOrDisposed(control))
+                return;
             ControlParentChanged?.Invoke(control, EventArgs.Empty);
         }
 
         /// <see cref="IComponentDesigner.RaiseMouseLeftButtonDown"/>
         public void RaiseMouseLeftButtonDown(object control, MouseEventArgs e)
         {
+            if (IsDisposingOrDisposed(control))
+                return;
             MouseLeftButtonDown?.Invoke(control, e);
         }
     }
