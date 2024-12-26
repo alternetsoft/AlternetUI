@@ -647,7 +647,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Uses collection of <see cref="TryParseNumberDelegate"/> delegates 
+        /// Uses collection of <see cref="TryParseNumberDelegate"/> delegates
         /// in order to convert string to a number.
         /// </summary>
         /// <param name="s">String to convert</param>
@@ -799,6 +799,147 @@ namespace Alternet.UI
             var isOk = float.TryParse(s, style, provider, out var value);
             result = value;
             return isOk;
+        }
+
+        /// <summary>
+        /// Removes all leading and trailing occurrences of a set of characters specified
+        /// in an array from the string. <paramref name="trimStart"/> and <paramref name="trimEnd"/>
+        /// parameters specify whether to remove leading and trailing occurrences.
+        /// </summary>
+        /// <param name="s">String to process.</param>
+        /// <param name="chars">An array of Unicode characters to remove, or null.</param>
+        /// <param name="trimStart">Whether to trim leading characters.</param>
+        /// <param name="trimEnd">Whether to trim trailing characters.</param>
+        /// <returns></returns>
+        public static string? Trim(
+            string? s,
+            char[] chars,
+            bool trimStart = true,
+            bool trimEnd = true)
+        {
+            if (s is null)
+                return null;
+
+            if (trimStart)
+            {
+                if (trimEnd)
+                {
+                    return s.Trim(chars);
+                }
+                else
+                {
+                    return s.TrimStart(chars);
+                }
+            }
+            else
+            {
+                if (trimEnd)
+                {
+                    return s.TrimEnd(chars);
+                }
+                else
+                {
+                    return s;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes all leading and trailing white-space characters from the string.
+        /// <paramref name="trimStart"/> and <paramref name="trimEnd"/>
+        /// parameters specify whether to remove leading and trailing occurrences.
+        /// </summary>
+        /// <param name="s">String to process.</param>
+        /// <param name="trimStart">Whether to trim leading characters.</param>
+        /// <param name="trimEnd">Whether to trim trailing characters.</param>
+        /// <returns></returns>
+        public static string? Trim(
+            string? s,
+            bool trimStart = true,
+            bool trimEnd = true)
+        {
+            if (s is null)
+                return null;
+
+            if (trimStart)
+            {
+                if (trimEnd)
+                {
+                    return s.Trim();
+                }
+                else
+                {
+                    return s.TrimStart();
+                }
+            }
+            else
+            {
+                if (trimEnd)
+                {
+                    return s.TrimEnd();
+                }
+                else
+                {
+                    return s;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Trims the string using the specified text trimming rules.
+        /// </summary>
+        /// <param name="s">String to trim.</param>
+        /// <param name="rules">Text trimming rules.</param>
+        /// <returns></returns>
+        public static string? Trim(string? s, TrimTextRules rules)
+        {
+            if (s is null)
+                return null;
+
+            bool trimStart = !rules.HasFlag(TrimTextRules.NoStartTrimmin);
+            bool trimEnd = !rules.HasFlag(TrimTextRules.NoEndTrimmin);
+
+            string? result;
+
+            if (rules.HasFlag(TrimTextRules.TrimWhiteChars))
+                result = Trim(s, trimStart, trimEnd);
+            else
+                result = s;
+
+            List<char> chars = new();
+
+            if (rules.HasFlag(TrimTextRules.TrimSpaces))
+                chars.Add(' ');
+
+            if (rules.HasFlag(TrimTextRules.TrimRoundBrackets))
+            {
+                chars.Add('(');
+                chars.Add(')');
+            }
+
+            if (rules.HasFlag(TrimTextRules.TrimSquareBrackets))
+            {
+                chars.Add('[');
+                chars.Add(']');
+            }
+
+            if (rules.HasFlag(TrimTextRules.TrimFigureBrackets))
+            {
+                chars.Add('{');
+                chars.Add('}');
+            }
+
+            if (rules.HasFlag(TrimTextRules.TrimAngleBrackets))
+            {
+                chars.Add('<');
+                chars.Add('>');
+            }
+
+            var charsArray = chars.ToArray();
+
+            s = Trim(result, charsArray, trimStart, trimEnd);
+
+            return s;
         }
 
         /// <summary>
