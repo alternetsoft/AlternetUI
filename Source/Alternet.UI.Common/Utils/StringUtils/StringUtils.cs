@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -86,6 +87,19 @@ namespace Alternet.UI
         /// Gets title of the windows key on MacOs (0x2318 character).
         /// </summary>
         public const string MacCommandKeyTitle = "\u2318";
+
+        /// <summary>
+        /// Gets or sets array of delegates used for the text to number conversion.
+        /// </summary>
+        public static TryParseNumberDelegate[] TryParseNumberDelegates =
+        [
+            StringUtils.TryParseInt32,
+            StringUtils.TryParseUInt32,
+            StringUtils.TryParseInt64,
+            StringUtils.TryParseUInt64,
+            StringUtils.TryParseDouble,
+            StringUtils.TryParseDecimal,
+        ];
 
         /// <summary>
         /// Gets or sets values that split one string to many.
@@ -369,7 +383,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="typeCode">Number type identifier.</param>
         /// <param name="s">The string to parse.</param>
-        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
         /// the permitted format of <paramref name="s"/>.</param>
         /// <param name="provider">
         /// An object that supplies culture-specific formatting information
@@ -402,6 +417,92 @@ namespace Alternet.UI
 
             var isOk = tryParse(s, style.Value, provider, out result);
             return isOk;
+        }
+
+        /// <summary>
+        /// Parses the string representation of an object using <see cref="TypeConverter"/>
+        /// registered for the <typeparamref name="T"/> type.
+        /// </summary>
+        /// <param name="text">The string to parse.</param>
+        /// <typeparam name="T">Type of the object to parse from the string.</typeparam>
+        /// <param name="context"><see cref="ITypeDescriptorContext"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="culture"><see cref="CultureInfo"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="useInvariantCulture">
+        /// Whether to use <see cref="TypeConverter"/> with invariant
+        /// string to value conversion.
+        /// </param>
+        /// <returns>Object parsed from the string or Null.</returns>
+        public static T? ParseWithTypeConverter<T>(
+            string? text,
+            ITypeDescriptorContext? context = null,
+            CultureInfo? culture = null,
+            bool useInvariantCulture = true)
+        {
+            var typeConverter = ObjectToStringFactory.Default.GetTypeConverter(typeof(T));
+
+            var result = ParseWithTypeConverter(
+                        text,
+                        typeConverter,
+                        context,
+                        culture,
+                        useInvariantCulture);
+            return (T?)result;
+        }
+
+        /// <summary>
+        /// Parses the string representation of an object using the specified type converter.
+        /// </summary>
+        /// <param name="text">The string to parse.</param>
+        /// <param name="context"><see cref="ITypeDescriptorContext"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="culture"><see cref="CultureInfo"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="useInvariantCulture">
+        /// Whether to use <see cref="TypeConverter"/> with invariant
+        /// string to value conversion.
+        /// </param>
+        /// <returns>Object parsed from the string or Null.</returns>
+        /// <param name="typeConverter"></param>
+        public static object? ParseWithTypeConverter(
+            string? text,
+            TypeConverter? typeConverter = null,
+            ITypeDescriptorContext? context = null,
+            CultureInfo? culture = null,
+            bool useInvariantCulture = true)
+        {
+            if (typeConverter is null)
+                return null;
+
+            object? result;
+
+            if (useInvariantCulture)
+            {
+                if (context is null)
+                    result = typeConverter.ConvertFromInvariantString(text);
+                else
+                    result = typeConverter.ConvertFromInvariantString(context, text);
+            }
+            else
+            {
+                if (context is null)
+                {
+                    if (culture is null)
+                        result = typeConverter.ConvertFromString(text);
+                    else
+                        result = typeConverter.ConvertFromString(context, culture, text);
+                }
+                else
+                {
+                    if (culture is null)
+                        result = typeConverter.ConvertFromString(context, culture, text);
+                    else
+                        result = typeConverter.ConvertFromString(context, culture, text);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -520,7 +621,8 @@ namespace Alternet.UI
         /// Calls <see cref="int.TryParse(string, NumberStyles, IFormatProvider, out int)"/>
         /// </summary>
         /// <param name="s">The string to parse.</param>
-        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
         /// the permitted format of <paramref name="s"/>.</param>
         /// <param name="provider">
         /// An object that supplies culture-specific formatting information
@@ -545,10 +647,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Uses collection of <see cref="TryParseNumberDelegate"/> delegates
+        /// in order to convert string to a number.
+        /// </summary>
+        /// <param name="s">String to convert</param>
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
+        /// the permitted format of <paramref name="s"/>.</param>
+        /// <param name="provider">
+        /// An object that supplies culture-specific formatting information
+        /// about <paramref name="s"/>.
+        /// </param>
+        /// <param name="delegates">Collection of delegates used for the conversion.</param>
+        /// <param name="result">
+        /// When this method returns and if the conversion succeeded, contains a number equivalent
+        /// of the numeric value or symbol contained in <paramref name="s"/>.
+        /// Contains default value for the type if the conversion failed.
+        /// </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>.</returns>
+        public static bool TryParseNumberWithDelegates(
+            string? s,
+            NumberStyles style,
+            IFormatProvider? provider,
+            out object? result,
+            IEnumerable<TryParseNumberDelegate> delegates)
+        {
+            foreach (var proc in delegates)
+            {
+                var converted = proc(
+                    s,
+                    style,
+                    provider,
+                    out result);
+
+                if (converted)
+                    return true;
+            }
+
+            result = default;
+            return false;
+        }
+
+        /// <summary>
         /// Calls <see cref="uint.TryParse(string, NumberStyles, IFormatProvider, out uint)"/>
         /// </summary>
         /// <param name="s">The string to parse.</param>
-        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
         /// the permitted format of <paramref name="s"/>.</param>
         /// <param name="provider">
         /// An object that supplies culture-specific formatting information
@@ -654,6 +799,147 @@ namespace Alternet.UI
             var isOk = float.TryParse(s, style, provider, out var value);
             result = value;
             return isOk;
+        }
+
+        /// <summary>
+        /// Removes all leading and trailing occurrences of a set of characters specified
+        /// in an array from the string. <paramref name="trimStart"/> and <paramref name="trimEnd"/>
+        /// parameters specify whether to remove leading and trailing occurrences.
+        /// </summary>
+        /// <param name="s">String to process.</param>
+        /// <param name="chars">An array of Unicode characters to remove, or null.</param>
+        /// <param name="trimStart">Whether to trim leading characters.</param>
+        /// <param name="trimEnd">Whether to trim trailing characters.</param>
+        /// <returns></returns>
+        public static string? Trim(
+            string? s,
+            char[] chars,
+            bool trimStart = true,
+            bool trimEnd = true)
+        {
+            if (s is null)
+                return null;
+
+            if (trimStart)
+            {
+                if (trimEnd)
+                {
+                    return s.Trim(chars);
+                }
+                else
+                {
+                    return s.TrimStart(chars);
+                }
+            }
+            else
+            {
+                if (trimEnd)
+                {
+                    return s.TrimEnd(chars);
+                }
+                else
+                {
+                    return s;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes all leading and trailing white-space characters from the string.
+        /// <paramref name="trimStart"/> and <paramref name="trimEnd"/>
+        /// parameters specify whether to remove leading and trailing occurrences.
+        /// </summary>
+        /// <param name="s">String to process.</param>
+        /// <param name="trimStart">Whether to trim leading characters.</param>
+        /// <param name="trimEnd">Whether to trim trailing characters.</param>
+        /// <returns></returns>
+        public static string? Trim(
+            string? s,
+            bool trimStart = true,
+            bool trimEnd = true)
+        {
+            if (s is null)
+                return null;
+
+            if (trimStart)
+            {
+                if (trimEnd)
+                {
+                    return s.Trim();
+                }
+                else
+                {
+                    return s.TrimStart();
+                }
+            }
+            else
+            {
+                if (trimEnd)
+                {
+                    return s.TrimEnd();
+                }
+                else
+                {
+                    return s;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Trims the string using the specified text trimming rules.
+        /// </summary>
+        /// <param name="s">String to trim.</param>
+        /// <param name="rules">Text trimming rules.</param>
+        /// <returns></returns>
+        public static string? Trim(string? s, TrimTextRules rules)
+        {
+            if (s is null)
+                return null;
+
+            bool trimStart = !rules.HasFlag(TrimTextRules.NoStartTrimmin);
+            bool trimEnd = !rules.HasFlag(TrimTextRules.NoEndTrimmin);
+
+            string? result;
+
+            if (rules.HasFlag(TrimTextRules.TrimWhiteChars))
+                result = Trim(s, trimStart, trimEnd);
+            else
+                result = s;
+
+            List<char> chars = new();
+
+            if (rules.HasFlag(TrimTextRules.TrimSpaces))
+                chars.Add(' ');
+
+            if (rules.HasFlag(TrimTextRules.TrimRoundBrackets))
+            {
+                chars.Add('(');
+                chars.Add(')');
+            }
+
+            if (rules.HasFlag(TrimTextRules.TrimSquareBrackets))
+            {
+                chars.Add('[');
+                chars.Add(']');
+            }
+
+            if (rules.HasFlag(TrimTextRules.TrimFigureBrackets))
+            {
+                chars.Add('{');
+                chars.Add('}');
+            }
+
+            if (rules.HasFlag(TrimTextRules.TrimAngleBrackets))
+            {
+                chars.Add('<');
+                chars.Add('>');
+            }
+
+            var charsArray = chars.ToArray();
+
+            s = Trim(result, charsArray, trimStart, trimEnd);
+
+            return s;
         }
 
         /// <summary>

@@ -1068,7 +1068,7 @@ namespace Alternet.UI
         /// <param name="key">Key.</param>
         /// <param name="modifiers">Key modifiers.</param>
         /// <returns>True if <see cref="ValidateKeyBinding"/> is False; otherwise
-        /// returns result of <see cref="KeyGesture.IsValid"/> call.</returns>
+        /// returns result of <see cref="KeyGesture.IsValid(Key, UI.ModifierKeys)"/> call.</returns>
         /// <remarks>
         /// Override this method in order to allow/supress allowed keys
         /// for this control used in <see cref="ExecuteKeyBinding"/> method.

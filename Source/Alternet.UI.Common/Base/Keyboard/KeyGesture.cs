@@ -15,9 +15,6 @@ namespace Alternet.UI
     {
         private const char MultipleGestureDelimiter = ';';
 
-        private static readonly TypeConverter KeyGestureConverter =
-            new KeyGestureConverter();
-
         private readonly ModifierKeys fmodifiers = ModifierKeys.None;
         private readonly Key fkey = Key.None;
         private readonly string fdisplayString;
@@ -206,6 +203,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Checks whether <see cref="Key"/> and <see cref="Modifiers"/> combination is valid.
+        /// </summary>
+        public virtual bool IsValid()
+        {
+            var result = ModifierKeysConverter.IsDefinedModifierKeys(Modifiers)
+                && IsDefinedKey(Key) && IsValid(Key, Modifiers);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            try
+            {
+                return KeyGestureConverter.Default.ConvertToString(this);
+            }
+            catch (Exception)
+            {
+                return base.ToString();
+            }
+        }
+
+        /// <summary>
         /// Returns a string that can be used to display the KeyGesture.  If the
         /// DisplayString was set by the constructor, it is returned.  Otherwise
         /// a suitable string is created from the Key and Modifiers, with any
@@ -222,7 +245,7 @@ namespace Alternet.UI
             }
 
             // otherwise use the type converter
-            return (string?)KeyGestureConverter.ConvertTo(
+            return (string?)KeyGestureConverter.Default.ConvertTo(
                 null,
                 culture,
                 this,
@@ -297,7 +320,7 @@ namespace Alternet.UI
                     UI.KeyGestureConverter.DisplayStringSeparator + keyDisplayString;
             }
 
-            return KeyGestureConverter.ConvertFromInvariantString(
+            return KeyGestureConverter.Default.ConvertFromInvariantString(
                 keyGestureToken) as KeyGesture;
         }
     }

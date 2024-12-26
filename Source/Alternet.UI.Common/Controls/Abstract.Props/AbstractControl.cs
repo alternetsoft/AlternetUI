@@ -1467,7 +1467,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether key bindings are validated using
-        /// <see cref="KeyGesture.IsValid"/> before they are used
+        /// <see cref="KeyGesture.IsValid(Key, UI.ModifierKeys)"/> before they are used
         /// in <see cref="ExecuteKeyBinding"/>. Default is True.
         /// </summary>
         [Browsable(false)]

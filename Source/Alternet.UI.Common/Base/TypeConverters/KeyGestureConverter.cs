@@ -15,12 +15,14 @@ namespace Alternet.UI
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
+        /// <summary>
+        /// Gets or sets default type converter for <see cref="KeyGesture"/>.
+        /// </summary>
+        public static TypeConverter Default = new KeyGestureConverter();
+
         internal const char DisplayStringSeparator = ',';
 
         private const char ModifiersDelimiter = '+';
-
-        private static readonly KeyConverter KeyConverter = new();
-        private static readonly ModifierKeysConverter ModifierKeysConverter = new();
 
         /// <summary>
         /// Check for Valid enum, as any int can be casted to the enum.
@@ -123,15 +125,12 @@ namespace Alternet.UI
             {
                 // When invoked by the serialization engine we can convert to
                 // string only for known type
-                if (context != null && context.Instance != null)
+                if (context?.Instance is KeyGesture keyGesture)
                 {
-                    if (context.Instance is KeyGesture keyGesture)
-                    {
-                        return ModifierKeysConverter.IsDefinedModifierKeys(
-                            keyGesture.Modifiers)
-                                && IsDefinedKey(keyGesture.Key);
-                    }
+                    return keyGesture.IsValid();
                 }
+                else
+                    return true;
             }
 
             return false;
@@ -175,10 +174,16 @@ namespace Alternet.UI
                             return string.Empty;
 
                         string strBinding = string.Empty;
-                        string? strKey = KeyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
+                        string? strKey = KeyConverter.Default
+                            .ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
                         if (!string.IsNullOrEmpty(strKey))
                         {
-                            strBinding += ModifierKeysConverter.ConvertTo(context, culture, keyGesture.Modifiers, destinationType) as string;
+                            strBinding += ModifierKeysConverter.Default.ConvertTo(
+                                context,
+                                culture,
+                                keyGesture.Modifiers,
+                                destinationType) as string;
+
                             if (strBinding != string.Empty)
                             {
                                 strBinding += ModifiersDelimiter;

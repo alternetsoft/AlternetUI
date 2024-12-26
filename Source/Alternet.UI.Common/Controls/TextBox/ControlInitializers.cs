@@ -24,12 +24,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to assign and use char validator when control is initialized.
-        /// Default is True.
-        /// </summary>
-        public virtual bool UseCharValidator { get; set; } = true;
-
-        /// <summary>
         /// Initializes control properties
         /// with defaults which are best for editing the specified
         /// value type.
