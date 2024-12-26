@@ -13,6 +13,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets or sets whether to assign and use char validator when control is initialized.
+        /// Default is True.
+        /// </summary>
+        public static bool UseCharValidator { get; set; } = true;
+
         public static TextBoxInitializers Default
         {
             get
@@ -30,9 +36,6 @@ namespace Alternet.UI
 
         public virtual void AddDefaultInitializers()
         {
-            Add(KnownInputType.String, InitAsString);
-            Add(KnownInputType.Boolean, InitAsBoolean);
-            Add(KnownInputType.Char, InitAsChar);
             Add(KnownInputType.SByte, InitAsSByte);
             Add(KnownInputType.Byte, InitAsByte);
             Add(KnownInputType.Int16, InitAsInt16);
@@ -47,11 +50,11 @@ namespace Alternet.UI
             Add(KnownInputType.UDouble, InitAsUDouble);
             Add(KnownInputType.Decimal, InitAsDecimal);
             Add(KnownInputType.UDecimal, InitAsUDecimal);
-            Add(KnownInputType.DateTime, InitAsDateTime);
-            Add(KnownInputType.Date, InitAsDate);
-            Add(KnownInputType.Time, InitAsTime);
+/*
+            Add(KnownInputType.String, InitAsString);
             Add(KnownInputType.EMail, InitAsEMail);
             Add(KnownInputType.Url, InitAsUrl);
+*/
             Add(KnownInputType.None, InitAsNone);
 
             void Add(
@@ -62,7 +65,90 @@ namespace Alternet.UI
             }
         }
 
+        public virtual void InitAsSByte(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(sbyte));
+        }
+
+        public virtual void InitAsByte(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(byte));
+        }
+
+        public virtual void InitAsInt16(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(short));
+        }
+
+        public virtual void InitAsUInt16(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(ushort));
+        }
+
+        public virtual void InitAsInt32(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(int));
+        }
+
+        public virtual void InitAsUInt32(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(uint));
+        }
+
+        public virtual void InitAsInt64(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(long));
+        }
+
+        public virtual void InitAsUInt64(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(ulong));
+        }
+
+        public virtual void InitAsSingle(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(float));
+        }
+
+        public virtual void InitAsUSingle(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(float));
+            c.MinValue = 0F;
+        }
+
+        public virtual void InitAsDouble(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(double));
+        }
+
+        public virtual void InitAsUDouble(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(double));
+            c.MinValue = 0D;
+        }
+
+        public virtual void InitAsDecimal(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(decimal));
+        }
+
+        public virtual void InitAsUDecimal(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            SetNumberValidator(c, e, typeof(decimal));
+            c.MinValue = 0M;
+        }
+
         public virtual void InitAsNone(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+            Reset(c);
+        }
+
+/*
+        public virtual void InitAsEMail(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        {
+        }
+
+        public virtual void InitAsUrl(CustomTextBox c, TextBoxInitializeEventArgs? e)
         {
         }
 
@@ -70,88 +156,26 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void InitAsBoolean(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
         public virtual void InitAsChar(CustomTextBox c, TextBoxInitializeEventArgs? e)
         {
         }
+*/
 
-        public virtual void InitAsSByte(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        protected virtual void Reset(CustomTextBox c)
         {
+            c.MinValue = null;
+            c.MaxValue = null;
+            c.Options &= ~TextBoxOptions.DefaultValidation;
         }
 
-        public virtual void InitAsByte(CustomTextBox c, TextBoxInitializeEventArgs? e)
+        protected virtual void SetNumberValidator(
+            CustomTextBox c,
+            TextBoxInitializeEventArgs? e,
+            Type valueType)
         {
-        }
-
-        public virtual void InitAsInt16(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsUInt16(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsInt32(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsUInt32(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsInt64(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsUInt64(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsSingle(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsUSingle(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsDouble(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsUDouble(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsDecimal(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsUDecimal(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsDateTime(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsDate(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsTime(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsEMail(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
-        }
-
-        public virtual void InitAsUrl(CustomTextBox c, TextBoxInitializeEventArgs? e)
-        {
+            Reset(c);
+            c.SetValidator(valueType, e?.UseCharValidator ?? UseCharValidator);
+            c.Options |= TextBoxOptions.DefaultValidation;
         }
     }
 }

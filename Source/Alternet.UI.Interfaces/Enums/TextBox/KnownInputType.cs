@@ -14,6 +14,7 @@ namespace Alternet.UI
         /// </summary>
         None,
 
+/*
         /// <summary>
         /// Value is <see cref="string"/>.
         /// </summary>
@@ -28,6 +29,7 @@ namespace Alternet.UI
         /// Value is <see cref="char"/>.
         /// </summary>
         Char,
+*/
 
         /// <summary>
         /// Value is <see cref="sbyte"/>.
@@ -99,6 +101,7 @@ namespace Alternet.UI
         /// </summary>
         UDecimal,
 
+/*
         /// <summary>
         /// Value is <see cref="DateTime"/>.
         /// </summary>
@@ -123,5 +126,6 @@ namespace Alternet.UI
         /// Value is url.
         /// </summary>
         Url,
+*/
     }
 }
