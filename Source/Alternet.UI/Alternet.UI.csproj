@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
-    <NoWarn>CS8032</NoWarn>
+    <NoWarn>$(NoWarn);CS8032</NoWarn>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <LangVersion>12.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

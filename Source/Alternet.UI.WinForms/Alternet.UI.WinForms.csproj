@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Version\Version.props" />
+  <Import Project="..\Version\VersionNugets.props" />
+  <Import Project="..\Keys\Keys.props" />
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);WFO5001</NoWarn>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+    <ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

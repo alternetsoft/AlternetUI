@@ -16,15 +16,15 @@
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
 
   <PropertyGroup>
-	<TargetFramework48Version>net480</TargetFramework48Version>
-	<TargetFramework46Version>net462</TargetFramework46Version>
+	<TargetFramework48Version>net480$(TFSUFFIX)</TargetFramework48Version>
+	<TargetFramework46Version>net462$(TFSUFFIX)</TargetFramework46Version>
 
 	<TF48 Condition="$(BoolNet48) and $([MSBuild]::IsOsPlatform('Windows'))">$(TargetFramework48Version);</TF48>
 	<TF46 Condition="$(BoolNet46) and $([MSBuild]::IsOsPlatform('Windows'))">$(TargetFramework46Version);</TF46>
-	<TF6 Condition="$(BoolNet6)">net6.0;</TF6>
-	<TF7 Condition="$(BoolNet7)">net7.0;</TF7>
-	<TF8 Condition="$(BoolNet8)">net8.0;</TF8>
-	<TF9 Condition="$(BoolNet9)">net9.0;</TF9>
+	<TF6 Condition="$(BoolNet6)">net6.0$(TFSUFFIX);</TF6>
+	<TF7 Condition="$(BoolNet7)">net7.0$(TFSUFFIX);</TF7>
+	<TF8 Condition="$(BoolNet8)">net8.0$(TFSUFFIX);</TF8>
+	<TF9 Condition="$(BoolNet9)">net9.0$(TFSUFFIX);</TF9>
 
     	<UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows;net8.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
 	<TargetFrameworks>$(TF9)$(TF8)$(TF7)$(TF6)$(TF48)$(TF46)</TargetFrameworks>
