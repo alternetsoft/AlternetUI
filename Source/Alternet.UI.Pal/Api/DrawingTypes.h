@@ -3,6 +3,10 @@
 #include <stdint.h>
 #include <wx/display.h>
 
+#if defined(__WXMSW__)
+	#include <wx/msw/uxtheme.h>
+#endif
+
 namespace Alternet::UI
 {
 
@@ -549,6 +553,22 @@ namespace Alternet::UI
 		{
 			Create(parent, id, title, pos, size, style, name);
 		}
+
+#if defined(__WXMSW__)
+		virtual WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override
+		{
+#if wxUSE_UXTHEME
+			if (nMsg == WM_THEMECHANGED)
+			{
+				auto isThemeActive = wxUxThemeIsActive();
+			}
+#endif
+			// let the base class do all real processing
+			return wxFrame::MSWWindowProc(nMsg, wParam, lParam);
+		}
+
+#endif
+
 	};
 
 	class ParkingWindow
@@ -573,7 +593,7 @@ namespace Alternet::UI
 		{
 			if (s_parkingWindow == nullptr)
 			{
-				s_parkingWindow = new wxFrame();
+				s_parkingWindow = new wxFrame2();
 				s_parkingWindow->Create(0, wxID_ANY,
 					_T("AlterNET UI Parking Window"));
 				s_parkingWindow->Bind(wxEVT_CLOSE_WINDOW, &ParkingWindow::OnClose);
