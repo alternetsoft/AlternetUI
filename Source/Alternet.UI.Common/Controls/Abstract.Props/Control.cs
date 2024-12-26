@@ -55,7 +55,7 @@ namespace Alternet.UI
                 if (Cursor == value)
                     return;
                 base.Cursor = value;
-                Handler.SetCursor(value);
+                SafeHandler?.SetCursor(value);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.VisibleOnScreen;
+                return SafeHandler?.VisibleOnScreen ?? false;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.TabStop;
+                return SafeHandler?.TabStop ?? false;
             }
 
             set
@@ -91,7 +91,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.IsFocused;
+                return SafeHandler?.IsFocused ?? false;
             }
         }
 
@@ -102,12 +102,12 @@ namespace Alternet.UI
             {
                 if (IsDummy)
                     return SizeD.Empty;
-                return Handler.ClientSize;
+                return SafeHandler?.ClientSize ?? SizeD.Empty;
             }
 
             set
             {
-                if (ClientSize == value)
+                if (ClientSize == value || SafeHandler is null)
                     return;
 
                 DoInsideLayout(() =>
@@ -122,12 +122,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.IsScrollable;
+                return SafeHandler?.IsScrollable ?? false;
             }
 
             set
             {
-                if (IsScrollable == value)
+                if (IsScrollable == value || DisposingOrDisposed)
                     return;
                 Handler.IsScrollable = value;
             }
@@ -138,7 +138,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BackgroundColor;
+                return SafeHandler?.BackgroundColor ?? SystemColors.Window;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.ForegroundColor;
+                return SafeHandler?.ForegroundColor ?? SystemColors.WindowText;
             }
         }
 
@@ -163,12 +163,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.LangDirection;
+                return SafeHandler?.LangDirection ?? LangDirection.LeftToRight;
             }
 
             set
             {
-                if (value == LangDirection.Default)
+                if (value == LangDirection.Default || DisposingOrDisposed)
                     return;
                 Handler.LangDirection = value;
             }
@@ -177,11 +177,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool UserPaint
         {
-            get => Handler.UserPaint;
+            get => SafeHandler?.UserPaint ?? false;
 
             set
             {
                 if (value && !CanUserPaint)
+                    return;
+                if (DisposingOrDisposed)
                     return;
                 Handler.UserPaint = value;
             }
@@ -190,11 +192,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override RectD Bounds
         {
-            get => Handler.Bounds;
+            get => SafeHandler?.Bounds ?? RectD.Empty;
             set
             {
                 value.Size = value.Size.ApplyMinMax(MinimumSize, MaximumSize);
-                if (Bounds == value)
+                if (Bounds == value || DisposingOrDisposed)
                     return;
                 Handler.Bounds = value;
             }
@@ -205,14 +207,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.MinimumSize;
+                return SafeHandler?.MinimumSize ?? SizeD.Empty;
             }
 
             set
             {
                 value.Width = Math.Max(0, value.Width);
                 value.Height = Math.Max(0, value.Height);
-                if (MinimumSize == value)
+                if (MinimumSize == value || DisposingOrDisposed)
                     return;
                 Handler.MinimumSize = value;
                 PerformLayout();
@@ -224,14 +226,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.MaximumSize;
+                return SafeHandler?.MaximumSize ?? SizeD.Empty;
             }
 
             set
             {
                 value.Width = Math.Max(0, value.Width);
                 value.Height = Math.Max(0, value.Height);
-                if (MaximumSize == value)
+                if (MaximumSize == value || DisposingOrDisposed)
                     return;
                 Handler.MaximumSize = value;
                 PerformLayout();
@@ -241,8 +243,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool AllowDrop
         {
-            get => Handler.AllowDrop;
-            set => Handler.AllowDrop = value;
+            get => SafeHandler?.AllowDrop ?? false;
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.AllowDrop = value;
+            }
         }
 
         /// <summary>
@@ -255,12 +263,12 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BackgroundStyle;
+                return SafeHandler?.BackgroundStyle ?? ControlBackgroundStyle.Paint;
             }
 
             set
             {
-                if (value == ControlBackgroundStyle.Transparent)
+                if (value == ControlBackgroundStyle.Transparent || DisposingOrDisposed)
                     return;
                 Handler.BackgroundStyle = value;
             }
@@ -271,14 +279,14 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BoundsI;
+                return SafeHandler?.BoundsI ?? RectI.Empty;
             }
 
             set
             {
                 value.Width = Math.Max(0, value.Width);
                 value.Height = Math.Max(0, value.Height);
-                if (BoundsInPixels == value)
+                if (BoundsInPixels == value || DisposingOrDisposed)
                     return;
                 Handler.BoundsI = value;
             }
@@ -290,12 +298,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override Thickness IntrinsicLayoutPadding
         {
-            get => Handler.IntrinsicLayoutPadding;
+            get => SafeHandler?.IntrinsicLayoutPadding ?? Thickness.Empty;
         }
 
         /// <inheritdoc/>
         public override Thickness IntrinsicPreferredSizePadding
-            => Handler.IntrinsicPreferredSizePadding;
+        {
+            get
+            {
+                return SafeHandler?.IntrinsicPreferredSizePadding ?? Thickness.Empty;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether <see cref="AbstractControl.Idle"/> event is fired.
@@ -305,11 +318,13 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.ProcessIdle;
+                return SafeHandler?.ProcessIdle ?? false;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ProcessIdle = value;
             }
         }
@@ -319,7 +334,7 @@ namespace Alternet.UI
         {
             get
             {
-                return !Handler.CanSelect;
+                return !CanSelect;
             }
 
             set
@@ -335,7 +350,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.CanSelect;
+                return SafeHandler?.CanSelect ?? false;
             }
 
             set
@@ -361,7 +376,21 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override object NativeControl => Handler.GetNativeControl();
+        public override object NativeControl => SafeHandler?.GetNativeControl() ?? new();
+
+        /// <summary>
+        /// Gets a <see cref="IControlHandler"/> associated with this class
+        /// or Null if control is disposed.
+        /// </summary>
+        public IControlHandler? SafeHandler
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return null;
+                return Handler;
+            }
+        }
 
         /// <summary>
         /// Gets a <see cref="IControlHandler"/> associated with this class.
@@ -372,7 +401,7 @@ namespace Alternet.UI
             get
             {
                 EnsureHandlerCreated();
-                return handler ?? throw new InvalidOperationException();
+                return handler ?? throw new InvalidOperationException("Error creating control handler");
             }
         }
 
@@ -384,11 +413,13 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BorderStyle;
+                return SafeHandler?.BorderStyle ?? ControlBorderStyle.Default;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.BorderStyle = value;
             }
         }
@@ -408,7 +439,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.IsMouseCaptured;
+                return SafeHandler?.IsMouseCaptured ?? false;
             }
         }
 
@@ -416,11 +447,13 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.ProcessUIUpdates;
+                return SafeHandler?.ProcessUIUpdates ?? false;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ProcessUIUpdates = value;
             }
         }
@@ -430,11 +463,13 @@ namespace Alternet.UI
         {
             get
             {
-                return Handler.BindScrollEvents;
+                return SafeHandler?.BindScrollEvents ?? false;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.BindScrollEvents = value;
             }
         }
@@ -463,6 +498,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public override void RaiseVisibleChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Visible = Visible;
             base.RaiseVisibleChanged();
         }
@@ -489,7 +526,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual RectI GetUpdateClientRectI()
         {
-            return Handler.GetUpdateClientRectI();
+            return SafeHandler?.GetUpdateClientRectI() ?? RectI.Empty;
         }
 
         /// <summary>
@@ -507,35 +544,36 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
-            return Handler.DoDragDrop(data, allowedEffects);
+            return SafeHandler?.DoDragDrop(data, allowedEffects) ?? DragDropEffects.None;
         }
 
         /// <inheritdoc/>
         public override int BeginUpdate()
         {
-            Handler.BeginUpdate();
+            if (!DisposingOrDisposed)
+            {
+                Handler.BeginUpdate();
+            }
+
             return base.BeginUpdate();
         }
 
         /// <inheritdoc/>
         public override Color? GetDefaultAttributesBgColor()
         {
-            CheckDisposed();
-            return Handler.GetDefaultAttributesBgColor();
+            return SafeHandler?.GetDefaultAttributesBgColor();
         }
 
         /// <inheritdoc/>
         public override Color? GetDefaultAttributesFgColor()
         {
-            CheckDisposed();
-            return Handler.GetDefaultAttributesFgColor();
+            return SafeHandler?.GetDefaultAttributesFgColor();
         }
 
         /// <inheritdoc/>
         public override Font? GetDefaultAttributesFont()
         {
-            CheckDisposed();
-            return Handler.GetDefaultAttributesFont();
+            return SafeHandler?.GetDefaultAttributesFont();
         }
 
         /// <inheritdoc/>
@@ -544,7 +582,11 @@ namespace Alternet.UI
             if (BackgroundColor is null)
                 ResetBackgroundColor(ResetColorType.Auto);
             else
-                Handler.BackgroundColor = BackgroundColor;
+            {
+                if(!DisposingOrDisposed)
+                    Handler.BackgroundColor = BackgroundColor;
+            }
+
             base.RaiseBackgroundColorChanged();
         }
 
@@ -553,13 +595,13 @@ namespace Alternet.UI
         {
             if (CanSkipInvalidate())
                 return;
-            Handler.RefreshRect(rect, eraseBackground);
+            SafeHandler?.RefreshRect(rect, eraseBackground);
         }
 
         /// <inheritdoc/>
         public override Graphics CreateDrawingContext()
         {
-            return Handler.CreateDrawingContext();
+            return SafeHandler?.CreateDrawingContext() ?? new PlessGraphics();
         }
 
         /// <inheritdoc/>
@@ -567,19 +609,22 @@ namespace Alternet.UI
         {
             if (CanSkipInvalidate())
                 return;
-            Handler.Invalidate();
+            if(!DisposingOrDisposed)
+                Handler.Invalidate();
             base.Invalidate();
         }
 
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            return Handler.SetFocus();
+            return SafeHandler?.SetFocus() ?? false;
         }
 
         /// <inheritdoc/>
         public override void Update()
         {
+            if (DisposingOrDisposed)
+                return;
             if (CanSkipInvalidate())
                 return;
             Handler.Update();
@@ -588,13 +633,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void HandleNeeded()
         {
-            Handler.HandleNeeded();
+            SafeHandler?.HandleNeeded();
         }
 
         /// <inheritdoc/>
         public override bool IsTransparentBackgroundSupported()
         {
-            return Handler.IsTransparentBackgroundSupported();
+            return SafeHandler?.IsTransparentBackgroundSupported() ?? false;
         }
 
         /// <summary>
@@ -674,71 +719,71 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override PointD ScreenToClient(PointD point)
         {
-            return Handler.ScreenToClient(point);
+            return SafeHandler?.ScreenToClient(point) ?? point;
         }
 
         /// <inheritdoc/>
         public override PointD ClientToScreen(PointD point)
         {
-            return Handler.ClientToScreen(point);
+            return SafeHandler?.ClientToScreen(point) ?? point;
         }
 
         /// <inheritdoc/>
         public override void HideToolTip()
         {
-            Handler.UnsetToolTip();
-            Handler.SetToolTip(GetRealToolTip());
+            SafeHandler?.UnsetToolTip();
+            SafeHandler?.SetToolTip(GetRealToolTip());
         }
 
         /// <inheritdoc/>
         public override void BeginInit()
         {
             base.BeginInit();
-            Handler.BeginInit();
+            SafeHandler?.BeginInit();
         }
 
         /// <inheritdoc/>
         public override void InvalidateBestSize()
         {
-            Handler.InvalidateBestSize();
+            SafeHandler?.InvalidateBestSize();
         }
 
         /// <inheritdoc/>
         public override void EndInit()
         {
-            Handler.EndInit();
+            SafeHandler?.EndInit();
             base.EndInit();
         }
 
         /// <inheritdoc/>
         public override IntPtr GetHandle()
         {
-            return Handler.GetHandle();
+            return SafeHandler?.GetHandle() ?? default;
         }
 
         /// <inheritdoc/>
         public override int EndUpdate()
         {
-            Handler.EndUpdate();
+            SafeHandler?.EndUpdate();
             return base.EndUpdate();
         }
 
         /// <inheritdoc/>
         public override void CaptureMouse()
         {
-            Handler.CaptureMouse();
+            SafeHandler?.CaptureMouse();
         }
 
         /// <inheritdoc/>
         public override void ReleaseMouseCapture()
         {
-            Handler.ReleaseMouseCapture();
+            SafeHandler?.ReleaseMouseCapture();
         }
 
         /// <inheritdoc/>
         public override void RecreateWindow()
         {
-            Handler.RecreateWindow();
+            SafeHandler?.RecreateWindow();
         }
 
         /// <inheritdoc/>
@@ -747,7 +792,7 @@ namespace Alternet.UI
             if (Keyboard.ProcessTabInternally)
                 base.FocusNextControl(forward, nested);
             else
-                Handler.FocusNextControl(forward, nested);
+                SafeHandler?.FocusNextControl(forward, nested);
         }
 
         /// <summary>
@@ -761,7 +806,7 @@ namespace Alternet.UI
             ScreenShotCounter++;
             try
             {
-                Handler.SaveScreenshot(fileName);
+                SafeHandler?.SaveScreenshot(fileName);
             }
             finally
             {
@@ -772,6 +817,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
+            if (DisposingOrDisposed)
+                return ScrollBarInfo.Default;
+
             if (isVertical)
                 return Handler.VertScrollBarInfo;
             return Handler.HorzScrollBarInfo;
@@ -780,6 +828,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
+            if (DisposingOrDisposed)
+                return;
+
             if (isVertical)
             {
                 Handler.VertScrollBarInfo = value;
@@ -795,6 +846,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RaiseHandleCreated()
         {
+            if (DisposingOrDisposed)
+                return;
+
             if (BackgroundColor is not null)
                 Handler.BackgroundColor = BackgroundColor;
             if (ForegroundColor is not null)
@@ -804,6 +858,9 @@ namespace Alternet.UI
 
         internal virtual void OnHandlerDpiChanged()
         {
+            if (DisposingOrDisposed)
+                return;
+
             var oldDpi = Handler.EventOldDpi;
             var newDpi = Handler.EventNewDpi;
 
@@ -813,6 +870,9 @@ namespace Alternet.UI
 
         internal virtual void OnHandlerVerticalScrollBarValueChanged()
         {
+            if (DisposingOrDisposed)
+                return;
+
             var args = new ScrollEventArgs
             {
                 ScrollOrientation = ScrollBarOrientation.Vertical,
@@ -824,6 +884,9 @@ namespace Alternet.UI
 
         internal virtual void OnHandlerVisibleChanged()
         {
+            if (DisposingOrDisposed)
+                return;
+
             bool visible = Handler.Visible;
             Visible = visible;
 
@@ -843,6 +906,9 @@ namespace Alternet.UI
 
         internal virtual void OnHandlerHorizontalScrollBarValueChanged()
         {
+            if (DisposingOrDisposed)
+                return;
+
             var args = new ScrollEventArgs
             {
                 ScrollOrientation = ScrollBarOrientation.Horizontal,
@@ -854,6 +920,9 @@ namespace Alternet.UI
 
         internal virtual void OnHandlerPaint()
         {
+            if (DisposingOrDisposed)
+                return;
+
             if (!UserPaint)
                 return;
             var clientRect = ClientRectangle;
@@ -947,12 +1016,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
-            Handler.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
+            SafeHandler?.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
         }
 
         /// <inheritdoc/>
         protected override void OnTextChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (handlerTextChanging == 0)
             {
                 var coercedText = CoerceTextForHandler(Text);
@@ -966,7 +1037,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override Coord? RequestScaleFactor()
         {
-            return Handler.GetPixelScaleFactor();
+            return SafeHandler?.GetPixelScaleFactor();
         }
 
         /// <summary>
@@ -987,7 +1058,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override SizeD GetBestSizeWithoutPadding(SizeD availableSize)
         {
-            return Handler.GetPreferredSize(availableSize);
+            return SafeHandler?.GetPreferredSize(availableSize) ?? SizeD.Empty;
         }
 
         /// <summary>
@@ -995,6 +1066,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnHandlerTextChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             if (handlerTextChanging > 0)
                 return;
 
@@ -1012,13 +1085,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void RaiseEnabledChanged(EventArgs e)
         {
-            Handler.SetEnabled(Enabled);
+            SafeHandler?.SetEnabled(Enabled);
             base.RaiseEnabledChanged(EventArgs.Empty);
         }
 
         /// <inheritdoc/>
         protected override void InternalSetColor(bool isBackground, Color? color)
         {
+            if (DisposingOrDisposed)
+                return;
+
             base.InternalSetColor(isBackground, color);
 
             if (isBackground)
@@ -1047,13 +1123,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnFontChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Font = RealFont;
         }
 
         /// <inheritdoc/>
         protected override void OnToolTipChanged(EventArgs e)
         {
-            Handler.SetToolTip(GetRealToolTip());
+            SafeHandler?.SetToolTip(GetRealToolTip());
         }
 
         private class EmptyControl : Control
