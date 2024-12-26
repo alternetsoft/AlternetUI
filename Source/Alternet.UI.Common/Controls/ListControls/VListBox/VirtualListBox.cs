@@ -38,7 +38,6 @@ namespace Alternet.UI
         public VirtualListBox()
         {
             UserPaint = true;
-            BackgroundStyle = ControlBackgroundStyle.Paint;
             SuggestedSize = 200;
         }
 
