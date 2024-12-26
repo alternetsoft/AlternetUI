@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -382,7 +383,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="typeCode">Number type identifier.</param>
         /// <param name="s">The string to parse.</param>
-        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/> values that indicates
+        /// <param name="style">A bitwise combination of <see cref="NumberStyles"/>
+        /// values that indicates
         /// the permitted format of <paramref name="s"/>.</param>
         /// <param name="provider">
         /// An object that supplies culture-specific formatting information
@@ -415,6 +417,92 @@ namespace Alternet.UI
 
             var isOk = tryParse(s, style.Value, provider, out result);
             return isOk;
+        }
+
+        /// <summary>
+        /// Parses the string representation of an object using <see cref="TypeConverter"/>
+        /// registered for the <typeparamref name="T"/> type.
+        /// </summary>
+        /// <param name="text">The string to parse.</param>
+        /// <typeparam name="T">Type of the object to parse from the string.</typeparam>
+        /// <param name="context"><see cref="ITypeDescriptorContext"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="culture"><see cref="CultureInfo"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="useInvariantCulture">
+        /// Whether to use <see cref="TypeConverter"/> with invariant
+        /// string to value conversion.
+        /// </param>
+        /// <returns>Object parsed from the string or Null.</returns>
+        public static T? ParseWithTypeConverter<T>(
+            string? text,
+            ITypeDescriptorContext? context = null,
+            CultureInfo? culture = null,
+            bool useInvariantCulture = true)
+        {
+            var typeConverter = ObjectToStringFactory.Default.GetTypeConverter(typeof(T));
+
+            var result = ParseWithTypeConverter(
+                        text,
+                        typeConverter,
+                        context,
+                        culture,
+                        useInvariantCulture);
+            return (T?)result;
+        }
+
+        /// <summary>
+        /// Parses the string representation of an object using the specified type converter.
+        /// </summary>
+        /// <param name="text">The string to parse.</param>
+        /// <param name="context"><see cref="ITypeDescriptorContext"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="culture"><see cref="CultureInfo"/> value which is used
+        /// when text is converted.</param>
+        /// <param name="useInvariantCulture">
+        /// Whether to use <see cref="TypeConverter"/> with invariant
+        /// string to value conversion.
+        /// </param>
+        /// <returns>Object parsed from the string or Null.</returns>
+        /// <param name="typeConverter"></param>
+        public static object? ParseWithTypeConverter(
+            string? text,
+            TypeConverter? typeConverter = null,
+            ITypeDescriptorContext? context = null,
+            CultureInfo? culture = null,
+            bool useInvariantCulture = true)
+        {
+            if (typeConverter is null)
+                return null;
+
+            object? result;
+
+            if (useInvariantCulture)
+            {
+                if (context is null)
+                    result = typeConverter.ConvertFromInvariantString(text);
+                else
+                    result = typeConverter.ConvertFromInvariantString(context, text);
+            }
+            else
+            {
+                if (context is null)
+                {
+                    if (culture is null)
+                        result = typeConverter.ConvertFromString(text);
+                    else
+                        result = typeConverter.ConvertFromString(context, culture, text);
+                }
+                else
+                {
+                    if (culture is null)
+                        result = typeConverter.ConvertFromString(context, culture, text);
+                    else
+                        result = typeConverter.ConvertFromString(context, culture, text);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
