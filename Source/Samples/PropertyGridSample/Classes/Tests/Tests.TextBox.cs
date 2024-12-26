@@ -42,6 +42,66 @@ namespace PropertyGridSample
             TestRichFindReplace(true);
         }
 
+        void HandleTextChangedForTextAsValue(object? sender, EventArgs e)
+        {
+            if (sender is not TextBox c)
+                return;
+
+            var value = c.TextAsValue;
+
+            string prefix = "TextBox.TextAsValue: ";
+
+            if (c.TextAsValueError is null)
+            {
+                App.LogReplace($"{prefix}Value = {value}", prefix);
+                c.ReportValidatorError(false);
+            }
+            else
+            {
+                App.LogReplace($"{prefix}Error = {c.TextAsValueError}", prefix);
+                c.ReportValidatorError(true);
+            }
+
+        }
+
+        void InitTestsTextBoxAndButton()
+        {
+            AddControlAction<TextBoxAndButton>("Edit Thickness", (control) =>
+            {
+                control.ErrorPictureVisible = true;
+
+                var c = control.TextBox;
+
+                c.Clear();
+                c.DataType = typeof(Thickness);
+                c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
+                c.TextAsValue = new Thickness(10, 5, 5, 10);
+                c.ValidatorErrorText = "Expected thickness. Example: 10, 5, 10, 5";
+                c.Options |= TextBoxOptions.UseTypeConverter;
+
+                c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
+                c.DelayedTextChanged += HandleTextChangedForTextAsValue;
+
+            });
+
+            AddControlAction<TextBoxAndButton>("Edit KeyGesture", (control) =>
+            {
+                control.ErrorPictureVisible = true;
+
+                var c = control.TextBox;
+
+                c.Clear();
+                c.DataType = typeof(KeyGesture);
+                c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
+                c.TextAsValue = new KeyGesture(Key.Space, Alternet.UI.ModifierKeys.ControlShift);
+                c.ValidatorErrorText = "Expected key with modifier. Example: Alt+Shift+B";
+
+                c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
+                c.DelayedTextChanged += HandleTextChangedForTextAsValue;
+
+            });
+        }
+
         void InitTestsTextBox()
         {
             AddControlAction<TextBox>("Edit sbyte", (c) =>

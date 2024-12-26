@@ -336,6 +336,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets last error occured inside <see cref="TextAsValue"/> property getter or setter.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Exception? TextAsValueError { get; private set; }
+
+        /// <summary>
+        /// Gets or sets text trimming rules used in <see cref="TextAsValue"/> setter and some
+        /// other places.
+        /// </summary>
+        public virtual TrimTextRules TrimTextRules { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="AbstractControl.Text"/>
         /// as <see cref="object"/> using <see cref="DataType"/>, <see cref="TypeConverter"/>
         /// and other properties which define text to/from value conversion rules.
@@ -345,27 +357,51 @@ namespace Alternet.UI
         {
             get
             {
-                if (TextToValueWithEvent(out object? result))
+                TextAsValueError = null;
+
+                try
+                {
+                    if (TextToValueWithEvent(out object? result))
+                        return result;
+
+                    if (DataType is null || DataType == typeof(string))
+                        return Text;
+
+                    var typeConverter = ObjectToStringFactory.Default.GetTypeConverter(DataType);
+
+                    result = StringUtils.ParseWithTypeConverter(
+                                Text,
+                                typeConverter,
+                                Context,
+                                Culture,
+                                Options.HasFlag(TextBoxOptions.UseInvariantCulture));
+
                     return result;
-
-                if (DataType is null || DataType == typeof(string))
-                    return Text;
-
-                var typeConverter = ObjectToStringFactory.Default.GetTypeConverter(DataType);
-
-                result = StringUtils.ParseWithTypeConverter(
-                            Text,
-                            typeConverter,
-                            Context,
-                            Culture,
-                            Options.HasFlag(TextBoxOptions.UseInvariantCulture));
-
-                return result;
+                }
+                catch (Exception e)
+                {
+                    TextAsValueError = e;
+                    return EmptyTextValue;
+                }
             }
 
             set
             {
-                SetTextAsObject(value);
+                TextAsValueError = null;
+
+                try
+                {
+                    var s = ObjectToString(value, Options | TextBoxOptions.UseTypeConverter);
+
+                    var trimmed = StringUtils.Trim(s, TrimTextRules);
+
+                    Text = trimmed ?? string.Empty;
+                }
+                catch (Exception e)
+                {
+                    Text = string.Empty;
+                    TextAsValueError = e;
+                }
             }
         }
 
@@ -1116,14 +1152,27 @@ namespace Alternet.UI
         /// If <see cref="CustomTextBox.DataType"/> property is <c>null</c>, it is set to
         /// the type of <paramref name="value"/>.
         /// </remarks>
-        public virtual void SetTextAsObject(
-            object? value)
+        public virtual void SetTextAsObject(object? value)
+        {
+            Text = ObjectToString(value) ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Converts the specified object to string using conversion
+        /// rules specified in the control.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <param name="optionsOverride">Conversion options. If not specified,
+        /// <see cref="Options"/> is used.</param>
+        /// <returns></returns>
+        public virtual string? ObjectToString(
+            object? value,
+            TextBoxOptions? optionsOverride = null)
         {
             if (value is null)
-            {
-                Text = string.Empty;
-                return;
-            }
+                return null;
+
+            optionsOverride ??= options;
 
             var valueToString = ValueToString ?? GlobalValueToString;
 
@@ -1132,10 +1181,7 @@ namespace Alternet.UI
                 var e = new ValueConvertEventArgs<object?, string?>(value);
                 valueToString(this, e);
                 if (e.Handled)
-                {
-                    Text = e.Result ?? string.Empty;
-                    return;
-                }
+                    return e.Result;
             }
 
             var type = value.GetType();
@@ -1143,7 +1189,7 @@ namespace Alternet.UI
             var converter = Converter;
             bool usedTypeConverter = false;
 
-            if (converter is null && options.HasFlag(TextBoxOptions.UseTypeConverter))
+            if (converter is null && optionsOverride.Value.HasFlag(TextBoxOptions.UseTypeConverter))
             {
                 converter = ObjectToStringFactory.Default.CreateAdapter(TypeConverter);
 
@@ -1163,8 +1209,7 @@ namespace Alternet.UI
 
             if (converter is null)
             {
-                Text = value.ToString() ?? string.Empty;
-                return;
+                return value.ToString();
             }
 
             var converted = converter.TryConvert(
@@ -1175,48 +1220,37 @@ namespace Alternet.UI
 
             if (converted)
             {
-                Text = conversionResult ?? string.Empty;
-                return;
+                return conversionResult;
             }
 
             if (usedTypeConverter)
             {
-                Text = converter.ToString(
+                return converter.ToString(
                     this,
                     value,
                     Context,
                     Culture,
-                    Options.HasFlag(TextBoxOptions.UseInvariantCulture)) ?? string.Empty;
+                    optionsOverride.Value.HasFlag(TextBoxOptions.UseInvariantCulture));
             }
 
             if (DefaultFormat is null)
             {
                 if (FormatProvider is null)
-                {
-                    Text = converter.ToString(this, value) ?? string.Empty;
-                    return;
-                }
+                    return converter.ToString(this, value);
                 else
-                {
-                    Text = converter.ToString(this, value, FormatProvider) ?? string.Empty;
-                    return;
-                }
+                    return converter.ToString(this, value, FormatProvider);
             }
             else
             {
                 if (FormatProvider is null)
-                {
-                    Text = converter.ToString(this, value, DefaultFormat) ?? string.Empty;
-                    return;
-                }
+                    return converter.ToString(this, value, DefaultFormat);
                 else
                 {
-                    Text = converter.ToString(
+                    return converter.ToString(
                         this,
                         value,
                         DefaultFormat,
-                        FormatProvider) ?? string.Empty;
-                    return;
+                        FormatProvider);
                 }
             }
         }

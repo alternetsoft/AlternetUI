@@ -45,6 +45,7 @@ namespace PropertyGridSample
             alreadyRegistered = true;
 
             InitTestsToolBar();
+            InitTestsTextBoxAndButton();
             InitTestsTextBox();
             InitTestsPictureBox();
             InitTestsListBox();
