@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Base class for text editors.
     /// </summary>
     [ControlCategory("Hidden")]
-    public abstract class CustomTextBox
+    public abstract partial class CustomTextBox
         : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions,
         INotifyDataErrorInfo
     {
@@ -26,6 +26,18 @@ namespace Alternet.UI
         private TextBoxOptions options = TextBoxOptions.IntRangeInError;
         private KnownInputType? inputType;
         private object? minValue;
+        private Type? dataType;
+        private string? defaultText;
+        private CultureInfo? culture;
+        private TypeConverter? typeConverter;
+        private ITypeDescriptorContext? context;
+        private IObjectToString? converter;
+        private string? defaultFormat;
+        private NumberStyles? numberStyles;
+        private bool allowEmptyText = true;
+        private IValidatorReporter? validatorReporter;
+        private string? validatorErrorText;
+        private object? emptyTextValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomTextBox"/> class.
@@ -48,23 +60,23 @@ namespace Alternet.UI
         /// Occurs when <see cref="string"/> is converted to value. This is static event
         /// and is called for all the editors.
         /// </summary>
-        public static event EventHandler<ValueConvertEventArgs<string?, object?>>? GlobalStringToValue;
+        public static event EventHandler<StringToObjectEventArgs>? GlobalStringToValue;
 
         /// <summary>
         /// Occurs when value is converted to <see cref="string"/>. This is static event
         /// and is called for all the editors.
         /// </summary>
-        public static event EventHandler<ValueConvertEventArgs<object?, string?>>? GlobalValueToString;
+        public static event EventHandler<ObjectToStringEventArgs>? GlobalValueToString;
 
         /// <summary>
         /// Occurs when <see cref="string"/> is converted to value in this control.
         /// </summary>
-        public static event EventHandler<ValueConvertEventArgs<string?, object?>>? StringToValue;
+        public static event EventHandler<StringToObjectEventArgs>? StringToValue;
 
         /// <summary>
         /// Occurs when value is converted to <see cref="string"/> in this control.
         /// </summary>
-        public static event EventHandler<ValueConvertEventArgs<object?, string?>>? ValueToString;
+        public static event EventHandler<ObjectToStringEventArgs>? ValueToString;
 
         /// <summary>
         /// Occurs when <see cref="ReportValidatorError"/> is called.
@@ -140,68 +152,15 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="IObjectToStringOptions.NumberStyles"/>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it if <see cref="TextBox"/> edits a number value or
-        /// for any other purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual NumberStyles? NumberStyles { get; set; }
-
-        /// <inheritdoc cref="IObjectToStringOptions.FormatProvider"/>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual IFormatProvider? FormatProvider { get; set; }
-
-        /// <inheritdoc cref="IObjectToStringOptions.DefaultFormat"/>
-        [Browsable(false)]
-        public virtual string? DefaultFormat { get; set; }
-
-        /// <inheritdoc cref="IObjectToStringOptions.Converter"/>
-        [Browsable(false)]
-        public virtual IObjectToString? Converter { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="TypeConverter"/> used for the text to/from value conversion.
-        /// You also need to specify <see cref="TextBoxOptions.UseTypeConverter"/>
-        /// in <see cref="Options"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual TypeConverter? TypeConverter { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="ITypeDescriptorContext"/> value which is used
-        /// when text to/from value is converted using <see cref="TypeConverter"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ITypeDescriptorContext? Context { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="CultureInfo"/> value which is used
-        /// when text to/from value is converted using <see cref="TypeConverter"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual CultureInfo? Culture { get; set; }
-
         /// <summary>
         /// Gets or sets default value for the <see cref="AbstractControl.Text"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual string? DefaultText { get; set; }
-
-        /// <summary>
-        /// Gets or sets <see cref="Type"/> of the <see cref="AbstractControl.Text"/> property.
-        /// </summary>
-        /// <remarks>
-        /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
-        /// by this property, you can use it for any purposes.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Type? DataType { get; set; }
+        public virtual string? DefaultText
+        {
+            get => defaultText;
+            set => defaultText = value;
+        }
 
         /// <summary>
         /// Gets or sets the maximum number of characters
@@ -241,112 +200,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether <see cref="DataType"/> specifies a signed integer number
-        /// (int, long, sbyte, short).
-        /// Additionally <see cref="MinValue"/>
-        /// is also checked whether it allows negative numbers.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsSignedInt
-        {
-            get
-            {
-                var typeCode = GetDataTypeCode();
-
-                if (AssemblyUtils.IsTypeCodeSignedInt(typeCode) && IsMinValueNegativeOrNull)
-                    return true;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="DataType"/> specifies an unsigned integer number
-        /// (uint, ulong, byte, ushort).
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsUnsignedInt
-        {
-            get
-            {
-                var typeCode = GetDataTypeCode();
-
-                if (AssemblyUtils.IsTypeCodeUnsignedInt(typeCode))
-                    return true;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="DataType"/> specifies a float number
-        /// (single, double, decimal).
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsFloat
-        {
-            get
-            {
-                var typeCode = GetDataTypeCode();
-
-                if (AssemblyUtils.IsTypeCodeFloat(typeCode))
-                    return true;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="DataType"/> specifies a signed number.
-        /// Additionally <see cref="MinValue"/>
-        /// is also checked whether it allows negative numbers.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsSignedNumber
-        {
-            get
-            {
-                if (IsNumber && IsMinValueNegativeOrNull)
-                    return true;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="MinValue"/> is specified and negative.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsMinValueNegativeOrNull
-        {
-            get
-            {
-                var realMinValue = GetRealMinValue();
-
-                if (realMinValue is null)
-                    return true;
-                else
-                {
-                    var typeCode = GetDataTypeCode();
-                    var signed = MathUtils.LessThanDefault(typeCode, realMinValue);
-                    return signed ?? true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets whether <see cref="NumberStyles"/>
-        /// has <see cref="System.Globalization.NumberStyles.HexNumber"/> flag.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsHexNumber
-        {
-            get
-            {
-                if (NumberStyles is not null
-                    && NumberStyles.Value.HasFlag(System.Globalization.NumberStyles.HexNumber))
-                    return true;
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets validator reporter object or control.
         /// </summary>
         /// <remarks>
@@ -355,7 +208,11 @@ namespace Alternet.UI
         /// this is a <see cref="PictureBox"/> with error image.
         /// </remarks>
         [Browsable(false)]
-        public virtual IValidatorReporter? ValidatorReporter { get; set; }
+        public virtual IValidatorReporter? ValidatorReporter
+        {
+            get => validatorReporter;
+            set => validatorReporter = value;
+        }
 
         /// <summary>
         /// Gets or sets a text string that can be used as validator error message.
@@ -364,7 +221,11 @@ namespace Alternet.UI
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
-        public virtual string? ValidatorErrorText { get; set; }
+        public virtual string? ValidatorErrorText
+        {
+            get => validatorErrorText;
+            set => validatorErrorText = value;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether empty string
@@ -375,7 +236,11 @@ namespace Alternet.UI
         /// by this property, you can use it for any purposes.
         /// </remarks>
         [Browsable(false)]
-        public virtual bool AllowEmptyText { get; set; } = true;
+        public virtual bool AllowEmptyText
+        {
+            get => allowEmptyText;
+            set => allowEmptyText = value;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether
@@ -401,26 +266,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether <see cref="DataType"/> is a number type.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsNumber
-        {
-            get
-            {
-                return DataTypeIsNumber();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets data value in cases when <see cref="AbstractControl.Text"/> property is empty.
+        /// Gets or sets data value in cases when <see cref="AbstractControl.Text"/>
+        /// property is empty.
         /// </summary>
         /// <remarks>
         /// Default value is <c>null</c>. <see cref="TextBox"/> behavior is not affected
         /// by this property, you can use it for any purposes.
         /// </remarks>
         [Browsable(false)]
-        public virtual object? EmptyTextValue { get; set; }
+        public virtual object? EmptyTextValue
+        {
+            get => emptyTextValue;
+            set => emptyTextValue = value;
+        }
 
         /// <summary>
         /// Gets or sets string search provider.
@@ -478,6 +336,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="AbstractControl.Text"/>
+        /// as <see cref="object"/> using <see cref="DataType"/>, <see cref="TypeConverter"/>
+        /// and other properties which define text to/from value conversion rules.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? TextAsValue
+        {
+            get
+            {
+                if (TextToValueWithEvent(out object? result))
+                    return result;
+
+                if (DataType is null || DataType == typeof(string))
+                    return Text;
+
+                var typeConverter = ObjectToStringFactory.Default.GetTypeConverter(DataType);
+
+                result = StringUtils.ParseWithTypeConverter(
+                            Text,
+                            typeConverter,
+                            Context,
+                            Culture,
+                            Options.HasFlag(TextBoxOptions.UseInvariantCulture));
+
+                return result;
+            }
+
+            set
+            {
+                SetTextAsObject(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="AbstractControl.Text"/> property value
         /// as <see cref="object"/> of a number type.
         /// </summary>
@@ -490,71 +382,31 @@ namespace Alternet.UI
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(Text))
-                    return this.EmptyTextValue;
+                if (TextToValueWithEvent(out object? convertedValue))
+                    return convertedValue;
 
-                var stringToValue = StringToValue ?? GlobalStringToValue;
-
-                if (stringToValue is not null)
+                if (!IsNumber)
                 {
-                    var e = new ValueConvertEventArgs<string?, object?>(Text);
-                    stringToValue(this, e);
-                    if (e.Handled)
-                    {
-                        return e.Result;
-                    }
+                    var converted = StringUtils.TryParseNumberWithDelegates(
+                                Text,
+                                NumberStyles ?? System.Globalization.NumberStyles.Any,
+                                FormatProvider,
+                                out var result,
+                                StringUtils.TryParseNumberDelegates);
+                    if (converted)
+                        return result;
                 }
 
-                var typeCode = GetDataTypeCode();
-                if (!AssemblyUtils.IsTypeCodeNumber(typeCode))
-                    return SmartTextAsNumber();
-
                 var isOk = StringUtils.TryParseNumber(
-                    typeCode,
+                    GetDataTypeCode(),
                     Text,
                     NumberStyles,
                     FormatProvider,
-                    out var result);
+                    out convertedValue);
                 if (isOk)
-                    return result;
+                    return convertedValue;
                 else
                     return null;
-
-                object? UseDelegate(TryParseNumberDelegate proc)
-                {
-                    var numberStyles = NumberStyles ?? System.Globalization.NumberStyles.Any;
-                    var isOk = proc(
-                        Text,
-                        numberStyles,
-                        FormatProvider,
-                        out result);
-                    if (isOk)
-                        return result;
-                    else
-                        return null;
-                }
-
-                object? SmartTextAsNumber()
-                {
-                    TryParseNumberDelegate[] procs =
-                    {
-                        StringUtils.TryParseInt32,
-                        StringUtils.TryParseUInt32,
-                        StringUtils.TryParseInt64,
-                        StringUtils.TryParseUInt64,
-                        StringUtils.TryParseDouble,
-                        StringUtils.TryParseDecimal,
-                    };
-
-                    foreach (var proc in procs)
-                    {
-                        object? result = UseDelegate(proc);
-                        if (result is not null)
-                            return result;
-                    }
-
-                    return null;
-                }
             }
 
             set
