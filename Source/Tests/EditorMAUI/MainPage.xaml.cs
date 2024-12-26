@@ -64,25 +64,6 @@ public partial class MainPage : ContentPage
             panel.Padding = new(0);
         }
 
-        UpdateEditorTheme();
-
-        void UpdateEditorTheme()
-        {
-            if (Alternet.UI.SystemSettings.AppearanceIsDark)
-            {
-                editor.Editor.VisualThemeType = VisualThemeType.Dark;
-            }
-            else
-            {
-                editor.Editor.VisualThemeType = VisualThemeType.Light;
-            }
-        }
-
-        Alternet.UI.SystemSettings.SystemColorsChanged += () =>
-        {
-            UpdateEditorTheme();
-        };
-
         BindingContext = this;
 
         Alternet.UI.App.LogMessage += App_LogMessage;
