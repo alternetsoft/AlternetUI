@@ -10,6 +10,11 @@ namespace Alternet.UI
     /// </summary>
     public class ModifierKeysConverter : TypeConverter
     {
+        /// <summary>
+        /// Gets or sets default <see cref="ModifierKeysConverter"/> implementation.
+        /// </summary>
+        public static TypeConverter Default = new ModifierKeysConverter();
+
         private const char ModifierDelimiter = '+';
 
         private static readonly ModifierKeys ModifierKeysFlag =
