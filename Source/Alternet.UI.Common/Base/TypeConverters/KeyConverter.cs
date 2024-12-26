@@ -16,6 +16,11 @@ namespace Alternet.UI
     public class KeyConverter : TypeConverter
     {
         /// <summary>
+        /// Gets or sets default <see cref="KeyConverter"/> implementation.
+        /// </summary>
+        public static TypeConverter Default = new KeyConverter();
+
+        /// <summary>
         /// Converts string representation of the key to the <see cref="Key"/>
         /// enumeration.
         /// </summary>
