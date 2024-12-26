@@ -410,7 +410,8 @@ namespace Alternet::UI
 
     Control::~Control()
     {
-        DestroyDropTarget();
+        _destroyed = true;
+        DestroyDropTarget(false);
         DestroyWxWindow();
     }
 
@@ -519,6 +520,8 @@ namespace Alternet::UI
     void Control::OnSysColorChanged(wxSysColourChangedEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::SystemColorsChanged);
     }
 
@@ -530,6 +533,8 @@ namespace Alternet::UI
     void Control::OnActivate(wxActivateEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         bool active = event.GetActive();
         _flags.Set(ControlFlags::Active, active);
 
@@ -565,12 +570,16 @@ namespace Alternet::UI
 
     void Control::OnScrollTop(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         ApplyScroll(ScrollEventType_First, event, 0);
         event.Skip();
     }
 
     void Control::OnScrollBottom(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(ScrollEventType_Last, event, scrollInfo.maximum);
         event.Skip();
@@ -578,6 +587,8 @@ namespace Alternet::UI
 
     void Control::OnScrollLineUp(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(ScrollEventType_SmallDecrement, event, scrollInfo.value - 1);
         event.Skip();
@@ -585,6 +596,8 @@ namespace Alternet::UI
 
     void Control::OnScrollLineDown(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(ScrollEventType_SmallIncrement, event, scrollInfo.value + 1);
         event.Skip();
@@ -592,6 +605,8 @@ namespace Alternet::UI
 
     void Control::OnScrollPageUp(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(ScrollEventType_LargeDecrement, event, scrollInfo.value - scrollInfo.largeChange);
         event.Skip();
@@ -599,18 +614,24 @@ namespace Alternet::UI
 
     void Control::OnScrollPageDown(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
         ApplyScroll(ScrollEventType_LargeIncrement, event, scrollInfo.value + scrollInfo.largeChange);
     }
 
     void Control::OnScrollThumbTrack(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         ApplyScroll(ScrollEventType_ThumbTrack, event, event.GetPosition());
         event.Skip();
     }
 
     void Control::OnScrollThumbRelease(wxScrollWinEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         ApplyScroll(ScrollEventType_ThumbPosition, event, event.GetPosition());
         event.Skip();
     }
@@ -657,16 +678,20 @@ namespace Alternet::UI
 
     void Control::OnGotFocus(wxFocusEvent& event)
     {
-        _eventFocusWindow = event.GetWindow();
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
+        _eventFocusWindow = event.GetWindow();
         RaiseEvent(ControlEvent::GotFocus);
         _eventFocusWindow = nullptr;
     }
 
     void Control::OnLostFocus(wxFocusEvent& event)
     {
-        _eventFocusWindow = event.GetWindow();
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
+        _eventFocusWindow = event.GetWindow();
         RaiseEvent(ControlEvent::LostFocus);
     }
 
@@ -806,7 +831,7 @@ namespace Alternet::UI
         if (value)
             CreateDropTarget();
         else
-            DestroyDropTarget();
+            DestroyDropTarget(true);
     }
 
     void Control::CreateDropTarget()
@@ -828,12 +853,14 @@ namespace Alternet::UI
         GetWxWindow()->Lower();
     }
 
-    void Control::DestroyDropTarget()
+    void Control::DestroyDropTarget(bool setDropTarget)
     {
         if (_dropTarget != nullptr)
         {
-            GetWxWindow()->SetDropTarget(nullptr);
-            delete _dropTarget;
+            _dropTarget->_control = nullptr;
+            if(setDropTarget)
+                GetWxWindow()->SetDropTarget(nullptr);
+            //delete _dropTarget; No need to delete, it is done by _wxWindow
             _dropTarget = nullptr;
         }
     }
@@ -937,8 +964,13 @@ namespace Alternet::UI
 
     void Control::SetTabStop(bool value)
     {
+        if (GetTabStop() == value)
+            return;
         _flags.Set(ControlFlags::TabStop, value);
-        RecreateWxWindowIfNeeded();
+        if(!value)
+            GetWxWindow()->DisableFocusFromKeyboard();
+        else
+            RecreateWxWindowIfNeeded();
     }
 
     void Control::SetFocusFlags(bool canSelect, bool tabStop, bool canSelectChildren)
@@ -1491,17 +1523,29 @@ namespace Alternet::UI
             auto cursor = (wxCursor*)handle;
             _cursor = wxCursor(*cursor);
         }
+    }
 
-        /*GetWxWindow()->SetCursor(_cursor);*/
+    bool Control::IsNullOrDeleting()
+    {
+        if (_wxWindow == nullptr || _destroyed)
+            return true;
+
+        if (_wxWindow->IsBeingDeleted())
+            return true;
+
+        return false;
     }
 
     void Control::OnSetCursor(wxSetCursorEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
+
+        auto wxWindow = GetWxWindow();
+
         auto mouseX = event.GetX();
         auto mouseY = event.GetY();
         auto mousePoint = wxPoint(mouseX, mouseY);
-
-        auto wxWindow = GetWxWindow();
 
         const wxWindowList& list = wxWindow->GetChildren();
         for (wxWindowList::compatibility_iterator node = list.GetFirst(); node; node = node->GetNext())
@@ -1522,12 +1566,16 @@ namespace Alternet::UI
     void Control::OnIdle(wxIdleEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::Idle);
     }
 
     void Control::OnPaint(wxPaintEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::Paint);
     }
 
@@ -1538,12 +1586,16 @@ namespace Alternet::UI
 
     void Control::OnMouseCaptureLost(wxEvent& event)
     {
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::MouseCaptureLost);
     }
 
     void Control::OnMouseEnter(wxMouseEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::MouseEnter);
 
         auto window = GetParent();
@@ -1564,6 +1616,8 @@ namespace Alternet::UI
     void Control::OnMouseLeave(wxMouseEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::MouseLeave);
 
         auto window = GetParent();
@@ -1579,6 +1633,8 @@ namespace Alternet::UI
     void Control::OnVisibleChanged(wxShowEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
 
         // For some reason this event is being called while destroying the window, despite the Unbind call prior to destruction.
         auto window = dynamic_cast<wxWindow*>(event.GetEventObject());
@@ -1596,6 +1652,8 @@ namespace Alternet::UI
     void Control::OnLocationChanged(wxMoveEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
 
         auto wxWindow = GetWxWindow();
 
@@ -1610,6 +1668,8 @@ namespace Alternet::UI
     void Control::OnSizeChanged(wxSizeEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
 
         _flags.Set(ControlFlags::ClientSizeCacheValid, false);
 
@@ -1900,23 +1960,39 @@ namespace Alternet::UI
     }
 
 
-    wxDragResult Control::RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
+    wxDragResult Control::RaiseDragOver(const wxPoint& location,
+        wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
     {
-        return RaiseDragAndDropEvent(location, defaultDragResult, dataObjectComposite, ControlEvent::DragOver);
+        if (IsNullOrDeleting())
+            return wxDragResult::wxDragCancel;
+
+        return RaiseDragAndDropEvent(location, defaultDragResult,
+            dataObjectComposite, ControlEvent::DragOver);
     }
 
-    wxDragResult Control::RaiseDragEnter(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
+    wxDragResult Control::RaiseDragEnter(const wxPoint& location,
+        wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
     {
-        return RaiseDragAndDropEvent(location, defaultDragResult, dataObjectComposite, ControlEvent::DragEnter);
+        if (IsNullOrDeleting())
+            return wxDragResult::wxDragCancel;
+
+        return RaiseDragAndDropEvent(location, defaultDragResult,
+            dataObjectComposite, ControlEvent::DragEnter);
     }
 
-    wxDragResult Control::RaiseDragDrop(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
+    wxDragResult Control::RaiseDragDrop(const wxPoint& location,
+        wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
     {
-        return RaiseDragAndDropEvent(location, defaultDragResult, dataObjectComposite, ControlEvent::DragDrop);
+        if (IsNullOrDeleting())
+            return wxDragResult::wxDragCancel;
+        return RaiseDragAndDropEvent(location, defaultDragResult,
+            dataObjectComposite, ControlEvent::DragDrop);
     }
 
     void Control::RaiseDragLeave()
     {
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::DragLeave);
     }
 
@@ -2095,7 +2171,7 @@ namespace Alternet::UI
         if (GetUserPaint() == value)
             return;
         _flags.Set(ControlFlags::UserPaint, value);
-        RecreateWxWindowIfNeeded();
+        GetWxWindow()->SetDoubleBuffered(value);
     }
 
     wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)
@@ -2364,6 +2440,8 @@ namespace Alternet::UI
     void Control::OnDpiChanged(wxDPIChangedEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         _eventOldDpi = event.GetOldDPI();
         _eventNewDpi = event.GetNewDPI();
         RaiseEvent(ControlEvent::DpiChanged);
@@ -2372,6 +2450,8 @@ namespace Alternet::UI
     void Control::OnTextChanged(wxCommandEvent& event)
     {
         event.Skip();
+        if (IsNullOrDeleting())
+            return;
         RaiseEvent(ControlEvent::TextChanged);
     }
 
