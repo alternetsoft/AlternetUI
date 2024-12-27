@@ -426,6 +426,10 @@ namespace Alternet.Drawing
         /// <see cref="Y"/>. Uses <see cref="Math.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
+        /// <remarks>
+        /// Ceiling operation returns the smallest integer that is greater than or equal
+        /// to the specified floating-point number.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly PointD Ceiling()
         {
@@ -437,15 +441,20 @@ namespace Alternet.Drawing
         /// this <see cref="System.Drawing.PointF"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Vector2 ToVector2() => new(RectD.CoordToFloat(x), RectD.CoordToFloat(y));
+        public readonly Vector2 ToVector2()
+        {
+            return new(RectD.CoordToFloat(x), RectD.CoordToFloat(y));
+        }
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override readonly int GetHashCode() =>
-            HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
+        public override readonly int GetHashCode()
+        {
+            return HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
+        }
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -465,16 +474,38 @@ namespace Alternet.Drawing
         /// <param name="scaleFactor">Scale factor. Optional. If not specified, the default
         /// scale factor is used for the convertion.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly PointI PixelFromDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelFromDip(this, scaleFactor);
         }
 
         /// <summary>
+        /// Calls <paramref name="coerceFunc"/> for x and y.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Coerce(Func<Coord, Coord> coerceFunc)
+        {
+            x = coerceFunc(x);
+            y = coerceFunc(y);
+        }
+
+        /// <summary>
+        /// Calls <see cref="SizeD.CoerceCoordFunc"/> for x and y.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Coerce()
+        {
+            if (SizeD.CoerceCoordFunc is null)
+                return;
+            Coerce(SizeD.CoerceCoordFunc);
+        }
+
+        /// <summary>
         /// Creates a string representation of this object based on the format string
-        /// and IFormatProvider passed in.
+        /// and <see cref="IFormatProvider"/> passed in.
         /// If the provider is null, the CurrentCulture is used.
-        /// See the documentation for IFormattable for more information.
+        /// See the documentation for <see cref="IFormattable"/> for more information.
         /// </summary>
         /// <returns>
         /// A string representation of this object.

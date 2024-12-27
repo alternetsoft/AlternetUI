@@ -318,7 +318,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Normally, TAB key is used for passing to the next control in a dialog.
         /// </remarks>
-        public virtual bool ProcessTab { get; set; }
+        public virtual bool WantTab { get; set; }
 
         /// <summary>
         /// Gets or sets the tab order of the control within its container.

@@ -254,7 +254,7 @@ namespace Alternet.UI
             var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
 
             if (Keyboard.ProcessTabInternally && e.Key == Key.Tab
-                && e.ShiftOrNone && !control.ProcessTab)
+                && e.ShiftOrNone && !control.WantTab)
             {
                 App.AddIdleTask(() =>
                 {
@@ -298,7 +298,7 @@ namespace Alternet.UI
             var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
 
             if (Keyboard.ProcessTabInternally && e.Key == Key.Tab
-                && e.ShiftOrNone && !control.ProcessTab)
+                && e.ShiftOrNone && !control.WantTab)
             {
                 handled = true;
                 return;

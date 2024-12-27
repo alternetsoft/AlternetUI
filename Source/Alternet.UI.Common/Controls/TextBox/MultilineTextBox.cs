@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// </summary>
         public MultilineTextBox()
         {
-            ProcessTab = true;
+            WantTab = true;
             base.Multiline = true;
 
             bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);

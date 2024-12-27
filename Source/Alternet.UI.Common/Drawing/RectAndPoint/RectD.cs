@@ -37,6 +37,12 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly RectD MinusOne = new(-1, -1, -1, -1);
 
+        /// <summary>
+        /// Gets or sets default <see cref="MidpointRounding"/> used in round coordinate
+        /// operations.
+        /// </summary>
+        public static MidpointRounding DefaultMidpointRounding = MidpointRounding.AwayFromZero;
+
         private Coord x;
         private Coord y;
         private Coord width;
@@ -508,7 +514,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int CoordToInt(Coord value)
         {
-            int i = (int)Math.Round(value, MidpointRounding.AwayFromZero);
+            int i = (int)Math.Round(value, DefaultMidpointRounding);
             return i;
         }
 
@@ -575,13 +581,17 @@ namespace Alternet.Drawing
         /// integer values.</summary>
         /// <param name="value">The <see cref="RectD" /> structure to be converted.</param>
         /// <returns>Returns a <see cref="RectI" />.</returns>
+        /// <remarks>
+        /// Ceiling operation returns the smallest integer that is greater than or equal
+        /// to the specified floating-point number.
+        /// </remarks>
         public static RectI Ceiling(RectD value)
         {
             return new(
-                (int)Math.Ceiling(value.X),
-                (int)Math.Ceiling(value.Y),
-                (int)Math.Ceiling(value.Width),
-                (int)Math.Ceiling(value.Height));
+                (int)Math.Ceiling(value.x),
+                (int)Math.Ceiling(value.y),
+                (int)Math.Ceiling(value.width),
+                (int)Math.Ceiling(value.height));
         }
 
         /// <summary>
@@ -600,20 +610,27 @@ namespace Alternet.Drawing
         /// by rounding the <see cref="RectD" /> values to the nearest integer values.
         /// </summary>
         /// <param name="value">The <see cref="RectD" /> to be converted.</param>
-        /// <returns>The rounded interger value of the <see cref="RectI" />.</returns>
-        public static RectI Round(RectD value)
+        /// <returns>The rounded integer value of the <see cref="RectI" />.</returns>
+        /// <param name="rounding">The <see cref="MidpointRounding"/> to use when
+        /// <see cref="Math.Round(Coord,MidpointRounding)"/> is called.</param>
+        /// <remarks>
+        /// Rounds a floating-point value to the nearest integer.
+        /// </remarks>
+        public static RectI Round(RectD value, MidpointRounding? rounding = null)
         {
+            rounding ??= DefaultMidpointRounding;
+
             return new(
-                (int)Math.Round(value.X),
-                (int)Math.Round(value.Y),
-                (int)Math.Round(value.Width),
-                (int)Math.Round(value.Height));
+                unchecked((int)Math.Round(value.x, rounding.Value)),
+                unchecked((int)Math.Round(value.y, rounding.Value)),
+                unchecked((int)Math.Round(value.width, rounding.Value)),
+                unchecked((int)Math.Round(value.height, rounding.Value)));
         }
 
         /// <summary>
         /// Returns an instance converted from the provided string using
-        /// the culture "en-US"
-        /// <param name="source">string with Rect data.</param>
+        /// the culture "en-US".
+        /// <param name="source">String with rectangle data.</param>
         /// </summary>
         public static RectD Parse(string source)
         {
@@ -1241,7 +1258,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns new rectangle with size and y-coordinate of this rectangle and the specified x-coordinate.
+        /// Returns new rectangle with size and y-coordinate of this rectangle
+        /// and the specified x-coordinate.
         /// </summary>
         /// <param name="ax">New X position.</param>
         /// <returns>Rectangle object with the new x-coordinate.</returns>
@@ -1252,7 +1270,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns new rectangle with size and x-coordinate of this rectangle and the specified y-coordinate.
+        /// Returns new rectangle with size and x-coordinate of this rectangle
+        /// and the specified y-coordinate.
         /// </summary>
         /// <param name="ay">New Y position.</param>
         /// <returns>Rectangle object with the new y-coordinate.</returns>
@@ -1260,6 +1279,29 @@ namespace Alternet.Drawing
         public readonly RectD WithY(Coord ay)
         {
             return new(x, ay, width, height);
+        }
+
+        /// <summary>
+        /// Calls <see cref="SizeD.CoerceCoordFunc"/> for the location and size.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Coerce()
+        {
+            if (SizeD.CoerceCoordFunc is null)
+                return;
+            Coerce(SizeD.CoerceCoordFunc);
+        }
+
+        /// <summary>
+        /// Calls <paramref name="coerceFunc"/> for the location and size.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Coerce(Func<Coord, Coord> coerceFunc)
+        {
+            x = coerceFunc(x);
+            y = coerceFunc(y);
+            width = coerceFunc(width);
+            height = coerceFunc(height);
         }
 
         /// <summary>
