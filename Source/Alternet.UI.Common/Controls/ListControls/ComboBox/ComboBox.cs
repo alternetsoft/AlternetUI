@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// otherwise, <see langword="false" />. The default is false.</returns>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool DroppedDown
+        public virtual bool DroppedDown
         {
             get
             {
@@ -193,6 +193,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (DroppedDown == value)
                     return;
                 if (value)
@@ -207,14 +209,30 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The zero-based index of the first character in the string
         /// of the current text selection.</value>
-        public virtual int TextSelectionStart => PlatformControl.TextSelectionStart;
+        public virtual int TextSelectionStart
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return PlatformControl.TextSelectionStart;
+            }
+        }
 
         /// <summary>
         /// Gets the number of characters selected in the editable portion
         /// of the combo box.
         /// </summary>
         /// <value>The number of characters selected in the combo box.</value>
-        public virtual int TextSelectionLength => PlatformControl.TextSelectionLength;
+        public virtual int TextSelectionLength
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return PlatformControl.TextSelectionLength;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a hint shown in an empty unfocused text control.
@@ -223,11 +241,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return PlatformControl.EmptyTextHint;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 PlatformControl.EmptyTextHint = value;
             }
         }
@@ -257,6 +279,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (Text == value)
                     return;
 
@@ -293,7 +317,8 @@ namespace Alternet.UI
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 if (value < 0 || value >= Items.Count)
                     value = null;
                 if (selectedIndex == value)
@@ -324,6 +349,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 if (selectedIndex == null || selectedIndex < 0 || selectedIndex >= Items.Count)
                     return null;
                 return Items[selectedIndex.Value];
@@ -331,6 +358,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (SelectedItem == value)
                     return;
                 if (value == null)
@@ -362,6 +391,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (isEditable == value)
                     return;
                 CheckDisposed();
@@ -374,7 +405,8 @@ namespace Alternet.UI
         /// Gets or sets a value specifying the style of the combo box.
         /// </summary>
         /// <returns>
-        /// One of the <see cref="ComboBoxStyle" /> values. The default is <see langword="DropDown" />.
+        /// One of the <see cref="ComboBoxStyle" /> values.
+        /// The default is <see langword="DropDown" />.
         /// </returns>
         [Category("Appearance")]
         [DefaultValue(ComboBoxStyle.DropDown)]
@@ -411,9 +443,17 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool HasBorder
         {
-            get => PlatformControl.HasBorder;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return PlatformControl.HasBorder;
+            }
+
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (HasBorder == value)
                     return;
                 PlatformControl.HasBorder = value;
@@ -561,11 +601,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return PlatformControl.OwnerDrawStyle;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (OwnerDrawStyle == value)
                     return;
                 PlatformControl.OwnerDrawStyle = value;
@@ -597,12 +641,21 @@ namespace Alternet.UI
         /// the control and replacing information.
         /// </remarks>
         public virtual void SelectTextRange(int start, int length)
-            => PlatformControl.SelectTextRange(start, length);
+        {
+            if (DisposingOrDisposed)
+                return;
+            PlatformControl.SelectTextRange(start, length);
+        }
 
         /// <summary>
         /// Selects all the text in the editable portion of the ComboBox.
         /// </summary>
-        public virtual void SelectAllText() => PlatformControl.SelectAllText();
+        public virtual void SelectAllText()
+        {
+            if (DisposingOrDisposed)
+                return;
+            PlatformControl.SelectAllText();
+        }
 
         /// <summary>
         /// Raises the <see cref="SelectedItemChanged"/> event and calls
@@ -611,6 +664,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseSelectedItemChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             var newIndex = SelectedIndex;
 
             if (newIndex == reportedSelectedIndex)
@@ -629,17 +684,22 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseDropDown()
         {
+            if (DisposingOrDisposed)
+                return;
             droppedDown = true;
             OnDropDown(EventArgs.Empty);
             DropDown?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
-        /// Raises the <see cref="DropDownClosed"/> event and calls <see cref="OnDropDownClosed"/> method.
+        /// Raises the <see cref="DropDownClosed"/> event and
+        /// calls <see cref="OnDropDownClosed"/> method.
         /// </summary>
         [Browsable(false)]
         public void RaiseDropDownClosed()
         {
+            if (DisposingOrDisposed)
+                return;
             droppedDown = false;
             OnDropDownClosed(EventArgs.Empty);
             DropDownClosed?.Invoke(this, EventArgs.Empty);
@@ -669,6 +729,8 @@ namespace Alternet.UI
             string propName,
             Func<object, bool>? addToItems = null)
         {
+            if (DisposingOrDisposed)
+                return;
             var choices = PropertyGrid.GetPropChoices(instance, propName);
             if (choices is null)
                 return;
@@ -726,6 +788,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RaiseFontChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             InvalidateBestSize();
             base.RaiseFontChanged();
         }
@@ -745,6 +809,8 @@ namespace Alternet.UI
         /// <param name="e">Paint arguments.</param>
         public virtual void DefaultItemPaint(ComboBoxItemPaintEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (ShouldPaintHintText())
             {
                 e.DefaultPaint();
@@ -937,6 +1003,8 @@ namespace Alternet.UI
 
         private void HandlePopupControlChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             PlatformControl.PopupControl = listBox.Value;
         }
 
@@ -952,7 +1020,8 @@ namespace Alternet.UI
                 result.Height = Math.Max(result.Height, size.Height);
             }
 
-            result.Width += 2 + PixelToDip(SystemSettings.GetMetric(SystemSettingsMetric.VScrollX, this));
+            result.Width += 2 + PixelToDip(
+                SystemSettings.GetMetric(SystemSettingsMetric.VScrollX, this));
             result.Height += 2;
 
             return result;

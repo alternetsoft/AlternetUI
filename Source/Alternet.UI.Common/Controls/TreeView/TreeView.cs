@@ -435,8 +435,15 @@ namespace Alternet.UI
         /// <see langword="false"/>. The default is <see langword="true"/>.</value>
         public virtual bool ShowLines
         {
-            get => Handler.ShowLines;
-            set => Handler.ShowLines = value;
+            get
+            {
+                return Handler.ShowLines;
+            }
+
+            set
+            {
+                Handler.ShowLines = value;
+            }
         }
 
         /// <summary>
@@ -449,8 +456,15 @@ namespace Alternet.UI
         /// <see langword="true"/>.</value>
         public virtual bool ShowRootLines
         {
-            get => Handler.ShowRootLines;
-            set => Handler.ShowRootLines = value;
+            get
+            {
+                return Handler.ShowRootLines;
+            }
+
+            set
+            {
+                Handler.ShowRootLines = value;
+            }
         }
 
         /// <summary>
@@ -466,8 +480,15 @@ namespace Alternet.UI
         /// </value>
         public virtual bool ShowExpandButtons
         {
-            get => Handler.ShowExpandButtons;
-            set => Handler.ShowExpandButtons = value;
+            get
+            {
+                return Handler.ShowExpandButtons;
+            }
+
+            set
+            {
+                Handler.ShowExpandButtons = value;
+            }
         }
 
         /// <summary>
@@ -476,7 +497,13 @@ namespace Alternet.UI
         /// <value>A <see cref="TreeViewItem"/> that represents the first
         /// fully-visible tree item in the tree view control.</value>
         [Browsable(false)]
-        public virtual TreeViewItem? TopItem => Handler.TopItem;
+        public virtual TreeViewItem? TopItem
+        {
+            get
+            {
+                return Handler.TopItem;
+            }
+        }
 
         /// <summary>
         /// Gets a collection containing the currently selected items in the
@@ -633,8 +660,15 @@ namespace Alternet.UI
         /// </value>
         public virtual bool FullRowSelect
         {
-            get => Handler.FullRowSelect;
-            set => Handler.FullRowSelect = value;
+            get
+            {
+                return Handler.FullRowSelect;
+            }
+
+            set
+            {
+                Handler.FullRowSelect = value;
+            }
         }
 
         /// <summary>
@@ -648,8 +682,15 @@ namespace Alternet.UI
         /// </value>
         public virtual bool AllowLabelEdit
         {
-            get => Handler.AllowLabelEdit;
-            set => Handler.AllowLabelEdit = value;
+            get
+            {
+                return Handler.AllowLabelEdit;
+            }
+
+            set
+            {
+                Handler.AllowLabelEdit = value;
+            }
         }
 
         [Browsable(false)]

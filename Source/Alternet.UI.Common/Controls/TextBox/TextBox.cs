@@ -39,10 +39,6 @@ namespace Alternet.UI
                 prm.EnumIsFlags = false;
                 prm.Choices = choices;
             }
-
-            var useErrorColors = false;
-            DefaultErrorUseForegroundColor = useErrorColors;
-            DefaultErrorUseBackgroundColor = useErrorColors;
         }
 
         /// <summary>
@@ -291,6 +287,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (multiline == value)
                     return;
                 multiline = value;
@@ -316,6 +314,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (isRichEdit == value)
                     return;
                 isRichEdit = value;
@@ -339,6 +339,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (textWrap == value)
                     return;
                 textWrap = value;
@@ -367,6 +369,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (textAlign == value)
                     return;
                 textAlign = value;
@@ -412,6 +416,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (readOnly == value)
                     return;
 
@@ -431,6 +437,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (MaxLength == value || value < 0)
                     return;
                 base.MaxLength = value;
@@ -451,6 +459,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (hasBorder == value)
                     return;
                 hasBorder = value;
@@ -467,6 +477,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasSelection;
             }
         }
@@ -479,11 +491,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.IsModified;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.IsModified = value;
             }
         }
@@ -501,6 +517,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CanCopy;
             }
         }
@@ -518,6 +536,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CanCut;
             }
         }
@@ -536,6 +556,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CanPaste;
             }
         }
@@ -554,6 +576,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CanRedo;
             }
         }
@@ -574,11 +598,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HideSelection;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HideSelection = value;
             }
         }
@@ -625,11 +653,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ProcessEnter;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ProcessEnter = value;
             }
         }
@@ -648,11 +680,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.IsPassword;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.IsPassword = value;
             }
         }
@@ -680,11 +716,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.AutoUrl;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.AutoUrl = value;
             }
         }
@@ -709,11 +749,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HideVertScrollbar;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HideVertScrollbar = value;
             }
         }
@@ -742,6 +786,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 value ??= PointI.Empty;
                 var insertPoint = XYToPosition((long)value.Value.X, (long)value.Value.Y);
                 SetInsertionPoint(insertPoint);
@@ -769,6 +815,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CanUndo;
             }
         }
@@ -781,6 +829,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.IsEmpty;
             }
         }
@@ -792,11 +842,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.EmptyTextHint;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 value ??= string.Empty;
                 Handler.EmptyTextHint = value;
             }
@@ -859,6 +913,8 @@ namespace Alternet.UI
         {
             var position = GetInsertionPoint();
             var fs = GetStyle(position);
+            if (fs is null)
+                return;
             var style = fs.GetFontStyle();
             style = Font.ChangeFontStyle(style, toggle, !style.HasFlag(toggle));
 
@@ -895,17 +951,19 @@ namespace Alternet.UI
         /// <remarks>
         /// If any of the color parameters is null, it will not be changed.
         /// </remarks>
-        public virtual void SelectionSetColor(Color? textColor, Color? backColor = null)
+        public virtual bool SelectionSetColor(Color? textColor, Color? backColor = null)
         {
             var position = GetInsertionPoint();
             var fs = GetStyle(position);
+            if (fs is null)
+                return false;
             var newStyle = CreateTextAttr();
             newStyle.Copy(fs);
             if (backColor is not null)
                 newStyle.SetBackgroundColor(backColor);
             if (textColor is not null)
                 newStyle.SetTextColor(textColor);
-            SetSelectionStyle(newStyle);
+            return SetSelectionStyle(newStyle);
         }
 
         /// <summary>
@@ -952,12 +1010,16 @@ namespace Alternet.UI
         /// <returns>The length of the line, or -1 if lineNo was invalid.</returns>
         public virtual int GetLineLength(long lineNo)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetLineLength(lineNo);
         }
 
         /// <inheritdoc/>
         public override string GetLineText(long lineNo)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetLineText(lineNo);
         }
 
@@ -966,6 +1028,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnTextMaxLength()
         {
+            if (DisposingOrDisposed)
+                return;
             TextMaxLength?.Invoke(this, EventArgs.Empty);
         }
 
@@ -977,6 +1041,9 @@ namespace Alternet.UI
         /// </param>
         public virtual void OnTextUrl(UrlEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+
             // Under MacOs url parameter of the event data is always empty,
             // so event is not fired. Also on MacOs url is opened automatically.
             if (App.IsMacOS)
@@ -999,12 +1066,16 @@ namespace Alternet.UI
         /// </summary>
         public virtual void OnEnterPressed()
         {
+            if (DisposingOrDisposed)
+                return;
             EnterPressed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <inheritdoc/>
         public override int GetNumberOfLines()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetNumberOfLines();
         }
 
@@ -1016,6 +1087,8 @@ namespace Alternet.UI
         /// zero based line number. If failure returns (-1,-1).</returns>
         public virtual PointI PositionToXY(long pos)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.PositionToXY(pos);
         }
 
@@ -1042,6 +1115,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual PointD PositionToCoords(long pos)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.PositionToCoords(pos);
         }
 
@@ -1051,6 +1126,8 @@ namespace Alternet.UI
         /// <param name="pos">The position that should be visible.</param>
         public virtual void ShowPosition(long pos)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.ShowPosition(pos);
         }
 
@@ -1062,6 +1139,8 @@ namespace Alternet.UI
         /// <returns>The position value, or -1 if x or y was invalid.</returns>
         public virtual long XYToPosition(long x, long y)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.XYToPosition(x, y);
         }
 
@@ -1070,6 +1149,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Clear()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Clear();
         }
 
@@ -1078,6 +1159,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Copy()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Copy();
         }
 
@@ -1086,6 +1169,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Cut()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Cut();
         }
 
@@ -1101,6 +1186,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void AppendText(string text)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.AppendText(text);
         }
 
@@ -1169,6 +1256,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual long GetInsertionPoint()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetInsertionPoint();
         }
 
@@ -1186,10 +1275,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Replaces the current selection in the control with the
-        /// contents of the Clipboard.
+        /// contents of the clipboard.
         /// </summary>
         public virtual void Paste()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Paste();
         }
 
@@ -1198,6 +1289,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Redo()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Redo();
         }
 
@@ -1213,6 +1306,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Remove(long from, long to)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Remove(from, to);
         }
 
@@ -1230,6 +1325,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Replace(long from, long to, string value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Replace(from, to, value);
         }
 
@@ -1240,6 +1337,8 @@ namespace Alternet.UI
         /// to <see cref="GetLastPosition"/> inclusive.</param>
         public virtual void SetInsertionPoint(long pos)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetInsertionPoint(pos);
         }
 
@@ -1248,6 +1347,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetInsertionPointEnd()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetInsertionPointEnd();
         }
 
@@ -1257,6 +1358,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void IdleAction()
         {
+            if (DisposingOrDisposed)
+                return;
             if (CurrentPositionChanged is not null)
             {
                 var currentPos = CurrentPosition;
@@ -1282,6 +1385,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetSelection(long from, long to)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetSelection(from, to);
         }
 
@@ -1290,6 +1395,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectAll()
         {
+            if (DisposingOrDisposed)
+                return;
             if (IsRichEdit)
             {
                 DoInsideUpdate(() =>
@@ -1306,6 +1413,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectNone()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SelectNone();
         }
 
@@ -1314,6 +1423,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Undo()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Undo();
         }
 
@@ -1335,6 +1446,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void WriteText(string text)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.WriteText(text);
         }
 
@@ -1359,6 +1472,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual string GetRange(long from, long to)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetRange(from, to);
         }
 
@@ -1368,6 +1483,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual string GetStringSelection()
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetStringSelection();
         }
 
@@ -1377,6 +1494,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void EmptyUndoBuffer()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.EmptyUndoBuffer();
         }
 
@@ -1388,6 +1507,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsValidPosition(long pos)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsValidPosition(pos);
         }
 
@@ -1399,6 +1520,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual long GetLastPosition()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetLastPosition();
         }
 
@@ -1408,6 +1531,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual long GetSelectionStart()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetSelectionStart();
         }
 
@@ -1417,6 +1542,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual long GetSelectionEnd()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetSelectionEnd();
         }
 
@@ -1443,8 +1570,10 @@ namespace Alternet.UI
         /// <remarks>
         /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
         /// </remarks>
-        public virtual ITextBoxTextAttr GetDefaultStyle()
+        public virtual ITextBoxTextAttr? GetDefaultStyle()
         {
+            if (DisposingOrDisposed)
+                return null;
             return Handler.GetDefaultStyle();
         }
 
@@ -1456,8 +1585,10 @@ namespace Alternet.UI
         /// <remarks>
         /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
         /// </remarks>
-        public virtual ITextBoxTextAttr GetStyle(long pos)
+        public virtual ITextBoxTextAttr? GetStyle(long pos)
         {
+            if (DisposingOrDisposed)
+                return null;
             return Handler.GetStyle(pos);
         }
 
@@ -1482,6 +1613,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetDefaultStyle(ITextBoxTextAttr style)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.SetDefaultStyle(style);
         }
 
@@ -1504,6 +1637,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetStyle(long start, long end, ITextBoxTextAttr style)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.SetStyle(start, end, style);
         }
 
@@ -1521,6 +1656,8 @@ namespace Alternet.UI
         /// </returns>
         public virtual object? DoCommand(string cmdName, params object?[] args)
         {
+            if (DisposingOrDisposed)
+                return default;
             if (cmdName == "GetReportedUrl")
             {
                 return Handler.ReportedUrl;
@@ -1541,7 +1678,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Center"/>
+        /// Sets text alignment in the current position
+        /// to <see cref="TextBoxTextAttrAlignment.Center"/>
         /// </summary>
         public virtual void SelectionAlignCenter()
         {
@@ -1549,7 +1687,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Left"/>
+        /// Sets text alignment in the current position
+        /// to <see cref="TextBoxTextAttrAlignment.Left"/>
         /// </summary>
         public virtual void SelectionAlignLeft()
         {
@@ -1583,6 +1722,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnTextChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnTextChanged(e);
             if (Options.HasFlag(TextBoxOptions.DefaultValidation))
                 RunDefaultValidation();

@@ -2432,13 +2432,19 @@ namespace Alternet.UI
         /// Gets name of the file loaded into the control.
         /// </summary>
         /// <returns></returns>
-        public virtual string GetFileName() => Handler.GetFileName();
+        public virtual string GetFileName()
+        {
+            return Handler.GetFileName();
+        }
 
         /// <summary>
         /// Sets name of the file loaded into the control.
         /// </summary>
         /// <returns></returns>
-        public virtual void SetFileName(string value) => Handler.SetFileName(value ?? string.Empty);
+        public virtual void SetFileName(string value)
+        {
+            Handler.SetFileName(value ?? string.Empty);
+        }
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()

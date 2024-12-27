@@ -307,71 +307,141 @@ namespace Alternet.UI
         /// <inheritdoc cref="PropertyGridColors.CaptionBackgroundColor"/>
         public Color CaptionBackgroundColor
         {
-            get => Handler.GetCaptionBackgroundColor();
-            set => Handler.SetCaptionBackgroundColor(value);
+            get
+            {
+                return Handler.GetCaptionBackgroundColor();
+            }
+
+            set
+            {
+                Handler.SetCaptionBackgroundColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.CaptionForegroundColor"/>
         public Color CaptionForegroundColor
         {
-            get => Handler.GetCaptionForegroundColor();
-            set => Handler.SetCaptionTextColor(value);
+            get
+            {
+                return Handler.GetCaptionForegroundColor();
+            }
+
+            set
+            {
+                Handler.SetCaptionTextColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.SelectionForegroundColor"/>
         public Color SelectionForegroundColor
         {
-            get => Handler.GetSelectionForegroundColor();
-            set => Handler.SetSelectionTextColor(value);
+            get
+            {
+                return Handler.GetSelectionForegroundColor();
+            }
+
+            set
+            {
+                Handler.SetSelectionTextColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.CellBackgroundColor"/>
         public Color CellBackgroundColor
         {
-            get => Handler.GetCellBackgroundColor();
-            set => Handler.SetCellBackgroundColor(value);
+            get
+            {
+                return Handler.GetCellBackgroundColor();
+            }
+
+            set
+            {
+                Handler.SetCellBackgroundColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.CellDisabledTextColor"/>
         public Color CellDisabledTextColor
         {
-            get => Handler.GetCellDisabledTextColor();
-            set => Handler.SetCellDisabledTextColor(value);
+            get
+            {
+                return Handler.GetCellDisabledTextColor();
+            }
+
+            set
+            {
+                Handler.SetCellDisabledTextColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.CellTextColor"/>
         public Color CellTextColor
         {
-            get => Handler.GetCellTextColor();
-            set => Handler.SetCellTextColor(value);
+            get
+            {
+                return Handler.GetCellTextColor();
+            }
+
+            set
+            {
+                Handler.SetCellTextColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.EmptySpaceColor"/>
         public Color EmptySpaceColor
         {
-            get => Handler.GetEmptySpaceColor();
-            set => Handler.SetEmptySpaceColor(value);
+            get
+            {
+                return Handler.GetEmptySpaceColor();
+            }
+
+            set
+            {
+                Handler.SetEmptySpaceColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.LineColor"/>
         public Color LineColor
         {
-            get => Handler.GetLineColor();
-            set => Handler.SetLineColor(value);
+            get
+            {
+                return Handler.GetLineColor();
+            }
+
+            set
+            {
+                Handler.SetLineColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.MarginColor"/>
         public Color MarginColor
         {
-            get => Handler.GetMarginColor();
-            set => Handler.SetMarginColor(value);
+            get
+            {
+                return Handler.GetMarginColor();
+            }
+
+            set
+            {
+                Handler.SetMarginColor(value);
+            }
         }
 
         /// <inheritdoc cref="PropertyGridColors.SelectionBackgroundColor"/>
         public Color SelectionBackgroundColor
         {
-            get => Handler.GetSelectionBackgroundColor();
-            set => Handler.SetSelectionBackgroundColor(value);
+            get
+            {
+                return Handler.GetSelectionBackgroundColor();
+            }
+
+            set
+            {
+                Handler.SetSelectionBackgroundColor(value);
+            }
         }
 
         /// <summary>

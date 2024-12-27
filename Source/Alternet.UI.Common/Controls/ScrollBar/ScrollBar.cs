@@ -244,11 +244,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return PlatformControl.IsVertical;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (IsVertical == value)
                     return;
                 PlatformControl.IsVertical = value;
@@ -365,6 +369,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BindHandlerEvents()
         {
+            if (DisposingOrDisposed)
+                return;
             base.BindHandlerEvents();
             UpdateScrollInfo();
             PlatformControl.Scroll = RaiseScroll;
@@ -382,6 +388,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseScroll()
         {
+            if (DisposingOrDisposed)
+                return;
             var newPos = (PlatformControl.EventNewPos / SmallChange) + Minimum;
             var oldPos = Value;
             newPos = MathUtils.ApplyMinMax(newPos, Minimum, Maximum);
@@ -430,6 +438,8 @@ namespace Alternet.UI
             int? pageSize,
             bool refresh = true)
         {
+            if (DisposingOrDisposed)
+                return;
             PlatformControl.SetScrollbar(
                 position,
                 range,
@@ -487,6 +497,8 @@ namespace Alternet.UI
 
         private void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             UpdateScrollInfo();
             if (!e.HasPropertyName())
                 OnValueChanged(EventArgs.Empty);
