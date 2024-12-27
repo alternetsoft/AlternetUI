@@ -568,6 +568,7 @@ namespace Alternet.UI
                     this,
                     value ?? KnownInputType.None,
                     InputTypeArgs);
+                inputType = value;
             }
         }
 
@@ -1355,6 +1356,35 @@ namespace Alternet.UI
             {
                 reporter?.SetErrorStatus(this, showError, hint);
             }
+        }
+
+        /// <summary>
+        /// Resets fields and properties before editing new value with the different data type.
+        /// You can call this method in order to reset members related to data type, formatting
+        /// and value conversion.
+        /// </summary>
+        public virtual void ResetInputSettings()
+        {
+            allowEmptyText = DefaultAllowEmptyText;
+            options = DefaultOptions;
+            culture = null;
+            typeConverter = null;
+            context = null;
+            converter = null;
+            defaultFormat = null;
+            numberStyles = null;
+            validatorErrorText = null;
+            emptyTextValue = null;
+            minLength = default;
+            maxLength = default;
+            inputType = null;
+            minValue = null;
+            maxValue = null;
+            dataType = null;
+            defaultText = null;
+            search = null;
+            textAsValueError = null;
+            trimTextRules = default;
         }
 
         /// <summary>
