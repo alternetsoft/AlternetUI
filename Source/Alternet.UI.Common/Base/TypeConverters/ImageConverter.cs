@@ -2,24 +2,18 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+
 using Alternet.UI;
 using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
 {
-    /// <summary>Converts <see cref="ImageSet"/> from one data type to another. Access this
-    /// class through the
+    /// <summary>
+    /// Converts <see cref="Image"/> from one data type to another.
+    /// Access this class through the
     /// <see cref="System.ComponentModel.TypeDescriptor" />.</summary>
-    public class ImageSetConverter : TypeConverter
+    public class ImageConverter : BaseTypeConverter
     {
-        /// <inheritdoc/>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext? context,
-            Type? sourceType)
-        {
-            return sourceType == typeof(string);
-        }
-
         /// <inheritdoc/>
         public override object? ConvertFrom(
             ITypeDescriptorContext? context,
@@ -30,7 +24,7 @@ namespace Alternet.Drawing
             if (s == null)
                 return null;
 
-            return new ImageSet(s, ImageConverter.GetContextBaseUri(context));
+            return new Bitmap(s, GetContextBaseUri(context));
         }
     }
 }

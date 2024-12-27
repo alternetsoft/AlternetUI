@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Converter class for converting between a string and the Type of a MenuItemRole
     /// </summary>
-    public class MenuItemRoleConverter : TypeConverter
+    public class MenuItemRoleConverter : BaseTypeConverter
     {
         /// <inheritdoc cref="KeyGestureConverter.CanConvertFrom(ITypeDescriptorContext?, Type?)"/>
         public override bool CanConvertFrom(

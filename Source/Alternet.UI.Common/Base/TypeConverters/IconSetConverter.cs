@@ -9,17 +9,9 @@ namespace Alternet.Drawing
 {
     /// <summary>Converts <see cref="IconSet"/> from one data type to another. Access this
     /// class through the
-    /// <see cref="System.ComponentModel.TypeDescriptor" />.</summary>
-    public class IconSetConverter : TypeConverter
+    /// <see cref="TypeDescriptor" />.</summary>
+    public class IconSetConverter : BaseTypeConverter
     {
-        /// <inheritdoc/>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext? context,
-            Type? sourceType)
-        {
-            return sourceType == typeof(string);
-        }
-
         /// <inheritdoc/>
         public override object? ConvertFrom(
             ITypeDescriptorContext? context,

@@ -9,7 +9,7 @@ namespace Alternet.UI.Port
     /// <see cref="TypeConverter"/> descendant for converting
     /// between a string and <see cref="DateTime"/>.
     /// </summary>
-    internal class DateTimeConverter2 : BaseTypeConverter
+    internal class DateTimeConverterUixml : BaseTypeConverter
     {
         /// <summary>
         /// Converts the given value object to a <see cref="DateTime"></see>.

@@ -42,19 +42,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
-        {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <inheritdoc/>
         public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
         {
             // We can convert to a string.
@@ -68,6 +55,8 @@ namespace Alternet.UI
                     Key key = (Key)context.Instance;
                     return (int)key >= (int)Key.None/* && (int)key <= (int)Key.DeadCharProcessed*/;
                 }
+                else
+                    return true;
             }
 
             return false;

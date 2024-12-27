@@ -211,7 +211,7 @@ namespace Alternet.UI
             }
             else if (typeof(DateTime).IsAssignableFrom(type))
             {
-                converterType = typeof(DateTimeConverter2);
+                converterType = typeof(DateTimeConverterUixml);
             }
 
             return converterType;
@@ -294,7 +294,7 @@ namespace Alternet.UI
             }
             else if (type == typeof(DateTime))
             {
-                typeConverter = new DateTimeConverter2();
+                typeConverter = new DateTimeConverterUixml();
             }
             else if (AssemblyUtils.IsNullableType(type))
             {
@@ -387,7 +387,7 @@ namespace Alternet.UI
             }
             else if (typeof(DateTime).IsAssignableFrom(type))
             {
-                typeConverter = new DateTimeConverter2();
+                typeConverter = new DateTimeConverterUixml();
             }
             else if (typeof(Uri).IsAssignableFrom(type))
             {

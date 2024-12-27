@@ -5,11 +5,13 @@ using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>Converts colors from one data type to another. Access this class through the
     /// <see cref="TypeDescriptor" />.</summary>
-    public class ColorConverter : TypeConverter
+    public class ColorConverter : BaseTypeConverter
     {
         private static readonly string ColorConstantsLock = "colorConstants";
         private static readonly string SystemColorConstantsLock = "systemColorConstants";
@@ -73,7 +75,7 @@ namespace Alternet.Drawing
         /// <returns>
         ///     <see langword="true" /> if this object can perform the conversion; otherwise,
         ///     <see langword="false" />.</returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type? sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }

@@ -11,7 +11,7 @@ namespace Alternet.UI
     public class BaseTypeConverter : TypeConverter
     {
         /// <inheritdoc/>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
         {
             if (destinationType == typeof(string))
                 return true;
@@ -20,12 +20,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type? sourceType)
         {
             if (sourceType == typeof(string))
                 return true;
 
             return base.CanConvertFrom(context, sourceType);
         }
+
+        internal static Uri? GetContextBaseUri(IServiceProvider? ctx)
+            => GetService<UI.Port.IUixmlUriContext>(ctx)?.BaseUri;
+
+        internal static T? GetService<T>(IServiceProvider? sp) => (T?)sp?.GetService(typeof(T));
     }
 }

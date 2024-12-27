@@ -74,14 +74,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext? context,
-            Type sourceType)
-        {
-            return sourceType == typeof(string);
-        }
-
-        /// <inheritdoc/>
         public override bool CanConvertTo(
             ITypeDescriptorContext? context,
             Type? destinationType)
@@ -92,6 +84,8 @@ namespace Alternet.UI
                 {
                     return IsDefinedModifierKeys(keys);
                 }
+                else
+                    return true;
             }
 
             return false;
