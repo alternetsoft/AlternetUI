@@ -45,7 +45,8 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return false;
                 return Handler.IsModal;
             }
         }
@@ -79,13 +80,16 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return ModalResult.Canceled;
+
                 return Handler.ModalResult;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ModalResult = value;
             }
         }
@@ -125,7 +129,7 @@ namespace Alternet.UI
         public virtual ModalResult ShowModal(Window? owner)
         {
             App.DoEvents();
-            if (IsDisposed)
+            if (DisposingOrDisposed)
                 return ModalResult.Canceled;
             ModalResult = ModalResult.None;
             ApplyStartLocationOnce(owner);
@@ -147,6 +151,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void ShowDialogAsync(Window? owner = null, Action<bool>? onClose = null)
         {
+            if (DisposingOrDisposed)
+                return;
             var result = ShowModal(owner);
             onClose?.Invoke(result == ModalResult.Accepted);
         }
@@ -157,6 +163,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+
             base.OnKeyDown(e);
 
             if (!Modal || e.Handled || e.ModifierKeys != UI.ModifierKeys.None)

@@ -281,7 +281,16 @@ namespace Alternet.UI
         /// this application.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsActive => Handler.IsActive;
+        public virtual bool IsActive
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return false;
+
+                return Handler.IsActive;
+            }
+        }
 
         /// <summary>
         /// Gets time when window was last time activated.
@@ -372,6 +381,9 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
+
                 if (info.HasTitleBar == value)
                     return;
                 info.HasTitleBar = value;
@@ -400,6 +412,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.HasBorder == value)
                     return;
                 info.HasBorder = value;
@@ -427,6 +441,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.Resizable == value)
                     return;
                 info.Resizable = value;
@@ -443,6 +459,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (TitleAsObject == value)
                     return;
                 base.TitleAsObject = value;
@@ -461,6 +479,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.IsToolWindow == value)
                     return;
                 info.IsToolWindow = value;
@@ -485,6 +505,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.IsPopupWindow == value)
                     return;
                 info.IsPopupWindow = value;
@@ -504,6 +526,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.HasSystemMenu == value)
                     return;
                 info.HasSystemMenu = value;
@@ -524,6 +548,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.AlwaysOnTop == value)
                     return;
                 info.AlwaysOnTop = value;
@@ -542,6 +568,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.CloseEnabled == value)
                     return;
                 info.CloseEnabled = value;
@@ -560,6 +588,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.MaximizeEnabled == value)
                     return;
                 info.MaximizeEnabled = value;
@@ -590,6 +620,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.ShowInTaskbar == value)
                     return;
                 info.ShowInTaskbar = value;
@@ -608,6 +640,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (info.MinimizeEnabled == value)
                     return;
                 info.MinimizeEnabled = value;
@@ -785,6 +819,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (State == value)
                     return;
 
@@ -811,6 +847,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (StatusBar == value)
                     return;
                 Handler.StatusBar = value;
@@ -847,6 +885,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (menu == value)
                     return;
 
@@ -884,6 +924,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (icon == value)
                     return;
 
@@ -959,7 +1001,7 @@ namespace Alternet.UI
                 if (Visible == value)
                     return;
 
-                if (value)
+                if (value && !DisposingOrDisposed)
                 {
                     ApplyStartLocationOnce(null);
                     RaiseLoadedOnce();
@@ -969,7 +1011,8 @@ namespace Alternet.UI
 
                 if (value)
                 {
-                    ActiveControl?.SetFocusIdle();
+                    if (!DisposingOrDisposed)
+                        ActiveControl?.SetFocusIdle();
                 }
                 else
                 {
@@ -1313,9 +1356,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="relativePosition">New location of the window in pixels. This value is relative
         /// to the top-left corner of the display's client area.</param>
-        /// <param name="display">Display which client area is used as a container for the window.</param>
+        /// <param name="display">Display which client area is used as a
+        /// container for the window.</param>
         public virtual void SetLocationOnDisplay(PointI relativePosition, Display? display = null)
         {
+            if (DisposingOrDisposed)
+                return;
             display = Display.SafeDisplay(display);
             var clientArea = display.ClientArea;
             var position = clientArea.Location;
@@ -1351,6 +1397,8 @@ namespace Alternet.UI
             RectI containerRect,
             bool shrinkSize = true)
         {
+            if (DisposingOrDisposed)
+                return;
             var newBounds = AlignUtils.AlignRectInRect(
                 BoundsInPixels,
                 containerRect,
@@ -1375,6 +1423,8 @@ namespace Alternet.UI
             AbstractControl? window,
             bool shrinkSize = true)
         {
+            if (DisposingOrDisposed)
+                return;
             if (window is null)
                 SetLocationOnDisplay(horz, vert, null, shrinkSize);
             else
@@ -1406,6 +1456,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool CenterOnParent(GenericOrientation direction = GenericOrientation.Both)
         {
+            if (DisposingOrDisposed)
+                return false;
             var vert = HVAlignment.Center.VerticalOrNull(direction);
             var horz = HVAlignment.Center.HorizontalOrNull(direction);
             SetLocationOnDisplay(horz, vert);
@@ -1428,6 +1480,8 @@ namespace Alternet.UI
             Display? display = null,
             bool shrinkSize = true)
         {
+            if (DisposingOrDisposed)
+                return;
             display = Display.SafeDisplay(display);
             var clientArea = display.ClientArea;
             SetLocationInRectI(horz, vert, clientArea, shrinkSize);
@@ -1462,13 +1516,20 @@ namespace Alternet.UI
         /// Lowers the window to the bottom of the window hierarchy (Z-order).
         /// This function only works for top level windows.
         /// </summary>
-        public virtual void Lower() => Handler.Lower();
+        public virtual void Lower()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.Lower();
+        }
 
         /// <summary>
         /// Raises <see cref="DisplayChanged"/> event if it is required.
         /// </summary>
         public virtual void RaiseDisplayChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             if (DisplayChanged is null)
                 return;
 
@@ -1493,6 +1554,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RecreateAllHandlers()
         {
+            if (DisposingOrDisposed)
+                return;
+
             void GetAllChildren(AbstractControl control, List<AbstractControl> result)
             {
                 foreach (var child in control.Children)
@@ -1533,6 +1597,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnKeyDown(e);
 
             if (e.Key == Key.Enter)
@@ -1554,6 +1620,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnAfterChildKeyDown(object? sender, KeyEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnAfterChildKeyDown(sender, e);
             e.Handled = e.Handled || ExecuteKeyBinding(e.Key, e.ModifierKeys, true);
         }
@@ -1732,6 +1800,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnHandlerSizeChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnHandlerSizeChanged(e);
             PerformLayout();
             needLayout = true;
@@ -1744,6 +1814,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void ProcessShortcuts(KeyEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             var shortcuts = GetShortcuts();
             if (shortcuts is null)
                 return;
@@ -1784,6 +1856,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnSystemColorsChanged(e);
             SystemSettings.ResetColors();
         }
@@ -1791,6 +1865,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnDpiChanged(DpiChangedEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnDpiChanged(e);
             PerformLayoutAndInvalidate();
         }
@@ -1800,6 +1876,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ApplyStartLocation(AbstractControl? owner)
         {
+            if (DisposingOrDisposed)
+                return;
             switch (StartLocation)
             {
                 case WindowStartLocation.Default:
@@ -1859,6 +1937,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnHandlerLocationChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnHandlerLocationChanged(e);
 
             InsideTryCatch(RaiseDisplayChanged);
@@ -1891,6 +1971,8 @@ namespace Alternet.UI
 
         private void RaiseLoadedOnce()
         {
+            if (DisposingOrDisposed)
+                return;
             if (loadedCalled)
                 return;
             loadedCalled = true;

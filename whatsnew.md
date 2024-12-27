@@ -1,3 +1,35 @@
+# 0.9.653 (2024 December 27)
+
+- Window: Speedup closing.
+- CustomTextBox.TextAsValue - uses TypeConverter and other conversion features and settings in order to convert Text to/from Object.
+- CustomTextBox: TextAsValueError, TrimTextRules, ObjectToString, InputTypeArgs, InputType, ResetInputSettings().
+- TextBoxAndButton, TextBoxAndLabel: Add InputType, InputTypeArgs.
+- Window: Returned OwnersCollection property, made Owner property setter more safe.
+- Maui: Initialize application handler as soon as possible.
+- MauiUtils: Windows, Pages, Controls, ControlViews, GetChildren.
+- Maui: ControlView now responds to app theme change event.
+- App.IsNetOrCoreApp and remove some #if NETCOREAPP conditionals.
+- Created ControlInitializers, TextBoxInitializers, TextBoxInitializeEventArgs.
+- Add SystemSettings.SystemColorsChanged event.
+- Maui: Reset system colors on app theme change event.
+- Maui: Caret color is selected as opposite of back color.
+- LightDarkColor: supports IEquatable, == and != operators, LightOrDark(bool isDark) method, GetHashCode, Equals.
+- App: IsMaui, AppThreadId, IsAppThread.
+- NativeApi.Generator: Now uses enums from Alternet.UI.Interfaces.
+- WebBrowser: IsEdgeBackend.
+- Disable Edge backend by default for WebBrowser as it is buggy in current wxWidgets version. Use IsEdgeBackendEnabled to toggle the feature.
+- ColorStruct: new constructor and conversion operator from int.
+- Color: IsLight, Gray100..Gray950.
+- StringUtils: TryParseNumberDelegates, TryParseNumberWithDelegates.
+- StringUtils: Different Trim overloads.
+- KeyGesture: IsValid, ToString.
+- KeyConverter.Default, KeyGestureConverter.Default, ModifierKeysConverter.Default.
+- KeyGestureConverter: Fixed to work without context parameter.
+- Control: Use DisposingOrDisposed in members.
+- Control.cpp: Fixed exceptions on destroy.
+- PointD, SizeD, RectD: CoerceCoordFunc, CoerceHeight, Coerce with overloads.
+- RectD.DefaultMidpointRounding and use it in Round methods of drawing structs.
+
 # 0.9.652 (2024 December 24)
 
 - AbstractControl: ProcessTab, TabIndex, FirstVisibleChild, ChildrenRecursive,  VisibleChildCount, HasVisibleChildren, HasFocusableChildren, GetFocusableChildren, IsKeyBindingValid, ValidateKeyBinding.
