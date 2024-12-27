@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="TextBox.HideSelection"/>
         bool HideSelection { get; set; }
 
-        /// <inheritdoc cref="TextBox.ProcessTab"/>
+        /// <inheritdoc cref="TextBox.WantTab"/>
         bool ProcessTab { get; set; }
 
         /// <inheritdoc cref="TextBox.ProcessEnter"/>
