@@ -44,7 +44,8 @@ namespace Alternet.Drawing
         public static readonly SizeD One = new(1d, 1d);
 
         /// <summary>
-        /// Gets <see cref="SizeD"/> with width and height equal to <see cref="Coord.PositiveInfinity"/>.
+        /// Gets <see cref="SizeD"/> with width and height equal
+        /// to <see cref="Coord.PositiveInfinity"/>.
         /// </summary>
         public static readonly SizeD PositiveInfinity
             = new(Coord.PositiveInfinity, Coord.PositiveInfinity);
@@ -54,6 +55,12 @@ namespace Alternet.Drawing
         /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>).
         /// </summary>
         public static readonly SizeD NaN = new(Coord.NaN, Coord.NaN);
+
+        /// <summary>
+        /// Gets or sets coerce function used in <see cref="Coerce()"/> method.
+        /// Default is Null. You can assign here for example <see cref="Math.Ceiling(Coord)"/>.
+        /// </summary>
+        public static Func<Coord, Coord>? CoerceCoordFunc = null;
 
         private Coord width; // Do not rename (binary serialization)
         private Coord height; // Do not rename (binary serialization)
@@ -586,6 +593,10 @@ namespace Alternet.Drawing
         /// <see cref="Height"/>. Uses <see cref="Math.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
+        /// <remarks>
+        /// Ceiling operation returns the smallest integer that is greater than or equal
+        /// to the specified floating-point number.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD Ceiling()
         {
@@ -724,6 +735,46 @@ namespace Alternet.Drawing
                 separator,
                 width,
                 height);
+        }
+
+        /// <summary>
+        /// Calls <paramref name="coerceFunc"/> for the height.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void CoerceHeight(Func<Coord, Coord> coerceFunc)
+        {
+            height = coerceFunc(height);
+        }
+
+        /// <summary>
+        /// Calls <paramref name="coerceFunc"/> for the width and height.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Coerce(Func<Coord, Coord> coerceFunc)
+        {
+            width = coerceFunc(width);
+            height = coerceFunc(height);
+        }
+
+        /// <summary>
+        /// Calls <see cref="CoerceCoordFunc"/> for the width and height.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Coerce()
+        {
+            if (CoerceCoordFunc is null)
+                return;
+            Coerce(CoerceCoordFunc);
+        }
+
+        /// <summary>
+        /// Calls <see cref="CoerceCoordFunc"/> for the height.
+        /// </summary>
+        public void CoerceHeight()
+        {
+            if (CoerceCoordFunc is null)
+                return;
+            CoerceHeight(CoerceCoordFunc);
         }
 
         /// <summary>
