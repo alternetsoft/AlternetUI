@@ -6,37 +6,16 @@ using System.Text;
 namespace Alternet.UI.Port
 {
     /// <summary>
-    ///  Wraps the DateTimeValueSerializer, to make it compatible with
-    ///  internal code that expects a type converter.
+    /// <see cref="TypeConverter"/> descendant for converting
+    /// between a string and <see cref="DateTime"/>.
     /// </summary>
-    internal class DateTimeConverter2 : TypeConverter
+    internal class DateTimeConverter2 : BaseTypeConverter
     {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-
-            return base.CanConvertFrom(context, sourceType);
-        }
-
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
-            if (destinationType == typeof(string))
-            {
-                return true;
-            }
-
-            return base.CanConvertTo(context, destinationType);
-        }
-
         /// <summary>
         /// Converts the given value object to a <see cref="DateTime"></see>.
         /// </summary>
-        public DateTime FromString(string? value)
+        public virtual DateTime FromString(string? value)
         {
-            // Validate and clean up input.
             if (value == null)
             {
                 throw GetConvertFromException(value);
@@ -47,28 +26,24 @@ namespace Alternet.UI.Port
                 return DateTime.MinValue;
             }
 
-            // Get a DateTimeFormatInfo
             DateTimeFormatInfo dateTimeFormatInfo;
 
             dateTimeFormatInfo =
-                (DateTimeFormatInfo)TypeConverterHelper.InvariantEnglishUS.GetFormat(
+                (DateTimeFormatInfo)App.InvariantEnglishUS.GetFormat(
                     typeof(DateTimeFormatInfo));
 
-            // Set the formatting style for round-tripping and to trim the string.
             DateTimeStyles dateTimeStyles = DateTimeStyles.RoundtripKind
                       | DateTimeStyles.NoCurrentDateDefault
                       | DateTimeStyles.AllowLeadingWhite
                       | DateTimeStyles.AllowTrailingWhite;
 
-            // Create the DateTime, using the DateTimeInfo if possible, and the culture otherwise.
             if (dateTimeFormatInfo != null)
             {
                 return DateTime.Parse(value, dateTimeFormatInfo, dateTimeStyles);
             }
             else
             {
-                // The culture didn't have a DateTimeFormatInfo.
-                return DateTime.Parse(value, TypeConverterHelper.InvariantEnglishUS, dateTimeStyles);
+                return DateTime.Parse(value, App.InvariantEnglishUS, dateTimeStyles);
             }
         }
 
@@ -85,16 +60,11 @@ namespace Alternet.UI.Port
         /// <summary>
         /// Converts the given value object to a <see cref="DateTime"></see>.
         /// </summary>
-        public string ConvertDateTimeToString(object? value)
+        public virtual string ConvertDateTimeToString(object? value)
         {
-            if (value == null || value is not DateTime)
-            {
+            if (value is not DateTime dateTime)
                 throw GetConvertToException(value, typeof(string));
-            }
 
-            DateTime dateTime = (DateTime)value;
-
-            // Build up the format string to be used in DateTime.ToString()
             StringBuilder formatString = new("yyyy-MM-dd");
 
             if (dateTime.TimeOfDay == TimeSpan.Zero)
@@ -135,7 +105,7 @@ namespace Alternet.UI.Port
             // We've finally got our format string built, we can create the string.
             return dateTime.ToString(
                 formatString.ToString(),
-                TypeConverterHelper.InvariantEnglishUS);
+                App.InvariantEnglishUS);
         }
 
         public override object ConvertTo(

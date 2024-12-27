@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Alternet.UI.Port
 {
-    internal class TypeUriConverter : TypeConverter
+    internal class TypeUriConverter : BaseTypeConverter
     {
         public TypeUriConverter()
         {
@@ -15,11 +15,6 @@ namespace Alternet.UI.Port
         /// <inheritdoc />
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == null)
-            {
-                throw new ArgumentNullException(nameof(sourceType));
-            }
-
             return sourceType == typeof(string) || sourceType == typeof(Uri);
         }
 

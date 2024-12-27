@@ -1,6 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -13,16 +10,22 @@ namespace Alternet.UI
     /// Converter class for converting between a string
     /// and the <see cref="KeyGesture"/>.
     /// </summary>
-    public class KeyGestureConverter : TypeConverter
+    public class KeyGestureConverter : BaseTypeConverter
     {
+        /// <summary>
+        /// Gets delimiter character between key and modifiers.
+        /// </summary>
+        public const char ModifiersDelimiter = '+';
+
+        /// <summary>
+        /// Gets separator character between display string and the key.
+        /// </summary>
+        public const char DisplayStringSeparator = ',';
+
         /// <summary>
         /// Gets or sets default type converter for <see cref="KeyGesture"/>.
         /// </summary>
         public static TypeConverter Default = new KeyGestureConverter();
-
-        internal const char DisplayStringSeparator = ',';
-
-        private const char ModifiersDelimiter = '+';
 
         /// <summary>
         /// Check for Valid enum, as any int can be casted to the enum.
@@ -67,7 +70,6 @@ namespace Alternet.UI
             index = fullName.LastIndexOf(ModifiersDelimiter);
             if (index >= 0)
             {
-                // modifiers exists
                 modifiersToken = fullName.Substring(0, index);
                 keyToken = fullName.Substring(index + 1);
             }
@@ -101,15 +103,7 @@ namespace Alternet.UI
             ITypeDescriptorContext? context,
             Type? sourceType)
         {
-            // We can only handle string.
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return sourceType == typeof(string);
         }
 
         /// <summary>
@@ -120,11 +114,8 @@ namespace Alternet.UI
             ITypeDescriptorContext? context,
             Type? destinationType)
         {
-            // We can convert to an InstanceDescriptor or to a string.
             if (destinationType == typeof(string))
             {
-                // When invoked by the serialization engine we can convert to
-                // string only for known type
                 if (context?.Instance is KeyGesture keyGesture)
                 {
                     return keyGesture.IsValid();

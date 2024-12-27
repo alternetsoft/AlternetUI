@@ -4,15 +4,10 @@ using System.ComponentModel;
 namespace Alternet.UI.Port
 {
     /// <summary>
-    /// TypeConverter for System.Type.
+    /// <see cref="TypeConverter"/> descendant for converting <see cref="System.Type"/>.
     /// </summary>
-    internal class TypeTypeConverter : TypeConverter
+    internal class TypeTypeConverter : BaseTypeConverter
     {
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof(string);
-        }
-
         public override object ConvertFrom(
             ITypeDescriptorContext context,
             System.Globalization.CultureInfo culture,
