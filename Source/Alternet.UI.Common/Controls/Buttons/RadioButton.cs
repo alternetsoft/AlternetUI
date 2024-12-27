@@ -61,9 +61,17 @@ namespace Alternet.UI
         /// <c>false</c>.</value>
         public virtual bool IsChecked
         {
-            get => Handler.IsChecked;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return false;
+                return Handler.IsChecked;
+            }
+
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (IsChecked == value)
                     return;
                 Handler.IsChecked = value;
@@ -97,6 +105,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BindHandlerEvents()
         {
+            if (DisposingOrDisposed)
+                return;
             base.BindHandlerEvents();
             Handler.CheckedChanged = RaiseCheckedChanged;
         }
@@ -129,6 +139,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void RaiseCheckedChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             var newChecked = IsChecked;
 
             if (reportedChecked == newChecked)
@@ -139,10 +151,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="RaiseCheckedChanged"/> for all sibling <see cref="RadioButton"/> controls.
+        /// Calls <see cref="RaiseCheckedChanged"/> for all sibling
+        /// <see cref="RadioButton"/> controls.
         /// </summary>
         protected virtual void RaiseSiblingsCheckedChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             var siblings = Parent?.Children;
 
             if (siblings is null || siblings.Count == 0)

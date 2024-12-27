@@ -42,7 +42,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Left"/>
+        /// Sets text alignment in the current position
+        /// to <see cref="TextBoxTextAttrAlignment.Left"/>
         /// </summary>
         public virtual void SelectionAlignLeft()
         {
@@ -50,7 +51,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Center"/>
+        /// Sets text alignment in the current position
+        /// to <see cref="TextBoxTextAttrAlignment.Center"/>
         /// </summary>
         public virtual void SelectionAlignCenter()
         {
@@ -58,7 +60,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Right"/>
+        /// Sets text alignment in the current
+        /// position to <see cref="TextBoxTextAttrAlignment.Right"/>
         /// </summary>
         public virtual void SelectionAlignRight()
         {
@@ -66,7 +69,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets text alignment in the current position to <see cref="TextBoxTextAttrAlignment.Justified"/>
+        /// Sets text alignment in the current
+        /// position to <see cref="TextBoxTextAttrAlignment.Justified"/>
         /// </summary>
         public virtual void SelectionAlignJustified()
         {
@@ -76,7 +80,9 @@ namespace Alternet.UI
         /// <summary>
         /// Sets specified style to the selection.
         /// </summary>
-        public virtual bool ApplyStyleToSelection(ITextBoxRichAttr style, RichTextSetStyleFlags flags)
+        public virtual bool ApplyStyleToSelection(
+            ITextBoxRichAttr style,
+            RichTextSetStyleFlags flags)
         {
             return Handler.ApplyStyleToSelection(style, flags);
         }
@@ -110,9 +116,15 @@ namespace Alternet.UI
                 return true;
             if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ToggleItalic, e, SelectionToggleItalic))
                 return true;
-            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ToggleUnderline, e, SelectionToggleUnderlined))
+            if (KeyInfo.Run(
+                KnownShortcuts.RichEditKeys.ToggleUnderline,
+                e,
+                SelectionToggleUnderlined))
                 return true;
-            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ToggleStrikethrough, e, SelectionToggleStrikethrough))
+            if (KeyInfo.Run(
+                KnownShortcuts.RichEditKeys.ToggleStrikethrough,
+                e,
+                SelectionToggleStrikethrough))
                 return true;
             if (KeyInfo.Run(KnownShortcuts.RichEditKeys.LeftAlign, e, SelectionAlignLeft))
                 return true;
@@ -122,7 +134,10 @@ namespace Alternet.UI
                 return true;
             if (KeyInfo.Run(KnownShortcuts.RichEditKeys.Justify, e, SelectionAlignJustified))
                 return true;
-            if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ClearTextFormatting, e, SelectionClearFormatting))
+            if (KeyInfo.Run(
+                KnownShortcuts.RichEditKeys.ClearTextFormatting,
+                e,
+                SelectionClearFormatting))
                 return true;
             if (KeyInfo.Run(KnownShortcuts.RichEditKeys.ShowGoToLineDialog, e, ShowDialogGoToLine))
                 return true;
