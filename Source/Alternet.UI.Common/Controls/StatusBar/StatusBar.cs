@@ -64,7 +64,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual AbstractControl? AttachedTo
         {
-            get => Handler.AttachedTo;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.AttachedTo;
+            }
         }
 
         /// <summary>
@@ -73,10 +78,17 @@ namespace Alternet.UI
         /// </summary>
         public bool SizingGripVisible
         {
-            get => Handler.SizingGripVisible;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.SizingGripVisible;
+            }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (SizingGripVisible == value)
                     return;
                 Handler.SizingGripVisible = value;
@@ -91,11 +103,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.TextEllipsize;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (TextEllipsize == value)
                     return;
                 Handler.TextEllipsize = value;
@@ -108,7 +124,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether control is fully active and is attached to the window.
         /// </summary>
-        public bool IsOk => Handler.IsOk;
+        public bool IsOk
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.IsOk;
+            }
+        }
 
         /// <summary>
         /// Gets handler for the control.
@@ -276,7 +300,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Restores the text to the value it had before the last call to <see cref="PushStatusText"/>.
+        /// Restores the text to the value it had before the last call
+        /// to <see cref="PushStatusText"/>.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>

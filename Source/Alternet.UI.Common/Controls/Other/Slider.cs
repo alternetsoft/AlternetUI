@@ -121,6 +121,8 @@ namespace Alternet.UI
             get => orientation;
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (orientation == value)
                     return;
                 orientation = value;
@@ -140,6 +142,8 @@ namespace Alternet.UI
             get => tickStyle ?? SliderTickStyle.None;
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (tickStyle == value)
                     return;
                 tickStyle = value;
@@ -164,6 +168,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 value = CoerceValue(value);
                 if (this.val == value)
                     return;
@@ -195,6 +201,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (minimum == value)
                     return;
                 minimum = value;
@@ -226,6 +234,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 value = CoerceMaximum(value);
                 if (maximum == value)
                     return;
@@ -250,6 +260,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (value < 0)
                     value = 0;
                 if (smallChange == value)
@@ -274,6 +286,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (value < 0)
                     value = 0;
                 if (largeChange == value)
@@ -302,6 +316,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (tickFrequency == value)
                     return;
                 tickFrequency = value;
@@ -401,7 +417,35 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void ClearTicks()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.ClearTicks();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MinimumChanged"/> event and calls
+        /// <see cref="OnMinimumChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseMinimumChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnMinimumChanged(e);
+            MinimumChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MaximumChanged"/> event and calls
+        /// <see cref="OnMaximumChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseMaximumChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnMaximumChanged(e);
+            MaximumChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -410,6 +454,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseValueChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             Designer?.RaisePropertyChanged(this, nameof(Value));
             OnValueChanged(EventArgs.Empty);
             ValueChanged?.Invoke(this, EventArgs.Empty);
@@ -439,35 +485,25 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
+        /// <summary>
+        /// Coerces minimal value the have the valid range.
+        /// </summary>
+        /// <param name="value">Value to coerce.</param>
+        /// <returns></returns>
+        protected virtual int CoerceMaximum(int value)
         {
-            return ControlFactory.Handler.CreateSliderHandler(this);
+            int min = Minimum;
+            if (value < min)
+                return min;
+            return value;
         }
 
         /// <summary>
-        /// Raises the <see cref="MinimumChanged"/> event and calls
-        /// <see cref="OnMinimumChanged(EventArgs)"/>.
+        /// Coerces value the have the valid range.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        private void RaiseMinimumChanged(EventArgs e)
-        {
-            OnMinimumChanged(e);
-            MinimumChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="MaximumChanged"/> event and calls
-        /// <see cref="OnMaximumChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        private void RaiseMaximumChanged(EventArgs e)
-        {
-            OnMaximumChanged(e);
-            MaximumChanged?.Invoke(this, e);
-        }
-
-        private int CoerceValue(int value)
+        /// <param name="value">Value to coerce.</param>
+        /// <returns></returns>
+        protected virtual int CoerceValue(int value)
         {
             if (value < Minimum)
                 return Minimum;
@@ -478,12 +514,10 @@ namespace Alternet.UI
             return value;
         }
 
-        private int CoerceMaximum(int value)
+        /// <inheritdoc/>
+        protected override IControlHandler CreateHandler()
         {
-            int min = Minimum;
-            if (value < min)
-                return min;
-            return value;
+            return ControlFactory.Handler.CreateSliderHandler(this);
         }
     }
 }

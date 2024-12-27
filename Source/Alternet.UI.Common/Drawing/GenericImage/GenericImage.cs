@@ -33,6 +33,11 @@ namespace Alternet.Drawing
         public const byte AlphaChannelOpaque = 0xff;
 
         /// <summary>
+        /// Gets an empty generic image.
+        /// </summary>
+        public static readonly GenericImage Empty = new();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an empty image without an alpha channel.
         /// </summary>

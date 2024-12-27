@@ -57,13 +57,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasBorder;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HasBorder = value;
             }
         }
@@ -86,13 +88,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return [];
                 return checkedIndices.ToArray();
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
 
                 ClearCheckedCore();
 
@@ -141,23 +145,23 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A zero-based index of the currently checked item. A value
         /// of <c>null</c> is returned if no item is checked.</value>
-        /// <exception cref="ArgumentOutOfRangeException">The assigned value
-        /// is less than 0 or greater than or equal to the item count.</exception>
         [Browsable(false)]
         public virtual int? CheckedIndex
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return checkedIndices.FirstOrDefault();
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
 
                 if (value != null && (value < 0 || value >= Items.Count))
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    value = null;
 
                 ClearChecked();
                 if (value != null)
@@ -265,6 +269,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseCheckedChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
         }
@@ -293,11 +299,15 @@ namespace Alternet.UI
 
         private void ClearCheckedCore()
         {
+            if (DisposingOrDisposed)
+                return;
             checkedIndices.Clear();
         }
 
         private bool SetCheckedCore(int index, bool value)
         {
+            if (DisposingOrDisposed)
+                return false;
             bool changed;
             if (value)
                 changed = checkedIndices.Add(index);

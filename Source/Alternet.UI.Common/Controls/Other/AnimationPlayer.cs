@@ -87,7 +87,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual uint FrameCount
         {
-            get => Handler.FrameCount;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.FrameCount;
+            }
         }
 
         /// <summary>
@@ -97,7 +102,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual SizeI AnimationSize
         {
-            get => Handler.AnimationSize;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.AnimationSize;
+            }
         }
 
         /// <summary>
@@ -107,7 +117,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsOk
         {
-            get => Handler.IsOk;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.IsOk;
+            }
         }
 
         /// <summary>
@@ -127,6 +142,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool Play()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.Play();
         }
 
@@ -140,6 +157,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Stop()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Stop();
         }
 
@@ -149,6 +168,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the animation is being played; <c>false</c> otherwise.</returns>
         public virtual bool IsPlaying()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPlaying();
         }
 
@@ -163,6 +184,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.LoadFile(filename, type);
         }
 
@@ -180,6 +203,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         public virtual bool Load(Stream stream, AnimationType type = AnimationType.Any)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.Load(stream, type);
         }
 
@@ -190,6 +215,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetDelay(uint i)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetDelay(i);
         }
 
@@ -200,6 +227,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual GenericImage GetFrame(uint i)
         {
+            if (DisposingOrDisposed)
+                return GenericImage.Empty;
             return Handler.GetFrame(i);
         }
 
@@ -222,6 +251,8 @@ namespace Alternet.UI
         /// </example>
         public virtual bool LoadFromUrl(string url, AnimationType type = AnimationType.Any)
         {
+            if (DisposingOrDisposed)
+                return default;
             using var stream = ResourceLoader.StreamFromUrl(url);
             return Handler.Load(stream, type);
         }
@@ -246,6 +277,8 @@ namespace Alternet.UI
         /// <param name="bitmap"></param>
         public virtual void SetInactiveBitmap(ImageSet? bitmap)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetInactiveBitmap(bitmap);
         }
 

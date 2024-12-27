@@ -96,6 +96,8 @@ namespace Alternet.UI
             get => isIndeterminate;
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (isIndeterminate == value)
                     return;
                 isIndeterminate = value;
@@ -113,6 +115,8 @@ namespace Alternet.UI
             get => orientation;
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (orientation == value)
                     return;
                 orientation = value;
@@ -176,13 +180,13 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return minimum;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 if (minimum == value)
                     return;
 
@@ -219,10 +223,11 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (maximum == value)
                     return;
                 maximum = value;
-                CheckDisposed();
                 MaximumChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -325,6 +330,8 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
         }
@@ -343,7 +350,12 @@ namespace Alternet.UI
         {
         }
 
-        private int CoerceValue(int value)
+        /// <summary>
+        /// Coerces value to have the valid range.
+        /// </summary>
+        /// <param name="value">Value to coerce.</param>
+        /// <returns></returns>
+        protected virtual int CoerceValue(int value)
         {
             if (value < Minimum)
                 return Minimum;
