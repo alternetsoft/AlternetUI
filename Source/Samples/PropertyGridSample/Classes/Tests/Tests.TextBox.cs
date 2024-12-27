@@ -58,7 +58,7 @@ namespace PropertyGridSample
             }
             else
             {
-                App.LogReplace($"{prefix}Error = {c.TextAsValueError}", prefix);
+                App.LogReplace($"{prefix}Error = {c.TextAsValueError.Message}", prefix);
                 c.ReportValidatorError(true);
             }
 
@@ -72,6 +72,7 @@ namespace PropertyGridSample
 
                 var c = control.TextBox;
 
+                c.ResetInputSettings();
                 c.Clear();
                 c.DataType = typeof(Thickness);
                 c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
@@ -90,11 +91,30 @@ namespace PropertyGridSample
 
                 var c = control.TextBox;
 
+                c.ResetInputSettings();
                 c.Clear();
                 c.DataType = typeof(KeyGesture);
                 c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
                 c.TextAsValue = new KeyGesture(Key.Space, Alternet.UI.ModifierKeys.ControlShift);
                 c.ValidatorErrorText = "Expected key with modifier. Example: Alt+Shift+B";
+
+                c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
+                c.DelayedTextChanged += HandleTextChangedForTextAsValue;
+
+            });
+
+            AddControlAction<TextBoxAndButton>("Edit DateTime", (control) =>
+            {
+                control.ErrorPictureVisible = true;
+
+                var c = control.TextBox;
+
+                c.ResetInputSettings();
+                c.Clear();
+                c.DataType = typeof(DateTime);
+                c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
+                c.TextAsValue = DateTime.Now;
+                c.ValidatorErrorText = "Expected date and time";
 
                 c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
                 c.DelayedTextChanged += HandleTextChangedForTextAsValue;
