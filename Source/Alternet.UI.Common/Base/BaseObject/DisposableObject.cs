@@ -82,7 +82,7 @@ namespace Alternet.UI
         {
             get
             {
-                return IsDisposed || Disposing;
+                return disposed || insideDisposing;
             }
         }
 
