@@ -163,9 +163,7 @@ namespace Alternet.UI
 
         protected virtual void Reset(CustomTextBox c)
         {
-            c.MinValue = null;
-            c.MaxValue = null;
-            c.Options &= ~TextBoxOptions.DefaultValidation;
+            c.ResetInputSettings();
         }
 
         protected virtual void SetNumberValidator(

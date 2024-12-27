@@ -121,6 +121,7 @@ namespace Alternet::UI
         bool _showVertScrollBar = false;
         bool _showHorzScrollBar = false;
         bool _scrollBarAlwaysVisible = false;
+        bool _destroyed = false;
         
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;
@@ -287,6 +288,8 @@ namespace Alternet::UI
         static wxDragResult GetDragResult(DragDropEffects input);
         static int GetDoDragDropFlags(DragDropEffects allowedEffects);
 
+        bool IsNullOrDeleting();
+
         wxDragResult RaiseDragAndDropEvent(
             const wxPoint& location,
             wxDragResult defaultDragResult,
@@ -294,7 +297,7 @@ namespace Alternet::UI
             ControlEvent event);
 
         void CreateDropTarget();
-        void DestroyDropTarget();
+        void DestroyDropTarget(bool setDropTarget);
 
         bool RetrieveVisible();
 

@@ -20,7 +20,11 @@ namespace Alternet.UI
         {
         }
 
-        public RectI BoundsI { get => NativeControl.BoundsI; set => NativeControl.BoundsI = value; }
+        public RectI BoundsI
+        {
+            get => NativeControl.BoundsI;
+            set => NativeControl.BoundsI = value;
+        }
 
         public SizeI EventOldDpi
         {
@@ -399,6 +403,16 @@ namespace Alternet.UI
 
         public bool IsFocusable => NativeControl.IsFocusable;
 
+        internal Native.Control? NativeControlOrNull
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return null;
+                return NativeControl;
+            }
+        }
+
         internal Native.Control NativeControl
         {
             get
@@ -476,11 +490,6 @@ namespace Alternet.UI
             NativeControl.Raise();
         }
 
-        public void CenterOnParent(GenericOrientation direction)
-        {
-            NativeControl.CenterOnParent((int)direction);
-        }
-
         public void SetCursor(Cursor? value)
         {
             NativeControl.SetCursor(WxCursorHandler.CursorToPtr(value));
@@ -494,11 +503,6 @@ namespace Alternet.UI
         public void Lower()
         {
             NativeControl.Lower();
-        }
-
-        public void SendSizeEvent()
-        {
-            NativeControl.SendSizeEvent();
         }
 
         public void UnsetToolTip()
@@ -550,17 +554,6 @@ namespace Alternet.UI
         {
             return NativeControl.ClientToScreen(point);
         }
-
-        public PointI ScreenToDevice(PointD point)
-        {
-            return NativeControl.ScreenToDevice(point);
-        }
-
-        public PointD DeviceToScreen(PointI point)
-        {
-            return NativeControl.DeviceToScreen(point);
-        }
-
         public void FocusNextControl(bool forward = true, bool nested = true)
         {
             NativeControl.FocusNextControl(forward, nested);
@@ -589,11 +582,6 @@ namespace Alternet.UI
             NativeControl.EndUpdate();
         }
 
-        public void SetBounds(RectD rect, SetBoundsFlags flags)
-        {
-            NativeControl.SetBoundsEx(rect, (int)flags);
-        }
-
         public void BeginInit()
         {
             NativeControl.BeginInit();
@@ -614,24 +602,9 @@ namespace Alternet.UI
             NativeControl.SaveScreenshot(fileName);
         }
 
-        public SizeD GetDPI()
-        {
-            return NativeControl.GetDPI();
-        }
-
         public bool IsTransparentBackgroundSupported()
         {
             return NativeControl.IsTransparentBackgroundSupported();
-        }
-
-        public void EndIgnoreRecreate()
-        {
-            NativeControl.EndIgnoreRecreate();
-        }
-
-        public void BeginIgnoreRecreate()
-        {
-            NativeControl.BeginIgnoreRecreate();
         }
 
         public Coord? GetPixelScaleFactor()
@@ -646,19 +619,9 @@ namespace Alternet.UI
             return NativeControl.GetUpdateClientRect();
         }
 
-        public Coord PixelToDip(int value)
-        {
-            return Native.Control.DrawingToDip(value, NativeControl.WxWidget);
-        }
-
         public int PixelFromDip(Coord value)
         {
             return Native.Control.DrawingFromDip(value, NativeControl.WxWidget);
-        }
-
-        public Coord PixelFromDipF(Coord value)
-        {
-            return Native.Control.DrawingFromDipF(value, NativeControl.WxWidget);
         }
 
         public void SetScrollBar(
@@ -731,34 +694,11 @@ namespace Alternet.UI
             return Font.FromInternal(NativeControl.GetDefaultAttributesFont());
         }
 
-        public void SendMouseDownEvent(int x, int y)
-        {
-            NativeControl.SendMouseDownEvent(x, y);
-        }
-
-        public void SendMouseUpEvent(int x, int y)
-        {
-            NativeControl.SendMouseUpEvent(x, y);
-        }
-
-        public bool BeginRepositioningChildren()
-        {
-            return NativeControl.BeginRepositioningChildren();
-        }
-
-        public void EndRepositioningChildren()
-        {
-            NativeControl.EndRepositioningChildren();
-        }
-
-        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true)
-        {
-            NativeControl.AlwaysShowScrollbars(hflag, vflag);
-        }
-
         public void Update()
         {
-            if (Control != null || Control is Window)
+            if (!IsAttached)
+                return;
+            if (Control.HasParent || Control is Window)
             {
                 NativeControl.Update();
             }
@@ -766,7 +706,9 @@ namespace Alternet.UI
 
         public void Invalidate()
         {
-            if (Control.Parent != null || Control is Window)
+            if (!IsAttached)
+                return;
+            if (Control.HasParent || Control is Window)
             {
                 NativeControl.Invalidate();
             }

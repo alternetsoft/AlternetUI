@@ -63,23 +63,32 @@ namespace Alternet::UI
 
     wxDragResult DropTarget::OnEnter(wxCoord x, wxCoord y, wxDragResult def)
     {
+        if (_control == nullptr)
+            return wxDragResult::wxDragCancel;
+
         UpdateData();
         return _control->RaiseDragEnter(wxPoint(x, y), def, GetDataObjectWithoutEmptyData());
     }
     
     void DropTarget::OnLeave()
     {
+        if (_control == nullptr)
+            return;
         _control->RaiseDragLeave();
     }
     
     wxDragResult DropTarget::OnData(wxCoord x, wxCoord y, wxDragResult def)
     {
+        if (_control == nullptr)
+            return wxDragResult::wxDragCancel;
         UpdateData();
         return _control->RaiseDragDrop(wxPoint(x, y), def, GetDataObjectWithoutEmptyData());
     }
 
     wxDragResult DropTarget::OnDragOver(wxCoord x, wxCoord y, wxDragResult def)
     {
+        if (_control == nullptr)
+            return wxDragResult::wxDragCancel;
         UpdateData();
         return _control->RaiseDragOver(wxPoint(x, y), def, GetDataObjectWithoutEmptyData());
     }

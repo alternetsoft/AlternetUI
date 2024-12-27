@@ -17,24 +17,34 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for
-        /// or Null if control is not assigned.
+        /// or Null if control is disposed or not assigned.
         /// </summary>
-        public Control? ControlOrNull => control;
+        public Control? ControlOrNull
+        {
+            get
+            {
+                return control;
+            }
+        }
 
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
+        /// If control is disposed or not attached to the handler, returns dummy control.
         /// </summary>
         public Control Control
         {
-            get => control ?? throw new InvalidOperationException(
-                "BaseControlHandler: Control is null");
+            get
+            {
+                return control
+                ?? throw new InvalidOperationException("BaseControlHandler: Control is null");
+            }
         }
 
         /// <summary>
         /// Gets a value indicating whether this object is attached
         /// to a <see cref="Control"/>.
         /// </summary>
-        public bool IsAttached => control != null;
+        public bool IsAttached => ControlOrNull != null;
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
@@ -43,6 +53,8 @@ namespace Alternet.UI
         /// handler to.</param>
         public void Attach(Control control)
         {
+            if (DisposingOrDisposed)
+                return;
             this.control = control;
             OnAttach();
         }

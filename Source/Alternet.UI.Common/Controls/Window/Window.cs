@@ -1289,6 +1289,8 @@ namespace Alternet.UI
                 e.Cancel = true;
                 return;
             }
+
+            Visible = false;
         }
 
         /// <summary>

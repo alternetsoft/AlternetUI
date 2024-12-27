@@ -468,8 +468,8 @@ namespace Alternet.UI
         /// <summary>
         /// Enumerates property information for the specified <see cref="Type"/>.
         /// </summary>
-        /// <param name="type">Type which events are enumerated.</param>
-        /// <param name="sort">Defines whether to sort result events by name.</param>
+        /// <param name="type">Type which properties are enumerated.</param>
+        /// <param name="sort">Defines whether to sort returned properties by name.</param>
         /// <param name="bindingFlags">Specifies flags that control the way in which
         /// the search for members is conducted.</param>
         /// <returns></returns>
@@ -492,6 +492,69 @@ namespace Alternet.UI
                     continue;
                 result.Add(p);
                 addedNames.Add(propName, p);
+            }
+
+            if (sort)
+                return addedNames.Values;
+            else
+                return result;
+        }
+
+        /// <summary>
+        /// Gets collection of the fields and properties marked with
+        /// <see cref="AutoResetAttribute"/> attribute.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<MemberInfo> GetAutoResetMembers(
+            Type type,
+            bool enumFields = true,
+            bool enumProps = true,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public
+            | BindingFlags.NonPublic)
+        {
+            var fields = AssemblyUtils.EnumFields(type, false, bindingFlags);
+            var props = AssemblyUtils.EnumFields(type, false, bindingFlags);
+
+            foreach (var item in fields)
+            {
+                if (AssemblyUtils.IsAutoReset(item))
+                    yield return item;
+            }
+
+            foreach (var item in props)
+            {
+                if (AssemblyUtils.IsAutoReset(item))
+                    yield return item;
+            }
+        }
+
+        /// <summary>
+        /// Enumerates field information for the specified <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">Type which fields are enumerated.</param>
+        /// <param name="sort">Defines whether to sort returned fields by name.</param>
+        /// <param name="bindingFlags">Specifies flags that control the way in which
+        /// the search for members is conducted.</param>
+        /// <returns></returns>
+        public static IEnumerable<FieldInfo> EnumFields(
+            Type type,
+            bool sort = false,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
+        {
+            List<FieldInfo> result = new();
+
+            IList<FieldInfo> fields =
+                new List<FieldInfo>(type.GetFields(bindingFlags));
+
+            SortedList<string, FieldInfo> addedNames = new();
+
+            foreach (var p in fields)
+            {
+                var name = p.Name;
+                if (addedNames.ContainsKey(name))
+                    continue;
+                result.Add(p);
+                addedNames.Add(name, p);
             }
 
             if (sort)
@@ -780,6 +843,19 @@ namespace Alternet.UI
             if (browsable is not null)
                 return browsable.Browsable;
             return true;
+        }
+
+        /// <summary>
+        /// Returns whether property or field has <see cref="AutoResetAttribute"/> attribute
+        /// and it's value property is True.
+        /// </summary>
+        /// <param name="p">Member info.</param>
+        public static bool IsAutoReset(MemberInfo p)
+        {
+            var attribute = p.GetCustomAttribute<AutoResetAttribute>(true);
+            if (attribute is not null)
+                return attribute.Value;
+            return false;
         }
 
         /// <summary>

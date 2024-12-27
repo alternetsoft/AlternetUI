@@ -18,14 +18,14 @@ namespace Alternet::UI
 
         virtual wxDragResult OnDragOver(wxCoord x, wxCoord y, wxDragResult def) override;
 
+        Control* _control;
+
     private:
 
         void RecreateDataObject();
         wxDataObjectComposite* GetDataObjectComposite();
         void UpdateData();
         wxDataObjectComposite* GetDataObjectWithoutEmptyData();
-
-        Control* _control;
 
         BYREF_ONLY(DropTarget);
     };

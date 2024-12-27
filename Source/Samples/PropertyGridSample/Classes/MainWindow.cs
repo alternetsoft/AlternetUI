@@ -420,10 +420,7 @@ namespace PropertyGridSample
                         panel.RemoveActions();
                         panel.AddActions(type);
 
-                        if (!DebugUtils.IsDebugDefined)
-                            return;
-
-                        var methods = type.GetMethods();
+                        var methods = type.GetMethods().OrderBy(method => method.Name);
                         foreach (var method in methods)
                         {
                             if (method.IsSpecialName)
@@ -458,6 +455,14 @@ namespace PropertyGridSample
 
             DoAction();
 
+        }
+
+        protected override void DisposeManaged()
+        {
+            ComponentDesigner.SafeDefault.PropertyChanged -= Designer_PropertyChanged;
+            ComponentDesigner.SafeDefault.MouseLeftButtonDown -= Designer_MouseLeftButtonDown;
+
+            base.DisposeManaged();
         }
 
         private void SetBackground(Color color)

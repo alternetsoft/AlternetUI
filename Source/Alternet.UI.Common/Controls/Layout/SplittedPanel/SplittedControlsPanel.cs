@@ -231,9 +231,10 @@ namespace Alternet.UI
             var actions = PropertyGrid.GetSimpleActions(type);
             if (actions is null)
                 return;
-            foreach (var action in actions)
+            var orderedActions = actions.OrderBy(item => item.Title);
+            foreach (var action in orderedActions)
             {
-                AddAction(action.Item1, action.Item2);
+                AddAction(action.Title, action.Action);
             }
         }
 

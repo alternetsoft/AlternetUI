@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -114,6 +115,21 @@ namespace Alternet.UI
             var t = disposable;
             disposable = default;
             t.Dispose();
+        }
+
+        /// <summary>
+        /// Gets whether the specified object is disposing or disposed.
+        /// </summary>
+        /// <param name="obj">Object to test.</param>
+        /// <returns></returns>
+        public static bool IsDisposingOrDisposed(object? obj)
+        {
+            if (obj is IDisposableObject disposable)
+            {
+                return disposable.DisposingOrDisposed;
+            }
+
+            return true;
         }
 
         /// <summary>

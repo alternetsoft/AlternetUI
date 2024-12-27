@@ -63,6 +63,9 @@ namespace Alternet.UI
 
         bool IDisposableObject.DisposeHandle => false;
 
+        /// <inheritdoc/>
+        public bool DisposingOrDisposed => insideDisposing || disposed;
+
         /// <inheritdoc cref="BaseObject.SafeDispose"/>
         public static void SafeDispose<T>(ref T? disposable)
             where T : IDisposable

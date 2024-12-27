@@ -22,6 +22,11 @@ namespace Alternet.UI
         bool IsDisposed { get; }
 
         /// <summary>
+        /// Gets whether object is disposing or disposed.
+        /// </summary>
+        bool DisposingOrDisposed { get; }
+
+        /// <summary>
         /// Gets or sets whether to dispose resources.
         /// </summary>
         bool DisposeHandle { get; }
