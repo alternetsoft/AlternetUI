@@ -13,26 +13,18 @@ using Alternet.UI.Port;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Class that provides functionality to obtain a TypeConverter from a property or the
-    /// type of the property, based on logic similar to TypeDescriptor.GetConverter.
+    /// Contains helper methods and properties related to <see cref="TypeConverter"/>.
+    /// Provides functionality to get a <see cref="TypeConverter"/>
+    /// from a property or the type of the property, based on logic similar
+    /// to <see cref="TypeDescriptor.GetConverter(Type)"/>.
     /// </summary>
     public static class TypeConverterHelper
     {
-        private static readonly CultureInfo invariantEnglishUS = CultureInfo.InvariantCulture;
-
-        private static IndexedValues<Type, TypeConverter> converters = new();
+        private static IndexedValues<Type, TypeConverter> convertersCached = new();
 
         static TypeConverterHelper()
         {
             TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
-        }
-
-        internal static CultureInfo InvariantEnglishUS
-        {
-            get
-            {
-                return invariantEnglishUS;
-            }
         }
 
         /// <summary>
@@ -40,7 +32,8 @@ namespace Alternet.UI
         /// otherwise Null if not found.
         /// First, if the type is one of the known system types, it lookups
         /// a table to determine the <see cref="TypeConverter"/>.
-        /// Next, it tries to find a <see cref="TypeConverterAttribute"/> on the type using reflection.
+        /// Next, it tries to find a <see cref="TypeConverterAttribute"/> on
+        /// the type using reflection.
         /// Finally, it looks up the table of known typeConverters again if
         /// the given type derives from one of the known system types.
         /// </summary>
@@ -48,12 +41,15 @@ namespace Alternet.UI
         /// which to find a <see cref="TypeConverter"/>.</param>
         /// <returns>A <see cref="TypeConverter"/> for the <see cref="Type"/>
         /// type if found; Null otherwise.</returns>
-        public static TypeConverter? GetTypeConverter(Type? type)
+        /// <param name="culture">Optional <see cref="CultureInfo"/> object used to create
+        /// <see cref="TypeConverter"/> instance.</param>
+        /// <returns></returns>
+        public static TypeConverter? GetTypeConverter(Type? type, CultureInfo? culture = null)
         {
             if (type == null)
                 return null;
 
-            var result = converters.GetValue(type, Internal);
+            var result = convertersCached.GetValue(type, Internal);
             return result;
 
             TypeConverter? Internal()
@@ -70,7 +66,7 @@ namespace Alternet.UI
                             BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
                             null,
                             null,
-                            InvariantEnglishUS) as TypeConverter;
+                            culture ?? App.InvariantEnglishUS) as TypeConverter;
                     }
                     else
                     {
@@ -403,7 +399,7 @@ namespace Alternet.UI
 
         private static void TypeDescriptorRefreshed(RefreshEventArgs args)
         {
-            converters = new();
+            convertersCached = new();
         }
     }
 }

@@ -431,7 +431,16 @@ namespace Alternet.UI
                     if (DataType is null || DataType == typeof(string))
                         return Text;
 
-                    var typeConverter = ObjectToStringFactory.Default.GetTypeConverter(DataType);
+                    var typeConverter = TypeConverter ??
+                        ObjectToStringFactory.Default.GetTypeConverter(DataType);
+
+                    if (typeConverter is null)
+                        return null;
+
+                    var isBaseTypeConverter = typeConverter.GetType() == typeof(TypeConverter);
+
+                    if (isBaseTypeConverter)
+                        return null;
 
                     result = StringUtils.ParseWithTypeConverter(
                                 Text,
