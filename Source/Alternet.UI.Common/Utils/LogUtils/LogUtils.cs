@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
 using SkiaSharp;
@@ -37,6 +38,7 @@ namespace Alternet.UI
         /// </summary>
         public static LogFlags Flags;
 
+        private static readonly object locker = new();
         private static readonly ICustomFlags EventLoggedFlags = FlagsFactory.Create();
 
         private static List<(string Name, Action Action)>? registeredLogActions;
@@ -80,7 +82,10 @@ namespace Alternet.UI
         /// </summary>
         public static int GenNewId()
         {
-            return id++;
+            lock (locker)
+            {
+                return id++;
+            }
         }
 
         /// <summary>
@@ -208,18 +213,65 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs message to file, debug output and console if it is allowed.
+        /// </summary>
+        /// <param name="msg">Message to log.</param>
+        /// <param name="kind">Message kind.</param>
+        public static string[] LogToExternalIfAllowed(string? msg, LogItemKind kind)
+        {
+            if (msg is null)
+                return [];
+
+            App.WriteToLogFileIfAllowed(msg);
+
+            string[] result = msg.Split(
+                StringUtils.StringSplitToArrayChars,
+                StringSplitOptions.RemoveEmptyEntries);
+
+            if (App.DebugWriteLine.HasKind(kind) || !App.HasLogMessageHandler)
+            {
+                foreach (string s2 in result)
+                {
+                    Debug.WriteLine(s2);
+
+                    try
+                    {
+                        Console.WriteLine(s2);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Logs <see cref="Exception"/> information.
         /// </summary>
         /// <param name="e">Exception to log.</param>
-        /// <param name="info">Additional info.</param>
-        public static void LogException(Exception e, string? info = default)
+        public static void LogException(Exception e)
         {
+            var asString = e.ToString();
+            var separator = $"{SectionSeparator}{Environment.NewLine}";
+            LogToExternalIfAllowed($"{separator}{asString}{separator}", LogItemKind.Error);
+
             try
             {
-                App.Log(SectionSeparator, LogItemKind.Error);
-                App.Log($"Exception: {info}", LogItemKind.Error);
-                App.Log(e.ToString(), LogItemKind.Error);
-                App.Log(SectionSeparator, LogItemKind.Error);
+                var s = $"Error '{e.GetType().Name}': {e.Message}. [Double click...]";
+
+                ListControlItem item = new(s);
+                item.Tag = asString;
+                item.DoubleClickAction = () =>
+                {
+                    App.AddIdleTask(() =>
+                    {
+                        App.ShowExceptionWindow(e, null, true, false);
+                    });
+                };
+
+                App.AddLogItem(item, LogItemKind.Error);
             }
             catch
             {
@@ -667,7 +719,8 @@ namespace Alternet.UI
             private int? id;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="LogItem"/> class with the specified parameters.
+            /// Initializes a new instance of the <see cref="LogItem"/> class with
+            /// the specified parameters.
             /// </summary>
             public LogItem(string msg, LogItemKind kind)
             {
@@ -676,12 +729,13 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="LogItem"/> class with the specified parameters.
+            /// Initializes a new instance of the <see cref="LogItem"/> class
+            /// with the specified parameters.
             /// </summary>
-            public LogItem(ListControlItem? item)
+            public LogItem(ListControlItem? item, LogItemKind kind = LogItemKind.Information)
             {
                 Msg = string.Empty;
-                Kind = LogItemKind.Information;
+                Kind = kind;
                 Item = item;
             }
 
