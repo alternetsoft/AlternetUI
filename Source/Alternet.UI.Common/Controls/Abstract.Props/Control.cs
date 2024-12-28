@@ -401,7 +401,7 @@ namespace Alternet.UI
             get
             {
                 EnsureHandlerCreated();
-                return handler ?? throw new InvalidOperationException("Error creating control handler");
+                return handler ??= new HandlerForDisposed();
             }
         }
 
@@ -959,7 +959,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                 {
-                    handler = PlessControlHandler.Default;
+                    handler = new HandlerForDisposed();
                     return;
                 }
 
@@ -1138,7 +1138,7 @@ namespace Alternet.UI
         {
             protected override IControlHandler CreateHandler()
             {
-                return PlessControlHandler.Default;
+                return HandlerForDisposed.Default;
             }
         }
     }
