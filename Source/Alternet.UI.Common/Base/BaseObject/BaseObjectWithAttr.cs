@@ -12,6 +12,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObjectWithAttr : BaseObjectWithId
     {
+        private readonly object locker = new();
+
         private IFlagsAndAttributes? flagsAndAttributes;
         private IIntFlagsAndAttributes? intFlagsAndAttributes;
 
@@ -27,7 +29,7 @@ namespace Alternet.UI
         /// is closely associated with the item.
         /// </remarks>
         [Browsable(false)]
-        public object? Tag { get; set; }
+        public virtual object? Tag { get; set; }
 
         /// <summary>
         /// Gets flags provider which allows to
@@ -53,7 +55,15 @@ namespace Alternet.UI
         {
             get
             {
-                return intFlagsAndAttributes ??= FlagsAndAttributesFactory.CreateIntFlagsAndAttributes();
+                if(intFlagsAndAttributes is null)
+                {
+                    lock (locker)
+                    {
+                        intFlagsAndAttributes = FlagsAndAttributesFactory.CreateIntFlagsAndAttributes();
+                    }
+                }
+
+                return intFlagsAndAttributes;
             }
 
             set
@@ -71,7 +81,15 @@ namespace Alternet.UI
         {
             get
             {
-                return flagsAndAttributes ??= FlagsAndAttributesFactory.Create();
+                if(flagsAndAttributes is null)
+                {
+                    lock (locker)
+                    {
+                        flagsAndAttributes = FlagsAndAttributesFactory.Create();
+                    }
+                }
+
+                return flagsAndAttributes;
             }
 
             set
