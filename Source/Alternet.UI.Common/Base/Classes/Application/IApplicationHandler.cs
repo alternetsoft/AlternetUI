@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether the caller must call an invoke method when making method
         /// calls to the UI objects because the caller is not on the UI thread.
         /// </summary>
-        bool InvokeRequired { get; }
+        bool IsInvokeRequired { get; }
 
         /// <summary>
         /// Creates <see cref="IActionSimulatorHandler"/> implementation specific to the platform.

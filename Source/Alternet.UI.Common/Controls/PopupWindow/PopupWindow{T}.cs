@@ -342,7 +342,7 @@ namespace Alternet.UI
             var szDip = control.Size;
             var sz = (0, szDip.Height);
 
-            control.BeginInvoke(() =>
+            BeginInvoke(() =>
             {
                 ShowPopup(posDip, sz);
             });

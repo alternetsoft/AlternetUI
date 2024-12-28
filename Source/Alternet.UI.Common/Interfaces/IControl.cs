@@ -1271,18 +1271,6 @@ namespace Alternet.UI
         void ResetForeColor();
 
         /// <summary>
-        /// Executes a delegate asynchronously on the thread that the control
-        /// was created on.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes parameters
-        /// of the same number and type that are contained in the args parameter.</param>
-        /// <param name="args">An array of objects to pass as arguments to the
-        /// given method. This can be <c>null</c> if no arguments are needed.</param>
-        /// <returns>An <see cref="IAsyncResult"/> that represents the result
-        /// of the operation.</returns>
-        IAsyncResult BeginInvoke(Delegate method, object?[] args);
-
-        /// <summary>
         /// Invalidates the specified region of the control (adds it to the control's
         /// update region, which is the area that will be repainted at the next
         /// paint operation), and causes a paint message to be sent to the
@@ -1315,89 +1303,11 @@ namespace Alternet.UI
         void SetText(object? value);
 
         /// <summary>
-        /// Executes a delegate asynchronously on the thread that the control
-        /// was created on.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes no
-        /// parameters.</param>
-        /// <returns>An <see cref="IAsyncResult"/> that represents the result of
-        /// the operation.</returns>
-        IAsyncResult BeginInvoke(Delegate method);
-
-        /// <summary>
         /// Executes <see cref="Action"/> and calls <see cref="ProcessException"/>
         /// event if exception was raised during execution.
         /// </summary>
         /// <param name="action"></param>
         void AvoidException(Action action);
-
-        /// <summary>
-        /// Executes an action asynchronously on the thread that the control
-        /// was created on.
-        /// </summary>
-        /// <param name="action">An action to execute.</param>
-        /// <returns>An <see cref="IAsyncResult"/> that represents the result
-        /// of the operation.</returns>
-        /// <remarks>
-        /// You can call this method from another non-ui thread with action
-        /// which can perform operation on ui controls.
-        /// </remarks>
-        /// <example>
-        /// private void StartCounterThread1()
-        /// {
-        ///    var thread1 = new Thread(() =>
-        ///    {
-        ///      for (int i = 0; ; i++)
-        ///      {
-        ///          BeginInvoke(() => beginInvokeCounterLabel.Text = i.ToString());
-        ///          Thread.Sleep(1000);
-        ///       }
-        ///    })
-        ///    { IsBackground = true };
-        ///
-        ///    thread1.Start();
-        /// }
-        /// </example>
-        IAsyncResult BeginInvoke(Action action);
-
-        /// <summary>
-        /// Gets result of the <see cref="BeginInvoke(Action)"/> call.
-        /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        object? EndInvoke(IAsyncResult result);
-
-        /// <summary>
-        /// Executes the specified delegate, on the thread that owns the control,
-        /// with the specified list of arguments.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes parameters of
-        /// the same number and type that are contained in the
-        /// <c>args</c> parameter.</param>
-        /// <param name="args">An array of objects to pass as arguments to
-        /// the specified method. This parameter can be <c>null</c> if the
-        /// method takes no arguments.</param>
-        /// <returns>An <see cref="object"/> that contains the return value
-        /// from the delegate being invoked, or <c>null</c> if the delegate has
-        /// no return value.</returns>
-        object? Invoke(Delegate? method, object?[] args);
-
-        /// <summary>
-        /// Executes the specified delegate on the thread that owns the control.
-        /// </summary>
-        /// <param name="method">A delegate that contains a method to be called
-        /// in the control's thread context.</param>
-        /// <returns>An <see cref="object"/> that contains the return value from
-        /// the delegate being invoked, or <c>null</c> if the delegate has no
-        /// return value.</returns>
-        object? Invoke(Delegate? method);
-
-        /// <summary>
-        /// Executes the specified action on the thread that owns the control.
-        /// </summary>
-        /// <param name="action">An action to be called in the control's
-        /// thread context.</param>
-        void Invoke(Action? action);
 
         /// <summary>
         /// Captures the mouse to the control.

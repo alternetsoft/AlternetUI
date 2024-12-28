@@ -63,15 +63,18 @@ namespace ThreadingSample
             {
                 for (int i = 0; ; i++)
                 {
-                    BeginInvoke(() =>
+                    // Here we write to log and change Label.Text.
+                    // Normally we should do this using BeginInvoke or Invoke,
+                    // BUT App.IdleLog and Text property of the control are thread safe,
+                    // so we don't do that.
+
+                    if (DisposingOrDisposed)
                     {
-                        if (IsDisposed)
-                        {
-                            App.IdleLog($"Thread {counter}.1: Form is already disposed");
-                        }
-                        else
-                            beginInvokeCounterLabel.Text = i.ToString();
-                    });
+                        App.IdleLog($"Thread {counter}.1: Form is already disposed");
+                    }
+                    else
+                        beginInvokeCounterLabel.Text = i.ToString();
+
                     Thread.Sleep(1000);
                 }
             }

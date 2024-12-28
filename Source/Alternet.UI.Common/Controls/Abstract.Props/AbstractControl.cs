@@ -500,7 +500,8 @@ namespace Alternet.UI
                     dock = value;
                     /*
                     Do not uncomment or we will have an exception
-                    if(Parent is not null && !IgnoreLayout)*/
+                    if(Parent is not null && !IgnoreLayout)
+                    */
                     PerformLayout();
                 }
             }
@@ -641,8 +642,6 @@ namespace Alternet.UI
                 text = value;
 
                 RaiseTextChanged();
-
-                StateFlags &= ~ControlFlags.ForceTextChange;
             }
         }
 

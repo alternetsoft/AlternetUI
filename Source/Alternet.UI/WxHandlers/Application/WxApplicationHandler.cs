@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.Drawing.Printing;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -314,7 +316,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool InvokeRequired => nativeApplication.InvokeRequired;
+        public bool IsInvokeRequired => nativeApplication.InvokeRequired;
 
         /// <inheritdoc/>
         public IControlPainterHandler CreateControlPainterHandler()

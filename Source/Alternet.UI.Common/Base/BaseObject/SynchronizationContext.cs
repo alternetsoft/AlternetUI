@@ -135,7 +135,7 @@ namespace Alternet.UI
             if (destinationThread == null || !destinationThread.IsAlive)
                 throw new InvalidAsynchronousStateException();
 
-            SynchronizationService.Invoke(d, new object?[] { state });
+            BaseObject.Invoke(d, new object?[] { state });
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Alternet.UI
         /// </remarks>
         public override void Post(SendOrPostCallback d, object? state)
         {
-            SynchronizationService.BeginInvoke(d, new object?[] { state });
+            BaseObject.BeginInvoke(d, new object?[] { state });
         }
 
         internal static void Uninstall(bool turnOffAutoInstall)

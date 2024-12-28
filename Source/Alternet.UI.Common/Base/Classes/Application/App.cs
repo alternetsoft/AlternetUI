@@ -754,13 +754,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the caller must call an invoke method when making method
-        /// calls to the control because the caller is on a different thread than the one the control
-        /// was created on.
-        /// </summary>
-        internal virtual bool InvokeRequired => Handler.InvokeRequired;
-
-        /// <summary>
         /// Informs all message pumps that they must terminate, and then closes
         /// all application windows after the messages have been processed.
         /// </summary>
@@ -785,50 +778,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Executes the specified delegate on the thread that owns the application.
-        /// </summary>
-        /// <param name="method">A delegate that contains a method to be called
-        /// in the control's thread context.</param>
-        /// <returns>An <see cref="object"/> that contains the return value from
-        /// the delegate being invoked, or <c>null</c> if the delegate has no
-        /// return value.</returns>
-        public static object? Invoke(Delegate? method)
-        {
-            if (method == null)
-                return null;
-            return Invoke(method, Array.Empty<object?>());
-        }
-
-        /// <summary>
-        /// Executes the specified action on the thread that owns the application.
-        /// </summary>
-        /// <param name="action">An action to be called in the control's
-        /// thread context.</param>
-        public static void Invoke(Action? action)
-        {
-            if (action == null)
-                return;
-            Invoke(action, Array.Empty<object?>());
-        }
-
-        /// <summary>
-        /// Executes the specified delegate, on the thread that owns the application,
-        /// with the specified list of arguments.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes parameters of
-        /// the same number and type that are contained in the
-        /// <c>args</c> parameter.</param>
-        /// <param name="args">An array of objects to pass as arguments to
-        /// the specified method. This parameter can be <c>null</c> if the
-        /// method takes no arguments.</param>
-        /// <returns>An <see cref="object"/> that contains the return value
-        /// from the delegate being invoked, or <c>null</c> if the delegate has
-        /// no return value.</returns>
-        public static object? Invoke(Delegate method, object?[] args)
-            => SynchronizationService.Invoke(method, args);
-
-        /// <summary>
-        /// Executes <see cref="App.IdleLog"/> using <see cref="Invoke(Action?)"/>.
+        /// Executes <see cref="App.IdleLog"/> using <see cref="BaseObject.Invoke"/>.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="kind">Message kind.</param>
@@ -841,7 +791,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Executes action in the application idle state using <see cref="Invoke(Action?)"/>.
+        /// Executes action in the application idle state using <see cref="BaseObject.Invoke"/>.
         /// </summary>
         /// <param name="action">Action to execute.</param>
         public static void InvokeIdle(Action? action)
@@ -857,6 +807,7 @@ namespace Alternet.UI
         /// it will force the system to send an idle event even if the system currently is
         /// idle and thus would not send any idle event until after some other event would get sent.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WakeUpIdle()
         {
             if (HasApplication)
@@ -926,6 +877,7 @@ namespace Alternet.UI
         /// <param name="value">Value.</param>
         /// <param name="condition">Log if <c>true</c>.</param>
         /// <param name="kind">Item kind.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogNameValueIf(
             string name,
             object? value,
@@ -943,6 +895,7 @@ namespace Alternet.UI
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="condition">Log if <c>true</c>.</param>
         /// <param name="kind">Item kind.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogIf(
             object? obj,
             bool condition,
@@ -1036,6 +989,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="task">Task action.</param>
         /// <param name="param">Task parameter.</param>
+        /// <remarks>
+        /// This is thread-safe method and it can be called from non-UI threads.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddIdleTask(Action<object?> task, object? param = null)
         {
             IdleTasks.Enqueue((task, param));
@@ -1047,6 +1004,7 @@ namespace Alternet.UI
         /// about to enter the idle state.
         /// </summary>
         /// <param name="task">Task action.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddIdleTask(Action? task)
         {
             if (task is null)
@@ -1058,6 +1016,7 @@ namespace Alternet.UI
         /// Logs warning message.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogWarning(object? obj)
         {
             Log($"Warning: {obj}", LogItemKind.Warning);
@@ -1086,6 +1045,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogErrorIfDebug(object? obj)
         {
             LogError(obj);
@@ -1097,6 +1057,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">Error text or object to log.</param>
         /// <param name="condition">Log if <c>true</c>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogErrorIf(
             object? obj,
             bool condition)
@@ -1148,6 +1109,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">Option name.</param>
         /// <param name="value">Option value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetSystemOption(string name, int value)
         {
             SystemSettings.Handler.SetSystemOption(name, value);
@@ -1156,6 +1118,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs an empty string.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogEmptyLine()
         {
             Log(" ");
@@ -1166,6 +1129,7 @@ namespace Alternet.UI
         /// Works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DebugLog(object? msg)
         {
             Log(msg);
@@ -1176,6 +1140,7 @@ namespace Alternet.UI
         /// Works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DebugLogError(object? msg)
         {
             LogError(msg);
@@ -1186,6 +1151,7 @@ namespace Alternet.UI
         /// Works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DebugLogIf(object? obj, bool condition)
         {
             if (condition)
@@ -1235,6 +1201,7 @@ namespace Alternet.UI
         /// of the <typeparamref name="T"/> type.
         /// </summary>
         /// <typeparam name="T">Type of the window to return.</typeparam>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T? FirstWindow<T>()
             where T : Window
         {
@@ -1245,6 +1212,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns first window or <c>null</c> if there are no windows.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Window? FirstWindow()
         {
             return FirstWindow<Window>();
@@ -1294,6 +1262,7 @@ namespace Alternet.UI
         /// should not refresh.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool LogInUpdates()
         {
             return logUpdateCount > 0;
@@ -1353,6 +1322,7 @@ namespace Alternet.UI
         /// Use <see cref="EndBusyCursor"/> to revert the cursor back to its previous state.
         /// These two calls can be nested, and a counter ensures that only the outer calls take effect.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void BeginBusyCursor() => Cursor.Factory.BeginBusyCursor();
 
         /// <summary>
@@ -1361,6 +1331,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Use with <see cref="BeginBusyCursor"/> and <see cref="IsBusyCursor"/>.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void EndBusyCursor() => Cursor.Factory.EndBusyCursor();
 
         /// <summary>
@@ -1417,6 +1388,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs separator.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogSeparator(LogItemKind kind = LogItemKind.Information)
         {
             Log(LogUtils.SectionSeparator, kind);
@@ -1425,6 +1397,7 @@ namespace Alternet.UI
         /// <summary>
         /// Ends log section.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogEndSection(LogItemKind kind = LogItemKind.Information)
         {
             Log(LogUtils.SectionSeparator, kind);
@@ -1435,6 +1408,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Sender parameter of the event.</param>
         /// <param name="args">Event arguments.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RaiseThreadException(object sender, ThreadExceptionEventArgs args)
         {
             ThreadException?.Invoke(sender, args);
@@ -1453,6 +1427,7 @@ namespace Alternet.UI
         /// This method is thread safe and can be called from non-ui threads.
         /// </remarks>
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DebugIdleLogIf(
             object? obj,
             bool condition,
@@ -1472,6 +1447,7 @@ namespace Alternet.UI
         /// This method is thread safe and can be called from non-ui threads.
         /// </remarks>
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DebugIdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
         {
             IdleLog(obj, kind);
@@ -1543,6 +1519,7 @@ namespace Alternet.UI
         /// with image, font and color properties specified in the <paramref name="item"/>.
         /// </summary>
         /// <param name="item">Item to add.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddLogItem(ListControlItem item)
         {
             LogQueue.Enqueue(new(item));
@@ -1553,6 +1530,7 @@ namespace Alternet.UI
         /// Works only if DEBUG conditional is defined.
         /// </remarks>
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DebugLogReplace(object? obj, string? prefix = null)
         {
             LogReplace(obj, prefix);
@@ -1593,6 +1571,7 @@ namespace Alternet.UI
         /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
         /// value describing how the application should
         /// behave if an exception is thrown without being caught.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode mode)
         {
             unhandledExceptionModeDebug = mode;
@@ -1601,6 +1580,7 @@ namespace Alternet.UI
         /// <summary>
         /// Can be called before massive outputs to log. Pairs with <see cref="LogEndUpdate"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogBeginUpdate()
         {
             logUpdateCount++;
@@ -1672,6 +1652,7 @@ namespace Alternet.UI
         /// <summary>
         /// Processes all messages currently in the message queue.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DoEvents()
         {
             if (App.Terminating)
@@ -1686,6 +1667,7 @@ namespace Alternet.UI
         /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
         /// value describing how the application should
         /// behave if an exception is thrown without being caught.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
         {
             unhandledExceptionMode = mode;
