@@ -479,12 +479,13 @@ namespace Alternet.UI
         /// Executes <see cref="Action"/> and calls <see cref="ProcessException"/>
         /// event if exception was raised during execution.
         /// </summary>
-        /// <param name="action"></param>
-        public virtual void AvoidException(Action action)
+        /// <param name="action">Action to execute.</param>
+        public virtual bool AvoidException(Action action)
         {
             try
             {
                 action();
+                return true;
             }
             catch (Exception exception)
             {
@@ -492,6 +493,7 @@ namespace Alternet.UI
                 RaiseProcessException(data);
                 if (data.ThrowIt)
                     throw;
+                return false;
             }
         }
 
