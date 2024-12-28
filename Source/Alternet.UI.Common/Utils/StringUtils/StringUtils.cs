@@ -944,6 +944,12 @@ namespace Alternet.UI
             return s;
         }
 
+        /// <summary>
+        /// Gets an array of characters that can be passed to <see cref="string.Trim(char[])"/>
+        /// function from the specified <see cref="TrimTextRules"/> parameter.
+        /// </summary>
+        /// <param name="rules">Rules for text trimming.</param>
+        /// <returns></returns>
         public static char[] GetTrimTextRulesChars(TrimTextRules rules)
         {
             List<char> chars = new();
