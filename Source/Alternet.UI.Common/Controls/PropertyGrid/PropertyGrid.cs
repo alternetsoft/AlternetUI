@@ -2151,6 +2151,22 @@ namespace Alternet.UI
                 {
                     var variant = EventPropValueAsVariant;
                     var newValue = variant.GetCompatibleValue(prop);
+
+                    if(newValue is not null)
+                    {
+                        var typeConverter
+                        = ObjectToStringFactory.Default.GetTypeConverter(propInfo.PropertyType);
+
+                        if (typeConverter is not null)
+                        {
+                            if(typeConverter.CanConvertFrom(newValue.GetType()))
+                            {
+                                var converted = typeConverter.ConvertFrom(newValue);
+                                newValue = converted;
+                            }
+                        }
+                    }
+
                     propInfo.SetValue(instance, newValue);
                     UpdateStruct();
                 });
