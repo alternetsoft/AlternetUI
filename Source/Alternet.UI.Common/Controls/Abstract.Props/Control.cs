@@ -382,6 +382,7 @@ namespace Alternet.UI
         /// Gets a <see cref="IControlHandler"/> associated with this class
         /// or Null if control is disposed.
         /// </summary>
+        [Browsable(false)]
         public IControlHandler? SafeHandler
         {
             get

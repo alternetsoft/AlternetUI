@@ -119,8 +119,10 @@ namespace Alternet.UI
         {
             if (charIndex != strLen)
             {
-                throw new System.InvalidOperationException(
-                    string.Format(ErrorMessages.Default.TokenizerHelperExtraDataEncountered, charIndex, str));
+                throw new InvalidOperationException(string.Format(
+                    ErrorMessages.Default.TokenizerHelperExtraDataEncountered,
+                    charIndex,
+                    str));
             }
         }
 
@@ -141,8 +143,9 @@ namespace Alternet.UI
         {
             if (!NextToken(false))
             {
-                throw new System.InvalidOperationException(
-                    string.Format(ErrorMessages.Default.TokenizerHelperPrematureStringTermination, str));
+                throw new InvalidOperationException(string.Format(
+                        ErrorMessages.Default.TokenizerHelperPrematureStringTermination,
+                        str));
             }
 
             return GetCurrentToken();
@@ -156,8 +159,9 @@ namespace Alternet.UI
         {
             if (!NextToken(allowQuotedToken))
             {
-                throw new System.InvalidOperationException(
-                    string.Format(ErrorMessages.Default.TokenizerHelperPrematureStringTermination, str));
+                throw new InvalidOperationException(string.Format(
+                        ErrorMessages.Default.TokenizerHelperPrematureStringTermination,
+                        str));
             }
 
             return GetCurrentToken();
@@ -289,8 +293,10 @@ namespace Alternet.UI
                 if (!(currentChar == separator) &&
                     !char.IsWhiteSpace(currentChar))
                 {
-                    throw new System.InvalidOperationException(
-                        string.Format(ErrorMessages.Default.TokenizerHelperExtraDataEncountered, charIndex, str));
+                    throw new InvalidOperationException(string.Format(
+                        ErrorMessages.Default.TokenizerHelperExtraDataEncountered,
+                        charIndex,
+                        str));
                 }
 
                 // loop until hit a character that isn't
