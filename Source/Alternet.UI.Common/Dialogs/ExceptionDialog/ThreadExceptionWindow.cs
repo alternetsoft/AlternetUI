@@ -23,6 +23,7 @@ namespace Alternet.UI
 
         private Exception? exception;
         private bool canContinue = true;
+        private bool canQuit = true;
         private TextBox? messageTextBox;
         private string? additionalInfo;
 
@@ -33,17 +34,6 @@ namespace Alternet.UI
         public ThreadExceptionWindow()
         {
             InitializeControls();
-
-            if (App.FirstWindow() is not null)
-            {
-                var activeWindow = ActiveWindow;
-                if (activeWindow is null || activeWindow.Title.Length == 0)
-                    Title = ErrorMessages.Default.ErrorTitle;
-                else
-                    Title = activeWindow.Title;
-            }
-            else
-                Title = ErrorMessages.Default.ErrorTitle;
         }
 
         /// <summary>
@@ -52,16 +42,20 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="exception">Exception information.</param>
         /// <param name="additionalInfo">Additional information.</param>
-        /// <param name="canContinue">Whether continue button is visible.</param>
+        /// <param name="canContinue">Whether 'Continue' button is visible.</param>
+        /// <param name="canQuit">Whether 'Quit' button is visible.</param>
         public ThreadExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
-            bool canContinue = true)
-            : this()
+            bool canContinue = true,
+            bool canQuit = true)
         {
             this.canContinue = canContinue;
-            AdditionalInfo = additionalInfo;
-            Exception = exception;
+            this.canQuit = canQuit;
+            this.additionalInfo = additionalInfo;
+            this.exception = exception;
+            InitializeControls();
+            UpdateExceptionText();
         }
 
         /// <summary>
@@ -100,6 +94,16 @@ namespace Alternet.UI
                 exception = value;
                 UpdateExceptionText();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets whether 'Quit' button is visible.
+        /// </summary>
+        public virtual bool CanQuit
+        {
+            get => canQuit;
+
+            set => canQuit = value;
         }
 
         /// <summary>
@@ -224,6 +228,17 @@ namespace Alternet.UI
             buttonsGrid.VerticalAlignment = UI.VerticalAlignment.Bottom;
             buttonsGrid.Parent = this;
 
+            if (App.FirstWindow() is not null)
+            {
+                var activeWindow = ActiveWindow;
+                if (activeWindow is null || activeWindow.Title.Length == 0)
+                    Title = ErrorMessages.Default.ErrorTitle;
+                else
+                    Title = activeWindow.Title;
+            }
+            else
+                Title = ErrorMessages.Default.ErrorTitle;
+
             EndInit();
 
             AbstractControl CreateMessageGrid()
@@ -316,6 +331,7 @@ namespace Alternet.UI
                 quitButton.Click += QuitButton_Click;
                 quitButton.IsDefault = true;
                 quitButton.IsCancel = true;
+                quitButton.Visible = canQuit;
                 quitButton.HorizontalAlignment = HorizontalAlignment.Right;
                 buttonsGrid.Children.Add(quitButton);
 
