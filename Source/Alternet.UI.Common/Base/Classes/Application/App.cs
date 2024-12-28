@@ -296,6 +296,11 @@ namespace Alternet.UI
         public static bool IsAppThread => Thread.CurrentThread.ManagedThreadId == AppThreadId;
 
         /// <summary>
+        /// Gets whether <see cref="LogMessage"/> event has any handlers.
+        /// </summary>
+        public static bool HasLogMessageHandler => LogMessage is not null;
+
+        /// <summary>
         /// Gets the path for the executable file that started the application, not including
         /// the executable name.</summary>
         /// <returns>
@@ -1487,27 +1492,7 @@ namespace Alternet.UI
             if (msg is null)
                 return;
 
-            WriteToLogFileIfAllowed(msg);
-
-            string[] result = msg.Split(
-                StringUtils.StringSplitToArrayChars,
-                StringSplitOptions.RemoveEmptyEntries);
-
-            if (DebugWriteLine.HasKind(kind) || LogMessage is null)
-            {
-                foreach (string s2 in result)
-                {
-                    Debug.WriteLine(s2);
-
-                    try
-                    {
-                        Console.WriteLine(s2);
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
+            string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
 
             foreach (string s2 in result)
                 LogQueue.Enqueue(new(s2, kind));
@@ -1519,10 +1504,13 @@ namespace Alternet.UI
         /// with image, font and color properties specified in the <paramref name="item"/>.
         /// </summary>
         /// <param name="item">Item to add.</param>
+        /// <param name="kind">Item kind.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void AddLogItem(ListControlItem item)
+        public static void AddLogItem(
+            ListControlItem item,
+            LogItemKind kind = LogItemKind.Information)
         {
-            LogQueue.Enqueue(new(item));
+            LogQueue.Enqueue(new(item, kind));
         }
 
         /// <inheritdoc cref="LogReplace"/>
@@ -1541,15 +1529,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="exception">Exception information.</param>
         /// <param name="additionalInfo">Additional information.</param>
-        /// <param name="canContinue">Whether continue button is visible.</param>
+        /// <param name="canContinue">Whether 'Continue' button is visible.</param>
+        /// <param name="canQuit">Whether 'Quit' button is visible.</param>
         /// <returns><c>true</c> if continue pressed, <c>false</c> otherwise.</returns>
         public static bool ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
-            bool canContinue = true)
+            bool canContinue = true,
+            bool canQuit = true)
         {
             using var errorWindow =
-                new ThreadExceptionWindow(exception, additionalInfo, canContinue);
+                new ThreadExceptionWindow(exception, additionalInfo, canContinue, canQuit);
             if (App.IsRunning)
             {
                 return errorWindow.ShowModal() == ModalResult.Accepted;
@@ -1560,6 +1550,7 @@ namespace Alternet.UI
                     return false;
 
                 errorWindow.CanContinue = false;
+                errorWindow.CanQuit = true;
                 App.Current.Run(errorWindow);
                 return false;
             }
@@ -1598,7 +1589,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handles exception showing <see cref="ThreadExceptionWindow"/> dialog and calling exception
+        /// Handles exception showing <see cref="ThreadExceptionWindow"/>
+        /// dialog and calling exception
         /// related events if specified in the exception handling settings.
         /// </summary>
         /// <param name="exception">Exception to process.</param>
@@ -1612,7 +1604,7 @@ namespace Alternet.UI
             {
                 if (LogUnhandledThreadException)
                 {
-                    LogUtils.LogException(exception, "Application.OnThreadException");
+                    LogUtils.LogException(exception);
                 }
 
                 if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
@@ -1781,6 +1773,19 @@ namespace Alternet.UI
             SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
         }
 
+        internal static void WriteToLogFileIfAllowed(string? msg)
+        {
+            if (!LogFileIsEnabled || msg is null)
+                return;
+            try
+            {
+                LogUtils.LogToFile(msg);
+            }
+            catch
+            {
+            }
+        }
+
         internal void RegisterWindow(Window window)
         {
             windows.Add(window);
@@ -1925,19 +1930,6 @@ namespace Alternet.UI
             args.Message = item.Msg;
 
             LogMessage(null, args);
-        }
-
-        private static void WriteToLogFileIfAllowed(string? msg)
-        {
-            if (!LogFileIsEnabled || msg is null)
-                return;
-            try
-            {
-                LogUtils.LogToFile(msg);
-            }
-            catch
-            {
-            }
         }
 
         private static void UpdateWakeUpIdleTimer()
