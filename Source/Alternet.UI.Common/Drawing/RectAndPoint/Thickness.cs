@@ -307,7 +307,8 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Thickness Parse(string s)
         {
-            const string exceptionMessage = "Invalid Thickness. Specify 1, 2 or 4 float numbers separated by comma.";
+            const string exceptionMessage
+                = "Invalid Thickness. Specify 1, 2 or 4 float numbers separated by comma.";
 
             if (!TryParse(s, out var result))
                 throw new FormatException(exceptionMessage);
