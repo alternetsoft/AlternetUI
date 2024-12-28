@@ -292,6 +292,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates new <see cref="IPropertyGridVariant"/> instance.
+        /// </summary>
+        public static IPropertyGridVariant CreateVariant()
+        {
+            return ControlFactory.Handler.CreateVariant();
+        }
+
+        /// <summary>
         /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
         /// </summary>
         /// <param name="type">Object type.</param>

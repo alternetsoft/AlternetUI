@@ -9,6 +9,8 @@ namespace Alternet.UI
 {
     public partial class PropertyGrid
     {
+        private static IPropertyGridVariant? tempVariant;
+
         /// <summary>
         /// Gets property value used in the event handler as <see cref="IPropertyGridVariant"/>.
         /// </summary>
@@ -17,6 +19,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return TempVariant;
                 return Handler.EventPropValueAsVariant;
             }
         }
@@ -29,11 +33,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.EventValidationFailureBehavior;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.EventValidationFailureBehavior = value;
             }
         }
@@ -43,11 +51,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetCaptionBackgroundColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetCaptionBackgroundColor(value);
             }
         }
@@ -57,11 +69,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetCaptionForegroundColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetCaptionTextColor(value);
             }
         }
@@ -71,11 +87,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetSelectionForegroundColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetSelectionTextColor(value);
             }
         }
@@ -85,11 +105,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetCellBackgroundColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetCellBackgroundColor(value);
             }
         }
@@ -99,11 +123,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetCellDisabledTextColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetCellDisabledTextColor(value);
             }
         }
@@ -113,11 +141,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetCellTextColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetCellTextColor(value);
             }
         }
@@ -127,11 +159,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetEmptySpaceColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetEmptySpaceColor(value);
             }
         }
@@ -141,11 +177,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetLineColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetLineColor(value);
             }
         }
@@ -155,11 +195,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetMarginColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetMarginColor(value);
             }
         }
@@ -169,11 +213,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
                 return Handler.GetSelectionBackgroundColor();
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SetSelectionBackgroundColor(value);
             }
         }
@@ -189,6 +237,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.EventColumn;
             }
         }
@@ -201,6 +251,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.EventProperty;
             }
         }
@@ -213,6 +265,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return string.Empty;
                 return Handler.EventPropertyName;
             }
         }
@@ -225,11 +279,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return string.Empty;
                 return Handler.EventValidationFailureMessage;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.EventValidationFailureMessage = value;
             }
         }
@@ -244,11 +302,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CreateStyle;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.CreateStyle = value;
             }
         }
@@ -263,11 +325,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CreateStyleEx;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.CreateStyleEx = value;
             }
         }
@@ -285,11 +351,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasBorder;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HasBorder = value;
             }
         }
@@ -310,12 +380,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Creates new <see cref="IPropertyGridVariant"/> instance.
-        /// </summary>
-        public static IPropertyGridVariant CreateVariant()
+        private static IPropertyGridVariant TempVariant
         {
-            return ControlFactory.Handler.CreateVariant();
+            get
+            {
+                return tempVariant ??= CreateVariant();
+            }
         }
 
         /// <summary>
@@ -323,6 +393,8 @@ namespace Alternet.UI
         /// </summary>
         public bool IsSmallScreen()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsSmallScreen();
         }
 
@@ -331,6 +403,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual IPropertyGridVariant CreateVar()
         {
+            if (DisposingOrDisposed)
+                return CreateVariant();
             return Handler.CreateVariant();
         }
 
@@ -342,6 +416,8 @@ namespace Alternet.UI
         /// disables it.</param>
         public void AutoGetTranslation(bool enable)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.AutoGetTranslation(enable);
         }
 
@@ -350,6 +426,8 @@ namespace Alternet.UI
         /// </summary>
         public void InitAllTypeHandlers()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.InitAllTypeHandlers();
         }
 
@@ -358,6 +436,8 @@ namespace Alternet.UI
         /// </summary>
         public void RegisterAdditionalEditors()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.RegisterAdditionalEditors();
         }
 
@@ -369,6 +449,8 @@ namespace Alternet.UI
         /// <param name="falseChoice"></param>
         public void SetBoolChoices(string trueChoice, string falseChoice)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetBoolChoices(trueChoice, falseChoice);
         }
 
@@ -860,6 +942,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Clear()
         {
+            if (DisposingOrDisposed)
+                return;
             items.Clear();
             Handler.Clear();
         }
@@ -871,6 +955,8 @@ namespace Alternet.UI
         /// <param name="parent">Parent item or null.</param>
         public virtual void Add(IPropertyGridItem? prop, IPropertyGridItem? parent = null)
         {
+            if (DisposingOrDisposed)
+                return;
             if (prop == null)
                 return;
             SetAsCheckBox(prop);
@@ -932,6 +1018,8 @@ namespace Alternet.UI
         /// <param name="property">Property Item.</param>
         public virtual string GetPropertyName(IPropertyGridItem property)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetPropertyName(property);
         }
 
@@ -942,6 +1030,8 @@ namespace Alternet.UI
         /// <c>false</c> otherwise.</param>
         public virtual void Sort(bool topLevelOnly = false)
         {
+            if (DisposingOrDisposed)
+                return;
             var flags = topLevelOnly ? PropertyGridItemValueFlags.SortTopLevelOnly : 0;
             Handler.Sort(flags);
         }
@@ -958,6 +1048,8 @@ namespace Alternet.UI
             bool isSet,
             bool recurse = true)
         {
+            if (DisposingOrDisposed)
+                return;
             var flags = recurse
                 ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
 
@@ -970,6 +1062,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual void SetPropertyValueUnspecified(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueUnspecified(prop);
         }
 
@@ -984,6 +1078,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void AppendIn(IPropertyGridItem prop, IPropertyGridItem newproperty)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.AppendIn(prop, newproperty);
         }
 
@@ -994,6 +1090,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
         public virtual bool Collapse(IPropertyGridItem? prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             if (prop is null)
                 return false;
             return Handler.Collapse(prop);
@@ -1005,6 +1103,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item to remove.</param>
         public virtual void RemoveProperty(IPropertyGridItem? prop)
         {
+            if (DisposingOrDisposed)
+                return;
             if (prop is null)
                 return;
             Handler.RemoveProperty(prop);
@@ -1018,6 +1118,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
         public virtual bool DisableProperty(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.DisableProperty(prop);
         }
 
@@ -1029,6 +1131,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
         public virtual bool EnableProperty(IPropertyGridItem? prop, bool enable = true)
         {
+            if (DisposingOrDisposed)
+                return default;
             if (prop is null)
                 return false;
             return Handler.EnableProperty(prop, enable);
@@ -1041,6 +1145,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
         public virtual bool Expand(IPropertyGridItem? prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             if (prop is null)
                 return false;
             return Handler.Expand(prop);
@@ -1052,6 +1158,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IntPtr GetPropertyClientData(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyClientData(prop);
         }
 
@@ -1061,6 +1169,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual string GetPropertyHelpString(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetPropertyHelpString(prop);
         }
 
@@ -1070,6 +1180,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual string GetPropertyLabel(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetPropertyLabel(prop);
         }
 
@@ -1079,6 +1191,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual string GetPropertyValueAsString(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetPropertyValueAsString(prop);
         }
 
@@ -1088,6 +1202,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual long GetPropertyValueAsLong(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyValueAsLong(prop);
         }
 
@@ -1097,6 +1213,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual ulong GetPropertyValueAsULong(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyValueAsULong(prop);
         }
 
@@ -1106,6 +1224,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual int GetPropertyValueAsInt(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyValueAsInt(prop);
         }
 
@@ -1115,6 +1235,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridVariant GetPropertyValueAsVariant(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return TempVariant;
             return Handler.GetPropertyValueAsVariant(prop);
         }
 
@@ -1124,6 +1246,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual bool GetPropertyValueAsBool(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyValueAsBool(prop);
         }
 
@@ -1133,6 +1257,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual double GetPropertyValueAsDouble(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyValueAsDouble(prop);
         }
 
@@ -1142,6 +1268,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual DateTime GetPropertyValueAsDateTime(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyValueAsDateTime(prop);
         }
 
@@ -1155,6 +1283,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
         public virtual bool HideProperty(IPropertyGridItem prop, bool hide, bool recurse = true)
         {
+            if (DisposingOrDisposed)
+                return default;
             var flags = recurse
                 ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             return Handler.HideProperty(prop, hide, flags);
@@ -1168,6 +1298,8 @@ namespace Alternet.UI
         /// <param name="newproperty">Property item to insert.</param>
         public virtual void Insert(IPropertyGridItem priorThis, IPropertyGridItem newproperty)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Insert(priorThis, newproperty);
         }
 
@@ -1182,6 +1314,8 @@ namespace Alternet.UI
             int index,
             IPropertyGridItem newproperty)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.InsertByIndex(parent, index, newproperty);
         }
 
@@ -1192,6 +1326,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property is category, <c>false</c> otherwise.</returns>
         public virtual bool IsPropertyCategory(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPropertyCategory(prop);
         }
 
@@ -1202,6 +1338,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property is enabled, <c>false</c> otherwise.</returns>
         public virtual bool IsPropertyEnabled(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPropertyEnabled(prop);
         }
 
@@ -1212,6 +1350,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property is expanded, <c>false</c> otherwise.</returns>
         public virtual bool IsPropertyExpanded(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPropertyExpanded(prop);
         }
 
@@ -1222,6 +1362,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property is modified, <c>false</c> otherwise.</returns>
         public virtual bool IsPropertyModified(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPropertyModified(prop);
         }
 
@@ -1232,6 +1374,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property is selected, <c>false</c> otherwise.</returns>
         public virtual bool IsPropertySelected(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPropertySelected(prop);
         }
 
@@ -1242,6 +1386,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property is shown, <c>false</c> otherwise.</returns>
         public virtual bool IsPropertyShown(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPropertyShown(prop);
         }
 
@@ -1252,6 +1398,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property value is unspecified, <c>false</c> otherwise.</returns>
         public virtual bool IsPropertyValueUnspecified(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsPropertyValueUnspecified(prop);
         }
 
@@ -1263,6 +1411,8 @@ namespace Alternet.UI
         /// <param name="limit"><c>true</c> to disable text editor, <c>false</c> otherwise.</param>
         public virtual void LimitPropertyEditing(IPropertyGridItem prop, bool limit = true)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.LimitPropertyEditing(prop, limit);
         }
 
@@ -1273,6 +1423,8 @@ namespace Alternet.UI
         /// <param name="newProp">New property item.</param>
         public virtual void ReplaceProperty(IPropertyGridItem prop, IPropertyGridItem newProp)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.ReplaceProperty(prop, newProp);
         }
 
@@ -1289,6 +1441,8 @@ namespace Alternet.UI
             Color color,
             bool recurse = true)
         {
+            if (DisposingOrDisposed)
+                return;
             var flags = recurse
                 ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SetPropertyBackgroundColor(prop, color, flags);
@@ -1303,6 +1457,8 @@ namespace Alternet.UI
         /// any of its children.</param>
         public virtual void SetPropertyColorsToDefault(IPropertyGridItem prop, bool recurse = true)
         {
+            if (DisposingOrDisposed)
+                return;
             var flags = recurse
                 ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SetPropertyColorsToDefault(prop, flags);
@@ -1321,6 +1477,8 @@ namespace Alternet.UI
             Color color,
             bool recurse = true)
         {
+            if (DisposingOrDisposed)
+                return;
             var flags = recurse
                 ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SetPropertyTextColor(prop, color, flags);
@@ -1342,6 +1500,8 @@ namespace Alternet.UI
             string src,
             PropertyGridEditableState restoreStates = PropertyGridEditableState.AllStates)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.RestoreEditableState(src, restoreStates);
         }
 
@@ -1354,6 +1514,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void RefreshProperty(IPropertyGridItem p)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.RefreshProperty(p);
         }
 
@@ -1370,6 +1532,8 @@ namespace Alternet.UI
             PropertyGridEditableState includedStates =
                 PropertyGridEditableState.AllStates)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.SaveEditableState(includedStates);
         }
 
@@ -1385,6 +1549,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetColumnProportion(int column, int proportion)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.SetColumnProportion(column, proportion);
         }
 
@@ -1394,6 +1560,8 @@ namespace Alternet.UI
         /// <param name="column">Column index.</param>
         public virtual int GetColumnProportion(int column)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetColumnProportion(column);
         }
 
@@ -1403,6 +1571,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual Color GetPropertyBackgroundColor(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return Color.Empty;
             return Handler.GetPropertyBackgroundColor(prop);
         }
 
@@ -1412,6 +1582,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual Color GetPropertyTextColor(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return Color.Empty;
             return Handler.GetPropertyTextColor(prop);
         }
 
@@ -1422,6 +1594,8 @@ namespace Alternet.UI
         /// <param name="clientData">Client data associated with the property.</param>
         public virtual void SetPropertyClientData(IPropertyGridItem prop, IntPtr clientData)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyClientData(prop, clientData);
         }
 
@@ -1436,6 +1610,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetPropertyLabel(IPropertyGridItem prop, string newproplabel)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyLabel(prop, newproplabel);
         }
 
@@ -1446,6 +1622,8 @@ namespace Alternet.UI
         /// <param name="helpString">Help string associated with the property.</param>
         public virtual void SetPropertyHelpString(IPropertyGridItem prop, string helpString)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyHelpString(prop, helpString);
         }
 
@@ -1459,6 +1637,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if maximum length was set, <c>false</c> otherwise.</returns>
         public virtual bool SetPropertyMaxLength(IPropertyGridItem prop, int maxLen)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.SetPropertyMaxLength(prop, maxLen);
         }
 
@@ -1469,6 +1649,8 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         public virtual void SetPropertyValueAsLong(IPropertyGridItem prop, long value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueAsLong(prop, value);
         }
 
@@ -1479,6 +1661,8 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         public virtual void SetPropertyValueAsInt(IPropertyGridItem prop, int value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueAsInt(prop, value);
         }
 
@@ -1489,6 +1673,8 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         public virtual void SetPropertyValueAsDouble(IPropertyGridItem prop, double value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueAsDouble(prop, value);
         }
 
@@ -1499,6 +1685,8 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         public virtual void SetPropertyValueAsBool(IPropertyGridItem prop, bool value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueAsBool(prop, value);
         }
 
@@ -1509,6 +1697,8 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         public virtual void SetPropertyValueAsStr(IPropertyGridItem prop, string value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueAsStr(prop, value);
         }
 
@@ -1519,6 +1709,8 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         public virtual void SetPropertyValueAsDateTime(IPropertyGridItem prop, DateTime value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueAsDateTime(prop, value);
         }
 
@@ -1529,6 +1721,8 @@ namespace Alternet.UI
         /// <param name="vfbFlags">Validation failure flags.</param>
         public virtual void SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetValidationFailureBehavior(vfbFlags);
         }
 
@@ -1540,6 +1734,8 @@ namespace Alternet.UI
         /// otherwise.</param>
         public virtual void SortChildren(IPropertyGridItem prop, bool recurse = false)
         {
+            if (DisposingOrDisposed)
+                return;
             var flags = recurse
                 ? PropertyGridItemValueFlags.Recurse : PropertyGridItemValueFlags.DontRecurse;
             Handler.SortChildren(prop, flags);
@@ -1556,6 +1752,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetPropertyEditorByName(IPropertyGridItem prop, string editorName)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyEditorByName(prop, editorName);
         }
 
@@ -1571,6 +1769,8 @@ namespace Alternet.UI
             Key keycode,
             ModifierKeys modifiers = 0)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.AddActionTrigger(action, keycode, modifiers);
         }
 
@@ -1581,6 +1781,8 @@ namespace Alternet.UI
         /// be removed.</param>
         public virtual void ClearActionTriggers(PropertyGridKeyboardAction action)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.ClearActionTriggers(action);
         }
 
@@ -1595,6 +1797,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void DedicateKey(Key keycode)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.DedicateKey(keycode);
         }
 
@@ -1606,6 +1810,8 @@ namespace Alternet.UI
         /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> is used).</param>
         public virtual void CenterSplitter(bool enableAutoResizing = false)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.CenterSplitter(enableAutoResizing);
         }
 
@@ -1618,6 +1824,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void EditorsValueWasModified()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.EditorsValueWasModified();
         }
 
@@ -1629,6 +1837,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void EditorsValueWasNotModified()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.EditorsValueWasNotModified();
         }
 
@@ -1644,6 +1854,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool EnableCategories(bool enable)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.EnableCategories(enable);
         }
 
@@ -1659,6 +1871,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual SizeD FitColumns()
         {
+            if (DisposingOrDisposed)
+                return 24;
             return Handler.FitColumns();
         }
 
@@ -1667,6 +1881,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetColumnCount()
         {
+            if (DisposingOrDisposed)
+                return 2;
             return Handler.GetColumnCount();
         }
 
@@ -1675,6 +1891,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetFontHeight()
         {
+            if (DisposingOrDisposed)
+                return (int)Control.DefaultFont.GetHeight(Window.Default.MeasureCanvas);
             return Handler.GetFontHeight();
         }
 
@@ -1683,6 +1901,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetMarginWidth()
         {
+            if (DisposingOrDisposed)
+                return 5;
             return Handler.GetMarginWidth();
         }
 
@@ -1691,6 +1911,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetRowHeight()
         {
+            if (DisposingOrDisposed)
+                return 24;
             return Handler.GetRowHeight();
         }
 
@@ -1708,6 +1930,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetVerticalSpacing()
         {
+            if (DisposingOrDisposed)
+                return 2;
             return Handler.GetVerticalSpacing();
         }
 
@@ -1718,6 +1942,8 @@ namespace Alternet.UI
         /// otherwise.</returns>
         public virtual bool IsEditorFocused()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsEditorFocused();
         }
 
@@ -1728,6 +1954,8 @@ namespace Alternet.UI
         /// otherwise.</returns>
         public virtual bool IsEditorsValueModified()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsEditorsValueModified();
         }
 
@@ -1738,6 +1966,8 @@ namespace Alternet.UI
         /// otherwise.</returns>
         public virtual bool IsAnyModified()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsAnyModified();
         }
 
@@ -1746,6 +1976,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ResetColors()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.ResetColors();
         }
 
@@ -1757,6 +1989,8 @@ namespace Alternet.UI
         /// <see cref="PropertyGridCreateStyle.SplitterAutoCenter"/> is used).</param>
         public virtual void ResetColumnSizes(bool enableAutoResizing = false)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.ResetColumnSizes(enableAutoResizing);
         }
 
@@ -1768,6 +2002,8 @@ namespace Alternet.UI
         /// from being editable.</param>
         public virtual void MakeColumnEditable(int column, bool editable = true)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.MakeColumnEditable(column, editable);
         }
 
@@ -1781,6 +2017,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void BeginLabelEdit(int column = 0)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.BeginLabelEdit(column);
         }
 
@@ -1791,6 +2029,8 @@ namespace Alternet.UI
         /// property cell data.</param>
         public virtual void EndLabelEdit(bool commit = true)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.EndLabelEdit(commit);
         }
 
@@ -1800,6 +2040,8 @@ namespace Alternet.UI
         /// <param name="colCount">Number of columns.</param>
         public virtual void SetColumnCount(int colCount)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetColumnCount(colCount);
         }
 
@@ -1815,6 +2057,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetSplitterPosition(int newXPos, int col = 0)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetSplitterPosition(newXPos, col);
         }
 
@@ -1823,6 +2067,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual string GetUnspecifiedValueText(PropertyGridValueFormatFlags flags = 0)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetUnspecifiedValueText(flags);
         }
 
@@ -1835,6 +2081,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetVirtualWidth(int width)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetVirtualWidth(width);
         }
 
@@ -1845,6 +2093,8 @@ namespace Alternet.UI
         /// to be cropped.</param>
         public virtual void SetSplitterLeft(bool privateChildrenToo = false)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetSplitterLeft(privateChildrenToo);
         }
 
@@ -1862,6 +2112,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetVerticalSpacing(int? vspacing = null)
         {
+            if (DisposingOrDisposed)
+                return;
             int v;
             if (vspacing is null)
                 v = AllPlatformDefaults.PlatformCurrent.PropertyGridVerticalSpacing;
@@ -1880,6 +2132,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool HasVirtualWidth()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.HasVirtualWidth();
         }
 
@@ -1888,6 +2142,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetCommonValueCount()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetCommonValueCount();
         }
 
@@ -1897,6 +2153,8 @@ namespace Alternet.UI
         /// <param name="i">Index of the commo nvalue.</param>
         public virtual string GetCommonValueLabel(int i)
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetCommonValueLabel(i);
         }
 
@@ -1905,6 +2163,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetUnspecifiedCommonValue()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetUnspecifiedCommonValue();
         }
 
@@ -1917,6 +2177,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetUnspecifiedCommonValue(int index)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetUnspecifiedCommonValue(index);
         }
 
@@ -1925,6 +2187,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RefreshEditor()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.RefreshEditor();
         }
 
@@ -1941,6 +2205,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool WasValueChangedInEvent()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.WasValueChangedInEvent();
         }
 
@@ -1949,6 +2215,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual int GetSpacingY()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetSpacingY();
         }
 
@@ -1957,6 +2225,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool UnfocusEditor()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.UnfocusEditor();
         }
 
@@ -1967,6 +2237,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IPropertyGridItem? GetLastItem(PropertyGridIteratorFlags flags)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetLastItem(flags);
         }
 
@@ -1979,6 +2251,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual IPropertyGridItem? GetRoot()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetRoot();
         }
 
@@ -1987,6 +2261,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual IPropertyGridItem? GetSelectedProperty()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetSelectedProperty();
         }
 
@@ -2009,6 +2285,8 @@ namespace Alternet.UI
         /// </returns>
         public virtual bool ChangePropertyValue(IPropertyGridItem prop, object value)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.ChangePropertyValue(prop, Handler.ToVariant(value));
         }
 
@@ -2022,6 +2300,8 @@ namespace Alternet.UI
             IPropertyGridItem prop,
             IPropertyGridVariant value)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.ChangePropertyValue(prop, value);
         }
 
@@ -2034,6 +2314,8 @@ namespace Alternet.UI
             IPropertyGridItem prop,
             IPropertyGridVariant value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyValueAsVariant(prop, value);
         }
 
@@ -2044,6 +2326,8 @@ namespace Alternet.UI
         /// <param name="bmp">Image.</param>
         public virtual void SetPropertyImage(IPropertyGridItem prop, ImageSet? bmp)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyImage(prop, bmp);
         }
 
@@ -2070,6 +2354,8 @@ namespace Alternet.UI
             object? value = null,
             PropertyGridItemValueFlags argFlags = 0)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyAttribute(
                 prop,
                 attrName,
@@ -2096,6 +2382,8 @@ namespace Alternet.UI
             IPropertyGridVariant value,
             PropertyGridItemValueFlags argFlags = 0)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyAttribute(
                 prop,
                 attrName,
@@ -2111,6 +2399,8 @@ namespace Alternet.UI
         /// <param name="value">Value of attribute.</param>
         public virtual void SetPropertyAttributeAll(string attrName, object value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyAttributeAll(attrName, Handler.ToVariant(value));
         }
 
@@ -2122,6 +2412,8 @@ namespace Alternet.UI
         /// <param name="value">Value of attribute.</param>
         public virtual void SetPropertyAttributeAll(string attrName, IPropertyGridVariant value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyAttributeAll(attrName, value);
         }
 
@@ -2132,6 +2424,8 @@ namespace Alternet.UI
         /// <returns><c>true</c> if something was actually done.</returns>
         public virtual bool EnsureVisible(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.EnsureVisible(prop);
         }
 
@@ -2152,6 +2446,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SelectProperty(IPropertyGridItem prop, bool focus = false)
         {
+            if (DisposingOrDisposed)
+                return default;
             if (prop == null)
                 return false;
             else
@@ -2175,6 +2471,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool AddToSelection(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.AddToSelection(prop);
         }
 
@@ -2187,6 +2485,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool RemoveFromSelection(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.RemoveFromSelection(prop);
         }
 
@@ -2197,6 +2497,8 @@ namespace Alternet.UI
         /// <param name="prop">Property category item.</param>
         public virtual void SetCurrentCategory(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetCurrentCategory(prop);
         }
 
@@ -2208,6 +2510,8 @@ namespace Alternet.UI
         /// have different image).</param>
         public virtual RectI GetImageRect(IPropertyGridItem prop, int item)
         {
+            if (DisposingOrDisposed)
+                return (0, 0, 16, 16);
             return Handler.GetImageRect(prop, item);
         }
 
@@ -2222,6 +2526,8 @@ namespace Alternet.UI
             PropertyGridItemFlags flag,
             bool value)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetPropertyFlag(prop, flag, value);
         }
 
@@ -2234,6 +2540,8 @@ namespace Alternet.UI
         /// different image).</param>
         public virtual SizeI GetImageSize(IPropertyGridItem? prop, int item)
         {
+            if (DisposingOrDisposed)
+                return 16;
             return Handler.GetImageSize(prop, item);
         }
 
@@ -2243,6 +2551,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridItem? GetPropertyParent(IPropertyGridItem? prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyParent(prop);
         }
 
@@ -2252,6 +2562,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridItem? GetFirstChild(IPropertyGridItem? prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetFirstChild(prop);
         }
 
@@ -2261,6 +2573,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public string GetPropNameAsLabel()
         {
+            if (DisposingOrDisposed)
+                return string.Empty;
             return Handler.GetPropNameAsLabel();
         }
 
@@ -2270,6 +2584,8 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridItem? GetPropertyCategory(IPropertyGridItem? prop)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyCategory(prop);
         }
 
@@ -2280,6 +2596,8 @@ namespace Alternet.UI
         /// <param name="flags">Filter flags.</param>
         public virtual IPropertyGridItem? GetFirst(PropertyGridIteratorFlags flags)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetFirst(flags);
         }
 
@@ -2290,6 +2608,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IPropertyGridItem? GetProperty(string? name)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetProperty(name);
         }
 
@@ -2300,6 +2620,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IPropertyGridItem? GetPropertyByLabel(string? label)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyByLabel(label);
         }
 
@@ -2310,6 +2632,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IPropertyGridItem? GetPropertyByName(string? name)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyByName(name);
         }
 
@@ -2319,6 +2643,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IPropertyGridItem? GetSelection()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetSelection();
         }
 
@@ -2331,6 +2657,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IPropertyGridItem? GetPropertyByNameAndSubName(string? name, string? subname)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetPropertyByNameAndSubName(name, subname);
         }
 
@@ -2341,6 +2669,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ReloadPropertyValue(IPropertyGridItem item)
         {
+            if (DisposingOrDisposed)
+                return;
             var p = item.PropInfo;
             var instance = item.Instance;
             if (instance == null || p == null)
@@ -2398,6 +2728,8 @@ namespace Alternet.UI
 
         internal void DeleteProperty(IPropertyGridItem prop)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.DeleteProperty(prop);
             items.Remove(prop.Handle);
         }
