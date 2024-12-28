@@ -11,6 +11,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObjectWithId : BaseObject, IBaseObjectWithId
     {
+        private readonly object locker = new();
+
         private ObjectUniqueId? uniqueId;
 
         /// <summary>
@@ -21,7 +23,15 @@ namespace Alternet.UI
         {
             get
             {
-                return uniqueId ??= new();
+                if(uniqueId is null)
+                {
+                    lock (locker)
+                    {
+                        uniqueId = new();
+                    }
+                }
+
+                return uniqueId.Value;
             }
         }
     }
