@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public class PropertyGridItem : BaseControlItem, IPropertyGridItem
     {
-        private readonly PropertyGridItemHandle handle;
+        private readonly PropertyGridItemHandle? handle;
         private readonly string defaultName;
         private readonly string defaultLabel;
         private readonly object? defaultValue;
@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// </summary>
         public PropertyGridItem(
             IPropertyGrid owner,
-            PropertyGridItemHandle handle,
+            PropertyGridItemHandle? handle,
             string label,
             string? name,
             object? defaultValue,
@@ -118,7 +118,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public PropertyGridItemHandle Handle => handle;
+        public PropertyGridItemHandle? Handle => handle;
 
         /// <inheritdoc/>
         public string DefaultName => defaultName;

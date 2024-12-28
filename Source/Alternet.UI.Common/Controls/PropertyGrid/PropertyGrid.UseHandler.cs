@@ -479,10 +479,17 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateFilenameProperty(
-                label,
-                CorrectPropName(name),
-                value!);
+
+            PropertyGridItemHandle? handle = null;
+
+            if(!DisposingOrDisposed)
+            {
+                handle = Handler.CreateFilenameProperty(
+                    label,
+                    CorrectPropName(name),
+                    value!);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.StringFilename;
@@ -516,10 +523,17 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateDirProperty(
-                label,
-                CorrectPropName(name),
-                value!);
+
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateDirProperty(
+                    label,
+                    CorrectPropName(name),
+                    value!);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.StringDirectory;
@@ -556,10 +570,17 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateImageFilenameProperty(
-                label,
-                CorrectPropName(name),
-                value!);
+
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateImageFilenameProperty(
+                    label,
+                    CorrectPropName(name),
+                    value!);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.StringImageFilename;
@@ -584,10 +605,16 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateStringProperty(
-                label,
-                CorrectPropName(name),
-                value!);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateStringProperty(
+                    label,
+                    CorrectPropName(name),
+                    value!);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.String;
@@ -610,10 +637,16 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateBoolProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateBoolProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.Bool;
@@ -636,10 +669,16 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateIntProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateIntProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.Int64;
@@ -662,10 +701,16 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateFloatProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateFloatProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.Double;
@@ -689,10 +734,16 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateFloatProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateFloatProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.Single;
@@ -716,10 +767,16 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateSystemColorProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateSystemColorProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.ColorSystem;
@@ -743,10 +800,16 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateColorProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateColorProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.Color;
@@ -770,10 +833,16 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateUIntProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateUIntProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.UInt64;
@@ -798,10 +867,16 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateLongStringProperty(
-                label,
-                CorrectPropName(name),
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateLongStringProperty(
+                    label,
+                    CorrectPropName(name),
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.StringLong;
@@ -832,10 +907,16 @@ namespace Alternet.UI
                 dt = value.Value;
 
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateDateProperty(
-                label,
-                CorrectPropName(name),
-                dt);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateDateProperty(
+                    label,
+                    CorrectPropName(name),
+                    dt);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.Date;
@@ -862,11 +943,17 @@ namespace Alternet.UI
         {
             value ??= 0;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateEnumProperty(
-                label,
-                CorrectPropName(name),
-                choices,
-                (int)value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateEnumProperty(
+                    label,
+                    CorrectPropName(name),
+                    choices,
+                    (int)value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.Enum;
@@ -893,11 +980,17 @@ namespace Alternet.UI
         {
             value ??= string.Empty;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateEditEnumProperty(
-                label,
-                CorrectPropName(name),
-                choices,
-                value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateEditEnumProperty(
+                    label,
+                    CorrectPropName(name),
+                    choices,
+                    value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.EnumEditable;
@@ -924,11 +1017,17 @@ namespace Alternet.UI
         {
             value ??= 0;
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateFlagsProperty(
-                label,
-                CorrectPropName(name),
-                choices,
-                (int)value);
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreateFlagsProperty(
+                    label,
+                    CorrectPropName(name),
+                    choices,
+                    (int)value);
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, value, prm);
 
             result.PropertyEditorKind = PropertyGridEditKindAll.EnumFlags;
@@ -966,7 +1065,8 @@ namespace Alternet.UI
             else
                 Handler.AppendIn(parent, prop);
 
-            items.Add(prop.Handle, prop);
+            if(prop.Handle is not null)
+                items.Add(prop.Handle, prop);
             if (prop.HasChildren)
             {
                 foreach (IPropertyGridItem child in prop.Children)
@@ -1002,9 +1102,15 @@ namespace Alternet.UI
             IPropertyGridNewItemParams? prm = null)
         {
             label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreatePropCategory(
-                label,
-                CorrectPropName(name));
+            PropertyGridItemHandle? handle = null;
+
+            if (!DisposingOrDisposed)
+            {
+                handle = Handler.CreatePropCategory(
+                    label,
+                    CorrectPropName(name));
+            }
+
             var result = new PropertyGridItem(this, handle, label, name, null, prm);
 
             result.IsCategory = true;
@@ -1105,10 +1211,11 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (prop is null)
-                return;
-            Handler.RemoveProperty(prop);
-            items.Remove(prop.Handle);
+            if (prop?.Handle is not null)
+            {
+                Handler.RemoveProperty(prop);
+                items.Remove(prop.Handle);
+            }
         }
 
         /// <summary>
@@ -2702,36 +2809,15 @@ namespace Alternet.UI
                 ReloadPropertyValue(item.Parent);
         }
 
-        /// <summary>
-        /// Creates cursor property.
-        /// </summary>
-        /// <param name="label">Property label.</param>
-        /// <param name="name">Property name.</param>
-        /// <param name="value">Default property value.</param>
-        /// <param name="prm">Property item create parameters.</param>
-        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
-        internal IPropertyGridItem CreateCursorItem(
-           string label,
-           string? name = null,
-           int value = 0,
-           IPropertyGridNewItemParams? prm = null)
-        {
-            label = CorrectPropLabel(label, prm);
-            var handle = Handler.CreateCursorProperty(
-                label,
-                CorrectPropName(name),
-                value);
-            var result = new PropertyGridItem(this, handle, label, name, value, prm);
-            OnPropertyCreated(result, prm);
-            return result;
-        }
-
         internal void DeleteProperty(IPropertyGridItem prop)
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.DeleteProperty(prop);
-            items.Remove(prop.Handle);
+            if(prop?.Handle is not null)
+            {
+                Handler.DeleteProperty(prop);
+                items.Remove(prop.Handle);
+            }
         }
 
         /// <inheritdoc/>
