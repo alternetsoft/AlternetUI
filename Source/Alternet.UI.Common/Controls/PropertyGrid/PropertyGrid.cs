@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -275,6 +276,12 @@ namespace Alternet.UI
         /// Gets or sets different <see cref="PropertyGrid"/> features.
         /// </summary>
         public PropertyGridFeature Features { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional <see cref="CultureInfo"/> used when property
+        /// values are converted to/from string. Default is Null.
+        /// </summary>
+        public CultureInfo? Culture { get; set; }
 
         /// <summary>
         /// Defines default extended style for the newly created
@@ -922,52 +929,30 @@ namespace Alternet.UI
                         prop = CreatePropertyAsBool(label, propName, instance, p);
                         break;
                     case TypeCode.SByte:
-                        prop = CreatePropertyAsSByte(label, propName, instance, p);
-                        break;
                     case TypeCode.Int16:
-                        prop = CreatePropertyAsInt16(label, propName, instance, p);
-                        break;
                     case TypeCode.Int32:
-                        prop = CreatePropertyAsInt(label, propName, instance, p);
-                        break;
                     case TypeCode.Int64:
-                        prop = CreatePropertyAsLong(label, propName, instance, p);
-                        break;
                     case TypeCode.Byte:
-                        prop = CreatePropertyAsByte(label, propName, instance, p);
-                        break;
                     case TypeCode.UInt32:
-                        prop = CreatePropertyAsUInt(label, propName, instance, p);
-                        break;
                     case TypeCode.UInt16:
-                        prop = CreatePropertyAsUInt16(label, propName, instance, p);
-                        break;
                     case TypeCode.UInt64:
-                        prop = CreatePropertyAsULong(label, propName, instance, p);
-                        break;
                     case TypeCode.Single:
-                        prop = CreatePropertyAsFloat(label, propName, instance, p);
-                        break;
                     case TypeCode.Double:
-                        prop = CreatePropertyAsDouble(label, propName, instance, p);
-                        break;
                     case TypeCode.Decimal:
-                        prop = CreatePropertyAsDecimal(label, propName, instance, p);
-                        break;
                     case TypeCode.DateTime:
-                        prop = CreatePropertyAsDate(label, propName, instance, p);
-                        break;
                     case TypeCode.Char:
-                        prop = CreatePropertyAsChar(label, propName, instance, p);
-                        break;
                     case TypeCode.String:
                         prop = CreatePropertyAsString(label, propName, instance, p);
                         break;
                 }
             }
 
-            prop!.Instance = instance;
-            prop!.PropInfo = p;
+            if(prop is not null)
+            {
+                prop.Instance = instance;
+                prop.PropInfo = p;
+            }
+
             return prop;
         }
 
@@ -988,6 +973,7 @@ namespace Alternet.UI
             return prop;
         }
 
+/*
         /// <summary>
         /// Creates <see cref="sbyte"/> property.
         /// </summary>
@@ -1004,7 +990,8 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
-
+*/
+/*
         /// <summary>
         /// Creates <see cref="short"/> property.
         /// </summary>
@@ -1021,7 +1008,8 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
-
+*/
+/*
         /// <summary>
         /// Creates <see cref="int"/> property.
         /// </summary>
@@ -1038,7 +1026,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="long"/> property.
         /// </summary>
@@ -1055,7 +1045,8 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
-
+*/
+/*
         /// <summary>
         /// Creates <see cref="byte"/> property.
         /// </summary>
@@ -1072,7 +1063,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="uint"/> property.
         /// </summary>
@@ -1089,7 +1082,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="ushort"/> property.
         /// </summary>
@@ -1106,7 +1101,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="ulong"/> property.
         /// </summary>
@@ -1123,7 +1120,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="float"/> property.
         /// </summary>
@@ -1140,7 +1139,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="double"/> property.
         /// </summary>
@@ -1157,7 +1158,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="decimal"/> property.
         /// </summary>
@@ -1174,7 +1177,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="DateTime"/> property.
         /// </summary>
@@ -1191,7 +1196,9 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
+/*
         /// <summary>
         /// Creates <see cref="char"/> property.
         /// </summary>
@@ -1208,6 +1215,7 @@ namespace Alternet.UI
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
         }
+*/
 
         /// <summary>
         /// Creates <see cref="string"/> property.
@@ -1219,7 +1227,45 @@ namespace Alternet.UI
                     object instance,
                     PropertyInfo propInfo)
         {
-            var value = AssemblyUtils.GetPropValue<string>(instance, propInfo, string.Empty);
+            object? propValue = propInfo.GetValue(instance, null);
+            string value = string.Empty;
+
+            if(propValue is not null)
+            {
+                var typeConverter
+                = ObjectToStringFactory.Default.GetTypeConverter(propInfo.PropertyType);
+
+                var success = AvoidException(() =>
+                {
+                    if (typeConverter is not null)
+                    {
+                        if (typeConverter.CanConvertTo(typeof(string)))
+                        {
+                            value = typeConverter.ConvertToString(
+                                null,
+                                Culture,
+                                propValue);
+                        }
+                        else
+                        {
+                            value = propValue.ToString();
+                        }
+                    }
+                    else
+                    {
+                        value = propValue.ToString();
+                    }
+                });
+
+                if (!success)
+                {
+                    AvoidException(() =>
+                    {
+                        value = propValue.ToString();
+                    });
+                }
+            }
+
             var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateStringItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
