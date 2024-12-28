@@ -1307,7 +1307,7 @@ namespace Alternet.UI
         /// event if exception was raised during execution.
         /// </summary>
         /// <param name="action"></param>
-        void AvoidException(Action action);
+        bool AvoidException(Action action);
 
         /// <summary>
         /// Captures the mouse to the control.
