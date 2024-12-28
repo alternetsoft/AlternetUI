@@ -89,6 +89,12 @@ namespace Alternet.UI
         public const string MacCommandKeyTitle = "\u2318";
 
         /// <summary>
+        /// Gets brackets characters used in <see cref="TrimWhitespaceAndBrackets"/>
+        /// and some other places.
+        /// </summary>
+        public static char[] BracketsChars = ['(', ')', '[', ']', '{', '}', '<', '>',];
+
+        /// <summary>
         /// Gets or sets array of delegates used for the text to number conversion.
         /// </summary>
         public static TryParseNumberDelegate[] TryParseNumberDelegates =
@@ -887,6 +893,19 @@ namespace Alternet.UI
 
         /// <summary>
         /// Trims the string using the specified text trimming rules.
+        /// Result is always not Null.
+        /// </summary>
+        /// <param name="s">String to trim.</param>
+        /// <param name="rules">Text trimming rules.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string SafeTrim(string? s, TrimTextRules rules)
+        {
+            return Trim(s, rules) ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Trims the string using the specified text trimming rules.
         /// </summary>
         /// <param name="s">String to trim.</param>
         /// <param name="rules">Text trimming rules.</param>
@@ -896,8 +915,8 @@ namespace Alternet.UI
             if (s is null)
                 return null;
 
-            bool trimStart = !rules.HasFlag(TrimTextRules.NoStartTrimmin);
-            bool trimEnd = !rules.HasFlag(TrimTextRules.NoEndTrimmin);
+            bool trimStart = !rules.HasFlag(TrimTextRules.NoLeading);
+            bool trimEnd = !rules.HasFlag(TrimTextRules.NoTrailing);
 
             string? result;
 
@@ -906,6 +925,27 @@ namespace Alternet.UI
             else
                 result = s;
 
+            s = Trim(result, GetTrimTextRulesChars(rules), trimStart, trimEnd);
+
+            return s;
+        }
+
+        /// <summary>
+        /// Removes all leading and trailing brackets and white-space characters
+        /// from the specified string. Uses bracket characters from <see cref="BracketsChars"/>.
+        /// </summary>
+        /// <param name="text">Text to trim.</param>
+        /// <returns></returns>
+        public static string TrimWhitespaceAndBrackets(string? text)
+        {
+            if (text is null)
+                return string.Empty;
+            var s = text.Trim().Trim(BracketsChars);
+            return s;
+        }
+
+        public static char[] GetTrimTextRulesChars(TrimTextRules rules)
+        {
             List<char> chars = new();
 
             if (rules.HasFlag(TrimTextRules.TrimSpaces))
@@ -936,10 +976,7 @@ namespace Alternet.UI
             }
 
             var charsArray = chars.ToArray();
-
-            s = Trim(result, charsArray, trimStart, trimEnd);
-
-            return s;
+            return charsArray;
         }
 
         /// <summary>
