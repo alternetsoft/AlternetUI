@@ -72,6 +72,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="Image"/> or <see cref="SvgImage"/> is assigned.
+        /// </summary>
+        public bool HasImageOrSvg => Image is not null || SvgImage is not null;
+
+        /// <summary>
         /// Gets or sets text for the display purposes.
         /// </summary>
         public virtual string? DisplayText { get; set; }
