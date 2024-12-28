@@ -3,10 +3,10 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains information about <see cref="TreeView.HitTest(Alternet.Drawing.PointD)"/> result for a
-    /// <see cref="TreeView"/> control.
+    /// Contains information about <see cref="TreeView.HitTest(Alternet.Drawing.PointD)"/>
+    /// result for a <see cref="TreeView"/> control.
     /// </summary>
-    public class TreeViewHitTestInfo
+    public class TreeViewHitTestInfo : BaseObject
     {
         /// <summary>
         /// Gets an empty <see cref="TreeViewHitTestInfo"/> object.

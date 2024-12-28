@@ -281,13 +281,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasBorder;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HasBorder = value;
             }
         }
@@ -306,11 +308,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HideRoot;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HideRoot = value;
             }
         }
@@ -331,11 +337,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.VariableRowHeight;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.VariableRowHeight = value;
             }
         }
@@ -360,11 +370,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.TwistButtons;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.TwistButtons = value;
             }
         }
@@ -378,11 +392,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.StateImageSpacing;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.StateImageSpacing = value;
             }
         }
@@ -395,11 +413,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.Indentation;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.Indentation = value;
             }
         }
@@ -417,11 +439,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.RowLines;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.RowLines = value;
             }
         }
@@ -437,11 +463,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ShowLines;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ShowLines = value;
             }
         }
@@ -458,11 +488,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ShowRootLines;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ShowRootLines = value;
             }
         }
@@ -482,11 +516,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ShowExpandButtons;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ShowExpandButtons = value;
             }
         }
@@ -501,6 +539,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.TopItem;
             }
         }
@@ -662,11 +702,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.FullRowSelect;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.FullRowSelect = value;
             }
         }
@@ -684,11 +728,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.AllowLabelEdit;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.AllowLabelEdit = value;
             }
         }
@@ -724,6 +772,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ExpandAll()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.ExpandAll();
         }
 
@@ -744,6 +794,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CollapseAll()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.CollapseAll();
         }
 
@@ -761,13 +813,16 @@ namespace Alternet.UI
         /// </remarks>
         public virtual TreeViewHitTestInfo HitTest(PointD point)
         {
-            var htResult = Handler.HitTest(point, out var item, out var locations);
-            if (htResult)
+            if (!DisposingOrDisposed)
             {
-                return new TreeViewHitTestInfo(locations, item);
+                var htResult = Handler.HitTest(point, out var item, out var locations);
+                if (htResult)
+                {
+                    return new TreeViewHitTestInfo(locations, item);
+                }
             }
-            else
-                return TreeViewHitTestInfo.Empty;
+
+            return TreeViewHitTestInfo.Empty;
         }
 
         /// <summary>
@@ -784,6 +839,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual TreeViewHitTestLocations HitTestLocation(PointD point)
         {
+            if (DisposingOrDisposed)
+                return default;
             Handler.HitTest(point, out _, out var locations, false);
             return locations;
         }
@@ -804,11 +861,14 @@ namespace Alternet.UI
         /// The <see cref="PointD" /> to evaluate and retrieve the node from.
         /// </param>
         /// <returns>
-        /// The <see cref="TreeViewItem" /> at the specified point, in tree view (client) coordinates,
+        /// The <see cref="TreeViewItem" /> at the specified point, in tree view
+        /// (client) coordinates,
         /// or <see langword="null" /> if there is no item at that location.
         /// </returns>
         public virtual TreeViewItem? GetNodeAt(PointD pt)
         {
+            if (DisposingOrDisposed)
+                return null;
             Handler.HitTest(pt, out var item, out _);
             return item;
         }
@@ -890,6 +950,8 @@ namespace Alternet.UI
         /// </param>
         public void RaiseSelectionChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
         }
@@ -909,6 +971,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectAndShowItem(TreeViewItem? item)
         {
+            if (DisposingOrDisposed)
+                return;
             if (item != null)
             {
                 DoInsideUpdate(() =>
@@ -941,6 +1005,8 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseAfterCollapse(TreeViewEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             e.Item.IsExpanded = false;
             OnAfterCollapse(e);
             AfterCollapse?.Invoke(this, e);
@@ -954,6 +1020,8 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseAfterExpand(TreeViewEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             e.Item.IsExpanded = true;
             OnAfterExpand(e);
             AfterExpand?.Invoke(this, e);
@@ -967,6 +1035,8 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseBeforeCollapse(TreeViewCancelEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnBeforeCollapse(e);
             BeforeCollapse?.Invoke(this, e);
         }
@@ -979,6 +1049,8 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseBeforeLabelEdit(TreeViewEditEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnBeforeLabelEdit(e);
             BeforeLabelEdit?.Invoke(this, e);
         }
@@ -991,6 +1063,8 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseAfterLabelEdit(TreeViewEditEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnAfterLabelEdit(e);
             AfterLabelEdit?.Invoke(this, e);
         }
@@ -1039,6 +1113,8 @@ namespace Alternet.UI
         /// <param name="item"></param>
         public virtual void RemoveItemAndSelectSibling(TreeViewItem? item)
         {
+            if (DisposingOrDisposed)
+                return;
             if (item == null)
                 return;
             var newItem = item?.NextOrPrevSibling;
@@ -1068,6 +1144,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void MakeAsListBox()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.MakeAsListBox();
         }
 
@@ -1079,6 +1157,8 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseBeforeExpand(TreeViewCancelEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnBeforeExpand(e);
             BeforeExpand?.Invoke(this, e);
         }
@@ -1091,14 +1171,18 @@ namespace Alternet.UI
         /// that contains the event data.</param>
         public void RaiseExpandedChanged(TreeViewEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnExpandedChanged(e);
             ExpandedChanged?.Invoke(this, e);
         }
 
         internal void RaiseItemAdded(TreeViewEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (e == null)
-                throw new ArgumentNullException(nameof(e));
+                return;
 
             OnItemAdded(e);
             ItemAdded?.Invoke(this, e);
@@ -1106,8 +1190,10 @@ namespace Alternet.UI
 
         internal void RaiseItemRemoved(TreeViewEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (e == null)
-                throw new ArgumentNullException(nameof(e));
+                return;
 
             OnItemRemoved(e);
             ItemRemoved?.Invoke(this, e);
@@ -1160,8 +1246,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewCancelEventArgs"/>
         /// that contains the event data.</param>
-        protected virtual void OnBeforeCollapse(
-            TreeViewCancelEventArgs e)
+        protected virtual void OnBeforeCollapse(TreeViewCancelEventArgs e)
         {
         }
 

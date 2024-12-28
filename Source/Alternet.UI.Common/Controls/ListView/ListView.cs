@@ -122,11 +122,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ColumnHeaderVisible;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ColumnHeaderVisible = value;
             }
         }
@@ -145,11 +149,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.AllowLabelEdit;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.AllowLabelEdit = value;
             }
         }
@@ -164,6 +172,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.TopItem;
             }
         }
@@ -175,11 +185,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.GridLinesDisplayMode;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.GridLinesDisplayMode = value;
             }
         }
@@ -628,6 +642,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasBorder;
             }
 
@@ -710,6 +726,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual ListViewHitTestInfo HitTest(PointD point)
         {
+            if (DisposingOrDisposed)
+                return new();
             return Handler.HitTest(point);
         }
 
@@ -721,6 +739,8 @@ namespace Alternet.UI
         /// whose label you want to edit.</param>
         public virtual void BeginLabelEdit(long itemIndex)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.BeginLabelEdit(itemIndex);
         }
 
@@ -740,6 +760,8 @@ namespace Alternet.UI
             long itemIndex,
             ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetItemBounds(itemIndex, portion);
         }
 
@@ -762,6 +784,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Clear()
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.Clear();
         }
 
@@ -873,6 +897,9 @@ namespace Alternet.UI
             ListViewColumn column,
             ListViewColumn.ColumnEventType eventType)
         {
+            if (DisposingOrDisposed)
+                return;
+
             var index = column.Index;
 
             if (index is null || index < 0)
@@ -1021,6 +1048,8 @@ namespace Alternet.UI
 
         private void UpdateSelectedIndices()
         {
+            if (DisposingOrDisposed)
+                return;
             if (Items.Count == 0)
                 return;
             if (selectedIndices == null)
