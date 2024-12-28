@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with slider control.
     /// </summary>
-    public interface ISliderHandler : IControlHandler
+    public interface ISliderHandler
     {
         /// <summary>
         /// Clears sliderr ticks.

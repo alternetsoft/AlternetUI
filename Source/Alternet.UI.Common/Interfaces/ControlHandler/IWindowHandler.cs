@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Extends <see cref="IControlHandler"/> with properties and methods
     /// specific to the window.
     /// </summary>
-    public interface IWindowHandler : IControlHandler
+    public interface IWindowHandler
     {
         /// <summary>
         /// Gets or sets action which is called when window state is changed.
@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
-        new Window Control { get; }
+        Window Control { get; }
 
         /// <summary>
         /// Shows window as a modal dialog.

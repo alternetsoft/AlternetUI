@@ -11,10 +11,11 @@ namespace Alternet.UI
     /// <summary>
     /// Contains properties and methods which allow to work with text box control.
     /// </summary>
-    public interface ITextBoxHandler : IControlHandler
+    public interface ITextBoxHandler
     {
         /// <summary>
-        /// Gets url at current position of the cursor. This property is only valid in the event handler.
+        /// Gets url at current position of the cursor.
+        /// This property is only valid in the event handler.
         /// </summary>
         string ReportedUrl { get; }
 

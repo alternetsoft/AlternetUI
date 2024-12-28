@@ -1162,7 +1162,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.Raise();
+            base.Handler.Raise();
         }
 
         /// <summary>
@@ -1520,7 +1520,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.Lower();
+            base.Handler.Lower();
         }
 
         /// <summary>

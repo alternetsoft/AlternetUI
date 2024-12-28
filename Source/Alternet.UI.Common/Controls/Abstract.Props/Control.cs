@@ -577,6 +577,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override void RaiseBackgroundColorChanged()
         {
             if (BackgroundColor is null)
@@ -599,12 +600,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override Graphics CreateDrawingContext()
         {
             return SafeHandler?.CreateDrawingContext() ?? new PlessGraphics();
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override void Invalidate()
         {
             if (CanSkipInvalidate())

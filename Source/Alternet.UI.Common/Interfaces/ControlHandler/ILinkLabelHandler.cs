@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with link label control.
     /// </summary>
-    public interface ILinkLabelHandler : IControlHandler
+    public interface ILinkLabelHandler
     {
         /// <inheritdoc cref="LinkLabel.Url"/>
         string Url { get; set; }

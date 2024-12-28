@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// If this field is <c>null</c>, <see cref="CreateHandler"/>
         /// is used to create animation player handler.
         /// </remarks>
-        public static Func<AnimationPlayer, IAnimationPlayerHandler>? CreateHandlerOverride;
+        public static Func<AnimationPlayer, IControlHandler>? CreateHandlerOverride;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.

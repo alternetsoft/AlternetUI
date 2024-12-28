@@ -74,13 +74,8 @@ namespace Alternet.UI
 
             set
             {
-                value ??= " ";
-                if (Text == value)
-                    return;
+                value ??= StringUtils.OneSpace;
                 base.Text = value;
-                if (DisposingOrDisposed)
-                    return;
-                Handler.Text = value;
             }
         }
 

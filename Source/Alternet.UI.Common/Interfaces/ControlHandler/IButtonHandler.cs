@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to control button control.
     /// </summary>
-    public interface IButtonHandler : IControlHandler
+    public interface IButtonHandler
     {
         /// <summary>
         /// Sets image for the 'Normal' state.

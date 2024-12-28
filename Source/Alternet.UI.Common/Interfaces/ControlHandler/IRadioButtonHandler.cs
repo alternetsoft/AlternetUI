@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with radio button control.
     /// </summary>
-    public interface IRadioButtonHandler : IControlHandler
+    public interface IRadioButtonHandler
     {
         /// <summary>
         /// Gets or sets an action which is called when checked state is changed.

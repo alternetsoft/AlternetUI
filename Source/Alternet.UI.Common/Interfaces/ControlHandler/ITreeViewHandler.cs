@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with tree view control.
     /// </summary>
-    public interface ITreeViewHandler : IControlHandler
+    public interface ITreeViewHandler
     {
         /// <inheritdoc cref="TreeView.HideRoot"/>
         bool HideRoot { get; set; }

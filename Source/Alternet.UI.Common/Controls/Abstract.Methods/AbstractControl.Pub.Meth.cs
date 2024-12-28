@@ -167,6 +167,7 @@ namespace Alternet.UI
         /// Returns the currently hovered control, or <see langword="null"/> if
         /// no control is under the mouse.
         /// </summary>
+        [Browsable(false)]
         public static AbstractControl? GetHoveredControl()
         {
             return HoveredControl;
@@ -175,6 +176,7 @@ namespace Alternet.UI
         /// <summary>
         /// Generates new group index.
         /// </summary>
+        [Browsable(false)]
         public static int NewGroupIndex() => groupIndexCounter++;
 
         /// <summary>
@@ -289,6 +291,7 @@ namespace Alternet.UI
         /// <see cref="IsDarkBackground"/> property.
         /// </summary>
         /// <param name="knownSvgColor">Known svg color identifier.</param>
+        [Browsable(false)]
         public virtual Color GetSvgColor(KnownSvgColor knownSvgColor = KnownSvgColor.Normal)
         {
             return SvgColors.GetSvgColor(knownSvgColor, IsDarkBackground);
@@ -297,13 +300,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
         /// </summary>
+        [Browsable(false)]
         public virtual IReadOnlyFontAndColor GetDefaultFontAndColor()
         {
             return new FontAndColor.ControlDefaultFontAndColor(this);
         }
 
         /// <summary>
-        /// Updates <see cref="ToolTip"/> so it will be repainted in the screen if it is currently shown.
+        /// Updates <see cref="ToolTip"/> so it will be repainted in the screen
+        /// if it is currently shown.
         /// </summary>
         [Browsable(false)]
         public virtual void UpdateToolTip()
@@ -340,6 +345,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets bacgkround color to the default value.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetBackgroundColor()
         {
             BackgroundColor = null;
@@ -348,6 +354,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets foreground color to the default value.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetForegroundColor()
         {
             ForegroundColor = null;
@@ -452,6 +459,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
         /// </summary>
+        [Browsable(false)]
         public virtual void PerformLayoutAndInvalidate(Action? action = null)
         {
             if (action is null)
@@ -607,7 +615,7 @@ namespace Alternet.UI
         /// <see cref="Visible"/> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method
         /// is called.</remarks>
-        public virtual void Show() => Visible = true;
+        public void Show() => Visible = true;
 
         /// <summary>
         /// Gets the child control at the specified index.
@@ -671,6 +679,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets all child controls recursively.
         /// </summary>
+        [Browsable(false)]
         public virtual ControlSet GetChildrenRecursive()
         {
             if (!HasChildren)
@@ -801,6 +810,7 @@ namespace Alternet.UI
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
         /// <seealso cref="GetVisibleChildOrNull"/>
+        [Browsable(false)]
         public virtual IReadOnlyList<AbstractControl> GetVisibleChildren()
         {
             if (HasChildren)
@@ -827,6 +837,7 @@ namespace Alternet.UI
         /// <returns>The child control at the specified index in the
         /// visible child controls list.</returns>
         /// <seealso cref="GetVisibleChildren"/>
+        [Browsable(false)]
         public virtual AbstractControl? GetVisibleChildOrNull(int index = 0)
         {
             var childs = GetVisibleChildren();
@@ -853,7 +864,7 @@ namespace Alternet.UI
         /// returns a value of <c>false</c> until the <see cref="Show"/> method
         /// is called.
         /// </remarks>
-        public virtual void Hide() => Visible = false;
+        public void Hide() => Visible = false;
 
         /// <summary>
         /// Creates the <see cref="Graphics"/> for the control.
@@ -873,6 +884,7 @@ namespace Alternet.UI
         /// that you want to use the <see cref="Graphics"/> object,
         /// and then call its Dispose() when you are finished using it.
         /// </remarks>
+        [Browsable(false)]
         public virtual Graphics CreateDrawingContext()
         {
             return new PlessGraphics();
@@ -882,6 +894,7 @@ namespace Alternet.UI
         /// Same as <see cref="CreateDrawingContext"/>. Added mainly for legacy code.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual Graphics CreateGraphics() => CreateDrawingContext();
 
         /// <summary>
@@ -1047,6 +1060,7 @@ namespace Alternet.UI
         /// Forces the control to invalidate itself and immediately redraw itself
         /// and any child controls. Calls <see cref="Invalidate()"/> and <see cref="Update"/>.
         /// </summary>
+        [Browsable(false)]
         public void Refresh()
         {
             Invalidate();
@@ -1057,6 +1071,7 @@ namespace Alternet.UI
         /// Invalidates the control and causes a paint message to be sent to
         /// the control.
         /// </summary>
+        [Browsable(false)]
         public virtual void Invalidate()
         {
             RaiseInvalidated(new(ClientRectangle));
@@ -1065,6 +1080,7 @@ namespace Alternet.UI
         /// <summary>
         /// Causes the control to redraw the invalidated regions.
         /// </summary>
+        [Browsable(false)]
         public virtual void Update()
         {
         }
@@ -1097,6 +1113,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New property value</param>
         /// <param name="recursive">Whether to apply to all children recurively.</param>
+        [Browsable(false)]
         public virtual void SetChildrenUseParentBackColor(bool value = true, bool recursive = false)
         {
             ForEachChild((control) => control.ParentBackColor = value, recursive);
@@ -1107,6 +1124,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New property value</param>
         /// <param name="recursive">Whether to apply to all children recurively.</param>
+        [Browsable(false)]
         public virtual void SetChildrenUseParentForeColor(bool value = true, bool recursive = false)
         {
             ForEachChild((control) => control.ParentForeColor = value, recursive);
@@ -1117,6 +1135,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New property value</param>
         /// <param name="recursive">Whether to apply to all children recurively.</param>
+        [Browsable(false)]
         public virtual void SetChildrenUseParentFont(bool value = true, bool recursive = false)
         {
             ForEachChild((control) => control.ParentFont = value, recursive);
@@ -1222,6 +1241,7 @@ namespace Alternet.UI
         /// method to enable the changes to take effect.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public virtual void ResumeLayout(bool performLayout = true)
         {
             layoutSuspendCount--;
@@ -1265,6 +1285,7 @@ namespace Alternet.UI
         /// Returns value of the <see cref="FileSystem"/> property if it is not <c>null</c>;
         /// otherwise returns <see cref="Alternet.UI.FileSystem.Default"/>.
         /// </returns>
+        [Browsable(false)]
         public virtual IFileSystem GetFileSystem()
         {
             return FileSystem ?? UI.FileSystem.Default;
@@ -1321,6 +1342,7 @@ namespace Alternet.UI
         /// You should not use this property.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual IntPtr GetHandle()
         {
             return IntPtr.Zero;
@@ -1333,6 +1355,7 @@ namespace Alternet.UI
         /// (<see cref="App.ToolTipProvider"/>).
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual IToolTipProvider? GetToolTipProvider()
         {
             var result = ToolTipProvider ?? Parent?.GetToolTipProvider() ?? App.ToolTipProvider;
@@ -1349,6 +1372,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="layoutParent">Specifies whether to call parent's
         /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        [Browsable(false)]
         public virtual void PerformLayout(bool layoutParent = true)
         {
             if (IsLayoutSuspended || IsDisposed || inLayout)
@@ -1446,6 +1470,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets <see cref="SuggestedHeight"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetSuggestedHeight()
         {
             SuggestedHeight = Coord.NaN;
@@ -1454,6 +1479,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets <see cref="SuggestedWidth"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetSuggestedWidth()
         {
             SuggestedWidth = Coord.NaN;
@@ -1488,6 +1514,7 @@ namespace Alternet.UI
         /// or <see cref="string.Empty"/>, to retrieve entity-level errors.
         /// </param>
         /// <returns>The validation errors for this control and its child controls.</returns>
+        [Browsable(false)]
         public virtual IEnumerable GetErrors(string? propertyName = null)
         {
             foreach (var item in AllChildren)
@@ -1508,6 +1535,7 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to get all children recurively.</param>
         /// <returns></returns>
         /// <typeparam name="T">Type of the control to find.</typeparam>
+        [Browsable(false)]
         public virtual ControlSet GetChildren<T>(bool recursive = false)
         {
             ControlSet result;
@@ -1651,6 +1679,7 @@ namespace Alternet.UI
         /// Sets <see cref="Visible"/> property value for all the children controls.
         /// </summary>
         /// <param name="visible">New value of the <see cref="Visible"/> property.</param>
+        [Browsable(false)]
         public void SetChildrenVisible(bool visible = true)
         {
             ForEachChild((c) => c.Visible = visible);
@@ -1990,6 +2019,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets the <see cref="AbstractControl.Font" /> property to its default value.</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
         public virtual void ResetFont()
         {
             Font = null;
@@ -1998,6 +2028,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets the <see cref="AbstractControl.Cursor" /> property to its default value.</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
         public virtual void ResetCursor()
         {
             Cursor = null;
@@ -2084,6 +2115,7 @@ namespace Alternet.UI
         /// Gets font from the default attributes.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual Font? GetDefaultAttributesFont()
         {
             return null;
@@ -2104,6 +2136,7 @@ namespace Alternet.UI
         /// Calls <see cref="LocationChanged"/> and <see cref="SizeChanged"/> events
         /// if <see cref="Bounds"/> property was changed.
         /// </summary>
+        [Browsable(false)]
         public virtual bool ReportBoundsChanged()
         {
             var newBounds = Bounds;
@@ -2264,7 +2297,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether this control contains mouse cursor.
         /// </summary>
-        /// <param name="threshold">Additional value on which bounds of the control are inflated.</param>
+        /// <param name="threshold">Additional value on which bounds
+        /// of the control are inflated.</param>
         /// <returns></returns>
         public virtual bool ContainsMouseCursor(Coord threshold)
         {
@@ -2284,6 +2318,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets the cached best size value so it will be recalculated the next time it is needed.
         /// </summary>
+        [Browsable(false)]
         public virtual void InvalidateBestSize()
         {
         }
