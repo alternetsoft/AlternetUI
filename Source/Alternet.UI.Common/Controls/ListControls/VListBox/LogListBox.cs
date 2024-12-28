@@ -342,10 +342,16 @@ namespace Alternet.UI
             LogRefresh();
         }
 
-        private ListControlItem LogInternal(int id, ListControlItem item)
+        private ListControlItem LogItemInternal(int id, ListControlItem item, LogItemKind kind)
         {
             if (IsDisposed)
                 return item;
+
+            if (!item.HasImageOrSvg)
+            {
+                item.SvgImage = GetImage(kind);
+                item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+            }
 
             lastLogMessage = item.Text;
             Add(item);
@@ -357,10 +363,10 @@ namespace Alternet.UI
 
         private ListControlItem LogInternal(int id, object? obj, LogItemKind kind)
         {
-            var message = obj.SafeToString();
-
             if (IsDisposed)
                 return new();
+
+            var message = obj.SafeToString();
 
             lastLogMessage = message;
 
@@ -422,7 +428,7 @@ namespace Alternet.UI
 
                 if(item is not null)
                 {
-                    LogInternal(e.Id, item);
+                    LogItemInternal(e.Id, item, e.Kind);
                     return;
                 }
 
