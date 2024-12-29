@@ -154,7 +154,7 @@ namespace Alternet.UI
                 if (propName == null)
                     return;
                 var type = instance.GetType();
-                propInfo = type.GetProperty(propName);
+                propInfo = AssemblyUtils.GetPropertySafe(type, propName);
             }
 
             Fn();

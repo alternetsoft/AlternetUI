@@ -131,7 +131,9 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             tb.SetCustomAttribute(new CustomAttributeBuilder(
                 typeof(AttributeUsageAttribute).GetConstructor(new[] { typeof(AttributeTargets) }),
                 new object[] { AttributeTargets.Assembly },
-                new[] { typeof(AttributeUsageAttribute).GetProperty("AllowMultiple") },
+                new[] { AssemblyUtils.GetPropertySafe(
+                    typeof(AttributeUsageAttribute),
+                    nameof(AttributeUsageAttribute.AllowMultiple)) },
                 new object[] { true }));
 
             return tb.CreateTypeInfo();

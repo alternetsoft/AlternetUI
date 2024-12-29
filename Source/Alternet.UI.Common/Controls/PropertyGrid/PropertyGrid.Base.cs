@@ -365,7 +365,7 @@ namespace Alternet.UI
         public static string? GetCustomLabel<T>(string propName)
             where T : class
         {
-            var propInfo = typeof(T).GetProperty(propName);
+            var propInfo = AssemblyUtils.GetPropertySafe(typeof(T), propName);
             if (propInfo == null)
                 return null;
 

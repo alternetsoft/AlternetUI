@@ -200,11 +200,11 @@ namespace Alternet.Drawing
                     }
                     else if (color.IsSystemColor)
                     {
-                        memberInfo = typeof(SystemColors).GetProperty(color.Name);
+                        memberInfo = AssemblyUtils.GetFirstMember(typeof(SystemColors), color.Name);
                     }
                     else if (color.IsKnownColor)
                     {
-                        memberInfo = typeof(Color).GetProperty(color.Name);
+                        memberInfo = AssemblyUtils.GetFirstMember(typeof(Color), color.Name);
                     }
                     else if (color.A != 255)
                     {

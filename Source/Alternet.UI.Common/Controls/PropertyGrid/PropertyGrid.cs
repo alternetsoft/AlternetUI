@@ -327,7 +327,7 @@ namespace Alternet.UI
         public static bool SetCustomLabel<T>(string propName, string label)
             where T : class
         {
-            var propInfo = typeof(T).GetProperty(propName);
+            var propInfo = AssemblyUtils.GetPropertySafe(typeof(T), propName);
             if (propInfo == null)
                 return false;
             var propRegistry = GetPropRegistry(typeof(T), propInfo);
@@ -836,7 +836,7 @@ namespace Alternet.UI
             if (instance == null)
                 return null;
             var type = instance.GetType();
-            var propInfo = type.GetProperty(nameInInstance);
+            var propInfo = AssemblyUtils.GetPropertySafe(type, nameInInstance);
             if (propInfo == null)
                 return null;
             return CreateProperty(label, name, instance, propInfo);
