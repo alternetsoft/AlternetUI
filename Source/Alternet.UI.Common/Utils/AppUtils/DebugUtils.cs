@@ -151,12 +151,11 @@ namespace Alternet.UI
                     if (ExceptionLoggerIgnored(exception.GetType()))
                         return;
 
-                    callback?.Invoke(exception);
-
                     if (ExceptionsLoggerDebugWriteLine)
                         LogExceptionToAction(title, e, (s) => Debug.WriteLine(s));
                     if (ExceptionsLoggerAppLog)
                         LogExceptionToAction(title, e, (s) => App.Log(s));
+                    callback?.Invoke(exception);
                 }
                 finally
                 {
@@ -166,11 +165,17 @@ namespace Alternet.UI
 
             static void LogExceptionToAction(string title, object e, Action<string> writeLine)
             {
-                writeLine(LogUtils.SectionSeparator);
-                writeLine(title);
-                var s = e.ToString();
-                writeLine(s);
-                writeLine(LogUtils.SectionSeparator);
+                try
+                {
+                    writeLine(LogUtils.SectionSeparator);
+                    writeLine(title);
+                    var s = e.ToString();
+                    writeLine(s);
+                    writeLine(LogUtils.SectionSeparator);
+                }
+                catch
+                {
+                }
             }
 
             App.ThreadException += (s, e) =>

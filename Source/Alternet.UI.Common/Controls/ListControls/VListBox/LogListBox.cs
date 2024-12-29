@@ -62,6 +62,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets 'Developer Tools' menu item.
         /// </summary>
+        [Browsable(false)]
         public MenuItem? MenuItemShowDevTools => menuItemShowDevTools;
 
         /// <summary>

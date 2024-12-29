@@ -321,13 +321,14 @@ namespace Alternet.UI
             string? prefix = null,
             LogItemKind kind = LogItemKind.Information)
         {
+            PropertyInfo? propInfo = AssemblyUtils.GetPropertySafe(obj?.GetType(), propName);
+            if (propInfo == null)
+                return;
+
             var s = prefix;
             if (s != null)
                 s += ".";
 
-            PropertyInfo? propInfo = obj?.GetType().GetProperty(propName);
-            if (propInfo == null)
-                return;
             string? propValue = propInfo?.GetValue(obj)?.ToString();
 
             if (logUseMaxLength > 0)

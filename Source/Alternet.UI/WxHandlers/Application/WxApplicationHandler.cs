@@ -71,25 +71,14 @@ namespace Alternet.UI
 
             if (DebugUtils.IsDebugDefined)
             {
-                LogUtils.RegisterLogAction("Toggle UsePlessCaret", () =>
-                {
-                    UsePlessCaret = !UsePlessCaret;
-                    App.LogNameValue("UsePlessCaret", UsePlessCaret);
-                });
-
                 LogUtils.RegisterLogAction(
                     "Log mapping: Key <-> WxWidgetsKeyCode",
                     WxKeyboardHandler.KeyAndWxMapping.LogToFile);
             }
 
             if(!App.IsWindowsOS)
-                UsePlessCaret = true;
+                Caret.UseGeneric = true;
         }
-
-        /// <summary>
-        /// Gets or sets whether to use internal caret. This can be used for testing purposes.
-        /// </summary>
-        public static bool UsePlessCaret { get; set; }
 
         /// <summary>
         /// Gets or sets whether to use dummy timer which doesn't call timer event.
@@ -296,7 +285,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public ICaretHandler CreateCaretHandler()
         {
-            if (UsePlessCaret)
+            if (Caret.UseGeneric)
                 return new PlessCaretHandler();
             return new WxCaretHandler();
         }
@@ -304,7 +293,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public ICaretHandler CreateCaretHandler(AbstractControl control, int width, int height)
         {
-            if (UsePlessCaret)
+            if (Caret.UseGeneric)
                 return new PlessCaretHandler(control, width, height);
             return new WxCaretHandler(control, width, height);
         }

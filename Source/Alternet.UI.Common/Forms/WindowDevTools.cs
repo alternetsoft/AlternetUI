@@ -13,8 +13,11 @@ namespace Alternet.UI
     /// </summary>
     internal class WindowDevTools : Window
     {
-        private static bool logGotFocus;
-        private static bool logFocusedControl;
+#pragma warning disable
+        internal static bool ShowFocusedProperties;
+        internal static bool LogGotFocus;
+        internal static bool LogFocusedControlInfo;
+#pragma warning restore
 
         private readonly PanelDevTools panel = new()
         {
@@ -23,17 +26,6 @@ namespace Alternet.UI
 
         static WindowDevTools()
         {
-            LogUtils.RegisterLogAction("Toggle GotFocus event logging", () =>
-            {
-                logGotFocus = !logGotFocus;
-                App.LogNameValue("GotFocus event logging", logGotFocus);
-            });
-
-            LogUtils.RegisterLogAction("Toggle Focused Info", () =>
-            {
-                logFocusedControl = !logFocusedControl;
-                App.LogNameValue("Focused control info", logFocusedControl);
-            });
         }
 
         public WindowDevTools()
@@ -61,6 +53,7 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             base.DisposeManaged();
+
             ComponentDesigner.SafeDefault.ControlGotFocus -= Designer_ControlGotFocus;
             ComponentDesigner.SafeDefault.ControlCreated -= Designer_ControlCreated;
             ComponentDesigner.SafeDefault.ControlDisposed -= Designer_ControlDisposed;
@@ -117,10 +110,14 @@ namespace Alternet.UI
 
             panel.LastFocusedControl = control;
 
-            if (logGotFocus)
-                App.Log(control.GetType().Name);
+            if (LogGotFocus)
+            {
+                var s = control.ParentWindow?.Title ?? control.ParentWindow?.GetType().Name;
+                var prefix = "FocusedControl:";
+                App.LogReplace($"{prefix} <{s}>.<{control.GetType().FullName}>", prefix);
+            }
 
-            if (logFocusedControl)
+            if (LogFocusedControlInfo)
                 LogFocusedControl(control);
         }
 
@@ -128,9 +125,12 @@ namespace Alternet.UI
         {
             var defaultColors = control.GetDefaultFontAndColor();
 
+            var windowTitle = control.ParentWindow?.Title ?? control.ParentWindow?.GetType().Name;
+
             App.LogSeparator();
             App.LogNameValue("Name", control.Name);
-            App.LogNameValue("Type", control.GetType().Name);
+            App.LogNameValue("Type", control.GetType().FullName);
+            App.LogNameValue("Window", windowTitle);
             LogUtils.LogColor("ForegroundColor", control.ForegroundColor);
             LogUtils.LogColor("ForegroundColor (real)", control.RealForegroundColor);
             LogUtils.LogColor("ForegroundColor (defaults)", defaultColors.ForegroundColor);

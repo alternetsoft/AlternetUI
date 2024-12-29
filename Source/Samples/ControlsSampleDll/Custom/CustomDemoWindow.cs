@@ -30,17 +30,6 @@ namespace Alternet.UI
             ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl;
             ResourceLoader.CustomStreamFromUrl += ResourceLoader_CustomStreamFromUrl2;
 
-            AbstractControl.FocusedControlChanged += (s, e) =>
-            {
-                if (LogFocusedControl)
-                    App.LogReplace($"FocusedControl: {FocusedControl?.GetType()}", "FocusedControl:");
-            };
-
-            LogUtils.RegisterLogAction("Toggle Logging of FocusedControl", () =>
-            {
-                LogFocusedControl = !LogFocusedControl;
-            });
-
             LogUtils.RegisterLogAction("Setup Main Form for Screenshot", () =>
             {
                 var window = App.FindWindow<CustomDemoWindow>();
