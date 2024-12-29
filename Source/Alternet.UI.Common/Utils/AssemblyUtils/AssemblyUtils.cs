@@ -20,6 +20,12 @@ namespace Alternet.UI
     /// </summary>
     public static partial class AssemblyUtils
     {
+        /// <summary>
+        /// Gets default binding flags.
+        /// </summary>
+        public const BindingFlags DefaultBindingFlags
+            = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
+
         private static AdvDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
         private static SortedList<string, EventInfo>? allControlEvents;
@@ -339,6 +345,67 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether property item can be reset.
+        /// </summary>
+        /// <param name="instance">Object instance with the property.</param>
+        /// <param name="propInfo">Property info.</param>
+        /// <returns>True if property can be reset.</returns>
+        /// <returns></returns>
+        /// <remarks>
+        /// Property can be reset if it is nullable, has <see cref="DefaultValueAttribute"/>
+        /// specified or class has reset method which
+        /// starts with 'Reset' and has property name at the end.
+        /// </remarks>
+        public static bool CanResetProp(object? instance, PropertyInfo? propInfo)
+        {
+            if (propInfo is null || instance is null)
+                return false;
+            var nullable = AssemblyUtils.GetNullable(propInfo);
+            var value = propInfo.GetValue(instance);
+            var resetMethod = AssemblyUtils.GetResetPropMethod(instance, propInfo.Name);
+            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(propInfo, out _);
+            return hasDevaultAttr || resetMethod != null || (nullable && value is not null);
+        }
+
+        /// <summary>
+        /// Resets property value using the specified instance and property info.
+        /// Uses different methods to reset the property including: calling reset method,
+        /// assigning default value from the attribute, assigning null value if property is nullable.
+        /// </summary>
+        /// <param name="instance">Object instance with the property.</param>
+        /// <param name="propInfo">Property info.</param>
+        /// <returns>True if property was reset.</returns>
+        public static bool ResetProperty(object? instance, PropertyInfo? propInfo)
+        {
+            if (instance is null || propInfo is null)
+                return false;
+
+            var resetMethod = AssemblyUtils.GetResetPropMethod(instance, propInfo.Name);
+            if (resetMethod is not null)
+            {
+                resetMethod.Invoke(instance, []);
+                return true;
+            }
+
+            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(propInfo, out var defValue);
+            if (hasDevaultAttr)
+            {
+                propInfo.SetValue(instance, defValue);
+                return true;
+            }
+
+            var nullable = AssemblyUtils.GetNullable(propInfo);
+            var value = propInfo.GetValue(instance);
+            if (nullable && value is not null)
+            {
+                propInfo.SetValue(instance, null);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Creates <see cref="Action"/> for the specified <see cref="MethodInfo"/>.
         /// </summary>
         /// <param name="instance">Object which contains the method.</param>
@@ -615,9 +682,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets property value.
+        /// Gets field value using the specified object instance and field info.
         /// </summary>
-        /// <param name="instance">Instance which contains the property.</param>
+        /// <param name="instance">Instance which contains the field.
+        /// Specify Null, for the static fields.</param>
+        /// <param name="fieldInfo">Field info.</param>
+        /// <param name="defValue">Default field value (used if field value is null).</param>
+        /// <typeparam name="T">Type of result.</typeparam>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T GetFieldValue<T>(object? instance, FieldInfo fieldInfo, T defValue)
+        {
+            object? result = fieldInfo.GetValue(instance);
+            if (result == null)
+                return defValue;
+            else
+                return (T)result;
+        }
+
+        /// <summary>
+        /// Gets property value using the specified object instance and property info.
+        /// </summary>
+        /// <param name="instance">Instance which contains the property.
+        /// Specify Null, for the static properties.</param>
         /// <param name="propInfo">Property info.</param>
         /// <param name="defValue">Default property value (used if property value is null).</param>
         /// <typeparam name="T">Type of result.</typeparam>
@@ -629,6 +715,138 @@ namespace Alternet.UI
                 return defValue;
             else
                 return (T)result;
+        }
+
+        /// <summary>
+        /// Toggles boolean field or property specified by the type (or instance) and name.
+        /// </summary>
+        /// <param name="instance">Instance which contains the property.
+        /// Specify Null, for the static properties.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="type">Type of the object with the property.</param>
+        public static bool? ToggleBoolMember(Type? type, object? instance, string propName)
+        {
+            var success = TryGetMemberValue(
+                type,
+                instance,
+                propName,
+                out object? result);
+
+            if (!success || result is not bool)
+                return null;
+
+            var value = !(bool)result;
+
+            TrySetMemberValue(
+                type,
+                instance,
+                propName,
+                value);
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets field or property information using the specified object type
+        /// (or instance) and property name.
+        /// Type of the object or the object itself must be specified.
+        /// </summary>
+        /// <param name="propName">Property name.</param>
+        /// <param name="bindingFlags">Specifies binding flags used when member is searched.
+        /// Optional.</param>
+        /// <param name="memberTypes">Specifies member types to search.
+        /// Optional. By default searches for the fields and properties.</param>
+        /// <param name="type">Type of the object with the property.</param>
+        /// <returns></returns>
+        public static MemberInfo? GetFirstMember(
+            Type? type,
+            string propName,
+            MemberTypes memberTypes = MemberTypes.Field | MemberTypes.Property,
+            BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic
+            | BindingFlags.Instance | BindingFlags.Static)
+        {
+            var members = type?.GetMember(
+                propName,
+                memberTypes,
+                bindingFlags);
+
+            if (members is null || members.Length == 0)
+                return null;
+
+            var member = members[0];
+
+            return member;
+        }
+
+        /// <summary>
+        /// Sets property or field value using the specified object type
+        /// (or instance) and property name.
+        /// Type of the object or the object itself must be specified.
+        /// </summary>
+        /// <param name="instance">Instance which contains the property or field.
+        /// Specify Null, for the static properties.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="type">Type of the object with the property.</param>
+        /// <param name="value">New property value.</param>
+        public static bool TrySetMemberValue(
+            Type? type,
+            object? instance,
+            string propName,
+            object? value)
+        {
+            var member = GetFirstMember(type ?? instance?.GetType(), propName);
+
+            if (member is PropertyInfo propInfo)
+            {
+                propInfo.SetValue(instance, value);
+                return true;
+            }
+            else
+            if (member is FieldInfo fieldInfo)
+            {
+                fieldInfo.SetValue(instance, value);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets property or field value using the specified object type
+        /// (or instance) and property name.
+        /// Type of the object or the object itself must be specified.
+        /// </summary>
+        /// <param name="instance">Instance which contains the property or field.
+        /// Specify Null, for the static properties.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="type">Type of the object with the property.</param>
+        /// <param name="result">Property value.</param>
+        /// <typeparam name="T">Type of result.</typeparam>
+        /// <param name="defValue">Default property value (used if member not found).</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetMemberValue<T>(
+            Type? type,
+            object? instance,
+            string propName,
+            out T result,
+            T defValue = default!)
+        {
+            var member = GetFirstMember(type ?? instance?.GetType(), propName);
+
+            if (member is PropertyInfo propInfo)
+            {
+                result = GetPropValue(instance, propInfo, defValue);
+                return true;
+            }
+            else
+            if (member is FieldInfo fieldInfo)
+            {
+                result = GetFieldValue(instance, fieldInfo, defValue);
+                return true;
+            }
+
+            result = defValue;
+            return false;
         }
 
         /// <summary>
@@ -666,11 +884,36 @@ namespace Alternet.UI
         /// <param name="name">Property name.</param>
         public static PropertyInfo? GetPropInfo(object? instance, string? name)
         {
-            if (instance == null || string.IsNullOrEmpty(name))
+            if (instance == null || name is null || name.Length == 0)
                 return null;
             var type = instance.GetType();
-            var propInfo = type.GetProperty(name);
+            var propInfo = GetPropertySafe(type, name);
             return propInfo;
+        }
+
+        /// <summary>
+        /// Same as <see cref="Type.GetProperty(string)"/> but doesn't raise exceptions.
+        /// </summary>
+        /// <param name="type">Type where to search for the property.</param>
+        /// <param name="propName">Property name.</param>
+        /// <param name="bindingFlags">Binding flags used when property is searched. Optional.</param>
+        /// <returns></returns>
+        public static PropertyInfo? GetPropertySafe(
+            Type? type,
+            string propName,
+            BindingFlags bindingFlags = DefaultBindingFlags)
+        {
+            var members = type?.GetMember(
+                propName,
+                MemberTypes.Property,
+                bindingFlags);
+
+            if (members is null || members.Length == 0)
+                return null;
+
+            var member = members[0] as PropertyInfo;
+
+            return member;
         }
 
         /// <summary>
