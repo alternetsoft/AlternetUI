@@ -42,6 +42,11 @@ namespace Alternet.UI
         TrimWhiteChars = 16,
 
         /// <summary>
+        /// Trims white chars and all types of brackets.
+        /// </summary>
+        TrimBracketsAndWhiteChars = TrimBrackets | TrimWhiteChars,
+
+        /// <summary>
         /// Trims spaces.
         /// </summary>
         TrimSpaces = 32,
@@ -49,11 +54,11 @@ namespace Alternet.UI
         /// <summary>
         /// Do not trim characters at the start of the string,
         /// </summary>
-        NoStartTrimmin = 64,
+        NoLeading = 64,
 
         /// <summary>
         /// Do not trim characters at the end of the string.
         /// </summary>
-        NoEndTrimmin = 128,
+        NoTrailing = 128,
     }
 }

@@ -95,7 +95,7 @@ namespace Alternet.UI
         /// <summary>
         /// Item handle.
         /// </summary>
-        PropertyGridItemHandle Handle { get; }
+        PropertyGridItemHandle? Handle { get; }
 
         /// <summary>
         /// Item name.

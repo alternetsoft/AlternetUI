@@ -364,7 +364,7 @@ namespace Alternet.Drawing
             };
 
             Handler = FontFactory.Handler.CreateFontHandler();
-            Handler.Update(prm);
+            Handler.Update(this, prm);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Alternet.Drawing
         /// Gets the pixel size.
         /// </summary>
         [Browsable(false)]
-        public virtual int SizeInPixels => Handler.GetPixelSize();
+        public virtual int SizeInPixels => Handler.GetPixelSize(this);
 
         /// <summary>
         /// Gets the size in dips.
@@ -438,7 +438,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         [Browsable(false)]
-        public virtual bool IsUsingSizeInPixels => Handler.IsUsingSizeInPixels();
+        public virtual bool IsUsingSizeInPixels => Handler.IsUsingSizeInPixels(this);
 
         /// <summary>
         /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
@@ -532,7 +532,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public virtual int NumericWeight
         {
-            get => Handler.GetNumericWeight();
+            get => Handler.GetNumericWeight(this);
         }
 
         /// <summary>
@@ -547,7 +547,13 @@ namespace Alternet.Drawing
         /// return value).
         /// </remarks>
         [Browsable(false)]
-        public virtual bool IsFixedWidth => Handler.IsFixedWidth();
+        public virtual bool IsFixedWidth
+        {
+            get
+            {
+                return Handler.IsFixedWidth(this);
+            }
+        }
 
         /// <summary>
         /// Gets the font weight.
@@ -714,7 +720,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Note that under Linux the returned value is always UTF8.
         /// </remarks>
-        internal FontEncoding Encoding => Handler.GetEncoding();
+        internal FontEncoding Encoding => Handler.GetEncoding(this);
 
         /// <summary>
         /// Converts the specified <see cref='Font'/> to a <see cref='SKFont'/>.
@@ -1107,7 +1113,7 @@ namespace Alternet.Drawing
         {
             var result = FontFactory.Handler.CreateFontHandler();
             IFontHandler.FontParams prm = new(this);
-            result.Update(prm);
+            result.Update(this, prm);
             return new Font(result);
         }
 

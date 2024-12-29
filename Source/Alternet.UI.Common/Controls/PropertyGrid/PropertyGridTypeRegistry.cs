@@ -85,7 +85,7 @@ namespace Alternet.UI
 
         public IPropertyGridPropInfoRegistry? GetPropRegistry(string propName)
         {
-            var prop = type.GetProperty(propName);
+            var prop = AssemblyUtils.GetPropertySafe(type, propName);
 
             if (prop is null)
                 return null;
@@ -95,7 +95,7 @@ namespace Alternet.UI
 
         public IPropertyGridPropInfoRegistry? GetPropRegistryOrNull(string propName)
         {
-            var propInfo = type.GetProperty(propName);
+            var propInfo = AssemblyUtils.GetPropertySafe(type, propName);
             if (propInfo == null)
                 return null;
             return GetPropRegistryOrNull(propInfo);

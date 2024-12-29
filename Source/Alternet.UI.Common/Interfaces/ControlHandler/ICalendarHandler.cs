@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with calendar control.
     /// </summary>
-    public interface ICalendarHandler : IControlHandler
+    public interface ICalendarHandler
     {
         /// <summary>
         /// Gets or sets whether or not the first day of week is sunday.

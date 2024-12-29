@@ -72,6 +72,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether to use internal caret. This can be used for testing purposes.
+        /// Usage of this property depends on platform.
+        /// </summary>
+        public static bool UseGeneric { get; set; }
+
+        /// <summary>
         /// Time, in milliseconds, for how long a blinking caret should stay invisible during
         /// a single blink cycle before it reappears.
         /// </summary>

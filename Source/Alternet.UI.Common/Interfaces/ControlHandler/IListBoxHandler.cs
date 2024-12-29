@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allows to work with list box control.
     /// </summary>
-    public interface IListBoxHandler : IControlHandler
+    public interface IListBoxHandler
     {
         /// <inheritdoc cref="CustomListBox{T}.HasBorder"/>
         bool HasBorder { get; set; }

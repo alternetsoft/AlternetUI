@@ -482,7 +482,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="MouseCaptureLost" /> event and <see cref="OnMouseCaptureLost"/> method.
+        /// Raises the <see cref="MouseCaptureLost" /> event and
+        /// <see cref="OnMouseCaptureLost"/> method.
         /// </summary>
         [Browsable(false)]
         public void RaiseMouseCaptureLost()
@@ -501,18 +502,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="TextChanged" /> event.</summary>
+        /// Raises the <see cref="TextChanged" /> event.
+        /// </summary>
         [Browsable(false)]
         public virtual void RaiseTextChanged()
         {
             if (DisposingOrDisposed)
                 return;
-            TextChanged?.Invoke(this, EventArgs.Empty);
-            OnTextChanged(EventArgs.Empty);
 
-            RaiseNotifications((n) => n.AfterTextChanged(this));
+            Invoke(Internal);
 
-            delayedTextChanged.Raise(this, EventArgs.Empty, () => IsDisposed);
+            void Internal()
+            {
+                TextChanged?.Invoke(this, EventArgs.Empty);
+                OnTextChanged(EventArgs.Empty);
+
+                RaiseNotifications((n) => n.AfterTextChanged(this));
+
+                delayedTextChanged.Raise(this, EventArgs.Empty, () => IsDisposed);
+
+                StateFlags &= ~ControlFlags.ForceTextChange;
+            }
         }
 
         /// <summary>

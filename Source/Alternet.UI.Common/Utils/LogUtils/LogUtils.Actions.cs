@@ -187,6 +187,32 @@ namespace Alternet.UI
                 }
             });
 
+            void AddToggle(string title, Type type, string propName)
+            {
+                Fn($"Toggle: {title}", () =>
+                {
+                    var newValue = AssemblyUtils.ToggleBoolMember(type, null, propName);
+                    App.LogNameValue(title, newValue);
+                });
+            }
+
+            AddToggle(
+                "Show Focused Properties",
+                typeof(WindowDevTools),
+                nameof(WindowDevTools.ShowFocusedProperties));
+            AddToggle(
+                "GotFocus event logging",
+                typeof(WindowDevTools),
+                nameof(WindowDevTools.LogGotFocus));
+            AddToggle(
+                "Focused control info",
+                typeof(WindowDevTools),
+                nameof(WindowDevTools.LogFocusedControlInfo));
+            AddToggle(
+                "Use generic caret",
+                typeof(Caret),
+                nameof(Caret.UseGeneric));
+
             Fn("Test Draw Bold Text", () =>
             {
                 var image = DrawingUtils.ImageFromTextWithBoldTag(

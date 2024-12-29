@@ -165,9 +165,10 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridItem? GetPropertyCategory(IPropertyGridItem? prop)
         {
-            if (prop is null)
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
                 return null;
-            var result = NativeControl.GetPropertyCategory(ItemToPtr(prop));
+            var result = NativeControl.GetPropertyCategory(ptr.Value);
             return PtrToItem(result);
         }
 
@@ -188,9 +189,10 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridItem? GetPropertyParent(IPropertyGridItem? prop)
         {
-            if (prop is null)
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
                 return null;
-            var result = NativeControl.GetPropertyParent(ItemToPtr(prop));
+            var result = NativeControl.GetPropertyParent(ptr.Value);
             return PtrToItem(result);
         }
 
@@ -200,9 +202,10 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridItem? GetFirstChild(IPropertyGridItem? prop)
         {
-            if (prop is null)
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
                 return null;
-            var result = NativeControl.GetFirstChild(ItemToPtr(prop));
+            var result = NativeControl.GetFirstChild(ptr.Value);
             return PtrToItem(result);
         }
 
@@ -315,22 +318,12 @@ namespace Alternet.UI
         /// <param name="prop">Property item.</param>
         public virtual IPropertyGridVariant GetPropertyValueAsVariant(IPropertyGridItem prop)
         {
-            var handle = NativeControl.GetPropertyValueAsVariant(ItemToPtr(prop));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return CreateVariant();
+            var handle = NativeControl.GetPropertyValueAsVariant(ptr.Value);
             PropertyGridVariant propValue = new(handle);
             return propValue;
-        }
-
-        /// <summary>
-        /// Sets validator of a property.
-        /// </summary>
-        /// <param name="prop">Property item.</param>
-        /// <param name="validator">Value validator.</param>
-        public virtual void SetPropertyValidator(IPropertyGridItem prop, IValueValidator validator)
-        {
-            IntPtr ptr = default;
-            if (validator != null)
-                ptr = validator.Handle;
-            NativeControl.SetPropertyValidator(ItemToPtr(prop), ptr);
         }
 
         /// <summary>
@@ -359,7 +352,10 @@ namespace Alternet.UI
         /// <param name="bmp">Image.</param>
         public void SetPropertyImage(IPropertyGridItem prop, ImageSet? bmp)
         {
-            NativeControl.SetPropertyImage(ItemToPtr(prop), (UI.Native.ImageSet?)bmp?.Handler);
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyImage(ptr.Value, (UI.Native.ImageSet?)bmp?.Handler);
         }
 
         public bool IsSmallScreen()
@@ -367,92 +363,146 @@ namespace Alternet.UI
             return Native.PropertyGrid.IsSmallScreen();
         }
 
-        void IPropertyGridHandler.RefreshProperty(IPropertyGridItem p)
+        void IPropertyGridHandler.RefreshProperty(IPropertyGridItem prop)
         {
-            NativeControl.RefreshProperty(ItemToPtr(p));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.RefreshProperty(ptr.Value);
         }
 
         void IPropertyGridHandler.SetPropertyReadOnly(
-            IPropertyGridItem id,
+            IPropertyGridItem prop,
             bool set,
             PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyReadOnly(ItemToPtr(id), set, (int)flags);
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyReadOnly(ptr.Value, set, (int)flags);
         }
 
-        void IPropertyGridHandler.SetPropertyValueUnspecified(IPropertyGridItem id)
+        void IPropertyGridHandler.SetPropertyValueUnspecified(IPropertyGridItem prop)
         {
-            NativeControl.SetPropertyValueUnspecified(ItemToPtr(id));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueUnspecified(ptr.Value);
         }
 
         void IPropertyGridHandler.AppendIn(IPropertyGridItem id, IPropertyGridItem newproperty)
         {
-            NativeControl.AppendIn(ItemToPtr(id), ItemToPtr(newproperty));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            var ptr2 = ItemToPtr(newproperty);
+            if (ptr2 is null)
+                return;
+            NativeControl.AppendIn(ptr.Value, ptr2.Value);
         }
 
-        void IPropertyGridHandler.BeginAddChildren(IPropertyGridItem id)
+        void IPropertyGridHandler.BeginAddChildren(IPropertyGridItem prop)
         {
-            NativeControl.BeginAddChildren(ItemToPtr(id));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.BeginAddChildren(ptr.Value);
         }
 
-        bool IPropertyGridHandler.Collapse(IPropertyGridItem id)
+        bool IPropertyGridHandler.Collapse(IPropertyGridItem prop)
         {
-            return NativeControl.Collapse(ItemToPtr(id));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return false;
+            return NativeControl.Collapse(ptr.Value);
         }
 
-        void IPropertyGridHandler.DeleteProperty(IPropertyGridItem id)
+        void IPropertyGridHandler.DeleteProperty(IPropertyGridItem prop)
         {
-            NativeControl.DeleteProperty(ItemToPtr(id));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.DeleteProperty(ptr.Value);
         }
 
         void IPropertyGridHandler.RemoveProperty(IPropertyGridItem id)
         {
-            NativeControl.RemoveProperty(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.RemoveProperty(ptr.Value);
         }
 
         bool IPropertyGridHandler.DisableProperty(IPropertyGridItem id)
         {
-            return NativeControl.DisableProperty(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return false;
+            return NativeControl.DisableProperty(ptr.Value);
         }
 
         bool IPropertyGridHandler.EnableProperty(IPropertyGridItem id, bool enable)
         {
-            return NativeControl.EnableProperty(ItemToPtr(id), enable);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return false;
+            return NativeControl.EnableProperty(ptr.Value, enable);
         }
 
         void IPropertyGridHandler.EndAddChildren(IPropertyGridItem id)
         {
-            NativeControl.EndAddChildren(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.EndAddChildren(ptr.Value);
         }
 
         bool IPropertyGridHandler.Expand(IPropertyGridItem id)
         {
-            return NativeControl.Expand(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.Expand(ptr.Value);
         }
 
         nint IPropertyGridHandler.GetPropertyClientData(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyClientData(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyClientData(ptr.Value);
         }
 
         string IPropertyGridHandler.GetPropertyHelpString(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyHelpString(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return string.Empty;
+            return NativeControl.GetPropertyHelpString(ptr.Value);
         }
 
         string IPropertyGridHandler.GetPropertyLabel(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyLabel(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return string.Empty;
+            return NativeControl.GetPropertyLabel(ptr.Value);
         }
 
         string IPropertyGridHandler.GetPropertyValueAsString(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyValueAsString(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return string.Empty;
+            return NativeControl.GetPropertyValueAsString(ptr.Value);
         }
 
         long IPropertyGridHandler.GetPropertyValueAsLong(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyValueAsLong(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyValueAsLong(ptr.Value);
         }
 
         string IPropertyGridHandler.GetPropNameAsLabel()
@@ -462,27 +512,42 @@ namespace Alternet.UI
 
         ulong IPropertyGridHandler.GetPropertyValueAsULong(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyValueAsULong(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyValueAsULong(ptr.Value);
         }
 
         int IPropertyGridHandler.GetPropertyValueAsInt(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyValueAsInt(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyValueAsInt(ptr.Value);
         }
 
         bool IPropertyGridHandler.GetPropertyValueAsBool(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyValueAsBool(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyValueAsBool(ptr.Value);
         }
 
         double IPropertyGridHandler.GetPropertyValueAsDouble(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyValueAsDouble(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyValueAsDouble(ptr.Value);
         }
 
         DateTime IPropertyGridHandler.GetPropertyValueAsDateTime(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyValueAsDateTime(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyValueAsDateTime(ptr.Value);
         }
 
         bool IPropertyGridHandler.HideProperty(
@@ -490,63 +555,111 @@ namespace Alternet.UI
             bool hide,
             PropertyGridItemValueFlags flags)
         {
-            return NativeControl.HideProperty(ItemToPtr(id), hide, (int)flags);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.HideProperty(ptr.Value, hide, (int)flags);
         }
 
         void IPropertyGridHandler.Insert(
             IPropertyGridItem priorThis, IPropertyGridItem newproperty)
         {
-            NativeControl.Insert(ItemToPtr(priorThis), ItemToPtr(newproperty));
+            var ptr = ItemToPtr(priorThis);
+            if (ptr is null)
+                return;
+            var ptr2 = ItemToPtr(newproperty);
+            if (ptr2 is null)
+                return;
+            NativeControl.Insert(ptr.Value, ptr2.Value);
         }
 
-        void IPropertyGridHandler.InsertByIndex(IPropertyGridItem parent, int index, IPropertyGridItem newproperty)
+        void IPropertyGridHandler.InsertByIndex(
+            IPropertyGridItem parent,
+            int index,
+            IPropertyGridItem newproperty)
         {
-            NativeControl.InsertByIndex(ItemToPtr(parent), index, ItemToPtr(newproperty));
+            var ptr = ItemToPtr(parent);
+            if (ptr is null)
+                return;
+            var ptr2 = ItemToPtr(newproperty);
+            if (ptr2 is null)
+                return;
+            NativeControl.InsertByIndex(ptr.Value, index, ptr2.Value);
         }
 
         bool IPropertyGridHandler.IsPropertyCategory(IPropertyGridItem id)
         {
-            return NativeControl.IsPropertyCategory(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.IsPropertyCategory(ptr.Value);
         }
 
         bool IPropertyGridHandler.IsPropertyEnabled(IPropertyGridItem id)
         {
-            return NativeControl.IsPropertyEnabled(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.IsPropertyEnabled(ptr.Value);
         }
 
         bool IPropertyGridHandler.IsPropertyExpanded(IPropertyGridItem id)
         {
-            return NativeControl.IsPropertyExpanded(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.IsPropertyExpanded(ptr.Value);
         }
 
         bool IPropertyGridHandler.IsPropertyModified(IPropertyGridItem id)
         {
-            return NativeControl.IsPropertyModified(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.IsPropertyModified(ptr.Value);
         }
 
         bool IPropertyGridHandler.IsPropertySelected(IPropertyGridItem id)
         {
-            return NativeControl.IsPropertySelected(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.IsPropertySelected(ptr.Value);
         }
 
         bool IPropertyGridHandler.IsPropertyShown(IPropertyGridItem id)
         {
-            return NativeControl.IsPropertyShown(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.IsPropertyShown(ptr.Value);
         }
 
         bool IPropertyGridHandler.IsPropertyValueUnspecified(IPropertyGridItem id)
         {
-            return NativeControl.IsPropertyValueUnspecified(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.IsPropertyValueUnspecified(ptr.Value);
         }
 
         void IPropertyGridHandler.LimitPropertyEditing(IPropertyGridItem id, bool limit)
         {
-            NativeControl.LimitPropertyEditing(ItemToPtr(id), limit);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.LimitPropertyEditing(ptr.Value, limit);
         }
 
         void IPropertyGridHandler.ReplaceProperty(IPropertyGridItem id, IPropertyGridItem property)
         {
-            NativeControl.ReplaceProperty(ItemToPtr(id), ItemToPtr(property));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            var ptr2 = ItemToPtr(property);
+            if (ptr2 is null)
+                return;
+            NativeControl.ReplaceProperty(ptr.Value, ptr2.Value);
         }
 
         void IPropertyGridHandler.SetPropertyBackgroundColor(
@@ -554,14 +667,20 @@ namespace Alternet.UI
             Color color,
             PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyBackgroundColor(ItemToPtr(id), color, (int)flags);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyBackgroundColor(ptr.Value, color, (int)flags);
         }
 
         void IPropertyGridHandler.SetPropertyColorsToDefault(
             IPropertyGridItem id,
             PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyColorsToDefault(ItemToPtr(id), (int)flags);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyColorsToDefault(ptr.Value, (int)flags);
         }
 
         void IPropertyGridHandler.SetPropertyTextColor(
@@ -569,72 +688,116 @@ namespace Alternet.UI
             Color col,
             PropertyGridItemValueFlags flags)
         {
-            NativeControl.SetPropertyTextColor(ItemToPtr(id), col, (int)flags);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyTextColor(ptr.Value, col, (int)flags);
         }
 
         Color IPropertyGridHandler.GetPropertyBackgroundColor(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyBackgroundColor(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return Color.Empty;
+            return NativeControl.GetPropertyBackgroundColor(ptr.Value);
         }
 
         Color IPropertyGridHandler.GetPropertyTextColor(IPropertyGridItem id)
         {
-            return NativeControl.GetPropertyTextColor(ItemToPtr(id));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return Color.Empty;
+            return NativeControl.GetPropertyTextColor(ptr.Value);
         }
 
         void IPropertyGridHandler.SetPropertyEditorByName(IPropertyGridItem id, string editorName)
         {
-            NativeControl.SetPropertyEditorByName(ItemToPtr(id), editorName);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyEditorByName(ptr.Value, editorName);
         }
 
         void IPropertyGridHandler.SetPropertyLabel(IPropertyGridItem id, string newproplabel)
         {
-            NativeControl.SetPropertyLabel(ItemToPtr(id), newproplabel);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyLabel(ptr.Value, newproplabel);
         }
 
         void IPropertyGridHandler.SetPropertyName(IPropertyGridItem id, string newName)
         {
-            NativeControl.SetPropertyName(ItemToPtr(id), newName);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyName(ptr.Value, newName);
         }
 
         void IPropertyGridHandler.SetPropertyHelpString(IPropertyGridItem id, string helpString)
         {
-            NativeControl.SetPropertyHelpString(ItemToPtr(id), helpString);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyHelpString(ptr.Value, helpString);
         }
 
         bool IPropertyGridHandler.SetPropertyMaxLength(IPropertyGridItem id, int maxLen)
         {
-            return NativeControl.SetPropertyMaxLength(ItemToPtr(id), maxLen);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return default;
+            return NativeControl.SetPropertyMaxLength(ptr.Value, maxLen);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsLong(IPropertyGridItem id, long value)
         {
-            NativeControl.SetPropertyValueAsLong(ItemToPtr(id), value);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueAsLong(ptr.Value, value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsInt(IPropertyGridItem id, int value)
         {
-            NativeControl.SetPropertyValueAsInt(ItemToPtr(id), value);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueAsInt(ptr.Value, value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsDouble(IPropertyGridItem id, double value)
         {
-            NativeControl.SetPropertyValueAsDouble(ItemToPtr(id), value);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueAsDouble(ptr.Value, value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsBool(IPropertyGridItem id, bool value)
         {
-            NativeControl.SetPropertyValueAsBool(ItemToPtr(id), value);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueAsBool(ptr.Value, value);
         }
 
         void IPropertyGridHandler.SetPropertyValueAsStr(IPropertyGridItem id, string value)
         {
-            NativeControl.SetPropertyValueAsStr(ItemToPtr(id), value);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueAsStr(ptr.Value, value);
         }
 
-        void IPropertyGridHandler.SetPropertyValueAsVariant(IPropertyGridItem id, IPropertyGridVariant variant)
+        void IPropertyGridHandler.SetPropertyValueAsVariant(
+            IPropertyGridItem id,
+            IPropertyGridVariant variant)
         {
-            NativeControl.SetPropertyValueAsVariant(ItemToPtr(id), VariantToHandle(variant));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueAsVariant(ptr.Value, VariantToHandle(variant));
         }
 
         public nint VariantToHandle(IPropertyGridVariant variant)
@@ -644,7 +807,10 @@ namespace Alternet.UI
 
         void IPropertyGridHandler.SetPropertyValueAsDateTime(IPropertyGridItem id, DateTime value)
         {
-            NativeControl.SetPropertyValueAsDateTime(ItemToPtr(id), value);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyValueAsDateTime(ptr.Value, value);
         }
 
         void IPropertyGridHandler.SetValidationFailureBehavior(PropertyGridValidationFailure vfbFlags)
@@ -654,17 +820,28 @@ namespace Alternet.UI
 
         void IPropertyGridHandler.SortChildren(IPropertyGridItem id, PropertyGridItemValueFlags flags)
         {
-            NativeControl.SortChildren(ItemToPtr(id), (int)flags);
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SortChildren(ptr.Value, (int)flags);
         }
 
-        bool IPropertyGridHandler.ChangePropertyValue(IPropertyGridItem id, IPropertyGridVariant variant)
+        bool IPropertyGridHandler.ChangePropertyValue(
+            IPropertyGridItem id,
+            IPropertyGridVariant variant)
         {
-            return NativeControl.ChangePropertyValue(ItemToPtr(id), VariantToHandle(variant));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return false;
+            return NativeControl.ChangePropertyValue(ptr.Value, VariantToHandle(variant));
         }
 
         void IPropertyGridHandler.SetPropertyClientData(IPropertyGridItem prop, nint clientData)
         {
-            NativeControl.SetPropertyClientData(ItemToPtr(prop), clientData);
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyClientData(ptr.Value, clientData);
         }
 
         void IPropertyGridHandler.SetPropertyAttribute(
@@ -673,8 +850,11 @@ namespace Alternet.UI
             IPropertyGridVariant variant,
             PropertyGridItemValueFlags argFlags)
         {
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
             NativeControl.SetPropertyAttribute(
-                ItemToPtr(id),
+                ptr.Value,
                 attrName,
                 VariantToHandle(variant),
                 (int)argFlags);
@@ -867,45 +1047,72 @@ namespace Alternet.UI
 
         bool IPropertyGridHandler.EnsureVisible(IPropertyGridItem propArg)
         {
-            return NativeControl.EnsureVisible(ItemToPtr(propArg));
+            var ptr = ItemToPtr(propArg);
+            if (ptr is null)
+                return false;
+            return NativeControl.EnsureVisible(ptr.Value);
         }
 
         bool IPropertyGridHandler.SelectProperty(IPropertyGridItem propArg, bool focus)
         {
-            return NativeControl.SelectProperty(ItemToPtr(propArg), focus);
+            var ptr = ItemToPtr(propArg);
+            if (ptr is null)
+                return false;
+            return NativeControl.SelectProperty(ptr.Value, focus);
         }
 
         bool IPropertyGridHandler.AddToSelection(IPropertyGridItem propArg)
         {
-            return NativeControl.AddToSelection(ItemToPtr(propArg));
+            var ptr = ItemToPtr(propArg);
+            if (ptr is null)
+                return false;
+            return NativeControl.AddToSelection(ptr.Value);
         }
 
         bool IPropertyGridHandler.RemoveFromSelection(IPropertyGridItem propArg)
         {
-            return NativeControl.RemoveFromSelection(ItemToPtr(propArg));
+            var ptr = ItemToPtr(propArg);
+            if (ptr is null)
+                return false;
+            return NativeControl.RemoveFromSelection(ptr.Value);
         }
 
-        void IPropertyGridHandler.SetCurrentCategory(IPropertyGridItem propArg)
+        void IPropertyGridHandler.SetCurrentCategory(IPropertyGridItem id)
         {
-            NativeControl.SetCurrentCategory(ItemToPtr(propArg));
+            var ptr = ItemToPtr(id);
+            if (ptr is null)
+                return;
+            NativeControl.SetCurrentCategory(ptr.Value);
         }
 
         RectI IPropertyGridHandler.GetImageRect(IPropertyGridItem p, int item)
         {
-            return NativeControl.GetImageRect(ItemToPtr(p), item);
+            var ptr = ItemToPtr(p);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetImageRect(ptr.Value, item);
         }
 
         SizeI IPropertyGridHandler.GetImageSize(IPropertyGridItem? p, int item)
         {
-            return NativeControl.GetImageSize(ItemToPtr(p), item);
+            var ptr = ItemToPtr(p);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetImageSize(ptr.Value, item);
         }
 
-        PropertyGridItemHandle IPropertyGridHandler.CreateStringProperty(string label, string name, string value)
+        PropertyGridItemHandle IPropertyGridHandler.CreateStringProperty(
+            string label,
+            string name,
+            string value)
         {
             return CreateHandle(NativeControl.CreateStringProperty(label, name, value));
         }
 
-        PropertyGridItemHandle IPropertyGridHandler.CreateFilenameProperty(string label, string name, string value)
+        PropertyGridItemHandle IPropertyGridHandler.CreateFilenameProperty(
+            string label,
+            string name,
+            string value)
         {
             return CreateHandle(NativeControl.CreateFilenameProperty(label, name, value));
         }
@@ -987,7 +1194,10 @@ namespace Alternet.UI
 
         void IPropertyGridHandler.Append(IPropertyGridItem property)
         {
-            NativeControl.Append(ItemToPtr(property));
+            var ptr = ItemToPtr(property);
+            if (ptr is null)
+                return;
+            NativeControl.Append(ptr.Value);
         }
 
         bool IPropertyGridHandler.ClearSelection(bool validation)
@@ -1017,7 +1227,10 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.GetPropertyName(IPropertyGridItem property)
         {
-            return NativeControl.GetPropertyName(ItemToPtr(property));
+            var ptr = ItemToPtr(property);
+            if (ptr is null)
+                return string.Empty;
+            return NativeControl.GetPropertyName(ptr.Value);
         }
 
         bool IPropertyGridHandler.RestoreEditableState(string src, PropertyGridEditableState restoreStates)
@@ -1065,7 +1278,10 @@ namespace Alternet.UI
             PropertyGridItemFlags flag,
             bool value)
         {
-            NativeControl.SetPropertyFlag(ItemToPtr(prop), (int)flag, value);
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyFlag(ptr.Value, (int)flag, value);
         }
 
         void IPropertyGridHandler.AddActionTrigger(
@@ -1282,11 +1498,6 @@ namespace Alternet.UI
             return new NativePropertyGrid(PropertyGrid.DefaultCreateStyle);
         }
 
-        internal IntPtr GetPropertyValidator(IPropertyGridItem prop)
-        {
-            return NativeControl.GetPropertyValidator(ItemToPtr(prop));
-        }
-
         internal bool CommitChangesFromEditor()
         {
             return NativeControl.CommitChangesFromEditor(0);
@@ -1294,25 +1505,34 @@ namespace Alternet.UI
 
         internal IntPtr GetPropertyImage(IPropertyGridItem prop)
         {
-            return NativeControl.GetPropertyImage(ItemToPtr(prop));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return default;
+            return NativeControl.GetPropertyImage(ptr.Value);
         }
 
         internal void SetPropertyEditor(IPropertyGridItem prop, IntPtr editor)
         {
-            NativeControl.SetPropertyEditor(ItemToPtr(prop), editor);
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.SetPropertyEditor(ptr.Value, editor);
         }
 
-        internal IntPtr ItemToPtr(IPropertyGridItem? prop)
+        internal IntPtr? ItemToPtr(IPropertyGridItem? prop)
         {
-            if (prop is null)
-                return default;
-            var handle = ((WxPropertyGridItemHandle)prop.Handle).Handle;
+            if (DisposingOrDisposed)
+                return null;
+            var handle = (prop?.Handle as WxPropertyGridItemHandle)?.Handle;
             return handle;
         }
 
         internal void DeleteProperty(IPropertyGridItem prop)
         {
-            NativeControl.DeleteProperty(ItemToPtr(prop));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.DeleteProperty(ptr.Value);
         }
 
         internal void SetupTextCtrlValue(string text)
@@ -1322,7 +1542,10 @@ namespace Alternet.UI
 
         internal void EndAddChildren(IPropertyGridItem prop)
         {
-            NativeControl.EndAddChildren(ItemToPtr(prop));
+            var ptr = ItemToPtr(prop);
+            if (ptr is null)
+                return;
+            NativeControl.EndAddChildren(ptr.Value);
         }
 
         protected override void OnDetach()

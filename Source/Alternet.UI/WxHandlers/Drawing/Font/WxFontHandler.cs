@@ -11,7 +11,13 @@ namespace Alternet.UI.Native
 {
     internal partial class Font : IFontHandler
     {
-        void IFontHandler.Update(IFontHandler.FontParams prm)
+        /// <summary>
+        /// Gets whether font is using size in pixels.
+        /// </summary>
+        bool IFontHandler.IsUsingSizeInPixels(Alternet.Drawing.Font font)
+            => IsUsingSizeInPixels();
+
+        void IFontHandler.Update(Alternet.Drawing.Font font, IFontHandler.FontParams prm)
         {
             Alternet.Drawing.Font.CoerceFontParams(prm);
             Initialize(
@@ -33,14 +39,24 @@ namespace Alternet.UI.Native
             return (FontWeight)GetWeight();
         }
 
-        int IFontHandler.GetPixelSize()
+        int IFontHandler.GetPixelSize(Alternet.Drawing.Font font)
         {
             return GetPixelSize().Height;
         }
 
-        FontEncoding IFontHandler.GetEncoding()
+        FontEncoding IFontHandler.GetEncoding(Alternet.Drawing.Font font)
         {
             return (FontEncoding)GetEncoding();
+        }
+
+        int IFontHandler.GetNumericWeight(Alternet.Drawing.Font font)
+        {
+            return GetNumericWeight();
+        }
+
+        bool IFontHandler.IsFixedWidth(Alternet.Drawing.Font font)
+        {
+            return IsFixedWidth();
         }
     }
 }

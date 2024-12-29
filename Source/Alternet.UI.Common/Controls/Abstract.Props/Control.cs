@@ -382,6 +382,7 @@ namespace Alternet.UI
         /// Gets a <see cref="IControlHandler"/> associated with this class
         /// or Null if control is disposed.
         /// </summary>
+        [Browsable(false)]
         public IControlHandler? SafeHandler
         {
             get
@@ -401,7 +402,7 @@ namespace Alternet.UI
             get
             {
                 EnsureHandlerCreated();
-                return handler ?? throw new InvalidOperationException("Error creating control handler");
+                return handler ??= new HandlerForDisposed();
             }
         }
 
@@ -577,6 +578,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override void RaiseBackgroundColorChanged()
         {
             if (BackgroundColor is null)
@@ -599,12 +601,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override Graphics CreateDrawingContext()
         {
             return SafeHandler?.CreateDrawingContext() ?? new PlessGraphics();
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override void Invalidate()
         {
             if (CanSkipInvalidate())
@@ -959,7 +963,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                 {
-                    handler = PlessControlHandler.Default;
+                    handler = new HandlerForDisposed();
                     return;
                 }
 
@@ -1138,7 +1142,7 @@ namespace Alternet.UI
         {
             protected override IControlHandler CreateHandler()
             {
-                return PlessControlHandler.Default;
+                return HandlerForDisposed.Default;
             }
         }
     }

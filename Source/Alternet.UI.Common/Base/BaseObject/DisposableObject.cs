@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// about to enter the idle state.
         /// </summary>
         /// <param name="action">Action to call.</param>
-        public void RunWhenIdle(Action action)
+        public virtual void RunWhenIdle(Action action)
         {
             App.AddIdleTask(() =>
             {
@@ -144,7 +144,7 @@ namespace Alternet.UI
         /// </remarks>
         [Conditional("DEBUG")]
         [Browsable(false)]
-        public void CheckDisposed()
+        public virtual void CheckDisposed()
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(null);

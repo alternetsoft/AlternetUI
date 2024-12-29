@@ -74,11 +74,8 @@ namespace Alternet.UI
 
             set
             {
-                value ??= " ";
-                if (Text == value)
-                    return;
+                value ??= StringUtils.OneSpace;
                 base.Text = value;
-                Handler.Text = value;
             }
         }
 
@@ -92,11 +89,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return string.Empty;
                 return Handler.Url;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.Url = value;
             }
         }
@@ -108,8 +109,19 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color HoverColor
         {
-            get => Handler.HoverColor;
-            set => Handler.HoverColor = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.HoverColor;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.HoverColor = value;
+            }
         }
 
         /// <summary>
@@ -120,8 +132,19 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color NormalColor
         {
-            get => Handler.NormalColor;
-            set => Handler.NormalColor = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.NormalColor;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.NormalColor = value;
+            }
         }
 
         /// <summary>
@@ -132,8 +155,19 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color VisitedColor
         {
-            get => Handler.VisitedColor;
-            set => Handler.VisitedColor = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.VisitedColor;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.VisitedColor = value;
+            }
         }
 
         /// <summary>
@@ -143,8 +177,19 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool Visited
         {
-            get => Handler.Visited;
-            set => Handler.Visited = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.Visited;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.Visited = value;
+            }
         }
 
         [Browsable(false)]
@@ -166,6 +211,8 @@ namespace Alternet.UI
         /// <param name="e"></param>
         public void RaiseLinkClicked(CancelEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnLinkClicked(e);
             if (!e.Cancel)
                 LinkClicked?.Invoke(this, e);

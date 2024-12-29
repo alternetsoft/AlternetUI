@@ -632,35 +632,10 @@ namespace Alternet.Drawing
         /// the culture "en-US".
         /// <param name="source">String with rectangle data.</param>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD Parse(string source)
         {
-            IFormatProvider formatProvider = App.InvariantEnglishUS;
-
-            TokenizerHelper th = new(source, formatProvider);
-
-            RectD value;
-
-            string firstToken = th.NextTokenRequired();
-
-            // The token will already have had whitespace trimmed so we can do a
-            // simple string compare.
-            if (firstToken == "Empty")
-            {
-                value = Empty;
-            }
-            else
-            {
-                value = new RectD(
-                    Convert.ToSingle(firstToken, formatProvider),
-                    Convert.ToSingle(th.NextTokenRequired(), formatProvider),
-                    Convert.ToSingle(th.NextTokenRequired(), formatProvider),
-                    Convert.ToSingle(th.NextTokenRequired(), formatProvider));
-            }
-
-            // There should be no more tokens in this string.
-            th.LastTokenRequired();
-
-            return value;
+            return ConversionUtils.ParseFourFloats(source);
         }
 
         /// <summary>

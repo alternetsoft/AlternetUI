@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -11,9 +7,10 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Key Converter class for converting between a string and the Type of a Key
+    /// <see cref="TypeConverter"/> descendant for converting
+    /// between a string and <see cref="Key"/>.
     /// </summary>
-    public class KeyConverter : TypeConverter
+    public class KeyConverter : BaseTypeConverter
     {
         /// <summary>
         /// Gets or sets default <see cref="KeyConverter"/> implementation.
@@ -44,30 +41,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// CanConvertFrom()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="sourceType"></param>
-        /// <returns></returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
-        {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// TypeConverter method override.
-        /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
+        /// <inheritdoc/>
         public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
         {
             // We can convert to a string.
@@ -81,18 +55,14 @@ namespace Alternet.UI
                     Key key = (Key)context.Instance;
                     return (int)key >= (int)Key.None/* && (int)key <= (int)Key.DeadCharProcessed*/;
                 }
+                else
+                    return true;
             }
 
             return false;
         }
 
-        /// <summary>
-        /// ConvertFrom()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override object ConvertFrom(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
@@ -103,14 +73,7 @@ namespace Alternet.UI
             throw GetConvertFromException(source);
         }
 
-        /// <summary>
-        /// ConvertTo()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override object? ConvertTo(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
@@ -171,7 +134,10 @@ namespace Alternet.UI
                     else
                     {
                         throw new ArgumentException(
-                            string.Format(ErrorMessages.Default.CannotConvertStringToType, keyToken, typeof(Key)));
+                            string.Format(
+                                ErrorMessages.Default.CannotConvertStringToType,
+                                keyToken,
+                                typeof(Key)));
                     }
                 }
                 else

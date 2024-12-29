@@ -276,24 +276,10 @@ namespace Alternet.Drawing
         /// <see cref="App.InvariantEnglishUS"/> culture.
         /// <param name="source">String with data.</param>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointD Parse(string source)
         {
-            IFormatProvider formatProvider = App.InvariantEnglishUS;
-
-            TokenizerHelper th = new(source, formatProvider);
-
-            PointD value;
-
-            string firstToken = th.NextTokenRequired();
-
-            value = new PointD(
-                Convert.ToSingle(firstToken, formatProvider),
-                Convert.ToSingle(th.NextTokenRequired(), formatProvider));
-
-            // There should be no more tokens in this string.
-            th.LastTokenRequired();
-
-            return value;
+            return ConversionUtils.ParseTwoFloats(source);
         }
 
         /// <summary>

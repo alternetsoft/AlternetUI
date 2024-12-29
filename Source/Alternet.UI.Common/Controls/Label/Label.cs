@@ -164,6 +164,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnHandlerTextChanged()
         {
+            // Must be empty here.
         }
 
         /// <inheritdoc/>

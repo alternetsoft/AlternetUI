@@ -235,10 +235,7 @@ namespace WindowPropertiesSample
         private void ReportBoundsChanged(string prefix)
         {
             var b = testWindow?.Bounds;
-            var eb = testWindow?.Handler.EventBounds;
-
-            var s = $"{prefix} B: {b}, EB: {eb}";
-
+            var s = $"{prefix} Bounds: {b}";
             App.LogReplace(s, prefix);
         }
 

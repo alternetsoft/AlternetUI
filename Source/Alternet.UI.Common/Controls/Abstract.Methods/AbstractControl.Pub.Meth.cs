@@ -167,6 +167,7 @@ namespace Alternet.UI
         /// Returns the currently hovered control, or <see langword="null"/> if
         /// no control is under the mouse.
         /// </summary>
+        [Browsable(false)]
         public static AbstractControl? GetHoveredControl()
         {
             return HoveredControl;
@@ -175,6 +176,7 @@ namespace Alternet.UI
         /// <summary>
         /// Generates new group index.
         /// </summary>
+        [Browsable(false)]
         public static int NewGroupIndex() => groupIndexCounter++;
 
         /// <summary>
@@ -289,6 +291,7 @@ namespace Alternet.UI
         /// <see cref="IsDarkBackground"/> property.
         /// </summary>
         /// <param name="knownSvgColor">Known svg color identifier.</param>
+        [Browsable(false)]
         public virtual Color GetSvgColor(KnownSvgColor knownSvgColor = KnownSvgColor.Normal)
         {
             return SvgColors.GetSvgColor(knownSvgColor, IsDarkBackground);
@@ -297,13 +300,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
         /// </summary>
+        [Browsable(false)]
         public virtual IReadOnlyFontAndColor GetDefaultFontAndColor()
         {
             return new FontAndColor.ControlDefaultFontAndColor(this);
         }
 
         /// <summary>
-        /// Updates <see cref="ToolTip"/> so it will be repainted in the screen if it is currently shown.
+        /// Updates <see cref="ToolTip"/> so it will be repainted in the screen
+        /// if it is currently shown.
         /// </summary>
         [Browsable(false)]
         public virtual void UpdateToolTip()
@@ -340,6 +345,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets bacgkround color to the default value.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetBackgroundColor()
         {
             BackgroundColor = null;
@@ -348,6 +354,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets foreground color to the default value.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetForegroundColor()
         {
             ForegroundColor = null;
@@ -376,23 +383,6 @@ namespace Alternet.UI
             if (HasChildren)
                 return Children.OfType<T>();
             return Array.Empty<T>();
-        }
-
-        /// <summary>
-        /// Executes a delegate asynchronously on the thread that the control
-        /// was created on.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes parameters
-        /// of the same number and type that are contained in the args parameter.</param>
-        /// <param name="args">An array of objects to pass as arguments to the
-        /// given method. This can be <c>null</c> if no arguments are needed.</param>
-        /// <returns>An <see cref="IAsyncResult"/> that represents the result
-        /// of the operation.</returns>
-        public virtual IAsyncResult BeginInvoke(Delegate method, object?[] args)
-        {
-            if (method == null)
-                throw new ArgumentNullException(nameof(method));
-            return SynchronizationService.BeginInvoke(method, args);
         }
 
         /// <summary>
@@ -469,6 +459,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
         /// </summary>
+        [Browsable(false)]
         public virtual void PerformLayoutAndInvalidate(Action? action = null)
         {
             if (action is null)
@@ -485,30 +476,16 @@ namespace Alternet.UI
         public void SetText(object? value) => Text = value.SafeToString();
 
         /// <summary>
-        /// Executes a delegate asynchronously on the thread that the control
-        /// was created on.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes no
-        /// parameters.</param>
-        /// <returns>An <see cref="IAsyncResult"/> that represents the result of
-        /// the operation.</returns>
-        public virtual IAsyncResult BeginInvoke(Delegate method)
-        {
-            if (method == null)
-                throw new ArgumentNullException(nameof(method));
-            return BeginInvoke(method, Array.Empty<object?>());
-        }
-
-        /// <summary>
         /// Executes <see cref="Action"/> and calls <see cref="ProcessException"/>
         /// event if exception was raised during execution.
         /// </summary>
-        /// <param name="action"></param>
-        public virtual void AvoidException(Action action)
+        /// <param name="action">Action to execute.</param>
+        public virtual bool AvoidException(Action action)
         {
             try
             {
                 action();
+                return true;
             }
             catch (Exception exception)
             {
@@ -516,104 +493,8 @@ namespace Alternet.UI
                 RaiseProcessException(data);
                 if (data.ThrowIt)
                     throw;
+                return false;
             }
-        }
-
-        /// <summary>
-        /// Executes an action asynchronously on the thread that the control
-        /// was created on.
-        /// </summary>
-        /// <param name="action">An action to execute.</param>
-        /// <returns>An <see cref="IAsyncResult"/> that represents the result
-        /// of the operation.</returns>
-        /// <remarks>
-        /// You can call this method from another non-ui thread with action
-        /// which can perform operation on ui controls.
-        /// </remarks>
-        /// <example>
-        /// private void StartCounterThread1()
-        /// {
-        ///    var thread1 = new Thread(() =>
-        ///    {
-        ///      for (int i = 0; ; i++)
-        ///      {
-        ///          BeginInvoke(() => beginInvokeCounterLabel.Text = i.ToString());
-        ///          Thread.Sleep(1000);
-        ///       }
-        ///    })
-        ///    { IsBackground = true };
-        ///
-        ///    thread1.Start();
-        /// }
-        /// </example>
-        public virtual IAsyncResult BeginInvoke(Action action)
-        {
-            if (action == null)
-                throw new ArgumentNullException(nameof(action));
-            return BeginInvoke(action, Array.Empty<object?>());
-        }
-
-        /// <summary>
-        /// Retrieves the return value of the asynchronous operation represented
-        /// by the <see cref="IAsyncResult"/> passed.
-        /// </summary>
-        /// <param name="result">The <see cref="IAsyncResult"/> that represents
-        /// a specific invoke asynchronous operation, returned when calling
-        /// <see cref="BeginInvoke(Delegate)"/>.</param>
-        /// <returns>The <see cref="object"/> generated by the
-        /// asynchronous operation.</returns>
-        public virtual object? EndInvoke(IAsyncResult result)
-        {
-            if (result == null)
-                throw new ArgumentNullException(nameof(result));
-            return SynchronizationService.EndInvoke(result);
-        }
-
-        /// <summary>
-        /// Executes the specified delegate, on the thread that owns the control,
-        /// with the specified list of arguments.
-        /// </summary>
-        /// <param name="method">A delegate to a method that takes parameters of
-        /// the same number and type that are contained in the
-        /// <c>args</c> parameter.</param>
-        /// <param name="args">An array of objects to pass as arguments to
-        /// the specified method. This parameter can be <c>null</c> if the
-        /// method takes no arguments.</param>
-        /// <returns>An <see cref="object"/> that contains the return value
-        /// from the delegate being invoked, or <c>null</c> if the delegate has
-        /// no return value.</returns>
-        public virtual object? Invoke(Delegate? method, object?[] args)
-        {
-            if (method == null)
-                return null;
-            return SynchronizationService.Invoke(method, args);
-        }
-
-        /// <summary>
-        /// Executes the specified delegate on the thread that owns the control.
-        /// </summary>
-        /// <param name="method">A delegate that contains a method to be called
-        /// in the control's thread context.</param>
-        /// <returns>An <see cref="object"/> that contains the return value from
-        /// the delegate being invoked, or <c>null</c> if the delegate has no
-        /// return value.</returns>
-        public virtual object? Invoke(Delegate? method)
-        {
-            if (method == null)
-                return null;
-            return Invoke(method, Array.Empty<object?>());
-        }
-
-        /// <summary>
-        /// Executes the specified action on the thread that owns the control.
-        /// </summary>
-        /// <param name="action">An action to be called in the control's
-        /// thread context.</param>
-        public virtual void Invoke(Action? action)
-        {
-            if (action == null)
-                return;
-            Invoke(action, Array.Empty<object?>());
         }
 
         /// <summary>
@@ -736,7 +617,11 @@ namespace Alternet.UI
         /// <see cref="Visible"/> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method
         /// is called.</remarks>
-        public virtual void Show() => Visible = true;
+        public virtual void Show()
+        {
+            // This method must be virtual as it is overriden in some descendants.
+            Visible = true;
+        }
 
         /// <summary>
         /// Gets the child control at the specified index.
@@ -800,6 +685,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets all child controls recursively.
         /// </summary>
+        [Browsable(false)]
         public virtual ControlSet GetChildrenRecursive()
         {
             if (!HasChildren)
@@ -930,6 +816,7 @@ namespace Alternet.UI
         /// Returns enumeration with the list of visible child controls.
         /// </summary>
         /// <seealso cref="GetVisibleChildOrNull"/>
+        [Browsable(false)]
         public virtual IReadOnlyList<AbstractControl> GetVisibleChildren()
         {
             if (HasChildren)
@@ -956,6 +843,7 @@ namespace Alternet.UI
         /// <returns>The child control at the specified index in the
         /// visible child controls list.</returns>
         /// <seealso cref="GetVisibleChildren"/>
+        [Browsable(false)]
         public virtual AbstractControl? GetVisibleChildOrNull(int index = 0)
         {
             var childs = GetVisibleChildren();
@@ -982,7 +870,7 @@ namespace Alternet.UI
         /// returns a value of <c>false</c> until the <see cref="Show"/> method
         /// is called.
         /// </remarks>
-        public virtual void Hide() => Visible = false;
+        public void Hide() => Visible = false;
 
         /// <summary>
         /// Creates the <see cref="Graphics"/> for the control.
@@ -1002,6 +890,7 @@ namespace Alternet.UI
         /// that you want to use the <see cref="Graphics"/> object,
         /// and then call its Dispose() when you are finished using it.
         /// </remarks>
+        [Browsable(false)]
         public virtual Graphics CreateDrawingContext()
         {
             return new PlessGraphics();
@@ -1011,6 +900,7 @@ namespace Alternet.UI
         /// Same as <see cref="CreateDrawingContext"/>. Added mainly for legacy code.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual Graphics CreateGraphics() => CreateDrawingContext();
 
         /// <summary>
@@ -1176,6 +1066,7 @@ namespace Alternet.UI
         /// Forces the control to invalidate itself and immediately redraw itself
         /// and any child controls. Calls <see cref="Invalidate()"/> and <see cref="Update"/>.
         /// </summary>
+        [Browsable(false)]
         public void Refresh()
         {
             Invalidate();
@@ -1186,6 +1077,7 @@ namespace Alternet.UI
         /// Invalidates the control and causes a paint message to be sent to
         /// the control.
         /// </summary>
+        [Browsable(false)]
         public virtual void Invalidate()
         {
             RaiseInvalidated(new(ClientRectangle));
@@ -1194,6 +1086,7 @@ namespace Alternet.UI
         /// <summary>
         /// Causes the control to redraw the invalidated regions.
         /// </summary>
+        [Browsable(false)]
         public virtual void Update()
         {
         }
@@ -1226,6 +1119,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New property value</param>
         /// <param name="recursive">Whether to apply to all children recurively.</param>
+        [Browsable(false)]
         public virtual void SetChildrenUseParentBackColor(bool value = true, bool recursive = false)
         {
             ForEachChild((control) => control.ParentBackColor = value, recursive);
@@ -1236,6 +1130,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New property value</param>
         /// <param name="recursive">Whether to apply to all children recurively.</param>
+        [Browsable(false)]
         public virtual void SetChildrenUseParentForeColor(bool value = true, bool recursive = false)
         {
             ForEachChild((control) => control.ParentForeColor = value, recursive);
@@ -1246,6 +1141,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New property value</param>
         /// <param name="recursive">Whether to apply to all children recurively.</param>
+        [Browsable(false)]
         public virtual void SetChildrenUseParentFont(bool value = true, bool recursive = false)
         {
             ForEachChild((control) => control.ParentFont = value, recursive);
@@ -1351,6 +1247,7 @@ namespace Alternet.UI
         /// method to enable the changes to take effect.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public virtual void ResumeLayout(bool performLayout = true)
         {
             layoutSuspendCount--;
@@ -1394,6 +1291,7 @@ namespace Alternet.UI
         /// Returns value of the <see cref="FileSystem"/> property if it is not <c>null</c>;
         /// otherwise returns <see cref="Alternet.UI.FileSystem.Default"/>.
         /// </returns>
+        [Browsable(false)]
         public virtual IFileSystem GetFileSystem()
         {
             return FileSystem ?? UI.FileSystem.Default;
@@ -1450,6 +1348,7 @@ namespace Alternet.UI
         /// You should not use this property.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual IntPtr GetHandle()
         {
             return IntPtr.Zero;
@@ -1462,6 +1361,7 @@ namespace Alternet.UI
         /// (<see cref="App.ToolTipProvider"/>).
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual IToolTipProvider? GetToolTipProvider()
         {
             var result = ToolTipProvider ?? Parent?.GetToolTipProvider() ?? App.ToolTipProvider;
@@ -1478,6 +1378,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="layoutParent">Specifies whether to call parent's
         /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        [Browsable(false)]
         public virtual void PerformLayout(bool layoutParent = true)
         {
             if (IsLayoutSuspended || IsDisposed || inLayout)
@@ -1575,6 +1476,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets <see cref="SuggestedHeight"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetSuggestedHeight()
         {
             SuggestedHeight = Coord.NaN;
@@ -1583,6 +1485,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets <see cref="SuggestedWidth"/> property.
         /// </summary>
+        [Browsable(false)]
         public virtual void ResetSuggestedWidth()
         {
             SuggestedWidth = Coord.NaN;
@@ -1617,6 +1520,7 @@ namespace Alternet.UI
         /// or <see cref="string.Empty"/>, to retrieve entity-level errors.
         /// </param>
         /// <returns>The validation errors for this control and its child controls.</returns>
+        [Browsable(false)]
         public virtual IEnumerable GetErrors(string? propertyName = null)
         {
             foreach (var item in AllChildren)
@@ -1637,6 +1541,7 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to get all children recurively.</param>
         /// <returns></returns>
         /// <typeparam name="T">Type of the control to find.</typeparam>
+        [Browsable(false)]
         public virtual ControlSet GetChildren<T>(bool recursive = false)
         {
             ControlSet result;
@@ -1780,6 +1685,7 @@ namespace Alternet.UI
         /// Sets <see cref="Visible"/> property value for all the children controls.
         /// </summary>
         /// <param name="visible">New value of the <see cref="Visible"/> property.</param>
+        [Browsable(false)]
         public void SetChildrenVisible(bool visible = true)
         {
             ForEachChild((c) => c.Visible = visible);
@@ -2119,6 +2025,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets the <see cref="AbstractControl.Font" /> property to its default value.</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
         public virtual void ResetFont()
         {
             Font = null;
@@ -2127,6 +2034,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets the <see cref="AbstractControl.Cursor" /> property to its default value.</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Browsable(false)]
         public virtual void ResetCursor()
         {
             Cursor = null;
@@ -2213,6 +2121,7 @@ namespace Alternet.UI
         /// Gets font from the default attributes.
         /// </summary>
         /// <returns></returns>
+        [Browsable(false)]
         public virtual Font? GetDefaultAttributesFont()
         {
             return null;
@@ -2233,6 +2142,7 @@ namespace Alternet.UI
         /// Calls <see cref="LocationChanged"/> and <see cref="SizeChanged"/> events
         /// if <see cref="Bounds"/> property was changed.
         /// </summary>
+        [Browsable(false)]
         public virtual bool ReportBoundsChanged()
         {
             var newBounds = Bounds;
@@ -2393,7 +2303,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether this control contains mouse cursor.
         /// </summary>
-        /// <param name="threshold">Additional value on which bounds of the control are inflated.</param>
+        /// <param name="threshold">Additional value on which bounds
+        /// of the control are inflated.</param>
         /// <returns></returns>
         public virtual bool ContainsMouseCursor(Coord threshold)
         {
@@ -2413,6 +2324,7 @@ namespace Alternet.UI
         /// <summary>
         /// Resets the cached best size value so it will be recalculated the next time it is needed.
         /// </summary>
+        [Browsable(false)]
         public virtual void InvalidateBestSize()
         {
         }

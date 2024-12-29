@@ -125,11 +125,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasBorder;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HasBorder = value;
             }
         }
@@ -241,8 +245,19 @@ namespace Alternet.UI
         /// </value>
         public virtual bool IsDefault
         {
-            get => Handler.IsDefault;
-            set => Handler.IsDefault = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.IsDefault;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.IsDefault = value;
+            }
         }
 
         /// <summary>
@@ -259,8 +274,19 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool ExactFit
         {
-            get => Handler.ExactFit;
-            set => Handler.ExactFit = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.ExactFit;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.ExactFit = value;
+            }
         }
 
         /// <summary>
@@ -275,8 +301,19 @@ namespace Alternet.UI
         /// </value>
         public virtual bool IsCancel
         {
-            get => Handler.IsCancel;
-            set => Handler.IsCancel = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.IsCancel;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.IsCancel = value;
+            }
         }
 
         /// <summary>
@@ -284,8 +321,19 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool TextVisible
         {
-            get => Handler.TextVisible;
-            set => Handler.TextVisible = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.TextVisible;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.TextVisible = value;
+            }
         }
 
         /// <summary>
@@ -302,8 +350,19 @@ namespace Alternet.UI
         /// </remarks>
         public virtual GenericDirection TextAlign
         {
-            get => Handler.TextAlign;
-            set => Handler.TextAlign = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.TextAlign;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.TextAlign = value;
+            }
         }
 
         [Browsable(false)]
@@ -335,6 +394,8 @@ namespace Alternet.UI
         /// <param name="dir">New image position (left, top, right, bottom).</param>
         public virtual void SetImagePosition(GenericDirection dir)
         {
+            if (DisposingOrDisposed)
+                return;
             if (dir == GenericDirection.Left || dir == GenericDirection.Right ||
                 dir == GenericDirection.Top || dir == GenericDirection.Bottom)
                 Handler.SetImagePosition(dir);
@@ -352,36 +413,48 @@ namespace Alternet.UI
         /// <param name="y">New vertical margin.</param>
         public virtual void SetImageMargins(Coord x, Coord? y = null)
         {
+            if (DisposingOrDisposed)
+                return;
             y ??= x;
             Handler.SetImageMargins(x, y.Value);
         }
 
         void IControlStateObjectChanged.DisabledChanged(object? sender)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.DisabledImage = stateImages?.Disabled;
             PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.NormalChanged(object? sender)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.NormalImage = stateImages?.Normal;
             PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.FocusedChanged(object? sender)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.FocusedImage = stateImages?.Focused;
             PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.HoveredChanged(object? sender)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.HoveredImage = stateImages?.Hovered;
             PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.PressedChanged(object? sender)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.PressedImage = stateImages?.Pressed;
             PerformLayoutAndInvalidate();
         }
@@ -393,6 +466,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BindHandlerEvents()
         {
+            if (DisposingOrDisposed)
+                return;
             base.BindHandlerEvents();
             Handler.Click = RaiseClick;
         }

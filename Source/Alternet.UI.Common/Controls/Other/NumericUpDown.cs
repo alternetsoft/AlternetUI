@@ -171,10 +171,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        internal bool HasBorder
+        internal virtual bool HasBorder
         {
-            get => Handler.HasBorder;
-            set => Handler.HasBorder = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.HasBorder;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.HasBorder = value;
+            }
         }
 
         [Browsable(false)]
@@ -206,6 +217,8 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
             Refresh();
@@ -286,9 +299,8 @@ namespace Alternet.UI
         /// event data.</param>
         private void RaiseMinimumChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
+            if (DisposingOrDisposed)
+                return;
             OnMinimumChanged(e);
             MinimumChanged?.Invoke(this, e);
         }
@@ -301,9 +313,8 @@ namespace Alternet.UI
         /// event data.</param>
         private void RaiseMaximumChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
+            if (DisposingOrDisposed)
+                return;
             OnMaximumChanged(e);
             MaximumChanged?.Invoke(this, e);
         }

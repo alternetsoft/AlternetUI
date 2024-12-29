@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with date/time picker.
     /// </summary>
-    public interface IDateTimePickerHandler : IControlHandler
+    public interface IDateTimePickerHandler
     {
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.

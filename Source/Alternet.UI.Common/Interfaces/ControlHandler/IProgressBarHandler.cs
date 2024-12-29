@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with progress bar control.
     /// </summary>
-    public interface IProgressBarHandler : IControlHandler
+    public interface IProgressBarHandler
     {
     }
 }

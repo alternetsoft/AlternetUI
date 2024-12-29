@@ -136,11 +136,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.MarkDateAttr;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.MarkDateAttr = value;
             }
         }
@@ -153,11 +157,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.Value;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.Value = value;
             }
         }
@@ -173,11 +181,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ShowHolidays;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (ShowHolidays == value)
                     return;
                 Handler.EnableHolidayDisplay(value);
@@ -193,11 +205,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.NoMonthChange;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (NoMonthChange == value)
                     return;
                 Handler.EnableMonthChange(!value);
@@ -217,11 +233,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.SequentalMonthSelect;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (SequentalMonthSelect == value)
                     return;
                 Handler.SequentalMonthSelect = value;
@@ -245,11 +265,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ShowSurroundWeeks;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (ShowSurroundWeeks == value)
                     return;
                 Handler.ShowSurroundWeeks = value;
@@ -269,11 +293,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ShowWeekNumbers;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (ShowWeekNumbers == value)
                     return;
                 Handler.ShowWeekNumbers = value;
@@ -288,11 +316,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.UseGeneric;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (UseGeneric == value)
                     return;
                 Handler.UseGeneric = value;
@@ -308,11 +340,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasBorder;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (HasBorder == value)
                     return;
                 Handler.HasBorder = value;
@@ -333,6 +369,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 if (Handler.SundayFirst)
                     return DayOfWeek.Sunday;
                 if (Handler.MondayFirst)
@@ -342,6 +380,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (FirstDayOfWeek == value)
                     return;
 
@@ -378,8 +418,17 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color HolidayColorFg
         {
-            get => Handler.GetHolidayColorFg();
-            set => SetHolidayColors(value, HolidayColorBg);
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.GetHolidayColorFg();
+            }
+
+            set
+            {
+                SetHolidayColors(value, HolidayColorBg);
+            }
         }
 
         /// <summary>
@@ -393,7 +442,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color HolidayColorBg
         {
-            get => Handler.GetHolidayColorBg();
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.GetHolidayColorBg();
+            }
+
             set => SetHolidayColors(HolidayColorFg, value);
         }
 
@@ -408,7 +463,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color HeaderColorFg
         {
-            get => Handler.GetHeaderColorFg();
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.GetHeaderColorFg();
+            }
+
             set => SetHeaderColors(value, HeaderColorBg);
         }
 
@@ -423,7 +484,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color HeaderColorBg
         {
-            get => Handler.GetHeaderColorBg();
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.GetHeaderColorBg();
+            }
+
             set => SetHeaderColors(HeaderColorFg, value);
         }
 
@@ -438,7 +505,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color HighlightColorFg
         {
-            get => Handler.GetHighlightColorFg();
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.GetHighlightColorFg();
+            }
+
             set => SetHighlightColors(value, HighlightColorBg);
         }
 
@@ -453,7 +526,13 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Color HighlightColorBg
         {
-            get => Handler.GetHighlightColorBg();
+            get
+            {
+                if (DisposingOrDisposed)
+                    return Color.Empty;
+                return Handler.GetHighlightColorBg();
+            }
+
             set => SetHighlightColors(HighlightColorFg, value);
         }
 
@@ -528,6 +607,8 @@ namespace Alternet.UI
         /// <param name="border">Date border settings.</param>
         public virtual ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = 0)
         {
+            if (DisposingOrDisposed)
+                return new PlessCalendarDateAttr();
             var result = Handler.CreateDateAttr(border);
             return result;
         }
@@ -541,7 +622,12 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="mark"><c>true</c> to mark the day, <c>false</c> to unmark it.</param>
-        public virtual void Mark(int day, bool mark = true) => Handler.Mark(day, mark);
+        public virtual void Mark(int day, bool mark = true)
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.Mark(day, mark);
+        }
 
         /// <summary>
         /// Clears any attributes associated with the given day.
@@ -551,7 +637,12 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public virtual void ResetAttr(int day) => Handler.ResetAttr(day);
+        public virtual void ResetAttr(int day)
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.ResetAttr(day);
+        }
 
         /// <summary>
         /// Marks the specified day as being a holiday in the current month.
@@ -561,7 +652,12 @@ namespace Alternet.UI
         /// This method is only implemented in generic calendar (when
         /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
         /// </remarks>
-        public virtual void SetHoliday(int day) => Handler.SetHoliday(day);
+        public virtual void SetHoliday(int day)
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.SetHoliday(day);
+        }
 
         /// <summary>
         /// Sets values for <see cref="HighlightColorBg"/> and
@@ -575,6 +671,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHighlightColors(Color colorFg, Color colorBg)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetHighlightColors(colorFg, colorBg);
         }
 
@@ -590,6 +688,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHolidayColors(Color colorFg, Color colorBg)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetHolidayColors(colorFg, colorBg);
         }
 
@@ -605,6 +705,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void SetHeaderColors(Color colorFg, Color colorBg)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetHeaderColors(colorFg, colorBg);
         }
 
@@ -626,6 +728,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual HitTestResult HitTest(PointD point)
         {
+            if (DisposingOrDisposed)
+                return default;
             var result = Handler.HitTest(point);
             return (HitTestResult)result;
         }
@@ -637,6 +741,8 @@ namespace Alternet.UI
         /// <param name="day">Day (in the range 1...31).</param>
         public virtual ICalendarDateAttr? GetAttr(int day)
         {
+            if (DisposingOrDisposed)
+                return default;
             var result = Handler.GetAttr(day);
             return result;
         }
@@ -648,6 +754,8 @@ namespace Alternet.UI
         /// <param name="dateAttr">Day attributes. Pass <c>null</c> to reset attributes.</param>
         public virtual void SetAttr(int day, ICalendarDateAttr? dateAttr)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetAttr(day, dateAttr);
         }
 
@@ -658,6 +766,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseSelectionChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
         }
@@ -669,6 +779,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaisePageChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnPageChanged(e);
             PageChanged?.Invoke(this, e);
         }
@@ -680,6 +792,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseWeekNumberClick(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnWeekNumberClick(e);
             WeekNumberClick?.Invoke(this, e);
         }
@@ -691,6 +805,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseDayHeaderClick(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnDayHeaderClick(e);
             DayHeaderClick?.Invoke(this, e);
         }
@@ -702,17 +818,32 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseDayDoubleClick(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnDayDoubleClick(e);
             DayDoubleClick?.Invoke(this, e);
         }
 
-        internal bool AllowMonthChange() => Handler.AllowMonthChange();
+        internal bool AllowMonthChange()
+        {
+            if (DisposingOrDisposed)
+                return default;
+            return Handler.AllowMonthChange();
+        }
 
-        internal bool EnableMonthChange(bool enable = true) =>
-            Handler.EnableMonthChange(enable);
+        internal bool EnableMonthChange(bool enable = true)
+        {
+            if (DisposingOrDisposed)
+                return default;
+            return Handler.EnableMonthChange(enable);
+        }
 
-        internal void EnableHolidayDisplay(bool display = true) =>
+        internal void EnableHolidayDisplay(bool display = true)
+        {
+            if (DisposingOrDisposed)
+                return;
             Handler.EnableHolidayDisplay(display);
+        }
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
@@ -723,6 +854,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void SetRange(DateTime min, DateTime max)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.MinValue = min;
             Handler.MaxValue = max;
             Handler.SetRange(UseMinDate, UseMaxDate);

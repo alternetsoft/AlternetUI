@@ -88,6 +88,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (Text == value)
                     return;
                 base.Text = value;
@@ -119,6 +121,8 @@ namespace Alternet.UI
         /// <inheritdoc />
         protected override void OnClick(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             base.OnClick(e);
             clickAction?.Invoke();
             commandSource.Execute();

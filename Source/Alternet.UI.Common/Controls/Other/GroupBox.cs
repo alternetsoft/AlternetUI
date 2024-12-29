@@ -75,6 +75,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int GetTopBorderForSizer()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetTopBorderForSizer();
         }
 
@@ -88,6 +90,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int GetOtherBorderForSizer()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetOtherBorderForSizer();
         }
 

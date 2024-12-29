@@ -63,6 +63,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (value == this.val)
                     return;
                 this.val = value;
@@ -78,11 +80,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.Kind;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.Kind = value;
             }
         }
@@ -101,11 +107,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.PopupKind;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.PopupKind = value;
             }
         }
@@ -115,8 +125,19 @@ namespace Alternet.UI
         /// </summary>
         internal bool HasBorder
         {
-            get => Handler.HasBorder;
-            set => Handler.HasBorder = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.HasBorder;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.HasBorder = value;
+            }
         }
 
         [Browsable(false)]
@@ -134,6 +155,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
         }
@@ -156,6 +179,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void SetRange(DateTime min, DateTime max)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.SetRange(min, max, UseMinDate, UseMaxDate);
         }
     }

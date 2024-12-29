@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with checkbox control.
     /// </summary>
-    public interface ICheckBoxHandler : IControlHandler
+    public interface ICheckBoxHandler
     {
         /// <inheritdoc cref="CheckBox.CheckState"/>
         CheckState CheckState { get; set; }

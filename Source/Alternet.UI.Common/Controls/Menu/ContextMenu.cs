@@ -149,7 +149,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateContextMenuHandler(this);
+            return (IControlHandler)ControlFactory.Handler.CreateContextMenuHandler(this);
         }
 
         /// <summary>

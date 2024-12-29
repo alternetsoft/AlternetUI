@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,8 @@ namespace Alternet.UI
         /// </summary>
         public static bool HandleTypeDescriptorRefreshed = true;
 
+        private static IndexedValues<Type, Type>? convertersOverride;
+
         static ObjectToStringFactory()
         {
             TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
@@ -33,6 +36,13 @@ namespace Alternet.UI
                 if(HandleTypeDescriptorRefreshed)
                     Converters.Clear();
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectToStringFactory"/> class.
+        /// </summary>
+        public ObjectToStringFactory()
+        {
         }
 
         /// <summary>
@@ -135,22 +145,100 @@ namespace Alternet.UI
         public virtual IObjectToString StringToString { get; set; } = new StringToStringConverter();
 
         /// <summary>
+        /// Registers an override <see cref="TypeConverter"/> for the specified type.
+        /// After override is registered, it is returned when
+        /// <see cref="GetTypeConverter"/>
+        /// is called. In order to unregister an override, call it with Null parameter.
+        /// </summary>
+        /// <param name="type">Type for which <see cref="TypeConverter"/>
+        /// override is registered.</param>
+        /// <param name="typeConverterType">Type of the <see cref="TypeConverter"/> descendant
+        /// which is used as an override.</param>
+        public virtual void RegisterTypeConverter(Type type, Type? typeConverterType)
+        {
+            convertersOverride ??= new();
+            convertersOverride[type] = typeConverterType;
+        }
+
+        /// <summary>
+        /// Similar to <see cref="RegisterTypeConverter(Type, Type)"/>.
+        /// </summary>
+        /// <typeparam name="TType">Type for which converter is registered.</typeparam>
+        /// <typeparam name="TTypeConverter">Type of the converter.</typeparam>
+        public void RegisterTypeConverter<TType, TTypeConverter>()
+            where TTypeConverter : TypeConverter
+        {
+            RegisterTypeConverter(typeof(TType), typeof(TTypeConverter));
+        }
+
+        /// <summary>
         /// Gets <see cref="TypeConverter"/> object for the specified type.
         /// </summary>
         /// <param name="type">Type.</param>
         /// <param name="toString">Whether conversion is from object to string. If not Null,
         /// type converter is quieried whether it can convert to/from string.
         /// If Null, no such check is performed.</param>
-        public virtual TypeConverter? GetTypeConverter(Type type, bool? toString = true)
+        /// <param name="culture">Optional <see cref="CultureInfo"/> object used to create
+        /// <see cref="TypeConverter"/> instance.</param>
+        public virtual TypeConverter? GetTypeConverter(
+            Type type,
+            bool? toString = true,
+            CultureInfo? culture = null)
         {
+            TypeConverter? CreateTypeConverter(Type? converterType)
+            {
+                if (converterType is null)
+                    return null;
+                var typeConverter = Activator.CreateInstance(
+                    converterType,
+                    BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
+                    null,
+                    null,
+                    culture ?? App.InvariantEnglishUS) as TypeConverter;
+                return typeConverter;
+            }
+
             if (type is null)
                 return null;
 
-            var typeConverter = Converters.GetValue(type, Internal);
+            var typeConverter = Converters.GetValue(type, InternalWithOverride);
 
-            TypeConverter? Internal()
+            TypeConverter? InternalWithOverride()
             {
-                var result = TypeDescriptor.GetConverter(type);
+                TypeConverter? result = null;
+
+                if (convertersOverride is not null)
+                {
+                    var converterType = convertersOverride[type];
+                    result = CreateTypeConverter(converterType);
+                }
+
+                /*
+                result ??= TypeConverterHelper.GetTypeConverter(
+                    type,
+                    culture ?? App.InvariantEnglishUS);
+                */
+
+                result ??= TypeDescriptor.GetConverter(type);
+
+                var isBaseOrNull
+                    = result is null || result.GetType() == typeof(TypeConverter);
+
+                if (isBaseOrNull)
+                {
+                    var parseMethod = type.GetMethod(
+                        "Parse",
+                        BindingFlags.Static | BindingFlags.Public,
+                        null,
+                        [typeof(string)],
+                        null);
+
+                    if(parseMethod is not null)
+                    {
+                        result = new TypeConverterUsingParse(parseMethod);
+                    }
+                }
+
                 return result;
             }
 

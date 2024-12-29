@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with group box control.
     /// </summary>
-    public interface IGroupBoxHandler : IControlHandler
+    public interface IGroupBoxHandler
     {
         /// <summary>
         /// Gets offset for the top border.

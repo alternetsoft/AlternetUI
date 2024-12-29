@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Converter class for converting between a string and the
     /// <see cref="ModifierKeys"/>.
     /// </summary>
-    public class ModifierKeysConverter : TypeConverter
+    public class ModifierKeysConverter : BaseTypeConverter
     {
         /// <summary>
         /// Gets or sets default <see cref="ModifierKeysConverter"/> implementation.
@@ -74,33 +74,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext? context,
-            Type sourceType)
-        {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <inheritdoc/>
         public override bool CanConvertTo(
             ITypeDescriptorContext? context,
             Type? destinationType)
         {
             if (destinationType == typeof(string))
             {
-                // When invoked by the serialization engine we can convert to
-                // string only for known type
                 if (context?.Instance is ModifierKeys keys)
                 {
                     return IsDefinedModifierKeys(keys);
                 }
+                else
+                    return true;
             }
 
             return false;

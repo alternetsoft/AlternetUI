@@ -54,6 +54,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 value ??= Color.Black;
                 if (color == value)
                     return;
@@ -91,6 +93,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
         }

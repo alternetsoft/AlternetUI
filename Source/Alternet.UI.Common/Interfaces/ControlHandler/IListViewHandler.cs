@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with the list view control.
     /// </summary>
-    public interface IListViewHandler : IControlHandler
+    public interface IListViewHandler
     {
         /// <inheritdoc cref="ListView.SelectedIndices"/>
         long[] SelectedIndices { get; }

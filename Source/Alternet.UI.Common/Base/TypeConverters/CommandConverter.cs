@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Converter class for converting between a string and the
     /// <see cref="ICommand"/>.
     /// </summary>
-    public class CommandConverter : TypeConverter
+    public class CommandConverter : BaseTypeConverter
     {
         /// <summary>
         /// Occurs when <see cref="string"/> is converted to <see cref="ICommand"/>.
@@ -31,21 +31,6 @@ namespace Alternet.UI
             }
 
             return string.IsNullOrWhiteSpace(source) ? null : new NamedCommand(source);
-        }
-
-        /// <inheritdoc/>
-        public override bool CanConvertFrom(
-            ITypeDescriptorContext? context,
-            Type sourceType)
-        {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <inheritdoc/>

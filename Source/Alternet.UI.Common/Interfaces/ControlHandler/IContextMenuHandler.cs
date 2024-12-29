@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with context menu.
     /// </summary>
-    public interface IContextMenuHandler : IControlHandler
+    public interface IContextMenuHandler
     {
         /// <summary>
         /// Show menu on screen.

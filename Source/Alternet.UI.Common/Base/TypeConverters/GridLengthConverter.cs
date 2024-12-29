@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// GridLengthConverter - Converter class for converting
     /// instances of other types to and from GridLength instances.
     /// </summary>
-    public class GridLengthConverter : TypeConverter
+    public class GridLengthConverter : BaseTypeConverter
     {
         #region Public Methods
 

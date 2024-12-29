@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Extends <see cref="IControlHandler"/> and <see cref="IWebBrowserLite"/>
+    /// Extends <see cref="IWebBrowserLite"/>
     /// with additional properties and methods specific to web browser control.
     /// </summary>
-    public interface IWebBrowserHandler : IControlHandler, IWebBrowserLite
+    public interface IWebBrowserHandler : IWebBrowserLite
     {
         /// <summary>
         /// Gets or sets whether or not control has border.

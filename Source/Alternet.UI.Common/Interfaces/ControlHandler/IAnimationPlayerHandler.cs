@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides methods and properties to control animation player.
     /// </summary>
-    public interface IAnimationPlayerHandler : IControlHandler
+    public interface IAnimationPlayerHandler
     {
         /// <inheritdoc cref="AnimationPlayer.FrameCount"/>
         uint FrameCount { get; }

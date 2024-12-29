@@ -1681,7 +1681,7 @@ namespace Alternet.UI.Localization
                 if (string.IsNullOrEmpty(str))
                     continue;
 
-                var propInfo = GetType().GetProperty(name);
+                var propInfo = AssemblyUtils.GetPropertySafe(GetType(), name);
 
                 if (propInfo is null)
                     continue;

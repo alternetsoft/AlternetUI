@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Converter class for converting instances of other types to and from coord representing length.
     /// </summary> 
-    public class LengthConverter : TypeConverter
+    public class LengthConverter : BaseTypeConverter
     {
         #region Public Methods
 
@@ -24,7 +24,9 @@ namespace Alternet.UI
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="sourceType"> The Type being queried for support. </param>
-        public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
+        public override bool CanConvertFrom(
+            ITypeDescriptorContext typeDescriptorContext,
+            Type sourceType)
         {
             // We can only handle strings, integral and floating types
             TypeCode tc = Type.GetTypeCode(sourceType);
@@ -54,7 +56,9 @@ namespace Alternet.UI
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
+        public override bool CanConvertTo(
+            ITypeDescriptorContext typeDescriptorContext,
+            Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             if (destinationType == typeof(InstanceDescriptor) ||
@@ -145,14 +149,7 @@ namespace Alternet.UI
         }
         #endregion 
 
-        //-------------------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //-------------------------------------------------------------------
-
         #region Internal Methods
-
 
         // Parse a Length from a string given the CultureInfo.
         // Formats: 
@@ -186,7 +183,8 @@ namespace Alternet.UI
             }
 
             //  important to substring original non-lowered string 
-            //  this allows case sensitive ToDouble/ToSingle below handle "NaN" and "Infinity" correctly. 
+            //  this allows case sensitive ToDouble/ToSingle below handle
+            //  "NaN" and "Infinity" correctly. 
             //  this addresses windows bug 1177408
             valueString = valueString.Substring(0, strLen - strLenUnit);
 

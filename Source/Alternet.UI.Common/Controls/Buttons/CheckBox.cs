@@ -69,11 +69,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.CheckState;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (!threeState && value == CheckState.Indeterminate)
                     value = CheckState.Unchecked;
                 if (CheckState == value)
@@ -102,6 +106,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (threeState == value)
                     return;
                 if (!value && CheckState == CheckState.Indeterminate)
@@ -127,6 +133,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (alignRight == value)
                     return;
                 alignRight = value;
@@ -153,6 +161,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (allowAllStatesForUser == value)
                     return;
                 allowAllStatesForUser = value;
@@ -254,6 +264,8 @@ namespace Alternet.UI
         /// </summary>
         public void RaiseCheckedChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             OnCheckedChanged(EventArgs.Empty);
             CheckedChanged?.Invoke(this, EventArgs.Empty);
         }

@@ -139,12 +139,16 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 var result = Handler.ItemsCount;
                 return result;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ItemsCount = value;
             }
         }
@@ -200,6 +204,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 if (SelectionMode == ListBoxSelectionMode.Single)
                 {
                     var result = Handler.GetSelection();
@@ -218,6 +224,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (SelectedIndex == value)
                     return;
                 if (SelectionMode == ListBoxSelectionMode.Single)
@@ -250,9 +258,17 @@ namespace Alternet.UI
         /// </summary>
         internal virtual bool VScrollBarVisible
         {
-            get => Handler.VScrollBarVisible;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.VScrollBarVisible;
+            }
+
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (VScrollBarVisible == value)
                     return;
                 Handler.VScrollBarVisible = value;
@@ -267,6 +283,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public override bool IsSelected(int index)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsSelected(index);
         }
 
@@ -277,6 +295,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsItemVisible(int index)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsVisible(index);
         }
 
@@ -290,6 +310,8 @@ namespace Alternet.UI
         /// showing the last row).</returns>
         public virtual bool ScrollRows(int rows)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.ScrollRows(rows);
         }
 
@@ -300,6 +322,8 @@ namespace Alternet.UI
         /// <returns>True if we scrolled the control, False if nothing was done.</returns>
         public virtual bool ScrollToRow(int rows)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.ScrollToRow(rows);
         }
 
@@ -323,12 +347,16 @@ namespace Alternet.UI
         /// showing the last row).</returns>
         public virtual bool ScrollRowPages(int pages)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.ScrollRowPages(pages);
         }
 
         /// <inheritdoc/>
         public override void RemoveAll()
         {
+            if (DisposingOrDisposed)
+                return;
             if (Items.Count == 0)
                 return;
 
@@ -348,6 +376,9 @@ namespace Alternet.UI
         /// <param name="kind">The method which is used when items are set.</param>
         public virtual bool SetItemsFast(VirtualListBoxItems value, SetItemsKind kind)
         {
+            if (DisposingOrDisposed)
+                return default;
+
             switch (kind)
             {
                 case SetItemsKind.ClearAddRange:
@@ -392,6 +423,8 @@ namespace Alternet.UI
         /// <param name="row">Item index.</param>
         public virtual void RefreshRow(int row)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.RefreshRow(row);
         }
 
@@ -482,6 +515,8 @@ namespace Alternet.UI
         /// <param name="to">Last item index.</param>
         public virtual void RefreshRows(int from, int to)
         {
+            if (DisposingOrDisposed)
+                return;
             Handler.RefreshRows(from, to);
         }
 
@@ -492,6 +527,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public override bool IsCurrent(int index)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.IsCurrent(index);
         }
 
@@ -501,6 +538,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetVisibleBegin()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetVisibleBegin();
         }
 
@@ -553,6 +592,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetVisibleEnd()
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetVisibleEnd();
         }
 
@@ -608,6 +649,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseMeasureItem(MeasureItemEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnMeasureItem(e);
             MeasureItem?.Invoke(this, e);
         }
@@ -618,6 +661,8 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseDrawItem(DrawItemEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnDrawItem(e);
             DrawItem?.Invoke(this, e);
         }
@@ -630,6 +675,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual RectD? GetItemRect(int? index)
         {
+            if (DisposingOrDisposed)
+                return default;
             if (index is null)
                 return null;
             var result = Handler.GetItemRect(index.Value);
@@ -664,6 +711,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (IsSelectionModeSingle)
             {
                 HandleInSingleMode();
@@ -752,6 +801,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (CheckOnClick && CheckBoxVisible)
             {
                 if (ToggleItemCheckState(e.Location))
@@ -767,6 +818,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (CheckOnClick && CheckBoxVisible)
             {
                 if (ToggleItemCheckState(e.Location))
@@ -797,6 +850,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             var clientSize = ClientSize;
 
             var dc = e.Graphics;
@@ -927,6 +982,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnScroll(ScrollEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (!App.IsWindowsOS)
                 return;
 

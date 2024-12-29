@@ -25,7 +25,10 @@ namespace Alternet.UI
         /// <param name="s">String to parse.</param>
         /// <param name="formatProvider">Formatting provider.</param>
         /// <param name="exceptionMessage">Exception message used in case of parse errors.</param>
-        public StringTokenizer(string s, IFormatProvider formatProvider, string? exceptionMessage = null)
+        public StringTokenizer(
+            string s,
+            IFormatProvider formatProvider,
+            string? exceptionMessage = null)
             : this(s, GetSeparatorFromFormatProvider(formatProvider), exceptionMessage)
         {
             mFormatProvider = formatProvider;

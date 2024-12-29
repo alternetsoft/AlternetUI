@@ -348,33 +348,10 @@ namespace Alternet.Drawing
         /// the culture "en-US"
         /// <param name="source"> string with Size data </param>
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeD Parse(string source)
         {
-            IFormatProvider formatProvider = App.InvariantEnglishUS;
-
-            TokenizerHelper th = new(source, formatProvider);
-
-            SizeD value;
-
-            string firstToken = th.NextTokenRequired();
-
-            // The token will already have had whitespace trimmed so we can do a
-            // simple string compare.
-            if (firstToken == "Empty")
-            {
-                value = Empty;
-            }
-            else
-            {
-                value = new SizeD(
-                    Convert.ToSingle(firstToken, formatProvider),
-                    Convert.ToSingle(th.NextTokenRequired(), formatProvider));
-            }
-
-            // There should be no more tokens in this string.
-            th.LastTokenRequired();
-
-            return value;
+            return ConversionUtils.ParseTwoFloats(source);
         }
 
         /// <summary>

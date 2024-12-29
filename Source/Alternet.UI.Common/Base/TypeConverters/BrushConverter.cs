@@ -1,35 +1,36 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
+
+using Alternet.UI;
 
 namespace Alternet.Drawing
 {
     /// <summary>Converts brushes from one data type to another. Access this class through the
-    /// <see cref="System.ComponentModel.TypeDescriptor" />.</summary>
-    public class BrushConverter : TypeConverter
+    /// <see cref="TypeDescriptor" />.</summary>
+    public class BrushConverter : BaseTypeConverter
     {
         /// <summary>Determines if this converter can convert an object in the given source type
         /// to the native type of the converter.</summary>
-        /// <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext" />
+        /// <param name="context">An <see cref="ITypeDescriptorContext" />
         /// that provides a format context. You can use this object to get additional information
         /// about the environment from which this converter is being invoked. </param>
         /// <param name="sourceType">The type from which you want to convert. </param>
         /// <returns>
         ///     <see langword="true" /> if this object can perform the conversion; otherwise,
         ///     <see langword="false" />.</returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type? sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
         /// <summary>Converts the given object to the converter's native type.</summary>
-        /// <param name="context">A <see cref="System.ComponentModel.TypeDescriptor" /> that
+        /// <param name="context">A <see cref="TypeDescriptor" /> that
         /// provides a format context. You can use this object to get additional information about
         /// the environment from which this converter is being invoked. </param>
-        /// <param name="culture">A <see cref="System.Globalization.CultureInfo" /> that specifies
+        /// <param name="culture">A <see cref="CultureInfo" /> that specifies
         /// the culture to represent the brush. </param>
         /// <param name="value">The object to convert. </param>
         /// <returns>An <see cref="object" /> representing the converted value.</returns>

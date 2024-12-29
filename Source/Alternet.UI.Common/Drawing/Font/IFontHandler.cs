@@ -34,28 +34,28 @@ namespace Alternet.Drawing
         /// Gets font encoding.
         /// </summary>
         /// <returns></returns>
-        FontEncoding GetEncoding();
+        FontEncoding GetEncoding(Font font);
 
         /// <summary>
         /// Gets font size in pixels.
         /// </summary>
-        int GetPixelSize();
+        int GetPixelSize(Font font);
 
         /// <summary>
         /// Gets whether font is using size in pixels.
         /// </summary>
-        bool IsUsingSizeInPixels();
+        bool IsUsingSizeInPixels(Font font);
 
         /// <summary>
         /// Gets font weight.
         /// </summary>
         /// <returns></returns>
-        int GetNumericWeight();
+        int GetNumericWeight(Font font);
 
         /// <summary>
         /// Gets whether font is a fixed width (monospaced) font.
         /// </summary>
-        bool IsFixedWidth();
+        bool IsFixedWidth(Font font);
 
         /// <summary>
         /// Gets font weight.
@@ -90,7 +90,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Updates font properties.
         /// </summary>
-        void Update(FontParams prm);
+        void Update(Font font, FontParams prm);
 
         /// <summary>
         /// Indicates whether font is equal to another font.

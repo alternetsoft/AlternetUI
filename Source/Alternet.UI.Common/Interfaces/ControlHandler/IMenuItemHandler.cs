@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with menu item.
     /// </summary>
-    public interface IMenuItemHandler : IControlHandler
+    public interface IMenuItemHandler
     {
     }
 }

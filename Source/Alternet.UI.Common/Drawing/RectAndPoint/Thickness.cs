@@ -24,6 +24,12 @@ namespace Alternet.UI
     public struct Thickness : IEquatable<Thickness>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref='Thickness'/> structure with
+        /// <see cref="Coord.NaN"/> in all bounds.
+        /// </summary>
+        public static readonly Thickness NaN = new(Coord.NaN, Coord.NaN, Coord.NaN, Coord.NaN);
+
+        /// <summary>
         /// Gets an empty <see cref="Thickness"/> object with
         /// Left, Top, Right, Bottom properties equal to zero.
         /// </summary>
@@ -41,23 +47,26 @@ namespace Alternet.UI
         private Coord bottom;
 
         /// <summary>
-        /// This constructur builds a Thickness with a specified value on every side.
+        /// Initializes a new instance of the <see cref="Thickness"/> struct
+        /// with the same value on every side.
         /// </summary>
-        /// <param name="uniformLength">The specified uniform length.</param>
+        /// <param name="uniform">The specified uniform length.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Thickness(Coord uniformLength)
+        public Thickness(Coord uniform)
         {
-            left = top = right = bottom = uniformLength;
+            left = top = right = bottom = uniform;
         }
 
         /// <summary>
-        /// This constructor builds a Thickness with the specified number of
-        /// pixels on each side.
+        /// Initializes a new instance of the <see cref="Thickness"/> struct
+        /// with the specified values for the each side.
         /// </summary>
         /// <param name="left">The thickness for the left side.</param>
         /// <param name="top">The thickness for the top side.</param>
         /// <param name="right">The thickness for the right side.</param>
         /// <param name="bottom">The thickness for the bottom side.</param>
+        /// <summary>
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Thickness(Coord left, Coord top, Coord right, Coord bottom)
         {
@@ -68,10 +77,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Thickness"/> structure.
+        /// Initializes a new instance of the <see cref="Thickness"/> structure
+        /// with the specified values for the horizontal and vertical sides.
         /// </summary>
-        /// <param name="horizontal">The thickness on the left and right.</param>
-        /// <param name="vertical">The thickness on the top and bottom.</param>
+        /// <param name="horizontal">The thickness on the left and right sides.</param>
+        /// <param name="vertical">The thickness on the top and bottom sides.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Thickness(Coord horizontal, Coord vertical)
         {
@@ -146,7 +156,7 @@ namespace Alternet.UI
         public readonly Coord Vertical => top + bottom;
 
         /// <summary>
-        /// This property is the Length on the thickness' left side.
+        /// This property is the length on the thickness' left side.
         /// </summary>
         public Coord Left
         {
@@ -161,7 +171,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>This property is the Length on the thickness' top side.</summary>
+        /// <summary>This property is the length on the thickness' top side.</summary>
         public Coord Top
         {
             readonly get
@@ -191,7 +201,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>This property is the Length on the thickness' bottom side.</summary>
+        /// <summary>This property is the length on the thickness' bottom side.</summary>
         public Coord Bottom
         {
             readonly get
@@ -270,6 +280,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates <see cref="Thickness"/> from array of 1, 2 or 4 values.
+        /// </summary>
+        /// <param name="coord">Array with values.</param>
+        /// <returns></returns>
+        public static Thickness? FromArray(float[]? coord)
+        {
+            switch (coord?.Length)
+            {
+                case 1:
+                    return new(coord[0]);
+                case 2:
+                    return new(coord[0], coord[1]);
+                case 4:
+                    return new(coord[0], coord[1], coord[2], coord[3]);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Parses a <see cref="Thickness"/> string.
         /// </summary>
         /// <param name="s">The string.</param>
@@ -277,7 +307,8 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Thickness Parse(string s)
         {
-            const string exceptionMessage = "Invalid Thickness.";
+            const string exceptionMessage
+                = "Invalid Thickness. Specify 1, 2 or 4 float numbers separated by comma.";
 
             if (!TryParse(s, out var result))
                 throw new FormatException(exceptionMessage);
@@ -290,32 +321,18 @@ namespace Alternet.UI
         /// </summary>
         public static bool TryParse(string s, out Thickness value)
         {
-            value = new Thickness();
-            using var tokenizer = new StringTokenizer(s, App.InvariantEnglishUS);
-            if (tokenizer.TryReadSingle(out var a))
+            var array = ConversionUtils.ParseOneOrTwoOrFourFloats(s);
+
+            var result = FromArray(array);
+
+            if(result is null)
             {
-                if (tokenizer.TryReadSingle(out var b))
-                {
-                    if (tokenizer.TryReadSingle(out var c))
-                    {
-                        if (tokenizer.TryReadSingle(out var d))
-                        {
-                            value = new Thickness(a, b, c, d);
-                            return true;
-                        }
-
-                        return false;
-                    }
-
-                    value = new Thickness(a, b);
-                    return true;
-                }
-
-                value = new Thickness(a);
-                return true;
+                value = Thickness.Empty;
+                return false;
             }
 
-            return false;
+            value = result.Value;
+            return true;
         }
 
         /// <summary>

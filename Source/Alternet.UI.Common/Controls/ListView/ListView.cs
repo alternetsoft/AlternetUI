@@ -120,8 +120,19 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool ColumnHeaderVisible
         {
-            get => Handler.ColumnHeaderVisible;
-            set => Handler.ColumnHeaderVisible = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.ColumnHeaderVisible;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.ColumnHeaderVisible = value;
+            }
         }
 
         /// <inheritdoc/>
@@ -136,8 +147,19 @@ namespace Alternet.UI
         /// langword="false"/>. The default is <see langword="false"/>.</value>
         public virtual bool AllowLabelEdit
         {
-            get => Handler.AllowLabelEdit;
-            set => Handler.AllowLabelEdit = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.AllowLabelEdit;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.AllowLabelEdit = value;
+            }
         }
 
         /// <summary>
@@ -146,15 +168,34 @@ namespace Alternet.UI
         /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item
         /// in the list view control.</value>
         [Browsable(false)]
-        public virtual ListViewItem? TopItem { get => Handler.TopItem; }
+        public virtual ListViewItem? TopItem
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.TopItem;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the grid line display mode for this list view.
         /// </summary>
         public virtual ListViewGridLinesDisplayMode GridLinesDisplayMode
         {
-            get => Handler.GridLinesDisplayMode;
-            set => Handler.GridLinesDisplayMode = value;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Handler.GridLinesDisplayMode;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.GridLinesDisplayMode = value;
+            }
         }
 
         /// <summary>
@@ -448,7 +489,8 @@ namespace Alternet.UI
         /// The <see cref="SmallImageList"/> property allows you to specify
         /// an <see cref="ImageList"/> object that contains icons to use when displaying
         /// items with small icons (when the <see cref="View"/> property is
-        /// set to any value other than <see cref="ListViewView.LargeIcon"/>). The <see cref="ListView"/> control
+        /// set to any value other than <see cref="ListViewView.LargeIcon"/>).
+        /// The <see cref="ListView"/> control
         /// can accept any graphics format that the <see cref="ImageList"/> control
         /// supports when displaying icons. The <see cref="ListView"/> control
         /// is not limited to .ico files. Once an <see cref="ImageList"/> is assigned
@@ -590,7 +632,8 @@ namespace Alternet.UI
         /// Gets a value indicating whether the control has a border.
         /// </summary>
         /// <remarks>
-        /// This property currently does nothing and <see cref="ListView"/> is always without the border.
+        /// This property currently does nothing and <see cref="ListView"/>
+        /// is always without the border.
         /// This is done to prevent bad behavior on Windows platform in some situations.
         /// In order to have border place <see cref="ListView"/> inside <see cref="Border"/> control.
         /// </remarks>
@@ -599,6 +642,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.HasBorder;
             }
 
@@ -679,7 +724,12 @@ namespace Alternet.UI
         /// and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
-        public virtual ListViewHitTestInfo HitTest(PointD point) => Handler.HitTest(point);
+        public virtual ListViewHitTestInfo HitTest(PointD point)
+        {
+            if (DisposingOrDisposed)
+                return new();
+            return Handler.HitTest(point);
+        }
 
         /// <summary>
         /// Initiates the editing of the list view item label.
@@ -687,7 +737,12 @@ namespace Alternet.UI
         /// <param name="itemIndex">The zero-based index of the item within the
         /// <see cref="ListView.Items"/> collection
         /// whose label you want to edit.</param>
-        public virtual void BeginLabelEdit(long itemIndex) => Handler.BeginLabelEdit(itemIndex);
+        public virtual void BeginLabelEdit(long itemIndex)
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.BeginLabelEdit(itemIndex);
+        }
 
         /// <summary>
         /// Retrieves the bounding rectangle for an item within the control.
@@ -703,8 +758,12 @@ namespace Alternet.UI
         /// specified <see cref="ListViewItem"/>.</returns>
         public virtual RectD GetItemBounds(
             long itemIndex,
-            ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
-            Handler.GetItemBounds(itemIndex, portion);
+            ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
+        {
+            if (DisposingOrDisposed)
+                return default;
+            return Handler.GetItemBounds(itemIndex, portion);
+        }
 
         /// <summary>
         /// Gets whether there are columns with the specified width mode.
@@ -723,7 +782,12 @@ namespace Alternet.UI
         /// <summary>
         /// Removes all items and columns from the control.
         /// </summary>
-        public virtual void Clear() => Handler.Clear();
+        public virtual void Clear()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.Clear();
+        }
 
         /// <summary>
         /// Raises the <see cref="ColumnClick"/> event.
@@ -833,6 +897,9 @@ namespace Alternet.UI
             ListViewColumn column,
             ListViewColumn.ColumnEventType eventType)
         {
+            if (DisposingOrDisposed)
+                return;
+
             var index = column.Index;
 
             if (index is null || index < 0)
@@ -981,6 +1048,8 @@ namespace Alternet.UI
 
         private void UpdateSelectedIndices()
         {
+            if (DisposingOrDisposed)
+                return;
             if (Items.Count == 0)
                 return;
             if (selectedIndices == null)

@@ -53,7 +53,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual bool InvokeRequired
+        public virtual bool IsInvokeRequired
         {
             get
             {
