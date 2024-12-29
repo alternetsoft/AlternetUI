@@ -44,7 +44,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual IFontHandler CreateDefaultFontHandler()
         {
-            return new PlessFontHandler(SkiaUtils.DefaultFontName, SkiaUtils.DefaultFontSize);
+            return new SkiaFontHandler(SkiaUtils.DefaultFontName, SkiaUtils.DefaultFontSize);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual IFontHandler CreateFontHandler()
         {
-            return new PlessFontHandler();
+            return new SkiaFontHandler();
         }
 
         /// <summary>
