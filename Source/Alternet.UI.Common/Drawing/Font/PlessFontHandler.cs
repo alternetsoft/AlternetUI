@@ -18,7 +18,6 @@ namespace Alternet.Drawing
         private Coord sizeInPoints = 12;
         private FontWeight weight = FontWeight.Normal;
         private FontEncoding encoding = FontEncoding.Default;
-        private bool isFixedWidth = false;
         private string? serialized;
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual FontEncoding GetEncoding()
+        public virtual FontEncoding GetEncoding(Font font)
         {
             return encoding;
         }
@@ -118,13 +117,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual int GetNumericWeight()
+        public virtual int GetNumericWeight(Font font)
         {
             return Font.GetNumericWeightOf(weight);
         }
 
         /// <inheritdoc/>
-        public virtual int GetPixelSize()
+        public virtual int GetPixelSize(Font font)
         {
             var result = GraphicsUnitConverter.Convert(
                 GraphicsUnit.Point,
@@ -182,23 +181,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual bool IsFixedWidth()
+        public virtual bool IsFixedWidth(Font font)
         {
-            return isFixedWidth;
-        }
-
-        /// <summary>
-        /// Sets whether or not font is fixed-pitch.
-        /// </summary>
-        /// <param name="value"></param>
-        public virtual void SetIsFixedWidth(bool value)
-        {
-            isFixedWidth = value;
-            Changed();
+            return false;
         }
 
         /// <inheritdoc/>
-        public virtual bool IsUsingSizeInPixels()
+        public virtual bool IsUsingSizeInPixels(Font font)
         {
             return false;
         }
@@ -226,7 +215,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual void Update(IFontHandler.FontParams prm)
+        public virtual void Update(Font font, IFontHandler.FontParams prm)
         {
             Font.CoerceFontParams(prm);
             if (prm.GenericFamily is null)
