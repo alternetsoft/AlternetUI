@@ -617,7 +617,11 @@ namespace Alternet.UI
         /// <see cref="Visible"/> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method
         /// is called.</remarks>
-        public void Show() => Visible = true;
+        public virtual void Show()
+        {
+            // This method must be virtual as it is overriden in some descendants.
+            Visible = true;
+        }
 
         /// <summary>
         /// Gets the child control at the specified index.
