@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
@@ -187,18 +188,12 @@ namespace Alternet.UI
         /// <param name="item">Property item.</param>
         /// <returns></returns>
         /// <remarks>
-        /// Property can be reset if it is nullable, has <see cref="DefaultValueAttribute"/>
-        /// specified or class has 'Reset(PropertyName)' method.
+        /// Uses <see cref="AssemblyUtils.CanResetProp"/>.
         /// </remarks>
         public virtual bool CanResetProp(IPropertyGridItem? item)
         {
-            if (item is null || item.PropInfo is null || item.Instance is null)
-                return false;
-            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
-            var value = item.PropInfo.GetValue(item.Instance);
-            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
-            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out _);
-            return hasDevaultAttr || resetMethod != null || (nullable && value is not null);
+            var result = AssemblyUtils.CanResetProp(item?.Instance, item?.PropInfo);
+            return result;
         }
 
         /// <summary>
@@ -206,38 +201,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">Property item.</param>
         /// <remarks>
-        /// Property can be reset if it is nullable, has <see cref="DefaultValueAttribute"/>
-        /// specified or class has 'Reset(PropertyName)' method.
+        /// Uses <see cref="AssemblyUtils.ResetProperty"/>.
         /// </remarks>
         public virtual void ResetProp(IPropertyGridItem? item)
         {
-            if (item is null || item.PropInfo is null || item.Instance is null)
-                return;
-
-            var resetMethod = AssemblyUtils.GetResetPropMethod(item.Instance, item.PropInfo.Name);
-            if (resetMethod is not null)
-            {
-                resetMethod.Invoke(item.Instance, Array.Empty<object?>());
+            if(AssemblyUtils.ResetProperty(item?.Instance, item?.PropInfo))
                 ReloadPropertyValue(item);
-                return;
-            }
-
-            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(item.PropInfo, out var defValue);
-            if (hasDevaultAttr)
-            {
-                item.PropInfo.SetValue(item.Instance, defValue);
-                ReloadPropertyValue(item);
-                return;
-            }
-
-            var nullable = AssemblyUtils.GetNullable(item.PropInfo);
-            var value = item.PropInfo.GetValue(item.Instance);
-            if (nullable && value is not null)
-            {
-                item.PropInfo.SetValue(item.Instance, null);
-                ReloadPropertyValue(item);
-                return;
-            }
         }
     }
 }

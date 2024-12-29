@@ -2774,9 +2774,9 @@ namespace Alternet.UI
         /// to the external object (<see cref="IPropInfoAndInstance.Instance"/> and
         /// <see cref="IPropInfoAndInstance.PropInfo"/>) are not null.
         /// </summary>
-        public virtual void ReloadPropertyValue(IPropertyGridItem item)
+        public virtual void ReloadPropertyValue(IPropertyGridItem? item)
         {
-            if (DisposingOrDisposed)
+            if (item is null || DisposingOrDisposed)
                 return;
             var p = item.PropInfo;
             var instance = item.Instance;
