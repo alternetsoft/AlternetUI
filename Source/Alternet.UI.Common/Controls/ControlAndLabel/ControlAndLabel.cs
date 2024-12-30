@@ -54,6 +54,7 @@ namespace Alternet.UI
         /// </summary>
         public ControlAndLabel()
         {
+            ParentBackColor = true;
             Layout = LayoutStyle.Horizontal;
 
             label = CreateLabel();
@@ -67,12 +68,13 @@ namespace Alternet.UI
 
             errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
             CustomTextBox.InitErrorPicture(errorPicture);
-            errorPicture.Parent = this;
             errorPicture.ParentBackColor = true;
+            errorPicture.Parent = this;
         }
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of
+        /// the main child control.
         /// </summary>
         [DefaultValue(Coord.PositiveInfinity)]
         public virtual Coord LabelSuggestedWidth
@@ -82,7 +84,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of
+        /// the main child control.
         /// </summary>
         [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedWidth
@@ -92,7 +95,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property of
+        /// the main child control.
         /// </summary>
         [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedHeight
@@ -102,7 +106,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property
+        /// of the main child control.
         /// </summary>
         [Browsable(false)]
         public virtual SizeD InnerSuggestedSize
@@ -178,7 +183,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IEnumerable GetErrors(string? propertyName)
         {
-            return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName) ?? Array.Empty<string>();
+            return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName)
+                ?? Array.Empty<string>();
         }
 
         /// <inheritdoc/>
