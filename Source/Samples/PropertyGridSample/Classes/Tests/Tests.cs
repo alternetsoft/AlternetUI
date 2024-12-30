@@ -132,8 +132,8 @@ namespace PropertyGridSample
 
         private void ControlPanel_MouseDown(object? sender, MouseEventArgs e)
         {
-            if (sender == parentParent && e.RightButton == MouseButtonState.Pressed)
-                UpdatePropertyGrid(controlPanelBorder);
+            if (sender == ControlParent && e.RightButton == MouseButtonState.Pressed)
+                UpdatePropertyGrid(ControlParent);
         }
 
         private void LogEvent(string name, bool logAlways = false)
