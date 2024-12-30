@@ -442,7 +442,7 @@ namespace ControlsSample
         {
             if (name == null)
             {
-                rootPanel.ActionsControl.AddActionSpacer();
+                rootPanel.ActionsControl.AddActionSpacer(true);
                 return;
             }
 
