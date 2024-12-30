@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -41,6 +42,12 @@ namespace Alternet.UI
         /// Gets or sets user data associated with this <see cref="IPropertyGridItem"/>.
         /// </summary>
         object? UserData { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="TypeConverter"/> used when attached property value
+        /// is converted to/from string.
+        /// </summary>
+        TypeConverter? TypeConverter { get; set; }
 
         /// <summary>
         /// Gets <see cref="IPropertyGridChoices"/> used in the item editor.

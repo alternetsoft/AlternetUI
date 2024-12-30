@@ -355,7 +355,8 @@ namespace Alternet.UI
                     string label,
                     string? name,
                     object instance,
-                    PropertyInfo propInfo);
+                    PropertyInfo propInfo,
+                    TypeConverter? typeConverter = null);
 
         /// <inheritdoc cref="PropertyGrid.CreateProps"/>
         IEnumerable<IPropertyGridItem> CreateProps(object instance, bool sort = false);
@@ -638,7 +639,7 @@ namespace Alternet.UI
             PropertyInfo? propInfo = null);
 
         /// <inheritdoc cref="PropertyGrid.ReloadPropertyValues"/>
-        void ReloadPropertyValues(object? instance = null, PropertyInfo? propInfo = null);
+        bool ReloadPropertyValues(object? instance = null, PropertyInfo? propInfo = null);
 
         /// <inheritdoc cref="PropertyGrid.ReloadPropertyValue"/>
         void ReloadPropertyValue(IPropertyGridItem item);
