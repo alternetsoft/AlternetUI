@@ -945,25 +945,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets font when item is inside the specified container. Result must not be <c>null</c>.
+        /// Gets font used when item is painted. Result is not <c>null</c>.
         /// </summary>
         /// <returns></returns>
         public virtual Font GetFont(IListControlItemContainer? container)
         {
-            var result = Font;
-            if (result is null)
-            {
-                var control = container?.Control;
-
-                if (control is not null)
-                {
-                    result = control.Font ?? UI.AbstractControl.DefaultFont;
-                    if (control.IsBold)
-                        result = result.AsBold;
-                }
-                else
-                    result = UI.AbstractControl.DefaultFont;
-            }
+            var result = Font ?? container?.Control?.RealFont ?? AbstractControl.DefaultFont;
 
             if (FontStyle is not null)
                 result = result.WithStyle(FontStyle.Value);
