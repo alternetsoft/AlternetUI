@@ -1515,7 +1515,17 @@ namespace Alternet.UI
 
                         if (ParentFont)
                         {
-                            Font ??= Parent?.RealFont;
+                            Font ??= value.RealFont;
+                        }
+
+                        if (ParentBackColor)
+                        {
+                            BackColor = value.RealBackgroundColor;
+                        }
+
+                        if (ParentForeColor)
+                        {
+                            ForeColor = value.RealForegroundColor;
                         }
                     }
 
