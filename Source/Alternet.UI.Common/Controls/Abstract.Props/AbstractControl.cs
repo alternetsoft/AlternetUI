@@ -666,13 +666,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets property of the <see cref="FrameworkElement.DataContext"/>
-        /// to use in the control. Only some controls are affected by this property.
-        /// </summary>
-        [Browsable(false)]
-        public virtual object? DataContextProperty { get; set; }
-
-        /// <summary>
         /// Gets internally painted caret information. This is used on some platforms
         /// where native caret is not available.
         /// </summary>
