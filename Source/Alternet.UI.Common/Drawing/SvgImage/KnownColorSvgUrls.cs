@@ -15,6 +15,16 @@ namespace Alternet.UI
             "embres:Alternet.UI.Common.Resources.ColorSvg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
+        /// Gets or sets url used to load logo svg image with text.
+        /// </summary>
+        public static string LogoWithText { get; set; } = GetImageUrl("logo");
+
+        /// <summary>
+        /// Gets or sets url used to load logo svg image without text.
+        /// </summary>
+        public static string Logo { get; set; } = GetImageUrl("logo-notext");
+
+        /// <summary>
         /// Gets or sets url used to load "Error" svg image.
         /// </summary>
         public static string Error { get; set; } = GetImageUrl("circle-xmark-red");

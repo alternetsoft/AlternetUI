@@ -16,6 +16,16 @@ namespace Alternet.UI
         private static ColorSvgImage? imgError;
         private static ColorSvgImage? imgWarning;
         private static ColorSvgImage? imgInformation;
+        private static ColorSvgImage? imgLogo;
+
+        /// <summary>
+        /// Gets or sets logo svg image without text.
+        /// </summary>
+        public static ColorSvgImage ImgLogo
+        {
+            get => imgLogo ??= new(KnownColorSvgUrls.Logo);
+            set => imgLogo = value;
+        }
 
         /// <summary>
         /// Gets or sets 'Error' image.
