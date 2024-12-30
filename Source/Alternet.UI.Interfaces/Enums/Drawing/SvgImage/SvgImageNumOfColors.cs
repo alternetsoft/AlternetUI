@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates possible number of colors used in <see cref="SvgImage"/>.
+    /// Enumerates possible number of colors used in svg image.
     /// </summary>
     public enum SvgImageNumOfColors
     {
