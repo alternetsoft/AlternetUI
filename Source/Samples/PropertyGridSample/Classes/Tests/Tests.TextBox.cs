@@ -58,7 +58,10 @@ namespace PropertyGridSample
             }
             else
             {
-                App.LogReplace($"{prefix}Error = {c.TextAsValueError.Message}", prefix);
+                App.LogReplace(
+                    $"{prefix}Error = {c.TextAsValueError.Message}",
+                    prefix,
+                    LogItemKind.Error);
                 c.ReportValidatorError(true);
             }
 
@@ -68,7 +71,7 @@ namespace PropertyGridSample
         {
             AddControlAction<TextBoxAndButton>("Edit Thickness", (control) =>
             {
-                control.ErrorPictureVisible = true;
+                control.AutoShowError = true;
 
                 var c = control.TextBox;
 
@@ -87,8 +90,7 @@ namespace PropertyGridSample
 
             AddControlAction<TextBoxAndButton>("Edit KeyGesture", (control) =>
             {
-                control.ErrorPictureVisible = true;
-
+                control.AutoShowError = true;
                 var c = control.TextBox;
 
                 c.ResetInputSettings();
@@ -100,13 +102,11 @@ namespace PropertyGridSample
 
                 c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
                 c.DelayedTextChanged += HandleTextChangedForTextAsValue;
-
             });
 
             AddControlAction<TextBoxAndButton>("Edit DateTime", (control) =>
             {
-                control.ErrorPictureVisible = true;
-
+                control.AutoShowError = true;
                 var c = control.TextBox;
 
                 c.ResetInputSettings();

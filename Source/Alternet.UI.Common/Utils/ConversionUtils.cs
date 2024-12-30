@@ -12,6 +12,70 @@ namespace Alternet.UI
     public static class ConversionUtils
     {
         /// <summary>
+        /// Converts <see cref="InnerOuterSelector"/> to the tuple with two boolean values.
+        /// </summary>
+        public static (bool Outer, bool Inner) FromInnerOuterSelector(InnerOuterSelector selector)
+        {
+            (bool Outer, bool Inner) result;
+
+            switch (selector)
+            {
+                default:
+                case InnerOuterSelector.None:
+                    result.Outer = false;
+                    result.Inner = false;
+                    break;
+                case InnerOuterSelector.Inner:
+                    result.Outer = false;
+                    result.Inner = true;
+                    break;
+                case InnerOuterSelector.Outer:
+                    result.Outer = true;
+                    result.Inner = false;
+                    break;
+                case InnerOuterSelector.Both:
+                    result.Outer = true;
+                    result.Inner = true;
+                    break;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts <paramref name="hasOuter"/> and <paramref name="hasInner"/> boolean
+        /// parameters to <see cref="InnerOuterSelector"/>.
+        /// </summary>
+        /// <param name="hasOuter">Whether outer is selected.</param>
+        /// <param name="hasInner">Whether inner is selected.</param>
+        /// <returns></returns>
+        public static InnerOuterSelector ToInnerOuterSelector(bool hasOuter, bool hasInner)
+        {
+            if (hasOuter)
+            {
+                if (hasInner)
+                {
+                    return InnerOuterSelector.Both;
+                }
+                else
+                {
+                    return InnerOuterSelector.Outer;
+                }
+            }
+            else
+            {
+                if (hasInner)
+                {
+                    return InnerOuterSelector.Inner;
+                }
+                else
+                {
+                    return InnerOuterSelector.None;
+                }
+            }
+        }
+
+        /// <summary>
         /// Parses string with 1, 2 or 4 float values separated by the
         /// comma character or other separator.
         /// All whitespaces and brackets are trimmed before parsing is done.

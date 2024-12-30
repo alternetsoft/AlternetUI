@@ -10,6 +10,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class TextBoxAndButton : ControlAndButton
     {
+        private bool autoBackColor = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxAndButton"/> class.
         /// </summary>
@@ -38,6 +40,62 @@ namespace Alternet.UI
             set
             {
                 TextBox.Text = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether error reporter is automatically shown/hidden when
+        /// error state is changed.
+        /// </summary>
+        public virtual bool AutoShowError
+        {
+            get => MainControl.AutoShowError;
+
+            set
+            {
+                MainControl.AutoShowError = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether background color is updated when <see cref="InnerOuterBorder"/>
+        /// property is changed.
+        /// </summary>
+        public virtual bool AutoBackColor
+        {
+            get => autoBackColor;
+            set
+            {
+                if (autoBackColor == value)
+                    return;
+                autoBackColor = value;
+                if(value)
+                    RaiseAutoBackColorChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets where border is painted (around the child or around the parent).
+        /// When this property is set, background color is also updated
+        /// if <see cref="AutoBackColor"/> is true.
+        /// </summary>
+        public virtual InnerOuterSelector InnerOuterBorder
+        {
+            get
+            {
+                return ConversionUtils.ToInnerOuterSelector(HasBorder, HasInnerBorder);
+            }
+
+            set
+            {
+                if (InnerOuterBorder == value)
+                    return;
+                var (outer, inner) = ConversionUtils.FromInnerOuterSelector(value);
+                var changed = (HasBorder != outer) || (HasInnerBorder != inner);
+                HasBorder = outer;
+                HasInnerBorder = inner;
+                if(changed)
+                    RaiseAutoBackColorChanged();
             }
         }
 
@@ -129,18 +187,18 @@ namespace Alternet.UI
             Buttons.SetChildrenVisible(false);
             this.HasBtnComboBox = true;
             this.BtnComboBoxSvg = null;
-            this.BtnComboBoxKnownImage = KnownButton.TextBoxShowPassword;
+            this.ButtonOverride = UI.KnownButton.TextBoxShowPassword;
 
             void TogglePasswordButtonClick(object? s, EventArgs e)
             {
                 TextBox.IsPassword = !TextBox.IsPassword;
                 if (TextBox.IsPassword)
                 {
-                    this.BtnComboBoxKnownImage = KnownButton.TextBoxShowPassword;
+                    this.ButtonOverride = UI.KnownButton.TextBoxShowPassword;
                 }
                 else
                 {
-                    this.BtnComboBoxKnownImage = KnownButton.TextBoxHidePassword;
+                    this.ButtonOverride = UI.KnownButton.TextBoxHidePassword;
                 }
             }
 
@@ -155,6 +213,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raised when <see cref="AutoBackColor"/> property is changed.
+        /// </summary>
+        protected virtual void RaiseAutoBackColorChanged()
+        {
+            if (!AutoBackColor)
+                return;
+            switch (InnerOuterBorder)
+            {
+                case InnerOuterSelector.None:
+                    ParentBackColor = true;
+                    break;
+                case InnerOuterSelector.Inner:
+                    ParentBackColor = true;
+                    break;
+                case InnerOuterSelector.Outer:
+                    ParentBackColor = false;
+                    BackColor = MainControl.BackColor;
+                    break;
+                case InnerOuterSelector.Both:
+                    ParentBackColor = false;
+                    BackColor = MainControl.BackColor;
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Initializes main child control.
         /// </summary>
         /// <remarks>
@@ -166,6 +250,7 @@ namespace Alternet.UI
         {
             MainControl.ValidatorReporter = ErrorPicture;
             MainControl.TextChanged += MainControl_TextChanged;
+            MainControl.AutoShowError = true;
         }
 
         /// <summary>
