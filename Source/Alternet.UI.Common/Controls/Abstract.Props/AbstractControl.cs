@@ -2874,6 +2874,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets <see cref="FontStyle"/> override. It is used instead of the
+        /// <see cref="Font"/> style when real font value is calculated.
+        /// This property is ignored when it equals <see cref="FontStyle.Regular"/> (default value).
+        /// </summary>
+        [Browsable(false)]
+        public virtual FontStyle FontStyleOverride
+        {
+            get
+            {
+                return fontStyle;
+            }
+
+            set
+            {
+                if (fontStyle == value)
+                    return;
+
+                RaiseFontChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether font style override is bold.
         /// </summary>
         public virtual bool IsBold
