@@ -2410,16 +2410,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Write a table at the current insertion point, returning the table.
+        /// Writes a table at the current insertion point, returning the table.
+        /// If Null is returned, table was not created.
         /// </summary>
-        public virtual object WriteTable(
+        public virtual object? WriteTable(
             int rows,
             int cols,
             ITextBoxRichAttr? tableAttr = default,
             ITextBoxRichAttr? cellAttr = default)
         {
             if (DisposingOrDisposed)
-                return default;
+                return null;
             return Handler.WriteTable(
                 rows,
                 cols,

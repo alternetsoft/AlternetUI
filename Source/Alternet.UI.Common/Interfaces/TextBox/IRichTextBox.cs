@@ -565,7 +565,7 @@ namespace Alternet.UI
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo);
 
         /// <inheritdoc cref="RichTextBox.WriteTable"/>
-        object WriteTable(
+        object? WriteTable(
             int rows,
             int cols,
             ITextBoxRichAttr? tableAttr = default,
