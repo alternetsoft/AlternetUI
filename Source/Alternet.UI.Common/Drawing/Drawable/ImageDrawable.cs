@@ -68,7 +68,7 @@ namespace Alternet.Drawing
         /// Sets svg size. Implemented for the convenience.
         /// </summary>
         /// <param name="size">New svg image width and height.</param>
-        public void SetSvgSize(int size)
+        public virtual void SetSvgSize(int size)
         {
             SvgImage.SvgSize = size;
         }
