@@ -12,6 +12,11 @@ namespace Alternet.Drawing
     public interface IBaseDrawable
     {
         /// <summary>
+        /// Gets or sets visual state of the object.
+        /// </summary>
+        VisualControlState VisualState { get; set; }
+
+        /// <summary>
         /// Gets or sets location where to draw this object.
         /// </summary>
         PointD Location { get; set; }
@@ -25,6 +30,11 @@ namespace Alternet.Drawing
         /// Gets or sets whether this object is visible.
         /// </summary>
         bool Visible { get; set; }
+
+        /// <summary>
+        /// Gets whether this object is enabled.
+        /// </summary>
+        bool Enabled { get; }
 
         /// <summary>
         /// Gets or sets destination rectangle where to draw the object.

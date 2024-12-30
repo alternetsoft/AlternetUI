@@ -80,9 +80,8 @@ namespace Alternet.UI
         /// </summary>
         public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
 
-        private readonly PictureBox picture = new()
+        private readonly Spacer picture = new()
         {
-            ImageStretch = false,
             Visible = false,
             Alignment = HVAlignment.Center,
         };
@@ -99,6 +98,8 @@ namespace Alternet.UI
             Visible = false,
             Alignment = HVAlignment.Center,
         };
+
+        private readonly ImageDrawable drawable = new();
 
         private Action? clickAction;
         private bool sticky;
@@ -732,14 +733,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.Image;
+                return drawable.Image;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.Image = value;
+                    drawable.Image = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -771,14 +773,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.DisabledImage;
+                return drawable.DisabledImage;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.DisabledImage = value;
+                    drawable.DisabledImage = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -791,14 +794,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.DisabledImageSet;
+                return drawable.DisabledImageSet;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.DisabledImageSet = value;
+                    drawable.DisabledImageSet = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -811,14 +815,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.ImageSet;
+                return drawable.ImageSet;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.ImageSet = value;
+                    drawable.ImageSet = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -889,7 +894,7 @@ namespace Alternet.UI
         /// Gets inner <see cref="PictureBox"/> control.
         /// </summary>
         [Browsable(false)]
-        internal PictureBox PictureBox => picture;
+        internal Spacer PictureBox => picture;
 
         /// <summary>
         /// Gets inner <see cref="GenericLabel"/> control.
@@ -1031,8 +1036,15 @@ namespace Alternet.UI
             }
 
             DrawDefaultBackground(e);
-            if(HasImage)
-                PictureBox.DrawDefaultImage(e.Graphics, PictureBox.Bounds);
+            if (HasImage)
+            {
+                drawable.VisualState = Enabled
+                    ? VisualControlState.Normal : VisualControlState.Disabled;
+
+                drawable.Bounds = PictureBox.Bounds;
+                drawable.Draw(this, e.Graphics);
+            }
+
             if (TextVisible)
             {
                 var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
@@ -1140,6 +1152,11 @@ namespace Alternet.UI
                 SafeDispose(ref firstClickTimer);
                 subscribedClickRepeated = false;
             }
+        }
+
+        private void PictureSizeChanged()
+        {
+            PictureBox.SuggestedSize = drawable.GetPreferredSize(this);
         }
 
         private void SubscribeClickRepeated()

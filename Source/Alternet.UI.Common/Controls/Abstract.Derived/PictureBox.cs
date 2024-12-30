@@ -466,10 +466,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SizeD GetImageAndTextSize()
         {
-            SizeD result = SizeD.Empty;
-
-            var image = Image;
-            var imageSet = ImageSet;
+            SizeD result;
 
             if (TextVisible)
             {
@@ -477,11 +474,7 @@ namespace Alternet.UI
             }
             else
             {
-                if (image is not null)
-                    result = image.SizeDip(this);
-                else
-                if (imageSet is not null)
-                    result = PixelToDip(imageSet.DefaultSize);
+                result = primitive.GetPreferredSize(this);
             }
 
             return result;
