@@ -2779,7 +2779,16 @@ namespace Alternet.UI
                 realInstance ??= instance;
                 if (reloadFunc == null)
                 {
-                    propValue = p.GetValue(realInstance);
+                    if(item.TypeConverter is null)
+                    {
+                        propValue = p.GetValue(realInstance);
+                    }
+                    else
+                    {
+                        var tpc = item.TypeConverter;
+                        propValue = PropValueToString(realInstance, p, ref tpc);
+                    }
+
                     variant.SetCompatibleValue(propValue, p);
                 }
                 else

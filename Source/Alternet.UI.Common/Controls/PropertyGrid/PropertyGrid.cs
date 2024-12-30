@@ -1228,7 +1228,7 @@ namespace Alternet.UI
         public virtual string PropValueToString(
             object instance,
             PropertyInfo propInfo,
-            TypeConverter? typeConverter = null)
+            ref TypeConverter? typeConverter)
         {
             object? propValue = propInfo.GetValue(instance, null);
             string value = string.Empty;
@@ -1237,14 +1237,15 @@ namespace Alternet.UI
             {
                 typeConverter ??=
                     ObjectToStringFactory.Default.GetTypeConverter(propInfo.PropertyType);
+                var tpc = typeConverter;
 
                 var success = AvoidException(() =>
                 {
-                    if (typeConverter is not null)
+                    if (tpc is not null)
                     {
-                        if (typeConverter.CanConvertTo(typeof(string)))
+                        if (tpc.CanConvertTo(typeof(string)))
                         {
-                            value = typeConverter.ConvertToString(
+                            value = tpc.ConvertToString(
                                 null,
                                 Culture,
                                 propValue);
@@ -1292,7 +1293,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo,
                     TypeConverter? typeConverter = null)
         {
-            var value = PropValueToString(instance, propInfo, typeConverter);
+            var value = PropValueToString(instance, propInfo, ref typeConverter);
             var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateStringItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
