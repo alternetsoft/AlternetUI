@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool DrawDebugCornersOnElements = false;
 
-        private CachedSvgImage cachedSvg = new();
+        private CachedSvgImage<Image> cachedSvg = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -915,8 +915,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Image? GetImage(VisualControlState state, bool? isDark = null)
         {
-            isDark ??= LightDarkColor.IsUsingDarkColor;
-            var result = cachedSvg.GetImage(state, isDark.Value);
+            var result = cachedSvg.GetImage(state, isDark);
             return result;
         }
 
@@ -940,8 +939,7 @@ namespace Alternet.UI
         /// <param name="isDark">Whether theme is dark.</param>
         public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
         {
-            isDark ??= LightDarkColor.IsUsingDarkColor;
-            cachedSvg.SetImage(state, image, isDark.Value);
+            cachedSvg.SetImage(state, image, isDark);
         }
 
         /// <summary>

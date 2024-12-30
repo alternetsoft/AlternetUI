@@ -10,8 +10,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="ImageSet"/> can be used for specifying several size representations of the
-    /// same picture.
+    /// <see cref="ImageSet"/> contains the same <see cref="Image"/> with different sizes.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
     public class ImageSet : ImageContainer<IImageSetHandler>
@@ -71,7 +70,8 @@ namespace Alternet.UI
         /// <remarks>
         /// See <see cref="ImageSet.FromUrl(string)"/> for the details.
         /// </remarks>
-        /// <param name="baseUri">Base url. Optional. Used if <paramref name="url"/> is relative.</param>
+        /// <param name="baseUri">Base url. Optional. Used if <paramref name="url"/>
+        /// is relative.</param>
         public ImageSet(string? url, Uri? baseUri = null)
             : this()
         {
