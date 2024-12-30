@@ -31,6 +31,11 @@ namespace Alternet.UI
         public static Coord DefaultImageLabelDistance = 4;
 
         /// <summary>
+        /// Gets or sets default padding in the <see cref="SpeedButton"/>.
+        /// </summary>
+        public static Coord DefaultPadding = 4;
+
+        /// <summary>
         /// Gets ot sets default value of <see cref="UseTheme"/> property.
         /// </summary>
         public static KnownTheme DefaultUseTheme = KnownTheme.Default;
@@ -143,7 +148,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButton()
         {
-            Padding = 4;
+            Padding = DefaultPadding;
             Layout = LayoutStyle.Horizontal;
 
             IsGraphicControl = true;
@@ -215,7 +220,83 @@ namespace Alternet.UI
                     return;
                 spacer.SuggestedSize = value;
                 if(HasImage && TextVisible)
-                    PerformLayout();
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the image.
+        /// </summary>
+        public virtual HorizontalAlignment ImageHorizontalAlignment
+        {
+            get
+            {
+                return picture.HorizontalAlignment;
+            }
+
+            set
+            {
+                if (ImageHorizontalAlignment == value)
+                    return;
+                picture.HorizontalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the image.
+        /// </summary>
+        public virtual VerticalAlignment ImageVerticalAlignment
+        {
+            get
+            {
+                return picture.VerticalAlignment;
+            }
+
+            set
+            {
+                if (ImageVerticalAlignment == value)
+                    return;
+                picture.VerticalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the label.
+        /// </summary>
+        public virtual HorizontalAlignment LabelHorizontalAlignment
+        {
+            get
+            {
+                return label.HorizontalAlignment;
+            }
+
+            set
+            {
+                if (LabelHorizontalAlignment == value)
+                    return;
+                label.HorizontalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the label.
+        /// </summary>
+        public virtual VerticalAlignment LabelVerticalAlignment
+        {
+            get
+            {
+                return label.VerticalAlignment;
+            }
+
+            set
+            {
+                if (LabelVerticalAlignment == value)
+                    return;
+                label.VerticalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
             }
         }
 
@@ -887,8 +968,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RaiseFontChanged()
         {
-            Label.IsBold = IsBold;
-            Label.Font = Font;
+            Label.Font = RealFont;
             base.RaiseFontChanged();
         }
 
