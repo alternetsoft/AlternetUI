@@ -459,11 +459,19 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
         /// </summary>
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        /// <param name="action">
+        /// The action to execute between calls to <see cref="SuspendLayout"/>
+        /// and <see cref="ResumeLayout"/>.
+        /// </param>
         [Browsable(false)]
-        public virtual void PerformLayoutAndInvalidate(Action? action = null)
+        public virtual void PerformLayoutAndInvalidate(
+            Action? action = null,
+            bool layoutParent = true)
         {
             if (action is null)
-                PerformLayout();
+                PerformLayout(layoutParent);
             else
                 DoInsideLayout(action);
             Invalidate();
@@ -781,7 +789,9 @@ namespace Alternet.UI
         /// and <see cref="ResumeLayout"/>.
         /// </summary>
         /// <param name="action">Action that will be executed.</param>
-        public virtual void DoInsideLayout(Action action)
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        public virtual void DoInsideLayout(Action action, bool layoutParent = true)
         {
             SuspendLayout();
             try
@@ -790,7 +800,7 @@ namespace Alternet.UI
             }
             finally
             {
-                ResumeLayout();
+                ResumeLayout(true, layoutParent);
             }
         }
 
@@ -1247,8 +1257,10 @@ namespace Alternet.UI
         /// method to enable the changes to take effect.
         /// </para>
         /// </remarks>
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
         [Browsable(false)]
-        public virtual void ResumeLayout(bool performLayout = true)
+        public virtual void ResumeLayout(bool performLayout = true, bool layoutParent = true)
         {
             layoutSuspendCount--;
             if (layoutSuspendCount < 0)
@@ -1257,7 +1269,7 @@ namespace Alternet.UI
             if (!IsLayoutSuspended)
             {
                 if (performLayout)
-                    PerformLayout();
+                    PerformLayout(layoutParent);
             }
         }
 
@@ -1381,7 +1393,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void PerformLayout(bool layoutParent = true)
         {
-            if (IsLayoutSuspended || IsDisposed || inLayout)
+            if (IsLayoutSuspended || DisposingOrDisposed || inLayout)
                 return;
             if (!Visible)
                 layoutParent = false;

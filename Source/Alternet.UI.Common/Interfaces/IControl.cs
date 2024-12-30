@@ -1294,7 +1294,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls <see cref="PerformLayout"/> and <see cref="Invalidate()"/>.
         /// </summary>
-        void PerformLayoutAndInvalidate(Action? action = null);
+        void PerformLayoutAndInvalidate(Action? action = null, bool layoutParent = true);
 
         /// <summary>
         /// Sets value of the <see cref="Text"/> property.
@@ -1359,7 +1359,9 @@ namespace Alternet.UI
         /// and <see cref="ResumeLayout"/>.
         /// </summary>
         /// <param name="action">Action that will be executed.</param>
-        void DoInsideLayout(Action action);
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        void DoInsideLayout(Action action, bool layoutParent = true);
 
         /// <summary>
         /// Conceals the control from the user.
@@ -1503,7 +1505,9 @@ namespace Alternet.UI
         /// method to enable the changes to take effect.
         /// </para>
         /// </remarks>
-        void ResumeLayout(bool performLayout = true);
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        void ResumeLayout(bool performLayout = true, bool layoutParent = true);
 
         /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="BeginUpdate"/>
