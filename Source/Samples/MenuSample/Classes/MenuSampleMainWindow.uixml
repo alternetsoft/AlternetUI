@@ -48,7 +48,8 @@
       </MenuItem>
       <MenuItem Text="_Help" IsTextLocalized="true">
         <MenuItem Text="Index" IsTextLocalized="true" Enabled="false" />
-        <MenuItem Text="_About" IsTextLocalized="true" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
+        <MenuItem Text="_About" IsTextLocalized="true"
+                  Name="aboutMenuItem" Click="AboutMenuItem_Click" />
       </MenuItem>
     </MainMenu>
   </Window.Menu>
