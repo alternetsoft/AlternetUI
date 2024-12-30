@@ -1522,7 +1522,7 @@ namespace Alternet.UI
 
                         if (ParentFont)
                         {
-                            Font ??= Parent?.Font;
+                            Font ??= Parent?.RealFont;
                         }
                     }
 
@@ -2478,7 +2478,7 @@ namespace Alternet.UI
                     return;
                 parentFont = value;
                 if (value && Parent is not null)
-                    Font = Parent.Font;
+                    Font = Parent.RealFont;
             }
         }
 
