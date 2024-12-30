@@ -322,6 +322,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether error reporter is automatically shown/hidden when
+        /// error state is changed.
+        /// </summary>
+        public virtual bool AutoShowError { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets data value in cases when <see cref="AbstractControl.Text"/>
         /// property is empty.
         /// </summary>
@@ -677,6 +683,8 @@ namespace Alternet.UI
             picture.ImageVisible = false;
             picture.ImageStretch = false;
             picture.TabStop = false;
+            picture.Margin = (ControlAndLabel.DefaultControlLabelDistance, 1, 1, 1);
+            picture.ParentBackColor = true;
 
             picture.MouseLeftButtonUp -= Picture_MouseLeftButtonUp;
             picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
@@ -1339,9 +1347,16 @@ namespace Alternet.UI
             if (!showError)
             {
                 if (DefaultErrorUseBackgroundColor)
-                    ResetBackgroundColor(ResetErrorBackgroundMethod ?? DefaultResetErrorBackgroundMethod);
+                {
+                    ResetBackgroundColor(ResetErrorBackgroundMethod
+                        ?? DefaultResetErrorBackgroundMethod);
+                }
+
                 if (DefaultErrorUseForegroundColor)
-                    ResetForegroundColor(ResetErrorForegroundMethod ?? DefaultResetErrorForegroundMethod);
+                {
+                    ResetForegroundColor(ResetErrorForegroundMethod
+                        ?? DefaultResetErrorForegroundMethod);
+                }
             }
             else
             {
@@ -1364,6 +1379,11 @@ namespace Alternet.UI
             void Report(IValidatorReporter? reporter)
             {
                 reporter?.SetErrorStatus(this, showError, hint);
+                if (AutoShowError && reporter is Control reporterControl)
+                {
+                    if(reporterControl != this)
+                        reporterControl.Visible = showError;
+                }
             }
         }
 
