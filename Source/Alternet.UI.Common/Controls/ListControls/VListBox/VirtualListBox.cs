@@ -934,6 +934,8 @@ namespace Alternet.UI
                             itemPaintArgs.ItemIndex = line;
                             itemPaintArgs.IsCurrent = IsCurrent(line);
                             itemPaintArgs.IsSelected = IsSelected(line);
+                            itemPaintArgs.LabelMetrics = new();
+                            itemPaintArgs.Visible = true;
                         }
 
                         matrix.Reset();
