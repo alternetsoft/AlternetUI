@@ -438,7 +438,7 @@ namespace Alternet.UI
                         return Text;
 
                     var typeConverter = TypeConverter ??
-                        ObjectToStringFactory.Default.GetTypeConverter(DataType);
+                        StringConverters.Default.GetTypeConverter(DataType);
 
                     if (typeConverter is null)
                         return null;
@@ -1255,11 +1255,11 @@ namespace Alternet.UI
 
             if (converter is null && optionsOverride.Value.HasFlag(TextBoxOptions.UseTypeConverter))
             {
-                converter = ObjectToStringFactory.Default.CreateAdapter(TypeConverter);
+                converter = StringConverters.Default.CreateAdapter(TypeConverter);
 
                 if (converter is null)
                 {
-                    converter = ObjectToStringFactory.Default.CreateAdapterForTypeConverter(type);
+                    converter = StringConverters.Default.CreateAdapterForTypeConverter(type);
                 }
 
                 usedTypeConverter = converter is not null;
@@ -1268,7 +1268,7 @@ namespace Alternet.UI
             if (converter is null)
             {
                 var typeCode = AssemblyUtils.GetRealTypeCode(type);
-                converter = ObjectToStringFactory.Default.GetConverter(typeCode);
+                converter = StringConverters.Default.GetConverter(typeCode);
             }
 
             if (converter is null)

@@ -446,7 +446,7 @@ namespace Alternet.UI
             CultureInfo? culture = null,
             bool useInvariantCulture = true)
         {
-            var typeConverter = ObjectToStringFactory.Default.GetTypeConverter(typeof(T));
+            var typeConverter = StringConverters.Default.GetTypeConverter(typeof(T));
 
             var result = ParseWithTypeConverter(
                         text,

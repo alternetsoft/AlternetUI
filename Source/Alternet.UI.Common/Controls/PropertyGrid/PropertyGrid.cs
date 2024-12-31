@@ -1236,7 +1236,7 @@ namespace Alternet.UI
             if (propValue is not null)
             {
                 typeConverter ??=
-                    ObjectToStringFactory.Default.GetTypeConverter(propInfo.PropertyType);
+                    StringConverters.Default.GetTypeConverter(propInfo.PropertyType);
                 var tpc = typeConverter;
 
                 var success = AvoidException(() =>

@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains helper properties and methods for the value conversion.
     /// </summary>
-    public static class ConversionUtils
+    public static partial class ConversionUtils
     {
         /// <summary>
         /// Converts <see cref="InnerOuterSelector"/> to the tuple with two boolean values.

@@ -265,7 +265,7 @@ namespace Alternet.UI
                 {
                     var type = item?.PropInfo?.PropertyType;
                     if(type is not null)
-                    typeConverter = ObjectToStringFactory.Default.GetTypeConverter(type);
+                    typeConverter = StringConverters.Default.GetTypeConverter(type);
                 }               
 
                 if (typeConverter is not null)

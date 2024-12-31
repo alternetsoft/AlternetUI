@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains properties and methods related to <see cref="IObjectToString"/>.
     /// </summary>
-    public partial class ObjectToStringFactory : BaseObject
+    public partial class StringConverters : BaseObject
     {
         /// <summary>
         /// Gets <see cref="Type"/> to <see cref="TypeConverter"/> dictionary.
@@ -27,7 +27,7 @@ namespace Alternet.UI
 
         private static IndexedValues<Type, Type>? convertersOverride;
 
-        static ObjectToStringFactory()
+        static StringConverters()
         {
             TypeDescriptor.Refreshed += TypeDescriptorRefreshed;
 
@@ -39,17 +39,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ObjectToStringFactory"/> class.
+        /// Initializes a new instance of the <see cref="ConversionUtils"/> class.
         /// </summary>
-        public ObjectToStringFactory()
+        public StringConverters()
         {
             RegisterDefaultTypeConverters();
         }
 
         /// <summary>
-        /// Gets or sets default <see cref="ObjectToStringFactory"/> implementation.
+        /// Gets or sets default <see cref="ConversionUtils"/> implementation.
         /// </summary>
-        public static ObjectToStringFactory Default { get; set; } = new();
+        public static StringConverters Default { get; set; } = new();
 
         /// <summary>
         /// Gets default <see cref="IObjectToString"/> implementation for
@@ -230,12 +230,6 @@ namespace Alternet.UI
                     var converterType = convertersOverride[type];
                     result = CreateTypeConverter(converterType);
                 }
-
-                /*
-                result ??= TypeConverterHelper.GetTypeConverter(
-                    type,
-                    culture ?? App.InvariantEnglishUS);
-                */
 
                 result ??= TypeDescriptor.GetConverter(type);
 

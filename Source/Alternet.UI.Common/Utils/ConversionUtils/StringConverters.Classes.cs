@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    public partial class ObjectToStringFactory
+    public partial class StringConverters
     {
         /// <summary>
         /// Base <see cref="IObjectToString"/> interface implementation.
