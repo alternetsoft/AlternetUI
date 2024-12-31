@@ -15,17 +15,15 @@ namespace Alternet.UI
     public partial class StringConverters : BaseObject
     {
         /// <summary>
-        /// Gets <see cref="Type"/> to <see cref="TypeConverter"/> dictionary.
-        /// </summary>
-        public static readonly IndexedValues<Type, TypeConverter> Converters = new();
-
-        /// <summary>
         /// Gets or sets whether to handle <see cref="TypeDescriptor.Refreshed"/> event.
         /// Default is False.
         /// </summary>
         public static bool HandleTypeDescriptorRefreshed = true;
 
-        private static IndexedValues<Type, Type>? convertersOverride;
+        /// <summary>
+        /// Gets <see cref="Type"/> to <see cref="TypeConverter"/> dictionary.
+        /// </summary>
+        private readonly IndexedValues<Type, TypeConverterItem> converters = new();
 
         static StringConverters()
         {
@@ -33,8 +31,9 @@ namespace Alternet.UI
 
             void TypeDescriptorRefreshed(RefreshEventArgs e)
             {
-                if(HandleTypeDescriptorRefreshed)
-                    Converters.Clear();
+                if (!HandleTypeDescriptorRefreshed)
+                    return;
+                Default.Reset();
             }
         }
 
@@ -163,6 +162,20 @@ namespace Alternet.UI
         public virtual IObjectToString StringToString { get; set; } = new StringToStringConverter();
 
         /// <summary>
+        /// Resets the object and removes all references to the created type converters.
+        /// </summary>
+        public virtual void Reset()
+        {
+            foreach (var item in converters.Values)
+            {
+                var value = item.Value;
+                if (value is null)
+                    continue;
+                value.Converter = null;
+            }
+        }
+
+        /// <summary>
         /// Registers an override <see cref="TypeConverter"/> for the specified type.
         /// After override is registered, it is returned when
         /// <see cref="GetTypeConverter"/>
@@ -174,8 +187,8 @@ namespace Alternet.UI
         /// which is used as an override.</param>
         public virtual void RegisterTypeConverter(Type type, Type? typeConverterType)
         {
-            convertersOverride ??= new();
-            convertersOverride[type] = typeConverterType;
+            var item = converters.GetValue(type, () => new());
+            item!.ConverterType = typeConverterType;
         }
 
         /// <summary>
@@ -203,33 +216,30 @@ namespace Alternet.UI
             bool? toString = true,
             CultureInfo? culture = null)
         {
-            TypeConverter? CreateTypeConverter(Type? converterType)
-            {
-                if (converterType is null)
-                    return null;
-                var typeConverter = Activator.CreateInstance(
-                    converterType,
-                    BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
-                    null,
-                    null,
-                    culture ?? App.InvariantEnglishUS) as TypeConverter;
-                return typeConverter;
-            }
-
             if (type is null)
                 return null;
 
-            var typeConverter = Converters.GetValue(type, InternalWithOverride);
+            var item = converters.GetValue(type, () => new());
+            var typeConverter = item.Converter;
+            typeConverter ??= Create(item.ConverterType);
 
-            TypeConverter? InternalWithOverride()
+            if (typeConverter is not null && toString is not null)
+            {
+                var canConvert = toString.Value
+                    ? typeConverter.CanConvertTo(typeof(string))
+                    : typeConverter.CanConvertFrom(typeof(string));
+                if (!canConvert)
+                    return null;
+            }
+
+            return typeConverter;
+
+            TypeConverter? Create(Type? converterType)
             {
                 TypeConverter? result = null;
 
-                if (convertersOverride is not null)
-                {
-                    var converterType = convertersOverride[type];
-                    result = CreateTypeConverter(converterType);
-                }
+                if (converterType is not null)
+                    result = CreateInstance(converterType);
 
                 result ??= TypeDescriptor.GetConverter(type);
 
@@ -254,19 +264,18 @@ namespace Alternet.UI
                 return result;
             }
 
-            if (typeConverter is null)
-                return null;
-
-            if(toString is not null)
+            TypeConverter? CreateInstance(Type? converterType)
             {
-                var canConvert = toString.Value
-                    ? typeConverter.CanConvertTo(typeof(string))
-                    : typeConverter.CanConvertFrom(typeof(string));
-                if (!canConvert)
+                if (converterType is null)
                     return null;
+                var typeConverter = Activator.CreateInstance(
+                    converterType,
+                    BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
+                    null,
+                    null,
+                    culture ?? App.InvariantEnglishUS) as TypeConverter;
+                return typeConverter;
             }
-
-            return typeConverter;
         }
 
         /// <summary>
@@ -350,6 +359,13 @@ namespace Alternet.UI
         protected virtual void RegisterDefaultTypeConverters()
         {
             RegisterTypeConverter(typeof(Coord), typeof(CoordTypeConverter));
+        }
+
+        private class TypeConverterItem
+        {
+            public Type? ConverterType;
+
+            public TypeConverter? Converter;
         }
     }
 }

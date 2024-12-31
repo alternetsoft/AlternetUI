@@ -52,7 +52,7 @@ namespace Alternet.UI
             var result = convertersCached.GetValue(type, Internal);
             return result;
 
-            TypeConverter? Internal()
+            TypeConverter Internal()
             {
                 TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
 
