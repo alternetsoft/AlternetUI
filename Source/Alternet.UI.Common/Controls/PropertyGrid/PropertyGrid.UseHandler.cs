@@ -2413,20 +2413,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets property value as variant.
-        /// </summary>
-        /// <param name="prop">Property item.</param>
-        /// <param name="value">New property value.</param>
-        public virtual void SetPropertyValueAsVariant(
-            IPropertyGridItem prop,
-            IPropertyGridVariant value)
-        {
-            if (DisposingOrDisposed)
-                return;
-            Handler.SetPropertyValueAsVariant(prop, value);
-        }
-
-        /// <summary>
         /// Sets image associated with the property.
         /// </summary>
         /// <param name="prop">Property item.</param>
@@ -2772,7 +2758,7 @@ namespace Alternet.UI
         /// <summary>
         /// Reloads value of the <see cref="IPropertyGridItem"/> item if it is attached
         /// to the external object (<see cref="IPropInfoAndInstance.Instance"/> and
-        /// <see cref="IPropInfoAndInstance.PropInfo"/>) are not null.
+        /// <see cref="IPropInfoAndInstance.PropInfo"/> are not null).
         /// </summary>
         public virtual void ReloadPropertyValue(IPropertyGridItem? item)
         {
@@ -2793,7 +2779,16 @@ namespace Alternet.UI
                 realInstance ??= instance;
                 if (reloadFunc == null)
                 {
-                    propValue = p.GetValue(realInstance);
+                    if(item.TypeConverter is null)
+                    {
+                        propValue = p.GetValue(realInstance);
+                    }
+                    else
+                    {
+                        var tpc = item.TypeConverter;
+                        propValue = PropValueToString(realInstance, p, ref tpc);
+                    }
+
                     variant.SetCompatibleValue(propValue, p);
                 }
                 else

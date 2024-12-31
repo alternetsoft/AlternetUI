@@ -46,6 +46,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a collection that contains the values.
+        /// </summary>
+        public IEnumerable<ILockedItem> Values
+        {
+            get
+            {
+                return values.Values;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets value for the specified index.
         /// </summary>
         /// <param name="index">Index of value.</param>
@@ -109,9 +120,9 @@ namespace Alternet.UI
         /// It is called when item with the specified index is locked for the first time.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TValue? GetValue(TIndex index, Func<TValue?> getDefault)
+        public TValue GetValue(TIndex index, Func<TValue> getDefault)
         {
-            return GetLockedItem(index, getDefault).Value;
+            return GetLockedItem(index, getDefault).Value!;
         }
 
         /// <summary>
@@ -163,7 +174,13 @@ namespace Alternet.UI
 
             public TIndex Index => index;
 
-            public bool Assigned => assigned;
+            public bool Assigned
+            {
+                get
+                {
+                    return assigned;
+                }
+            }
 
             public TValue? Value
             {
@@ -192,6 +209,12 @@ namespace Alternet.UI
 
                     Changed?.Invoke(this, EventArgs.Empty);
                 }
+            }
+
+            public void Reset()
+            {
+                Value = default;
+                assigned = false;
             }
         }
     }

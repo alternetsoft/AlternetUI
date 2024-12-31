@@ -132,6 +132,8 @@ namespace MenuSample
             fileMenu.Opened += MenuItem_Opened;
             fileMenu.Closed += MenuItem_Closed;
             fileMenu.Highlighted += MenuItem_Highlighted;
+
+            aboutMenuItem.SvgImage = KnownColorSvgImages.ImgLogo;
         }
 
         private void MenuItem_Highlighted(object sender, EventArgs e)

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -35,10 +37,19 @@ namespace Alternet.UI
         /// <remarks>
         /// This method allows to separate different action groups.
         /// </remarks>
-        public virtual ListControlItem AddActionSpacer()
+        public virtual ListControlItem AddActionSpacer(bool drawLine = false)
         {
-            var result = new ListControlItem(string.Empty);
-            result.HideSelection = true;
+            ListControlItem result;
+
+            if (drawLine)
+            {
+                result = new ListControlSeparatorItem();
+            }
+            else
+            {
+                result = new ListControlEmptyItem();
+            }
+
             Add(result);
             return result;
         }

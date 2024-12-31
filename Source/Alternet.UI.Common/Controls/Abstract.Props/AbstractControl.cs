@@ -666,13 +666,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets property of the <see cref="FrameworkElement.DataContext"/>
-        /// to use in the control. Only some controls are affected by this property.
-        /// </summary>
-        [Browsable(false)]
-        public virtual object? DataContextProperty { get; set; }
-
-        /// <summary>
         /// Gets internally painted caret information. This is used on some platforms
         /// where native caret is not available.
         /// </summary>
@@ -1522,7 +1515,17 @@ namespace Alternet.UI
 
                         if (ParentFont)
                         {
-                            Font ??= Parent?.Font;
+                            Font ??= value.RealFont;
+                        }
+
+                        if (ParentBackColor)
+                        {
+                            BackColor = value.RealBackgroundColor;
+                        }
+
+                        if (ParentForeColor)
+                        {
+                            ForeColor = value.RealForegroundColor;
                         }
                     }
 
@@ -2478,7 +2481,7 @@ namespace Alternet.UI
                     return;
                 parentFont = value;
                 if (value && Parent is not null)
-                    Font = Parent.Font;
+                    Font = Parent.RealFont;
             }
         }
 
@@ -2870,6 +2873,28 @@ namespace Alternet.UI
             get
             {
                 return font is null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="FontStyle"/> override. It is used instead of the
+        /// <see cref="Font"/> style when real font value is calculated.
+        /// This property is ignored when it equals <see cref="FontStyle.Regular"/> (default value).
+        /// </summary>
+        [Browsable(false)]
+        public virtual FontStyle FontStyleOverride
+        {
+            get
+            {
+                return fontStyle;
+            }
+
+            set
+            {
+                if (fontStyle == value)
+                    return;
+
+                RaiseFontChanged();
             }
         }
 

@@ -1,3 +1,37 @@
+# 0.9.654 (2024 December 31)
+
+- SpeedButton: DefaultPadding, ImageHorizontalAlignment, ImageVerticalAlignmentm LabelHorizontalAlignment, LabelVerticalAlignment.
+- SpeedButton: Fixed IsBold, IsUnderlined not worked.
+- MenuItem: SvgImage, SvgImageSize.
+- Use DisposingOrDisposed in control's members to make their usage more safe.
+- Fixed mono font determination for SkiaSharp fonts.
+- Add classes: BaseTypeConverter, ListControlEmptyItem (draws nothing), ListControlSeparatorItem (draws horizontal line).
+- ListControlItem: Fixed Font determination.
+- ListControlItem: DrawBackgroundAction, DrawForegroundAction (now it's easy to add owner-drawn VirtualListBox items by assigning these actions).
+- CustomTextBox: Try to use static Parse method when editing custom types if TypeConverter is absent.
+- CustomTextBox: AutoShowError.
+- TextBoxAndButton: AutoShowError, AutoBackColor, InnerOuterBorder.
+- Demo: add sample of DateTime and other custom types editing in TextBox and TextBoxAndButton controls.
+- Add StringConverters.RegisterTypeConverter method for registering custom converters for the types. This register is used in CustomTextBox and PropertyGrid in order to get TypeConverter.
+- BaseObjectWithAttr and BaseObjectWithId: made thread safe.
+- Simplify Invoke, BeginInvoke, EndInvoke methods and make them static members of BaseObject.
+- AbstractControl.Text property is now thread safe (Invoke is called in the setter).
+- ConversionUtils: Add parse float array methods (ParseFourFloats, ParseTwoFloats, ParseOneOrTwoOrFourFloats) and use them in RectD, SizeD, PointD and Thickness.
+- AbstractControl: AvoidException now returns bool.
+- ThreadExceptionWindow: Quit button can be optionally hidden.
+- LogUtils: LogException now logs one line with info, but user can double click on it for the details (ThreadExceptionWindow dialog will be shown).
+- LogUtils: GenNewId is now thread safe
+- LogListBox: Show icon next to ListControlItem log items.
+- Fix possible exception when Type.GetProperty is called. This includes all classes that use PropertyInfo including PropertyGrid.
+- AssemblyUtils: DefaultBindingFlags, CanResetProp, ResetProperty, GetFieldValue, ToggleBoolMember, GetFirstMember, TrySetMemberValue,  TryGetMemberValue, GetPropertySafe.
+- AbstractControl: FontStyleOverride (similar to IsBold).
+- Controls: Fixed ParentFont property behavior.
+- AbstractControl: Use TabIndex when getting next focused control.
+- AbstractControl: Fix BackColor and ForeColor were not updated after parent changed in case when ParentBackColor/ParentForeColor is True.
+- SpeedButton: Do not use inner platform control for drawing the picture, so now SpeedButton occupy less memory and works faster.
+- PropertyGrid: Use TypeConverter when property is loaded or assigned with new value.
+- PropertyGrid: Culture property.
+
 # 0.9.653 (2024 December 27)
 
 - Window: Speedup closing.

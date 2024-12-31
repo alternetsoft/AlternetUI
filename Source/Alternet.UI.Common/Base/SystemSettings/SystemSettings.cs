@@ -14,9 +14,14 @@ namespace Alternet.UI
     public static class SystemSettings
     {
         private static ISystemSettingsHandler? handler;
-        private static bool validColors = false;
+        private static bool validColors;
         private static bool? appearanceIsDarkOverride;
         private static bool? isUsingDarkBackgroundOverride;
+
+        static SystemSettings()
+        {
+            validColors = false;
+        }
 
         /// <summary>
         /// Occurs when the system colors change.

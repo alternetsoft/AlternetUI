@@ -15,7 +15,6 @@ namespace PropertyGridSample
                 return;
             textBox.Text = "some text";
             textBox.HasBtnEllipsis = true;
-            textBox.ErrorPictureVisible = true;
             textBox.InnerSuggestedWidth = 200;
             textBox.ButtonClick += (s, e) =>
             {

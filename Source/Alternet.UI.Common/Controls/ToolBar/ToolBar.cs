@@ -278,7 +278,7 @@ namespace Alternet.UI
             set
             {
                 base.Font = value;
-                SetChildrenFont(value, true);
+                SetChildrenFont(RealFont, true);
             }
         }
 

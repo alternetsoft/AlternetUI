@@ -322,6 +322,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether error reporter is automatically shown/hidden when
+        /// error state is changed.
+        /// </summary>
+        public virtual bool AutoShowError { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets data value in cases when <see cref="AbstractControl.Text"/>
         /// property is empty.
         /// </summary>
@@ -432,7 +438,7 @@ namespace Alternet.UI
                         return Text;
 
                     var typeConverter = TypeConverter ??
-                        ObjectToStringFactory.Default.GetTypeConverter(DataType);
+                        StringConverters.Default.GetTypeConverter(DataType);
 
                     if (typeConverter is null)
                         return null;
@@ -677,6 +683,8 @@ namespace Alternet.UI
             picture.ImageVisible = false;
             picture.ImageStretch = false;
             picture.TabStop = false;
+            picture.Margin = (ControlAndLabel.DefaultControlLabelDistance, 1, 1, 1);
+            picture.ParentBackColor = true;
 
             picture.MouseLeftButtonUp -= Picture_MouseLeftButtonUp;
             picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
@@ -1247,11 +1255,11 @@ namespace Alternet.UI
 
             if (converter is null && optionsOverride.Value.HasFlag(TextBoxOptions.UseTypeConverter))
             {
-                converter = ObjectToStringFactory.Default.CreateAdapter(TypeConverter);
+                converter = StringConverters.Default.CreateAdapter(TypeConverter);
 
                 if (converter is null)
                 {
-                    converter = ObjectToStringFactory.Default.CreateAdapterForTypeConverter(type);
+                    converter = StringConverters.Default.CreateAdapterForTypeConverter(type);
                 }
 
                 usedTypeConverter = converter is not null;
@@ -1260,7 +1268,7 @@ namespace Alternet.UI
             if (converter is null)
             {
                 var typeCode = AssemblyUtils.GetRealTypeCode(type);
-                converter = ObjectToStringFactory.Default.GetConverter(typeCode);
+                converter = StringConverters.Default.GetConverter(typeCode);
             }
 
             if (converter is null)
@@ -1339,9 +1347,16 @@ namespace Alternet.UI
             if (!showError)
             {
                 if (DefaultErrorUseBackgroundColor)
-                    ResetBackgroundColor(ResetErrorBackgroundMethod ?? DefaultResetErrorBackgroundMethod);
+                {
+                    ResetBackgroundColor(ResetErrorBackgroundMethod
+                        ?? DefaultResetErrorBackgroundMethod);
+                }
+
                 if (DefaultErrorUseForegroundColor)
-                    ResetForegroundColor(ResetErrorForegroundMethod ?? DefaultResetErrorForegroundMethod);
+                {
+                    ResetForegroundColor(ResetErrorForegroundMethod
+                        ?? DefaultResetErrorForegroundMethod);
+                }
             }
             else
             {
@@ -1364,6 +1379,11 @@ namespace Alternet.UI
             void Report(IValidatorReporter? reporter)
             {
                 reporter?.SetErrorStatus(this, showError, hint);
+                if (AutoShowError && reporter is Control reporterControl)
+                {
+                    if(reporterControl != this)
+                        reporterControl.Visible = showError;
+                }
             }
         }
 

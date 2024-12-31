@@ -15,8 +15,7 @@ namespace Alternet.UI
         private MenuItemRole? role;
         private bool isChecked;
         private Action? action;
-        private ImageSet? image;
-        private ImageSet? disabledImage;
+        private CachedSvgImage<ImageSet> svgImage = new();
         private bool shortcutEnabled = true;
         private CommandSourceStruct commandSource = new();
 
@@ -52,7 +51,8 @@ namespace Alternet.UI
         /// the <see cref="MenuItem" /> is clicked.</summary>
         /// <param name="text">The text to display on the menu item.</param>
         /// <param name="image">The <see cref="Image" /> to display on the control.</param>
-        /// <param name="onClick">An event handler that raises the <see cref="AbstractControl.Click" />
+        /// <param name="onClick">An event handler that raises the
+        /// <see cref="AbstractControl.Click" />
         /// event when the control is clicked.</param>
         public MenuItem(string? text, Image image, EventHandler onClick)
             : this()
@@ -154,21 +154,65 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.MenuItem;
 
         /// <summary>
-        /// Gets or sets image associated with the menu item.
+        /// Gets or sets <see cref="ImageSet"/> associated with the menu item.
         /// </summary>
         public virtual ImageSet? Image
         {
             get
             {
-                return image;
+                return svgImage.GetImage(VisualControlState.Normal);
             }
 
             set
             {
-                if (image == value)
+                if (Image == value)
                     return;
-                image = value;
-                ImageChanged?.Invoke(this, EventArgs.Empty);
+                svgImage.SetImage(VisualControlState.Normal, value);
+                RaiseImageChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="SvgImage"/> associated with the menu item.
+        /// </summary>
+        public virtual SvgImage? SvgImage
+        {
+            get
+            {
+                return svgImage.SvgImage;
+            }
+
+            set
+            {
+                if (svgImage.SvgImage == value)
+                    return;
+                svgImage.SvgImage = value;
+                RaiseImageChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets size of the svg image.
+        /// </summary>
+        /// <remarks>
+        /// It is up to control to decide whether and how this property is used.
+        /// When this property is changed, you need to repaint the item.
+        /// Currently only rectangular svg images are supported.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual SizeI? SvgImageSize
+        {
+            get => svgImage.SvgSize;
+
+            set
+            {
+                if (SvgImageSize == value)
+                    return;
+                svgImage.SvgSize = value;
+                if(SvgImage is not null)
+                {
+                    RaiseImageChanged();
+                }
             }
         }
 
@@ -179,15 +223,15 @@ namespace Alternet.UI
         {
             get
             {
-                return disabledImage;
+                return svgImage.GetImage(VisualControlState.Disabled);
             }
 
             set
             {
-                if (disabledImage == value)
+                if (DisabledImage == value)
                     return;
-                disabledImage = value;
-                DisabledImageChanged?.Invoke(this, EventArgs.Empty);
+                svgImage.SetImage(VisualControlState.Disabled, value);
+                RaiseDisabledImageChanged();
             }
         }
 
@@ -450,6 +494,45 @@ namespace Alternet.UI
         public void RaiseShortcutChanged()
         {
             ShortcutChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises <see cref="ImageChanged"/> event.
+        /// </summary>
+        public void RaiseImageChanged()
+        {
+            ImageChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises <see cref="DisabledImageChanged"/> event.
+        /// </summary>
+        public void RaiseDisabledImageChanged()
+        {
+            DisabledImageChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Gets real menu image for the specified state constructed from the
+        /// following properties: <see cref="Image"/>, <see cref="DisabledImage"/>,
+        /// <see cref="SvgImage"/>, <see cref="SvgImageSize"/>.
+        /// </summary>
+        /// <param name="state">Item state.</param>
+        /// <param name="isDark">Light/dark theme flag.</param>
+        /// <param name="control">Control which scale factor is used.</param>
+        /// <returns></returns>
+        public virtual ImageSet? GetRealImage(
+            VisualControlState state,
+            bool? isDark = null,
+            Control? control = null)
+        {
+            svgImage.UpdateImageSet(
+                state,
+                isDark ?? control?.IsDarkBackground ?? SystemSettings.IsUsingDarkBackground,
+                control);
+
+            var img = state == VisualControlState.Disabled ? DisabledImage : Image;
+            return img;
         }
 
         /// <inheritdoc />

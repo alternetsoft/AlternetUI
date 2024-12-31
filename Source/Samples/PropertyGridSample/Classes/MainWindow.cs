@@ -18,28 +18,6 @@ namespace PropertyGridSample
 
         internal readonly SplittedControlsPanel panel = new();
 
-        private readonly Panel controlPanel = new()
-        {
-            UserPaint = true,
-            Name = "contrrolPanel",
-        };
-
-        private readonly Panel parentParent = new()
-        {
-            Padding = (5, 15, 5, 15),
-            UserPaint = true,
-            Name = "parentParent",
-        };
-
-        private readonly Border controlPanelBorder = new()
-        {
-            BorderColor = Color.Red,
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Top,
-            Padding = 0,
-            Name = "controlPanelBorder",
-        };
-
         private readonly ContextMenuStrip propGridContextMenu = new();
         private MenuItem? resetMenu;
         private readonly StatusBar statusBar = new();
@@ -91,7 +69,7 @@ namespace PropertyGridSample
 
         public PropertyGrid PropGrid => panel.PropGrid;
 
-        public Border ControlPanelBorder => controlPanelBorder;
+        public AbstractControl ControlParent => panel.FillPanel;
 
         public MainWindow()
         {
@@ -120,13 +98,10 @@ namespace PropertyGridSample
 
                 propGridContextMenu.Opening += PropGridContextMenu_Opening;
 
-                controlPanelBorder.NormalBorder.Paint += BorderSettings.DrawDesignCorners;
-                controlPanelBorder.NormalBorder.DrawDefaultBorder = false;
-
                 panel.BindApplicationLog();
 
                 PropGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
-                    | PropertyGridApplyFlags.ReloadAfterSetValue;
+                    | PropertyGridApplyFlags.ReloadAllAfterSetValue;
                 PropGrid.PropertyRightClick += PropGrid_PropertyRightClick;
                 PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
                 PropGrid.ProcessException += PropertyGrid_ProcessException;
@@ -141,11 +116,7 @@ namespace PropertyGridSample
                 panel.PropGrid.Required();
                 panel.ActionsControl.Required();
 
-                controlPanel.Parent = controlPanelBorder;
-
-                controlPanelBorder.Parent = parentParent;
-
-                parentParent.Parent = panel.FillPanel;
+                panel.FillPanel.MinChildMargin = 10;
 
                 InitToolBox();
 
@@ -181,7 +152,7 @@ namespace PropertyGridSample
                 ComponentDesigner.SafeDefault.MouseLeftButtonDown += Designer_MouseLeftButtonDown;
 
                 panel.FillPanel.MouseDown += ControlPanel_MouseDown;
-                controlPanel.DragStart += ControlPanel_DragStart;
+                panel.FillPanel.DragStart += ControlPanel_DragStart;
 
                 panel.WriteWelcomeLogMessages();
                 updatePropertyGrid = true;
@@ -296,21 +267,6 @@ namespace PropertyGridSample
 
         private static void Designer_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {
-            /*if(sender is Control control)
-            {
-                var name = control.Name ?? control.GetType().Name;
-                Application.LogNameValue("MouseLeftButtonDown", name);
-            }*/
-
-            /*
-            if (sender is not GroupBox groupBox)
-                return;
-            Application.LogNameValue("groupBox.GetTopBorderForSizer", groupBox.GetTopBorderForSizer());
-            Application.LogNameValue("groupBox.GetOtherBorderForSizer", groupBox.GetOtherBorderForSizer());
-            Application.LogNameValue("groupBox.IntrinsicPreferredSizePadding", groupBox.IntrinsicPreferredSizePadding);
-            Application.LogNameValue("groupBox.Padding", groupBox.Padding);
-            Application.LogNameValue("groupBox.IntrinsicLayoutPadding", groupBox.IntrinsicLayoutPadding);
-            */
         }
 
         internal bool LogSize { get; set; } = false;
@@ -354,7 +310,7 @@ namespace PropertyGridSample
 
             void DoAction()
             {
-                controlPanel.GetVisibleChildOrNull()?.Hide();
+                ControlParent.GetVisibleChildOrNull()?.Hide();
                 if (ToolBox.SelectedItem is not ControlListBoxItem item)
                 {
                     PropGrid.Clear();
@@ -365,9 +321,12 @@ namespace PropertyGridSample
 
                 if (item.Instance is AbstractControl control)
                 {
-                    parentParent.DoInsideLayout(() =>
+                    ControlParent.DoInsideLayout(() =>
                     {
-                        controlPanelBorder.HasBorder = PropertyGridSettings.Default!.DesignCorners
+                        var hasBorder = PropertyGridSettings.Default!.DesignCorners
+
+                        // Update design corners here.
+
                         && item.HasTicks
                         && !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
 
@@ -375,23 +334,25 @@ namespace PropertyGridSample
                         {
                             var s = control.GetType().ToString();
                             var splitted = s.Split('.');
-                            control.Name = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
+                            control.Name
+                            = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
                         }
 
                         if (control.Parent == null)
                         {
                             control.VerticalAlignment = VerticalAlignment.Top;
-                            control.Parent = controlPanel;
+                            control.Parent = ControlParent;
                         }
 
                         control.Visible = true;
                         control.Refresh();
                     });
-                    parentParent.Refresh();
+                    
+                    ControlParent.Refresh();
                 }
                 else
                 {
-                    controlPanelBorder.HasBorder = false;
+                    // Hide designer corners here
                 }
 
                 if (type == typeof(WelcomePage))
@@ -413,7 +374,7 @@ namespace PropertyGridSample
                         AfterSetProps();
                     });
 
-                    SetBackground(SystemColors.Control);
+                    SetBackground(Color.Gray100);
 
                     App.AddIdleTask(() =>
                     {
@@ -470,9 +431,7 @@ namespace PropertyGridSample
             if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
                 color = Color.White;
 
-            parentParent.BackgroundColor = color;
-            controlPanelBorder.BackgroundColor = color;
-            controlPanel.BackgroundColor = color;
+            ControlParent.BackgroundColor = color;
         }
 
         public class SettingsControl : Control

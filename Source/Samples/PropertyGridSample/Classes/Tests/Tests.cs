@@ -132,23 +132,40 @@ namespace PropertyGridSample
 
         private void ControlPanel_MouseDown(object? sender, MouseEventArgs e)
         {
-            if (sender == parentParent && e.RightButton == MouseButtonState.Pressed)
-                UpdatePropertyGrid(controlPanelBorder);
+            if (sender == ControlParent && e.RightButton == MouseButtonState.Pressed)
+                UpdatePropertyGrid(ControlParent);
         }
 
         private void LogEvent(string name, bool logAlways = false)
         {
-            var propValue = PropGrid.EventPropValue;
-            if (propValue is Color color)
-                propValue = color.ToDebugString();
-            propValue ??= "NULL";
-            string propName = PropGrid.EventPropName;
-            string s = $"Event: {name}. {propName} = {propValue}";
+            IPropertyGridItem? item = PropGrid.EventProperty;
 
-            if (logAlways)
-                App.Log(s);
+            if(item is null
+                || item.Instance is null || item.PropInfo is null)
+            {
+                var propValue = PropGrid.EventPropValue;
+                if (propValue is Color color)
+                    propValue = color.ToDebugString();
+                propValue ??= "NULL";
+                string propName = PropGrid.EventPropName;
+                string s = $"Event: [{name}] {propName} = {propValue}";
+
+                if (logAlways)
+                    App.Log(s);
+                else
+                    App.LogReplace(s, s);
+            }
             else
-                App.LogReplace(s, s);
+            {
+                var value = item.PropInfo.GetValue(item.Instance);
+                var type = item.Instance.GetType().Name;
+                string s = $"Event: [{name}] {type}.{item.PropInfo.Name} = {value}";
+
+                if (logAlways)
+                    App.Log(s);
+                else
+                    App.LogReplace(s, s);
+            }
         }
 
         private void PGPropertySelected(object? sender, EventArgs e)

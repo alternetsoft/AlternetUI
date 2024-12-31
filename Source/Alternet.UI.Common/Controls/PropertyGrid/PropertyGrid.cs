@@ -973,275 +973,279 @@ namespace Alternet.UI
             return prop;
         }
 
-/*
-        /// <summary>
-        /// Creates <see cref="sbyte"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsSByte(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<sbyte>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateSByteItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
-/*
-        /// <summary>
-        /// Creates <see cref="short"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsInt16(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<short>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateInt16Item(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
-/*
-        /// <summary>
-        /// Creates <see cref="int"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsInt(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<int>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateIntItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="sbyte"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsSByte(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<sbyte>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateSByteItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
+        /*
+                /// <summary>
+                /// Creates <see cref="short"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsInt16(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<short>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateInt16Item(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
+        /*
+                /// <summary>
+                /// Creates <see cref="int"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsInt(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<int>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateIntItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="long"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsLong(
-                    string label,
-                    string name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<long>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateLongItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
-/*
-        /// <summary>
-        /// Creates <see cref="byte"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsByte(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<byte>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateByteItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="long"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsLong(
+                            string label,
+                            string name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<long>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateLongItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
+        /*
+                /// <summary>
+                /// Creates <see cref="byte"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsByte(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<byte>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateByteItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="uint"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsUInt(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<uint>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateUIntItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="uint"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsUInt(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<uint>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateUIntItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="ushort"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsUInt16(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<ushort>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateUInt16Item(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="ushort"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsUInt16(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<ushort>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateUInt16Item(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="ulong"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsULong(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<ulong>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateULongItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="ulong"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsULong(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<ulong>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateULongItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="float"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsFloat(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<float>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateFloatItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="float"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsFloat(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<float>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateFloatItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="double"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsDouble(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<double>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateDoubleItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="double"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsDouble(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<double>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateDoubleItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="decimal"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsDecimal(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<decimal>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateDecimalItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="decimal"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsDecimal(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<decimal>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateDecimalItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="DateTime"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsDate(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<DateTime>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateDateItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="DateTime"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsDate(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<DateTime>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateDateItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
-/*
-        /// <summary>
-        /// Creates <see cref="char"/> property.
-        /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsChar(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            var value = AssemblyUtils.GetPropValue<char>(instance, propInfo, default);
-            var prm = ConstructNewItemParams(instance, propInfo);
-            var prop = CreateCharItem(label, name, value, prm);
-            OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-        }
-*/
+        /*
+                /// <summary>
+                /// Creates <see cref="char"/> property.
+                /// </summary>
+                /// <inheritdoc cref="CreatePropertyAsDummy"/>
+                public virtual IPropertyGridItem CreatePropertyAsChar(
+                            string label,
+                            string? name,
+                            object instance,
+                            PropertyInfo propInfo)
+                {
+                    var value = AssemblyUtils.GetPropValue<char>(instance, propInfo, default);
+                    var prm = ConstructNewItemParams(instance, propInfo);
+                    var prop = CreateCharItem(label, name, value, prm);
+                    OnPropertyCreated(prop, instance, propInfo, prm);
+                    return prop;
+                }
+        */
 
         /// <summary>
-        /// Creates <see cref="string"/> property.
+        /// Converts property value to string using the specified or default
+        /// <see cref="TypeConverter"/>.
         /// </summary>
-        /// <inheritdoc cref="CreatePropertyAsDummy"/>
-        public virtual IPropertyGridItem CreatePropertyAsString(
-                    string label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
+        /// <param name="instance">Object instance.</param>
+        /// <param name="propInfo">Property info.</param>
+        /// <param name="typeConverter">Type converter. Optional.</param>
+        /// <returns></returns>
+        public virtual string PropValueToString(
+            object instance,
+            PropertyInfo propInfo,
+            ref TypeConverter? typeConverter)
         {
             object? propValue = propInfo.GetValue(instance, null);
             string value = string.Empty;
 
-            if(propValue is not null)
+            if (propValue is not null)
             {
-                var typeConverter
-                = ObjectToStringFactory.Default.GetTypeConverter(propInfo.PropertyType);
+                typeConverter ??=
+                    StringConverters.Default.GetTypeConverter(propInfo.PropertyType);
+                var tpc = typeConverter;
 
                 var success = AvoidException(() =>
                 {
-                    if (typeConverter is not null)
+                    if (tpc is not null)
                     {
-                        if (typeConverter.CanConvertTo(typeof(string)))
+                        if (tpc.CanConvertTo(typeof(string)))
                         {
-                            value = typeConverter.ConvertToString(
+                            value = tpc.ConvertToString(
                                 null,
                                 Culture,
                                 propValue);
@@ -1266,9 +1270,34 @@ namespace Alternet.UI
                 }
             }
 
+            return value;
+        }
+
+        /// <summary>
+        /// Creates property with <see cref="string"/> editor.
+        /// </summary>
+        /// <param name="typeConverter">Type converter. Optional.</param>
+        /// <param name="label">Property label.</param>
+        /// <param name="name">Property name.</param>
+        /// <param name="instance">Object instance which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <returns>Property declaration for use with <see cref="PropertyGrid.Add"/>.</returns>
+        /// <remarks>
+        /// If <paramref name="label"/> or <paramref name="name"/> is null,
+        /// <paramref name="propInfo"/> is used to get them.
+        /// </remarks>
+        public virtual IPropertyGridItem CreatePropertyAsString(
+                    string label,
+                    string? name,
+                    object instance,
+                    PropertyInfo propInfo,
+                    TypeConverter? typeConverter = null)
+        {
+            var value = PropValueToString(instance, propInfo, ref typeConverter);
             var prm = ConstructNewItemParams(instance, propInfo);
             var prop = CreateStringItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
+            prop.TypeConverter = typeConverter;
             return prop;
         }
 
@@ -1661,25 +1690,28 @@ namespace Alternet.UI
         /// <param name="instance">Instance filter parameter. Ignored if <c>null</c>.</param>
         /// <param name="propInfo">Property information filter parameter.
         /// Ignored if <c>null</c></param>
-        public virtual void ReloadPropertyValues(
+        public virtual bool ReloadPropertyValues(
             object? instance = null,
             PropertyInfo? propInfo = null)
         {
-            var filteredItems = GetItemsFiltered(instance, propInfo);
-            if (filteredItems.First() == null)
-                return;
-            BeginUpdate();
-            try
+            return AvoidException(() =>
             {
-                foreach (var item in filteredItems)
+                var filteredItems = GetItemsFiltered(instance, propInfo);
+                if (filteredItems.First() == null)
+                    return;
+                BeginUpdate();
+                try
                 {
-                    ReloadPropertyValue(item);
+                    foreach (var item in filteredItems)
+                    {
+                        ReloadPropertyValue(item);
+                    }
                 }
-            }
-            finally
-            {
-                EndUpdate();
-            }
+                finally
+                {
+                    EndUpdate();
+                }
+            });
         }
 
         /// <summary>
@@ -2024,6 +2056,63 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets property value as variant.
+        /// </summary>
+        /// <param name="prop">Property item.</param>
+        /// <param name="value">New property value.</param>
+        public virtual void SetPropertyValueAsVariant(
+            IPropertyGridItem prop,
+            IPropertyGridVariant value)
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.SetPropertyValueAsVariant(prop, value);
+        }
+
+        /// <summary>
+        /// Sets attached property value using
+        /// <see cref="IPropInfoAndInstance"/> specified in <paramref name="prop"/> parameter.
+        /// </summary>
+        /// <param name="variant">Value to set.</param>
+        /// <param name="prop">Item which contains attached object and property information.</param>
+        /// <returns></returns>
+        public virtual bool SetAttachedPropertyValue(
+            IPropertyGridItem prop,
+            IPropertyGridVariant variant)
+        {
+            if (DisposingOrDisposed)
+                return false;
+
+            var propInfo = prop.PropInfo;
+            var instance = prop.Instance;
+
+            if (instance == null || propInfo == null || !propInfo.CanWrite)
+                return false;
+
+            var success = AvoidException(() =>
+            {
+                var newValue = variant.GetCompatibleValue(prop);
+                propInfo.SetValue(instance, newValue);
+                UpdateStruct();
+            });
+
+            return success;
+
+            void UpdateStruct()
+            {
+                var parent = prop.Parent;
+                if (parent == null)
+                    return;
+                var parentInstance = parent.Instance;
+                var parentPropInfo = parent.PropInfo;
+                var parentIsStruct = AssemblyUtils.IsStruct(parentPropInfo?.PropertyType);
+                if (!parentIsStruct)
+                    return;
+                parentPropInfo?.SetValue(parentInstance, instance);
+            }
+        }
+
+        /// <summary>
         /// Raises <see cref="LabelEditBegin"/> event and <see cref="OnLabelEditBegin"/> method.
         /// </summary>
         /// <param name="e">Event arguments.</param>
@@ -2182,71 +2271,35 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnPropertyChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+            var setValue = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropInfoSetValue);
+            if (!setValue)
+                return;
+
             var prop = EventProperty;
             if (prop == null)
                 return;
 
-            var setValue = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropInfoSetValue);
+            var variant = EventPropValueAsVariant;
+            var success = SetAttachedPropertyValue(prop, variant);
 
-            var propInfo = prop.PropInfo;
-            var instance = prop.Instance;
-
-            if (setValue && instance != null && propInfo != null && propInfo.CanWrite)
+            if (success)
             {
-                AvoidException(() =>
-                {
-                    var variant = EventPropValueAsVariant;
-                    var newValue = variant.GetCompatibleValue(prop);
+                var reload = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAfterSetValue);
+                var reloadAll = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAllAfterSetValue);
 
-                    if(newValue is not null)
-                    {
-                        var typeConverter
-                        = ObjectToStringFactory.Default.GetTypeConverter(propInfo.PropertyType);
-
-                        if (typeConverter is not null)
-                        {
-                            if(typeConverter.CanConvertFrom(newValue.GetType()))
-                            {
-                                var converted = typeConverter.ConvertFrom(newValue);
-                                newValue = converted;
-                            }
-                        }
-                    }
-
-                    propInfo.SetValue(instance, newValue);
-                    UpdateStruct();
-                });
-
-                AvoidException(() =>
-                {
-                    var reload = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAfterSetValue);
-                    var reloadAll = ApplyFlags.HasFlag(PropertyGridApplyFlags.ReloadAllAfterSetValue);
-
-                    if (reloadAll)
-                        ReloadPropertyValues();
-                    else
-                        if (reload)
-                        ReloadPropertyValues(instance, propInfo);
-                });
+                if (reloadAll)
+                    ReloadPropertyValues();
+                else
+                if (reload)
+                    ReloadPropertyValues(prop.Instance, prop.PropInfo);
             }
 
             var propEvent = ApplyFlags.HasFlag(PropertyGridApplyFlags.PropEvent);
             if (propEvent)
             {
                 AvoidException(() => { prop.RaisePropertyChanged(); });
-            }
-
-            void UpdateStruct()
-            {
-                var parent = prop.Parent;
-                if (parent == null)
-                    return;
-                var parentInstance = parent.Instance;
-                var parentPropInfo = parent.PropInfo;
-                var parentIsStruct = AssemblyUtils.IsStruct(parentPropInfo?.PropertyType);
-                if (!parentIsStruct)
-                    return;
-                parentPropInfo?.SetValue(parentInstance, instance);
             }
         }
 

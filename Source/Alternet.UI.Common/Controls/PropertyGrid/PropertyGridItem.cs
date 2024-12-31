@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -54,29 +55,29 @@ namespace Alternet.UI
         public event EventHandler? ButtonClick;
 
         /// <inheritdoc/>
-        public IPropertyGridNewItemParams? Params => prm;
+        public virtual IPropertyGridNewItemParams? Params => prm;
 
         /// <inheritdoc/>
-        public IPropertyGridChoices? Choices { get; set; }
+        public virtual IPropertyGridChoices? Choices { get; set; }
 
         /// <inheritdoc/>
-        public object? UserData { get; set; }
+        public virtual object? UserData { get; set; }
 
         /// <inheritdoc/>
-        public IPropertyGrid Owner { get => owner; }
+        public virtual IPropertyGrid Owner { get => owner; }
 
         /// <inheritdoc/>
-        public bool CanHaveCustomEllipsis { get; set; } = true;
+        public virtual bool CanHaveCustomEllipsis { get; set; } = true;
 
         /// <inheritdoc/>
         public PropertyGridEditKindAll PropertyEditorKind { get; set; } =
             PropertyGridEditKindAll.Other;
 
         /// <inheritdoc/>
-        public bool IsFlags => PropertyEditorKind == PropertyGridEditKindAll.EnumFlags;
+        public virtual bool IsFlags => PropertyEditorKind == PropertyGridEditKindAll.EnumFlags;
 
         /// <inheritdoc/>
-        public IPropertyGridItem? Parent => parent;
+        public virtual IPropertyGridItem? Parent => parent;
 
         /// <inheritdoc/>
         public bool HasChildren
@@ -88,7 +89,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IList<IPropertyGridItem> Children
+        public virtual IList<IPropertyGridItem> Children
         {
             get
             {
@@ -104,41 +105,44 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public object? Instance
+        public virtual object? Instance
         {
             get => instance;
             set => instance = value;
         }
 
         /// <inheritdoc/>
-        public PropertyInfo? PropInfo
+        public virtual PropertyInfo? PropInfo
         {
             get => propInfo;
             set => propInfo = value;
         }
 
         /// <inheritdoc/>
-        public PropertyGridItemHandle? Handle => handle;
+        public virtual PropertyGridItemHandle? Handle => handle;
 
         /// <inheritdoc/>
-        public string DefaultName => defaultName;
+        public virtual string DefaultName => defaultName;
 
         /// <inheritdoc/>
-        public string DefaultLabel => defaultLabel;
+        public virtual string DefaultLabel => defaultLabel;
 
         /// <inheritdoc/>
-        public object? DefaultValue => defaultValue;
+        public virtual object? DefaultValue => defaultValue;
 
         /// <inheritdoc/>
-        public Func<IPropertyGridItem?, object, PropertyInfo, object?>? GetValueFuncForReload
+        public virtual Func<IPropertyGridItem?, object, PropertyInfo, object?>? GetValueFuncForReload
         { get; set; }
 
         /// <inheritdoc/>
-        public bool IsCategory
+        public virtual bool IsCategory
         {
             get => isCategory;
             set => isCategory = value;
         }
+
+        /// <inheritdoc/>
+        public virtual TypeConverter? TypeConverter { get; set; }
 
         /// <summary>
         /// Compares two specified <see cref="IPropertyGridItem"/> objects by their labels

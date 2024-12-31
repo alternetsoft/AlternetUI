@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool DrawDebugCornersOnElements = false;
 
-        private CachedSvgImage cachedSvg = new();
+        private CachedSvgImage<Image> cachedSvg = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -318,6 +318,22 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Action? DoubleClickAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets an action which is called when background is painted for the item.
+        /// When this action is specified, default background painting is not performed.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>?
+            DrawBackgroundAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets an action which is called when foreground is painted for the item.
+        /// When this action is specified, default foreground painting is not performed.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>?
+            DrawForegroundAction { get; set; }
 
         /// <summary>
         /// Gets font of the container.
@@ -638,7 +654,8 @@ namespace Alternet.UI
 
                         if (!selectionUnderImage)
                         {
-                            DefaultDrawForeground(container, e, out var drawParams, false);
+                            CalcForegroundMetrics(container, e);
+                            var drawParams = e.LabelMetrics;
                             var rects = drawParams.ResultRects;
                             if (rects is not null && rects.Length > 1)
                             {
@@ -675,13 +692,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Default method which calls <see cref="DefaultDrawForeground"/> for the
+        /// <see cref="ListBoxItemPaintEventArgs.LabelMetrics"/> calculation.
+        /// </summary>
+        public static void CalcForegroundMetrics(
+            IListControlItemContainer? container,
+            ListBoxItemPaintEventArgs e)
+        {
+            var savedVisible = e.Visible;
+            e.Visible = false;
+            DefaultDrawForeground(container, e);
+            e.Visible = savedVisible;
+        }
+
+        /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
         public static void DefaultDrawForeground(
             IListControlItemContainer? container,
-            ListBoxItemPaintEventArgs e,
-            out Graphics.DrawLabelParams drawParams,
-            bool visible = true)
+            ListBoxItemPaintEventArgs e)
         {
             var item = e.Item;
 
@@ -727,7 +756,7 @@ namespace Alternet.UI
                 e.ClipRectangle,
                 e.ItemAlignment);
 
-            prm.Visible = visible;
+            prm.Visible = e.Visible;
 
             if(item is not null)
             {
@@ -740,7 +769,7 @@ namespace Alternet.UI
             }
 
             e.Graphics.DrawLabel(ref prm);
-            drawParams = prm;
+            e.LabelMetrics = prm;
         }
 
         /// <summary>
@@ -855,7 +884,10 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
         {
-            DefaultDrawBackground(container, e);
+            if(DrawBackgroundAction is null)
+                DefaultDrawBackground(container, e);
+            else
+                DrawBackgroundAction(container, e);
         }
 
         /// <summary>
@@ -863,11 +895,16 @@ namespace Alternet.UI
         /// </summary>
         public virtual void DrawForeground(
             IListControlItemContainer? container,
-            ListBoxItemPaintEventArgs e,
-            out Graphics.DrawLabelParams drawParams,
-            bool visible = true)
+            ListBoxItemPaintEventArgs e)
         {
-            ListControlItem.DefaultDrawForeground(container, e, out drawParams, visible);
+            if (DrawForegroundAction is null)
+            {
+                DefaultDrawForeground(container, e);
+            }
+            else
+            {
+                DrawForegroundAction(container, e);
+            }
         }
 
         /// <summary>
@@ -878,8 +915,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Image? GetImage(VisualControlState state, bool? isDark = null)
         {
-            isDark ??= LightDarkColor.IsUsingDarkColor;
-            var result = cachedSvg.GetImage(state, isDark.Value);
+            var result = cachedSvg.GetImage(state, isDark);
             return result;
         }
 
@@ -903,30 +939,16 @@ namespace Alternet.UI
         /// <param name="isDark">Whether theme is dark.</param>
         public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
         {
-            isDark ??= LightDarkColor.IsUsingDarkColor;
-            cachedSvg.SetImage(state, image, isDark.Value);
+            cachedSvg.SetImage(state, image, isDark);
         }
 
         /// <summary>
-        /// Gets font when item is inside the specified container. Result must not be <c>null</c>.
+        /// Gets font used when item is painted. Result is not <c>null</c>.
         /// </summary>
         /// <returns></returns>
         public virtual Font GetFont(IListControlItemContainer? container)
         {
-            var result = Font;
-            if (result is null)
-            {
-                var control = container?.Control;
-
-                if (control is not null)
-                {
-                    result = control.Font ?? UI.AbstractControl.DefaultFont;
-                    if (control.IsBold)
-                        result = result.AsBold;
-                }
-                else
-                    result = UI.AbstractControl.DefaultFont;
-            }
+            var result = Font ?? container?.Control?.RealFont ?? AbstractControl.DefaultFont;
 
             if (FontStyle is not null)
                 result = result.WithStyle(FontStyle.Value);

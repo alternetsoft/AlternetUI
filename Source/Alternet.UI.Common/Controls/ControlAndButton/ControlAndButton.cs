@@ -16,22 +16,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default image for the 'ComboBox' button.
         /// </summary>
-        public static KnownButton DefaultBtnComboBoxImage = KnownButton.TextBoxCombo;
+        public static KnownButton DefaultBtnComboBoxImage = UI.KnownButton.TextBoxCombo;
 
         /// <summary>
         /// Gets or sets default image for the 'Ellipsis' button.
         /// </summary>
-        public static KnownButton DefaultBtnEllipsisImage = KnownButton.TextBoxEllipsis;
+        public static KnownButton DefaultBtnEllipsisImage = UI.KnownButton.TextBoxEllipsis;
 
         /// <summary>
         /// Gets or sets default image for the 'Plus' button.
         /// </summary>
-        public static KnownButton DefaultBtnPlusImage = KnownButton.TextBoxPlus;
+        public static KnownButton DefaultBtnPlusImage = UI.KnownButton.TextBoxPlus;
 
         /// <summary>
         /// Gets or sets default image for the 'Minus' button.
         /// </summary>
-        public static KnownButton DefaultBtnMinusImage = KnownButton.TextBoxMinus;
+        public static KnownButton DefaultBtnMinusImage = UI.KnownButton.TextBoxMinus;
 
         /// <summary>
         /// Gets or sets default svg image for 'ComboBox' button.
@@ -77,6 +77,7 @@ namespace Alternet.UI
         /// </summary>
         public ControlAndButton()
         {
+            ParentBackColor = true;
             Layout = LayoutStyle.Horizontal;
 
             SuspendLayout();
@@ -125,9 +126,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets 'ComboBox' button image as <see cref="KnownButton"/>.
+        /// Gets or sets 'ComboBox' button image as <see cref="UI.KnownButton"/>.
         /// </summary>
-        public virtual KnownButton? BtnComboBoxKnownImage
+        public virtual KnownButton? ButtonOverride
         {
             get
             {
@@ -267,10 +268,8 @@ namespace Alternet.UI
                 {
                     errorPicture = new();
                     errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
-                    errorPicture.Margin = (ControlAndLabel.DefaultControlLabelDistance, 0, 0, 0);
                     CustomTextBox.InitErrorPicture(errorPicture);
                     errorPicture.Visible = false;
-                    errorPicture.ParentBackColor = true;
                     errorPicture.Parent = this;
                 }
 
@@ -284,12 +283,22 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool ErrorPictureVisible
         {
-            get => ErrorPicture.Visible;
-            set => ErrorPicture.Visible = value;
+            get
+            {
+                return (errorPicture is not null) && ErrorPicture.Visible;
+            }
+
+            set
+            {
+                if (errorPicture is null && !value)
+                    return;
+                ErrorPicture.Visible = value;
+            }
         }
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property
+        /// of the main child control.
         /// </summary>
         [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedWidth
@@ -299,7 +308,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property
+        /// of the main child control.
         /// </summary>
         [DefaultValue(Coord.NaN)]
         public virtual Coord InnerSuggestedHeight
@@ -309,7 +319,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property of the main child control.
+        /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property
+        /// of the main child control.
         /// </summary>
         [Browsable(false)]
         public virtual SizeD InnerSuggestedSize
@@ -355,7 +366,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IEnumerable GetErrors(string? propertyName)
         {
-            return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName) ?? Array.Empty<string>();
+            return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName)
+                ?? Array.Empty<string>();
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace Alternet.UI
                     foreach (var child in Children)
                     {
                         if (child.ParentFont)
-                            child.Font = Font?.WithStyle(child.fontStyle);
+                            child.Font = RealFont;
                     }
                 }
             });

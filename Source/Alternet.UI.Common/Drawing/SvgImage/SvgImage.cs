@@ -163,6 +163,39 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Tries to get svg image as image with pixel data.
+        /// </summary>
+        /// <typeparam name="T">Type of the image.
+        /// Supported types: <see cref="ImageSet"/>, <see cref="Image"/></typeparam>
+        /// <param name="size">Image size in pixels.</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <param name="knownColor">Known svg color.</param>
+        /// <param name="result">Image with pixel data.</param>
+        public virtual bool TryGetImage<T>(
+            int size,
+            KnownSvgColor knownColor,
+            bool isDark,
+            ref object? result)
+        {
+            var image = AsImageSet(size, knownColor, isDark);
+
+            if (typeof(T) == typeof(ImageSet))
+            {
+                result = image;
+                return true;
+            }
+
+            if (typeof(T) == typeof(Image))
+            {
+                result = image?.AsImage();
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        /// <summary>
         /// Gets image with the specified size and known svg color.
         /// </summary>
         /// <param name="size">Image size in pixels.</param>

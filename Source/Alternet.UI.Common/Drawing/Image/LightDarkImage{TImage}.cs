@@ -7,24 +7,25 @@ namespace Alternet.Drawing
     /// <summary>
     /// Contains image for the light and dark color themes.
     /// </summary>
-    public class LightDarkImage
+    public class LightDarkImage<TImage>
+        where TImage : class
     {
         /// <summary>
         /// Gets or sets image for the light color theme.
         /// </summary>
-        public Image? Light;
+        public TImage? Light;
 
         /// <summary>
         /// Gets or sets image for the dark color theme.
         /// </summary>
-        public Image? Dark;
+        public TImage? Dark;
 
         /// <summary>
         /// Gets image for the specified light/dark flag.
         /// </summary>
         /// <param name="isDark">The light/dark flag for which to get the image.</param>
         /// <returns></returns>
-        public virtual Image? GetImage(bool isDark)
+        public virtual TImage? GetImage(bool isDark)
         {
             if (isDark)
                 return Dark;
@@ -36,7 +37,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="isDark">The light/dark flag for which to set the image.</param>
         /// <param name="value">New image value.</param>
-        public virtual void SetImage(bool isDark, Image? value)
+        public virtual void SetImage(bool isDark, TImage? value)
         {
             if (isDark)
                 Dark = value;

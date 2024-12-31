@@ -130,6 +130,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether real painting need to be performed. When <see cref="Visible"/>
+        /// is False, caller need only <see cref="LabelMetrics"/> without any actual painting.
+        /// </summary>
+        public virtual bool Visible { get; set; } = true;
+
+        /// <summary>
+        /// Gets draw label result returned after painting of the label is performed.
+        /// </summary>
+        public virtual Graphics.DrawLabelParams LabelMetrics { get; set; }
+
+        /// <summary>
         /// Gets normal and disabled images of the item.
         /// </summary>
         public virtual EnumArrayStateImages ItemImages

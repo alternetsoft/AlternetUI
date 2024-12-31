@@ -256,85 +256,112 @@ namespace Alternet.UI
 
         public object? GetCompatibleValue(IPropertyGridItem item)
         {
-            if (IsNull)
-                return null;
-
-            PropertyInfo p = item.PropInfo!;
-
-            if (p == null)
-                return AsObject;
-
-            var type = AssemblyUtils.GetRealType(p.PropertyType);
-            TypeCode typeCode = Type.GetTypeCode(type);
-            var nullable = AssemblyUtils.GetNullable(p);
-
-            if (type.IsEnum)
+            var newValue = Internal();
+            if (newValue is not null)
             {
-                if (nullable)
+                var typeConverter = item?.TypeConverter;
+                
+                if(typeConverter is null)
                 {
-                    var kind = item.PropertyEditorKind;
-                    var kindisEnum = kind == PropertyGridEditKindAll.Enum
-                        || kind == PropertyGridEditKindAll.EnumEditable;
-                    var choices = item.Choices;
-                    if(choices != null && kindisEnum)
+                    var type = item?.PropInfo?.PropertyType;
+                    if(type is not null)
+                    typeConverter = StringConverters.Default.GetTypeConverter(type);
+                }               
+
+                if (typeConverter is not null)
+                {
+                    if (typeConverter.CanConvertFrom(newValue.GetType()))
                     {
-                        var value = AsLong;
-                        if (value == choices.NullableValue)
-                            return null;
+                        var converted = typeConverter.ConvertFrom(newValue);
+                        newValue = converted;
                     }
                 }
-
-                return Enum.ToObject(type, AsLong);
             }
 
-            switch (typeCode)
+            return newValue;
+
+            object? Internal()
             {
-                case TypeCode.Empty:
+                if (IsNull)
                     return null;
-                case TypeCode.Object:
+
+                var p = item.PropInfo;
+
+                if (p == null)
                     return AsObject;
-                case TypeCode.DBNull:
-                    return null;
-                case TypeCode.Boolean:
-                    return AsBool;
-                case TypeCode.Char:
-                    var s = AsString;
-                    if (s.Length < 1)
+
+                var type = AssemblyUtils.GetRealType(p.PropertyType);
+                TypeCode typeCode = Type.GetTypeCode(type);
+                var nullable = AssemblyUtils.GetNullable(p);
+
+                if (type.IsEnum)
+                {
+                    if (nullable)
                     {
-                        if (nullable)
-                            return null;
-                        return 0;
+                        var kind = item.PropertyEditorKind;
+                        var kindisEnum = kind == PropertyGridEditKindAll.Enum
+                            || kind == PropertyGridEditKindAll.EnumEditable;
+                        var choices = item.Choices;
+                        if (choices != null && kindisEnum)
+                        {
+                            var value = AsLong;
+                            if (value == choices.NullableValue)
+                                return null;
+                        }
                     }
 
-                    return s[0];
-                case TypeCode.SByte:
-                    return (sbyte)AsLong;
-                case TypeCode.Byte:
-                    return (byte)AsULong;
-                case TypeCode.Int16:
-                    return (short)AsLong;
-                case TypeCode.UInt16:
-                    return (ushort)AsULong;
-                case TypeCode.Int32:
-                    return (int)AsLong;
-                case TypeCode.UInt32:
-                    return (uint)AsULong;
-                case TypeCode.Int64:
-                    return AsLong;
-                case TypeCode.UInt64:
-                    return AsULong;
-                case TypeCode.Single:
-                    return (float)AsDouble;
-                case TypeCode.Double:
-                    return AsDouble;
-                case TypeCode.Decimal:
-                    return AsDecimal;
-                case TypeCode.DateTime:
-                    return AsDateTime;
-                case TypeCode.String:
-                    return AsString;
-                default:
-                    return null;
+                    return Enum.ToObject(type, AsLong);
+                }
+
+                switch (typeCode)
+                {
+                    case TypeCode.Empty:
+                        return null;
+                    case TypeCode.DBNull:
+                        return null;
+                    case TypeCode.Object:
+                        return AsObject;
+                    case TypeCode.Boolean:
+                        return AsBool;
+                    case TypeCode.Char:
+                        var s = AsString;
+                        if (s.Length < 1)
+                        {
+                            if (nullable)
+                                return null;
+                            return 0;
+                        }
+
+                        return s[0];
+                    case TypeCode.SByte:
+                        return (sbyte)AsLong;
+                    case TypeCode.Byte:
+                        return (byte)AsULong;
+                    case TypeCode.Int16:
+                        return (short)AsLong;
+                    case TypeCode.UInt16:
+                        return (ushort)AsULong;
+                    case TypeCode.Int32:
+                        return (int)AsLong;
+                    case TypeCode.UInt32:
+                        return (uint)AsULong;
+                    case TypeCode.Int64:
+                        return AsLong;
+                    case TypeCode.UInt64:
+                        return AsULong;
+                    case TypeCode.Single:
+                        return (float)AsDouble;
+                    case TypeCode.Double:
+                        return AsDouble;
+                    case TypeCode.Decimal:
+                        return AsDecimal;
+                    case TypeCode.DateTime:
+                        return AsDateTime;
+                    case TypeCode.String:
+                        return AsString;
+                    default:
+                        return null;
+                }
             }
         }
 

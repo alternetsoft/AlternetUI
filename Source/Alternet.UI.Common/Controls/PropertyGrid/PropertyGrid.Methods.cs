@@ -46,31 +46,55 @@ namespace Alternet.UI
         /// <returns>Returns true if successful or if there was no selection. May fail if validation
         /// was enabled and active editor had invalid value.</returns>
         public virtual bool ClearSelection(bool validation)
-            => Handler.ClearSelection(validation);
+        {
+            if (DisposingOrDisposed)
+                return default;
+            return Handler.ClearSelection(validation);
+        }
 
         /// <summary>
         /// Resets modified status of all properties.
         /// </summary>
-        public virtual void ClearModifiedStatus() => Handler.ClearModifiedStatus();
+        public virtual void ClearModifiedStatus()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Handler.ClearModifiedStatus();
+        }
 
         /// <summary>
         /// Collapses all items that can be collapsed. This functions clears selection.
         /// </summary>
-        public virtual bool CollapseAll() => Handler.CollapseAll();
+        public virtual bool CollapseAll()
+        {
+            if (DisposingOrDisposed)
+                return default;
+            return Handler.CollapseAll();
+        }
 
         /// <summary>
         /// Returns true if all property grid data changes have been committed.
         /// </summary>
         /// <returns>Usually only returns false if value in active editor has been invalidated
         /// by a validator.</returns>
-        public virtual bool EditorValidate() => Handler.EditorValidate();
+        public virtual bool EditorValidate()
+        {
+            if (DisposingOrDisposed)
+                return default;
+            return Handler.EditorValidate();
+        }
 
         /// <summary>
         /// Expands all items that can be expanded. This functions clears selection.
         /// </summary>
         /// <param name="expand"></param>
         /// <returns></returns>
-        public virtual bool ExpandAll(bool expand) => Handler.ExpandAll(expand);
+        public virtual bool ExpandAll(bool expand)
+        {
+            if (DisposingOrDisposed)
+                return default;
+            return Handler.ExpandAll(expand);
+        }
 
         /// <summary>
         /// Translates the logical coordinates to the device ones.
@@ -87,6 +111,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual PointI CalcScrolledPositionI(PointI point)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.CalcScrolledPosition(point);
         }
 
@@ -105,6 +131,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual PointD CalcScrolledPositionD(PointD point)
         {
+            if (DisposingOrDisposed)
+                return default;
             var pointI = PixelFromDip(point);
             var result = Handler.CalcScrolledPosition(pointI);
             var pointD = PixelToDip(result);
@@ -126,6 +154,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual PointI CalcUnscrolledPositionI(PointI point)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.CalcUnscrolledPosition(point);
         }
 
@@ -144,6 +174,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual PointD CalcUnscrolledPositionD(PointD point)
         {
+            if (DisposingOrDisposed)
+                return default;
             var pointI = PixelFromDip(point);
             var result = Handler.CalcUnscrolledPosition(pointI);
             var pointD = PixelToDip(result);
@@ -162,6 +194,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int GetHitTestColumn(PointD point)
         {
+            if (DisposingOrDisposed)
+                return default;
             var pointI = PixelFromDip(point);
             var result = Handler.GetHitTestColumn(pointI);
             return result;
@@ -179,6 +213,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual IPropertyGridItem? GetHitTestProp(PointD point)
         {
+            if (DisposingOrDisposed)
+                return default;
             return Handler.GetHitTestProp(point);
         }
 

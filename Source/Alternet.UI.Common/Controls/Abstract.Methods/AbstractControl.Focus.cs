@@ -248,6 +248,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets collection of the focusable children controls optinally sorted by
+        /// the <see cref="TabIndex"/> property.
+        /// </summary>
+        /// <param name="recursive">Whether to process child controls recursively</param>
+        /// <param name="sortByTabIndex">Whether to sort control by
+        /// the <see cref="TabIndex"/> property</param>
+        /// <returns></returns>
+        public virtual AbstractControl[] GetFocusableChildren(bool recursive, bool sortByTabIndex)
+        {
+            var result = GetFocusableChildren(recursive).ToArray();
+            if(sortByTabIndex)
+                Array.Sort(result, Comparison);
+            return result;
+
+            int Comparison(AbstractControl x, AbstractControl y)
+            {
+                var xHash = x.Parent?.GetHashCode() ?? 0;
+                var yHash = y.Parent?.GetHashCode() ?? 0;
+
+                var result = xHash.CompareTo(yHash);
+
+                if (result == 0)
+                {
+                    result = x.TabIndex.CompareTo(y.TabIndex);
+                }
+
+                if (result == 0)
+                {
+                    var xIndex = x.IndexInParent ?? 0;
+                    var yIndex = y.IndexInParent ?? 0;
+                    result = xIndex.CompareTo(yIndex);
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets collection of the focusable children controls.
         /// </summary>
         /// <param name="recursive">Whether to process child controls recursively</param>
@@ -267,7 +305,7 @@ namespace Alternet.UI
                     continue;
 
                 if (!control.TabStop || !control.Visible || !control.IsEnabled
-                    || !control.CanSelect || !control.CanFocus
+                    || !control.CanSelect || !control.CanFocus || control.IsGraphicControl
                     || control.HasChildren || control.HasFocusableChildren(true))
                     continue;
 
@@ -299,7 +337,7 @@ namespace Alternet.UI
 
             AbstractControl[] GetItems(AbstractControl container)
             {
-                var result = container.GetFocusableChildren(recursive).ToArray();
+                var result = container.GetFocusableChildren(recursive, true);
                 return result;
             }
 

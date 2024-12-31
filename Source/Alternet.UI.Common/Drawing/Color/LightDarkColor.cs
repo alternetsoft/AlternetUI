@@ -31,7 +31,19 @@ namespace Alternet.Drawing
         private Color dark;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class.
+        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// with the same light and dark colors.
+        /// </summary>
+        /// <param name="value">Light and dark color value.</param>
+        public LightDarkColor(Color value)
+        {
+            this.light = value;
+            this.dark = value;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// with the specified light and dark color values.
         /// </summary>
         /// <param name="light">Light color.</param>
         /// <param name="dark">Dark color.</param>

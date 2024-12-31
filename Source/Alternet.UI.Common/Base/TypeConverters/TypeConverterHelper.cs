@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// from a property or the type of the property, based on logic similar
     /// to <see cref="TypeDescriptor.GetConverter(Type)"/>.
     /// </summary>
-    public static class TypeConverterHelper
+    internal static class TypeConverterHelper
     {
         private static IndexedValues<Type, TypeConverter> convertersCached = new();
 
@@ -52,7 +52,7 @@ namespace Alternet.UI
             var result = convertersCached.GetValue(type, Internal);
             return result;
 
-            TypeConverter? Internal()
+            TypeConverter Internal()
             {
                 TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
 

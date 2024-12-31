@@ -15,7 +15,15 @@ namespace Alternet.UI
         private FrameworkElement? logicalParent;
 
         /// <summary>
-        /// Gets or sets data context.
+        /// Gets or sets property of the <see cref="DataContext"/>
+        /// to use in the element. Only some elements use this property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? DataContextProperty { get; set; }
+
+        /// <summary>
+        /// Gets or sets data context to use in the element.
+        /// Only some elements use this property.
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

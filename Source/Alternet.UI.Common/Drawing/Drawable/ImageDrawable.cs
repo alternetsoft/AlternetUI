@@ -29,6 +29,16 @@ namespace Alternet.Drawing
         public ImageSet? ImageSet;
 
         /// <summary>
+        /// Gets or sets image to draw.
+        /// </summary>
+        public Image? DisabledImage;
+
+        /// <summary>
+        /// Gets or sets image to draw.
+        /// </summary>
+        public ImageSet? DisabledImageSet;
+
+        /// <summary>
         /// Gets or sets source rectangle which specifies part of the image to draw.
         /// </summary>
         public RectI? SourceRect = null;
@@ -57,20 +67,54 @@ namespace Alternet.Drawing
         /// Gets image to draw.
         /// </summary>
         /// <returns></returns>
-        public virtual Image? GetImage()
+        public virtual Image? GetImage(bool isDark)
         {
-            var image = SvgImage.AsImage;
-            image ??= Image ?? ImageSet?.AsImage(ImageSet.DefaultSize);
-            return image;
+            Image? GetNormalImage()
+            {
+                var image = SvgImage.SvgImage?.AsNormalImage(SvgImage.SvgSize, isDark);
+                image ??= Image ?? ImageSet?.AsImage(ImageSet.DefaultSize);
+                return image;
+            }
+
+            if (Enabled)
+            {
+                return GetNormalImage();
+            }
+            else
+            {
+                var image = SvgImage.SvgImage?.AsDisabledImage(SvgImage.SvgSize, isDark);
+                image ??= DisabledImage ?? DisabledImageSet?.AsImage(DisabledImageSet.DefaultSize);
+                image ??= GetNormalImage();
+                return image;
+            }
         }
 
         /// <summary>
         /// Sets svg size. Implemented for the convenience.
         /// </summary>
         /// <param name="size">New svg image width and height.</param>
-        public void SetSvgSize(int size)
+        public virtual void SetSvgSize(int size)
         {
             SvgImage.SvgSize = size;
+        }
+
+        /// <summary>
+        /// Gets preferred size in device-independent units.
+        /// </summary>
+        /// <param name="control">Control in which this object is painted.</param>
+        /// <returns></returns>
+        public virtual SizeD GetPreferredSize(AbstractControl control)
+        {
+            SizeD result;
+
+            var image = GetImage(control.IsDarkBackground);
+
+            if (image is not null)
+                result = image.SizeDip(control.ScaleFactor);
+            else
+                result = SizeD.Empty;
+
+            return result;
         }
 
         /// <summary>
@@ -83,7 +127,7 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            var image = GetImage();
+            var image = GetImage(control.IsDarkBackground);
             if (Image.IsNullOrEmpty(image))
                 return;
 

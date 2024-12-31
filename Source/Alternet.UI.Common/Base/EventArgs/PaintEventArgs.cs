@@ -14,8 +14,8 @@ namespace Alternet.UI
     /// </remarks>
     public class PaintEventArgs : BaseEventArgs
     {
+        private readonly Func<Graphics> canvasFunc;
         private Graphics? canvas;
-        private Func<Graphics> canvasFunc;
         private RectD rect;
 
         /// <summary>

@@ -10,14 +10,15 @@ namespace Alternet.Drawing
     /// Storage for <see cref="SvgImage"/> conversions to <see cref="Image"/>
     /// for the different visual states and light/dark flags.
     /// </summary>
-    public struct CachedSvgImage
+    public struct CachedSvgImage<TImage>
+        where TImage : class
     {
-        private EnumArray<VisualControlState, LightDarkImage?> imageData = new();
+        private EnumArray<VisualControlState, LightDarkImage<object>?> imageData = new();
         private SvgImage? svgImage;
         private SizeI? svgSize;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CachedSvgImage"/> struct.
+        /// Initializes a new instance of the <see cref="CachedSvgImage{TImage}"/> struct.
         /// </summary>
         public CachedSvgImage()
         {
@@ -59,15 +60,27 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether image exists for the specified item state and light/dark theme flag.
+        /// </summary>
+        /// <param name="state">Item state.</param>
+        /// <param name="isDark">Light/dark theme flag.</param>
+        /// <returns></returns>
+        public readonly bool HasImage(VisualControlState state, bool? isDark = null)
+        {
+            return GetImage(state, isDark) != null;
+        }
+
+        /// <summary>
         /// Gets image for the specified item state and light/dark theme flag.
         /// </summary>
         /// <param name="state">Item state.</param>
-        /// <param name="isDark">Light/dark theme flag</param>
+        /// <param name="isDark">Light/dark theme flag.</param>
         /// <returns></returns>
-        public readonly Image? GetImage(VisualControlState state, bool isDark)
+        public readonly TImage? GetImage(VisualControlState state, bool? isDark = null)
         {
-            var result = imageData[state]?.GetImage(isDark);
-            return result;
+            isDark ??= LightDarkColor.IsUsingDarkColor;
+            var result = imageData[state]?.GetImage(isDark.Value);
+            return (TImage?)result;
         }
 
         /// <summary>
@@ -77,10 +90,63 @@ namespace Alternet.Drawing
         /// for which image is set.</param>
         /// <param name="image">New image value.</param>
         /// <param name="isDark">Whether theme is dark.</param>
-        public void SetImage(VisualControlState state, Image? image, bool isDark)
+        public void SetImage(VisualControlState state, object? image, bool? isDark = null)
         {
+            isDark ??= LightDarkColor.IsUsingDarkColor;
             imageData[state] ??= new();
-            imageData[state]!.SetImage(isDark, image);
+            imageData[state]!.SetImage(isDark.Value, image);
+        }
+
+        /// <summary>
+        /// Gets real svg height in pixels using <see cref="SvgSize"/> and other settings.
+        /// </summary>
+        /// <param name="control">Control which scale factor is used.</param>
+        /// <returns></returns>
+        public readonly int RealSvgHeight(Control? control = null)
+        {
+            var imageSize = SvgSize ?? 16;
+            var imageHeight = imageSize.Height;
+            return imageHeight;
+        }
+
+        /// <summary>
+        /// Saves svg as <see cref="ImageSet"/> to the specified state.
+        /// </summary>
+        /// <param name="state">Item state.</param>
+        /// <param name="isDark">Light/dark theme flag.</param>
+        /// <param name="control">Control which scale factor is used.</param>
+        public void UpdateImageSet(VisualControlState state, bool isDark, Control? control)
+        {
+            if (svgImage is null)
+                return;
+
+            if (!HasImage(state, isDark))
+            {
+                SetImage(
+                    state,
+                    svgImage?.AsNormal(RealSvgHeight(control), isDark),
+                    isDark);
+            }
+        }
+
+        /// <summary>
+        /// Saves svg as <see cref="Image"/> to the specified state.
+        /// </summary>
+        /// <param name="state">Item state.</param>
+        /// <param name="isDark">Light/dark theme flag.</param>
+        /// <param name="control">Control which scale factor is used.</param>
+        public void UpdateImage(VisualControlState state, bool isDark, Control? control)
+        {
+            if (svgImage is null)
+                return;
+
+            if (!HasImage(state, isDark))
+            {
+                SetImage(
+                    state,
+                    svgImage?.AsNormalImage(RealSvgHeight(control), isDark),
+                    isDark);
+            }
         }
     }
 }

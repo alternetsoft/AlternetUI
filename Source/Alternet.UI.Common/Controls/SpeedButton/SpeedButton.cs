@@ -31,6 +31,11 @@ namespace Alternet.UI
         public static Coord DefaultImageLabelDistance = 4;
 
         /// <summary>
+        /// Gets or sets default padding in the <see cref="SpeedButton"/>.
+        /// </summary>
+        public static Coord DefaultPadding = 4;
+
+        /// <summary>
         /// Gets ot sets default value of <see cref="UseTheme"/> property.
         /// </summary>
         public static KnownTheme DefaultUseTheme = KnownTheme.Default;
@@ -75,9 +80,8 @@ namespace Alternet.UI
         /// </summary>
         public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
 
-        private readonly PictureBox picture = new()
+        private readonly Spacer picture = new()
         {
-            ImageStretch = false,
             Visible = false,
             Alignment = HVAlignment.Center,
         };
@@ -94,6 +98,8 @@ namespace Alternet.UI
             Visible = false,
             Alignment = HVAlignment.Center,
         };
+
+        private readonly ImageDrawable drawable = new();
 
         private Action? clickAction;
         private bool sticky;
@@ -143,7 +149,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButton()
         {
-            Padding = 4;
+            Padding = DefaultPadding;
             Layout = LayoutStyle.Horizontal;
 
             IsGraphicControl = true;
@@ -215,7 +221,83 @@ namespace Alternet.UI
                     return;
                 spacer.SuggestedSize = value;
                 if(HasImage && TextVisible)
-                    PerformLayout();
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the image.
+        /// </summary>
+        public virtual HorizontalAlignment ImageHorizontalAlignment
+        {
+            get
+            {
+                return picture.HorizontalAlignment;
+            }
+
+            set
+            {
+                if (ImageHorizontalAlignment == value)
+                    return;
+                picture.HorizontalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the image.
+        /// </summary>
+        public virtual VerticalAlignment ImageVerticalAlignment
+        {
+            get
+            {
+                return picture.VerticalAlignment;
+            }
+
+            set
+            {
+                if (ImageVerticalAlignment == value)
+                    return;
+                picture.VerticalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the label.
+        /// </summary>
+        public virtual HorizontalAlignment LabelHorizontalAlignment
+        {
+            get
+            {
+                return label.HorizontalAlignment;
+            }
+
+            set
+            {
+                if (LabelHorizontalAlignment == value)
+                    return;
+                label.HorizontalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the label.
+        /// </summary>
+        public virtual VerticalAlignment LabelVerticalAlignment
+        {
+            get
+            {
+                return label.VerticalAlignment;
+            }
+
+            set
+            {
+                if (LabelVerticalAlignment == value)
+                    return;
+                label.VerticalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
             }
         }
 
@@ -651,14 +733,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.Image;
+                return drawable.Image;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.Image = value;
+                    drawable.Image = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -690,14 +773,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.DisabledImage;
+                return drawable.DisabledImage;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.DisabledImage = value;
+                    drawable.DisabledImage = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -710,14 +794,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.DisabledImageSet;
+                return drawable.DisabledImageSet;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.DisabledImageSet = value;
+                    drawable.DisabledImageSet = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -730,14 +815,15 @@ namespace Alternet.UI
         {
             get
             {
-                return PictureBox.ImageSet;
+                return drawable.ImageSet;
             }
 
             set
             {
                 PerformLayoutAndInvalidate(() =>
                 {
-                    PictureBox.ImageSet = value;
+                    drawable.ImageSet = value;
+                    PictureSizeChanged();
                 });
             }
         }
@@ -808,7 +894,7 @@ namespace Alternet.UI
         /// Gets inner <see cref="PictureBox"/> control.
         /// </summary>
         [Browsable(false)]
-        internal PictureBox PictureBox => picture;
+        internal Spacer PictureBox => picture;
 
         /// <summary>
         /// Gets inner <see cref="GenericLabel"/> control.
@@ -887,8 +973,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RaiseFontChanged()
         {
-            Label.IsBold = IsBold;
-            Label.Font = Font;
+            Label.Font = RealFont;
             base.RaiseFontChanged();
         }
 
@@ -951,8 +1036,15 @@ namespace Alternet.UI
             }
 
             DrawDefaultBackground(e);
-            if(HasImage)
-                PictureBox.DrawDefaultImage(e.Graphics, PictureBox.Bounds);
+            if (HasImage)
+            {
+                drawable.VisualState = Enabled
+                    ? VisualControlState.Normal : VisualControlState.Disabled;
+
+                drawable.Bounds = PictureBox.Bounds;
+                drawable.Draw(this, e.Graphics);
+            }
+
             if (TextVisible)
             {
                 var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
@@ -1060,6 +1152,11 @@ namespace Alternet.UI
                 SafeDispose(ref firstClickTimer);
                 subscribedClickRepeated = false;
             }
+        }
+
+        private void PictureSizeChanged()
+        {
+            PictureBox.SuggestedSize = drawable.GetPreferredSize(this);
         }
 
         private void SubscribeClickRepeated()

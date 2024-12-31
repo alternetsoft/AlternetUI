@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Enumerates known data parameter types for <see cref="SvgImage"/> constructor.
+    /// Enumerates known data parameter types for the constructor of svg image.
     /// </summary>
     public enum SvgImageDataKind
     {
